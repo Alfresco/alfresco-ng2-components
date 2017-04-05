@@ -105,7 +105,7 @@ export class FormService {
                 return forms.data.find(formdata => formdata.name === name);
             })
             .catch(err => this.handleError(err)
-        );
+            );
     }
 
     /**
@@ -158,7 +158,7 @@ export class FormService {
      * @returns {Observable<any>}
      */
     saveTaskForm(taskId: string, formValues: FormValues): Observable<any> {
-        let body = JSON.stringify({values: formValues});
+        let body = JSON.stringify({ values: formValues });
 
         return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.saveTaskForm(taskId, body))
             .catch(err => this.handleError(err));
@@ -172,7 +172,7 @@ export class FormService {
      * @returns {Observable<any>}
      */
     completeTaskForm(taskId: string, formValues: FormValues, outcome?: string): Observable<any> {
-        let data: any = {values: formValues};
+        let data: any = { values: formValues };
         if (outcome) {
             data.outcome = outcome;
         }
@@ -294,67 +294,34 @@ export class FormService {
         return Observable.fromPromise(alfrescoApi.activiti.taskApi.getRestFieldValuesColumn(taskId, field, column));
     }
 
-    // TODO: uses private webApp api
-    getWorkflowGroups(filter: string, groupId?: string): Observable<GroupModel[]> {
-        return Observable.create(observer => {
-
-            let xhr: XMLHttpRequest = new XMLHttpRequest();
-            xhr.withCredentials = true;
-
-            xhr.onreadystatechange = () => {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                        let json = JSON.parse(xhr.response);
-                        let data: GroupModel[] = (json.data || []).map(item => <GroupModel> item);
-                        observer.next(data);
-                        observer.complete();
-                    } else {
-                        this.logService.error(xhr.response);
-                        Observable.throw(new Error(xhr.response));
-                    }
-                }
-            };
-
-            let host = this.apiService.getInstance().config.hostBpm;
-            let url = `${host}/activiti-app/app/rest/workflow-groups?filter=${filter}`;
-            if (groupId) {
-                url += `&groupId=${groupId}`;
-            }
-            xhr.open('GET', url, true);
-            xhr.setRequestHeader('Authorization', this.apiService.getInstance().getTicketBpm());
-            xhr.send();
-        });
+    getWorkflowUsers(filter: string, groupId?: string): Observable<GroupUserModel[]> {
+        let option: any = { filter: filter };
+        if (groupId) {
+            option.groupId = groupId;
+        }
+        return Observable.fromPromise(this.getWorkflowUserApi(option))
+            .map((response: any) => <GroupUserModel[]> response.data || [])
+            .catch(err => this.handleError(err));
     }
 
-    getWorkflowUsers(filter: string, groupId?: string): Observable<GroupUserModel[]> {
-        return Observable.create(observer => {
+    private getWorkflowUserApi(options: any) {
+        let alfrescoApi = this.apiService.getInstance();
+        return alfrescoApi.activiti.usersWorkflowApi.getUsers(options);
+    }
 
-            let xhr: XMLHttpRequest = new XMLHttpRequest();
-            xhr.withCredentials = true;
+    getWorkflowGroups(filter: string, groupId?: string): Observable<GroupModel[]> {
+        let option: any = { filter: filter };
+        if (groupId) {
+            option.groupId = groupId;
+        }
+        return Observable.fromPromise(this.getWorkflowGroupsApi(option))
+            .map((response: any) => <GroupModel[]> response.data || [])
+            .catch(err => this.handleError(err));
+    }
 
-            xhr.onreadystatechange = () => {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                        let json = JSON.parse(xhr.response);
-                        let data: GroupUserModel[] = (json.data || []).map(item => <GroupUserModel> item);
-                        observer.next(data);
-                        observer.complete();
-                    } else {
-                        this.logService.error(xhr.response);
-                        Observable.throw(new Error(xhr.response));
-                    }
-                }
-            };
-
-            let host = this.apiService.getInstance().config.hostBpm;
-            let url = `${host}/activiti-app/app/rest/workflow-users?filter=${filter}`;
-            if (groupId) {
-                url += `&groupId=${groupId}`;
-            }
-            xhr.open('GET', url, true);
-            xhr.setRequestHeader('Authorization', this.apiService.getInstance().getTicketBpm());
-            xhr.send();
-        });
+    private getWorkflowGroupsApi(options: any) {
+        let alfrescoApi = this.apiService.getInstance();
+        return alfrescoApi.activiti.groupsApi.getGroups(options);
     }
 
     getFormId(res: any): string {
