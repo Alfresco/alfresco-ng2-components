@@ -224,10 +224,10 @@ Example:
 
 ```json
 [
- {type: 'text', key: 'id', title: 'Id'},
- {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
- {type: 'text', key: 'formKey', title: 'Form Key', sortable: true},
- {type: 'text', key: 'created', title: 'Created', sortable: true}
+ {"type": "text", "key": "id", "title": "Id"},
+ {"type": "text", "key": "name", "title": "Name", "cssClass": "full-width name-column", "sortable": true},
+ {"type": "text", "key": "formKey", "title": "Form Key", "sortable": true},
+ {"type": "text", "key": "created", "title": "Created", "sortable": true}
 ]
 ```
 
@@ -310,6 +310,31 @@ The component shows all the available apps.
 | Name | Type | Required | Description |
 | --- | --- | --- | --- |
 | `layoutType` | {string} | required | Define the layout of the apps. There are two possible values: GRID or LIST. |
+| `filtersAppId` | {Object} |  | Provide a way to filter the apps to show. |
+
+
+### How filter the activiti apps 
+
+If you want show some specific apps you can specify them through the filtersAppId parameters
+
+```html
+<activiti-apps [filtersAppId]="'[{defaultAppId: 'tasks'}, {deploymentId: '15037'}, {name : 'my app name'}]'"></activiti-apps>
+```
+
+In this specific case only the Tasks app, the app with deploymentId 15037 and the app with "my app name" will be showed
+![how-filter-apps](docs/assets/how-filter-apps.png)
+
+You can use inside the filter one of the following property 
+```json
+{ 
+    "defaultAppId": "string", 
+    "deploymentId": "string", 
+    "name": "string", 
+    "id": "number", 
+    "modelId": "number",
+    "tenantId": "number"
+}
+```
 
 ## Basic usage example Activiti Filter
 
