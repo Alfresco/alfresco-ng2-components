@@ -44,6 +44,9 @@ export class ContentActionComponent implements OnInit, OnChanges {
     @Output()
     execute = new EventEmitter();
 
+    @Output()
+    permissionEvent = new EventEmitter();
+
     model: ContentActionModel;
 
     constructor(
@@ -98,6 +101,9 @@ export class ContentActionComponent implements OnInit, OnChanges {
 
             if (ltarget === 'folder') {
                 if (this.folderActions) {
+                    this.folderActions.permissionEvent.subscribe((permision) => {
+                        this.permissionEvent.emit(permision);
+                    });
                     return this.folderActions.getHandler(name);
                 }
                 return null;

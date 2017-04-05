@@ -97,11 +97,55 @@ describe('FolderActionsService', () => {
         expect(service.getHandler('delete')).toBeDefined();
     });
 
-    it('should delete folder node', () => {
+    it('should not delete the folder node if there are no permissions', (done) => {
         spyOn(documentListService, 'deleteNode').and.callThrough();
+
+        service.permissionEvent.subscribe((permission) => {
+            expect(permission).toBeDefined();
+            expect(permission.type).toEqual('folder');
+            expect(permission.action).toEqual('delete');
+            done();
+        });
 
         let folder = new FolderNode();
         service.getHandler('delete')(folder);
+
+    });
+
+    it('should delete the folder node if there is the delete permission', () => {
+        spyOn(documentListService, 'deleteNode').and.callThrough();
+
+        let folder = new FolderNode();
+        let folderWithPermission: any = folder;
+        folderWithPermission.entry.allowableOperations = [ 'delete'];
+        service.getHandler('delete')(folderWithPermission);
+
+        expect(documentListService.deleteNode).toHaveBeenCalledWith(folder.entry.id);
+    });
+
+    it('should not delete the folder node if there is no delete permission', (done) => {
+        spyOn(documentListService, 'deleteNode').and.callThrough();
+
+        service.permissionEvent.subscribe((permission) => {
+            expect(permission).toBeDefined();
+            expect(permission.type).toEqual('folder');
+            expect(permission.action).toEqual('delete');
+            done();
+        });
+
+        let folder = new FolderNode();
+        let folderWithPermission: any = folder;
+        folderWithPermission.entry.allowableOperations = ['create', 'update'];
+        service.getHandler('delete')(folderWithPermission);
+    });
+
+    it('should delete the folder node if there is the delete and others permission ', () => {
+        spyOn(documentListService, 'deleteNode').and.callThrough();
+
+        let folder = new FolderNode();
+        let folderWithPermission: any = folder;
+        folderWithPermission.entry.allowableOperations = ['create', 'update', 'delete'];
+        service.getHandler('delete')(folderWithPermission);
 
         expect(documentListService.deleteNode).toHaveBeenCalledWith(folder.entry.id);
     });
@@ -114,7 +158,9 @@ describe('FolderActionsService', () => {
         expect(documentListService.deleteNode).not.toHaveBeenCalled();
 
         let folder = new FolderNode();
-        service.getHandler('delete')(folder);
+        let folderWithPermission: any = folder;
+        folderWithPermission.entry.allowableOperations = [ 'delete'];
+        service.getHandler('delete')(folderWithPermission);
         expect(documentListService.deleteNode).toHaveBeenCalled();
     });
 
@@ -133,7 +179,10 @@ describe('FolderActionsService', () => {
 
         let target = jasmine.createSpyObj('obj', ['reload']);
         let folder = new FolderNode();
-        service.getHandler('delete')(folder, target);
+        let folderWithPermission: any = folder;
+        folderWithPermission.entry.allowableOperations = [ 'delete'];
+
+        service.getHandler('delete')(folderWithPermission, target);
 
         expect(documentListService.deleteNode).toHaveBeenCalled();
         expect(target.reload).toHaveBeenCalled();

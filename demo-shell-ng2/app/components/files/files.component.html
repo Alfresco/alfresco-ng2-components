@@ -71,6 +71,7 @@
                 <content-action
                         target="folder"
                         title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.DELETE' | translate}}"
+                        (permissionEvent)="onPermissionsFailed($event)"
                         handler="delete">
                 </content-action>
                 <!-- document actions -->

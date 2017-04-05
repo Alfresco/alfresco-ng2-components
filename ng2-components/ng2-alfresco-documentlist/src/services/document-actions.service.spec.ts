@@ -101,6 +101,59 @@ describe('DocumentActionsService', () => {
         expect(service.getHandler('delete')).toBeDefined();
     });
 
+    it('should not delete the file node if there are no permissions', (done) => {
+        spyOn(documentListService, 'deleteNode').and.callThrough();
+
+        service.permissionEvent.subscribe((permission) => {
+            expect(permission).toBeDefined();
+            expect(permission.type).toEqual('content');
+            expect(permission.action).toEqual('delete');
+            done();
+        });
+
+        let file = new FileNode();
+        service.getHandler('delete')(file);
+
+    });
+
+    it('should delete the file node if there is the delete permission', () => {
+        spyOn(documentListService, 'deleteNode').and.callThrough();
+
+        let file = new FileNode();
+        let fileWithPermission: any = file;
+        fileWithPermission.entry.allowableOperations = [ 'delete'];
+        service.getHandler('delete')(fileWithPermission);
+
+        expect(documentListService.deleteNode).toHaveBeenCalledWith(file.entry.id);
+    });
+
+    it('should not delete the file node if there is no delete permission', (done) => {
+        spyOn(documentListService, 'deleteNode').and.callThrough();
+
+        service.permissionEvent.subscribe((permission) => {
+            expect(permission).toBeDefined();
+            expect(permission.type).toEqual('content');
+            expect(permission.action).toEqual('delete');
+            done();
+        });
+
+        let file = new FileNode();
+        let fileWithPermission: any = file;
+        fileWithPermission.entry.allowableOperations = ['create', 'update'];
+        service.getHandler('delete')(fileWithPermission);
+    });
+
+    it('should delete the file node if there is the delete and others permission ', () => {
+        spyOn(documentListService, 'deleteNode').and.callThrough();
+
+        let file = new FileNode();
+        let fileWithPermission: any = file;
+        fileWithPermission.entry.allowableOperations = ['create', 'update', 'delete'];
+        service.getHandler('delete')(fileWithPermission);
+
+        expect(documentListService.deleteNode).toHaveBeenCalledWith(file.entry.id);
+    });
+
     it('should register download action', () => {
         expect(service.getHandler('download')).toBeDefined();
     });
@@ -153,7 +206,9 @@ describe('DocumentActionsService', () => {
         spyOn(documentListService, 'deleteNode').and.callThrough();
 
         let file = new FileNode();
-        service.getHandler('delete')(file);
+        let fileWithPermission: any = file;
+        fileWithPermission.entry.allowableOperations = ['delete'];
+        service.getHandler('delete')(fileWithPermission);
 
         expect(documentListService.deleteNode).toHaveBeenCalledWith(file.entry.id);
     });
@@ -166,7 +221,9 @@ describe('DocumentActionsService', () => {
         expect(documentListService.deleteNode).not.toHaveBeenCalled();
 
         let file = new FileNode();
-        service.getHandler('delete')(file);
+        let fileWithPermission: any = file;
+        fileWithPermission.entry.allowableOperations = ['delete'];
+        service.getHandler('delete')(fileWithPermission);
         expect(documentListService.deleteNode).toHaveBeenCalled();
     });
 
@@ -185,7 +242,9 @@ describe('DocumentActionsService', () => {
 
         let target = jasmine.createSpyObj('obj', ['reload']);
         let file = new FileNode();
-        service.getHandler('delete')(file, target);
+        let fileWithPermission: any = file;
+        fileWithPermission.entry.allowableOperations = ['delete'];
+        service.getHandler('delete')(fileWithPermission, target);
 
         expect(documentListService.deleteNode).toHaveBeenCalled();
         expect(target.reload).toHaveBeenCalled();
