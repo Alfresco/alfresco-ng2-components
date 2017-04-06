@@ -24,6 +24,7 @@ environment:
   - COMPONENT_NAME: ng2-activiti-diagrams
   - COMPONENT_NAME: ng2-activiti-analytics
   - COMPONENT_NAME: ng2-alfresco-userinfo
+  - COMPONENT_NAME: ng2-alfresco-social
 
 # Install scripts. (runs after repo cloning)
 install:

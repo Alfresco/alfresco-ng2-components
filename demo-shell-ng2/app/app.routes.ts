@@ -29,6 +29,7 @@ import {
     ActivitiAppsView,
     WebscriptComponent,
     TagComponent,
+    SocialComponent,
     AboutComponent,
     FormViewer,
     FormNodeViewer,
@@ -115,6 +116,11 @@ export const appRoutes: Routes = [
     {
         path: 'tag',
         component: TagComponent,
+        canActivate: [AuthGuardEcm]
+    },
+    {
+        path: 'social',
+        component: SocialComponent,
         canActivate: [AuthGuardEcm]
     },
     { path: 'about', component: AboutComponent },

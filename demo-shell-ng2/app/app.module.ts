@@ -25,6 +25,7 @@ import { DataTableModule } from 'ng2-alfresco-datatable';
 import { DocumentListModule } from 'ng2-alfresco-documentlist';
 import { UploadModule } from 'ng2-alfresco-upload';
 import { TagModule } from 'ng2-alfresco-tag';
+import { SocialModule } from 'ng2-alfresco-social';
 import { WebScriptModule } from 'ng2-alfresco-webscript';
 import { ViewerModule } from 'ng2-alfresco-viewer';
 import { ActivitiFormModule } from 'ng2-activiti-form';
@@ -50,6 +51,7 @@ import {
     FormViewer,
     WebscriptComponent,
     TagComponent,
+    SocialComponent,
     AboutComponent,
     FilesComponent,
     FormNodeViewer,
@@ -68,6 +70,7 @@ import {
         DocumentListModule.forRoot(),
         UploadModule.forRoot(),
         TagModule.forRoot(),
+        SocialModule.forRoot(),
         WebScriptModule.forRoot(),
         ViewerModule.forRoot(),
         ActivitiFormModule.forRoot(),
@@ -91,6 +94,7 @@ import {
         FormViewer,
         WebscriptComponent,
         TagComponent,
+        SocialComponent,
         AboutComponent,
         FilesComponent,
         FormNodeViewer,

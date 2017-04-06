@@ -33,7 +33,7 @@ export class TagService {
     }
 
     getTagsByNodeId(nodeId: string): any {
-        return Observable.fromPromise(this.apiService.getInstance().core.tagsApi.getNodeTags(nodeId))
+        return Observable.fromPromise(C.core.tagsApi.getNodeTags(nodeId))
             .catch(err => this.handleError(err));
     }
 

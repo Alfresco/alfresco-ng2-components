@@ -15,6 +15,7 @@ for PACKAGE in \
   ng2-alfresco-login \
   ng2-alfresco-search \
   ng2-alfresco-tag \
+  ng2-alfresco-social \
   ng2-alfresco-upload \
   ng2-alfresco-viewer \
   ng2-alfresco-webscript \
@@ -41,6 +42,7 @@ for PACKAGE in \
   ng2-alfresco-login \
   ng2-alfresco-search \
   ng2-alfresco-tag \
+  ng2-alfresco-social \
   ng2-alfresco-upload \
   ng2-alfresco-viewer \
   ng2-alfresco-webscript \
