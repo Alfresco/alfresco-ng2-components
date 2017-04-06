@@ -441,6 +441,65 @@ describe('DisplayValueWidget', () => {
         expect(widget.value).toBe('<invalid value>');
     });
 
+    it('should show the [DATE] field with the default format (D-M-YYYY) if the display format is missing', () => {
+        widget.field = new FormFieldModel(null, {
+            type: FormFieldTypes.DISPLAY_VALUE,
+            value: '1982-03-13T00:00:00.000Z',
+            params: {
+                field: {
+                    type: FormFieldTypes.DATE
+                }
+            }
+        });
+        widget.ngOnInit();
+        expect(widget.value).toBe('13-3-1982');
+    });
+
+    it('should show the [DATE] field with the custom display format (MM-DD-YYYY)', () => {
+        widget.field = new FormFieldModel(null, {
+            type: FormFieldTypes.DISPLAY_VALUE,
+            value: '1982-03-13T00:00:00.000Z',
+            dateDisplayFormat: 'MM-DD-YYYY',
+            params: {
+                field: {
+                    type: FormFieldTypes.DATE
+                }
+            }
+        });
+        widget.ngOnInit();
+        expect(widget.value).toBe('03-13-1982');
+    });
+
+    it('should show the [DATE] field with the custom display format (MM-YY-DD)', () => {
+        widget.field = new FormFieldModel(null, {
+            type: FormFieldTypes.DISPLAY_VALUE,
+            value: '1982-03-13T00:00:00.000Z',
+            dateDisplayFormat: 'MM-YY-DD',
+            params: {
+                field: {
+                    type: FormFieldTypes.DATE
+                }
+            }
+        });
+        widget.ngOnInit();
+        expect(widget.value).toBe('03-82-13');
+    });
+
+    it('should show the [DATE] field with the custom display format (DD-MM-YYYY)', () => {
+        widget.field = new FormFieldModel(null, {
+            type: FormFieldTypes.DISPLAY_VALUE,
+            value: '1982-03-13T00:00:00.000Z',
+            dateDisplayFormat: 'DD-MM-YYYY',
+            params: {
+                field: {
+                    type: FormFieldTypes.DATE
+                }
+            }
+        });
+        widget.ngOnInit();
+        expect(widget.value).toBe('13-03-1982');
+    });
+
     it('should not setup [DATE] field when missing value', () => {
         widget.field = new FormFieldModel(null, {
             type: FormFieldTypes.DISPLAY_VALUE,
