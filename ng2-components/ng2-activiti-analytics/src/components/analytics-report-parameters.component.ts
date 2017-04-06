@@ -25,9 +25,10 @@ import {
     SimpleChanges,
     OnDestroy,
     AfterViewChecked,
+    AfterContentChecked,
     ViewChild
 } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { AlfrescoTranslationService, LogService, ContentService } from 'ng2-alfresco-core';
 import { AnalyticsService } from '../services/analytics.service';
@@ -47,7 +48,7 @@ declare let dialogPolyfill: any;
     templateUrl: './analytics-report-parameters.component.html',
     styleUrls: ['./analytics-report-parameters.component.css']
 })
-export class AnalyticsReportParametersComponent implements OnInit, OnChanges, OnDestroy, AfterViewChecked {
+export class AnalyticsReportParametersComponent implements OnInit, OnChanges, OnDestroy, AfterViewChecked, AfterContentChecked {
 
     public static FORMAT_DATE_ACTIVITI: string = 'YYYY-MM-DD';
 
@@ -102,6 +103,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     private reportParamQuery: ReportQuery;
     private reportName: string;
     private hideParameters: boolean = true;
+    private formValidState: boolean = false;
 
     constructor(private translateService: AlfrescoTranslationService,
                 private analyticsService: AnalyticsService,
@@ -131,6 +133,9 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
 
     ngOnChanges(changes: SimpleChanges) {
         this.isEditable = false;
+        if (this.reportForm) {
+            this.reportForm.reset();
+        }
         let reportId = changes['reportId'];
         if (reportId && reportId.currentValue) {
             this.getReportParams(reportId.currentValue);
@@ -147,42 +152,42 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         parameters.forEach((param: ReportParameterDetailsModel) => {
             switch (param.type) {
                 case 'dateRange' :
-                    formBuilderGroup.dateRange = new FormGroup({});
+                    formBuilderGroup.dateRange = new FormGroup({}, Validators.required);
                     break;
                 case 'processDefinition':
                     formBuilderGroup.processDefGroup = new FormGroup({
-                        processDefinitionId: new FormControl()
-                    });
+                        processDefinitionId: new FormControl(null, Validators.required, null)
+                    }, Validators.required);
                     break;
                 case 'duration':
                     formBuilderGroup.durationGroup = new FormGroup({
-                        duration: new FormControl()
-                    });
+                        duration: new FormControl(null, Validators.required, null)
+                    }, Validators.required);
                     break;
                 case 'dateInterval':
                     formBuilderGroup.dateIntervalGroup = new FormGroup({
-                        dateRangeInterval: new FormControl()
-                    });
+                        dateRangeInterval: new FormControl(null, Validators.required, null)
+                    }, Validators.required);
                     break;
                 case 'boolean':
                     formBuilderGroup.typeFilteringGroup = new FormGroup({
-                        typeFiltering: new FormControl()
-                    });
+                        typeFiltering: new FormControl(null, Validators.required, null)
+                    }, Validators.required);
                     break;
                 case 'task':
                     formBuilderGroup.taskGroup = new FormGroup({
-                        taskName: new FormControl()
-                    });
+                        taskName: new FormControl(null, Validators.required, null)
+                    }, Validators.required);
                     break;
                 case 'integer':
                     formBuilderGroup.processInstanceGroup = new FormGroup({
-                        slowProcessInstanceInteger: new FormControl()
-                    });
+                        slowProcessInstanceInteger: new FormControl(null, Validators.required, null)
+                    }, Validators.required);
                     break;
                 case 'status':
                     formBuilderGroup.statusGroup = new FormGroup({
-                        status: new FormControl()
-                    });
+                        status: new FormControl(null, Validators.required, null)
+                    }, Validators.required);
                     break;
                 default:
                     return;
@@ -190,6 +195,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         });
         this.reportForm = this.formBuilder.group(formBuilderGroup);
         this.reportForm.valueChanges.subscribe(data => this.onValueChanged(data));
+        this.reportForm.statusChanges.subscribe(data => this.onStatusChanged(data));
     }
 
     public getReportParams(reportId: string) {
@@ -240,6 +246,12 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         this.onFormValueChanged.emit(values);
         if (this.reportForm && this.reportForm.valid) {
             this.submit(values);
+        }
+    }
+
+    onStatusChanged(status: any) {
+        if (this.reportForm && !this.reportForm.pending && this.reportForm.dirty) {
+            this.formValidState = this.reportForm.valid;
         }
     }
 
@@ -346,12 +358,12 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         this.reportName = '';
     }
 
-    isFormValid() {
-        return this.reportForm && this.reportForm.valid && this.reportForm.dirty;
-    }
-
     isSaveAction() {
         return this.action === 'Save';
+    }
+
+    isFormValid() {
+        return this.reportForm && this.reportForm.dirty && this.reportForm.valid;
     }
 
     doExport(paramQuery: ReportQuery) {
@@ -375,9 +387,14 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     }
 
     ngAfterViewChecked() {
-        // workaround for MDL issues with dynamic components
         if (componentHandler) {
             componentHandler.upgradeAllRegistered();
+        }
+    }
+
+    ngAfterContentChecked() {
+        if (this.reportForm && this.reportForm.valid) {
+            this.reportForm.markAsDirty();
         }
     }
 
