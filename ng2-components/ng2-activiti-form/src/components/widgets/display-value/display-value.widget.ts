@@ -116,15 +116,15 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
                             break;
                         case FormFieldTypes.DATE:
                             if (this.value) {
-                                let d;
+                                let dateValue;
                                 if (NumberFieldValidator.isNumber(this.value)) {
-                                    d = moment(this.value);
+                                    dateValue = moment(this.value);
                                 } else {
-                                    d = moment(this.value.split('T')[0], 'YYYY-M-D');
+                                    dateValue = moment(this.value.split('T')[0], 'YYYY-M-D');
                                 }
-                                if (d && d.isValid()) {
+                                if (dateValue && dateValue.isValid()) {
                                     const displayFormat = this.field.dateDisplayFormat || this.field.defaultDateFormat;
-                                    this.value = d.format(displayFormat);
+                                    this.value = dateValue.format(displayFormat);
                                 }
                             }
                             break;
