@@ -140,6 +140,42 @@ describe('ActivitiChecklist', () => {
             });
         }));
 
+        it('should remove a checklist element', async(() => {
+            checklistComponent.taskId = 'new-fake-task-id';
+            checklistComponent.checklist.push(fakeTaskDetail);
+            fixture.detectChanges();
+            let checklistElementRemove = <HTMLElement> element.querySelector('#remove-fake-check-id');
+            expect(checklistElementRemove).toBeDefined();
+            expect(checklistElementRemove).not.toBeNull();
+            checklistElementRemove.click();
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json'
+            });
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#fake-check-id')).toBeNull();
+            });
+        }));
+
+        it('should send an event when the checklist is deleted', (done) => {
+            checklistComponent.taskId = 'new-fake-task-id';
+            checklistComponent.checklist.push(fakeTaskDetail);
+            fixture.detectChanges();
+            let checklistElementRemove = <HTMLElement> element.querySelector('#remove-fake-check-id');
+            expect(checklistElementRemove).toBeDefined();
+            expect(checklistElementRemove).not.toBeNull();
+            checklistElementRemove.click();
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json'
+            });
+            checklistComponent.checklistTaskDeleted.subscribe(() => {
+                expect(element.querySelector('#fake-check-id')).toBeNull();
+                done();
+            });
+        });
+
         it('should show load task checklist on change', async(() => {
             checklistComponent.taskId = 'new-fake-task-id';
             checklistComponent.checklist.push(fakeTaskDetail);

@@ -38,7 +38,8 @@
                     [readOnly]="readOnlyForm"
                     [taskId]="taskDetails.id"
                     [assignee]="taskDetails?.assignee?.id"
-                    (checklistTaskCreated)="onChecklistTaskCreated($event)">
+                    (checklistTaskCreated)="onChecklistTaskCreated($event)"
+                    (checklistTaskDeleted)="onChecklistTaskDeleted($event)">
                 </activiti-checklist>
             </div>
         </div>
