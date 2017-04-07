@@ -70,6 +70,7 @@
                 </content-action>
                 <content-action
                         target="folder"
+                        disableWithNoPermission="delete"
                         title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.DELETE' | translate}}"
                         (permissionEvent)="onPermissionsFailed($event)"
                         handler="delete">
@@ -92,6 +93,7 @@
                 </content-action>
                 <content-action
                         target="document"
+                        disableWithNoPermission="delete"
                         title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DELETE' | translate}}"
                         handler="delete">
                 </content-action>

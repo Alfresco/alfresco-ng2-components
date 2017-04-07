@@ -20,6 +20,7 @@ export class ContentActionModel {
     title: string;
     handler: ContentActionHandler;
     target: string;
+    disableWithNoPermission: string;
 
     constructor(obj?: any) {
         if (obj) {
@@ -27,6 +28,7 @@ export class ContentActionModel {
             this.title = obj.title;
             this.handler = obj.handler;
             this.target = obj.target;
+            this.disableWithNoPermission = obj.disableWithNoPermission;
         }
     }
 }

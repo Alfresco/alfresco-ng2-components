@@ -414,4 +414,65 @@ describe('DataTable', () => {
         dataTable.onImageLoadingError(event);
         expect(event.target.src).toBe(originalSrc);
     });
+
+    it('should disable the action if there is no permission', () => {
+
+        dataTable.data = new ObjectDataTableAdapter(
+            [{id: 1, name: 'xyz', allowableOperations: ['create', 'update']}],
+            []
+        );
+
+        let row = dataTable.data.getRows();
+        let actions = [
+            {
+                disableWithNoPermission: 'delete',
+                target: 'folder',
+                title: 'action2'
+            }
+        ];
+
+        let updateActions = dataTable.checkPermissions(row[0], actions);
+        expect(updateActions[0].disabled).toBe(true);
+    });
+
+    it('should not disable the action if there is the right permission', () => {
+
+        dataTable.data = new ObjectDataTableAdapter(
+            [{ id: 1, name: 'xyz', allowableOperations: ['create', 'update', 'delete'] }],
+            []
+        );
+
+        let row = dataTable.data.getRows();
+        let actions = [
+            {
+                disableWithNoPermission: 'delete',
+                target: 'folder',
+                title: 'action2'
+            }
+        ];
+
+        let updateActions = dataTable.checkPermissions(row[0], actions);
+        expect(updateActions[0].disabled).toBeUndefined();
+    });
+
+    it('should not disable the action if there are no permissions', () => {
+
+        dataTable.data = new ObjectDataTableAdapter(
+            [{id: 1, name: 'xyz', allowableOperations: null}],
+            []
+        );
+
+        let row = dataTable.data.getRows();
+        let actions = [
+            {
+                disableWithNoPermission: 'delete',
+                target: 'folder',
+                title: 'action2'
+            }
+        ];
+
+        let updateActions = dataTable.checkPermissions(row[0], actions);
+        expect(updateActions[0].disabled).toBeUndefined();
+    });
+
 });
