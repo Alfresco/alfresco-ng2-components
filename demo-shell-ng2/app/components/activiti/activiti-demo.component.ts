@@ -264,6 +264,10 @@ export class ActivitiDemoComponent implements AfterViewInit {
         this.taskList.reload();
     }
 
+    onTaskDeleted(data: any) {
+        this.taskList.reload();
+    }
+
     ngAfterViewInit() {
         // workaround for MDL issues with dynamic components
         if (componentHandler) {

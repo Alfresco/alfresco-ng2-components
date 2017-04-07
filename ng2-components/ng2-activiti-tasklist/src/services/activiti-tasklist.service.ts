@@ -257,6 +257,15 @@ export class ActivitiTaskListService {
     }
 
     /**
+     * Delete a task
+     * @param taskId - string
+     */
+    deleteTask(taskId: string): Observable<TaskDetailsModel> {
+        return Observable.fromPromise(this.callApiDeleteTask(taskId))
+            .catch(err => this.handleError(err));
+    }
+
+    /**
      * Add a filter
      * @param filter - FilterRepresentationModel
      * @returns {FilterRepresentationModel}
@@ -355,6 +364,10 @@ export class ActivitiTaskListService {
 
     private callApiAddTask(task: TaskDetailsModel) {
         return this.apiService.getInstance().activiti.taskApi.addSubtask(task.parentTaskId, task);
+    }
+
+    private callApiDeleteTask(taskId: string) {
+        return this.apiService.getInstance().activiti.taskApi.deleteTask(taskId);
     }
 
     private callApiAddFilter(filter: FilterRepresentationModel) {
