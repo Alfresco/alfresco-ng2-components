@@ -249,14 +249,14 @@ export class FormFieldModel extends FormWidgetModel {
          */
         if (json.type === FormFieldTypes.DATE) {
             if (value) {
-                let d;
+                let dateValue;
                 if (NumberFieldValidator.isNumber(value)) {
-                    d = moment(value);
+                    dateValue = moment(value);
                 } else {
-                    d = moment(value.split('T')[0], 'YYYY-M-D');
+                    dateValue = moment(value.split('T')[0], 'YYYY-M-D');
                 }
-                if (d && d.isValid()) {
-                    value = d.format(this.dateDisplayFormat);
+                if (dateValue && dateValue.isValid()) {
+                    value = dateValue.format(this.dateDisplayFormat);
                 }
             }
         }
@@ -312,14 +312,14 @@ export class FormFieldModel extends FormWidgetModel {
                 }
                 break;
             case FormFieldTypes.DATE:
-                let d;
+                let dateValue;
                 if (NumberFieldValidator.isNumber(this.value)) {
-                    d = moment(this.value);
+                    dateValue = moment(this.value);
                 } else {
-                    d = moment(this.value, this.dateDisplayFormat);
+                    dateValue = moment(this.value, this.dateDisplayFormat);
                 }
-                if (d && d.isValid()) {
-                    this.form.values[this.id] = `${d.format('YYYY-MM-DD')}T00:00:00.000Z`;
+                if (dateValue && dateValue.isValid()) {
+                    this.form.values[this.id] = `${dateValue.format('YYYY-MM-DD')}T00:00:00.000Z`;
                 } else {
                     this.form.values[this.id] = null;
                 }
