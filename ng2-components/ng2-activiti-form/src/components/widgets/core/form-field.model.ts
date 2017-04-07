@@ -76,7 +76,7 @@ export class FormFieldModel extends FormWidgetModel {
     visibilityCondition: WidgetVisibilityModel = null;
     enableFractions: boolean = false;
     currency: string = null;
-    dateDisplayFormat: string = this.defaultDateFormat;
+    dateDisplayFormat: string = this.dateDisplayFormat || this.defaultDateFormat;
 
     // container model members
     numberOfColumns: number = 1;
@@ -249,9 +249,14 @@ export class FormFieldModel extends FormWidgetModel {
          */
         if (json.type === FormFieldTypes.DATE) {
             if (value) {
-                let d = moment(value.split('T')[0], 'YYYY-M-D');
-                if (d.isValid()) {
-                    value = d.format(this.dateDisplayFormat);
+                let dateValue;
+                if (NumberFieldValidator.isNumber(value)) {
+                    dateValue = moment(value);
+                } else {
+                    dateValue = moment(value.split('T')[0], 'YYYY-M-D');
+                }
+                if (dateValue && dateValue.isValid()) {
+                    value = dateValue.format(this.dateDisplayFormat);
                 }
             }
         }
@@ -307,9 +312,14 @@ export class FormFieldModel extends FormWidgetModel {
                 }
                 break;
             case FormFieldTypes.DATE:
-                let d = moment(this.value, this.dateDisplayFormat);
-                if (d.isValid()) {
-                    this.form.values[this.id] = `${d.format('YYYY-MM-DD')}T00:00:00.000Z`;
+                let dateValue;
+                if (NumberFieldValidator.isNumber(this.value)) {
+                    dateValue = moment(this.value);
+                } else {
+                    dateValue = moment(this.value, this.dateDisplayFormat);
+                }
+                if (dateValue && dateValue.isValid()) {
+                    this.form.values[this.id] = `${dateValue.format('YYYY-MM-DD')}T00:00:00.000Z`;
                 } else {
                     this.form.values[this.id] = null;
                 }
