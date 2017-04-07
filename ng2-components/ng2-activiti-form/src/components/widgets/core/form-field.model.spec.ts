@@ -121,6 +121,109 @@ describe('FormFieldModel', () => {
         expect(field.value).toBe('deferred');
     });
 
+    it('should parse the date with the default format (D-M-YYYY) if the display format is missing', () => {
+        let form = new FormModel();
+        let field = new FormFieldModel(form, {
+            fieldType: 'FormFieldRepresentation',
+            id: 'mmddyyyy',
+            name: 'MM-DD-YYYY',
+            type: 'date',
+            value: '2017-04-28T00:00:00.000+0000',
+            required: false,
+            readOnly: false,
+            params: {
+                field: {
+                    id: 'mmddyyyy',
+                    name: 'MM-DD-YYYY',
+                    type: 'date',
+                    value: null,
+                    required: false,
+                    readOnly: false
+                }
+            }
+        });
+        expect(field.value).toBe('28-4-2017');
+        expect(form.values['mmddyyyy']).toEqual('2017-04-28T00:00:00.000Z');
+    });
+
+    it('should parse the date with the format MM-DD-YYYY', () => {
+        let form = new FormModel();
+        let field = new FormFieldModel(form, {
+            fieldType: 'FormFieldRepresentation',
+            id: 'mmddyyyy',
+            name: 'MM-DD-YYYY',
+            type: 'date',
+            value: '2017-04-28T00:00:00.000+0000',
+            required: false,
+            readOnly: false,
+            params: {
+                field: {
+                    id: 'mmddyyyy',
+                    name: 'MM-DD-YYYY',
+                    type: 'date',
+                    value: null,
+                    required: false,
+                    readOnly: false
+                }
+            },
+            dateDisplayFormat: 'MM-DD-YYYY'
+        });
+        expect(field.value).toBe('04-28-2017');
+        expect(form.values['mmddyyyy']).toEqual('2017-04-28T00:00:00.000Z');
+    });
+
+    it('should parse the date with the format MM-YY-DD', () => {
+        let form = new FormModel();
+        let field = new FormFieldModel(form, {
+            fieldType: 'FormFieldRepresentation',
+            id: 'mmyydd',
+            name: 'MM-YY-DD',
+            type: 'date',
+            value: '2017-04-28T00:00:00.000+0000',
+            required: false,
+            readOnly: false,
+            params: {
+                field: {
+                    id: 'mmyydd',
+                    name: 'MM-YY-DD',
+                    type: 'date',
+                    value: null,
+                    required: false,
+                    readOnly: false
+                }
+            },
+            dateDisplayFormat: 'MM-YY-DD'
+        });
+        expect(field.value).toBe('04-17-28');
+        expect(form.values['mmyydd']).toEqual('2017-04-28T00:00:00.000Z');
+    });
+
+    it('should parse the date with the format DD-MM-YYYY', () => {
+        let form = new FormModel();
+        let field = new FormFieldModel(form, {
+            fieldType: 'FormFieldRepresentation',
+            id: 'ddmmyyy',
+            name: 'DD-MM-YYYY',
+            type: 'date',
+            value: '2017-04-28T00:00:00.000+0000',
+            required: false,
+            readOnly: false,
+            params: {
+                field: {
+                    id: 'ddmmyyy',
+                    name: 'DD-MM-YYYY',
+                    type: 'date',
+                    value: null,
+                    required: false,
+                    readOnly: false
+                }
+            },
+            dateDisplayFormat: 'DD-MM-YYYY'
+        });
+        expect(field.value).toBe('28-04-2017');
+        expect(form.values['ddmmyyy']).toEqual('2017-04-28T00:00:00.000Z');
+    });
+
     it('should return the label of selected dropdown value ', () => {
         let field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.DROPDOWN,
