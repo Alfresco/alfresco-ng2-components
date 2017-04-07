@@ -25,7 +25,7 @@
 
             // other libraries
             'rxjs': 'npm:rxjs',
-            'ng2-translate': 'npm:ng2-translate',
+            'ng2-translate/ng2-translate': 'npm:ng2-translate/bundles/ng2-translate.umd.js',
             'ng2-alfresco-core': 'npm:ng2-alfresco-core',
             'ng2-alfresco-datatable': 'npm:ng2-alfresco-datatable',
             'ng2-alfresco-webscript': 'npm:ng2-alfresco-webscript',

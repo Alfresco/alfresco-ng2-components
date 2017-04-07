@@ -35,14 +35,11 @@ module.exports = function (config) {
 
       'node_modules/alfresco-js-api/dist/alfresco-js-api.js',
       {pattern: 'node_modules/ng2-translate/**/*.js', included: false, watched: false},
-      {pattern: 'node_modules/ng2-translate/**/*.js.map', included: false, watched: false},
 
       'karma-test-shim.js',
 
       // paths loaded via module imports
       {pattern: 'src/**/*.js', included: false, watched: true},
-      {pattern: 'src/**/*.html', included: true, served: true, watched: true},
-      {pattern: 'src/**/*.css', included: true, served: true, watched: true},
 
       // paths to support debugging with source maps in dev tools
       {pattern: 'src/**/*.ts', included: false, watched: false},
