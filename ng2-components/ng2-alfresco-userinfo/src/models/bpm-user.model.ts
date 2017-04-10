@@ -25,6 +25,7 @@ export class BpmUserModel {
     firstName: string;
     lastName: string;
     fullname: string;
+    fullNameDisplay: string;
     groups: any;
     id: string;
     lastUpdate: string;
@@ -47,6 +48,7 @@ export class BpmUserModel {
         this.firstName = obj && obj.firstName;
         this.lastName = obj && obj.lastName;
         this.fullname = obj && obj.fullname;
+        this.fullNameDisplay = obj ? this.formatValue(obj.firstName).trim() + ' ' + this.formatValue(obj.lastName).trim() : null;
         this.groups = obj && obj.groups || null;
         this.id = obj && obj.id || null;
         this.lastUpdate = obj && obj.lastUpdate;
@@ -58,5 +60,9 @@ export class BpmUserModel {
         this.tenantName = obj && obj.tenantName;
         this.tenantPictureId = obj && obj.tenantPictureId;
         this.type = obj && obj.type;
+    }
+
+    private formatValue(value: string): string {
+        return value && value !== 'null' ? value : 'N/A';
     }
 }

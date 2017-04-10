@@ -19,9 +19,6 @@
 export { BpmUserModel } from '../models/bpm-user.model';
 export { BpmUserService } from '../services/bpm-user.service';
 
-import { BpmUserModel } from '../models/bpm-user.model';
-import { Observable } from 'rxjs/Rx';
-
 export var fakeBpmUserNoImage = {
     apps: [],
     capabilities: 'fake-capability',
@@ -68,7 +65,7 @@ export var fakeBpmUser = {
     type: 'fake-type'
 };
 
-export var fakeBpmEditedUser: BpmUserModel = {
+export var fakeBpmEditedUser = {
     apps: [],
     capabilities: 'fake-capability',
     company: 'fake-company',
@@ -90,34 +87,3 @@ export var fakeBpmEditedUser: BpmUserModel = {
     tenantPictureId: 'fake-tenant-picture-id',
     type: 'fake-type'
 };
-
-export class FakeBpmUserService {
-
-    lastPromise: Observable<BpmUserModel>;
-    public userNeeded = 0;
-    usersList = [fakeBpmUser, fakeBpmUserNoImage, fakeBpmEditedUser];
-
-    getUserInfo(userName: string) {
-        return this.lastPromise = Observable.of(this.usersList[this.userNeeded]);
-    };
-
-    getCurrentUserInfo() {
-        return this.getUserInfo('fake-id');
-    };
-
-    getCurrentUserProfileImage() {
-        return Observable.of(this.usersList[this.userNeeded].pictureId);
-    };
-
-    respondWithTheUserWithoutImage() {
-        this.userNeeded = 1;
-    }
-
-    respondWithTheUserWithImage() {
-        this.userNeeded = 0;
-    }
-
-    respondWithEditedUser() {
-        this.userNeeded = 2;
-    }
-}

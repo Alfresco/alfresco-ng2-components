@@ -81,7 +81,7 @@ export class UserInfoComponent implements OnInit {
         if (this.authService.isEcmLoggedIn()) {
             this.ecmUserService.getCurrentUserInfo()
                 .subscribe((res) => {
-                        this.ecmUser = <EcmUserModel> res;
+                        this.ecmUser = new EcmUserModel(res);
                         this.getEcmAvatar();
                     }
                 );
@@ -95,7 +95,7 @@ export class UserInfoComponent implements OnInit {
         if (this.authService.isBpmLoggedIn()) {
             this.bpmUserService.getCurrentUserInfo()
                 .subscribe((res) => {
-                    this.bpmUser = <BpmUserModel> res;
+                    this.bpmUser = new BpmUserModel(res);
                 });
             this.bpmUserImage = this.bpmUserService.getCurrentUserProfileImage();
         } else {
@@ -115,20 +115,6 @@ export class UserInfoComponent implements OnInit {
         event.stopPropagation();
     }
 
-    getEcmFullName(): string {
-        if (this.ecmUser) {
-            return `${this.formatValue(this.ecmUser.firstName)} ${this.formatValue(this.ecmUser.lastName)}`.trim();
-        }
-        return 'N/A';
-    }
-
-    getBpmFullName(): string {
-        if (this.bpmUser) {
-            return `${this.formatValue(this.bpmUser.firstName)} ${this.formatValue(this.bpmUser.lastName)}`.trim();
-        }
-        return 'N/A';
-    }
-
     private getEcmAvatar() {
         this.ecmUserImage = this.ecmUserService.getUserProfileImage(this.ecmUser.avatarId);
     }
@@ -143,9 +129,5 @@ export class UserInfoComponent implements OnInit {
 
     getEcmUserAvatar() {
         return this.ecmUserImage;
-    }
-
-    formatValue(value: string) {
-        return value && value !== 'null' ? value : '';
     }
 }

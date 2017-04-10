@@ -27,6 +27,7 @@ import {
     AlfrescoTranslationService
 } from 'ng2-alfresco-core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { BpmUserModel } from './../models/bpm-user.model';
 
 declare let jasmine: any;
 
@@ -81,18 +82,6 @@ describe('User info component', () => {
         expect(element.querySelector('#user-profile-lists')).toBeNull();
     });
 
-    it('should format null string values in empty value', () => {
-        let res = userInfoComp.formatValue('null');
-        expect(res).toBe('');
-    });
-
-    it('should return the value when it is not null string', () => {
-        let res = userInfoComp.formatValue('fake-value');
-        expect(res).toBeDefined();
-        expect(res).not.toBeNull();
-        expect(res).toEqual('fake-value');
-    });
-
     it('should return the anonymous avatar when users do not have images', () => {
         let event = <any> {
             target: {
@@ -118,6 +107,32 @@ describe('User info component', () => {
             jasmine.Ajax.uninstall();
         });
 
+        it('should show ecm only last name when user first name is null ', async(() => {
+            fixture.detectChanges();
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: {
+                    'entry': {
+                        'id': 'fake-id',
+                        'firstName': null,
+                        'lastName': 'fake-ecm-last-name',
+                        'description': 'i am a fake user for test',
+                        'avatarId': 'fake-avatar-id',
+                        'email': 'fakeEcm@ecmUser.com'
+                    }
+                }
+            });
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#userinfo_container')).toBeDefined();
+                expect(element.querySelector('#ecm-username')).toBeDefined();
+                expect(element.querySelector('#ecm-username').textContent).not.toContain('fake-ecm-first-name');
+                expect(element.querySelector('#ecm-username').textContent).not.toContain('null');
+            });
+        }));
+
         describe('and has image', () => {
 
             beforeEach(async(() => {
@@ -140,14 +155,6 @@ describe('User info component', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                 });
-            }));
-
-            it('should show ecm only last name when user first name is null ', async(() => {
-                userInfoComp.ecmUser.firstName = null;
-                fixture.detectChanges();
-                expect(element.querySelector('#userinfo_container')).toBeDefined();
-                expect(element.querySelector('#ecm-username')).toBeDefined();
-                expect(element.querySelector('#ecm-username').textContent).not.toContain('fake-ecm-first-name');
             }));
 
             it('should get the ecm current user image from the service', async(() => {
@@ -229,6 +236,13 @@ describe('User info component', () => {
             jasmine.Ajax.uninstall();
         });
 
+        it('should show full name next the user image', async(() => {
+            expect(element.querySelector('#userinfo_container')).toBeDefined();
+            expect(element.querySelector('#bpm-username')).toBeDefined();
+            expect(element.querySelector('#bpm-username').innerHTML).toContain('fake-bpm-first-name fake-bpm-last-name');
+
+        }));
+
         it('should get the bpm current user image from the service', async(() => {
             expect(element.querySelector('#userinfo_container')).toBeDefined();
             expect(element.querySelector('#logged-user-img')).toBeDefined();
@@ -238,27 +252,25 @@ describe('User info component', () => {
         }));
 
         it('should show last name if first name is null', async(() => {
-            userInfoComp.bpmUser.firstName = null;
+            let wrongBpmUser: BpmUserModel = new BpmUserModel({
+                firstName: null,
+                lastName: 'fake-last-name'
+            });
+            userInfoComp.bpmUser = wrongBpmUser;
             fixture.detectChanges();
             expect(element.querySelector('#userinfo_container')).toBeDefined();
             expect(element.querySelector('#bpm-username')).not.toBeNull();
-            expect(element.querySelector('#bpm-username').textContent).toContain('fake-bpm-last-name');
-
-        }));
-
-        it('should show full name next the user image', async(() => {
-            userInfoComp.bpmUser.firstName = 'fake-first-name-bpm';
-            userInfoComp.bpmUser.lastName = 'fake-last-name-bpm';
-            fixture.detectChanges();
-            expect(element.querySelector('#userinfo_container')).toBeDefined();
-            expect(element.querySelector('#bpm-username')).toBeDefined();
-            expect(element.querySelector('#bpm-username').innerHTML).toContain('fake-first-name-bpm fake-last-name-bpm');
+            expect(element.querySelector('#bpm-username').textContent).toContain('fake-last-name');
+            expect(element.querySelector('#bpm-username').textContent).not.toContain('fake-bpm-first-name');
 
         }));
 
         it('should not show first name if it is null string', async(() => {
-            userInfoComp.bpmUser.firstName = 'null';
-            userInfoComp.bpmUser.lastName = 'fake-last-name';
+            let wrongFirstNameBpmUser: BpmUserModel = new BpmUserModel({
+                firstName: 'null',
+                lastName: 'fake-last-name'
+            });
+            userInfoComp.bpmUser = wrongFirstNameBpmUser;
             fixture.detectChanges();
             expect(element.querySelector('#userinfo_container')).toBeDefined();
             expect(element.querySelector('#bpm-full-name')).toBeDefined();
@@ -267,8 +279,11 @@ describe('User info component', () => {
         }));
 
         it('should not show last name if it is null string', async(() => {
-            userInfoComp.bpmUser.firstName = 'fake-first-name';
-            userInfoComp.bpmUser.lastName = 'null';
+            let wrongLastNameBpmUser: BpmUserModel = new BpmUserModel({
+                firstName: 'fake-first-name',
+                lastName: 'null'
+            });
+            userInfoComp.bpmUser = wrongLastNameBpmUser;
             fixture.detectChanges();
             expect(element.querySelector('#userinfo_container')).toBeDefined();
             expect(element.querySelector('#bpm-full-name')).toBeDefined();
