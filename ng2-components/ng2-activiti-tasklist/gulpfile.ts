@@ -165,7 +165,7 @@ gulp.task('build.bundles.app', (done) => {
             typescript: 'node_modules/typescript/lib/typescript.js',
             '@angular': 'node_modules/@angular',
             rxjs: 'node_modules/rxjs',
-            'ng2-translate': 'node_modules/ng2-translate',
+            'ng2-translate/ng2-translate': 'node_modules/ng2-translate/',
             'alfresco-js-api': 'node_modules/alfresco-js-api/dist/alfresco-js-api',
             'ng2-alfresco-core': 'node_modules/ng2-alfresco-core/',
             'ng2-activiti-diagrams': 'node_modules/ng2-activiti-diagrams/',
