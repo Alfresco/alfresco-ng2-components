@@ -71,28 +71,28 @@ export class FolderActionsService {
         window.alert('standard folder action 2');
     }
 
-    private deleteNode(obj: any, target?: any) {
+    private deleteNode(obj: any, target?: any, permission?: string) {
         if (this.canExecuteAction(obj) && obj.entry && obj.entry.id) {
-            if (this.hasDeletePermission(obj.entry)) {
+            if (this.hasPermission(obj.entry, permission)) {
                 this.documentListService.deleteNode(obj.entry.id).subscribe(() => {
                     if (target && typeof target.reload === 'function') {
                         target.reload();
                     }
                 });
             } else {
-                this.permissionEvent.next(new PermissionModel({type: 'folder', action: 'delete'}));
+                this.permissionEvent.next(new PermissionModel({type: 'folder', action: 'delete', permission: permission}));
             }
         }
     }
 
-    private hasDeletePermission(node: any): boolean {
-        if (this.hasPermission(node)) {
-            return node.allowableOperations.find(permision => permision === 'delete') ? true : false;
+    private hasPermission(node: any, permissionToCheck: string): boolean {
+        if (this.hasPermissions(node)) {
+            return node.allowableOperations.find(permision => permision === permissionToCheck) ? true : false;
         }
         return false;
     }
 
-    private hasPermission(node: any): boolean {
+    private hasPermissions(node: any): boolean {
         return node.allowableOperations ? true : false;
     }
 }

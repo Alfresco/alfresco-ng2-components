@@ -249,13 +249,20 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
     }
 
     checkPermission(row: DataRow, action) {
-        if (action.disableWithNoPermission) {
-            let permissions = row.getValue('allowableOperations');
-            if (permissions && !permissions.find(permission => permission === action.disableWithNoPermission)) {
-                action.disabled = true;
+        if (action.permission) {
+            if (this.hasPermissions(row)) {
+                let permissions = row.getValue('allowableOperations');
+                let findPermission = permissions.find(permission => permission === action.permission);
+                if (!findPermission && action.disableWithNoPermission === true) {
+                    action.disabled = true;
+                }
             }
         }
         return action;
+    }
+
+    private hasPermissions(row: DataRow): boolean {
+        return row.getValue('allowableOperations') ? true : false;
     }
 
     onExecuteRowAction(row: DataRow, action: any) {

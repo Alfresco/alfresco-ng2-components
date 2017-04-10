@@ -20,7 +20,8 @@ export class ContentActionModel {
     title: string;
     handler: ContentActionHandler;
     target: string;
-    disableWithNoPermission: string;
+    permission: string;
+    disableWithNoPermission: boolean;
 
     constructor(obj?: any) {
         if (obj) {
@@ -28,13 +29,14 @@ export class ContentActionModel {
             this.title = obj.title;
             this.handler = obj.handler;
             this.target = obj.target;
+            this.permission = obj.permission;
             this.disableWithNoPermission = obj.disableWithNoPermission;
         }
     }
 }
 
 export interface ContentActionHandler {
-    (obj: any, target?: any): any;
+    (obj: any, target?: any, permission?: string): any;
 }
 
 export class DocumentActionModel extends ContentActionModel {

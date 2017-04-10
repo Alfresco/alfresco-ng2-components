@@ -18,11 +18,13 @@
 export class PermissionModel {
     type: string;
     action: string;
+    permission: string;
 
     constructor(obj?: any) {
         if (obj) {
             this.type = obj.type || null;
             this.action = obj.action || null;
+            this.permission = obj.permission || null;
         }
     }
 }

@@ -415,7 +415,7 @@ describe('DataTable', () => {
         expect(event.target.src).toBe(originalSrc);
     });
 
-    it('should disable the action if there is no permission', () => {
+    it('should disable the action if there is no permission and disableWithNoPermission true', () => {
 
         dataTable.data = new ObjectDataTableAdapter(
             [{id: 1, name: 'xyz', allowableOperations: ['create', 'update']}],
@@ -425,7 +425,8 @@ describe('DataTable', () => {
         let row = dataTable.data.getRows();
         let actions = [
             {
-                disableWithNoPermission: 'delete',
+                disableWithNoPermission: true,
+                permission: 'delete',
                 target: 'folder',
                 title: 'action2'
             }
@@ -433,6 +434,27 @@ describe('DataTable', () => {
 
         let updateActions = dataTable.checkPermissions(row[0], actions);
         expect(updateActions[0].disabled).toBe(true);
+    });
+
+    it('should not disable the action if there is no permission and disableWithNoPermission false', () => {
+
+        dataTable.data = new ObjectDataTableAdapter(
+            [{id: 1, name: 'xyz', allowableOperations: ['create', 'update']}],
+            []
+        );
+
+        let row = dataTable.data.getRows();
+        let actions = [
+            {
+                disableWithNoPermission: false,
+                permission: 'delete',
+                target: 'folder',
+                title: 'action2'
+            }
+        ];
+
+        let updateActions = dataTable.checkPermissions(row[0], actions);
+        expect(updateActions[0].disabled).toBeUndefined();
     });
 
     it('should not disable the action if there is the right permission', () => {
@@ -445,7 +467,7 @@ describe('DataTable', () => {
         let row = dataTable.data.getRows();
         let actions = [
             {
-                disableWithNoPermission: 'delete',
+                permission: 'delete',
                 target: 'folder',
                 title: 'action2'
             }
@@ -465,7 +487,7 @@ describe('DataTable', () => {
         let row = dataTable.data.getRows();
         let actions = [
             {
-                disableWithNoPermission: 'delete',
+                permission: 'delete',
                 target: 'folder',
                 title: 'action2'
             }

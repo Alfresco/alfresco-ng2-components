@@ -65,12 +65,15 @@
                 </content-action>
                 <content-action
                         target="folder"
+                        permission="create"
+                        [disableWithNoPermission]="true"
                         title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.CUSTOM' | translate}}"
                         (execute)="myFolderAction1($event)">
                 </content-action>
                 <content-action
                         target="folder"
-                        disableWithNoPermission="delete"
+                        permission="delete"
+                        [disableWithNoPermission]="false"
                         title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.DELETE' | translate}}"
                         (permissionEvent)="onPermissionsFailed($event)"
                         handler="delete">
@@ -93,7 +96,9 @@
                 </content-action>
                 <content-action
                         target="document"
-                        disableWithNoPermission="delete"
+                        permission="delete"
+                        [disableWithNoPermission]="true"
+                        (permissionEvent)="onPermissionsFailed($event)"
                         title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DELETE' | translate}}"
                         handler="delete">
                 </content-action>

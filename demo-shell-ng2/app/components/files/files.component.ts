@@ -169,10 +169,8 @@ export class FilesComponent implements OnInit, AfterViewInit {
         }.bind(this);
     }
 
-    onPermissionsFailed(event: any){
-        if (event.action === 'delete') {
-            this.notificationService.openSnackMessage(`you don't have permission to delete this `+ event.type, 4000);
-        }
+    onPermissionsFailed(event: any) {
+        this.notificationService.openSnackMessage(`you don't have the ${event.permission} permission to ${event.action} the ${event.type} `, 4000);
     }
 
     reload(event: any) {

@@ -42,7 +42,10 @@ export class ContentActionComponent implements OnInit, OnChanges {
     target: string;
 
     @Input()
-    disableWithNoPermission: string;
+    permission: string;
+
+    @Input()
+    disableWithNoPermission: boolean;
 
     @Output()
     execute = new EventEmitter();
@@ -63,6 +66,7 @@ export class ContentActionComponent implements OnInit, OnChanges {
         this.model = new ContentActionModel({
             title: this.title,
             icon: this.icon,
+            permission: this.permission,
             disableWithNoPermission: this.disableWithNoPermission,
             target: this.target
         });

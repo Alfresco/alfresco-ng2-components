@@ -306,7 +306,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
      */
     executeContentAction(node: MinimalNodeEntity, action: ContentActionModel) {
         if (node && node.entry && action) {
-            action.handler(node, this);
+            action.handler(node, this, action.permission);
         }
     }
 
