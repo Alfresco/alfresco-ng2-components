@@ -26,7 +26,7 @@
             // other libraries
             'rxjs': 'npm:rxjs',
             'moment': 'npm:moment/min/moment.min.js',
-            'ng2-translate': 'npm:ng2-translate',
+            'ng2-translate/ng2-translate': 'npm:ng2-translate/bundles/ng2-translate.umd.js',
             'alfresco-js-api': 'npm:alfresco-js-api/dist',
             'ng2-alfresco-core': 'npm:ng2-alfresco-core',
             'ng2-activiti-form': 'npm:ng2-activiti-form'
