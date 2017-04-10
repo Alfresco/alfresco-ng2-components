@@ -129,18 +129,6 @@ export class UserInfoComponent implements OnInit {
         return 'N/A';
     }
 
-    getUserNameHeaderFor(env: string): string {
-        if (this.ecmUser && env === 'ECM') {
-            return this.ecmUser.firstName || this.ecmUser.lastName;
-        }
-
-        if (this.bpmUser && env === 'BPM') {
-            return this.formatValue(this.bpmUser.firstName) ||
-                this.formatValue(this.bpmUser.lastName) ||
-                this.formatValue(this.bpmUser.fullname);
-        }
-    }
-
     private getEcmAvatar() {
         this.ecmUserImage = this.ecmUserService.getUserProfileImage(this.ecmUser.avatarId);
     }

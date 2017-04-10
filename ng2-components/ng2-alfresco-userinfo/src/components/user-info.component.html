@@ -27,7 +27,7 @@
                                      alt="ecm-profile-image"
                                      (error)="onImageLoadingError($event)"
                                      [src]="getEcmUserAvatar()"/>
-                                <h2 class="mdl-card__title-text" id="ecm-username">{{getUserNameHeaderFor('ECM')}}</h2>
+                                <h2 class="mdl-card__title-text" id="ecm-username">{{getEcmFullName()}}</h2>
                             </div>
                             <div class="mdl-card__supporting-text">
                                 <li class="mdl-list__item mdl-list__item--two-line">
@@ -55,7 +55,7 @@
                                      alt="bpm-profile-image"
                                      (error)="onImageLoadingError($event)"
                                      [src]="getBpmUserAvatar()"/>
-                                <h2 class="mdl-card__title-text" id="bpm-username">{{getUserNameHeaderFor('BPM')}}</h2>
+                                <h2 class="mdl-card__title-text" id="bpm-username">{{getBpmFullName()}}</h2>
                             </div>
                             <div class="mdl-card__supporting-text">
                                 <li class="mdl-list__item mdl-list__item--two-line">

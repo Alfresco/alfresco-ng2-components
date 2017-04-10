@@ -36,4 +36,25 @@ export class EcmUserModel {
         userStatus: string;
         enabled: boolean;
         emailNotificationsEnabled: boolean;
+
+    constructor(obj?: any) {
+        this.id = obj && obj.id || null;
+        this.firstName = obj && obj.firstName || false;
+        this.lastName = obj && obj.lastName || null;
+        this.description = obj && obj.description || null;
+        this.avatarId = obj && obj.avatarId || null;
+        this.email = obj && obj.email || null;
+        this.skypeId = obj && obj.skypeId;
+        this.googleId = obj && obj.googleId;
+        this.instantMessageId = obj && obj.instantMessageId;
+        this.jobTitle = obj && obj.jobTitle || null;
+        this.location = obj && obj.location || null;
+        this.company = obj && obj.company;
+        this.mobile = obj && obj.mobile;
+        this.telephone = obj && obj.telephone;
+        this.statusUpdatedAt = obj && obj.statusUpdatedAt;
+        this.userStatus = obj && obj.userStatus;
+        this.enabled = obj && obj.enabled;
+        this.emailNotificationsEnabled = obj && obj.emailNotificationsEnabled;
+    }
 }

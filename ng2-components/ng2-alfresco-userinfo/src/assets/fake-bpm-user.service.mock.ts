@@ -22,8 +22,8 @@ export { BpmUserService } from '../services/bpm-user.service';
 import { BpmUserModel } from '../models/bpm-user.model';
 import { Observable } from 'rxjs/Rx';
 
-export var fakeBpmUserNoImage: BpmUserModel = {
-    apps: {},
+export var fakeBpmUserNoImage = {
+    apps: [],
     capabilities: 'fake-capability',
     company: 'fake-company',
     created: 'fake-create-date',
@@ -32,7 +32,7 @@ export var fakeBpmUserNoImage: BpmUserModel = {
     firstName: 'fake-first-name',
     lastName: 'fake-last-name',
     fullname: 'fake-full-name',
-    groups: {},
+    groups: [],
     id: 'fake-id',
     lastUpdate: 'fake-update-date',
     latestSyncTimeStamp: 'fake-timestamp',
@@ -45,17 +45,17 @@ export var fakeBpmUserNoImage: BpmUserModel = {
     type: 'fake-type'
 };
 
-export var fakeBpmUser: BpmUserModel = {
-    apps: {},
-    capabilities: 'fake-capability',
+export var fakeBpmUser = {
+    apps: [],
+    capabilities: null,
     company: 'fake-company',
     created: 'fake-create-date',
     email: 'fakeBpm@fake.com',
     externalId: 'fake-external-id',
-    firstName: 'fake-first-name',
-    lastName: 'fake-last-name',
-    fullname: 'fake-full-name',
-    groups: {},
+    firstName: 'fake-bpm-first-name',
+    lastName: 'fake-bpm-last-name',
+    fullname: 'fake-bpm-full-name',
+    groups: [],
     id: 'fake-id',
     lastUpdate: 'fake-update-date',
     latestSyncTimeStamp: 'fake-timestamp',
@@ -69,7 +69,7 @@ export var fakeBpmUser: BpmUserModel = {
 };
 
 export var fakeBpmEditedUser: BpmUserModel = {
-    apps: {},
+    apps: [],
     capabilities: 'fake-capability',
     company: 'fake-company',
     created: 'fake-create-date',
@@ -78,7 +78,7 @@ export var fakeBpmEditedUser: BpmUserModel = {
     firstName: 'fake-first-name',
     lastName: 'fake-last-name',
     fullname: 'fake-full-name',
-    groups: {},
+    groups: [],
     id: 'fake-id',
     lastUpdate: 'fake-update-date',
     latestSyncTimeStamp: 'fake-timestamp',
