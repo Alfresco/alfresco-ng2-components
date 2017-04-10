@@ -1,8 +1,7 @@
 <div class="container">
     <alfresco-upload-drag-area
             [rootFolderId]="documentList.currentFolderId"
-            [versioning] = "versioning"
-            (onSuccess)="documentList.reload()">
+            [versioning] = "versioning">
         <alfresco-document-list-breadcrumb
             [target]="documentList"
             [folderNode]="documentList.folderNode">
@@ -145,23 +144,23 @@
     <br/>
 </div>
 <div *ngIf="!acceptedFilesTypeShow">
-    <alfresco-upload-button data-automation-id="multiple-file-upload"
+    <alfresco-upload-button #uploadButton
+                            data-automation-id="multiple-file-upload"
                             [rootFolderId]="documentList.currentFolderId"
                             [multipleFiles]="multipleFileUpload"
                             [uploadFolders]="folderUpload"
-                            [versioning] = "versioning"
-                            (onSuccess)="documentList.reload()">
+                            [versioning] = "versioning">
         <div class="mdl-spinner mdl-js-spinner is-active"></div>
     </alfresco-upload-button>
 </div>
 <div *ngIf="acceptedFilesTypeShow">
-    <alfresco-upload-button data-automation-id="multiple-file-upload"
+    <alfresco-upload-button #uploadButton
+                            data-automation-id="multiple-file-upload"
                             [rootFolderId]="documentList.currentFolderId"
                             [acceptedFilesType]="acceptedFilesType"
                             [multipleFiles]="multipleFileUpload"
                             [uploadFolders]="folderUpload"
-                            [versioning] = "versioning"
-                            (onSuccess)="documentList.reload()">
+                            [versioning] = "versioning">
         <div class="mdl-spinner mdl-js-spinner is-active"></div>
     </alfresco-upload-button>
 </div>

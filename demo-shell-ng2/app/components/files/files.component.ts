@@ -15,18 +15,19 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Optional, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Optional, ViewChild, ViewChildren, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AlfrescoAuthenticationService, LogService } from 'ng2-alfresco-core';
 import { DocumentActionsService, DocumentListComponent, ContentActionHandler, DocumentActionModel, FolderActionModel } from 'ng2-alfresco-documentlist';
 import { FormService } from 'ng2-activiti-form';
+import { UploadButtonComponent, UploadDragAreaComponent } from 'ng2-alfresco-upload';
 
 @Component({
     selector: 'files-component',
     templateUrl: './files.component.html',
     styleUrls: ['./files.component.css']
 })
-export class FilesComponent implements OnInit {
+export class FilesComponent implements OnInit, AfterViewInit {
     // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
     currentFolderId: string = '-my-';
 
@@ -41,6 +42,12 @@ export class FilesComponent implements OnInit {
 
     @ViewChild(DocumentListComponent)
     documentList: DocumentListComponent;
+
+    @ViewChild(UploadButtonComponent)
+    uploadButton: UploadButtonComponent;
+
+    @ViewChild(UploadDragAreaComponent)
+    uploadDragArea: UploadDragAreaComponent;
 
     constructor(private documentActions: DocumentActionsService,
                 private authService: AlfrescoAuthenticationService,
@@ -113,6 +120,20 @@ export class FilesComponent implements OnInit {
         }
     }
 
+    ngAfterViewInit() {
+        this.uploadButton.onSuccess
+            .debounceTime(100)
+            .subscribe((event)=> {
+                this.reload(event);
+            });
+
+        this.uploadDragArea.onSuccess
+            .debounceTime(100)
+            .subscribe((event)=> {
+                this.reload(event);
+            });
+    }
+
     viewActivitiForm(event?: any) {
         this.router.navigate(['/activiti/tasksnode', event.value.entry.id]);
     }
@@ -145,5 +166,13 @@ export class FilesComponent implements OnInit {
         return function (obj: any, target?: any) {
             window.alert(`Starting BPM process: ${processDefinition.id}`);
         }.bind(this);
+    }
+
+    reload(event: any) {
+        if (event && event.value && event.value.entry && event.value.entry.parentId) {
+            if (this.documentList.currentFolderId === event.value.entry.parentId) {
+                this.documentList.reload();
+            }
+        }
     }
 }
