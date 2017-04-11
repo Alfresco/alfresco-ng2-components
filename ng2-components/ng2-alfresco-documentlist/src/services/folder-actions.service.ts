@@ -17,10 +17,15 @@
 
 import { Injectable } from '@angular/core';
 import { ContentActionHandler } from '../models/content-action.model';
+import { PermissionModel } from '../models/permissions.model';
 import { DocumentListService } from './document-list.service';
+import { Subject } from 'rxjs/Rx';
 
 @Injectable()
 export class FolderActionsService {
+
+    permissionEvent: Subject<PermissionModel> = new Subject<PermissionModel>();
+
     private handlers: { [id: string]: ContentActionHandler; } = {};
 
     constructor(private documentListService?: DocumentListService) {
@@ -66,13 +71,28 @@ export class FolderActionsService {
         window.alert('standard folder action 2');
     }
 
-    private deleteNode(obj: any, target?: any) {
-        if (this.canExecuteAction(obj) && obj.entry && obj.entry.id) {
-            this.documentListService.deleteNode(obj.entry.id).subscribe(() => {
-                if (target && typeof target.reload === 'function') {
-                    target.reload();
-                }
-            });
+    private deleteNode(obj: any, target?: any, permission?: string) {
+        if (this.canExecuteAction(obj)) {
+            if (this.hasPermission(obj.entry, permission)) {
+                this.documentListService.deleteNode(obj.entry.id).subscribe(() => {
+                    if (target && typeof target.reload === 'function') {
+                        target.reload();
+                    }
+                });
+            } else {
+                this.permissionEvent.next(new PermissionModel({type: 'folder', action: 'delete', permission: permission}));
+            }
         }
+    }
+
+    private hasPermission(node: any, permissionToCheck: string): boolean {
+        if (this.hasPermissions(node)) {
+            return node.allowableOperations.find(permision => permision === permissionToCheck) ? true : false;
+        }
+        return false;
+    }
+
+    private hasPermissions(node: any): boolean {
+        return node && node.allowableOperations ? true : false;
     }
 }
