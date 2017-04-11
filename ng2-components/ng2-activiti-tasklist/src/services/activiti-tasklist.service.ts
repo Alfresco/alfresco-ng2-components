@@ -35,7 +35,7 @@ export class ActivitiTaskListService {
     }
 
     /**
-     * Retrive all the Deployed app
+     * Retrieve all the Deployed app
      * @returns {Observable<any>}
      */
     getDeployedApplications(name?: string): Observable<any> {
@@ -50,7 +50,7 @@ export class ActivitiTaskListService {
     }
 
     /**
-     * Retrive all the Tasks filters
+     * neve all the Tasks filters
      * @returns {Observable<any>}
      */
     getTaskListFilters(appId?: string): Observable<any> {
@@ -62,6 +62,28 @@ export class ActivitiTaskListService {
                     filters.push(filterModel);
                 });
                 return filters;
+            }).catch(err => this.handleError(err));
+    }
+
+    /**
+     * Retrieve the Tasks filter by id
+     * @returns {Observable<FilterRepresentationModel>}
+     */
+    getTaskFilterById(taskId: string, appId?: string): Observable<FilterRepresentationModel> {
+        return Observable.fromPromise(this.callApiTaskFilters(appId))
+            .map((response: any) => {
+                return response.data.find(filter => filter.id === taskId);
+            }).catch(err => this.handleError(err));
+    }
+
+    /**
+     * Retrieve the Tasks filter by name
+     * @returns {Observable<FilterRepresentationModel>}
+     */
+    getTaskFilterByName(taskName: string, appId?: string): Observable<FilterRepresentationModel> {
+        return Observable.fromPromise(this.callApiTaskFilters(appId))
+            .map((response: any) => {
+                return response.data.find(filter => filter.name === taskName);
             }).catch(err => this.handleError(err));
     }
 
@@ -108,7 +130,7 @@ export class ActivitiTaskListService {
     }
 
     /**
-     * Retrive all the tasks filtered by filterModel
+     * Retrieve all the tasks filtered by filterModel
      * @param filter - TaskFilterRepresentationModel
      * @returns {any}
      */
@@ -124,7 +146,7 @@ export class ActivitiTaskListService {
     }
 
     /**
-     * Retrive all the task details
+     * Retrieve all the task details
      * @param id - taskId
      * @returns {<TaskDetailsModel>}
      */
@@ -137,7 +159,7 @@ export class ActivitiTaskListService {
     }
 
     /**
-     * Retrive all the task's comments
+     * Retrieve all the task's comments
      * @param id - taskId
      * @returns {<Comment[]>}
      */
@@ -155,7 +177,7 @@ export class ActivitiTaskListService {
     }
 
     /**
-     * Retrive all the task's checklist
+     * Retrieve all the task's checklist
      * @param id - taskId
      * @returns {TaskDetailsModel}
      */
@@ -172,7 +194,7 @@ export class ActivitiTaskListService {
     }
 
     /**
-     * Retrive all the form shared with this user
+     * Retrieve all the form shared with this user
      * @returns {TaskDetailsModel}
      */
     getFormList(): Observable<Form []> {
