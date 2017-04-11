@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, AfterViewInit, Optional, ViewChild, ViewChildren, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Optional, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AlfrescoAuthenticationService, LogService, NotificationService } from 'ng2-alfresco-core';
 import { DocumentActionsService, DocumentListComponent, ContentActionHandler, DocumentActionModel, FolderActionModel } from 'ng2-alfresco-documentlist';
@@ -124,13 +124,13 @@ export class FilesComponent implements OnInit, AfterViewInit {
     ngAfterViewInit() {
         this.uploadButton.onSuccess
             .debounceTime(100)
-            .subscribe((event)=> {
+            .subscribe((event) => {
                 this.reload(event);
             });
 
         this.uploadDragArea.onSuccess
             .debounceTime(100)
-            .subscribe((event)=> {
+            .subscribe((event) => {
                 this.reload(event);
             });
     }
