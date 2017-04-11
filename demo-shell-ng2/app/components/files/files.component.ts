@@ -17,7 +17,7 @@
 
 import { Component, OnInit, AfterViewInit, Optional, ViewChild, ViewChildren, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { AlfrescoAuthenticationService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, LogService, NotificationService } from 'ng2-alfresco-core';
 import { DocumentActionsService, DocumentListComponent, ContentActionHandler, DocumentActionModel, FolderActionModel } from 'ng2-alfresco-documentlist';
 import { FormService } from 'ng2-activiti-form';
 import { UploadButtonComponent, UploadDragAreaComponent } from 'ng2-alfresco-upload';
@@ -55,6 +55,7 @@ export class FilesComponent implements OnInit, AfterViewInit {
                 private logService: LogService,
                 private changeDetector: ChangeDetectorRef,
                 private router: Router,
+                private notificationService: NotificationService,
                 @Optional() private route: ActivatedRoute) {
         documentActions.setHandler('my-handler', this.myDocumentActionHandler.bind(this));
     }
@@ -166,6 +167,10 @@ export class FilesComponent implements OnInit, AfterViewInit {
         return function (obj: any, target?: any) {
             window.alert(`Starting BPM process: ${processDefinition.id}`);
         }.bind(this);
+    }
+
+    onPermissionsFailed(event: any) {
+        this.notificationService.openSnackMessage(`you don't have the ${event.permission} permission to ${event.action} the ${event.type} `, 4000);
     }
 
     reload(event: any) {

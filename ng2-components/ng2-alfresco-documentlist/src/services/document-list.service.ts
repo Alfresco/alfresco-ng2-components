@@ -72,7 +72,7 @@ export class DocumentListService {
 
         let params: any = {
             includeSource: true,
-            include: ['path', 'properties']
+            include: ['path', 'properties', 'allowableOperations']
         };
 
         if (folder) {
@@ -121,7 +121,7 @@ export class DocumentListService {
     getFolderNode(nodeId: string): Promise<MinimalNodeEntryEntity> {
         let opts: any = {
             includeSource: true,
-            include: ['path', 'properties']
+            include: ['path', 'properties', 'allowableOperations']
         };
 
         let nodes: any = this.apiService.getInstance().nodes;

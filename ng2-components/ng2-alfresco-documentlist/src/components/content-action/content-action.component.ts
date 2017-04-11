@@ -41,8 +41,17 @@ export class ContentActionComponent implements OnInit, OnChanges {
     @Input()
     target: string;
 
+    @Input()
+    permission: string;
+
+    @Input()
+    disableWithNoPermission: boolean;
+
     @Output()
     execute = new EventEmitter();
+
+    @Output()
+    permissionEvent = new EventEmitter();
 
     model: ContentActionModel;
 
@@ -57,6 +66,8 @@ export class ContentActionComponent implements OnInit, OnChanges {
         this.model = new ContentActionModel({
             title: this.title,
             icon: this.icon,
+            permission: this.permission,
+            disableWithNoPermission: this.disableWithNoPermission,
             target: this.target
         });
 
@@ -98,6 +109,9 @@ export class ContentActionComponent implements OnInit, OnChanges {
 
             if (ltarget === 'folder') {
                 if (this.folderActions) {
+                    this.folderActions.permissionEvent.subscribe((permision) => {
+                        this.permissionEvent.emit(permision);
+                    });
                     return this.folderActions.getHandler(name);
                 }
                 return null;

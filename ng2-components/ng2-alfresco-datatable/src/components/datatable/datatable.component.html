@@ -34,14 +34,14 @@
         [class.alfresco-datatable__row--selected]="selectedRow === row"
         [adf-upload]="allowDropFiles" [adf-upload-data]="row">
 
-        <!-- Actions (right) -->
+        <!-- Actions (left) -->
         <td *ngIf="actions && actionsPosition === 'left'" class="alfresco-datatable__actions-cell">
             <button [id]="'action_menu_' + idx" alfresco-mdl-button class="mdl-button--icon" [attr.data-automation-id]="actions_menu">
                 <i class="material-icons">more_vert</i>
             </button>
             <ul alfresco-mdl-menu class="mdl-menu--bottom-left"
                 [attr.for]="'action_menu_' + idx">
-                <li class="mdl-menu__item"
+                <li class="mdl-menu__item" [attr.disabled]="action.disabled"
                     [attr.data-automation-id]="action.title"
                     *ngFor="let action of getRowActions(row)"
                     (click)="onExecuteRowAction(row, action)">
@@ -90,7 +90,7 @@
             </button>
             <ul alfresco-mdl-menu class="mdl-menu--bottom-right"
                 [attr.for]="'action_menu_' + idx">
-                <li class="mdl-menu__item"
+                <li class="mdl-menu__item" [attr.disabled]="action.disabled"
                     [attr.data-automation-id]="action.title"
                     *ngFor="let action of getRowActions(row)"
                     (click)="onExecuteRowAction(row, action)">

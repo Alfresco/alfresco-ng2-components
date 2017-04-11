@@ -86,7 +86,22 @@ describe('DocumentList', () => {
         spyOn(action, 'handler').and.stub();
 
         documentList.executeContentAction(node, action);
-        expect(action.handler).toHaveBeenCalledWith(node, documentList);
+        expect(action.handler).toHaveBeenCalledWith(node, documentList, undefined);
+
+    });
+
+    it('should execute action with node and permission', () => {
+        let node = new FileNode();
+        let action = new ContentActionModel();
+        action.handler = function () {
+            console.log('mock handler');
+        };
+        action.permission = 'fake-permission';
+
+        spyOn(action, 'handler').and.stub();
+
+        documentList.executeContentAction(node, action);
+        expect(action.handler).toHaveBeenCalledWith(node, documentList, 'fake-permission');
 
     });
 
