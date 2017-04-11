@@ -19,6 +19,12 @@
             <div class="page-content">
                 <div class="mdl-grid">
                     <div class="mdl-cell mdl-cell--2-col task-column mdl-shadow--2dp">
+                        <div class="list-buttons">
+                            <activiti-start-task
+                                [appId]="appId"
+                                (onSuccess)="onStartTaskSuccess($event)">
+                            </activiti-start-task>
+                        </div>
                         <activiti-filters
                             [appId]="appId"
                             (filterClick)="onTaskFilterClick($event)"
@@ -27,12 +33,6 @@
                         </activiti-filters>
                     </div>
                     <div class="mdl-cell mdl-cell--3-col task-column mdl-shadow--2dp list-column">
-                        <div class="list-buttons">
-                            <activiti-start-task
-                                [appId]="appId"
-                                (onSuccess)="onStartTaskSuccess($event)">
-                            </activiti-start-task>
-                        </div>
                         <activiti-tasklist
                             [appId]="taskFilter?.appId"
                             [processDefinitionKey]="taskFilter?.filter?.processDefinitionKey"
@@ -77,13 +77,6 @@
                 <div class="page-content">
                     <div class="mdl-grid">
                         <div class="mdl-cell mdl-cell--2-col task-column  mdl-shadow--2dp">
-                            <activiti-process-instance-filters
-                                [appId]="appId"
-                                (filterClick)="onProcessFilterClick($event)"
-                                (onSuccess)="onSuccessProcessFilterList($event)">
-                            </activiti-process-instance-filters>
-                        </div>
-                        <div class="mdl-cell mdl-cell--3-col task-column list-column mdl-shadow--2dp" *ngIf="processFilter && !isStartProcessMode()">
                             <div class="list-buttons">
                                 <button
                                     md-raised-button
@@ -93,6 +86,13 @@
                                     <span>START PROCESS</span>
                                 </button>
                             </div>
+                            <activiti-process-instance-filters
+                                [appId]="appId"
+                                (filterClick)="onProcessFilterClick($event)"
+                                (onSuccess)="onSuccessProcessFilterList($event)">
+                            </activiti-process-instance-filters>
+                        </div>
+                        <div class="mdl-cell mdl-cell--3-col task-column list-column mdl-shadow--2dp" *ngIf="processFilter && !isStartProcessMode()">
                             <activiti-process-instance-list
                                 *ngIf="processFilter?.hasFilter()" [appId]="processFilter.appId"
                                 [processDefinitionKey]="processFilter.filter.processDefinitionKey"
