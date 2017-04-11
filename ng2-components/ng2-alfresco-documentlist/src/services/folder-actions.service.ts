@@ -72,7 +72,7 @@ export class FolderActionsService {
     }
 
     private deleteNode(obj: any, target?: any, permission?: string) {
-        if (this.canExecuteAction(obj) && obj.entry && obj.entry.id) {
+        if (this.canExecuteAction(obj)) {
             if (this.hasPermission(obj.entry, permission)) {
                 this.documentListService.deleteNode(obj.entry.id).subscribe(() => {
                     if (target && typeof target.reload === 'function') {
@@ -93,6 +93,6 @@ export class FolderActionsService {
     }
 
     private hasPermissions(node: any): boolean {
-        return node.allowableOperations ? true : false;
+        return node && node.allowableOperations ? true : false;
     }
 }
