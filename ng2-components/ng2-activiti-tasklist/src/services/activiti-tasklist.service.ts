@@ -50,7 +50,7 @@ export class ActivitiTaskListService {
     }
 
     /**
-     * neve all the Tasks filters
+     * Retrieve all the Tasks filters
      * @returns {Observable<any>}
      */
     getTaskListFilters(appId?: string): Observable<any> {
@@ -67,6 +67,7 @@ export class ActivitiTaskListService {
 
     /**
      * Retrieve the Tasks filter by id
+     * @param taskId - string - The id of the filter
      * @returns {Observable<FilterRepresentationModel>}
      */
     getTaskFilterById(taskId: string, appId?: string): Observable<FilterRepresentationModel> {
@@ -78,6 +79,7 @@ export class ActivitiTaskListService {
 
     /**
      * Retrieve the Tasks filter by name
+     * @param taskName - string - The name of the filter
      * @returns {Observable<FilterRepresentationModel>}
      */
     getTaskFilterByName(taskName: string, appId?: string): Observable<FilterRepresentationModel> {
