@@ -72,23 +72,25 @@ export class ActivitiProcessService {
 
     /**
      * Retrieve the process filter by id
+     * @param processId - string - The id of the filter
      * @returns {Observable<FilterProcessRepresentationModel>}
      */
-    getProcessFilterById(taskId: string, appId?: string): Observable<FilterProcessRepresentationModel> {
+    getProcessFilterById(processId: string, appId?: string): Observable<FilterProcessRepresentationModel> {
         return Observable.fromPromise(this.callApiGetUserProcessInstanceFilters(appId))
             .map((response: any) => {
-                return response.data.find(filter => filter.id === taskId);
+                return response.data.find(filter => filter.id === processId);
             }).catch(err => this.handleError(err));
     }
 
     /**
      * Retrieve the process filter by name
+     * @param processName - string - The name of the filter
      * @returns {Observable<FilterProcessRepresentationModel>}
      */
-    getProcessFilterByName(taskName: string, appId?: string): Observable<FilterProcessRepresentationModel> {
+    getProcessFilterByName(processName: string, appId?: string): Observable<FilterProcessRepresentationModel> {
         return Observable.fromPromise(this.callApiGetUserProcessInstanceFilters(appId))
             .map((response: any) => {
-                return response.data.find(filter => filter.name === taskName);
+                return response.data.find(filter => filter.name === processName);
             }).catch(err => this.handleError(err));
     }
 
