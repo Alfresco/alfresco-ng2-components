@@ -61,7 +61,7 @@
     "ng2-activiti-diagrams": "1.3.0",
     "ng2-alfresco-core": "1.3.0",
     "ng2-charts": "1.5.0",
-    "ng2-translate": "4.0.0",
+    "ng2-translate": "2.5.0",
     "raphael": "2.2.7",
     "reflect-metadata": "0.1.10",
     "rxjs": "5.0.0-beta.12",
