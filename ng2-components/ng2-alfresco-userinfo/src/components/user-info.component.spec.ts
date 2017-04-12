@@ -65,11 +65,6 @@ describe('User info component', () => {
         });
     }));
 
-    afterEach(() => {
-        fixture.destroy();
-        TestBed.resetTestingModule();
-    });
-
     it('should not show any image if the user is not logged in', () => {
         expect(element.querySelector('#userinfo_container')).toBeDefined();
         expect(element.querySelector('#logged-user-img')).toBeNull();
@@ -97,9 +92,6 @@ describe('User info component', () => {
         beforeEach(() => {
             spyOn(stubAuthService, 'isEcmLoggedIn').and.returnValue(true);
             spyOn(stubAuthService, 'isLoggedIn').and.returnValue(true);
-        });
-
-        beforeEach(() => {
             jasmine.Ajax.install();
         });
 
@@ -111,17 +103,29 @@ describe('User info component', () => {
             fixture.detectChanges();
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
-                contentType: 'json',
-                responseText: {
+                contentType: 'application/json',
+                responseText: JSON.stringify({
                     'entry': {
-                        'id': 'fake-id',
-                        'firstName': null,
-                        'lastName': 'fake-ecm-last-name',
-                        'description': 'i am a fake user for test',
-                        'avatarId': 'fake-avatar-id',
-                        'email': 'fakeEcm@ecmUser.com'
+                        id: 'fake-id',
+                        firstName: null,
+                        lastName: 'fake-last-name',
+                        description: 'i am a fake user for test',
+                        avatarId: 'fake-avatar-id',
+                        email: 'fakeEcm@ecmUser.com',
+                        skypeId: 'fake-skype-id',
+                        googleId: 'fake-googleId-id',
+                        instantMessageId: 'fake-instantMessageId-id',
+                        company: null,
+                        jobTitle: 'test job',
+                        location: 'fake location',
+                        mobile: '000000000',
+                        telephone: '11111111',
+                        statusUpdatedAt: 'fake-date',
+                        userStatus: 'active',
+                        enabled: true,
+                        emailNotificationsEnabled: true
                     }
-                }
+                })
             });
 
             fixture.whenStable().then(() => {
@@ -143,53 +147,81 @@ describe('User info component', () => {
                     contentType: 'json',
                     responseText: {
                         'entry': {
-                            'id': 'fake-id',
-                            'firstName': 'fake-ecm-first-name',
-                            'lastName': 'fake-ecm-last-name',
-                            'description': 'i am a fake user for test',
-                            'avatarId': 'fake-avatar-id',
-                            'email': 'fakeEcm@ecmUser.com'
+                            id: 'fake-id',
+                            firstName: 'fake-ecm-first-name',
+                            lastName: 'fake-ecm-last-name',
+                            description: 'i am a fake user for test',
+                            avatarId: 'fake-avatar-id',
+                            email: 'fakeEcm@ecmUser.com',
+                            skypeId: 'fake-skype-id',
+                            googleId: 'fake-googleId-id',
+                            instantMessageId: 'fake-instantMessageId-id',
+                            company: null,
+                            jobTitle: 'test job',
+                            location: 'fake location',
+                            mobile: '000000000',
+                            telephone: '11111111',
+                            statusUpdatedAt: 'fake-date',
+                            userStatus: 'active',
+                            enabled: true,
+                            emailNotificationsEnabled: true
                         }
                     }
-                });
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
                 });
             }));
 
             it('should get the ecm current user image from the service', async(() => {
-                expect(element.querySelector('#userinfo_container')).toBeDefined();
-                expect(element.querySelector('#logged-user-img')).toBeDefined();
-                expect(element.querySelector('#logged-user-img').getAttribute('src')).toContain('assets/images/ecmImg.gif');
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    expect(element.querySelector('#userinfo_container')).toBeDefined();
+                    expect(element.querySelector('#logged-user-img')).toBeDefined();
+                    expect(element.querySelector('#logged-user-img').getAttribute('src')).toContain('assets/images/ecmImg.gif');
+                });
             }));
 
-            it('should get the ecm user informations from the service', async(() => {
-                expect(element.querySelector('#userinfo_container')).toBeDefined();
-                expect(element.querySelector('#ecm_username')).toBeDefined();
-                expect(element.querySelector('#ecm_title')).toBeDefined();
-                expect(element.querySelector('#ecm-user-detail-image')).toBeDefined();
-                expect(element.querySelector('#ecm-user-detail-image').getAttribute('src')).toContain('assets/images/ecmImg.gif');
-                expect(element.querySelector('#ecm-full-name').textContent).toContain('fake-ecm-first-name fake-ecm-last-name');
-                expect(element.querySelector('#ecm-job-title').textContent).toContain('USER_PROFILE.LABELS.ECM.JOB_TITLE');
-            }));
+            it('should get the ecm user informations from the service', () => {
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    expect(element.querySelector('#userinfo_container')).toBeDefined();
+                    expect(element.querySelector('#ecm_username')).toBeDefined();
+                    expect(element.querySelector('#ecm_title')).toBeDefined();
+                    expect(element.querySelector('#ecm-user-detail-image')).toBeDefined();
+                    expect(element.querySelector('#ecm-user-detail-image').getAttribute('src')).toContain('assets/images/ecmImg.gif');
+                    expect(element.querySelector('#ecm-full-name').textContent).toContain('fake-ecm-first-name fake-ecm-last-name');
+                    expect(element.querySelector('#ecm-job-title').textContent).toContain('USER_PROFILE.LABELS.ECM.JOB_TITLE');
+                });
+            });
         });
 
         describe('and has no image', () => {
 
             beforeEach(async(() => {
                 userInfoComp.anonymousImageUrl = userInfoComp.anonymousImageUrl.replace('/base/dist', '');
-                spyOn(stubContent, 'getContentUrl').and.returnValue('wrongImage.gif');
+                // spyOn(stubContent, 'getContentUrl').and.returnValue('wrongImage.gif');
                 fixture.detectChanges();
                 jasmine.Ajax.requests.mostRecent().respondWith({
                     status: 200,
                     contentType: 'json',
                     responseText: {
                         'entry': {
-                            'id': 'fake-id',
-                            'firstName': 'fake-first-name',
-                            'lastName': 'fake-last-name',
-                            'description': 'i am a fake user for test',
-                            'email': 'fakeEcm@ecmUser.com'
+                            id: 'fake-id',
+                            firstName: 'fake-ecm-first-name',
+                            lastName: 'fake-ecm-last-name',
+                            description: 'i am a fake user for test',
+                            avatarId: null,
+                            email: 'fakeEcm@ecmUser.com',
+                            skypeId: 'fake-skype-id',
+                            googleId: 'fake-googleId-id',
+                            instantMessageId: 'fake-instantMessageId-id',
+                            company: null,
+                            jobTitle: null,
+                            location: 'fake location',
+                            mobile: '000000000',
+                            telephone: '11111111',
+                            statusUpdatedAt: 'fake-date',
+                            userStatus: 'active',
+                            enabled: true,
+                            emailNotificationsEnabled: true
                         }
                     }
                 });
@@ -306,8 +338,6 @@ describe('User info component', () => {
             spyOn(stubContent, 'getContentUrl').and.returnValue('src/assets/images/ecmImg.gif');
             userInfoComp.anonymousImageUrl = userInfoComp.anonymousImageUrl.replace('/base/dist', '');
             jasmine.Ajax.install();
-            fakeBpmUser.firstName = 'fake-bpm-first-name';
-            fakeBpmUser.lastName = 'fake-bpm-last-name';
         }));
 
         beforeEach(async(() => {
@@ -317,13 +347,24 @@ describe('User info component', () => {
                 contentType: 'json',
                 responseText: {
                     'entry': {
-                        'id': 'fake-id',
-                        'firstName': 'fake-ecm-first-name',
-                        'lastName': 'fake-ecm-last-name',
-                        'description': 'i am a fake user for test',
-                        'avatarId': 'fake-ecm-avatar-id',
-                        'email': 'fakeEcm@ecmUser.com',
-                        'jobTitle': 'job-ecm-test'
+                        id: 'fake-id',
+                        firstName: 'fake-ecm-first-name',
+                        lastName: 'fake-ecm-last-name',
+                        description: 'i am a fake user for test',
+                        avatarId: 'fake-avatar-id',
+                        email: 'fakeEcm@ecmUser.com',
+                        skypeId: 'fake-skype-id',
+                        googleId: 'fake-googleId-id',
+                        instantMessageId: 'fake-instantMessageId-id',
+                        company: null,
+                        jobTitle: 'job-ecm-test',
+                        location: 'fake location',
+                        mobile: '000000000',
+                        telephone: '11111111',
+                        statusUpdatedAt: 'fake-date',
+                        userStatus: 'active',
+                        enabled: true,
+                        emailNotificationsEnabled: true
                     }
                 }
             });
