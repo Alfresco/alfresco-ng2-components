@@ -15,31 +15,38 @@
  * limitations under the License.
  */
 
-import { TestBed } from '@angular/core/testing';
-import { CoreModule, AlfrescoAuthenticationService, AlfrescoApiService } from 'ng2-alfresco-core';
+import { ReflectiveInjector } from '@angular/core';
+import {
+    AlfrescoAuthenticationService,
+    AlfrescoSettingsService,
+    AlfrescoApiService,
+    StorageService,
+    LogService
+} from 'ng2-alfresco-core';
 import { BpmUserService } from '../services/bpm-user.service';
-// import { fakeBpmUser } from '../assets/fake-bpm-user.service.mock';
-
+import { BpmUserModel } from '../models/bpm-user.model';
 declare let jasmine: any;
 
-describe('BpmUserService', () => {
+describe('Bpm user service', () => {
 
-    let service: BpmUserService;
-    let authService: AlfrescoAuthenticationService;
-    let apiService: AlfrescoApiService;
+    let service, injector;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                CoreModule.forRoot()
-            ],
-            providers: [
-                BpmUserService
-            ]
-        });
-        service = TestBed.get(BpmUserService);
-        authService = TestBed.get(AlfrescoAuthenticationService);
-        apiService = TestBed.get(AlfrescoApiService);
+        injector = ReflectiveInjector.resolveAndCreate([
+            AlfrescoSettingsService,
+            AlfrescoApiService,
+            AlfrescoAuthenticationService,
+            BpmUserService,
+            StorageService,
+            LogService
+        ]);
+    });
+
+    beforeEach(() => {
+        service = injector.get(BpmUserService);
+    });
+
+    beforeEach(() => {
         jasmine.Ajax.install();
     });
 
@@ -47,36 +54,36 @@ describe('BpmUserService', () => {
         jasmine.Ajax.uninstall();
     });
 
-    // TODO: these tests do not make sense
-
     describe('when user is logged in', () => {
 
-        /*
-        it('should be able to retrieve current user info', (done) => {
-            service.getCurrentUserInfo().subscribe(
-                (user) => {
-                    expect(user.fakeBpmUser).toBeDefined();
-                    expect(user.fakeBpmUser.firstName).toEqual('fake-first-name');
-                    expect(user.fakeBpmUser.lastName).toEqual('fake-last-name');
-                    expect(user.fakeBpmUser.email).toEqual('fakeBpm@fake.com');
-                    done();
-                });
+        it('should be able to retrieve the user information', (done) => {
+            service.getCurrentUserInfo().subscribe((user: BpmUserModel) => {
+                expect(user).toBeDefined();
+                expect(user.id).toBe(1);
+                expect(user.lastName).toBe('fake-last-name');
+                expect(user.fullname).toBe('fake-full-name');
+                done();
+            });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: {fakeBpmUser}
+                'status': 200,
+                contentType: 'application/json',
+                responseText: JSON.stringify({
+                    lastName: 'fake-last-name',
+                    fullname: 'fake-full-name',
+                    groups: [],
+                    id: 1
+                })
             });
         });
-        */
 
-        xit('should retrieve avatar url for current user', () => {
+        it('should retrieve avatar url for current user', () => {
             let path = service.getCurrentUserProfileImage();
             expect(path).toBeDefined();
             expect(path).toContain('/app/rest/admin/profile-picture');
         });
 
-        xit('should catch errors on call for profile', (done) => {
+        it('should catch errors on call for profile', (done) => {
             service.getCurrentUserInfo().subscribe(() => {
             }, () => {
                 done();
