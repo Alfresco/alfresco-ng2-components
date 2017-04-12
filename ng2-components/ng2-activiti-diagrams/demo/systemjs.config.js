@@ -27,7 +27,7 @@
             'rxjs': 'npm:rxjs',
             'moment': 'npm:moment/min/moment.min.js',
             'raphael': 'npm:raphael',
-            'ng2-translate/ng2-translate': 'npm:ng2-translate/bundles/ng2-translate.umd.js',
+            'ng2-translate': 'npm:ng2-translate',
             'alfresco-js-api': 'npm:alfresco-js-api/dist',
             'ng2-alfresco-core': 'npm:ng2-alfresco-core',
             'ng2-activiti-diagrams': 'npm:ng2-activiti-diagrams'
