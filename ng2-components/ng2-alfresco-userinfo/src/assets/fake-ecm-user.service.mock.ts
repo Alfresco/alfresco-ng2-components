@@ -19,11 +19,9 @@
 export { EcmUserModel } from '../models/ecm-user.model';
 export { EcmUserService } from '../services/ecm-user.service';
 
-import { EcmUserModel } from '../models/ecm-user.model';
 import { EcmCompanyModel } from '../models/ecm-company.model';
-import { Observable } from 'rxjs/Rx';
 
-export var fakeEcmCompany: EcmCompanyModel = {
+export let fakeEcmCompany: EcmCompanyModel = {
     organization: 'company-fake-name',
     address1: 'fake-address-1',
     address2: 'fake-address-2',
@@ -34,7 +32,28 @@ export var fakeEcmCompany: EcmCompanyModel = {
     email: 'fakeCompany@fake.com'
 };
 
-export var fakeEcmUserNoImage: EcmUserModel = {
+export let fakeEcmUser = {
+    id: 'fake-id',
+    firstName: 'fake-first-name',
+    lastName: 'fake-last-name',
+    description: 'i am a fake user for test',
+    avatarId: 'fake-avatar-id',
+    email: 'fakeEcm@ecmUser.com',
+    skypeId: 'fake-skype-id',
+    googleId: 'fake-googleId-id',
+    instantMessageId: 'fake-instantMessageId-id',
+    company: fakeEcmCompany,
+    jobTitle: 'test job',
+    location: 'fake location',
+    mobile: '000000000',
+    telephone: '11111111',
+    statusUpdatedAt: 'fake-date',
+    userStatus: 'active',
+    enabled: true,
+    emailNotificationsEnabled: true
+};
+
+export let fakeEcmUserNoImage = {
     id: 'fake-id',
     firstName: 'fake-first-name',
     lastName: 'fake-last-name',
@@ -55,7 +74,7 @@ export var fakeEcmUserNoImage: EcmUserModel = {
     emailNotificationsEnabled: true
 };
 
-export var fakeEcmUser: EcmUserModel = {
+export let fakeEcmEditedUser = {
     id: 'fake-id',
     firstName: 'fake-first-name',
     lastName: 'fake-last-name',
@@ -75,58 +94,3 @@ export var fakeEcmUser: EcmUserModel = {
     enabled: true,
     emailNotificationsEnabled: true
 };
-
-export var fakeEcmEditedUser: EcmUserModel = {
-    id: 'fake-id',
-    firstName: 'fake-first-name',
-    lastName: 'fake-last-name',
-    description: 'i am a fake user for test',
-    avatarId: 'fake-avatar-id',
-    email: 'fakeEcm@ecmUser.com',
-    skypeId: 'fake-skype-id',
-    googleId: 'fake-googleId-id',
-    instantMessageId: 'fake-instantMessageId-id',
-    company: fakeEcmCompany,
-    jobTitle: 'test job',
-    location: 'fake location',
-    mobile: '000000000',
-    telephone: '11111111',
-    statusUpdatedAt: 'fake-date',
-    userStatus: 'active',
-    enabled: true,
-    emailNotificationsEnabled: true
-};
-
-export class FakeEcmUserService {
-
-    lastPromise: Observable<EcmUserModel>;
-    public userNeeded = 0;
-    usersList = [fakeEcmUser, fakeEcmUserNoImage, fakeEcmEditedUser];
-
-    getUserInfo(userName: string) {
-        return this.lastPromise = Observable.of(this.usersList[this.userNeeded]);
-    };
-
-    getCurrentUserInfo() {
-        return this.getUserInfo('fake-id');
-    };
-
-    getUserProfileImage(avatarId: string) {
-        if (avatarId) {
-            return 'src/assets/images/ecmImg.gif';
-        }
-    };
-
-    respondWithTheUserWithoutImage() {
-        this.userNeeded = 1;
-    };
-
-    respondWithTheUserWithImage() {
-        this.userNeeded = 0;
-    };
-
-    respondWithEditedUser() {
-        this.userNeeded = 2;
-    };
-
-}

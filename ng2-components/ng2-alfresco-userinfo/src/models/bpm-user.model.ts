@@ -25,6 +25,7 @@ export class BpmUserModel {
     firstName: string;
     lastName: string;
     fullname: string;
+    fullNameDisplay: string;
     groups: any;
     id: string;
     lastUpdate: string;
@@ -36,4 +37,32 @@ export class BpmUserModel {
     tenantName: string;
     tenantPictureId: string;
     type: string;
+
+    constructor(obj?: any) {
+        this.apps = obj && obj.apps || null;
+        this.capabilities = obj && obj.capabilities || false;
+        this.company = obj && obj.company || null;
+        this.created = obj && obj.created || null;
+        this.email = obj && obj.email || null;
+        this.externalId = obj && obj.externalId || null;
+        this.firstName = obj && obj.firstName;
+        this.lastName = obj && obj.lastName;
+        this.fullname = obj && obj.fullname;
+        this.fullNameDisplay = obj ? this.formatValue(obj.firstName).trim() + ' ' + this.formatValue(obj.lastName).trim() : null;
+        this.groups = obj && obj.groups || null;
+        this.id = obj && obj.id || null;
+        this.lastUpdate = obj && obj.lastUpdate;
+        this.latestSyncTimeStamp = obj && obj.latestSyncTimeStamp;
+        this.password = obj && obj.password;
+        this.pictureId = obj && obj.pictureId;
+        this.status = obj && obj.status;
+        this.tenantId = obj && obj.tenantId;
+        this.tenantName = obj && obj.tenantName;
+        this.tenantPictureId = obj && obj.tenantPictureId;
+        this.type = obj && obj.type;
+    }
+
+    private formatValue(value: string): string {
+        return value && value !== 'null' ? value : 'N/A';
+    }
 }

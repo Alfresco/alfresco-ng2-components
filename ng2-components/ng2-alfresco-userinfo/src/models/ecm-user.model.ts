@@ -18,22 +18,49 @@
 import { EcmCompanyModel } from './ecm-company.model';
 
 export class EcmUserModel {
-        id: string;
-        firstName: string;
-        lastName: string;
-        description: string;
-        avatarId: string;
-        email: string;
-        skypeId: string;
-        googleId: string;
-        instantMessageId: string;
-        jobTitle: string;
-        location: string;
-        company: EcmCompanyModel;
-        mobile: string;
-        telephone: string;
-        statusUpdatedAt: string;
-        userStatus: string;
-        enabled: boolean;
-        emailNotificationsEnabled: boolean;
+    id: string;
+    firstName: string;
+    lastName: string;
+    fullNameDisplay: string;
+    description: string;
+    avatarId: string;
+    email: string;
+    skypeId: string;
+    googleId: string;
+    instantMessageId: string;
+    jobTitle: string;
+    location: string;
+    company: EcmCompanyModel;
+    mobile: string;
+    telephone: string;
+    statusUpdatedAt: string;
+    userStatus: string;
+    enabled: boolean;
+    emailNotificationsEnabled: boolean;
+
+    constructor(obj?: any) {
+        this.id = obj && obj.id || null;
+        this.firstName = obj && obj.firstName;
+        this.lastName = obj && obj.lastName;
+        this.fullNameDisplay = obj ? this.formatValue(obj.firstName).trim() + ' ' + this.formatValue(obj.lastName).trim() : null;
+        this.description = obj && obj.description || null;
+        this.avatarId = obj && obj.avatarId || null;
+        this.email = obj && obj.email || null;
+        this.skypeId = obj && obj.skypeId;
+        this.googleId = obj && obj.googleId;
+        this.instantMessageId = obj && obj.instantMessageId;
+        this.jobTitle = obj && obj.jobTitle || null;
+        this.location = obj && obj.location || null;
+        this.company = obj && obj.company;
+        this.mobile = obj && obj.mobile;
+        this.telephone = obj && obj.telephone;
+        this.statusUpdatedAt = obj && obj.statusUpdatedAt;
+        this.userStatus = obj && obj.userStatus;
+        this.enabled = obj && obj.enabled;
+        this.emailNotificationsEnabled = obj && obj.emailNotificationsEnabled;
+    }
+
+    private formatValue(value: string) {
+        return value && value !== 'null' ? value : 'N/A';
+    }
 }
