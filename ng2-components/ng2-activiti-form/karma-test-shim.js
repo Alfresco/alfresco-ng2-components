@@ -60,7 +60,7 @@ var map = {
 
     // other libraries
     'rxjs': 'npm:rxjs',
-    'ng2-translate/ng2-translate': 'npm:ng2-translate/bundles/ng2-translate.umd.js',
+    'ng2-translate': 'npm:ng2-translate',
     'md-date-time-picker' : 'npm:md-date-time-picker',
     'moment' : 'npm:moment/min/moment.min.js',
     'hammerjs': 'npm:hammerjs',
