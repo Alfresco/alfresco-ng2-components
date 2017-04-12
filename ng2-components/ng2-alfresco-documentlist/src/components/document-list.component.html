@@ -30,7 +30,7 @@
         </no-content-template>
     </div>
 </alfresco-datatable>
-<alfresco-pagination *ngIf="enablePagination && !isEmpty()"
+<alfresco-pagination *ngIf="isPaginationEnabled()"
     (changePageSize)="onChangePageSize($event)"
     (nextPage)="onNextPage($event)"
     (prevPage)="onPrevPage($event)"
