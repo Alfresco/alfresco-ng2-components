@@ -18,17 +18,17 @@
 import {
     AppDefinitionRepresentationModel,
     Comment,
-    FilterRepresentationModel,
     TaskDetailsModel,
     User
 } from 'ng2-activiti-tasklist';
-import { ProcessDefinitionRepresentation } from '../models/index';
+import { ProcessDefinitionRepresentation, FilterProcessRepresentationModel } from '../models/index';
 
 export var fakeFilters = {
     size: 1, total: 1, start: 0,
-    data: [new FilterRepresentationModel({
+    data: [new FilterProcessRepresentationModel({
         'name': 'Running',
         'appId': '22',
+        'id': '333',
         'recent': true,
         'icon': 'glyphicon-random',
         'filter': {'sort': 'created-desc', 'name': '', 'state': 'running'}

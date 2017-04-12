@@ -71,9 +71,31 @@ export class ActivitiProcessService {
     }
 
     /**
+     * Retrieve the process filter by id
+     * @returns {Observable<FilterProcessRepresentationModel>}
+     */
+    getProcessFilterById(taskId: string, appId?: string): Observable<FilterProcessRepresentationModel> {
+        return Observable.fromPromise(this.callApiGetUserProcessInstanceFilters(appId))
+            .map((response: any) => {
+                return response.data.find(filter => filter.id === taskId);
+            }).catch(err => this.handleError(err));
+    }
+
+    /**
+     * Retrieve the process filter by name
+     * @returns {Observable<FilterProcessRepresentationModel>}
+     */
+    getProcessFilterByName(taskName: string, appId?: string): Observable<FilterProcessRepresentationModel> {
+        return Observable.fromPromise(this.callApiGetUserProcessInstanceFilters(appId))
+            .map((response: any) => {
+                return response.data.find(filter => filter.name === taskName);
+            }).catch(err => this.handleError(err));
+    }
+
+    /**
      * Create and return the default filters
      * @param appId
-     * @returns {FilterRepresentationModel[]}
+     * @returns {FilterProcessRepresentationModel[]}
      */
     public createDefaultFilters(appId: number): Observable<FilterProcessRepresentationModel[]> {
         let runnintFilter = this.getRunningFilterInstance(appId);
@@ -292,6 +314,14 @@ export class ActivitiProcessService {
 
     private callApiAddFilter(filter: FilterProcessRepresentationModel) {
         return this.apiService.getInstance().activiti.userFiltersApi.createUserProcessInstanceFilter(filter);
+    }
+
+    callApiProcessFilters(appId?: string) {
+        if (appId) {
+            return this.apiService.getInstance().activiti.userFiltersApi.getUserProcessInstanceFilters({ appId: appId });
+        } else {
+            return this.apiService.getInstance().activiti.userFiltersApi.getUserProcessInstanceFilters();
+        }
     }
 
     private extractData(res: any) {
