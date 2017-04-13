@@ -54,7 +54,7 @@ export class AppDefinitionRepresentationModel {
  * @returns {FilterRepresentationModel} .
  */
 export class FilterRepresentationModel {
-    id: number;
+    id: string;
     appId: string;
     name: string;
     recent: boolean;
@@ -64,6 +64,7 @@ export class FilterRepresentationModel {
     landingTaskId: string;
 
     constructor(obj?: any) {
+        this.id = obj && obj.id || null;
         this.appId = obj && obj.appId || null;
         this.name = obj && obj.name || null;
         this.recent = obj && obj.recent || false;
