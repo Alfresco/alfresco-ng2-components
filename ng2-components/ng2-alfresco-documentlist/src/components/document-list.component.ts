@@ -255,6 +255,14 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         return !!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
 
+    isEmpty() {
+        return this.data.getRows().length === 0;
+    }
+
+    isPaginationEnabled() {
+        return this.enablePagination && !this.isEmpty();
+    }
+
     getNodeActions(node: MinimalNodeEntity): ContentActionModel[] {
         let target = null;
 
