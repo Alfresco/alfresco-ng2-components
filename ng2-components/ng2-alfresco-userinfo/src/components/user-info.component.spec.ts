@@ -28,6 +28,7 @@ import {
 } from 'ng2-alfresco-core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { BpmUserModel } from './../models/bpm-user.model';
+import { fakeEcmUser, fakeEcmEditedUser, fakeEcmUserNoImage } from '../assets/fake-ecm-user.service.mock';
 
 declare let jasmine: any;
 
@@ -104,28 +105,7 @@ describe('User info component', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'application/json',
-                responseText: JSON.stringify({
-                    'entry': {
-                        id: 'fake-id',
-                        firstName: null,
-                        lastName: 'fake-last-name',
-                        description: 'i am a fake user for test',
-                        avatarId: 'fake-avatar-id',
-                        email: 'fakeEcm@ecmUser.com',
-                        skypeId: 'fake-skype-id',
-                        googleId: 'fake-googleId-id',
-                        instantMessageId: 'fake-instantMessageId-id',
-                        company: null,
-                        jobTitle: 'test job',
-                        location: 'fake location',
-                        mobile: '000000000',
-                        telephone: '11111111',
-                        statusUpdatedAt: 'fake-date',
-                        userStatus: 'active',
-                        enabled: true,
-                        emailNotificationsEnabled: true
-                    }
-                })
+                responseText: JSON.stringify({ entry: fakeEcmEditedUser })
             });
 
             fixture.whenStable().then(() => {
@@ -144,29 +124,8 @@ describe('User info component', () => {
                 fixture.detectChanges();
                 jasmine.Ajax.requests.mostRecent().respondWith({
                     status: 200,
-                    contentType: 'json',
-                    responseText: {
-                        'entry': {
-                            id: 'fake-id',
-                            firstName: 'fake-ecm-first-name',
-                            lastName: 'fake-ecm-last-name',
-                            description: 'i am a fake user for test',
-                            avatarId: 'fake-avatar-id',
-                            email: 'fakeEcm@ecmUser.com',
-                            skypeId: 'fake-skype-id',
-                            googleId: 'fake-googleId-id',
-                            instantMessageId: 'fake-instantMessageId-id',
-                            company: null,
-                            jobTitle: 'test job',
-                            location: 'fake location',
-                            mobile: '000000000',
-                            telephone: '11111111',
-                            statusUpdatedAt: 'fake-date',
-                            userStatus: 'active',
-                            enabled: true,
-                            emailNotificationsEnabled: true
-                        }
-                    }
+                    contentType: 'application/json',
+                    responseText: JSON.stringify({ entry: fakeEcmUser })
                 });
             }));
 
@@ -197,33 +156,11 @@ describe('User info component', () => {
 
             beforeEach(async(() => {
                 userInfoComp.anonymousImageUrl = userInfoComp.anonymousImageUrl.replace('/base/dist', '');
-                // spyOn(stubContent, 'getContentUrl').and.returnValue('wrongImage.gif');
                 fixture.detectChanges();
                 jasmine.Ajax.requests.mostRecent().respondWith({
                     status: 200,
-                    contentType: 'json',
-                    responseText: {
-                        'entry': {
-                            id: 'fake-id',
-                            firstName: 'fake-ecm-first-name',
-                            lastName: 'fake-ecm-last-name',
-                            description: 'i am a fake user for test',
-                            avatarId: null,
-                            email: 'fakeEcm@ecmUser.com',
-                            skypeId: 'fake-skype-id',
-                            googleId: 'fake-googleId-id',
-                            instantMessageId: 'fake-instantMessageId-id',
-                            company: null,
-                            jobTitle: null,
-                            location: 'fake location',
-                            mobile: '000000000',
-                            telephone: '11111111',
-                            statusUpdatedAt: 'fake-date',
-                            userStatus: 'active',
-                            enabled: true,
-                            emailNotificationsEnabled: true
-                        }
-                    }
+                    contentType: 'application/json',
+                    responseText: JSON.stringify({ entry: fakeEcmUserNoImage })
                 });
             }));
 
@@ -344,29 +281,8 @@ describe('User info component', () => {
             fixture.detectChanges();
             jasmine.Ajax.requests.first().respondWith({
                 status: 200,
-                contentType: 'json',
-                responseText: {
-                    'entry': {
-                        id: 'fake-id',
-                        firstName: 'fake-ecm-first-name',
-                        lastName: 'fake-ecm-last-name',
-                        description: 'i am a fake user for test',
-                        avatarId: 'fake-avatar-id',
-                        email: 'fakeEcm@ecmUser.com',
-                        skypeId: 'fake-skype-id',
-                        googleId: 'fake-googleId-id',
-                        instantMessageId: 'fake-instantMessageId-id',
-                        company: null,
-                        jobTitle: 'job-ecm-test',
-                        location: 'fake location',
-                        mobile: '000000000',
-                        telephone: '11111111',
-                        statusUpdatedAt: 'fake-date',
-                        userStatus: 'active',
-                        enabled: true,
-                        emailNotificationsEnabled: true
-                    }
-                }
+                contentType: 'application/json',
+                responseText: JSON.stringify({ entry: fakeEcmUser })
             });
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
