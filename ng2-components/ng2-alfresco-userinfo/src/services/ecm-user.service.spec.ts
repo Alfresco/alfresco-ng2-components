@@ -71,8 +71,8 @@ describe('EcmUserService', () => {
             service.getCurrentUserInfo().subscribe(
                 (user) => {
                     expect(user).toBeDefined();
-                    expect(user.firstName).toEqual('fake-first-name');
-                    expect(user.lastName).toEqual('fake-last-name');
+                    expect(user.firstName).toEqual('fake-ecm-first-name');
+                    expect(user.lastName).toEqual('fake-ecm-last-name');
                     expect(user.email).toEqual('fakeEcm@ecmUser.com');
                     done();
                 });
