@@ -131,17 +131,18 @@ export class UploadButtonComponent implements OnInit, OnChanges {
      * @param {File[]} files - files dropped in the drag area.
      */
     onFilesAdded($event: any): void {
-        this.checkPermission();
+        let files = $event.currentTarget.files;
         this.permissionValue.subscribe((hasPermission: boolean) => {
             if (hasPermission) {
-                let files = $event.currentTarget.files;
                 this.uploadFiles(this.currentFolderPath, files);
             } else {
                 this.permissionEvent.emit(new PermissionModel({type: 'content', action: 'upload', permission: 'create'}));
             }
-            // reset the value of the input file
-            $event.target.value = '';
         });
+
+        this.checkPermission();
+        // reset the value of the input file
+        $event.target.value = '';
     }
 
     /**
@@ -150,10 +151,9 @@ export class UploadButtonComponent implements OnInit, OnChanges {
      * @param {File[]} files - files of a folder dropped in the drag area.
      */
     onDirectoryAdded($event: any): void {
-        this.checkPermission();
+        let files = $event.currentTarget.files;
         this.permissionValue.subscribe((hasPermission: boolean) => {
             if (hasPermission) {
-                let files = $event.currentTarget.files;
                 let hashMapDir = this.convertIntoHashMap(files);
 
                 hashMapDir.forEach((filesDir, directoryPath) => {
@@ -182,9 +182,11 @@ export class UploadButtonComponent implements OnInit, OnChanges {
             } else {
                 this.permissionEvent.emit(new PermissionModel({type: 'content', action: 'upload', permission: 'create'}));
             }
-            // reset the value of the input file
-            $event.target.value = '';
         });
+
+        this.checkPermission();
+        // reset the value of the input file
+        $event.target.value = '';
     }
 
     /**
@@ -324,7 +326,7 @@ export class UploadButtonComponent implements OnInit, OnChanges {
 
     private hasCreatePermission(node: any): boolean {
         if (this.hasPermissions(node)) {
-            return node.allowableOperations.find(permision => permision === 'createFake') ? true : false;
+            return node.allowableOperations.find(permision => permision === 'create') ? true : false;
         }
         return false;
     }
