@@ -144,9 +144,11 @@ export class UploadButtonComponent implements OnInit, OnChanges {
             } else {
                 this.permissionEvent.emit(new PermissionModel({type: 'content', action: 'upload', permission: 'create'}));
             }
-            // reset the value of the input file
-            $event.target.value = '';
         });
+
+        this.checkPermission();
+        // reset the value of the input file
+        $event.target.value = '';
     }
 
     /**
@@ -186,9 +188,11 @@ export class UploadButtonComponent implements OnInit, OnChanges {
             } else {
                 this.permissionEvent.emit(new PermissionModel({type: 'content', action: 'upload', permission: 'create'}));
             }
-            // reset the value of the input file
-            $event.target.value = '';
         });
+
+        this.checkPermission();
+        // reset the value of the input file
+        $event.target.value = '';
     }
 
     /**
