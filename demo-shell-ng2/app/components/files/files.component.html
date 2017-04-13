@@ -141,6 +141,13 @@
     </label>
 </p>
 
+<p class="options-container">
+    <label for="switch-disableWithNoPermission" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
+        <input type="checkbox" id="switch-disableWithNoPermission" class="mdl-switch__input" (change)="toggleDisableWithNoPermission()" >
+        <span class="mdl-switch__label">Disable upload</span>
+    </label>
+</p>
+
 <h5>Upload</h5>
 <br>
 <div *ngIf="acceptedFilesTypeShow">
@@ -155,7 +162,9 @@
                             [rootFolderId]="documentList.currentFolderId"
                             [multipleFiles]="multipleFileUpload"
                             [uploadFolders]="folderUpload"
-                            [versioning] = "versioning">
+                            [versioning] = "versioning"
+                            [disableWithNoPermission]="disableWithNoPermission"
+                            (permissionEvent)="onUploadPermissionFailed($event)">
         <div class="mdl-spinner mdl-js-spinner is-active"></div>
     </alfresco-upload-button>
 </div>
@@ -166,7 +175,9 @@
                             [acceptedFilesType]="acceptedFilesType"
                             [multipleFiles]="multipleFileUpload"
                             [uploadFolders]="folderUpload"
-                            [versioning] = "versioning">
+                            [versioning] = "versioning"
+                            [disableWithNoPermission]="disableWithNoPermission"
+                            (permissionEvent)="onUploadPermissionFailed($event)">
         <div class="mdl-spinner mdl-js-spinner is-active"></div>
     </alfresco-upload-button>
 </div>

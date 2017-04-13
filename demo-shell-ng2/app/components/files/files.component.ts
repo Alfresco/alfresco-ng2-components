@@ -35,6 +35,7 @@ export class FilesComponent implements OnInit, AfterViewInit {
     fileNodeId: any;
     fileShowed: boolean = false;
     multipleFileUpload: boolean = false;
+    disableWithNoPermission: boolean = false;
     folderUpload: boolean = false;
     acceptedFilesTypeShow: boolean = false;
     versioning: boolean = false;
@@ -84,6 +85,11 @@ export class FilesComponent implements OnInit, AfterViewInit {
     toggleMultipleFileUpload() {
         this.multipleFileUpload = !this.multipleFileUpload;
         return this.multipleFileUpload;
+    }
+
+    toggleDisableWithNoPermission() {
+        this.disableWithNoPermission = !this.disableWithNoPermission;
+        return this.disableWithNoPermission;
     }
 
     toggleFolder() {
@@ -170,6 +176,10 @@ export class FilesComponent implements OnInit, AfterViewInit {
     }
 
     onPermissionsFailed(event: any) {
+        this.notificationService.openSnackMessage(`you don't have the ${event.permission} permission to ${event.action} the ${event.type} `, 4000);
+    }
+
+    onUploadPermissionFailed(event: any) {
         this.notificationService.openSnackMessage(`you don't have the ${event.permission} permission to ${event.action} the ${event.type} `, 4000);
     }
 

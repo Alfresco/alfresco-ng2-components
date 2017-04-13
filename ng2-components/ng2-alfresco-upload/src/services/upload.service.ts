@@ -20,7 +20,7 @@ import { Response } from '@angular/http';
 import { Observer, Observable } from 'rxjs/Rx';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 import { FileModel } from '../models/file.model';
-import { MinimalNodeEntity } from 'alfresco-js-api';
+import { MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
 
 /**
  *
@@ -183,5 +183,18 @@ export class UploadService {
         if (this.totalCompletedObserver) {
             this.totalCompletedObserver.next(total);
         }
+    }
+
+    getFolderNode(nodeId: string): Observable<MinimalNodeEntryEntity> {
+        let opts: any = {
+            includeSource: true,
+            include: ['allowableOperations']
+        };
+
+        return Observable.fromPromise(this.apiService.getInstance().nodes.getNodeInfo(nodeId, opts))
+            .map((response: any) => {
+                return response;
+            })
+            .catch(err => this.handleError(err));
     }
 }
