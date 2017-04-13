@@ -51,6 +51,7 @@ module.exports = function (config) {
 
       { pattern: 'node_modules/ng2-alfresco-datatable/src/**/*.js', included: false, served: true, watched: false },
       { pattern: 'node_modules/ng2-alfresco-datatable/index.js', included: false, served: true, watched: false },
+      { pattern: 'src/assets/images/empty_doc_lib.svg', included: false, served: true, watched: false },
 
       // paths to support debugging with source maps in dev tools
       {pattern: 'src/**/*.ts', included: false, watched: false},
