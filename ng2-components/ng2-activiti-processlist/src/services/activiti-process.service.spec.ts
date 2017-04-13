@@ -18,7 +18,6 @@
 import { TestBed } from '@angular/core/testing';
 import { async } from '@angular/core/testing';
 import { CoreModule, AlfrescoApiService } from 'ng2-alfresco-core';
-import { FilterRepresentationModel } from 'ng2-activiti-tasklist';
 import { AlfrescoApi } from 'alfresco-js-api';
 import {
     fakeFilters,
@@ -581,7 +580,7 @@ describe('ActivitiProcessService', () => {
 
             createFilter = spyOn(alfrescoApi.activiti.userFiltersApi, 'createUserProcessInstanceFilter')
                 .and
-                .callFake((filter: FilterRepresentationModel) => Promise.resolve(filter));
+                .callFake((filter: FilterProcessRepresentationModel) => Promise.resolve(filter));
         });
 
         describe('get filters', () => {
@@ -594,6 +593,32 @@ describe('ActivitiProcessService', () => {
             it('should call the API with the correct appId when specified', () => {
                 service.getProcessFilters(226);
                 expect(getFilters).toHaveBeenCalledWith({appId: 226});
+            });
+
+            it('should return the task filter by id', (done) => {
+                service.getProcessFilterById('333').subscribe(
+                    (res: FilterProcessRepresentationModel) => {
+                        expect(res).toBeDefined();
+                        expect(res.id).toEqual('333');
+                        expect(res.name).toEqual('Running');
+                        expect(res.filter.sort).toEqual('created-desc');
+                        expect(res.filter.state).toEqual('running');
+                        done();
+                    }
+                );
+            });
+
+            it('should return the task filter by name', (done) => {
+                service.getProcessFilterByName('Running').subscribe(
+                    (res: FilterProcessRepresentationModel) => {
+                        expect(res).toBeDefined();
+                        expect(res.id).toEqual('333');
+                        expect(res.name).toEqual('Running');
+                        expect(res.filter.sort).toEqual('created-desc');
+                        expect(res.filter.state).toEqual('running');
+                        done();
+                    }
+                );
             });
 
             it('should return the non-empty filter list that is returned by the API', async(() => {
@@ -640,7 +665,7 @@ describe('ActivitiProcessService', () => {
             });
 
             it('should return the created filter', async(() => {
-                service.addFilter(filter).subscribe((createdFilter: FilterRepresentationModel) => {
+                service.addFilter(filter).subscribe((createdFilter: FilterProcessRepresentationModel) => {
                     expect(createdFilter).toBe(filter);
                 });
             }));

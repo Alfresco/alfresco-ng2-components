@@ -160,7 +160,7 @@ export class ActivitiProcessFilters implements OnInit, OnChanges {
 
     /**
      * Return the current task
-     * @returns {FilterRepresentationModel}
+     * @returns {FilterProcessRepresentationModel}
      */
     getCurrentFilter(): FilterProcessRepresentationModel {
         return this.currentFilter;
