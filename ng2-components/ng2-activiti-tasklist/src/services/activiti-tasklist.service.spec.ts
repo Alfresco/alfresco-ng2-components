@@ -101,6 +101,46 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
+        it('should return the task filter by id', (done) => {
+            service.getTaskFilterById('2').subscribe(
+                (res: FilterRepresentationModel) => {
+                    expect(res).toBeDefined();
+                    expect(res.id).toEqual('2');
+                    expect(res.name).toEqual('FakeMyTasks');
+                    expect(res.filter.sort).toEqual('created-desc');
+                    expect(res.filter.state).toEqual('open');
+                    expect(res.filter.assignment).toEqual('fake-assignee');
+                    done();
+                }
+            );
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 200,
+                contentType: 'application/json',
+                responseText: JSON.stringify(fakeFilters)
+            });
+        });
+
+        it('should return the task filter by name', (done) => {
+            service.getTaskFilterByName('FakeMyTasks').subscribe(
+                (res: FilterRepresentationModel) => {
+                    expect(res).toBeDefined();
+                    expect(res.id).toEqual('2');
+                    expect(res.name).toEqual('FakeMyTasks');
+                    expect(res.filter.sort).toEqual('created-desc');
+                    expect(res.filter.state).toEqual('open');
+                    expect(res.filter.assignment).toEqual('fake-assignee');
+                    done();
+                }
+            );
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 200,
+                contentType: 'application/json',
+                responseText: JSON.stringify(fakeFilters)
+            });
+        });
+
         it('should call the api withthe appId', (done) => {
             spyOn(service, 'callApiTaskFilters').and.returnValue((fakeAppPromise));
 
