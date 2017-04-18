@@ -34,7 +34,6 @@
 }
 
 .mdl-paging__per-page-value {
-    position: absolute;
     right: 36px;
     top: 6px;
 }
