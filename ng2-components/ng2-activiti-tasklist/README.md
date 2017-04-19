@@ -355,6 +355,27 @@ The component shows all the available filters.
 
 No options
 
+### How to create an accordion menu with the task filter
+
+You can create an accordion menu using the AccordionComponent that wrap the activiti task filter.
+The AccordionComponent is exposed by the alfresco-core.
+
+```html
+<accordion>
+    <accordion-group [heading]="'Tasks'" [isSelected]="true" [headingIcon]="'assignment'">
+        <activiti-filters
+            [appId]="appId"
+            [hasIcon]="false"
+            (filterClick)="onTaskFilterClick($event)"
+            (onSuccess)="onSuccessTaskFilterList($event)"
+            #activitifilter>
+        </activiti-filters>
+    </accordion-group>
+</accordion>
+```
+
+![how-create-accordion-menu](docs/assets/how-to-create-accordion-menu.png)
+
 ## Basic usage example Activiti Checklist
 
 The component shows the checklist task functionality.
