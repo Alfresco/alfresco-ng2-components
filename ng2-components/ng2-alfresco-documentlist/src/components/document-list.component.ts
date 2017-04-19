@@ -22,7 +22,14 @@ import {
 import { Subject } from 'rxjs/Rx';
 import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, Pagination } from 'alfresco-js-api';
 import { AlfrescoTranslationService, DataColumnListComponent } from 'ng2-alfresco-core';
-import { DataRowEvent, DataTableComponent, ObjectDataColumn, DataCellEvent, DataRowActionEvent, DataColumn } from 'ng2-alfresco-datatable';
+import {
+    DataRowEvent,
+    DataTableComponent,
+    ObjectDataColumn,
+    DataCellEvent,
+    DataRowActionEvent,
+    DataColumn
+} from 'ng2-alfresco-datatable';
 import { DocumentListService } from './../services/document-list.service';
 import { ContentActionModel } from './../models/content-action.model';
 import { ShareDataTableAdapter, ShareDataRow, RowFilter, ImageResolver } from './../data/share-datatable-adapter';
@@ -140,6 +147,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     emptyFolderTemplate: TemplateRef<any>;
     contextActionHandler: Subject<any> = new Subject();
     data: ShareDataTableAdapter;
+    allowableOperations: string[];
 
     constructor(private documentListService: DocumentListService,
                 private ngZone: NgZone,
@@ -320,6 +328,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     loadFolder() {
         let nodeId = this.folderNode ? this.folderNode.id : this.currentFolderId;
+        this.getAllowableOperations(this.folderNode);
         if (nodeId) {
             this.loadFolderNodesByFolderNodeId(nodeId, this.pageSize, this.skipCount).catch(err => this.error.emit(err));
         }
@@ -328,11 +337,12 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     // gets folder node and its content
     loadFolderByNodeId(nodeId: string) {
         this.documentListService.getFolderNode(nodeId).then(node => {
-                this.folderNode = node;
-                this.currentFolderId = node.id;
-                this.skipCount = 0;
-                this.loadFolderNodesByFolderNodeId(node.id, this.pageSize, this.skipCount).catch(err => this.error.emit(err));
-            })
+            this.getAllowableOperations(node);
+            this.folderNode = node;
+            this.currentFolderId = node.id;
+            this.skipCount = 0;
+            this.loadFolderNodesByFolderNodeId(node.id, this.pageSize, this.skipCount).catch(err => this.error.emit(err));
+        })
             .catch(err => this.error.emit(err));
     }
 
@@ -487,5 +497,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     onPrevPage(event: Pagination): void {
         this.skipCount = event.skipCount;
         this.reload();
+    }
+
+    getAllowableOperations(node: any) {
+        this.allowableOperations = node ? node.allowableOperations : null;
     }
 }

@@ -1,6 +1,7 @@
 <alfresco-document-menu-action
     *ngIf="creationMenuActions"
     [folderId]="currentFolderId"
+    [allowableOperations]="allowableOperations"
     (success)="onActionMenuSuccess($event)"
     (error)="onActionMenuError($event)">
 </alfresco-document-menu-action>

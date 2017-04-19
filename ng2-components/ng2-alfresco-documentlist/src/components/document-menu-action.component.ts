@@ -37,11 +37,17 @@ export class DocumentMenuActionComponent {
     @Input()
     folderId: string;
 
+    @Input()
+    allowableOperations: string[];
+
     @Output()
     success = new EventEmitter();
 
     @Output()
     error = new EventEmitter();
+
+    @Output()
+    permissionErrorEvent = new EventEmitter();
 
     @ViewChild('dialog')
     dialog: any;
@@ -51,6 +57,8 @@ export class DocumentMenuActionComponent {
     message: string;
 
     folderName: string = '';
+
+    createPermission: string = 'create';
 
     constructor(private documentListService: DocumentListService,
                 private translateService: AlfrescoTranslationService,
@@ -63,25 +71,29 @@ export class DocumentMenuActionComponent {
 
     public createFolder(name: string) {
         this.cancel();
-        this.documentListService.createFolder(name, this.folderId)
-            .subscribe(
-                (res: MinimalNodeEntity) => {
-                    this.folderName = '';
-                    this.logService.info(res.entry);
-                    this.success.emit({node: res.entry});
-                },
-                error => {
-                    if (error.response) {
-                        let errorMessagePlaceholder = this.getErrorMessage(error.response);
-                        this.message = this.formatString(errorMessagePlaceholder, [name]);
-                        this.error.emit({message: this.message});
-                        this.logService.error(this.message);
-                    } else {
-                        this.error.emit(error);
-                        this.logService.error(error);
+        if (this.hasPermission(this.createPermission)) {
+            this.documentListService.createFolder(name, this.folderId)
+                .subscribe(
+                    (res: MinimalNodeEntity) => {
+                        this.folderName = '';
+                        this.logService.info(res.entry);
+                        this.success.emit({ node: res.entry });
+                    },
+                    error => {
+                        if (error.response) {
+                            let errorMessagePlaceholder = this.getErrorMessage(error.response);
+                            this.message = this.formatString(errorMessagePlaceholder, [name]);
+                            this.error.emit({ message: this.message });
+                            this.logService.error(this.message);
+                        } else {
+                            this.error.emit(error);
+                            this.logService.error(error);
+                        }
                     }
-                }
-            );
+                );
+        } else {
+            this.permissionErrorEvent.emit();
+        }
     }
 
     public showDialog() {
@@ -126,5 +138,16 @@ export class DocumentMenuActionComponent {
 
     isFolderNameEmpty() {
         return this.folderName === '' ? true : false;
+    }
+
+    hasPermission(permission: string): boolean {
+        let hasPermission: boolean = true;
+        if (this.allowableOperations) {
+            let permFound = this.allowableOperations.find(element => element === permission);
+            hasPermission = permFound ? true : false;
+        } else {
+            hasPermission = false;
+        }
+        return hasPermission;
     }
 }
