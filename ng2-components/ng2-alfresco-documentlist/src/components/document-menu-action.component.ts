@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
 
@@ -32,13 +32,13 @@ const ERROR_FOLDER_ALREADY_EXIST = 409;
     styleUrls: ['./document-menu-action.component.css'],
     templateUrl: './document-menu-action.component.html'
 })
-export class DocumentMenuActionComponent {
+export class DocumentMenuActionComponent implements OnChanges {
 
     @Input()
     folderId: string;
 
     @Input()
-    allowableOperations: string[];
+    disableWithNoPermission: boolean = true;
 
     @Output()
     success = new EventEmitter();
@@ -58,7 +58,7 @@ export class DocumentMenuActionComponent {
 
     folderName: string = '';
 
-    createPermission: string = 'create';
+    allowableOperations: string[];
 
     constructor(private documentListService: DocumentListService,
                 private translateService: AlfrescoTranslationService,
@@ -69,9 +69,17 @@ export class DocumentMenuActionComponent {
         }
     }
 
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes && changes['folderId']) {
+            if (changes['folderId'].currentValue !== changes['folderId'].previousValue) {
+                this.loadCurrentNodePermissions(changes['folderId'].currentValue);
+            }
+        }
+    }
+
     public createFolder(name: string) {
         this.cancel();
-        if (this.hasPermission(this.createPermission)) {
+        if (this.hasPermission('create')) {
             this.documentListService.createFolder(name, this.folderId)
                 .subscribe(
                     (res: MinimalNodeEntity) => {
@@ -144,10 +152,20 @@ export class DocumentMenuActionComponent {
         let hasPermission: boolean = true;
         if (this.allowableOperations) {
             let permFound = this.allowableOperations.find(element => element === permission);
-            hasPermission = permFound ? true : false;
-        } else {
+            hasPermission = !permFound && this.disableWithNoPermission ? false : true;
+        } else if (this.disableWithNoPermission) {
             hasPermission = false;
         }
         return hasPermission;
+    }
+
+    hasCreatePermission() {
+        return this.hasPermission('create');
+    }
+
+    loadCurrentNodePermissions(nodeId: string) {
+        this.documentListService.getFolderNode(nodeId).then(node => {
+            this.allowableOperations = node ? node['allowableOperations'] : null;
+        }).catch(err => this.error.emit(err));
     }
 }

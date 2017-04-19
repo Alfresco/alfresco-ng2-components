@@ -328,7 +328,6 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     loadFolder() {
         let nodeId = this.folderNode ? this.folderNode.id : this.currentFolderId;
-        this.getAllowableOperations(this.folderNode);
         if (nodeId) {
             this.loadFolderNodesByFolderNodeId(nodeId, this.pageSize, this.skipCount).catch(err => this.error.emit(err));
         }
@@ -337,7 +336,6 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     // gets folder node and its content
     loadFolderByNodeId(nodeId: string) {
         this.documentListService.getFolderNode(nodeId).then(node => {
-            this.getAllowableOperations(node);
             this.folderNode = node;
             this.currentFolderId = node.id;
             this.skipCount = 0;
@@ -497,9 +495,5 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     onPrevPage(event: Pagination): void {
         this.skipCount = event.skipCount;
         this.reload();
-    }
-
-    getAllowableOperations(node: any) {
-        this.allowableOperations = node ? node.allowableOperations : null;
     }
 }
