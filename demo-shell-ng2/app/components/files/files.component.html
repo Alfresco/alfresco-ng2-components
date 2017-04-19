@@ -27,12 +27,21 @@
                         title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
                         key="name"
                         class="full-width ellipsis-cell">
-                    <!-- Example of using custom column template -->
+
+                    <!-- Example #1: using custom template with implicit access to data context -->
                     <!--
                     <template let-entry="$implicit">
                         <span>Hi! {{entry.data.getValue(entry.row, entry.col)}}</span>
                     </template>
                     -->
+
+                    <!-- Example #2: using custom template with value access -->
+                    <!--
+                    <template let-value="value">
+                        <span>Hi! {{value}}</span>
+                    </template>
+                    -->
+
                 </data-column>
                 <data-column
                     title="{{'DOCUMENT_LIST.COLUMNS.TAG' | translate}}"
