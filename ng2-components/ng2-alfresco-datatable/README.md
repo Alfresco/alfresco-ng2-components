@@ -190,8 +190,20 @@ export class DataTableDemo {
         this.data = new ObjectDataTableAdapter(
             // data
             [
-                {id: 1, name: 'Name 1', createdBy : { name: 'user'}, createdOn: 123, icon: 'http://example.com/img.png'},
-                {id: 2, name: 'Name 2', createdBy : { name: 'user 2'}, createdOn: 123, icon: 'http://example.com/img.png'}
+                {
+                    id: 1, 
+                    name: 'Name 1', 
+                    createdBy : { name: 'user'}, 
+                    createdOn: 123, 
+                    icon: 'http://example.com/img.png'
+                },
+                {
+                    id: 2, 
+                    name: 'Name 2', 
+                    createdBy : { name: 'user 2'}, 
+                    createdOn: 123, 
+                    icon: 'http://example.com/img.png'
+                }
             ]
         );
     }
@@ -293,6 +305,52 @@ onRowClick(event) {
         </template>
     </no-content-template>
 </alfresco-datatable>
+```
+
+#### Column Templates
+
+It is possible assigning a custom column template like the following:
+
+```html
+<alfresco-datatable ...>
+    <data-columns>
+        <data-column title="Version" key="properties.cm:versionLabel">
+            <template let-value="value">
+                <span>V. {{value}}</span>
+            </template>
+        </data-column>
+    </data-columns>
+</alfresco-datatable>
+```
+
+Example above shows access to the underlying cell value by binding `value` property to the underlying context `value`:
+
+```html
+<template let-value="value">
+```
+
+Alternatively you can get access to the entire data context using the following syntax:
+
+```html
+<template let-entry="$implicit">
+```
+
+That means you are going to create local variable `entry` that is bound to the data context via Angular's special `$implicit` keyword.
+
+```html
+<template let-entry="$implicit">
+    <span>V. {{entry.data.getValue(entry.row, entry.col)}}</span>
+</template>
+```
+
+In the second case `entry` variable is holding a reference to the following data context:
+
+```ts
+{
+    data: DataTableAdapter,
+    row: DataRow,
+    col: DataColumn
+}
 ```
 
 #### rowClick event
