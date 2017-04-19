@@ -115,7 +115,6 @@ export class DocumentListService {
     getFolder(folder: string, opts?: any) {
         return Observable.fromPromise(this.getNodesPromise(folder, opts))
             .map(res => <NodePaging> res)
-            .do(res => console.log(res))
             .catch(err => this.handleError(err));
     }
 
