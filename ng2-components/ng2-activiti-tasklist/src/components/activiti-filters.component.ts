@@ -47,6 +47,9 @@ export class ActivitiFilters implements OnInit, OnChanges {
     @Input()
     appName: string;
 
+    @Input()
+    hasIcon: boolean = true;
+
     private filterObserver: Observer<FilterRepresentationModel>;
     filter$: Observable<FilterRepresentationModel>;
 
