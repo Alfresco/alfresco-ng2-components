@@ -1,0 +1,35 @@
+.panel-heading {
+    float: left;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: #000000;
+    width: 100%;
+}
+
+.panel-heading-selected {
+    color: #448aff;
+}
+
+.panel-heading-icon {
+    float: left;
+}
+
+.panel-heading-text {
+    float: left;
+    padding-left: 20px;
+    padding-top: 4px;
+}
+
+.panel-heading-toggle {
+    float: right;
+    cursor: pointer;
+}
+
+.panel-heading-toggle:hover {
+    opacity: 0.4;
+}
