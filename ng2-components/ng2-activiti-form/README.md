@@ -438,10 +438,33 @@ class MyComponent {
 | getRestFieldValuesByProcessId | (processDefinitionId: string, field: string) | Observable\<any\> |  |
 | getRestFieldValuesColumnByProcessId | (processDefinitionId: string, field: string, column?: string) | Observable\<any\> |  |
 | getRestFieldValuesColumn | (taskId: string, field: string, column?: string) | Observable\<any\> |  |
-| getWorkflowGroups\* | (filter: string, groupId?: string) | Observable\<GroupModel[]\> |  |
-| getWorkflowUsers\* | (filter: string, groupId?: string) | Observable\<GroupUserModel[]\> |  |
+| getWorkflowGroups\ | (filter: string, groupId?: string) | Observable\<GroupModel[]\> |  |
+| getWorkflowUsers\ | (filter: string, groupId?: string) | Observable\<GroupUserModel[]\> |  |
 
-\* _Uses private Activiti WebApp api_
+## Common scenarios
+
+### Changing field value based on another field
+
+Create a simple Form with a dropdown widget (id: `type`), and a multiline text (id: `description`).
+
+```ts
+formService.formFieldValueChanged.subscribe((e: FormFieldEvent) => {
+    if (e.field.id === 'type') {
+        const fields: FormFieldModel[] = e.form.getFormFields();
+        const description = fields.find(f => f.id === 'description');
+        if (description != null) {
+            console.log(description);
+            description.value = 'Type set to ' + e.field.value;
+        }
+    }
+});
+```
+
+You subscribe to the `formFieldValueChanged` event and check whether event is raised for the `type` widget, then you search for a `description` widget and assign its value to some simple text.
+
+The result should be as following:
+
+![](docs/assets/form-service-sample-01.png)
 
 ## See also
 
