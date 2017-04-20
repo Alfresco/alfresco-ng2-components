@@ -1,4 +1,4 @@
-.panel-heading {
+.adf-panel-heading {
     float: left;
     font-size: 14px;
     font-weight: bold;
@@ -11,25 +11,25 @@
     width: 100%;
 }
 
-.panel-heading-selected {
+.adf-panel-heading-selected {
     color: #448aff;
 }
 
-.panel-heading-icon {
+.adf-panel-heading-icon {
     float: left;
 }
 
-.panel-heading-text {
+.adf-panel-heading-text {
     float: left;
     padding-left: 20px;
     padding-top: 4px;
 }
 
-.panel-heading-toggle {
+.adf-panel-heading-toggle {
     float: right;
     cursor: pointer;
 }
 
-.panel-heading-toggle:hover {
+.adf-panel-heading-toggle:hover {
     opacity: 0.4;
 }

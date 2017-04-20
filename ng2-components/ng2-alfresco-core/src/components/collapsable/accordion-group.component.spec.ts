@@ -47,11 +47,11 @@ describe('AccordionGroupComponent', () => {
         component.headingIcon = 'fake-icon';
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            let headerToggle = fixture.nativeElement.querySelector('.panel-heading-toggle .material-icons');
+            let headerToggle = fixture.nativeElement.querySelector('.adf-panel-heading-toggle .material-icons');
             expect(headerToggle.innerText).toEqual('expand_more');
-            let headerText = fixture.nativeElement.querySelector('.panel-heading-text');
+            let headerText = fixture.nativeElement.querySelector('.adf-panel-heading-text');
             expect(headerText.innerText).toEqual('Fake Header');
-            let headerIcon = fixture.nativeElement.querySelector('.panel-heading-icon .material-icons');
+            let headerIcon = fixture.nativeElement.querySelector('.adf-panel-heading-icon .material-icons');
             expect(headerIcon.innerText).toEqual('fake-icon');
         });
     });
@@ -61,14 +61,14 @@ describe('AccordionGroupComponent', () => {
         component.heading = 'Fake Header';
         component.headingIcon = 'fake-icon';
         fixture.detectChanges();
-        element.querySelector('.panel-heading-toggle').click();
+        element.querySelector('.adf-panel-heading-toggle').click();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            let headerText = fixture.nativeElement.querySelector('.panel-heading-text');
+            let headerText = fixture.nativeElement.querySelector('.adf-panel-heading-text');
             expect(headerText.innerText).toEqual('Fake Header');
-            let headerIcon = fixture.nativeElement.querySelector('.panel-heading-icon .material-icons');
+            let headerIcon = fixture.nativeElement.querySelector('.adf-panel-heading-icon .material-icons');
             expect(headerIcon.innerText).toEqual('fake-icon');
-            let headerToggle = fixture.nativeElement.querySelector('.panel-heading-toggle .material-icons');
+            let headerToggle = fixture.nativeElement.querySelector('.adf-panel-heading-toggle .material-icons');
             expect(headerToggle.innerText).toEqual('expand_less');
         });
     });
