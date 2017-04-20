@@ -783,6 +783,7 @@ DocumentList emits the following events:
 | `nodeDblClick` | emitted when user double-clicks list node |
 | `folderChange` | emitted once current display folder has changed |
 | `preview` | emitted when user acts upon files with either single or double click (depends on `navigation-mode`), recommended for Viewer components integration  |
+| `permissionError` | emitted when user is attempting to create a folder via action menu but it doesn't have the permission to do it |
 
 ## Advanced usage and customization
 

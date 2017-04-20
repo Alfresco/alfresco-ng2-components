@@ -21,6 +21,7 @@ import { MinimalNodeEntity } from 'alfresco-js-api';
 
 import { DocumentListService } from './../services/document-list.service';
 import { ContentActionModel } from './../models/content-action.model';
+import { PermissionModel } from '../models/permissions.model';
 
 declare let dialogPolyfill: any;
 
@@ -79,7 +80,7 @@ export class DocumentMenuActionComponent implements OnChanges {
 
     public createFolder(name: string) {
         this.cancel();
-        if (this.hasPermission('create')) {
+        if (this.hasCreatePermission()) {
             this.documentListService.createFolder(name, this.folderId)
                 .subscribe(
                     (res: MinimalNodeEntity) => {
@@ -100,7 +101,7 @@ export class DocumentMenuActionComponent implements OnChanges {
                     }
                 );
         } else {
-            this.permissionErrorEvent.emit();
+            this.permissionErrorEvent.emit(new PermissionModel({type: 'folder', action: 'create', permission: this.allowableOperations}));
         }
     }
 

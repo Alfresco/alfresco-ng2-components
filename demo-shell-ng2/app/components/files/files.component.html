@@ -20,7 +20,8 @@
                 [allowDropFiles]="true"
                 (error)="onNavigationError($event)"
                 (success)="resetError()"
-                (preview)="showFile($event)">
+                (preview)="showFile($event)"
+                (permissionError)="onPermissionsFailed($event)">
             <data-columns>
                 <data-column key="$thumbnail" type="image" [sortable]="false"></data-column>
                 <data-column

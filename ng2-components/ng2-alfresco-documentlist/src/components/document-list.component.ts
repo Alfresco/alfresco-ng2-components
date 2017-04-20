@@ -139,6 +139,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     @Output()
     error: EventEmitter<any> = new EventEmitter();
 
+    @Output()
+    permissionError: EventEmitter<any> = new EventEmitter();
+
     @ViewChild(DataTableComponent)
     dataTable: DataTableComponent;
 
@@ -147,7 +150,6 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     emptyFolderTemplate: TemplateRef<any>;
     contextActionHandler: Subject<any> = new Subject();
     data: ShareDataTableAdapter;
-    allowableOperations: string[];
 
     constructor(private documentListService: DocumentListService,
                 private ngZone: NgZone,
@@ -495,5 +497,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     onPrevPage(event: Pagination): void {
         this.skipCount = event.skipCount;
         this.reload();
+    }
+
+    onPermissionError(event) {
+        this.permissionError.emit(event);
     }
 }

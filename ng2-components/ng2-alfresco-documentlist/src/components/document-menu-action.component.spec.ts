@@ -16,9 +16,11 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { SimpleChange } from '@angular/core';
 import {
     AlfrescoAuthenticationService,
     AlfrescoSettingsService,
+    AlfrescoTranslationService,
     AlfrescoApiService,
     CoreModule,
     LogService
@@ -27,6 +29,39 @@ import { DocumentListService } from './../services/document-list.service';
 import { DocumentMenuActionComponent } from './document-menu-action.component';
 
 declare let jasmine: any;
+
+let exampleFolderWithCreate = {
+    'entry': {
+        'aspectNames': ['cm:auditable'],
+        'allowableOperations': ['create'],
+        'createdAt': '2017-04-03T11:34:35.708+0000',
+        'isFolder': true,
+        'isFile': false,
+        'createdByUser': { 'id': 'admin', 'displayName': 'Administrator' },
+        'modifiedAt': '2017-04-03T11:34:35.708+0000',
+        'modifiedByUser': { 'id': 'admin', 'displayName': 'Administrator' },
+        'name': 'test-folder2',
+        'id': 'c0284dc3-841d-48b2-955c-bcb2218e2b03',
+        'nodeType': 'cm:folder',
+        'parentId': '1ee81bf8-52d6-4cfc-a924-1efbc79306bf'
+    }
+};
+
+let exampleFolderWithNoOperations = {
+    'entry': {
+        'aspectNames': ['cm:auditable'],
+        'createdAt': '2017-04-03T11:34:35.708+0000',
+        'isFolder': true,
+        'isFile': false,
+        'createdByUser': { 'id': 'admin', 'displayName': 'Administrator' },
+        'modifiedAt': '2017-04-03T11:34:35.708+0000',
+        'modifiedByUser': { 'id': 'admin', 'displayName': 'Administrator' },
+        'name': 'test-folder2',
+        'id': 'c0284dc3-841d-48b2-955c-bcb2218e2b03',
+        'nodeType': 'cm:folder',
+        'parentId': '1ee81bf8-52d6-4cfc-a924-1efbc79306bf'
+    }
+};
 
 describe('Document menu action', () => {
 
@@ -50,6 +85,9 @@ describe('Document menu action', () => {
         });
 
         TestBed.compileComponents();
+
+        let translateService = TestBed.get(AlfrescoTranslationService);
+        spyOn(translateService, 'get').and.returnValue({ value: 'fake translated message' });
     }));
 
     beforeEach(() => {
@@ -67,6 +105,10 @@ describe('Document menu action', () => {
     });
 
     describe('Folder creation', () => {
+
+        beforeEach(() => {
+            component.disableWithNoPermission = false;
+        });
 
         it('should createFolder fire a success event if the folder has been created', (done) => {
 
@@ -87,9 +129,9 @@ describe('Document menu action', () => {
                         'createdAt': '2017-04-03T11:34:35.708+0000',
                         'isFolder': true,
                         'isFile': false,
-                        'createdByUser': {'id': 'admin', 'displayName': 'Administrator'},
+                        'createdByUser': { 'id': 'admin', 'displayName': 'Administrator' },
                         'modifiedAt': '2017-04-03T11:34:35.708+0000',
-                        'modifiedByUser': {'id': 'admin', 'displayName': 'Administrator'},
+                        'modifiedByUser': { 'id': 'admin', 'displayName': 'Administrator' },
                         'name': 'test-folder2',
                         'id': 'c0284dc3-841d-48b2-955c-bcb2218e2b03',
                         'nodeType': 'cm:folder',
@@ -113,5 +155,99 @@ describe('Document menu action', () => {
                 status: 403
             });
         });
+
+        it('should createFolder fire an error when folder already exists', (done) => {
+            component.showDialog();
+
+            component.createFolder('test-folder');
+
+            component.error.subscribe((err) => {
+                expect(err.message).toEqual('fake translated message');
+                done();
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 403,
+                responseText: JSON.stringify({ message: 'Fake folder exists', error: { statusCode: 409 } })
+            });
+        });
+    });
+
+    describe('Check Permissions', () => {
+
+        it('should get the folder permission when folderId is changed', async(() => {
+            let change = new SimpleChange('folder-id', 'new-folder-id');
+            component.ngOnChanges({ 'folderId': change });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'application/json',
+                responseText: JSON.stringify(exampleFolderWithCreate)
+            });
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                let createButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#folder-create-button');
+                expect(createButton).toBeDefined();
+                expect(component.allowableOperations).toBeDefined();
+                expect(component.allowableOperations).not.toBeNull();
+                expect(createButton.disabled).toBeFalsy();
+            });
+        }));
+
+        it('should disable the create button if folder does not have any allowable operations', async(() => {
+            let change = new SimpleChange('folder-id', 'new-folder-id');
+            component.ngOnChanges({ 'folderId': change });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'application/json',
+                responseText: JSON.stringify(exampleFolderWithNoOperations)
+            });
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                let createButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#folder-create-button');
+                expect(createButton).toBeDefined();
+                expect(createButton.disabled).toBeTruthy();
+            });
+        }));
+
+        it('should not disable the option when disableWithNoPermission is false', async(() => {
+            component.disableWithNoPermission = false;
+            let change = new SimpleChange('folder-id', 'new-folder-id');
+            component.ngOnChanges({ 'folderId': change });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'application/json',
+                responseText: JSON.stringify(exampleFolderWithNoOperations)
+            });
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                let createButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#folder-create-button');
+                expect(createButton).toBeDefined();
+                expect(createButton.disabled).toBeFalsy();
+            });
+        }));
+
+        it('should emit permission event error when user does not have create permission', async(() => {
+            let change = new SimpleChange('folder-id', 'new-folder-id');
+            component.ngOnChanges({ 'folderId': change });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'application/json',
+                responseText: JSON.stringify(exampleFolderWithNoOperations)
+            });
+
+            component.permissionErrorEvent.subscribe((error) => {
+                expect(error.type).toEqual('folder');
+                expect(error.action).toEqual('create');
+            });
+            component.showDialog();
+            component.createFolder('not-allowed');
+        }));
     });
 });
