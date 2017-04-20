@@ -4,8 +4,8 @@
             <i class="material-icons">{{headingIcon}}</i>
         </div>
         <div class="adf-panel-heading-text">{{heading}}</div>
-        <div class="adf-panel-heading-toggle" (click)="toggleOpen($event)">
-            <i class="material-icons">{{getAccordianIcon()}}</i>
+        <div id="accordion-button" class="adf-panel-heading-toggle" (click)="toggleOpen($event)">
+            <i class="material-icons">{{getAccordionIcon()}}</i>
         </div>
     </div>
     <div class="adf-panel-collapse" [hidden]="!isOpen">

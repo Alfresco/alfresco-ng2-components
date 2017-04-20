@@ -61,7 +61,7 @@ describe('AccordionGroupComponent', () => {
         component.heading = 'Fake Header';
         component.headingIcon = 'fake-icon';
         fixture.detectChanges();
-        element.querySelector('.adf-panel-heading-toggle').click();
+        element.querySelector('#accordion-button').click();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             let headerText = fixture.nativeElement.querySelector('.adf-panel-heading-text');

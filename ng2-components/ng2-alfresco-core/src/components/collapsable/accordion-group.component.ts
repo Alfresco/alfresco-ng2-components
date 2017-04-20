@@ -73,7 +73,7 @@ export class AccordionGroupComponent implements OnDestroy {
         this.isOpen = !this.isOpen;
     }
 
-    getAccordianIcon(): string {
+    getAccordionIcon(): string {
         return this.isOpen ? 'expand_less' : 'expand_more';
     }
 }
