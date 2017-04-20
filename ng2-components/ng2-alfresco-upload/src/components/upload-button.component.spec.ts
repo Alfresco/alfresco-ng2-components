@@ -21,6 +21,7 @@ import { DebugElement }    from '@angular/core';
 import { CoreModule, AlfrescoTranslationService, NotificationService } from 'ng2-alfresco-core';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { UploadService } from '../services/upload.service';
+import { Observable } from 'rxjs/Rx';
 
 describe('UploadButtonComponent', () => {
 
@@ -51,6 +52,25 @@ describe('UploadButtonComponent', () => {
                 }
             }
         }
+    };
+
+    let fakeFolderNodeWithoutPermission = {
+        allowableOperations: [
+            'update'
+        ],
+        isFolder: true,
+        name: 'Folder Fake Name',
+        nodeType: 'cm:folder'
+    };
+
+    let fakeFolderNodeWithPermission = {
+        allowableOperations: [
+            'create',
+            'update'
+        ],
+        isFolder: true,
+        name: 'Folder Fake Name',
+        nodeType: 'cm:folder'
     };
 
     let fakeRejectPromise = new Promise(function (resolve, reject) {
@@ -117,9 +137,70 @@ describe('UploadButtonComponent', () => {
         expect(compiled.querySelector('#uploadFolder')).toBeDefined();
     });
 
+    it('should emit the permissionEvent, without permission and disableWithNoPermission false', (done) => {
+        component.rootFolderId = '-my-';
+        component.disableWithNoPermission = false;
+
+        spyOn(uploadService, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithoutPermission));
+
+        fixture.detectChanges();
+
+        component.permissionEvent.subscribe( permission => {
+            expect(permission).toBeDefined();
+            expect(permission.type).toEqual('content');
+            expect(permission.action).toEqual('upload');
+            expect(permission.permission).toEqual('create');
+            done();
+        });
+
+        component.onFilesAdded(fakeEvent);
+    });
+
+    it('should show the disabled button, without permission and disableWithNoPermission true', () => {
+        component.rootFolderId = '-my-';
+        component.disableWithNoPermission = true;
+
+        spyOn(uploadService, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithoutPermission));
+
+        component.onFilesAdded(fakeEvent);
+        let compiled = fixture.debugElement.nativeElement;
+        fixture.detectChanges();
+        expect(compiled.querySelector('#upload-single-file')).toBeDefined();
+        expect(compiled.querySelector('#upload-single-file').disabled).toBe(true);
+    });
+
+    it('should show the enabled button with permission and disableWithNoPermission true', () => {
+        component.rootFolderId = '-my-';
+        component.disableWithNoPermission = true;
+
+        spyOn(uploadService, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
+
+        component.onFilesAdded(fakeEvent);
+        let compiled = fixture.debugElement.nativeElement;
+        fixture.detectChanges();
+        expect(compiled.querySelector('#upload-single-file')).toBeDefined();
+        expect(compiled.querySelector('#upload-single-file').disabled).toBe(false);
+    });
+
+    it('should show the enabled button with permission and disableWithNoPermission false', () => {
+        component.rootFolderId = '-my-';
+        component.disableWithNoPermission = false;
+
+        spyOn(uploadService, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
+
+        component.onFilesAdded(fakeEvent);
+        let compiled = fixture.debugElement.nativeElement;
+        fixture.detectChanges();
+        expect(compiled.querySelector('#upload-single-file')).toBeDefined();
+        expect(compiled.querySelector('#upload-single-file').disabled).toBe(false);
+    });
+
     it('should call uploadFile with the default root folder', () => {
         component.currentFolderPath = '/root-fake-/sites-fake/folder-fake';
         component.onSuccess = null;
+
+        spyOn(uploadService, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
+
         uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
 
         fixture.detectChanges();
@@ -132,6 +213,8 @@ describe('UploadButtonComponent', () => {
         component.currentFolderPath = '/root-fake-/sites-fake/folder-fake';
         component.rootFolderId = '-my-';
         component.onSuccess = null;
+
+        spyOn(uploadService, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
         uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
 
         fixture.detectChanges();
@@ -144,6 +227,7 @@ describe('UploadButtonComponent', () => {
         component.currentFolderPath = '/fake-root-path';
         fixture.detectChanges();
 
+        spyOn(uploadService, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
         spyOn(uploadService, 'callApiCreateFolder').and.returnValue(fakeResolvePromise);
 
         component.onSuccess.subscribe(e => {
@@ -161,6 +245,7 @@ describe('UploadButtonComponent', () => {
     });
 
     it('should emit an onError event when the folder already exist', (done) => {
+        spyOn(uploadService, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
         spyOn(uploadService, 'callApiCreateFolder').and.returnValue(fakeRejectPromise);
         component.onError.subscribe(e => {
             expect(e.value).toEqual('FILE_UPLOAD.MESSAGES.FOLDER_ALREADY_EXIST');
