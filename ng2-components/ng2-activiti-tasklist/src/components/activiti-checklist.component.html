@@ -9,7 +9,9 @@
         <li class="mdl-list__item" *ngFor="let check of checklist">
             <span class="mdl-chip mdl-chip--deletable" id="check-{{check.id}}">
                 <span class="mdl-chip__text">{{check.name}}</span>
-                <button type="button" class="mdl-chip__action"><i id="remove-{{check.id}}" (click)="delete(check.id)" class="material-icons">cancel</i></button>
+                <button type="button" class="mdl-chip__action" (click)="delete(check.id)">
+                    <i id="remove-{{check.id}}" class="material-icons">cancel</i>
+                </button>
             </span>
         </li>
     </ul>
