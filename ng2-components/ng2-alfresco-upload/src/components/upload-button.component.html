@@ -1,6 +1,6 @@
 <form>
     <!--Files Upload-->
-    <div *ngIf="!uploadFolders" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-button--file">
+    <div *ngIf="!uploadFolders" [class.mdl-button--file--disabled]="disableButton" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-button--file">
         <i class="material-icons">file_upload</i>
 
         <!--Multiple Files Upload-->
@@ -11,6 +11,7 @@
                    (change)="onFilesAdded($event)"
                    multiple="multiple"
                    accept="{{acceptedFilesType}}"
+                   [attr.disabled]="disableButton"
                    #uploadFiles>
         </span>
 
@@ -21,6 +22,7 @@
             <input id="upload-single-file" data-automation-id="upload-single-file" type="file" name="uploadFiles"
                    (change)="onFilesAdded($event)"
                    accept="{{acceptedFilesType}}"
+                   [attr.disabled]="disableButton"
                    #uploadFiles>
         </span>
     </div>
@@ -34,6 +36,7 @@
                (change)="onDirectoryAdded($event)"
                multiple="multiple"
                accept="{{acceptedFilesType}}"
+               [attr.disabled]="disableButton"
                webkitdirectory directory
                multiple #uploadFolders>
     </div>
