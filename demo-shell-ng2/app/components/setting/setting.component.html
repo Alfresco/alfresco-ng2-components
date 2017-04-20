@@ -10,18 +10,31 @@
                     Content Services host URL configuration
                 </div>
                 <nav class="mdl-navigation">
-                    <div class="icon material-icons icon-margin">link</div>
-                    <input type="text" class="mdl-textfield__input" id="ecmHost" data-automation-id="ecmHost"
-                           tabindex="1" (change)="onChangeECMHost($event)" value="{{ecmHost}}"/>
+                    <i class="icon material-icons icon-margin">link</i>
+                    <div class="mdl-textfield mdl-js-textfield setting-input-padding">
+                        <input data-automation-id="ecmHost"
+                               class="mdl-textfield__input" tabindex="1"
+                               type="text" tabindex="1"
+                               (change)="onChangeECMHost($event)"
+                               pattern="^(http|https):\/\/.*" id="ecmHost" value="{{ecmHost}}">
+                        <label class="mdl-textfield__label" for="ecmHost">ECM Host</label>
+                        <span class="mdl-textfield__error">ECM host is not valid!</span>
+                    </div>
                 </nav>
 
                 <div class="mdl-card__supporting-text">
                     Process Services host URL configuration
                 </div>
                 <nav class="mdl-navigation">
-                    <div class="icon material-icons icon-margin">link</div>
-                    <input type="text" class="mdl-textfield__input" id="bpmHost" data-automation-id="bpmHost"
-                           tabindex="1" (change)="onChangeBPMHost($event)" value="{{bpmHost}}"/>
+                    <i class="icon material-icons icon-margin">link</i>
+                    <div class="mdl-textfield mdl-js-textfield setting-input-padding">
+                        <input class="mdl-textfield__input"
+                               type="text"
+                               (change)="onChangeBPMHost($event)"
+                               tabindex="2" pattern="^(http|https):\/\/.*" id="bpmHost" value="{{bpmHost}}">
+                        <label class="mdl-textfield__label" for="bpmHost">BPM Host</label>
+                        <span class="mdl-textfield__error">BPM host is not valid!</span>
+                    </div>
                 </nav>
             </div>
             <div class="mdl-card__actions mdl-card--border">
