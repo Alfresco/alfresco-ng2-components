@@ -45,11 +45,13 @@ import { DataColumnComponent } from './src/components/data-column/data-column.co
 import { DataColumnListComponent } from './src/components/data-column/data-column-list.component';
 import { MATERIAL_DESIGN_DIRECTIVES } from './src/components/material/index';
 import { CONTEXT_MENU_PROVIDERS, CONTEXT_MENU_DIRECTIVES } from './src/components/context-menu/index';
+import { COLLAPSABLE_DIRECTIVES } from './src/components/collapsable/index';
 
 export * from './src/services/index';
 export * from './src/components/index';
 export * from './src/components/data-column/data-column.component';
 export * from './src/components/data-column/data-column-list.component';
+export * from './src/components/collapsable/index';
 export * from './src/directives/upload.directive';
 export * from './src/utils/index';
 export * from './src/events/base.event';
@@ -94,6 +96,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
     declarations: [
         ...MATERIAL_DESIGN_DIRECTIVES,
         ...CONTEXT_MENU_DIRECTIVES,
+        ...COLLAPSABLE_DIRECTIVES,
         UploadDirective,
         DataColumnComponent,
         DataColumnListComponent
@@ -110,6 +113,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         TranslateModule,
         ...MATERIAL_DESIGN_DIRECTIVES,
         ...CONTEXT_MENU_DIRECTIVES,
+        ...COLLAPSABLE_DIRECTIVES,
         UploadDirective,
         DataColumnComponent,
         DataColumnListComponent

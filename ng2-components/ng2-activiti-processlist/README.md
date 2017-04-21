@@ -248,6 +248,25 @@ If both `appId` and `appName` are specified then `appName` will take precedence 
 | `onError` | Emitted when an error occurs |
 | `ilterClick` | Emitted when the user selects a filter from the list |
 
+### How to create an accordion menu with the processes filter
+
+You can create an accordion menu using the AccordionComponent that wrap the activiti task filter.
+The AccordionComponent is exposed by the alfresco-core.
+
+```html
+<accordion>
+    <accordion-group [heading]="'Processes'" [isSelected]="true" [headingIcon]="'assessment'">
+        <activiti-process-instance-filters
+            [appId]="appId"
+            (filterClick)="onProcessFilterClick($event)"
+            (onSuccess)="onSuccessProcessFilterList($event)">
+        </activiti-process-instance-filters>
+    </accordion-group>
+</accordion>
+```
+
+![how-create-accordion-menu](docs/assets/how-to-create-accordion-menu.png)
+
 ### Start Process Button component
 
 Displays a button which in turn displays a dialog when clicked, allowing the user
