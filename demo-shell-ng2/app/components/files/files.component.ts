@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, AfterViewInit, Optional, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit, Optional, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AlfrescoAuthenticationService, LogService, NotificationService } from 'ng2-alfresco-core';
 import { DocumentActionsService, DocumentListComponent, ContentActionHandler, DocumentActionModel, FolderActionModel } from 'ng2-alfresco-documentlist';
@@ -34,12 +34,27 @@ export class FilesComponent implements OnInit, AfterViewInit {
     errorMessage: string = null;
     fileNodeId: any;
     fileShowed: boolean = false;
+
+    @Input()
     multipleFileUpload: boolean = false;
+
+    @Input()
     disableWithNoPermission: boolean = false;
+
+    @Input()
     folderUpload: boolean = false;
+
+    @Input()
     acceptedFilesTypeShow: boolean = false;
+
+    @Input()
     versioning: boolean = false;
+
+    @Input()
     acceptedFilesType: string = '.jpg,.pdf,.js';
+
+    @Input()
+    enableUpload: boolean = true;
 
     @ViewChild(DocumentListComponent)
     documentList: DocumentListComponent;
@@ -82,30 +97,10 @@ export class FilesComponent implements OnInit, AfterViewInit {
         }
     }
 
-    toggleMultipleFileUpload() {
-        this.multipleFileUpload = !this.multipleFileUpload;
-        return this.multipleFileUpload;
-    }
-
-    toggleDisableWithNoPermission() {
-        this.disableWithNoPermission = !this.disableWithNoPermission;
-        return this.disableWithNoPermission;
-    }
-
     toggleFolder() {
         this.multipleFileUpload = false;
         this.folderUpload = !this.folderUpload;
         return this.folderUpload;
-    }
-
-    toggleAcceptedFilesType() {
-        this.acceptedFilesTypeShow = !this.acceptedFilesTypeShow;
-        return this.acceptedFilesTypeShow;
-    }
-
-    toggleVersioning() {
-        this.versioning = !this.versioning;
-        return this.versioning;
     }
 
     ngOnInit() {
