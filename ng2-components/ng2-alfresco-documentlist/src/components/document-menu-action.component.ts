@@ -154,17 +154,14 @@ export class DocumentMenuActionComponent implements OnChanges {
     }
 
     isButtonDisabled(): boolean {
-        let disbled = !this.hasCreatePermission() && this.disableWithNoPermission ? true : undefined;
-        return disbled;
+        return !this.hasCreatePermission() && this.disableWithNoPermission ? true : undefined;
     }
 
     hasPermission(permission: string): boolean {
-        let hasPermission: boolean = true;
+        let hasPermission: boolean = false;
         if (this.allowableOperations) {
             let permFound = this.allowableOperations.find(element => element === permission);
             hasPermission = permFound ? true : false;
-        } else {
-            hasPermission = false;
         }
         return hasPermission;
     }
