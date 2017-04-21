@@ -103,11 +103,10 @@ Follow the 3 steps below:
 
     Please refer to the following example file: [systemjs.config.js](demo/systemjs.config.js) .
 
-
 #### Basic usage with node id
 
 ```html
-<ng2-alfresco-viewer [overlayMode]="true" [urlFile]="'filename.pdf'"></ng2-alfresco-viewer>
+<alfresco-viewer [overlayMode]="true" [urlFile]="'filename.pdf'"></alfresco-viewer>
 ```
 
 Example of an App that declares the file viewer component :
@@ -121,22 +120,23 @@ import { ViewerModule } from 'ng2-alfresco-viewer';
 
 @Component({
     selector: 'alfresco-app-demo',
-    template: `<alfresco-viewer [showViewer]="true" [overlayMode]="true" [fileNodeId]="'d367023a-7ebe-4f3a-a7d0-4f27c43f1045'">
-                    <div class="mdl-spinner mdl-js-spinner is-active"></div>
-                   </alfresco-viewer>`
+    template: `
+        <alfresco-viewer 
+            [showViewer]="true" 
+            [overlayMode]="true" 
+            [fileNodeId]="'d367023a-7ebe-4f3a-a7d0-4f27c43f1045'">
+        </alfresco-viewer>`
 })
 class MyDemoApp {
 
-    constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService) {
+    constructor(private authService: AlfrescoAuthenticationService, 
+                private settingsService: AlfrescoSettingsService) {
         settingsService.ecmHost = 'http://localhost:8080';
 
         this.authService.login('admin', 'admin').subscribe(
-            ticket => {
-                console.log(ticket);
-            },
-            error => {
-                console.log(error);
-            });
+            ticket => console.log(ticket),
+            error => console.log(error)
+        );
     }
 }
 
@@ -152,13 +152,12 @@ class MyDemoApp {
 export class AppModule { }
 
 platformBrowserDynamic().bootstrapModule(AppModule);
-
 ```
 
 #### Basic usage with urlFile
 
 ```html
-<ng2-alfresco-viewer [overlayMode]="true" [urlFile]="'filename.pdf'"></ng2-alfresco-viewer>
+<alfresco-viewer [overlayMode]="true" [urlFile]="'filename.pdf'"></alfresco-viewer>
 ```
 
 Example of an App that declares the file viewer component :
@@ -172,22 +171,22 @@ import { ViewerModule } from 'ng2-alfresco-viewer';
 
 @Component({
     selector: 'alfresco-app-demo',
-    template: `<alfresco-viewer [showViewer]="true" [overlayMode]="true" [urlFile]="'localTestFile.pdf'">
-                    <div class="mdl-spinner mdl-js-spinner is-active"></div>
-               </alfresco-viewer>`
+    template: `
+        <alfresco-viewer 
+            [showViewer]="true" 
+            [overlayMode]="true" 
+            [urlFile]="'localTestFile.pdf'">
+        </alfresco-viewer>`
 })
 class MyDemoApp {
 
-    constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService) {
+    constructor(private authService: AlfrescoAuthenticationService, 
+                private settingsService: AlfrescoSettingsService) {
         settingsService.ecmHost = 'http://localhost:8080';
-
         this.authService.login('admin', 'admin').subscribe(
-            ticket => {
-                console.log(ticket);
-            },
-            error => {
-                console.log(error);
-            });
+            ticket => console.log(ticket),
+            error => console.log(error)
+        );
     }
 }
 
@@ -207,67 +206,79 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 
 #### Options
 
-Attribute     | Options     | Default      | Description | Mandatory
----           | ---         | ---          | ---         | ---
-`fileNodeId`         | *string*    |        |  node Id of the file to load the file | 
-`urlFile`         | *string*    |        |  If you want load an external file that not comes from the ECM you can use this Url where to load the file |
-`urlBlob`         | *Blob*    |        |  If you want load a Blob File |
-`overlayMode`         | *boolean*    | `false`        | if true Show the Viewer full page over the present content otherwise will fit the parent div  |
-`showViewer`         | *boolean*    | `true`        | Hide or show the viewer |
-`showToolbar`         | *boolean*    | `true`        | Hide or show the toolbars |
-`displayName`     | *string*    |        |  You can specify the name of the file|
+| Attribute     | Options     | Default      | Description | Mandatory
+| --- | --- | --- | --- | --- |
+| `fileNodeId` | *string* | | Node Id of the file to load the file |
+| `urlFile` | *string* | | If you want load an external file that not comes from the ECM you can use this Url where to load the file |
+| `urlBlob` | *Blob* | | If you want load a Blob File |
+| `overlayMode` | *boolean* | `false` | if true Show the Viewer full page over the present content otherwise will fit the parent div |
+| `showViewer` | *boolean* | `true` | Hide or show the viewer |
+| `showToolbar` | *boolean* | `true` | Hide or show the toolbars |
+| `displayName` | *string* | | You can specify the name of the file |
 
 #### Supported file formats
 
-Type     | extensions     
----           | ---         
-Media         | Mp4,  WebM, Ogv
-Images        | png, jpg, jpeg, gif, bmp         
-Text          | pdf         
+| Type | extensions |
+| --- | --- |
+| Media | Mp4,  WebM, Ogv |
+| Images | png, jpg, jpeg, gif, bmp |
+| Text | pdf |
 
 # Custom extension handler
 
 If you want handle other file formats that are not yet supported by the ng2-alfresco-viewer you can define your own custom handler.
-Above you can find an example where with the use of ``` extension-viewer  ``` if you can handle 3d files
+
+Below you can find an example where with the use of ```extension-viewer``` if you can handle 3d files
 
 ```html
-    <alfresco-viewer [(showViewer)]="fileShowed"
-                     [fileNodeId]="fileNodeId"
-                     [overlayMode]="true">
-        <extension-viewer [supportedExtensions]="['obj','3ds']" #extension>
-            <template let-urlFileContent="urlFileContent" let-extension="extension" >
-                <threed-viewer [urlFile]="urlFileContent" [extension]="extension" ></threed-viewer>
-            </template>
-        </extension-viewer>
-    </alfresco-viewer> 
+<alfresco-viewer 
+    [(showViewer)]="fileShowed"
+    [fileNodeId]="fileNodeId"
+    [overlayMode]="true">
+    
+    <extension-viewer [supportedExtensions]="['obj','3ds']" #extension>
+        <template let-urlFileContent="urlFileContent" let-extension="extension">
+            <threed-viewer 
+                [urlFile]="urlFileContent" 
+                [extension]="extension">
+            </threed-viewer>
+        </template>
+    </extension-viewer>
+
+</alfresco-viewer> 
 ```
-Note: In order to make the example above works you need to add in your package.json the dependency to ng2-3d-editor.
 
-Is possible define multiple ``` extension-viewer  ```
+Note: you need adding `ng2-3d-editor` dependency to your `package.json` file to make example above work.
+
+It is possible to define multiple ```extension-viewer``` templates:
 
 ```html
-    <alfresco-viewer [(showViewer)]="fileShowed"
-                     [fileNodeId]="fileNodeId"
-                     [overlayMode]="true">
+<alfresco-viewer 
+    [(showViewer)]="fileShowed"
+    [fileNodeId]="fileNodeId"
+    [overlayMode]="true">
 
-        <extension-viewer [supportedExtensions]="['xls','xlsx']" #extension>
-            <template let-urlFileContent="urlFileContent"  >
-                  <my-custom-xls-component urlFileContent="urlFileContent"></my-custom-xls-component>
-            </template>
-        </extension-viewer>
+    <extension-viewer [supportedExtensions]="['xls','xlsx']" #extension>
+        <template let-urlFileContent="urlFileContent"  >
+            <my-custom-xls-component 
+                urlFileContent="urlFileContent">
+            </my-custom-xls-component>
+        </template>
+    </extension-viewer>
 
-        <extension-viewer [supportedExtensions]="['txt']" #extension>
-            <template  let-urlFileContent="urlFileContent" >               
-                <my-custom-txt-component urlFileContent="urlFileContent"></my-custom-txt-component>
-            </template>
-        </extension-viewer>
-    </alfresco-viewer> 
+    <extension-viewer [supportedExtensions]="['txt']" #extension>
+        <template  let-urlFileContent="urlFileContent" >               
+            <my-custom-txt-component 
+                urlFileContent="urlFileContent">
+            </my-custom-txt-component>
+        </template>
+    </extension-viewer>
+</alfresco-viewer> 
 ```
 
 ## Build from sources
 
 Alternatively you can build component from sources with the following commands:
-
 
 ```sh
 npm install
@@ -324,4 +335,3 @@ npm start
 ## License
 
 [Apache Version 2.0](https://github.com/Alfresco/alfresco-ng2-components/blob/master/LICENSE)
-
