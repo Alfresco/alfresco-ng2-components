@@ -46,6 +46,7 @@
     </div>
     <div *ngIf="isAssignedToMe()">
         <activiti-form *ngIf="hasFormKey()" #activitiForm
+            [showDebugButton]="debugMode"
             [taskId]="taskDetails.id"
             [showTitle]="showFormTitle"
             [showRefreshButton]="showFormRefreshButton"

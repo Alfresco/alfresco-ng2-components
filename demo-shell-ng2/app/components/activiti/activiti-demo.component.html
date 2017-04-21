@@ -58,6 +58,7 @@
                     </div>
                     <div class="mdl-cell mdl-cell--7-col task-column mdl-shadow--2dp">
                         <activiti-task-details #activitidetails
+                            [debugMode]="true"
                             [taskId]="currentTaskId"
                             (formCompleted)="onFormCompleted($event)"
                             (formContentClicked)="onFormContentClick($event)"
