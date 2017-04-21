@@ -25,6 +25,7 @@ import 'ng2-alfresco-documentlist';
 import 'ng2-alfresco-login';
 import 'ng2-alfresco-search';
 import 'ng2-alfresco-tag';
+import 'ng2-alfresco-social';
 import 'ng2-alfresco-upload';
 import 'ng2-alfresco-viewer';
 import 'ng2-alfresco-webscript';

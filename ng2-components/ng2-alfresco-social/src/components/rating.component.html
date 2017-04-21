@@ -1,0 +1,10 @@
+<div id="adf-rating-container" class="adf-rating-container">
+    <ul class="mdl-list adf-stars-container">
+        <li class="mdl-list__item adf-rating-star" *ngFor="let currentRate of stars; let idx = index">
+            <span id="adf-rate-{{idx}}" class="mdl-list__item-primary-content">
+                <i id="adf-grey-star-{{idx}}" *ngIf="currentRate.fill" class="material-icons adf-colored-star" (click)="updateVote(idx + 1)" >star_rate</i>
+                <i id="adf-colored-star-{{idx}}" *ngIf="!currentRate.fill" class="material-icons adf-grey-star" (click)="updateVote(idx + 1)" >star_border</i>
+            </span>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,11 @@
+<div id="adf-like-container" class="adf-like-container">
+    <div class="material-icons adf-like">
+        <span id="adf-like-{{nodeId}}" [ngClass]="{'adf-like-select': isLike ,'adf-like-grey': !isLike  }"
+              (click)="likeClick()">
+            <i class="material-icons">thumb_up</i>
+        </span>
+    </div>
+    <div id="adf-like-counter" class="adf-like-counter">{{likesCounter}}</div>
+    <div class="adf-left" *ngIf="likesCounter<=1">Like</div>
+    <div class="adf-left" *ngIf="likesCounter>1">Likes</div>
+</div>

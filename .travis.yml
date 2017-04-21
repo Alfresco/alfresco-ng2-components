@@ -25,6 +25,7 @@ env:
     - MODULE=ng2-activiti-diagrams
     - MODULE=ng2-activiti-analytics
     - MODULE=ng2-alfresco-userinfo
+    - MODULE=ng2-alfresco-social
 
 before_script:
   - if ([ "$MODULE" != "ng2-alfresco-core" ]); then
