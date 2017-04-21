@@ -121,75 +121,65 @@
 
 <context-menu-holder></context-menu-holder>
 
-<p class="options-container">
-    <label for="switch-multiple-file" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
-        <input type="checkbox" id="switch-multiple-file" class="mdl-switch__input" (change)="toggleMultipleFileUpload()" >
-        <span class="mdl-switch__label">Multiple File Upload</span>
-    </label>
-</p>
+<div class="container">
+    <section>
+        <md-slide-toggle [(ngModel)]="multipleFileUpload">Multiple File Upload</md-slide-toggle>
+    </section>
 
+    <section>
+        <md-slide-toggle [(ngModel)]="folderUpload">Folder upload</md-slide-toggle>
+    </section>
 
-<p class="options-container">
-    <label for="switch-folder-upload" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
-        <input type="checkbox" id="switch-folder-upload" class="mdl-switch__input" (change)="toggleFolder()">
-        <span class="mdl-switch__label">Folder Upload</span>
-    </label>
-</p>
+    <section>
+        <md-slide-toggle [(ngModel)]="acceptedFilesTypeShow">Custom extensions filter</md-slide-toggle>
+    </section>
 
-<p class="options-container">
-    <label for="switch-accepted-file-type" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
-        <input type="checkbox" id="switch-accepted-file-type" class="mdl-switch__input" (change)="toggleAcceptedFilesType()">
-        <span class="mdl-switch__label">Filter extension</span>
-    </label>
-</p>
+    <section>
+        <md-slide-toggle [(ngModel)]="versioning">Enable versioning</md-slide-toggle>
+    </section>
 
-<p style="width:250px;margin: 20px;">
-    <label for="switch-versioning" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
-        <input type="checkbox" id="switch-versioning" class="mdl-switch__input" (change)="toggleVersioning()">
-        <span class="mdl-switch__label">Versioning</span>
-    </label>
-</p>
+    <section>
+        <md-slide-toggle [(ngModel)]="disableWithNoPermission">Disable when user has no permissions</md-slide-toggle>
+    </section>
 
-<p class="options-container">
-    <label for="switch-disableWithNoPermission" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
-        <input type="checkbox" id="switch-disableWithNoPermission" class="mdl-switch__input" (change)="toggleDisableWithNoPermission()" >
-        <span class="mdl-switch__label">Disable upload</span>
-    </label>
-</p>
-
-<h5>Upload</h5>
-<br>
-<div *ngIf="acceptedFilesTypeShow">
-    <label class="mdl-input__label">Extension accepted
-        <input type="text" data-automation-id="accepted-files-type" [(ngModel)]="acceptedFilesType">
-    </label>
-    <br/>
+    <h5>Upload</h5>
+    <section *ngIf="acceptedFilesTypeShow">
+        <md-input-container>
+            <input md-input placeholder="Extension accepted" [(ngModel)]="acceptedFilesType"  data-automation-id="accepted-files-type">
+        </md-input-container>
+    </section>
+    <div *ngIf="!acceptedFilesTypeShow">
+        <alfresco-upload-button
+            #uploadButton
+            [disabled]="!enableUpload"
+            data-automation-id="multiple-file-upload"
+            [rootFolderId]="documentList.currentFolderId"
+            [multipleFiles]="multipleFileUpload"
+            [uploadFolders]="folderUpload"
+            [versioning]="versioning"
+            [disableWithNoPermission]="disableWithNoPermission"
+            (permissionEvent)="onUploadPermissionFailed($event)">
+        </alfresco-upload-button>
+    </div>
+    <div *ngIf="acceptedFilesTypeShow">
+        <alfresco-upload-button
+            #uploadButton
+            [disabled]="!enableUpload"
+            data-automation-id="multiple-file-upload"
+            [rootFolderId]="documentList.currentFolderId"
+            [acceptedFilesType]="acceptedFilesType"
+            [multipleFiles]="multipleFileUpload"
+            [uploadFolders]="folderUpload"
+            [versioning]="versioning"
+            [disableWithNoPermission]="disableWithNoPermission"
+            (permissionEvent)="onUploadPermissionFailed($event)">
+        </alfresco-upload-button>
+    </div>
+    <section>
+        <md-checkbox [(ngModel)]="enableUpload">Enable upload (demoing enabled/disabled state)</md-checkbox>
+    </section>
 </div>
-<div *ngIf="!acceptedFilesTypeShow">
-    <alfresco-upload-button #uploadButton
-                            data-automation-id="multiple-file-upload"
-                            [rootFolderId]="documentList.currentFolderId"
-                            [multipleFiles]="multipleFileUpload"
-                            [uploadFolders]="folderUpload"
-                            [versioning] = "versioning"
-                            [disableWithNoPermission]="disableWithNoPermission"
-                            (permissionEvent)="onUploadPermissionFailed($event)">
-        <div class="mdl-spinner mdl-js-spinner is-active"></div>
-    </alfresco-upload-button>
-</div>
-<div *ngIf="acceptedFilesTypeShow">
-    <alfresco-upload-button #uploadButton
-                            data-automation-id="multiple-file-upload"
-                            [rootFolderId]="documentList.currentFolderId"
-                            [acceptedFilesType]="acceptedFilesType"
-                            [multipleFiles]="multipleFileUpload"
-                            [uploadFolders]="folderUpload"
-                            [versioning] = "versioning"
-                            [disableWithNoPermission]="disableWithNoPermission"
-                            (permissionEvent)="onUploadPermissionFailed($event)">
-        <div class="mdl-spinner mdl-js-spinner is-active"></div>
-    </alfresco-upload-button>
-</div>
+
 <file-uploading-dialog #fileDialog></file-uploading-dialog>
 
 <div *ngIf="fileShowed">
