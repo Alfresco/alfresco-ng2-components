@@ -1,5 +1,5 @@
 <div class="container">
-    <button id="folder-create-button" md-button [mdMenuTriggerFor]="menu" [attr.disabled]="!hasCreatePermission()">
+    <button id="folder-create-button" md-button [mdMenuTriggerFor]="menu" [disabled]="isButtonDisabled()">
         <md-icon>add</md-icon>
         <span>{{ 'ALFRESCO_DOCUMENT_LIST.BUTTON.ACTION_CREATE' | translate }}</span>
     </button>

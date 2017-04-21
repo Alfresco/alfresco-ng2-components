@@ -101,7 +101,11 @@ export class DocumentMenuActionComponent implements OnChanges {
                     }
                 );
         } else {
-            this.permissionErrorEvent.emit(new PermissionModel({type: 'folder', action: 'create', permission: this.allowableOperations}));
+            this.permissionErrorEvent.emit(new PermissionModel({
+                type: 'folder',
+                action: 'create',
+                permission: 'create'
+            }));
         }
     }
 
@@ -149,12 +153,17 @@ export class DocumentMenuActionComponent implements OnChanges {
         return this.folderName === '' ? true : false;
     }
 
+    isButtonDisabled(): boolean {
+        let disbled = !this.hasCreatePermission() && this.disableWithNoPermission ? true : undefined;
+        return disbled;
+    }
+
     hasPermission(permission: string): boolean {
         let hasPermission: boolean = true;
         if (this.allowableOperations) {
             let permFound = this.allowableOperations.find(element => element === permission);
-            hasPermission = !permFound && this.disableWithNoPermission ? false : true;
-        } else if (this.disableWithNoPermission) {
+            hasPermission = permFound ? true : false;
+        } else {
             hasPermission = false;
         }
         return hasPermission;
