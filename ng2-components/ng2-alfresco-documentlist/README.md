@@ -37,6 +37,10 @@
 Before you start using this development framework, make sure you have installed all required software and done all the
 necessary configuration [prerequisites](https://github.com/Alfresco/alfresco-ng2-components/blob/master/PREREQUISITES.md).
 
+## See also
+
+- [Walkthrough: adding indicators to clearly highlight information about a node](docs/metadata-indicators.md)
+
 ## Install
 
 Follow the 3 steps below:
