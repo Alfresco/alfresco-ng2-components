@@ -1,6 +1,6 @@
 <form>
     <!--Files Upload-->
-    <div *ngIf="!uploadFolders" [class.mdl-button--file--disabled]="isDisabled()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-button--file">
+    <div *ngIf="!uploadFolders" [class.mdl-button--file--disabled]="isButtonDisabled()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-button--file">
         <md-icon>file_upload</md-icon>
 
         <!--Multiple Files Upload-->
@@ -11,7 +11,7 @@
                    (change)="onFilesAdded($event)"
                    multiple="multiple"
                    accept="{{acceptedFilesType}}"
-                   [attr.disabled]="isDisabled()"
+                   [attr.disabled]="isButtonDisabled()"
                    #uploadFiles>
         </span>
 
@@ -22,13 +22,13 @@
             <input id="upload-single-file" data-automation-id="upload-single-file" type="file" name="uploadFiles"
                    (change)="onFilesAdded($event)"
                    accept="{{acceptedFilesType}}"
-                   [attr.disabled]="isDisabled()"
+                   [attr.disabled]="isButtonDisabled()"
                    #uploadFiles>
         </span>
     </div>
 
     <!--Folders Upload-->
-    <div *ngIf="uploadFolders" [class.mdl-button--file--disabled]="isDisabled()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-button--file">
+    <div *ngIf="uploadFolders" [class.mdl-button--file--disabled]="isButtonDisabled()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-button--file">
         <md-icon>file_upload</md-icon>
         <label id="uploadFolder-label" *ngIf="!staticTitle" for="uploadFolder">{{'FILE_UPLOAD.BUTTON.UPLOAD_FOLDER' | translate}}</label>
         <label id="uploadFolder-label-static" *ngIf="staticTitle" for="uploadFolder">{{staticTitle}}</label>
@@ -36,7 +36,7 @@
                (change)="onDirectoryAdded($event)"
                multiple="multiple"
                accept="{{acceptedFilesType}}"
-               [attr.disabled]="isDisabled()"
+               [attr.disabled]="isButtonDisabled()"
                webkitdirectory directory
                multiple #uploadFolders>
     </div>
