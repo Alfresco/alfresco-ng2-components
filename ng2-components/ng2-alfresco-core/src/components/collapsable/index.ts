@@ -15,6 +15,10 @@
  * limitations under the License.
  */
 
-export * from './context-menu/index';
-export * from './material/index';
-export * from './collapsable/index';
+import {AccordionComponent} from './accordion.component';
+import {AccordionGroupComponent} from './accordion-group.component';
+
+export const COLLAPSABLE_DIRECTIVES: [any] = [
+    AccordionComponent,
+    AccordionGroupComponent
+];
