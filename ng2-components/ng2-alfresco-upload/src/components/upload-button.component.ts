@@ -57,6 +57,9 @@ export class UploadButtonComponent implements OnInit, OnChanges {
     private static DEFAULT_ROOT_ID: string = '-root-';
 
     @Input()
+    disabled: boolean = false;
+
+    @Input()
     showNotificationBar: boolean = true;
 
     @Input()
@@ -96,7 +99,6 @@ export class UploadButtonComponent implements OnInit, OnChanges {
     permissionEvent: EventEmitter<PermissionModel> = new EventEmitter<PermissionModel>();
 
     private disableButton: boolean = false;
-
     private permissionValue: Subject<boolean> = new Subject<boolean>();
 
     constructor(private el: ElementRef,
@@ -107,6 +109,10 @@ export class UploadButtonComponent implements OnInit, OnChanges {
         if (translateService) {
             translateService.addTranslationFolder('ng2-alfresco-upload', 'node_modules/ng2-alfresco-upload/src');
         }
+    }
+
+    isDisabled(): boolean {
+        return this.disabled || this.disableButton;
     }
 
     ngOnInit() {
