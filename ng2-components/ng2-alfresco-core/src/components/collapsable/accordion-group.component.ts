@@ -20,7 +20,6 @@ import { AccordionComponent } from './accordion.component';
 
 @Component({
     selector: 'adf-accordion-group',
-    moduleId: module.id,
     templateUrl: 'accordion-group.component.html',
     styleUrls: ['./accordion-group.component.css']
 

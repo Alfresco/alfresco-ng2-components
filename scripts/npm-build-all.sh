@@ -2,7 +2,6 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 eval RUN_TEST=false
-eval RUN_LINK=false
 
 eval projects=( "ng2-alfresco-core"
     "ng2-alfresco-datatable"
@@ -25,64 +24,40 @@ show_help() {
     echo "Usage: npm-build-all.sh"
     echo ""
     echo "-t or -test build all your local component and run also the test on them"
-    echo "-l or -link link together the local component and link it also in the demo shell"
 }
 
 enable_test(){
     RUN_TEST=true
 }
 
-enable_link(){
-    RUN_LINK=true
-}
-
-build_project() {
-    cd $1
-    echo "====== build project: $2 ====="
-    npm install
-
-    if $RUN_TEST == true; then
-     npm run test
-    fi
-
-    if $RUN_LINK == true; then
-      npm run travis
-    fi
-
-    npm run tsc
-    npm run build.umd
-
-    if $RUN_LINK == true; then
-      npm link
-    fi
+test_project() {
+    echo "====== test project: $1 ====="
+    npm run test || exit 1
 }
 
 while [[ $1 == -* ]]; do
     case "$1" in
       -h|--help|-\?) show_help; exit 0;;
-      -l|--link)  enable_link; shift;;
       -t|--test)  enable_test; shift;;
       -*) echo "invalid option: $1" 1>&2; show_help; exit 1;;
     esac
 done
 
+cd "$DIR/../ng2-components/"
+npm install package-json-merge -g
+npm install rimraf -g
+npm install license-check -g
+npm run pkg-build
+npm install && npm run build || exit 1
+
 for PACKAGE in ${projects[@]}
 do
   DESTDIR="$DIR/../ng2-components/${PACKAGE}"
-  build_project $DESTDIR $PACKAGE
+  cd $DESTDIR
+  npm run license-check || exit 1
+  if $RUN_TEST == true; then
+      test_project $PACKAGE
+  fi
 done
 
-#Install demo
 
-cd "$DIR/../demo-shell-ng2"
-npm install
-
-if $RUN_LINK == true; then
-    #LINK ALL THE COMPONENTS INSIDE THE DEMO-SHELL
-    for PACKAGE in ${projects[@]}
-    do
-      DESTDIR="$DIR/../ng2-components/${PACKAGE}"
-      echo "====== demo shell linking: ${PACKAGE} ====="
-      npm link ${PACKAGE}
-    done
-fi

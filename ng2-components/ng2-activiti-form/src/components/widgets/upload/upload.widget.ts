@@ -21,7 +21,6 @@ import { WidgetComponent } from './../widget.component';
 import { FormService } from '../../../services/form.service';
 
 @Component({
-    moduleId: module.id,
     selector: 'upload-widget',
     templateUrl: './upload.widget.html',
     styleUrls: ['./upload.widget.css']

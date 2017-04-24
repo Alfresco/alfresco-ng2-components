@@ -41,10 +41,10 @@
                 defaultExtension: 'js'
             },
             'ng2-translate': { defaultExtension: 'js' },
-            'ng2-alfresco-core': { main: './index.js', defaultExtension: 'js'},
-            'ng2-alfresco-userinfo': { main: './index.js', defaultExtension: 'js'},
             'alfresco-js-api': { main: './alfresco-js-api.js', defaultExtension: 'js'},
-            'ng2-alfresco-login': { main: './index.js', defaultExtension: 'js'}
+            'ng2-alfresco-core': {main: './bundles/ng2-alfresco-core.js', defaultExtension: 'js'},
+            'ng2-alfresco-userinfo': {main: './bundles/ng2-alfresco-userinfo.js', defaultExtension: 'js'},
+            'ng2-alfresco-login': {main: './bundles/ng2-alfresco-login.js', defaultExtension: 'js'}
         }
     });
 })(this);

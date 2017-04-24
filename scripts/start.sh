@@ -10,7 +10,6 @@ show_help() {
     echo "-i or -install start the demo shell and install the dependencies"
     echo "-u or -update start the demo shell and update the dependencies"
     echo "-c or -cleanInstall clean the demo shell install the dependencies and start the the demo shell"
-    echo "-l or -link all the ng2-components in the demo shell and start the the demo shell"
 }
 
 install() {
@@ -26,22 +25,6 @@ cleanInstall() {
     npm run clean
     npm install
 }
-
-link() {
-    echo "link"
-    "$DIR/npm-link-demo-shell.sh"
-}
-
-eval args=("$@");
-
-while [[ $1 == -* ]]; do
-    case "$1" in
-      -l|--link) link; shift;;
-      -*) shift;;
-    esac
-done
-
-set -- "${args[@]}";
 
 while [[ $1  == -* ]]; do
     case "$1" in

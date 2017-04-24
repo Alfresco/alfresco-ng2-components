@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export var chartProcessDefOverview = {
+export let chartProcessDefOverview = {
     'elements': [{
         'id': 'id1585876275153',
         'type': 'table',
@@ -62,7 +62,7 @@ export var chartProcessDefOverview = {
     }]
 };
 
-export var chartTaskOverview = {
+export let chartTaskOverview = {
     'elements': [{
         'id': 'id792351752194',
         'type': 'barChart',

@@ -23,7 +23,6 @@ import { RaphaelService } from './raphael/raphael.service';
 import { DiagramModel, DiagramElementModel } from '../models/diagram.model';
 
 @Component({
-    moduleId: module.id,
     selector: 'activiti-diagram',
     styleUrls: ['./diagram.component.css'],
     templateUrl: './diagram.component.html'

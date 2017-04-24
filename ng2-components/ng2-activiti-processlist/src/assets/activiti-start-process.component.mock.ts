@@ -18,12 +18,12 @@
 import { ProcessInstance } from './../models/process-instance.model';
 import { ProcessDefinitionRepresentation } from './../models/process-definition.model';
 
-export var newProcess = new ProcessInstance({
+export let newProcess = new ProcessInstance({
     id: '32323',
     name: 'Process'
 });
 
-export var fakeProcessDefs = [new ProcessDefinitionRepresentation({
+export let fakeProcessDefs = [new ProcessDefinitionRepresentation({
     id: 'my:process1',
     name: 'My Process 1',
     hasStartForm: false
@@ -33,13 +33,13 @@ export var fakeProcessDefs = [new ProcessDefinitionRepresentation({
     hasStartForm: false
 })];
 
-export var fakeProcessDefWithForm = [new ProcessDefinitionRepresentation({
+export let fakeProcessDefWithForm = [new ProcessDefinitionRepresentation({
     id: 'my:process1',
     name: 'My Process 1',
     hasStartForm: true
 })];
 
-export var taskFormMock = {
+export let taskFormMock = {
     'id': 4,
     'name': 'Translation request',
     'processDefinitionId': 'TranslationProcess:2:8',

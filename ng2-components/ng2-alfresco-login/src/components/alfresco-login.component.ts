@@ -24,14 +24,11 @@ declare let componentHandler: any;
 
 @Component({
     selector: 'alfresco-login',
-    moduleId: module.id,
     templateUrl: './alfresco-login.component.html',
     styleUrls: ['./alfresco-login.component.css'],
     host: {'(blur)': 'onBlur($event)'}
 })
 export class AlfrescoLoginComponent implements OnInit {
-
-    private baseComponentPath: string = module.id.replace('components/alfresco-login.component.js', '');
 
     isPasswordShow: boolean = false;
 
@@ -42,10 +39,10 @@ export class AlfrescoLoginComponent implements OnInit {
     registerLink: string = '';
 
     @Input()
-    logoImageUrl: string = this.baseComponentPath + 'assets/images/alfresco-logo.svg';
+    logoImageUrl: string = require('../assets/images/alfresco-logo.svg');
 
     @Input()
-    backgroundImageUrl: string = this.baseComponentPath + 'assets/images/background.svg';
+    backgroundImageUrl: string = require('../assets/images/background.svg');
 
     @Input()
     providers: string;

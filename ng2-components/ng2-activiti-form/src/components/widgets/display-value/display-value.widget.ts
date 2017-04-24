@@ -26,7 +26,6 @@ import { WidgetVisibilityService } from '../../../services/widget-visibility.ser
 import { NumberFieldValidator } from '../core/form-field-validator';
 
 @Component({
-    moduleId: module.id,
     selector: 'display-value-widget',
     templateUrl: './display-value.widget.html',
     styleUrls: ['./display-value.widget.css']

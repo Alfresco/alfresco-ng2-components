@@ -46,9 +46,9 @@
             'ng2-translate': { defaultExtension: 'js' },
             'ng2-charts': { main: 'ng2-charts.js', defaultExtension: 'js'},
             'alfresco-js-api': { main: './alfresco-js-api.js', defaultExtension: 'js'},
-            'ng2-alfresco-core': { main: './index.js', defaultExtension: 'js'},
-            'ng2-activiti-diagrams': { main: './index.js', defaultExtension: 'js'},
-            'ng2-activiti-analytics': { main: './index.js', defaultExtension: 'js'}
+            'ng2-alfresco-core': { main: './bundles/ng2-alfresco-core.js', defaultExtension: 'js'},
+            'ng2-analytics-diagrams': { main: './bundles/ng2-analytics-diagrams.js', defaultExtension: 'js'},
+            'ng2-analytics-analytics': { main: './bundles/ng2-analytics-analytics.js', defaultExtension: 'js'}
         }
     });
 })(this);

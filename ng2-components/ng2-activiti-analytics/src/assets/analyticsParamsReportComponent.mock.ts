@@ -17,14 +17,14 @@
 
 import { ReportParameterDetailsModel } from '../models/report.model';
 
-export var reportDefParamStatus = {
+export let reportDefParamStatus = {
     'id': 2005,
     'name': 'Fake Task overview status',
     'created': '2016-10-05T15:39:40.222+0000',
     'definition': '{ "parameters" :[{"id":"status","name":null,"nameKey":null,"type":"status","value":null,"dependsOn":null}]}'
 };
 
-export var reportDefParamNumber = {
+export let reportDefParamNumber = {
     'id': 2005,
     'name': 'Fake Process instances overview',
     'created': '2016-10-05T15:39:40.222+0000',
@@ -32,7 +32,7 @@ export var reportDefParamNumber = {
     ' :[{"id":"slowProcessInstanceInteger","name":null,"nameKey":null,"type":"integer","value":10,"dependsOn":null}]}'
 };
 
-export var reportDefParamDuration = {
+export let reportDefParamDuration = {
     'id': 2005,
     'name': 'Fake Task service level agreement',
     'created': '2016-10-05T15:39:40.222+0000',
@@ -40,7 +40,7 @@ export var reportDefParamDuration = {
     ' :[{"id":"duration","name":null,"nameKey":null,"type":"duration","value":null,"dependsOn":null}]}'
 };
 
-export var reportDefParamCheck = {
+export let reportDefParamCheck = {
     'id': 2005,
     'name': 'Fake Task service level agreement',
     'created': '2016-10-05T15:39:40.222+0000',
@@ -48,28 +48,28 @@ export var reportDefParamCheck = {
     ' :[{"id":"typeFiltering","name":null,"nameKey":null,"type":"boolean","value":true,"dependsOn":null}]}'
 };
 
-export var reportDefParamDateRange = {
+export let reportDefParamDateRange = {
     'id': 2005,
     'name': 'Fake Process instances overview',
     'created': '2016-10-05T15:39:40.222+0000',
     'definition': '{ "parameters" :[{"id":"dateRange","name":null,"nameKey":null,"type":"dateRange","value":null,"dependsOn":null}]}'
 };
 
-export var reportDefParamRangeInterval = {
+export let reportDefParamRangeInterval = {
     'id': 2006,
     'name': 'Fake Task overview RangeInterval',
     'created': '2016-10-05T15:39:40.222+0000',
     'definition': '{ "parameters" :[{"id":"dateRangeInterval","name":null,"nameKey":null,"type":"dateInterval","value":null,"dependsOn":null}]}'
 };
 
-export var reportDefParamProcessDef = {
+export let reportDefParamProcessDef = {
     'id': 2006,
     'name': 'Fake Task overview ProcessDefinition',
     'created': '2016-10-05T15:39:40.222+0000',
     'definition': '{ "parameters" :[{"id":"processDefinitionId","name":null,"nameKey":null,"type":"processDefinition","value":null,"dependsOn":null}]}'
 };
 
-export var reportDefParamProcessDefOptionsNoApp = [
+export let reportDefParamProcessDefOptionsNoApp = [
     {
         'id': 'FakeProcessTest 1:1:1',
         'name': 'Fake Process Test 1 Name ',
@@ -92,7 +92,7 @@ export var reportDefParamProcessDefOptionsNoApp = [
     }
 ];
 
-export var reportDefParamProcessDefOptions = {
+export let reportDefParamProcessDefOptions = {
     'size': 4, 'total': 4, 'start': 0, 'data': [
         {
             'id': 'FakeProcessTest 1:1:1',
@@ -117,7 +117,7 @@ export var reportDefParamProcessDefOptions = {
     ]
 };
 
-export var reportDefParamProcessDefOptionsApp = {
+export let reportDefParamProcessDefOptionsApp = {
     'size': 2, 'total': 2, 'start': 2, 'data': [
         {
             'id': 'FakeProcessTest 1:1:1',
@@ -132,23 +132,23 @@ export var reportDefParamProcessDefOptionsApp = {
     ]
 };
 
-export var reportDefParamTask = {
+export let reportDefParamTask = {
     'id': 2006,
     'name': 'Fake Task service level agreement',
     'created': '2016-10-05T15:39:40.222+0000',
     'definition': '{ "parameters" :[{"id":"taskName","name":null,"nameKey":null,"type":"task","value":null,"dependsOn":"processDefinitionId"}]}'
 };
 
-export var reportNoParameterDefinitions = {
+export let reportNoParameterDefinitions = {
     'id': 2006,
     'name': 'Fake Task service level agreement',
     'created': '2016-10-05T15:39:40.222+0000',
     'definition': '{ "parameters" : []}'
 };
 
-export var reportDefParamTaskOptions = ['Fake task name 1', 'Fake task name 2'];
+export let reportDefParamTaskOptions = ['Fake task name 1', 'Fake task name 2'];
 
-export var fieldProcessDef = new ReportParameterDetailsModel(
+export let fieldProcessDef = new ReportParameterDetailsModel(
     {
         id: 'processDefinitionId',
         type: 'processDefinition',

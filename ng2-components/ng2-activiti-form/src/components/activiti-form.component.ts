@@ -71,7 +71,6 @@ declare var componentHandler: any;
  * @returns {ActivitiForm} .
  */
 @Component({
-    moduleId: module.id,
     selector: 'activiti-form',
     templateUrl: './activiti-form.component.html',
     styleUrls: ['./activiti-form.component.css']
@@ -236,6 +235,12 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
         let formName = changes['formName'];
         if (formName && formName.currentValue) {
             this.getFormDefinitionByFormName(formName.currentValue);
+            return;
+        }
+
+        let nodeId = changes['nodeId'];
+        if (nodeId && nodeId.currentValue) {
+            this.loadFormForEcmNode();
             return;
         }
     }
