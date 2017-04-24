@@ -22,7 +22,14 @@ import {
 import { Subject } from 'rxjs/Rx';
 import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, Pagination } from 'alfresco-js-api';
 import { AlfrescoTranslationService, DataColumnListComponent } from 'ng2-alfresco-core';
-import { DataRowEvent, DataTableComponent, ObjectDataColumn, DataCellEvent, DataRowActionEvent, DataColumn } from 'ng2-alfresco-datatable';
+import {
+    DataRowEvent,
+    DataTableComponent,
+    ObjectDataColumn,
+    DataCellEvent,
+    DataRowActionEvent,
+    DataColumn
+} from 'ng2-alfresco-datatable';
 import { DocumentListService } from './../services/document-list.service';
 import { ContentActionModel } from './../models/content-action.model';
 import { ShareDataTableAdapter, ShareDataRow, RowFilter, ImageResolver } from './../data/share-datatable-adapter';
@@ -131,6 +138,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     @Output()
     error: EventEmitter<any> = new EventEmitter();
+
+    @Output()
+    permissionError: EventEmitter<any> = new EventEmitter();
 
     @ViewChild(DataTableComponent)
     dataTable: DataTableComponent;
@@ -328,11 +338,11 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     // gets folder node and its content
     loadFolderByNodeId(nodeId: string) {
         this.documentListService.getFolderNode(nodeId).then(node => {
-                this.folderNode = node;
-                this.currentFolderId = node.id;
-                this.skipCount = 0;
-                this.loadFolderNodesByFolderNodeId(node.id, this.pageSize, this.skipCount).catch(err => this.error.emit(err));
-            })
+            this.folderNode = node;
+            this.currentFolderId = node.id;
+            this.skipCount = 0;
+            this.loadFolderNodesByFolderNodeId(node.id, this.pageSize, this.skipCount).catch(err => this.error.emit(err));
+        })
             .catch(err => this.error.emit(err));
     }
 
@@ -487,5 +497,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     onPrevPage(event: Pagination): void {
         this.skipCount = event.skipCount;
         this.reload();
+    }
+
+    onPermissionError(event) {
+        this.permissionError.emit(event);
     }
 }
