@@ -21,6 +21,7 @@ for PACKAGE in \
   ng2-alfresco-tag \
   ng2-alfresco-upload \
   ng2-alfresco-viewer \
+  ng2-alfresco-social \
   ng2-alfresco-webscript \
   ng2-alfresco-userinfo
 do
