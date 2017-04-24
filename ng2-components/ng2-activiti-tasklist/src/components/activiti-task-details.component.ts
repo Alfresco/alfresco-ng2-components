@@ -43,6 +43,9 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
     errorDialog: DebugElement;
 
     @Input()
+    debugMode: boolean = false;
+
+    @Input()
     taskId: string;
 
     @Input()
