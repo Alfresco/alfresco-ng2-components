@@ -178,7 +178,7 @@ Attribute     | Options     | Default      | Description | Mandatory
 `currentFolderPath`         | *string*    |     '/Sites/swsdp/documentLibrary'   |  define the path where the files are uploaded | 
 `versioning`         | *boolean*    |     false   |  Versioning false is the default uploader behaviour and it rename using an integer suffix if there is a name clash. Versioning true to indicate that a major version should be created  | 
 `staticTitle`         | *string*    |  'FILE_UPLOAD.BUTTON.UPLOAD_FILE' or 'FILE_UPLOAD.BUTTON.UPLOAD_FOLDER' string in the JSON text file    |  define the text of the upload button| 
-`disableWithNoPermission`         | *boolean*    |     false   |  If the value is true and the user doesn't have the permission to delete the node the button will be disabled | 
+`disableWithNoPermission`         | *boolean*    |     false   |  If the value is true and the user doesn't have the permission to delete the node the button will be disabled |
 
 ### How to show notification message with no permission
 You can show a notification error when the user doesn't have the right permission to perform the action.

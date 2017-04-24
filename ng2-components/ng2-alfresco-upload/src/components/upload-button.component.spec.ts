@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { UploadButtonComponent } from './upload-button.component';
-import { DebugElement }    from '@angular/core';
+import { DebugElement, SimpleChange }    from '@angular/core';
 import { CoreModule, AlfrescoTranslationService, NotificationService } from 'ng2-alfresco-core';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { UploadService } from '../services/upload.service';
@@ -175,6 +175,7 @@ describe('UploadButtonComponent', () => {
 
         spyOn(uploadService, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
 
+        component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId) });
         component.onFilesAdded(fakeEvent);
         let compiled = fixture.debugElement.nativeElement;
         fixture.detectChanges();
@@ -188,6 +189,7 @@ describe('UploadButtonComponent', () => {
 
         spyOn(uploadService, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
 
+        component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId) });
         component.onFilesAdded(fakeEvent);
         let compiled = fixture.debugElement.nativeElement;
         fixture.detectChanges();
@@ -196,11 +198,13 @@ describe('UploadButtonComponent', () => {
     });
 
     it('should call uploadFile with the default root folder', () => {
+        component.rootFolderId = '-root-';
         component.currentFolderPath = '/root-fake-/sites-fake/folder-fake';
         component.onSuccess = null;
 
         spyOn(uploadService, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
 
+        component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId) });
         uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
 
         fixture.detectChanges();
@@ -215,6 +219,8 @@ describe('UploadButtonComponent', () => {
         component.onSuccess = null;
 
         spyOn(uploadService, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
+        component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId) });
+
         uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
 
         fixture.detectChanges();
@@ -224,12 +230,14 @@ describe('UploadButtonComponent', () => {
     });
 
     it('should create a folder and emit an File uploaded event', (done) => {
+        component.rootFolderId = '-my-';
         component.currentFolderPath = '/fake-root-path';
-        fixture.detectChanges();
 
         spyOn(uploadService, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
         spyOn(uploadService, 'callApiCreateFolder').and.returnValue(fakeResolvePromise);
 
+        component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId) });
+        fixture.detectChanges();
         component.onSuccess.subscribe(e => {
             expect(e.value).toEqual('File uploaded');
             done();
@@ -245,8 +253,12 @@ describe('UploadButtonComponent', () => {
     });
 
     it('should emit an onError event when the folder already exist', (done) => {
+        component.rootFolderId = '-my-';
         spyOn(uploadService, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
         spyOn(uploadService, 'callApiCreateFolder').and.returnValue(fakeRejectPromise);
+
+        component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId) });
+
         component.onError.subscribe(e => {
             expect(e.value).toEqual('FILE_UPLOAD.MESSAGES.FOLDER_ALREADY_EXIST');
             done();
