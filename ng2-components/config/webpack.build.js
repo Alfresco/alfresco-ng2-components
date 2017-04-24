@@ -22,6 +22,7 @@ module.exports = webpackMerge(commonConfig, {
         "ng2-alfresco-documentlist": "./ng2-alfresco-documentlist/index.ts",
         "ng2-alfresco-login": "./ng2-alfresco-login/index.ts",
         "ng2-alfresco-search": "./ng2-alfresco-search/index.ts",
+        "ng2-alfresco-social": "./ng2-alfresco-social/index.ts",
         "ng2-alfresco-tag": "./ng2-alfresco-tag/index.ts",
         "ng2-alfresco-upload": "./ng2-alfresco-upload/index.ts",
         "ng2-alfresco-viewer": "./ng2-alfresco-viewer/index.ts",

@@ -9,7 +9,7 @@
     "license-check": "license-check",
     "tslint": "",
     "tsc": "",
-    "test": "karma start ../config/karma.conf.js --reporters mocha,coverage --single-run --component ng2-alfresco-webscript",
+    "test": "",
     "test-browser": "",
     "coverage": "",
     "publish:prod": "",

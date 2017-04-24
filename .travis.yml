@@ -18,7 +18,7 @@ script:
         (./scripts/npm-build-all.sh -t;);
     fi
   - if ([ "$MODULE" == "ng2-demo-shell" ]); then
-        (cd demo-shell-ng2 && npm install && npm run test || exit 1;)
+        (cd demo-shell-ng2 && npm install && npm run test || exit 1;);
     fi
 
 # Send coverage data to Coveralls
