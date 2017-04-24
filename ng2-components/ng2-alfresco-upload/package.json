@@ -5,7 +5,7 @@
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "clean": "rimraf dist node_modules typings bundles coverage",
-    "build": "rimraf dist && npm run tslint && npm run tsc && license-check",
+    "build": "license-check && ../node_modules/webpack/bin/webpack.js --config webpack.build.js --progress --profile --bail",
     "license-check": "license-check",
     "tslint": "../node_modules/tslint/bin/tslint -c ../config/assets/tslint.json 'src/{,**/}**.ts' 'index.ts'  -e '{,**/}**.d.ts'",
     "tsc": "../node_modules/typescript/bin/tsc",
