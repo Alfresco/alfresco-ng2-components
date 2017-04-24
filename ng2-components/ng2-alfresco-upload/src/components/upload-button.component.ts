@@ -185,7 +185,6 @@ export class UploadButtonComponent implements OnInit, OnChanges {
                                     this._showErrorNotificationBar(errorMessage);
                                 }
                             }
-                            this.logService.error(error);
                         }
                     );
             });
@@ -321,11 +320,11 @@ export class UploadButtonComponent implements OnInit, OnChanges {
     checkPermission() {
         if (this.rootFolderId) {
             this.uploadService.getFolderNode(this.rootFolderId).subscribe(
-                res => {
+                (res) => {
                     this.permissionValue.next(this.hasCreatePermission(res));
                 },
-                error => {
-                    this.logService.error(error);
+                (error) => {
+                    this.onError.emit(error);
                 }
             );
         }
