@@ -19,7 +19,7 @@ import { Component } from '@angular/core';
 import { AccordionGroupComponent } from './accordion-group.component';
 
 @Component({
-    selector: 'accordion',
+    selector: 'adf-accordion',
     template: `
         <ng-content></ng-content>
     `,

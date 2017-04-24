@@ -254,15 +254,15 @@ You can create an accordion menu using the AccordionComponent that wrap the acti
 The AccordionComponent is exposed by the alfresco-core.
 
 ```html
-<accordion>
-    <accordion-group [heading]="'Processes'" [isSelected]="true" [headingIcon]="'assessment'">
+<adf-accordion>
+    <adf-accordion-group [heading]="'Processes'" [isSelected]="true" [headingIcon]="'assessment'">
         <activiti-process-instance-filters
             [appId]="appId"
             (filterClick)="onProcessFilterClick($event)"
             (onSuccess)="onSuccessProcessFilterList($event)">
         </activiti-process-instance-filters>
-    </accordion-group>
-</accordion>
+    </adf-accordion-group>
+</adf-accordion>
 ```
 
 ![how-create-accordion-menu](docs/assets/how-to-create-accordion-menu.png)
