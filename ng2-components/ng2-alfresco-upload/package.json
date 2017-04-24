@@ -7,7 +7,7 @@
     "clean": "rimraf dist node_modules typings bundles coverage",
     "build": "rimraf dist && npm run tslint && npm run tsc && license-check",
     "license-check": "license-check",
-    "tslint": "../node_modules/tslint/bin/tslint -c tslint.json 'src/{,**/}**.ts' 'index.ts'  -e '{,**/}**.d.ts'",
+    "tslint": "../node_modules/tslint/bin/tslint -c ../config/assets/tslint.json 'src/{,**/}**.ts' 'index.ts'  -e '{,**/}**.d.ts'",
     "tsc": "../node_modules/typescript/bin/tsc",
     "test": "../node_modules/karma/bin/karma start ../config/karma.conf.js --reporters mocha,coverage --single-run --component ng2-alfresco-upload",
     "test-browser": "../node_modules/karma/bin/karma start ../config/karma.conf.js --reporters kjhtml --component ng2-alfresco-upload",

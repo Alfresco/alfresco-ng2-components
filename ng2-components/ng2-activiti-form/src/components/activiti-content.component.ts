@@ -43,6 +43,9 @@ export class ActivitiContent implements OnChanges {
     @Output()
     contentLoaded: EventEmitter<any> = new EventEmitter<any>();
 
+    @Output()
+    error: EventEmitter<any> = new EventEmitter<any>();
+
     content: ContentLinkModel;
 
     constructor(private translate: AlfrescoTranslationService,
@@ -70,8 +73,8 @@ export class ActivitiContent implements OnChanges {
                     this.contentLoaded.emit(this.content);
                     this.loadThumbnailUrl(this.content);
                 },
-                error => {
-                    this.logService.error(error);
+                (error) => {
+                    this.error.emit(error);
                 }
             );
     }
@@ -92,8 +95,9 @@ export class ActivitiContent implements OnChanges {
                         this.content.thumbnailUrl = this.contentService.createTrustedUrl(response);
                         this.thumbnailLoaded.emit(this.content.thumbnailUrl);
                     },
-                    error => {
-                        this.logService.error(error);
+                    (error) => {
+                        this.error.emit(error);
+
                     }
                 );
             }
@@ -108,7 +112,9 @@ export class ActivitiContent implements OnChanges {
                 this.logService.info('Content clicked' + content.id);
                 this.formService.formContentClicked.next(content);
             },
-            error => this.logService.error(error)
+            (error) => {
+                this.error.emit(error);
+            }
         );
     }
 
@@ -118,7 +124,9 @@ export class ActivitiContent implements OnChanges {
     download(content: ContentLinkModel): void {
         this.formService.getFileRawContent(content.id).subscribe(
             (blob: Blob) => this.contentService.downloadBlob(blob, content.name),
-            error => this.logService.error(error)
+            (error) => {
+                this.error.emit(error);
+            }
         );
     }
 }

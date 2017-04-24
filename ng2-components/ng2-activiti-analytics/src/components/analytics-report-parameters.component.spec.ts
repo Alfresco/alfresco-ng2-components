@@ -481,28 +481,35 @@ describe('AnalyticsReportParametersComponent', () => {
                 validForm = true;
             });
 
-            it('Should be able to change the report title', async(() => {
+            it('Should be able to change the report title', (done) => {
+
                 let title: HTMLElement = element.querySelector('h4');
                 title.click();
                 fixture.detectChanges();
+
                 let reportName: HTMLInputElement = <HTMLInputElement> element.querySelector('#reportName');
                 expect(reportName).not.toBeNull();
+
                 reportName.focus();
                 component.reportParameters.name = 'FAKE_TEST_NAME';
                 reportName.value = 'FAKE_TEST_NAME';
                 reportName.blur();
-                jasmine.Ajax.requests.mostRecent().respondWith({
-                    status: 200,
-                    contentType: 'json',
-                    responseText: analyticParamsMock.reportDefParamStatus
-                });
+
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     let titleChanged: HTMLElement = element.querySelector('h4');
                     expect(titleChanged.textContent.trim()).toEqual('FAKE_TEST_NAME');
+                    done();
                 });
-            }));
+
+                jasmine.Ajax.requests.mostRecent().respondWith({
+                    status: 200,
+                    contentType: 'json',
+                    responseText: analyticParamsMock.reportDefParamStatus
+                });
+
+            });
 
             it('Should show a dialog to allowing report save', async(() => {
                 component.saveReportSuccess.subscribe(() => {

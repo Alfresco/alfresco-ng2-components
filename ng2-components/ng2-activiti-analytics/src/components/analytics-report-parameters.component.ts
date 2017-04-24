@@ -209,7 +209,6 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                 }
             },
             (err: any) => {
-                this.logService.error(err);
                 this.onError.emit(err);
             }
         );
@@ -223,7 +222,6 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                     this.onSuccessParamOpt.emit(opts);
                 },
                 (err: any) => {
-                    this.logService.error(err);
                     this.onError.emit(err);
                 }
             );
@@ -320,7 +318,6 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                 this.onEdit.emit(this.reportParameters.name);
             },
             (err: any) => {
-                this.logService.error(err);
                 this.onError.emit(err);
             }
         );

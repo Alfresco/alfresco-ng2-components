@@ -51,6 +51,9 @@ export class ActivitiProcessInstanceDetails implements OnChanges {
     processCancelled: EventEmitter<any> = new EventEmitter<any>();
 
     @Output()
+    error: EventEmitter<any> = new EventEmitter<any>();
+
+    @Output()
     taskClick: EventEmitter<TaskDetailsEvent> = new EventEmitter<TaskDetailsEvent>();
 
     processInstanceDetails: ProcessInstance;
@@ -107,7 +110,7 @@ export class ActivitiProcessInstanceDetails implements OnChanges {
             (data) => {
                 this.processCancelled.emit(data);
             }, (err) => {
-                this.logService.error(err);
+                this.error.emit(err);
             });
     }
 

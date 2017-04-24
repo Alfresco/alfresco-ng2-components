@@ -100,7 +100,6 @@ export class ActivitiProcessFilters implements OnInit, OnChanges {
                             this.onSuccess.emit(resDefault);
                         },
                         (errDefault: any) => {
-                            this.logService.error(errDefault);
                             this.onError.emit(errDefault);
                         }
                     );
@@ -115,7 +114,6 @@ export class ActivitiProcessFilters implements OnInit, OnChanges {
                 }
             },
             (err: any) => {
-                this.logService.error(err);
                 this.onError.emit(err);
             }
         );
@@ -132,7 +130,6 @@ export class ActivitiProcessFilters implements OnInit, OnChanges {
                 this.selectFirstFilter();
             },
             (err) => {
-                this.logService.error(err);
                 this.onError.emit(err);
             });
     }

@@ -46,6 +46,9 @@ export class AttachWidget extends WidgetComponent implements OnInit {
     @Output()
     fieldChanged: EventEmitter<FormFieldModel> = new EventEmitter<FormFieldModel>();
 
+    @Output()
+    error: EventEmitter<any> = new EventEmitter<any>();
+
     @ViewChild('dialog')
     dialog: any;
 
@@ -98,7 +101,9 @@ export class AttachWidget extends WidgetComponent implements OnInit {
         this.contentService.getAlfrescoNodes(this.selectedFolderAccountId, this.selectedFolderPathId)
             .subscribe(
                 nodes => this.selectedFolderNodes = nodes,
-                error => this.logService.error(error)
+                (err) => {
+                    this.error.emit(err);
+                }
             );
     }
 

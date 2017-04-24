@@ -436,7 +436,6 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     }
 
     handleError(err: any): any {
-        this.logService.error(err);
         this.onError.emit(err);
     }
 

@@ -166,7 +166,6 @@ export class AlfrescoLoginComponent implements OnInit {
                     this.displayErrorMessage(err);
                     this.enableError();
                     this.onError.emit(err);
-                    this.logService.error(err);
                 },
                 () => this.logService.info('Login done')
             );

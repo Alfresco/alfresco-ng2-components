@@ -190,11 +190,9 @@ export class ActivitiTaskList implements OnChanges, AfterContentInit {
                         this.selectTask(requestNode.landingTaskId);
                         this.onSuccess.emit(response);
                     }, (error) => {
-                        this.logService.error(error);
                         this.onError.emit(error);
                     });
             }, (err) => {
-                this.logService.error(err);
                 this.onError.emit(err);
             });
     }

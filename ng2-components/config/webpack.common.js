@@ -62,7 +62,7 @@ module.exports = {
                 loader: 'tslint-loader',
                 options: {
                     emitErrors: true,
-                    configFile: './ng2-alfresco-core/tslint.json'
+                    configFile: './config/assets/tslint.json'
                 },
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
             },

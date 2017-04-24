@@ -95,7 +95,6 @@ export class AnalyticsReportListComponent implements  OnInit {
             },
             (err: any) => {
                 this.onError.emit(err);
-                this.logService.error(err);
             }
         );
     }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewChild, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, OnInit, ViewChild, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { Observable, Observer } from 'rxjs/Rx';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
@@ -38,6 +38,9 @@ export class ActivitiProcessInstanceTasks implements OnInit, OnChanges {
 
     @Input()
     showRefreshButton: boolean = true;
+
+    @Output()
+    error: EventEmitter<any> = new EventEmitter<any>();
 
     activeTasks: TaskDetailsModel[] = [];
     completedTasks: TaskDetailsModel[] = [];
@@ -105,7 +108,7 @@ export class ActivitiProcessInstanceTasks implements OnInit, OnChanges {
                     });
                 },
                 (err) => {
-                    this.logService.error(err);
+                    this.error.emit(err);
                 }
             );
         } else {
@@ -123,7 +126,7 @@ export class ActivitiProcessInstanceTasks implements OnInit, OnChanges {
                     });
                 },
                 (err) => {
-                    this.logService.error(err);
+                    this.error.emit(err);
                 }
             );
         } else {

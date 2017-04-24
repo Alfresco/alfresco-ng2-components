@@ -92,10 +92,8 @@ export class DocumentMenuActionComponent implements OnChanges {
                             let errorMessagePlaceholder = this.getErrorMessage(error.response);
                             this.message = this.formatString(errorMessagePlaceholder, [name]);
                             this.error.emit({ message: this.message });
-                            this.logService.error(this.message);
                         } else {
                             this.error.emit(error);
-                            this.logService.error(error);
                         }
                     }
                 );

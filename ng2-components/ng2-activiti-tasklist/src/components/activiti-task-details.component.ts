@@ -220,7 +220,6 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
                     this.reset();
                 }
             }, (error) => {
-                this.logService.error(error);
                 this.onError.emit(error);
             });
     }

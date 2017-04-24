@@ -36,6 +36,9 @@ export class ActivitiStartTaskButton {
     @Output()
     onSuccess: EventEmitter<any> = new EventEmitter<any>();
 
+    @Output()
+    error: EventEmitter<any> = new EventEmitter<any>();
+
     @ViewChild('dialog')
     dialog: any;
 
@@ -75,8 +78,7 @@ export class ActivitiStartTaskButton {
                     this.attachForm(res.id);
                 },
                 (err) => {
-                    window.alert('An error occurred while trying to add the task');
-                    this.logService.error(err);
+                    this.logService.error('An error occurred while trying to add the task');
                 }
             );
         }
@@ -110,8 +112,8 @@ export class ActivitiStartTaskButton {
                 this.forms = res;
             },
             (err) => {
-                window.alert('An error occurred while trying to get the forms');
-                this.logService.error(err);
+                this.error.emit(err);
+                this.logService.error('An error occurred while trying to get the forms');
             });
     }
 
