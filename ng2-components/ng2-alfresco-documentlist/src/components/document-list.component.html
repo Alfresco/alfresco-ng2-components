@@ -2,7 +2,8 @@
     *ngIf="creationMenuActions"
     [folderId]="currentFolderId"
     (success)="onActionMenuSuccess($event)"
-    (error)="onActionMenuError($event)">
+    (error)="onActionMenuError($event)"
+    (permissionErrorEvent)="onPermissionError($event)">
 </alfresco-document-menu-action>
 <alfresco-datatable
     [data]="data"
