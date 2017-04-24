@@ -54,9 +54,9 @@ export class DynamicTableModel extends FormWidgetModel {
         this.field = field;
 
         if (field.json) {
-
-            if (field.json.columnDefinitions) {
-                this.columns = field.json.columnDefinitions.map(obj => <DynamicTableColumn> obj);
+            const columns = this.getColumns(field);
+            if (columns) {
+                this.columns = columns;
                 this.visibleColumns = this.columns.filter(col => col.visible);
             }
 
@@ -70,6 +70,20 @@ export class DynamicTableModel extends FormWidgetModel {
             new DateCellValidator(),
             new NumberCellValidator()
         ];
+    }
+
+    private getColumns(field: FormFieldModel): DynamicTableColumn[] {
+        if (field && field.json) {
+            let definitions = field.json.columnDefinitions;
+            if (!definitions && field.json.params && field.json.params.field) {
+                definitions = field.json.params.field.columnDefinitions;
+            }
+
+            if (definitions) {
+                return definitions.map(obj => <DynamicTableColumn> obj);
+            }
+        }
+        return null;
     }
 
     flushValue() {

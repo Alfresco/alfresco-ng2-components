@@ -1,9 +1,9 @@
 <div class="dynamic-table-widget {{field.className}}"
     [class.dynamic-table-widget__invalid]="!isValid()" *ngIf="field?.isVisible">
-     <div class="dynamic-table-widget__label">{{content.name}}</div>
+    <div class="dynamic-table-widget__label">{{content.name}}</div>
 
-     <div *ngIf="!editMode">
-         <div class="dynamic-table-widget__table-container">
+    <div *ngIf="!editMode">
+        <div class="dynamic-table-widget__table-container">
             <table class="mdl-data-table mdl-js-data-table dynamic-table-widget__table">
                 <thead>
                     <tr>
@@ -24,9 +24,9 @@
                     </tr>
                 </tbody>
             </table>
-         </div>
+        </div>
 
-        <div class="dynamic-table-widget__buttons">
+        <div class="dynamic-table-widget__buttons" *ngIf="!readOnly">
             <button class="mdl-button mdl-js-button mdl-button--icon"
                     [disabled]="!hasSelection()"
                     (click)="moveSelectionUp()">
