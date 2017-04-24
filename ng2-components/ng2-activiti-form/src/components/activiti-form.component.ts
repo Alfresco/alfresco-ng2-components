@@ -26,7 +26,6 @@ import { FormEvent, FormErrorEvent } from './../events/index';
 
 import { WidgetVisibilityService }  from './../services/widget-visibility.service';
 
-declare let dialogPolyfill: any;
 declare var componentHandler: any;
 
 /**
@@ -118,7 +117,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     showSaveButton: boolean = true;
 
     @Input()
-    showDebugButton: boolean = true;
+    showDebugButton: boolean = false;
 
     @Input()
     readOnly: boolean = false;
