@@ -42,30 +42,7 @@
         </div>
     </div>
     <div *ngSwitchCase="'dynamic-table'">
-
-        <div class="display-value-widget__dynamic-table">
-            <div>{{field.name}}</div>
-            <div class="display-value-dynamic-table-widget__table-container">
-                <table class="mdl-data-table mdl-js-data-table">
-                    <thead>
-                    <tr>
-                        <th *ngFor="let column of visibleColumns"
-                            class="mdl-data-table__cell--non-numeric is-disabled">
-                            {{column.name}}
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr *ngFor="let row of rows">
-                        <td *ngFor="let column of visibleColumns"
-                            class="mdl-data-table__cell--non-numeric is-disabled">
-                            {{ getCellValue(row, column) }}
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        <dynamic-table-widget [field]="field" [readOnly]="!tableEditable"></dynamic-table-widget>
     </div>
     <div *ngSwitchCase="'upload'">
         <div *ngIf="hasFile" class="mdl-grid">
