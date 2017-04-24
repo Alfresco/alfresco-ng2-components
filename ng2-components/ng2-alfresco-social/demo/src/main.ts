@@ -40,10 +40,10 @@ import { SocialModule } from 'ng2-alfresco-social';
                     <div class="mdl-grid">
                       <div class="mdl-cell mdl-cell--4-col">
                         Like component
-                        <alfresco-like [nodeId]="nodeId"></alfresco-like></div>
+                        <adf-like [nodeId]="nodeId"></adf-like></div>
                       <div class="mdl-cell mdl-cell--4-col">
                         Rating component
-                        <alfresco-rating [nodeId]="nodeId"></alfresco-rating>
+                        <adf-rating [nodeId]="nodeId"></adf-rating>
                      </div>
                     </div>
                 </div>

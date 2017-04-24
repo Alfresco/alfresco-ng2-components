@@ -19,7 +19,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { RatingService } from './../services/rating.service';
 
 @Component({
-    selector: 'alfresco-like',
+    selector: 'adf-like',
     styleUrls: ['./like.component.css'],
     templateUrl: './like.component.html',
     providers: [RatingService]

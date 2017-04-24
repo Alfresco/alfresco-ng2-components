@@ -19,7 +19,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { RatingService } from './../services/rating.service';
 
 @Component({
-    selector: 'alfresco-rating',
+    selector: 'adf-rating',
     styleUrls: ['./rating.component.css'],
     templateUrl: './rating.component.html',
     providers: [RatingService]

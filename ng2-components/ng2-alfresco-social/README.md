@@ -99,15 +99,15 @@ Follow the 3 steps below:
 
 In this component are present two different components :
 
-* alfresco-like
-* alfresco-rating
+* adf-like
+* adf-rating
 
 
 
-## alfresco-like
+## adf-like
 
 ```html
-<alfresco-like [nodeId]="nodeId"></alfresco-like>
+<adf-like [nodeId]="nodeId"></adf-like>
 ``` 
 
 ```ts
@@ -120,7 +120,7 @@ import { SocialModule } from 'ng2-alfresco-social';
 
 @Component({
     selector: 'alfresco-app-demo',
-    template: `<alfresco-like [nodeId]="'74cd8a96-8a21-47e5-9b3b-a1b3e296787d'"></alfresco-like>
+    template: `<adf-like [nodeId]="'74cd8a96-8a21-47e5-9b3b-a1b3e296787d'"></adf-like>
     `
 })
 class LikeDemo {
@@ -167,10 +167,10 @@ Attribute     | Options     | Default      | Description | Mandatory
 
 ![Custom columns](docs/assets/social1.png)                         
 
-## alfresco-rating
+## adf-rating
 
 ```html
-<alfresco-rating  [nodeId]="'74cd8a96-8a21-47e5-9b3b-a1b3e296787d'" ></alfresco-rating>
+<adf-rating  [nodeId]="'74cd8a96-8a21-47e5-9b3b-a1b3e296787d'" ></adf-rating>
 ``` 
 
 ```ts
@@ -183,7 +183,7 @@ import { SocialModule } from 'ng2-alfresco-social';
 
 @Component({
     selector: 'alfresco-app-demo',
-    template: `<alfresco-rating [nodeId]="'74cd8a96-8a21-47e5-9b3b-a1b3e296787d'></alfresco-rating>`
+    template: `<adf-rating [nodeId]="'74cd8a96-8a21-47e5-9b3b-a1b3e296787d'></adf-rating>`
 })
 class RatingDemo {
 
