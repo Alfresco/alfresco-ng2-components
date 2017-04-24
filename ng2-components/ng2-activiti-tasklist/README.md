@@ -361,8 +361,8 @@ You can create an accordion menu using the AccordionComponent that wrap the acti
 The AccordionComponent is exposed by the alfresco-core.
 
 ```html
-<accordion>
-    <accordion-group [heading]="'Tasks'" [isSelected]="true" [headingIcon]="'assignment'">
+<adf-accordion>
+    <adf-accordion-group [heading]="'Tasks'" [isSelected]="true" [headingIcon]="'assignment'">
         <activiti-filters
             [appId]="appId"
             [hasIcon]="false"
@@ -370,8 +370,8 @@ The AccordionComponent is exposed by the alfresco-core.
             (onSuccess)="onSuccessTaskFilterList($event)"
             #activitifilter>
         </activiti-filters>
-    </accordion-group>
-</accordion>
+    </adf-accordion-group>
+</adf-accordion>
 ```
 
 ![how-create-accordion-menu](docs/assets/how-to-create-accordion-menu.png)

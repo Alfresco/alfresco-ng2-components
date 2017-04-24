@@ -19,7 +19,7 @@ import { Component, Input, OnDestroy } from '@angular/core';
 import { AccordionComponent } from './accordion.component';
 
 @Component({
-    selector: 'accordion-group',
+    selector: 'adf-accordion-group',
     moduleId: module.id,
     templateUrl: 'accordion-group.component.html',
     styleUrls: ['./accordion-group.component.css']
