@@ -24,6 +24,7 @@ export { ActivitiDemoComponent } from './activiti/activiti-demo.component';
 export { FormViewer } from './activiti/form-viewer.component';
 export { WebscriptComponent } from './webscript/webscript.component';
 export { TagComponent } from './tag/tag.component';
+export { SocialComponent } from './social/social.component';
 export { AboutComponent } from './about/about.component';
 export { FilesComponent } from './files/files.component';
 export { FormNodeViewer } from './activiti/form-node-viewer.component';
