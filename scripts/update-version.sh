@@ -30,6 +30,7 @@ for PACKAGE in \
   ng2-alfresco-viewer \
   ng2-alfresco-webscript \
   ng2-alfresco-userinfo \
+  ng2-alfresco-social \
   alfresco-js-api
 do
   DESTDIR="$DIR/../ng2-components/${PACKAGE}"
@@ -52,6 +53,7 @@ for PACKAGE in \
   ng2-alfresco-upload \
   ng2-alfresco-viewer \
   ng2-alfresco-webscript \
+  ng2-alfresco-social \
   ng2-alfresco-userinfo
 do
   DESTDIR="$DIR/../ng2-components/${PACKAGE}"
@@ -79,6 +81,7 @@ for PACKAGE in \
   ng2-alfresco-viewer \
   ng2-alfresco-webscript \
   ng2-alfresco-userinfo \
+  ng2-alfresco-social \
   alfresco-js-api
 do
   DESTDIR="$DIR/../ng2-components/${PACKAGE}"
@@ -101,6 +104,7 @@ for PACKAGE in \
   ng2-alfresco-upload \
   ng2-alfresco-viewer \
   ng2-alfresco-webscript \
+  ng2-alfresco-social \
   ng2-alfresco-userinfo
 do
   DESTDIR="$DIR/../ng2-components/${PACKAGE}"
