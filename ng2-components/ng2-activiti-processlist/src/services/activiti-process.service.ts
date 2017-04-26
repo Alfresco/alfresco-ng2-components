@@ -24,7 +24,7 @@ import { ProcessInstanceVariable } from './../models/process-instance-variable.m
 import { AppDefinitionRepresentationModel, Comment, TaskDetailsModel, User } from 'ng2-activiti-tasklist';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 
-declare var moment: any;
+declare let moment: any;
 
 @Injectable()
 export class ActivitiProcessService {

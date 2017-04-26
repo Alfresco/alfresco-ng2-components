@@ -23,7 +23,6 @@ declare let mdDateTimePicker: any;
 declare var componentHandler: any;
 
 @Component({
-    moduleId: module.id,
     selector: 'date-widget',
     templateUrl: './date.widget.html',
     styleUrls: ['./date.widget.css']

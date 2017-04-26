@@ -38,7 +38,6 @@ import { NodeEntityEvent, NodeEntryEvent } from './node.event';
 declare var module: any;
 
 @Component({
-    moduleId: module.id,
     selector: 'alfresco-document-list',
     styleUrls: ['./document-list.component.css'],
     templateUrl: './document-list.component.html'
@@ -49,12 +48,10 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
     static DEFAULT_PAGE_SIZE: number = 20;
 
-    baseComponentPath = module.id.replace('components/document-list.component.js', '');
-
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
     @Input()
-    fallbackThumbnail: string = this.baseComponentPath + 'assets/images/ft_ic_miscellaneous.svg';
+    fallbackThumbnail: string = require('../assets/images/ft_ic_miscellaneous.svg');
 
     @Input()
     navigate: boolean = true;
@@ -87,7 +84,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     pageSize: number = DocumentListComponent.DEFAULT_PAGE_SIZE;
 
     @Input()
-    emptyFolderImageUrl: string = this.baseComponentPath + 'assets/images/empty_doc_lib.svg';
+    emptyFolderImageUrl: string = require('../assets/images/empty_doc_lib.svg');
 
     @Input()
     allowDropFiles: boolean = false;
@@ -155,7 +152,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                 private ngZone: NgZone,
                 private translateService: AlfrescoTranslationService) {
 
-        this.data = new ShareDataTableAdapter(this.documentListService, this.baseComponentPath);
+        this.data = new ShareDataTableAdapter(this.documentListService);
 
         if (translateService) {
             translateService.addTranslationFolder('ng2-alfresco-documentlist', 'node_modules/ng2-alfresco-documentlist/src');
@@ -205,7 +202,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         }
 
         if (!this.data) {
-            this.data = new ShareDataTableAdapter(this.documentListService, this.baseComponentPath, schema);
+            this.data = new ShareDataTableAdapter(this.documentListService, schema);
         } else if (schema && schema.length > 0) {
             this.data.setColumns(schema);
         }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export var fakeSearch = {
+export let fakeSearch = {
     list: {
         pagination: {
             count: 1,
@@ -44,7 +44,7 @@ export var fakeSearch = {
     }
 };
 
-export var fakeError = {
+export let fakeError = {
     error: {
         errorKey: 'Search failed',
         statusCode: 400,
@@ -54,7 +54,7 @@ export var fakeError = {
     }
 };
 
-export var fakeApi = {
+export let fakeApi = {
     core: {
         queriesApi: {
             findNodes: (term, opts) => Promise.resolve(fakeSearch)

@@ -22,7 +22,6 @@ import { ReportQuery } from '../models/report.model';
 import { AnalyticsGeneratorComponent } from './analytics-generator.component';
 
 @Component({
-    moduleId: module.id,
     selector: 'activiti-analytics',
     templateUrl: './analytics.component.html',
     styleUrls: ['./analytics.component.css']

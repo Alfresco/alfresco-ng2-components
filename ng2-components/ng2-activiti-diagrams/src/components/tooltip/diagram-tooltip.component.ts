@@ -18,7 +18,6 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-    moduleId: module.id,
     selector: 'diagram-tooltip',
     templateUrl: './diagram-tooltip.component.html',
     styleUrls: ['./diagram-tooltip-style.css']

@@ -94,9 +94,9 @@ export class AnalyticsService {
     getProcessStatusValues(): Observable<any> {
         let paramOptions: ParameterValueModel[] = [];
 
-        paramOptions.push(new ParameterValueModel({ id: 'All', name: 'All' }));
-        paramOptions.push(new ParameterValueModel({ id: 'Active', name: 'Active' }));
-        paramOptions.push(new ParameterValueModel({ id: 'Complete', name: 'Complete' }));
+        paramOptions.push(new ParameterValueModel({id: 'All', name: 'All'}));
+        paramOptions.push(new ParameterValueModel({id: 'Active', name: 'Active'}));
+        paramOptions.push(new ParameterValueModel({id: 'Complete', name: 'Complete'}));
 
         return Observable.create(observer => {
             observer.next(paramOptions);
@@ -107,11 +107,11 @@ export class AnalyticsService {
     getDateIntervalValues(): Observable<any> {
         let paramOptions: ParameterValueModel[] = [];
 
-        paramOptions.push(new ParameterValueModel({ id: 'byHour', name: 'By hour' }));
-        paramOptions.push(new ParameterValueModel({ id: 'byDay', name: 'By day' }));
-        paramOptions.push(new ParameterValueModel({ id: 'byWeek', name: 'By week' }));
-        paramOptions.push(new ParameterValueModel({ id: 'byMonth', name: 'By month' }));
-        paramOptions.push(new ParameterValueModel({ id: 'byYear', name: 'By year' }));
+        paramOptions.push(new ParameterValueModel({id: 'byHour', name: 'By hour'}));
+        paramOptions.push(new ParameterValueModel({id: 'byDay', name: 'By day'}));
+        paramOptions.push(new ParameterValueModel({id: 'byWeek', name: 'By week'}));
+        paramOptions.push(new ParameterValueModel({id: 'byMonth', name: 'By month'}));
+        paramOptions.push(new ParameterValueModel({id: 'byYear', name: 'By year'}));
 
         return Observable.create(observer => {
             observer.next(paramOptions);
@@ -122,9 +122,9 @@ export class AnalyticsService {
     getMetricValues(): Observable<any> {
         let paramOptions: ParameterValueModel[] = [];
 
-        paramOptions.push(new ParameterValueModel({ id: 'totalCount', name: 'Number of times a step is executed' }));
-        paramOptions.push(new ParameterValueModel({ id: 'totalTime', name: 'Total time spent in a process step' }));
-        paramOptions.push(new ParameterValueModel({ id: 'avgTime', name: 'Average time spent in a process step' }));
+        paramOptions.push(new ParameterValueModel({id: 'totalCount', name: 'Number of times a step is executed'}));
+        paramOptions.push(new ParameterValueModel({id: 'totalTime', name: 'Total time spent in a process step'}));
+        paramOptions.push(new ParameterValueModel({id: 'avgTime', name: 'Average time spent in a process step'}));
 
         return Observable.create(observer => {
             observer.next(paramOptions);
@@ -144,7 +144,7 @@ export class AnalyticsService {
     }
 
     getProcessDefinitionsValues(appId: string): Observable<any> {
-        let options = { 'appDefinitionId': appId };
+        let options = {'appDefinitionId': appId};
         return Observable.fromPromise(this.apiService.getInstance().activiti.processDefinitionsApi.getProcessDefinitions(options))
             .map((res: any) => {
                 let paramOptions: ParameterValueModel[] = [];
@@ -160,7 +160,7 @@ export class AnalyticsService {
             .map((res: any) => {
                 let paramOptions: ParameterValueModel[] = [];
                 res.forEach((opt) => {
-                    paramOptions.push(new ParameterValueModel({ id: opt, name: opt }));
+                    paramOptions.push(new ParameterValueModel({id: opt, name: opt}));
                 });
                 return paramOptions;
             }).catch(err => this.handleError(err));
@@ -227,7 +227,7 @@ export class AnalyticsService {
 
     private handleError(error: Response) {
         this.logService.error(error);
-        return Observable.throw(error.json().error || 'Server error');
+        return Observable.throw(error || 'Server error');
     }
 
     toJson(res: any) {

@@ -44,8 +44,8 @@
             'moment': { defaultExtension: 'js' },
             'ng2-translate': { defaultExtension: 'js' },
             'alfresco-js-api': { main: './alfresco-js-api.js', defaultExtension: 'js'},
-            'ng2-alfresco-core': { main: './index.js', defaultExtension: 'js'},
-            'ng2-activiti-diagrams': { main: './index.js', defaultExtension: 'js'}
+            'ng2-alfresco-core': { main: './bundles/ng2-alfresco-core.js', defaultExtension: 'js'},
+            'ng2-activiti-diagrams': { main: './bundles/ng2-activiti-diagrams.js', defaultExtension: 'js'}
         }
     });
 })(this);

@@ -43,7 +43,6 @@ declare var componentHandler;
 declare let dialogPolyfill: any;
 
 @Component({
-    moduleId: module.id,
     selector: 'analytics-report-parameters',
     templateUrl: './analytics-report-parameters.component.html',
     styleUrls: ['./analytics-report-parameters.component.css']
@@ -210,7 +209,6 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                 }
             },
             (err: any) => {
-                this.logService.error(err);
                 this.onError.emit(err);
             }
         );
@@ -224,7 +222,6 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                     this.onSuccessParamOpt.emit(opts);
                 },
                 (err: any) => {
-                    this.logService.error(err);
                     this.onError.emit(err);
                 }
             );
@@ -321,7 +318,6 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                 this.onEdit.emit(this.reportParameters.name);
             },
             (err: any) => {
-                this.logService.error(err);
                 this.onError.emit(err);
             }
         );
@@ -369,7 +365,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     doExport(paramQuery: ReportQuery) {
         this.analyticsService.exportReportToCsv(this.reportId, paramQuery).subscribe(
             (data: any) => {
-                let blob: Blob = new Blob([data], { type: 'text/csv' });
+                let blob: Blob = new Blob([data], {type: 'text/csv'});
                 this.contentService.downloadBlob(blob, paramQuery.reportName + '.csv');
             });
     }

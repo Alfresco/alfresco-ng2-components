@@ -22,7 +22,6 @@ import { ActivitiTaskListService } from './../services/activiti-tasklist.service
 
 @Component({
     selector: 'activiti-task-header',
-    moduleId: module.id,
     templateUrl: './activiti-task-header.component.html',
     styleUrls: ['./activiti-task-header.component.css']
 })

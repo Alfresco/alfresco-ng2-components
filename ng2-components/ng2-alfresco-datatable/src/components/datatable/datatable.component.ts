@@ -37,7 +37,6 @@ import { MdCheckboxChange } from '@angular/material';
 declare var componentHandler;
 
 @Component({
-    moduleId: module.id,
     selector: 'alfresco-datatable',
     styleUrls: ['./datatable.component.css'],
     templateUrl: './datatable.component.html'

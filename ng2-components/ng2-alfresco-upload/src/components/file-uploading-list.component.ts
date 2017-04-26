@@ -30,7 +30,6 @@ import { FileModel } from '../models/file.model';
  */
 @Component({
     selector: 'alfresco-file-uploading-list',
-    moduleId: module.id,
     templateUrl: './file-uploading-list.component.html',
     styleUrls: ['./file-uploading-list.component.css']
 })

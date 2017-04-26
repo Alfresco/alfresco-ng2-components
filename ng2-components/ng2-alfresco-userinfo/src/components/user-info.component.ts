@@ -26,19 +26,16 @@ declare let componentHandler: any;
 
 @Component({
     selector: 'ng2-alfresco-userinfo',
-    moduleId: module.id,
     styleUrls: ['./user-info.component.css'],
     templateUrl: './user-info.component.html'
 })
 export class UserInfoComponent implements OnInit {
 
-    private baseComponentPath = module.id.replace('components/user-info.component.js', '');
+    @Input()
+    ecmBackgroundImage: string = require('../assets/images/ecm-background.png');
 
     @Input()
-    ecmBackgroundImage: string = this.baseComponentPath + 'assets/images/ecm-background.png';
-
-    @Input()
-    bpmBackgroundImage: string = this.baseComponentPath + 'assets/images/bpm-background.png';
+    bpmBackgroundImage: string = require('../assets/images/bpm-background.png');
 
     @Input()
     menuOpenType: string = 'right';
@@ -48,7 +45,7 @@ export class UserInfoComponent implements OnInit {
 
     ecmUser: EcmUserModel;
     bpmUser: BpmUserModel;
-    anonymousImageUrl: string = this.baseComponentPath + 'assets/images/anonymous.gif';
+    anonymousImageUrl: string = require('../assets/images/anonymous.gif');
     bpmUserImage: any;
     ecmUserImage: any;
 

@@ -19,7 +19,6 @@ import { Component } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
 
 @Component({
-    moduleId: module.id,
     selector: 'multiline-text-widget',
     templateUrl: './multiline-text.widget.html',
     styleUrls: ['./multiline-text.widget.css']

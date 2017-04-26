@@ -32,7 +32,7 @@ const entryItem = {
     }
 };
 
-export var result = {
+export let result = {
     list: {
         entries: [
             entryItem
@@ -40,7 +40,7 @@ export var result = {
     }
 };
 
-export var results = {
+export let results = {
     list: {
         entries: [
             entryItem,
@@ -50,7 +50,7 @@ export var results = {
     }
 };
 
-export var folderResult = {
+export let folderResult = {
     list: {
         entries: [
             {
@@ -71,13 +71,13 @@ export var folderResult = {
     }
 };
 
-export var noResult = {
+export let noResult = {
     list: {
         entries: []
     }
 };
 
-export var errorJson = {
+export let errorJson = {
     error: {
         errorKey: 'Search failed',
         statusCode: 400,
