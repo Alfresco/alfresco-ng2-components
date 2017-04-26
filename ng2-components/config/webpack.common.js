@@ -21,7 +21,10 @@ module.exports = {
         'ng2-alfresco-core',
         'ng2-alfresco-datatable',
         'ng2-activiti-analytics',
-        'ng2-activiti-diagrams'
+        'ng2-activiti-diagrams',
+        'ng2-activiti-form',
+        "ng2-activiti-tasklist",
+        'ng2-alfresco-documentlist'
     ],
 
     module: {
@@ -110,7 +113,7 @@ module.exports = {
 
     ],
 
-    devtool: 'source-map',
+    devtool: 'cheap-module-source-map',
 
     node: {
         fs: 'empty',
