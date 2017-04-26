@@ -36,6 +36,12 @@ export class AlfrescoLoginComponent implements OnInit {
     isPasswordShow: boolean = false;
 
     @Input()
+    showRememberMe: boolean = false;
+
+    @Input()
+    showLoginActions: boolean = false;
+
+    @Input()
     needHelpLink: string = '';
 
     @Input()
