@@ -507,7 +507,7 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should get the deployed app details by id ', (done) => {
-            service.getApplicationDetailsById('2').subscribe(
+            service.getApplicationDetailsById(1).subscribe(
                 (res: any) => {
                     expect(res).toBeDefined();
                     expect(res.name).toEqual('Sales-Fakes-App');
