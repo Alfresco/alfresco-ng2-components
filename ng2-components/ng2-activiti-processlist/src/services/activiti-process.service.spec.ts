@@ -566,6 +566,14 @@ describe('ActivitiProcessService', () => {
             );
         }));
 
+        it('should return the correct app by id', async(() => {
+            service.getApplicationDetailsById(fakeApp1.id).subscribe((app) => {
+                expect(app.id).toBe(fakeApp1.id);
+                expect(app.name).toBe(fakeApp1.name);
+                expect(app.deploymentId).toBe(fakeApp1.deploymentId);
+            });
+        }));
+
     });
 
     describe('filters', () => {
