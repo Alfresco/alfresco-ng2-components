@@ -78,7 +78,7 @@ export class ActivitiProcessService {
     getProcessFilterById(processId: string, appId?: string): Observable<FilterProcessRepresentationModel> {
         return Observable.fromPromise(this.callApiGetUserProcessInstanceFilters(appId))
             .map((response: any) => {
-                return response.data.find(filter => filter.id === processId);
+                return response.data.find(filter => filter.id.toString() === processId);
             }).catch(err => this.handleError(err));
     }
 
