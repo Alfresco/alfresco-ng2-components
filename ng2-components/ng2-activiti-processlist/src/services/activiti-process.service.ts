@@ -47,11 +47,11 @@ export class ActivitiProcessService {
      * Retrieve deployed apps details by id
      * @returns {Observable<any>}
      */
-    getApplicationDetailsById(appId?: string): Observable<any> {
+    getApplicationDetailsById(appId?: number): Observable<any> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.appsApi.getAppDefinitions())
             .map((response: any) => {
                 if (appId) {
-                    return response.data.find(p => p.id !== null && p.id.toString() === appId);
+                    return response.data.find(p => p.id !== null && p.id === appId);
                 }
                 return response.data;
             })
