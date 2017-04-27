@@ -596,10 +596,10 @@ describe('ActivitiProcessService', () => {
             });
 
             it('should return the task filter by id', (done) => {
-                service.getProcessFilterById('333').subscribe(
+                service.getProcessFilterById(333).subscribe(
                     (res: FilterProcessRepresentationModel) => {
                         expect(res).toBeDefined();
-                        expect(res.id).toEqual('333');
+                        expect(res.id).toEqual(333);
                         expect(res.name).toEqual('Running');
                         expect(res.filter.sort).toEqual('created-desc');
                         expect(res.filter.state).toEqual('running');
