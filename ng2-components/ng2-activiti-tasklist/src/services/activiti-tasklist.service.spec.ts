@@ -102,10 +102,10 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should return the task filter by id', (done) => {
-            service.getTaskFilterById('2').subscribe(
+            service.getTaskFilterById(2).subscribe(
                 (res: FilterRepresentationModel) => {
                     expect(res).toBeDefined();
-                    expect(res.id).toEqual('2');
+                    expect(res.id).toEqual(2);
                     expect(res.name).toEqual('FakeMyTasks');
                     expect(res.filter.sort).toEqual('created-desc');
                     expect(res.filter.state).toEqual('open');

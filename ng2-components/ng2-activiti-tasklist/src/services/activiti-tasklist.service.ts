@@ -67,13 +67,14 @@ export class ActivitiTaskListService {
 
     /**
      * Retrieve the Tasks filter by id
-     * @param taskId - string - The id of the filter
+     * @param filterId - number - The id of the filter
+     * @param appId - string - optional - The id of app
      * @returns {Observable<FilterRepresentationModel>}
      */
-    getTaskFilterById(taskId: string, appId?: string): Observable<FilterRepresentationModel> {
+    getTaskFilterById(filterId: number, appId?: string): Observable<FilterRepresentationModel> {
         return Observable.fromPromise(this.callApiTaskFilters(appId))
             .map((response: any) => {
-                return response.data.find(filter => filter.id.toString() === taskId);
+                return response.data.find(filter => filter.id === filterId);
             }).catch(err => this.handleError(err));
     }
 
