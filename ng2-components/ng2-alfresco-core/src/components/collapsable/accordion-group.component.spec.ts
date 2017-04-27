@@ -73,4 +73,17 @@ describe('AccordionGroupComponent', () => {
         });
     });
 
+    it('should emit an event when a heading clicked', (done) => {
+        component.heading = 'Fake Header';
+        fixture.detectChanges();
+        let heading: string = component.heading;
+        component.onHeadingSelection.subscribe((headName: string) => {
+            expect(headName).toBeDefined();
+            expect(headName).toEqual(heading);
+            done();
+        });
+
+        component.onHeadingClick();
+    });
+
 });
