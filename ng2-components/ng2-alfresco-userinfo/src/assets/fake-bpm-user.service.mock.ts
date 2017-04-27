@@ -19,7 +19,7 @@
 export { BpmUserModel } from '../models/bpm-user.model';
 export { BpmUserService } from '../services/bpm-user.service';
 
-export var fakeBpmUserNoImage = {
+export let fakeBpmUserNoImage = {
     apps: [],
     capabilities: 'fake-capability',
     company: 'fake-company',
@@ -42,7 +42,7 @@ export var fakeBpmUserNoImage = {
     type: 'fake-type'
 };
 
-export var fakeBpmUser = {
+export let fakeBpmUser = {
     apps: [],
     capabilities: null,
     company: 'fake-company',
@@ -65,7 +65,7 @@ export var fakeBpmUser = {
     type: 'fake-type'
 };
 
-export var fakeBpmEditedUser = {
+export let fakeBpmEditedUser = {
     apps: [],
     capabilities: 'fake-capability',
     company: 'fake-company',

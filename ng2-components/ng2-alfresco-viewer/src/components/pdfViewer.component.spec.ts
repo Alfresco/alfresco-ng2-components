@@ -80,7 +80,7 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
 
     describe('View with url file', () => {
         beforeEach(() => {
-            component.urlFile = 'base/src/assets/fake-test-file.pdf';
+            component.urlFile = require('../assets/fake-test-file.pdf');
             fixture.detectChanges();
         });
 
@@ -177,7 +177,7 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
     describe('User interaction', () => {
 
         beforeEach(() => {
-            component.urlFile = 'base/src/assets/fake-test-file.pdf';
+            component.urlFile = require('../assets/fake-test-file.pdf');
             fixture.detectChanges();
             component.inputPage('1');
         });
@@ -315,7 +315,7 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
 
     describe('Resize interaction', () => {
         beforeEach(() => {
-            component.urlFile = 'base/src/assets/fake-test-file.pdf';
+            component.urlFile = require('../assets/fake-test-file.pdf');
             component.inputPage('1');
         });
         it('resize event should trigger setScaleUpdatePages', (done) => {
@@ -331,7 +331,7 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
 
     describe('scroll interaction', () => {
         beforeEach(() => {
-            component.urlFile = 'base/src/assets/fake-test-file.pdf';
+            component.urlFile = require('../assets/fake-test-file.pdf');
             fixture.detectChanges();
         });
         it('scroll page should return the current page', (done) => {

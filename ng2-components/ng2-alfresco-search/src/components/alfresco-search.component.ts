@@ -22,7 +22,6 @@ import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { NodePaging, Pagination } from 'alfresco-js-api';
 
 @Component({
-    moduleId: module.id,
     selector: 'alfresco-search',
     styleUrls: ['./alfresco-search.component.css'],
     templateUrl: './alfresco-search.component.html'
@@ -31,8 +30,6 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
 
     static SINGLE_CLICK_NAVIGATION: string = 'click';
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
-
-    private baseComponentPath: string = module.id.replace('components/alfresco-search.component.js', '');
 
     @Input()
     searchTerm: string = '';
@@ -53,7 +50,7 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
     navigationMode: string = AlfrescoSearchComponent.DOUBLE_CLICK_NAVIGATION; // click|dblclick
 
     @Input()
-    emptyFolderImageUrl: string = this.baseComponentPath + 'assets/images/empty_doc_lib.svg';
+    emptyFolderImageUrl: string = require('../assets/images/empty_doc_lib.svg');
 
     @Output()
     resultsLoad = new EventEmitter();

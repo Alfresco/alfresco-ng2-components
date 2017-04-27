@@ -38,7 +38,6 @@ import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 
 @Component({
     selector: 'activiti-tasklist',
-    moduleId: module.id,
     templateUrl: './activiti-tasklist.component.html',
     styleUrls: ['./activiti-tasklist.component.css']
 })
@@ -191,11 +190,9 @@ export class ActivitiTaskList implements OnChanges, AfterContentInit {
                         this.selectTask(requestNode.landingTaskId);
                         this.onSuccess.emit(response);
                     }, (error) => {
-                        this.logService.error(error);
                         this.onError.emit(error);
                     });
             }, (err) => {
-                this.logService.error(err);
                 this.onError.emit(err);
             });
     }

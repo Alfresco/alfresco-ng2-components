@@ -34,23 +34,10 @@ feel for what's available.
 ./start.sh -update or -u
 ```
 
-* If you want to use your local components use the following script with any of the previous option. It will npm link all the components
-in the demo shell:
-
-```sh
-./start.sh -link or -l
-```
-
 * If you want to build all your local component:
 
 ```sh
 ./npm-buid-all.sh
-```
-
-* If you want to build all your local component and link it together and in the demo shell:
-
-```sh
-./npm-buid-all.sh -l or -link
 ```
 
 * If you want to build all your local component and run the test:

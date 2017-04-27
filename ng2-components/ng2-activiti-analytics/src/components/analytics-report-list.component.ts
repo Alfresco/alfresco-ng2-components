@@ -22,7 +22,6 @@ import { AnalyticsService } from '../services/analytics.service';
 import { ReportParametersModel } from '../models/report.model';
 
 @Component({
-    moduleId: module.id,
     selector: 'analytics-report-list',
     templateUrl: './analytics-report-list.component.html',
     styleUrls: ['./analytics-report-list.component.css']
@@ -96,7 +95,6 @@ export class AnalyticsReportListComponent implements  OnInit {
             },
             (err: any) => {
                 this.onError.emit(err);
-                this.logService.error(err);
             }
         );
     }

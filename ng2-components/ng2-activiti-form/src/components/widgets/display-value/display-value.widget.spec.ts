@@ -39,7 +39,7 @@ describe('DisplayValueWidget', () => {
         logService = new LogServiceMock();
         formService = new FormService(null, null, logService);
         visibilityService = new WidgetVisibilityService(null, logService);
-        widget = new DisplayValueWidget(formService, visibilityService, logService);
+        widget = new DisplayValueWidget(formService, visibilityService);
     });
 
     it('should require field to setup default value', () => {
@@ -387,13 +387,11 @@ describe('DisplayValueWidget', () => {
         expect(widget.value).toBe('100');
     });
 
-    it('should handle rest error', () => {
+    it('should handle rest error', (done) => {
         const error = 'ERROR';
         spyOn(formService, 'getRestFieldValues').and.returnValue(
             Observable.throw(error)
         );
-
-        spyOn(logService, 'error').and.stub();
 
         let form = new FormModel({taskId: '<id>'});
 
@@ -407,10 +405,12 @@ describe('DisplayValueWidget', () => {
                 }
             }
         });
+        widget.error.subscribe(() => {
+            expect(formService.getRestFieldValues).toHaveBeenCalled();
+            expect(widget.value).toBe('100');
+            done();
+        });
         widget.ngOnInit();
-        expect(formService.getRestFieldValues).toHaveBeenCalled();
-        expect(logService.error).toHaveBeenCalledWith(error);
-        expect(widget.value).toBe('100');
     });
 
     it('should setup [DATE] field with valid date', () => {

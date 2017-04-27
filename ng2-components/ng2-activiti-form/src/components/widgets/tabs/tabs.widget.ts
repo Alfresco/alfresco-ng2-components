@@ -21,7 +21,6 @@ import { TabModel, FormFieldModel } from './../core/index';
 declare var componentHandler: any;
 
 @Component({
-    moduleId: module.id,
     selector: 'tabs-widget',
     templateUrl: './tabs.widget.html'
 })

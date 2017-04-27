@@ -29,7 +29,7 @@ declare let jasmine: any;
 describe('AnalyticsReportHeatMapComponent', () => {
 
     let componentHandler: any;
-    let component: any;
+    let component: AnalyticsReportHeatMapComponent;
     let fixture: ComponentFixture<AnalyticsReportHeatMapComponent>;
     let debug: DebugElement;
     let element: HTMLElement;

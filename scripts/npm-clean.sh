@@ -12,12 +12,15 @@ eval projects=( "ng2-activiti-diagrams"
       "ng2-alfresco-documentlist"
       "ng2-alfresco-login"
       "ng2-alfresco-search"
+      "ng2-alfresco-social"
       "ng2-alfresco-tag"
       "ng2-alfresco-social"
       "ng2-alfresco-upload"
       "ng2-alfresco-viewer"
       "ng2-alfresco-webscript"
       "ng2-alfresco-userinfo" )
+
+npm install rimraf -g
 
 for PACKAGE in ${projects[@]}
 do
@@ -33,6 +36,9 @@ do
 done
 
 cd "$DIR/../demo-shell-ng2"
+npm run clean
+
+cd "$DIR/../ng2-components"
 npm run clean
 
 cd ${DIR}

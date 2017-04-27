@@ -17,7 +17,7 @@
 
 import { AppDefinitionRepresentationModel } from '../models/filter.model';
 
-export var nonDeployedApps = [new AppDefinitionRepresentationModel({
+export let nonDeployedApps = [new AppDefinitionRepresentationModel({
     id: '1',
     name: '1',
     icon: 'icon1'
@@ -30,7 +30,7 @@ export var nonDeployedApps = [new AppDefinitionRepresentationModel({
     name: '3',
     icon: 'icon3'
 })];
-export var deployedApps = [new AppDefinitionRepresentationModel({
+export let deployedApps = [new AppDefinitionRepresentationModel({
     id: 1,
     name: 'App1',
     icon: 'icon1',
@@ -74,6 +74,6 @@ export var deployedApps = [new AppDefinitionRepresentationModel({
     tenantId: 9,
     modelId: 66
 })];
-export var defaultApp = [new AppDefinitionRepresentationModel({
+export let defaultApp = [new AppDefinitionRepresentationModel({
     defaultAppId: 'tasks'
 })];

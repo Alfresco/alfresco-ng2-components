@@ -20,7 +20,6 @@ import { MinimalNodeEntryEntity, PathElementEntity } from 'alfresco-js-api';
 import { DocumentListComponent } from '../document-list.component';
 
 @Component({
-    moduleId: module.id,
     selector: 'alfresco-document-list-breadcrumb',
     templateUrl: './breadcrumb.component.html',
     styleUrls: ['./breadcrumb.component.css']
