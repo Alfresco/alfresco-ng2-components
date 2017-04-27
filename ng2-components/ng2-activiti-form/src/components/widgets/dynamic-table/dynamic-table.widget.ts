@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, Input } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
 import { WidgetComponent } from './../widget.component';
 import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './dynamic-table.widget.model';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
+import { FormFieldModel } from '../core/form-field.model';
 
 @Component({
     moduleId: module.id,
@@ -30,6 +31,12 @@ import { WidgetVisibilityService } from '../../../services/widget-visibility.ser
 export class DynamicTableWidget extends WidgetComponent implements OnInit {
 
     ERROR_MODEL_NOT_FOUND = 'Table model not found';
+
+    @Input()
+    field: FormFieldModel;
+
+    @Input()
+    readOnly: boolean = false;
 
     content: DynamicTableModel;
 
@@ -70,7 +77,7 @@ export class DynamicTableWidget extends WidgetComponent implements OnInit {
     }
 
     moveSelectionUp(): boolean {
-        if (this.content) {
+        if (this.content && !this.readOnly) {
             this.content.moveRow(this.content.selectedRow, -1);
             return true;
         }
@@ -78,7 +85,7 @@ export class DynamicTableWidget extends WidgetComponent implements OnInit {
     }
 
     moveSelectionDown(): boolean {
-        if (this.content) {
+        if (this.content && !this.readOnly) {
             this.content.moveRow(this.content.selectedRow, 1);
             return true;
         }
@@ -86,7 +93,7 @@ export class DynamicTableWidget extends WidgetComponent implements OnInit {
     }
 
     deleteSelection(): boolean {
-        if (this.content) {
+        if (this.content && !this.readOnly) {
             this.content.deleteRow(this.content.selectedRow);
             return true;
         }
@@ -94,7 +101,7 @@ export class DynamicTableWidget extends WidgetComponent implements OnInit {
     }
 
     addNewRow(): boolean {
-        if (this.content) {
+        if (this.content && !this.readOnly) {
             this.editRow = <DynamicTableRow> {
                 isNew: true,
                 selected: false,
@@ -107,7 +114,7 @@ export class DynamicTableWidget extends WidgetComponent implements OnInit {
     }
 
     editSelection(): boolean {
-        if (this.content) {
+        if (this.content && !this.readOnly) {
             this.editRow = this.copyRow(this.content.selectedRow);
             this.editMode = true;
             return true;

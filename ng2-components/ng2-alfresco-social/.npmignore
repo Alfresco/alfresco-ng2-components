@@ -1,0 +1,16 @@
+npm-debug.log
+.idea
+
+coverage/
+demo/
+node_modules
+typings/
+fonts/
+
+/.editorconfig
+/.travis.yml
+/*.json
+/karma-test-shim.js
+/karma.conf.js
+/gulpfile.ts
+/.npmignore

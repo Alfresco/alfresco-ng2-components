@@ -38,13 +38,15 @@
                     [readOnly]="readOnlyForm"
                     [taskId]="taskDetails.id"
                     [assignee]="taskDetails?.assignee?.id"
-                    (checklistTaskCreated)="onChecklistTaskCreated($event)">
+                    (checklistTaskCreated)="onChecklistTaskCreated($event)"
+                    (checklistTaskDeleted)="onChecklistTaskDeleted($event)">
                 </activiti-checklist>
             </div>
         </div>
     </div>
     <div *ngIf="isAssignedToMe()">
         <activiti-form *ngIf="hasFormKey()" #activitiForm
+            [showDebugButton]="debugMode"
             [taskId]="taskDetails.id"
             [showTitle]="showFormTitle"
             [showRefreshButton]="showFormRefreshButton"

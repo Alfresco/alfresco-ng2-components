@@ -19,11 +19,8 @@
 export { BpmUserModel } from '../models/bpm-user.model';
 export { BpmUserService } from '../services/bpm-user.service';
 
-import { BpmUserModel } from '../models/bpm-user.model';
-import { Observable } from 'rxjs/Rx';
-
-export var fakeBpmUserNoImage: BpmUserModel = {
-    apps: {},
+export var fakeBpmUserNoImage = {
+    apps: [],
     capabilities: 'fake-capability',
     company: 'fake-company',
     created: 'fake-create-date',
@@ -32,7 +29,7 @@ export var fakeBpmUserNoImage: BpmUserModel = {
     firstName: 'fake-first-name',
     lastName: 'fake-last-name',
     fullname: 'fake-full-name',
-    groups: {},
+    groups: [],
     id: 'fake-id',
     lastUpdate: 'fake-update-date',
     latestSyncTimeStamp: 'fake-timestamp',
@@ -45,17 +42,17 @@ export var fakeBpmUserNoImage: BpmUserModel = {
     type: 'fake-type'
 };
 
-export var fakeBpmUser: BpmUserModel = {
-    apps: {},
-    capabilities: 'fake-capability',
+export var fakeBpmUser = {
+    apps: [],
+    capabilities: null,
     company: 'fake-company',
     created: 'fake-create-date',
     email: 'fakeBpm@fake.com',
     externalId: 'fake-external-id',
-    firstName: 'fake-first-name',
-    lastName: 'fake-last-name',
-    fullname: 'fake-full-name',
-    groups: {},
+    firstName: 'fake-bpm-first-name',
+    lastName: 'fake-bpm-last-name',
+    fullname: 'fake-bpm-full-name',
+    groups: [],
     id: 'fake-id',
     lastUpdate: 'fake-update-date',
     latestSyncTimeStamp: 'fake-timestamp',
@@ -68,8 +65,8 @@ export var fakeBpmUser: BpmUserModel = {
     type: 'fake-type'
 };
 
-export var fakeBpmEditedUser: BpmUserModel = {
-    apps: {},
+export var fakeBpmEditedUser = {
+    apps: [],
     capabilities: 'fake-capability',
     company: 'fake-company',
     created: 'fake-create-date',
@@ -78,7 +75,7 @@ export var fakeBpmEditedUser: BpmUserModel = {
     firstName: 'fake-first-name',
     lastName: 'fake-last-name',
     fullname: 'fake-full-name',
-    groups: {},
+    groups: [],
     id: 'fake-id',
     lastUpdate: 'fake-update-date',
     latestSyncTimeStamp: 'fake-timestamp',
@@ -90,34 +87,3 @@ export var fakeBpmEditedUser: BpmUserModel = {
     tenantPictureId: 'fake-tenant-picture-id',
     type: 'fake-type'
 };
-
-export class FakeBpmUserService {
-
-    lastPromise: Observable<BpmUserModel>;
-    public userNeeded = 0;
-    usersList = [fakeBpmUser, fakeBpmUserNoImage, fakeBpmEditedUser];
-
-    getUserInfo(userName: string) {
-        return this.lastPromise = Observable.of(this.usersList[this.userNeeded]);
-    };
-
-    getCurrentUserInfo() {
-        return this.getUserInfo('fake-id');
-    };
-
-    getCurrentUserProfileImage() {
-        return Observable.of(this.usersList[this.userNeeded].pictureId);
-    };
-
-    respondWithTheUserWithoutImage() {
-        this.userNeeded = 1;
-    }
-
-    respondWithTheUserWithImage() {
-        this.userNeeded = 0;
-    }
-
-    respondWithEditedUser() {
-        this.userNeeded = 2;
-    }
-}

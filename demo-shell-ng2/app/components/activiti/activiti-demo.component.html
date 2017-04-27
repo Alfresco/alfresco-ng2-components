@@ -19,20 +19,25 @@
             <div class="page-content">
                 <div class="mdl-grid">
                     <div class="mdl-cell mdl-cell--2-col task-column mdl-shadow--2dp">
-                        <activiti-filters
-                            [appId]="appId"
-                            (filterClick)="onTaskFilterClick($event)"
-                            (onSuccess)="onSuccessTaskFilterList($event)"
-                            #activitifilter>
-                        </activiti-filters>
-                    </div>
-                    <div class="mdl-cell mdl-cell--3-col task-column mdl-shadow--2dp list-column">
                         <div class="list-buttons">
                             <activiti-start-task
                                 [appId]="appId"
                                 (onSuccess)="onStartTaskSuccess($event)">
                             </activiti-start-task>
                         </div>
+                        <adf-accordion>
+                            <adf-accordion-group [heading]="'Tasks'" [isSelected]="true" [isOpen]="true" [headingIcon]="'assignment'">
+                                <activiti-filters
+                                    [appId]="appId"
+                                    [hasIcon]="false"
+                                    (filterClick)="onTaskFilterClick($event)"
+                                    (onSuccess)="onSuccessTaskFilterList($event)"
+                                    #activitifilter>
+                                </activiti-filters>
+                            </adf-accordion-group>
+                        </adf-accordion>
+                    </div>
+                    <div class="mdl-cell mdl-cell--3-col task-column mdl-shadow--2dp list-column">
                         <activiti-tasklist
                             [appId]="taskFilter?.appId"
                             [processDefinitionKey]="taskFilter?.filter?.processDefinitionKey"
@@ -58,10 +63,12 @@
                     </div>
                     <div class="mdl-cell mdl-cell--7-col task-column mdl-shadow--2dp">
                         <activiti-task-details #activitidetails
+                            [debugMode]="true"
                             [taskId]="currentTaskId"
                             (formCompleted)="onFormCompleted($event)"
                             (formContentClicked)="onFormContentClick($event)"
-                            (taskCreated)="onTaskCreated($event)">
+                            (taskCreated)="onTaskCreated($event)"
+                            (taskDeleted)="onTaskDeleted($event)">
                         </activiti-task-details>
                     </div>
                 </div>
@@ -76,13 +83,6 @@
                 <div class="page-content">
                     <div class="mdl-grid">
                         <div class="mdl-cell mdl-cell--2-col task-column  mdl-shadow--2dp">
-                            <activiti-process-instance-filters
-                                [appId]="appId"
-                                (filterClick)="onProcessFilterClick($event)"
-                                (onSuccess)="onSuccessProcessFilterList($event)">
-                            </activiti-process-instance-filters>
-                        </div>
-                        <div class="mdl-cell mdl-cell--3-col task-column list-column mdl-shadow--2dp" *ngIf="processFilter && !isStartProcessMode()">
                             <div class="list-buttons">
                                 <button
                                     md-raised-button
@@ -92,6 +92,17 @@
                                     <span>START PROCESS</span>
                                 </button>
                             </div>
+                            <adf-accordion>
+                                <adf-accordion-group [heading]="'Processes'" [isSelected]="true" [isOpen]="true" [headingIcon]="'assessment'">
+                                    <activiti-process-instance-filters
+                                        [appId]="appId"
+                                        (filterClick)="onProcessFilterClick($event)"
+                                        (onSuccess)="onSuccessProcessFilterList($event)">
+                                    </activiti-process-instance-filters>
+                                </adf-accordion-group>
+                            </adf-accordion>
+                        </div>
+                        <div class="mdl-cell mdl-cell--3-col task-column list-column mdl-shadow--2dp" *ngIf="processFilter && !isStartProcessMode()">
                             <activiti-process-instance-list
                                 *ngIf="processFilter?.hasFilter()" [appId]="processFilter.appId"
                                 [processDefinitionKey]="processFilter.filter.processDefinitionKey"

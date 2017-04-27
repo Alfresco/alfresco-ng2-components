@@ -428,6 +428,7 @@ describe('AnalyticsReportParametersComponent', () => {
         });
 
         describe('When the form is rendered correctly', () => {
+            let validForm: boolean = true;
             let values: any = {
                 dateRange: {
                     startDate: '2016-09-01', endDate: '2016-10-05'
@@ -468,10 +469,16 @@ describe('AnalyticsReportParametersComponent', () => {
                 fixture.whenStable().then(() => {
                     component.toggleParameters();
                     component.reportId = '1';
-                    spyOn(component, 'isFormValid').and.returnValue(true);
+                    spyOn(component, 'isFormValid').and.callFake(() => {
+                        return validForm;
+                    });
                     fixture.detectChanges();
                 });
             }));
+
+            afterEach(() => {
+                validForm = true;
+            });
 
             it('Should be able to change the report title', async(() => {
                 let title: HTMLElement = element.querySelector('h4');
@@ -567,6 +574,52 @@ describe('AnalyticsReportParametersComponent', () => {
                     contentType: 'json'
                 });
             }));
+
+            it('Should hide export button if the form is not valid', async(() => {
+                let exportButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#export-button');
+                expect(exportButton).toBeDefined();
+                expect(exportButton).not.toBeNull();
+                validForm = false;
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    exportButton = <HTMLButtonElement>element.querySelector('#export-button');
+                    expect(exportButton).toBeNull();
+                });
+            }));
+
+            it('Should hide save button if the form is not valid', async(() => {
+                let saveButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#save-button');
+                expect(saveButton).toBeDefined();
+                expect(saveButton).not.toBeNull();
+                validForm = false;
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    saveButton = <HTMLButtonElement>element.querySelector('#save-button');
+                    expect(saveButton).toBeNull();
+                });
+            }));
+
+            it('Should show export and save button when the form became valid', async(() => {
+                validForm = false;
+                fixture.detectChanges();
+                let saveButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#save-button');
+                let exportButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#export-button');
+                expect(saveButton).toBeNull();
+                expect(exportButton).toBeNull();
+                validForm = true;
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    saveButton = <HTMLButtonElement>element.querySelector('#save-button');
+                    exportButton = <HTMLButtonElement>element.querySelector('#export-button');
+                    expect(saveButton).not.toBeNull();
+                    expect(saveButton).toBeDefined();
+                    expect(exportButton).not.toBeNull();
+                    expect(exportButton).toBeDefined();
+                });
+            }));
         });
+
     });
 });

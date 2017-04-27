@@ -37,6 +37,10 @@
 Before you start using this development framework, make sure you have installed all required software and done all the
 necessary configuration [prerequisites](https://github.com/Alfresco/alfresco-ng2-components/blob/master/PREREQUISITES.md).
 
+## See also
+
+- [Walkthrough: adding indicators to clearly highlight information about a node](docs/metadata-indicators.md)
+
 ## Install
 
 Follow the 3 steps below:
@@ -612,6 +616,61 @@ The following action handlers are provided out-of-box:
 All system handler names are case-insensitive, `handler="download"` and `handler="DOWNLOAD"`
 will trigger the same `download` action.
 
+##### Delete - Show notification message with no permission
+You can show a notification error when the user don't have the right permission to perform the action.
+The ContentActionComponent provides the event permissionEvent that is raised when the permission specified in the permission property is missing
+You can subscribe to this event from your component and use the NotificationService to show a message.
+
+```html
+<alfresco-document-list ...>
+    <content-actions>
+
+        <content-action
+            target="document"
+            title="Delete"
+            permission="delete"
+            (permissionEvent)="onPermissionsFailed($event)"
+            handler="delete">
+        </content-action>
+
+    </content-actions>
+</alfresco-document-list>
+
+
+export class MyComponent {
+
+onPermissionsFailed(event: any) {
+    this.notificationService.openSnackMessage(`you don't have the ${event.permission} permission to ${event.action} the ${event.type} `, 4000);
+}
+
+}
+```
+
+![Delete show notification message](docs/assets/content-action-notification-message.png)
+
+##### Delete - Disable button checking the permission
+You can easily disable a button when the user doesn't own the permission to perform the action related to the button.
+The ContentActionComponent provides the property permission that must contain the permission to check and a property disableWithNoPermission that can be true if
+ you want see the button disabled.
+
+```html
+<alfresco-document-list ...>
+    <content-actions>
+
+        <content-action
+            target="document"
+            title="Delete"
+            permission="delete"
+            disableWithNoPermission="true"
+            handler="delete">
+        </content-action>
+
+    </content-actions>
+</alfresco-document-list>
+```
+
+![Delete disable action button](docs/assets/content-action-disable-delete-button.png)
+
 ##### Download
 
 Initiates download of the corresponding document file.
@@ -631,7 +690,6 @@ Initiates download of the corresponding document file.
 ```
 
 ![Download document action](docs/assets/document-action-download.png)
-
 
 #### Folder actions
 
@@ -725,6 +783,7 @@ DocumentList emits the following events:
 | `nodeDblClick` | emitted when user double-clicks list node |
 | `folderChange` | emitted once current display folder has changed |
 | `preview` | emitted when user acts upon files with either single or double click (depends on `navigation-mode`), recommended for Viewer components integration  |
+| `permissionError` | emitted when user is attempting to create a folder via action menu but it doesn't have the permission to do it |
 
 ## Advanced usage and customization
 

@@ -17,26 +17,45 @@
 
 import { NgZone, SimpleChange, TemplateRef } from '@angular/core';
 import { DataTableComponent, DataColumn, DataRowEvent } from 'ng2-alfresco-datatable';
-
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { CoreModule } from 'ng2-alfresco-core';
 import { DocumentListComponent } from './document-list.component';
-import { DocumentListServiceMock } from './../assets/document-list.service.mock';
+import { DocumentListService } from './../services/document-list.service';
 import { ContentActionModel } from '../models/content-action.model';
 import { FileNode, FolderNode } from '../assets/document-library.model.mock';
 import { NodeMinimalEntry, NodeMinimal, NodePaging } from '../models/document-library.model';
 import { ShareDataRow, RowFilter, ImageResolver } from './../data/share-datatable-adapter';
+import { DataTableModule } from 'ng2-alfresco-datatable';
+import { DocumentMenuActionComponent } from './document-menu-action.component';
 
 describe('DocumentList', () => {
 
-    let documentListService: DocumentListServiceMock;
     let documentList: DocumentListComponent;
+    let fixture: ComponentFixture<DocumentListComponent>;
+    let element: HTMLElement;
     let eventMock: any;
     let componentHandler;
 
-    beforeEach(() => {
-        documentListService = new DocumentListServiceMock();
+    beforeEach(async(() => {
         let zone = new NgZone(false);
-        documentList = new DocumentListComponent(documentListService, zone, null);
 
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule.forRoot(),
+                DataTableModule.forRoot()
+            ],
+            declarations: [
+                DocumentListComponent,
+                DocumentMenuActionComponent
+            ],
+            providers: [
+                DocumentListService,
+                {provide: NgZone, useValue: zone}
+            ]
+        }).compileComponents();
+    }));
+
+    beforeEach(() => {
         eventMock = {
             preventDefault: function () {
                 console.log('mock preventDefault');
@@ -47,18 +66,21 @@ describe('DocumentList', () => {
             'upgradeAllRegistered'
         ]);
         window['componentHandler'] = componentHandler;
+
+        fixture = TestBed.createComponent(DocumentListComponent);
+
+        element = fixture.nativeElement;
+        documentList = fixture.componentInstance;
+        fixture.detectChanges();
     });
 
     it('should setup default columns', () => {
-        spyOn(documentList, 'setupDefaultColumns').and.callThrough();
-
         documentList.ngAfterContentInit();
 
-        expect(documentList.setupDefaultColumns).toHaveBeenCalled();
         expect(documentList.data.getColumns().length).not.toBe(0);
     });
 
-    it('should use custom columns instead of default ones', () => {
+    it('should add the custom columns', () => {
         let column = <DataColumn> {
             title: 'title',
             key: 'source',
@@ -72,8 +94,8 @@ describe('DocumentList', () => {
         columns.push(column);
 
         documentList.ngAfterContentInit();
-        expect(columns.length).toBe(1);
-        expect(columns[0]).toBe(column);
+        expect(columns.length).toBe(3);
+        expect(columns[2]).toBe(column);
     });
 
     it('should execute action with node', () => {
@@ -86,7 +108,22 @@ describe('DocumentList', () => {
         spyOn(action, 'handler').and.stub();
 
         documentList.executeContentAction(node, action);
-        expect(action.handler).toHaveBeenCalledWith(node, documentList);
+        expect(action.handler).toHaveBeenCalledWith(node, documentList, undefined);
+
+    });
+
+    it('should execute action with node and permission', () => {
+        let node = new FileNode();
+        let action = new ContentActionModel();
+        action.handler = function () {
+            console.log('mock handler');
+        };
+        action.permission = 'fake-permission';
+
+        spyOn(action, 'handler').and.stub();
+
+        documentList.executeContentAction(node, action);
+        expect(action.handler).toHaveBeenCalledWith(node, documentList, 'fake-permission');
 
     });
 
@@ -298,12 +335,6 @@ describe('DocumentList', () => {
         expect(documentList.performNavigation(null)).toBeFalsy();
     });
 
-    /*
-     it('should not get node path for null node', () => {
-     expect(documentList.getNodePath(null)).toBeNull();
-     });
-     */
-
     it('should require valid node for file preview', () => {
         let file = new FileNode();
         file.entry = null;
@@ -344,7 +375,6 @@ describe('DocumentList', () => {
 
     it('should display folder content from loadFolderByNodeId on reload if currentFolderId defined', () => {
         documentList.currentFolderId = 'id-folder';
-        spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.reject(false));
         spyOn(documentList, 'loadFolderByNodeId').and.callThrough();
         documentList.reload();
         expect(documentList.loadFolderByNodeId).toHaveBeenCalled();
@@ -425,16 +455,12 @@ describe('DocumentList', () => {
     });
 
     it('should emit error on wrong folder id', (done) => {
-        let raised = false;
-        documentList.error.subscribe(err => raised = true);
-        spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.reject(false));
+        documentList.error.subscribe(() => {
+            done();
+        });
 
         documentList.currentFolderId = 'wrong-id';
         documentList.ngOnChanges({currentFolderId: new SimpleChange(null, documentList.currentFolderId)});
-        setTimeout(() => {
-            expect(raised).toBeTruthy();
-            done();
-        }, 0);
     });
 
     it('should require dataTable to check empty template', () => {
@@ -450,6 +476,14 @@ describe('DocumentList', () => {
 
         documentList.emptyFolderTemplate = null;
         expect(documentList.isEmptyTemplateDefined()).toBeFalsy();
+    });
+
+    it('should empty folder NOT show the pagination', () => {
+        documentList.emptyFolderTemplate = <TemplateRef<any>> {};
+        documentList.dataTable = new DataTableComponent(null);
+
+        expect(documentList.isEmpty()).toBeTruthy();
+        expect(element.querySelector('alfresco-pagination')).toBe(null);
     });
 
     it('should set row filter for underlying adapter', () => {

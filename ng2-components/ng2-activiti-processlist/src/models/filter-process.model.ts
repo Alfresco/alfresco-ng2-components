@@ -23,7 +23,7 @@
  * @returns {FilterProcessRepresentationModel} .
  */
 export class FilterProcessRepresentationModel {
-    id: number;
+    id: string;
     appId: string;
     name: string;
     recent: boolean;
@@ -32,6 +32,7 @@ export class FilterProcessRepresentationModel {
     index: number;
 
     constructor(obj?: any) {
+        this.id = obj && obj.id || null;
         this.appId = obj && obj.appId || null;
         this.name = obj && obj.name || null;
         this.recent = obj && obj.recent || false;

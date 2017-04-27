@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, Input, Output, EventEmitter } from '@angular/core';
-import 'rxjs/Rx';
+import { Component, ElementRef, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Subject } from 'rxjs/Rx';
 import { AlfrescoTranslationService, LogService, NotificationService } from 'ng2-alfresco-core';
 import { UploadService } from '../services/upload.service';
 import { FileModel } from '../models/file.model';
+import { PermissionModel } from '../models/permissions.model';
 
 declare let componentHandler: any;
 
@@ -51,9 +52,12 @@ const ERROR_FOLDER_ALREADY_EXIST = 409;
     templateUrl: './upload-button.component.html',
     styleUrls: ['./upload-button.component.css']
 })
-export class UploadButtonComponent {
+export class UploadButtonComponent implements OnInit, OnChanges {
 
     private static DEFAULT_ROOT_ID: string = '-root-';
+
+    @Input()
+    disabled: boolean = false;
 
     @Input()
     showNotificationBar: boolean = true;
@@ -79,6 +83,9 @@ export class UploadButtonComponent {
     @Input()
     rootFolderId: string = UploadButtonComponent.DEFAULT_ROOT_ID;
 
+    @Input()
+    disableWithNoPermission: boolean = false;
+
     @Output()
     onSuccess = new EventEmitter();
 
@@ -87,6 +94,13 @@ export class UploadButtonComponent {
 
     @Output()
     createFolder = new EventEmitter();
+
+    @Output()
+    permissionEvent: EventEmitter<PermissionModel> = new EventEmitter<PermissionModel>();
+
+    private hasPermission: boolean = false;
+
+    private permissionValue: Subject<boolean> = new Subject<boolean>();
 
     constructor(private el: ElementRef,
                 private uploadService: UploadService,
@@ -98,9 +112,31 @@ export class UploadButtonComponent {
         }
     }
 
-    ngOnChanges(changes) {
+    ngOnInit() {
+        this.permissionValue.subscribe((permission: boolean) => {
+            this.hasPermission = permission;
+        });
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        let rootFolderId = changes['rootFolderId'];
+        if (rootFolderId && rootFolderId.currentValue) {
+            this.checkPermission();
+        }
         let formFields = this.createFormFields();
         this.uploadService.setOptions(formFields, this.versioning);
+    }
+
+    isButtonDisabled(): boolean {
+        return this.isForceDisable() || this.isDisableWithNoPermission();
+    }
+
+    isForceDisable(): boolean {
+        return this.disabled ? true : undefined;
+    }
+
+    isDisableWithNoPermission(): boolean {
+        return !this.hasPermission && this.disableWithNoPermission ? true : undefined;
     }
 
     /**
@@ -110,7 +146,12 @@ export class UploadButtonComponent {
      */
     onFilesAdded($event: any): void {
         let files = $event.currentTarget.files;
-        this.uploadFiles(this.currentFolderPath, files);
+
+        if (this.hasPermission) {
+            this.uploadFiles(this.currentFolderPath, files);
+        } else {
+            this.permissionEvent.emit(new PermissionModel({type: 'content', action: 'upload', permission: 'create'}));
+        }
         // reset the value of the input file
         $event.target.value = '';
     }
@@ -122,31 +163,34 @@ export class UploadButtonComponent {
      */
     onDirectoryAdded($event: any): void {
         let files = $event.currentTarget.files;
-        let hashMapDir = this.convertIntoHashMap(files);
+        if (this.hasPermission) {
+            let hashMapDir = this.convertIntoHashMap(files);
 
-        hashMapDir.forEach((filesDir, directoryPath) => {
-            let directoryName = this.getDirectoryName(directoryPath);
-            let absolutePath = this.currentFolderPath + this.getDirectoryPath(directoryPath);
+            hashMapDir.forEach((filesDir, directoryPath) => {
+                let directoryName = this.getDirectoryName(directoryPath);
+                let absolutePath = this.currentFolderPath + this.getDirectoryPath(directoryPath);
 
-            this.uploadService.createFolder(absolutePath, directoryName, this.rootFolderId)
-                .subscribe(
-                    res => {
-                        let relativeDir = this.currentFolderPath + '/' + directoryPath;
-                        this.uploadFiles(relativeDir, filesDir);
-                    },
-                    error => {
-                        let errorMessagePlaceholder = this.getErrorMessage(error.response);
-                        if (errorMessagePlaceholder) {
-                            this.onError.emit({value: errorMessagePlaceholder});
-                            let errorMessage = this.formatString(errorMessagePlaceholder, [directoryName]);
-                            if (errorMessage) {
-                                this._showErrorNotificationBar(errorMessage);
+                this.uploadService.createFolder(absolutePath, directoryName, this.rootFolderId)
+                    .subscribe(
+                        res => {
+                            let relativeDir = this.currentFolderPath + '/' + directoryPath;
+                            this.uploadFiles(relativeDir, filesDir);
+                        },
+                        error => {
+                            let errorMessagePlaceholder = this.getErrorMessage(error.response);
+                            if (errorMessagePlaceholder) {
+                                this.onError.emit({value: errorMessagePlaceholder});
+                                let errorMessage = this.formatString(errorMessagePlaceholder, [directoryName]);
+                                if (errorMessage) {
+                                    this._showErrorNotificationBar(errorMessage);
+                                }
                             }
                         }
-                        this.logService.error(error);
-                    }
-                );
-        });
+                    );
+            });
+        } else {
+            this.permissionEvent.emit(new PermissionModel({type: 'content', action: 'upload', permission: 'create'}));
+        }
         // reset the value of the input file
         $event.target.value = '';
     }
@@ -271,5 +315,29 @@ export class UploadButtonComponent {
                 overwrite: true
             }
         };
+    }
+
+    checkPermission() {
+        if (this.rootFolderId) {
+            this.uploadService.getFolderNode(this.rootFolderId).subscribe(
+                (res) => {
+                    this.permissionValue.next(this.hasCreatePermission(res));
+                },
+                (error) => {
+                    this.onError.emit(error);
+                }
+            );
+        }
+    }
+
+    private hasCreatePermission(node: any): boolean {
+        if (this.hasPermissions(node)) {
+            return node.allowableOperations.find(permision => permision === 'create') ? true : false;
+        }
+        return false;
+    }
+
+    private hasPermissions(node: any): boolean {
+        return node && node.allowableOperations ? true : false;
     }
 }

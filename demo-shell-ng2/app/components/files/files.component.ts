@@ -15,32 +15,55 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Optional, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit, Optional, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { AlfrescoAuthenticationService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, LogService, NotificationService } from 'ng2-alfresco-core';
 import { DocumentActionsService, DocumentListComponent, ContentActionHandler, DocumentActionModel, FolderActionModel } from 'ng2-alfresco-documentlist';
 import { FormService } from 'ng2-activiti-form';
+import { UploadButtonComponent, UploadDragAreaComponent } from 'ng2-alfresco-upload';
 
 @Component({
     selector: 'files-component',
     templateUrl: './files.component.html',
     styleUrls: ['./files.component.css']
 })
-export class FilesComponent implements OnInit {
+export class FilesComponent implements OnInit, AfterViewInit {
     // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
     currentFolderId: string = '-my-';
 
     errorMessage: string = null;
     fileNodeId: any;
     fileShowed: boolean = false;
+
+    @Input()
     multipleFileUpload: boolean = false;
+
+    @Input()
+    disableWithNoPermission: boolean = false;
+
+    @Input()
     folderUpload: boolean = false;
+
+    @Input()
     acceptedFilesTypeShow: boolean = false;
+
+    @Input()
     versioning: boolean = false;
+
+    @Input()
     acceptedFilesType: string = '.jpg,.pdf,.js';
+
+    @Input()
+    enableUpload: boolean = true;
 
     @ViewChild(DocumentListComponent)
     documentList: DocumentListComponent;
+
+    @ViewChild(UploadButtonComponent)
+    uploadButton: UploadButtonComponent;
+
+    @ViewChild(UploadDragAreaComponent)
+    uploadDragArea: UploadDragAreaComponent;
 
     constructor(private documentActions: DocumentActionsService,
                 private authService: AlfrescoAuthenticationService,
@@ -48,6 +71,7 @@ export class FilesComponent implements OnInit {
                 private logService: LogService,
                 private changeDetector: ChangeDetectorRef,
                 private router: Router,
+                private notificationService: NotificationService,
                 @Optional() private route: ActivatedRoute) {
         documentActions.setHandler('my-handler', this.myDocumentActionHandler.bind(this));
     }
@@ -73,25 +97,10 @@ export class FilesComponent implements OnInit {
         }
     }
 
-    toggleMultipleFileUpload() {
-        this.multipleFileUpload = !this.multipleFileUpload;
-        return this.multipleFileUpload;
-    }
-
     toggleFolder() {
         this.multipleFileUpload = false;
         this.folderUpload = !this.folderUpload;
         return this.folderUpload;
-    }
-
-    toggleAcceptedFilesType() {
-        this.acceptedFilesTypeShow = !this.acceptedFilesTypeShow;
-        return this.acceptedFilesTypeShow;
-    }
-
-    toggleVersioning() {
-        this.versioning = !this.versioning;
-        return this.versioning;
     }
 
     ngOnInit() {
@@ -111,6 +120,20 @@ export class FilesComponent implements OnInit {
         } else {
             this.logService.warn('You are not logged in to BPM');
         }
+    }
+
+    ngAfterViewInit() {
+        this.uploadButton.onSuccess
+            .debounceTime(100)
+            .subscribe((event) => {
+                this.reload(event);
+            });
+
+        this.uploadDragArea.onSuccess
+            .debounceTime(100)
+            .subscribe((event) => {
+                this.reload(event);
+            });
     }
 
     viewActivitiForm(event?: any) {
@@ -145,5 +168,21 @@ export class FilesComponent implements OnInit {
         return function (obj: any, target?: any) {
             window.alert(`Starting BPM process: ${processDefinition.id}`);
         }.bind(this);
+    }
+
+    onPermissionsFailed(event: any) {
+        this.notificationService.openSnackMessage(`you don't have the ${event.permission} permission to ${event.action} the ${event.type} `, 4000);
+    }
+
+    onUploadPermissionFailed(event: any) {
+        this.notificationService.openSnackMessage(`you don't have the ${event.permission} permission to ${event.action} the ${event.type} `, 4000);
+    }
+
+    reload(event: any) {
+        if (event && event.value && event.value.entry && event.value.entry.parentId) {
+            if (this.documentList.currentFolderId === event.value.entry.parentId) {
+                this.documentList.reload();
+            }
+        }
     }
 }

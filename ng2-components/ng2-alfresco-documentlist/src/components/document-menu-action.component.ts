@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
 
 import { DocumentListService } from './../services/document-list.service';
 import { ContentActionModel } from './../models/content-action.model';
+import { PermissionModel } from '../models/permissions.model';
 
 declare let dialogPolyfill: any;
 
@@ -32,16 +33,22 @@ const ERROR_FOLDER_ALREADY_EXIST = 409;
     styleUrls: ['./document-menu-action.component.css'],
     templateUrl: './document-menu-action.component.html'
 })
-export class DocumentMenuActionComponent {
+export class DocumentMenuActionComponent implements OnChanges {
 
     @Input()
     folderId: string;
+
+    @Input()
+    disableWithNoPermission: boolean = true;
 
     @Output()
     success = new EventEmitter();
 
     @Output()
     error = new EventEmitter();
+
+    @Output()
+    permissionErrorEvent = new EventEmitter();
 
     @ViewChild('dialog')
     dialog: any;
@@ -52,6 +59,8 @@ export class DocumentMenuActionComponent {
 
     folderName: string = '';
 
+    allowableOperations: string[];
+
     constructor(private documentListService: DocumentListService,
                 private translateService: AlfrescoTranslationService,
                 private logService: LogService) {
@@ -61,27 +70,43 @@ export class DocumentMenuActionComponent {
         }
     }
 
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes && changes['folderId']) {
+            if (changes['folderId'].currentValue !== changes['folderId'].previousValue) {
+                this.loadCurrentNodePermissions(changes['folderId'].currentValue);
+            }
+        }
+    }
+
     public createFolder(name: string) {
         this.cancel();
-        this.documentListService.createFolder(name, this.folderId)
-            .subscribe(
-                (res: MinimalNodeEntity) => {
-                    this.folderName = '';
-                    this.logService.info(res.entry);
-                    this.success.emit({node: res.entry});
-                },
-                error => {
-                    if (error.response) {
-                        let errorMessagePlaceholder = this.getErrorMessage(error.response);
-                        this.message = this.formatString(errorMessagePlaceholder, [name]);
-                        this.error.emit({message: this.message});
-                        this.logService.error(this.message);
-                    } else {
-                        this.error.emit(error);
-                        this.logService.error(error);
+        if (this.hasCreatePermission()) {
+            this.documentListService.createFolder(name, this.folderId)
+                .subscribe(
+                    (res: MinimalNodeEntity) => {
+                        this.folderName = '';
+                        this.logService.info(res.entry);
+                        this.success.emit({ node: res.entry });
+                    },
+                    error => {
+                        if (error.response) {
+                            let errorMessagePlaceholder = this.getErrorMessage(error.response);
+                            this.message = this.formatString(errorMessagePlaceholder, [name]);
+                            this.error.emit({ message: this.message });
+                            this.logService.error(this.message);
+                        } else {
+                            this.error.emit(error);
+                            this.logService.error(error);
+                        }
                     }
-                }
-            );
+                );
+        } else {
+            this.permissionErrorEvent.emit(new PermissionModel({
+                type: 'folder',
+                action: 'create',
+                permission: 'create'
+            }));
+        }
     }
 
     public showDialog() {
@@ -126,5 +151,28 @@ export class DocumentMenuActionComponent {
 
     isFolderNameEmpty() {
         return this.folderName === '' ? true : false;
+    }
+
+    isButtonDisabled(): boolean {
+        return !this.hasCreatePermission() && this.disableWithNoPermission ? true : undefined;
+    }
+
+    hasPermission(permission: string): boolean {
+        let hasPermission: boolean = false;
+        if (this.allowableOperations) {
+            let permFound = this.allowableOperations.find(element => element === permission);
+            hasPermission = permFound ? true : false;
+        }
+        return hasPermission;
+    }
+
+    hasCreatePermission() {
+        return this.hasPermission('create');
+    }
+
+    loadCurrentNodePermissions(nodeId: string) {
+        this.documentListService.getFolderNode(nodeId).then(node => {
+            this.allowableOperations = node ? node['allowableOperations'] : null;
+        }).catch(err => this.error.emit(err));
     }
 }

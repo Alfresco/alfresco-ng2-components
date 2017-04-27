@@ -43,6 +43,9 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
     errorDialog: DebugElement;
 
     @Input()
+    debugMode: boolean = false;
+
+    @Input()
     taskId: string;
 
     @Input()
@@ -95,6 +98,9 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
 
     @Output()
     taskCreated: EventEmitter<TaskDetailsModel> = new EventEmitter<TaskDetailsModel>();
+
+    @Output()
+    taskDeleted: EventEmitter<string> = new EventEmitter<string>();
 
     @Output()
     onError: EventEmitter<any> = new EventEmitter<any>();
@@ -256,6 +262,10 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
 
     onChecklistTaskCreated(task: TaskDetailsModel) {
         this.taskCreated.emit(task);
+    }
+
+    onChecklistTaskDeleted(taskId: string) {
+        this.taskDeleted.emit(taskId);
     }
 
     onFormError(error: any) {

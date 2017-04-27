@@ -1,4 +1,7 @@
 {
+    "APPS": {
+        "NONE": "Nessuna applicazione trovata."
+    },
     "TASK_LIST": {
         "MESSAGES": {
             "NONE": "Nessuna lista tasks trovata."

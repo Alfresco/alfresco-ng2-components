@@ -19,9 +19,14 @@ import { Injectable } from '@angular/core';
 import { ContentActionHandler } from '../models/content-action.model';
 import { DocumentListService } from './document-list.service';
 import { AlfrescoContentService } from 'ng2-alfresco-core';
+import { PermissionModel } from '../models/permissions.model';
+import { Subject } from 'rxjs/Rx';
 
 @Injectable()
 export class DocumentActionsService {
+
+    permissionEvent: Subject<PermissionModel> = new Subject<PermissionModel>();
+
     private handlers: { [id: string]: ContentActionHandler; } = {};
 
     constructor(private documentListService?: DocumentListService,
@@ -82,13 +87,28 @@ export class DocumentActionsService {
         return false;
     }
 
-    private deleteNode(obj: any, target?: any) {
-        if (this.canExecuteAction(obj) && obj.entry && obj.entry.id) {
-            this.documentListService.deleteNode(obj.entry.id).subscribe(() => {
-                if (target && typeof target.reload === 'function') {
-                    target.reload();
-                }
-            });
+    private deleteNode(obj: any, target?: any, permission?: string) {
+        if (this.canExecuteAction(obj)) {
+            if (this.hasPermission(obj.entry, permission)) {
+                this.documentListService.deleteNode(obj.entry.id).subscribe(() => {
+                    if (target && typeof target.reload === 'function') {
+                        target.reload();
+                    }
+                });
+            } else {
+                this.permissionEvent.next(new PermissionModel({type: 'content', action: 'delete', permission: permission}));
+            }
         }
+    }
+
+    private hasPermission(node: any, permission: string): boolean {
+        if (this.hasPermissions(node)) {
+            return node.allowableOperations.find(permision => permision === permission) ? true : false;
+        }
+        return false;
+    }
+
+    private hasPermissions(node: any): boolean {
+        return node && node.allowableOperations ? true : false;
     }
 }

@@ -17,22 +17,6 @@
 
 import { AppDefinitionRepresentationModel } from '../models/filter.model';
 
-export var deployedApps = [new AppDefinitionRepresentationModel({
-    id: '1',
-    name: 'App1',
-    icon: 'icon1',
-    deploymentId: '1'
-}), new AppDefinitionRepresentationModel({
-    id: '2',
-    name: 'App2',
-    icon: 'icon2',
-    deploymentId: '2'
-}), new AppDefinitionRepresentationModel({
-    id: '3',
-    name: 'App3',
-    icon: 'icon3',
-    deploymentId: '3'
-})];
 export var nonDeployedApps = [new AppDefinitionRepresentationModel({
     id: '1',
     name: '1',
@@ -45,6 +29,50 @@ export var nonDeployedApps = [new AppDefinitionRepresentationModel({
     id: '1',
     name: '3',
     icon: 'icon3'
+})];
+export var deployedApps = [new AppDefinitionRepresentationModel({
+    id: 1,
+    name: 'App1',
+    icon: 'icon1',
+    deploymentId: '1',
+    defaultAppId: 'fake-app-1',
+    modelId: null,
+    tenantId: null
+}), new AppDefinitionRepresentationModel({
+    id: 2,
+    name: 'App2',
+    icon: 'icon2',
+    deploymentId: '2',
+    modelId: null,
+    tenantId: null
+}), new AppDefinitionRepresentationModel({
+    id: 3,
+    name: 'App3',
+    icon: 'icon3',
+    deploymentId: '3',
+    modelId: null,
+    tenantId: null
+}), new AppDefinitionRepresentationModel({
+    id: 4,
+    name: 'App4',
+    icon: 'icon4',
+    deploymentId: '4',
+    modelId: 65,
+    tenantId: null
+}), new AppDefinitionRepresentationModel({
+    id: 5,
+    name: 'App5',
+    icon: 'icon5',
+    deploymentId: '5',
+    modelId: 66,
+    tenantId: 9
+}), new AppDefinitionRepresentationModel({
+    id: 6,
+    name: 'App6',
+    icon: 'icon6',
+    deploymentId: '6',
+    tenantId: 9,
+    modelId: 66
 })];
 export var defaultApp = [new AppDefinitionRepresentationModel({
     defaultAppId: 'tasks'

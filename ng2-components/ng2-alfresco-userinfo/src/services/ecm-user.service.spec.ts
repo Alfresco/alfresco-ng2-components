@@ -15,11 +15,17 @@
  * limitations under the License.
  */
 
-import { TestBed } from '@angular/core/testing';
-import { CoreModule, AlfrescoAuthenticationService, AlfrescoContentService } from 'ng2-alfresco-core';
 import { EcmUserService } from '../services/ecm-user.service';
 import { fakeEcmUser } from '../assets/fake-ecm-user.service.mock';
-
+import { ReflectiveInjector } from '@angular/core';
+import {
+    AlfrescoAuthenticationService,
+    AlfrescoContentService,
+    AlfrescoSettingsService,
+    AlfrescoApiService,
+    StorageService,
+    LogService
+} from 'ng2-alfresco-core';
 declare let jasmine: any;
 
 describe('EcmUserService', () => {
@@ -27,45 +33,53 @@ describe('EcmUserService', () => {
     let service: EcmUserService;
     let authService: AlfrescoAuthenticationService;
     let contentService: AlfrescoContentService;
+    let injector;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                CoreModule.forRoot()
-            ],
-            providers: [
-                EcmUserService
-            ]
-        });
-        service = TestBed.get(EcmUserService);
-        authService = TestBed.get(AlfrescoAuthenticationService);
-        contentService = TestBed.get(AlfrescoContentService);
+        injector = ReflectiveInjector.resolveAndCreate([
+            AlfrescoSettingsService,
+            AlfrescoApiService,
+            AlfrescoAuthenticationService,
+            AlfrescoContentService,
+            EcmUserService,
+            StorageService,
+            LogService
+        ]);
+    });
+
+    beforeEach(() => {
+        service = injector.get(EcmUserService);
+        authService = injector.get(AlfrescoAuthenticationService);
+        contentService = injector.get(AlfrescoContentService);
+    });
+
+    beforeEach(() => {
+        jasmine.Ajax.install();
+    });
+
+    afterEach(() => {
+        jasmine.Ajax.uninstall();
     });
 
     describe('when user is logged in', () => {
 
         beforeEach(() => {
             spyOn(authService, 'isEcmLoggedIn').and.returnValue(true);
-            jasmine.Ajax.install();
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
         });
 
         it('should be able to retrieve current user info', (done) => {
             service.getCurrentUserInfo().subscribe(
                 (user) => {
                     expect(user).toBeDefined();
-                    expect(user.firstName).toEqual('fake-first-name');
-                    expect(user.lastName).toEqual('fake-last-name');
+                    expect(user.firstName).toEqual('fake-ecm-first-name');
+                    expect(user.lastName).toEqual('fake-ecm-last-name');
                     expect(user.email).toEqual('fakeEcm@ecmUser.com');
                     done();
                 });
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
-                contentType: 'json',
-                responseText: {entry: fakeEcmUser}
+                contentType: 'application/json',
+                responseText: JSON.stringify({entry: fakeEcmUser})
             });
         });
 

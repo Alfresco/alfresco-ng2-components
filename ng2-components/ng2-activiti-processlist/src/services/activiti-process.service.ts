@@ -71,9 +71,33 @@ export class ActivitiProcessService {
     }
 
     /**
+     * Retrieve the process filter by id
+     * @param processId - string - The id of the filter
+     * @returns {Observable<FilterProcessRepresentationModel>}
+     */
+    getProcessFilterById(processId: string, appId?: string): Observable<FilterProcessRepresentationModel> {
+        return Observable.fromPromise(this.callApiGetUserProcessInstanceFilters(appId))
+            .map((response: any) => {
+                return response.data.find(filter => filter.id === processId);
+            }).catch(err => this.handleError(err));
+    }
+
+    /**
+     * Retrieve the process filter by name
+     * @param processName - string - The name of the filter
+     * @returns {Observable<FilterProcessRepresentationModel>}
+     */
+    getProcessFilterByName(processName: string, appId?: string): Observable<FilterProcessRepresentationModel> {
+        return Observable.fromPromise(this.callApiGetUserProcessInstanceFilters(appId))
+            .map((response: any) => {
+                return response.data.find(filter => filter.name === processName);
+            }).catch(err => this.handleError(err));
+    }
+
+    /**
      * Create and return the default filters
      * @param appId
-     * @returns {FilterRepresentationModel[]}
+     * @returns {FilterProcessRepresentationModel[]}
      */
     public createDefaultFilters(appId: number): Observable<FilterProcessRepresentationModel[]> {
         let runnintFilter = this.getRunningFilterInstance(appId);
@@ -292,6 +316,14 @@ export class ActivitiProcessService {
 
     private callApiAddFilter(filter: FilterProcessRepresentationModel) {
         return this.apiService.getInstance().activiti.userFiltersApi.createUserProcessInstanceFilter(filter);
+    }
+
+    callApiProcessFilters(appId?: string) {
+        if (appId) {
+            return this.apiService.getInstance().activiti.userFiltersApi.getUserProcessInstanceFilters({ appId: appId });
+        } else {
+            return this.apiService.getInstance().activiti.userFiltersApi.getUserProcessInstanceFilters();
+        }
     }
 
     private extractData(res: any) {

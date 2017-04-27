@@ -7,9 +7,11 @@
 <div class="menu-container" *ngIf="checklist?.length > 0">
     <ul class='mdl-list'>
         <li class="mdl-list__item" *ngFor="let check of checklist">
-            <span class="mdl-list__item-primary-content" id="check-{{check.id}}">
-            <i class="material-icons mdl-list__item-icon">done</i>
-            {{check.name}}
+            <span class="mdl-chip mdl-chip--deletable" id="check-{{check.id}}">
+                <span class="mdl-chip__text">{{check.name}}</span>
+                <button type="button" class="mdl-chip__action" (click)="delete(check.id)">
+                    <i id="remove-{{check.id}}" class="material-icons">cancel</i>
+                </button>
             </span>
         </li>
     </ul>

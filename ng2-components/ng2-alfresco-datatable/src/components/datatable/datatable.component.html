@@ -34,14 +34,14 @@
         [class.alfresco-datatable__row--selected]="selectedRow === row"
         [adf-upload]="allowDropFiles" [adf-upload-data]="row">
 
-        <!-- Actions (right) -->
+        <!-- Actions (left) -->
         <td *ngIf="actions && actionsPosition === 'left'" class="alfresco-datatable__actions-cell">
             <button [id]="'action_menu_' + idx" alfresco-mdl-button class="mdl-button--icon" [attr.data-automation-id]="actions_menu">
                 <i class="material-icons">more_vert</i>
             </button>
             <ul alfresco-mdl-menu class="mdl-menu--bottom-left"
                 [attr.for]="'action_menu_' + idx">
-                <li class="mdl-menu__item"
+                <li class="mdl-menu__item" [attr.disabled]="action.disabled"
                     [attr.data-automation-id]="action.title"
                     *ngFor="let action of getRowActions(row)"
                     (click)="onExecuteRowAction(row, action)">
@@ -53,33 +53,38 @@
         <td *ngIf="multiselect">
             <md-checkbox [(ngModel)]="row.isSelected"></md-checkbox>
         </td>
-        <td *ngFor="let col of data.getColumns()" [ngSwitch]="col.type"
+        <td *ngFor="let col of data.getColumns()"
             class="mdl-data-table__cell--non-numeric non-selectable data-cell {{col.cssClass}}"
             (click)="onRowClick(row, $event)"
             (dblclick)="onRowDblClick(row, $event)"
             [context-menu]="getContextMenuActions(row, col)"
             [context-menu-enabled]="contextMenu">
             <div *ngIf="!col.template" class="cell-container">
-                <div *ngSwitchCase="'image'" class="cell-value">
-                    <i *ngIf="isIconValue(row, col)" class="material-icons icon-cell">{{asIconValue(row, col)}}</i>
-                    <img *ngIf="!isIconValue(row, col)"
-                        class="image-cell"
-                        alt="{{iconAltTextKey(data.getValue(row, col))|translate}}"
-                        src="{{data.getValue(row, col)}}"
-                        (error)="onImageLoadingError($event)">
-                </div>
-                <div *ngSwitchCase="'date'" class="cell-value" [attr.data-automation-id]="'date_' + data.getValue(row, col)">
-                    {{data.getValue(row, col)}}
-                </div>
-                <div *ngSwitchCase="'text'" class="cell-value" [attr.data-automation-id]="'text_' + data.getValue(row, col)">
-                    {{data.getValue(row, col)}}
-                </div>
-                <span *ngSwitchDefault class="cell-value">
-                <!-- empty cell for unknown column type -->
-                </span>
+                <ng-container [ngSwitch]="col.type">
+                    <div *ngSwitchCase="'image'" class="cell-value">
+                        <i *ngIf="isIconValue(row, col)" class="material-icons icon-cell">{{asIconValue(row, col)}}</i>
+                        <img *ngIf="!isIconValue(row, col)"
+                            class="image-cell"
+                            alt="{{iconAltTextKey(data.getValue(row, col))|translate}}"
+                            src="{{data.getValue(row, col)}}"
+                            (error)="onImageLoadingError($event)">
+                    </div>
+                    <div *ngSwitchCase="'date'" class="cell-value" [attr.data-automation-id]="'date_' + data.getValue(row, col)">
+                        {{data.getValue(row, col)}}
+                    </div>
+                    <div *ngSwitchCase="'text'" class="cell-value" [attr.data-automation-id]="'text_' + data.getValue(row, col)">
+                        {{data.getValue(row, col)}}
+                    </div>
+                    <span *ngSwitchDefault class="cell-value">
+                    <!-- empty cell for unknown column type -->
+                    </span>
+                </ng-container>
             </div>
             <div *ngIf="col.template" class="cell-container">
-                <template ngFor [ngForOf]="[{ data: data, row: row, col: col }]" [ngForTemplate]="col.template"></template>
+                <ng-container
+                    [ngTemplateOutlet]="col.template"
+                    [ngOutletContext]="{ $implicit: { data: data, row: row, col: col }, value: data.getValue(row, col) }">
+                </ng-container>
             </div>
         </td>
 
@@ -90,7 +95,7 @@
             </button>
             <ul alfresco-mdl-menu class="mdl-menu--bottom-right"
                 [attr.for]="'action_menu_' + idx">
-                <li class="mdl-menu__item"
+                <li class="mdl-menu__item" [attr.disabled]="action.disabled"
                     [attr.data-automation-id]="action.title"
                     *ngFor="let action of getRowActions(row)"
                     (click)="onExecuteRowAction(row, action)">

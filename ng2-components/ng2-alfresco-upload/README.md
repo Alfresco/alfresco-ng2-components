@@ -1,4 +1,4 @@
-# Alfresco Upload Component for Angular 2
+# Alfresco Upload Component for Angular
 
 <p>
   <a title='Build Status Travis' href="https://travis-ci.org/Alfresco/alfresco-ng2-components">
@@ -163,21 +163,60 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 
 ```
 #### Events
-Attribute     | Description 
----           | ---         
-`onSuccess`   |  The event is emitted when the file is uploaded 
 
-#### Options
+| Name | Description |
+| --- | --- |
+| `onSuccess` | The event is emitted when the file is uploaded |
 
-Attribute     | Options     | Default      | Description | Mandatory
----           | ---         | ---          | ---         | ---
-`showNotificationBar`         | *boolean*    |     true   |  Hide/show notification bar | 
-`uploadFolders`         | *boolean*    |     false   |  Allow/disallow upload folders (only for chrome) | 
-`multipleFiles`         | *boolean*    |     false   |  Allow/disallow multiple files | 
-`acceptedFilesType`         | *string*    |     *   |  array of allowed file extensions , example: ".jpg,.gif,.png,.svg" | 
-`currentFolderPath`         | *string*    |     '/Sites/swsdp/documentLibrary'   |  define the path where the files are uploaded | 
-`versioning`         | *boolean*    |     false   |  Versioning false is the default uploader behaviour and it rename using an integer suffix if there is a name clash. Versioning true to indicate that a major version should be created  | 
-`staticTitle`         | *string*    |  'FILE_UPLOAD.BUTTON.UPLOAD_FILE' or 'FILE_UPLOAD.BUTTON.UPLOAD_FOLDER' string in the JSON text file    |  define the text of the upload button| 
+#### Properties
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `disabled` | *boolean* | false | Toggle component disabled state |
+| `showNotificationBar` | *boolean* | true | Hide/show notification bar |
+| `uploadFolders` | *boolean* | false | Allow/disallow upload folders (only for chrome) |
+| `multipleFiles` | *boolean* | false | Allow/disallow multiple files |
+| `acceptedFilesType` | *string* | * |  array of allowed file extensions , example: ".jpg,.gif,.png,.svg" |
+| `currentFolderPath` | *string* | '/Sites/swsdp/documentLibrary' | define the path where the files are uploaded |
+| `versioning` | *boolean* | false   |  Versioning false is the default uploader behaviour and it rename using an integer suffix if there is a name clash. Versioning true to indicate that a major version should be created |
+| `staticTitle` | *string* | 'FILE_UPLOAD.BUTTON.UPLOAD_FILE' or 'FILE_UPLOAD.BUTTON.UPLOAD_FOLDER' string in the JSON text file | define the text of the upload button |
+| `disableWithNoPermission` | *boolean* | false |  If the value is true and the user doesn't have the permission to delete the node the button will be disabled |
+
+### How to show notification message with no permission
+You can show a notification error when the user doesn't have the right permission to perform the action.
+The UploadButtonComponent provides the event permissionEvent that is raised when the delete permission is missing
+You can subscribe to this event from your component and use the NotificationService to show a message.
+
+```html
+<alfresco-upload-button
+    [rootFolderId]="currentFolderId"
+    (permissionEvent)="onUploadPermissionFailed($event)">
+</alfresco-upload-button>
+
+export class MyComponent {
+
+onUploadPermissionFailed(event: any) {
+    this.notificationService.openSnackMessage(`you don't have the ${event.permission} permission to ${event.action} the ${event.type} `, 4000);
+}
+
+}
+```
+
+![Upload notification message](docs/assets/upload-notification-message.png)
+
+#### How to disable the button when the delete permission is missing
+You can easily disable the button when the user doesn't own the permission to perform the action.
+The UploadButtonComponent provides the property disableWithNoPermission that can be true. In this way the button should be disabled if the delete permission is missing for the node.
+
+```html
+<alfresco-upload-button
+    [rootFolderId]="currentFolderId"
+    [disableWithNoPermission]="true">
+</alfresco-upload-button>
+```
+
+![Upload disable button](docs/assets/upload-disable-button.png)
+
 
 
 ### Drag and drop
@@ -243,23 +282,24 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 ```
 
 #### Events
-Attribute     | Description 
----           | ---         
-`onSuccess`   |  The event is emitted when the file is uploaded 
 
-#### Options
+| Name | Description |
+| --- | --- |
+| `onSuccess` | The event is emitted when the file is uploaded |
 
-Attribute     | Options     | Default      | Description | Mandatory
----           | ---         | ---          | ---         | ---
-`showNotificationBar`         | *boolean*    |     true   |  Hide/show notification bar | 
-`currentFolderPath`         | *string*    |     '/Sites/swsdp/documentLibrary'   |  define the path where the files are uploaded | 
-`versioning`         | *boolean*    |     false   |  Versioning false is the default uploader behaviour and it rename using an integer suffix if there is a name clash. Versioning true to indicate that a major version should be created  | 
+#### Propertoes
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `showNotificationBar` | *boolean* | true |  Hide/show notification bar |
+| `currentFolderPath` | *string* | '/Sites/swsdp/documentLibrary' | define the path where the files are uploaded | 
+| `versioning` | *boolean* | false |  Versioning false is the default uploader behaviour and it rename using an integer suffix if there is a name clash. Versioning true to indicate that a major version should be created  | 
 
 
 ### Files Dialog
-This component provides a dialog that shows all the files uploaded 
-with upload button or drag & drop area components. This component should
- be used in combination with upload button or drag & drop area.
+
+This component provides a dialog that shows all the files uploaded with upload button or drag & drop area components. 
+This component should be used in combination with upload button or drag & drop area.
 
 #### Basic usage
 
@@ -270,7 +310,6 @@ with upload button or drag & drop area components. This component should
 ## Build from sources
 
 Alternatively you can build component from sources with the following commands:
-
 
 ```sh
 npm install
