@@ -513,9 +513,6 @@ describe('Activiti TaskList Service', () => {
                     expect(res.name).toEqual('Sales-Fakes-App');
                     expect(res.description).toEqual('desc-fake1');
                     expect(res.deploymentId).toEqual('111');
-                    expect(res.name).toEqual('health-care-Fake');
-                    expect(res.description).toEqual('desc-fake2');
-                    expect(res.deploymentId).toEqual('444');
                     done();
                 }
             );
