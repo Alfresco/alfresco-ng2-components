@@ -56,6 +56,28 @@ describe('AccordionGroupComponent', () => {
         });
     });
 
+    it('should hide expand icon by default', () => {
+        component.heading = 'Fake Header';
+        component.headingIcon = 'fake-icon';
+        component.contentWrapper.nativeElement.innerHTML = '';
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            let headerToggle = fixture.nativeElement.querySelector('.adf-panel-heading-toggle .material-icons');
+            expect(headerToggle).toBeNull();
+        });
+    });
+
+    it('should show expand icon by default', () => {
+        component.heading = 'Fake Header';
+        component.headingIcon = 'fake-icon';
+        component.contentWrapper.nativeElement.innerHTML = '<a>Test</a>';
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            let headerToggle = fixture.nativeElement.querySelector('.adf-panel-heading-toggle .material-icons');
+            expect(headerToggle).toBeDefined();
+        });
+    });
+
     it('should be open when click', () => {
         component.isSelected = true;
         component.heading = 'Fake Header';

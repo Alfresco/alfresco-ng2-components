@@ -6,12 +6,12 @@
             </div>
             <div class="adf-panel-heading-text">{{heading}}</div>
         </div>
-        <div id="accordion-button" class="adf-panel-heading-toggle" (click)="toggleOpen($event)">
+        <div id="accordion-button" *ngIf="isADFPanelBodyEmpty()" class="adf-panel-heading-toggle" (click)="toggleOpen($event)">
             <i class="material-icons">{{getAccordionIcon()}}</i>
         </div>
     </div>
     <div class="adf-panel-collapse" [hidden]="!isOpen">
-        <div class="adf-panel-body">
+        <div class="adf-panel-body" #contentWrapper>
             <ng-content></ng-content>
         </div>
     </div>

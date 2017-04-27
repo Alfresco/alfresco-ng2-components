@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnDestroy, Output, EventEmitter, ViewChild } from '@angular/core';
 import { AccordionComponent } from './accordion.component';
 
 @Component({
@@ -27,6 +27,9 @@ import { AccordionComponent } from './accordion.component';
 export class AccordionGroupComponent implements OnDestroy {
     private _isOpen: boolean = false;
     private _isSelected: boolean = false;
+
+    @ViewChild('contentWrapper')
+    contentWrapper: any;
 
     @Input()
     heading: string;
@@ -81,5 +84,9 @@ export class AccordionGroupComponent implements OnDestroy {
 
     onHeadingClick() {
         this.onHeadingSelection.emit(this.heading);
+    }
+
+    isADFPanelBodyEmpty() {
+        return this.contentWrapper.nativeElement.innerHTML.trim().length > 0;
     }
 }
