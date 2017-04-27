@@ -46,6 +46,9 @@ export class ActivitiProcessFilters implements OnInit, OnChanges {
     @Input()
     appName: string;
 
+    @Input()
+    hasIcon: boolean = true;
+
     private filterObserver: Observer<FilterProcessRepresentationModel>;
     filter$: Observable<FilterProcessRepresentationModel>;
 
