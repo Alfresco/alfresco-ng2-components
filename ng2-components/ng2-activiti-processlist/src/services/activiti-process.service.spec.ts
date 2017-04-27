@@ -612,7 +612,7 @@ describe('ActivitiProcessService', () => {
                 service.getProcessFilterByName('Running').subscribe(
                     (res: FilterProcessRepresentationModel) => {
                         expect(res).toBeDefined();
-                        expect(res.id).toEqual('333');
+                        expect(res.id).toEqual(333);
                         expect(res.name).toEqual('Running');
                         expect(res.filter.sort).toEqual('created-desc');
                         expect(res.filter.state).toEqual('running');
