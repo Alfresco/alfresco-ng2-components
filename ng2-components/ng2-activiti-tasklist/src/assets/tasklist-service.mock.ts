@@ -25,12 +25,12 @@ export var fakeFilters = {
     data: [
         new AppDefinitionRepresentationModel(
             {
-                id: '1', name: 'FakeInvolvedTasks', recent: false, icon: 'glyphicon-align-left',
+                id: 1, name: 'FakeInvolvedTasks', recent: false, icon: 'glyphicon-align-left',
                 filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'fake-involved' }
             }
         ),
         {
-            id: '2', name: 'FakeMyTasks', recent: false, icon: 'glyphicon-align-left',
+            id: 2, name: 'FakeMyTasks', recent: false, icon: 'glyphicon-align-left',
             filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'fake-assignee' }
         }
     ]
