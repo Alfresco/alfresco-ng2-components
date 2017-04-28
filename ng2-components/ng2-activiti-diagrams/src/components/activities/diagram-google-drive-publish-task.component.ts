@@ -18,7 +18,6 @@
 import { Component, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-    moduleId: module.id,
     selector: 'diagram-google-drive-publish-task',
     templateUrl: './diagram-google-drive-publish-task.component.html'
 })

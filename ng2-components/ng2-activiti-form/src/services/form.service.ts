@@ -158,7 +158,7 @@ export class FormService {
      * @returns {Observable<any>}
      */
     saveTaskForm(taskId: string, formValues: FormValues): Observable<any> {
-        let body = JSON.stringify({ values: formValues });
+        let body = JSON.stringify({values: formValues});
 
         return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.saveTaskForm(taskId, body))
             .catch(err => this.handleError(err));
@@ -172,7 +172,7 @@ export class FormService {
      * @returns {Observable<any>}
      */
     completeTaskForm(taskId: string, formValues: FormValues, outcome?: string): Observable<any> {
-        let data: any = { values: formValues };
+        let data: any = {values: formValues};
         if (outcome) {
             data.outcome = outcome;
         }
@@ -251,17 +251,17 @@ export class FormService {
      * @returns {Observable<any>}
      */
     createTemporaryRawRelatedContent(file: any): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.contentApi.createTemporaryRawRelatedContent(file));
+        return Observable.fromPromise(this.apiService.getInstance().activiti.contentApi.createTemporaryRawRelatedContent(file)).catch(err => this.handleError(err));
     }
 
     getFileContent(contentId: number): Observable<any> {
         let alfrescoApi = this.apiService.getInstance();
-        return Observable.fromPromise(alfrescoApi.activiti.contentApi.getContent(contentId));
+        return Observable.fromPromise(alfrescoApi.activiti.contentApi.getContent(contentId)).catch(err => this.handleError(err));
     }
 
     getFileRawContent(contentId: number): Observable<any> {
         let alfrescoApi = this.apiService.getInstance();
-        return Observable.fromPromise(alfrescoApi.activiti.contentApi.getRawContent(contentId));
+        return Observable.fromPromise(alfrescoApi.activiti.contentApi.getRawContent(contentId)).catch(err => this.handleError(err));
     }
 
     getFileRawContentUrl(contentId: number): string {
@@ -271,31 +271,31 @@ export class FormService {
 
     getContentThumbnailUrl(contentId: number): Observable<any> {
         let alfrescoApi = this.apiService.getInstance();
-        return Observable.fromPromise(alfrescoApi.activiti.contentApi.getContentThumbnailUrl(contentId));
+        return Observable.fromPromise(alfrescoApi.activiti.contentApi.getContentThumbnailUrl(contentId)).catch(err => this.handleError(err));
     }
 
     getRestFieldValues(taskId: string, field: string): Observable<any> {
         let alfrescoApi = this.apiService.getInstance();
-        return Observable.fromPromise(alfrescoApi.activiti.taskApi.getRestFieldValues(taskId, field));
+        return Observable.fromPromise(alfrescoApi.activiti.taskApi.getRestFieldValues(taskId, field)).catch(err => this.handleError(err));
     }
 
     getRestFieldValuesByProcessId(processDefinitionId: string, field: string): Observable<any> {
         let alfrescoApi = this.apiService.getInstance();
-        return Observable.fromPromise(alfrescoApi.activiti.processApi.getRestFieldValues(processDefinitionId, field));
+        return Observable.fromPromise(alfrescoApi.activiti.processApi.getRestFieldValues(processDefinitionId, field)).catch(err => this.handleError(err));
     }
 
     getRestFieldValuesColumnByProcessId(processDefinitionId: string, field: string, column?: string): Observable<any> {
         let alfrescoApi = this.apiService.getInstance();
-        return Observable.fromPromise(alfrescoApi.activiti.processApi.getRestTableFieldValues(processDefinitionId, field, column));
+        return Observable.fromPromise(alfrescoApi.activiti.processApi.getRestTableFieldValues(processDefinitionId, field, column)).catch(err => this.handleError(err));
     }
 
     getRestFieldValuesColumn(taskId: string, field: string, column?: string): Observable<any> {
         let alfrescoApi = this.apiService.getInstance();
-        return Observable.fromPromise(alfrescoApi.activiti.taskApi.getRestFieldValuesColumn(taskId, field, column));
+        return Observable.fromPromise(alfrescoApi.activiti.taskApi.getRestFieldValuesColumn(taskId, field, column)).catch(err => this.handleError(err));
     }
 
     getWorkflowUsers(filter: string, groupId?: string): Observable<GroupUserModel[]> {
-        let option: any = { filter: filter };
+        let option: any = {filter: filter};
         if (groupId) {
             option.groupId = groupId;
         }
@@ -310,7 +310,7 @@ export class FormService {
     }
 
     getWorkflowGroups(filter: string, groupId?: string): Observable<GroupModel[]> {
-        let option: any = { filter: filter };
+        let option: any = {filter: filter};
         if (groupId) {
             option.groupId = groupId;
         }

@@ -25,7 +25,6 @@ declare let dialogPolyfill: any;
 
 @Component({
     selector: 'activiti-comments',
-    moduleId: module.id,
     templateUrl: './activiti-comments.component.html',
     styleUrls: ['./activiti-comments.component.css'],
     providers: [ActivitiTaskListService]

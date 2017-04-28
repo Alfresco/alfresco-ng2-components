@@ -1,11 +1,9 @@
-var webpackMerge = require('webpack-merge');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var commonConfig = require('./webpack.common.js');
-var helpers = require('./helpers');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
+const webpackMerge = require('webpack-merge');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const commonConfig = require('./webpack.common.js');
+const helpers = require('./helpers');
 
 module.exports = webpackMerge(commonConfig, {
-
     devtool: 'cheap-module-eval-source-map',
 
     output: {
@@ -15,54 +13,15 @@ module.exports = webpackMerge(commonConfig, {
     },
 
     plugins: [
-        new ExtractTextPlugin('[name].css'),
-        new CopyWebpackPlugin([
-            {
-                from: 'favicon-96x96.png'
-            },
-            {
-                from: 'node_modules/pdfjs-dist/build/pdf.worker.js',
-                to: 'pdf.worker.js'
-            },
-            {
-                context: 'resources/i18n',
-                from: '**/*.json',
-                to: 'resources/i18n'
-            },
-            // Copy i18n folders for all modules with ng2-alfresco- prefix
-            {
-                context: 'node_modules',
-                from: 'ng2-alfresco-*/src/i18n/*.json',
-                to: 'node_modules'
-            },
-            // Copy i18n folders for all modules with ng2-activiti- prefix
-            {
-                context: 'node_modules',
-                from: 'ng2-activiti-*/src/i18n/*.json',
-                to: 'node_modules'
-            },
-            // Copy asstes folders for all modules with ng2-activiti- prefix
-            {
-                context: 'node_modules',
-                from: 'ng2-activiti-*/src/assets/images/*.*',
-                to: 'assets/images',
-                flatten: true
-            },
-            // Copy asstes folders for all modules with ng2-alfresco- prefix
-            {
-                context: 'node_modules',
-                from: 'ng2-alfresco-*/src/assets/images/*.*',
-                to: 'assets/images',
-                flatten: true
-            }
-        ])
+        new ExtractTextPlugin('[name].css')
     ],
 
     devServer: {
-        host: '0.0.0.0',
+        contentBase: helpers.root('dist'),
+        compress: true,
         port: 3000,
-        inline: true,
         historyApiFallback: true,
-        stats: 'minimal'
+        host: '0.0.0.0',
+        inline: true
     }
 });

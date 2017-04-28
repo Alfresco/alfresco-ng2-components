@@ -25,16 +25,13 @@ declare let dialogPolyfill: any;
 
 @Component({
     selector: 'activiti-people',
-    moduleId: module.id,
     templateUrl: './activiti-people.component.html',
     styleUrls: ['./activiti-people.component.css']
 })
 export class ActivitiPeople {
 
-    private baseComponentPath: string = module.id.replace('components/activiti-people.component.js', '');
-
     @Input()
-    iconImageUrl: string = this.baseComponentPath + 'assets/images/user.jpg';
+    iconImageUrl: string = require('../assets/images/user.jpg');
 
     @Input()
     people: User [] = [];
@@ -110,7 +107,7 @@ export class ActivitiPeople {
 
     getDisplayUser(user: User): string {
         let firstName = user.firstName && user.firstName !== 'null' ? user.firstName : 'N/A';
-        let lastName =  user.lastName && user.lastName !== 'null' ? user.lastName : 'N/A';
+        let lastName = user.lastName && user.lastName !== 'null' ? user.lastName : 'N/A';
         return firstName + ' ' + lastName;
     }
 
