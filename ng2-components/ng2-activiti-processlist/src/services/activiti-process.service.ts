@@ -39,7 +39,7 @@ export class ActivitiProcessService {
      */
     getDeployedApplications(name: string): Observable<AppDefinitionRepresentationModel> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.appsApi.getAppDefinitions())
-            .map((response: any) => response.data.find((p: AppDefinitionRepresentationModel) => p.name === name))
+            .map((response: any) => response.data.find((app: AppDefinitionRepresentationModel) => app.name === name))
             .catch(err => this.handleError(err));
     }
 
@@ -51,7 +51,7 @@ export class ActivitiProcessService {
     getApplicationDetailsById(appId: number): Observable<any> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.appsApi.getAppDefinitions())
             .map((response: any) => {
-                return response.data.find(p => p.id === appId);
+                return response.data.find(app => app.id === appId);
             })
             .catch(err => this.handleError(err));
     }
@@ -60,7 +60,7 @@ export class ActivitiProcessService {
         return Observable.fromPromise(this.apiService.getInstance().activiti.processApi.getProcessInstances(requestNode))
             .map((res: any) => {
                 if (requestNode.processDefinitionKey) {
-                    return res.data.filter(p => p.processDefinitionKey === requestNode.processDefinitionKey);
+                    return res.data.filter(process => process.processDefinitionKey === requestNode.processDefinitionKey);
                 } else {
                     return res.data;
                 }
