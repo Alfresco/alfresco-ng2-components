@@ -99,13 +99,13 @@ describe('AccordionGroupComponent', () => {
         component.heading = 'Fake Header';
         fixture.detectChanges();
         let heading: string = component.heading;
-        component.onHeadingSelection.subscribe((headName: string) => {
+        component.headingSelect.subscribe((headName: string) => {
             expect(headName).toBeDefined();
             expect(headName).toEqual(heading);
             done();
         });
 
-        component.onHeadingClick();
+        component.onHeadingSelect();
     });
 
 });

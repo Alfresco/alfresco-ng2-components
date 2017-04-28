@@ -38,7 +38,7 @@ export class AccordionGroupComponent implements OnDestroy {
     headingIcon: string;
 
     @Output()
-    onHeadingSelection: EventEmitter<any> = new EventEmitter<any>();
+    headingSelect: EventEmitter<any> = new EventEmitter<any>();
 
     @Input()
     set isOpen(value: boolean) {
@@ -82,11 +82,11 @@ export class AccordionGroupComponent implements OnDestroy {
         return this.isOpen ? 'expand_less' : 'expand_more';
     }
 
-    onHeadingClick() {
-        this.onHeadingSelection.emit(this.heading);
+    onHeadingSelect() {
+        this.headingSelect.emit(this.heading);
     }
 
-    isADFPanelBodyEmpty() {
-        return this.contentWrapper.nativeElement.innerHTML.trim().length > 0;
+    isGroupContentEmpty() {
+        return this.contentWrapper.nativeElement.innerHTML.trim().length === 0;
     }
 }
