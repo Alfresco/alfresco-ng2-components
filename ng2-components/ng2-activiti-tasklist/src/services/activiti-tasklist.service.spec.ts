@@ -508,11 +508,11 @@ describe('Activiti TaskList Service', () => {
 
         it('should get the deployed app details by id ', (done) => {
             service.getApplicationDetailsById(1).subscribe(
-                (res: any) => {
-                    expect(res).toBeDefined();
-                    expect(res.name).toEqual('Sales-Fakes-App');
-                    expect(res.description).toEqual('desc-fake1');
-                    expect(res.deploymentId).toEqual('111');
+                (app: any) => {
+                    expect(app).toBeDefined();
+                    expect(app.name).toEqual('Sales-Fakes-App');
+                    expect(app.description).toEqual('desc-fake1');
+                    expect(app.deploymentId).toEqual('111');
                     done();
                 }
             );
