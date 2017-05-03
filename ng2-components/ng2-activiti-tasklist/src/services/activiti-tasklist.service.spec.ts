@@ -102,14 +102,14 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should return the task filter by id', (done) => {
-            service.getTaskFilterById('2').subscribe(
-                (res: FilterRepresentationModel) => {
-                    expect(res).toBeDefined();
-                    expect(res.id).toEqual('2');
-                    expect(res.name).toEqual('FakeMyTasks');
-                    expect(res.filter.sort).toEqual('created-desc');
-                    expect(res.filter.state).toEqual('open');
-                    expect(res.filter.assignment).toEqual('fake-assignee');
+            service.getTaskFilterById(2).subscribe(
+                (taskFilter: FilterRepresentationModel) => {
+                    expect(taskFilter).toBeDefined();
+                    expect(taskFilter.id).toEqual(2);
+                    expect(taskFilter.name).toEqual('FakeMyTasks');
+                    expect(taskFilter.filter.sort).toEqual('created-desc');
+                    expect(taskFilter.filter.state).toEqual('open');
+                    expect(taskFilter.filter.assignment).toEqual('fake-assignee');
                     done();
                 }
             );
@@ -125,7 +125,7 @@ describe('Activiti TaskList Service', () => {
             service.getTaskFilterByName('FakeMyTasks').subscribe(
                 (res: FilterRepresentationModel) => {
                     expect(res).toBeDefined();
-                    expect(res.id).toEqual('2');
+                    expect(res.id).toEqual(2);
                     expect(res.name).toEqual('FakeMyTasks');
                     expect(res.filter.sort).toEqual('created-desc');
                     expect(res.filter.state).toEqual('open');
