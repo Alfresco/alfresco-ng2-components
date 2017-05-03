@@ -25,7 +25,6 @@ declare let dialogPolyfill: any;
 
 @Component({
     selector: 'activiti-checklist',
-    moduleId: module.id,
     templateUrl: './activiti-checklist.component.html',
     styleUrls: ['./activiti-checklist.component.css'],
     providers: [ActivitiTaskListService]
@@ -46,6 +45,9 @@ export class ActivitiChecklist implements OnInit, OnChanges {
 
     @Output()
     checklistTaskDeleted: EventEmitter<string> = new EventEmitter<string>();
+
+    @Output()
+    error: EventEmitter<any> = new EventEmitter<any>();
 
     @ViewChild('dialog')
     dialog: any;
@@ -95,8 +97,8 @@ export class ActivitiChecklist implements OnInit, OnChanges {
                         this.taskObserver.next(task);
                     });
                 },
-                (err) => {
-                    this.logService.error(err);
+                (error) => {
+                    this.error.emit(error);
                 }
             );
         } else {
@@ -125,8 +127,8 @@ export class ActivitiChecklist implements OnInit, OnChanges {
                 this.checklistTaskCreated.emit(res);
                 this.taskName = '';
             },
-            (err) => {
-                this.logService.error(err);
+            (error) => {
+                this.error.emit(error);
             }
         );
         this.cancel();
@@ -138,8 +140,8 @@ export class ActivitiChecklist implements OnInit, OnChanges {
                 this.checklist = this.checklist.filter(check => check.id !== taskId);
                 this.checklistTaskDeleted.emit(taskId);
             },
-            (err) => {
-                this.logService.error(err);
+            (error) => {
+                this.error.emit(error);
             });
     }
 

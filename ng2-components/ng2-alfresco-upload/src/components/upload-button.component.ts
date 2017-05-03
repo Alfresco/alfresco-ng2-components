@@ -48,7 +48,6 @@ const ERROR_FOLDER_ALREADY_EXIST = 409;
  */
 @Component({
     selector: 'alfresco-upload-button',
-    moduleId: module.id,
     templateUrl: './upload-button.component.html',
     styleUrls: ['./upload-button.component.css']
 })

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export var fakeRedition = {
+export let fakeRedition = {
     'entry': {
         'id': 'pdf',
         'content': {'mimeType': 'application/pdf', 'mimeTypeName': 'Adobe PDF Document'},
@@ -23,7 +23,7 @@ export var fakeRedition = {
     }
 };
 
-export var fakeReditionCreated = {
+export let fakeReditionCreated = {
     'entry': {
         'id': 'pdf',
         'content': {'mimeType': 'application/pdf', 'mimeTypeName': 'Adobe PDF Document'},
@@ -31,7 +31,7 @@ export var fakeReditionCreated = {
     }
 };
 
-export var fakeReditionsList = {
+export let fakeReditionsList = {
     'list': {
         'pagination': {
             'count': 6,

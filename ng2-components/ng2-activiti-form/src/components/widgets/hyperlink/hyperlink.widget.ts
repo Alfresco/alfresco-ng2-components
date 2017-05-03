@@ -19,7 +19,6 @@ import { Component, OnInit } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
 
 @Component({
-    moduleId: module.id,
     selector: 'hyperlink-widget',
     templateUrl: './hyperlink.widget.html',
     styleUrls: ['./hyperlink.widget.css']

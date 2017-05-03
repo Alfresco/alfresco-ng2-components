@@ -19,7 +19,6 @@ import { Component, ElementRef, Input, Output, EventEmitter } from '@angular/cor
 import { DiagramColorService } from '../../services/diagram-color.service';
 
 @Component({
-    moduleId: module.id,
     selector: 'diagram-icon-manual-task',
     templateUrl: './diagram-icon-manual-task.component.html'
 })

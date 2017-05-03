@@ -27,7 +27,6 @@ declare let dialogPolyfill: any;
 
 @Component({
     selector: 'activiti-process-instance-comments',
-    moduleId: module.id,
     templateUrl: './activiti-process-comments.component.html',
     styleUrls: ['./activiti-process-comments.component.css'],
     providers: [ActivitiProcessService]

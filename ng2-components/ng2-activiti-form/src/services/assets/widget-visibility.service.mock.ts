@@ -17,15 +17,15 @@
 
 import { FormModel, FormValues } from '../../components/widgets/core/index';
 
-export var formTest = new FormModel({});
+export let formTest = new FormModel({});
 
-export var fakeTaskProcessVariableModels = [
+export let fakeTaskProcessVariableModels = [
     {id: 'TEST_VAR_1', type: 'string', value: 'test_value_1'},
     {id: 'TEST_VAR_2', type: 'string', value: 'test_value_2'},
     {id: 'TEST_VAR_3', type: 'string', value: 'test_value_3'}
 ];
 
-export var formValues: FormValues = {
+export let formValues: FormValues = {
     'test_1': 'value_1',
     'test_2': 'value_2',
     'test_3': 'value_1',
@@ -34,7 +34,7 @@ export var formValues: FormValues = {
     'dropdown': {'id': 'dropdown_id', 'name': 'dropdown_label'}
 };
 
-export var fakeFormJson = {
+export let fakeFormJson = {
     id: '9999',
     name: 'FORM_VISIBILITY',
     processDefinitionId: 'PROCESS_TEST:9:9999',
