@@ -45,14 +45,33 @@ describe('AccordionGroupComponent', () => {
     it('should be closed by default', () => {
         component.heading = 'Fake Header';
         component.headingIcon = 'fake-icon';
+        component.contentWrapper.nativeElement.innerHTML = '<a>Test</a>';
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            let headerToggle = fixture.nativeElement.querySelector('.adf-panel-heading-toggle .material-icons');
-            expect(headerToggle.innerText).toEqual('expand_more');
-            let headerText = fixture.nativeElement.querySelector('.adf-panel-heading-text');
+            let headerText = element.querySelector('#heading-text');
             expect(headerText.innerText).toEqual('Fake Header');
-            let headerIcon = fixture.nativeElement.querySelector('.adf-panel-heading-icon .material-icons');
+            let headerIcon = element.querySelector('#heading-icon .material-icons');
             expect(headerIcon.innerText).toEqual('fake-icon');
+            let headerToggle = element.querySelector('#accordion-button .material-icons');
+            expect(headerToggle.innerText).toEqual('expand_more');
+        });
+    });
+
+    it('should be open when click', () => {
+        component.isSelected = true;
+        component.heading = 'Fake Header';
+        component.headingIcon = 'fake-icon';
+        component.contentWrapper.nativeElement.innerHTML = '<a>Test</a>';
+        fixture.detectChanges();
+        element.querySelector('#accordion-button').click();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            let headerText = element.querySelector('#heading-text');
+            expect(headerText.innerText).toEqual('Fake Header');
+            let headerIcon = element.querySelector('#heading-icon .material-icons');
+            expect(headerIcon.innerText).toEqual('fake-icon');
+            let headerToggle = element.querySelector('#accordion-button .material-icons');
+            expect(headerToggle.innerText).toEqual('expand_less');
         });
     });
 
@@ -62,8 +81,8 @@ describe('AccordionGroupComponent', () => {
         component.contentWrapper.nativeElement.innerHTML = '';
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            let headerToggle = fixture.nativeElement.querySelector('.adf-panel-heading-toggle .material-icons');
-            expect(headerToggle).toBeNull();
+            let headerIcon = element.querySelector('#accordion-button');
+            expect(headerIcon).toBeNull();
         });
     });
 
@@ -73,25 +92,8 @@ describe('AccordionGroupComponent', () => {
         component.contentWrapper.nativeElement.innerHTML = '<a>Test</a>';
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            let headerToggle = fixture.nativeElement.querySelector('.adf-panel-heading-toggle .material-icons');
-            expect(headerToggle).toBeDefined();
-        });
-    });
-
-    it('should be open when click', () => {
-        component.isSelected = true;
-        component.heading = 'Fake Header';
-        component.headingIcon = 'fake-icon';
-        fixture.detectChanges();
-        element.querySelector('#accordion-button').click();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            let headerText = fixture.nativeElement.querySelector('.adf-panel-heading-text');
-            expect(headerText.innerText).toEqual('Fake Header');
-            let headerIcon = fixture.nativeElement.querySelector('.adf-panel-heading-icon .material-icons');
-            expect(headerIcon.innerText).toEqual('fake-icon');
-            let headerToggle = fixture.nativeElement.querySelector('.adf-panel-heading-toggle .material-icons');
-            expect(headerToggle.innerText).toEqual('expand_less');
+            let headerIcon = element.querySelector('#accordion-button');
+            expect(headerIcon).toBeDefined();
         });
     });
 
