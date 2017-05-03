@@ -28,7 +28,7 @@ export var fakeFilters = {
     data: [new FilterProcessRepresentationModel({
         'name': 'Running',
         'appId': '22',
-        'id': '333',
+        'id': 333,
         'recent': true,
         'icon': 'glyphicon-random',
         'filter': {'sort': 'created-desc', 'name': '', 'state': 'running'}
