@@ -65,7 +65,7 @@ describe('Like component', () => {
             jasmine.Ajax.uninstall();
         });
 
-        it('should like component should be present', (done) => {
+        it('should like component be present', (done) => {
             fixture.detectChanges();
 
             component.ngOnChanges().subscribe(() => {
