@@ -14,9 +14,7 @@
     "coverage": "npm run test && ../node_modules/wsrv/bin/wsrv -o -p 9875 ./coverage/report",
     "publish:prod": "npm run test && npm publish"
   },
-  "main": "./index.js",
-  "module": "./index.js",
-  "typings": "./index.d.ts",
+  "main": "bundles/ng2-alfresco-social.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/Alfresco/alfresco-ng2-components.git"

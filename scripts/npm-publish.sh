@@ -3,6 +3,25 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 "$DIR/npm-clean.sh"
+eval FORCE_PUBLISH=false
+
+show_help() {
+    echo "Usage: npm-publish.sh"
+    echo ""
+    echo "-f or -force publish the package with force"
+}
+
+enable_force(){
+    FORCE_PUBLISH=true
+}
+
+while [[ $1 == -* ]]; do
+    case "$1" in
+      -h|--help|-\?) show_help; exit 0;;
+      -f|--force)  enable_force; shift;;
+      -*) echo "invalid option: $1" 1>&2; show_help; exit 1;;
+    esac
+done
 
 for PACKAGE in \
   ng2-alfresco-core \
@@ -27,6 +46,11 @@ do
   cd ${DESTDIR}
   npm run clean
   npm install
-  npm run publish:prod
+  if FORCE_PUBLISH == false; then
+     npm run publish:prod
+  fi
+  if FORCE_PUBLISH == true; then
+     npm run test && npm run publish --force || exit 1
+  fi
   cd ${DIR}
 done
