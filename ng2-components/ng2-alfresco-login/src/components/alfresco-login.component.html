@@ -1,6 +1,6 @@
 <div class="content-grid mdl-grid content-layout login-content"
      [style.background-image]="'url(' + backgroundImageUrl + ')'">
-    <div class="login-card-wide mdl-card mdl-shadow--4dp">
+    <div class="mdl-card login-card-wide">
         <form [formGroup]="form" (submit)="onSubmit(form.value, $event)">
             <div class="mdl-card__title alfresco-logo">
                 <!--HEADER TEMPLATE-->
@@ -20,13 +20,11 @@
                 </div>
 
                 <!--USERNAME FIELD-->
-                <div [ngClass]="{'is-invalid': isErrorStyle(form.controls.username)}"
-                     class="center mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-
+                <div class="adf-login__field" [ngClass]="{'is-invalid': isErrorStyle(form.controls.username)}">
                     <md-input-container class="adf-full-width">
                         <input md-input placeholder="{{'LOGIN.LABEL.USERNAME' | translate }}"
                                type="text"
-                               class="mdl-textfield__input adf-full-width"
+                               class="adf-full-width"
                                [formControl]="form.controls['username']"
                                autocapitalize="none"
                                id="username"
@@ -41,14 +39,13 @@
                 </div>
 
                 <!--PASSWORD FIELD-->
-                <div class="center mdl-textfield mdl-js-textfield mdl-textfield--floating-label alfresco-login__password">
+                <div class="adf-login__field alfresco-login__password">
                     <md-icon *ngIf="!isPasswordShow" class="alfresco-login__password-icon" data-automation-id="show_password" (click)="toggleShowPassword()">visibility</md-icon>
                     <md-icon *ngIf="isPasswordShow" class="alfresco-login__password-icon" data-automation-id="hide_password" (click)="toggleShowPassword()">visibility_off</md-icon>
 
                     <md-input-container class="adf-full-width">
                         <input md-input placeholder="{{'LOGIN.LABEL.PASSWORD' | translate }}"
                                type="password"
-                               class="mdl-textfield__input"
                                [formControl]="form.controls['password']"
                                id="password"
                                data-automation-id="password"
@@ -66,15 +63,11 @@
                 <button type="submit" id="login-button" tabindex="3"
                         class="center mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
                         data-automation-id="login-button" [disabled]="!form.valid">{{'LOGIN.BUTTON.LOGIN' | translate }}</button>
-                <br>
-                <div class="center">
-                    <label class=" mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="remember">
-                        <input type="checkbox" id="remember" class="center mdl-checkbox__input">
-                        <span id="login-remember" class="mdl-checkbox__label">{{'LOGIN.LABEL.REMEMBER' | translate }}</span>
-                    </label>
+                <div *ngIf="showRememberMe" class="adf-login__remember-me">
+                    <md-checkbox>{{'LOGIN.LABEL.REMEMBER' | translate }}</md-checkbox>
                 </div>
             </div>
-            <div class="mdl-card__actions mdl-card--border mdl-card__link">
+            <div *ngIf="showLoginActions" class="mdl-card__actions mdl-card--border mdl-card__link">
 
                 <!--FOOTER TEMPLATE-->
                 <template *ngIf="footerTemplate"
@@ -82,11 +75,11 @@
                           [ngForTemplate]="footerTemplate">
                 </template>
                 <div class="login-action" *ngIf="!footerTemplate">
-                    <div id="login-action-help" class="login-action-left"> <a href="{{needHelpLink}}">{{'LOGIN.ACTION.HELP' | translate
-                        }}</a>
+                    <div id="login-action-help" class="login-action-left">
+                        <a href="{{needHelpLink}}">{{'LOGIN.ACTION.HELP' | translate }}</a>
                     </div>
-                    <div id="login-action-register" class="login-action-right"> <a href="{{registerLink}}">{{'LOGIN.ACTION.REGISTER' |
-                        translate }}</a>
+                    <div id="login-action-register" class="login-action-right">
+                        <a href="{{registerLink}}">{{'LOGIN.ACTION.REGISTER' | translate }}</a>
                     </div>
                 </div>
             </div>

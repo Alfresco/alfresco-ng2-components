@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { DebugElement }    from '@angular/core';
+import { DebugElement } from '@angular/core';
 import { AlfrescoAuthenticationService, CoreModule } from 'ng2-alfresco-core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AlfrescoLoginComponent } from './alfresco-login.component';
@@ -24,7 +24,7 @@ import { AuthenticationMock } from './../assets/authentication.service.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
 
 describe('AlfrescoLogin', () => {
-    let component: any;
+    let component: AlfrescoLoginComponent;
     let fixture: ComponentFixture<AlfrescoLoginComponent>;
     let debug: DebugElement;
     let element: any;
@@ -50,6 +50,8 @@ describe('AlfrescoLogin', () => {
         debug = fixture.debugElement;
         element = fixture.nativeElement;
         component = fixture.componentInstance;
+        component.showRememberMe = true;
+        component.showLoginActions = true;
 
         usernameInput = element.querySelector('#username');
         passwordInput = element.querySelector('#password');
@@ -67,8 +69,10 @@ describe('AlfrescoLogin', () => {
         expect(element.querySelector('#login-button')).toBeDefined();
         expect(element.querySelector('#login-button').innerText).toEqual('LOGIN.BUTTON.LOGIN');
 
+        /*
         expect(element.querySelector('#login-remember')).toBeDefined();
         expect(element.querySelector('#login-remember').innerText).toEqual('LOGIN.LABEL.REMEMBER');
+        */
 
         expect(element.querySelector('#login-action-help')).toBeDefined();
         expect(element.querySelector('#login-action-help').innerText).toEqual('LOGIN.ACTION.HELP');

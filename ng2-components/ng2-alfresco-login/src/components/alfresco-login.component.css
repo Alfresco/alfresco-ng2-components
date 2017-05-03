@@ -230,3 +230,14 @@
 .adf-full-width {
     width: 100%;
 }
+
+.adf-login__remember-me {
+    padding-top: 15px;
+}
+
+.adf-login__field {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 24px;
+}

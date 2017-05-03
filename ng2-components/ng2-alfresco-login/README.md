@@ -106,8 +106,8 @@ This component allow to authenticate to Alfresco One and Alfresco Activiti.
 Usage example of this component :
 
 **main.ts**
-```ts
 
+```ts
 import { NgModule, Component } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
@@ -153,8 +153,21 @@ export class AppComponent {
 export class AppModule { }
 
 platformBrowserDynamic().bootstrapModule(AppModule);
-
 ```
+
+#### Properties
+
+| Name | Type | Default Value | Description |
+| --- | --- | --- | --- |
+| `providers` | string | ECM | Possible valid value are ECM, BPM or ALL. The default behaviour of this component will logged in only in the ECM . If you want log in in both system the correct value to use is ALL |
+| `disableCsrf` | boolean | false | To prevent the CSRF Token from been submitted. Only for Activiti call |
+| `needHelpLink` | string | '' | It will change the url of the NEED HELP link in the footer  |
+| `registerLink` | string | '' | It will change the url of the REGISTER link in the footer |
+| `logoImageUrl` | string | Alfresco logo image | To change the logo image with a customised image |
+| `backgroundImageUrl` | string | Alfresco background image | To change the background image with a customised image |
+| `fieldsValidation` | { [key: string]: any; }, extra?: { [key: string]: any; } |  | Use it to customise the validation rules of the login form |
+| `showRememberMe` | boolean | false | Toggle `Remember me` checkbox visibility |
+| `showLoginActions` | boolean | false | Toggle extra actions visibility (`Need Help`, `Register`, etc.) |
 
 #### Events
 
@@ -163,19 +176,6 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 | `onSuccess` | The event is emitted when the login is done |
 | `onError` | The event is emitted when the login fails |
 | `executeSubmit` | The event is emitted when the form is submitted |
-
-#### Options
-
-| Name     | Options     | Default      | Description | Mandatory
-| ---           | ---         | ---          | ---         | ---
-| `providers`         | *string*    |   ECM     | Possible valid value are ECM, BPM or ALL. The default behaviour of this component will logged in only in the ECM . If you want log in in both system the correct value to use is ALL |
-| `disableCsrf`         | *boolean*    |   false     | To prevent the CSRF Token from been submitted. Only for Activiti call |
-| `needHelpLink`         | *string*    |   ''     | It will change the url of the NEED HELP link in the footer  |
-| `registerLink`         | *string*    |   ''     | It will change the url of the REGISTER link in the footer |
-| `logoImageUrl`         | *string*    |   Alfresco logo image   | To change the logo image with a customised image |
-| `backgroundImageUrl`         | *string*    | Alfresco background image    | To change the background image with a customised image |
-| `fieldsValidation`         | *map*  { [key: string]: any; }, extra?: { [key: string]: any; }   |   null     | Use it to customise the validation rules of the login form |
-
 
 ## Change footer content
 
