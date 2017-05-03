@@ -10,48 +10,17 @@ before_install:
 
 env:
   matrix:
-    - MODULE=ng2-alfresco-core
-    - MODULE=ng2-alfresco-datatable
-    - MODULE=ng2-alfresco-documentlist
-    - MODULE=ng2-alfresco-login
-    - MODULE=ng2-alfresco-search
-    - MODULE=ng2-alfresco-upload
-    - MODULE=ng2-alfresco-viewer
-    - MODULE=ng2-alfresco-webscript
-    - MODULE=ng2-alfresco-tag
-    - MODULE=ng2-activiti-form
-    - MODULE=ng2-activiti-tasklist
-    - MODULE=ng2-activiti-processlist
-    - MODULE=ng2-activiti-diagrams
-    - MODULE=ng2-activiti-analytics
-    - MODULE=ng2-alfresco-userinfo
-    - MODULE=ng2-alfresco-social
+    - MODULE=ng2-components
+    - MODULE=ng2-demo-shell
 
-before_script:
-  - if ([ "$MODULE" != "ng2-alfresco-core" ]); then
-        (cd ng2-components/ng2-alfresco-core; if [ ! -d "bundles" ]; then npm install && npm run  build && npm link; fi);
+script:
+  - if ([ "$MODULE" == "ng2-components" ]); then
+        (./scripts/npm-build-all.sh -t;);
     fi
-  - if ([ "$MODULE" == "ng2-alfresco-documentlist" ] || [ "$MODULE" == "ng2-alfresco-webscript" ] || [ "$MODULE" == "ng2-activiti-processlist" ] || [ "$MODULE" == "ng2-activiti-tasklist" ]); then
-        (cd ng2-components/ng2-alfresco-datatable; npm link ng2-alfresco-core; if [ ! -d "bundles" ]; then npm install && npm run  build && npm link; fi);
+  - if ([ "$MODULE" == "ng2-demo-shell" ]); then
+        (cd demo-shell-ng2 && npm install && npm run test || exit 1;);
     fi
-  - if ([ "$MODULE" == "ng2-activiti-tasklist" ] || [ "$MODULE" == "ng2-activiti-processlist" ]); then
-        (cd ng2-components/ng2-alfresco-datatable; npm link ng2-alfresco-core; if [ ! -d "bundles" ]; then npm install && npm run  build && npm link; fi);
-        (cd ng2-components/ng2-activiti-form; npm link ng2-alfresco-core; if [ ! -d "bundles" ]; then npm install && npm run  build && npm link; fi);
-    fi
-  - if ([ "$MODULE" == "ng2-activiti-processlist" ]); then
-        (cd ng2-components/ng2-alfresco-datatable; npm link ng2-alfresco-core; if [ ! -d "bundles" ]; then npm install && npm run  build && npm link; fi);
-        (cd ng2-components/ng2-activiti-form; npm link ng2-alfresco-core; if [ ! -d "bundles" ]; then npm install && npm run  build && npm link; fi);
-        (cd ng2-components/ng2-activiti-tasklist; npm link ng2-alfresco-core; npm link ng2-alfresco-datatable; npm link ng2-activiti-form; if [ ! -d "bundles" ]; then npm install && npm run  build && npm link; fi);
-    fi
-  - if ([ "$MODULE" == "ng2-activiti-analytics" ]); then
-        (cd ng2-components/ng2-activiti-diagrams; npm link ng2-alfresco-core; if [ ! -d "bundles" ]; then npm install && npm run  build && npm link; fi);
-    fi
-  - if ([ "$MODULE" == "ng2-alfresco-search" ]); then
-        (cd ng2-components/ng2-alfresco-datatable; npm link ng2-alfresco-core; if [ ! -d "bundles" ]; then npm install && npm run  build && npm link; fi);
-        (cd ng2-components/ng2-alfresco-documentlist; npm link ng2-alfresco-core; npm link ng2-alfresco-datatable; if [ ! -d "bundles" ]; then npm install && npm run  build && npm link; fi);
-    fi
-  - cd ng2-components/$MODULE;
-script: npm install && npm run travis && npm run test
+
 # Send coverage data to Coveralls
 after_success:
   bash <(curl -s https://codecov.io/bash) -X gcov
@@ -61,18 +30,4 @@ cache:
   - ./node_modules/material-design-lite
   - ./node_modules/material-design-icons
   - demo-shell-ng2/node_modules
-  - ng2-components/ng2-activiti-form/node_modules
-  - ng2-components/ng2-activiti-processlist/node_modules
-  - ng2-components/ng2-activiti-tasklist/node_modules
-  - ng2-components/ng2-alfresco-core/node_modules
-  - ng2-components/ng2-alfresco-datatable/node_modules
-  - ng2-components/ng2-alfresco-documentlist/node_modules
-  - ng2-components/ng2-alfresco-login/node_modules
-  - ng2-components/ng2-alfresco-search/node_modules
-  - ng2-components/ng2-alfresco-upload/node_modules
-  - ng2-components/ng2-alfresco-viewer/node_modules
-  - ng2-components/ng2-alfresco-webscript/node_modules
-  - ng2-components/ng2-alfresco-tag/node_modules
-  - ng2-components/ng2-activiti-analytics/node_modules
-  - ng2-components/ng2-alfresco-userinfo/node_modules
-  - ng2-components/ng2-activiti-diagrams/node_modules
+  - ng2-components/node_modules

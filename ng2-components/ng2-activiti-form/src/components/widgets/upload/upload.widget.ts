@@ -21,7 +21,6 @@ import { WidgetComponent } from './../widget.component';
 import { FormService } from '../../../services/form.service';
 
 @Component({
-    moduleId: module.id,
     selector: 'upload-widget',
     templateUrl: './upload.widget.html',
     styleUrls: ['./upload.widget.css']
@@ -69,8 +68,7 @@ export class UploadWidget extends WidgetComponent implements OnInit {
                     this.field.value = [response];
                     this.field.json.value = [response];
                 }, (error: any) => {
-                    this.logService.error(error);
-                    window.alert('Error uploading file. See console output for more details.');
+                    this.logService.error('Error uploading file. See console output for more details.');
                 });
         }
     }

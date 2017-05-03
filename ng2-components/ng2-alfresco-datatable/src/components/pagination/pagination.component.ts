@@ -20,7 +20,6 @@ import { PaginationData } from '../../models/pagination.data';
 import { Pagination } from 'alfresco-js-api';
 
 @Component({
-    moduleId: module.id,
     selector: 'alfresco-pagination',
     templateUrl: './pagination.component.html',
     styleUrls: ['./pagination.component.css']

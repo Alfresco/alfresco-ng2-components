@@ -17,7 +17,7 @@
 
 import { ProcessInstance } from '../models/process-instance.model';
 
-export var fakeProcessInstances = [
+export let fakeProcessInstances = [
     new ProcessInstance({
         id: 1,
         name: 'Process 773443333',
@@ -45,7 +45,7 @@ export var fakeProcessInstances = [
     })
 ];
 
-export var fakeProcessInstancesWithNoName = [
+export let fakeProcessInstancesWithNoName = [
     new ProcessInstance({
         id: 1,
         name: null,

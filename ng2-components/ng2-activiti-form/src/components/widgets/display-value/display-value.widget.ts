@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import * as moment from 'moment';
-import { LogService } from 'ng2-alfresco-core';
 import { WidgetComponent } from './../widget.component';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormService } from '../../../services/form.service';
@@ -26,12 +25,14 @@ import { WidgetVisibilityService } from '../../../services/widget-visibility.ser
 import { NumberFieldValidator } from '../core/form-field-validator';
 
 @Component({
-    moduleId: module.id,
     selector: 'display-value-widget',
     templateUrl: './display-value.widget.html',
     styleUrls: ['./display-value.widget.css']
 })
 export class DisplayValueWidget extends WidgetComponent implements OnInit {
+
+    @Output()
+    error: EventEmitter<any> = new EventEmitter<any>();
 
     value: any;
     fieldType: string;
@@ -49,8 +50,7 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
     showDocumentContent: boolean = true;
 
     constructor(private formService: FormService,
-                private visibilityService: WidgetVisibilityService,
-                private logService: LogService) {
+                private visibilityService: WidgetVisibilityService) {
         super();
     }
 
@@ -185,8 +185,7 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
                     }
                     this.visibilityService.refreshVisibility(this.field.form);
                 },
-                error => {
-                    this.logService.error(error);
+                (error) => {
                     this.value = this.field.value;
                 }
             );
@@ -207,8 +206,8 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
                     }
                     this.visibilityService.refreshVisibility(this.field.form);
                 },
-                error => {
-                    this.logService.error(error);
+                (error) => {
+                    this.error.emit(error);
                     this.value = this.field.value;
                 }
             );

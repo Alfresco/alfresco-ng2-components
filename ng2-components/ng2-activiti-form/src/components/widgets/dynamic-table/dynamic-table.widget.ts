@@ -23,7 +23,6 @@ import { WidgetVisibilityService } from '../../../services/widget-visibility.ser
 import { FormFieldModel } from '../core/form-field.model';
 
 @Component({
-    moduleId: module.id,
     selector: 'dynamic-table-widget',
     templateUrl: './dynamic-table.widget.html',
     styleUrls: ['./dynamic-table.widget.css']

@@ -21,7 +21,6 @@ import { DynamicTableModel, DynamicTableRow, DynamicTableColumn, DynamicTableCol
 import { FormService } from './../../../../../services/form.service';
 
 @Component({
-    moduleId: module.id,
     selector: 'alf-dropdown-editor',
     templateUrl: './dropdown.editor.html',
     styleUrls: ['./dropdown.editor.css']

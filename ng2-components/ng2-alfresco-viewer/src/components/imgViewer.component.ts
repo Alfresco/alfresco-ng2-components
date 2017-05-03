@@ -19,7 +19,6 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ContentService } from 'ng2-alfresco-core';
 
 @Component({
-    moduleId: module.id,
     selector: 'img-viewer',
     templateUrl: './imgViewer.component.html',
     styleUrls: ['./imgViewer.component.css']

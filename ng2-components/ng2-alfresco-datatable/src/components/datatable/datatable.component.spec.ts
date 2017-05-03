@@ -48,7 +48,7 @@ describe('DataTable', () => {
         fixture = TestBed.createComponent(DataTableComponent);
         dataTable = fixture.componentInstance;
         element = fixture.debugElement.nativeElement;
-        fixture.detectChanges();
+        //fixture.detectChanges();
     });
 
     beforeEach(() => {

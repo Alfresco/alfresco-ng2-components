@@ -20,7 +20,7 @@ import {
     AppDefinitionRepresentationModel
 } from '../models/filter.model';
 
-export var fakeFilters = {
+export let fakeFilters = {
     size: 2, total: 2, start: 0,
     data: [
         new AppDefinitionRepresentationModel(
@@ -36,7 +36,7 @@ export var fakeFilters = {
     ]
 };
 
-export var fakeAppFilter = {
+export let fakeAppFilter = {
     size: 1, total: 1, start: 0,
     data: [
         {
@@ -46,7 +46,7 @@ export var fakeAppFilter = {
     ]
 };
 
-export var fakeApps = {
+export let fakeApps = {
     size: 2, total: 2, start: 0,
     data: [
         {
@@ -60,17 +60,17 @@ export var fakeApps = {
     ]
 };
 
-export var fakeFilter = {
+export let fakeFilter = {
     sort: 'created-desc', text: '', state: 'open', assignment: 'fake-assignee'
 };
 
-export var fakeFilterWithProcessDefinitionKey = {
+export let fakeFilterWithProcessDefinitionKey = {
     sort: 'created-desc', text: '', state: 'open', assignment: 'fake-assignee', processDefinitionKey: '1'
 };
 
-export var fakeUser = { id: 1, email: 'fake-email@dom.com', firstName: 'firstName', lastName: 'lastName' };
+export let fakeUser = { id: 1, email: 'fake-email@dom.com', firstName: 'firstName', lastName: 'lastName' };
 
-export var fakeTaskList = {
+export let fakeTaskList = {
     size: 1, total: 1, start: 0,
     data: [
         {
@@ -81,7 +81,7 @@ export var fakeTaskList = {
     ]
 };
 
-export var fakeTaskListDifferentProcessDefinitionKey = {
+export let fakeTaskListDifferentProcessDefinitionKey = {
     size: 1, total: 1, start: 0,
     data: [
         {
@@ -99,7 +99,7 @@ export var fakeTaskListDifferentProcessDefinitionKey = {
     ]
 };
 
-export var secondFakeTaskList = {
+export let secondFakeTaskList = {
     size: 1, total: 1, start: 0,
     data: [
         {
@@ -110,13 +110,13 @@ export var secondFakeTaskList = {
     ]
 };
 
-export var fakeErrorTaskList = {
+export let fakeErrorTaskList = {
     error: 'wrong request'
 };
 
-export var fakeTaskDetails = { id: '999', name: 'fake-task-name', formKey: '99', assignee: fakeUser };
+export let fakeTaskDetails = { id: '999', name: 'fake-task-name', formKey: '99', assignee: fakeUser };
 
-export var fakeTasksComment = {
+export let fakeTasksComment = {
     size: 2, total: 2, start: 0,
     data: [
         {
@@ -128,7 +128,7 @@ export var fakeTasksComment = {
     ]
 };
 
-export var fakeTasksChecklist = {
+export let fakeTasksChecklist = {
     size: 1, total: 1, start: 0,
     data: [
         {
@@ -144,7 +144,7 @@ export var fakeTasksChecklist = {
     ]
 };
 
-export var fakeRepresentationFilter1: FilterRepresentationModel = new FilterRepresentationModel({
+export let fakeRepresentationFilter1: FilterRepresentationModel = new FilterRepresentationModel({
     appId: 1,
     name: 'CONTAIN FILTER',
     recent: true,
@@ -161,7 +161,7 @@ export var fakeRepresentationFilter1: FilterRepresentationModel = new FilterRepr
     }
 });
 
-export var fakeRepresentationFilter2: FilterRepresentationModel = new FilterRepresentationModel({
+export let fakeRepresentationFilter2: FilterRepresentationModel = new FilterRepresentationModel({
     appId: 2,
     name: 'NO TASK FILTER',
     recent: false,
@@ -178,11 +178,11 @@ export var fakeRepresentationFilter2: FilterRepresentationModel = new FilterRepr
     }
 });
 
-export var fakeAppPromise = new Promise(function (resolve, reject) {
+export let fakeAppPromise = new Promise(function (resolve, reject) {
     resolve(fakeAppFilter);
 });
 
-export var fakeFormList = {
+export let fakeFormList = {
     size: 2,
     total: 2,
     start: 0,

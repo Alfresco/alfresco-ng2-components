@@ -38,7 +38,7 @@ export class DocumentListServiceMock extends DocumentListService {
         authService?: AlfrescoAuthenticationService,
         contentService?: AlfrescoContentService,
         apiService?: AlfrescoApiService,
-        logService?: LogService,
+        logService?: LogService
     ) {
         super(authService, contentService, apiService, logService);
     }

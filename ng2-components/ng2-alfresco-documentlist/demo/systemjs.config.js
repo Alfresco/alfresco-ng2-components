@@ -40,11 +40,11 @@
             rxjs: {
                 defaultExtension: 'js'
             },
-            'ng2-translate': { defaultExtension: 'js' },
-            'alfresco-js-api': { main: './alfresco-js-api.js', defaultExtension: 'js'},
-            'ng2-alfresco-core': { main: './index.js', defaultExtension: 'js'},
-            'ng2-alfresco-datatable': { main: './index.js', defaultExtension: 'js'},
-            'ng2-alfresco-documentlist': { main: './index.js', defaultExtension: 'js'}
+            'ng2-translate': {defaultExtension: 'js'},
+            'alfresco-js-api': {main: './alfresco-js-api.js', defaultExtension: 'js'},
+            'ng2-alfresco-core': {main: './bundles/ng2-alfresco-core.js', defaultExtension: 'js'},
+            'ng2-alfresco-datatable': {main: './bundles/ng2-alfresco-datatable.js', defaultExtension: 'js'},
+            'ng2-alfresco-documentlist': {main: './bundles/ng2-alfresco-documentlist.js', defaultExtension: 'js'}
         }
     });
 })(this);
