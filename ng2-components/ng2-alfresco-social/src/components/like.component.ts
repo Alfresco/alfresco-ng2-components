@@ -42,6 +42,8 @@ export class LikeComponent {
     }
 
     ngOnChanges() {
+        this.clean();
+
         let ratingObserver = this.ratingService.getRating(this.nodeId, this.ratingType);
 
         ratingObserver.subscribe(
@@ -76,5 +78,10 @@ export class LikeComponent {
         }
 
         this.changeVote.emit(this.likesCounter);
+    }
+
+    clean() {
+     this.isLike = false;
+     this.likesCounter = 0;
     }
 }
