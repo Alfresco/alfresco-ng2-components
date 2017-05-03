@@ -42,9 +42,21 @@ export class ActivitiTaskListService {
         return Observable.fromPromise(this.apiService.getInstance().activiti.appsApi.getAppDefinitions())
             .map((response: any) => {
                 if (name) {
-                    return response.data.find(p => p.name === name);
+                    return response.data.find(app => app.name === name);
                 }
                 return response.data;
+            })
+            .catch(err => this.handleError(err));
+    }
+
+    /**
+     * Retrieve Deployed App details by appId
+     * @returns {Observable<any>}
+     */
+    getApplicationDetailsById(appId: number): Observable<any> {
+        return Observable.fromPromise(this.apiService.getInstance().activiti.appsApi.getAppDefinitions())
+            .map((response: any) => {
+                return response.data.find(app => app.id === appId);
             })
             .catch(err => this.handleError(err));
     }

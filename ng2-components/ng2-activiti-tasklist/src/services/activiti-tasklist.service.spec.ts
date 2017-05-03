@@ -506,6 +506,24 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
+        it('should get the deployed app details by id ', (done) => {
+            service.getApplicationDetailsById(1).subscribe(
+                (app: any) => {
+                    expect(app).toBeDefined();
+                    expect(app.name).toEqual('Sales-Fakes-App');
+                    expect(app.description).toEqual('desc-fake1');
+                    expect(app.deploymentId).toEqual('111');
+                    done();
+                }
+            );
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 200,
+                contentType: 'application/json',
+                responseText: JSON.stringify(fakeApps)
+            });
+        });
+
         it('should create a new standalone task ', (done) => {
             let taskFake = new TaskDetailsModel({
                 name: 'FakeNameTask',
