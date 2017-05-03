@@ -6,12 +6,7 @@ module.exports = {
 
     resolve: {
         extensions: ['.ts', '.js'],
-        // Needed if webpack2-lib is symlinked
-        modules: [
-            helpers.root('src'),
-            helpers.root('node_modules'),
-            helpers.root('node_modules/webpack2-lib/dist')
-        ]
+        modules: [helpers.root('../ng2-components'), helpers.root('node_modules')]
     },
 
     module: {
@@ -33,13 +28,7 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                exclude: helpers.root('app'),
-                loader: 'null-loader'
-            },
-            {
-                test: /\.css$/,
-                include: helpers.root('app'),
-                loader: 'raw-loader',
+                loader: ['to-string-loader', 'css-loader'],
                 exclude: [ /public/, /resources/, /dist/]
             }
         ]
