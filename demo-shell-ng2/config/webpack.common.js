@@ -140,5 +140,9 @@ module.exports = {
         new webpack.optimize.CommonsChunkPlugin({
             name: ['app', 'vendor', 'polyfills']
         })
-    ]
+    ],
+
+    node: {
+        fs: 'empty'
+    }
 };
