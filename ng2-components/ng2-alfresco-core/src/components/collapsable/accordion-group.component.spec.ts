@@ -107,7 +107,7 @@ describe('AccordionGroupComponent', () => {
             done();
         });
 
-        component.onHeadingSelect();
+        component.onHeadingClick();
     });
 
 });
