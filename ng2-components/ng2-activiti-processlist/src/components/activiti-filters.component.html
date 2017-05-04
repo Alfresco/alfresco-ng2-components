@@ -3,7 +3,7 @@
         <li class="mdl-list__item activiti-filters__entry" (click)="selectFilter(filter)" *ngFor="let filter of filters"
             [class.active]="currentFilter === filter">
             <span class="mdl-list__item-primary-content">
-            <i class="material-icons mdl-list__item-icon activiti-filters__entry-icon" [attr.data-automation-id]="filter.name + '_filter'" >assignment</i>
+            <i *ngIf="showIcon" class="material-icons mdl-list__item-icon activiti-filters__entry-icon" [attr.data-automation-id]="filter.name + '_filter'" >assignment</i>
             {{filter.name}}
             </span>
         </li>
