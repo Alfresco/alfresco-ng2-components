@@ -63,7 +63,7 @@
                 <button type="submit" id="login-button" tabindex="3"
                         class="center mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
                         data-automation-id="login-button" [disabled]="!form.valid">{{'LOGIN.BUTTON.LOGIN' | translate }}</button>
-                <div *ngIf="showRememberMe" class="adf-login__remember-me">
+                <div *ngIf="showRememberMe" class="adf-login__remember-me" id ="login-remember">
                     <md-checkbox>{{'LOGIN.LABEL.REMEMBER' | translate }}</md-checkbox>
                 </div>
             </div>

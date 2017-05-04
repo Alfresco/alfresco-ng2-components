@@ -10,7 +10,7 @@
     "tslint": "../node_modules/tslint/bin/tslint -c ../config/assets/tslint.json 'src/{,**/}**.ts' 'index.ts'  -e '{,**/}**.d.ts'",
     "tsc": "../node_modules/typescript/bin/tsc",
     "test": "../node_modules/karma/bin/karma start ../config/karma.conf.js --reporters mocha,coverage --single-run --component ng2-alfresco-login",
-    "test-browser": "concurrently \"../node_modules/karma/bin/karma start ../config/karma.conf.js --reporters kjhtml --component ng2-alfresco-login\"",
+    "test-browser": "../node_modules/karma/bin/karma start ../config/karma.conf.js --reporters kjhtml --component ng2-alfresco-login",
     "coverage": "npm run test && ../node_modules/wsrv/bin/wsrv -o -p 9875 ./coverage/report",
     "publish:prod": "npm run test && npm publish"
   },
