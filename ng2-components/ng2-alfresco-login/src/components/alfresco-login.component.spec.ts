@@ -63,16 +63,14 @@ describe('AlfrescoLogin', () => {
         expect(element.querySelector('[for="username"]')).toBeDefined();
         expect(element.querySelector('[for="username"]').innerText).toEqual('LOGIN.LABEL.USERNAME');
 
+        expect(element.querySelector('#login-remember')).toBeDefined();
+        expect(element.querySelector('#login-remember').innerText).toEqual('LOGIN.LABEL.REMEMBER');
+
         expect(element.querySelector('[for="password"]')).toBeDefined();
         expect(element.querySelector('[for="password"]').innerText).toEqual('LOGIN.LABEL.PASSWORD');
 
         expect(element.querySelector('#login-button')).toBeDefined();
         expect(element.querySelector('#login-button').innerText).toEqual('LOGIN.BUTTON.LOGIN');
-
-        /*
-        expect(element.querySelector('#login-remember')).toBeDefined();
-        expect(element.querySelector('#login-remember').innerText).toEqual('LOGIN.LABEL.REMEMBER');
-        */
 
         expect(element.querySelector('#login-action-help')).toBeDefined();
         expect(element.querySelector('#login-action-help').innerText).toEqual('LOGIN.ACTION.HELP');
@@ -87,6 +85,23 @@ describe('AlfrescoLogin', () => {
         expect(element.querySelector('input[type="text"]')).toBeDefined();
         expect(element.querySelector('input[type="password"]').value).toEqual('');
         expect(element.querySelector('input[type="text"]').value).toEqual('');
+    });
+
+    it('should hide remember me if showRememberMe is false', () => {
+        component.showRememberMe = true;
+
+        fixture.detectChanges();
+
+        expect(element.querySelector('#login-remember')).not.toBeDefined();
+    });
+
+    it('should hide login actions if showLoginActions is false', () => {
+        component.showRememberMe = true;
+
+        fixture.detectChanges();
+
+        expect(element.querySelector('#login-action-help')).not.toBeDefined();
+        expect(element.querySelector('#login-action-register')).not.toBeDefined();
     });
 
     it('should render validation min-length error when the username is just 1 character', () => {

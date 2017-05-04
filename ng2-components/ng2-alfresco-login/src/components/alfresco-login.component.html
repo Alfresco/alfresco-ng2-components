@@ -67,14 +67,14 @@
                     <md-checkbox>{{'LOGIN.LABEL.REMEMBER' | translate }}</md-checkbox>
                 </div>
             </div>
-            <div *ngIf="showLoginActions" class="mdl-card__actions mdl-card--border mdl-card__link">
+            <div class="mdl-card__actions mdl-card--border mdl-card__link">
 
                 <!--FOOTER TEMPLATE-->
                 <template *ngIf="footerTemplate"
                           ngFor [ngForOf]="[data]"
                           [ngForTemplate]="footerTemplate">
                 </template>
-                <div class="login-action" *ngIf="!footerTemplate">
+                <div class="login-action" *ngIf="!footerTemplate && showLoginActions">
                     <div id="login-action-help" class="login-action-left">
                         <a href="{{needHelpLink}}">{{'LOGIN.ACTION.HELP' | translate }}</a>
                     </div>
