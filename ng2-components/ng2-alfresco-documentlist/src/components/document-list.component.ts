@@ -89,6 +89,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     @Input()
     allowDropFiles: boolean = false;
 
+    @Input()
+    sorting: string[];
+
     skipCount: number = 0;
 
     pagination: Pagination;
@@ -188,12 +191,6 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         this.enforceSingleClickNavigationForMobile();
     }
 
-    private enforceSingleClickNavigationForMobile(): void {
-        if (this.isMobile()) {
-            this.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
-        }
-    }
-
     ngAfterContentInit() {
         let schema: DataColumn[] = [];
 
@@ -210,6 +207,15 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         let columns = this.data.getColumns();
         if (!columns || columns.length === 0) {
             this.setupDefaultColumns();
+        }
+
+        if (this.sorting) {
+            const [ key, direction ] = this.sorting;
+
+            this.data.setSorting({
+                key,
+                direction: direction || 'asc'
+            });
         }
     }
 
@@ -285,7 +291,6 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             if (target) {
 
                 let ltarget = target.toLowerCase();
-
                 return this.actions.filter(entry => {
                     return entry.target.toLowerCase() === ltarget;
                 });
@@ -340,7 +345,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             this.skipCount = 0;
             this.loadFolderNodesByFolderNodeId(node.id, this.pageSize, this.skipCount).catch(err => this.error.emit(err));
         })
-            .catch(err => this.error.emit(err));
+        .catch(err => this.error.emit(err));
     }
 
     loadFolderNodesByFolderNodeId(id: string, maxItems: number, skipCount: number): Promise<any> {
@@ -352,7 +357,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                         skipCount: skipCount,
                         rootFolderId: id
                     })
-                    .subscribe(val => {
+                    .subscribe(
+                        val => {
                             this.data.loadPage(<NodePaging>val);
                             this.pagination = val.list.pagination;
                             resolve(true);
@@ -498,5 +504,11 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     onPermissionError(event) {
         this.permissionError.emit(event);
+    }
+
+    private enforceSingleClickNavigationForMobile(): void {
+        if (this.isMobile()) {
+            this.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
+        }
     }
 }

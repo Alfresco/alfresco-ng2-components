@@ -236,7 +236,8 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
         let event = new DataCellEvent(row, col, []);
         this.showRowActionsMenu.emit(event);
 
-        return this.checkPermissions(row, event.value.actions);
+        return event.value.actions;
+        // return this.checkPermissions(row, event.value.actions);
     }
 
     checkPermissions(row: DataRow, actions: any[]) {
