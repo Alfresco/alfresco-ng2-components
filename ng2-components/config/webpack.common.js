@@ -105,7 +105,7 @@ module.exports = {
     plugins: [
         new webpack.NoEmitOnErrorsPlugin(),
 
-        new webpack.BannerPlugin(fs.readFileSync(path.resolve(__dirname, './assets/license_header.txt'), 'utf8')),
+        new webpack.BannerPlugin(fs.readFileSync(path.resolve(__dirname, './assets/license_header_add.txt'), 'utf8')),
 
         // Workaround for angular/angular#11580
         new webpack.ContextReplacementPlugin(
