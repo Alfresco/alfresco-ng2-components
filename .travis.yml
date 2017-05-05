@@ -1,10 +1,12 @@
 language: node_js
 dist: trusty
-sudo: false
+sudo: required
 node_js:
-  - "5"
+  - "6"
 
 before_install:
+  - sudo apt-get update
+  - sudo apt-get install chromium-chromedriver
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
 
@@ -18,7 +20,7 @@ script:
         (./scripts/npm-build-all.sh -t;);
     fi
   - if ([ "$MODULE" == "ng2-demo-shell" ]); then
-        (cd demo-shell-ng2 && npm install && npm run test || exit 1;);
+        (./scripts/npm-build-all.sh && cd demo-shell-ng2 && npm install && npm run build && npm run test  && npm run protractor-test || exit 1;);
     fi
 
 # Send coverage data to Coveralls
