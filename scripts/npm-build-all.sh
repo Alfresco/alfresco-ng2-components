@@ -47,7 +47,6 @@ done
 cd "$DIR/../ng2-components/"
 npm install package-json-merge -g
 npm install rimraf -g
-npm install license-check -g
 npm run pkg-build
 npm install && npm run build || exit 1
 
@@ -55,7 +54,6 @@ for PACKAGE in ${projects[@]}
 do
   DESTDIR="$DIR/../ng2-components/${PACKAGE}"
   cd $DESTDIR
-  npm run license-check || exit 1
   if $RUN_TEST == true; then
       test_project $PACKAGE
   fi

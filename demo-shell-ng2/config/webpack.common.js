@@ -29,6 +29,13 @@ module.exports = {
         'vendor': './app/vendor.ts',
         'app': './app/main.ts'
     },
+
+    resolveLoader: {
+        alias: {
+            "license-check": path.resolve(__dirname, "./loaders/license-check")
+        }
+    },
+
     module: {
         rules: [
             {
@@ -84,6 +91,17 @@ module.exports = {
             {
                 test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
                 loader: 'file-loader?name=assets/[name].[hash].[ext]'
+            },
+            {
+                enforce: 'pre',
+                test: /\.ts$/,
+                loader: 'license-check',
+                include: helpers.root('app'),
+                options: {
+                    emitErrors: true,
+                    licenseFile: path.resolve(__dirname, '../assets/license_header.txt')
+                },
+                exclude: [/node_modules/, /bundles/, /dist/, /demo/],
             }
         ]
     },
