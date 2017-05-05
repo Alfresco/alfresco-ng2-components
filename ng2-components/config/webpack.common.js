@@ -7,7 +7,8 @@ module.exports = {
 
     resolveLoader: {
         alias: {
-            "file-multi-loader": path.resolve(__dirname, "./custom-loaders/file-loader-multi")
+            "file-multi-loader": path.resolve(__dirname, "./custom-loaders/file-loader-multi"),
+            "license-check": path.resolve(__dirname, "./custom-loaders/license-check")
         }
     },
 
@@ -65,6 +66,15 @@ module.exports = {
                 test: /\.css$/,
                 loader: ['to-string-loader', 'css-loader'],
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
+            },{
+                enforce: 'pre',
+                test: /\.ts$/,
+                loader: 'license-check',
+                options: {
+                    emitErrors: true,
+                    licenseFile: path.resolve(__dirname, './assets/license_header.txt')
+                },
+                exclude: [/node_modules/, /bundles/, /dist/, /demo/, path.resolve(__dirname, '../ng2-alfresco-viewer/src/services/rendering-queue.services.ts')],
             },
             {
                 test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
