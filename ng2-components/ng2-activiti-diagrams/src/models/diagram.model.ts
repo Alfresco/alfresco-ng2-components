@@ -50,6 +50,8 @@ export class DiagramModel {
 }
 
 export class DiagramElementModel {
+    completed: boolean;
+    current: boolean;
     height: string;
     id: string;
     name: string;
@@ -65,6 +67,8 @@ export class DiagramElementModel {
 
     constructor(obj?: any) {
         if (obj) {
+            this.completed = obj.completed || false;
+            this.current = obj.current || false;
             this.height = obj.height || '';
             this.id = obj.id || '';
             this.name = obj.name || '';
@@ -102,6 +106,8 @@ export class DiagramElementPropertyModel {
 }
 
 export class DiagramFlowElementModel {
+    completed: boolean;
+    current: boolean;
     id: string;
     properties: any[] = [];
     sourceRef: string;
@@ -111,6 +117,8 @@ export class DiagramFlowElementModel {
 
     constructor(obj?: any) {
         if (obj) {
+            this.completed = obj.completed || false;
+            this.current = obj.current || false;
             this.id = obj.id;
             this.properties = obj.properties;
             this.sourceRef = obj.sourceRef;
