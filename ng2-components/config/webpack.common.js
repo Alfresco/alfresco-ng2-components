@@ -39,17 +39,17 @@ module.exports = {
             {
                 enforce: 'pre',
                 test: /\.ts$/,
-                loader: 'tslint-loader',
-                options: {
-                    emitErrors: true,
-                    configFile: path.resolve(__dirname, './assets/tslint.json')
-                },
+                use: 'source-map-loader',
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
             },
             {
                 enforce: 'pre',
                 test: /\.ts$/,
-                use: 'source-map-loader',
+                loader: 'tslint-loader',
+                options: {
+                    emitErrors: true,
+                    configFile: path.resolve(__dirname, './assets/tslint.json')
+                },
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
             },
             {

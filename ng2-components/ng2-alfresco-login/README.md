@@ -166,8 +166,8 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 | `logoImageUrl` | string | Alfresco logo image | To change the logo image with a customised image |
 | `backgroundImageUrl` | string | Alfresco background image | To change the background image with a customised image |
 | `fieldsValidation` | { [key: string]: any; }, extra?: { [key: string]: any; } |  | Use it to customise the validation rules of the login form |
-| `showRememberMe` | boolean | true | Toggle `Remember me` checkbox visibility |
-| `showLoginActions` | boolean | true | Toggle extra actions visibility (`Need Help`, `Register`, etc.) |
+| `showRememberMe` | boolean | false | Toggle `Remember me` checkbox visibility |
+| `showLoginActions` | boolean | false | Toggle extra actions visibility (`Need Help`, `Register`, etc.) |
 
 #### Events
 

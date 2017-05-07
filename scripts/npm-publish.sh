@@ -47,10 +47,10 @@ do
   npm run clean
   npm install
   if FORCE_PUBLISH == false; then
-     npm run publish:prod
+     npm run publish
   fi
   if FORCE_PUBLISH == true; then
-     npm run test && npm run publish --force || exit 1
+     npm run publish --force || exit 1
   fi
   cd ${DIR}
 done

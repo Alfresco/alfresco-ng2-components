@@ -11,11 +11,7 @@ require('zone.js/dist/jasmine-patch');
 require('zone.js/dist/async-test');
 require('zone.js/dist/fake-async-test');
 
-var path = '../' + __karma__.config.component + '/src';
-console.log('path appContext '+ path);
-
-var appContext;
-appContext = require.context('../ng2-alfresco-search/src', true, /\.spec\.ts/);
+var appContext = require.context('./src', true, /\.spec\.ts/);
 appContext.keys().forEach(appContext);
 
 

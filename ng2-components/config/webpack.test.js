@@ -52,8 +52,7 @@ module.exports = {
                 loader: 'istanbul-instrumenter-loader',
                 exclude: [
                     /node_modules/,
-                    /test/,
-                    /spec\.ts$/
+                    /test/
                 ]
             }
         ]
