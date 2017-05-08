@@ -33,7 +33,7 @@ const mockBackendResponse = (connection: MockConnection, response: string) => {
 
 describe('TranslateLoader', () => {
     let injector: Injector;
-    let backend: MockBackend;
+    let backend: any;
     let alfrescoTranslationService: AlfrescoTranslationService;
     let connection: MockConnection; // this will be set when a new connection is emitted from the backend.
     let customLoader;
