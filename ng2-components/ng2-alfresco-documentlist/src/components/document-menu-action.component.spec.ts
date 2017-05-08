@@ -176,7 +176,7 @@ describe('Document menu action', () => {
     describe('Check Permissions', () => {
 
         it('should get the folder permission when folderId is changed', async(() => {
-            let change = new SimpleChange('folder-id', 'new-folder-id');
+            let change = new SimpleChange('folder-id', 'new-folder-id', true);
             component.ngOnChanges({ 'folderId': change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -196,7 +196,7 @@ describe('Document menu action', () => {
         }));
 
         it('should disable the create button if folder does not have any allowable operations', async(() => {
-            let change = new SimpleChange('folder-id', 'new-folder-id');
+            let change = new SimpleChange('folder-id', 'new-folder-id', true);
             component.ngOnChanges({ 'folderId': change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -214,7 +214,7 @@ describe('Document menu action', () => {
         }));
 
         it('should disable the create button if folder does not have create permission', async(() => {
-            let change = new SimpleChange('folder-id', 'new-folder-id');
+            let change = new SimpleChange('folder-id', 'new-folder-id', true);
             component.ngOnChanges({ 'folderId': change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -233,7 +233,7 @@ describe('Document menu action', () => {
 
         it('should not disable the option when disableWithNoPermission is false', async(() => {
             component.disableWithNoPermission = false;
-            let change = new SimpleChange('folder-id', 'new-folder-id');
+            let change = new SimpleChange('folder-id', 'new-folder-id', true);
             component.ngOnChanges({ 'folderId': change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -251,7 +251,7 @@ describe('Document menu action', () => {
         }));
 
         it('should emit permission event error when user does not have create permission', async(() => {
-            let change = new SimpleChange('folder-id', 'new-folder-id');
+            let change = new SimpleChange('folder-id', 'new-folder-id', true);
             component.ngOnChanges({ 'folderId': change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({

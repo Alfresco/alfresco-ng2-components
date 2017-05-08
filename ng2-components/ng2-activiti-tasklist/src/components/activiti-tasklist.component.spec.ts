@@ -145,9 +145,9 @@ describe('ActivitiTaskList', () => {
         spyOn(taskListService, 'getTotalTasks').and.returnValue(Observable.of(fakeGlobalTotalTasks));
         spyOn(taskListService, 'getTasks').and.returnValue(Observable.of(fakeGlobalTask));
 
-        let state = new SimpleChange(null, 'open');
-        let processDefinitionKey = new SimpleChange(null, null);
-        let assignment = new SimpleChange(null, 'fake-assignee');
+        let state = new SimpleChange(null, 'open', true);
+        let processDefinitionKey = new SimpleChange(null, null, true);
+        let assignment = new SimpleChange(null, 'fake-assignee', true);
 
         component.onSuccess.subscribe((res) => {
             expect(res).toBeDefined();
@@ -186,9 +186,9 @@ describe('ActivitiTaskList', () => {
         spyOn(taskListService, 'getTotalTasks').and.returnValue(Observable.of(fakeGlobalTotalTasks));
         spyOn(taskListService, 'getTasks').and.returnValue(Observable.of(fakeGlobalTask));
 
-        let state = new SimpleChange(null, 'open');
-        let processDefinitionKey = new SimpleChange(null, 'fakeprocess');
-        let assignment = new SimpleChange(null, 'fake-assignee');
+        let state = new SimpleChange(null, 'open', true);
+        let processDefinitionKey = new SimpleChange(null, 'fakeprocess', true);
+        let assignment = new SimpleChange(null, 'fake-assignee', true);
 
         component.onSuccess.subscribe((res) => {
             expect(res).toBeDefined();
@@ -212,8 +212,8 @@ describe('ActivitiTaskList', () => {
     it('should throw an exception when the response is wrong', (done) => {
         spyOn(taskListService, 'getTotalTasks').and.returnValue(Observable.throw(fakeErrorTaskList));
 
-        let state = new SimpleChange(null, 'open');
-        let assignment = new SimpleChange(null, 'fake-assignee');
+        let state = new SimpleChange(null, 'open', true);
+        let assignment = new SimpleChange(null, 'fake-assignee', true);
 
         component.onError.subscribe((err) => {
             expect(err).toBeDefined();
@@ -280,7 +280,7 @@ describe('ActivitiTaskList', () => {
 
         it('should reload the list when the appId parameter changes', (done) => {
             const appId = '1';
-            let change = new SimpleChange(null, appId);
+            let change = new SimpleChange(null, appId, true);
 
             component.onSuccess.subscribe((res) => {
                 expect(res).toBeDefined();
@@ -296,7 +296,7 @@ describe('ActivitiTaskList', () => {
 
         it('should reload the list when the processDefinitionKey parameter changes', (done) => {
             const processDefinitionKey = 'fakeprocess';
-            let change = new SimpleChange(null, processDefinitionKey);
+            let change = new SimpleChange(null, processDefinitionKey, true);
 
             component.onSuccess.subscribe((res) => {
                 expect(res).toBeDefined();
@@ -312,7 +312,7 @@ describe('ActivitiTaskList', () => {
 
         it('should reload the list when the state parameter changes', (done) => {
             const state = 'open';
-            let change = new SimpleChange(null, state);
+            let change = new SimpleChange(null, state, true);
 
             component.onSuccess.subscribe((res) => {
                 expect(res).toBeDefined();
@@ -328,7 +328,7 @@ describe('ActivitiTaskList', () => {
 
         it('should reload the list when the sort parameter changes', (done) => {
             const sort = 'desc';
-            let change = new SimpleChange(null, sort);
+            let change = new SimpleChange(null, sort, true);
 
             component.onSuccess.subscribe((res) => {
                 expect(res).toBeDefined();
@@ -344,7 +344,7 @@ describe('ActivitiTaskList', () => {
 
         it('should reload the process list when the name parameter changes', (done) => {
             const name = 'FakeTaskName';
-            let change = new SimpleChange(null, name);
+            let change = new SimpleChange(null, name, true);
 
             component.onSuccess.subscribe((res) => {
                 expect(res).toBeDefined();
@@ -360,7 +360,7 @@ describe('ActivitiTaskList', () => {
 
         it('should reload the list when the assignment parameter changes', (done) => {
             const assignment = 'assignee';
-            let change = new SimpleChange(null, assignment);
+            let change = new SimpleChange(null, assignment, true);
 
             component.onSuccess.subscribe((res) => {
                 expect(res).toBeDefined();

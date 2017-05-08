@@ -180,7 +180,7 @@ describe('ActivitiChecklist', () => {
             checklistComponent.taskId = 'new-fake-task-id';
             checklistComponent.checklist.push(fakeTaskDetail);
             fixture.detectChanges();
-            let change = new SimpleChange(null, 'new-fake-task-id');
+            let change = new SimpleChange(null, 'new-fake-task-id', true);
             checklistComponent.ngOnChanges({
                 taskId: change
             });
@@ -201,7 +201,7 @@ describe('ActivitiChecklist', () => {
             checklistComponent.checklist.push(fakeTaskDetail);
             fixture.detectChanges();
             checklistComponent.taskId = null;
-            let change = new SimpleChange(null, 'new-fake-task-id');
+            let change = new SimpleChange(null, 'new-fake-task-id', true);
             checklistComponent.ngOnChanges({
                 taskId: change
             });

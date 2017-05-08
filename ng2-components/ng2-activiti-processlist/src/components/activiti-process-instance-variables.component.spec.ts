@@ -145,8 +145,8 @@ describe('ActivitiProcessInstanceVariables', () => {
 
     describe('change detection', () => {
 
-        let change = new SimpleChange('123', '456');
-        let nullChange = new SimpleChange('123', null);
+        let change = new SimpleChange('123', '456', true);
+        let nullChange = new SimpleChange('123', null, true);
 
         beforeEach(async(() => {
             component.processInstanceId = '123';

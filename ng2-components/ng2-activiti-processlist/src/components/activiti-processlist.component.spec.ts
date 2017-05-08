@@ -295,7 +295,7 @@ describe('ActivitiProcessInstanceListComponent', () => {
 
         it('should reload the list when the appId parameter changes', (done) => {
             const appId = '1';
-            let change = new SimpleChange(null, appId);
+            let change = new SimpleChange(null, appId, true);
 
             component.onSuccess.subscribe((res) => {
                 expect(res).toBeDefined();
@@ -311,7 +311,7 @@ describe('ActivitiProcessInstanceListComponent', () => {
 
         it('should reload the list when the processDefinitionKey parameter changes', (done) => {
             const processDefinitionKey = 'fakeprocess';
-            let change = new SimpleChange(null, processDefinitionKey);
+            let change = new SimpleChange(null, processDefinitionKey, true);
 
             component.onSuccess.subscribe((res) => {
                 expect(res).toBeDefined();
@@ -327,7 +327,7 @@ describe('ActivitiProcessInstanceListComponent', () => {
 
         it('should reload the list when the state parameter changes', (done) => {
             const state = 'open';
-            let change = new SimpleChange(null, state);
+            let change = new SimpleChange(null, state, true);
 
             component.onSuccess.subscribe((res) => {
                 expect(res).toBeDefined();
@@ -343,7 +343,7 @@ describe('ActivitiProcessInstanceListComponent', () => {
 
         it('should reload the list when the sort parameter changes', (done) => {
             const sort = 'created-desc';
-            let change = new SimpleChange(null, sort);
+            let change = new SimpleChange(null, sort, true);
 
             component.onSuccess.subscribe((res) => {
                 expect(res).toBeDefined();
@@ -359,7 +359,7 @@ describe('ActivitiProcessInstanceListComponent', () => {
 
         it('should sort the list when the sort parameter changes', (done) => {
             const sort = 'created-asc';
-            let change = new SimpleChange(null, sort);
+            let change = new SimpleChange(null, sort, true);
             let sortSpy = spyOn(component.data, 'setSorting');
 
             component.onSuccess.subscribe((res) => {
@@ -374,7 +374,7 @@ describe('ActivitiProcessInstanceListComponent', () => {
 
         it('should reload the process list when the name parameter changes', (done) => {
             const name = 'FakeTaskName';
-            let change = new SimpleChange(null, name);
+            let change = new SimpleChange(null, name, true);
 
             component.onSuccess.subscribe((res) => {
                 expect(res).toBeDefined();

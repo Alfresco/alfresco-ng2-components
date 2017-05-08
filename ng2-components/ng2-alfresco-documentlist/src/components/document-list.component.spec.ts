@@ -460,7 +460,7 @@ describe('DocumentList', () => {
         });
 
         documentList.currentFolderId = 'wrong-id';
-        documentList.ngOnChanges({currentFolderId: new SimpleChange(null, documentList.currentFolderId)});
+        documentList.ngOnChanges({currentFolderId: new SimpleChange(null, documentList.currentFolderId, true)});
     });
 
     it('should require dataTable to check empty template', () => {
@@ -526,7 +526,7 @@ describe('DocumentList', () => {
     it('should load folder by ID on init', () => {
         documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
         spyOn(documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.resolve());
-        documentList.ngOnChanges({folderNode: new SimpleChange(null, documentList.currentFolderId)});
+        documentList.ngOnChanges({folderNode: new SimpleChange(null, documentList.currentFolderId, true)});
         expect(documentList.loadFolderNodesByFolderNodeId).toHaveBeenCalled();
     });
 });
