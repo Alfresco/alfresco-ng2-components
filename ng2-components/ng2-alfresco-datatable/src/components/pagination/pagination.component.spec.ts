@@ -101,7 +101,7 @@ describe('PaginationComponent', () => {
     it('should update the summary on input pagination parameter change', () => {
         spyOn(paginationComponent, 'updateSummary');
 
-        paginationComponent.ngOnChanges({pagination: new SimpleChange(null, new PaginationData(0, 0, 0, 20, true))});
+        paginationComponent.ngOnChanges({pagination: new SimpleChange(null, new PaginationData(0, 0, 0, 20, true), true)});
 
         expect(paginationComponent.updateSummary).toHaveBeenCalled();
     });
