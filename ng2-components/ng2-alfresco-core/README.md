@@ -331,6 +331,13 @@ export class MyComponent implements OnInit {
 
 The authentication service is used inside the [login component](../ng2-alfresco-login) and is possible to find there an example of how to use it.
 
+### Events
+
+| Name | Description |
+| --- | --- |
+| onLogin | Raised when user logs in |
+| onLogout | Raised when user logs out |
+
 ```ts
 import { NgModule, Component } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
