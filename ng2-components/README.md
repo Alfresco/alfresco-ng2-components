@@ -39,14 +39,19 @@
 
 - [DataTable](ng2-alfresco-datatable/README.md)
 - [DocumentList](ng2-alfresco-documentlist/README.md)
-- [Viewer](ng2-alfresco-viewer/README.md)
 - [Login](ng2-alfresco-login/README.md)
-- [Upload](ng2-alfresco-upload/README.md)
-- [Webscript Viewer](ng2-alfresco-webscript/README.md)
+- [Search](ng2-alfresco-search/README.md)
+- [Social](ng2-alfresco-social/README.md)
 - [Tag list and controls](ng2-alfresco-tag/README.md)
+- [User Info](ng2-alfresco-userinfo/README.md)
+- [Upload](ng2-alfresco-upload/README.md)
+- [Viewer](ng2-alfresco-viewer/README.md)
+- [Webscript Viewer](ng2-alfresco-webscript/README.md)
 
 ## BPM components
 
+- [Analytics](ng2-activiti-analytics/README.md)
+- [Diagrams](ng2-activiti-diagrams/README.md)
 - [TaskList](ng2-activiti-tasklist/README.md)
 - [ProcessList](ng2-activiti-processlist/README.md)
 - [Form](ng2-activiti-form/README.md)
