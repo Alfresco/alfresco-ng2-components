@@ -180,7 +180,9 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 
 | Name | Type | Required | Description |
 | --- | --- | --- | --- |
+| `appId` | {string} | | The application id |
 | `layoutType` | {string} | required | Define the layout of the apps. There are two possible values: GRID or LIST. LIST is the default value|
+| `selectFirst` | {boolean} | false | Change the value to true if you want select the first item in the list as default|
 
 ## Basic usage example Activiti Analytics
 

@@ -37,6 +37,9 @@ export class AnalyticsReportListComponent implements  OnInit {
     @Input()
     appId: string;
 
+    @Input()
+    selectFirst: boolean = false;
+
     @Output()
     reportClick: EventEmitter<ReportParametersModel> = new EventEmitter<ReportParametersModel>();
 
@@ -90,6 +93,9 @@ export class AnalyticsReportListComponent implements  OnInit {
                     res.forEach((report) => {
                         this.reportObserver.next(report);
                     });
+                    if (this.selectFirst) {
+                        this.selectFirstReport();
+                    }
                     this.onSuccess.emit(res);
                 }
             },
@@ -141,6 +147,11 @@ export class AnalyticsReportListComponent implements  OnInit {
     public selectReport(report: any) {
         this.currentReport = report;
         this.reportClick.emit(report);
+    }
+
+    selectFirstReport() {
+        this.selectReport(this.reports[0]);
+        this.selectFirst = false;
     }
 
     isSelected(report: any) {
