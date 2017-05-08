@@ -5,11 +5,26 @@ const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
 
 module.exports = {
 
+    devtool: 'inline-source-map',
+
+    resolve: {
+        extensions: ['.ts', '.js'],
+        symlinks: false,
+        modules: [helpers.root('../ng2-components'), helpers.root('node_modules')]
+    },
+
     module: {
         rules: [
             {
+                enforce: 'pre',
+                test: /\.js$/,
+                loader: 'source-map-loader',
+                exclude: [/node_modules/, /bundles/, /dist/, /demo/]
+            },
+            {
                 test: /\.ts$/,
-                loaders: ['ts-loader', 'angular2-template-loader']
+                loaders: ['ts-loader', 'angular2-template-loader'],
+                exclude: [/node_modules/, /bundles/, /dist/, /demo/]
             },
             {
                 test: /\.html$/,
@@ -27,7 +42,6 @@ module.exports = {
                 query: {
                     name: '[path][name].[ext]',
                     outputPath: (url)=> {
-                        console.log
                         return url.replace('src', 'dist');
                     }
                 }
@@ -42,14 +56,6 @@ module.exports = {
                     /spec\.ts$/
                 ]
             }
-        ]
-    },
-
-    resolve: {
-        extensions: ['.ts', '.js'],
-        symlinks: false,
-        modules: [
-            '../ng2-components', 'node_modules'
         ]
     },
 
@@ -75,8 +81,6 @@ module.exports = {
         })
 
     ],
-
-    devtool: 'inline-source-map',
 
     node: {
         fs: 'empty',
