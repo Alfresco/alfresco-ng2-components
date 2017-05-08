@@ -137,7 +137,7 @@ describe('ActivitiContent', () => {
             });
 
             let contentId = 1;
-            let change = new SimpleChange(null, contentId);
+            let change = new SimpleChange(null, contentId, true);
             component.ngOnChanges({ 'id': change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -180,7 +180,7 @@ describe('ActivitiContent', () => {
             });
 
             let contentId = 1;
-            let change = new SimpleChange(null, contentId);
+            let change = new SimpleChange(null, contentId, true);
             component.ngOnChanges({'id': change});
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -208,7 +208,7 @@ describe('ActivitiContent', () => {
         it('should show unsupported preview with unsupported file', (done) => {
 
             let contentId = 1;
-            let change = new SimpleChange(null, contentId);
+            let change = new SimpleChange(null, contentId, true);
             component.ngOnChanges({'id': change});
 
             component.contentLoaded.subscribe((res) => {

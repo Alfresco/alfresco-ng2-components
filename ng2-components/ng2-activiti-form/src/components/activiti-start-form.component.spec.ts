@@ -77,19 +77,19 @@ describe('ActivitiStartForm', () => {
 
     it('should load start form on change if processDefinitionId defined', () => {
         component.processDefinitionId = exampleId1;
-        component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2) });
+        component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
         expect(formService.getStartFormDefinition).toHaveBeenCalled();
     });
 
     it('should load start form when processDefinitionId changed', () => {
         component.processDefinitionId = exampleId1;
-        component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2) });
+        component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
         expect(formService.getStartFormDefinition).toHaveBeenCalled();
     });
 
     it('should not load start form when changes notified but no change to processDefinitionId', () => {
         component.processDefinitionId = exampleId1;
-        component.ngOnChanges({ otherProp: new SimpleChange(exampleId1, exampleId2) });
+        component.ngOnChanges({ otherProp: new SimpleChange(exampleId1, exampleId2, true) });
         expect(formService.getStartFormDefinition).not.toHaveBeenCalled();
     });
 
@@ -110,7 +110,7 @@ describe('ActivitiStartForm', () => {
         }));
         component.processDefinitionId = exampleId1;
         component.ngOnInit();
-        component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2) });
+        component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
         fixture.detectChanges();
         expect(component.outcomesContainer).toBeTruthy();
     });
@@ -126,7 +126,7 @@ describe('ActivitiStartForm', () => {
         }));
         component.processDefinitionId = exampleId1;
         component.showOutcomeButtons = true;
-        component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2) });
+        component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
         fixture.detectChanges();
         expect(component.outcomesContainer).toBeTruthy();
     });
