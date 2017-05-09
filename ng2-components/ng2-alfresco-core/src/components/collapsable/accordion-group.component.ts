@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy, Output, EventEmitter, ViewChild } from '@angular/core';
 import { AccordionComponent } from './accordion.component';
 
 @Component({
@@ -28,11 +28,17 @@ export class AccordionGroupComponent implements OnDestroy {
     private _isOpen: boolean = false;
     private _isSelected: boolean = false;
 
+    @ViewChild('contentWrapper')
+    contentWrapper: any;
+
     @Input()
     heading: string;
 
     @Input()
     headingIcon: string;
+
+    @Output()
+    headingClick: EventEmitter<any> = new EventEmitter<any>();
 
     @Input()
     set isOpen(value: boolean) {
@@ -74,5 +80,13 @@ export class AccordionGroupComponent implements OnDestroy {
 
     getAccordionIcon(): string {
         return this.isOpen ? 'expand_less' : 'expand_more';
+    }
+
+    onHeadingClick() {
+        this.headingClick.emit(this.heading);
+    }
+
+    isGroupContentEmpty() {
+        return this.contentWrapper.nativeElement.innerHTML.trim().length === 0;
     }
 }
