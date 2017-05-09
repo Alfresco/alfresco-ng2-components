@@ -56,16 +56,16 @@ export class AnalyticsService {
     }
 
     /**
-      * Retrive Report by name
-      * @param reportName - string - The name of report
-      * @returns {Observable<any>}
-      */
-     getReportByName(reportName: string): Observable<any> {
-         return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.getReportList())
-             .map((response: any) => {
-                 return response.find(report => report.name === reportName);
-             }).catch(err => this.handleError(err));
-     }
+     * Retrive Report by name
+     * @param reportName - string - The name of report
+     * @returns {Observable<any>}
+     */
+    getReportByName(reportName: string): Observable<any> {
+        return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.getReportList())
+            .map((response: any) => {
+                return response.find(report => report.name === reportName);
+            }).catch(err => this.handleError(err));
+    }
 
     private isReportValid(appId: string, report: ReportParametersModel) {
         let isValid: boolean = true;
