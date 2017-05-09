@@ -92,7 +92,6 @@ export class DiagramComponent {
             },
             (err: any) => {
                 this.onError.emit(err);
-                this.logService.error(err);
             }
         );
     }
