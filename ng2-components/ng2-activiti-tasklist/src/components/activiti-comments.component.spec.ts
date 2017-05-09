@@ -74,7 +74,7 @@ describe('ActivitiComments', () => {
     });
 
     it('should load comments when taskId specified', () => {
-        let change = new SimpleChange(null, '123');
+        let change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'taskId': change });
 
         expect(getCommentsSpy).toHaveBeenCalled();
@@ -84,7 +84,7 @@ describe('ActivitiComments', () => {
         let emitSpy = spyOn(component.error, 'emit');
         getCommentsSpy.and.returnValue(Observable.throw({}));
 
-        let change = new SimpleChange(null, '123');
+        let change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'taskId': change });
 
         expect(emitSpy).toHaveBeenCalled();
@@ -96,7 +96,7 @@ describe('ActivitiComments', () => {
     });
 
     it('should display comments when the task has comments', async(() => {
-        let change = new SimpleChange(null, '123');
+        let change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'taskId': change });
 
         fixture.whenStable().then(() => {
@@ -117,8 +117,8 @@ describe('ActivitiComments', () => {
 
     describe('change detection', () => {
 
-        let change = new SimpleChange('123', '456');
-        let nullChange = new SimpleChange('123', null);
+        let change = new SimpleChange('123', '456', true);
+        let nullChange = new SimpleChange('123', null, true);
 
         beforeEach(async(() => {
             component.taskId = '123';

@@ -103,7 +103,7 @@ describe('DataTable', () => {
         let data = new ObjectDataTableAdapter([], []);
 
         expect(table.data).toBeUndefined();
-        table.ngOnChanges({'data': new SimpleChange('123', data)});
+        table.ngOnChanges({'data': new SimpleChange('123', data, true)});
         expect(table.data).toEqual(data);
     });
 

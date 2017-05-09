@@ -175,7 +175,7 @@ describe('UploadButtonComponent', () => {
 
         spyOn(uploadService, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
 
-        component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId) });
+        component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
         component.onFilesAdded(fakeEvent);
         let compiled = fixture.debugElement.nativeElement;
         fixture.detectChanges();
@@ -189,7 +189,7 @@ describe('UploadButtonComponent', () => {
 
         spyOn(uploadService, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
 
-        component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId) });
+        component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
         component.onFilesAdded(fakeEvent);
         let compiled = fixture.debugElement.nativeElement;
         fixture.detectChanges();
@@ -204,7 +204,7 @@ describe('UploadButtonComponent', () => {
 
         spyOn(uploadService, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
 
-        component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId) });
+        component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
         uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
 
         fixture.detectChanges();
@@ -219,7 +219,7 @@ describe('UploadButtonComponent', () => {
         component.onSuccess = null;
 
         spyOn(uploadService, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
-        component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId) });
+        component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
 
         uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
 
@@ -236,7 +236,7 @@ describe('UploadButtonComponent', () => {
         spyOn(uploadService, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
         spyOn(uploadService, 'callApiCreateFolder').and.returnValue(fakeResolvePromise);
 
-        component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId) });
+        component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
         fixture.detectChanges();
         component.onSuccess.subscribe(e => {
             expect(e.value).toEqual('File uploaded');
@@ -257,7 +257,7 @@ describe('UploadButtonComponent', () => {
         spyOn(uploadService, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
         spyOn(uploadService, 'callApiCreateFolder').and.returnValue(fakeRejectPromise);
 
-        component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId) });
+        component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
 
         component.onError.subscribe(e => {
             expect(e.value).toEqual('FILE_UPLOAD.MESSAGES.FOLDER_ALREADY_EXIST');

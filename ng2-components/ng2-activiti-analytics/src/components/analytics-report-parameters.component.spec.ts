@@ -108,7 +108,7 @@ describe('AnalyticsReportParametersComponent', () => {
             });
 
             let reportId = 1;
-            let change = new SimpleChange(null, reportId);
+            let change = new SimpleChange(null, reportId, true);
             component.ngOnChanges({ 'reportId': change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -128,7 +128,7 @@ describe('AnalyticsReportParametersComponent', () => {
             });
 
             let reportId = 1;
-            let change = new SimpleChange(null, reportId);
+            let change = new SimpleChange(null, reportId, true);
             component.ngOnChanges({ 'reportId': change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -155,7 +155,7 @@ describe('AnalyticsReportParametersComponent', () => {
             });
 
             let reportId = 1;
-            let change = new SimpleChange(null, reportId);
+            let change = new SimpleChange(null, reportId, true);
             component.ngOnChanges({ 'reportId': change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -216,7 +216,7 @@ describe('AnalyticsReportParametersComponent', () => {
             });
 
             let reportId = 1;
-            let change = new SimpleChange(null, reportId);
+            let change = new SimpleChange(null, reportId, true);
             component.ngOnChanges({ 'reportId': change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -241,7 +241,7 @@ describe('AnalyticsReportParametersComponent', () => {
             });
 
             let reportId = 1;
-            let change = new SimpleChange(null, reportId);
+            let change = new SimpleChange(null, reportId, true);
             component.ngOnChanges({ 'reportId': change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -266,7 +266,7 @@ describe('AnalyticsReportParametersComponent', () => {
             });
 
             let reportId = 1;
-            let change = new SimpleChange(null, reportId);
+            let change = new SimpleChange(null, reportId, true);
             component.ngOnChanges({ 'reportId': change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -304,7 +304,7 @@ describe('AnalyticsReportParametersComponent', () => {
             });
 
             let reportId = 1;
-            let change = new SimpleChange(null, reportId);
+            let change = new SimpleChange(null, reportId, true);
             component.ngOnChanges({ 'reportId': change });
 
         });
@@ -338,7 +338,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
             component.appId = appId;
             component.reportId = '1';
-            let change = new SimpleChange(null, appId);
+            let change = new SimpleChange(null, appId, true);
             component.ngOnChanges({ 'appId': change });
 
         });
@@ -351,7 +351,7 @@ describe('AnalyticsReportParametersComponent', () => {
             });
 
             let reportId = 1;
-            let change = new SimpleChange(null, reportId);
+            let change = new SimpleChange(null, reportId, true);
             component.ngOnChanges({ 'reportId': change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -401,7 +401,7 @@ describe('AnalyticsReportParametersComponent', () => {
             });
 
             let reportId = 1;
-            let change = new SimpleChange(null, reportId);
+            let change = new SimpleChange(null, reportId, true);
             component.ngOnChanges({ 'reportId': change });
 
         });
@@ -413,7 +413,7 @@ describe('AnalyticsReportParametersComponent', () => {
             });
 
             let reportId = 1;
-            let change = new SimpleChange(null, reportId);
+            let change = new SimpleChange(null, reportId, true);
             component.ngOnChanges({ 'reportId': change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -459,7 +459,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
             beforeEach(async(() => {
                 let reportId = 1;
-                let change = new SimpleChange(null, reportId);
+                let change = new SimpleChange(null, reportId, true);
                 component.ngOnChanges({ 'reportId': change });
                 fixture.detectChanges();
                 jasmine.Ajax.requests.mostRecent().respondWith({

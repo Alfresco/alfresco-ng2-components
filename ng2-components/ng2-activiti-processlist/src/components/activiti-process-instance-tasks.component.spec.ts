@@ -104,7 +104,7 @@ describe('ActivitiProcessInstanceTasks', () => {
     });
 
     it('should display active tasks', () => {
-        let change = new SimpleChange(null, exampleProcessInstance);
+        let change = new SimpleChange(null, exampleProcessInstance, true);
         fixture.detectChanges();
         component.ngOnChanges({ 'processInstanceDetails': change });
         fixture.whenStable().then(() => {
@@ -117,7 +117,7 @@ describe('ActivitiProcessInstanceTasks', () => {
     });
 
     it('should display completed tasks', () => {
-        let change = new SimpleChange(null, exampleProcessInstance);
+        let change = new SimpleChange(null, exampleProcessInstance, true);
         fixture.detectChanges();
         component.ngOnChanges({ 'processInstanceDetails': change });
         fixture.whenStable().then(() => {

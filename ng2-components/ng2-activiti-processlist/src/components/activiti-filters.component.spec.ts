@@ -53,7 +53,7 @@ describe('ActivitiFilters', () => {
     it('should return the filter task list', (done) => {
         spyOn(activitiService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
         const appId = '1';
-        let change = new SimpleChange(null, appId);
+        let change = new SimpleChange(null, appId, true);
         filterList.ngOnChanges({ 'appId': change });
 
         filterList.onSuccess.subscribe((res) => {
@@ -77,7 +77,7 @@ describe('ActivitiFilters', () => {
         spyOn(activitiService, 'getDeployedApplications').and.returnValue(Observable.fromPromise(fakeDeployedApplicationsPromise));
         spyOn(activitiService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
 
-        let change = new SimpleChange(null, 'test');
+        let change = new SimpleChange(null, 'test', true);
         filterList.ngOnChanges({ 'appName': change });
 
         filterList.onSuccess.subscribe((res) => {
@@ -94,7 +94,7 @@ describe('ActivitiFilters', () => {
         spyOn(activitiService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeErrorFilterPromise));
 
         const appId = '1';
-        let change = new SimpleChange(null, appId);
+        let change = new SimpleChange(null, appId, true);
         filterList.ngOnChanges({ 'appId': change });
 
         filterList.onError.subscribe((err) => {
@@ -109,7 +109,7 @@ describe('ActivitiFilters', () => {
         spyOn(activitiService, 'getDeployedApplications').and.returnValue(Observable.fromPromise(fakeErrorFilterPromise));
 
         const appId = 'fake-app';
-        let change = new SimpleChange(null, appId);
+        let change = new SimpleChange(null, appId, true);
         filterList.ngOnChanges({ 'appName': change });
 
         filterList.onError.subscribe((err) => {
@@ -137,7 +137,7 @@ describe('ActivitiFilters', () => {
         spyOn(filterList, 'getFiltersByAppId').and.stub();
         const appId = '1';
 
-        let change = new SimpleChange(null, appId);
+        let change = new SimpleChange(null, appId, true);
         filterList.ngOnChanges({ 'appId': change });
 
         expect(filterList.getFiltersByAppId).toHaveBeenCalledWith(appId);
@@ -147,7 +147,7 @@ describe('ActivitiFilters', () => {
         spyOn(filterList, 'getFiltersByAppId').and.stub();
         const appId = null;
 
-        let change = new SimpleChange(null, appId);
+        let change = new SimpleChange(null, appId, true);
         filterList.ngOnChanges({ 'appId': change });
 
         expect(filterList.getFiltersByAppId).toHaveBeenCalledWith(appId);
@@ -157,7 +157,7 @@ describe('ActivitiFilters', () => {
         spyOn(filterList, 'getFiltersByAppName').and.stub();
         const appName = 'fake-app-name';
 
-        let change = new SimpleChange(null, appName);
+        let change = new SimpleChange(null, appName, true);
         filterList.ngOnChanges({ 'appName': change });
 
         expect(filterList.getFiltersByAppName).toHaveBeenCalledWith(appName);
