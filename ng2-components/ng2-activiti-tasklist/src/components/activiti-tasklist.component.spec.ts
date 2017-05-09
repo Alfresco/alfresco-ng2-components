@@ -287,7 +287,7 @@ describe('ActivitiTaskList', () => {
             );
 
             const landingTaskId = '999';
-            let change = new SimpleChange(null, landingTaskId);
+            let change = new SimpleChange(null, landingTaskId, true);
 
             component.ngOnChanges({'landingTaskId': change});
             expect(component.reload).not.toHaveBeenCalled();
@@ -308,7 +308,7 @@ describe('ActivitiTaskList', () => {
             );
 
             const landingTaskId = '888';
-            let change = new SimpleChange(null, landingTaskId);
+            let change = new SimpleChange(null, landingTaskId, true);
 
             component.onSuccess.subscribe((res) => {
                 expect(res).toBeDefined();
