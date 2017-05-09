@@ -32,6 +32,9 @@ export class DiagramComponent {
     processDefinitionId: any;
 
     @Input()
+    processInstanceId: any;
+
+    @Input()
     metricPercentages: any;
 
     @Input()
@@ -71,14 +74,34 @@ export class DiagramComponent {
     ngOnChanges(changes: SimpleChanges) {
         this.reset();
         this.diagramColorService.setTotalColors(this.metricColor);
-        this.getProcessDefinitionModel(this.processDefinitionId);
+        if (this.processDefinitionId) {
+            this.getProcessDefinitionModel(this.processDefinitionId);
+        } else {
+            this.getRunningProcessDefinitionModel(this.processInstanceId);
+        }
+    }
+
+    getRunningProcessDefinitionModel(processInstanceId: string) {
+        this.diagramsService.getRunningProcessDefinitionModel(processInstanceId).subscribe(
+            (res: any) => {
+                this.diagram = new DiagramModel(res);
+                this.raphaelService.setting(this.diagram.diagramWidth + this.PADDING_WIDTH,
+                                            this.diagram.diagramHeight + this.PADDING_HEIGHT);
+                this.setMetricValueToDiagramElement(this.diagram, this.metricPercentages, this.metricType);
+                this.onSuccess.emit(res);
+            },
+            (err: any) => {
+                this.onError.emit(err);
+            }
+        );
     }
 
     getProcessDefinitionModel(processDefinitionId: string) {
         this.diagramsService.getProcessDefinitionModel(processDefinitionId).subscribe(
             (res: any) => {
                 this.diagram = new DiagramModel(res);
-                this.raphaelService.setting(this.diagram.diagramWidth + this.PADDING_WIDTH, this.diagram.diagramHeight + this.PADDING_HEIGHT);
+                this.raphaelService.setting(this.diagram.diagramWidth + this.PADDING_WIDTH,
+                                            this.diagram.diagramHeight + this.PADDING_HEIGHT);
                 this.setMetricValueToDiagramElement(this.diagram, this.metricPercentages, this.metricType);
                 this.onSuccess.emit(res);
             },
