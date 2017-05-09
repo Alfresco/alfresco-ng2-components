@@ -23,7 +23,9 @@ import { getTestBed, TestBed, async } from '@angular/core/testing';
 import { Injector } from '@angular/core';
 
 export class MockElementRef extends ElementRef {
-
+    constructor() {
+        super(null);
+    }
 }
 
 describe('ExtensionViewerComponent', () => {

@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Component } from '@angular/core';
 import { NotificationService } from './notification.service';
 import { MdSnackBarModule } from '@angular/material';
@@ -24,7 +25,10 @@ describe('NotificationService', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [MdSnackBarModule.forRoot()],
+            imports: [
+                BrowserAnimationsModule,
+                MdSnackBarModule.forRoot()
+            ],
             declarations: [ComponentThatProvidesNotificationService],
             providers: [
                 NotificationService

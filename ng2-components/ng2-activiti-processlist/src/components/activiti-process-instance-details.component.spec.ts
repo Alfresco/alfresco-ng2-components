@@ -85,7 +85,7 @@ describe('ActivitiProcessInstanceDetails', () => {
 
     it('should display a header when the processInstanceId is provided', async(() => {
         fixture.detectChanges();
-        component.ngOnChanges({ 'processInstanceId': new SimpleChange(null, '123') });
+        component.ngOnChanges({ 'processInstanceId': new SimpleChange(null, '123', true) });
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             let headerEl: DebugElement = fixture.debugElement.query(By.css('h2'));
@@ -97,7 +97,7 @@ describe('ActivitiProcessInstanceDetails', () => {
     it('should display default details when the process instance has no name', async(() => {
         getProcessSpy = getProcessSpy.and.returnValue(Observable.of(exampleProcessNoName));
         fixture.detectChanges();
-        component.ngOnChanges({ 'processInstanceId': new SimpleChange(null, '123') });
+        component.ngOnChanges({ 'processInstanceId': new SimpleChange(null, '123', true) });
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             let headerEl: DebugElement = fixture.debugElement.query(By.css('h2'));
@@ -108,8 +108,8 @@ describe('ActivitiProcessInstanceDetails', () => {
 
     describe('change detection', () => {
 
-        let change = new SimpleChange('123', '456');
-        let nullChange = new SimpleChange('123', null);
+        let change = new SimpleChange('123', '456', true);
+        let nullChange = new SimpleChange('123', null, true);
 
         beforeEach(async(() => {
             component.processInstanceId = '123';

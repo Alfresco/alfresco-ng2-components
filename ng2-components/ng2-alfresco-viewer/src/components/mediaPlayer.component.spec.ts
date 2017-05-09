@@ -65,7 +65,7 @@ describe('Test ng2-alfresco-viewer Media player component ', () => {
     });
 
     it('If no url or no blob are passed should thrown an error', () => {
-        let change = new SimpleChange(null, null);
+        let change = new SimpleChange(null, null, true);
         expect(() => {
             component.ngOnChanges({ 'blobFile': change });
         }).toThrow(new Error('Attribute urlFile or blobFile is required'));
@@ -89,7 +89,7 @@ describe('Test ng2-alfresco-viewer Media player component ', () => {
         let blob = createFakeBlob();
 
         spyOn(service, 'createTrustedUrl').and.returnValue('fake-blob-url');
-        let change = new SimpleChange(null, blob);
+        let change = new SimpleChange(null, blob, true);
         expect(() => {
             component.ngOnChanges({ 'blobFile': change });
         }).not.toThrow(new Error('Attribute urlFile or blobFile is required'));
