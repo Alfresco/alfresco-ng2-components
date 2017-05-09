@@ -101,7 +101,7 @@ describe('AccordionGroupComponent', () => {
         component.heading = 'Fake Header';
         fixture.detectChanges();
         let heading: string = component.heading;
-        component.headingSelect.subscribe((headName: string) => {
+        component.headingClick.subscribe((headName: string) => {
             expect(headName).toBeDefined();
             expect(headName).toEqual(heading);
             done();
