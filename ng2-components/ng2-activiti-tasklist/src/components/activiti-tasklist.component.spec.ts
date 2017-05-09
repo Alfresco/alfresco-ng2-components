@@ -272,6 +272,54 @@ describe('ActivitiTaskList', () => {
             );
         });
 
+        it('should NOT reload the tasks if the loadingTaskId is the same of the current task', () => {
+            spyOn(component, 'reload').and.stub();
+            component.currentInstanceId = '999';
+
+            component.data = new ObjectDataTableAdapter(
+                [
+                    {id: '999', name: 'Fake-name'}
+                ],
+                [
+                    {type: 'text', key: 'id', title: 'Id'},
+                    {type: 'text', key: 'name', title: 'Name'}
+                ]
+            );
+
+            const landingTaskId = '999';
+            let change = new SimpleChange(null, landingTaskId);
+
+            component.ngOnChanges({'landingTaskId': change});
+            expect(component.reload).not.toHaveBeenCalled();
+            expect(component.data.getRows().length).toEqual(1);
+        });
+
+        it('should reload the tasks if the loadingTaskId is different from the current task', (done) => {
+            component.currentInstanceId = '999';
+
+            component.data = new ObjectDataTableAdapter(
+                [
+                    {id: '999', name: 'Fake-name'}
+                ],
+                [
+                    {type: 'text', key: 'id', title: 'Id'},
+                    {type: 'text', key: 'name', title: 'Name'}
+                ]
+            );
+
+            const landingTaskId = '888';
+            let change = new SimpleChange(null, landingTaskId);
+
+            component.onSuccess.subscribe((res) => {
+                expect(res).toBeDefined();
+                expect(component.data).toBeDefined();
+                expect(component.data.getRows().length).toEqual(2);
+                done();
+            });
+
+            component.ngOnChanges({'landingTaskId': change});
+        });
+
         it('should NOT reload the process list when no parameters changed', () => {
             expect(component.isListEmpty()).toBeTruthy();
             component.ngOnChanges({});
