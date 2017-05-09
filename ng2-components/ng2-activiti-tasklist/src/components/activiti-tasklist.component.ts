@@ -166,7 +166,7 @@ export class ActivitiTaskList implements OnChanges, AfterContentInit {
             changed = true;
         } else if (assignment && assignment.currentValue) {
             changed = true;
-        } else if (landingTaskId && landingTaskId.currentValue) {
+        } else if (landingTaskId && landingTaskId.currentValue && !this.isEqualToCurrentId(landingTaskId.currentValue)) {
             changed = true;
         }
         return changed;
@@ -245,6 +245,15 @@ export class ActivitiTaskList implements OnChanges, AfterContentInit {
      */
     getCurrentId(): string {
         return this.currentInstanceId;
+    }
+
+    /**
+     * Check if the taskId is the same of the selected task
+     * @param taskId
+     * @returns {boolean}
+     */
+    isEqualToCurrentId(taskId: string) {
+        return this.currentInstanceId === taskId ? true : false;
     }
 
     /**
