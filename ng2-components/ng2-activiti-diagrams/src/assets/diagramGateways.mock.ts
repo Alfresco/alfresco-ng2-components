@@ -25,7 +25,55 @@ export let exclusiveGatway = {
     properties: [{}]
 };
 
+export let exclusiveGatwayActive = {
+    completed: false,
+    current: true,
+    id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
+    type: 'ExclusiveGateway',
+    width: 40,
+    height: 40,
+    x: 40,
+    y: 30,
+    properties: [{}]
+};
+
+export let exclusiveGatwayCompleted = {
+    completed: true,
+    current: false,
+    id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
+    type: 'ExclusiveGateway',
+    width: 40,
+    height: 40,
+    x: 40,
+    y: 30,
+    properties: [{}]
+};
+
 export let inclusiveGatway = {
+    id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
+    type: 'InclusiveGateway',
+    width: 40,
+    height: 40,
+    x: 40,
+    y: 30,
+    properties: [{}]
+};
+
+export let inclusiveGatwayActive = {
+    completed: false,
+    current: true,
+    id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
+    type: 'InclusiveGateway',
+    width: 40,
+    height: 40,
+    x: 40,
+    y: 30,
+    properties: [{}]
+};
+
+export let inclusiveGatwayCompleted = {
+    completed: true,
+    current: false,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
     type: 'InclusiveGateway',
     width: 40,
@@ -45,7 +93,55 @@ export let parallelGatway = {
     properties: [{}]
 };
 
+export let parallelGatwayActive = {
+    completed: false,
+    current: true,
+    id: 'sid-14EE23CE-0731-4E23-80F3-C557DA2A0CFC',
+    type: 'ParallelGateway',
+    width: 40,
+    height: 40,
+    x: 40,
+    y: 30,
+    properties: [{}]
+};
+
+export let parallelGatwayCompleted = {
+    completed: true,
+    current: false,
+    id: 'sid-14EE23CE-0731-4E23-80F3-C557DA2A0CFC',
+    type: 'ParallelGateway',
+    width: 40,
+    height: 40,
+    x: 40,
+    y: 30,
+    properties: [{}]
+};
+
 export let eventGatway = {
+    id: 'sid-14EE23CE-0731-4E23-80F3-C557DA2A0CFC',
+    type: 'EventGateway',
+    width: 40,
+    height: 40,
+    x: 40,
+    y: 30,
+    properties: [{}]
+};
+
+export let eventGatwayActive = {
+    completed: false,
+    current: true,
+    id: 'sid-14EE23CE-0731-4E23-80F3-C557DA2A0CFC',
+    type: 'EventGateway',
+    width: 40,
+    height: 40,
+    x: 40,
+    y: 30,
+    properties: [{}]
+};
+
+export let eventGatwayCompleted = {
+    completed: true,
+    current: false,
     id: 'sid-14EE23CE-0731-4E23-80F3-C557DA2A0CFC',
     type: 'EventGateway',
     width: 40,

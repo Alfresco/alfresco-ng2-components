@@ -40,6 +40,17 @@ export class DiagramsService {
             }).catch(err => this.handleError(err));
     }
 
+    getRunningProcessDefinitionModel(processInstanceId: string): Observable<any> {
+        let url = `${this.settingsService.getBPMApiBaseUrl()}/app/rest/process-instances/${processInstanceId}/model-json`;
+        let options = this.getRequestOptions();
+        return this.http
+            .get(url, options)
+            .map((res: any) => {
+                let body = res.json();
+                return body;
+            }).catch(err => this.handleError(err));
+    }
+
     public getHeaders(): Headers {
         return new Headers({
             'Accept': 'application/json',
