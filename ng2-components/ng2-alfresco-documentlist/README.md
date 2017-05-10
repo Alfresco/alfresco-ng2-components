@@ -192,6 +192,7 @@ The properties currentFolderId, folderNode and node are the entry initialization
 | `rowFilter` | `RowFilter` | | Custom row filter, [see more](#custom-row-filter). |
 | `imageResolver` | `ImageResolver` | | Custom image resolver, [see more](#custom-image-resolver). |
 | `allowDropFiles` | boolean | false | Toggle file drop support for rows (see **ng2-alfresco-core/UploadDirective** for more details) |
+| `sorting` | string[] | | Defines default sorting. The format is an array of 2 strings `[key, direction]` i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want to override default sorting detected by the component based on columns. |
 
 ### Events
 

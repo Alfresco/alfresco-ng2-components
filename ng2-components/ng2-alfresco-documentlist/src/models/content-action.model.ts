@@ -22,6 +22,7 @@ export class ContentActionModel {
     target: string;
     permission: string;
     disableWithNoPermission: boolean;
+    disabled: boolean;
 
     constructor(obj?: any) {
         if (obj) {

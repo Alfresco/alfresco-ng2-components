@@ -164,6 +164,166 @@ describe('DocumentList', () => {
         expect(actions[0]).toBe(documentMenu);
     });
 
+    it('should disable the action if there is no permission for the file and disableWithNoPermission true', () => {
+        let documentMenu = new ContentActionModel({
+            disableWithNoPermission: true,
+            permission: 'delete',
+            target: 'document',
+            title: 'FileAction'
+        });
+
+        documentList.actions = [
+            documentMenu
+        ];
+
+        let nodeFile = {entry: {isFile: true, name: 'xyz', allowableOperations: ['create', 'update']}};
+
+        let actions = documentList.getNodeActions(nodeFile);
+        expect(actions.length).toBe(1);
+        expect(actions[0].title).toEqual('FileAction');
+        expect(actions[0].disabled).toBe(true);
+
+    });
+
+    it('should disable the action if there is no permission for the folder and disableWithNoPermission true', () => {
+        let documentMenu = new ContentActionModel({
+            disableWithNoPermission: true,
+            permission: 'delete',
+            target: 'folder',
+            title: 'FolderAction'
+        });
+
+        documentList.actions = [
+            documentMenu
+        ];
+
+        let nodeFile = {entry: {isFolder: true, name: 'xyz', allowableOperations: ['create', 'update']}};
+
+        let actions = documentList.getNodeActions(nodeFile);
+        expect(actions.length).toBe(1);
+        expect(actions[0].title).toEqual('FolderAction');
+        expect(actions[0].disabled).toBe(true);
+
+    });
+
+    it('should not disable the action if there is no permission for the file and disableWithNoPermission false', () => {
+        let documentMenu = new ContentActionModel({
+            disableWithNoPermission: false,
+            permission: 'delete',
+            target: 'document',
+            title: 'FileAction'
+        });
+
+        documentList.actions = [
+            documentMenu
+        ];
+
+        let nodeFile = {entry: {isFile: true, name: 'xyz', allowableOperations: ['create', 'update']}};
+
+        let actions = documentList.getNodeActions(nodeFile);
+        expect(actions.length).toBe(1);
+        expect(actions[0].title).toEqual('FileAction');
+        expect(actions[0].disabled).toBeUndefined(true);
+    });
+
+    it('should not disable the action if there is no permission for the folder and disableWithNoPermission false', () => {
+        let documentMenu = new ContentActionModel({
+            disableWithNoPermission: false,
+            permission: 'delete',
+            target: 'folder',
+            title: 'FolderAction'
+        });
+
+        documentList.actions = [
+            documentMenu
+        ];
+
+        let nodeFile = {entry: {isFolder: true, name: 'xyz', allowableOperations: ['create', 'update']}};
+
+        let actions = documentList.getNodeActions(nodeFile);
+        expect(actions.length).toBe(1);
+        expect(actions[0].title).toEqual('FolderAction');
+        expect(actions[0].disabled).toBeUndefined(true);
+    });
+
+    it('should not disable the action if there is the right permission for the file', () => {
+        let documentMenu = new ContentActionModel({
+            disableWithNoPermission: true,
+            permission: 'delete',
+            target: 'document',
+            title: 'FileAction'
+        });
+
+        documentList.actions = [
+            documentMenu
+        ];
+
+        let nodeFile = {entry: {isFile: true, name: 'xyz', allowableOperations: ['create', 'update', 'delete']}};
+
+        let actions = documentList.getNodeActions(nodeFile);
+        expect(actions.length).toBe(1);
+        expect(actions[0].title).toEqual('FileAction');
+        expect(actions[0].disabled).toBeUndefined();
+    });
+
+    it('should not disable the action if there is the right permission for the folder', () => {
+        let documentMenu = new ContentActionModel({
+            disableWithNoPermission: true,
+            permission: 'delete',
+            target: 'folder',
+            title: 'FolderAction'
+        });
+
+        documentList.actions = [
+            documentMenu
+        ];
+
+        let nodeFile = {entry: {isFolder: true, name: 'xyz', allowableOperations: ['create', 'update', 'delete']}};
+
+        let actions = documentList.getNodeActions(nodeFile);
+        expect(actions.length).toBe(1);
+        expect(actions[0].title).toEqual('FolderAction');
+        expect(actions[0].disabled).toBeUndefined();
+    });
+
+    it('should not disable the action if there are no permissions for the file', () => {
+        let documentMenu = new ContentActionModel({
+            permission: 'delete',
+            target: 'document',
+            title: 'FileAction'
+        });
+
+        documentList.actions = [
+            documentMenu
+        ];
+
+        let nodeFile = {entry: {isFile: true, name: 'xyz', allowableOperations: null}};
+
+        let actions = documentList.getNodeActions(nodeFile);
+        expect(actions.length).toBe(1);
+        expect(actions[0].title).toEqual('FileAction');
+        expect(actions[0].disabled).toBeUndefined();
+    });
+
+    it('should not disable the action if there are no permissions for the folder', () => {
+        let documentMenu = new ContentActionModel({
+            permission: 'delete',
+            target: 'folder',
+            title: 'FolderAction'
+        });
+
+        documentList.actions = [
+            documentMenu
+        ];
+
+        let nodeFile = {entry: {isFolder: true, name: 'xyz', allowableOperations: null}};
+
+        let actions = documentList.getNodeActions(nodeFile);
+        expect(actions.length).toBe(1);
+        expect(actions[0].title).toEqual('FolderAction');
+        expect(actions[0].disabled).toBeUndefined();
+    });
+
     it('should find no content actions', () => {
         let documentButton = new ContentActionModel();
         documentButton.target = 'document';

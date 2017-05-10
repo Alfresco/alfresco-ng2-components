@@ -235,33 +235,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
     getRowActions(row: DataRow, col: DataColumn): any[] {
         let event = new DataCellEvent(row, col, []);
         this.showRowActionsMenu.emit(event);
-
-        return this.checkPermissions(row, event.value.actions);
-    }
-
-    checkPermissions(row: DataRow, actions: any[]) {
-        let actionsPermission = [];
-        actions.forEach((action) => {
-            actionsPermission.push(this.checkPermission(row, action));
-        });
-        return actionsPermission;
-    }
-
-    checkPermission(row: DataRow, action) {
-        if (action.permission) {
-            if (this.hasPermissions(row)) {
-                let permissions = row.getValue('allowableOperations');
-                let findPermission = permissions.find(permission => permission === action.permission);
-                if (!findPermission && action.disableWithNoPermission === true) {
-                    action.disabled = true;
-                }
-            }
-        }
-        return action;
-    }
-
-    private hasPermissions(row: DataRow): boolean {
-        return row.getValue('allowableOperations') ? true : false;
+        return event.value.actions;
     }
 
     onExecuteRowAction(row: DataRow, action: any) {
