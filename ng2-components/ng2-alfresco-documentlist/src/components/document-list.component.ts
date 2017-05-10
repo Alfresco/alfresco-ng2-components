@@ -276,7 +276,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         return this.enablePagination && !this.isEmpty();
     }
 
-    getNodeActions(node: MinimalNodeEntity): ContentActionModel[] {
+    getNodeActions(node: MinimalNodeEntity | any): ContentActionModel[] {
         let target = null;
 
         if (node && node.entry) {
@@ -289,15 +289,44 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             }
 
             if (target) {
-
                 let ltarget = target.toLowerCase();
-                return this.actions.filter(entry => {
+                let actionWithPermission = this.checkPermissions(node);
+
+                let actionsByTarget = actionWithPermission.filter(entry => {
                     return entry.target.toLowerCase() === ltarget;
                 });
+
+                let cloneActions = Object.create(actionsByTarget);
+                return cloneActions;
             }
         }
 
         return [];
+    }
+
+    checkPermissions(node: MinimalNodeEntity): ContentActionModel[] {
+        let actionsPermission: ContentActionModel[] = [];
+        this.actions.forEach((action) => {
+            actionsPermission.push(this.checkPermission(node, action));
+        });
+        return actionsPermission;
+    }
+
+    checkPermission(node: any, action: ContentActionModel): ContentActionModel {
+        if (action.permission) {
+            if (this.hasPermissions(node)) {
+                let permissions = node.entry.allowableOperations;
+                let findPermission = permissions.find(permission => permission === action.permission);
+                if (!findPermission && action.disableWithNoPermission === true) {
+                    action.disabled = true;
+                }
+            }
+        }
+        return action;
+    }
+
+    private hasPermissions(node: any): boolean {
+        return node.entry.allowableOperations ? true : false;
     }
 
     @HostListener('contextmenu', ['$event'])
