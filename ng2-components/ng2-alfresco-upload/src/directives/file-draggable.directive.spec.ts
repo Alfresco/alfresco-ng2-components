@@ -25,6 +25,20 @@ describe('FileDraggableDirective', () => {
         component = new FileDraggableDirective();
     });
 
+    it('should always be enabled by default', () => {
+        expect(new FileDraggableDirective().enabled).toBeTruthy();
+    });
+
+    it('should not allow drad and drop when disabled', () => {
+        component.enabled = false;
+        let event = new CustomEvent('custom-event');
+        spyOn(event, 'preventDefault').and.stub();
+        component.onDropFiles(event);
+        component.onDragEnter(event);
+        component.onDragLeave(event);
+        expect(event.preventDefault).not.toHaveBeenCalled();
+    });
+
     it('should emit onFolderEntityDropped event when a folder is dragged with Chrome' , (done) => {
 
         let itemEntity = {
