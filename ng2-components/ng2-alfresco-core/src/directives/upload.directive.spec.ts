@@ -113,6 +113,7 @@ describe('UploadDirective', () => {
         directive.enabled = true;
         let files = [<File> {}];
         let event = jasmine.createSpyObj('event', ['preventDefault', 'stopPropagation']);
+        spyOn(directive, 'getDataTransfer').and.returnValue({});
         spyOn(directive, 'getFilesDropped').and.returnValue(files);
         spyOn(nativeElement, 'dispatchEvent').and.stub();
         directive.onDrop(event);
@@ -123,6 +124,7 @@ describe('UploadDirective', () => {
         directive.enabled = true;
         let files = [<File> {}];
         let event = jasmine.createSpyObj('event', ['preventDefault', 'stopPropagation']);
+        spyOn(directive, 'getDataTransfer').and.returnValue({});
         spyOn(directive, 'getFilesDropped').and.returnValue(files);
 
         spyOn(nativeElement, 'dispatchEvent').and.callFake(e => {

@@ -105,15 +105,18 @@ export class UploadDirective implements OnInit {
     }
 
     @HostListener('drop', ['$event'])
-    onDrop(event: DragEvent) {
+    onDrop(event: Event) {
         if (this.isDropMode()) {
             event.preventDefault();
             event.stopPropagation();
 
             this.isDragging = false;
 
-            const files = this.getFilesDropped(event.dataTransfer);
-            this.onUploadFiles(files);
+            const dataTranfer = this.getDataTransfer(event);
+            if (dataTranfer) {
+                const files = this.getFilesDropped(dataTranfer);
+                this.onUploadFiles(files);
+            }
         }
     }
 
@@ -142,6 +145,16 @@ export class UploadDirective implements OnInit {
 
     protected isClickMode(): boolean {
         return this.hasMode('click');
+    }
+
+    protected getDataTransfer(event: Event | any): DataTransfer {
+        if (event && event.dataTranfer) {
+            return event.dataTranfer;
+        }
+        if (event && event.originalEvent && event.originalEvent.dataTranfer) {
+            return event.originalEvent.dataTranfer;
+        }
+        return null;
     }
 
     /**
