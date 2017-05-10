@@ -20,8 +20,6 @@ import { AlfrescoTranslationService, LogService, NotificationService } from 'ng2
 import { UploadService } from '../services/upload.service';
 import { FileModel } from '../models/file.model';
 
-declare let componentHandler: any;
-
 const ERROR_FOLDER_ALREADY_EXIST = 409;
 
 /**
@@ -41,6 +39,9 @@ const ERROR_FOLDER_ALREADY_EXIST = 409;
 export class UploadDragAreaComponent {
 
     private static DEFAULT_ROOT_ID: string = '-root-';
+
+    @Input()
+    disabled: boolean = false;
 
     @Input()
     showNotificationBar: boolean = true;
@@ -76,16 +77,18 @@ export class UploadDragAreaComponent {
      * @param e DOM event
      */
     onUploadFiles(e: CustomEvent) {
-        e.stopPropagation();
-        e.preventDefault();
+        if (!this.disabled) {
+            e.stopPropagation();
+            e.preventDefault();
 
-        let files = e.detail.files;
-        if (files && files.length > 0) {
-            if (e.detail.data.obj.entry.isFolder) {
-                let id = e.detail.data.obj.entry.id;
-                this.onFilesDropped(files, id, '/');
-            } else {
-                this.onFilesDropped(files);
+            let files = e.detail.files;
+            if (files && files.length > 0) {
+                if (e.detail.data.obj.entry.isFolder) {
+                    let id = e.detail.data.obj.entry.id;
+                    this.onFilesDropped(files, id, '/');
+                } else {
+                    this.onFilesDropped(files);
+                }
             }
         }
     }
@@ -96,7 +99,7 @@ export class UploadDragAreaComponent {
      * @param {File[]} files - files dropped in the drag area.
      */
     onFilesDropped(files: File[], rootId?: string, directory?: string): void {
-        if (files.length) {
+        if (!this.disabled && files.length) {
             if (this.checkValidity(files)) {
                 this.uploadService.addToQueue(files);
                 this.uploadService.uploadFilesInTheQueue(rootId || this.rootFolderId, directory || this.currentFolderPath, this.onSuccess);
@@ -133,12 +136,14 @@ export class UploadDragAreaComponent {
      * @param item - FileEntity
      */
     onFilesEntityDropped(item: any): void {
-        item.file((file: any) => {
-            this.uploadService.addToQueue([file]);
-            let path = item.fullPath.replace(item.name, '');
-            let filePath = this.currentFolderPath + path;
-            this.uploadService.uploadFilesInTheQueue(this.rootFolderId, filePath, this.onSuccess);
-        });
+        if (!this.disabled) {
+            item.file((file: any) => {
+                this.uploadService.addToQueue([file]);
+                let path = item.fullPath.replace(item.name, '');
+                let filePath = this.currentFolderPath + path;
+                this.uploadService.uploadFilesInTheQueue(this.rootFolderId, filePath, this.onSuccess);
+            });
+        }
     }
 
     /**
@@ -146,7 +151,7 @@ export class UploadDragAreaComponent {
      * @param folder - name of the dropped folder
      */
     onFolderEntityDropped(folder: any): void {
-        if (folder.isDirectory) {
+        if (!this.disabled && folder.isDirectory) {
             let relativePath = folder.fullPath.replace(folder.name, '');
             relativePath = this.currentFolderPath + relativePath;
 
