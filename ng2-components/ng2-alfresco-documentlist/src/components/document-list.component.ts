@@ -16,7 +16,7 @@
  */
 
 import {
-    Component, OnInit, Input, OnChanges, Output, SimpleChanges, EventEmitter,
+    Component, OnInit, Input, OnChanges, Output, SimpleChanges, EventEmitter, ElementRef,
     AfterContentInit, TemplateRef, NgZone, ViewChild, HostListener, ContentChild
 } from '@angular/core';
 import { Subject } from 'rxjs/Rx';
@@ -150,7 +150,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     constructor(private documentListService: DocumentListService,
                 private ngZone: NgZone,
-                private translateService: AlfrescoTranslationService) {
+                private translateService: AlfrescoTranslationService,
+                private el: ElementRef) {
 
         this.data = new ShareDataTableAdapter(this.documentListService);
 
@@ -396,7 +397,16 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     onNodeClick(node: MinimalNodeEntity) {
-        let event = new NodeEntityEvent(node);
+        const domEvent = new CustomEvent('node-click', {
+            detail: {
+                sender: this,
+                node: node
+            },
+            bubbles: true
+        });
+        this.el.nativeElement.dispatchEvent(domEvent);
+
+        const event = new NodeEntityEvent(node);
         this.nodeClick.emit(event);
 
         if (!event.defaultPrevented) {
@@ -420,7 +430,16 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     onNodeDblClick(node: MinimalNodeEntity) {
-        let event = new NodeEntityEvent(node);
+        const domEvent = new CustomEvent('node-dblclick', {
+            detail: {
+                sender: this,
+                node: node
+            },
+            bubbles: true
+        });
+        this.el.nativeElement.dispatchEvent(domEvent);
+
+        const event = new NodeEntityEvent(node);
         this.nodeDblClick.emit(event);
 
         if (!event.defaultPrevented) {

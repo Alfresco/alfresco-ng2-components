@@ -513,6 +513,19 @@ describe('DocumentList', () => {
         expect(documentList.onNodeClick).toHaveBeenCalledWith(node);
     });
 
+    it('should emit node-click DOM event', (done) => {
+        let node = new NodeMinimalEntry();
+        let row = new ShareDataRow(node);
+        let event = new DataRowEvent(row, null);
+
+        const htmlElement = fixture.debugElement.nativeElement as HTMLElement;
+        htmlElement.addEventListener('node-click', (e: CustomEvent) => {
+            done();
+        });
+
+        documentList.onRowClick(event);
+    });
+
     it('should emit [nodeDblClick] event on row double-click', () => {
         let node = new NodeMinimalEntry();
         let row = new ShareDataRow(node);
@@ -521,6 +534,19 @@ describe('DocumentList', () => {
         spyOn(documentList, 'onNodeDblClick').and.callThrough();
         documentList.onRowDblClick(event);
         expect(documentList.onNodeDblClick).toHaveBeenCalledWith(node);
+    });
+
+    it('should emit node-dblclick DOM event', (done) => {
+        let node = new NodeMinimalEntry();
+        let row = new ShareDataRow(node);
+        let event = new DataRowEvent(row, null);
+
+        const htmlElement = fixture.debugElement.nativeElement as HTMLElement;
+        htmlElement.addEventListener('node-dblclick', (e: CustomEvent) => {
+            done();
+        });
+
+        documentList.onRowDblClick(event);
     });
 
     it('should load folder by ID on init', () => {

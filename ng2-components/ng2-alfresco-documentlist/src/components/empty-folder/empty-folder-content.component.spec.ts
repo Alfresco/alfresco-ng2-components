@@ -28,7 +28,7 @@ describe('EmptyFolderContent', () => {
 
     beforeEach(() => {
         let documentListService = new DocumentListServiceMock();
-        documentList = new DocumentListComponent(documentListService, null, null);
+        documentList = new DocumentListComponent(documentListService, null, null, null);
         documentList.dataTable = new DataTableComponent(null);
         emptyFolderContent = new EmptyFolderContentComponent(documentList);
     });
