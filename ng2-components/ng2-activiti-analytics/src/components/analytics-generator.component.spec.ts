@@ -96,7 +96,7 @@ describe('AnalyticsGeneratorComponent', () => {
             jasmine.Ajax.uninstall();
         });
 
-        it('Should render the Process definition overview report ', (done) => {
+        xit('Should render the Process definition overview report ', (done) => {
             component.onSuccess.subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(res.length).toEqual(3);

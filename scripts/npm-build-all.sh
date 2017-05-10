@@ -27,9 +27,10 @@ while [[ $1 == -* ]]; do
 done
 
 cd "$DIR/../ng2-components/"
-npm install package-json-merge -g
+npm install package-json-merge
 npm run pkg-build
-npm install && npm run build || exit 1
+npm install
+npm run build || exit 1
 if $RUN_TEST == true; then
-  npm run test
+  test_project
 fi

@@ -23,7 +23,7 @@ module.exports = {
             },
             {
                 test: /\.ts$/,
-                loaders: ['ts-loader', 'angular2-template-loader'],
+                loaders: ['ts-loader?' + JSON.stringify({ transpileOnly: true}), 'angular2-template-loader'],
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
             },
             {

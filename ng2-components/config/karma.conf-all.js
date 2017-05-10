@@ -27,11 +27,11 @@ module.exports = function (config) {
             {pattern: './node_modules/pdfjs-dist/web/pdf_viewer.js', included: true, watched: false},
 
             {pattern: './karma-test-shim.js', watched: false},
-            {pattern: '**/src/assets/**/*.*', included: false, served: true, watched: false},
-            {pattern: '**/src/i18n/**/*.*', included: false, served: true, watched: false},
-            {pattern: '**/dist/**/*.js', included: false, served: true, watched: false},
-            {pattern: '**/dist/**/*.js.map', included: false, served: true, watched: false},
-            {pattern: '**/src/**/*.ts', included: false, served: true, watched: false}
+            {pattern: './ng2-**/dist/**/*.js', included: false, served: true, watched: false},
+            {pattern: './ng2-**/dist/**/*.js.map', included: false, served: true, watched: false},
+            {pattern: './ng2-**/src/assets/**/*.*', included: false, served: true, watched: false},
+            {pattern: './ng2-**/src/i18n/**/*.*', included: false, served: true, watched: false},
+            {pattern: './ng2-**/src/**/*.ts', included: false, served: true, watched: false}
         ],
 
         webpack: webpackConfig,
@@ -90,7 +90,7 @@ module.exports = function (config) {
 
         coverageReporter: {
             includeAllSources: true,
-            dir: '../ng2-components/coverage/',
+            dir: './coverage/',
             subdir: 'report',
             reporters: [
                 {type: 'text'},
