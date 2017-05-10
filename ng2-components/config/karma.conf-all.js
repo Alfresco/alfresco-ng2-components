@@ -16,10 +16,8 @@ module.exports = function (config) {
             {pattern: './node_modules/moment/min/moment.min.js', included: true, watched: false},
             {pattern: './node_modules/md-date-time-picker/dist/js/mdDateTimePicker.js', included: true, watched: false},
 
-            {pattern: './node_modules/ng2-translate/**/*.js', included: false, watched: false},
-            {pattern: './node_modules/ng2-charts/**/*.js', included: false, served: true, watched: false},
-            {pattern: './node_modules/md-date-time-picker/**/*.js', included: false, served: true, watched: false},
-            {pattern: './node_modules/moment/**/*.js', included: false, served: true, watched: false},
+            {pattern: './node_modules/ng2-translate/ng2-translate.js', included: false, watched: false},
+            {pattern: './node_modules/ng2-charts/bundles/ng2-charts.umd.js', included: false, served: true, watched: false},
 
             // pdf-js
             {pattern: './node_modules/pdfjs-dist/build/pdf.js', included: true, watched: false},
@@ -27,17 +25,17 @@ module.exports = function (config) {
             {pattern: './node_modules/pdfjs-dist/web/pdf_viewer.js', included: true, watched: false},
 
             {pattern: './karma-test-shim.js', watched: false},
-            {pattern: './ng2-**/dist/**/*.js', included: false, served: true, watched: false},
-            {pattern: './ng2-**/dist/**/*.js.map', included: false, served: true, watched: false},
             {pattern: './ng2-**/src/assets/**/*.*', included: false, served: true, watched: false},
-            {pattern: './ng2-**/src/i18n/**/*.*', included: false, served: true, watched: false},
             {pattern: './ng2-**/src/**/*.ts', included: false, served: true, watched: false}
         ],
 
         webpack: webpackConfig,
 
         webpackMiddleware: {
-            stats: 'errors-only'
+            noInfo: true,
+            stats: {
+                chunks: false
+            }
         },
 
         port: 9876,
@@ -48,7 +46,7 @@ module.exports = function (config) {
 
         colors: true,
 
-        autoWatch: true,
+        autoWatch: false,
 
         captureTimeout: 1800000,
         browserDisconnectTimeout: 1800000,
@@ -84,7 +82,7 @@ module.exports = function (config) {
         reporters: ['mocha', 'coverage', 'kjhtml'],
 
         preprocessors: {
-            './karma-test-shim.js': ['webpack', 'sourcemap'],
+            './karma-test-shim.js': ['webpack'],
             '(ng2-alfresco|ng2-activiti)/src/**/!(*spec|index|*mock|*model|*event).js': 'coverage'
         },
 

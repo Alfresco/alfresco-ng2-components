@@ -2,7 +2,7 @@ language: node_js
 dist: trusty
 sudo: false
 node_js:
-  - "5"
+  - "6"
 
 before_install:
   - "export DISPLAY=:99.0"

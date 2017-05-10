@@ -107,20 +107,11 @@ module.exports = {
 
         new webpack.BannerPlugin(fs.readFileSync(path.resolve(__dirname, './assets/license_header_add.txt'), 'utf8')),
 
-        // Workaround for angular/angular#11580
         new webpack.ContextReplacementPlugin(
-            // The (\\|\/) piece accounts for path separators in *nix and Windows
-            /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
-            helpers.root('src'), // location of your src
-            {} // a map of your routes
-        ),
-
-        new webpack.LoaderOptionsPlugin({
-            htmlLoader: {
-                minimize: false // workaround for ng2
-            }
-        })
-
+            /angular(\\|\/)core(\\|\/)@angular/,
+            helpers.root('./src'),
+            {}
+        )
     ],
 
     devtool: 'cheap-module-source-map',

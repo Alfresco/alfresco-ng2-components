@@ -11,7 +11,7 @@ require('zone.js/dist/jasmine-patch');
 require('zone.js/dist/async-test');
 require('zone.js/dist/fake-async-test');
 
-var appContext = require.context('./', true, /^(?=.*(ng2-))(?!.*node_modules).*(.([^\/]*\/[^\/]*)src)((\\\\|\/)[a-zA-Z0-9_. \-]+)+\.spec.ts/);
+var appContext = require.context('./', true, /^(?=.*(ng2-alfresco))(?!.*node_modules).*(.([^\/]*\/[^\/]*)src)((\\\\|\/)[a-zA-Z0-9_. \-]+)+\.spec.ts/);
 appContext.keys().forEach(appContext);
 
 var testing = require('@angular/core/testing');
