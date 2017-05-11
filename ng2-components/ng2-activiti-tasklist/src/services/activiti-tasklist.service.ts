@@ -375,6 +375,19 @@ export class ActivitiTaskListService {
             .catch(err => this.handleError(err));
     }
 
+    /**
+     * Return all the related content of the task
+     * @param taskId
+     * @returns {any}
+     */
+    getRelatedContent(taskId: string): Observable<any> {
+        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.getRelatedContentForTask(taskId));
+    }
+
+    deleteRelatedContent(contentId: string): Observable<any> {
+        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.getRelatedContentForTask(contentId));
+    }
+
     private callApiTasksFiltered(requestNode: TaskQueryRequestRepresentationModel) {
         return this.apiService.getInstance().activiti.taskApi.listTasks(requestNode);
     }

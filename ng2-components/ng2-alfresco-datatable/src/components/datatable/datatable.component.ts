@@ -18,6 +18,7 @@
 import {
     Component,
     OnChanges,
+    SimpleChange,
     SimpleChanges,
     Input,
     Output,
@@ -47,6 +48,9 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
 
     @Input()
     data: DataTableAdapter;
+
+    @Input()
+    rows: any[] = [];
 
     @Input()
     multiselect: boolean = false;
@@ -96,10 +100,25 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['data'] && changes['data'].currentValue) {
+        if (this.isPropertyChanged(changes['data'])) {
             this.loadTable();
             return;
         }
+
+        if (this.isPropertyChanged(changes['rows'])) {
+            if (this.data) {
+                this.data.setRows(this.convertToRowsData(changes['rows'].currentValue));
+            }
+            return;
+        }
+    }
+
+    isPropertyChanged(property: SimpleChange): boolean {
+        return property && property.currentValue ? true : false;
+    }
+
+    convertToRowsData(rows: any []): ObjectDataRow[] {
+        return rows.map(row => new ObjectDataRow(row));
     }
 
     loadTable() {
@@ -110,7 +129,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
         }
 
         if (!this.data) {
-            this.data = new ObjectDataTableAdapter([], schema);
+            this.data = new ObjectDataTableAdapter(this.rows, schema);
         } else {
             this.setHtmlColumnConfigurationOnObjectAdapter(schema);
         }
