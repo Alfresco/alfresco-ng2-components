@@ -16,6 +16,11 @@ module.exports = webpackMerge(commonConfig, {
         chunkFilename: '[id].[hash].chunk.js'
     },
 
+    resolve: {
+        extensions: ['.ts', '.js'],
+        modules: [helpers.root('node_modules')]
+    },
+
     plugins: [
         new webpack.NoEmitOnErrorsPlugin(),
         new webpack.optimize.UglifyJsPlugin({ // https://github.com/angular/angular/issues/10618

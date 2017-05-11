@@ -82,11 +82,12 @@ describe('AnalyticsGeneratorComponent', () => {
         component = fixture.componentInstance;
         debug = fixture.debugElement;
         element = fixture.nativeElement;
-        fixture.detectChanges();
         componentHandler = jasmine.createSpyObj('componentHandler', [
             'upgradeAllRegistered'
         ]);
         window['componentHandler'] = componentHandler;
+
+        fixture.detectChanges();
 
         jasmine.Ajax.install();
     });
@@ -122,15 +123,18 @@ describe('AnalyticsGeneratorComponent', () => {
             done();
         });
 
-        let reportId = 1001;
-        let reportParamQuery = new ReportQuery({status: 'All'});
+        component.reportId = 1001;
+        component.reportParamQuery = new ReportQuery({status: 'All'});
+        component.ngOnChanges();
 
-        component.generateReport(reportId, reportParamQuery);
+        fixture.detectChanges();
 
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'json',
-            responseText: analyticMock.chartProcessDefOverview
+        fixture.whenStable().then(() => {
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: analyticMock.chartProcessDefOverview
+            });
         });
     });
 
@@ -165,10 +169,14 @@ describe('AnalyticsGeneratorComponent', () => {
         component.reportParamQuery = new ReportQuery({status: 'All'});
         component.ngOnChanges();
 
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'json',
-            responseText: analyticMock.chartProcessDefOverview
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: analyticMock.chartProcessDefOverview
+            });
         });
     });
 
@@ -229,14 +237,18 @@ describe('AnalyticsGeneratorComponent', () => {
             done();
         });
 
-        let reportParamQuery = new ReportQuery({status: 'All'});
         component.reportId = 1;
-        component.generateReport(reportParamQuery);
+        component.reportParamQuery = new ReportQuery({status: 'All'});
+        component.ngOnChanges();
 
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'json',
-            responseText: analyticMock.chartTaskOverview
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: analyticMock.chartTaskOverview
+            });
         });
     });
 
@@ -244,7 +256,12 @@ describe('AnalyticsGeneratorComponent', () => {
         component.reports = [new Chart({id: 'fake', type: 'fake-type'})];
         component.reportId = 1;
         component.ngOnChanges();
-        expect(component.reports).toBeUndefined();
+
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            expect(component.reports).toBeUndefined();
+        });
     });
 
     it('Should emit onError event with a 404 response ', (done) => {
@@ -253,14 +270,18 @@ describe('AnalyticsGeneratorComponent', () => {
             done();
         });
 
-        let reportParamQuery = new ReportQuery({status: 'All'});
         component.reportId = 1;
-        component.generateReport(reportParamQuery);
+        component.reportParamQuery = new ReportQuery({status: 'All'});
+        component.ngOnChanges();
 
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 404,
-            contentType: 'json',
-            responseText: []
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 404,
+                contentType: 'json',
+                responseText: []
+            });
         });
     });
 });

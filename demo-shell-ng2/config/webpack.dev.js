@@ -6,6 +6,11 @@ const helpers = require('./helpers');
 module.exports = webpackMerge(commonConfig, {
     devtool: 'cheap-module-eval-source-map',
 
+    resolve: {
+        extensions: ['.ts', '.js'],
+        modules: [helpers.root('../ng2-components'), helpers.root('node_modules')]
+    },
+
     output: {
         path: helpers.root('dist'),
         filename: '[name].js',

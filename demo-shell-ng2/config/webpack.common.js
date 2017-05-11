@@ -105,10 +105,7 @@ module.exports = {
             }
         ]
     },
-    resolve: {
-        extensions: ['.ts', '.js'],
-        modules: [helpers.root('../ng2-components'), helpers.root('node_modules')]
-    },
+
     plugins: [
         // Workaround for angular/angular#11580
         new webpack.ContextReplacementPlugin(
