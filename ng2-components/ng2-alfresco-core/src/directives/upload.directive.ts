@@ -40,6 +40,8 @@ export class UploadDirective implements OnInit, OnDestroy {
     @Input()
     directory: boolean;
 
+    isDragging: boolean = false;
+
     private cssClassName: string = 'adf-upload__dragging';
     private upload: HTMLInputElement;
     private element: HTMLElement;
@@ -96,6 +98,7 @@ export class UploadDirective implements OnInit, OnDestroy {
     onDragEnter(event: Event) {
         if (this.isDropMode()) {
             this.element.classList.add(this.cssClassName);
+            this.isDragging = true;
         }
     }
 
@@ -103,6 +106,7 @@ export class UploadDirective implements OnInit, OnDestroy {
         event.preventDefault();
         if (this.isDropMode()) {
             this.element.classList.add(this.cssClassName);
+            this.isDragging = true;
         }
         return false;
     }
@@ -110,15 +114,18 @@ export class UploadDirective implements OnInit, OnDestroy {
     onDragLeave(event) {
         if (this.isDropMode()) {
             this.element.classList.remove(this.cssClassName);
+            this.isDragging = false;
         }
     }
 
     onDrop(event: Event) {
         if (this.isDropMode()) {
+
             event.stopPropagation();
             event.preventDefault();
 
             this.element.classList.remove(this.cssClassName);
+            this.isDragging = false;
 
             const dataTranfer = this.getDataTransfer(event);
             if (dataTranfer) {

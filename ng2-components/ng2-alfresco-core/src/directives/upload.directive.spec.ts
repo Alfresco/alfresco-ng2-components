@@ -25,6 +25,7 @@ describe('UploadDirective', () => {
 
     beforeEach(() => {
         nativeElement = {
+            classList: jasmine.createSpyObj('classList', ['add', 'remove']),
             dispatchEvent: () => {}
         };
         directive = new UploadDirective(new ElementRef(nativeElement), null, null);
@@ -34,7 +35,6 @@ describe('UploadDirective', () => {
         expect(directive.enabled).toBeTruthy();
     });
 
-    /*
     it('should update drag status on dragenter', () => {
         expect(directive.isDragging).toBeFalsy();
         directive.enabled = true;
@@ -52,7 +52,7 @@ describe('UploadDirective', () => {
     it('should update drag status on dragover', () => {
         expect(directive.isDragging).toBeFalsy();
         directive.enabled = true;
-        directive.onDragOver(null);
+        directive.onDragOver(new CustomEvent('dragover'));
         expect(directive.isDragging).toBeTruthy();
     });
 
@@ -68,7 +68,7 @@ describe('UploadDirective', () => {
     it('should not update drag status on dragover when disabled', () => {
         expect(directive.isDragging).toBeFalsy();
         directive.enabled = false;
-        directive.onDragOver(null);
+        directive.onDragOver(new CustomEvent('dragover'));
     });
 
     it('should update drag status on dragleave', () => {
@@ -131,6 +131,5 @@ describe('UploadDirective', () => {
         directive.onDrop(event);
         expect(nativeElement.dispatchEvent).toHaveBeenCalled();
     });
-    */
 
 });
