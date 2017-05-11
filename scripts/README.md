@@ -25,7 +25,7 @@ feel for what's available.
 * Start the demo, install all the dependencies, and remove the previous version of the npm packages (*Note. do this only after big changes*):
 
 ```sh
-./start.sh -cleanInstall or -c
+./start.sh -c -i
 ```
 
 * Start the demo and update the dependencies:

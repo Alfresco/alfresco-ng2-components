@@ -15,7 +15,7 @@ env:
 
 script:
   - if ([ "$MODULE" == "ng2-components" ]); then
-        (travis_wait 60 ./scripts/npm-build-all.sh -t || exit 1;);
+        (./scripts/npm-build-all.sh -t || exit 1;);
     fi
   - if ([ "$MODULE" == "ng2-demo-shell" ]); then
         (cd demo-shell-ng2 && npm install && npm run test || exit 1;);
