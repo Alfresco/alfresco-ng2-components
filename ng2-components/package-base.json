@@ -1,17 +1,18 @@
 {
     "name": "ng2-alfresco-components",
     "description": "Alfresco ng2 components",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "author": "Alfresco Software, Ltd.",
     "scripts": {
         "clean": "rimraf node_modules",
         "build": "webpack --config config/webpack.build.js --progress --profile --bail",
         "pkg-build": "package-json-merge ng2-alfresco-core/package.json ng2-alfresco-datatable/package.json ng2-activiti-diagrams/package.json ng2-activiti-analytics/package.json ng2-activiti-form/package.json ng2-activiti-tasklist/package.json ng2-activiti-processlist/package.json ng2-alfresco-documentlist/package.json ng2-alfresco-login/package.json ng2-alfresco-search/package.json ng2-alfresco-tag/package.json ng2-alfresco-upload/package.json ng2-alfresco-viewer/package.json ng2-alfresco-webscript/package.json ng2-alfresco-webscript/package.json ng2-alfresco-userinfo/package.json ng2-alfresco-social/package.json package-base.json  > package.json",
-        "test": "karma start ../config/karma.conf.js --reporters mocha,coverage --single-run --component ng2-alfresco-webscript",
+        "test": "karma start --reporters mocha,coverage --single-run",
+        "test-browser": "karma start karma.conf.js --reporters kjhtml",
         "tslint": "",
+        "prepublish": "",
         "tsc": "",
         "pretest": "",
-        "test-browser": "",
         "posttest": "",
         "coverage": "",
         "publish:prod": ""

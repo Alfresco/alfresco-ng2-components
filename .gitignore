@@ -3,6 +3,7 @@ node_modules
 workspace.xml
 .idea/
 dist/
+ng2-components/coverage/
 !systemjs.config.js
 demo-shell-ng2/app/components/router/
 ng2-components/ng2-alfresco-userinfo-old/demo/src/app/

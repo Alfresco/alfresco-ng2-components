@@ -25,13 +25,25 @@ feel for what's available.
 * Start the demo, install all the dependencies, and remove the previous version of the npm packages (*Note. do this only after big changes*):
 
 ```sh
-./start.sh -cleanInstall or -c
+./start.sh -c -i
+```
+
+* Start the demo using an alternative npm registry 
+
+```sh
+./start.sh -registry 'http://npm.local.me:8080/'
 ```
 
 * Start the demo and update the dependencies:
 
 ```sh
 ./start.sh -update or -u
+```
+
+* Start the demo in development mode building the relative folder ng2-components with all the components and pointing to this component instead to the node_modules one
+
+```sh
+./start.sh -develop -d
 ```
 
 * If you want to build all your local component:
@@ -44,6 +56,12 @@ feel for what's available.
 
 ```sh
 ./npm-buid-alll.sh -t or -test
+```
+
+* If you want clean the ng2-components folder node_modules before to build
+
+```sh
+./npm-buid-alll.sh -c
 ```
 
 * If you want clean all your local component and the demo shell:

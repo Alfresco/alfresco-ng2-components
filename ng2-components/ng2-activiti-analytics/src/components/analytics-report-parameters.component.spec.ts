@@ -462,11 +462,13 @@ describe('AnalyticsReportParametersComponent', () => {
                 let change = new SimpleChange(null, reportId, true);
                 component.ngOnChanges({ 'reportId': change });
                 fixture.detectChanges();
+
                 jasmine.Ajax.requests.mostRecent().respondWith({
                     status: 200,
                     contentType: 'json',
                     responseText: analyticParamsMock.reportDefParamStatus
                 });
+
                 fixture.whenStable().then(() => {
                     component.toggleParameters();
                     component.reportId = '1';
@@ -481,7 +483,7 @@ describe('AnalyticsReportParametersComponent', () => {
                 validForm = true;
             });
 
-            it('Should be able to change the report title', (done) => {
+            xit('Should be able to change the report title', (done) => {
 
                 let title: HTMLElement = element.querySelector('h4');
                 title.click();
