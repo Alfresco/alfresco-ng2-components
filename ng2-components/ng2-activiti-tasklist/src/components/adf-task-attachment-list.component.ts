@@ -103,7 +103,7 @@ export class TaskAttachmentListComponent implements OnChanges {
         }
     }
 
-    openViewer(event: any): void {
+    private openContent(event: any): void {
         let content = event.value.obj;
         this.activitiContentService.getFileRawContent(content.id).subscribe(
             (blob: Blob) => {

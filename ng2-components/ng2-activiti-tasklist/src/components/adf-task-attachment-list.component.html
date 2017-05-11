@@ -1,7 +1,7 @@
 <alfresco-datatable *ngIf="!isEmpty()"
     [rows]="attachments"
     [actions]="true"
-    (rowDblClick)="openViewer($event)"
+    (rowDblClick)="openContent($event)"
     (showRowActionsMenu)="onShowRowActionsMenu($event)"
     (executeRowAction)="onExecuteRowAction($event)">
     <data-columns>
