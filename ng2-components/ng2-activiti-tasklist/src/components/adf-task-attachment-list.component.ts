@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, OnChanges, Input, SimpleChanges } from '@angular/core';
+import { Component, OnChanges, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
-import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
+import { ActivitiContentService } from 'ng2-activiti-form';
 
 @Component({
     selector: 'adf-task-attachment-list',
@@ -29,10 +29,13 @@ export class TaskAttachmentListComponent implements OnChanges {
     @Input()
     taskId: string;
 
+    @Output()
+    attachmentClick = new EventEmitter();
+
     attachments: any[] = [];
 
     constructor(private translateService: AlfrescoTranslationService,
-                private activitiTaskList: ActivitiTaskListService) {
+                private activitiContentService: ActivitiContentService) {
 
         if (translateService) {
             translateService.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
@@ -52,7 +55,7 @@ export class TaskAttachmentListComponent implements OnChanges {
     private loadAttachmentsByTaskId(taskId: string) {
         if (taskId) {
             this.reset();
-            this.activitiTaskList.getRelatedContent(taskId).subscribe(
+            this.activitiContentService.getTaskRelatedContent(taskId).subscribe(
                 (res: any) => {
                     res.data.forEach(content => {
                         this.attachments.push({
@@ -69,9 +72,12 @@ export class TaskAttachmentListComponent implements OnChanges {
 
     private deleteAttachmentById(contentId: string) {
         if (contentId) {
-            this.attachments = this.attachments.filter(content => {
-                return content.id !== contentId;
-            });
+            this.activitiContentService.deleteRelatedContent(contentId).subscribe(
+                (res: any) => {
+                    this.attachments = this.attachments.filter(content => {
+                        return content.id !== contentId;
+                    });
+                });
         }
     }
 
@@ -83,7 +89,6 @@ export class TaskAttachmentListComponent implements OnChanges {
         let myAction = {
             title: 'Delete',
             name: 'delete'
-            // you custom metadata needed for onExecuteRowAction
         };
         event.value.actions = [
             myAction
@@ -96,6 +101,16 @@ export class TaskAttachmentListComponent implements OnChanges {
         if (action.name === 'delete') {
             this.deleteAttachmentById(args.row.obj.id);
         }
+    }
+
+    openViewer(event: any): void {
+        let content = event.value.obj;
+        this.activitiContentService.getFileRawContent(content.id).subscribe(
+            (blob: Blob) => {
+                content.contentBlob = blob;
+                this.attachmentClick.emit(content);
+            }
+        );
     }
 
 }

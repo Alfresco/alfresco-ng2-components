@@ -254,6 +254,12 @@ export class ActivitiDemoComponent implements AfterViewInit {
         this.contentName = content.name;
     }
 
+    onAttachmentClick(content: any) {
+        this.fileShowed = true;
+        this.content = content.contentBlob;
+        this.contentName = content.name;
+    }
+
     onTaskCreated(data: any) {
         this.currentTaskId = data.parentTaskId;
         this.taskList.reload();

@@ -71,7 +71,8 @@
                             (taskDeleted)="onTaskDeleted($event)">
                         </activiti-task-details>
                         <adf-task-attachment-list *ngIf="currentTaskId"
-                            [taskId]="currentTaskId">
+                          [taskId]="currentTaskId"
+                          (attachmentClick)="onAttachmentClick($event)">
                         </adf-task-attachment-list>
                     </div>
                 </div>
