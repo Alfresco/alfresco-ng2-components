@@ -2,7 +2,7 @@ language: node_js
 dist: trusty
 sudo: false
 node_js:
-  - "5"
+  - "6"
 
 before_install:
   - "export DISPLAY=:99.0"
@@ -15,7 +15,7 @@ env:
 
 script:
   - if ([ "$MODULE" == "ng2-components" ]); then
-        (./scripts/npm-build-all.sh -t;);
+        (./scripts/npm-build-all.sh -t || exit 1;);
     fi
   - if ([ "$MODULE" == "ng2-demo-shell" ]); then
         (cd demo-shell-ng2 && npm install && npm run test || exit 1;);

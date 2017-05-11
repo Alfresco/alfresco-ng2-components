@@ -23,7 +23,7 @@ module.exports = {
             },
             {
                 test: /\.ts$/,
-                loaders: ['ts-loader', 'angular2-template-loader'],
+                loaders: ['ts-loader?' + JSON.stringify({ transpileOnly: true}), 'angular2-template-loader'],
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
             },
             {
@@ -52,8 +52,7 @@ module.exports = {
                 loader: 'istanbul-instrumenter-loader',
                 exclude: [
                     /node_modules/,
-                    /test/,
-                    /spec\.ts$/
+                    /test/
                 ]
             }
         ]
@@ -62,12 +61,10 @@ module.exports = {
     plugins: [
         new webpack.NoEmitOnErrorsPlugin(),
 
-        // Workaround for angular/angular#11580
         new webpack.ContextReplacementPlugin(
-            // The (\\|\/) piece accounts for path separators in *nix and Windows
-            /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
-            helpers.root('src'), // location of your src
-            {} // a map of your routes
+            /angular(\\|\/)core(\\|\/)@angular/,
+            helpers.root('./src'),
+            {}
         ),
         new webpack.DefinePlugin({
             'process.env': {
@@ -75,11 +72,10 @@ module.exports = {
             }
         }),
         new webpack.LoaderOptionsPlugin({
-            htmlLoader: {
-                minimize: false // workaround for ng2
-            }
+                htmlLoader: {
+                    minimize: false // workaround for ng2
+                }
         })
-
     ],
 
     node: {

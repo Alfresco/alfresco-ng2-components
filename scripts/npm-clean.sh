@@ -20,7 +20,7 @@ eval projects=( "ng2-activiti-diagrams"
       "ng2-alfresco-webscript"
       "ng2-alfresco-userinfo" )
 
-npm install rimraf -g
+npm install rimraf
 
 for PACKAGE in ${projects[@]}
 do
