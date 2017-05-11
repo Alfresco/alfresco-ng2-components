@@ -41,7 +41,7 @@ module.exports = {
             {
                 enforce: 'pre',
                 test: /\.js$/,
-                include: [helpers.root('app')],
+                include: [helpers.root('app'), helpers.root('../ng2-components')],
                 loader: 'source-map-loader',
                 exclude: [ /node_modules/, /public/, /resources/, /dist/]
             },
