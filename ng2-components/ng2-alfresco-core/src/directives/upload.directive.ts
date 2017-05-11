@@ -80,8 +80,13 @@ export class UploadDirective implements OnInit {
         }
     }
 
-    @HostListener('dragenter')
-    onDragEnter() {
+    @HostListener('dragenter', ['$event'])
+    onDragEnter(event: Event) {
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+
         if (this.isDropMode()) {
             this.isDragging = true;
         }
@@ -89,16 +94,23 @@ export class UploadDirective implements OnInit {
 
     @HostListener('dragover', ['$event'])
     onDragOver(event: Event) {
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+
         if (this.isDropMode()) {
-            if (event) {
-                event.preventDefault();
-            }
             this.isDragging = true;
         }
     }
 
-    @HostListener('dragleave')
-    onDragLeave() {
+    @HostListener('dragleave', ['$event'])
+    onDragLeave(event) {
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+
         if (this.isDropMode()) {
             this.isDragging = false;
         }
@@ -148,11 +160,11 @@ export class UploadDirective implements OnInit {
     }
 
     protected getDataTransfer(event: Event | any): DataTransfer {
-        if (event && event.dataTranfer) {
-            return event.dataTranfer;
+        if (event && event.dataTransfer) {
+            return event.dataTransfer;
         }
-        if (event && event.originalEvent && event.originalEvent.dataTranfer) {
-            return event.originalEvent.dataTranfer;
+        if (event && event.originalEvent && event.originalEvent.dataTransfer) {
+            return event.originalEvent.dataTransfer;
         }
         return null;
     }

@@ -41,14 +41,14 @@ describe('UploadDirective', () => {
     it('should update drag status on dragenter', () => {
         expect(directive.isDragging).toBeFalsy();
         directive.enabled = true;
-        directive.onDragEnter();
+        directive.onDragEnter(null);
         expect(directive.isDragging).toBeTruthy();
     });
 
     it('should not update drag status on dragenter when disabled', () => {
         expect(directive.isDragging).toBeFalsy();
         directive.enabled = false;
-        directive.onDragEnter();
+        directive.onDragEnter(null);
         expect(directive.isDragging).toBeFalsy();
     });
 
@@ -77,14 +77,14 @@ describe('UploadDirective', () => {
     it('should update drag status on dragleave', () => {
         directive.enabled = true;
         directive.isDragging = true;
-        directive.onDragLeave();
+        directive.onDragLeave(null);
         expect(directive.isDragging).toBeFalsy();
     });
 
     it('should not update drag status on dragleave when disabled', () => {
         directive.enabled = false;
         directive.isDragging = true;
-        directive.onDragLeave();
+        directive.onDragLeave(null);
         expect(directive.isDragging).toBeTruthy();
     });
 
