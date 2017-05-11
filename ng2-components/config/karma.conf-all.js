@@ -24,7 +24,7 @@ module.exports = function (config) {
             {pattern: './node_modules/pdfjs-dist/build/pdf.worker.js', included: true, watched: false},
             {pattern: './node_modules/pdfjs-dist/web/pdf_viewer.js', included: true, watched: false},
 
-            {pattern: './karma-test-shim.js', watched: false},
+            {pattern:  config.component +'/karma-test-shim.js', watched: false},
             {pattern: './ng2-**/src/assets/**/*.*', included: false, served: true, watched: false},
             {pattern: './ng2-**/src/**/*.ts', included: false, served: true, watched: false}
         ],
@@ -82,7 +82,7 @@ module.exports = function (config) {
         reporters: ['mocha', 'coverage', 'kjhtml'],
 
         preprocessors: {
-            './karma-test-shim.js': ['webpack'],
+            '**/karma-test-shim.js': ['webpack'],
             '(ng2-alfresco|ng2-activiti)/src/**/!(*spec|index|*mock|*model|*event).js': 'coverage'
         },
 

@@ -3,6 +3,23 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 eval RUN_TEST=false
 
+eval projects=( "ng2-alfresco-core"
+    "ng2-alfresco-datatable"
+    "ng2-activiti-diagrams"
+    "ng2-activiti-analytics"
+    "ng2-activiti-form"
+    "ng2-activiti-tasklist"
+    "ng2-activiti-processlist"
+    "ng2-alfresco-documentlist"
+    "ng2-alfresco-login"
+    "ng2-alfresco-search"
+    "ng2-alfresco-social"
+    "ng2-alfresco-tag"
+    "ng2-alfresco-social"
+    "ng2-alfresco-upload"
+    "ng2-alfresco-viewer"
+    "ng2-alfresco-webscript"
+    "ng2-alfresco-userinfo" )
 show_help() {
     echo "Usage: npm-build-all.sh"
     echo ""
@@ -15,7 +32,7 @@ enable_test(){
 
 test_project() {
     echo "====== test project: $1 ====="
-    npm run test || exit 1
+    npm run test -- --component $1 || exit 1
 }
 
 while [[ $1 == -* ]]; do
@@ -31,6 +48,12 @@ npm install package-json-merge
 npm run pkg-build
 npm install
 npm run build || exit 1
-if $RUN_TEST == true; then
-  test_project
-fi
+
+for PACKAGE in ${projects[@]}
+do
+  DESTDIR="$DIR/../ng2-components/"
+  cd $DESTDIR
+  if $RUN_TEST == true; then
+      test_project $PACKAGE
+  fi
+done

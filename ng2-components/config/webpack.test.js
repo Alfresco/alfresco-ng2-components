@@ -70,6 +70,11 @@ module.exports = {
             'process.env': {
                 'ENV': JSON.stringify(ENV)
             }
+        }),
+        new webpack.LoaderOptionsPlugin({
+                htmlLoader: {
+                    minimize: false // workaround for ng2
+                }
         })
     ],
 

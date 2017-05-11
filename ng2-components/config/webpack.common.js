@@ -17,6 +17,7 @@ module.exports = {
         /^\@angular\//,
         /^rxjs\//,
         'moment',
+        'raphael',
         'ng2-charts',
         'alfresco-js-api',
         'ng2-alfresco-core',
