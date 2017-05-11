@@ -7,12 +7,13 @@
     "build": "rimraf dist && webpack --config config/webpack.prod.js --progress --profile --bail",
     "build:dev": "rimraf dist && webpack --config config/webpack.dev.js --progress --profile --bail",
     "start:dist": "wsrv -s dist/ -p 3000 -a 0.0.0.0",
-    "start": "npm run server-versions && node --max_old_space_size=4096 webpack-dev-server --progress -config config/webpack.prod.js",
-    "start:dev": "npm run server-versions && node --max_old_space_size=4096 webpack-dev-server --progress -config config/webpack.dev.js",
+    "start": "npm run server-versions && npm run webpack-dev-server --progress -config config/webpack.prod.js --content-base ./",
+    "start:dev": "npm run server-versions && npm run webpack-dev-server --progress -config config/webpack.dev.js --content-base ./",
     "test": "rimraf coverage && karma start --single-run",
     "clean": "npm run clean-build  && rimraf dist node_modules typings dist",
     "clean-build": "rimraf 'app/{,**/}**.js' 'app/{,**/}**.js.map' 'app/{,**/}**.d.ts'",
     "server-versions": "rimraf versions.json && npm list --depth=0 --json=true --prod=true > versions.json  || exit 0",
+    "webpack-dev-server": "node --max_old_space_size=4096 node_modules/webpack-dev-server/bin/webpack-dev-server.js",
     "aws": "node app.js"
   },
   "repository": {
