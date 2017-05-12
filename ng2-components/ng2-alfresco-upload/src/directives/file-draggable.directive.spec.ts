@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { ElementRef } from '@angular/core';
 import { FileDraggableDirective } from '../directives/file-draggable.directive';
 
 describe('FileDraggableDirective', () => {
@@ -22,11 +23,12 @@ describe('FileDraggableDirective', () => {
     let component: FileDraggableDirective;
 
     beforeEach( () => {
-        component = new FileDraggableDirective(null, null);
+        let el = new ElementRef(null);
+        component = new FileDraggableDirective(el, null);
     });
 
     it('should always be enabled by default', () => {
-        expect(new FileDraggableDirective(null, null).enabled).toBeTruthy();
+        expect(component.enabled).toBeTruthy();
     });
 
     it('should not allow drad and drop when disabled', () => {
