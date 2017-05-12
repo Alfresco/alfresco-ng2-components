@@ -29,7 +29,7 @@ import { WidgetVisibilityService } from './src/services/widget-visibility.servic
 import { ActivitiAlfrescoContentService } from './src/services/activiti-alfresco.service';
 import { FormRenderingService } from './src/services/form-rendering.service';
 import { HttpModule } from '@angular/http';
-import { WIDGET_DIRECTIVES } from './src/components/widgets/index';
+import { WIDGET_DIRECTIVES, MASK_DIRECTIVE } from './src/components/widgets/index';
 
 export * from './src/components/activiti-form.component';
 export * from './src/components/activiti-content.component';
@@ -64,7 +64,8 @@ export const ACTIVITI_FORM_PROVIDERS: any[] = [
         HttpModule
     ],
     declarations: [
-        ...ACTIVITI_FORM_DIRECTIVES
+        ...ACTIVITI_FORM_DIRECTIVES,
+        ...MASK_DIRECTIVE
     ],
     entryComponents: [
         ...WIDGET_DIRECTIVES

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
 
 @Component({
@@ -23,5 +23,21 @@ import { WidgetComponent } from './../widget.component';
     templateUrl: './text.widget.html',
     styleUrls: ['./text.widget.css']
 })
-export class TextWidget extends WidgetComponent {
+export class TextWidget extends WidgetComponent implements OnInit {
+
+    private mask;
+
+    ngOnInit() {
+        if (this.field.params && this.field.params['inputMask']) {
+            let inputMask = this.field.params['inputMask'];
+            let isReversed = this.field.params['inputMaskReversed'] ? this.field.params['inputMaskReversed'] : false;
+            this.mask = isReversed ? this.reverseMask(inputMask) : inputMask;
+        }
+    }
+
+    private reverseMask(inputMask: string) {
+        return inputMask.replace(/[A-Za-z0-9]+/, function (s) {
+            return s.split('').reverse().join('');
+        });
+    }
 }
