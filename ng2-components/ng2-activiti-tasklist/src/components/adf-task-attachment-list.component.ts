@@ -46,8 +46,6 @@ export class TaskAttachmentListComponent implements OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        console.log(changes);
-        console.log(changes['taskId']);
         if (changes['taskId'] && changes['taskId'].currentValue) {
             this.loadAttachmentsByTaskId(changes['taskId'].currentValue);
         }
