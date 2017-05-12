@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, HostListener, HostBinding, EventEmitter, Output } from '@angular/core';
+import { Directive, EventEmitter, Output, OnInit, OnDestroy, ElementRef, NgZone } from '@angular/core';
 
 /**
  * [file-draggable]
@@ -31,7 +31,7 @@ import { Directive, HostListener, HostBinding, EventEmitter, Output } from '@ang
 @Directive({
     selector: '[file-draggable]'
 })
-export class FileDraggableDirective {
+export class FileDraggableDirective implements OnInit, OnDestroy {
 
     files: File [];
 
@@ -44,14 +44,33 @@ export class FileDraggableDirective {
     @Output()
     onFolderEntityDropped: EventEmitter<any> = new EventEmitter();
 
-    @HostBinding('class.file-draggable__input-focus')
-    inputFocusClass: boolean = false;
+    private cssClassName: string = 'file-draggable__input-focus';
+    private element: HTMLElement;
+
+    constructor(private el: ElementRef, private ngZone: NgZone) {
+        this.element = el.nativeElement;
+    }
+
+    ngOnInit() {
+        this.ngZone.runOutsideAngular(() => {
+            this.element.addEventListener('dragenter', this.onDragEnter.bind(this));
+            this.element.addEventListener('dragover', this.onDragOver.bind(this));
+            this.element.addEventListener('dragleave', this.onDragLeave.bind(this));
+            this.element.addEventListener('drop', this.onDropFiles.bind(this));
+        });
+    }
+
+    ngOnDestroy() {
+        this.element.removeEventListener('dragenter', this.onDragEnter);
+        this.element.removeEventListener('dragover', this.onDragOver);
+        this.element.removeEventListener('dragleave', this.onDragLeave);
+        this.element.removeEventListener('drop', this.onDropFiles);
+    }
 
     /**
      * Method called when files is dropped in the drag and drop area.
      * @param event DOM event.
      */
-    @HostListener('drop', ['$event'])
     onDropFiles(event: any): void {
         if (!event.defaultPrevented) {
             this.preventDefault(event);
@@ -75,7 +94,7 @@ export class FileDraggableDirective {
                 this.onFilesDropped.emit(files);
             }
 
-            this.inputFocusClass = false;
+            this.element.classList.remove(this.cssClassName);
         }
     }
 
@@ -100,11 +119,10 @@ export class FileDraggableDirective {
      *
      * @param {event} event - DOM event.
      */
-    @HostListener('dragenter', ['$event'])
     onDragEnter(event: Event): void {
         if (!event.defaultPrevented) {
             this.preventDefault(event);
-            this.inputFocusClass = true;
+            this.element.classList.add(this.cssClassName);
         }
     }
 
@@ -113,11 +131,10 @@ export class FileDraggableDirective {
      *
      * @param {event} event - DOM event.
      */
-    @HostListener('dragleave', ['$event'])
     onDragLeave(event: Event): void {
         if (!event.defaultPrevented) {
             this.preventDefault(event);
-            this.inputFocusClass = false;
+            this.element.classList.remove(this.cssClassName);
         }
     }
 
@@ -126,11 +143,10 @@ export class FileDraggableDirective {
      *
      * @param event
      */
-    @HostListener('dragover', ['$event'])
     onDragOver(event: Event): void {
         if (!event.defaultPrevented) {
             this.preventDefault(event);
-            this.inputFocusClass = true;
+            this.element.classList.add(this.cssClassName);
         }
     }
 
@@ -142,13 +158,5 @@ export class FileDraggableDirective {
     preventDefault(event: Event): void {
         event.stopPropagation();
         event.preventDefault();
-    }
-
-    /**
-     * Return the value of input focus class
-     * @returns {boolean}
-     */
-    getInputFocus () {
-        return this.inputFocusClass;
     }
 }

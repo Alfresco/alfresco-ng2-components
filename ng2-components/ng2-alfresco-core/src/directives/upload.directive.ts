@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { Directive, Input, HostBinding, HostListener, ElementRef, Renderer, OnInit } from '@angular/core';
+import { Directive, Input, HostListener, ElementRef, Renderer, OnInit, NgZone, OnDestroy } from '@angular/core';
 
 @Directive({
     selector: '[adf-upload]'
 })
-export class UploadDirective implements OnInit {
+export class UploadDirective implements OnInit, OnDestroy {
 
     @Input('adf-upload')
     enabled: boolean = true;
@@ -40,15 +40,14 @@ export class UploadDirective implements OnInit {
     @Input()
     directory: boolean;
 
-    @Input()
-    debug: boolean = false;
+    isDragging: boolean = false;
 
-    @HostBinding('class.adf-upload__dragging')
-    isDragging: boolean;
-
+    private cssClassName: string = 'adf-upload__dragging';
     private upload: HTMLInputElement;
+    private element: HTMLElement;
 
-    constructor(private el: ElementRef, private renderer: Renderer) {
+    constructor(private el: ElementRef, private renderer: Renderer, private ngZone: NgZone) {
+        this.element = el.nativeElement;
     }
 
     ngOnInit() {
@@ -70,6 +69,22 @@ export class UploadDirective implements OnInit {
                 this.upload.setAttribute('webkitdirectory', '');
             }
         }
+
+        if (this.isDropMode()) {
+            this.ngZone.runOutsideAngular(() => {
+                this.element.addEventListener('dragenter', this.onDragEnter.bind(this));
+                this.element.addEventListener('dragover', this.onDragOver.bind(this));
+                this.element.addEventListener('dragleave', this.onDragLeave.bind(this));
+                this.element.addEventListener('drop', this.onDrop.bind(this));
+            });
+        }
+    }
+
+    ngOnDestroy() {
+        this.element.removeEventListener('dragenter', this.onDragEnter);
+        this.element.removeEventListener('dragover', this.onDragOver);
+        this.element.removeEventListener('dragleave', this.onDragLeave);
+        this.element.removeEventListener('drop', this.onDrop);
     }
 
     @HostListener('click', ['$event'])
@@ -80,36 +95,36 @@ export class UploadDirective implements OnInit {
         }
     }
 
-    @HostListener('dragenter')
-    onDragEnter() {
+    onDragEnter(event: Event) {
         if (this.isDropMode()) {
+            this.element.classList.add(this.cssClassName);
             this.isDragging = true;
         }
     }
 
-    @HostListener('dragover', ['$event'])
     onDragOver(event: Event) {
+        event.preventDefault();
         if (this.isDropMode()) {
-            if (event) {
-                event.preventDefault();
-            }
+            this.element.classList.add(this.cssClassName);
             this.isDragging = true;
         }
+        return false;
     }
 
-    @HostListener('dragleave')
-    onDragLeave() {
+    onDragLeave(event) {
         if (this.isDropMode()) {
+            this.element.classList.remove(this.cssClassName);
             this.isDragging = false;
         }
     }
 
-    @HostListener('drop', ['$event'])
     onDrop(event: Event) {
         if (this.isDropMode()) {
-            event.preventDefault();
-            event.stopPropagation();
 
+            event.stopPropagation();
+            event.preventDefault();
+
+            this.element.classList.remove(this.cssClassName);
             this.isDragging = false;
 
             const dataTranfer = this.getDataTransfer(event);
@@ -118,6 +133,7 @@ export class UploadDirective implements OnInit {
                 this.onUploadFiles(files);
             }
         }
+        return false;
     }
 
     onUploadFiles(files: File[]) {
@@ -148,11 +164,11 @@ export class UploadDirective implements OnInit {
     }
 
     protected getDataTransfer(event: Event | any): DataTransfer {
-        if (event && event.dataTranfer) {
-            return event.dataTranfer;
+        if (event && event.dataTransfer) {
+            return event.dataTransfer;
         }
-        if (event && event.originalEvent && event.originalEvent.dataTranfer) {
-            return event.originalEvent.dataTranfer;
+        if (event && event.originalEvent && event.originalEvent.dataTransfer) {
+            return event.originalEvent.dataTransfer;
         }
         return null;
     }

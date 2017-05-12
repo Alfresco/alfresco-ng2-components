@@ -25,37 +25,34 @@ describe('UploadDirective', () => {
 
     beforeEach(() => {
         nativeElement = {
+            classList: jasmine.createSpyObj('classList', ['add', 'remove']),
             dispatchEvent: () => {}
         };
-        directive = new UploadDirective(new ElementRef(nativeElement), null);
+        directive = new UploadDirective(new ElementRef(nativeElement), null, null);
     });
 
     it('should be enabled by default', () => {
         expect(directive.enabled).toBeTruthy();
     });
 
-    it('should have debug mode switched off by default', () => {
-        expect(directive.debug).toBeFalsy();
-    });
-
     it('should update drag status on dragenter', () => {
         expect(directive.isDragging).toBeFalsy();
         directive.enabled = true;
-        directive.onDragEnter();
+        directive.onDragEnter(null);
         expect(directive.isDragging).toBeTruthy();
     });
 
     it('should not update drag status on dragenter when disabled', () => {
         expect(directive.isDragging).toBeFalsy();
         directive.enabled = false;
-        directive.onDragEnter();
+        directive.onDragEnter(null);
         expect(directive.isDragging).toBeFalsy();
     });
 
     it('should update drag status on dragover', () => {
         expect(directive.isDragging).toBeFalsy();
         directive.enabled = true;
-        directive.onDragOver(null);
+        directive.onDragOver(new CustomEvent('dragover'));
         expect(directive.isDragging).toBeTruthy();
     });
 
@@ -71,20 +68,20 @@ describe('UploadDirective', () => {
     it('should not update drag status on dragover when disabled', () => {
         expect(directive.isDragging).toBeFalsy();
         directive.enabled = false;
-        directive.onDragOver(null);
+        directive.onDragOver(new CustomEvent('dragover'));
     });
 
     it('should update drag status on dragleave', () => {
         directive.enabled = true;
         directive.isDragging = true;
-        directive.onDragLeave();
+        directive.onDragLeave(null);
         expect(directive.isDragging).toBeFalsy();
     });
 
     it('should not update drag status on dragleave when disabled', () => {
         directive.enabled = false;
         directive.isDragging = true;
-        directive.onDragLeave();
+        directive.onDragLeave(null);
         expect(directive.isDragging).toBeTruthy();
     });
 
