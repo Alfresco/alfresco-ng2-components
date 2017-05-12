@@ -4,7 +4,7 @@
   "version": "1.4.0",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
-    "clean": "rimraf dist node_modules typings bundles coverage",
+    "clean": "rimraf dist node_modules typings bundles coverage .npmrc",
     "build": "webpack --config webpack.build.js --progress --profile --bail",
     "test": "karma start karma.conf.js --reporters mocha,coverage --single-run --component",
     "test-browser": "karma start karma.conf.js --reporters kjhtml --component",

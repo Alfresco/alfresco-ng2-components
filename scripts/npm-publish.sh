@@ -3,7 +3,8 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 eval FORCE_PUBLISH=false
-eval NPM_REGISTRY=""
+eval EXEC_CHANGE_REGISTRY=false
+eval NPM_REGISTRY=false
 eval OPTIONS=""
 
 cd "$DIR/../demo-shell-ng2"
@@ -20,6 +21,11 @@ enable_force(){
     OPTIONS="$OPTIONS -force"
 }
 
+enable_change_registry(){
+    NPM_REGISTRY=$1
+    EXEC_CHANGE_REGISTRY=true
+}
+
 add_tag(){
     eval TAG=$1
 
@@ -34,8 +40,6 @@ add_tag(){
 }
 
 change_registry(){
-    NPM_REGISTRY=$1
-
     if [[ "${NPM_REGISTRY}" == "" ]]
     then
       echo "NPM registry required WITH OPTION -r | -registry"
@@ -43,7 +47,10 @@ change_registry(){
     fi
 
     echo "====== CHANGE REGISTRY: ${NPM_REGISTRY} ====="
-    npm config set registry ${NPM_REGISTRY}
+    touch .npmrc
+    echo 'strict-ssl=false' >> .npmrc
+    echo 'registry=http://'${NPM_REGISTRY} >> .npmrc
+    echo '//'${NPM_REGISTRY}'/:_authToken="'${NPM_REGISTRY}'"' >> .npmrc
 }
 
 while [[ $1 == -* ]]; do
@@ -51,7 +58,7 @@ while [[ $1 == -* ]]; do
       -h|--help|-\?) show_help; exit 0;;
       -t|--tag)  add_tag $2; shift 2;;
       -f|--force)  enable_force; shift;;
-      -r|--registry)  change_registry $2; shift 2;;
+      -r|--registry) enable_change_registry $2; shift 2;;
       -*) echo "invalid option: $1" 1>&2; show_help; exit 0;;
     esac
 done
@@ -75,10 +82,18 @@ for PACKAGE in \
   ng2-alfresco-userinfo
 do
   DESTDIR="$DIR/../ng2-components/${PACKAGE}"
-  echo "====== PUBLISHING: ${DESTDIR} ===== npm publish ${OPTIONS}"
+  echo "====== MOVE DIR: ${DESTDIR} ===== "
   cd ${DESTDIR}
+  echo "====== INSTALL AND CLEAN ===== "
+  npm install rimraf
   npm run clean
   npm install
+
+  if $EXEC_CHANGE_REGISTRY == true; then
+    change_registry
+  fi
+
+  echo "====== PUBLISHING: ${DESTDIR} ===== npm publish ${OPTIONS}"
   npm publish ${OPTIONS}
   cd ${DIR}
 done
