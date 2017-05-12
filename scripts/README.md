@@ -62,6 +62,12 @@ feel for what's available.
 
 ```sh
 ./npm-buid-alll.sh -c
+```* 
+
+If you want build to build all the components against a commit-ish version of the JS-API
+
+```sh
+./npm-buid-alll.sh -j commit-ish
 ```
 
 * If you want clean all your local component and the demo shell:
