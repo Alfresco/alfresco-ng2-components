@@ -21,7 +21,7 @@ install:
               if %APPVEYOR_REPO_BRANCH EQU master
                 (cd scripts && sh npm-build-all.sh -t || exit 1)
               else
-                (cd scripts && sh npm-build-all.sh -t -j development|| exit 1)
+                (cd scripts && sh npm-build-all.sh -t -gitjsapi development|| exit 1)
     )
   - if %COMPONENT_NAME% EQU ng2-demo-shell (cd demo-shell-ng2 && npm install && npm run test || exit 1)
 

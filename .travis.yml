@@ -18,7 +18,7 @@ script:
           if ([ "$TRAVIS_BRANCH" = "master" ]); then
             (./scripts/npm-build-all.sh -t || exit 1;);
           else
-            (./scripts/npm-build-all.sh -t -j development|| exit 1;);
+            (./scripts/npm-build-all.sh -t -gitjsapi development|| exit 1;);
           fi
     fi
   - if ([ "$MODULE" == "ng2-demo-shell" ]); then
