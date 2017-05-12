@@ -1,5 +1,6 @@
 npm-debug.log
 .idea
+.npmrc
 
 coverage/
 demo/

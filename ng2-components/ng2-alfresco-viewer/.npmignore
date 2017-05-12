@@ -1,5 +1,7 @@
 npm-debug.log
 .idea
+.npmrc
+
 demo/localTestFile.pdf
 
 coverage/
