@@ -183,6 +183,7 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 | `disableWithNoPermission` | *boolean* | false |  If the value is true and the user doesn't have the permission to delete the node the button will be disabled |
 
 ### How to show notification message with no permission
+
 You can show a notification error when the user doesn't have the right permission to perform the action.
 The UploadButtonComponent provides the event permissionEvent that is raised when the delete permission is missing
 You can subscribe to this event from your component and use the NotificationService to show a message.
@@ -205,6 +206,7 @@ onUploadPermissionFailed(event: any) {
 ![Upload notification message](docs/assets/upload-notification-message.png)
 
 #### How to disable the button when the delete permission is missing
+
 You can easily disable the button when the user doesn't own the permission to perform the action.
 The UploadButtonComponent provides the property disableWithNoPermission that can be true. In this way the button should be disabled if the delete permission is missing for the node.
 
@@ -217,9 +219,8 @@ The UploadButtonComponent provides the property disableWithNoPermission that can
 
 ![Upload disable button](docs/assets/upload-disable-button.png)
 
-
-
 ### Drag and drop
+
 This component, provide a drag and drop are to upload files to alfresco.
 
 #### Basic usage
@@ -240,25 +241,24 @@ import { UploadModule } from 'ng2-alfresco-upload';
 
 @Component({
     selector: 'alfresco-app-demo',
-    template: `<alfresco-upload-drag-area (onSuccess)="customMethod($event)" >
-                     <div style="width: 200px; height: 100px; border: 1px solid #888888">
-                         DRAG HERE
-                     </div>
-               </alfresco-upload-drag-area>
-               <file-uploading-dialog></file-uploading-dialog>`
+    template: `
+        <alfresco-upload-drag-area (onSuccess)="customMethod($event)" >
+            <div style="width: 200px; height: 100px; border: 1px solid #888888">
+                DRAG HERE
+            </div>
+        </alfresco-upload-drag-area>
+        <file-uploading-dialog></file-uploading-dialog>`
 })
 export class MyDemoApp {
 
-    constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService) {
+    constructor(private authService: AlfrescoAuthenticationService, 
+                private settingsService: AlfrescoSettingsService) {
         settingsService.ecmHost = 'http://localhost:8080';
 
         this.authService.login('admin', 'admin').subscribe(
-            ticket => {
-                console.log(ticket);
-            },
-            error => {
-                console.log(error);
-            });
+            ticket => console.log(ticket),
+            error => console.log(error)
+        );
     }
 
     public onSuccess(event: Object): void {
@@ -278,7 +278,6 @@ export class MyDemoApp {
 export class AppModule { }
 
 platformBrowserDynamic().bootstrapModule(AppModule);
-
 ```
 
 #### Events
@@ -291,8 +290,10 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
+| `disabled` | *boolean* | false | Toggle component disabled state |
 | `showNotificationBar` | *boolean* | true |  Hide/show notification bar |
-| `currentFolderPath` | *string* | '/Sites/swsdp/documentLibrary' | define the path where the files are uploaded | 
+| `rootFolderId` | *string* | '-root-' | The ID of the root folder node.
+| `currentFolderPath` | *string* | '/' | define the path where the files are uploaded | 
 | `versioning` | *boolean* | false |  Versioning false is the default uploader behaviour and it rename using an integer suffix if there is a name clash. Versioning true to indicate that a major version should be created  | 
 
 

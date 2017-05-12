@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, HostListener, HostBinding, EventEmitter, Output } from '@angular/core';
+import { Directive, HostListener, HostBinding, EventEmitter, Output, Input } from '@angular/core';
 
 /**
  * [file-draggable]
@@ -35,6 +35,9 @@ export class FileDraggableDirective {
 
     files: File [];
 
+    @Input('file-draggable')
+    enabled: boolean = true;
+
     @Output()
     onFilesDropped: EventEmitter<any> = new EventEmitter();
 
@@ -53,7 +56,7 @@ export class FileDraggableDirective {
      */
     @HostListener('drop', ['$event'])
     onDropFiles(event: any): void {
-        if (!event.defaultPrevented) {
+        if (this.enabled && !event.defaultPrevented) {
             this.preventDefault(event);
 
             let items = event.dataTransfer.items;
@@ -102,7 +105,7 @@ export class FileDraggableDirective {
      */
     @HostListener('dragenter', ['$event'])
     onDragEnter(event: Event): void {
-        if (!event.defaultPrevented) {
+        if (this.enabled && !event.defaultPrevented) {
             this.preventDefault(event);
             this.inputFocusClass = true;
         }
@@ -115,7 +118,7 @@ export class FileDraggableDirective {
      */
     @HostListener('dragleave', ['$event'])
     onDragLeave(event: Event): void {
-        if (!event.defaultPrevented) {
+        if (this.enabled && !event.defaultPrevented) {
             this.preventDefault(event);
             this.inputFocusClass = false;
         }
@@ -128,7 +131,7 @@ export class FileDraggableDirective {
      */
     @HostListener('dragover', ['$event'])
     onDragOver(event: Event): void {
-        if (!event.defaultPrevented) {
+        if (this.enabled && !event.defaultPrevented) {
             this.preventDefault(event);
             this.inputFocusClass = true;
         }
