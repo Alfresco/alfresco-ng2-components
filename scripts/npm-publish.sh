@@ -70,7 +70,8 @@ while [[ $1 == -* ]]; do
       -h|--help|-\?) show_help; exit 0;;
       -t|--tag)  add_tag $2; shift 2;;
       -f|--force)  enable_force; shift;;
-      -r|--registry) get_token_registry $2; shift 2;;
+      -token) get_token_registry $2; shift 2;;
+      -r|--registry) enable_change_registry $2; shift 2;;
       -*) echo "invalid option: $1" 1>&2; show_help; exit 0;;
     esac
 done
@@ -96,7 +97,7 @@ do
   DESTDIR="$DIR/../ng2-components/${PACKAGE}"
   echo "====== MOVE DIR: ${DESTDIR} ===== "
   cd ${DESTDIR}
-  echo "====== INSTALL AND CLEAN ===== "
+  echo "====== INSTALL AND CLEAN ${PACKAGE} ===== "
   npm install rimraf
   npm run clean
   npm install
