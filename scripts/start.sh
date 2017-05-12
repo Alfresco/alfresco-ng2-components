@@ -7,7 +7,9 @@ eval EXEC_UPDATE=false
 eval EXEC_CLEAN=false
 eval EXEC_DEVELOP=false
 eval EXEC_VERSION=false
+eval ENABLE_DIST=false
 eval EXEC_GIT_NPM_INSTALL_JSAPI=false
+eval EXEC_VERSION_JSAPI=false
 eval JSAPI_VERSION=""
 eval NG2_COMPONENTS_VERSION=""
 eval GIT_ISH=""
@@ -34,6 +36,7 @@ show_help() {
     echo "Usage: start.sh"
     echo ""
     echo "-d or -develop start the demo shell using the relative ng2-components folder to link the components"
+    echo "-dist start the demo shell in dist mode"
     echo "-i or -install start the demo shell and install the dependencies"
     echo "-u or -update start the demo shell and update the dependencies"
     echo "-v or -version install different version of ng2_components from npm defined in the package.json this option is not compatible with -d"
@@ -53,6 +56,10 @@ update() {
 
 develop() {
     EXEC_DEVELOP=true
+}
+
+enable_dist() {
+    ENABLE_DIST=true
 }
 
 enable_js_api_git_link() {
@@ -111,6 +118,7 @@ while [[ $1  == -* ]]; do
       -d|--develop) develop; shift;;
       -r|--registry)  change_registry $2; shift 2;;
       -r|--version)  version_component $2; shift 2;;
+      -dist)  enable_dist; shift;;
       -gitjsapi)  enable_js_api_git_link $2; shift 2;;
       -vjsapi)  version_js_api $2; shift 2;;
       -*) shift;;
@@ -179,9 +187,28 @@ if $EXEC_VERSION_JSAPI == true; then
   npm install alfresco-js-api@${JSAPI_VERSION}
 fi
 
-if $EXEC_DEVELOP == false; then
-  echo "====== Start Demo shell ====="
+if $EXEC_DEVELOP == true; then
   cd "$DIR/../demo-shell-ng2"
-  npm run start
+    if $ENABLE_DIST == true; then
+        echo "====== Build and start dist Demo shell ====="
+        npm run build:dev
+        npm run start:dist
+    else
+        echo "====== Start Demo shell ====="
+        npm run start:dev
+    fi
+else
+  cd "$DIR/../demo-shell-ng2"
+
+  if $ENABLE_DIST == true; then
+    echo "====== Build and start dist Demo shell ====="
+    npm run build
+    npm run start:dist
+  else
+    echo "====== Start Demo shell dev mode====="
+    npm run start
+  fi
+
 fi
+
 

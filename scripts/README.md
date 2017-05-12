@@ -51,7 +51,13 @@ feel for what's available.
 * Start the demo in development mode building the relative folder ng2-components with all the components and pointing to this component instead to the node_modules one
 
 ```sh
-./start.sh -develop -d
+./start.sh -develop or -d
+```
+
+* Start the demo start the demo shell in dist mode
+
+```sh
+./start.sh -dist
 ```
 
 * If you want start the demo shell using an alfresco-js-api referenced by commit-ish version of the JS-API
