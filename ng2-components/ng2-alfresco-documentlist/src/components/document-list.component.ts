@@ -210,6 +210,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             this.setupDefaultColumns();
         }
 
+        // TODO: commented out as Permissions feature (Context Menus and Row Actions) breaks all component functionality
+        /*
         if (this.sorting) {
             const [ key, direction ] = this.sorting;
 
@@ -218,6 +220,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                 direction: direction || 'asc'
             });
         }
+        */
     }
 
     ngOnChanges(changes: SimpleChanges) {
