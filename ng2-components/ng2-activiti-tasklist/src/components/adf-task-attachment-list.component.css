@@ -6,10 +6,3 @@ alfresco-datatable >>> .column-header {
 alfresco-datatable >>> .data-cell {
     cursor: pointer !important;
 }
-
-alfresco-datatable >>> .cell-value{
-    width: 250px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis
-}

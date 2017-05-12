@@ -5,7 +5,8 @@
     (showRowActionsMenu)="onShowRowActionsMenu($event)"
     (executeRowAction)="onExecuteRowAction($event)">
     <data-columns>
-        <data-column key="name" type="text" title="Name" class="name-column" [sortable]="true"></data-column>
+        <data-column key="icon" type="image" srTitle="Thumbnail" [sortable]="false"></data-column>
+        <data-column key="name" type="text" title="Name" class="full-width ellipsis-cell" [sortable]="true"></data-column>
         <data-column key="created" type="date" format="shortDate" title="Date"></data-column>
     </data-columns>
 </alfresco-datatable>

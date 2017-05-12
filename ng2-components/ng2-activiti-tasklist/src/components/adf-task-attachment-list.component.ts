@@ -32,6 +32,9 @@ export class TaskAttachmentListComponent implements OnChanges {
     @Output()
     attachmentClick = new EventEmitter();
 
+    @Output()
+    success = new EventEmitter();
+
     attachments: any[] = [];
 
     constructor(private translateService: AlfrescoTranslationService,
@@ -43,8 +46,10 @@ export class TaskAttachmentListComponent implements OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
+        console.log(changes);
+        console.log(changes['taskId']);
         if (changes['taskId'] && changes['taskId'].currentValue) {
-            this.loadAttachmentsByTaskId(this.taskId);
+            this.loadAttachmentsByTaskId(changes['taskId'].currentValue);
         }
     }
 
@@ -62,10 +67,11 @@ export class TaskAttachmentListComponent implements OnChanges {
                             id: content.id,
                             name: content.name,
                             created: content.created,
-                            createdBy: content.createdBy.firstName + ' ' + content.createdBy.lastName
+                            createdBy: content.createdBy.firstName + ' ' + content.createdBy.lastName,
+                            icon: this.activitiContentService.getMimeTypeIcon(content.mimeType)
                         });
                     });
-
+                    this.success.emit(this.attachments);
                 });
         }
     }
@@ -103,7 +109,7 @@ export class TaskAttachmentListComponent implements OnChanges {
         }
     }
 
-    private openContent(event: any): void {
+    openContent(event: any): void {
         let content = event.value.obj;
         this.activitiContentService.getFileRawContent(content.id).subscribe(
             (blob: Blob) => {
