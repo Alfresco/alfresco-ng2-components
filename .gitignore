@@ -12,3 +12,4 @@ ng2-components/ng2-alfresco-userinfo-old/src/services/ecm-user.service.spec.ts
 src/environments/
 /ng2-components/ng2-example-webpack/
 /ng2-components/config/coverage/
+*.npmrc

@@ -3,6 +3,8 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 eval RUN_TEST=false
 eval EXEC_CLEAN=false
+eval EXEC_GIT_NPM_INSTALL_JSAPI=false
+eval GIT_ISH=""
 
 eval projects=( "ng2-alfresco-core"
     "ng2-alfresco-datatable"
@@ -21,11 +23,13 @@ eval projects=( "ng2-alfresco-core"
     "ng2-alfresco-viewer"
     "ng2-alfresco-webscript"
     "ng2-alfresco-userinfo" )
+
 show_help() {
     echo "Usage: npm-build-all.sh"
     echo ""
     echo "-t or -test build all your local component and run also the test on them"
-    echo "-c or -clean the ndode_moduels folder before to start the build"
+    echo "-c or -clean the node_modules folder before to start the build"
+    echo "-gitjsapi to build all the components against a commit-ish version of the JS-API"
 }
 
 enable_test(){
@@ -37,6 +41,11 @@ test_project() {
     npm run test -- --component $1 || exit 1
 }
 
+enable_js_api_git_link() {
+    GIT_ISH='git://github.com/Alfresco/alfresco-js-api.git#'$1
+    EXEC_GIT_NPM_INSTALL_JSAPI=true
+}
+
 clean() {
     EXEC_CLEAN=true
 }
@@ -45,6 +54,8 @@ while [[ $1 == -* ]]; do
     case "$1" in
       -h|--help|-\?) show_help; exit 0;;
       -t|--test)  enable_test; shift;;
+      -gitjsapi)  enable_js_api_git_link $2; shift 2;;
+      -v|--version)  install_version_pacakge $2; shift 2;;
       -c|--clean)  clean; shift;;
       -*) echo "invalid option: $1" 1>&2; show_help; exit 1;;
     esac
@@ -64,6 +75,14 @@ npm run pkg-build
 
 echo "====== Install ng2-components dependencies ====="
 npm install
+
+if $EXEC_GIT_NPM_INSTALL_JSAPI == true; then
+  echo "====== Use the alfresco JS-API  '$GIT_ISH'====="
+  npm install $GIT_ISH
+  cd "$DIR/../ng2-components/node_modules/alfresco-js-api"
+  npm install
+  cd "$DIR/../ng2-components/"
+fi
 
 echo "====== Build ng2-components ====="
 npm run build || exit 1
