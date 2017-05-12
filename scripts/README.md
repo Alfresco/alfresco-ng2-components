@@ -38,7 +38,7 @@ feel for what's available.
 
 ```sh
 ./start.sh -update or -u
-``
+```
 
 * Install a different version of the ng2-components specified in the package.json his option is not compatible with -d
 
@@ -93,9 +93,9 @@ feel for what's available.
 
 ```sh
 ./npm-buid-all.sh -c
-```* 
+```
 
-If you want build to build all the components against a commit-ish version of the JS-API
+* If you want build to build all the components against a commit-ish version of the JS-API
 
 ```sh
  ./npm-buid-all.sh -gitjsapi commit-ish
