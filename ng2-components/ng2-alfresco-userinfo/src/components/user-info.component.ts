@@ -56,7 +56,7 @@ export class UserInfoComponent implements OnInit {
         if (translateService) {
             translateService.addTranslationFolder('ng2-alfresco-userinfo', 'node_modules/ng2-alfresco-userinfo/src');
         }
-        authService.loginSubject.subscribe((response) => {
+        authService.onLogin.subscribe((response) => {
             this.getUserInfo();
         });
     }
