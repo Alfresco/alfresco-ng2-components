@@ -105,6 +105,20 @@ feel for what's available.
  ./npm-build-all.sh -gitjsapi de92be966e2ce7eca642ca9e9d7647ba4f849356
 ```
 
+* If you want avoid initial build and run only all the test
+
+```sh
+./npm-buid-all.sh -s -t
+```
+
+* If you want test in less time (high memoery consumign less detail)
+
+```sh
+./npm-buid-all.sh -ft //test and build
+
+./npm-buid-all.sh -s -ft //only test
+```
+
 * If you want clean all your local component and the demo shell:
 
 ```sh
