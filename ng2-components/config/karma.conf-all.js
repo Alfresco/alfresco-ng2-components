@@ -7,14 +7,14 @@ module.exports = function (config) {
         frameworks: ['jasmine-ajax', 'jasmine'],
 
         files: [
-            {pattern: './node_modules/hammerjs/hammer.js', included: true, watched: false},
+            {pattern: './node_modules/hammerjs/hammer.min.js', included: true, watched: false},
 
             //diagrams
             {pattern: './node_modules/chart.js/dist/Chart.js', included: true, watched: false},
-            {pattern: './node_modules/alfresco-js-api/dist/alfresco-js-api.js', included: true, watched: false},
-            {pattern: './node_modules/raphael/raphael.js', included: true, watched: false},
+            {pattern: './node_modules/alfresco-js-api/dist/alfresco-js-api.min.js', included: true, watched: false},
+            {pattern: './node_modules/raphael/raphael.min.js', included: true, watched: false},
             {pattern: './node_modules/moment/min/moment.min.js', included: true, watched: false},
-            {pattern: './node_modules/md-date-time-picker/dist/js/mdDateTimePicker.js', included: true, watched: false},
+            {pattern: './node_modules/md-date-time-picker/dist/js/mdDateTimePicker.min.js', included: true, watched: false},
 
             {pattern: './node_modules/ng2-translate/ng2-translate.js', included: false, watched: false},
             {pattern: './node_modules/ng2-charts/bundles/ng2-charts.umd.js', included: false, served: true, watched: false},

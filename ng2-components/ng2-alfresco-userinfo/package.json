@@ -97,14 +97,5 @@
     "userinfo",
     "alfresco-component"
   ],
-  "license-check-config": {
-    "src": [
-      "./src/**/*.ts"
-    ],
-    "path": "assets/license_header.txt",
-    "blocking": true,
-    "logInfo": false,
-    "logError": true
-  },
   "license": "Apache-2.0"
 }

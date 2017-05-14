@@ -10,6 +10,7 @@
     "test-browser": "karma start karma.conf.js --reporters kjhtml",
     "coverage": "",
     "prepublish": "",
+    "rimraf": "rimraf",
     "pkg-build": "package-json-merge ng2-alfresco-core/package.json ng2-alfresco-datatable/package.json ng2-activiti-diagrams/package.json ng2-activiti-analytics/package.json ng2-activiti-form/package.json ng2-activiti-tasklist/package.json ng2-activiti-processlist/package.json ng2-alfresco-documentlist/package.json ng2-alfresco-login/package.json ng2-alfresco-search/package.json ng2-alfresco-tag/package.json ng2-alfresco-upload/package.json ng2-alfresco-viewer/package.json ng2-alfresco-webscript/package.json ng2-alfresco-webscript/package.json ng2-alfresco-userinfo/package.json ng2-alfresco-social/package.json package-base.json  > package.json",
     "tslint": "",
     "tsc": "",
@@ -25,7 +26,6 @@
   "bugs": {
     "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
   },
-  "license": "Apache-2.0",
   "contributors": {
     "0": {
       "name": "Eugenio Romano",
@@ -144,15 +144,7 @@
     "wsrv": "^0.1.7",
     "license-check": "1.1.5"
   },
-  "license-check-config": {
-    "src": {
-      "0": "./src/**/*.ts"
-    },
-    "path": "assets/license_header.txt",
-    "blocking": true,
-    "logInfo": false,
-    "logError": true
-  },
+  "license": "Apache-2.0",
   "module": "./index.js",
   "typings": "./index.d.ts"
 }

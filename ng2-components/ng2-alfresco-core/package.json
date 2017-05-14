@@ -5,7 +5,6 @@
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "clean": "rimraf dist node_modules typings bundles coverage .npmrc",
-    "rimraf": "rimraf",
     "build": "webpack --config webpack.build.js --progress --profile --bail",
     "test": "karma start karma.conf.js --reporters mocha,coverage --single-run --component",
     "test-browser": "karma start karma.conf.js --reporters kjhtml --component",
@@ -20,7 +19,6 @@
   "bugs": {
     "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
   },
-  "license": "Apache-2.0",
   "contributors": [
     {
       "name": "Denys Vuika",
@@ -120,13 +118,5 @@
     "webpack-merge": "2.6.1",
     "wsrv": "^0.1.7"
   },
-  "license-check-config": {
-    "src": [
-      "./src/**/*.ts"
-    ],
-    "path": "assets/license_header.txt",
-    "blocking": true,
-    "logInfo": false,
-    "logError": true
-  }
+  "license": "Apache-2.0"
 }

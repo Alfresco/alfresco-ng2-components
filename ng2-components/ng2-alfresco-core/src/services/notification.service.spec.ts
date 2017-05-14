@@ -47,14 +47,13 @@ describe('NotificationService', () => {
 
         it('should open a message notification bar', (done) => {
             let promise = fixture.componentInstance.sendMessage();
+            promise.afterDismissed().subscribe(() => {
+                done();
+            });
 
             fixture.detectChanges();
 
             expect(document.querySelector('snack-bar-container')).not.toBeNull();
-
-            promise.afterDismissed().subscribe(() => {
-                done();
-            });
         });
     });
 
@@ -62,15 +61,14 @@ describe('NotificationService', () => {
 
         it('should open a message notification bar with action', (done) => {
             let promise = fixture.componentInstance.sendMessageAction();
+            promise.afterDismissed().subscribe(() => {
+                done();
+            });
 
             fixture.detectChanges();
 
             expect(document.querySelector('snack-bar-container')).not.toBeNull();
             expect(document.querySelector('.md-simple-snackbar-action')).not.toBeNull();
-
-            promise.afterDismissed().subscribe(() => {
-                done();
-            });
         });
     });
 
@@ -86,12 +84,12 @@ class ComponentThatProvidesNotificationService {
     }
 
     sendMessage() {
-        let promise = this.notificationService.openSnackMessage('Test notification', 2000);
+        let promise = this.notificationService.openSnackMessage('Test notification', 5000);
         return promise;
     }
 
     sendMessageAction() {
-        let promise = this.notificationService.openSnackMessageAction('Test notification', 'TestWarn', 2000);
+        let promise = this.notificationService.openSnackMessageAction('Test notification', 'TestWarn', 5000);
         return promise;
     }
 
