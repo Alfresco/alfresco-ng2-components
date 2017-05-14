@@ -26,18 +26,12 @@ import { WidgetComponent } from './../widget.component';
 export class TextWidget extends WidgetComponent implements OnInit {
 
     private mask;
+    private isMaskReversed;
 
     ngOnInit() {
         if (this.field.params && this.field.params['inputMask']) {
-            let inputMask = this.field.params['inputMask'];
-            let isReversed = this.field.params['inputMaskReversed'] ? this.field.params['inputMaskReversed'] : false;
-            this.mask = isReversed ? this.reverseMask(inputMask) : inputMask;
+            this.mask = this.field.params['inputMask'];
+            this.isMaskReversed = this.field.params['inputMaskReversed'] ? this.field.params['inputMaskReversed'] : false;
         }
-    }
-
-    private reverseMask(inputMask: string) {
-        return inputMask.replace(/[A-Za-z0-9]+/, function (s) {
-            return s.split('').reverse().join('');
-        });
     }
 }

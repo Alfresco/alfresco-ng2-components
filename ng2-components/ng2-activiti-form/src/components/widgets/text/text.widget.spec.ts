@@ -16,6 +16,12 @@
  */
 
 import { TextWidget } from './text.widget';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { CoreModule } from 'ng2-alfresco-core';
+import { InputMaskDirective } from './text-mask.component';
+import { FormFieldModel } from '../core/form-field.model';
+import { FormModel } from '../core/form.model';
+import { FormFieldTypes } from '../core/form-field-types';
 
 describe('TextWidget', () => {
 
@@ -25,11 +31,59 @@ describe('TextWidget', () => {
     beforeEach(() => {
         widget = new TextWidget();
 
-        componentHandler =  jasmine.createSpyObj('componentHandler', [
+        componentHandler = jasmine.createSpyObj('componentHandler', [
             'upgradeAllRegistered'
         ]);
 
         window['componentHandler'] = componentHandler;
+    });
+
+    describe('when template is ready', () => {
+        let textWidget: TextWidget;
+        let fixture: ComponentFixture<TextWidget>;
+        let element: HTMLElement;
+        let componentHandler;
+
+        beforeEach(async(() => {
+            componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
+            window['componentHandler'] = componentHandler;
+            TestBed.configureTestingModule({
+                imports: [CoreModule],
+                declarations: [TextWidget, InputMaskDirective]
+            }).compileComponents().then(() => {
+                fixture = TestBed.createComponent(TextWidget);
+                textWidget = fixture.componentInstance;
+                element = fixture.nativeElement;
+            });
+        }));
+
+        afterEach(() => {
+            fixture.destroy();
+            TestBed.resetTestingModule();
+        });
+
+        describe('and typeahead is populated via taskId', () => {
+
+            beforeEach(() => {
+                textWidget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                    id: 'text-id',
+                    name: 'text-name',
+                    value: '',
+                    params: { inputMask: '##-##0,00%' },
+                    type: FormFieldTypes.TEXT,
+                    readOnly: false
+                });
+                textWidget.field.isVisible = true;
+                fixture.detectChanges();
+            });
+
+            fit('should show visible typeahead widget', () => {
+                expect(element.querySelector('#typeahead-id')).toBeDefined();
+                expect(element.querySelector('#typeahead-id')).not.toBeNull();
+            });
+
+        });
+
     });
 
 });
