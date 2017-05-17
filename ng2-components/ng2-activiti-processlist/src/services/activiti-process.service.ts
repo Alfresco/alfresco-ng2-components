@@ -18,6 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
+import { RestVariable } from 'alfresco-js-api';
 import { ProcessInstance, ProcessDefinitionRepresentation } from '../models/index';
 import { ProcessFilterRequestRepresentation } from '../models/process-instance-filter.model';
 import { ProcessInstanceVariable } from './../models/process-instance-variable.model';
@@ -277,7 +278,7 @@ export class ActivitiProcessService {
             .catch(err => this.handleError(err));
     }
 
-    startProcess(processDefinitionId: string, name: string, outcome?: string, startFormValues?: any): Observable<ProcessInstance> {
+    startProcess(processDefinitionId: string, name: string, outcome?: string, startFormValues?: any, variables?: RestVariable): Observable<ProcessInstance> {
         let startRequest: any = {
             name: name,
             processDefinitionId: processDefinitionId
@@ -287,6 +288,9 @@ export class ActivitiProcessService {
         }
         if (startFormValues) {
             startRequest.values = startFormValues;
+        }
+        if (variables) {
+            startRequest.variables = variables;
         }
         return Observable.fromPromise(
             this.apiService.getInstance().activiti.processApi.startNewProcessInstance(startRequest)
