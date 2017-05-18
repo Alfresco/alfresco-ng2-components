@@ -168,6 +168,28 @@ export class AlfrescoAuthenticationService {
     }
 
     /**
+     * Get the ECM username
+     *
+     * @returns {string} The username value
+     *
+     * @memberof AlfrescoAuthenticationService
+     */
+    getEcmUsername(): string {
+        return this.alfrescoApi.getInstance().ecmAuth.username;
+    }
+
+    /**
+     * Get the BPM username
+     *
+     * @returns {string} The username value
+     *
+     * @memberof AlfrescoAuthenticationService
+     */
+    getBpmUsername(): string {
+        return this.alfrescoApi.getInstance().bpmAuth.username;
+    }
+
+    /**
      * The method write the error in the console browser
      * @param error
      * @returns {ErrorObservable}
