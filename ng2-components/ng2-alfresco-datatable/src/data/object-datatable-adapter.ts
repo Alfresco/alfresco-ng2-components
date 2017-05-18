@@ -111,7 +111,23 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
             }
         }
 
+        if (col.type === 'image') {
+
+            if (col.key === 'icon') {
+
+                let icon = this.getImagePath(row.getValue('icon'));
+                if (icon) {
+                    return icon;
+                }
+                return this.getImagePath('ft_ic_miscellaneous.svg');
+            }
+        }
+
         return value;
+    }
+
+    getImagePath(id: string): any {
+        return require('./../assets/images/' + id);
     }
 
     getSorting(): DataSorting {

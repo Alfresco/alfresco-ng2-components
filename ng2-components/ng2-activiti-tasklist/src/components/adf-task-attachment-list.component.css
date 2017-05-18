@@ -1,0 +1,8 @@
+alfresco-datatable >>> .column-header {
+    color: #232323;
+    font-size: 15px;
+}
+
+alfresco-datatable >>> .data-cell {
+    cursor: pointer !important;
+}
