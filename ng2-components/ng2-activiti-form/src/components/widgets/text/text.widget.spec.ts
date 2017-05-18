@@ -41,7 +41,7 @@ describe('TextWidget', () => {
     describe('when template is ready', () => {
         let textWidget: TextWidget;
         let fixture: ComponentFixture<TextWidget>;
-        let element: HTMLElement;
+        let element: HTMLInputElement;
         let componentHandler;
 
         beforeEach(async(() => {
@@ -57,12 +57,9 @@ describe('TextWidget', () => {
             });
         }));
 
-        afterEach(() => {
-            fixture.destroy();
-            TestBed.resetTestingModule();
-        });
+        describe('and mask is configured on text element', () => {
 
-        describe('and typeahead is populated via taskId', () => {
+            let inputElement: HTMLInputElement;
 
             beforeEach(() => {
                 textWidget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
@@ -73,17 +70,106 @@ describe('TextWidget', () => {
                     type: FormFieldTypes.TEXT,
                     readOnly: false
                 });
-                textWidget.field.isVisible = true;
                 fixture.detectChanges();
+                inputElement = <HTMLInputElement>element.querySelector('#text-id');
             });
 
-            fit('should show visible typeahead widget', () => {
-                expect(element.querySelector('#typeahead-id')).toBeDefined();
-                expect(element.querySelector('#typeahead-id')).not.toBeNull();
+            it('should show text widget', () => {
+                expect(element.querySelector('#text-id')).toBeDefined();
+                expect(element.querySelector('#text-id')).not.toBeNull();
             });
 
+            it('should prevent text to be written if is not allowed by the mask on keyUp event', async(() => {
+                expect(element.querySelector('#text-id')).not.toBeNull();
+                inputElement.value = 'F';
+                textWidget.field.value = 'F';
+                let event: any = new Event('keyup');
+                event.keyCode = '70';
+                inputElement.dispatchEvent(event);
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    inputElement = <HTMLInputElement>element.querySelector('#text-id');
+                    expect(inputElement.value).toBe('');
+                });
+            }));
+
+            it('should prevent text to be written if is not allowed by the mask on input event', async(() => {
+                expect(element.querySelector('#text-id')).not.toBeNull();
+                inputElement.value = 'F';
+                textWidget.field.value = 'F';
+                inputElement.dispatchEvent(new Event('input'));
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    inputElement = <HTMLInputElement>element.querySelector('#text-id');
+                    expect(inputElement.value).toBe('');
+                });
+            }));
+
+            it('should allow masked configured value on keyUp event', async(() => {
+                expect(element.querySelector('#text-id')).not.toBeNull();
+                inputElement.value = '1';
+                textWidget.field.value = '1';
+                let event: any = new Event('keyup');
+                event.keyCode = '49';
+                inputElement.dispatchEvent(event);
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    let inputElement: HTMLInputElement = <HTMLInputElement>element.querySelector('#text-id');
+                    console.log(inputElement);
+                    expect(inputElement.value).toBe('1');
+                });
+            }));
+
+            it('should autofill masked configured value on keyUp event', async(() => {
+                expect(element.querySelector('#text-id')).not.toBeNull();
+                inputElement.value = '12345678';
+                textWidget.field.value = '12345678';
+                let event: any = new Event('keyup');
+                event.keyCode = '49';
+                inputElement.dispatchEvent(event);
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    let inputElement: HTMLInputElement = <HTMLInputElement>element.querySelector('#text-id');
+                    console.log(inputElement.value);
+                    expect(inputElement.value).toBe('12-345,67%');
+                });
+            }));
         });
 
+        describe('when the mask is reversed ', () => {
+
+            let inputElement: HTMLInputElement;
+
+            beforeEach(() => {
+                textWidget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                    id: 'text-id',
+                    name: 'text-name',
+                    value: '',
+                    params: { existingColspan: 1, maxColspan: 2, inputMask: "#.##0,00%", inputMaskReversed: true },
+                    type: FormFieldTypes.TEXT,
+                    readOnly: false
+                });
+                fixture.detectChanges();
+                inputElement = <HTMLInputElement>element.querySelector('#text-id');
+            });
+
+            it('should be able to apply the mask reversed', async(() => {
+                expect(element.querySelector('#text-id')).not.toBeNull();
+                inputElement.value = '1234';
+                textWidget.field.value = '1234';
+                let event: any = new Event('keyup');
+                event.keyCode = '49';
+                inputElement.dispatchEvent(event);
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    let inputElement: HTMLInputElement = <HTMLInputElement>element.querySelector('#text-id');
+                    console.log(inputElement.value);
+                    expect(inputElement.value).toBe('12,34%');
+                });
+            }));
+        });
     });
 
 });

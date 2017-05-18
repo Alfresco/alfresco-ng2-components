@@ -54,6 +54,7 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
 
     private byPassKeys = [9, 16, 17, 18, 36, 37, 38, 39, 40, 91];
     private value;
+    private invalidCharacters = [];
 
     constructor(private el: ElementRef, private render: Renderer) {
     }
@@ -64,7 +65,8 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
     _onTouched = () => {
     }
 
-    @HostListener('keyup', ['$event']) onInputTextInput(event: KeyboardEvent) {
+    @HostListener('input', ['$event'])
+    @HostListener('keyup', ['$event']) onTextInput(event: KeyboardEvent) {
         if (this.inputMask && this.inputMask.mask) {
             this.maskValue(this.el.nativeElement.value, this.el.nativeElement.selectionStart,
                 this.inputMask.mask, this.inputMask.isReversed, event.keyCode);
@@ -91,11 +93,9 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
     }
 
     private maskValue(actualValue, startCaret, maskToApply, isMaskReversed, keyCode) {
-        console.log('======================================================================');
-        console.log('actualValue : ' + actualValue);
-        console.log('maskToApply : ' + maskToApply);
         if (this.byPassKeys.indexOf(keyCode) === -1) {
             let value = this.getMasked(false, actualValue, maskToApply, isMaskReversed);
+            console.log('CALCULATED VALUE : ' + value);
             let calculatedCaret = this.calculateCaretPosition(startCaret, actualValue, keyCode);
             this.render.setElementAttribute(this.el.nativeElement, 'value', value);
             this.el.nativeElement.value = value;
@@ -103,16 +103,11 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
             this._onChange(value);
             this.setCaretPosition(calculatedCaret);
         }
-        console.log('======================================================================+');
     }
 
     private setCaretPosition(caretPosition) {
-        setTimeout(() => {
-            this.el.nativeElement.moveStart = caretPosition;
-            this.el.nativeElement.selectionStart = caretPosition;
-            this.el.nativeElement.moveEnd = caretPosition;
-            this.el.nativeElement.selectionEnd = caretPosition;
-        }, 60);
+        this.el.nativeElement.moveStart = caretPosition;
+        this.el.nativeElement.moveEnd = caretPosition;
     }
 
     calculateCaretPosition(caretPosition, newValue, keyCode) {
@@ -120,29 +115,27 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
         let oldValue = this.getValue() || '';
         let oldValueLength = oldValue.length;
 
-        // edge cases when erasing digits
         if (keyCode === 8 && oldValue !== newValue) {
             caretPosition = caretPosition - (newValue.slice(0, caretPosition).length - oldValue.slice(0, caretPosition).length);
-
-            // edge cases when typing new digits
         } else if (oldValue !== newValue) {
-            // if the cursor is at the end keep it there
             if (caretPosition >= oldValueLength) {
                 caretPosition = newValueLength;
             } else {
                 caretPosition = caretPosition + (newValue.slice(0, caretPosition).length - oldValue.slice(0, caretPosition).length);
             }
         }
-
         return caretPosition;
     }
 
     getMasked(skipMaskChars, val, mask, isReversed = false) {
         let buf = [],
             value = val,
-            m = 0, maskLen = mask.length,
-            v = 0, valLen = value.length,
-            offset = 1, addMethod = 'push',
+            maskIndex = 0,
+            maskLen = mask.length,
+            valueIndex = 0,
+            valueLength = value.length,
+            offset = 1,
+            addMethod = 'push',
             resetPos = -1,
             lastMaskChar,
             check;
@@ -151,22 +144,16 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
             addMethod = 'unshift';
             offset = -1;
             lastMaskChar = 0;
-            m = maskLen - 1;
-            v = valLen - 1;
-            check = function () {
-                return m > -1 && v > -1;
-            };
+            maskIndex = maskLen - 1;
+            valueIndex = valueLength - 1;
         } else {
             lastMaskChar = maskLen - 1;
-            check = function () {
-                return m < maskLen && v < valLen;
-            };
         }
-
+        check = this.isToCheck(isReversed, maskIndex, maskLen, valueIndex, valueLength);
         let lastUntranslatedMaskChar;
-        while (check()) {
-            let maskDigit = mask.charAt(m),
-                valDigit = value.charAt(v),
+        while (check) {
+            let maskDigit = mask.charAt(maskIndex),
+                valDigit = value.charAt(valueIndex),
                 translation = this.translationMask[maskDigit];
 
             if (translation) {
@@ -174,54 +161,58 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
                     buf[addMethod](valDigit);
                     if (translation.recursive) {
                         if (resetPos === -1) {
-                            resetPos = m;
-                        } else if (m === lastMaskChar) {
-                            m = resetPos - offset;
+                            resetPos = maskIndex;
+                        } else if (maskIndex === lastMaskChar) {
+                            maskIndex = resetPos - offset;
                         }
-
                         if (lastMaskChar === resetPos) {
-                            m -= offset;
+                            maskIndex -= offset;
                         }
                     }
-                    m += offset;
+                    maskIndex += offset;
                 } else if (valDigit === lastUntranslatedMaskChar) {
-                    // matched the last untranslated (raw) mask character that we encountered
-                    // likely an insert offset the mask character from the last entry; fall
-                    // through and only increment v
                     lastUntranslatedMaskChar = undefined;
                 } else if (translation.optional) {
-                    m += offset;
-                    v -= offset;
-                } else if (translation.fallback) {
-                    buf[addMethod](translation.fallback);
-                    m += offset;
-                    v -= offset;
+                    maskIndex += offset;
+                    valueIndex -= offset;
                 } else {
-                    // p.invalid.push({ p: v, v: valDigit, e: translation.pattern });
-                    console.log('INVALID CHAR');
+                    this.invalidCharacters.push({
+                        index: valueIndex,
+                        digit: valDigit,
+                        translated: translation.pattern
+                    });
                 }
-                v += offset;
+                valueIndex += offset;
             } else {
                 if (!skipMaskChars) {
                     buf[addMethod](maskDigit);
                 }
-
                 if (valDigit === maskDigit) {
-                    v += offset;
+                    valueIndex += offset;
                 } else {
                     lastUntranslatedMaskChar = maskDigit;
                 }
-
-                m += offset;
+                maskIndex += offset;
             }
+            check = this.isToCheck(isReversed, maskIndex, maskLen, valueIndex, valueLength);
         }
 
         let lastMaskCharDigit = mask.charAt(lastMaskChar);
-        if (maskLen === valLen + 1 && !this.translationMask[lastMaskCharDigit]) {
+        if (maskLen === valueLength + 1 && !this.translationMask[lastMaskCharDigit]) {
             buf.push(lastMaskCharDigit);
         }
 
         return buf.join('');
+    }
+
+    private isToCheck(isReversed, maskIndex, maskLen, valueIndex, valueLength) {
+        let check = false;
+        if (isReversed) {
+            check = maskIndex > -1 && valueIndex > -1;
+        } else {
+            check = maskIndex < maskLen && valueIndex < valueLength;
+        }
+        return check;
     }
 
     private setValue(value) {
