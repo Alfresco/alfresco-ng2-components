@@ -98,6 +98,18 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
                                 this.hasFile = false;
                             }
                             break;
+                        case FormFieldTypes.DOCUMENT:
+                            console.log('document');
+                            const file = this.field.value;
+                            if (file) {
+                                this.value = decodeURI(file.name);
+                                this.id = file.id;
+                                this.hasFile = true;
+                            } else {
+                                this.value = null;
+                                this.hasFile = false;
+                            }
+                            break;
                         case FormFieldTypes.TYPEAHEAD:
                             this.loadRestFieldValue();
                             break;

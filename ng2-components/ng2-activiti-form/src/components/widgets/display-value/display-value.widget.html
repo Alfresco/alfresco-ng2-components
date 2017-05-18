@@ -51,6 +51,11 @@
             </div>
         </div>
     </div>
+    <div *ngSwitchCase="'document'">
+        <div *ngIf="hasFile">
+            <activiti-content [id]="id" [showDocumentContent]="true"></activiti-content>
+        </div>
+    </div>
     <div *ngSwitchDefault
          class="mdl-textfield mdl-js-textfield text-widget is-disabled is-dirty is-upgraded">
         <label [attr.for]="field.id">{{field.name}}</label>
