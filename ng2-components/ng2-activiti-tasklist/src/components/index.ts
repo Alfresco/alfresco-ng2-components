@@ -19,6 +19,7 @@ export * from './activiti-apps.component';
 export * from './activiti-tasklist.component';
 export * from './activiti-checklist.component';
 export * from './activiti-comments.component';
+export * from './adf-task-attachment-list.component';
 export * from './activiti-people.component';
 export * from './activiti-task-header.component';
 export * from './no-task-detail-template.component';

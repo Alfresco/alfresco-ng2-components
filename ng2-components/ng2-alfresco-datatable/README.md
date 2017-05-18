@@ -228,6 +228,7 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | `data` | DataTableAdapter | instance of **ObjectDataTableAdapter** | data source |
+| `rows` | Object[] | [] | The rows that the datatable should show |
 | `multiselect` | boolean | false | Toggles multiple row selection, renders checkboxes at the beginning of each row |
 | `actions` | boolean | false | Toggles data actions column |
 | `actionsPosition` | string (left\|right) | right | Position of the actions dropdown menu. | 
