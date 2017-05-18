@@ -76,14 +76,14 @@ export class UploadDragAreaComponent {
      * Handles 'upload-files' events raised by child components.
      * @param e DOM event
      */
-    onUploadFiles(e: CustomEvent) {
-        e.stopPropagation();
-        e.preventDefault();
+    onUploadFiles(event: CustomEvent) {
+        event.stopPropagation();
+        event.preventDefault();
         if (!this.disabled) {
-            let files = e.detail.files;
+            let files = event.detail.files;
             if (files && files.length > 0) {
-                if (e.detail.data.obj.entry.isFolder) {
-                    let id = e.detail.data.obj.entry.id;
+                if (event.detail.data.obj.entry.isFolder) {
+                    let id = event.detail.data.obj.entry.id;
                     this.onFilesDropped(files, id, '/');
                 } else {
                     this.onFilesDropped(files);
