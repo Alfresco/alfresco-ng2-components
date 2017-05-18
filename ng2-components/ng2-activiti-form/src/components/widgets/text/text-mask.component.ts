@@ -74,7 +74,6 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        console.log(changes);
         if (changes['inputMask'] && changes['inputMask'].currentValue['mask']) {
             this.inputMask = changes['inputMask'].currentValue;
         }
@@ -95,7 +94,6 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
     private maskValue(actualValue, startCaret, maskToApply, isMaskReversed, keyCode) {
         if (this.byPassKeys.indexOf(keyCode) === -1) {
             let value = this.getMasked(false, actualValue, maskToApply, isMaskReversed);
-            console.log('CALCULATED VALUE : ' + value);
             let calculatedCaret = this.calculateCaretPosition(startCaret, actualValue, keyCode);
             this.render.setElementAttribute(this.el.nativeElement, 'value', value);
             this.el.nativeElement.value = value;
@@ -138,6 +136,7 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
             addMethod = 'push',
             resetPos = -1,
             lastMaskChar,
+            lastUntranslatedMaskChar,
             check;
 
         if (isReversed) {
@@ -150,7 +149,6 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
             lastMaskChar = maskLen - 1;
         }
         check = this.isToCheck(isReversed, maskIndex, maskLen, valueIndex, valueLength);
-        let lastUntranslatedMaskChar;
         while (check) {
             let maskDigit = mask.charAt(maskIndex),
                 valDigit = value.charAt(valueIndex),
