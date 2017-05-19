@@ -2,11 +2,6 @@ const webpack = require('webpack');
 const helpers = require('./helpers');
 const fs = require('fs');
 const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-var HappyPack = require('happypack');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
-
-const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
 
 module.exports = {
 
@@ -17,16 +12,22 @@ module.exports = {
         }
     },
 
-    resolve: {
-        alias: {
-            "ng2-alfresco-core": helpers.root('../ng2-alfresco-core/index.ts'),
-            "ng2-alfresco-datatable": helpers.root('../ng2-alfresco-datatable/index.ts'),
-            "ng2-alfresco-documentlist": helpers.root('../ng2-alfresco-documentlist/index.ts')
-        },
-        extensions: ['.ts', '.js'],
-        symlinks: false,
-        modules: [helpers.root('../../ng2-components'), helpers.root('node_modules')]
-    },
+    // require those dependencies but don't bundle them
+    externals: [
+        /^\@angular\//,
+        /^rxjs\//,
+        'moment',
+        'raphael',
+        'ng2-charts',
+        'alfresco-js-api',
+        'ng2-alfresco-core',
+        'ng2-alfresco-datatable',
+        'ng2-activiti-analytics',
+        'ng2-activiti-diagrams',
+        'ng2-activiti-form',
+        "ng2-activiti-tasklist",
+        'ng2-alfresco-documentlist'
+    ],
 
     module: {
         rules: [
@@ -39,17 +40,22 @@ module.exports = {
             {
                 enforce: 'pre',
                 test: /\.ts$/,
+                use: 'source-map-loader',
+                exclude: [/node_modules/, /bundles/, /dist/, /demo/]
+            },
+            {
+                enforce: 'pre',
+                test: /\.ts$/,
                 loader: 'tslint-loader',
                 options: {
                     emitErrors: true,
-                    failOnHint: true,
-                    fix: true
+                    configFile: path.resolve(__dirname, './assets/tslint.json')
                 },
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
             },
             {
                 test: /\.ts$/,
-                loader: ['happypack/loader?id=ts', 'angular2-template-loader'],
+                use: ['ts-loader', 'angular2-template-loader'],
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
             },
             {
@@ -63,17 +69,8 @@ module.exports = {
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
             },
             {
-                test: /\.scss$/,
-                use: [{
-                    loader: "to-string-loader"
-                }, {
-                    loader: "raw-loader"
-                }, {
-                    loader: "sass-loader",
-                    options: {
-                        includePaths: [ path.resolve(__dirname, '../../ng2-alfresco-core/styles')]
-                    }
-                }],
+                test: /\.component.scss$/,
+                use: ['to-string-loader', 'raw-loader', 'sass-loader'],
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
             },
             {
@@ -104,29 +101,15 @@ module.exports = {
         ]
     },
 
+    resolve: {
+        extensions: ['.ts', '.js'],
+        symlinks: false,
+        modules: [
+            '../ng2-components', 'node_modules'
+        ]
+    },
+
     plugins: [
-        new ForkTsCheckerWebpackPlugin(),
-        new HappyPack({
-            id: 'ts',
-            threads: 8,
-            loaders: [
-                {
-                    path: 'ts-loader',
-                    query: {
-                        happyPackMode: true,
-                        "compilerOptions": {
-                            "paths": {}
-                        }
-                    }
-                }
-            ]
-        }),
-
-        new CopyWebpackPlugin([{
-            from: `src/i18n/`,
-            to: `bundles/assets/${path.basename(helpers.root(''))}/i18n/`
-        }]),
-
         new webpack.NoEmitOnErrorsPlugin(),
 
         new webpack.BannerPlugin(fs.readFileSync(path.resolve(__dirname, './assets/license_header_add.txt'), 'utf8')),
@@ -135,18 +118,10 @@ module.exports = {
             /angular(\\|\/)core(\\|\/)@angular/,
             helpers.root('./src'),
             {}
-        ),
-        new webpack.DefinePlugin({
-            'process.env': {
-                'ENV': JSON.stringify(ENV)
-            }
-        }),
-        new webpack.LoaderOptionsPlugin({
-                htmlLoader: {
-                    minimize: false // workaround for ng2
-                }
-        })
+        )
     ],
+
+    devtool: 'cheap-module-source-map',
 
     node: {
         fs: 'empty',
