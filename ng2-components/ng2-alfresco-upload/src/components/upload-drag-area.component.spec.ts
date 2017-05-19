@@ -65,26 +65,6 @@ describe('UploadDragAreaComponent', () => {
         TestBed.resetTestingModule();
     });
 
-    it('should show an folder non supported error in console when the file type is empty', () => {
-        component.showNotificationBar = false;
-        spyOn(logService, 'error');
-
-        let fileFake = new File([''], 'folder-fake', {type: ''});
-        component.onFilesDropped([fileFake]);
-
-        expect(logService.error).toHaveBeenCalledWith('FILE_UPLOAD.MESSAGES.FOLDER_NOT_SUPPORTED');
-    });
-
-    it('should show an folder non supported error in the notification bar when the file type is empty', () => {
-        component.showErrorNotificationBar = jasmine.createSpy('_showErrorNotificationBar');
-        component.showNotificationBar = true;
-
-        let fileFake = new File([''], 'folder-fake', {type: ''});
-        component.onFilesDropped([fileFake]);
-
-        expect(component.showErrorNotificationBar).toHaveBeenCalledWith('FILE_UPLOAD.MESSAGES.FOLDER_NOT_SUPPORTED');
-    });
-
     it('should upload the list of files dropped', () => {
         component.currentFolderPath = '/root-fake-/sites-fake/folder-fake';
         component.onSuccess = null;
