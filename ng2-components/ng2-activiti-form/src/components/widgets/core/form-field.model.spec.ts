@@ -332,4 +332,28 @@ describe('FormFieldModel', () => {
         });
     });
 
+    it('should be able to check if the field has options available', () =>{
+        let form = new FormModel();
+        let field = new FormFieldModel(form, {
+            id: 'dropdown-happy',
+            type: FormFieldTypes.DROPDOWN,
+            options: [
+                { id: 'opt1', name: 'Option 1' },
+                { id: 'opt2', name: 'Option 2' }
+            ]
+        });
+
+        expect(field.hasOptions()).toBeTruthy();
+    });
+
+    it('should return false if field has no options', () =>{
+        let form = new FormModel();
+        let field = new FormFieldModel(form, {
+            id: 'dropdown-sad',
+            type: FormFieldTypes.DROPDOWN
+        });
+
+        expect(field.hasOptions()).toBeFalsy();
+    });
+
 });

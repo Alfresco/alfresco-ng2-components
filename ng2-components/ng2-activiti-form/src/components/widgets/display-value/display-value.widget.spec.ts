@@ -50,7 +50,7 @@ describe('DisplayValueWidget', () => {
 
     it('should take field value on init', () => {
         let value = '<value>';
-        widget.field = new FormFieldModel(null, {value: value});
+        widget.field = new FormFieldModel(null, { value: value });
         widget.field.params = null;
         widget.ngOnInit();
         expect(widget.value).toBe(value);
@@ -150,7 +150,7 @@ describe('DisplayValueWidget', () => {
         widget.field = new FormFieldModel(null, {
             type: FormFieldTypes.DISPLAY_VALUE,
             value: [
-                {name: 'file1'}
+                { name: 'file1' }
             ],
             params: {
                 field: {
@@ -238,8 +238,8 @@ describe('DisplayValueWidget', () => {
             restUrl: null,
             value: '2',
             options: [
-                {id: '1', name: 'option 1'},
-                {id: '2', name: 'option 2'}
+                { id: '1', name: 'option 1' },
+                { id: '2', name: 'option 2' }
             ],
             params: {
                 field: {
@@ -257,8 +257,8 @@ describe('DisplayValueWidget', () => {
             restUrl: null,
             value: '100',
             options: [
-                {id: '1', name: 'option 1'},
-                {id: '2', name: 'option 2'}
+                { id: '1', name: 'option 1' },
+                { id: '2', name: 'option 2' }
             ],
             params: {
                 field: {
@@ -306,22 +306,22 @@ describe('DisplayValueWidget', () => {
         spyOn(formService, 'getRestFieldValues').and.returnValue(
             Observable.create(observer => {
                 observer.next([
-                    {id: '1', name: 'option 1'},
-                    {id: '2', name: 'option 2'}
+                    { id: '1', name: 'option 1' },
+                    { id: '2', name: 'option 2' }
                 ]);
                 observer.complete();
             })
         );
 
-        let form = new FormModel({taskId: '<id>'});
+        let form = new FormModel({ taskId: '<id>' });
 
         widget.field = new FormFieldModel(form, {
             type: FormFieldTypes.DISPLAY_VALUE,
             restUrl: '<url>',
             value: '2',
             options: [
-                {id: '1', name: 'option 1'},
-                {id: '2', name: 'option 2'}
+                { id: '1', name: 'option 1' },
+                { id: '2', name: 'option 2' }
             ],
             params: {
                 field: {
@@ -338,14 +338,14 @@ describe('DisplayValueWidget', () => {
         spyOn(formService, 'getRestFieldValues').and.returnValue(
             Observable.create(observer => {
                 observer.next([
-                    {id: '1', name: 'option 1'},
-                    {id: '2', name: 'option 2'}
+                    { id: '1', name: 'option 1' },
+                    { id: '2', name: 'option 2' }
                 ]);
                 observer.complete();
             })
         );
 
-        let form = new FormModel({taskId: '<id>'});
+        let form = new FormModel({ taskId: '<id>' });
 
         widget.field = new FormFieldModel(form, {
             type: FormFieldTypes.DISPLAY_VALUE,
@@ -370,7 +370,7 @@ describe('DisplayValueWidget', () => {
             })
         );
 
-        let form = new FormModel({taskId: '<id>'});
+        let form = new FormModel({ taskId: '<id>' });
 
         widget.field = new FormFieldModel(form, {
             type: FormFieldTypes.DISPLAY_VALUE,
@@ -393,7 +393,7 @@ describe('DisplayValueWidget', () => {
             Observable.throw(error)
         );
 
-        let form = new FormModel({taskId: '<id>'});
+        let form = new FormModel({ taskId: '<id>' });
 
         widget.field = new FormFieldModel(form, {
             type: FormFieldTypes.DISPLAY_VALUE,
@@ -628,7 +628,7 @@ describe('DisplayValueWidget', () => {
                     FormService,
                     WidgetVisibilityService
                 ],
-                schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+                schemas: [CUSTOM_ELEMENTS_SCHEMA]
             }).compileComponents().then(() => {
                 fixture = TestBed.createComponent(DisplayValueWidget);
                 widgetUI = fixture.componentInstance;
@@ -684,6 +684,52 @@ describe('DisplayValueWidget', () => {
                     let elWidget: any = element.querySelector('#fake-checkbox-id');
                     expect(elWidget).toBeDefined();
                     expect(elWidget.checked).toBeFalsy();
+                });
+        }));
+
+        it('should show the dropdown value taken from options when field has options', async(() => {
+            widgetUI.field = new FormFieldModel(null, {
+                id: 'fake-dropdown-id',
+                type: FormFieldTypes.DISPLAY_VALUE,
+                value: '1',
+                options: [
+                    { id: '1', name: 'Option 1' },
+                    { id: '2', name: 'Option 2' }
+                ],
+                params: {
+                    field: {
+                        type: FormFieldTypes.DROPDOWN
+                    }
+                }
+            });
+
+            fixture.whenStable()
+                .then(() => {
+                    fixture.detectChanges();
+                    let elWidget: any = element.querySelector('#fake-dropdown-id');
+                    expect(elWidget).toBeDefined();
+                    expect(elWidget.value).toBe('Option 1');
+                });
+        }));
+
+        it('should show the dropdown value taken from value when field has no options', async(() => {
+            widgetUI.field = new FormFieldModel(null, {
+                id: 'fake-dropdown-id',
+                type: FormFieldTypes.DISPLAY_VALUE,
+                value: 'FAKE',
+                params: {
+                    field: {
+                        type: FormFieldTypes.DROPDOWN
+                    }
+                }
+            });
+
+            fixture.whenStable()
+                .then(() => {
+                    fixture.detectChanges();
+                    let elWidget: any = element.querySelector('#fake-dropdown-id');
+                    expect(elWidget).toBeDefined();
+                    expect(elWidget.value).toBe('FAKE');
                 });
         }));
     });

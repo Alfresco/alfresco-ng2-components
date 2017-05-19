@@ -99,7 +99,6 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
                             }
                             break;
                         case FormFieldTypes.DOCUMENT:
-                            console.log('document');
                             const file = this.field.value;
                             if (file) {
                                 this.value = decodeURI(file.name);
@@ -117,7 +116,7 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
                             if (this.field.restUrl) {
                                 this.loadRestFieldValue();
                             } else {
-                                this.value = this.field.getOptionName();
+                                this.value = this.field.hasOptions() ? this.field.getOptionName() : this.value;
                             }
                             break;
                         case FormFieldTypes.RADIO_BUTTONS:
