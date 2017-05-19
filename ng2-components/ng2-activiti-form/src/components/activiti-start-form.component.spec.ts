@@ -23,6 +23,7 @@ import { ActivitiStartForm } from './activiti-start-form.component';
 import { FormFieldComponent } from './form-field/form-field.component';
 import { ActivitiContent } from './activiti-content.component';
 import { WIDGET_DIRECTIVES } from './widgets/index';
+import { MASK_DIRECTIVE } from './widgets/index';
 import { FormService } from './../services/form.service';
 import { EcmModelService } from './../services/ecm-model.service';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
@@ -47,7 +48,8 @@ describe('ActivitiStartForm', () => {
                 ActivitiStartForm,
                 FormFieldComponent,
                 ActivitiContent,
-                ...WIDGET_DIRECTIVES
+                ...WIDGET_DIRECTIVES,
+                ...MASK_DIRECTIVE
             ],
             providers: [
                 { provide: AlfrescoTranslationService, useClass: TranslationMock },

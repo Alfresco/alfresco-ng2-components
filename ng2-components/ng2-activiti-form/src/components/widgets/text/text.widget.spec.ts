@@ -57,6 +57,11 @@ describe('TextWidget', () => {
             });
         }));
 
+        afterEach(() => {
+            fixture.destroy();
+            TestBed.resetTestingModule();
+        });
+
         describe('and mask is configured on text element', () => {
 
             let inputElement: HTMLInputElement;
@@ -117,7 +122,6 @@ describe('TextWidget', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     let inputElement: HTMLInputElement = <HTMLInputElement>element.querySelector('#text-id');
-                    console.log(inputElement);
                     expect(inputElement.value).toBe('1');
                 });
             }));
@@ -132,7 +136,6 @@ describe('TextWidget', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     let inputElement: HTMLInputElement = <HTMLInputElement>element.querySelector('#text-id');
-                    console.log(inputElement.value);
                     expect(inputElement.value).toBe('12-345,67%');
                 });
             }));
@@ -155,6 +158,11 @@ describe('TextWidget', () => {
                 inputElement = <HTMLInputElement>element.querySelector('#text-id');
             });
 
+            afterEach(() => {
+                fixture.destroy();
+                TestBed.resetTestingModule();
+            });
+
             it('should be able to apply the mask reversed', async(() => {
                 expect(element.querySelector('#text-id')).not.toBeNull();
                 inputElement.value = '1234';
@@ -165,7 +173,6 @@ describe('TextWidget', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     let inputElement: HTMLInputElement = <HTMLInputElement>element.querySelector('#text-id');
-                    console.log(inputElement.value);
                     expect(inputElement.value).toBe('12,34%');
                 });
             }));
