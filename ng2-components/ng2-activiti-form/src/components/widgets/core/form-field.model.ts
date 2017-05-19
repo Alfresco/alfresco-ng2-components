@@ -355,4 +355,8 @@ export class FormFieldModel extends FormWidgetModel {
         let option: FormFieldOption = this.options.find(opt => opt.id === this.value);
         return option ? option.name : null;
     }
+
+    hasOptions(){
+        return this.options && this.options.length > 0;
+    }
 }
