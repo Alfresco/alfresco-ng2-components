@@ -37,6 +37,11 @@ module.exports = {
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
             },
             {
+                test: /\.component.scss$/,
+                use: ['to-string-loader', 'raw-loader', 'sass-loader'],
+                exclude: [/node_modules/, /bundles/, /dist/, /demo/]
+            },
+            {
                 test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico|pdf)$/,
                 loader: 'file-loader',
                 query: {

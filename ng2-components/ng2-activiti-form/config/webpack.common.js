@@ -67,7 +67,13 @@ module.exports = {
                 test: /\.css$/,
                 loader: ['to-string-loader', 'css-loader'],
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
-            },{
+            },
+            {
+                test: /\.component.scss$/,
+                use: ['to-string-loader', 'raw-loader', 'sass-loader'],
+                exclude: [/node_modules/, /bundles/, /dist/, /demo/]
+            },
+            {
                 enforce: 'pre',
                 test: /\.ts$/,
                 loader: 'license-check',
