@@ -22,6 +22,7 @@ import { fakeFormJson } from '../../../services/assets/widget-visibility.service
 import { TabsWidget } from './tabs.widget';
 import { TabModel } from '../core/tab.model';
 import { WIDGET_DIRECTIVES } from '../index';
+import { MASK_DIRECTIVE } from '../index';
 import { FormFieldComponent } from './../../form-field/form-field.component';
 import { ActivitiContent } from './../../activiti-content.component';
 import { CoreModule } from 'ng2-alfresco-core';
@@ -104,7 +105,7 @@ describe('TabsWidget', () => {
         beforeEach(async(() => {
             TestBed.configureTestingModule({
                 imports: [CoreModule],
-                declarations: [FormFieldComponent, ActivitiContent, WIDGET_DIRECTIVES]
+                declarations: [FormFieldComponent, ActivitiContent, WIDGET_DIRECTIVES, MASK_DIRECTIVE]
             }).compileComponents().then(() => {
                 fixture = TestBed.createComponent(TabsWidget);
                 tabWidgetComponent = fixture.componentInstance;

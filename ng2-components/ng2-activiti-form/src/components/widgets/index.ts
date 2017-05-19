@@ -41,6 +41,7 @@ import { DropdownEditorComponent } from './dynamic-table/editors/dropdown/dropdo
 import { BooleanEditorComponent } from './dynamic-table/editors/boolean/boolean.editor';
 import { TextEditorComponent } from './dynamic-table/editors/text/text.editor';
 import { RowEditorComponent } from './dynamic-table/editors/row.editor';
+import { InputMaskDirective } from './text/text-mask.component';
 
 // core
 export * from './widget.component';
@@ -76,6 +77,7 @@ export * from './dynamic-table/editors/date/date.editor';
 export * from './dynamic-table/editors/dropdown/dropdown.editor';
 export * from './dynamic-table/editors/boolean/boolean.editor';
 export * from './dynamic-table/editors/text/text.editor';
+export * from './text/text-mask.component';
 
 export const WIDGET_DIRECTIVES: any[] = [
     UnknownWidget,
@@ -104,4 +106,8 @@ export const WIDGET_DIRECTIVES: any[] = [
     BooleanEditorComponent,
     TextEditorComponent,
     RowEditorComponent
+];
+
+export const MASK_DIRECTIVE: any[] = [
+    InputMaskDirective
 ];
