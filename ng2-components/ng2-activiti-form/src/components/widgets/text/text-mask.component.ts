@@ -206,9 +206,9 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
     private isToCheck(isReversed, maskIndex, maskLen, valueIndex, valueLength) {
         let check = false;
         if (isReversed) {
-            check = maskIndex > -1 && valueIndex > -1;
+            check = (maskIndex > -1) && (valueIndex > -1);
         } else {
-            check = maskIndex < maskLen && valueIndex < valueLength;
+            check = (maskIndex < maskLen) && (valueIndex < valueLength);
         }
         return check;
     }

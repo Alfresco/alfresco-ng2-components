@@ -47,6 +47,9 @@ describe('TextWidget', () => {
         beforeEach(async(() => {
             componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
             window['componentHandler'] = componentHandler;
+        }));
+
+        beforeEach(async(() => {
             TestBed.configureTestingModule({
                 imports: [CoreModule],
                 declarations: [TextWidget, InputMaskDirective]
@@ -75,6 +78,7 @@ describe('TextWidget', () => {
                     type: FormFieldTypes.TEXT,
                     readOnly: false
                 });
+
                 fixture.detectChanges();
                 inputElement = <HTMLInputElement>element.querySelector('#text-id');
             });
@@ -86,12 +90,14 @@ describe('TextWidget', () => {
 
             it('should prevent text to be written if is not allowed by the mask on keyUp event', async(() => {
                 expect(element.querySelector('#text-id')).not.toBeNull();
+
                 inputElement.value = 'F';
                 textWidget.field.value = 'F';
                 let event: any = new Event('keyup');
                 event.keyCode = '70';
                 inputElement.dispatchEvent(event);
                 fixture.detectChanges();
+
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     inputElement = <HTMLInputElement>element.querySelector('#text-id');
@@ -101,10 +107,12 @@ describe('TextWidget', () => {
 
             it('should prevent text to be written if is not allowed by the mask on input event', async(() => {
                 expect(element.querySelector('#text-id')).not.toBeNull();
+
                 inputElement.value = 'F';
                 textWidget.field.value = 'F';
                 inputElement.dispatchEvent(new Event('input'));
                 fixture.detectChanges();
+
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     inputElement = <HTMLInputElement>element.querySelector('#text-id');
@@ -114,11 +122,13 @@ describe('TextWidget', () => {
 
             it('should allow masked configured value on keyUp event', async(() => {
                 expect(element.querySelector('#text-id')).not.toBeNull();
+
                 inputElement.value = '1';
                 textWidget.field.value = '1';
                 let event: any = new Event('keyup');
                 event.keyCode = '49';
                 inputElement.dispatchEvent(event);
+
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     let inputElement: HTMLInputElement = <HTMLInputElement>element.querySelector('#text-id');
@@ -128,11 +138,13 @@ describe('TextWidget', () => {
 
             it('should autofill masked configured value on keyUp event', async(() => {
                 expect(element.querySelector('#text-id')).not.toBeNull();
+
                 inputElement.value = '12345678';
                 textWidget.field.value = '12345678';
                 let event: any = new Event('keyup');
                 event.keyCode = '49';
                 inputElement.dispatchEvent(event);
+
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     let inputElement: HTMLInputElement = <HTMLInputElement>element.querySelector('#text-id');
@@ -154,6 +166,7 @@ describe('TextWidget', () => {
                     type: FormFieldTypes.TEXT,
                     readOnly: false
                 });
+
                 fixture.detectChanges();
                 inputElement = <HTMLInputElement>element.querySelector('#text-id');
             });
@@ -165,11 +178,13 @@ describe('TextWidget', () => {
 
             it('should be able to apply the mask reversed', async(() => {
                 expect(element.querySelector('#text-id')).not.toBeNull();
+
                 inputElement.value = '1234';
                 textWidget.field.value = '1234';
                 let event: any = new Event('keyup');
                 event.keyCode = '49';
                 inputElement.dispatchEvent(event);
+
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     let inputElement: HTMLInputElement = <HTMLInputElement>element.querySelector('#text-id');
