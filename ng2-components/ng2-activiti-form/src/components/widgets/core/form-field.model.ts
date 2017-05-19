@@ -244,8 +244,8 @@ export class FormFieldModel extends FormWidgetModel {
         }
 
         /*
-        This is needed due to Activiti displaying/editing dates in d-M-YYYY format
-        but storing on server in ISO8601 format (i.e. 2013-02-04T22:44:30.652Z)
+         This is needed due to Activiti displaying/editing dates in d-M-YYYY format
+         but storing on server in ISO8601 format (i.e. 2013-02-04T22:44:30.652Z)
          */
         if (json.type === FormFieldTypes.DATE) {
             if (value) {
@@ -354,5 +354,9 @@ export class FormFieldModel extends FormWidgetModel {
     getOptionName(): string {
         let option: FormFieldOption = this.options.find(opt => opt.id === this.value);
         return option ? option.name : null;
+    }
+
+    hasOptions() {
+        return this.options && this.options.length > 0;
     }
 }
