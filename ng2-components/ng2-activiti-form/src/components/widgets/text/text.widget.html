@@ -9,6 +9,7 @@
            [(ngModel)]="field.value"
            (ngModelChange)="onFieldChanged(field)"
            [disabled]="field.readOnly"
+           [textMask]="{mask: mask, isReversed: isMaskReversed}"
            placeholder="{{field.placeholder}}">
     <span *ngIf="field.validationSummary" class="mdl-textfield__error">{{field.validationSummary}}</span>
 </div>

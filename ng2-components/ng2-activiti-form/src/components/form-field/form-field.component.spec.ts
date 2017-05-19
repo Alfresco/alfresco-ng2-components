@@ -21,6 +21,7 @@ import { FormFieldComponent } from './form-field.component';
 import { FormRenderingService } from './../../services/form-rendering.service';
 import { FormModel, FormFieldModel, FormFieldTypes } from './../widgets/core/index';
 import { TextWidget } from './../widgets/text/text.widget';
+import { InputMaskDirective } from './../widgets/text/text-mask.component';
 import { CheckboxWidget } from './../widgets/checkbox/checkbox.widget';
 import { WidgetVisibilityService } from './../../services/widget-visibility.service';
 
@@ -36,7 +37,7 @@ describe('FormFieldComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
                 imports: [CoreModule],
-                declarations: [FormFieldComponent, TextWidget, CheckboxWidget],
+                declarations: [FormFieldComponent, TextWidget, CheckboxWidget, InputMaskDirective],
                 providers: [
                     FormRenderingService,
                     WidgetVisibilityService
