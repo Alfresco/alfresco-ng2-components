@@ -7,6 +7,7 @@ const helpers = require('./helpers');
 const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
 
 module.exports = webpackMerge(commonConfig, {
+
     devtool: 'source-map',
 
     output: {
@@ -19,6 +20,19 @@ module.exports = webpackMerge(commonConfig, {
     resolve: {
         extensions: ['.ts', '.js'],
         modules: [helpers.root('node_modules')]
+    },
+
+    module: {
+        rules: [
+            {
+                test: /\.ts$/,
+                loader: [
+                    'ts-loader',
+                    'angular2-template-loader'
+                ],
+                exclude: [ /node_modules/, /public/, /resources/, /dist/]
+            }
+        ]
     },
 
     plugins: [

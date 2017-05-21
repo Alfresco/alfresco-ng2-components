@@ -7,6 +7,8 @@ module.exports = function (config) {
         frameworks: ['jasmine'],
 
         files: [
+            './node_modules/hammerjs/hammer.js',
+
             { pattern: './config/karma-test-shim.js', watched: false }
         ],
 

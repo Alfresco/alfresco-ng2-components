@@ -2,14 +2,16 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-eval EXEC_INSTALL=false
+eval EXEC_INSTALL=true
 eval EXEC_UPDATE=false
 eval EXEC_CLEAN=false
 eval EXEC_DEVELOP=false
 eval EXEC_VERSION=false
-eval ENABLE_DIST=false
+eval EXEC_DIST=false
 eval EXEC_GIT_NPM_INSTALL_JSAPI=false
 eval EXEC_VERSION_JSAPI=false
+eval EXEC_START=true
+eval EXEC_TEST=false
 eval JSAPI_VERSION=""
 eval NG2_COMPONENTS_VERSION=""
 eval GIT_ISH=""
@@ -35,19 +37,21 @@ eval projects=( "ng2-alfresco-core"
 show_help() {
     echo "Usage: start.sh"
     echo ""
-    echo "-d or -develop start the demo shell using the relative ng2-components folder to link the components"
-    echo "-dist start the demo shell in dist mode"
-    echo "-i or -install start the demo shell and install the dependencies"
+    echo "-ss or -skipstart build only the demo shell without start"
+    echo "-si or -skipinstall start the demo shell and  skip the install the dependencies"
+    echo "-dev or -develop start the demo shell using the relative ng2-components folder to link the components"
+    echo "-dist create the disbuild the demo shell in dist mode"
+    echo "-t or -test execute test"
     echo "-u or -update start the demo shell and update the dependencies"
-    echo "-v or -version install different version of ng2_components from npm defined in the package.json this option is not compatible with -d"
     echo "-c or -clean  clean the demo shell and reinstall the dependencies"
     echo "-r or -registry to download the packages from an alternative npm registry example -registry 'http://npm.local.me:8080/' "
+    echo "-v or -version install different version of ng2_components from npm defined in the package.json this option is not compatible with -d"
     echo "-gitjsapi to build all the components against a commit-ish version of the JS-API"
     echo "-vjsapi install different version from npm of JS-API defined in the package.json"
 }
 
 install() {
-    EXEC_INSTALL=true
+    EXEC_INSTALL=false
 }
 
 update() {
@@ -59,7 +63,15 @@ develop() {
 }
 
 enable_dist() {
-    ENABLE_DIST=true
+    EXEC_DIST=true
+}
+
+disable_start() {
+    EXEC_START=false
+}
+
+enable_test() {
+    EXEC_TEST=false
 }
 
 enable_js_api_git_link() {
@@ -112,12 +124,14 @@ clean() {
 while [[ $1  == -* ]]; do
     case "$1" in
       -h|--help|-\?) show_help; exit 0;;
-      -i|--install) install; shift;;
       -u|--update) update; shift;;
       -c|--clean) clean; shift;;
-      -d|--develop) develop; shift;;
+      -t|--test) enable_test; shift;;
       -r|--registry)  change_registry $2; shift 2;;
-      -r|--version)  version_component $2; shift 2;;
+      -v|--version)  version_component $2; shift 2;;
+      -si|--skipinstall) install; shift;;
+      -ss|--skipstart)  disable_start; shift;;
+      -dev|--develop) develop; shift;;
       -dist)  enable_dist; shift;;
       -gitjsapi)  enable_js_api_git_link $2; shift 2;;
       -vjsapi)  version_js_api $2; shift 2;;
@@ -125,34 +139,28 @@ while [[ $1  == -* ]]; do
     esac
 done
 
+cd "$DIR/../demo-shell-ng2"
+
 if $EXEC_CLEAN == true; then
   echo "====== Clean Demo shell ====="
-  cd "$DIR/../demo-shell-ng2"
   npm install rimraf
   npm run clean
 fi
 
+if $EXEC_INSTALL == true; then
+  echo "====== Install Demo shell ====="
+  npm install
+fi
+
 if $EXEC_DEVELOP == true; then
-  echo "====== Build ng2-components folder====="
-  cd "$DIR/../scripts"
-  sh npm-build-all.sh
-fi
-
-if $EXEC_INSTALL == true; then
-  echo "====== Install Demo shell ====="
-  cd "$DIR/../demo-shell-ng2"
-  npm install
-fi
-
-if $EXEC_INSTALL == true; then
-  echo "====== Install Demo shell ====="
-  cd "$DIR/../demo-shell-ng2"
-  npm install
+   echo "====== Install node_modules ng2-components ====="
+   cd "$DIR/../ng2-components"
+   npm install
+   cd "$DIR/../demo-shell-ng2"
 fi
 
 if $EXEC_VERSION == true; then
-  echo "====== Install version "${NG2_COMPONENTS_VERSION}" of ng2-components ====="
-  cd "$DIR/../demo-shell-ng2"
+   echo "====== Install version "${NG2_COMPONENTS_VERSION}" of ng2-components ====="
 
     if [[ "${EXEC_DEVELOP}" == "" ]]
     then
@@ -169,46 +177,52 @@ fi
 if $EXEC_GIT_NPM_INSTALL_JSAPI == true; then
   echo "====== Use the alfresco JS-API  '$GIT_ISH'====="
   npm install $GIT_ISH
-  cd "$DIR/../ng2-components/node_modules/alfresco-js-api"
+  cd "$DIR/../demo-shell-ng2/node_modules/alfresco-js-api"
   npm install
-  cd "$DIR/../ng2-components/"
-fi
-
-if $EXEC_GIT_NPM_INSTALL_JSAPI == true; then
-  echo "====== Use the alfresco JS-API  '$GIT_ISH'====="
-  npm install $GIT_ISH
-  cd "$DIR/../ng2-components/node_modules/alfresco-js-api"
-  npm install
+  if $EXEC_DEVELOP == true; then
+   cd "$DIR/../ng2-components/"
+   npm install $GIT_ISH
+   cd "$DIR/../ng2-components/node_modules/alfresco-js-api"
+   npm install
+  fi
+  cd "$DIR/../demo-shell-ng2"
 fi
 
 if $EXEC_VERSION_JSAPI == true; then
   echo "====== Use the alfresco JS-API '$JSAPI_VERSION'====="
-  cd "$DIR/../demo-shell-ng2"
   npm install alfresco-js-api@${JSAPI_VERSION}
+  if $EXEC_DEVELOP == true; then
+   echo "====== Install node_modules ng2-components ====="
+   cd "$DIR/../ng2-components/"
+   npm install alfresco-js-api@${JSAPI_VERSION}
+  fi
+  cd "$DIR/../demo-shell-ng2"
 fi
 
-if $EXEC_DEVELOP == true; then
-  cd "$DIR/../demo-shell-ng2"
-    if $ENABLE_DIST == true; then
-        echo "====== Build and start dist Demo shell ====="
-        npm run build:dev
+if $EXEC_TEST == true; then
+  echo "====== Demo shell Test====="
+  npm run test
+fi
+
+if $EXEC_START == true; then
+    if $EXEC_DEVELOP == true; then
+        echo "====== Start Demo shell dev mode ====="
+        npm run start:dev
+    elif $EXEC_DIST == true; then
+        echo "====== Start Demo shell dist mode ====="
         npm run start:dist
     else
         echo "====== Start Demo shell ====="
-        npm run start:dev
+        npm run start
     fi
 else
-  cd "$DIR/../demo-shell-ng2"
-
-  if $ENABLE_DIST == true; then
-    echo "====== Build and start dist Demo shell ====="
-    npm run build
-    npm run start:dist
-  else
-    echo "====== Start Demo shell dev mode====="
-    npm run start
-  fi
-
+    if $EXEC_DEVELOP == true; then
+        echo "====== Build Demo shell dev mode ====="
+        npm run build:dev
+    else
+        echo "====== Build Demo shell ====="
+        npm run build
+    fi
 fi
 
 
