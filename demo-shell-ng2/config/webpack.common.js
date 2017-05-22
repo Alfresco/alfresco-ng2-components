@@ -63,7 +63,7 @@ module.exports = {
             },
             {
                 test: /\.ts$/,
-                include: [helpers.root('app')],
+                include: [helpers.root('app'), helpers.root('../ng2-components')],
                 loader: [
                     'ts-loader',
                     'angular2-template-loader'
@@ -77,7 +77,7 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                exclude: helpers.root('app'),
+                exclude: [helpers.root('app'), helpers.root('../ng2-components')],
                 loader: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
                     use: 'css-loader?sourceMap'
@@ -85,7 +85,7 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                include: helpers.root('app'),
+                include: [helpers.root('app'), helpers.root('../ng2-components')],
                 loader: 'raw-loader'
             },
             {
@@ -156,6 +156,15 @@ module.exports = {
             name: ['app', 'vendor', 'polyfills']
         })
     ],
+
+    devServer: {
+        contentBase: helpers.root('dist'),
+        compress: true,
+        port: 3000,
+        historyApiFallback: true,
+        host: '0.0.0.0',
+        inline: true
+    },
 
     node: {
         fs: 'empty'

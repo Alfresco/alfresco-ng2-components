@@ -1,8 +1,11 @@
 typings/
 node_modules/
 bower_components/
+ng2-components/
 app/**/*.js
 app/**/*.js.map
+app/**/*.d.ts
+
 !app/js/Polyline.js
 .idea
 versions.json

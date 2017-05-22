@@ -24,8 +24,6 @@ module.exports = function (config) {
       {pattern: 'karma-test-shim.js', watched: false},
       {pattern: './src/assets/**/*.*', included: false, served: true, watched: false},
       {pattern: './src/i18n/**/*.*', included: false, served: true, watched: false},
-      {pattern: './dist/**/*.js', included: false, served: true, watched: false},
-      {pattern: './dist/**/*.js.map', included: false, served: true, watched: false},
       {pattern: './src/**/*.ts', included: false, served: true, watched: false}
     ],
 

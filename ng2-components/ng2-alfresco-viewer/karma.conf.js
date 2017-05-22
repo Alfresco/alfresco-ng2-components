@@ -21,9 +21,14 @@ module.exports = function (config) {
       {pattern: './node_modules/md-date-time-picker/**/*.js', included: false, served: true, watched: false},
       {pattern: './node_modules/moment/**/*.js', included: false, served: true, watched: false},
 
+      // pdf-js
+      {pattern: './node_modules/pdfjs-dist/build/pdf.js', included: true, watched: false},
+      {pattern: './node_modules/pdfjs-dist/build/pdf.worker.js', included: true, watched: false},
+      {pattern: './node_modules/pdfjs-dist/web/pdf_viewer.js', included: true, watched: false},
+
       {pattern: 'karma-test-shim.js', watched: false},
-      {pattern: './dist/**/*.*', included: false, served: true, watched: false},
       {pattern: './src/**/*.*', included: false, served: true, watched: false}
+
     ],
 
     webpack: webpackConfig,

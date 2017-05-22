@@ -13,17 +13,26 @@ env:
     - MODULE=ng2-components
     - MODULE=ng2-demo-shell
 
+install:
+    - if ([ "$MODULE" == "ng2-components" ]); then
+        if ([ "$TRAVIS_BRANCH" = "master" ]); then
+            (./scripts/npm-build-all.sh  || exit 1;);
+        else
+            (./scripts/npm-build-all.sh  -gitjsapi development || exit 1;);
+        fi
+      fi
+
 script:
-  - if ([ "$MODULE" == "ng2-components" ]); then
-          if ([ "$TRAVIS_BRANCH" = "master" ]); then
-            (./scripts/npm-build-all.sh -t || exit 1;);
-          else
-            (./scripts/npm-build-all.sh -t -gitjsapi development|| exit 1;);
-          fi
-    fi
-  - if ([ "$MODULE" == "ng2-demo-shell" ]); then
-        (cd demo-shell-ng2 && npm install && npm run test || exit 1;);
-    fi
+    - if ([ "$MODULE" == "ng2-components" ]); then
+            (./scripts/npm-build-all.sh -si -sb -t || exit 1;);
+      fi
+    - if ([ "$MODULE" == "ng2-demo-shell" ]); then
+       if ([ "$TRAVIS_BRANCH" = "master" ]); then
+            (./scripts/start.sh -t -ss || exit 1;);
+       else
+            (./scripts/start.sh -dev -t -ss -gitjsapi development || exit 1;);
+       fi
+      fi
 
 # Send coverage data to Coveralls
 after_success:
