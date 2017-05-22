@@ -114,7 +114,6 @@ do
   echo "====== INSTALL AND CLEAN ${PACKAGE} ===== "
   npm install rimraf
   npm run clean
-  npm install
 
   if $EXEC_GIT_NPM_INSTALL_JSAPI == true; then
     echo "====== Use the alfresco JS-API  '$GIT_ISH'====="
@@ -123,6 +122,8 @@ do
     npm install
     cd ${DESTDIR}
   fi
+
+  npm install
 
   echo "====== PUBLISHING: ${DESTDIR} ===== npm publish ${OPTIONS}"
   npm publish ${OPTIONS} || exit 1
