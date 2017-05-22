@@ -15,3 +15,7 @@
 .error-message--text {
     color: #d50000;
 }
+
+.adf-not-overlay-viewer {
+    height:900px;
+}
