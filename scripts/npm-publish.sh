@@ -107,13 +107,13 @@ do
   echo "====== MOVE DIR: ${DESTDIR} ===== "
   cd ${DESTDIR}
 
-  if $EXEC_CHANGE_REGISTRY == true; then
-    change_registry
-  fi
-
   echo "====== INSTALL AND CLEAN ${PACKAGE} ===== "
   npm install rimraf
   npm run clean
+
+  if $EXEC_CHANGE_REGISTRY == true; then
+    change_registry
+  fi
 
   if $EXEC_GIT_NPM_INSTALL_JSAPI == true; then
     echo "====== Use the alfresco JS-API  '$GIT_ISH'====="
