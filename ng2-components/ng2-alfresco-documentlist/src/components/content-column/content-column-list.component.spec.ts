@@ -30,6 +30,8 @@ describe('ContentColumnList', () => {
         let service = new DocumentListServiceMock();
         documentList = new DocumentListComponent(service, null, null, null);
         columnList = new ContentColumnListComponent(documentList);
+
+        documentList.ngOnInit();
     });
 
     it('should register column within parent document list', () => {
