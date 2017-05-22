@@ -21,6 +21,7 @@ import { ActivitiStartForm } from 'ng2-activiti-form';
 import { ProcessInstance } from './../models/process-instance.model';
 import { ProcessDefinitionRepresentation } from './../models/process-definition.model';
 import { ActivitiProcessService } from './../services/activiti-process.service';
+import { RestVariable } from 'alfresco-js-api';
 
 declare let componentHandler: any;
 declare let dialogPolyfill: any;
@@ -36,10 +37,13 @@ export class ActivitiStartProcessInstance implements OnChanges {
     appId: string;
 
     @Input()
-    showStartButton: boolean = true;
+    variables: RestVariable;
 
     @Output()
     start: EventEmitter<ProcessInstance> = new EventEmitter<ProcessInstance>();
+
+    @Output()
+    error: EventEmitter<ProcessInstance> = new EventEmitter<ProcessInstance>();
 
     @ViewChild(ActivitiStartForm)
     startForm: ActivitiStartForm;
@@ -85,14 +89,14 @@ export class ActivitiStartProcessInstance implements OnChanges {
         if (this.currentProcessDef.id && this.name) {
             this.resetErrorMessage();
             let formValues = this.startForm ? this.startForm.form.values : undefined;
-            this.activitiProcess.startProcess(this.currentProcessDef.id, this.name, outcome, formValues).subscribe(
+            this.activitiProcess.startProcess(this.currentProcessDef.id, this.name, outcome, formValues, this.variables).subscribe(
                 (res) => {
                     this.name = '';
                     this.start.emit(res);
                 },
                 (err) => {
                     this.errorMessageId = 'START_PROCESS.ERROR.START';
-                    this.start.error(err);
+                    this.error.error(err);
                 }
             );
         }

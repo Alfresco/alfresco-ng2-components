@@ -26,6 +26,7 @@ import { TranslationMock } from './../assets/translation.service.mock';
 import { newProcess, fakeProcessDefs, fakeProcessDefWithForm, taskFormMock } from './../assets/activiti-start-process.component.mock';
 import { ActivitiStartProcessInstance } from './activiti-start-process.component';
 import { ActivitiProcessService } from '../services/activiti-process.service';
+import { RestVariable } from 'alfresco-js-api';
 
 describe('ActivitiStartProcessInstance', () => {
 
@@ -201,7 +202,24 @@ describe('ActivitiStartProcessInstance', () => {
             component.onProcessDefChange('my:process1');
             component.startProcess();
             fixture.whenStable().then(() => {
-                expect(startProcessSpy).toHaveBeenCalledWith('my:process1', 'My new process', undefined, undefined);
+                expect(startProcessSpy).toHaveBeenCalledWith('my:process1', 'My new process', undefined, undefined, undefined);
+            });
+        }));
+
+        it('should call service to start process with the variables setted', async(() => {
+            let inputProcessVariable = [];
+
+            let variable: any = {};
+            variable.name = 'nodeId';
+            variable.value ='id';
+
+            inputProcessVariable.push(variable);
+
+            component.variables = inputProcessVariable;
+            component.onProcessDefChange('my:process1');
+            component.startProcess();
+            fixture.whenStable().then(() => {
+                expect(startProcessSpy).toHaveBeenCalledWith('my:process1', 'My new process', undefined, undefined, inputProcessVariable);
             });
         }));
 
@@ -214,8 +232,8 @@ describe('ActivitiStartProcessInstance', () => {
             });
         }));
 
-        it('should throw start event error when process cannot be started', async(() => {
-            let errorSpy = spyOn(component.start, 'error');
+        it('should throw error event when process cannot be started', async(() => {
+            let errorSpy = spyOn(component.error, 'error');
             let error = { message: 'My error' };
             startProcessSpy = startProcessSpy.and.returnValue(Observable.throw(error));
             component.onProcessDefChange('my:process1');
