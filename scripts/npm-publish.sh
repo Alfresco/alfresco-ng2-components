@@ -7,6 +7,8 @@ eval EXEC_CHANGE_REGISTRY=false
 eval NPM_REGISTRY=false
 eval TOKEN_REGISTRY=""
 eval OPTIONS=""
+eval EXEC_GIT_NPM_INSTALL_JSAPI=false
+eval GIT_ISH=""
 
 cd "$DIR/../demo-shell-ng2"
 
@@ -17,6 +19,7 @@ show_help() {
     echo "-r or -registry to publish in an alternative npm registry -registry 'http://npm.local.me:8080/' "
     echo "-token auth token for publish in the npm registry"
     echo "-t or -tag to add a tag when publish a package"
+    echo "-gitjsapi to build all the components against a commit-ish version of the JS-API"
 }
 
 enable_force(){
@@ -36,6 +39,11 @@ get_token_registry(){
       echo "token missing -token"
       exit 0
     fi
+}
+
+enable_js_api_git_link() {
+    GIT_ISH='git://github.com/Alfresco/alfresco-js-api.git#'$1
+    EXEC_GIT_NPM_INSTALL_JSAPI=true
 }
 
 add_tag(){
@@ -72,6 +80,7 @@ while [[ $1 == -* ]]; do
       -f|--force)  enable_force; shift;;
       -token) get_token_registry $2; shift 2;;
       -r|--registry) enable_change_registry $2; shift 2;;
+      -gitjsapi)  enable_js_api_git_link $2; shift 2;;
       -*) echo "invalid option: $1" 1>&2; show_help; exit 0;;
     esac
 done
@@ -101,6 +110,14 @@ do
   npm install rimraf
   npm run clean
   npm install
+
+  if $EXEC_GIT_NPM_INSTALL_JSAPI == true; then
+    echo "====== Use the alfresco JS-API  '$GIT_ISH'====="
+    npm install $GIT_ISH
+    cd  "${DESTDIR}/node_modules/alfresco-js-api"
+    npm install
+    cd ${DESTDIR}
+  fi
 
   if $EXEC_CHANGE_REGISTRY == true; then
     change_registry

@@ -5,6 +5,7 @@ eval RUN_TEST=false
 eval EXEC_FAST_TEST=false
 eval EXEC_CLEAN=false
 eval EXEC_BUILD=true
+eval EXEC_INSTALL=true
 eval EXEC_GIT_NPM_INSTALL_JSAPI=false
 eval GIT_ISH=""
 
@@ -29,10 +30,11 @@ eval projects=( "ng2-alfresco-core"
 show_help() {
     echo "Usage: npm-build-all.sh"
     echo ""
-    echo "-e or -exclude  exclude initial build"
     echo "-t or -test build all your local component and run also the test on them"
-    echo "-ft or -fast test build all your local component and run also the test in one single karmatestshim (high memory consuming and less details)"
     echo "-c or -clean the node_modules folder before to start the build"
+    echo "-si or -skipinstall skip the install node_modules folder before to start the build"
+    echo "-sb or skip build"
+    echo "-ft or -fast test build all your local component and run also the test in one single karma-test-shim (high memory consuming and less details)"
     echo "-gitjsapi to build all the components against a commit-ish version of the JS-API"
 }
 
@@ -62,15 +64,19 @@ exclude_build(){
     EXEC_BUILD=false
 }
 
+exec_install(){
+    EXEC_INSTALL=false
+}
+
 while [[ $1 == -* ]]; do
     case "$1" in
       -h|--help|-\?) show_help; exit 0;;
       -t|--test)  enable_test; shift;;
       -ft|--fasttest)  enable_fast_test; shift;;
       -gitjsapi)  enable_js_api_git_link $2; shift 2;;
-      -v|--version)  install_version_pacakge $2; shift 2;;
       -c|--clean)  clean; shift;;
-      -s|--skipbuild)  exclude_build; shift;;
+      -si|--skipinstall)  exec_install; shift;;
+      -sb|--skipbuild)  exclude_build; shift;;
       -*) echo "invalid option: $1" 1>&2; show_help; exit 1;;
     esac
 done
@@ -87,8 +93,10 @@ echo "====== Regenerate global ng2-components package.json ====="
 npm install package-json-merge
 npm run pkg-build
 
-echo "====== Install ng2-components dependencies ====="
-npm install
+if $EXEC_INSTALL == true; then
+    echo "====== Install ng2-components dependencies ====="
+    npm install
+fi
 
 if $EXEC_GIT_NPM_INSTALL_JSAPI == true; then
   echo "====== Use the alfresco JS-API  '$GIT_ISH'====="

@@ -7,12 +7,6 @@ module.exports = {
 
     devtool: 'inline-source-map',
 
-    resolve: {
-        extensions: ['.ts', '.js'],
-        symlinks: false,
-        modules: [helpers.root('../ng2-components'), helpers.root('node_modules')]
-    },
-
     module: {
         rules: [
             {
@@ -56,6 +50,12 @@ module.exports = {
                 ]
             }
         ]
+    },
+
+    resolve: {
+        extensions: ['.ts', '.js'],
+        symlinks: false,
+        modules: [helpers.root('../ng2-components'), helpers.root('node_modules')]
     },
 
     plugins: [

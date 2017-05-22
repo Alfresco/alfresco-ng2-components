@@ -5,6 +5,8 @@ const path = require('path');
 
 module.exports = {
 
+    devtool: 'cheap-module-source-map',
+
     resolveLoader: {
         alias: {
             "file-multi-loader": path.resolve(__dirname, "./custom-loaders/file-loader-multi"),
@@ -55,7 +57,12 @@ module.exports = {
             },
             {
                 test: /\.ts$/,
-                use: ['ts-loader', 'angular2-template-loader'],
+                use: ['ts-loader?' + JSON.stringify({
+                    "compilerOptions": {
+                        "typeRoots": [
+                            "../node_modules/@types"
+                        ]}
+                }), 'angular2-template-loader'],
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
             },
             {
@@ -67,7 +74,7 @@ module.exports = {
                 test: /\.css$/,
                 loader: ['to-string-loader', 'css-loader'],
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
-            },{
+            }, {
                 enforce: 'pre',
                 test: /\.ts$/,
                 loader: 'license-check',
@@ -75,7 +82,7 @@ module.exports = {
                     emitErrors: true,
                     licenseFile: path.resolve(__dirname, './assets/license_header.txt')
                 },
-                exclude: [/node_modules/, /bundles/, /dist/, /demo/, /rendering-queue.services.ts/ ],
+                exclude: [/node_modules/, /bundles/, /dist/, /demo/, /rendering-queue.services.ts/],
             },
             {
                 test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
@@ -96,11 +103,26 @@ module.exports = {
     },
 
     resolve: {
+        alias: {
+            "ng2-alfresco-core": path.resolve(__dirname, '../ng2-alfresco-core/index.ts'),
+            "ng2-alfresco-datatable": path.resolve(__dirname, '../ng2-alfresco-datatable/index.ts'),
+            "ng2-activiti-diagrams": path.resolve(__dirname, '../ng2-activiti-diagrams/index.ts'),
+            "ng2-activiti-analytics":path.resolve(__dirname, '../ng2-activiti-analytics/index.ts'),
+            "ng2-activiti-form":path.resolve(__dirname, '../ng2-activiti-form/index.ts'),
+            "ng2-activiti-tasklist": path.resolve(__dirname, '../ng2-activiti-tasklist/index.ts'),
+            "ng2-activiti-processlist": path.resolve(__dirname, '../ng2-activiti-processlist/index.ts'),
+            "ng2-alfresco-documentlist": path.resolve(__dirname, '../ng2-alfresco-documentlist/index.ts'),
+            "ng2-alfresco-login": path.resolve(__dirname, '../ng2-alfresco-login/index.ts'),
+            "ng2-alfresco-search": path.resolve(__dirname, '../ng2-alfresco-search/index.ts'),
+            "ng2-alfresco-social": path.resolve(__dirname, '../ng2-alfresco-social/index.ts'),
+            "ng2-alfresco-tag": path.resolve(__dirname, '../ng2-alfresco-tag/index.ts'),
+            "ng2-alfresco-upload": path.resolve(__dirname, '../ng2-alfresco-upload/index.ts'),
+            "ng2-alfresco-viewer": path.resolve(__dirname, '../ng2-alfresco-viewer/index.ts'),
+            "ng2-alfresco-webscript": path.resolve(__dirname, '../ng2-alfresco-webscript/index.ts'),
+            "ng2-alfresco-userinfo": path.resolve(__dirname, '../ng2-alfresco-userinfo/index.ts')
+        },
         extensions: ['.ts', '.js'],
-        symlinks: false,
-        modules: [
-            '../ng2-components', 'node_modules'
-        ]
+            modules: [helpers.root('node_modules')]
     },
 
     plugins: [
@@ -114,8 +136,6 @@ module.exports = {
             {}
         )
     ],
-
-    devtool: 'cheap-module-source-map',
 
     node: {
         fs: 'empty',
