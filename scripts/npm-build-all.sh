@@ -6,8 +6,10 @@ eval EXEC_FAST_TEST=false
 eval EXEC_CLEAN=false
 eval EXEC_BUILD=true
 eval EXEC_INSTALL=true
+eval EXEC_SINGLE_TEST=false
 eval EXEC_GIT_NPM_INSTALL_JSAPI=false
 eval GIT_ISH=""
+eval SINGLE_TEST=""
 
 eval projects=( "ng2-alfresco-core"
     "ng2-alfresco-datatable"
@@ -30,7 +32,7 @@ eval projects=( "ng2-alfresco-core"
 show_help() {
     echo "Usage: npm-build-all.sh"
     echo ""
-    echo "-t or -test build all your local component and run also the test on them"
+    echo "-t or -test build all your local component and run also the test on them , this parameter accept also a wildecard to execute test for example -t "ng2-alfresco-core" "
     echo "-c or -clean the node_modules folder before to start the build"
     echo "-si or -skipinstall skip the install node_modules folder before to start the build"
     echo "-sb or skip build"
@@ -39,6 +41,12 @@ show_help() {
 }
 
 enable_test(){
+    if [[ ! -z $1 ]]; then
+        if [[  $1 != "-"* ]]; then
+            EXEC_SINGLE_TEST=true
+            SINGLE_TEST=$1
+        fi
+    fi
     RUN_TEST=true
 }
 
@@ -71,7 +79,12 @@ exec_install(){
 while [[ $1 == -* ]]; do
     case "$1" in
       -h|--help|-\?) show_help; exit 0;;
-      -t|--test)  enable_test; shift;;
+      -t|--test)  enable_test $2;
+                       shift;
+                       if $EXEC_SINGLE_TEST == true; then
+                        shift;
+                       fi
+                       ;;
       -ft|--fasttest)  enable_fast_test; shift;;
       -gitjsapi)  enable_js_api_git_link $2; shift 2;;
       -c|--clean)  clean; shift;;
@@ -89,11 +102,10 @@ if $EXEC_CLEAN == true; then
   npm run clean
 fi
 
-echo "====== Regenerate global ng2-components package.json ====="
-npm install package-json-merge
-npm run pkg-build
-
 if $EXEC_INSTALL == true; then
+    echo "====== Regenerate global ng2-components package.json ====="
+    npm install package-json-merge
+    npm run pkg-build
     echo "====== Install ng2-components dependencies ====="
     npm install
 fi
@@ -116,11 +128,20 @@ if $EXEC_FAST_TEST == true; then
     npm run test || exit 1
 fi
 
-for PACKAGE in ${projects[@]}
-do
-  DESTDIR="$DIR/../ng2-components/"
-  cd $DESTDIR
-  if $RUN_TEST == true; then
-      test_project $PACKAGE
-  fi
-done
+
+if $RUN_TEST == true; then
+    for PACKAGE in ${projects[@]}
+    do
+      DESTDIR="$DIR/../ng2-components/"
+      cd $DESTDIR
+      if $EXEC_SINGLE_TEST == true; then
+        if [[ $PACKAGE == $SINGLE_TEST ]]; then
+            test_project $SINGLE_TEST
+        fi
+      else
+        test_project $PACKAGE
+      fi
+    done
+fi
+
+
