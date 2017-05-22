@@ -106,6 +106,11 @@ do
   DESTDIR="$DIR/../ng2-components/${PACKAGE}"
   echo "====== MOVE DIR: ${DESTDIR} ===== "
   cd ${DESTDIR}
+
+  if $EXEC_CHANGE_REGISTRY == true; then
+    change_registry
+  fi
+
   echo "====== INSTALL AND CLEAN ${PACKAGE} ===== "
   npm install rimraf
   npm run clean
@@ -117,10 +122,6 @@ do
     cd  "${DESTDIR}/node_modules/alfresco-js-api"
     npm install
     cd ${DESTDIR}
-  fi
-
-  if $EXEC_CHANGE_REGISTRY == true; then
-    change_registry
   fi
 
   echo "====== PUBLISHING: ${DESTDIR} ===== npm publish ${OPTIONS}"

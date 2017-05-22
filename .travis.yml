@@ -10,11 +10,12 @@ before_install:
 
 env:
   matrix:
-    - MODULE=ng2-components
+    - MODULE=ng2-components-alfresco
+    - MODULE=ng2-components-activiti
     - MODULE=ng2-demo-shell
 
 install:
-    - if ([ "$MODULE" == "ng2-components" ]); then
+    - if ([ "$MODULE" == "ng2-components-alfresco" -o  "$MODULE" == "ng2-components-activiti" ]); then
         if ([ "$TRAVIS_BRANCH" = "master" ]); then
             (./scripts/npm-build-all.sh  || exit 1;);
         else
@@ -23,8 +24,11 @@ install:
       fi
 
 script:
-    - if ([ "$MODULE" == "ng2-components" ]); then
-            (./scripts/npm-build-all.sh -si -sb -t || exit 1;);
+    - if ([ "$MODULE" == "ng2-components-activiti" ]); then
+            (./scripts/npm-build-all.sh -si -sb -t "ng2-activiti*" || exit 1;);
+      fi
+    - if ([ "$MODULE" == "ng2-components-alfresco" ]); then
+            (./scripts/npm-build-all.sh -si -sb -t "ng2-alfresco*" || exit 1;);
       fi
     - if ([ "$MODULE" == "ng2-demo-shell" ]); then
        if ([ "$TRAVIS_BRANCH" = "master" ]); then
