@@ -41,9 +41,11 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     selectedRow: DataRow;
 
     constructor(private documentListService: DocumentListService,
-                schema: DataColumn[] = []) {
+                schema: DataColumn[] = [],
+                sorting?: DataSorting) {
         this.rows = [];
         this.columns = schema || [];
+        this.sorting = sorting;
     }
 
     getRows(): Array<DataRow> {

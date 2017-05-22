@@ -52,7 +52,10 @@ import { ContextMenuService } from './context-menu.service';
     template: `
         <div [ngStyle]="locationCss" class="menu-container">
             <ul class="context-menu">
-                <li (click)="link.subject.next(link)" class="mdl-menu__item link" *ngFor="let link of links">
+                <li *ngFor="let link of links"
+                    class="mdl-menu__item link"
+                    (click)="onMenuItemClick($event, link)"
+                    [attr.disabled]="link.model?.disabled || undefined">
                     {{link.title || link.model?.title}}
                 </li>
             </ul>
@@ -80,6 +83,15 @@ export class ContextMenuHolderComponent {
     @HostListener('document:click')
     clickedOutside() {
         this.isShown = false;
+    }
+
+    onMenuItemClick(event: Event, menuItem: any): void {
+        if (menuItem && menuItem.model && menuItem.model.disabled) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            return;
+        }
+        menuItem.subject.next(menuItem);
     }
 
     showMenu(e, links) {

@@ -20,6 +20,7 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
 import { MdCheckboxChange } from '@angular/material';
 import { DataTableComponent } from './datatable.component';
+import { DataTableCellComponent } from './datatable-cell.component';
 import {
     DataRow,
     DataColumn,
@@ -40,7 +41,10 @@ describe('DataTable', () => {
             imports: [
                 CoreModule.forRoot()
             ],
-            declarations: [DataTableComponent]
+            declarations: [
+                DataTableCellComponent,
+                DataTableComponent
+            ]
         }).compileComponents();
     }));
 

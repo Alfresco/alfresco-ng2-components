@@ -21,8 +21,8 @@ export class ContentActionModel {
     handler: ContentActionHandler;
     target: string;
     permission: string;
-    disableWithNoPermission: boolean;
-    disabled: boolean;
+    disableWithNoPermission: boolean = false;
+    disabled: boolean = false;
 
     constructor(obj?: any) {
         if (obj) {
@@ -32,6 +32,7 @@ export class ContentActionModel {
             this.target = obj.target;
             this.permission = obj.permission;
             this.disableWithNoPermission = obj.disableWithNoPermission;
+            this.disabled = obj.disabled;
         }
     }
 }

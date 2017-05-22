@@ -157,11 +157,11 @@ describe('DocumentList', () => {
 
         let actions = documentList.getNodeActions(new FolderNode());
         expect(actions.length).toBe(1);
-        expect(actions[0]).toBe(folderMenu);
+        expect(actions[0].target).toBe(folderMenu.target);
 
         actions = documentList.getNodeActions(new FileNode());
         expect(actions.length).toBe(1);
-        expect(actions[0]).toBe(documentMenu);
+        expect(actions[0].target).toBe(documentMenu.target);
     });
 
     it('should disable the action if there is no permission for the file and disableWithNoPermission true', () => {
