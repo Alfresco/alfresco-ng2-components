@@ -1,6 +1,6 @@
 .setting-card.mdl-card {
-    width: 320px;
-    height: 360px;
+    width: 100%;
+    height: 100%;
 }
 
 .setting-card > .mdl-card__title {
@@ -30,6 +30,6 @@
     display: table-row;
 }
 
-.adf-setting-input-padding{
+.adf-setting-input-padding {
     padding-top: 0px !important;
 }
