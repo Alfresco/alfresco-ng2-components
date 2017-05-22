@@ -258,7 +258,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
     }
 
     onExecuteRowAction(row: DataRow, action: any) {
-        if (action.disabled) {
+        if (action.disabled || action.disabled) {
             event.stopPropagation();
         } else {
             this.executeRowAction.emit(new DataRowActionEvent(row, action));

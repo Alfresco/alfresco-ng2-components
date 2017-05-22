@@ -28,7 +28,8 @@ import {
     ObjectDataColumn,
     DataCellEvent,
     DataRowActionEvent,
-    DataColumn
+    DataColumn,
+    DataSorting
 } from 'ng2-alfresco-datatable';
 import { DocumentListService } from './../services/document-list.service';
 import { ContentActionModel } from './../models/content-action.model';
@@ -156,8 +157,6 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                 private translateService: AlfrescoTranslationService,
                 private el: ElementRef) {
 
-        this.data = new ShareDataTableAdapter(this.documentListService);
-
         if (translateService) {
             translateService.addTranslationFolder('ng2-alfresco-documentlist', 'node_modules/ng2-alfresco-documentlist/src');
         }
@@ -186,6 +185,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     ngOnInit() {
+        this.data = new ShareDataTableAdapter(this.documentListService, null, this.getDefaultSorting());
         this.data.thumbnails = this.thumbnails;
         this.contextActionHandler.subscribe(val => this.contextActionCallback(val));
 
@@ -200,7 +200,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         }
 
         if (!this.data) {
-            this.data = new ShareDataTableAdapter(this.documentListService, schema);
+            this.data = new ShareDataTableAdapter(this.documentListService, schema, this.getDefaultSorting());
         } else if (schema && schema.length > 0) {
             this.data.setColumns(schema);
         }
@@ -209,18 +209,6 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         if (!columns || columns.length === 0) {
             this.setupDefaultColumns();
         }
-
-        // TODO: commented out as Permissions feature (Context Menus and Row Actions) breaks all component functionality
-        /*
-        if (this.sorting) {
-            const [ key, direction ] = this.sorting;
-
-            this.data.setSorting({
-                key,
-                direction: direction || 'asc'
-            });
-        }
-        */
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -294,26 +282,19 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
             if (target) {
                 let ltarget = target.toLowerCase();
-                let actionWithPermission = this.checkPermissions(node);
-
-                let actionsByTarget = actionWithPermission.filter(entry => {
+                let actionsByTarget = this.actions.filter(entry => {
                     return entry.target.toLowerCase() === ltarget;
+                }).map(action => new ContentActionModel(action));
+
+                actionsByTarget.forEach((action) => {
+                    this.checkPermission(node, action);
                 });
 
-                let cloneActions = Object.create(actionsByTarget);
-                return cloneActions;
+                return actionsByTarget;
             }
         }
 
         return [];
-    }
-
-    checkPermissions(node: MinimalNodeEntity): ContentActionModel[] {
-        let actionsPermission: ContentActionModel[] = [];
-        this.actions.forEach((action) => {
-            actionsPermission.push(this.checkPermission(node, action));
-        });
-        return actionsPermission;
     }
 
     checkPermission(node: any, action: ContentActionModel): ContentActionModel {
@@ -561,5 +542,14 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         if (this.isMobile()) {
             this.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
         }
+    }
+
+    private getDefaultSorting(): DataSorting {
+        let defaultSorting: DataSorting;
+        if (this.sorting) {
+            const [ key, direction ] = this.sorting;
+            defaultSorting = new DataSorting(key, direction);
+        }
+        return defaultSorting;
     }
 }

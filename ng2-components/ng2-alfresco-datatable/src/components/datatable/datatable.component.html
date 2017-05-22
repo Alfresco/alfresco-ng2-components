@@ -95,7 +95,7 @@
             </button>
             <ul alfresco-mdl-menu class="mdl-menu--bottom-right"
                 [attr.for]="'action_menu_' + idx">
-                <li class="mdl-menu__item" [attr.disabled]="action.disabled"
+                <li class="mdl-menu__item" [attr.disabled]="action.disabled || undefined"
                     [attr.data-automation-id]="action.title"
                     *ngFor="let action of getRowActions(row)"
                     (click)="onExecuteRowAction(row, action)">
