@@ -29,7 +29,7 @@ import {
     ContentChild,
     Optional
 } from '@angular/core';
-import { DataTableAdapter, DataRow, DataColumn, DataSorting, DataRowEvent, ObjectDataTableAdapter, ObjectDataRow } from '../../data/index';
+import { ObjectDataRow, DataTableAdapter, DataRow, DataColumn, DataSorting, DataRowEvent, ObjectDataTableAdapter } from '../../data/index';
 import { DataCellEvent } from './data-cell.event';
 import { DataRowActionEvent } from './data-row-action.event';
 import { DataColumnListComponent } from 'ng2-alfresco-core';
@@ -288,7 +288,33 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
     getRowActions(row: DataRow, col: DataColumn): any[] {
         let event = new DataCellEvent(row, col, []);
         this.showRowActionsMenu.emit(event);
-        return event.value.actions;
+
+        return this.checkPermissions(row, event.value.actions);
+    }
+
+    checkPermissions(row: DataRow, actions: any[]) {
+        let actionsPermission = [];
+        actions.forEach((action) => {
+            actionsPermission.push(this.checkPermission(row, action));
+        });
+        return actionsPermission;
+    }
+
+    checkPermission(row: DataRow, action) {
+        if (action.permission) {
+            if (this.hasPermissions(row)) {
+                let permissions = row.getValue('allowableOperations');
+                let findPermission = permissions.find(permission => permission === action.permission);
+                if (!findPermission && action.disableWithNoPermission === true) {
+                    action.disabled = true;
+                }
+            }
+        }
+        return action;
+    }
+
+    private hasPermissions(row: DataRow): boolean {
+        return row.getValue('allowableOperations') ? true : false;
     }
 
     onExecuteRowAction(row: DataRow, action: any) {
