@@ -1,0 +1,12 @@
+<div class="upload-attachment-container">
+    <alfresco-upload-drag-area 
+    (onSuccess)="onFileUpload($event)"
+    [uploadToECM]="false">
+        <div class="drag-area">Drag Content Here..</div>
+    </alfresco-upload-drag-area>
+    <alfresco-upload-button 
+        (onSuccess)="onFileUpload($event)"
+        [uploadToECM]="false">
+    </alfresco-upload-button>
+    <file-uploading-dialog></file-uploading-dialog>
+</div>
