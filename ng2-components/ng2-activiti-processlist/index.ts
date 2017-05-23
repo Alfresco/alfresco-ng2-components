@@ -20,6 +20,7 @@ import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { ActivitiFormModule } from 'ng2-activiti-form';
 import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
+import { UploadModule } from 'ng2-alfresco-upload';
 
 import {
     ActivitiProcessInstanceListComponent,
@@ -29,16 +30,21 @@ import {
     ActivitiProcessInstanceVariables,
     ActivitiProcessComments,
     ActivitiProcessInstanceDetails,
-    ActivitiStartProcessInstance
+    ActivitiStartProcessInstance,
+    ActivitiProcessAttachmentListComponent,
+    ActivitiCreateProcessAttachmentComponent
 } from './src/components/index';
 
 import { ActivitiProcessService } from './src/services/activiti-process.service';
+import { DocumentListModule } from 'ng2-alfresco-documentlist';
 
 // components
 export * from './src/components/activiti-processlist.component';
 export * from './src/components/activiti-filters.component';
 export * from './src/components/activiti-process-instance-details.component';
 export * from './src/components/activiti-start-process.component';
+export * from './src/components/activiti-process-attachment-list.component';
+export * from './src/components/activiti-create-process-attachment.component';
 
 // models
 export * from './src/models/index';
@@ -54,7 +60,9 @@ export const ACTIVITI_PROCESSLIST_DIRECTIVES: [any] = [
     ActivitiProcessInstanceTasks,
     ActivitiProcessInstanceVariables,
     ActivitiProcessComments,
-    ActivitiStartProcessInstance
+    ActivitiStartProcessInstance,
+    ActivitiProcessAttachmentListComponent,
+    ActivitiCreateProcessAttachmentComponent
 ];
 
 export const ACTIVITI_PROCESSLIST_PROVIDERS: [any] = [
@@ -66,7 +74,9 @@ export const ACTIVITI_PROCESSLIST_PROVIDERS: [any] = [
         CoreModule,
         DataTableModule,
         ActivitiFormModule,
-        ActivitiTaskListModule
+        ActivitiTaskListModule,
+        DocumentListModule,
+        UploadModule
     ],
     declarations: [
         ...ACTIVITI_PROCESSLIST_DIRECTIVES
