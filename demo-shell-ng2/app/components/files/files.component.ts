@@ -20,7 +20,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AlfrescoAuthenticationService, LogService, NotificationService } from 'ng2-alfresco-core';
 import { DocumentActionsService, DocumentListComponent, ContentActionHandler, DocumentActionModel, FolderActionModel } from 'ng2-alfresco-documentlist';
 import { FormService } from 'ng2-activiti-form';
-import { UploadButtonComponent, UploadDragAreaComponent } from 'ng2-alfresco-upload';
+import { UploadService, UploadButtonComponent, UploadDragAreaComponent, FolderCreatedEvent } from 'ng2-alfresco-upload';
 
 @Component({
     selector: 'files-component',
@@ -72,6 +72,7 @@ export class FilesComponent implements OnInit, AfterViewInit {
                 private changeDetector: ChangeDetectorRef,
                 private router: Router,
                 private notificationService: NotificationService,
+                private uploadService: UploadService,
                 @Optional() private route: ActivatedRoute) {
         documentActions.setHandler('my-handler', this.myDocumentActionHandler.bind(this));
     }
@@ -120,6 +121,8 @@ export class FilesComponent implements OnInit, AfterViewInit {
         } else {
             this.logService.warn('You are not logged in to BPM');
         }
+
+        this.uploadService.folderCreated.subscribe(value => this.onFolderCreated(value));
     }
 
     ngAfterViewInit() {
@@ -168,6 +171,14 @@ export class FilesComponent implements OnInit, AfterViewInit {
         return function (obj: any, target?: any) {
             window.alert(`Starting BPM process: ${processDefinition.id}`);
         }.bind(this);
+    }
+
+    onFolderCreated(event: FolderCreatedEvent) {
+        console.log('FOLDER CREATED');
+        console.log(event);
+        if (event && event.parentId === this.documentList.currentFolderId) {
+            this.documentList.reload();
+        }
     }
 
     onPermissionsFailed(event: any) {

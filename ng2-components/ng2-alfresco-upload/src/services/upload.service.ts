@@ -17,8 +17,9 @@
 
 import { EventEmitter, Injectable } from '@angular/core';
 import { Response } from '@angular/http';
-import { Observer, Observable } from 'rxjs/Rx';
+import { Observer, Observable, Subject } from 'rxjs/Rx';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
+import { FolderCreatedEvent } from '../events/folder-created.event';
 import { FileModel } from '../models/file.model';
 import { MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
 
@@ -40,6 +41,8 @@ export class UploadService {
     totalCompleted: number = 0;
     filesUpload$: Observable<FileModel[]>;
     totalCompleted$: Observable<any>;
+
+    folderCreated: Subject<FolderCreatedEvent> = new Subject<FolderCreatedEvent>();
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
@@ -151,9 +154,16 @@ export class UploadService {
      * Create a folder
      * @param name - the folder name
      */
-    createFolder(relativePath: string, name: string, parentId?: string) {
+    createFolder(relativePath: string, name: string, parentId?: string): Observable<MinimalNodeEntity> {
         return Observable.fromPromise(this.callApiCreateFolder(relativePath, name, parentId))
-            .do(data => this.logService.info('Node data', data)) // eyeball results in the console
+            .do(data => {
+                this.folderCreated.next({
+                    relativePath: relativePath,
+                    name: name,
+                    parentId: parentId,
+                    node: data
+                });
+            })
             .catch(err => this.handleError(err));
     }
 
