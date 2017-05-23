@@ -22,19 +22,6 @@ module.exports = webpackMerge(commonConfig, {
         modules: [helpers.root('node_modules')]
     },
 
-    module: {
-        rules: [
-            {
-                test: /\.ts$/,
-                loader: [
-                    'ts-loader',
-                    'angular2-template-loader'
-                ],
-                exclude: [ /node_modules/, /public/, /resources/, /dist/]
-            }
-        ]
-    },
-
     plugins: [
         new webpack.NoEmitOnErrorsPlugin(),
         new webpack.optimize.UglifyJsPlugin({ // https://github.com/angular/angular/issues/10618
