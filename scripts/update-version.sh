@@ -1,12 +1,34 @@
 #!/usr/bin/env bash
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+eval JS_API=true
 
-set -ex
+show_help() {
+    echo "Usage: update-version.sh"
+    echo ""
+    echo "-sj or -sjsapi  don't update js-api version"
+    echo "-v or -version  version to update"
+}
 
-cd `dirname $0`
+skip_js() {
+    echo "====== Skip JS-API change version $1 ====="
+    JS_API=false
+}
 
-VERSION=$1
+version_change() {
+    echo "====== New version $1 ====="
+    VERSION=$1
+}
+
+while [[ $1  == -* ]]; do
+    case "$1" in
+      -h|--help|-\?) show_help; exit 0;;
+      -v|version) version_change $2; shift 2;;
+      -sj|sjsapi) skip_js; shift;;
+      -*) shift;;
+    esac
+done
+
 
 if [[ "${VERSION}" == "" ]]
 then
@@ -30,13 +52,23 @@ for PACKAGE in \
   ng2-alfresco-viewer \
   ng2-alfresco-webscript \
   ng2-alfresco-userinfo \
-  ng2-alfresco-social \
-  alfresco-js-api
+  ng2-alfresco-social
 do
   DESTDIR="$DIR/../ng2-components/${PACKAGE}"
   echo "====== UPDATE PACKAGE VERSION of ${PACKAGE} to ${VERSION} version in all the package.json ======"
   find ././../ -type f -maxdepth 4 -name package.json -print0 | xargs -0 sed -i '' "s/\"${PACKAGE}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGE}\": \"${VERSION}\"/g"
 done
+
+
+if $JS_API == true; then
+    for PACKAGE in \
+      alfresco-js-api
+    do
+      DESTDIR="$DIR/../ng2-components/${PACKAGE}"
+      echo "====== UPDATE PACKAGE VERSION of ${PACKAGE} to ${VERSION} version in all the package.json ======"
+      find ././../ -type f -maxdepth 4 -name package.json -print0 | xargs -0 sed -i '' "s/\"${PACKAGE}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGE}\": \"${VERSION}\"/g"
+    done
+fi
 
 for PACKAGE in \
   ng2-activiti-diagrams \
@@ -81,13 +113,23 @@ for PACKAGE in \
   ng2-alfresco-viewer \
   ng2-alfresco-webscript \
   ng2-alfresco-userinfo \
-  ng2-alfresco-social \
-  alfresco-js-api
+  ng2-alfresco-social
 do
   DESTDIR="$DIR/../ng2-components/${PACKAGE}"
   echo "====== UPDATE PACKAGE VERSION of ${PACKAGE} to ~${VERSION} version in all the package.json ======"
   find ././../ -type f -maxdepth 4 -name package.json -print0 | xargs -0 sed -i '' "s/\"${PACKAGE}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGE}\": \"~${VERSION}\"/g"
 done
+
+
+if $JS_API == true; then
+    for PACKAGE in \
+      alfresco-js-api
+    do
+        DESTDIR="$DIR/../ng2-components/${PACKAGE}"
+        echo "====== UPDATE PACKAGE VERSION of ${PACKAGE} to ~${VERSION} version in all the package.json ======"
+        find ././../ -type f -maxdepth 4 -name package.json -print0 | xargs -0 sed -i '' "s/\"${PACKAGE}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGE}\": \"~${VERSION}\"/g"
+    done
+fi
 
 for PACKAGE in \
   ng2-activiti-diagrams \
