@@ -1,0 +1,35 @@
+alfresco-datatable >>> .column-header {
+    color: #232323;
+    font-size: 15px;
+}
+
+alfresco-datatable >>> .data-cell {
+    cursor: pointer !important;
+}
+
+.action-header{
+    border: 1px solid rgb(224, 224, 224);
+    background: #fff;
+    text-align: left;
+}
+
+.action-header>button{
+    border-right: 1px solid #e0e0e0;
+    line-height: 40px;
+    color: rgb(255, 145, 0);
+    opacity: 0.54;
+}
+
+.action-header>button>i{
+    margin-top: -4px;
+    font-size: 20px;
+}
+
+.no-attachment-message {
+    border: 1px solid rgb(224, 224, 224);
+    background: #fff;
+    text-align: left;
+    border-top: none;
+    padding: 10px;
+    text-align: center;
+}
