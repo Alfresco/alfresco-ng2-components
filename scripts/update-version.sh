@@ -3,6 +3,8 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 eval JS_API=true
 
+set -ex
+
 cd `dirname $0`
 
 show_help() {
