@@ -243,6 +243,10 @@ export class ShareDataRow implements DataRow {
         if (!obj) {
             throw new Error(ShareDataRow.ERR_OBJECT_NOT_FOUND);
         }
+
+        if (obj.entry) {
+            this.cache['allowDrop'] = obj.entry.isFolder;
+        }
     }
 
     cacheValue(key: string, value: any): any {
@@ -258,7 +262,7 @@ export class ShareDataRow implements DataRow {
     }
 
     hasValue(key: string): boolean {
-        return this.getValue(key) ? true : false;
+        return this.getValue(key) !== undefined;
     }
 }
 
