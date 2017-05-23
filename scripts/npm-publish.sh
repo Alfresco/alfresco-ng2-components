@@ -56,7 +56,7 @@ add_tag(){
     fi
 
     echo "====== TAG WILL BE ADDED DURING THE PUBLISH: ${TAG} ====="
-    OPTIONS="$OPTIONS -tag $1"
+    OPTIONS="$OPTIONS --tag $1"
 }
 
 change_registry(){
