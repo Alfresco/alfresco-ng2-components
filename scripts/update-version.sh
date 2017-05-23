@@ -3,6 +3,8 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 eval JS_API=true
 
+cd `dirname $0`
+
 show_help() {
     echo "Usage: update-version.sh"
     echo ""
@@ -54,7 +56,6 @@ for PACKAGE in \
   ng2-alfresco-userinfo \
   ng2-alfresco-social
 do
-  DESTDIR="$DIR/../ng2-components/${PACKAGE}"
   echo "====== UPDATE PACKAGE VERSION of ${PACKAGE} to ${VERSION} version in all the package.json ======"
   find ././../ -type f -maxdepth 4 -name package.json -print0 | xargs -0 sed -i '' "s/\"${PACKAGE}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGE}\": \"${VERSION}\"/g"
 done
@@ -64,7 +65,6 @@ if $JS_API == true; then
     for PACKAGE in \
       alfresco-js-api
     do
-      DESTDIR="$DIR/../ng2-components/${PACKAGE}"
       echo "====== UPDATE PACKAGE VERSION of ${PACKAGE} to ${VERSION} version in all the package.json ======"
       find ././../ -type f -maxdepth 4 -name package.json -print0 | xargs -0 sed -i '' "s/\"${PACKAGE}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGE}\": \"${VERSION}\"/g"
     done
