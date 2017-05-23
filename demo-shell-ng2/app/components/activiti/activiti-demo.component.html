@@ -135,6 +135,7 @@
                                 (processCancelled)="processCancelled()"
                                 (taskClick)="onProcessDetailsTaskClick($event)">
                             </activiti-process-instance-details>
+                            <activiti-process-attachment-list [processInstanceId]="currentProcessInstanceId"></activiti-process-attachment-list>	
                         </div>
                         <div class="mdl-cell mdl-cell--10-col task-column mdl-shadow--2dp" *ngIf="isStartProcessMode()">
                             <activiti-start-process [appId]="appId" (start)="onStartProcessInstance($event)"></activiti-start-process>
