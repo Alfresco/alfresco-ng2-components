@@ -22,6 +22,9 @@
             '@angular/router': 'npm:@angular/router/bundles/router.umd.js',
             '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
             '@angular/material': 'npm:@angular/material/bundles/material.umd.js',
+            '@angular/animations': 'npm:@angular/animations/bundles/animations.umd.min.js',
+            '@angular/animations/browser':'npm:@angular/animations/bundles/animations-browser.umd.js',
+            '@angular/platform-browser/animations': 'npm:@angular/platform-browser/bundles/platform-browser-animations.umd.js',
 
             // other libraries
             'rxjs': 'npm:rxjs',
@@ -32,6 +35,24 @@
             'ng2-alfresco-core': 'npm:ng2-alfresco-core',
             'ng2-activiti-diagrams': 'npm:ng2-activiti-diagrams',
             'ng2-activiti-analytics': 'npm:ng2-activiti-analytics'
+        },
+        meta: {
+            'ng2-translate/*': {build: false},
+            'ng2-alfresco-core/*': {build: false},
+            'ng2-activiti-diagrams/*': {build: false},
+            'ng2-activiti-analytics/*': {build: false},
+            'ng2-alfresco-datatable/*': {build: false},
+            'ng2-alfresco-documentlist/*': {build: false},
+            'ng2-activiti-form/*': {build: false},
+            'ng2-alfresco-login/*': {build: false},
+            'ng2-activiti-processlist/*': {build: false},
+            'ng2-alfresco-search/*': {build: false},
+            'ng2-activiti-tasklist/*': {build: false},
+            'ng2-alfresco-tag/*': {build: false},
+            'ng2-alfresco-upload/*': {build: false},
+            'ng2-alfresco-userinfo/*': {build: false},
+            'ng2-alfresco-viewer/*': {build: false},
+            'ng2-alfresco-webscript/*': {build: false}
         },
         // packages tells the System loader how to load when no filename and/or no extension
         packages: {
