@@ -65,8 +65,14 @@
                         <i *ngIf="isIconValue(row, col)" class="material-icons icon-cell">{{asIconValue(row, col)}}</i>
                         <img *ngIf="!isIconValue(row, col)"
                             class="image-cell"
-                            alt="{{iconAltTextKey(data.getValue(row, col))|translate}}"
-                            src="{{data.getValue(row, col)}}"
+                            alt="{{ iconAltTextKey(data.getValue(row, col)) | translate }}"
+                            src="{{ data.getValue(row, col) }}"
+                            (error)="onImageLoadingError($event)">
+                    </div>
+                    <div *ngSwitchCase="'icon'" class="cell-value">
+                        <img class="image-cell"
+                            alt="{{ iconAltTextKey(data.getValue(row, col)) | translate }}"
+                            src="{{ data.getValue(row, col) }}"
                             (error)="onImageLoadingError($event)">
                     </div>
                     <div *ngSwitchCase="'date'" class="cell-value" [attr.data-automation-id]="'date_' + data.getValue(row, col)">
