@@ -70,6 +70,8 @@ export class InputMaskDirective implements OnChanges, ControlValueAccessor {
         if (this.inputMask && this.inputMask.mask) {
             this.maskValue(this.el.nativeElement.value, this.el.nativeElement.selectionStart,
                 this.inputMask.mask, this.inputMask.isReversed, event.keyCode);
+        } else {
+            this._onChange(this.el.nativeElement.value);
         }
     }
 

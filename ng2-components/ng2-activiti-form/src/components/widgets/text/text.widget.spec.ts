@@ -65,6 +65,36 @@ describe('TextWidget', () => {
             TestBed.resetTestingModule();
         });
 
+        describe('and no mask is configured on text element', () => {
+
+            let inputElement: HTMLInputElement;
+
+            beforeEach(() => {
+                textWidget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                    id: 'text-id',
+                    name: 'text-name',
+                    value: '',
+                    type: FormFieldTypes.TEXT,
+                    readOnly: false
+                });
+
+                fixture.detectChanges();
+                inputElement = <HTMLInputElement>element.querySelector('#text-id');
+            });
+
+            it('should raise ngModelChange event', async(() => {
+                inputElement.value = 'TEXT';
+                expect(textWidget.field.value).toBe('');
+                inputElement.dispatchEvent(new Event('input'));
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    expect(textWidget.field).not.toBeNull();
+                    expect(textWidget.field.value).not.toBeNull();
+                    expect(textWidget.field.value).toBe('TEXT');
+                });
+            }));
+        });
+
         describe('and mask is configured on text element', () => {
 
             let inputElement: HTMLInputElement;
