@@ -25,6 +25,33 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
     private _sorting: DataSorting;
     private _rows: DataRow[];
     private _columns: DataColumn[];
+    private icons: string[] = [
+        'empty_doc_lib.svg',
+        'ft_ic_archive.svg',
+        'ft_ic_audio.svg',
+        'ft_ic_database.svg',
+        'ft_ic_document.svg',
+        'ft_ic_ebook.svg',
+        'ft_ic_folder.svg',
+        'ft_ic_folder_empty.svg',
+        'ft_ic_form.svg',
+        'ft_ic_google_docs.svg',
+        'ft_ic_google_drawings.svg',
+        'ft_ic_google_forms.svg',
+        'ft_ic_google_sheets.svg',
+        'ft_ic_google_slides.svg',
+        'ft_ic_miscellaneous.svg',
+        'ft_ic_ms_excel.svg',
+        'ft_ic_ms_powerpoint.svg',
+        'ft_ic_ms_word.svg',
+        'ft_ic_pdf.svg',
+        'ft_ic_presentation.svg',
+        'ft_ic_raster_image.svg',
+        'ft_ic_spreadsheet.svg',
+        'ft_ic_vector_image.svg',
+        'ft_ic_video.svg',
+        'ft_ic_website.svg'
+    ];
 
     selectedRow: DataRow;
 
@@ -111,16 +138,12 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
             }
         }
 
-        if (col.type === 'image') {
-
-            if (col.key === 'icon') {
-
-                let icon = this.getImagePath(row.getValue('icon'));
-                if (icon) {
-                    return icon;
-                }
-                return this.getImagePath('ft_ic_miscellaneous.svg');
+        if (col.type === 'icon') {
+            const iconName = row.getValue(col.key);
+            if (this.icons.indexOf(iconName) > -1) {
+                return this.getImagePath(iconName);
             }
+            return this.getImagePath('ft_ic_miscellaneous.svg');
         }
 
         return value;
