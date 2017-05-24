@@ -87,8 +87,8 @@ module.exports = {
                     },
                     publicPath: (url, resourcePath)=> {
                         var component = resourcePath.substring(0, resourcePath.indexOf('src'));
-                        var path = resourcePath.replace(component, '').replace('src', 'bundles');
-                        return './' + path + url;
+                        var path = resourcePath.replace(component, '').replace('src/', '');
+                        return path + url;
                     }
                 }
             }
