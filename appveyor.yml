@@ -34,7 +34,7 @@ install:
               if %APPVEYOR_REPO_BRANCH EQU master
                 (cd scripts && sh start.sh -t -ss || exit 1)
               else
-                (cd scripts && sh start.sh -d -t -ss -gitjsapi development|| exit 1)
+                (cd scripts && sh start.sh -dev -t -ss -gitjsapi development|| exit 1)
     )
 
 # Don't actually build.
