@@ -36,7 +36,7 @@ while [[ $1  == -* ]]; do
     case "$1" in
       -h|--help|-\?) show_help; exit 0;;
       -sd|--skipDemo) update; shift;;
-      -*) shift;;
+      -*) echo "invalid option: $1" 1>&2; show_help; exit 0;;
     esac
 done
 

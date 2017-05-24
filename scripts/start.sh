@@ -135,7 +135,7 @@ while [[ $1  == -* ]]; do
       -dist)  enable_dist; shift;;
       -gitjsapi)  enable_js_api_git_link $2; shift 2;;
       -vjsapi)  version_js_api $2; shift 2;;
-      -*) shift;;
+      -*) echo "invalid option: $1" 1>&2; show_help; exit 0;;
     esac
 done
 
