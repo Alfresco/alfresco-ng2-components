@@ -149,6 +149,9 @@ module.exports = {
                 context: 'public',
                 from: '',
                 to: ''
+            },
+            {
+                from: 'versions.json'
             }
         ]),
 

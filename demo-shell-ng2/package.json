@@ -4,8 +4,8 @@
   "version": "1.4.0",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
-    "build": "rimraf dist && npm run webpack -- --config  config/webpack.prod.js --progress --profile --bail",
-    "build:dev": "rimraf dist && npm run webpack -- --config  config/webpack.dev.js --progress --profile --bail",
+    "build": "npm run server-versions && rimraf dist && npm run webpack -- --config  config/webpack.prod.js --progress --profile --bail",
+    "build:dev": "npm run server-versions && rimraf dist && npm run webpack -- --config  config/webpack.dev.js --progress --profile --bail",
     "start:dist": "npm run server-versions && wsrv -s dist/ -p 3000 -a 0.0.0.0",
     "start": "npm run server-versions && npm run webpack-dev-server -- --config config/webpack.prod.js --progress  --content-base app/",
     "start:dev": "npm run server-versions && npm run webpack-dev-server -- --config config/webpack.dev.js --progress --content-base app/",
