@@ -93,8 +93,8 @@ update_component_js_version(){
 
 update_demo_shell_dependency_version(){
 
-   for (( k=0; j<${projectslength}; k++ ));
-    do
+   for (( k=0; k<${projectslength}; k++ ));
+   do
     echo "====== UPDATE VERSION OF DEMO-SHELL to ${projects[$k]} version ${VERSION} ======"
     DESTDIR="$DIR/../demo-shell-ng2/"
     sed "${sedi[@]}" "s/\"${projects[$k]}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${projects[$k]}\": \"${VERSION}\"/g"  ${DESTDIR}/package.json
