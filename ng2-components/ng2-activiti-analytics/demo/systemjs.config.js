@@ -36,24 +36,6 @@
             'ng2-activiti-diagrams': 'npm:ng2-activiti-diagrams',
             'ng2-activiti-analytics': 'npm:ng2-activiti-analytics'
         },
-        meta: {
-            'ng2-translate/*': {build: false},
-            'ng2-alfresco-core/*': {build: false},
-            'ng2-activiti-diagrams/*': {build: false},
-            'ng2-activiti-analytics/*': {build: false},
-            'ng2-alfresco-datatable/*': {build: false},
-            'ng2-alfresco-documentlist/*': {build: false},
-            'ng2-activiti-form/*': {build: false},
-            'ng2-alfresco-login/*': {build: false},
-            'ng2-activiti-processlist/*': {build: false},
-            'ng2-alfresco-search/*': {build: false},
-            'ng2-activiti-tasklist/*': {build: false},
-            'ng2-alfresco-tag/*': {build: false},
-            'ng2-alfresco-upload/*': {build: false},
-            'ng2-alfresco-userinfo/*': {build: false},
-            'ng2-alfresco-viewer/*': {build: false},
-            'ng2-alfresco-webscript/*': {build: false}
-        },
         // packages tells the System loader how to load when no filename and/or no extension
         packages: {
             app: {
@@ -65,11 +47,11 @@
             },
             'moment': 'npm:moment/min/moment.min.js',
             'ng2-translate': { defaultExtension: 'js' },
-            'ng2-charts': { main: 'ng2-charts.js', defaultExtension: 'js'},
+            'ng2-charts': { main: './bundles/ng2-charts.umd.js', defaultExtension: 'js'},
             'alfresco-js-api': { main: './alfresco-js-api.js', defaultExtension: 'js'},
             'ng2-alfresco-core': { main: './bundles/ng2-alfresco-core.js', defaultExtension: 'js'},
-            'ng2-analytics-diagrams': { main: './bundles/ng2-analytics-diagrams.js', defaultExtension: 'js'},
-            'ng2-analytics-analytics': { main: './bundles/ng2-analytics-analytics.js', defaultExtension: 'js'}
+            'ng2-activiti-diagrams': { main: './bundles/ng2-activiti-diagrams.js', defaultExtension: 'js'},
+            'ng2-activiti-analytics': { main: './bundles/ng2-activiti-analytics.js', defaultExtension: 'js'}
         }
     });
 })(this);

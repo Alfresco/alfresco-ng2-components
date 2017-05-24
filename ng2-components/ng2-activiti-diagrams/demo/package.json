@@ -32,6 +32,7 @@
     "activiti-diagrams"
   ],
   "dependencies": {
+    "@angular/animations": "~4.0.0",
     "@angular/common": "~4.0.0",
     "@angular/compiler": "~4.0.0",
     "@angular/core": "~4.0.0",
