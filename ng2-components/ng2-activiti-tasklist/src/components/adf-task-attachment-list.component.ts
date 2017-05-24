@@ -16,7 +16,7 @@
  */
 
 import { Component, OnChanges, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, ContentService } from 'ng2-alfresco-core';
 import { ActivitiContentService } from 'ng2-activiti-form';
 
 @Component({
@@ -33,12 +33,19 @@ export class TaskAttachmentListComponent implements OnChanges {
     attachmentClick = new EventEmitter();
 
     @Output()
+    attachmentCreate = new EventEmitter();
+
+    @Output()
     success = new EventEmitter();
+
+    @Output()
+    error: EventEmitter<any> = new EventEmitter<any>();
 
     attachments: any[] = [];
 
     constructor(private translateService: AlfrescoTranslationService,
-                private activitiContentService: ActivitiContentService) {
+                private activitiContentService: ActivitiContentService,
+                private contentService: ContentService) {
 
         if (translateService) {
             translateService.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
@@ -90,31 +97,68 @@ export class TaskAttachmentListComponent implements OnChanges {
     }
 
     onShowRowActionsMenu(event: any) {
-        let myAction = {
-            title: 'Delete',
-            name: 'delete'
+        let viewAction = {
+            title: 'View',
+            name: 'view'
         };
+
+        let removeAction = {
+            title: 'Remove',
+            name: 'remove'
+        };
+
+        let downloadAction = {
+            title: 'Download',
+            name: 'download'
+        };
+
         event.value.actions = [
-            myAction
+            viewAction,
+            removeAction,
+            downloadAction
         ];
     }
 
     onExecuteRowAction(event: any) {
         let args = event.value;
         let action = args.action;
-        if (action.name === 'delete') {
+        if (action.name === 'view') {
+            this.emitDocumentContent(args.row.obj);
+        } else if (action.name === 'remove') {
             this.deleteAttachmentById(args.row.obj.id);
+        } else if (action.name === 'download') {
+            this.downloadContent(args.row.obj);
         }
     }
 
     openContent(event: any): void {
         let content = event.value.obj;
+        this.emitDocumentContent(content);
+    }
+
+    emitDocumentContent(content: any) {
         this.activitiContentService.getFileRawContent(content.id).subscribe(
             (blob: Blob) => {
                 content.contentBlob = blob;
                 this.attachmentClick.emit(content);
+            },
+            (err) => {
+                this.error.emit(err);
             }
         );
+    }
+
+    downloadContent(content: any): void {
+        this.activitiContentService.getFileRawContent(content.id).subscribe(
+            (blob: Blob) => this.contentService.downloadBlob(blob, content.name),
+            (err) => {
+                this.error.emit(err);
+            }
+        );
+    }
+
+    attachDocumentToTask() {
+        this.attachmentCreate.emit();
     }
 
 }
