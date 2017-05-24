@@ -123,7 +123,7 @@ module.exports = {
                 return {
                     context: `../ng2-components/${lib}/bundles/assets/` ,
                     from: '**/*',
-                    to: `bundles/assets/`
+                    to: `assets/`
                 }
             }),
             {
