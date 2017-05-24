@@ -42,22 +42,18 @@ import { UploadModule } from 'ng2-alfresco-upload';
                 </div>
                 <div *ngIf="!acceptedFilesTypeShow">
                     <alfresco-upload-button data-automation-id="multiple-file-upload"
-                                            [currentFolderPath]="currentPath"
                                             [multipleFiles]="multipleFileUpload"
                                             [uploadFolders]="folderUpload"
-                                            [versioning] = "versioning"
-                                            (onSuccess)="documentList.reload()">
+                                            [versioning] = "versioning">
                         <div class="mdl-spinner mdl-js-spinner is-active"></div>
                     </alfresco-upload-button>
                 </div>
                 <div *ngIf="acceptedFilesTypeShow">
                     <alfresco-upload-button data-automation-id="multiple-file-upload"
-                                            [currentFolderPath]="currentPath"
                                             acceptedFilesType="{{acceptedFilesType}}"
                                             [multipleFiles]="multipleFileUpload"
                                             [uploadFolders]="folderUpload"
-                                            [versioning] = "versioning"
-                                            (onSuccess)="documentList.reload()">
+                                            [versioning] = "versioning">
                         <div class="mdl-spinner mdl-js-spinner is-active"></div>
                     </alfresco-upload-button>
                 </div>
