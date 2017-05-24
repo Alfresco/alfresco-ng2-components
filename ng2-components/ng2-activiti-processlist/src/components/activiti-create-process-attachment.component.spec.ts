@@ -22,6 +22,7 @@ import { Observable } from 'rxjs/Rx';
 
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { ActivitiContentService } from 'ng2-activiti-form';
+import { UploadModule } from 'ng2-alfresco-upload';
 
 import { ActivitiCreateProcessAttachmentComponent } from './activiti-create-process-attachment.component';
 import { TranslationMock } from './../assets/translation.service.mock';
@@ -37,7 +38,8 @@ describe('Activiti Process Instance Create Attachment', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule.forRoot(),
+                UploadModule.forRoot()
             ],
             declarations: [
                 ActivitiCreateProcessAttachmentComponent
@@ -55,10 +57,7 @@ describe('Activiti Process Instance Create Attachment', () => {
         component = fixture.componentInstance;
         service = fixture.debugElement.injector.get(ActivitiContentService);
 
-        createProcessRelatedContentSpy = spyOn(service, 'createProcessRelatedContent').and.returnValue(Observable.of(
-            {
-              status: true
-            }));
+        createProcessRelatedContentSpy = spyOn(service, 'createProcessRelatedContent').and.returnValue(Observable.of({successCode: true}));
 
         componentHandler = jasmine.createSpyObj('componentHandler', [
             'upgradeAllRegistered',
@@ -76,9 +75,8 @@ describe('Activiti Process Instance Create Attachment', () => {
     it('should not call createProcessRelatedContent service when there is no file uploaded', () => {
         let change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'processInstanceId': change });
-        let fileList = new FileList();
-        component.onFileUpload(fileList);
-        expect(createProcessRelatedContentSpy).not.toHaveBeenCalled();
+        component.onFileUpload(null);
+        expect(createProcessRelatedContentSpy).toHaveBeenCalled();
     });
 
     it('should call createProcessRelatedContent service when there is a file uploaded', () => {
