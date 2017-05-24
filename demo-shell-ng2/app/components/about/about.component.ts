@@ -35,7 +35,7 @@ export class AboutComponent implements OnInit {
 
     ngOnInit() {
         this.http.get('/versions.json').subscribe(response => {
-            let regexp = new RegExp('^(ng2-activiti|ng2-alfresco|alfresco-)', 'g');
+            let regexp = new RegExp('^(ng2-activiti|ng2-alfresco|alfresco-)');
 
             let alfrescoPackages = Object.keys(response.json().dependencies).filter((val) => {
                 this.logService.log(val);
