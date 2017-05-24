@@ -514,9 +514,10 @@ describe('AnalyticsReportParametersComponent', () => {
             });
 
             it('Should show a dialog to allowing report save', async(() => {
-                component.saveReportSuccess.subscribe(() => {
+                component.saveReportSuccess.subscribe((repId) => {
                     let reportDialogTitle: HTMLElement = <HTMLElement>element.querySelector('#report-dialog');
                     expect(reportDialogTitle.getAttribute('open')).toBeNull();
+                    expect(repId).toBe(1);
                 });
 
                 component.submit(values);

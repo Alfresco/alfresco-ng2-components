@@ -28,14 +28,14 @@ declare let jasmine: any;
 describe('AnalyticsReportListComponent', () => {
 
     let reportList = [
-        {'id': 2002, 'name': 'Fake Test Process definition heat map'},
-        {'id': 2003, 'name': 'Fake Test Process definition overview'},
-        {'id': 2004, 'name': 'Fake Test Process instances overview'},
-        {'id': 2005, 'name': 'Fake Test Task overview'},
-        {'id': 2006, 'name': 'Fake Test Task service level agreement'}
+        { 'id': 2002, 'name': 'Fake Test Process definition heat map' },
+        { 'id': 2003, 'name': 'Fake Test Process definition overview' },
+        { 'id': 2004, 'name': 'Fake Test Process instances overview' },
+        { 'id': 2005, 'name': 'Fake Test Task overview' },
+        { 'id': 2006, 'name': 'Fake Test Task service level agreement' }
     ];
 
-    let reportSelected = {'id': 2003, 'name': 'Fake Test Process definition overview'};
+    let reportSelected = { 'id': 2003, 'name': 'Fake Test Process definition overview' };
 
     let component: AnalyticsReportListComponent;
     let fixture: ComponentFixture<AnalyticsReportListComponent>;
@@ -57,7 +57,9 @@ describe('AnalyticsReportListComponent', () => {
 
         let translateService = TestBed.get(AlfrescoTranslationService);
         spyOn(translateService, 'addTranslationFolder').and.stub();
-        spyOn(translateService, 'get').and.callFake((key) => { return Observable.of(key); });
+        spyOn(translateService, 'get').and.callFake((key) => {
+            return Observable.of(key);
+        });
     }));
 
     beforeEach(() => {
@@ -174,19 +176,47 @@ describe('AnalyticsReportListComponent', () => {
 
         it('Should return false if the current report is different', () => {
             component.selectReport(reportSelected);
-            let anotherReport = {'id': 111, 'name': 'Another Fake Test Process definition overview'};
+            let anotherReport = { 'id': 111, 'name': 'Another Fake Test Process definition overview' };
             expect(component.isSelected(anotherReport)).toBe(false);
         });
 
         it('Should reload the report list', (done) => {
             component.initObserver();
-            let report = new ReportParametersModel({'id': 2002, 'name': 'Fake Test Process definition heat map'});
+            let report = new ReportParametersModel({ 'id': 2002, 'name': 'Fake Test Process definition heat map' });
             component.reports = [report];
             expect(component.reports.length).toEqual(1);
             component.reload();
 
             component.onSuccess.subscribe(() => {
                 expect(component.reports.length).toEqual(5);
+                done();
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: reportList
+            });
+        });
+
+        fit('Should reload the report list and select the report with the given id', (done) => {
+            component.initObserver();
+            let report = new ReportParametersModel({ 'id': '2002', 'name': 'Fake Test Process definition heat map' });
+            let reportOverview = new ReportParametersModel({
+                'id': '2002',
+                'name': 'Fake Test Process definition overview'
+            });
+            component.reports = [report, reportOverview];
+            console.log('PIPPOBA');
+            console.log(component.reports);
+            expect(component.reports.length).toEqual(1);
+            component.reload('2002');
+
+            component.onSuccess.subscribe(() => {
+                expect(component.reports.length).toEqual(5);
+                expect(component.currentReport).toBeDefined();
+                expect(component.currentReport).not.toBeNull();
+                expect(component.currentReport.id).toEqual('2002');
                 done();
             });
 

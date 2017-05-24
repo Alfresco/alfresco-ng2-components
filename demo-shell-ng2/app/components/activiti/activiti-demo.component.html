@@ -167,9 +167,12 @@
                             [reportId]="report.id"
                             [hideParameters]="false"
                             (editReport)="onEditReport($event)"
-                            (reportSaved)="onReportSaved()"
+                            (reportSaved)="onReportSaved($event)"
                             (reportDeleted)="onReportDeleted()">
                         </activiti-analytics>
+                        <div *ngIf="!report">
+                            <span>No report selected. Choose a report from the list</span>
+                        </div>
                     </div>
                 </div>
             </div>
