@@ -184,7 +184,7 @@ export class UploadDragAreaComponent {
         messageTranslate = this.translateService.get('FILE_UPLOAD.MESSAGES.PROGRESS');
         actionTranslate = this.translateService.get('FILE_UPLOAD.ACTION.UNDO');
 
-        this.notificationService.openSnackMessageAction(messageTranslate.value, actionTranslate.value, 3000).afterDismissed().subscribe(() => {
+        this.notificationService.openSnackMessageAction(messageTranslate.value, actionTranslate.value, 3000).onAction().subscribe(() => {
             latestFilesAdded.forEach((uploadingFileModel: FileModel) => {
                 uploadingFileModel.emitAbort();
             });
