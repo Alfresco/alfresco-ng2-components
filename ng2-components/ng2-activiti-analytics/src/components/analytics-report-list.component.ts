@@ -76,7 +76,7 @@ export class AnalyticsReportListComponent implements OnInit {
     /**
      * Reload the component
      */
-    reload(reportId?: string) {
+    reload(reportId?) {
         this.reset();
         this.getReportList(this.appId, reportId);
     }
@@ -94,6 +94,7 @@ export class AnalyticsReportListComponent implements OnInit {
                         this.reportObserver.next(report);
                     });
                     if (reportId) {
+                        console.log('SELEZIONO IL REPORT!');
                         this.selectReportByReportId(reportId);
                     }
                     if (this.selectFirst) {
@@ -153,8 +154,6 @@ export class AnalyticsReportListComponent implements OnInit {
     }
 
     public selectReportByReportId(reportId) {
-        console.log('QUI');
-        console.log(this.reports);
         let reportFound = this.reports.find(report => report.id === reportId);
         if (reportFound) {
             this.currentReport = reportFound;

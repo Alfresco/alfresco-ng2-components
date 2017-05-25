@@ -483,7 +483,7 @@ describe('AnalyticsReportParametersComponent', () => {
                 validForm = true;
             });
 
-            xit('Should be able to change the report title', (done) => {
+            it('Should be able to change the report title', (done) => {
 
                 let title: HTMLElement = element.querySelector('h4');
                 title.click();
@@ -517,7 +517,7 @@ describe('AnalyticsReportParametersComponent', () => {
                 component.saveReportSuccess.subscribe((repId) => {
                     let reportDialogTitle: HTMLElement = <HTMLElement>element.querySelector('#report-dialog');
                     expect(reportDialogTitle.getAttribute('open')).toBeNull();
-                    expect(repId).toBe(1);
+                    expect(repId).toBe('1');
                 });
 
                 component.submit(values);

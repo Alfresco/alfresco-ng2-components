@@ -199,24 +199,17 @@ describe('AnalyticsReportListComponent', () => {
             });
         });
 
-        fit('Should reload the report list and select the report with the given id', (done) => {
+        it('Should reload the report list and select the report with the given id', (done) => {
             component.initObserver();
-            let report = new ReportParametersModel({ 'id': '2002', 'name': 'Fake Test Process definition heat map' });
-            let reportOverview = new ReportParametersModel({
-                'id': '2002',
-                'name': 'Fake Test Process definition overview'
-            });
-            component.reports = [report, reportOverview];
-            console.log('PIPPOBA');
-            console.log(component.reports);
-            expect(component.reports.length).toEqual(1);
-            component.reload('2002');
+            expect(component.reports.length).toEqual(0);
+
+            component.reload(2002);
 
             component.onSuccess.subscribe(() => {
                 expect(component.reports.length).toEqual(5);
                 expect(component.currentReport).toBeDefined();
                 expect(component.currentReport).not.toBeNull();
-                expect(component.currentReport.id).toEqual('2002');
+                expect(component.currentReport.id).toEqual(2002);
                 done();
             });
 
