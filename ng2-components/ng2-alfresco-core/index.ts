@@ -16,6 +16,7 @@
  */
 
 import { NgModule, ModuleWithProviders } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule, Http } from '@angular/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -86,6 +87,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         FormsModule,
         ReactiveFormsModule,
         HttpModule,
+        BrowserAnimationsModule,
         MaterialModule.forRoot(),
         TranslateModule.forRoot({
             provide: TranslateLoader,
@@ -105,6 +107,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         ...ALFRESCO_CORE_PROVIDERS
     ],
     exports: [
+        BrowserAnimationsModule,
         CommonModule,
         FormsModule,
         MaterialModule,

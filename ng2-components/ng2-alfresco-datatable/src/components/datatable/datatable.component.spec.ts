@@ -20,6 +20,7 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
 import { MdCheckboxChange } from '@angular/material';
 import { DataTableComponent } from './datatable.component';
+import { DataTableCellComponent } from './datatable-cell.component';
 import {
     DataRow,
     DataColumn,
@@ -40,7 +41,10 @@ describe('DataTable', () => {
             imports: [
                 CoreModule.forRoot()
             ],
-            declarations: [DataTableComponent]
+            declarations: [
+                DataTableCellComponent,
+                DataTableComponent
+            ]
         }).compileComponents();
     }));
 
@@ -48,7 +52,7 @@ describe('DataTable', () => {
         fixture = TestBed.createComponent(DataTableComponent);
         dataTable = fixture.componentInstance;
         element = fixture.debugElement.nativeElement;
-        fixture.detectChanges();
+        //fixture.detectChanges();
     });
 
     beforeEach(() => {
@@ -103,7 +107,7 @@ describe('DataTable', () => {
         let data = new ObjectDataTableAdapter([], []);
 
         expect(table.data).toBeUndefined();
-        table.ngOnChanges({'data': new SimpleChange('123', data)});
+        table.ngOnChanges({'data': new SimpleChange('123', data, true)});
         expect(table.data).toEqual(data);
     });
 
@@ -413,88 +417,6 @@ describe('DataTable', () => {
         dataTable.fallbackThumbnail = null;
         dataTable.onImageLoadingError(event);
         expect(event.target.src).toBe(originalSrc);
-    });
-
-    it('should disable the action if there is no permission and disableWithNoPermission true', () => {
-
-        dataTable.data = new ObjectDataTableAdapter(
-            [{id: 1, name: 'xyz', allowableOperations: ['create', 'update']}],
-            []
-        );
-
-        let row = dataTable.data.getRows();
-        let actions = [
-            {
-                disableWithNoPermission: true,
-                permission: 'delete',
-                target: 'folder',
-                title: 'action2'
-            }
-        ];
-
-        let updateActions = dataTable.checkPermissions(row[0], actions);
-        expect(updateActions[0].disabled).toBe(true);
-    });
-
-    it('should not disable the action if there is no permission and disableWithNoPermission false', () => {
-
-        dataTable.data = new ObjectDataTableAdapter(
-            [{id: 1, name: 'xyz', allowableOperations: ['create', 'update']}],
-            []
-        );
-
-        let row = dataTable.data.getRows();
-        let actions = [
-            {
-                disableWithNoPermission: false,
-                permission: 'delete',
-                target: 'folder',
-                title: 'action2'
-            }
-        ];
-
-        let updateActions = dataTable.checkPermissions(row[0], actions);
-        expect(updateActions[0].disabled).toBeUndefined();
-    });
-
-    it('should not disable the action if there is the right permission', () => {
-
-        dataTable.data = new ObjectDataTableAdapter(
-            [{ id: 1, name: 'xyz', allowableOperations: ['create', 'update', 'delete'] }],
-            []
-        );
-
-        let row = dataTable.data.getRows();
-        let actions = [
-            {
-                permission: 'delete',
-                target: 'folder',
-                title: 'action2'
-            }
-        ];
-
-        let updateActions = dataTable.checkPermissions(row[0], actions);
-        expect(updateActions[0].disabled).toBeUndefined();
-    });
-
-    it('should not disable the action if there are no permissions', () => {
-
-        dataTable.data = new ObjectDataTableAdapter(
-            [{id: 1, name: 'xyz', allowableOperations: null}],
-            []
-        );
-
-        let row = dataTable.data.getRows();
-        let actions = [
-            {
-                permission: 'delete',
-                target: 'folder',
-                title: 'action2'
-            }
-        ];
-
-        let updateActions = dataTable.checkPermissions(row[0], actions);
-        expect(updateActions[0].disabled).toBeUndefined();
     });
 
 });

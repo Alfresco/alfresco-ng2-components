@@ -255,7 +255,7 @@ describe('AlfrescoSearchComponent', () => {
                 done();
             });
 
-            component.ngOnChanges({searchTerm: new SimpleChange('', 'searchTerm2')});
+            component.ngOnChanges({searchTerm: new SimpleChange('', 'searchTerm2', true)});
         });
     });
 

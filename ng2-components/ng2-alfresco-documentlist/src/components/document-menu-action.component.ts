@@ -28,7 +28,6 @@ declare let dialogPolyfill: any;
 const ERROR_FOLDER_ALREADY_EXIST = 409;
 
 @Component({
-    moduleId: module.id,
     selector: 'alfresco-document-menu-action',
     styleUrls: ['./document-menu-action.component.css'],
     templateUrl: './document-menu-action.component.html'
@@ -93,10 +92,8 @@ export class DocumentMenuActionComponent implements OnChanges {
                             let errorMessagePlaceholder = this.getErrorMessage(error.response);
                             this.message = this.formatString(errorMessagePlaceholder, [name]);
                             this.error.emit({ message: this.message });
-                            this.logService.error(this.message);
                         } else {
                             this.error.emit(error);
-                            this.logService.error(error);
                         }
                     }
                 );

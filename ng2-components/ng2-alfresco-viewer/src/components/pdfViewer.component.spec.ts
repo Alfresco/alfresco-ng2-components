@@ -80,7 +80,7 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
 
     describe('View with url file', () => {
         beforeEach(() => {
-            component.urlFile = 'base/src/assets/fake-test-file.pdf';
+            component.urlFile = require('../assets/fake-test-file.pdf');
             fixture.detectChanges();
         });
 
@@ -177,7 +177,7 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
     describe('User interaction', () => {
 
         beforeEach(() => {
-            component.urlFile = 'base/src/assets/fake-test-file.pdf';
+            component.urlFile = require('../assets/fake-test-file.pdf');
             fixture.detectChanges();
             component.inputPage('1');
         });
@@ -185,19 +185,25 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
         it('Total number of pages should be loaded', (done) => {
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
-                expect(component.totalPages).toEqual(6);
-                done();
+                fixture.whenStable().then(() => {
+
+                    expect(component.totalPages).toEqual(6);
+                    done();
+                });
             });
         }, 5000);
 
         it('right arrow should move to the next page', (done) => {
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
-                expect(component.displayPage).toBe(1);
-                EventMock.keyDown(39);
-                fixture.detectChanges();
-                expect(component.displayPage).toBe(2);
-                done();
+                fixture.whenStable().then(() => {
+                    expect(component.displayPage).toBe(1);
+                    EventMock.keyDown(39);
+                    fixture.detectChanges();
+                    expect(component.displayPage).toBe(2);
+                    done();
+                });
+
             });
         }, 5000);
 
@@ -206,24 +212,30 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
 
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
-                expect(component.displayPage).toBe(1);
-                nextPageButton.click();
-                fixture.detectChanges();
-                expect(component.displayPage).toBe(2);
-                done();
+                fixture.whenStable().then(() => {
+
+                    expect(component.displayPage).toBe(1);
+                    nextPageButton.click();
+                    fixture.detectChanges();
+                    expect(component.displayPage).toBe(2);
+                    done();
+                });
             });
         });
 
         it('left arrow should move to the previous page', (done) => {
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
-                expect(component.displayPage).toBe(1);
-                EventMock.keyDown(39);
-                EventMock.keyDown(39);
-                EventMock.keyDown(37);
-                fixture.detectChanges();
-                expect(component.displayPage).toBe(2);
-                done();
+                fixture.whenStable().then(() => {
+
+                    expect(component.displayPage).toBe(1);
+                    EventMock.keyDown(39);
+                    EventMock.keyDown(39);
+                    EventMock.keyDown(37);
+                    fixture.detectChanges();
+                    expect(component.displayPage).toBe(2);
+                    done();
+                });
             });
         });
 
@@ -233,35 +245,44 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
 
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
-                expect(component.displayPage).toBe(1);
-                nextPageButton.click();
-                nextPageButton.click();
-                previousPageButton.click();
-                fixture.detectChanges();
-                expect(component.displayPage).toBe(2);
-                done();
+                fixture.whenStable().then(() => {
+
+                    expect(component.displayPage).toBe(1);
+                    nextPageButton.click();
+                    nextPageButton.click();
+                    previousPageButton.click();
+                    fixture.detectChanges();
+                    expect(component.displayPage).toBe(2);
+                    done();
+                });
             });
         });
 
         it('previous page should not move to the previous page if is page 1', (done) => {
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
-                expect(component.displayPage).toBe(1);
-                component.previousPage();
-                fixture.detectChanges();
-                expect(component.displayPage).toBe(1);
-                done();
+                fixture.whenStable().then(() => {
+
+                    expect(component.displayPage).toBe(1);
+                    component.previousPage();
+                    fixture.detectChanges();
+                    expect(component.displayPage).toBe(1);
+                    done();
+                });
             });
         });
 
         it('Input page should move to the inserted page', (done) => {
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
-                expect(component.displayPage).toBe(1);
-                component.inputPage('2');
-                fixture.detectChanges();
-                expect(component.displayPage).toBe(2);
-                done();
+                fixture.whenStable().then(() => {
+
+                    expect(component.displayPage).toBe(1);
+                    component.inputPage('2');
+                    fixture.detectChanges();
+                    expect(component.displayPage).toBe(2);
+                    done();
+                });
             });
         });
 
@@ -314,39 +335,50 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
     });
 
     describe('Resize interaction', () => {
+
         beforeEach(() => {
-            component.urlFile = 'base/src/assets/fake-test-file.pdf';
+            component.urlFile = require('../assets/fake-test-file.pdf');
+            fixture.detectChanges();
             component.inputPage('1');
         });
+
         it('resize event should trigger setScaleUpdatePages', (done) => {
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
-                spyOn(component, 'onResize');
-                EventMock.resizeMobileView();
-                expect(component.onResize).toHaveBeenCalled();
-                done();
+                fixture.whenStable().then(() => {
+
+                    spyOn(component, 'onResize');
+                    EventMock.resizeMobileView();
+                    expect(component.onResize).toHaveBeenCalled();
+                    done();
+                });
             });
         });
     });
 
     describe('scroll interaction', () => {
+
         beforeEach(() => {
-            component.urlFile = 'base/src/assets/fake-test-file.pdf';
+            component.urlFile = require('../assets/fake-test-file.pdf');
             fixture.detectChanges();
         });
+
         it('scroll page should return the current page', (done) => {
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
-                expect(component.displayPage).toBe(1);
-                component.inputPage('2');
-                fixture.detectChanges();
-                expect(component.displayPage).toBe(2);
-                let documentContainer = element.querySelector('#viewer-pdf-container');
-                documentContainer.scrollTop = 100000;
-                component.watchScroll(documentContainer);
-                fixture.detectChanges();
-                expect(component.displayPage).toBe(6);
-                done();
+                fixture.whenStable().then(() => {
+
+                    expect(component.displayPage).toBe(1);
+                    component.inputPage('2');
+                    fixture.detectChanges();
+                    expect(component.displayPage).toBe(2);
+                    let documentContainer = element.querySelector('#viewer-pdf-container');
+                    documentContainer.scrollTop = 100000;
+                    component.watchScroll(documentContainer);
+                    fixture.detectChanges();
+                    expect(component.displayPage).toBe(6);
+                    done();
+                });
             });
         });
     });

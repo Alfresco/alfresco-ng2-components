@@ -24,8 +24,9 @@ import { AlfrescoApiService } from './alfresco-api.service';
 
 @Injectable()
 export class AlfrescoAuthenticationService {
-    loginSubject: Subject<any> = new Subject<any>();
-    logoutSubject: Subject<any> = new Subject<any>();
+
+    onLogin: Subject<any> = new Subject<any>();
+    onLogout: Subject<any> = new Subject<any>();
 
     constructor(private settingsService: AlfrescoSettingsService,
                 public alfrescoApi: AlfrescoApiService,
@@ -52,7 +53,7 @@ export class AlfrescoAuthenticationService {
         return Observable.fromPromise(this.callApiLogin(username, password))
             .map((response: any) => {
                 this.saveTickets();
-                this.loginSubject.next(response);
+                this.onLogin.next(response);
                 return {type: this.settingsService.getProviders(), ticket: response};
             })
             .catch(err => this.handleError(err));
@@ -75,10 +76,9 @@ export class AlfrescoAuthenticationService {
      */
     logout() {
         return Observable.fromPromise(this.callApiLogout())
-            .map(res => <any> res)
             .do(response => {
                 this.removeTicket();
-                this.logoutSubject.next(response);
+                this.onLogout.next(response);
                 return response;
             })
             .catch(err => this.handleError(err));
@@ -165,6 +165,28 @@ export class AlfrescoAuthenticationService {
      */
     isBpmLoggedIn() {
         return this.alfrescoApi.getInstance().bpmAuth && !!this.alfrescoApi.getInstance().bpmAuth.isLoggedIn();
+    }
+
+    /**
+     * Get the ECM username
+     *
+     * @returns {string} The username value
+     *
+     * @memberof AlfrescoAuthenticationService
+     */
+    getEcmUsername(): string {
+        return this.alfrescoApi.getInstance().ecmAuth.username;
+    }
+
+    /**
+     * Get the BPM username
+     *
+     * @returns {string} The username value
+     *
+     * @memberof AlfrescoAuthenticationService
+     */
+    getBpmUsername(): string {
+        return this.alfrescoApi.getInstance().bpmAuth.username;
     }
 
     /**

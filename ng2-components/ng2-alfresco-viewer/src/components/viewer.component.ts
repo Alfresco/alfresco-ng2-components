@@ -21,7 +21,6 @@ import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 
 @Component({
-    moduleId: module.id,
     selector: 'alfresco-viewer',
     templateUrl: './viewer.component.html',
     styleUrls: ['./viewer.component.css']
@@ -73,8 +72,10 @@ export class ViewerComponent {
 
     ngOnChanges(changes) {
         if (this.showViewer) {
-            this.hideOtherHeaderBar();
-            this.blockOtherScrollBar();
+            if (this.overlayMode) {
+                this.hideOtherHeaderBar();
+                this.blockOtherScrollBar();
+            }
             if (!this.urlFile && !this.blobFile && !this.fileNodeId) {
                 throw new Error('Attribute urlFile or fileNodeId or blobFile is required');
             }

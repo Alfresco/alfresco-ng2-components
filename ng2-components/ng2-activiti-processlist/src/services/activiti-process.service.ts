@@ -18,13 +18,14 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
+import { RestVariable } from 'alfresco-js-api';
 import { ProcessInstance, ProcessDefinitionRepresentation } from '../models/index';
 import { ProcessFilterRequestRepresentation } from '../models/process-instance-filter.model';
 import { ProcessInstanceVariable } from './../models/process-instance-variable.model';
 import { AppDefinitionRepresentationModel, Comment, TaskDetailsModel, User } from 'ng2-activiti-tasklist';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 
-declare var moment: any;
+declare let moment: any;
 
 @Injectable()
 export class ActivitiProcessService {
@@ -39,7 +40,20 @@ export class ActivitiProcessService {
      */
     getDeployedApplications(name: string): Observable<AppDefinitionRepresentationModel> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.appsApi.getAppDefinitions())
-            .map((response: any) => response.data.find((p: AppDefinitionRepresentationModel) => p.name === name))
+            .map((response: any) => response.data.find((app: AppDefinitionRepresentationModel) => app.name === name))
+            .catch(err => this.handleError(err));
+    }
+
+    /**
+     * Retrieve deployed apps details by id
+     * @param appId - number - optional - The id of app
+     * @returns {Observable<any>}
+     */
+    getApplicationDetailsById(appId: number): Observable<any> {
+        return Observable.fromPromise(this.apiService.getInstance().activiti.appsApi.getAppDefinitions())
+            .map((response: any) => {
+                return response.data.find(app => app.id === appId);
+            })
             .catch(err => this.handleError(err));
     }
 
@@ -47,7 +61,7 @@ export class ActivitiProcessService {
         return Observable.fromPromise(this.apiService.getInstance().activiti.processApi.getProcessInstances(requestNode))
             .map((res: any) => {
                 if (requestNode.processDefinitionKey) {
-                    return res.data.filter(p => p.processDefinitionKey === requestNode.processDefinitionKey);
+                    return res.data.filter(process => process.processDefinitionKey === requestNode.processDefinitionKey);
                 } else {
                     return res.data;
                 }
@@ -72,13 +86,14 @@ export class ActivitiProcessService {
 
     /**
      * Retrieve the process filter by id
-     * @param processId - string - The id of the filter
+     * @param filterId - number - The id of the filter
+     * @param appId - string - optional - The id of app
      * @returns {Observable<FilterProcessRepresentationModel>}
      */
-    getProcessFilterById(processId: string, appId?: string): Observable<FilterProcessRepresentationModel> {
-        return Observable.fromPromise(this.callApiGetUserProcessInstanceFilters(appId))
+    getProcessFilterById(filterId: number, appId?: string): Observable<FilterProcessRepresentationModel> {
+        return Observable.fromPromise(this.callApiProcessFilters(appId))
             .map((response: any) => {
-                return response.data.find(filter => filter.id === processId);
+                return response.data.find(filter => filter.id === filterId);
             }).catch(err => this.handleError(err));
     }
 
@@ -263,7 +278,7 @@ export class ActivitiProcessService {
             .catch(err => this.handleError(err));
     }
 
-    startProcess(processDefinitionId: string, name: string, outcome?: string, startFormValues?: any): Observable<ProcessInstance> {
+    startProcess(processDefinitionId: string, name: string, outcome?: string, startFormValues?: any, variables?: RestVariable): Observable<ProcessInstance> {
         let startRequest: any = {
             name: name,
             processDefinitionId: processDefinitionId
@@ -273,6 +288,9 @@ export class ActivitiProcessService {
         }
         if (startFormValues) {
             startRequest.values = startFormValues;
+        }
+        if (variables) {
+            startRequest.variables = variables;
         }
         return Observable.fromPromise(
             this.apiService.getInstance().activiti.processApi.startNewProcessInstance(startRequest)

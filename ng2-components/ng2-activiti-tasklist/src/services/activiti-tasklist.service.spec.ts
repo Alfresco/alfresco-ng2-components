@@ -102,14 +102,14 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should return the task filter by id', (done) => {
-            service.getTaskFilterById('2').subscribe(
-                (res: FilterRepresentationModel) => {
-                    expect(res).toBeDefined();
-                    expect(res.id).toEqual('2');
-                    expect(res.name).toEqual('FakeMyTasks');
-                    expect(res.filter.sort).toEqual('created-desc');
-                    expect(res.filter.state).toEqual('open');
-                    expect(res.filter.assignment).toEqual('fake-assignee');
+            service.getTaskFilterById(2).subscribe(
+                (taskFilter: FilterRepresentationModel) => {
+                    expect(taskFilter).toBeDefined();
+                    expect(taskFilter.id).toEqual(2);
+                    expect(taskFilter.name).toEqual('FakeMyTasks');
+                    expect(taskFilter.filter.sort).toEqual('created-desc');
+                    expect(taskFilter.filter.state).toEqual('open');
+                    expect(taskFilter.filter.assignment).toEqual('fake-assignee');
                     done();
                 }
             );
@@ -125,7 +125,7 @@ describe('Activiti TaskList Service', () => {
             service.getTaskFilterByName('FakeMyTasks').subscribe(
                 (res: FilterRepresentationModel) => {
                     expect(res).toBeDefined();
-                    expect(res.id).toEqual('2');
+                    expect(res.id).toEqual(2);
                     expect(res.name).toEqual('FakeMyTasks');
                     expect(res.filter.sort).toEqual('created-desc');
                     expect(res.filter.state).toEqual('open');
@@ -495,6 +495,24 @@ describe('Activiti TaskList Service', () => {
                     expect(res.name).toEqual('health-care-Fake');
                     expect(res.description).toEqual('desc-fake2');
                     expect(res.deploymentId).toEqual('444');
+                    done();
+                }
+            );
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 200,
+                contentType: 'application/json',
+                responseText: JSON.stringify(fakeApps)
+            });
+        });
+
+        it('should get the deployed app details by id ', (done) => {
+            service.getApplicationDetailsById(1).subscribe(
+                (app: any) => {
+                    expect(app).toBeDefined();
+                    expect(app.name).toEqual('Sales-Fakes-App');
+                    expect(app.description).toEqual('desc-fake1');
+                    expect(app.deploymentId).toEqual('111');
                     done();
                 }
             );

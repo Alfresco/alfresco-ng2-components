@@ -41,10 +41,11 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     selectedRow: DataRow;
 
     constructor(private documentListService: DocumentListService,
-                private basePath: string,
-                schema: DataColumn[] = []) {
+                schema: DataColumn[] = [],
+                sorting?: DataSorting) {
         this.rows = [];
         this.columns = schema || [];
+        this.sorting = sorting;
     }
 
     getRows(): Array<DataRow> {
@@ -223,7 +224,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     }
 
     getImagePath(id: string): any {
-        return `${this.basePath}assets/images/${id}`;
+        return require('../assets/images/' + id);
     }
 }
 

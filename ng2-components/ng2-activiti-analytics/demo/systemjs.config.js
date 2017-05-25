@@ -22,6 +22,9 @@
             '@angular/router': 'npm:@angular/router/bundles/router.umd.js',
             '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
             '@angular/material': 'npm:@angular/material/bundles/material.umd.js',
+            '@angular/animations': 'npm:@angular/animations/bundles/animations.umd.min.js',
+            '@angular/animations/browser':'npm:@angular/animations/bundles/animations-browser.umd.js',
+            '@angular/platform-browser/animations': 'npm:@angular/platform-browser/bundles/platform-browser-animations.umd.js',
 
             // other libraries
             'rxjs': 'npm:rxjs',
@@ -44,11 +47,11 @@
             },
             'moment': 'npm:moment/min/moment.min.js',
             'ng2-translate': { defaultExtension: 'js' },
-            'ng2-charts': { main: 'ng2-charts.js', defaultExtension: 'js'},
+            'ng2-charts': { main: './bundles/ng2-charts.umd.js', defaultExtension: 'js'},
             'alfresco-js-api': { main: './alfresco-js-api.js', defaultExtension: 'js'},
-            'ng2-alfresco-core': { main: './index.js', defaultExtension: 'js'},
-            'ng2-activiti-diagrams': { main: './index.js', defaultExtension: 'js'},
-            'ng2-activiti-analytics': { main: './index.js', defaultExtension: 'js'}
+            'ng2-alfresco-core': { main: './bundles/ng2-alfresco-core.js', defaultExtension: 'js'},
+            'ng2-activiti-diagrams': { main: './bundles/ng2-activiti-diagrams.js', defaultExtension: 'js'},
+            'ng2-activiti-analytics': { main: './bundles/ng2-activiti-analytics.js', defaultExtension: 'js'}
         }
     });
 })(this);

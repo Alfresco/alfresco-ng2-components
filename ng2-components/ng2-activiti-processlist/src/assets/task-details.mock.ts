@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export var taskDetailsMock = {
+export let taskDetailsMock = {
     'id': '91',
     'name': 'Request translation',
     'description': null,
@@ -49,7 +49,7 @@ export var taskDetailsMock = {
     'memberOfCandidateGroup': false
 };
 
-export var taskFormMock = {
+export let taskFormMock = {
     'id': 4,
     'name': 'Translation request',
     'processDefinitionId': 'TranslationProcess:2:8',
@@ -181,12 +181,12 @@ export var taskFormMock = {
     'globalDateFormat': 'D-M-YYYY'
 };
 
-export var tasksMock = {
+export let tasksMock = {
     data: [
         taskDetailsMock
     ]
 };
 
-export var noDataMock = {
+export let noDataMock = {
     data: []
 };

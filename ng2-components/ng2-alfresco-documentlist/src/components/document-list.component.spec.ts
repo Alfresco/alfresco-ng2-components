@@ -157,11 +157,171 @@ describe('DocumentList', () => {
 
         let actions = documentList.getNodeActions(new FolderNode());
         expect(actions.length).toBe(1);
-        expect(actions[0]).toBe(folderMenu);
+        expect(actions[0].target).toBe(folderMenu.target);
 
         actions = documentList.getNodeActions(new FileNode());
         expect(actions.length).toBe(1);
-        expect(actions[0]).toBe(documentMenu);
+        expect(actions[0].target).toBe(documentMenu.target);
+    });
+
+    it('should disable the action if there is no permission for the file and disableWithNoPermission true', () => {
+        let documentMenu = new ContentActionModel({
+            disableWithNoPermission: true,
+            permission: 'delete',
+            target: 'document',
+            title: 'FileAction'
+        });
+
+        documentList.actions = [
+            documentMenu
+        ];
+
+        let nodeFile = {entry: {isFile: true, name: 'xyz', allowableOperations: ['create', 'update']}};
+
+        let actions = documentList.getNodeActions(nodeFile);
+        expect(actions.length).toBe(1);
+        expect(actions[0].title).toEqual('FileAction');
+        expect(actions[0].disabled).toBe(true);
+
+    });
+
+    it('should disable the action if there is no permission for the folder and disableWithNoPermission true', () => {
+        let documentMenu = new ContentActionModel({
+            disableWithNoPermission: true,
+            permission: 'delete',
+            target: 'folder',
+            title: 'FolderAction'
+        });
+
+        documentList.actions = [
+            documentMenu
+        ];
+
+        let nodeFile = {entry: {isFolder: true, name: 'xyz', allowableOperations: ['create', 'update']}};
+
+        let actions = documentList.getNodeActions(nodeFile);
+        expect(actions.length).toBe(1);
+        expect(actions[0].title).toEqual('FolderAction');
+        expect(actions[0].disabled).toBe(true);
+
+    });
+
+    it('should not disable the action if there is no permission for the file and disableWithNoPermission false', () => {
+        let documentMenu = new ContentActionModel({
+            disableWithNoPermission: false,
+            permission: 'delete',
+            target: 'document',
+            title: 'FileAction'
+        });
+
+        documentList.actions = [
+            documentMenu
+        ];
+
+        let nodeFile = {entry: {isFile: true, name: 'xyz', allowableOperations: ['create', 'update']}};
+
+        let actions = documentList.getNodeActions(nodeFile);
+        expect(actions.length).toBe(1);
+        expect(actions[0].title).toEqual('FileAction');
+        expect(actions[0].disabled).toBeUndefined(true);
+    });
+
+    it('should not disable the action if there is no permission for the folder and disableWithNoPermission false', () => {
+        let documentMenu = new ContentActionModel({
+            disableWithNoPermission: false,
+            permission: 'delete',
+            target: 'folder',
+            title: 'FolderAction'
+        });
+
+        documentList.actions = [
+            documentMenu
+        ];
+
+        let nodeFile = {entry: {isFolder: true, name: 'xyz', allowableOperations: ['create', 'update']}};
+
+        let actions = documentList.getNodeActions(nodeFile);
+        expect(actions.length).toBe(1);
+        expect(actions[0].title).toEqual('FolderAction');
+        expect(actions[0].disabled).toBeUndefined(true);
+    });
+
+    it('should not disable the action if there is the right permission for the file', () => {
+        let documentMenu = new ContentActionModel({
+            disableWithNoPermission: true,
+            permission: 'delete',
+            target: 'document',
+            title: 'FileAction'
+        });
+
+        documentList.actions = [
+            documentMenu
+        ];
+
+        let nodeFile = {entry: {isFile: true, name: 'xyz', allowableOperations: ['create', 'update', 'delete']}};
+
+        let actions = documentList.getNodeActions(nodeFile);
+        expect(actions.length).toBe(1);
+        expect(actions[0].title).toEqual('FileAction');
+        expect(actions[0].disabled).toBeUndefined();
+    });
+
+    it('should not disable the action if there is the right permission for the folder', () => {
+        let documentMenu = new ContentActionModel({
+            disableWithNoPermission: true,
+            permission: 'delete',
+            target: 'folder',
+            title: 'FolderAction'
+        });
+
+        documentList.actions = [
+            documentMenu
+        ];
+
+        let nodeFile = {entry: {isFolder: true, name: 'xyz', allowableOperations: ['create', 'update', 'delete']}};
+
+        let actions = documentList.getNodeActions(nodeFile);
+        expect(actions.length).toBe(1);
+        expect(actions[0].title).toEqual('FolderAction');
+        expect(actions[0].disabled).toBeUndefined();
+    });
+
+    it('should not disable the action if there are no permissions for the file', () => {
+        let documentMenu = new ContentActionModel({
+            permission: 'delete',
+            target: 'document',
+            title: 'FileAction'
+        });
+
+        documentList.actions = [
+            documentMenu
+        ];
+
+        let nodeFile = {entry: {isFile: true, name: 'xyz', allowableOperations: null}};
+
+        let actions = documentList.getNodeActions(nodeFile);
+        expect(actions.length).toBe(1);
+        expect(actions[0].title).toEqual('FileAction');
+        expect(actions[0].disabled).toBeUndefined();
+    });
+
+    it('should not disable the action if there are no permissions for the folder', () => {
+        let documentMenu = new ContentActionModel({
+            permission: 'delete',
+            target: 'folder',
+            title: 'FolderAction'
+        });
+
+        documentList.actions = [
+            documentMenu
+        ];
+
+        let nodeFile = {entry: {isFolder: true, name: 'xyz', allowableOperations: null}};
+
+        let actions = documentList.getNodeActions(nodeFile);
+        expect(actions.length).toBe(1);
+        expect(actions[0].title).toEqual('FolderAction');
+        expect(actions[0].disabled).toBeUndefined();
     });
 
     it('should find no content actions', () => {
@@ -460,7 +620,7 @@ describe('DocumentList', () => {
         });
 
         documentList.currentFolderId = 'wrong-id';
-        documentList.ngOnChanges({currentFolderId: new SimpleChange(null, documentList.currentFolderId)});
+        documentList.ngOnChanges({currentFolderId: new SimpleChange(null, documentList.currentFolderId, true)});
     });
 
     it('should require dataTable to check empty template', () => {
@@ -513,6 +673,19 @@ describe('DocumentList', () => {
         expect(documentList.onNodeClick).toHaveBeenCalledWith(node);
     });
 
+    it('should emit node-click DOM event', (done) => {
+        let node = new NodeMinimalEntry();
+        let row = new ShareDataRow(node);
+        let event = new DataRowEvent(row, null);
+
+        const htmlElement = fixture.debugElement.nativeElement as HTMLElement;
+        htmlElement.addEventListener('node-click', (e: CustomEvent) => {
+            done();
+        });
+
+        documentList.onRowClick(event);
+    });
+
     it('should emit [nodeDblClick] event on row double-click', () => {
         let node = new NodeMinimalEntry();
         let row = new ShareDataRow(node);
@@ -523,10 +696,23 @@ describe('DocumentList', () => {
         expect(documentList.onNodeDblClick).toHaveBeenCalledWith(node);
     });
 
+    it('should emit node-dblclick DOM event', (done) => {
+        let node = new NodeMinimalEntry();
+        let row = new ShareDataRow(node);
+        let event = new DataRowEvent(row, null);
+
+        const htmlElement = fixture.debugElement.nativeElement as HTMLElement;
+        htmlElement.addEventListener('node-dblclick', (e: CustomEvent) => {
+            done();
+        });
+
+        documentList.onRowDblClick(event);
+    });
+
     it('should load folder by ID on init', () => {
         documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
         spyOn(documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.resolve());
-        documentList.ngOnChanges({folderNode: new SimpleChange(null, documentList.currentFolderId)});
+        documentList.ngOnChanges({folderNode: new SimpleChange(null, documentList.currentFolderId, true)});
         expect(documentList.loadFolderNodesByFolderNodeId).toHaveBeenCalled();
     });
 });

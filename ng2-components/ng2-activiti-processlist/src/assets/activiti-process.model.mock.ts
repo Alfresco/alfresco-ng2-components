@@ -39,7 +39,7 @@ export class SingleProcessList extends ProcessList {
     }
 }
 
-export var exampleProcess = new ProcessInstance({
+export let exampleProcess = new ProcessInstance({
     id: '123',
     name: 'Process 123',
     started: '2016-11-10T03:37:30.010+0000',
@@ -51,7 +51,7 @@ export var exampleProcess = new ProcessInstance({
     }
 });
 
-export var exampleProcessNoName = new ProcessInstance({
+export let exampleProcessNoName = new ProcessInstance({
     id: '123',
     name: null,
     started: '2016-11-10T03:37:30.010+0000',

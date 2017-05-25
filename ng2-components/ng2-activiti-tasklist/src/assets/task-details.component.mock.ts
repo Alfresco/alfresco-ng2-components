@@ -15,6 +15,6 @@
  * limitations under the License.
  */
 
-export var mockTaskDetailsComponent = {
+export let mockTaskDetailsComponent = {
     noTaskDetailsTemplateComponent: null
 };

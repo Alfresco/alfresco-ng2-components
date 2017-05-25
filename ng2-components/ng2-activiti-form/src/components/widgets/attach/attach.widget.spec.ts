@@ -38,7 +38,8 @@ describe('AttachWidget', () => {
 
         dialogPolyfill = {
             registerDialog(obj: any) {
-                obj.showModal = function () {};
+                obj.showModal = function () {
+                };
             }
         };
         window['dialogPolyfill'] = dialogPolyfill;
@@ -58,7 +59,7 @@ describe('AttachWidget', () => {
 
         widget.field = new FormFieldModel(null, {
             type: FormFieldTypes.UPLOAD,
-            value: [{ name: 'file' }]
+            value: [{name: 'file'}]
         });
         widget.ngOnInit();
         expect(widget.hasFile()).toBeTruthy();
@@ -68,8 +69,8 @@ describe('AttachWidget', () => {
         let nodes = [{}];
         spyOn(contentService, 'getAlfrescoNodes').and.returnValue(
             Observable.create(observer => {
-                 observer.next(nodes);
-                 observer.complete();
+                observer.next(nodes);
+                observer.complete();
             })
         );
 
@@ -124,7 +125,7 @@ describe('AttachWidget', () => {
     it('should reset', () => {
         widget.field = new FormFieldModel(null, {
             type: FormFieldTypes.UPLOAD,
-            value: [{ name: 'filename' }]
+            value: [{name: 'filename'}]
         });
 
         widget.reset();
@@ -138,7 +139,7 @@ describe('AttachWidget', () => {
         let closed = false;
         widget.dialog = {
             nativeElement: {
-                close: function() {
+                close: function () {
                     closed = true;
                 }
             }
@@ -150,8 +151,8 @@ describe('AttachWidget', () => {
     it('should show modal dialog', () => {
         spyOn(contentService, 'getAlfrescoNodes').and.returnValue(
             Observable.create(observer => {
-                 observer.next([]);
-                 observer.complete();
+                observer.next([]);
+                observer.complete();
             })
         );
 
@@ -167,7 +168,7 @@ describe('AttachWidget', () => {
         let modalShown = false;
         widget.dialog = {
             nativeElement: {
-                showModal: function() {
+                showModal: function () {
                     modalShown = true;
                 }
             }
@@ -181,12 +182,12 @@ describe('AttachWidget', () => {
         let nodes = [{}];
         spyOn(contentService, 'getAlfrescoNodes').and.returnValue(
             Observable.create(observer => {
-                 observer.next(nodes);
-                 observer.complete();
+                observer.next(nodes);
+                observer.complete();
             })
         );
 
-        let node = <ExternalContent> { id: '<id>' };
+        let node = <ExternalContent> {id: '<id>'};
         widget.selectFolder(node, null);
 
         expect(widget.selectedFolderPathId).toBe(node.id);
@@ -202,7 +203,7 @@ describe('AttachWidget', () => {
 
     it('should get linked file name via selected file', () => {
         widget.fileName = null;
-        widget.selectedFile = <ExternalContent> { title: '<title>' };
+        widget.selectedFile = <ExternalContent> {title: '<title>'};
         widget.field = null;
         expect(widget.getLinkedFileName()).toBe(widget.selectedFile.title);
     });
@@ -214,7 +215,7 @@ describe('AttachWidget', () => {
         let name = '<file>';
         widget.field = new FormFieldModel(null, {
             type: FormFieldTypes.UPLOAD,
-            value: [{ name: name }]
+            value: [{name: name}]
         });
 
         expect(widget.getLinkedFileName()).toBe(name);
@@ -250,8 +251,8 @@ describe('AttachWidget', () => {
         let nodes = [{}];
         spyOn(contentService, 'getAlfrescoNodes').and.returnValue(
             Observable.create(observer => {
-                 observer.next(nodes);
-                 observer.complete();
+                observer.next(nodes);
+                observer.complete();
             })
         );
 
@@ -265,15 +266,17 @@ describe('AttachWidget', () => {
         expect(widget.selectedFolderNodes).toEqual(nodes);
     });
 
-    it('should handle error', () => {
+    it('should handle error', (done) => {
         let error = 'error';
         spyOn(contentService, 'getAlfrescoNodes').and.returnValue(
             Observable.throw(error)
         );
 
-        spyOn(logService, 'error').and.stub();
+        widget.error.subscribe(() => {
+            done();
+        });
+
         widget.getExternalContentNodes();
-        expect(logService.error).toHaveBeenCalledWith(error);
     });
 
     it('should register dialog via polyfill', () => {

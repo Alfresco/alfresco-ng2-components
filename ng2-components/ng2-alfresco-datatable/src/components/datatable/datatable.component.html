@@ -65,15 +65,21 @@
                         <i *ngIf="isIconValue(row, col)" class="material-icons icon-cell">{{asIconValue(row, col)}}</i>
                         <img *ngIf="!isIconValue(row, col)"
                             class="image-cell"
-                            alt="{{iconAltTextKey(data.getValue(row, col))|translate}}"
-                            src="{{data.getValue(row, col)}}"
+                            alt="{{ iconAltTextKey(data.getValue(row, col)) | translate }}"
+                            src="{{ data.getValue(row, col) }}"
+                            (error)="onImageLoadingError($event)">
+                    </div>
+                    <div *ngSwitchCase="'icon'" class="cell-value">
+                        <img class="image-cell"
+                            alt="{{ iconAltTextKey(data.getValue(row, col)) | translate }}"
+                            src="{{ data.getValue(row, col) }}"
                             (error)="onImageLoadingError($event)">
                     </div>
                     <div *ngSwitchCase="'date'" class="cell-value" [attr.data-automation-id]="'date_' + data.getValue(row, col)">
-                        {{data.getValue(row, col)}}
+                        <alfresco-datatable-cell [data]="data" [column]="col" [row]="row"></alfresco-datatable-cell>
                     </div>
                     <div *ngSwitchCase="'text'" class="cell-value" [attr.data-automation-id]="'text_' + data.getValue(row, col)">
-                        {{data.getValue(row, col)}}
+                        <alfresco-datatable-cell [data]="data" [column]="col" [row]="row"></alfresco-datatable-cell>
                     </div>
                     <span *ngSwitchDefault class="cell-value">
                     <!-- empty cell for unknown column type -->
@@ -95,7 +101,7 @@
             </button>
             <ul alfresco-mdl-menu class="mdl-menu--bottom-right"
                 [attr.for]="'action_menu_' + idx">
-                <li class="mdl-menu__item" [attr.disabled]="action.disabled"
+                <li class="mdl-menu__item" [attr.disabled]="action.disabled || undefined"
                     [attr.data-automation-id]="action.title"
                     *ngFor="let action of getRowActions(row)"
                     (click)="onExecuteRowAction(row, action)">

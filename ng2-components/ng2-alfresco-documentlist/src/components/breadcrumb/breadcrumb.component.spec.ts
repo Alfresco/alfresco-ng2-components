@@ -50,7 +50,7 @@ describe('DocumentListBreadcrumb', () => {
     });
 
     it('should update document list on click', (done) => {
-        let documentList = new DocumentListComponent(null, null, null);
+        let documentList = new DocumentListComponent(null, null, null, null);
         spyOn(documentList, 'loadFolderByNodeId').and.stub();
 
         let node = <PathElementEntity> { id: '-id-', name: 'name' };

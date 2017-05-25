@@ -104,7 +104,12 @@ Follow the 3 steps below:
 This component shows the diagram of a process.
 
 ```html
-<activiti-diagrams [processDefinitionId]="processDefinitionId"></activiti-diagrams>
+<activiti-diagram [processDefinitionId]="processDefinitionId"></activiti-diagram>
+```
+Or below component shows the diagram of a running process instance with the activities highlighted according to their state (Active/Completed/Pending).
+
+```html
+<activiti-diagram [processInstanceId]="processInstanceId"></activiti-diagram>
 ```
 
 Usage example of this component :
@@ -165,7 +170,9 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 
 | Name | Description |
 | --- | --- |
-| `metricPercentage` | The array that contains the percentage of the time for each element |
+| `metricPercentages` | The array that contains the percentage of the time for each element |
+| `metricColor` | The array that contains the color for each element |
+| `metricType` | The string that specifies the metric type |
 
 ## Build from sources
 
@@ -219,7 +226,6 @@ npm start
 | Command | Description |
 | --- | --- |
 | npm run build | Build component |
-| npm run build:w | Build component and keep watching the changes |
 | npm run test | Run unit tests in the console |
 | npm run test-browser | Run unit tests in the browser
 | npm run coverage | Run unit tests and display code coverage report |

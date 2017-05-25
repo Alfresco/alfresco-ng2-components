@@ -26,6 +26,7 @@ import { TranslationMock } from './../assets/translation.service.mock';
 import { newProcess, fakeProcessDefs, fakeProcessDefWithForm, taskFormMock } from './../assets/activiti-start-process.component.mock';
 import { ActivitiStartProcessInstance } from './activiti-start-process.component';
 import { ActivitiProcessService } from '../services/activiti-process.service';
+import { RestVariable } from 'alfresco-js-api';
 
 describe('ActivitiStartProcessInstance', () => {
 
@@ -78,7 +79,7 @@ describe('ActivitiStartProcessInstance', () => {
     describe('process definitions list', () => {
 
         it('should call service to fetch process definitions', () => {
-            let change = new SimpleChange(null, '123');
+            let change = new SimpleChange(null, '123', true);
             component.ngOnChanges({ 'appId': change });
             fixture.detectChanges();
 
@@ -86,7 +87,7 @@ describe('ActivitiStartProcessInstance', () => {
         });
 
         it('should call service to fetch process definitions with appId when provided', () => {
-            let change = new SimpleChange(null, '123');
+            let change = new SimpleChange(null, '123', true);
             component.ngOnChanges({ 'appId': change });
             fixture.detectChanges();
 
@@ -94,7 +95,7 @@ describe('ActivitiStartProcessInstance', () => {
         });
 
         it('should display the correct number of processes in the select list', () => {
-            let change = new SimpleChange(null, '123');
+            let change = new SimpleChange(null, '123', true);
             component.ngOnChanges({ 'appId': change });
             fixture.detectChanges();
 
@@ -103,7 +104,7 @@ describe('ActivitiStartProcessInstance', () => {
         });
 
         it('should display the correct process def details', async(() => {
-            let change = new SimpleChange(null, '123');
+            let change = new SimpleChange(null, '123', true);
             component.ngOnChanges({ 'appId': change });
             fixture.detectChanges();
 
@@ -116,7 +117,7 @@ describe('ActivitiStartProcessInstance', () => {
 
         it('should indicate an error to the user if process defs cannot be loaded', async(() => {
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.throw({}));
-            let change = new SimpleChange(null, '123');
+            let change = new SimpleChange(null, '123', true);
             component.ngOnChanges({ 'appId': change });
             fixture.detectChanges();
 
@@ -129,7 +130,7 @@ describe('ActivitiStartProcessInstance', () => {
 
         it('should show no process available message when no process definition is loaded', async(() => {
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.of([]));
-            let change = new SimpleChange(null, '123');
+            let change = new SimpleChange(null, '123', true);
             component.ngOnChanges({ 'appId': change });
             fixture.detectChanges();
 
@@ -144,8 +145,8 @@ describe('ActivitiStartProcessInstance', () => {
 
     describe('input changes', () => {
 
-        let change = new SimpleChange('123', '456');
-        let nullChange = new SimpleChange('123', null);
+        let change = new SimpleChange('123', '456', true);
+        let nullChange = new SimpleChange('123', null, true);
 
         beforeEach(async(() => {
             component.appId = '123';
@@ -177,7 +178,7 @@ describe('ActivitiStartProcessInstance', () => {
 
         beforeEach(() => {
             component.name = 'My new process';
-            let change = new SimpleChange(null, '123');
+            let change = new SimpleChange(null, '123', true);
             component.ngOnChanges({ 'appId': change });
         });
 
@@ -201,7 +202,24 @@ describe('ActivitiStartProcessInstance', () => {
             component.onProcessDefChange('my:process1');
             component.startProcess();
             fixture.whenStable().then(() => {
-                expect(startProcessSpy).toHaveBeenCalledWith('my:process1', 'My new process', undefined, undefined);
+                expect(startProcessSpy).toHaveBeenCalledWith('my:process1', 'My new process', undefined, undefined, undefined);
+            });
+        }));
+
+        it('should call service to start process with the variables setted', async(() => {
+            let inputProcessVariable = [];
+
+            let variable: any = {};
+            variable.name = 'nodeId';
+            variable.value ='id';
+
+            inputProcessVariable.push(variable);
+
+            component.variables = inputProcessVariable;
+            component.onProcessDefChange('my:process1');
+            component.startProcess();
+            fixture.whenStable().then(() => {
+                expect(startProcessSpy).toHaveBeenCalledWith('my:process1', 'My new process', undefined, undefined, inputProcessVariable);
             });
         }));
 
@@ -214,8 +232,8 @@ describe('ActivitiStartProcessInstance', () => {
             });
         }));
 
-        it('should throw start event error when process cannot be started', async(() => {
-            let errorSpy = spyOn(component.start, 'error');
+        it('should throw error event when process cannot be started', async(() => {
+            let errorSpy = spyOn(component.error, 'error');
             let error = { message: 'My error' };
             startProcessSpy = startProcessSpy.and.returnValue(Observable.throw(error));
             component.onProcessDefChange('my:process1');
@@ -247,7 +265,7 @@ describe('ActivitiStartProcessInstance', () => {
 
             beforeEach(async(() => {
                 component.name = 'My new process';
-                let change = new SimpleChange(null, '123');
+                let change = new SimpleChange(null, '123', true);
                 component.ngOnChanges({ 'appId': change });
                 fixture.detectChanges();
                 component.onProcessDefChange('my:process1');
@@ -279,7 +297,7 @@ describe('ActivitiStartProcessInstance', () => {
 
             beforeEach(() => {
                 getDefinitionsSpy.and.returnValue(Observable.of(fakeProcessDefWithForm));
-                let change = new SimpleChange(null, '123');
+                let change = new SimpleChange(null, '123', true);
                 component.ngOnChanges({ 'appId': change });
                 component.onProcessDefChange('my:process1');
                 fixture.detectChanges();

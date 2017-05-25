@@ -178,9 +178,11 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 
 #### Options
 
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `layoutType` | {string} | required | Define the layout of the apps. There are two possible values: GRID or LIST. LIST is the default value|
+| Name | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `appId` | {string} | optional | | The application id |
+| `layoutType` | {string} | required | | Define the layout of the apps. There are two possible values: GRID or LIST. LIST is the default value|
+| `selectFirst` | {boolean} | optional | false | Change the value to true if you want select the first item in the list as default|
 
 ## Basic usage example Activiti Analytics
 
@@ -345,7 +347,6 @@ npm start
 | Command | Description |
 | --- | --- |
 | npm run build | Build component |
-| npm run build:w | Build component and keep watching the changes |
 | npm run test | Run unit tests in the console |
 | npm run test-browser | Run unit tests in the browser
 | npm run coverage | Run unit tests and display code coverage report |

@@ -267,13 +267,13 @@ The AccordionComponent is exposed by the alfresco-core.
 
 ![how-create-accordion-menu](docs/assets/how-to-create-accordion-menu.png)
 
-### Start Process Button component
+### Start Process component
 
 Displays a button which in turn displays a dialog when clicked, allowing the user
 to specify some basic details needed to start a new process instance.
 
 ```html
-<activiti-start-process-instance></activiti-start-process-instance>
+<activiti-start-process appId="YOUR_APP_ID" ></activiti-start-process>
 ```
 
 #### Options
@@ -281,18 +281,24 @@ to specify some basic details needed to start a new process instance.
 
 | Name | Description |
 | --- | --- |
-| `appId` | Limit the list of processes which can be started to those contained in the specified app |
+| `appId` |  (required): Limit the list of processes which can be started to those contained in the specified app |
+| `variables` | Variables in input to the process [RestVariable]**](https://github.com/Alfresco/alfresco-js-api/tree/master/src/alfresco-activiti-rest-api/docs/RestVariable.md)|
+
 
 #### Events
 
-No events are emitted by this component
+| Name | Description |
+| --- | --- |
+| `start` | The event is emitted when the process start |
+| `error` | The event is emitted when the start process fail |
+
 
 ### Process Details component
 
 This component displays detailed information on a specified process instance
 
 ```html
-<activiti-process-instance-details processInstanceId="123"></activiti-process-instance-details>
+<activiti-process-instance-details processInstanceId="YOUR_PROCESS_INSTANCE_ID"></activiti-process-instance-details>
 ```
 
 #### Options
@@ -337,7 +343,7 @@ This is a sub-component of the process details component, which renders some gen
 Lists both the active and completed tasks associated with a particular process instance
 
 ```html
-<activiti-process-instance-tasks processInstanceId="123" showRefreshButton="true"></activiti-process-instance-tasks>
+<activiti-process-instance-tasks processInstanceId="YOUR_PROCESS_INSTANCE_ID" showRefreshButton="true"></activiti-process-instance-tasks>
 ```
 
 #### Options
@@ -359,7 +365,7 @@ Lists both the active and completed tasks associated with a particular process i
 Displays comments associated with a particular process instances and allows the user to add new comments
 
 ```html
-<activiti-process-instance-comments processInstanceId="123"></activiti-process-instance-comments>
+<activiti-process-instance-comments processInstanceId="YOUR_PROCESS_INSTANCE_ID"></activiti-process-instance-comments>
 ```
 
 #### Options
@@ -425,7 +431,6 @@ npm start
 | Command | Description |
 | --- | --- |
 | npm run build | Build component |
-| npm run build:w | Build component and keep watching the changes |
 | npm run test | Run unit tests in the console |
 | npm run test-browser | Run unit tests in the browser
 | npm run coverage | Run unit tests and display code coverage report |

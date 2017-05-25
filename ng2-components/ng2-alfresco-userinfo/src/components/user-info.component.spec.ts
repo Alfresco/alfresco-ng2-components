@@ -54,7 +54,7 @@ describe('User info component', () => {
             providers: [
                 EcmUserService,
                 BpmUserService,
-                { provide: AlfrescoTranslationService, useClass: TranslationMock }
+                {provide: AlfrescoTranslationService, useClass: TranslationMock}
             ]
         }).compileComponents().then(() => {
             fixture = TestBed.createComponent(UserInfoComponent);
@@ -105,7 +105,7 @@ describe('User info component', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'application/json',
-                responseText: JSON.stringify({ entry: fakeEcmEditedUser })
+                responseText: JSON.stringify({entry: fakeEcmEditedUser})
             });
 
             fixture.whenStable().then(() => {
@@ -125,7 +125,7 @@ describe('User info component', () => {
                 jasmine.Ajax.requests.mostRecent().respondWith({
                     status: 200,
                     contentType: 'application/json',
-                    responseText: JSON.stringify({ entry: fakeEcmUser })
+                    responseText: JSON.stringify({entry: fakeEcmUser})
                 });
             }));
 
@@ -160,7 +160,7 @@ describe('User info component', () => {
                 jasmine.Ajax.requests.mostRecent().respondWith({
                     status: 200,
                     contentType: 'application/json',
-                    responseText: JSON.stringify({ entry: fakeEcmUserNoImage })
+                    responseText: JSON.stringify({entry: fakeEcmUserNoImage})
                 });
             }));
 
@@ -181,88 +181,110 @@ describe('User info component', () => {
 
     describe('when user is logged on bpm', () => {
 
-        beforeEach(() => {
+        beforeEach(async(() => {
             spyOn(stubAuthService, 'isBpmLoggedIn').and.returnValue(true);
             spyOn(stubAuthService, 'isLoggedIn').and.returnValue(true);
             jasmine.Ajax.install();
+
+            userInfoComp.anonymousImageUrl = userInfoComp.anonymousImageUrl.replace('/base/dist', '');
+        }));
+
+        afterEach(() => {
+            jasmine.Ajax.uninstall();
         });
 
-        beforeEach(async(() => {
-            userInfoComp.anonymousImageUrl = userInfoComp.anonymousImageUrl.replace('/base/dist', '');
+        it('should show full name next the user image', () => {
             fixture.detectChanges();
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify(fakeBpmUser)
             });
-        }));
 
-        beforeEach(() => {
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#userinfo_container')).toBeDefined();
+                expect(element.querySelector('#bpm-username')).toBeDefined();
+                expect(element.querySelector('#bpm-username').innerHTML).toContain('fake-bpm-first-name fake-bpm-last-name');
+            });
+        });
+
+        it('should get the bpm current user image from the service', () => {
             fixture.detectChanges();
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'application/json',
+                responseText: JSON.stringify(fakeBpmUser)
+            });
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#userinfo_container')).toBeDefined();
+                expect(element.querySelector('#logged-user-img')).toBeDefined();
+                expect(element.querySelector('#logged-user-img').getAttribute('src'))
+                    .toContain('activiti-app/app/rest/admin/profile-picture');
+            });
         });
 
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
-
-        it('should show full name next the user image', async(() => {
-            expect(element.querySelector('#userinfo_container')).toBeDefined();
-            expect(element.querySelector('#bpm-username')).toBeDefined();
-            expect(element.querySelector('#bpm-username').innerHTML).toContain('fake-bpm-first-name fake-bpm-last-name');
-
-        }));
-
-        it('should get the bpm current user image from the service', async(() => {
-            expect(element.querySelector('#userinfo_container')).toBeDefined();
-            expect(element.querySelector('#logged-user-img')).toBeDefined();
-            expect(element.querySelector('#logged-user-img').getAttribute('src'))
-                .toContain('activiti-app/app/rest/admin/profile-picture');
-
-        }));
-
-        it('should show last name if first name is null', async(() => {
+        it('should show last name if first name is null', () => {
+            fixture.detectChanges();
             let wrongBpmUser: BpmUserModel = new BpmUserModel({
                 firstName: null,
                 lastName: 'fake-last-name'
             });
             userInfoComp.bpmUser = wrongBpmUser;
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#userinfo_container')).toBeDefined();
+                expect(element.querySelector('#bpm-username')).not.toBeNull();
+                expect(element.querySelector('#bpm-username').textContent).toContain('fake-last-name');
+                expect(element.querySelector('#bpm-username').textContent).not.toContain('fake-bpm-first-name');
+
+            });
+        });
+
+        it('should not show first name if it is null string', () => {
             fixture.detectChanges();
-            expect(element.querySelector('#userinfo_container')).toBeDefined();
-            expect(element.querySelector('#bpm-username')).not.toBeNull();
-            expect(element.querySelector('#bpm-username').textContent).toContain('fake-last-name');
-            expect(element.querySelector('#bpm-username').textContent).not.toContain('fake-bpm-first-name');
-
-        }));
-
-        it('should not show first name if it is null string', async(() => {
             let wrongFirstNameBpmUser: BpmUserModel = new BpmUserModel({
                 firstName: 'null',
                 lastName: 'fake-last-name'
             });
             userInfoComp.bpmUser = wrongFirstNameBpmUser;
-            fixture.detectChanges();
-            expect(element.querySelector('#userinfo_container')).toBeDefined();
-            expect(element.querySelector('#bpm-full-name')).toBeDefined();
-            expect(element.querySelector('#bpm-full-name').textContent).toContain('fake-last-name');
-            expect(element.querySelector('#bpm-full-name').textContent).not.toContain('null');
-        }));
 
-        it('should not show last name if it is null string', async(() => {
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#userinfo_container')).toBeDefined();
+                expect(element.querySelector('#bpm-full-name')).toBeDefined();
+                expect(element.querySelector('#bpm-full-name').textContent).toContain('fake-last-name');
+                expect(element.querySelector('#bpm-full-name').textContent).not.toContain('null');
+            });
+        });
+
+        it('should not show last name if it is null string', () => {
+            fixture.detectChanges();
             let wrongLastNameBpmUser: BpmUserModel = new BpmUserModel({
                 firstName: 'fake-first-name',
                 lastName: 'null'
             });
             userInfoComp.bpmUser = wrongLastNameBpmUser;
-            fixture.detectChanges();
-            expect(element.querySelector('#userinfo_container')).toBeDefined();
-            expect(element.querySelector('#bpm-full-name')).toBeDefined();
-            expect(element.querySelector('#bpm-full-name').textContent).toContain('fake-first-name');
-            expect(element.querySelector('#bpm-full-name').textContent).not.toContain('null');
-        }));
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#userinfo_container')).toBeDefined();
+                expect(element.querySelector('#bpm-full-name')).toBeDefined();
+                expect(element.querySelector('#bpm-full-name').textContent).toContain('fake-first-name');
+                expect(element.querySelector('#bpm-full-name').textContent).not.toContain('null');
+            });
+        });
 
         it('should not show the tabs', () => {
             fixture.detectChanges();
-            expect(element.querySelector('#tab-bar-env').getAttribute('hidden')).not.toBeNull();
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges()
+                expect(element.querySelector('#tab-bar-env').getAttribute('hidden')).not.toBeNull();
+            });
         });
     });
 
@@ -282,7 +304,7 @@ describe('User info component', () => {
             jasmine.Ajax.requests.first().respondWith({
                 status: 200,
                 contentType: 'application/json',
-                responseText: JSON.stringify({ entry: fakeEcmUser })
+                responseText: JSON.stringify({entry: fakeEcmUser})
             });
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,

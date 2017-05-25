@@ -25,7 +25,57 @@ export let startEvent = {
     properties: [{}]
 };
 
+export let startEventActive = {
+    completed: false,
+    current: true,
+    id: 'startEvent1',
+    type: 'StartEvent',
+    width: 30,
+    height: 30,
+    x: 15,
+    y: 48.5,
+    properties: [{}]
+};
+
+export let startEventCompleted = {
+    completed: true,
+    current: false,
+    id: 'startEvent1',
+    type: 'StartEvent',
+    width: 30,
+    height: 30,
+    x: 15,
+    y: 48.5,
+    properties: [{}]
+};
+
 export let startTimeEvent = {
+    id: 'startEvent1',
+    type: 'StartEvent',
+    width: 30,
+    height: 30,
+    x: 15,
+    y: 48.5,
+    eventDefinition: {type: 'timer'},
+    properties: [{}]
+};
+
+export let startTimeEventActive = {
+    completed: false,
+    current: true,
+    id: 'startEvent1',
+    type: 'StartEvent',
+    width: 30,
+    height: 30,
+    x: 15,
+    y: 48.5,
+    eventDefinition: {type: 'timer'},
+    properties: [{}]
+};
+
+export let startTimeEventCompleted = {
+    completed: true,
+    current: false,
     id: 'startEvent1',
     type: 'StartEvent',
     width: 30,
@@ -47,7 +97,59 @@ export let startSignalEvent = {
     properties: [{}]
 };
 
+export let startSignalEventActive = {
+    completed: false,
+    current: true,
+    id: 'startEvent1',
+    type: 'StartEvent',
+    width: 30,
+    height: 30,
+    x: 15,
+    y: 48.5,
+    eventDefinition: {type: 'signal'},
+    properties: [{}]
+};
+
+export let startSignalEventCompleted = {
+    completed: true,
+    current: false,
+    id: 'startEvent1',
+    type: 'StartEvent',
+    width: 30,
+    height: 30,
+    x: 15,
+    y: 48.5,
+    eventDefinition: {type: 'signal'},
+    properties: [{}]
+};
+
 export let startMessageEvent = {
+    id: 'startEvent1',
+    type: 'StartEvent',
+    width: 30,
+    height: 30,
+    x: 15,
+    y: 48.5,
+    eventDefinition: {type: 'message'},
+    properties: [{}]
+};
+
+export let startMessageEventActive = {
+    completed: false,
+    current: true,
+    id: 'startEvent1',
+    type: 'StartEvent',
+    width: 30,
+    height: 30,
+    x: 15,
+    y: 48.5,
+    eventDefinition: {type: 'message'},
+    properties: [{}]
+};
+
+export let startMessageEventCompleted = {
+    completed: true,
+    current: false,
     id: 'startEvent1',
     type: 'StartEvent',
     width: 30,
@@ -69,6 +171,32 @@ export let startErrorEvent = {
     properties: [{}]
 };
 
+export let startErrorEventActive = {
+    completed: false,
+    current: true,
+    id: 'startEvent1',
+    type: 'StartEvent',
+    width: 30,
+    height: 30,
+    x: 15,
+    y: 48.5,
+    eventDefinition: {type: 'error'},
+    properties: [{}]
+};
+
+export let startErrorEventCompleted = {
+    completed: true,
+    current: false,
+    id: 'startEvent1',
+    type: 'StartEvent',
+    width: 30,
+    height: 30,
+    x: 15,
+    y: 48.5,
+    eventDefinition: {type: 'error'},
+    properties: [{}]
+};
+
 export let endEvent = {
     id: 'sid-CED2A8DB-47E2-4057-A7B8-3ABBE5CE795E',
     type: 'EndEvent',
@@ -79,7 +207,58 @@ export let endEvent = {
     properties: [{}]
 };
 
+export let endEventActive = {
+    completed: false,
+    current: true,
+    id: 'sid-CED2A8DB-47E2-4057-A7B8-3ABBE5CE795E',
+    type: 'EndEvent',
+    width: 28,
+    height: 28,
+    x: 15,
+    y: 48.5,
+    properties: [{}]
+};
+
+export let endEventCompleted = {
+    completed: true,
+    current: false,
+    id: 'sid-CED2A8DB-47E2-4057-A7B8-3ABBE5CE795E',
+    type: 'EndEvent',
+    width: 28,
+    height: 28,
+    x: 15,
+    y: 48.5,
+    properties: [{}]
+};
+
 export let endErrorEvent = {
+    id: 'sid-CED2A8DB-47E2-4057-A7B8-3ABBE5CE795E',
+    type: 'EndEvent',
+    width: 28,
+    height: 28,
+    x: 15,
+    y: 48.5,
+    eventDefinition: {type: 'error'},
+    properties: [{}]
+};
+
+
+export let endErrorEventActive = {
+    completed: false,
+    current: true,
+    id: 'sid-CED2A8DB-47E2-4057-A7B8-3ABBE5CE795E',
+    type: 'EndEvent',
+    width: 28,
+    height: 28,
+    x: 15,
+    y: 48.5,
+    eventDefinition: {type: 'error'},
+    properties: [{}]
+};
+
+export let endErrorEventCompleted = {
+    completed: true,
+    current: false,
     id: 'sid-CED2A8DB-47E2-4057-A7B8-3ABBE5CE795E',
     type: 'EndEvent',
     width: 28,

@@ -228,6 +228,7 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | `data` | DataTableAdapter | instance of **ObjectDataTableAdapter** | data source |
+| `rows` | Object[] | [] | The rows that the datatable should show |
 | `multiselect` | boolean | false | Toggles multiple row selection, renders checkboxes at the beginning of each row |
 | `actions` | boolean | false | Toggles data actions column |
 | `actionsPosition` | string (left\|right) | right | Position of the actions dropdown menu. | 
@@ -679,7 +680,6 @@ npm start
 | Command | Description |
 | --- | --- |
 | npm run build | Build component |
-| npm run build:w | Build component and keep watching the changes |
 | npm run test | Run unit tests in the console |
 | npm run test-browser | Run unit tests in the browser
 | npm run coverage | Run unit tests and display code coverage report |

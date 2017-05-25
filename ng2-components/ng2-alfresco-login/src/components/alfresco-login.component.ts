@@ -24,16 +24,19 @@ declare let componentHandler: any;
 
 @Component({
     selector: 'alfresco-login',
-    moduleId: module.id,
     templateUrl: './alfresco-login.component.html',
     styleUrls: ['./alfresco-login.component.css'],
     host: {'(blur)': 'onBlur($event)'}
 })
 export class AlfrescoLoginComponent implements OnInit {
 
-    private baseComponentPath: string = module.id.replace('components/alfresco-login.component.js', '');
-
     isPasswordShow: boolean = false;
+
+    @Input()
+    showRememberMe: boolean = true;
+
+    @Input()
+    showLoginActions: boolean = true;
 
     @Input()
     needHelpLink: string = '';
@@ -42,10 +45,10 @@ export class AlfrescoLoginComponent implements OnInit {
     registerLink: string = '';
 
     @Input()
-    logoImageUrl: string = this.baseComponentPath + 'assets/images/alfresco-logo.svg';
+    logoImageUrl: string = require('../assets/images/alfresco-logo.svg');
 
     @Input()
-    backgroundImageUrl: string = this.baseComponentPath + 'assets/images/background.svg';
+    backgroundImageUrl: string = require('../assets/images/background.svg');
 
     @Input()
     providers: string;
@@ -169,7 +172,6 @@ export class AlfrescoLoginComponent implements OnInit {
                     this.displayErrorMessage(err);
                     this.enableError();
                     this.onError.emit(err);
-                    this.logService.error(err);
                 },
                 () => this.logService.info('Login done')
             );

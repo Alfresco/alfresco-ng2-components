@@ -25,13 +25,10 @@ import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 
 @Component({
     selector: 'activiti-task-details',
-    moduleId: module.id,
     templateUrl: './activiti-task-details.component.html',
     styleUrls: ['./activiti-task-details.component.css']
 })
 export class ActivitiTaskDetails implements OnInit, OnChanges {
-
-    private baseComponentPath: string = module.id.replace('components/activiti-task-details.component', '');
 
     @ViewChild('activiticomments')
     activiticomments: any;
@@ -82,7 +79,7 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
     showFormRefreshButton: boolean = true;
 
     @Input()
-    peopleIconImageUrl: string = this.baseComponentPath + 'assets/images/user.jpg';
+    peopleIconImageUrl: string = require('../assets/images/user.jpg');
 
     @Output()
     formSaved: EventEmitter<FormModel> = new EventEmitter<FormModel>();
@@ -223,7 +220,6 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
                     this.reset();
                 }
             }, (error) => {
-                this.logService.error(error);
                 this.onError.emit(error);
             });
     }

@@ -210,16 +210,17 @@ Here's the list of available properties you can define for a Data Column definit
 
 ### Properties
 
-| Name | Description |
+
+| Name | Type | Default | Description |
 | --- | --- | --- | --- |
-|`appId`| { string } The id of the app. |
-|`processDefinitionKey`| { string } The processDefinitionKey of the process. |
-|`assignment`| { string } The assignment of the process. <ul>Possible values are: <li>assignee : where the current user is the assignee</li> <li>candidate: where the current user is a task candidate </li><li>group_x: where the task is assigned to a group where the current user is a member of.</li> <li>no value: where the current user is involved</li> </ul> |
-|`state`| { string } Define state of the processes. Possible values are: completed, active  |
+|`appId`| { string } || The id of the app. |
+|`processDefinitionKey`| { string } || The processDefinitionKey of the process. |
+|`assignment`| { string } || The assignment of the process. <ul>Possible values are: <li>assignee : where the current user is the assignee</li> <li>candidate: where the current user is a task candidate </li><li>group_x: where the task is assigned to a group where the current user is a member of.</li> <li>no value: where the current user is involved</li> </ul> |
+|`state`| { string } || Define state of the processes. Possible values are: completed, active  |
 |`hasIcon` | boolean | true | Show/Hide the icon on the left . |
-|`landingTaskId`| { string } Define which task id should be selected after the reloading. If the task id doesn't exist or nothing is passed it will select the first task |
-|`sort`| { string } Define the sort of the processes. Possible values are : created-desc, created-asc, due-desc, due-asc |
-| `data` | { DataTableAdapter } (optional) JSON object that represent the number and the type of the columns that you want show |
+|`landingTaskId`| { string } | | Define which task id should be selected after the reloading. If the task id doesn't exist or nothing is passed it will select the first task |
+|`sort`| { string } ||Define the sort of the processes. Possible values are : created-desc, created-asc, due-desc, due-asc |
+| `data` | { DataTableAdapter }| (optional)|JSON object that represent the number and the type of the columns that you want show 
 
 Example:
 
@@ -452,7 +453,6 @@ npm start
 | Command | Description |
 | --- | --- |
 | npm run build | Build component |
-| npm run build:w | Build component and keep watching the changes |
 | npm run test | Run unit tests in the console |
 | npm run test-browser | Run unit tests in the browser
 | npm run coverage | Run unit tests and display code coverage report |

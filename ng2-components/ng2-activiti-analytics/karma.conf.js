@@ -1,76 +1,36 @@
-'use strict';
+var webpackConfig = require('./webpack.test');
 
 module.exports = function (config) {
-  var configuration = {
+  var _config = {
     basePath: '.',
 
     frameworks: ['jasmine-ajax', 'jasmine'],
 
     files: [
-      // System.js for module loading
-      'node_modules/systemjs/dist/system.src.js',
+      './node_modules/hammerjs/hammer.js',
 
-      // Polyfills
-      'node_modules/core-js/client/shim.js',
-      'node_modules/reflect-metadata/Reflect.js',
+      //diagrams
+      './node_modules/chart.js/dist/Chart.js',
+      './node_modules/alfresco-js-api/dist/alfresco-js-api.js',
+      './node_modules/raphael/raphael.js',
+      './node_modules/moment/min/moment.min.js',
+      './node_modules/md-date-time-picker/dist/js/mdDateTimePicker.js',
 
-      // zone.js
-      'node_modules/zone.js/dist/zone.js',
-      'node_modules/zone.js/dist/long-stack-trace-zone.js',
-      'node_modules/zone.js/dist/proxy.js',
-      'node_modules/zone.js/dist/sync-test.js',
-      'node_modules/zone.js/dist/jasmine-patch.js',
-      'node_modules/zone.js/dist/async-test.js',
-      'node_modules/zone.js/dist/fake-async-test.js',
-      'node_modules/hammerjs/hammer.js',
+      {pattern: './node_modules/ng2-translate/**/*.js', included: false, watched: false},
+      {pattern: './node_modules/ng2-charts/**/*.js', included: false, served: true, watched: false},
+      {pattern: './node_modules/md-date-time-picker/**/*.js', included: false, served: true, watched: false},
+      {pattern: './node_modules/moment/**/*.js', included: false, served: true, watched: false},
 
-      // RxJs
-      { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false },
-      { pattern: 'node_modules/rxjs/**/*.js.map', included: false, watched: false },
-
-      // Paths loaded via module imports:
-      // Angular itself
-      {pattern: 'node_modules/@angular/**/*.js', included: false, watched: false},
-      {pattern: 'node_modules/@angular/**/*.js.map', included: false, watched: false},
-
-      'node_modules/alfresco-js-api/dist/alfresco-js-api.js',
-      'node_modules/moment/min/moment.min.js',
-      'node_modules/md-date-time-picker/dist/js/mdDateTimePicker.js',
-      'node_modules/chart.js/dist/Chart.bundle.min.js',
-      {pattern: 'node_modules/ng2-translate/**/*.js', included: false, watched: false},
-
-      'karma-test-shim.js',
-
-      // paths loaded via module imports
-      {pattern: 'src/**/*.js', included: false, watched: true},
-      {pattern: 'src/**/*.html', included: true, served: true, watched: true},
-      {pattern: 'src/**/*.css', included: true, served: true, watched: true},
-
-      // ng2-components
-      { pattern: 'node_modules/ng2-alfresco-core/src/**/*.*', included: false, served: true, watched: false },
-      { pattern: 'node_modules/ng2-alfresco-core/index.js', included: false, served: true, watched: false },
-
-      { pattern: 'node_modules/ng2-activiti-diagrams/src/**/*.*', included: false, served: true, watched: false },
-      { pattern: 'node_modules/ng2-activiti-diagrams/index.js', included: false, served: true, watched: false },
-
-      { pattern: 'node_modules/ng2-charts/**/*.js', included: false, served: true, watched: false },
-      { pattern: 'node_modules/md-date-time-picker/**/*.js', included: false, served: true, watched: false },
-      { pattern: 'node_modules/moment/**/*.js', included: false, served: true, watched: false },
-
-      // paths to support debugging with source maps in dev tools
-      {pattern: 'src/**/*.ts', included: false, watched: false},
-      {pattern: 'src/**/*.js.map', included: false, watched: false},
-      {pattern: 'src/**/*.json', included: false, watched: false}
+      {pattern: 'karma-test-shim.js', watched: false},
+      {pattern: './src/assets/**/*.*', included: false, served: true, watched: false},
+      {pattern: './src/i18n/**/*.*', included: false, served: true, watched: false},
+      {pattern: './src/**/*.ts', included: false, served: true, watched: false}
     ],
 
-    exclude: [
-      'node_modules/**/*spec.js'
-    ],
+    webpack: webpackConfig,
 
-    // proxied base paths
-    proxies: {
-      // required for component assets fetched by Angular's compiler
-      '/src/': '/base/src/'
+    webpackMiddleware: {
+      stats: 'errors-only'
     },
 
     port: 9876,
@@ -87,6 +47,7 @@ module.exports = function (config) {
     browserDisconnectTimeout: 180000,
     browserDisconnectTolerance: 3,
     browserNoActivityTimeout: 300000,
+
     browsers: ['Chrome'],
 
     customLaunchers: {
@@ -98,29 +59,35 @@ module.exports = function (config) {
 
     // Karma plugins loaded
     plugins: [
-      'karma-jasmine',
-      'karma-coverage',
-      'karma-jasmine-ajax',
-      'karma-chrome-launcher',
-      'karma-mocha-reporter',
-      'karma-jasmine-html-reporter'
+      require('./node_modules/karma-jasmine'),
+      require('./node_modules/karma-coverage'),
+      require('./node_modules/karma-sourcemap-loader'),
+      require('./node_modules/karma-jasmine-ajax'),
+      require('./node_modules/karma-chrome-launcher'),
+      require('./node_modules/karma-mocha-reporter'),
+      require('./node_modules/karma-webpack'),
+      require('./node_modules/karma-jasmine-html-reporter')
     ],
+
+    webpackServer: {
+      noInfo: true
+    },
 
     // Coverage reporter generates the coverage
     reporters: ['mocha', 'coverage', 'kjhtml'],
 
-    // Source files that you wanna generate coverage for.
-    // Do not include tests or libraries (these files will be instrumented by Istanbul)
     preprocessors: {
-      'src/**/!(*spec|index|*mock|*model|*event).js': 'coverage'
+      'karma-test-shim.js': ['webpack', 'sourcemap'],
+      './src/**/!(*spec|index|*mock|*model|*event).js': 'coverage'
     },
 
     coverageReporter: {
       includeAllSources: true,
-      dir: 'coverage/',
+      dir: 'coverage',
       subdir: 'report',
       reporters: [
         {type: 'text'},
+        {type: 'text-summary'},
         {type: 'json', file: 'coverage-final.json'},
         {type: 'html'},
         {type: 'lcov'}
@@ -129,8 +96,8 @@ module.exports = function (config) {
   };
 
   if (process.env.TRAVIS) {
-    configuration.browsers = ['Chrome_travis_ci'];
+    config.browsers = ['Chrome_travis_ci'];
   }
 
-  config.set(configuration)
+  config.set(_config);
 };

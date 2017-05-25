@@ -42,9 +42,21 @@ export class ActivitiTaskListService {
         return Observable.fromPromise(this.apiService.getInstance().activiti.appsApi.getAppDefinitions())
             .map((response: any) => {
                 if (name) {
-                    return response.data.find(p => p.name === name);
+                    return response.data.find(app => app.name === name);
                 }
                 return response.data;
+            })
+            .catch(err => this.handleError(err));
+    }
+
+    /**
+     * Retrieve Deployed App details by appId
+     * @returns {Observable<any>}
+     */
+    getApplicationDetailsById(appId: number): Observable<any> {
+        return Observable.fromPromise(this.apiService.getInstance().activiti.appsApi.getAppDefinitions())
+            .map((response: any) => {
+                return response.data.find(app => app.id === appId);
             })
             .catch(err => this.handleError(err));
     }
@@ -67,13 +79,14 @@ export class ActivitiTaskListService {
 
     /**
      * Retrieve the Tasks filter by id
-     * @param taskId - string - The id of the filter
+     * @param filterId - number - The id of the filter
+     * @param appId - string - optional - The id of app
      * @returns {Observable<FilterRepresentationModel>}
      */
-    getTaskFilterById(taskId: string, appId?: string): Observable<FilterRepresentationModel> {
+    getTaskFilterById(filterId: number, appId?: string): Observable<FilterRepresentationModel> {
         return Observable.fromPromise(this.callApiTaskFilters(appId))
             .map((response: any) => {
-                return response.data.find(filter => filter.id === taskId);
+                return response.data.find(filter => filter.id === filterId);
             }).catch(err => this.handleError(err));
     }
 

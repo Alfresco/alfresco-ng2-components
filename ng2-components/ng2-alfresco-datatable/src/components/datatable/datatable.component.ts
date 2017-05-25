@@ -18,6 +18,7 @@
 import {
     Component,
     OnChanges,
+    SimpleChange,
     SimpleChanges,
     Input,
     Output,
@@ -28,7 +29,7 @@ import {
     ContentChild,
     Optional
 } from '@angular/core';
-import { DataTableAdapter, DataRow, DataColumn, DataSorting, DataRowEvent, ObjectDataTableAdapter } from '../../data/index';
+import { DataTableAdapter, DataRow, DataColumn, DataSorting, DataRowEvent, ObjectDataTableAdapter, ObjectDataRow } from '../../data/index';
 import { DataCellEvent } from './data-cell.event';
 import { DataRowActionEvent } from './data-row-action.event';
 import { DataColumnListComponent } from 'ng2-alfresco-core';
@@ -37,7 +38,6 @@ import { MdCheckboxChange } from '@angular/material';
 declare var componentHandler;
 
 @Component({
-    moduleId: module.id,
     selector: 'alfresco-datatable',
     styleUrls: ['./datatable.component.css'],
     templateUrl: './datatable.component.html'
@@ -48,6 +48,9 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
 
     @Input()
     data: DataTableAdapter;
+
+    @Input()
+    rows: any[] = [];
 
     @Input()
     multiselect: boolean = false;
@@ -97,10 +100,25 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['data'] && changes['data'].currentValue) {
+        if (this.isPropertyChanged(changes['data'])) {
             this.loadTable();
             return;
         }
+
+        if (this.isPropertyChanged(changes['rows'])) {
+            if (this.data) {
+                this.data.setRows(this.convertToRowsData(changes['rows'].currentValue));
+            }
+            return;
+        }
+    }
+
+    isPropertyChanged(property: SimpleChange): boolean {
+        return property && property.currentValue ? true : false;
+    }
+
+    convertToRowsData(rows: any []): ObjectDataRow[] {
+        return rows.map(row => new ObjectDataRow(row));
     }
 
     loadTable() {
@@ -111,7 +129,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
         }
 
         if (!this.data) {
-            this.data = new ObjectDataTableAdapter([], schema);
+            this.data = new ObjectDataTableAdapter(this.rows, schema);
         } else {
             this.setHtmlColumnConfigurationOnObjectAdapter(schema);
         }
@@ -236,37 +254,11 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
     getRowActions(row: DataRow, col: DataColumn): any[] {
         let event = new DataCellEvent(row, col, []);
         this.showRowActionsMenu.emit(event);
-
-        return this.checkPermissions(row, event.value.actions);
-    }
-
-    checkPermissions(row: DataRow, actions: any[]) {
-        let actionsPermission = [];
-        actions.forEach((action) => {
-            actionsPermission.push(this.checkPermission(row, action));
-        });
-        return actionsPermission;
-    }
-
-    checkPermission(row: DataRow, action) {
-        if (action.permission) {
-            if (this.hasPermissions(row)) {
-                let permissions = row.getValue('allowableOperations');
-                let findPermission = permissions.find(permission => permission === action.permission);
-                if (!findPermission && action.disableWithNoPermission === true) {
-                    action.disabled = true;
-                }
-            }
-        }
-        return action;
-    }
-
-    private hasPermissions(row: DataRow): boolean {
-        return row.getValue('allowableOperations') ? true : false;
+        return event.value.actions;
     }
 
     onExecuteRowAction(row: DataRow, action: any) {
-        if (action.disabled) {
+        if (action.disabled || action.disabled) {
             event.stopPropagation();
         } else {
             this.executeRowAction.emit(new DataRowActionEvent(row, action));

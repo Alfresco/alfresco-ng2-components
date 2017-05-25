@@ -27,7 +27,6 @@ import { ProcessInstance } from '../models/process-instance.model';
 
 @Component({
     selector: 'activiti-process-instance-details',
-    moduleId: module.id,
     templateUrl: './activiti-process-instance-details.component.html',
     styleUrls: ['./activiti-process-instance-details.component.css']
 })
@@ -50,6 +49,9 @@ export class ActivitiProcessInstanceDetails implements OnChanges {
 
     @Output()
     processCancelled: EventEmitter<any> = new EventEmitter<any>();
+
+    @Output()
+    error: EventEmitter<any> = new EventEmitter<any>();
 
     @Output()
     taskClick: EventEmitter<TaskDetailsEvent> = new EventEmitter<TaskDetailsEvent>();
@@ -108,7 +110,7 @@ export class ActivitiProcessInstanceDetails implements OnChanges {
             (data) => {
                 this.processCancelled.emit(data);
             }, (err) => {
-                this.logService.error(err);
+                this.error.emit(err);
             });
     }
 

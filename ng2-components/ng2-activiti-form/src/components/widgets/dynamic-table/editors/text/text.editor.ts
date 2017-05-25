@@ -19,7 +19,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { DynamicTableRow, DynamicTableColumn, DynamicTableModel } from './../../dynamic-table.widget.model';
 
 @Component({
-    moduleId: module.id,
     selector: 'alf-text-editor',
     templateUrl: './text.editor.html',
     styleUrls: ['./text.editor.css']

@@ -35,7 +35,6 @@ const ERROR_FOLDER_ALREADY_EXIST = 409;
  */
 @Component({
     selector: 'alfresco-upload-drag-area',
-    moduleId: module.id,
     templateUrl: './upload-drag-area.component.html',
     styleUrls: ['./upload-drag-area.component.css']
 })
@@ -98,35 +97,13 @@ export class UploadDragAreaComponent {
      */
     onFilesDropped(files: File[], rootId?: string, directory?: string): void {
         if (files.length) {
-            if (this.checkValidity(files)) {
-                this.uploadService.addToQueue(files);
-                this.uploadService.uploadFilesInTheQueue(rootId || this.rootFolderId, directory || this.currentFolderPath, this.onSuccess);
-                let latestFilesAdded = this.uploadService.getQueue();
-                if (this.showNotificationBar) {
-                    this.showUndoNotificationBar(latestFilesAdded);
-                }
-            } else {
-                let errorMessage: any;
-                errorMessage = this.translateService.get('FILE_UPLOAD.MESSAGES.FOLDER_NOT_SUPPORTED');
-                if (this.showNotificationBar) {
-                    this.showErrorNotificationBar(errorMessage.value);
-                } else {
-                    this.logService.error(errorMessage.value);
-                }
+            this.uploadService.addToQueue(files);
+            this.uploadService.uploadFilesInTheQueue(rootId || this.rootFolderId, directory || this.currentFolderPath, this.onSuccess);
+            let latestFilesAdded = this.uploadService.getQueue();
+            if (this.showNotificationBar) {
+                this.showUndoNotificationBar(latestFilesAdded);
             }
         }
-    }
-
-    /**
-     * Check il the file is valid or not
-     * @param files
-     * @returns {boolean}
-     */
-    checkValidity(files: File[]): boolean {
-        if (files.length && files[0].type === '') {
-            return false;
-        }
-        return true;
     }
 
     /**

@@ -18,6 +18,7 @@
                 [contextMenuActions]="true"
                 [contentActions]="true"
                 [allowDropFiles]="true"
+                [sorting]="['name', 'desc']"
                 (error)="onNavigationError($event)"
                 (success)="resetError()"
                 (preview)="showFile($event)"
@@ -44,6 +45,8 @@
                     -->
 
                 </data-column>
+                <!-- Notes: has performance problems due to multiple files/folders causing separate HTTP calls to get tags -->
+                <!--
                 <data-column
                     title="{{'DOCUMENT_LIST.COLUMNS.TAG' | translate}}"
                     key="id"
@@ -52,6 +55,7 @@
                         <alfresco-tag-node-list  [nodeId]="entry.data.getValue(entry.row, entry.col)"></alfresco-tag-node-list>
                     </template>
                 </data-column>
+                -->
                 <data-column
                         title="{{'DOCUMENT_LIST.COLUMNS.CREATED_BY' | translate}}"
                         key="createdByUser.displayName"
@@ -140,7 +144,7 @@
     </section>
 
     <section>
-        <md-slide-toggle [(ngModel)]="disableWithNoPermission">Disable when user has no permissions</md-slide-toggle>
+        <md-slide-toggle [(ngModel)]="disableWithNoPermission">Disable upload button when user has no permissions</md-slide-toggle>
     </section>
 
     <h5>Upload</h5>
@@ -195,5 +199,15 @@
         </extension-viewer>
 
     </alfresco-viewer>
+
+    <!-- Comment the viewer above and uncomment that one below if you want test the overlay false viewer-->
+
+    <!--<div *ngIf="fileShowed" class="adf-not-overlay-viewer">-->
+        <!--<alfresco-viewer [(showViewer)]="fileShowed"-->
+                         <!--[fileNodeId]="fileNodeId"-->
+                         <!--[overlayMode]="false">-->
+        <!--</alfresco-viewer>-->
+    <!--</div>-->
+
 </div>
 

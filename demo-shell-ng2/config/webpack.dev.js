@@ -1,8 +1,9 @@
-var webpackMerge = require('webpack-merge');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var commonConfig = require('./webpack.common.js');
-var helpers = require('./helpers');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
+const webpack = require('webpack');
+const webpackMerge = require('webpack-merge');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const commonConfig = require('./webpack.common.js');
+const helpers = require('./helpers');
+const path = require('path');
 
 module.exports = webpackMerge(commonConfig, {
 
@@ -14,55 +15,38 @@ module.exports = webpackMerge(commonConfig, {
         chunkFilename: '[id].chunk.js'
     },
 
-    plugins: [
-        new ExtractTextPlugin('[name].css'),
-        new CopyWebpackPlugin([
-            {
-                from: 'favicon-96x96.png'
-            },
-            {
-                from: 'node_modules/pdfjs-dist/build/pdf.worker.js',
-                to: 'pdf.worker.js'
-            },
-            {
-                context: 'resources/i18n',
-                from: '**/*.json',
-                to: 'resources/i18n'
-            },
-            // Copy i18n folders for all modules with ng2-alfresco- prefix
-            {
-                context: 'node_modules',
-                from: 'ng2-alfresco-*/src/i18n/*.json',
-                to: 'node_modules'
-            },
-            // Copy i18n folders for all modules with ng2-activiti- prefix
-            {
-                context: 'node_modules',
-                from: 'ng2-activiti-*/src/i18n/*.json',
-                to: 'node_modules'
-            },
-            // Copy asstes folders for all modules with ng2-activiti- prefix
-            {
-                context: 'node_modules',
-                from: 'ng2-activiti-*/src/assets/images/*.*',
-                to: 'assets/images',
-                flatten: true
-            },
-            // Copy asstes folders for all modules with ng2-alfresco- prefix
-            {
-                context: 'node_modules',
-                from: 'ng2-alfresco-*/src/assets/images/*.*',
-                to: 'assets/images',
-                flatten: true
-            }
-        ])
-    ],
+    resolve: {
+        alias: {
+            "ng2-alfresco-core$": path.resolve(__dirname, '../../ng2-components/ng2-alfresco-core/index.ts'),
+            "ng2-alfresco-datatable$": path.resolve(__dirname, '../../ng2-components/ng2-alfresco-datatable/index.ts'),
+            "ng2-activiti-form/stencils/runtime.ng1$": path.resolve(__dirname, '../../ng2-components/ng2-activiti-form/stencils/runtime.ng1'),
+            "ng2-activiti-form/stencils/runtime.adf$": path.resolve(__dirname, '../../ng2-components/ng2-activiti-form/stencils/runtime.adf'),
+            "ng2-activiti-diagrams$": path.resolve(__dirname, '../../ng2-components/ng2-activiti-diagrams/index.ts'),
+            "ng2-activiti-analytics$": path.resolve(__dirname, '../../ng2-components/ng2-activiti-analytics/index.ts'),
+            "ng2-activiti-form$": path.resolve(__dirname, '../../ng2-components/ng2-activiti-form/index.ts'),
+            "ng2-activiti-tasklist$": path.resolve(__dirname, '../../ng2-components/ng2-activiti-tasklist/index.ts'),
+            "ng2-activiti-processlist$": path.resolve(__dirname, '../../ng2-components/ng2-activiti-processlist/index.ts'),
+            "ng2-alfresco-documentlist$": path.resolve(__dirname, '../../ng2-components/ng2-alfresco-documentlist/index.ts'),
+            "ng2-alfresco-login$": path.resolve(__dirname, '../../ng2-components/ng2-alfresco-login/index.ts'),
+            "ng2-alfresco-search$": path.resolve(__dirname, '../../ng2-components/ng2-alfresco-search/index.ts'),
+            "ng2-alfresco-social$": path.resolve(__dirname, '../../ng2-components/ng2-alfresco-social/index.ts'),
+            "ng2-alfresco-tag$": path.resolve(__dirname, '../../ng2-components/ng2-alfresco-tag/index.ts'),
+            "ng2-alfresco-upload$": path.resolve(__dirname, '../../ng2-components/ng2-alfresco-upload/index.ts'),
+            "ng2-alfresco-viewer$": path.resolve(__dirname, '../../ng2-components/ng2-alfresco-viewer/index.ts'),
+            "ng2-alfresco-webscript$": path.resolve(__dirname, '../../ng2-components/ng2-alfresco-webscript/index.ts'),
+            "ng2-alfresco-userinfo$": path.resolve(__dirname, '../../ng2-components/ng2-alfresco-userinfo/index.ts')
+        },
+        extensions: ['.ts', '.js'],
+        modules: [path.resolve(__dirname, '../node_modules')]
+    },
 
-    devServer: {
-        host: '0.0.0.0',
-        port: 3000,
-        inline: true,
-        historyApiFallback: true,
-        stats: 'minimal'
-    }
+    plugins: [
+        new webpack.NoEmitOnErrorsPlugin(),
+        new ExtractTextPlugin('[name].[hash].css'),
+        new webpack.LoaderOptionsPlugin({
+            htmlLoader: {
+                minimize: false // workaround for ng2
+            }
+        })
+    ]
 });

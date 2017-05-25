@@ -23,18 +23,20 @@ import { ActivitiContent } from './src/components/activiti-content.component';
 import { FormFieldComponent } from './src/components/form-field/form-field.component';
 import { ActivitiStartForm } from './src/components/activiti-start-form.component';
 import { FormService } from './src/services/form.service';
+import { ActivitiContentService } from './src/services/activiti-content-service';
 import { EcmModelService } from './src/services/ecm-model.service';
 import { NodeService } from './src/services/node.service';
 import { WidgetVisibilityService } from './src/services/widget-visibility.service';
 import { ActivitiAlfrescoContentService } from './src/services/activiti-alfresco.service';
 import { FormRenderingService } from './src/services/form-rendering.service';
 import { HttpModule } from '@angular/http';
-import { WIDGET_DIRECTIVES } from './src/components/widgets/index';
+import { WIDGET_DIRECTIVES, MASK_DIRECTIVE } from './src/components/widgets/index';
 
 export * from './src/components/activiti-form.component';
 export * from './src/components/activiti-content.component';
 export * from './src/components/activiti-start-form.component';
 export * from './src/services/form.service';
+export * from './src/services/activiti-content-service';
 export * from './src/components/widgets/index';
 export * from './src/services/ecm-model.service';
 export * from './src/services/node.service';
@@ -51,6 +53,7 @@ export const ACTIVITI_FORM_DIRECTIVES: any[] = [
 
 export const ACTIVITI_FORM_PROVIDERS: any[] = [
     FormService,
+    ActivitiContentService,
     EcmModelService,
     NodeService,
     WidgetVisibilityService,
@@ -64,7 +67,8 @@ export const ACTIVITI_FORM_PROVIDERS: any[] = [
         HttpModule
     ],
     declarations: [
-        ...ACTIVITI_FORM_DIRECTIVES
+        ...ACTIVITI_FORM_DIRECTIVES,
+        ...MASK_DIRECTIVE
     ],
     entryComponents: [
         ...WIDGET_DIRECTIVES

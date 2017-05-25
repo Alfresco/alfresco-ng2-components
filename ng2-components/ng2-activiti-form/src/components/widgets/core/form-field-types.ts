@@ -34,6 +34,7 @@ export class FormFieldTypes {
     static NUMBER: string = 'integer';
     static DATE: string = 'date';
     static AMOUNT: string = 'amount';
+    static DOCUMENT: string = 'document';
 
     static READONLY_TYPES: string[] = [
         FormFieldTypes.HYPERLINK,

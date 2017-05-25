@@ -74,6 +74,10 @@ export class RaphaelMultilineTextDirective extends RaphaelBase implements OnInit
     }
 
     private formatText(textPaper, text, elementWidth) {
+        let pText = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        textPaper.attr({
+            'text': pText
+        });
         let letterWidth = textPaper.getBBox().width / text.length;
         let removedLineBreaks = text.split('\n');
         let actualRowLength = 0, formattedText = [];

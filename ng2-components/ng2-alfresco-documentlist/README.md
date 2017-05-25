@@ -192,6 +192,7 @@ The properties currentFolderId, folderNode and node are the entry initialization
 | `rowFilter` | `RowFilter` | | Custom row filter, [see more](#custom-row-filter). |
 | `imageResolver` | `ImageResolver` | | Custom image resolver, [see more](#custom-image-resolver). |
 | `allowDropFiles` | boolean | false | Toggle file drop support for rows (see **ng2-alfresco-core/UploadDirective** for more details) |
+| `sorting` | string[] | | Defines default sorting. The format is an array of 2 strings `[key, direction]` i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want to override default sorting detected by the component based on columns. |
 
 ### Events
 
@@ -205,6 +206,42 @@ The properties currentFolderId, folderNode and node are the entry initialization
 _For a complete example source code please refer to 
 [DocumentList Demo](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-alfresco-documentlist/demo) 
 repository._
+
+### DOM Events
+
+Below are the DOM events the DocumentList component emits. 
+All of them are `bubbling`, meaning you can handle them in any component up the parent hierarchy, even if DocumentList is wrapped by another component(s).
+
+| Name | Description |
+| --- | --- |
+| node-click | Raised when user clicks the node |
+| node-dblclick | Raised when user double-clicks the node |
+
+Every event is represented by a [CustomEvent](https://developer.mozilla.org/en/docs/Web/API/CustomEvent) instance, having at least the following properties as part of the `Event.detail` property value:
+
+```ts
+{
+    sender: DocumentListComponent,
+    node: MinimalNodeEntity
+}
+```
+
+#### Handling DOM events
+
+Here's a basic example on handling DOM events in the parent elements:
+
+```html
+<div (node-click)="onNodeClicked($event)" 
+     (node-dblclick)="onNodeDblClicked($event)">
+    <div>
+        <alfresco-upload-drag-area ...>
+             <alfresco-document-list ...>
+                ...
+             </alfresco-document-list>
+        </alfresco-upload-drag-area>
+    </div>
+</div>
+```
 
 ### Setting default folder
 
@@ -1098,7 +1135,6 @@ npm start
 | Command | Description |
 | --- | --- |
 | npm run build | Build component |
-| npm run build:w | Build component and keep watching the changes |
 | npm run test | Run unit tests in the console |
 | npm run test-browser | Run unit tests in the browser
 | npm run coverage | Run unit tests and display code coverage report |

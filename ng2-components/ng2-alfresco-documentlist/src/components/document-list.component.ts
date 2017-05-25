@@ -16,7 +16,7 @@
  */
 
 import {
-    Component, OnInit, Input, OnChanges, Output, SimpleChanges, EventEmitter,
+    Component, OnInit, Input, OnChanges, Output, SimpleChanges, EventEmitter, ElementRef,
     AfterContentInit, TemplateRef, NgZone, ViewChild, HostListener, ContentChild
 } from '@angular/core';
 import { Subject } from 'rxjs/Rx';
@@ -28,7 +28,8 @@ import {
     ObjectDataColumn,
     DataCellEvent,
     DataRowActionEvent,
-    DataColumn
+    DataColumn,
+    DataSorting
 } from 'ng2-alfresco-datatable';
 import { DocumentListService } from './../services/document-list.service';
 import { ContentActionModel } from './../models/content-action.model';
@@ -38,7 +39,6 @@ import { NodeEntityEvent, NodeEntryEvent } from './node.event';
 declare var module: any;
 
 @Component({
-    moduleId: module.id,
     selector: 'alfresco-document-list',
     styleUrls: ['./document-list.component.css'],
     templateUrl: './document-list.component.html'
@@ -49,12 +49,10 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
     static DEFAULT_PAGE_SIZE: number = 20;
 
-    baseComponentPath = module.id.replace('components/document-list.component.js', '');
-
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
     @Input()
-    fallbackThumbnail: string = this.baseComponentPath + 'assets/images/ft_ic_miscellaneous.svg';
+    fallbackThumbnail: string = require('../assets/images/ft_ic_miscellaneous.svg');
 
     @Input()
     navigate: boolean = true;
@@ -87,10 +85,13 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     pageSize: number = DocumentListComponent.DEFAULT_PAGE_SIZE;
 
     @Input()
-    emptyFolderImageUrl: string = this.baseComponentPath + 'assets/images/empty_doc_lib.svg';
+    emptyFolderImageUrl: string = require('../assets/images/empty_doc_lib.svg');
 
     @Input()
     allowDropFiles: boolean = false;
+
+    @Input()
+    sorting: string[];
 
     skipCount: number = 0;
 
@@ -153,9 +154,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     constructor(private documentListService: DocumentListService,
                 private ngZone: NgZone,
-                private translateService: AlfrescoTranslationService) {
-
-        this.data = new ShareDataTableAdapter(this.documentListService, this.baseComponentPath);
+                private translateService: AlfrescoTranslationService,
+                private el: ElementRef) {
 
         if (translateService) {
             translateService.addTranslationFolder('ng2-alfresco-documentlist', 'node_modules/ng2-alfresco-documentlist/src');
@@ -185,16 +185,11 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     ngOnInit() {
+        this.data = new ShareDataTableAdapter(this.documentListService, null, this.getDefaultSorting());
         this.data.thumbnails = this.thumbnails;
         this.contextActionHandler.subscribe(val => this.contextActionCallback(val));
 
         this.enforceSingleClickNavigationForMobile();
-    }
-
-    private enforceSingleClickNavigationForMobile(): void {
-        if (this.isMobile()) {
-            this.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
-        }
     }
 
     ngAfterContentInit() {
@@ -205,7 +200,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         }
 
         if (!this.data) {
-            this.data = new ShareDataTableAdapter(this.documentListService, this.baseComponentPath, schema);
+            this.data = new ShareDataTableAdapter(this.documentListService, schema, this.getDefaultSorting());
         } else if (schema && schema.length > 0) {
             this.data.setColumns(schema);
         }
@@ -273,7 +268,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         return this.enablePagination && !this.isEmpty();
     }
 
-    getNodeActions(node: MinimalNodeEntity): ContentActionModel[] {
+    getNodeActions(node: MinimalNodeEntity | any): ContentActionModel[] {
         let target = null;
 
         if (node && node.entry) {
@@ -286,16 +281,37 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             }
 
             if (target) {
-
                 let ltarget = target.toLowerCase();
-
-                return this.actions.filter(entry => {
+                let actionsByTarget = this.actions.filter(entry => {
                     return entry.target.toLowerCase() === ltarget;
+                }).map(action => new ContentActionModel(action));
+
+                actionsByTarget.forEach((action) => {
+                    this.checkPermission(node, action);
                 });
+
+                return actionsByTarget;
             }
         }
 
         return [];
+    }
+
+    checkPermission(node: any, action: ContentActionModel): ContentActionModel {
+        if (action.permission) {
+            if (this.hasPermissions(node)) {
+                let permissions = node.entry.allowableOperations;
+                let findPermission = permissions.find(permission => permission === action.permission);
+                if (!findPermission && action.disableWithNoPermission === true) {
+                    action.disabled = true;
+                }
+            }
+        }
+        return action;
+    }
+
+    private hasPermissions(node: any): boolean {
+        return node.entry.allowableOperations ? true : false;
     }
 
     @HostListener('contextmenu', ['$event'])
@@ -343,7 +359,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             this.skipCount = 0;
             this.loadFolderNodesByFolderNodeId(node.id, this.pageSize, this.skipCount).catch(err => this.error.emit(err));
         })
-            .catch(err => this.error.emit(err));
+        .catch(err => this.error.emit(err));
     }
 
     loadFolderNodesByFolderNodeId(id: string, maxItems: number, skipCount: number): Promise<any> {
@@ -355,7 +371,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                         skipCount: skipCount,
                         rootFolderId: id
                     })
-                    .subscribe(val => {
+                    .subscribe(
+                        val => {
                             this.data.loadPage(<NodePaging>val);
                             this.pagination = val.list.pagination;
                             resolve(true);
@@ -399,7 +416,16 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     onNodeClick(node: MinimalNodeEntity) {
-        let event = new NodeEntityEvent(node);
+        const domEvent = new CustomEvent('node-click', {
+            detail: {
+                sender: this,
+                node: node
+            },
+            bubbles: true
+        });
+        this.el.nativeElement.dispatchEvent(domEvent);
+
+        const event = new NodeEntityEvent(node);
         this.nodeClick.emit(event);
 
         if (!event.defaultPrevented) {
@@ -423,7 +449,16 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     onNodeDblClick(node: MinimalNodeEntity) {
-        let event = new NodeEntityEvent(node);
+        const domEvent = new CustomEvent('node-dblclick', {
+            detail: {
+                sender: this,
+                node: node
+            },
+            bubbles: true
+        });
+        this.el.nativeElement.dispatchEvent(domEvent);
+
+        const event = new NodeEntityEvent(node);
         this.nodeDblClick.emit(event);
 
         if (!event.defaultPrevented) {
@@ -501,5 +536,20 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     onPermissionError(event) {
         this.permissionError.emit(event);
+    }
+
+    private enforceSingleClickNavigationForMobile(): void {
+        if (this.isMobile()) {
+            this.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
+        }
+    }
+
+    private getDefaultSorting(): DataSorting {
+        let defaultSorting: DataSorting;
+        if (this.sorting) {
+            const [ key, direction ] = this.sorting;
+            defaultSorting = new DataSorting(key, direction);
+        }
+        return defaultSorting;
     }
 }

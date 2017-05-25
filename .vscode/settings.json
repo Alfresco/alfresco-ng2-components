@@ -6,9 +6,10 @@
         "**/.hg": true,
         "**/.DS_Store": true,
         "**/*.js": { "when": "$(basename).ts"},
-        "**/*.js.map": { "when": "$(basename)"},
+        "**/*.js.map": { "when": "$(basename).ts"},
         "**/*.d.ts": { "when": "$(basename).ts"},
         "**/coverage": true
     },
-    "editor.renderIndentGuides": true
+    "editor.renderIndentGuides": true,
+    "tslint.configFile": "ng2-components/config/assets/tslint.json"
 }

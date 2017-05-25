@@ -258,7 +258,7 @@ describe('ActivitiForm', () => {
         spyOn(formComponent, 'getFormByTaskId').and.stub();
         const taskId = '<task id>';
 
-        let change = new SimpleChange(null, taskId);
+        let change = new SimpleChange(null, taskId, true);
         formComponent.ngOnChanges({'taskId': change});
 
         expect(formComponent.getFormByTaskId).toHaveBeenCalledWith(taskId);
@@ -268,7 +268,7 @@ describe('ActivitiForm', () => {
         spyOn(formComponent, 'getFormDefinitionByFormId').and.stub();
         const formId = '123';
 
-        let change = new SimpleChange(null, formId);
+        let change = new SimpleChange(null, formId, true);
         formComponent.ngOnChanges({'formId': change});
 
         expect(formComponent.getFormDefinitionByFormId).toHaveBeenCalledWith(formId);
@@ -278,7 +278,7 @@ describe('ActivitiForm', () => {
         spyOn(formComponent, 'getFormDefinitionByFormName').and.stub();
         const formName = '<form>';
 
-        let change = new SimpleChange(null, formName);
+        let change = new SimpleChange(null, formName, true);
         formComponent.ngOnChanges({'formName': change});
 
         expect(formComponent.getFormDefinitionByFormName).toHaveBeenCalledWith(formName);
@@ -304,7 +304,7 @@ describe('ActivitiForm', () => {
         spyOn(formComponent, 'getFormDefinitionByFormId').and.stub();
         spyOn(formComponent, 'getFormDefinitionByFormName').and.stub();
 
-        formComponent.ngOnChanges({'tag': new SimpleChange(null, 'hello world')});
+        formComponent.ngOnChanges({'tag': new SimpleChange(null, 'hello world', true)});
 
         expect(formComponent.getFormByTaskId).not.toHaveBeenCalled();
         expect(formComponent.getFormDefinitionByFormId).not.toHaveBeenCalled();

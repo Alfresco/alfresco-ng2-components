@@ -22,7 +22,6 @@ import { AnalyticsService } from '../services/analytics.service';
 import { ReportParametersModel } from '../models/report.model';
 
 @Component({
-    moduleId: module.id,
     selector: 'analytics-report-list',
     templateUrl: './analytics-report-list.component.html',
     styleUrls: ['./analytics-report-list.component.css']
@@ -37,6 +36,9 @@ export class AnalyticsReportListComponent implements  OnInit {
 
     @Input()
     appId: string;
+
+    @Input()
+    selectFirst: boolean = false;
 
     @Output()
     reportClick: EventEmitter<ReportParametersModel> = new EventEmitter<ReportParametersModel>();
@@ -91,12 +93,14 @@ export class AnalyticsReportListComponent implements  OnInit {
                     res.forEach((report) => {
                         this.reportObserver.next(report);
                     });
+                    if (this.selectFirst) {
+                        this.selectFirstReport();
+                    }
                     this.onSuccess.emit(res);
                 }
             },
             (err: any) => {
                 this.onError.emit(err);
-                this.logService.error(err);
             }
         );
     }
@@ -143,6 +147,11 @@ export class AnalyticsReportListComponent implements  OnInit {
     public selectReport(report: any) {
         this.currentReport = report;
         this.reportClick.emit(report);
+    }
+
+    selectFirstReport() {
+        this.selectReport(this.reports[0]);
+        this.selectFirst = false;
     }
 
     isSelected(report: any) {

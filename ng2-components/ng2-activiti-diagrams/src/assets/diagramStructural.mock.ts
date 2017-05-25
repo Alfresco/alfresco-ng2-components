@@ -25,7 +25,55 @@ export let subProcess = {
     properties: [{}]
 };
 
+export let subProcessActive = {
+    completed: false,
+    current: true,
+    id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
+    type: 'SubProcess',
+    width: 300,
+    height: 200,
+    x: 40,
+    y: 30,
+    properties: [{}]
+};
+
+export let subProcessCompleted = {
+    completed: true,
+    current: false,
+    id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
+    type: 'SubProcess',
+    width: 300,
+    height: 200,
+    x: 40,
+    y: 30,
+    properties: [{}]
+};
+
 export let eventSubProcess = {
+    id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
+    type: 'EventSubProcess',
+    width: 300,
+    height: 200,
+    x: 40,
+    y: 30,
+    properties: [{}]
+};
+
+export let eventSubProcessActive = {
+    completed: false,
+    current: true,
+    id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
+    type: 'EventSubProcess',
+    width: 300,
+    height: 200,
+    x: 40,
+    y: 30,
+    properties: [{}]
+};
+
+export let eventSubProcessCompleted = {
+    completed: true,
+    current: false,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
     type: 'EventSubProcess',
     width: 300,

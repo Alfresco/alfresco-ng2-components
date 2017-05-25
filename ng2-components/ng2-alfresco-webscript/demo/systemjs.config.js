@@ -22,6 +22,9 @@
             '@angular/router': 'npm:@angular/router/bundles/router.umd.js',
             '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
             '@angular/material': 'npm:@angular/material/bundles/material.umd.js',
+            '@angular/animations': 'npm:@angular/animations/bundles/animations.umd.min.js',
+            '@angular/animations/browser':'npm:@angular/animations/bundles/animations-browser.umd.js',
+            '@angular/platform-browser/animations': 'npm:@angular/platform-browser/bundles/platform-browser-animations.umd.js',
 
             // other libraries
             'rxjs': 'npm:rxjs',
@@ -41,10 +44,10 @@
                 defaultExtension: 'js'
             },
             'ng2-translate': { defaultExtension: 'js' },
-            'ng2-alfresco-core': { main: './index.js', defaultExtension: 'js'},
-            'ng2-alfresco-datatable': { main: './index.js', defaultExtension: 'js'},
-            'ng2-alfresco-webscript': { main: './index.js', defaultExtension: 'js'},
-            'alfresco-js-api': { main: './alfresco-js-api.js', defaultExtension: 'js'}
+            'alfresco-js-api': { main: './alfresco-js-api.js', defaultExtension: 'js'},
+            'ng2-alfresco-core': {main: './bundles/ng2-alfresco-core.js', defaultExtension: 'js'},
+            'ng2-alfresco-datatable': {main: './bundles/ng2-alfresco-datatable.js', defaultExtension: 'js'},
+            'ng2-alfresco-webscript': {main: './bundles/ng2-alfresco-webscript.js', defaultExtension: 'js'}
         }
     });
 })(this);

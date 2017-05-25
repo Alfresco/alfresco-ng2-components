@@ -27,9 +27,11 @@ export * from './src/components/datatable/data-row-action.event';
 import { DataTableComponent } from './src/components/datatable/datatable.component';
 import { NoContentTemplateComponent } from './src/components/datatable/no-content-template.component';
 import { PaginationComponent } from './src/components/pagination/pagination.component';
+import { DataTableCellComponent } from './src/components/datatable/datatable-cell.component';
 
 export const ALFRESCO_DATATABLE_DIRECTIVES: [any] = [
     DataTableComponent,
+    DataTableCellComponent,
     NoContentTemplateComponent,
     PaginationComponent
 ];
