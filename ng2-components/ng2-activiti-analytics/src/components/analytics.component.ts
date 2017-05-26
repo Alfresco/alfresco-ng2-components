@@ -79,8 +79,8 @@ export class AnalyticsComponent implements OnChanges {
         this.editReport.emit(name);
     }
 
-    public onSaveReportSuccess() {
-        this.reportSaved.emit();
+    public onSaveReportSuccess(reportId) {
+        this.reportSaved.emit(reportId);
     }
 
     public onDeleteReportSuccess() {

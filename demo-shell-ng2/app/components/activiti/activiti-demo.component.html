@@ -167,9 +167,12 @@
                             [reportId]="report.id"
                             [hideParameters]="false"
                             (editReport)="onEditReport($event)"
-                            (reportSaved)="onReportSaved()"
+                            (reportSaved)="onReportSaved($event)"
                             (reportDeleted)="onReportDeleted()">
                         </activiti-analytics>
+                        <div *ngIf="!report">
+                            <span>{{'ANALYTICS_REPORT.NO_REPORT_MESSAGE' | translate}}</span>
+                        </div>
                     </div>
                 </div>
             </div>
