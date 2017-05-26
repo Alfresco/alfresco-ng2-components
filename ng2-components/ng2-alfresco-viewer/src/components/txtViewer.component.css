@@ -1,5 +1,8 @@
 .adf-txt-viewer-margin {
     margin: auto !important;
+    overflow: auto;
+    font-size: 1em;
+    padding: 20px;
 }
 
 .full_width{
