@@ -49,6 +49,7 @@ export * from './src/directives/file-draggable.directive';
 export * from './src/components/file-uploading-list.component';
 export * from './src/models/file.model';
 export * from './src/models/permissions.model';
+export * from './src/events/folder-created.event';
 
 export const UPLOAD_DIRECTIVES: any[] = [
     FileDraggableDirective,
