@@ -19,29 +19,58 @@ import { Injectable } from '@angular/core';
 
 import { AlfrescoAuthenticationService } from './alfresco-authentication.service';
 import { AlfrescoApiService } from './alfresco-api.service';
+import { LogService } from './log.service.ts';
+import { Observable } from 'rxjs/Rx';
 
 @Injectable()
 export class AlfrescoContentService {
 
     constructor(public authService: AlfrescoAuthenticationService,
-                public apiService: AlfrescoApiService) {
+                public apiService: AlfrescoApiService,
+                private logService: LogService) {
     }
 
     /**
      * Get thumbnail URL for the given document node.
-     * @param document Node to get URL for.
+     * @param nodeId {string} Node to get URL for.
      * @returns {string} URL address.
      */
-    getDocumentThumbnailUrl(document: any): string {
-        return this.apiService.getInstance().content.getDocumentThumbnailUrl(document.entry.id);
+    getDocumentThumbnailUrl(nodeId: any): string {
+
+        if (nodeId && nodeId.entry) {
+            nodeId = nodeId.entry.id;
+        }
+
+        return this.apiService.getInstance().content.getDocumentThumbnailUrl(nodeId);
     }
 
     /**
      * Get content URL for the given node.
-     * @param document Node to get URL for.
+     * @param nodeId {string} Node to get URL for.
      * @returns {string} URL address.
      */
-    getContentUrl(document: any): string {
-        return this.apiService.getInstance().content.getContentUrl(document.entry.id);
+    getContentUrl(nodeId: any): string {
+
+        if (nodeId && nodeId.entry) {
+            nodeId = nodeId.entry.id;
+        }
+
+        return this.apiService.getInstance().content.getContentUrl(nodeId);
+    }
+
+    /**
+     * Get content for the given node.
+     * @param nodeId {string}.
+     * @returns {string} URL address.
+     */
+    getNodeContent(nodeId: string): any {
+        return Observable.fromPromise(this.apiService.getInstance().core.nodesApi.getFileContent(nodeId).then((dataContent) => {
+            return dataContent;
+        })).catch(this.handleError);
+    }
+
+    private handleError(error: any) {
+        this.logService.error(error);
+        return Observable.throw(error || 'Server error');
     }
 }

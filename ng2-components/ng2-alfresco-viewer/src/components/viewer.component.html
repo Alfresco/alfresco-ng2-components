@@ -51,6 +51,9 @@
                             <media-player [urlFile]="urlFileContent" [mimeType]="mimeType" [blobFile]="blobFile"
                                           [nameFile]="displayName"></media-player>
                         </div>
+                        <div class="center-element" *ngIf="isText()">
+                            <txt-viewer [nodeId]="fileNodeId" ></txt-viewer>
+                        </div>
 
                          <span *ngFor="let extensionTemplate of extensionTemplates">
                             <template [ngTemplateOutlet]="extensionTemplate.template"  *ngIf="extensionTemplate.isVisible"

@@ -80,7 +80,6 @@ export class ViewerComponent {
                 throw new Error('Attribute urlFile or fileNodeId or blobFile is required');
             }
             return new Promise((resolve, reject) => {
-                let alfrescoApi = this.apiService.getInstance();
                 if (this.blobFile) {
                     this.mimeType = this.blobFile.type;
                     this.extensionChange.emit(this.mimeType);
@@ -93,10 +92,10 @@ export class ViewerComponent {
                     this.urlFileContent = this.urlFile;
                     resolve();
                 } else if (this.fileNodeId) {
-                    alfrescoApi.nodes.getNodeInfo(this.fileNodeId).then((data: MinimalNodeEntryEntity) => {
+                    this.apiService.getInstance().nodes.getNodeInfo(this.fileNodeId).then((data: MinimalNodeEntryEntity) => {
                         this.mimeType = data.content.mimeType;
                         this.displayName = data.name;
-                        this.urlFileContent = alfrescoApi.content.getContentUrl(data.id);
+                        this.urlFileContent = this.apiService.getInstance().content.getContentUrl(data.id);
                         this.extension = this.getFileExtension(data.name);
                         this.extensionChange.emit(this.extension);
                         this.loaded = true;
@@ -234,12 +233,21 @@ export class ViewerComponent {
     }
 
     /**
+     * check if the current file is a supported txt extension
+     *
+     * @returns {boolean}
+     */
+    private isText() {
+        return this.extension === 'txt' || this.mimeType === 'text/txt';
+    }
+
+    /**
      * check if the current file is  a supported extension
      *
      * @returns {boolean}
      */
     supportedExtension() {
-        return this.isImage() || this.isPdf() || this.isMedia() || this.isExternalSupportedExtension();
+        return this.isImage() || this.isPdf() || this.isMedia() || this.isText() || this.isExternalSupportedExtension();
     }
 
     /**

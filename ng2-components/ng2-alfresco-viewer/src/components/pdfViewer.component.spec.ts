@@ -84,7 +84,7 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
             fixture.detectChanges();
         });
 
-        it('If urlfile is not present should thrown an error ', () => {
+        it('should thrown an error If urlfile is not present', () => {
             component.urlFile = undefined;
 
             fixture.detectChanges();
@@ -94,21 +94,21 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
             }).toThrow(new Error('Attribute urlFile or blobFile is required'));
         });
 
-        it('Canvas should be present', () => {
+        it('should Canvas be present', () => {
             expect(element.querySelector('#viewer-viewerPdf')).not.toBeNull();
             expect(element.querySelector('#viewer-pdf-container')).not.toBeNull();
         });
 
-        it('Loader should be present', () => {
+        it('should Loader be present', () => {
             expect(element.querySelector('#loader-container')).not.toBeNull();
         });
 
-        it('Next an Previous Buttons should be present', () => {
+        it('should Next an Previous Buttons be present', () => {
             expect(element.querySelector('#viewer-previous-page-button')).not.toBeNull();
             expect(element.querySelector('#viewer-next-page-button')).not.toBeNull();
         });
 
-        it('Input Page elements should be present', () => {
+        it('should Input Page elements be present', () => {
             expect(element.querySelector('#viewer-pagenumber-input')).toBeDefined();
             expect(element.querySelector('#viewer-total-pages')).toBeDefined();
 
@@ -116,7 +116,7 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
             expect(element.querySelector('#viewer-next-page-button')).not.toBeNull();
         });
 
-        it('Toolbar should be hide if showToolbar is false', () => {
+        it('should Toolbar be hide if showToolbar is false', () => {
             component.showToolbar = false;
 
             fixture.detectChanges();
@@ -135,28 +135,28 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
             fixture.detectChanges();
         });
 
-        it('If blobFile is not present should thrown an error ', () => {
+        it('should If blobFile is not present thrown an error ', () => {
             component.blobFile = undefined;
             expect(() => {
                 component.ngOnChanges(null);
             }).toThrow(new Error('Attribute urlFile or blobFile is required'));
         });
 
-        it('Canvas should be present', () => {
+        it('should Canvas be present', () => {
             expect(element.querySelector('#viewer-viewerPdf')).not.toBeNull();
             expect(element.querySelector('#viewer-pdf-container')).not.toBeNull();
         });
 
-        it('Loader should be present', () => {
+        it('should Loader be present', () => {
             expect(element.querySelector('#loader-container')).not.toBeNull();
         });
 
-        it('Next an Previous Buttons should be present', () => {
+        it('should Next an Previous Buttons be present', () => {
             expect(element.querySelector('#viewer-previous-page-button')).not.toBeNull();
             expect(element.querySelector('#viewer-next-page-button')).not.toBeNull();
         });
 
-        it('Input Page elements should be present', () => {
+        it('should Input Page elements be present', () => {
             expect(element.querySelector('#viewer-pagenumber-input')).toBeDefined();
             expect(element.querySelector('#viewer-total-pages')).toBeDefined();
 
@@ -164,7 +164,7 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
             expect(element.querySelector('#viewer-next-page-button')).not.toBeNull();
         });
 
-        it('Toolbar should be hide if showToolbar is false', () => {
+        it('should Toolbar be hide if showToolbar is false', () => {
             component.showToolbar = false;
 
             fixture.detectChanges();
@@ -182,7 +182,7 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
             component.inputPage('1');
         });
 
-        it('Total number of pages should be loaded', (done) => {
+        it('should Total number of pages be loaded', (done) => {
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -193,7 +193,7 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
             });
         }, 5000);
 
-        it('right arrow should move to the next page', (done) => {
+        it('should right arrow move to the next page', (done) => {
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -207,7 +207,7 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
             });
         }, 5000);
 
-        it('nextPage should move to the next page', (done) => {
+        it('should nextPage move to the next page', (done) => {
             let nextPageButton: any = element.querySelector('#viewer-next-page-button');
 
             component.ngOnChanges(null).then(() => {
@@ -223,7 +223,7 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
             });
         });
 
-        it('left arrow should move to the previous page', (done) => {
+        it('should left arrow move to the previous page', (done) => {
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -239,7 +239,7 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
             });
         });
 
-        it('previous page should move to the previous page', (done) => {
+        it('should previous page move to the previous page', (done) => {
             let previousPageButton: any = element.querySelector('#viewer-previous-page-button');
             let nextPageButton: any = element.querySelector('#viewer-next-page-button');
 
@@ -258,7 +258,7 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
             });
         });
 
-        it('previous page should not move to the previous page if is page 1', (done) => {
+        it('should previous page not move to the previous page if is page 1', (done) => {
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -272,7 +272,7 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
             });
         });
 
-        it('Input page should move to the inserted page', (done) => {
+        it('should Input page move to the inserted page', (done) => {
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -293,7 +293,7 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
                 fixture.detectChanges();
             });
 
-            it('In should increment the scale value', (done) => {
+            it('should zoom in increment the scale value', (done) => {
                 let zoomInButton: any = element.querySelector('#viewer-zoom-in-button');
 
                 component.ngOnChanges(null).then(() => {
@@ -306,7 +306,7 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
                 });
             });
 
-            it('Out should decrement the scale value', (done) => {
+            it('should zoom out decrement the scale value', (done) => {
                 let zoomOutButton: any = element.querySelector('#viewer-zoom-out-button');
 
                 component.ngOnChanges(null).then(() => {
@@ -319,7 +319,7 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
                 });
             });
 
-            it('fit-in button should toggle page-fit and auto scale mode', (done) => {
+            it('should fit-in button toggle page-fit and auto scale mode', (done) => {
                 let fitPage: any = element.querySelector('#viewer-scale-page-button');
 
                 component.ngOnChanges(null).then(() => {
@@ -341,8 +341,7 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
             fixture.detectChanges();
             component.inputPage('1');
         });
-
-        it('resize event should trigger setScaleUpdatePages', (done) => {
+        it('should resize event trigger setScaleUpdatePages', (done) => {
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -362,8 +361,7 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
             component.urlFile = require('../assets/fake-test-file.pdf');
             fixture.detectChanges();
         });
-
-        it('scroll page should return the current page', (done) => {
+        it('should scroll page return the current page', (done) => {
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {

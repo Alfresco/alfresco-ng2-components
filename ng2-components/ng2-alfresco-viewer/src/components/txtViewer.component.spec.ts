@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { NotSupportedFormat } from './notSupportedFormat.component';
+import { TxtViewerComponent } from './txtViewer.component';
 import { DebugElement }    from '@angular/core';
 import {
     AlfrescoAuthenticationService,
@@ -25,10 +25,10 @@ import {
     CoreModule
 } from 'ng2-alfresco-core';
 
-describe('Test ng2-alfresco-viewer Not Supported Format View component', () => {
+describe('Test ng2-alfresco-viewer Text View component', () => {
 
-    let component: NotSupportedFormat;
-    let fixture: ComponentFixture<NotSupportedFormat>;
+    let component: TxtViewerComponent;
+    let fixture: ComponentFixture<TxtViewerComponent>;
     let debug: DebugElement;
     let element: HTMLElement;
 
@@ -37,7 +37,7 @@ describe('Test ng2-alfresco-viewer Not Supported Format View component', () => {
             imports: [
                 CoreModule
             ],
-            declarations: [NotSupportedFormat],
+            declarations: [TxtViewerComponent],
             providers: [
                 AlfrescoSettingsService,
                 AlfrescoAuthenticationService,
@@ -47,35 +47,19 @@ describe('Test ng2-alfresco-viewer Not Supported Format View component', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(NotSupportedFormat);
+        fixture = TestBed.createComponent(TxtViewerComponent);
 
         debug = fixture.debugElement;
         element = fixture.nativeElement;
         component = fixture.componentInstance;
+        component.content = 'example';
         fixture.detectChanges();
     });
 
+
     describe('View', () => {
-
-        it('should be present Download button', () => {
-            expect(element.querySelector('#viewer-download-button')).not.toBeNull();
-        });
-
-        it('should display the name of the file', () => {
-            component.nameFile = 'Example Content.xls';
-            fixture.detectChanges();
-            expect(element.querySelector('h4 span').innerHTML).toEqual('Example Content.xls');
-        });
-    });
-
-    describe('User Interaction', () => {
-        it('should call download method if Click on Download button', () => {
-            spyOn(window, 'open');
-
-            let downloadButton: any = element.querySelector('#viewer-download-button');
-            downloadButton.click();
-
-            expect(window.open).toHaveBeenCalled();
+        it('Should text container be present', () => {
+            expect(element.querySelector('#adf-viewer-text-container').textContent).toContain('example');
         });
     });
 });
