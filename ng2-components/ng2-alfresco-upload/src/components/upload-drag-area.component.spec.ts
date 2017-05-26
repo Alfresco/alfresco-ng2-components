@@ -22,6 +22,7 @@ import { AlfrescoTranslationService, CoreModule, LogService, LogServiceMock, Not
 import { UploadDragAreaComponent } from './upload-drag-area.component';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { UploadService } from '../services/upload.service';
+import { FileModel } from '../models/file.model';
 
 describe('UploadDragAreaComponent', () => {
 
@@ -73,11 +74,12 @@ describe('UploadDragAreaComponent', () => {
         uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
 
         fixture.detectChanges();
-        let fileFake = <File> {name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json'};
+        const file = <File> {name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json'};
+        let fileFake = new FileModel(file);
         let filesList = [fileFake];
 
         component.onFilesDropped(filesList);
-        expect(uploadService.addToQueue).toHaveBeenCalledWith(filesList);
+        expect(uploadService.addToQueue).toHaveBeenCalledWith(fileFake);
         expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith('-root-', '/root-fake-/sites-fake/folder-fake', null);
     });
 
@@ -89,7 +91,7 @@ describe('UploadDragAreaComponent', () => {
         component.showUndoNotificationBar = jasmine.createSpy('_showUndoNotificationBar');
 
         fixture.detectChanges();
-        let fileFake = <File> {name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json'};
+        let fileFake = new FileModel(<File> {name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json'});
         let filesList = [fileFake];
 
         component.onFilesDropped(filesList);

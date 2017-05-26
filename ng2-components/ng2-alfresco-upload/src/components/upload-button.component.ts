@@ -127,8 +127,6 @@ export class UploadButtonComponent implements OnInit, OnChanges {
         if (rootFolderId && rootFolderId.currentValue) {
             this.checkPermission();
         }
-        let formFields = this.createFormFields();
-        this.uploadService.setOptions(formFields, this.versioning);
     }
 
     isButtonDisabled(): boolean {
@@ -186,7 +184,7 @@ export class UploadButtonComponent implements OnInit, OnChanges {
                                 this.onError.emit({value: errorMessagePlaceholder});
                                 let errorMessage = this.formatString(errorMessagePlaceholder, [directoryName]);
                                 if (errorMessage) {
-                                    this._showErrorNotificationBar(errorMessage);
+                                    this.showErrorNotificationBar(errorMessage);
                                 }
                             }
                         }
@@ -204,12 +202,13 @@ export class UploadButtonComponent implements OnInit, OnChanges {
      * @param path
      * @param files
      */
-    uploadFiles(path: string, files: any[]) {
+    uploadFiles(path: string, files: File[]): void {
         if (files.length) {
-            let latestFilesAdded = this.uploadService.addToQueue(files);
+            const latestFilesAdded = files.map(f => new FileModel(f, { newVersion: this.versioning }));
+            this.uploadService.addToQueue(...latestFilesAdded);
             this.uploadService.uploadFilesInTheQueue(this.rootFolderId, path, this.onSuccess);
             if (this.showNotificationBar) {
-                this._showUndoNotificationBar(latestFilesAdded);
+                this.showUndoNotificationBar(latestFilesAdded);
             }
         }
     }
@@ -220,8 +219,8 @@ export class UploadButtonComponent implements OnInit, OnChanges {
      * @param files - array of files
      * @returns {Map}
      */
-    private convertIntoHashMap(files: any[]) {
-        let directoryMap = new Map<string, Object[]>();
+    private convertIntoHashMap(files: File[]): Map<string, File[]> {
+        let directoryMap = new Map<string, File[]>();
         for (let file of files) {
             let directory = this.getDirectoryPath(file.webkitRelativePath);
             let filesSomeDir = directoryMap.get(directory) || [];
@@ -236,7 +235,7 @@ export class UploadButtonComponent implements OnInit, OnChanges {
      * @param directory
      * @returns {string}
      */
-    private getDirectoryPath(directory: string) {
+    private getDirectoryPath(directory: string): string {
         let relativeDirPath = '';
         let dirPath = directory.split('/');
         if (dirPath.length > 1) {
@@ -251,7 +250,7 @@ export class UploadButtonComponent implements OnInit, OnChanges {
      * @param directory
      * @returns {string}
      */
-    private getDirectoryName(directory: string) {
+    private getDirectoryName(directory: string): string {
         let dirPath = directory.split('/');
         if (dirPath.length > 1) {
             return dirPath.pop();
@@ -265,7 +264,7 @@ export class UploadButtonComponent implements OnInit, OnChanges {
      *
      * @param {FileModel[]} latestFilesAdded - files in the upload queue enriched with status flag and xhr object.
      */
-    private _showUndoNotificationBar(latestFilesAdded: FileModel[]) {
+    private showUndoNotificationBar(latestFilesAdded: FileModel[]): void {
         let messageTranslate: any, actionTranslate: any;
         messageTranslate = this.translateService.get('FILE_UPLOAD.MESSAGES.PROGRESS');
         actionTranslate = this.translateService.get('FILE_UPLOAD.ACTION.UNDO');
@@ -295,7 +294,7 @@ export class UploadButtonComponent implements OnInit, OnChanges {
      * @param Error message
      * @private
      */
-    private _showErrorNotificationBar(errorMessage: string) {
+    private showErrorNotificationBar(errorMessage: string): void {
         this.notificationService.openSnackMessage(errorMessage, 3000);
     }
 
@@ -305,20 +304,12 @@ export class UploadButtonComponent implements OnInit, OnChanges {
      * @param keys - array of value
      * @returns {string} - The message without placeholder
      */
-    private formatString(message: string, keys: any []) {
+    private formatString(message: string, keys: any []): string {
         let i = keys.length;
         while (i--) {
             message = message.replace(new RegExp('\\{' + i + '\\}', 'gm'), keys[i]);
         }
         return message;
-    }
-
-    private createFormFields(): any {
-        return {
-            formFields: {
-                overwrite: true
-            }
-        };
     }
 
     checkPermission() {

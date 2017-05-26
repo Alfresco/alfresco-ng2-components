@@ -31,9 +31,7 @@ import { MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
 @Injectable()
 export class UploadService {
 
-    private formFields: Object = {};
     private queue: FileModel[] = [];
-    private versioning: boolean = false;
     private filesUploadObserverProgressBar: Observer<FileModel[]>;
     private totalCompletedObserver: Observer<number>;
 
@@ -48,58 +46,43 @@ export class UploadService {
     }
 
     /**
-     * Configure the service
-     *
-     * @param {Object} - options formFields to init the object
-     * @param {boolean} - versioning true to indicate that a major version should be created
-     *
-     */
-    setOptions(options: any, versioning: boolean): void {
-        this.formFields = options.formFields != null ? options.formFields : this.formFields;
-        this.versioning = versioning != null ? versioning : this.versioning;
-    }
-
-    /**
      * Add files to the uploading queue to be uploaded.
      *
-     * @param {File[]} - files to add to the upload queue.
-     *
-     * return {FileModel[]} - return the file added to the queue in this call.
+     * Examples:
+     *  addToQueue(file); // pass one file
+     *  addToQueue(file1, file2, file3); // pass multiple files
+     *  addToQueue(...[file1, file2, file3]); // pass an array of files
      */
-    addToQueue(files: File[]): FileModel[] {
-        const result: FileModel[] = [];
-
-        for (let file of files) {
-            let uploadingFileModel = new FileModel(file);
-            result.push(uploadingFileModel);
-            this.queue.push(uploadingFileModel);
-            if (this.filesUploadObserverProgressBar) {
-                this.filesUploadObserverProgressBar.next(this.queue);
-            }
+    addToQueue(...files: FileModel[]): FileModel[] {
+        const allowedFiles = files.filter(f => !f.name.startsWith('.'));
+        this.queue = this.queue.concat(allowedFiles);
+        if (this.filesUploadObserverProgressBar) {
+            this.filesUploadObserverProgressBar.next(this.queue);
         }
-        return result;
+        return allowedFiles;
     }
 
     /**
      * Pick all the files in the queue that are not been uploaded yet and upload it into the directory folder.
      */
     uploadFilesInTheQueue(rootId: string, directory: string, elementEmit: EventEmitter<any>): void {
-        let filesToUpload = this.queue.filter((uploadingFileModel) => {
-            return !uploadingFileModel.uploading && !uploadingFileModel.done && !uploadingFileModel.abort && !uploadingFileModel.error;
+        let filesToUpload = this.queue.filter((file) => {
+            return !file.uploading && !file.done && !file.abort && !file.error;
         });
-
-        let opts: any = {};
-        opts.renditions = 'doclib';
-
-        if (this.versioning) {
-            opts.overwrite = true;
-            opts.majorVersion = true;
-        } else {
-            opts.autoRename = true;
-        }
 
         filesToUpload.forEach((uploadingFileModel: FileModel) => {
             uploadingFileModel.setUploading();
+
+            const opts: any = {
+                renditions: 'doclib'
+            };
+
+            if (uploadingFileModel.options.newVersion === true) {
+                opts.overwrite = true;
+                opts.majorVersion = true;
+            } else {
+                opts.autoRename = true;
+            }
 
             let promiseUpload = this.apiService.getInstance().upload.uploadFile(uploadingFileModel.file, directory, rootId, null, opts)
                 .on('progress', (progress: any) => {
