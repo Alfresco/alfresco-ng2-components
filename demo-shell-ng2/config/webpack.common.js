@@ -62,15 +62,6 @@ module.exports = {
                 exclude: [ /public/, /resources/, /dist/]
             },
             {
-                test: /\.ts$/,
-                include: [helpers.root('app'), helpers.root('../ng2-components')],
-                loader: [
-                    'ts-loader',
-                    'angular2-template-loader'
-                ],
-                exclude: [ /node_modules/, /public/, /resources/, /dist/]
-            },
-            {
                 test: /\.html$/,
                 loader: 'html-loader',
                 exclude: [ /node_modules/, /public/, /resources/, /dist/]

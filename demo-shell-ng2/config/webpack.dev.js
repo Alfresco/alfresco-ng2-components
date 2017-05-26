@@ -15,6 +15,20 @@ module.exports = webpackMerge(commonConfig, {
         chunkFilename: '[id].chunk.js'
     },
 
+    module: {
+        rules: [
+            {
+                test: /\.ts$/,
+                include: [helpers.root('app'), helpers.root('../ng2-components')],
+                loader: [
+                    'ts-loader',
+                    'angular2-template-loader'
+                ],
+                exclude: [ /node_modules/, /public/, /resources/, /dist/]
+            }
+        ]
+    },
+
     resolve: {
         alias: {
             "ng2-alfresco-core$": path.resolve(__dirname, '../../ng2-components/ng2-alfresco-core/index.ts'),
