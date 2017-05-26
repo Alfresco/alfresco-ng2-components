@@ -72,3 +72,7 @@ export class FileModel {
         });
     }
 }
+
+export interface FileUploadOptions {
+    newVersion?: boolean;
+}

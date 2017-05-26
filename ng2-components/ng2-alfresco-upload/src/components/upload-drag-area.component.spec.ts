@@ -128,7 +128,7 @@ describe('UploadDragAreaComponent', () => {
         component.showUndoNotificationBar = jasmine.createSpy('_showUndoNotificationBar');
 
         fixture.detectChanges();
-        let fileFake = <File> {name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json'};
+        let fileFake = new FileModel(<File> {name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json'});
         let filesList = [fileFake];
 
         component.onFilesDropped(filesList);
