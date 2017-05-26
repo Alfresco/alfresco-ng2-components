@@ -209,7 +209,7 @@ export class ObjectDataRow implements DataRow {
     }
 
     hasValue(key: string): boolean {
-        return this.getValue(key) ? true : false;
+        return this.getValue(key) !== undefined;
     }
 }
 

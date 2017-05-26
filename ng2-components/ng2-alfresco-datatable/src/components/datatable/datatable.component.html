@@ -32,7 +32,7 @@
     <tr *ngFor="let row of data.getRows(); let idx = index" tabindex="0"
         class="alfresco-datatable__row"
         [class.alfresco-datatable__row--selected]="selectedRow === row"
-        [adf-upload]="allowDropFiles" [adf-upload-data]="row">
+        [adf-upload]="allowDropFiles && rowAllowsDrop(row)" [adf-upload-data]="row">
 
         <!-- Actions (left) -->
         <td *ngIf="actions && actionsPosition === 'left'" class="alfresco-datatable__actions-cell">

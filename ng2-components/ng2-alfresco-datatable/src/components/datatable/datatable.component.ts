@@ -264,4 +264,8 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
             this.executeRowAction.emit(new DataRowActionEvent(row, action));
         }
     }
+
+    rowAllowsDrop(row: DataRow): boolean {
+        return row.isDropTarget === true;
+    }
 }
