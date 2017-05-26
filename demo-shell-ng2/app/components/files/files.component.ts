@@ -15,49 +15,25 @@
  * limitations under the License.
  */
 
-import { ChangeDetectorRef, Component, Input, OnInit, Optional, ViewChild } from '@angular/core';
-import { MdDialog } from '@angular/material';
+import { Component, Input, OnInit, AfterViewInit, Optional, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { MinimalNodeEntity } from 'alfresco-js-api';
-import {
-    AlfrescoApiService, AlfrescoContentService, AlfrescoTranslationService, CreateFolderDialogComponent,
-    DownloadZipDialogComponent, FileUploadEvent, FolderCreatedEvent, NotificationService,
-    SiteModel, UploadService
-} from 'ng2-alfresco-core';
-import { DataColumn, DataRow } from 'ng2-alfresco-datatable';
-import { DocumentListComponent, PermissionStyleModel } from 'ng2-alfresco-documentlist';
-
-import { ViewerService } from 'ng2-alfresco-viewer';
+import { AlfrescoAuthenticationService, LogService, NotificationService } from 'ng2-alfresco-core';
+import { DocumentActionsService, DocumentListComponent, ContentActionHandler, DocumentActionModel, FolderActionModel } from 'ng2-alfresco-documentlist';
+import { FormService } from 'ng2-activiti-form';
+import { UploadService, UploadButtonComponent, UploadDragAreaComponent, FolderCreatedEvent } from 'ng2-alfresco-upload';
 
 @Component({
-    selector: 'adf-files-component',
+    selector: 'files-component',
     templateUrl: './files.component.html',
     styleUrls: ['./files.component.css']
 })
-export class FilesComponent implements OnInit {
+export class FilesComponent implements OnInit, AfterViewInit {
     // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
     currentFolderId: string = '-my-';
 
     errorMessage: string = null;
     fileNodeId: any;
-    showViewer: boolean = false;
-
-    toolbarColor = 'default';
-    useDropdownBreadcrumb = false;
-    useViewerDialog = true;
-    useInlineViewer = false;
-
-    selectionModes = [
-        { value: 'none', viewValue: 'None' },
-        { value: 'single', viewValue: 'Single' },
-        { value: 'multiple', viewValue: 'Multiple' }
-    ];
-
-    @Input()
-    selectionMode = 'multiple';
-
-    @Input()
-    multiselect = false;
+    fileShowed: boolean = false;
 
     @Input()
     multipleFileUpload: boolean = false;
@@ -83,41 +59,43 @@ export class FilesComponent implements OnInit {
     @ViewChild(DocumentListComponent)
     documentList: DocumentListComponent;
 
-    permissionsStyle: PermissionStyleModel[] = [];
+    @ViewChild(UploadButtonComponent)
+    uploadButton: UploadButtonComponent;
 
-    constructor(private changeDetector: ChangeDetectorRef,
-                private apiService: AlfrescoApiService,
+    @ViewChild(UploadDragAreaComponent)
+    uploadDragArea: UploadDragAreaComponent;
+
+    constructor(private documentActions: DocumentActionsService,
+                private authService: AlfrescoAuthenticationService,
+                private formService: FormService,
+                private logService: LogService,
+                private changeDetector: ChangeDetectorRef,
+                private router: Router,
                 private notificationService: NotificationService,
                 private uploadService: UploadService,
-                private contentService: AlfrescoContentService,
-                private dialog: MdDialog,
-                private translateService: AlfrescoTranslationService,
-                private viewerService: ViewerService,
-                private router: Router,
                 @Optional() private route: ActivatedRoute) {
+        documentActions.setHandler('my-handler', this.myDocumentActionHandler.bind(this));
+    }
+
+    myDocumentActionHandler(obj: any) {
+        window.alert('my custom action handler');
+    }
+
+    myCustomAction1(event) {
+        alert('Custom document action for ' + event.value.entry.name);
+    }
+
+    myFolderAction1(event) {
+        alert('Custom folder action for ' + event.value.entry.name);
     }
 
     showFile(event) {
-        if (this.useViewerDialog) {
-            if (event.value.entry.isFile) {
-                this.viewerService
-                    .showViewerForNode(event.value.entry)
-                    .then(result => {
-                        console.log(result);
-                    });
-            }
+        if (event.value.entry.isFile) {
+            this.fileNodeId = event.value.entry.id;
+            this.fileShowed = true;
         } else {
-            if (event.value.entry.isFile) {
-                this.fileNodeId = event.value.entry.id;
-                this.showViewer = true;
-            } else {
-                this.showViewer = false;
-            }
+            this.fileShowed = false;
         }
-    }
-
-    onFolderChange($event) {
-        this.router.navigate(['/files', $event.value.id]);
     }
 
     toggleFolder() {
@@ -135,21 +113,34 @@ export class FilesComponent implements OnInit {
                 }
             });
         }
+        if (this.authService.isBpmLoggedIn()) {
+            this.formService.getProcessDefinitions().subscribe(
+                defs => this.setupBpmActions(defs || []),
+                err => this.logService.error(err)
+            );
+        } else {
+            this.logService.warn('You are not logged in to BPM');
+        }
 
-        this.uploadService.fileUploadComplete.debounceTime(300).subscribe(value => this.onFileUploadEvent(value));
-        this.uploadService.fileUploadDeleted.subscribe((value) => this.onFileUploadEvent(value));
-        this.contentService.folderCreated.subscribe(value => this.onFolderCreated(value));
-
-        // this.permissionsStyle.push(new PermissionStyleModel('document-list__create', PermissionsEnum.CREATE));
-        // this.permissionsStyle.push(new PermissionStyleModel('document-list__disable', PermissionsEnum.NOT_CREATE, false, true));
+        this.uploadService.folderCreated.subscribe(value => this.onFolderCreated(value));
     }
 
-    getCurrentDocumentListNode(): MinimalNodeEntity[] {
-        if (this.documentList.folderNode) {
-            return [ { entry: this.documentList.folderNode } ];
-        } else {
-            return [];
-        }
+    ngAfterViewInit() {
+        this.uploadButton.onSuccess
+            .debounceTime(100)
+            .subscribe((event) => {
+                this.reload(event);
+            });
+
+        this.uploadDragArea.onSuccess
+            .debounceTime(100)
+            .subscribe((event) => {
+                this.reload(event);
+            });
+    }
+
+    viewActivitiForm(event?: any) {
+        this.router.navigate(['/activiti/tasksnode', event.value.entry.id]);
     }
 
     onNavigationError(err: any) {
@@ -162,10 +153,24 @@ export class FilesComponent implements OnInit {
         this.errorMessage = null;
     }
 
-    onFileUploadEvent(event: FileUploadEvent) {
-        if (event && event.file.options.parentId === this.documentList.currentFolderId) {
-            this.documentList.reload();
-        }
+    private setupBpmActions(actions: any[]) {
+        actions.map(def => {
+            let documentAction = new DocumentActionModel();
+            documentAction.title = 'Activiti: ' + (def.name || 'Unknown process');
+            documentAction.handler = this.getBpmActionHandler(def);
+            this.documentList.actions.push(documentAction);
+
+            let folderAction = new FolderActionModel();
+            folderAction.title = 'Activiti: ' + (def.name || 'Unknown process');
+            folderAction.handler = this.getBpmActionHandler(def);
+            this.documentList.actions.push(folderAction);
+        });
+    }
+
+    private getBpmActionHandler(processDefinition: any): ContentActionHandler {
+        return function (obj: any, target?: any) {
+            window.alert(`Starting BPM process: ${processDefinition.id}`);
+        }.bind(this);
     }
 
     onFolderCreated(event: FolderCreatedEvent) {
@@ -176,127 +181,19 @@ export class FilesComponent implements OnInit {
         }
     }
 
-    handlePermissionError(event: any) {
-        this.notificationService.openSnackMessage(
-            `You don't have the ${event.permission} permission to ${event.action} the ${event.type} `,
-            4000
-        );
+    onPermissionsFailed(event: any) {
+        this.notificationService.openSnackMessage(`you don't have the ${event.permission} permission to ${event.action} the ${event.type} `, 4000);
     }
 
-    onContentActionError(errors) {
-        const errorStatusCode = JSON.parse(errors.message).error.statusCode;
-        let translatedErrorMessage: any;
-
-        switch (errorStatusCode) {
-            case 403:
-                translatedErrorMessage = this.translateService.get('OPERATION.ERROR.PERMISSION');
-                break;
-            case 409:
-                translatedErrorMessage = this.translateService.get('OPERATION.ERROR.CONFLICT');
-                break;
-            default:
-                translatedErrorMessage = this.translateService.get('OPERATION.ERROR.UNKNOWN');
-        }
-
-        this.notificationService.openSnackMessage(translatedErrorMessage.value, 4000);
+    onUploadPermissionFailed(event: any) {
+        this.notificationService.openSnackMessage(`you don't have the ${event.permission} permission to ${event.action} the ${event.type} `, 4000);
     }
 
-    onContentActionSuccess(message) {
-        let translatedMessage: any = this.translateService.get(message);
-        this.notificationService.openSnackMessage(translatedMessage.value, 4000);
-    }
-
-    onCreateFolderClicked(event: Event) {
-        let dialogRef = this.dialog.open(CreateFolderDialogComponent);
-        dialogRef.afterClosed().subscribe(folderName => {
-            if (folderName) {
-                this.contentService.createFolder('', folderName, this.documentList.currentFolderId).subscribe(
-                    node => console.log(node),
-                    err => console.log(err)
-                );
-            }
-        });
-    }
-
-    getSiteContent(site: SiteModel) {
-        this.currentFolderId = site && site.guid ? site.guid : '-my-';
-    }
-
-    hasSelection(selection: Array<MinimalNodeEntity>): boolean {
-        return selection && selection.length > 0;
-    }
-
-    downloadNodes(selection: Array<MinimalNodeEntity>) {
-        if (!selection || selection.length === 0) {
-            return;
-        }
-
-        if (selection.length === 1) {
-            this.downloadNode(selection[0]);
-        } else {
-            this.downloadZip(selection);
-        }
-    }
-
-    downloadNode(node: MinimalNodeEntity) {
-        if (node && node.entry) {
-            const entry = node.entry;
-
-            if (entry.isFile) {
-                this.downloadFile(node);
-            }
-
-            if (entry.isFolder) {
-                this.downloadZip([node]);
+    reload(event: any) {
+        if (event && event.value && event.value.entry && event.value.entry.parentId) {
+            if (this.documentList.currentFolderId === event.value.entry.parentId) {
+                this.documentList.reload();
             }
         }
-    }
-
-    downloadFile(node: MinimalNodeEntity) {
-        if (node && node.entry) {
-            const contentApi = this.apiService.getInstance().content;
-
-            const url = contentApi.getContentUrl(node.entry.id, true);
-            const fileName = node.entry.name;
-
-            this.download(url, fileName);
-        }
-    }
-
-    downloadZip(selection: Array<MinimalNodeEntity>) {
-        if (selection && selection.length > 0) {
-            const nodeIds = selection.map(node => node.entry.id);
-
-            const dialogRef = this.dialog.open(DownloadZipDialogComponent, {
-                width: '600px',
-                data: {
-                    nodeIds: nodeIds
-                }
-            });
-            dialogRef.afterClosed().subscribe(result => {
-                console.log(result);
-            });
-        }
-    }
-
-    download(url: string, fileName: string) {
-        if (url && fileName) {
-            const link = document.createElement('a');
-
-            link.style.display = 'none';
-            link.download = fileName;
-            link.href = url;
-
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-    }
-
-    getNodeNameTooltip(row: DataRow, col: DataColumn): string {
-        if (row) {
-            return row.getValue('name');
-        }
-        return null;
     }
 }
