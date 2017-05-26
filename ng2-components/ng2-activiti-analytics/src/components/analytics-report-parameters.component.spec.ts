@@ -43,9 +43,9 @@ describe('AnalyticsReportParametersComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+                CoreModule.forRoot(),
                 MdTooltipModule.forRoot(),
-                MdButtonModule.forRoot(),
-                CoreModule.forRoot()
+                MdButtonModule
             ],
             declarations: [
                 AnalyticsReportParametersComponent,
