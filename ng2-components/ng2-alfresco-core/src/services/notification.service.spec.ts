@@ -61,7 +61,7 @@ describe('NotificationService', () => {
     });
 
 
-    it('should open a message notification bar with action', (done) => {
+    xit('should open a message notification bar with action', (done) => {
         let promise = fixture.componentInstance.sendMessageAction();
         promise.afterDismissed().subscribe(() => {
             done();
