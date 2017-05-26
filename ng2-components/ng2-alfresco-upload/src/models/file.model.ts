@@ -34,14 +34,19 @@ export class FileModel {
     error: boolean = false;
     abort: boolean = false;
     uploading: boolean = false;
-    file: any;
+    file: File;
     promiseUpload: any;
 
-    constructor(file: any) {
+    options: FileUploadOptions;
+
+    constructor(file: File, options?: FileUploadOptions) {
         this.file = file;
-        this.id = this._generateId();
+        this.options = Object.assign({}, {
+            newVersion: false
+        }, options);
+        this.id = this.generateId();
         this.name = file.name;
-        this.size = this._getFileSize(file.size);
+        this.size = this.getFileSize(file.size);
         this.progress = {
             loaded: 0,
             total: 0,
@@ -115,7 +120,7 @@ export class FileModel {
      *
      * @param {number} sizeinbytes - size in bytes of the file.
      */
-    private _getFileSize(sizeinbytes: number): string {
+    private getFileSize(sizeinbytes: number): string {
         let fSExt = new Array('Bytes', 'KB', 'MB', 'GB');
         let size = sizeinbytes;
         let i = 0;
@@ -126,15 +131,14 @@ export class FileModel {
         return Math.round((Math.round(size * 100) / 100)) + ' ' + fSExt[i];
     }
 
-    /**
-     * Calculate the size of the file in kb,mb and gb.
-     *
-     * @return {string} - return a unique file uploading id.
-     */
-    private _generateId(): string {
+    private generateId(): string {
         return 'uploading-file-' + 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
                 let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
                 return v.toString(16);
             });
     }
+}
+
+export interface FileUploadOptions {
+    newVersion?: boolean;
 }
