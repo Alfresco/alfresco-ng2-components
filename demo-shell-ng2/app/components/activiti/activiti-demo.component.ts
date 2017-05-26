@@ -15,71 +15,62 @@
  * limitations under the License.
  */
 
-// tslint:disable-next-line:adf-file-name
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Pagination } from 'alfresco-js-api';
-import { AnalyticsReportListComponent } from 'ng2-activiti-analytics';
-import { FORM_FIELD_VALIDATORS, FormEvent, FormFieldEvent, FormRenderingService, FormService } from 'ng2-activiti-form';
+import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import {
-    FilterProcessRepresentationModel,
-    ProcessFiltersComponent,
-    ProcessInstance,
-    ProcessInstanceDetailsComponent,
-    ProcessInstanceListComponent,
-    StartProcessInstanceComponent
-} from 'ng2-activiti-processlist';
-import {
-    AppsListComponent,
+    ActivitiApps,
+    ActivitiFilters,
+    ActivitiTaskList,
     FilterRepresentationModel,
-    TaskDetailsComponent,
-    TaskDetailsEvent,
-    TaskFiltersComponent,
-    TaskListComponent,
-    TaskListService
+    TaskDetailsEvent
 } from 'ng2-activiti-tasklist';
-import { AlfrescoApiService } from 'ng2-alfresco-core';
 import {
-    DataSorting,
-    ObjectDataRow,
-    ObjectDataTableAdapter
-} from 'ng2-alfresco-datatable';
+    ActivitiProcessFilters,
+    ActivitiProcessInstanceDetails,
+    ActivitiProcessInstanceListComponent,
+    ActivitiStartProcessInstance,
+    FilterProcessRepresentationModel,
+    ProcessInstance
+} from 'ng2-activiti-processlist';
+import { AnalyticsReportListComponent } from 'ng2-activiti-analytics';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
+import {
+    ObjectDataTableAdapter,
+    ObjectDataRow,
+    DataSorting
+} from 'ng2-alfresco-datatable';
+import { AlfrescoApiService } from 'ng2-alfresco-core';
+import { FormService, FormRenderingService, FormEvent, FormFieldEvent } from 'ng2-activiti-form';
 import { /*CustomEditorComponent*/ CustomStencil01 } from './custom-editor/custom-editor.component';
-import { DemoFieldValidator } from './demo-field-validator';
 
 declare var componentHandler;
 
 const currentProcessIdNew = '__NEW__';
-const currentTaskIdNew = '__NEW__';
 
 @Component({
     selector: 'activiti-demo',
     templateUrl: './activiti-demo.component.html',
     styleUrls: ['./activiti-demo.component.css']
 })
-export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
+export class ActivitiDemoComponent implements AfterViewInit {
 
-    @ViewChild(TaskFiltersComponent)
-    activitifilter: TaskFiltersComponent;
+    @ViewChild(ActivitiFilters)
+    activitifilter: ActivitiFilters;
 
-    @ViewChild(TaskListComponent)
-    taskList: TaskListComponent;
+    @ViewChild(ActivitiTaskList)
+    taskList: ActivitiTaskList;
 
-    @ViewChild(ProcessFiltersComponent)
-    activitiprocessfilter: ProcessFiltersComponent;
+    @ViewChild(ActivitiProcessFilters)
+    activitiprocessfilter: ActivitiProcessFilters;
 
-    @ViewChild(ProcessInstanceListComponent)
-    processList: ProcessInstanceListComponent;
+    @ViewChild(ActivitiProcessInstanceListComponent)
+    processList: ActivitiProcessInstanceListComponent;
 
-    @ViewChild(ProcessInstanceDetailsComponent)
-    activitiprocessdetails: ProcessInstanceDetailsComponent;
+    @ViewChild(ActivitiProcessInstanceDetails)
+    activitiprocessdetails: ActivitiProcessInstanceDetails;
 
-    @ViewChild(TaskDetailsComponent)
-    activitidetails: TaskDetailsComponent;
-
-    @ViewChild(StartProcessInstanceComponent)
-    activitiStartProcess: StartProcessInstanceComponent;
+    @ViewChild(ActivitiStartProcessInstance)
+    activitiStartProcess: ActivitiStartProcessInstance;
 
     @ViewChild(AnalyticsReportListComponent)
     analyticsreportlist: AnalyticsReportListComponent;
@@ -98,12 +89,6 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     currentProcessInstanceId: string;
 
     taskSchemaColumns: any [] = [];
-    taskPagination: Pagination = {
-        skipCount: 0,
-        maxItems: 2,
-        totalItems: 0
-    };
-    taskPage: number = 0;
     processSchemaColumns: any [] = [];
 
     activeTab: string = 'tasks'; // tasks|processes|reports
@@ -119,18 +104,11 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     dataTasks: ObjectDataTableAdapter;
     dataProcesses: ObjectDataTableAdapter;
 
-    fieldValidators = [
-        ...FORM_FIELD_VALIDATORS,
-        new DemoFieldValidator()
-    ];
-
     constructor(private elementRef: ElementRef,
                 private route: ActivatedRoute,
-                private router: Router,
-                private taskListService: TaskListService,
                 private apiService: AlfrescoApiService,
-                formRenderingService: FormRenderingService,
-                formService: FormService) {
+                private formRenderingService: FormRenderingService,
+                private formService: FormService) {
         this.dataTasks = new ObjectDataTableAdapter();
         this.dataTasks.setSorting(new DataSorting('created', 'desc'));
 
@@ -157,55 +135,9 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
             console.log(`Field value changed. Form: ${e.form.id}, Field: ${e.field.id}, Value: ${e.field.value}`);
         });
 
-        // Uncomment this block to see form event handling in action
-        /*
-        formService.formEvents.subscribe((event: Event) => {
-            console.log('Event fired:' + event.type);
-            console.log('Event Target:' + event.target);
-        });
-        */
-    }
-
-    onPrevPage(pagination: Pagination): void {
-        this.taskPagination.skipCount = pagination.skipCount;
-        this.taskPage--;
-    }
-
-    onNextPage(pagination: Pagination): void {
-        this.taskPagination.skipCount = pagination.skipCount;
-        this.taskPage++;
-    }
-
-    onChangePageSize(pagination: Pagination): void {
-        const { skipCount, maxItems } = pagination;
-        this.taskPage = this.currentPage(skipCount, maxItems);
-        this.taskPagination.maxItems = maxItems;
-        this.taskPagination.skipCount = skipCount;
-    }
-
-    onChangePageNumber(pagination: Pagination): void {
-        const { maxItems, skipCount } = pagination;
-        this.taskPage = this.currentPage(skipCount, maxItems);
-        this.taskPagination.maxItems = maxItems;
-        this.taskPagination.skipCount = skipCount;
-    }
-
-    currentPage(skipCount: number, maxItems: number): number {
-        return (skipCount && maxItems) ? Math.floor(skipCount / maxItems) : 0;
     }
 
     ngOnInit() {
-        this.taskListService.tasksList$.subscribe(
-            (tasks) => {
-                this.taskPagination = {count: tasks.data.length, maxItems: this.taskPagination.maxItems, skipCount: this.taskPagination.skipCount, totalItems: tasks.total};
-                console.log({count: tasks.data.length, maxItems: this.taskPagination.maxItems, skipCount: this.taskPagination.skipCount, totalItems: tasks.total});
-            }, (err) => {
-            console.log('err');
-        });
-
-        if (this.router.url.includes('processes') ) {
-            this.activeTab = 'processes';
-        }
         this.sub = this.route.params.subscribe(params => {
             let applicationId = params['appId'];
             if (applicationId && applicationId !== '0') {
@@ -217,23 +149,22 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
             this.processFilter = null;
             this.currentProcessInstanceId = null;
         });
-        this.layoutType = AppsListComponent.LAYOUT_GRID;
-
+        this.layoutType = ActivitiApps.LAYOUT_GRID;
     }
 
     ngOnDestroy() {
         this.sub.unsubscribe();
     }
 
-    onTaskFilterClick(filter: FilterRepresentationModel): void {
+    onTaskFilterClick(filter: FilterRepresentationModel) {
         this.applyTaskFilter(filter);
     }
 
-    onReportClick(event: any): void {
+    onReportClick(event: any) {
         this.report = event;
     }
 
-    onSuccessTaskFilterList(event: any): void {
+    onSuccessTaskFilterList(event: any) {
         this.applyTaskFilter(this.activitifilter.getCurrentFilter());
     }
 
@@ -244,125 +175,97 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
         }
     }
 
-    onStartTaskSuccess(event: any): void {
+    onStartTaskSuccess(event: any) {
         this.activitifilter.selectFilterWithTask(event.id);
         this.currentTaskId = event.id;
-    }
-
-    onCancelStartTask() {
-        this.currentTaskId = null;
-        this.reloadTaskFilters();
     }
 
     onSuccessTaskList(event: FilterRepresentationModel) {
         this.currentTaskId = this.taskList.getCurrentId();
     }
 
-    onProcessFilterClick(event: FilterProcessRepresentationModel): void {
+    onProcessFilterClick(event: FilterProcessRepresentationModel) {
         this.currentProcessInstanceId = null;
         this.processFilter = event;
     }
 
-    onSuccessProcessFilterList(): void {
+    onSuccessProcessFilterList() {
         this.processFilter = this.activitiprocessfilter.getCurrentFilter();
     }
 
-    onSuccessProcessList(event: any): void {
+    onSuccessProcessList(event: any) {
         this.currentProcessInstanceId = this.processList.getCurrentId();
     }
 
-    onTaskRowClick(taskId): void {
+    onTaskRowClick(taskId) {
         this.currentTaskId = taskId;
     }
 
-    onProcessRowClick(processInstanceId): void {
+    onProcessRowClick(processInstanceId) {
         this.currentProcessInstanceId = processInstanceId;
     }
 
-    onEditReport(name: string): void {
+    onEditReport(name: string) {
         this.analyticsreportlist.reload();
     }
 
-    onReportSaved(reportId): void {
+    onReportSaved(reportId) {
         this.analyticsreportlist.reload(reportId);
     }
 
-    onReportDeleted(): void {
+    onReportDeleted() {
         this.analyticsreportlist.reload();
         this.analyticsreportlist.selectReport(null);
     }
 
-    navigateStartProcess(): void {
+    navigateStartProcess() {
         this.resetProcessFilters();
         this.reloadProcessFilters();
         this.currentProcessInstanceId = currentProcessIdNew;
     }
 
-    navigateStartTask(): void {
-        this.resetTaskFilters();
-        this.reloadTaskFilters();
-        this.currentTaskId = currentTaskIdNew;
-    }
-
-    onStartProcessInstance(instance: ProcessInstance): void {
+    onStartProcessInstance(instance: ProcessInstance) {
         this.currentProcessInstanceId = instance.id;
         this.activitiStartProcess.reset();
         this.resetProcessFilters();
     }
 
-    onCancelProcessInstance() {
-        this.currentProcessInstanceId = null;
-        this.reloadProcessFilters();
-    }
-
-    isStartProcessMode(): boolean {
+    isStartProcessMode() {
         return this.currentProcessInstanceId === currentProcessIdNew;
     }
 
-    isStartTaskMode(): boolean {
-        return this.currentTaskId === currentTaskIdNew;
-    }
-
-    processCancelled(data: any): void {
+    processCancelled(data: any) {
         this.currentProcessInstanceId = null;
         this.processList.reload();
     }
 
-    onSuccessNewProcess(data: any): void {
+    onSuccessNewProcess(data: any) {
         this.processList.reload();
     }
 
-    onFormCompleted(form): void {
-        this.currentTaskId = null;
-        this.taskPagination.totalItems--;
-        const { skipCount, maxItems, totalItems } = this.taskPagination;
-        if (totalItems > 0 && (skipCount >= totalItems)) {
-            this.taskPagination.skipCount -= maxItems;
-        }
-        this.taskPage = this.currentPage(this.taskPagination.skipCount, maxItems);
+    onFormCompleted(form) {
         this.taskList.reload();
+        this.currentTaskId = null;
     }
 
-    onFormContentClick(content: any): void {
+    onFormContentClick(content: any) {
         this.fileShowed = true;
         this.content = content.contentBlob;
         this.contentName = content.name;
     }
 
-    onAuditClick(event: any) {
-        console.log(event);
+    onAttachmentClick(content: any) {
+        this.fileShowed = true;
+        this.content = content.contentBlob;
+        this.contentName = content.name;
     }
 
-    onAuditError(event: any): void {
-        console.error('My custom error message' + event);
-    }
-
-    onTaskCreated(data: any): void {
+    onTaskCreated(data: any) {
         this.currentTaskId = data.parentTaskId;
         this.taskList.reload();
     }
 
-    onTaskDeleted(data: any): void {
+    onTaskDeleted(data: any) {
         this.taskList.reload();
     }
 
@@ -386,11 +289,7 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
         });
     }
 
-    onShowProcessDiagram(event: any): void {
-        this.router.navigate(['/activiti/apps/' + this.appId + '/diagram/' + event.value]);
-    }
-
-    onProcessDetailsTaskClick(event: TaskDetailsEvent): void {
+    onProcessDetailsTaskClick(event: TaskDetailsEvent) {
         event.preventDefault();
         this.activeTab = 'tasks';
 
@@ -406,36 +305,20 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
         this.currentTaskId = taskId;
     }
 
-    private resetProcessFilters(): void {
+    private resetProcessFilters() {
         this.processFilter = null;
     }
 
-    private resetTaskFilters(): void {
-        this.taskFilter = null;
+    private reloadProcessFilters() {
+        this.activitiprocessfilter.selectFilter(null);
     }
 
-    private reloadProcessFilters(): void {
-        this.activitiprocessfilter.selectFilter(this.activitiprocessfilter.getCurrentFilter());
-    }
-
-    private reloadTaskFilters(): void {
-        this.activitifilter.selectFilter(this.activitifilter.getCurrentFilter());
-    }
-
-    onRowClick(event): void {
+    onRowClick(event) {
         console.log(event);
     }
 
-    onRowDblClick(event): void {
+    onRowDblClick(event) {
         console.log(event);
     }
 
-    isTaskCompleted(): boolean {
-        return this.activitidetails.isCompletedTask();
-    }
-
-    onAssignTask() {
-        this.taskList.reload();
-        this.currentTaskId = null;
-    }
 }

@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { ReportParametersModel } from 'ng2-activiti-diagrams';
-import { Observable, Observer } from 'rxjs/Rx';
+import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
+import { Observer, Observable } from 'rxjs/Rx';
+import { LogService } from 'ng2-alfresco-core';
 import { AnalyticsService } from '../services/analytics.service';
+import { ReportParametersModel } from '../models/report.model';
 
 @Component({
-    selector: ' adf-analytics-report-list, analytics-report-list',
+    selector: 'analytics-report-list',
     templateUrl: './analytics-report-list.component.html',
-    styleUrls: ['./analytics-report-list.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./analytics-report-list.component.css']
 })
 export class AnalyticsReportListComponent implements OnInit {
 
@@ -56,7 +56,8 @@ export class AnalyticsReportListComponent implements OnInit {
 
     reports: ReportParametersModel[] = [];
 
-    constructor(private analyticsService: AnalyticsService) {
+    constructor(private analyticsService: AnalyticsService,
+                private logService: LogService) {
         this.report$ = new Observable<ReportParametersModel>(observer => this.reportObserver = observer).share();
     }
 
@@ -93,6 +94,7 @@ export class AnalyticsReportListComponent implements OnInit {
                         this.reportObserver.next(report);
                     });
                     if (reportId) {
+                        console.log('SELEZIONO IL REPORT!');
                         this.selectReportByReportId(reportId);
                     }
                     if (this.selectFirst) {

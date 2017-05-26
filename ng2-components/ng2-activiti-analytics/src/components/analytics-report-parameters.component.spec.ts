@@ -15,19 +15,20 @@
  * limitations under the License.
  */
 
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { DebugElement, SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReportParametersModel } from 'ng2-activiti-diagrams';
-import { AlfrescoTranslationService, AppConfigModule, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
-import * as analyticParamsMock from '../assets/analyticsParamsReportComponent.mock';
+import * as moment from 'moment';
+import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
+
 import { AnalyticsReportParametersComponent } from '../components/analytics-report-parameters.component';
 import { WIDGET_DIRECTIVES } from '../components/widgets/index';
-import { MaterialModule } from '../material.module';
 import { AnalyticsService } from '../services/analytics.service';
-import { DateRangeWidgetComponent } from './widgets/date-range/date-range.widget';
+import { ReportParametersModel } from '../models/report.model';
+import * as analyticParamsMock from '../assets/analyticsParamsReportComponent.mock';
 
 declare let jasmine: any;
+declare let mdDateTimePicker: any;
 
 describe('AnalyticsReportParametersComponent', () => {
 
@@ -41,14 +42,9 @@ describe('AnalyticsReportParametersComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
-                AppConfigModule.forRoot('app.config.json', {
-                    bpmHost: 'http://localhost:9876/bpm'
-                }),
-                MaterialModule
+                CoreModule.forRoot()
             ],
             declarations: [
-                DateRangeWidgetComponent,
                 AnalyticsReportParametersComponent,
                 ...WIDGET_DIRECTIVES
             ],
@@ -113,7 +109,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
             let reportId = 1;
             let change = new SimpleChange(null, reportId, true);
-            component.ngOnChanges({'reportId': change});
+            component.ngOnChanges({ 'reportId': change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -133,7 +129,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
             let reportId = 1;
             let change = new SimpleChange(null, reportId, true);
-            component.ngOnChanges({'reportId': change});
+            component.ngOnChanges({ 'reportId': change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -160,7 +156,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
             let reportId = 1;
             let change = new SimpleChange(null, reportId, true);
-            component.ngOnChanges({'reportId': change});
+            component.ngOnChanges({ 'reportId': change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -208,7 +204,6 @@ describe('AnalyticsReportParametersComponent', () => {
                     typeFiltering: true
                 }
             };
-
             component.submit(values);
         });
 
@@ -222,7 +217,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
             let reportId = 1;
             let change = new SimpleChange(null, reportId, true);
-            component.ngOnChanges({'reportId': change});
+            component.ngOnChanges({ 'reportId': change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -233,15 +228,21 @@ describe('AnalyticsReportParametersComponent', () => {
 
         it('Should render a date range components when the definition parameter type is \'dateRange\' ', (done) => {
             component.onSuccessReportParams.subscribe(() => {
-                let dateElement: any = element.querySelector('adf-date-range-widget');
-                expect(dateElement).toBeDefined();
+                fixture.detectChanges();
+
+                let today = moment().format('YYYY-MM-DD');
+
+                const startDate: any = element.querySelector('#startDateInput');
+                const endDate: any = element.querySelector('#endDateInput');
+
+                expect(startDate.value).toEqual(today);
+                expect(endDate.value).toEqual(today);
                 done();
             });
 
             let reportId = 1;
             let change = new SimpleChange(null, reportId, true);
-            component.toggleParameters();
-            component.ngOnChanges({'reportId': change});
+            component.ngOnChanges({ 'reportId': change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -266,7 +267,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
             let reportId = 1;
             let change = new SimpleChange(null, reportId, true);
-            component.ngOnChanges({'reportId': change});
+            component.ngOnChanges({ 'reportId': change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -290,13 +291,13 @@ describe('AnalyticsReportParametersComponent', () => {
                 done();
             });
 
-            jasmine.Ajax.stubRequest('http://localhost:9876/bpm/activiti-app/app/rest/reporting/report-params/1').andReturn({
+            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/app/rest/reporting/report-params/1').andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: analyticParamsMock.reportDefParamProcessDef
             });
 
-            jasmine.Ajax.stubRequest('http://localhost:9876/bpm/activiti-app/app/rest/reporting/process-definitions').andReturn({
+            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/app/rest/reporting/process-definitions').andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: analyticParamsMock.reportDefParamProcessDefOptionsNoApp
@@ -304,7 +305,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
             let reportId = 1;
             let change = new SimpleChange(null, reportId, true);
-            component.ngOnChanges({'reportId': change});
+            component.ngOnChanges({ 'reportId': change });
 
         });
 
@@ -321,7 +322,7 @@ describe('AnalyticsReportParametersComponent', () => {
                 done();
             });
 
-            jasmine.Ajax.stubRequest('http://localhost:9876/bpm/activiti-app/app/rest/reporting/report-params/1').andReturn({
+            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/app/rest/reporting/report-params/1').andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: analyticParamsMock.reportDefParamProcessDef
@@ -329,7 +330,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
             let appId = '1';
 
-            jasmine.Ajax.stubRequest('http://localhost:9876/bpm/activiti-app/api/enterprise/process-definitions?appDefinitionId=' + appId).andReturn({
+            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/api/enterprise/process-definitions?appDefinitionId=' + appId).andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: analyticParamsMock.reportDefParamProcessDefOptionsApp
@@ -338,7 +339,7 @@ describe('AnalyticsReportParametersComponent', () => {
             component.appId = appId;
             component.reportId = '1';
             let change = new SimpleChange(null, appId, true);
-            component.ngOnChanges({'appId': change});
+            component.ngOnChanges({ 'appId': change });
 
         });
 
@@ -351,7 +352,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
             let reportId = 1;
             let change = new SimpleChange(null, reportId, true);
-            component.ngOnChanges({'reportId': change});
+            component.ngOnChanges({ 'reportId': change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -387,13 +388,13 @@ describe('AnalyticsReportParametersComponent', () => {
                 done();
             });
 
-            jasmine.Ajax.stubRequest('http://localhost:9876/bpm/activiti-app/app/rest/reporting/report-params/1').andReturn({
+            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/app/rest/reporting/report-params/1').andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: analyticParamsMock.reportDefParamProcessDef
             });
 
-            jasmine.Ajax.stubRequest('http://localhost:9876/bpm/activiti-app/app/rest/reporting/process-definitions').andReturn({
+            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/app/rest/reporting/process-definitions').andReturn({
                 status: 404,
                 contentType: 'json',
                 responseText: []
@@ -401,7 +402,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
             let reportId = 1;
             let change = new SimpleChange(null, reportId, true);
-            component.ngOnChanges({'reportId': change});
+            component.ngOnChanges({ 'reportId': change });
 
         });
 
@@ -413,7 +414,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
             let reportId = 1;
             let change = new SimpleChange(null, reportId, true);
-            component.ngOnChanges({'reportId': change});
+            component.ngOnChanges({ 'reportId': change });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 404,
@@ -459,7 +460,7 @@ describe('AnalyticsReportParametersComponent', () => {
             beforeEach(async(() => {
                 let reportId = 1;
                 let change = new SimpleChange(null, reportId, true);
-                component.ngOnChanges({'reportId': change});
+                component.ngOnChanges({ 'reportId': change });
                 fixture.detectChanges();
 
                 jasmine.Ajax.requests.mostRecent().respondWith({
@@ -494,7 +495,7 @@ describe('AnalyticsReportParametersComponent', () => {
                 reportName.focus();
                 component.reportParameters.name = 'FAKE_TEST_NAME';
                 reportName.value = 'FAKE_TEST_NAME';
-                reportName.dispatchEvent(new Event('blur'));
+                reportName.blur();
 
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -509,18 +510,19 @@ describe('AnalyticsReportParametersComponent', () => {
                     contentType: 'json',
                     responseText: analyticParamsMock.reportDefParamStatus
                 });
+
             });
 
             it('Should show a dialog to allowing report save', async(() => {
                 component.saveReportSuccess.subscribe((repId) => {
-                    let reportDialogTitle: HTMLElement = <HTMLElement> element.querySelector('#report-dialog');
+                    let reportDialogTitle: HTMLElement = <HTMLElement>element.querySelector('#report-dialog');
                     expect(reportDialogTitle.getAttribute('open')).toBeNull();
                     expect(repId).toBe('1');
                 });
 
                 component.submit(values);
                 fixture.detectChanges();
-                let saveButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#save-button');
+                let saveButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#save-button');
                 expect(saveButton).toBeDefined();
                 expect(saveButton).not.toBeNull();
                 saveButton.click();
@@ -529,10 +531,10 @@ describe('AnalyticsReportParametersComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let reportDialogTitle: HTMLElement = <HTMLElement> element.querySelector('#report-dialog-title');
+                    let reportDialogTitle: HTMLElement = <HTMLElement>element.querySelector('#report-dialog-title');
                     let saveTitleSubMessage: HTMLElement = <HTMLElement> element.querySelector('#save-title-submessage');
                     let inputSaveName: HTMLInputElement = <HTMLInputElement> element.querySelector('#repName');
-                    let performActionButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#action-dialog-button');
+                    let performActionButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#action-dialog-button');
                     let todayDate = component.getTodayDate();
 
                     expect(reportDialogTitle).not.toBeNull();
@@ -552,7 +554,7 @@ describe('AnalyticsReportParametersComponent', () => {
             it('Should show a dialog to allowing report export', async(() => {
                 component.submit(values);
                 fixture.detectChanges();
-                let exportButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#export-button');
+                let exportButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#export-button');
 
                 expect(exportButton).toBeDefined();
                 expect(exportButton).not.toBeNull();
@@ -562,9 +564,9 @@ describe('AnalyticsReportParametersComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let reportDialogTitle: HTMLElement = <HTMLElement> element.querySelector('#report-dialog-title');
+                    let reportDialogTitle: HTMLElement = <HTMLElement>element.querySelector('#report-dialog-title');
                     let inputSaveName: HTMLInputElement = <HTMLInputElement> element.querySelector('#repName');
-                    let performActionButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#action-dialog-button');
+                    let performActionButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#action-dialog-button');
                     let todayDate = component.getTodayDate();
 
                     expect(reportDialogTitle).not.toBeNull();
@@ -581,7 +583,7 @@ describe('AnalyticsReportParametersComponent', () => {
             }));
 
             it('Should raise an event for report deleted', async(() => {
-                let deleteButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#delete-button');
+                let deleteButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#delete-button');
                 expect(deleteButton).toBeDefined();
                 expect(deleteButton).not.toBeNull();
 
@@ -598,7 +600,7 @@ describe('AnalyticsReportParametersComponent', () => {
             }));
 
             it('Should hide export button if the form is not valid', async(() => {
-                let exportButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#export-button');
+                let exportButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#export-button');
                 expect(exportButton).toBeDefined();
                 expect(exportButton).not.toBeNull();
                 validForm = false;
@@ -607,13 +609,13 @@ describe('AnalyticsReportParametersComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    exportButton = <HTMLButtonElement> element.querySelector('#export-button');
+                    exportButton = <HTMLButtonElement>element.querySelector('#export-button');
                     expect(exportButton).toBeNull();
                 });
             }));
 
             it('Should hide save button if the form is not valid', async(() => {
-                let saveButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#save-button');
+                let saveButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#save-button');
                 expect(saveButton).toBeDefined();
                 expect(saveButton).not.toBeNull();
                 validForm = false;
@@ -622,7 +624,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    saveButton = <HTMLButtonElement> element.querySelector('#save-button');
+                    saveButton = <HTMLButtonElement>element.querySelector('#save-button');
                     expect(saveButton).toBeNull();
                 });
             }));
@@ -630,8 +632,8 @@ describe('AnalyticsReportParametersComponent', () => {
             it('Should show export and save button when the form became valid', async(() => {
                 validForm = false;
                 fixture.detectChanges();
-                let saveButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#save-button');
-                let exportButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#export-button');
+                let saveButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#save-button');
+                let exportButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#export-button');
                 expect(saveButton).toBeNull();
                 expect(exportButton).toBeNull();
                 validForm = true;
@@ -639,8 +641,8 @@ describe('AnalyticsReportParametersComponent', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
 
-                    saveButton = <HTMLButtonElement> element.querySelector('#save-button');
-                    exportButton = <HTMLButtonElement> element.querySelector('#export-button');
+                    saveButton = <HTMLButtonElement>element.querySelector('#save-button');
+                    exportButton = <HTMLButtonElement>element.querySelector('#export-button');
 
                     expect(saveButton).not.toBeNull();
                     expect(saveButton).toBeDefined();
