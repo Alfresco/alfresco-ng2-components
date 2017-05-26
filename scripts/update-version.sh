@@ -74,6 +74,27 @@ update_component_dependency_version(){
      done
 }
 
+update_total_build_dependency_version(){
+   DESTDIR="$DIR/../ng2-components/"
+
+   for (( j=0; j<${projectslength}; j++ ));
+    do
+       echo "====== UPDATE TOTAL BUILD DEPENDENCY VERSION of ${projects[$j]} to ~${VERSION} in ${1}======"
+       sed "${sedi[@]}" "s/\"${projects[$j]}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${projects[$j]}\": \"${VERSION}\"/g"  ${DESTDIR}/package.json
+       sed "${sedi[@]}" "s/\"${projects[$j]}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${projects[$j]}\": \"~${VERSION}\"/g"  ${DESTDIR}/package.json
+     done
+}
+
+update_total_build_dependency_js_version(){
+    echo "====== UPDATE VERSION OF TOTAL BUILD to  alfresco-js-api version ${VERSION} ======"
+    DESTDIR="$DIR/../ng2-components/"
+    PACKAGETOCHANGE="alfresco-js-api"
+
+    echo "====== UPDATE DEPENDENCY VERSION of ${1} to ~${VERSION} in ${DESTDIR}======"
+    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"${VERSION}\"/g"  ${DESTDIR}/package.json
+    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"~${VERSION}\"/g"  ${DESTDIR}/package.json
+}
+
 update_component_js_version(){
    echo "====== UPDATE DEPENDENCY VERSION of alfresco-js-api in ${1} to ${VERSION} ======"
    DESTDIR="$DIR/../ng2-components/${1}"
@@ -163,6 +184,13 @@ update_demo_shell_dependency_version
 if $JS_API == true; then
     update_demo_shell_js_version
 fi
+
+
+echo "====== UPDATE TOTAL BUILD======"
+
+update_total_build_dependency_version
+update_total_build_dependency_js_version
+
 
 DESTDIR="$DIR/../demo-shell-ng2/"
 sed "${sedi[@]}" "s/\"version\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"version\": \"${VERSION}\"/g"  ${DIR}/../demo-shell-ng2/package.json
