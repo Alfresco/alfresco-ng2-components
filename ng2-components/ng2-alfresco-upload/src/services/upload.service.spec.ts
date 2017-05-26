@@ -62,6 +62,14 @@ describe('UploadService', () => {
         expect(service.getQueue().length).toEqual(2);
     });
 
+    it('should skip hidden macOS files', () => {
+        const file1 = new FileModel(new File([''], '.git'));
+        const file2 = new FileModel(new File([''], 'readme.md'));
+        const result = service.addToQueue(file1, file2);
+        expect(result.length).toBe(1);
+        expect(result[0]).toBe(file2);
+    });
+
     it('should make XHR done request after the file is added in the queue', (done) => {
         let emitter = new EventEmitter();
 

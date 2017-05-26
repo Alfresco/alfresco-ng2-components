@@ -53,11 +53,13 @@ export class UploadService {
      *  addToQueue(file1, file2, file3); // pass multiple files
      *  addToQueue(...[file1, file2, file3]); // pass an array of files
      */
-    addToQueue(...files: FileModel[]): void {
-        this.queue = this.queue.concat(files);
+    addToQueue(...files: FileModel[]): FileModel[] {
+        const allowedFiles = files.filter(f => !f.name.startsWith('.'));
+        this.queue = this.queue.concat(allowedFiles);
         if (this.filesUploadObserverProgressBar) {
             this.filesUploadObserverProgressBar.next(this.queue);
         }
+        return allowedFiles;
     }
 
     /**
