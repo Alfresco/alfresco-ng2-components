@@ -21,5 +21,8 @@
                 "CUSTOM": "Custom action"
             }
         }
+    },
+    "ANALYTICS_REPORT":{
+        "NO_REPORT_MESSAGE":"No report selected. Choose a report from the list"
     }
 }

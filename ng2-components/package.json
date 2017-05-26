@@ -65,7 +65,7 @@
     "@angular/router": "~4.0.0",
     "@angular/compiler-cli": "~4.0.0",
     "@angular/material": "2.0.0-beta.1",
-    "alfresco-js-api": "~1.4.0",
+    "alfresco-js-api": "~1.5.0",
     "core-js": "2.4.1",
     "dialog-polyfill": "0.4.7",
     "element.scrollintoviewifneeded-polyfill": "1.0.1",
