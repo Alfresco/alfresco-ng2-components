@@ -31,9 +31,7 @@ import { MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
 @Injectable()
 export class UploadService {
 
-    private formFields: Object = {};
     private queue: FileModel[] = [];
-    private versioning: boolean = false;
     private filesUploadObserverProgressBar: Observer<FileModel[]>;
     private totalCompletedObserver: Observer<number>;
 
@@ -45,18 +43,6 @@ export class UploadService {
                 private logService: LogService) {
         this.filesUpload$ = new Observable<FileModel[]>(observer => this.filesUploadObserverProgressBar = observer).share();
         this.totalCompleted$ = new Observable<number>(observer => this.totalCompletedObserver = observer).share();
-    }
-
-    /**
-     * Configure the service
-     *
-     * @param {Object} - options formFields to init the object
-     * @param {boolean} - versioning true to indicate that a major version should be created
-     *
-     */
-    setOptions(options: any, versioning: boolean): void {
-        this.formFields = options.formFields != null ? options.formFields : this.formFields;
-        this.versioning = versioning != null ? versioning : this.versioning;
     }
 
     /**
@@ -78,22 +64,23 @@ export class UploadService {
      * Pick all the files in the queue that are not been uploaded yet and upload it into the directory folder.
      */
     uploadFilesInTheQueue(rootId: string, directory: string, elementEmit: EventEmitter<any>): void {
-        let filesToUpload = this.queue.filter((uploadingFileModel) => {
-            return !uploadingFileModel.uploading && !uploadingFileModel.done && !uploadingFileModel.abort && !uploadingFileModel.error;
+        let filesToUpload = this.queue.filter((file) => {
+            return !file.uploading && !file.done && !file.abort && !file.error;
         });
-
-        let opts: any = {};
-        opts.renditions = 'doclib';
-
-        if (this.versioning) {
-            opts.overwrite = true;
-            opts.majorVersion = true;
-        } else {
-            opts.autoRename = true;
-        }
 
         filesToUpload.forEach((uploadingFileModel: FileModel) => {
             uploadingFileModel.setUploading();
+
+            const opts: any = {
+                renditions: 'doclib'
+            };
+
+            if (uploadingFileModel.options.newVersion === true) {
+                opts.overwrite = true;
+                opts.majorVersion = true;
+            } else {
+                opts.autoRename = true;
+            }
 
             let promiseUpload = this.apiService.getInstance().upload.uploadFile(uploadingFileModel.file, directory, rootId, null, opts)
                 .on('progress', (progress: any) => {

@@ -26,16 +26,6 @@ declare let jasmine: any;
 describe('UploadService', () => {
     let service: UploadService;
 
-    let options = {
-        host: 'fakehost',
-        url: '/some/cool/url',
-        baseUrlPath: 'fakebasepath',
-        formFields: {
-            siteid: 'fakeSite',
-            containerid: 'fakeFolder'
-        }
-    };
-
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
@@ -54,19 +44,16 @@ describe('UploadService', () => {
     });
 
     it('should return an empty queue if no elements are added', () => {
-        service.setOptions(options, false);
         expect(service.getQueue().length).toEqual(0);
     });
 
     it('should add an element in the queue and returns it', () => {
-        service.setOptions(options, false);
         let filesFake = new FileModel(<File>{name: 'fake-name', size: 10});
         service.addToQueue(filesFake);
         expect(service.getQueue().length).toEqual(1);
     });
 
     it('should add two elements in the queue and returns them', () => {
-        service.setOptions(options, false);
         let filesFake = [
             new FileModel(<File>{name: 'fake-name', size: 10}),
             new FileModel(<File>{name: 'fake-name2', size: 20})
@@ -82,7 +69,6 @@ describe('UploadService', () => {
             expect(e.value).toBe('File uploaded');
             done();
         });
-        service.setOptions(options, false);
         let fileFake = new FileModel(<File>{name: 'fake-name', size: 10});
         service.addToQueue(fileFake);
         service.uploadFilesInTheQueue('-root-', 'fake-dir', emitter);
@@ -105,7 +91,6 @@ describe('UploadService', () => {
             expect(e.value).toBe('Error file uploaded');
             done();
         });
-        service.setOptions(options, false);
         let fileFake = new FileModel(<File>{name: 'fake-name', size: 10});
         service.addToQueue(fileFake);
         service.uploadFilesInTheQueue('-root-', '', emitter);
@@ -126,7 +111,6 @@ describe('UploadService', () => {
             expect(e.value).toEqual('File aborted');
             done();
         });
-        service.setOptions(options, false);
         let fileFake = new FileModel(<File>{name: 'fake-name', size: 10});
         service.addToQueue(fileFake);
         service.uploadFilesInTheQueue('-root-', '', emitter);
@@ -142,7 +126,6 @@ describe('UploadService', () => {
             expect(e.value).toBe('Error file uploaded');
             done();
         });
-        service.setOptions(options, false);
         let fileFake = new FileModel(<File>{name: 'fake-name', size: 10});
         service.addToQueue(fileFake);
         service.uploadFilesInTheQueue('-root-', '', emitter);
@@ -152,7 +135,6 @@ describe('UploadService', () => {
     });
 
     it('should make XHR progress request after the onprogress is called', (done) => {
-        service.setOptions(options, false);
         let fakeProgress = {
             loaded: 500,
             total: 1234,
@@ -185,7 +167,6 @@ describe('UploadService', () => {
             resolve(fakeRest);
         });
         spyOn(service, 'callApiCreateFolder').and.returnValue(fakePromise);
-        service.setOptions(options, false);
         let defaultPath = '';
         let folderName = 'fake-folder';
         service.createFolder(defaultPath, folderName).subscribe(res => {
@@ -208,7 +189,6 @@ describe('UploadService', () => {
             reject(fakeRest);
         });
         spyOn(service, 'callApiCreateFolder').and.returnValue(fakePromise);
-        service.setOptions(options, false);
         let defaultPath = '';
         let folderName = 'folder-duplicate-fake';
         service.createFolder(defaultPath, folderName).subscribe(
@@ -224,9 +204,7 @@ describe('UploadService', () => {
     it('If versioning is true autoRename should not be present and majorVersion should be a param', () => {
         let emitter = new EventEmitter();
 
-        let enableVersioning = true;
-        service.setOptions(options, enableVersioning);
-        let filesFake = new FileModel(<File>{name: 'fake-name', size: 10});
+        const filesFake = new FileModel(<File>{name: 'fake-name', size: 10}, { newVersion: true });
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue('-root-', '', emitter);
 
@@ -241,7 +219,6 @@ describe('UploadService', () => {
             expect(e.value).toBe('File uploaded');
             done();
         });
-        service.setOptions(options, false);
         let filesFake = new FileModel(<File>{name: 'fake-name', size: 10});
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue('123', 'fake-dir', emitter);

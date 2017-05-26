@@ -127,8 +127,6 @@ export class UploadButtonComponent implements OnInit, OnChanges {
         if (rootFolderId && rootFolderId.currentValue) {
             this.checkPermission();
         }
-        let formFields = this.createFormFields();
-        this.uploadService.setOptions(formFields, this.versioning);
     }
 
     isButtonDisabled(): boolean {
@@ -206,7 +204,7 @@ export class UploadButtonComponent implements OnInit, OnChanges {
      */
     uploadFiles(path: string, files: File[]): void {
         if (files.length) {
-            const latestFilesAdded = files.map(f => new FileModel(f));
+            const latestFilesAdded = files.map(f => new FileModel(f, { newVersion: this.versioning }));
             this.uploadService.addToQueue(...latestFilesAdded);
             this.uploadService.uploadFilesInTheQueue(this.rootFolderId, path, this.onSuccess);
             if (this.showNotificationBar) {
@@ -312,14 +310,6 @@ export class UploadButtonComponent implements OnInit, OnChanges {
             message = message.replace(new RegExp('\\{' + i + '\\}', 'gm'), keys[i]);
         }
         return message;
-    }
-
-    private createFormFields(): any {
-        return {
-            formFields: {
-                overwrite: true
-            }
-        };
     }
 
     checkPermission() {

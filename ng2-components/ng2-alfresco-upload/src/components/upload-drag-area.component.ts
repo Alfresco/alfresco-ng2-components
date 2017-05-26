@@ -66,11 +66,6 @@ export class UploadDragAreaComponent {
         }
     }
 
-    ngOnChanges(changes) {
-        let formFields = this.createFormFields();
-        this.uploadService.setOptions(formFields, this.versioning);
-    }
-
     /**
      * Handles 'upload-files' events raised by child components.
      * @param e DOM event
@@ -81,7 +76,7 @@ export class UploadDragAreaComponent {
 
         let files: File[] = e.detail.files;
         if (files && files.length > 0) {
-            const fileModels = files.map(f => new FileModel(f));
+            const fileModels = files.map(f => new FileModel(f, { newVersion: this.versioning }));
             if (e.detail.data.obj.entry.isFolder) {
                 let id = e.detail.data.obj.entry.id;
                 this.onFilesDropped(fileModels, id, '/');
@@ -113,7 +108,7 @@ export class UploadDragAreaComponent {
      */
     onFilesEntityDropped(item: any): void {
         item.file((file: File) => {
-            const fileModel = new FileModel(file);
+            const fileModel = new FileModel(file, { newVersion: this.versioning });
             this.uploadService.addToQueue(fileModel);
             let path = item.fullPath.replace(item.name, '');
             let filePath = this.currentFolderPath + path;
@@ -229,13 +224,5 @@ export class UploadDragAreaComponent {
             }
         }
         return message;
-    }
-
-    private createFormFields(): any {
-        return {
-            formFields: {
-                overwrite: true
-            }
-        };
     }
 }
