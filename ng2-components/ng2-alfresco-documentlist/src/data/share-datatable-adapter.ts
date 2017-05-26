@@ -234,6 +234,7 @@ export class ShareDataRow implements DataRow {
 
     cache: { [key: string]: any } = {};
     isSelected: boolean = false;
+    readonly isDropTarget;
 
     get node(): NodeMinimalEntry {
         return this.obj;
@@ -244,9 +245,7 @@ export class ShareDataRow implements DataRow {
             throw new Error(ShareDataRow.ERR_OBJECT_NOT_FOUND);
         }
 
-        if (obj.entry) {
-            this.cache['allowDrop'] = obj.entry.isFolder;
-        }
+        this.isDropTarget = obj.entry && obj.entry.isFolder;
     }
 
     cacheValue(key: string, value: any): any {
