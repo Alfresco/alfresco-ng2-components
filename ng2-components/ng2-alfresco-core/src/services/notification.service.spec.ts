@@ -14,11 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Component } from '@angular/core';
 import { NotificationService } from './notification.service';
-import { MdSnackBarModule } from '@angular/material';
+import { MdSnackBarModule, MdSnackBar, OverlayModule, OVERLAY_PROVIDERS, LiveAnnouncer } from '@angular/material';
 
 describe('NotificationService', () => {
     let fixture: ComponentFixture<ComponentThatProvidesNotificationService>;
@@ -26,12 +27,16 @@ describe('NotificationService', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                BrowserAnimationsModule,
-                MdSnackBarModule.forRoot()
+                OverlayModule,
+                MdSnackBarModule,
+                NoopAnimationsModule
             ],
             declarations: [ComponentThatProvidesNotificationService],
             providers: [
-                NotificationService
+                NotificationService,
+                MdSnackBar,
+                OVERLAY_PROVIDERS,
+                LiveAnnouncer
             ]
         });
 
