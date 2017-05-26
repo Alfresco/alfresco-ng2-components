@@ -307,6 +307,16 @@ This component should be used in combination with upload button or drag & drop a
 <file-uploading-dialog></file-uploading-dialog>
 ```
 
+### UploadService service
+
+Provides access to various APIs related to file upload features.
+
+#### Events
+
+| Name | Type | Description |
+| --- | --- | --- |
+| folderCreated | FolderCreatedEvent | Raised when dropped folder gets created |
+
 ## Build from sources
 
 Alternatively you can build component from sources with the following commands:
