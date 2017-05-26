@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { DebugElement, SimpleChange } from '@angular/core';
-import { MdTooltipModule, MdButtonModule } from '@angular/material';
+import { MdTooltipModule, MdButtonModule, OVERLAY_PROVIDERS } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
 import * as moment from 'moment';
 import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
@@ -44,7 +44,7 @@ describe('AnalyticsReportParametersComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                MdTooltipModule.forRoot(),
+                MdTooltipModule,
                 MdButtonModule
             ],
             declarations: [
@@ -52,7 +52,8 @@ describe('AnalyticsReportParametersComponent', () => {
                 ...WIDGET_DIRECTIVES
             ],
             providers: [
-                AnalyticsService
+                AnalyticsService,
+                OVERLAY_PROVIDERS
             ]
         }).compileComponents();
 
