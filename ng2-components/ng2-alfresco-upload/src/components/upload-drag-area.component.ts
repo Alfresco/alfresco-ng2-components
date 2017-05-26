@@ -79,13 +79,14 @@ export class UploadDragAreaComponent {
         e.stopPropagation();
         e.preventDefault();
 
-        let files = e.detail.files;
+        let files: File[] = e.detail.files;
         if (files && files.length > 0) {
+            const fileModels = files.map(f => new FileModel(f));
             if (e.detail.data.obj.entry.isFolder) {
                 let id = e.detail.data.obj.entry.id;
-                this.onFilesDropped(files, id, '/');
+                this.onFilesDropped(fileModels, id, '/');
             } else {
-                this.onFilesDropped(files);
+                this.onFilesDropped(fileModels);
             }
         }
     }
@@ -95,9 +96,9 @@ export class UploadDragAreaComponent {
      *
      * @param {File[]} files - files dropped in the drag area.
      */
-    onFilesDropped(files: File[], rootId?: string, directory?: string): void {
+    onFilesDropped(files: FileModel[], rootId?: string, directory?: string): void {
         if (files.length) {
-            this.uploadService.addToQueue(files);
+            this.uploadService.addToQueue(...files);
             this.uploadService.uploadFilesInTheQueue(rootId || this.rootFolderId, directory || this.currentFolderPath, this.onSuccess);
             let latestFilesAdded = this.uploadService.getQueue();
             if (this.showNotificationBar) {
@@ -111,8 +112,9 @@ export class UploadDragAreaComponent {
      * @param item - FileEntity
      */
     onFilesEntityDropped(item: any): void {
-        item.file((file: any) => {
-            this.uploadService.addToQueue([file]);
+        item.file((file: File) => {
+            const fileModel = new FileModel(file);
+            this.uploadService.addToQueue(fileModel);
             let path = item.fullPath.replace(item.name, '');
             let filePath = this.currentFolderPath + path;
             this.uploadService.uploadFilesInTheQueue(this.rootFolderId, filePath, this.onSuccess);

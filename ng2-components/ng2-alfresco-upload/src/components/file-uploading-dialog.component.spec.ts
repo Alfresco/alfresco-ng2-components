@@ -50,10 +50,7 @@ describe('FileUploadingDialogComponent', () => {
     beforeEach(() => {
         window['componentHandler'] = null;
 
-        let fileFake = {
-            id: 'fake-id',
-            name: 'fake-name'
-        };
+        const fileFake = new File([''], 'fake-name');
         file = new FileModel(fileFake);
 
         fixture = TestBed.createComponent(FileUploadingDialogComponent);
@@ -80,7 +77,7 @@ describe('FileUploadingDialogComponent', () => {
     });
 
     it('should render dialog box with css class show when an element is added to Observer', () => {
-        uploadService.addToQueue([<File> { name: 'file' }]);
+        uploadService.addToQueue(new FileModel(<File> { name: 'file' }));
         component.filesUploadingList = [file];
 
         fixture.detectChanges();

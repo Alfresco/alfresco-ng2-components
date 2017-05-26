@@ -19,6 +19,7 @@ import { EventEmitter } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
 import { UploadService } from './upload.service';
+import { FileModel } from '../models/file.model';
 
 declare let jasmine: any;
 
@@ -59,7 +60,7 @@ describe('UploadService', () => {
 
     it('should add an element in the queue and returns it', () => {
         service.setOptions(options, false);
-        let filesFake = [<File>{name: 'fake-name', size: 10}];
+        let filesFake = new FileModel(<File>{name: 'fake-name', size: 10});
         service.addToQueue(filesFake);
         expect(service.getQueue().length).toEqual(1);
     });
@@ -67,10 +68,10 @@ describe('UploadService', () => {
     it('should add two elements in the queue and returns them', () => {
         service.setOptions(options, false);
         let filesFake = [
-            <File>{name: 'fake-name', size: 10},
-            <File>{name: 'fake-name2', size: 20}
+            new FileModel(<File>{name: 'fake-name', size: 10}),
+            new FileModel(<File>{name: 'fake-name2', size: 20})
         ];
-        service.addToQueue(filesFake);
+        service.addToQueue(...filesFake);
         expect(service.getQueue().length).toEqual(2);
     });
 
@@ -82,8 +83,8 @@ describe('UploadService', () => {
             done();
         });
         service.setOptions(options, false);
-        let filesFake = [<File>{name: 'fake-name', size: 10}];
-        service.addToQueue(filesFake);
+        let fileFake = new FileModel(<File>{name: 'fake-name', size: 10});
+        service.addToQueue(fileFake);
         service.uploadFilesInTheQueue('-root-', 'fake-dir', emitter);
 
         let request = jasmine.Ajax.requests.mostRecent();
@@ -105,8 +106,8 @@ describe('UploadService', () => {
             done();
         });
         service.setOptions(options, false);
-        let filesFake = [<File>{name: 'fake-name', size: 10}];
-        service.addToQueue(filesFake);
+        let fileFake = new FileModel(<File>{name: 'fake-name', size: 10});
+        service.addToQueue(fileFake);
         service.uploadFilesInTheQueue('-root-', '', emitter);
         expect(jasmine.Ajax.requests.mostRecent().url)
             .toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true');
@@ -126,8 +127,8 @@ describe('UploadService', () => {
             done();
         });
         service.setOptions(options, false);
-        let filesFake = [<File>{name: 'fake-name', size: 10}];
-        service.addToQueue(filesFake);
+        let fileFake = new FileModel(<File>{name: 'fake-name', size: 10});
+        service.addToQueue(fileFake);
         service.uploadFilesInTheQueue('-root-', '', emitter);
 
         let file = service.getQueue();
@@ -142,8 +143,8 @@ describe('UploadService', () => {
             done();
         });
         service.setOptions(options, false);
-        let filesFake = [<File>{name: 'fake-name', size: 10}];
-        service.addToQueue(filesFake);
+        let fileFake = new FileModel(<File>{name: 'fake-name', size: 10});
+        service.addToQueue(fileFake);
         service.uploadFilesInTheQueue('-root-', '', emitter);
 
         let file = service.getQueue();
@@ -157,7 +158,7 @@ describe('UploadService', () => {
             total: 1234,
             percent: 44
         };
-        let filesFake = [<File>{name: 'fake-name', size: 10}];
+        let filesFake = new FileModel(<File>{name: 'fake-name', size: 10});
         service.addToQueue(filesFake);
         service.filesUpload$.subscribe((file) => {
             expect(file).toBeDefined();
@@ -225,7 +226,7 @@ describe('UploadService', () => {
 
         let enableVersioning = true;
         service.setOptions(options, enableVersioning);
-        let filesFake = [<File>{name: 'fake-name', size: 10}];
+        let filesFake = new FileModel(<File>{name: 'fake-name', size: 10});
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue('-root-', '', emitter);
 
@@ -241,7 +242,7 @@ describe('UploadService', () => {
             done();
         });
         service.setOptions(options, false);
-        let filesFake = [<File>{name: 'fake-name', size: 10}];
+        let filesFake = new FileModel(<File>{name: 'fake-name', size: 10});
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue('123', 'fake-dir', emitter);
 

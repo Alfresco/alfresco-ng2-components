@@ -34,10 +34,10 @@ export class FileModel {
     error: boolean = false;
     abort: boolean = false;
     uploading: boolean = false;
-    file: any;
+    file: File;
     promiseUpload: any;
 
-    constructor(file: any) {
+    constructor(file: File) {
         this.file = file;
         this.id = this._generateId();
         this.name = file.name;

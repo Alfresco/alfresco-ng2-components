@@ -62,22 +62,16 @@ export class UploadService {
     /**
      * Add files to the uploading queue to be uploaded.
      *
-     * @param {File[]} - files to add to the upload queue.
-     *
-     * return {FileModel[]} - return the file added to the queue in this call.
+     * Examples:
+     *  addToQueue(file); // pass one file
+     *  addToQueue(file1, file2, file3); // pass multiple files
+     *  addToQueue(...[file1, file2, file3]); // pass an array of files
      */
-    addToQueue(files: File[]): FileModel[] {
-        const result: FileModel[] = [];
-
-        for (let file of files) {
-            let uploadingFileModel = new FileModel(file);
-            result.push(uploadingFileModel);
-            this.queue.push(uploadingFileModel);
-            if (this.filesUploadObserverProgressBar) {
-                this.filesUploadObserverProgressBar.next(this.queue);
-            }
+    addToQueue(...files: FileModel[]): void {
+        this.queue = this.queue.concat(files);
+        if (this.filesUploadObserverProgressBar) {
+            this.filesUploadObserverProgressBar.next(this.queue);
         }
-        return result;
     }
 
     /**
