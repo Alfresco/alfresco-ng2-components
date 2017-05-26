@@ -16,6 +16,7 @@
  */
 
 import { NgModule, ModuleWithProviders } from '@angular/core';
+import { MdSnackBarModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule, Http } from '@angular/http';
 import { CommonModule } from '@angular/common';
@@ -91,7 +92,8 @@ export function createTranslateLoader(http: Http, logService: LogService) {
             provide: TranslateLoader,
             useFactory: (createTranslateLoader),
             deps: [Http, LogService]
-        })
+        }),
+        MdSnackBarModule
     ],
     declarations: [
         ...MATERIAL_DESIGN_DIRECTIVES,
@@ -116,7 +118,8 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         ...COLLAPSABLE_DIRECTIVES,
         UploadDirective,
         DataColumnComponent,
-        DataColumnListComponent
+        DataColumnListComponent,
+        MdSnackBarModule
     ]
 })
 export class CoreModule {

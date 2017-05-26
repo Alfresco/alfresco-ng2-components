@@ -16,7 +16,7 @@
  */
 
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { MdCheckboxModule, MdMenuModule } from '@angular/material';
+import { MdCheckboxModule, MdMenuModule, MdIconModule, MdButtonModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
 
 export * from './src/data/index';
@@ -41,7 +41,9 @@ export const ALFRESCO_DATATABLE_DIRECTIVES: [any] = [
     imports: [
         CoreModule,
         MdCheckboxModule,
-        MdMenuModule
+        MdMenuModule,
+        MdIconModule,
+        MdButtonModule
     ],
     declarations: [
         ...ALFRESCO_DATATABLE_DIRECTIVES
@@ -49,7 +51,9 @@ export const ALFRESCO_DATATABLE_DIRECTIVES: [any] = [
     exports: [
         ...ALFRESCO_DATATABLE_DIRECTIVES,
         MdCheckboxModule,
-        MdMenuModule
+        MdMenuModule,
+        MdIconModule,
+        MdButtonModule
     ]
 })
 export class DataTableModule {

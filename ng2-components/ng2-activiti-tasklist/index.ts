@@ -16,12 +16,12 @@
  */
 
 import { NgModule, ModuleWithProviders } from '@angular/core';
+import { MdIconModule, MdButtonModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { ActivitiFormModule } from 'ng2-activiti-form';
 import { ActivitiPeopleService } from './src/services/activiti-people.service';
 import { ActivitiTaskListService } from './src/services/activiti-tasklist.service';
-import { MaterialModule } from '@angular/material';
 
 import {
     ActivitiApps,
@@ -67,7 +67,8 @@ export const ACTIVITI_TASKLIST_PROVIDERS: any[] = [
         CoreModule,
         DataTableModule,
         ActivitiFormModule,
-        MaterialModule
+        MdIconModule,
+        MdButtonModule
     ],
     declarations: [
         ...ACTIVITI_TASKLIST_DIRECTIVES
@@ -76,7 +77,9 @@ export const ACTIVITI_TASKLIST_PROVIDERS: any[] = [
         ...ACTIVITI_TASKLIST_PROVIDERS
     ],
     exports: [
-        ...ACTIVITI_TASKLIST_DIRECTIVES
+        ...ACTIVITI_TASKLIST_DIRECTIVES,
+        MdIconModule,
+        MdButtonModule
     ]
 })
 export class ActivitiTaskListModule {
