@@ -41,6 +41,21 @@ module.exports = webpackMerge(commonConfig, {
         modules: [helpers.root('node_modules')]
     },
 
+    module: {
+        rules: [
+            {
+                test: /\.ts$/,
+                include: [helpers.root('app'), helpers.root('../ng2-components')],
+                use: ['ts-loader?' + JSON.stringify({
+                    "compilerOptions": {
+                        "paths": {}
+                    }
+                }), 'angular2-template-loader'],
+                exclude: [ /node_modules/, /public/, /resources/, /dist/]
+            }
+        ]
+    },
+
     plugins: [
         new CopyWebpackPlugin([
             ... alfrescoLibs.map(lib => {
