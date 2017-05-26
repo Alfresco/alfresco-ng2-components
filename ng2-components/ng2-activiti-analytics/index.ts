@@ -16,7 +16,7 @@
  */
 
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { MdTooltipModule, MdButtonModule } from '@angular/material';
+import { MdTooltipModule, MdButtonModule, MdIconModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
 import { DiagramsModule } from 'ng2-activiti-diagrams';
 
@@ -56,7 +56,8 @@ export const ANALYTICS_PROVIDERS: any[] = [
         ChartsModule,
         DiagramsModule,
         MdTooltipModule,
-        MdButtonModule
+        MdButtonModule,
+        MdIconModule
     ],
     declarations: [
         ...ANALYTICS_DIRECTIVES
@@ -67,7 +68,8 @@ export const ANALYTICS_PROVIDERS: any[] = [
     exports: [
         ...ANALYTICS_DIRECTIVES,
         MdTooltipModule,
-        MdButtonModule
+        MdButtonModule,
+        MdIconModule
     ]
 })
 export class AnalyticsModule {

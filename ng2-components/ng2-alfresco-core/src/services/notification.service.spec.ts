@@ -43,33 +43,29 @@ describe('NotificationService', () => {
         fixture.detectChanges();
     });
 
-    describe('openSnackMessage', () => {
 
-        it('should open a message notification bar', (done) => {
-            let promise = fixture.componentInstance.sendMessage();
-            promise.afterDismissed().subscribe(() => {
-                done();
-            });
-
-            fixture.detectChanges();
-
-            expect(document.querySelector('snack-bar-container')).not.toBeNull();
+    it('should open a message notification bar', (done) => {
+        let promise = fixture.componentInstance.sendMessage();
+        promise.afterDismissed().subscribe(() => {
+            done();
         });
+
+        fixture.detectChanges();
+
+        expect(document.querySelector('snack-bar-container')).not.toBeNull();
     });
 
-    describe('openSnackMessageAction', () => {
 
-        it('should open a message notification bar with action', (done) => {
-            let promise = fixture.componentInstance.sendMessageAction();
-            promise.afterDismissed().subscribe(() => {
-                done();
-            });
-
-            fixture.detectChanges();
-
-            expect(document.querySelector('snack-bar-container')).not.toBeNull();
-            expect(document.querySelector('.md-simple-snackbar-action')).not.toBeNull();
+    it('should open a message notification bar with action', (done) => {
+        let promise = fixture.componentInstance.sendMessageAction();
+        promise.afterDismissed().subscribe(() => {
+            done();
         });
+
+        fixture.detectChanges();
+
+        expect(document.querySelector('snack-bar-container')).not.toBeNull();
+        expect(document.querySelector('.md-simple-snackbar-action')).not.toBeNull();
     });
 
 });

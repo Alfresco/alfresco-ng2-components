@@ -17,6 +17,7 @@
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { DebugElement, SimpleChange } from '@angular/core';
+import { MdTooltipModule, MdButtonModule } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
 import * as moment from 'moment';
 import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
@@ -42,6 +43,8 @@ describe('AnalyticsReportParametersComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+                MdTooltipModule.forRoot(),
+                MdButtonModule.forRoot(),
                 CoreModule.forRoot()
             ],
             declarations: [
