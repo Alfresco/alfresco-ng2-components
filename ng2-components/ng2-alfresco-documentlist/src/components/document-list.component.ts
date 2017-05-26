@@ -359,7 +359,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             this.skipCount = 0;
             this.loadFolderNodesByFolderNodeId(node.id, this.pageSize, this.skipCount).catch(err => this.error.emit(err));
         })
-        .catch(err => this.error.emit(err));
+            .catch(err => this.error.emit(err));
     }
 
     loadFolderNodesByFolderNodeId(id: string, maxItems: number, skipCount: number): Promise<any> {
@@ -373,9 +373,13 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                     })
                     .subscribe(
                         val => {
-                            this.data.loadPage(<NodePaging>val);
-                            this.pagination = val.list.pagination;
-                            resolve(true);
+                            if (this.checkPreviousPage(val, skipCount)) {
+                                this.loadFolderNodesByFolderNodeId(id, maxItems, skipCount - maxItems);
+                            } else {
+                                this.data.loadPage(<NodePaging>val);
+                                this.pagination = val.list.pagination;
+                                resolve(true);
+                            }
                         },
                         error => {
                             reject(error);
@@ -385,6 +389,18 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             }
         });
 
+    }
+
+    private checkPreviousPage(node, skipCount) {
+        let isCheckNeeded: boolean = false;
+        if (!this.hasNodeEntries(node) && skipCount > 0 && this.isPaginationEnabled()) {
+            isCheckNeeded = true;
+        }
+        return isCheckNeeded;
+    }
+
+    private hasNodeEntries(node) {
+        return node && node.list && node.list.entries && node.list.entries.length > 0;
     }
 
     /**
@@ -547,7 +563,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     private getDefaultSorting(): DataSorting {
         let defaultSorting: DataSorting;
         if (this.sorting) {
-            const [ key, direction ] = this.sorting;
+            const [key, direction] = this.sorting;
             defaultSorting = new DataSorting(key, direction);
         }
         return defaultSorting;

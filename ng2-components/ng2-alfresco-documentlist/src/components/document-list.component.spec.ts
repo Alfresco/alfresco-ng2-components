@@ -715,4 +715,11 @@ describe('DocumentList', () => {
         documentList.ngOnChanges({folderNode: new SimpleChange(null, documentList.currentFolderId, true)});
         expect(documentList.loadFolderNodesByFolderNodeId).toHaveBeenCalled();
     });
+
+    fit('should try to load previous page if there are no other elements in multi page table', () => {
+        documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
+        spyOn(documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.resolve());
+        documentList.ngOnChanges({folderNode: new SimpleChange(null, documentList.currentFolderId, true)});
+        expect(documentList.loadFolderNodesByFolderNodeId).toHaveBeenCalled();
+    });
 });
