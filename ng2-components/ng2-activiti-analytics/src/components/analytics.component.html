@@ -3,7 +3,7 @@
                                  [hideComponent]="hideParameters"
                                  (onFormValueChanged)="reset()"
                                  (onSuccess)="showReport($event)"
-                                 (saveReportSuccess)="onSaveReportSuccess()"
+                                 (saveReportSuccess)="onSaveReportSuccess($event)"
                                  (deleteReportSuccess)="onDeleteReportSuccess()"
                                  (onEdit)="onEditReport($event)">
     </analytics-report-parameters>

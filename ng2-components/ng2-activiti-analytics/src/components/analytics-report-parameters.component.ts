@@ -372,7 +372,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
 
     doSave(paramQuery: ReportQuery) {
         this.analyticsService.saveReport(this.reportId, paramQuery).subscribe(() => {
-            this.saveReportSuccess.emit();
+            this.saveReportSuccess.emit(this.reportId);
         });
     }
 

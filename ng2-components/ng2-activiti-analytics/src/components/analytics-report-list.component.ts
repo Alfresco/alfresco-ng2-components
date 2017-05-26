@@ -26,7 +26,7 @@ import { ReportParametersModel } from '../models/report.model';
     templateUrl: './analytics-report-list.component.html',
     styleUrls: ['./analytics-report-list.component.css']
 })
-export class AnalyticsReportListComponent implements  OnInit {
+export class AnalyticsReportListComponent implements OnInit {
 
     public static LAYOUT_LIST: string = 'LIST';
     public static LAYOUT_GRID: string = 'GRID';
@@ -76,15 +76,15 @@ export class AnalyticsReportListComponent implements  OnInit {
     /**
      * Reload the component
      */
-    reload() {
+    reload(reportId?) {
         this.reset();
-        this.getReportList(this.appId);
+        this.getReportList(this.appId, reportId);
     }
 
     /**
      * Get the report list
      */
-    getReportList(appId: string) {
+    getReportList(appId: string, reportId?: string) {
         this.analyticsService.getReportList(appId).subscribe(
             (res: ReportParametersModel[]) => {
                 if (res && res.length === 0) {
@@ -93,6 +93,10 @@ export class AnalyticsReportListComponent implements  OnInit {
                     res.forEach((report) => {
                         this.reportObserver.next(report);
                     });
+                    if (reportId) {
+                        console.log('SELEZIONO IL REPORT!');
+                        this.selectReportByReportId(reportId);
+                    }
                     if (this.selectFirst) {
                         this.selectFirstReport();
                     }
@@ -147,6 +151,14 @@ export class AnalyticsReportListComponent implements  OnInit {
     public selectReport(report: any) {
         this.currentReport = report;
         this.reportClick.emit(report);
+    }
+
+    public selectReportByReportId(reportId) {
+        let reportFound = this.reports.find(report => report.id === reportId);
+        if (reportFound) {
+            this.currentReport = reportFound;
+            this.reportClick.emit(reportFound);
+        }
     }
 
     selectFirstReport() {

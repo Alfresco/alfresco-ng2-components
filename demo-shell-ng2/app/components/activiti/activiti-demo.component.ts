@@ -115,8 +115,8 @@ export class ActivitiDemoComponent implements AfterViewInit {
         this.dataProcesses = new ObjectDataTableAdapter(
             [],
             [
-                {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
-                {type: 'text', key: 'started', title: 'Started', cssClass: 'hidden', sortable: true}
+                { type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true },
+                { type: 'text', key: 'started', title: 'Started', cssClass: 'hidden', sortable: true }
             ]
         );
         this.dataProcesses.setSorting(new DataSorting('started', 'desc'));
@@ -209,13 +209,13 @@ export class ActivitiDemoComponent implements AfterViewInit {
         this.analyticsreportlist.reload();
     }
 
-    onReportSaved() {
-        this.analyticsreportlist.reload();
+    onReportSaved(reportId) {
+        this.analyticsreportlist.reload(reportId);
     }
 
     onReportDeleted() {
-        this.selectFirstReport = true;
         this.analyticsreportlist.reload();
+        this.analyticsreportlist.selectReport(null);
     }
 
     navigateStartProcess() {
