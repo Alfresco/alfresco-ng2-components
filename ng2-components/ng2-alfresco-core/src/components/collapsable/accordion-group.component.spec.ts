@@ -75,17 +75,6 @@ describe('AccordionGroupComponent', () => {
         });
     });
 
-    it('should hide expand icon by default', () => {
-        component.heading = 'Fake Header';
-        component.headingIcon = 'fake-icon';
-        component.contentWrapper.nativeElement.innerHTML = '';
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            let headerIcon = element.querySelector('#accordion-button');
-            expect(headerIcon).toBeNull();
-        });
-    });
-
     it('should show expand icon by default', () => {
         component.heading = 'Fake Header';
         component.headingIcon = 'fake-icon';
@@ -94,6 +83,18 @@ describe('AccordionGroupComponent', () => {
             fixture.detectChanges();
             let headerIcon = element.querySelector('#accordion-button');
             expect(headerIcon).toBeDefined();
+        });
+    });
+
+    it('should hide expand icon', () => {
+        component.heading = 'Fake Header';
+        component.headingIcon = 'fake-icon';
+        component.hasAccordionIcon = false;
+        component.contentWrapper.nativeElement.innerHTML = '<a>Test</a>';
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            let headerIcon = element.querySelector('#accordion-button');
+            expect(headerIcon).toBeNull();
         });
     });
 
