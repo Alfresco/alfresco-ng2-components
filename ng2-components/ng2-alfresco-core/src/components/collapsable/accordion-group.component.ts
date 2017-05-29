@@ -88,5 +88,4 @@ export class AccordionGroupComponent implements OnDestroy {
     onHeadingClick() {
         this.headingClick.emit(this.heading);
     }
-    
 }
