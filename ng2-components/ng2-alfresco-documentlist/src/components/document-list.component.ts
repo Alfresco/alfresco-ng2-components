@@ -392,7 +392,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     }
 
-    private checkIfTheCurrentPageIsEmpty(node, skipCount) {
+    private checkIfTheCurrentPageIsEmpty(node, skipCount): boolean {
         let isCheckNeeded: boolean = false;
         if (this.isCurrentPageEmpty(node, skipCount)) {
             isCheckNeeded = true;
@@ -400,15 +400,15 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         return isCheckNeeded;
     }
 
-    private isCurrentPageEmpty(node, skipCount) {
+    private isCurrentPageEmpty(node, skipCount): boolean {
         return !this.hasNodeEntries(node) && this.hasPages(skipCount);
     }
 
-    private hasPages(skipCount) {
+    private hasPages(skipCount): boolean {
         return skipCount > 0 && this.isPaginationEnabled();
     }
 
-    private hasNodeEntries(node) {
+    private hasNodeEntries(node): boolean {
         return node && node.list && node.list.entries && node.list.entries.length > 0;
     }
 
