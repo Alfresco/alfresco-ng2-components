@@ -18,7 +18,7 @@
 import { NgZone, SimpleChange, TemplateRef } from '@angular/core';
 import { DataTableComponent, DataColumn, DataRowEvent } from 'ng2-alfresco-datatable';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { DocumentListComponent } from './document-list.component';
 import { DocumentListService } from './../services/document-list.service';
 import { ContentActionModel } from '../models/content-action.model';
@@ -27,6 +27,7 @@ import { NodeMinimalEntry, NodeMinimal, NodePaging } from '../models/document-li
 import { ShareDataRow, RowFilter, ImageResolver } from './../data/share-datatable-adapter';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { DocumentMenuActionComponent } from './document-menu-action.component';
+import { Observable } from 'rxjs/Rx';
 
 declare let jasmine: any;
 
@@ -121,11 +122,17 @@ describe('DocumentList', () => {
         };
 
         componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered'
+            'upgradeAllRegistered', 'upgradeElement'
         ]);
         window['componentHandler'] = componentHandler;
 
         fixture = TestBed.createComponent(DocumentListComponent);
+
+        let translateService = TestBed.get(AlfrescoTranslationService);
+        spyOn(translateService, 'addTranslationFolder').and.stub();
+        spyOn(translateService, 'get').and.callFake((key) => {
+            return Observable.of(key);
+        });
 
         element = fixture.nativeElement;
         documentList = fixture.componentInstance;
@@ -782,13 +789,23 @@ describe('DocumentList', () => {
         expect(documentList.loadFolderNodesByFolderNodeId).toHaveBeenCalled();
     });
 
-    fit('should try to load previous page if there are no other elements in multi page table', () => {
+    it('should try to load previous page if there are no other elements in multi page table', async(() => {
         documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
+        documentList.folderNode = new NodeMinimal();
+        documentList.folderNode.id = '1d26e465-dea3-42f3-b415-faa8364b9692';
+        documentList.skipCount = 5;
+        documentList.pageSize = 5;
+        spyOn(documentList, 'isPaginationEnabled').and.returnValue(true);
+        // let documentService = TestBed.get(DocumentListService);
+        // spyOn(documentService, 'getFolder').and.returnValues(Promise.resolve(fakeNodeAnswerWithNOEntries), Promise.resolve(fakeNodeAnswerWithEntries));
         documentList.reload();
+
+        fixture.detectChanges();
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            let rowElement = element.querySelector('data-automation-id=b_txt_file.rtf');
+            let rowElement = element.querySelector('[data-automation-id="b_txt_file.rtf"]');
+            expect(rowElement).toBeDefined();
             expect(rowElement).not.toBeNull();
         });
 
@@ -803,5 +820,5 @@ describe('DocumentList', () => {
             contentType: 'application/json',
             responseText: JSON.stringify(fakeNodeAnswerWithEntries)
         });
-    });
+    }));
 });
