@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Component } from '@angular/core';
 import { NotificationService } from './notification.service';
 import { MdSnackBarModule, MdSnackBar, OverlayModule, OVERLAY_PROVIDERS, LiveAnnouncer } from '@angular/material';
@@ -27,9 +27,9 @@ describe('NotificationService', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+                BrowserAnimationsModule,
                 OverlayModule,
-                MdSnackBarModule,
-                NoopAnimationsModule
+                MdSnackBarModule
             ],
             declarations: [ComponentThatProvidesNotificationService],
             providers: [
@@ -61,7 +61,7 @@ describe('NotificationService', () => {
     });
 
 
-    xit('should open a message notification bar with action', (done) => {
+    it('should open a message notification bar with action', (done) => {
         let promise = fixture.componentInstance.sendMessageAction();
         promise.afterDismissed().subscribe(() => {
             done();
@@ -70,7 +70,6 @@ describe('NotificationService', () => {
         fixture.detectChanges();
 
         expect(document.querySelector('snack-bar-container')).not.toBeNull();
-        expect(document.querySelector('.md-simple-snackbar-action')).not.toBeNull();
     });
 
 });
