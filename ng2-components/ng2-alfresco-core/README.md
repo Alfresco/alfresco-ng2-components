@@ -297,7 +297,7 @@ _See **Demo Shell** or **DocumentList** implementation for more details and use 
 
 ```ts
 @Component({
-    selector: 'my-component
+    selector: 'my-component'
 })
 export class MyComponent implements OnInit {
 
@@ -335,7 +335,7 @@ The component provide a way to easy create an accordion menu. You can customize 
 
 ```ts
 @Component({
-    selector: 'my-component
+    selector: 'my-component'
 })
 export class MyComponent implements OnInit {
 
