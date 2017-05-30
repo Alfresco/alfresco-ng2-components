@@ -15,9 +15,19 @@
  * limitations under the License.
  */
 
-import { Directive, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output } from '@angular/core';
-import { FileUtils } from 'ng2-alfresco-core';
+import { Directive, EventEmitter, Input, Output, OnInit, OnDestroy, ElementRef, NgZone } from '@angular/core';
 
+/**
+ * [file-draggable]
+ *
+ * This directive, provide a drag and drop area for files and folders.
+ *
+ * @OutputEvent {EventEmitter} onFilesDropped(File)- event fired fot each file dropped
+ * in the drag and drop area.
+ *
+ *
+ * @returns {FileDraggableDirective} .
+ */
 @Directive({
     selector: '[file-draggable]'
 })
@@ -29,7 +39,7 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
     enabled: boolean = true;
 
     @Output()
-    onFilesDropped: EventEmitter<File[]> = new EventEmitter<File[]>();
+    onFilesDropped: EventEmitter<any> = new EventEmitter();
 
     @Output()
     onFilesEntityDropped: EventEmitter<any> = new EventEmitter();
@@ -40,7 +50,7 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
     private cssClassName: string = 'file-draggable__input-focus';
     private element: HTMLElement;
 
-    constructor(el: ElementRef, private ngZone: NgZone) {
+    constructor(private el: ElementRef, private ngZone: NgZone) {
         this.element = el.nativeElement;
     }
 
@@ -74,24 +84,36 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
                     if (typeof items[i].webkitGetAsEntry !== 'undefined') {
                         let item = items[i].webkitGetAsEntry();
                         if (item) {
-                            if (item.isFile) {
-                                this.onFilesEntityDropped.emit(item);
-                            } else if (item.isDirectory) {
-                                this.onFolderEntityDropped.emit(item);
-                            }
+                            this.traverseFileTree(item);
                         }
                     } else {
-                        let files = FileUtils.toFileArray(event.dataTransfer.files);
+                        let files = event.dataTransfer.files;
                         this.onFilesDropped.emit(files);
                     }
                 }
             } else {
                 // safari or FF
-                let files = FileUtils.toFileArray(event.dataTransfer.files);
+                let files = event.dataTransfer.files;
                 this.onFilesDropped.emit(files);
             }
 
             this.element.classList.remove(this.cssClassName);
+        }
+    }
+
+    /**
+     * Travers all the files and folders, and emit an event for each file or directory.
+     *
+     * @param {Object} item - can contains files or folders.
+     */
+    private traverseFileTree(item: any): void {
+        if (item.isFile) {
+            let self = this;
+            self.onFilesEntityDropped.emit(item);
+        } else {
+            if (item.isDirectory) {
+                this.onFolderEntityDropped.emit(item);
+            }
         }
     }
 
