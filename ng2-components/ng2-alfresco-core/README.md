@@ -322,6 +322,41 @@ export class MyComponent implements OnInit {
 }
 ```
 
+## Accordion Component
+The component provide a way to easy create an accordion menu. You can customize the header and the icon.
+
+```html
+<adf-accordion>
+    <adf-accordion-group [heading]="titleHeading" [isSelected]="true" [headingIcon]="'assignment'">
+        <my-list></my-list>
+    </adf-accordion-group>
+</adf-accordion>
+```
+
+```ts
+@Component({
+    selector: 'my-component
+})
+export class MyComponent implements OnInit {
+
+    titleHeading: string;
+
+    constructor() {
+        this.titleHeading = 'My Group';
+    }
+
+}
+```
+
+### Options
+
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `heading` | {string} | optional | The header title. |
+| `isSelected` | {boolean} | optional | Define if the accordion group is selected or not. |
+| `headingIcon` | {string} | optional | The material design icon. |
+
+
 ## Authentication Service
 
 The authentication service is used inside the [login component](../ng2-alfresco-login) and is possible to find there an example of how to use it.
