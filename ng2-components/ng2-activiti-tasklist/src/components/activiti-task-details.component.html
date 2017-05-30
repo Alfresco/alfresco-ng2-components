@@ -1,7 +1,7 @@
 <div *ngIf="!taskDetails">
-    <template *ngIf="noTaskDetailsTemplateComponent" ngFor [ngForOf]="[data]" [ngForTemplate]="noTaskDetailsTemplateComponent">
+    <ng-template *ngIf="noTaskDetailsTemplateComponent" ngFor [ngForOf]="[data]" [ngForTemplate]="noTaskDetailsTemplateComponent">
         {{ 'TASK_DETAILS.MESSAGES.NONE' | translate }}
-    </template>
+    </ng-template>
     <div *ngIf="!noTaskDetailsTemplateComponent">
         {{ 'TASK_DETAILS.MESSAGES.NONE' | translate }}
     </div>

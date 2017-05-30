@@ -150,7 +150,7 @@
     <h5>Upload</h5>
     <section *ngIf="acceptedFilesTypeShow">
         <md-input-container>
-            <input md-input placeholder="Extension accepted" [(ngModel)]="acceptedFilesType"  data-automation-id="accepted-files-type">
+            <input mdInput placeholder="Extension accepted" [(ngModel)]="acceptedFilesType"  data-automation-id="accepted-files-type">
         </md-input-container>
     </section>
     <div *ngIf="!acceptedFilesTypeShow">
@@ -193,9 +193,9 @@
                      [overlayMode]="true">
 
         <extension-viewer [supportedExtensions]="['obj','3DS']" #extension>
-            <template let-urlFileContent="urlFileContent" let-extension="extension" >
+            <ng-template let-urlFileContent="urlFileContent" let-extension="extension" >
                 <threed-viewer [urlFile]="urlFileContent" [extension]="extension" ></threed-viewer>
-            </template>
+            </ng-template>
         </extension-viewer>
 
     </alfresco-viewer>

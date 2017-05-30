@@ -14,11 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Component } from '@angular/core';
 import { NotificationService } from './notification.service';
-import { MdSnackBarModule } from '@angular/material';
+import { MdSnackBarModule, MdSnackBar, OverlayModule, OVERLAY_PROVIDERS, LiveAnnouncer } from '@angular/material';
 
 describe('NotificationService', () => {
     let fixture: ComponentFixture<ComponentThatProvidesNotificationService>;
@@ -27,11 +28,15 @@ describe('NotificationService', () => {
         TestBed.configureTestingModule({
             imports: [
                 BrowserAnimationsModule,
-                MdSnackBarModule.forRoot()
+                OverlayModule,
+                MdSnackBarModule
             ],
             declarations: [ComponentThatProvidesNotificationService],
             providers: [
-                NotificationService
+                NotificationService,
+                MdSnackBar,
+                OVERLAY_PROVIDERS,
+                LiveAnnouncer
             ]
         });
 
@@ -43,33 +48,28 @@ describe('NotificationService', () => {
         fixture.detectChanges();
     });
 
-    describe('openSnackMessage', () => {
 
-        it('should open a message notification bar', (done) => {
-            let promise = fixture.componentInstance.sendMessage();
-            promise.afterDismissed().subscribe(() => {
-                done();
-            });
-
-            fixture.detectChanges();
-
-            expect(document.querySelector('snack-bar-container')).not.toBeNull();
+    it('should open a message notification bar', (done) => {
+        let promise = fixture.componentInstance.sendMessage();
+        promise.afterDismissed().subscribe(() => {
+            done();
         });
+
+        fixture.detectChanges();
+
+        expect(document.querySelector('snack-bar-container')).not.toBeNull();
     });
 
-    describe('openSnackMessageAction', () => {
 
-        it('should open a message notification bar with action', (done) => {
-            let promise = fixture.componentInstance.sendMessageAction();
-            promise.afterDismissed().subscribe(() => {
-                done();
-            });
-
-            fixture.detectChanges();
-
-            expect(document.querySelector('snack-bar-container')).not.toBeNull();
-            expect(document.querySelector('.md-simple-snackbar-action')).not.toBeNull();
+    it('should open a message notification bar with action', (done) => {
+        let promise = fixture.componentInstance.sendMessageAction();
+        promise.afterDismissed().subscribe(() => {
+            done();
         });
+
+        fixture.detectChanges();
+
+        expect(document.querySelector('snack-bar-container')).not.toBeNull();
     });
 
 });

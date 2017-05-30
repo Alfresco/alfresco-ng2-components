@@ -17,6 +17,7 @@
 
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { MdSlideToggleModule, MdInputModule } from '@angular/material';
 
 import { CoreModule } from 'ng2-alfresco-core';
 import { SearchModule } from 'ng2-alfresco-search';
@@ -37,7 +38,6 @@ import { AppComponent } from './app.component';
 import { routing } from './app.routes';
 import { CustomEditorsModule } from './components/activiti/custom-editor/custom-editor.component';
 import { Editor3DModule } from 'ng2-3d-editor';
-import { MaterialModule } from '@angular/material';
 import { ChartsModule } from 'ng2-charts';
 
 import {
@@ -62,7 +62,8 @@ import {
     imports: [
         BrowserModule,
         routing,
-        MaterialModule.forRoot(),
+        MdInputModule,
+        MdSlideToggleModule,
         CoreModule.forRoot(),
         LoginModule.forRoot(),
         SearchModule.forRoot(),

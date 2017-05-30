@@ -2,13 +2,23 @@
     <div *ngIf="!hasForm()">
         <h3 class="activiti-task-title">Please select a Task</h3>
     </div>
-    <div *ngIf="hasForm()">
-        <div class="mdl-card mdl-shadow--2dp activiti-form-container {{form.className}}">
-            <div class="mdl-card__title">
-                <i *ngIf="showValidationIcon" class="material-icons">{{ form.isValid ? 'event_available' : 'event_busy' }}</i>
-                <h2 *ngIf="isTitleEnabled()" class="mdl-card__title-text">{{form.taskName}}</h2>
-            </div>
-            <div class="mdl-card__media">
+    <div *ngIf="hasForm()" class="{{form.className}}">
+        <md-card>
+            <md-card-header>
+                <md-card-title>
+                    <h4 *ngIf="isTitleEnabled()">
+                        <div *ngIf="showRefreshButton" class="activiti-form-reload-button">
+                            <button md-icon-button (click)="onRefreshClicked()">
+                                <md-icon>refresh</md-icon>
+                            </button>
+                        </div>
+                        <md-icon>{{ form.isValid ? 'event_available' : 'event_busy' }}</md-icon>
+                        <span>{{form.taskName}}</span>
+
+                    </h4>
+                </md-card-title>
+            </md-card-header>
+            <md-card-content>
                 <div *ngIf="form.hasTabs()">
                     <tabs-widget [tabs]="form.tabs" (formTabChanged)="checkVisibility($event);"></tabs-widget>
                 </div>
@@ -18,40 +28,26 @@
                         <form-field [field]="field.field"></form-field>
                     </div>
                 </div>
-            </div>
-            <div *ngIf="form.hasOutcomes()" class="mdl-card__actions mdl-card--border">
+            </md-card-content>
+            <md-card-actions *ngIf="form.hasOutcomes()">
+                <!--[class.mdl-button--colored]="!outcome.isSystem"-->
                 <button *ngFor="let outcome of form.outcomes"
-                        alfresco-mdl-button
+                        md-button
                         [disabled]="!isOutcomeButtonEnabled(outcome)"
-                        [class.mdl-button--colored]="!outcome.isSystem"
                         [class.activiti-form-hide-button]="!isOutcomeButtonVisible(outcome, form.readOnly)"
                         (click)="onOutcomeClicked(outcome, $event)">
-                    {{outcome.name}}
+                    {{outcome.name | uppercase}}
                 </button>
-            </div>
-            <div  *ngIf="showRefreshButton" class="mdl-card__menu" >
-                <button (click)="onRefreshClicked()"
-                        class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-                    <i class="material-icons">refresh</i>
-                </button>
-            </div>
-        </div>
+            </md-card-actions>
+        </md-card>
     </div>
 </div>
 <!--
 For debugging and data visualisation purposes,
 will be removed during future revisions
 -->
-<div  *ngIf="showDebugButton" class="activiti-form-debug-container">
-
-    <div class="activiti-debug-button">
-        <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1" [class.is-checked]="debugMode">
-            <input type="checkbox" id="switch-1" class="mdl-switch__input" [(ngModel)]="debugMode">
-            <span class="mdl-switch__label"></span>
-            <span class="debug-toggle-text">Debug mode</span>
-        </label>
-    </div>
-
+<div *ngIf="showDebugButton" class="activiti-form-debug-container">
+    <md-slide-toggle [(ngModel)]="debugMode">Debug mode</md-slide-toggle>
     <div *ngIf="debugMode && hasForm()">
         <h4>Values</h4>
         <pre>{{form.values | json}}</pre>
