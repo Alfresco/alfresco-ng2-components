@@ -37,6 +37,9 @@ export class UploadDragAreaComponent {
      * @memberof UploadButtonComponent
      */
     @Input()
+    enabled: boolean = true;
+
+    @Input()
     showNotificationBar: boolean = true;
 
     @Input()
