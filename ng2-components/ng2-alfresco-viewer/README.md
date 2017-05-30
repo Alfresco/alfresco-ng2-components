@@ -222,7 +222,7 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 | --- | --- |
 | Media | Mp4,  WebM, Ogv |
 | Images | png, jpg, jpeg, gif, bmp |
-| Text | pdf |
+| Text | pdf, txt |
 
 # Custom extension handler
 

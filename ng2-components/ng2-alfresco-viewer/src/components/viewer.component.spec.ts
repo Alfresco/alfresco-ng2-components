@@ -17,6 +17,7 @@
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { PdfViewerComponent } from './pdfViewer.component';
+import { TxtViewerComponent } from './txtViewer.component';
 import { NotSupportedFormat } from './notSupportedFormat.component';
 import { MediaPlayerComponent } from './mediaPlayer.component';
 import { ImgViewerComponent } from './imgViewer.component';
@@ -48,6 +49,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
             declarations: [
                 ViewerComponent,
                 PdfViewerComponent,
+                TxtViewerComponent,
                 NotSupportedFormat,
                 MediaPlayerComponent,
                 ImgViewerComponent
@@ -88,39 +90,39 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
                 fixture.detectChanges();
             });
 
-            it('shadow overlay should be present if is overlay mode', () => {
+            it('should shadow overlay be present if is overlay mode', () => {
                 expect(element.querySelector('#viewer-shadow-transparent')).not.toBeNull();
             });
 
-            it('header should be present if is overlay mode', () => {
+            it('should header be present if is overlay mode', () => {
                 expect(element.querySelector('header')).not.toBeNull();
             });
 
-            it('Name File should be present if is overlay mode ', () => {
+            it('should Name File be present if is overlay mode ', () => {
                 component.ngOnChanges(null).then(() => {
                     fixture.detectChanges();
                     expect(element.querySelector('#viewer-name-file').innerHTML).toEqual('fake-test-file.pdf');
                 });
             });
 
-            it('Close button should be present if overlay mode', () => {
+            it('should Close button be present if overlay mode', () => {
                 expect(element.querySelector('#viewer-close-button')).not.toBeNull();
             });
 
-            it('Click on close button should hide the viewer', () => {
+            it('should Click on close button hide the viewer', () => {
                 let closebutton: any = element.querySelector('#viewer-close-button');
                 closebutton.click();
                 fixture.detectChanges();
                 expect(element.querySelector('#viewer-main-container')).toBeNull();
             });
 
-            it('Esc button should hide the viewer', () => {
+            it('should Esc button hide the viewer', () => {
                 EventMock.keyDown(27);
                 fixture.detectChanges();
                 expect(element.querySelector('#viewer-main-container')).toBeNull();
             });
 
-            it('all-space class should not be present if is in overlay mode', () => {
+            it('should all-space class not be present if is in overlay mode', () => {
                 expect(element.querySelector('#viewer').getAttribute('class')).toEqual('');
             });
         });
@@ -132,15 +134,15 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
                 fixture.detectChanges();
             });
 
-            it('header should be NOT be present if is not overlay mode', () => {
+            it('should header be NOT be present if is not overlay mode', () => {
                 expect(element.querySelector('header')).toBeNull();
             });
 
-            it('Close button should be not present if is not overlay mode', () => {
+            it('should Close button be not present if is not overlay mode', () => {
                 expect(element.querySelector('#viewer-close-button')).toBeNull();
             });
 
-            it('Esc button should not  hide the viewer if is not overlay mode', () => {
+            it('should Esc button not hide the viewer if is not overlay mode', () => {
                 EventMock.keyDown(27);
                 fixture.detectChanges();
                 expect(element.querySelector('#viewer-main-container')).not.toBeNull();
@@ -153,7 +155,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
     });
 
     describe('Attribute', () => {
-        it('Url or fileNodeId File should be mandatory', () => {
+        it('should Url or fileNodeId be mandatory', () => {
             component.showViewer = true;
             component.fileNodeId = undefined;
             component.urlFile = undefined;
@@ -163,7 +165,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
             }).toThrow();
         });
 
-        it('If FileNodeId is present should not be thrown any error ', () => {
+        it('should FileNodeId present not thrown any error ', () => {
             component.showViewer = true;
             component.fileNodeId = 'file-node-id';
             component.urlFile = undefined;
@@ -173,7 +175,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
             }).not.toThrow();
         });
 
-        it('If urlFile is present should not be thrown any error ', () => {
+        it('should  urlFile present not thrown any error ', () => {
             component.showViewer = true;
             component.fileNodeId = undefined;
 
@@ -182,11 +184,11 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
             }).not.toThrow();
         });
 
-        it('showViewer default value should be true', () => {
+        it('should showViewer default value  be true', () => {
             expect(component.showViewer).toBe(true);
         });
 
-        it('if showViewer value is false the viewer should be hide', () => {
+        it('should viewer be hide if showViewer value is false', () => {
             component.showViewer = false;
 
             fixture.detectChanges();
@@ -195,7 +197,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
     });
 
     describe('Extension Type Test', () => {
-        it('if extension file is a pdf the pdf viewer should be loaded', (done) => {
+        it('should  extension file pdf  be loaded', (done) => {
             component.urlFile = 'base/src/assets/fake-test-file.pdf';
 
             component.ngOnChanges(null).then(() => {
@@ -205,7 +207,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
             });
         });
 
-        it('if extension file is a image the img viewer should be loaded', (done) => {
+        it('should  extension file png be loaded', (done) => {
             component.urlFile = 'fake-url-file.png';
 
             component.ngOnChanges(null).then(() => {
@@ -215,7 +217,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
             });
         });
 
-        it('if extension file is a video the the media player should be loaded', (done) => {
+        it('should extension file mp4 be loaded', (done) => {
             component.urlFile = 'fake-url-file.mp4';
 
             component.ngOnChanges(null).then(() => {
@@ -225,7 +227,17 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
             });
         });
 
-        it('if extension file is a not supported the not supported div should be loaded', (done) => {
+        it('should extension file txt be loaded', (done) => {
+            component.urlFile = 'fake-url-file.txt';
+
+            component.ngOnChanges(null).then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('txt-viewer')).not.toBeNull();
+                done();
+            });
+        });
+
+        it('should the not supported div be loaded if the file is a not supported extension', (done) => {
             component.urlFile = 'fake-url-file.unsupported';
 
             component.ngOnChanges(null).then(() => {
@@ -293,6 +305,17 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
             });
         });
 
+        it('should display the txt viewer  if the file identified by mimetype is a txt when the filename has wrong extension', (done) => {
+            component.urlFile = 'content.bin';
+            component.mimeType = 'text/txt';
+
+            component.ngOnChanges(null).then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('txt-viewer')).not.toBeNull();
+                done();
+            });
+        });
+
         it('should display the media player if the file identified by mimetype is a media when the filename has no extension', (done) => {
             component.urlFile = 'content';
             component.mimeType = 'video/mp4';
@@ -317,7 +340,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
     });
 
     describe('Events', () => {
-        it('if extension change exextensionChange event should be fired ', (done) => {
+        it('should if the extension change extension Change event be fired ', (done) => {
 
             component.extensionChange.subscribe((fileExtension) => {
                 expect(fileExtension).toEqual('png');

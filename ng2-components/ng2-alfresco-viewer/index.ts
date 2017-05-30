@@ -33,6 +33,7 @@ import { ImgViewerComponent } from './src/components/imgViewer.component';
 import { MediaPlayerComponent } from './src/components/mediaPlayer.component';
 import { NotSupportedFormat } from './src/components/notSupportedFormat.component';
 import { PdfViewerComponent } from './src/components/pdfViewer.component';
+import { TxtViewerComponent } from './src/components/txtViewer.component';
 import { ExtensionViewerDirective } from './src/directives/extension-viewer.directive';
 
 export * from './src/components/viewer.component';
@@ -41,10 +42,12 @@ export * from './src/components/imgViewer.component';
 export * from './src/components/mediaPlayer.component';
 export * from './src/components/notSupportedFormat.component';
 export * from './src/components/pdfViewer.component';
+export * from './src/components/txtViewer.component';
 
 export const VIEWER_DIRECTIVES: any[] = [
     ViewerComponent,
     ImgViewerComponent,
+    TxtViewerComponent,
     MediaPlayerComponent,
     NotSupportedFormat,
     PdfViewerComponent,
