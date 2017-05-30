@@ -16,6 +16,7 @@
  */
 
 import { NgModule, ModuleWithProviders } from '@angular/core';
+import { MdSnackBarModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule, Http } from '@angular/http';
 import { CommonModule } from '@angular/common';
