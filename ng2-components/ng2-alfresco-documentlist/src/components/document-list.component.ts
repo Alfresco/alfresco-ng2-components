@@ -373,7 +373,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                     })
                     .subscribe(
                         val => {
-                            if (this.checkPreviousPage(val, skipCount)) {
+                            if (this.checkIfTheCurrentPageIsEmpty(val, skipCount)) {
+                                this.updateSkipCount(skipCount - maxItems);
                                 this.loadFolderNodesByFolderNodeId(id, maxItems, skipCount - maxItems);
                             } else {
                                 this.data.loadPage(<NodePaging>val);
@@ -391,12 +392,20 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     }
 
-    private checkPreviousPage(node, skipCount) {
+    private checkIfTheCurrentPageIsEmpty(node, skipCount) {
         let isCheckNeeded: boolean = false;
-        if (!this.hasNodeEntries(node) && skipCount > 0 && this.isPaginationEnabled()) {
+        if (this.isCurrentPageEmpty(node, skipCount)) {
             isCheckNeeded = true;
         }
         return isCheckNeeded;
+    }
+
+    private isCurrentPageEmpty(node, skipCount) {
+        return !this.hasNodeEntries(node) && this.hasPages(skipCount);
+    }
+
+    private hasPages(skipCount) {
+        return skipCount > 0 && this.isPaginationEnabled();
     }
 
     private hasNodeEntries(node) {
@@ -567,5 +576,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             defaultSorting = new DataSorting(key, direction);
         }
         return defaultSorting;
+    }
+
+    updateSkipCount(newSkipCount) {
+        this.skipCount = newSkipCount;
     }
 }

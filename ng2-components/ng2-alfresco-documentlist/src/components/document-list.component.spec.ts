@@ -2,14 +2,14 @@
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
  *
- * Licensed under the Apache License, Version 2.0 (the 'License');
+ * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an 'AS IS' BASIS,
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -789,7 +789,7 @@ describe('DocumentList', () => {
         expect(documentList.loadFolderNodesByFolderNodeId).toHaveBeenCalled();
     });
 
-    it('should try to load previous page if there are no other elements in multi page table', async(() => {
+    it('should load previous page if there are no other elements in multi page table', async(() => {
         documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
         documentList.folderNode = new NodeMinimal();
         documentList.folderNode.id = '1d26e465-dea3-42f3-b415-faa8364b9692';
