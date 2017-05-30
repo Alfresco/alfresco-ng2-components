@@ -287,12 +287,14 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 | --- | --- |
 | `onSuccess` | The event is emitted when the file is uploaded |
 
-#### Propertoes
+#### Properties
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
+| `enabled` | *boolean* | true | Toggle component enabled state |
 | `showNotificationBar` | *boolean* | true |  Hide/show notification bar |
-| `currentFolderPath` | *string* | '/Sites/swsdp/documentLibrary' | define the path where the files are uploaded | 
+| `rootFolderId` | *string* | '-root-' | The ID of the root folder node.
+| `currentFolderPath` | *string* | '/' | define the path where the files are uploaded |
 | `versioning` | *boolean* | false |  Versioning false is the default uploader behaviour and it rename using an integer suffix if there is a name clash. Versioning true to indicate that a major version should be created  | 
 
 

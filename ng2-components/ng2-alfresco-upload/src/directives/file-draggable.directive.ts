@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, EventEmitter, Output, OnInit, OnDestroy, ElementRef, NgZone } from '@angular/core';
+import { Directive, EventEmitter, Input, Output, OnInit, OnDestroy, ElementRef, NgZone } from '@angular/core';
 
 /**
  * [file-draggable]
@@ -34,6 +34,9 @@ import { Directive, EventEmitter, Output, OnInit, OnDestroy, ElementRef, NgZone 
 export class FileDraggableDirective implements OnInit, OnDestroy {
 
     files: File [];
+
+    @Input('file-draggable')
+    enabled: boolean = true;
 
     @Output()
     onFilesDropped: EventEmitter<any> = new EventEmitter();
@@ -72,7 +75,7 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
      * @param event DOM event.
      */
     onDropFiles(event: any): void {
-        if (!event.defaultPrevented) {
+        if (this.enabled && !event.defaultPrevented) {
             this.preventDefault(event);
 
             let items = event.dataTransfer.items;
@@ -120,7 +123,7 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
      * @param {event} event - DOM event.
      */
     onDragEnter(event: Event): void {
-        if (!event.defaultPrevented) {
+        if (this.enabled && !event.defaultPrevented) {
             this.preventDefault(event);
             this.element.classList.add(this.cssClassName);
         }
@@ -132,7 +135,7 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
      * @param {event} event - DOM event.
      */
     onDragLeave(event: Event): void {
-        if (!event.defaultPrevented) {
+        if (this.enabled && !event.defaultPrevented) {
             this.preventDefault(event);
             this.element.classList.remove(this.cssClassName);
         }
@@ -144,7 +147,7 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
      * @param event
      */
     onDragOver(event: Event): void {
-        if (!event.defaultPrevented) {
+        if (this.enabled && !event.defaultPrevented) {
             this.preventDefault(event);
             this.element.classList.add(this.cssClassName);
         }
