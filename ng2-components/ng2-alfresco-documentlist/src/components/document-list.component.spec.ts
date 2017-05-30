@@ -796,8 +796,6 @@ describe('DocumentList', () => {
         documentList.skipCount = 5;
         documentList.pageSize = 5;
         spyOn(documentList, 'isPaginationEnabled').and.returnValue(true);
-        // let documentService = TestBed.get(DocumentListService);
-        // spyOn(documentService, 'getFolder').and.returnValues(Promise.resolve(fakeNodeAnswerWithNOEntries), Promise.resolve(fakeNodeAnswerWithEntries));
         documentList.reload();
 
         fixture.detectChanges();
