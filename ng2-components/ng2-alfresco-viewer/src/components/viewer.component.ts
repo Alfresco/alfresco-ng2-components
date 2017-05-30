@@ -80,7 +80,6 @@ export class ViewerComponent {
                 throw new Error('Attribute urlFile or fileNodeId or blobFile is required');
             }
             return new Promise((resolve, reject) => {
-                let alfrescoApi = this.apiService.getInstance();
                 if (this.blobFile) {
                     this.mimeType = this.blobFile.type;
                     this.extensionChange.emit(this.mimeType);
@@ -93,10 +92,10 @@ export class ViewerComponent {
                     this.urlFileContent = this.urlFile;
                     resolve();
                 } else if (this.fileNodeId) {
-                    alfrescoApi.nodes.getNodeInfo(this.fileNodeId).then((data: MinimalNodeEntryEntity) => {
+                    this.apiService.getInstance().nodes.getNodeInfo(this.fileNodeId).then((data: MinimalNodeEntryEntity) => {
                         this.mimeType = data.content.mimeType;
                         this.displayName = data.name;
-                        this.urlFileContent = alfrescoApi.content.getContentUrl(data.id);
+                        this.urlFileContent = this.apiService.getInstance().content.getContentUrl(data.id);
                         this.extension = this.getFileExtension(data.name);
                         this.extensionChange.emit(this.extension);
                         this.loaded = true;
@@ -145,7 +144,7 @@ export class ViewerComponent {
      * @param {string} url - url file
      * @returns {string} name file
      */
-    getFilenameFromUrl(url: string) {
+    getFilenameFromUrl(url: string): string {
         let anchor = url.indexOf('#');
         let query = url.indexOf('?');
         let end = Math.min(
@@ -160,7 +159,7 @@ export class ViewerComponent {
      * @param {string} fileName - file name
      * @returns {string} file name extension
      */
-    private getFileExtension(fileName: string) {
+    private getFileExtension(fileName: string): string {
         return fileName.split('.').pop().toLowerCase();
     }
 
@@ -169,7 +168,7 @@ export class ViewerComponent {
      *
      * @returns {boolean}
      */
-    private isImage() {
+    private isImage(): boolean {
         return this.isImageExtension() || this.isImageMimeType();
     }
 
@@ -178,7 +177,7 @@ export class ViewerComponent {
      *
      * @returns {boolean}
      */
-    private isMedia() {
+    private isMedia(): boolean {
         return this.isMediaExtension(this.extension) || this.isMediaMimeType();
     }
 
@@ -187,7 +186,7 @@ export class ViewerComponent {
      *
      * @returns {boolean}
      */
-    private isImageExtension() {
+    private isImageExtension(): boolean {
         return this.extension === 'png' || this.extension === 'jpg' ||
             this.extension === 'jpeg' || this.extension === 'gif' || this.extension === 'bmp';
     }
@@ -197,7 +196,7 @@ export class ViewerComponent {
      *
      * @returns {boolean}
      */
-    private isMediaMimeType() {
+    private isMediaMimeType(): boolean {
         let mimeExtension;
         if (this.mimeType && this.mimeType.indexOf('/')) {
             mimeExtension = this.mimeType.substr(this.mimeType.indexOf('/') + 1, this.mimeType.length);
@@ -211,7 +210,7 @@ export class ViewerComponent {
      *
      * @returns {boolean}
      */
-    private isMediaExtension(extension: string) {
+    private isMediaExtension(extension: string): boolean {
         return extension === 'mp4' || extension === 'WebM' || extension === 'Ogg';
     }
 
@@ -220,7 +219,7 @@ export class ViewerComponent {
      *
      * @returns {boolean}
      */
-    private isImageMimeType() {
+    private isImageMimeType(): boolean {
         return this.mimeType && this.mimeType.indexOf('image/') === 0;
     }
 
@@ -229,8 +228,17 @@ export class ViewerComponent {
      *
      * @returns {boolean}
      */
-    private isPdf() {
+    private isPdf(): boolean {
         return this.extension === 'pdf' || this.mimeType === 'application/pdf';
+    }
+
+    /**
+     * check if the current file is a supported txt extension
+     *
+     * @returns {boolean}
+     */
+    private isText(): boolean {
+        return this.extension === 'txt' || this.mimeType === 'text/txt';
     }
 
     /**
@@ -238,8 +246,8 @@ export class ViewerComponent {
      *
      * @returns {boolean}
      */
-    supportedExtension() {
-        return this.isImage() || this.isPdf() || this.isMedia() || this.isExternalSupportedExtension();
+    supportedExtension(): boolean {
+        return this.isImage() || this.isPdf() || this.isMedia() || this.isText() || this.isExternalSupportedExtension();
     }
 
     /**
@@ -247,7 +255,7 @@ export class ViewerComponent {
      *
      * @returns {boolean}
      */
-    isExternalSupportedExtension() {
+    isExternalSupportedExtension(): boolean {
         let externalType: string;
 
         if (this.externalExtensions && (this.externalExtensions instanceof Array)) {
@@ -274,8 +282,6 @@ export class ViewerComponent {
 
     /**
      * Check if in the document there are scrollable main area and disable it
-     *
-     * @returns {boolean}
      */
     private blockOtherScrollBar() {
         let mainElements: any = document.getElementsByTagName('main');
@@ -286,9 +292,7 @@ export class ViewerComponent {
     }
 
     /**
-     * Check if in the document there are scrollable main area and renable it
-     *
-     * @returns {boolean}
+     * Check if in the document there are scrollable main area and re-enable it
      */
     private unblockOtherScrollBar() {
         let mainElements: any = document.getElementsByTagName('main');
@@ -303,7 +307,7 @@ export class ViewerComponent {
      *
      * @returns {boolean}
      */
-    private isParentElementHeaderBar() {
+    private isParentElementHeaderBar(): boolean {
         return !!this.closestElement(this.element.nativeElement, 'header');
     }
 
@@ -313,7 +317,7 @@ export class ViewerComponent {
      * @param {string} nodeName
      * @returns {HTMLElement}
      */
-    private closestElement(element: HTMLElement, nodeName: string) {
+    private closestElement(element: HTMLElement, nodeName: string): HTMLElement {
         let parent = element.parentElement;
         if (parent) {
             if (parent.nodeName.toLowerCase() === nodeName) {
@@ -340,8 +344,10 @@ export class ViewerComponent {
 
     /**
      * return true if the data about the node in the ecm are loaded
+     *
+     * @returns {boolean}
      */
-    isLoaded() {
+    isLoaded(): boolean {
         return this.fileNodeId ? this.loaded : true;
     }
 }
