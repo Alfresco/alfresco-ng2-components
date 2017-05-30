@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { DebugElement, SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { TxtViewerComponent } from './txtViewer.component';
+import { DebugElement }    from '@angular/core';
 import {
-    AlfrescoApiService,
     AlfrescoAuthenticationService,
     AlfrescoSettingsService,
+    AlfrescoApiService,
     CoreModule
 } from 'ng2-alfresco-core';
-import { TxtViewerComponent } from './txtViewer.component';
 
 describe('Test ng2-alfresco-viewer Text View component', () => {
 
@@ -52,37 +52,14 @@ describe('Test ng2-alfresco-viewer Text View component', () => {
         debug = fixture.debugElement;
         element = fixture.nativeElement;
         component = fixture.componentInstance;
+        component.content = 'example';
+        fixture.detectChanges();
     });
 
+
     describe('View', () => {
-
-        it('Should text container be present with urlfile', (done) => {
-            fixture.detectChanges();
-            let urlFile = require('../assets/fake-test-file.txt');
-            let change = new SimpleChange(null, urlFile, true);
-
-            component.ngOnChanges({ 'urlFile': change }).then(() => {
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    expect(element.querySelector('.adf-txt-viewer-content').textContent).toContain('example');
-                    done();
-                });
-            });
+        it('Should text container be present', () => {
+            expect(element.querySelector('#adf-viewer-text-container').textContent).toContain('example');
         });
-
-        it('Should text container be present with Blob file', (done) => {
-            let blobFile = new Blob(['text example'], {type: 'text/txt'});
-
-            let change = new SimpleChange(null, blobFile, true);
-
-            component.ngOnChanges({ 'blobFile': change }).then(() => {
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    expect(element.querySelector('.adf-txt-viewer-content').textContent).toContain('example');
-                    done();
-                });
-            });
-        });
-
     });
 });

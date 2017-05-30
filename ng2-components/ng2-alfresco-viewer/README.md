@@ -1,129 +1,237 @@
-# Alfresco File Viewer library
+# Alfresco File Viewer Component for Angular 2
 
-Contains the Alfresco Viewer component.
-
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Alfresco Viewer component](#alfresco-viewer-component)
-  * [Basic usage](#basic-usage)
-    + [Properties](#properties)
-  * [Details](#details)
-    + [Supported file formats](#supported-file-formats)
-    + [PDF Conversion](#pdf-conversion)
-    + [Configuring PDF.js library](#configuring-pdfjs-library)
-    + [Custom extension handler](#custom-extension-handler)
-- [Project Information](#project-information)
-  * [Prerequisites](#prerequisites)
-  * [Install](#install)
-  * [Build from sources](#build-from-sources)
-  * [NPM scripts](#npm-scripts)
-  * [Demo](#demo)
-  * [License](#license)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
-
-## Alfresco Viewer component
+<p>
+  <a title='Build Status Travis' href="https://travis-ci.org/Alfresco/alfresco-ng2-components">
+    <img src='https://travis-ci.org/Alfresco/alfresco-ng2-components.svg?branch=master'  alt='travis
+    Status' />
+  </a>
+  <a title='Build Status AppVeyor' href="https://ci.appveyor.com/project/alfresco/alfresco-ng2-components">
+    <img src='https://ci.appveyor.com/api/projects/status/github/Alfresco/alfresco-ng2-components'  alt='travis
+    Status' />
+  </a>
+  <a href='https://codecov.io/gh/Alfresco/alfresco-ng2-components'>
+    <img src='https://img.shields.io/codecov/c/github/Alfresco/alfresco-ng2-components/master.svg?maxAge=2592000' alt='Coverage Status' />
+  </a>
+  <a href='https://www.npmjs.com/package/ng2-alfresco-viewer'>
+    <img src='https://img.shields.io/npm/dt/ng2-alfresco-viewer.svg' alt='npm downloads' />
+  </a>
+  <a href='https://github.com/Alfresco/alfresco-ng2-components/blob/master/LICENSE'>
+     <img src='https://img.shields.io/hexpm/l/plug.svg' alt='license' />
+  </a>
+  <a href='https://www.alfresco.com/'>
+     <img src='https://img.shields.io/badge/style-component-green.svg?label=alfresco' alt='alfresco component' />
+  </a>
+  <a href='https://angular.io/'>
+     <img src='https://img.shields.io/badge/style-2-red.svg?label=angular' alt='angular 2' />
+  </a>
+  <a href='https://www.typescriptlang.org/docs/tutorial.html'>
+     <img src='https://img.shields.io/badge/style-lang-blue.svg?label=typescript' alt='typescript' />
+  </a>
+  <a href='https://www.alfresco.com/'>
+     <img src='https://img.shields.io/badge/style-%3E5.0.0-blue.svg?label=node%20version' alt='node version' />
+  </a>
+</p>
 
 See it live: [Viewer Quickstart](https://embed.plnkr.co/iTuG1lFIXfsP95l6bDW6/)
 
-### Basic usage
+## Prerequisites
 
-Using with node id:
+Before you start using this development framework, make sure you have installed all required software and done all the
+necessary configuration [prerequisites](https://github.com/Alfresco/alfresco-ng2-components/blob/master/PREREQUISITES.md).
+
+## Install
+
+Follow the 3 steps below:
+
+1. Npm
+
+    ```sh
+    npm install ng2-alfresco-viewer --save
+    ```
+
+2. Html
+
+    Include these dependencies in your index.html page:
+
+    ```html
+
+    <!-- Google Material Design Lite -->
+    <link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
+    <script src="node_modules/material-design-lite/material.min.js"></script>
+    <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
+
+    <!-- Load the Angular Material 2 stylesheet -->
+    <link href="node_modules/@angular/material/core/theming/prebuilt/deeppurple-amber.css" rel="stylesheet">
+
+    <!-- Polyfill(s) for Safari (pre-10.x) -->
+    <script src="node_modules/intl/dist/Intl.min.js"></script>
+    <script src="node_modules/intl/locale-data/jsonp/en.js"></script>
+
+    <!-- Polyfill(s) for older browsers -->
+    <script src="node_modules/core-js/client/shim.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/dom4/1.8.3/dom4.js"></script>
+    <script src="node_modules/element.scrollintoviewifneeded-polyfill/index.js"></script>
+
+    <!-- Polyfill(s) for dialogs -->
+    <script src="node_modules/dialog-polyfill/dialog-polyfill.js"></script>
+    <link rel="stylesheet" type="text/css" href="node_modules/dialog-polyfill/dialog-polyfill.css" />
+    <style>._dialog_overlay { position: static !important; } </style>
+
+    <!-- Modules  -->
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+
+    <!-- Polyfill(s) for pdf support -->
+    <script src="node_modules/pdfjs-dist/web/compatibility.js"></script>
+
+    <script src="node_modules/pdfjs-dist/build/pdf.js"></script>
+    <script src="node_modules/pdfjs-dist/build/pdf.worker.js"></script>
+    <script src="node_modules/pdfjs-dist/web/pdf_viewer.js"></script>
+
+
+    ```
+
+3. SystemJs
+
+    Add the following components to your systemjs.config.js file:
+
+    - ng2-translate
+    - alfresco-js-api
+    - ng2-alfresco-core
+    - ng2-alfresco-viewer
+
+    Please refer to the following example file: [systemjs.config.js](demo/systemjs.config.js) .
+
+#### Basic usage with node id
 
 ```html
-<adf-viewer 
-    [showViewer]="true" 
-    [overlayMode]="true" 
-    [fileNodeId]="'d367023a-7ebe-4f3a-a7d0-4f27c43f1045'">
-</adf-viewer>
+<alfresco-viewer [overlayMode]="true" [urlFile]="'filename.pdf'"></alfresco-viewer>
 ```
 
-Using with file url:
+Example of an App that declares the file viewer component :
+
+```ts
+import { NgModule, Component } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { ViewerModule } from 'ng2-alfresco-viewer';
+
+@Component({
+    selector: 'alfresco-app-demo',
+    template: `
+        <alfresco-viewer 
+            [showViewer]="true" 
+            [overlayMode]="true" 
+            [fileNodeId]="'d367023a-7ebe-4f3a-a7d0-4f27c43f1045'">
+        </alfresco-viewer>`
+})
+class MyDemoApp {
+
+    constructor(private authService: AlfrescoAuthenticationService, 
+                private settingsService: AlfrescoSettingsService) {
+        settingsService.ecmHost = 'http://localhost:8080';
+
+        this.authService.login('admin', 'admin').subscribe(
+            ticket => console.log(ticket),
+            error => console.log(error)
+        );
+    }
+}
+
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        ViewerModule.forRoot()
+    ],
+    declarations: [ MyDemoApp ],
+    bootstrap:    [ MyDemoApp ]
+})
+export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);
+```
+
+#### Basic usage with urlFile
 
 ```html
-<adf-viewer 
-    [overlayMode]="true" 
-    [urlFile]="'filename.pdf'">
-</adf-viewer>
+<alfresco-viewer [overlayMode]="true" [urlFile]="'filename.pdf'"></alfresco-viewer>
 ```
 
-#### Properties
+Example of an App that declares the file viewer component :
 
-| Attribute | Options | Default | Description |
-| --- | --- | --- | --- |
-| fileNodeId | string | | Node Id of the file to load |
-| urlFile | string | | If you want to load an external file that does not come from ECM you can use this Url where to load the file |
-| urlBlob | Blob | | If you want to load a Blob File |
-| overlayMode | boolean | false | If `true` show the Viewer full page over the present content otherwise will fit the parent div |
-| showViewer | boolean | true | Hide or show the viewer |
-| showToolbar | boolean | true | Hide or show the toolbars |
-| displayName | string | | You can specify the name of the file |
+```ts
+import { NgModule, Component } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { ViewerModule } from 'ng2-alfresco-viewer';
 
-### Details
+@Component({
+    selector: 'alfresco-app-demo',
+    template: `
+        <alfresco-viewer 
+            [showViewer]="true" 
+            [overlayMode]="true" 
+            [urlFile]="'localTestFile.pdf'">
+        </alfresco-viewer>`
+})
+class MyDemoApp {
+
+    constructor(private authService: AlfrescoAuthenticationService, 
+                private settingsService: AlfrescoSettingsService) {
+        settingsService.ecmHost = 'http://localhost:8080';
+        this.authService.login('admin', 'admin').subscribe(
+            ticket => console.log(ticket),
+            error => console.log(error)
+        );
+    }
+}
+
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        ViewerModule.forRoot()
+    ],
+    declarations: [ MyDemoApp ],
+    bootstrap:    [ MyDemoApp ]
+})
+export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);
+```
+
+#### Options
+
+| Attribute     | Options     | Default      | Description | Mandatory
+| --- | --- | --- | --- | --- |
+| `fileNodeId` | *string* | | Node Id of the file to load the file |
+| `urlFile` | *string* | | If you want load an external file that not comes from the ECM you can use this Url where to load the file |
+| `urlBlob` | *Blob* | | If you want load a Blob File |
+| `overlayMode` | *boolean* | `false` | if true Show the Viewer full page over the present content otherwise will fit the parent div |
+| `showViewer` | *boolean* | `true` | Hide or show the viewer |
+| `showToolbar` | *boolean* | `true` | Hide or show the toolbars |
+| `displayName` | *string* | | You can specify the name of the file |
 
 #### Supported file formats
 
-| Type | Extension |
+| Type | extensions |
 | --- | --- |
-| Media | wav, Mp3, Mp4, WebM, Ogv |
+| Media | Mp4,  WebM, Ogv |
 | Images | png, jpg, jpeg, gif, bmp |
 | Text | pdf, txt |
 
-#### PDF Conversion
+# Custom extension handler
 
-![Rendition](docs/assets/renditions.png)                         
+If you want handle other file formats that are not yet supported by the ng2-alfresco-viewer you can define your own custom handler.
 
-Note for unsupported extensions the viewer will offer the possibility to convert to PDF if that kind of extension is supported by the [content service renditions service](https://community.alfresco.com/docs/DOC-5879-rendition-service)
-
-#### Configuring PDF.js library
-
-In order to configure your webpack-enabled application with the PDF.js library please follow the next steps.
-
-Install pdfjs-dist
-
-```sh
-npm install pdfjs-dist
-```
-
-Update `vendors.ts` by appending the following:
-
-```ts
-// PDF.js
-require('pdfjs-dist/web/compatibility.js');
-const pdfjsLib = require('pdfjs-dist');
-pdfjsLib.PDFJS.workerSrc = './pdf.worker.js';
-require('pdfjs-dist/web/pdf_viewer.js');
-```
-
-The code above enables the "viewer" component and "compatibility" mode for all the browsers.
-It also configures the web worker for PDF.js library to render PDF files in the background.
-
-Update the `plugins` section of the `webpack.common.js` file with the next lines:
-
-```js
-new CopyWebpackPlugin([
-    ...
-    {
-        from: 'node_modules/pdfjs-dist/build/pdf.worker.js',
-        to: 'pdf.worker.js'
-    }
-])
-```
-
-The Viewer component now should be able displaying PDF files.
-
-#### Custom extension handler
-
-If you want to handle other file formats that are not yet supported by the ng2-alfresco-viewer you can define your own custom handler.
-
-Below you can find an example with the use of `extension-viewer` if you can handle 3d files
+Below you can find an example where with the use of ```extension-viewer``` if you can handle 3d files
 
 ```html
-<adf-viewer 
+<alfresco-viewer 
     [(showViewer)]="fileShowed"
     [fileNodeId]="fileNodeId"
     [overlayMode]="true">
@@ -137,15 +245,15 @@ Below you can find an example with the use of `extension-viewer` if you can hand
         </template>
     </extension-viewer>
 
-</adf-viewer> 
+</alfresco-viewer> 
 ```
 
-Note: you need adding `ng2-3d-editor` dependency to your `package.json` file to make the example above work.
+Note: you need adding `ng2-3d-editor` dependency to your `package.json` file to make example above work.
 
-It is possible to define multiple `extension-viewer` templates:
+It is possible to define multiple ```extension-viewer``` templates:
 
 ```html
-<adf-viewer 
+<alfresco-viewer 
     [(showViewer)]="fileShowed"
     [fileNodeId]="fileNodeId"
     [overlayMode]="true">
@@ -165,37 +273,56 @@ It is possible to define multiple `extension-viewer` templates:
             </my-custom-txt-component>
         </template>
     </extension-viewer>
-</adf-viewer> 
+</alfresco-viewer> 
 ```
 
-## Project Information
+## Build from sources
 
-### Prerequisites
-
-Before you start using this development framework, make sure you have installed all required software and done all the
-necessary configuration [prerequisites](https://github.com/Alfresco/alfresco-ng2-components/blob/master/PREREQUISITES.md).
-
-> If you plan using this component with projects generated by Angular CLI, please refer to the following article: [Using ADF with Angular CLI](https://github.com/Alfresco/alfresco-ng2-components/wiki/Angular-CLI)
-
-### Install
-
-```sh
-npm install ng2-alfresco-viewer
-```
-
-### Build from sources
-
-You can build component from sources with the following commands:
+Alternatively you can build component from sources with the following commands:
 
 ```sh
 npm install
 npm run build
 ```
 
-> The `build` task rebuilds all the code, runs tslint, license checks 
-> and other quality check tools before performing unit testing.
+### Build the files and keep watching for changes
 
-### NPM scripts
+```sh
+$ npm run build:w
+```
+
+## Running unit tests
+
+```sh
+npm test
+```
+
+### Running unit tests in browser
+
+```sh
+npm test-browser
+```
+
+This task rebuilds all the code, runs tslint, license checks and other quality check tools
+before performing unit testing.
+
+### Code coverage
+
+```sh
+npm run coverage
+```
+
+## Demo
+
+If you want have a demo of how the component works, please check the demo folder :
+
+```sh
+cd demo
+npm install
+npm start
+```
+
+## NPM scripts
 
 | Command | Description |
 | --- | --- |
@@ -204,16 +331,6 @@ npm run build
 | npm run test-browser | Run unit tests in the browser
 | npm run coverage | Run unit tests and display code coverage report |
 
-### Demo
-
-Please check the demo folder for a demo project
-
-```sh
-cd demo
-npm install
-npm start
-```
-
-### License
+## License
 
 [Apache Version 2.0](https://github.com/Alfresco/alfresco-ng2-components/blob/master/LICENSE)

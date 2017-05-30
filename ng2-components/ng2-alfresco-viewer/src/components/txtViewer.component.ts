@@ -15,77 +15,32 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
-import { SimpleChanges } from '@angular/core';
-import { Http, RequestOptions, Response, ResponseContentType } from '@angular/http';
-import 'rxjs/add/operator/toPromise';
+import { Component, Input } from '@angular/core';
+import { AlfrescoContentService } from 'ng2-alfresco-core';
 
 @Component({
-    selector: 'adf-txt-viewer',
+    selector: 'txt-viewer',
     templateUrl: './txtViewer.component.html',
-    styleUrls: ['./txtViewer.component.scss'],
-    host: { 'class': 'adf-txt-viewer' },
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./txtViewer.component.css']
 })
-export class TxtViewerComponent implements OnChanges {
+export class TxtViewerComponent {
 
     @Input()
-    urlFile: any;
-
-    @Input()
-    blobFile: Blob;
+    nodeId: string;
 
     content: string;
 
-    constructor(private http: Http) {
+    constructor(private alfrescoContentService: AlfrescoContentService) {
     }
 
-    ngOnChanges(changes: SimpleChanges): Promise<any> {
-
-        let blobFile = changes['blobFile'];
-        if (blobFile && blobFile.currentValue) {
-            return this.readBlob(blobFile.currentValue);
-        }
-
-        let urlFile = changes['urlFile'];
-        if (urlFile && urlFile.currentValue) {
-            return this.getUrlContent(urlFile.currentValue);
-        }
-
-        if (!this.urlFile && !this.blobFile) {
-            throw new Error('Attribute urlFile or blobFile is required');
-        }
+    ngOnChanges() {
+        this.getNodeContent(this.nodeId);
     }
 
-    private getUrlContent(url: string): Promise<any> {
-        return new Promise((resolve, reject) => {
-
-            this.http.get(url, new RequestOptions({
-                responseType: ResponseContentType.Text
-            })).toPromise().then(
-                (res: Response) => {
-                    this.content = res.text();
-                    resolve();
-                }, (event) => {
-                    reject(event);
-                });
+    private getNodeContent(nodeId) {
+        this.alfrescoContentService.getNodeContent(nodeId).subscribe((nodeContent) => {
+            this.content = nodeContent;
         });
     }
 
-    private readBlob(blob: Blob): Promise<any> {
-        return new Promise((resolve, reject) => {
-            let reader = new FileReader();
-
-            reader.onload = () => {
-                this.content = reader.result;
-                resolve();
-            };
-
-            reader.onerror = (error: ErrorEvent) => {
-                reject(error);
-            };
-
-            reader.readAsText(blob);
-        });
-    }
 }

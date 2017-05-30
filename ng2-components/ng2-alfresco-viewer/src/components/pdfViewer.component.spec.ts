@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-import { DebugElement } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import {
-    AlfrescoApiService,
-    AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
-    CoreModule
-} from 'ng2-alfresco-core';
-import { EventMock } from '../assets/event.mock';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { PdfViewerComponent } from './pdfViewer.component';
+import { EventMock } from '../assets/event.mock';
+import { DebugElement }    from '@angular/core';
+import {
+    AlfrescoAuthenticationService,
+    AlfrescoSettingsService,
+    AlfrescoApiService,
+    CoreModule
+} from 'ng2-alfresco-core';
 
 describe('Test ng2-alfresco-viewer PdfViewer component', () => {
 
@@ -95,12 +95,12 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
         });
 
         it('should Canvas be present', () => {
-            expect(element.querySelector('.pdfViewer')).not.toBeNull();
-            expect(element.querySelector('.viewer-pdf-container')).not.toBeNull();
+            expect(element.querySelector('#viewer-viewerPdf')).not.toBeNull();
+            expect(element.querySelector('#viewer-pdf-container')).not.toBeNull();
         });
 
         it('should Loader be present', () => {
-            expect(element.querySelector('.loader-container')).not.toBeNull();
+            expect(element.querySelector('#loader-container')).not.toBeNull();
         });
 
         it('should Next an Previous Buttons be present', () => {
@@ -109,8 +109,8 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
         });
 
         it('should Input Page elements be present', () => {
-            expect(element.querySelector('.viewer-pagenumber-input')).toBeDefined();
-            expect(element.querySelector('.viewer-total-pages')).toBeDefined();
+            expect(element.querySelector('#viewer-pagenumber-input')).toBeDefined();
+            expect(element.querySelector('#viewer-total-pages')).toBeDefined();
 
             expect(element.querySelector('#viewer-previous-page-button')).not.toBeNull();
             expect(element.querySelector('#viewer-next-page-button')).not.toBeNull();
@@ -121,8 +121,8 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
 
             fixture.detectChanges();
 
-            expect(element.querySelector('.viewer-toolbar-command')).toBeNull();
-            expect(element.querySelector('.viewer-toolbar-pagination')).toBeNull();
+            expect(element.querySelector('#viewer-toolbar-command')).toBeNull();
+            expect(element.querySelector('#viewer-toolbar-pagination')).toBeNull();
         });
     });
 
@@ -143,12 +143,12 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
         });
 
         it('should Canvas be present', () => {
-            expect(element.querySelector('.pdfViewer')).not.toBeNull();
-            expect(element.querySelector('.viewer-pdf-container')).not.toBeNull();
+            expect(element.querySelector('#viewer-viewerPdf')).not.toBeNull();
+            expect(element.querySelector('#viewer-pdf-container')).not.toBeNull();
         });
 
         it('should Loader be present', () => {
-            expect(element.querySelector('.loader-container')).not.toBeNull();
+            expect(element.querySelector('#loader-container')).not.toBeNull();
         });
 
         it('should Next an Previous Buttons be present', () => {
@@ -157,8 +157,8 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
         });
 
         it('should Input Page elements be present', () => {
-            expect(element.querySelector('.viewer-pagenumber-input')).toBeDefined();
-            expect(element.querySelector('.viewer-total-pages')).toBeDefined();
+            expect(element.querySelector('#viewer-pagenumber-input')).toBeDefined();
+            expect(element.querySelector('#viewer-total-pages')).toBeDefined();
 
             expect(element.querySelector('#viewer-previous-page-button')).not.toBeNull();
             expect(element.querySelector('#viewer-next-page-button')).not.toBeNull();
@@ -169,8 +169,8 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
 
             fixture.detectChanges();
 
-            expect(element.querySelector('.viewer-toolbar-command')).toBeNull();
-            expect(element.querySelector('.viewer-toolbar-pagination')).toBeNull();
+            expect(element.querySelector('#viewer-toolbar-command')).toBeNull();
+            expect(element.querySelector('#viewer-toolbar-pagination')).toBeNull();
         });
     });
 
@@ -370,7 +370,7 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
                     component.inputPage('2');
                     fixture.detectChanges();
                     expect(component.displayPage).toBe(2);
-                    let documentContainer = element.querySelector('.viewer-pdf-container');
+                    let documentContainer = element.querySelector('#viewer-pdf-container');
                     documentContainer.scrollTop = 100000;
                     component.watchScroll(documentContainer);
                     fixture.detectChanges();
