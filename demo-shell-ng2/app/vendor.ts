@@ -39,7 +39,7 @@ import 'dialog-polyfill/dialog-polyfill.css';
 import 'flag-icon-css/css/flag-icon.min.css';
 
 // Load the Angular Material 2 stylesheet
-import '../public/css/angular-material.css';
+import '@angular/material/prebuilt-themes/indigo-pink.css';
 
 // Google Material Design Lite
 import 'material-design-lite/material.js';

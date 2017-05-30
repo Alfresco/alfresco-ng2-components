@@ -16,6 +16,7 @@
  */
 
 import { NgModule, ModuleWithProviders } from '@angular/core';
+import { MdIconModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
 
 import { UploadDragAreaComponent } from './src/components/upload-drag-area.component';
@@ -65,7 +66,8 @@ export const UPLOAD_PROVIDERS: any[] = [
 
 @NgModule({
     imports: [
-        CoreModule
+        CoreModule,
+        MdIconModule
     ],
     declarations: [
         ...UPLOAD_DIRECTIVES

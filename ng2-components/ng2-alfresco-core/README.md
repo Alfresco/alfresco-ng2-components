@@ -47,11 +47,6 @@ npm install --save ng2-alfresco-core
 
 - Components
     - Context Menu directive
-    - Material Design directives
-        - [mdl]
-        - [alfresco-mdl-button]
-        - [alfresco-mdl-menu]
-        - [alfresco-mdl-tabs]
 - Directives
     - UploadDirective
 - Services

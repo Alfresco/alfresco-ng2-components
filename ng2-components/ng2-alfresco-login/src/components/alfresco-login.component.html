@@ -4,10 +4,10 @@
         <form [formGroup]="form" (submit)="onSubmit(form.value, $event)">
             <div class="mdl-card__title alfresco-logo">
                 <!--HEADER TEMPLATE-->
-                <template *ngIf="headerTemplate"
+                <ng-template *ngIf="headerTemplate"
                           ngFor [ngForOf]="[data]"
                           [ngForTemplate]="headerTemplate">
-                </template>
+                </ng-template>
                 <img *ngIf="!headerTemplate" class="center" [src]="logoImageUrl" alt="{{'LOGIN.LOGO' | translate }}">
             </div>
             <div class="mdl-card__supporting-text">
@@ -22,7 +22,7 @@
                 <!--USERNAME FIELD-->
                 <div class="adf-login__field" [ngClass]="{'is-invalid': isErrorStyle(form.controls.username)}">
                     <md-input-container class="adf-full-width">
-                        <input md-input placeholder="{{'LOGIN.LABEL.USERNAME' | translate }}"
+                        <input mdInput placeholder="{{'LOGIN.LABEL.USERNAME' | translate }}"
                                type="text"
                                class="adf-full-width"
                                [formControl]="form.controls['username']"
@@ -44,7 +44,7 @@
                     <md-icon *ngIf="isPasswordShow" class="alfresco-login__password-icon" data-automation-id="hide_password" (click)="toggleShowPassword()">visibility_off</md-icon>
 
                     <md-input-container class="adf-full-width">
-                        <input md-input placeholder="{{'LOGIN.LABEL.PASSWORD' | translate }}"
+                        <input mdInput placeholder="{{'LOGIN.LABEL.PASSWORD' | translate }}"
                                type="password"
                                [formControl]="form.controls['password']"
                                id="password"
@@ -70,10 +70,10 @@
             <div class="mdl-card__actions mdl-card--border mdl-card__link">
 
                 <!--FOOTER TEMPLATE-->
-                <template *ngIf="footerTemplate"
+                <ng-template *ngIf="footerTemplate"
                           ngFor [ngForOf]="[data]"
                           [ngForTemplate]="footerTemplate">
-                </template>
+                </ng-template>
                 <div class="login-action" *ngIf="!footerTemplate && showLoginActions">
                     <div id="login-action-help" class="login-action-left">
                         <a href="{{needHelpLink}}">{{'LOGIN.ACTION.HELP' | translate }}</a>
