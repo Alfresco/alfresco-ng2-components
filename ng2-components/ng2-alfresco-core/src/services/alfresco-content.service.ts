@@ -61,9 +61,10 @@ export class AlfrescoContentService {
     /**
      * Get content for the given node.
      * @param nodeId {string}.
-     * @returns {string} URL address.
+     *
+     * @returns {Observable<any>} URL address.
      */
-    getNodeContent(nodeId: string): any {
+    getNodeContent(nodeId: string): Observable<any> {
         return Observable.fromPromise(this.apiService.getInstance().core.nodesApi.getFileContent(nodeId).then((dataContent) => {
             return dataContent;
         })).catch(this.handleError);
