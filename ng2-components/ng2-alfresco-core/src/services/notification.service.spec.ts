@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { LiveAnnouncer, MdSnackBar, MdSnackBarModule, OVERLAY_PROVIDERS, OverlayModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Component } from '@angular/core';
 import { NotificationService } from './notification.service';
+import { MdSnackBarModule, MdSnackBar, OverlayModule, OVERLAY_PROVIDERS, LiveAnnouncer } from '@angular/material';
 
 describe('NotificationService', () => {
-    let fixture: ComponentFixture<ProvidesNotificationServiceComponent>;
+    let fixture: ComponentFixture<ComponentThatProvidesNotificationService>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -31,7 +31,7 @@ describe('NotificationService', () => {
                 OverlayModule,
                 MdSnackBarModule
             ],
-            declarations: [ProvidesNotificationServiceComponent],
+            declarations: [ComponentThatProvidesNotificationService],
             providers: [
                 NotificationService,
                 MdSnackBar,
@@ -44,11 +44,12 @@ describe('NotificationService', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ProvidesNotificationServiceComponent);
+        fixture = TestBed.createComponent(ComponentThatProvidesNotificationService);
         fixture.detectChanges();
     });
 
-    xit('should open a message notification bar', (done) => {
+
+    it('should open a message notification bar', (done) => {
         let promise = fixture.componentInstance.sendMessage();
         promise.afterDismissed().subscribe(() => {
             done();
@@ -59,7 +60,8 @@ describe('NotificationService', () => {
         expect(document.querySelector('snack-bar-container')).not.toBeNull();
     });
 
-    xit('should open a message notification bar with action', (done) => {
+
+    it('should open a message notification bar with action', (done) => {
         let promise = fixture.componentInstance.sendMessageAction();
         promise.afterDismissed().subscribe(() => {
             done();
@@ -76,7 +78,7 @@ describe('NotificationService', () => {
     template: '',
     providers: [NotificationService]
 })
-class ProvidesNotificationServiceComponent {
+class ComponentThatProvidesNotificationService {
     constructor(public notificationService: NotificationService) {
 
     }

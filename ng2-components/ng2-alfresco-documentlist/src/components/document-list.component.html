@@ -1,57 +1,40 @@
-<adf-datatable
-    [selectionMode]="selectionMode"
+<alfresco-document-menu-action
+    *ngIf="creationMenuActions"
+    [folderId]="currentFolderId"
+    (success)="onActionMenuSuccess($event)"
+    (error)="onActionMenuError($event)"
+    (permissionErrorEvent)="onPermissionError($event)">
+</alfresco-document-menu-action>
+<alfresco-datatable
     [data]="data"
     [actions]="contentActions"
     [actionsPosition]="contentActionsPosition"
     [multiselect]="multiselect"
+    [fallbackThumbnail]="fallbackThumbnail"
     [allowDropFiles]="allowDropFiles"
     [contextMenu]="contextMenuActions"
-    [rowStyle]="rowStyle"
-    [rowStyleClass]="rowStyleClass"
-    [loading]="loading"
-    [showHeader]="!isEmpty()"
     (showRowContextMenu)="onShowRowContextMenu($event)"
     (showRowActionsMenu)="onShowRowActionsMenu($event)"
     (executeRowAction)="onExecuteRowAction($event)"
-    (rowClick)="onNodeClick($event.value?.node)"
-    (rowDblClick)="onNodeDblClick($event.value?.node)"
-    (row-select)="onNodeSelect($event.detail)"
-    (row-unselect)="onNodeUnselect($event.detail)">
-
+    (rowClick)="onRowClick($event)"
+    (rowDblClick)="onRowDblClick($event)">
     <div *ngIf="!isEmptyTemplateDefined()">
         <no-content-template>
             <ng-template>
-                <adf-empty-list>
-                    <adf-empty-list-header>
-                        <div> {{'ADF-DOCUMENT-LIST.EMPTY.HEADER' | translate}} </div>
-                    </adf-empty-list-header>
-                </adf-empty-list>
+                <div class="document-list_empty_template">
+                    <div class="document-list__this-space-is-empty">This folder is empty</div>
+                    <div class="document-list__drag-drop">Drag and Drop</div>
+                    <div class="document-list__any-files-here-to-add">any files here to add</div>
+                    <img [src]="emptyFolderImageUrl" class="document-list__empty_doc_lib">
+                </div>
             </ng-template>
         </no-content-template>
     </div>
-
-    <div>
-        <loading-content-template>
-            <ng-template>
-                <div class="adf-document-list-loading-container">
-                    <md-progress-spinner
-                        id="adf-document-list-loading"
-                        class="adf-document-list-loading-margin"
-                        [color]="'primary'"
-                        [mode]="'indeterminate'">
-                    </md-progress-spinner>
-                </div>
-            </ng-template>
-        </loading-content-template>
-    </div>
-</adf-datatable>
-
-<adf-pagination
-    *ngIf="isPaginationEnabled()"
-    class="adf-documentlist-pagination"
+</alfresco-datatable>
+<alfresco-pagination *ngIf="isPaginationEnabled()"
     (changePageSize)="onChangePageSize($event)"
     (nextPage)="onNextPage($event)"
     (prevPage)="onPrevPage($event)"
     [pagination]="pagination"
     [supportedPageSizes]="[5, 10, 15, 20]">
-</adf-pagination>
+</alfresco-pagination>

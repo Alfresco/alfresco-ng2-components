@@ -114,10 +114,10 @@
     <tr *ngIf="data.getRows().length === 0">
         <td class="mdl-data-table__cell--non-numeric no-content-container"
             [attr.colspan]="1 + data.getColumns().length">
-            <template *ngIf="noContentTemplate"
+            <ng-template *ngIf="noContentTemplate"
                       ngFor [ngForOf]="[data]"
                       [ngForTemplate]="noContentTemplate">
-            </template>
+            </ng-template>
         </td>
     </tr>
     </tbody>

@@ -15,24 +15,40 @@
  * limitations under the License.
  */
 
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
+import { MdIconModule } from '@angular/material';
+import { CoreModule } from 'ng2-alfresco-core';
 
-import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
-import { MaterialModule } from './src/material.module';
-
-import { FileUploadingDialogComponent } from './src/components/file-uploading-dialog.component';
-import { FileUploadingListRowComponent } from './src/components/file-uploading-list-row.component';
-import { FileUploadingListComponent } from './src/components/file-uploading-list.component';
-import { UploadButtonComponent } from './src/components/upload-button.component';
 import { UploadDragAreaComponent } from './src/components/upload-drag-area.component';
 import { FileDraggableDirective } from './src/directives/file-draggable.directive';
+import { UploadButtonComponent } from './src/components/upload-button.component';
+import { FileUploadingDialogComponent } from './src/components/file-uploading-dialog.component';
+import { FileUploadingListComponent } from './src/components/file-uploading-list.component';
+import { UploadService } from './src/services/upload.service';
+
+/**
+ * ng2-alfresco-upload, provide components to upload files to alfresco repository.
+ *
+ * Components provided:
+ *         - A button to upload files
+ *           <alfresco-upload-button [showDialogUpload]="boolean"
+ *                                   [showNotificationBar]="boolean"
+ *                                   [uploadFolders]="boolean"
+ *                                   [multipleFiles]="boolean"
+ *                                   [acceptedFilesType]="string">
+ *           </alfresco-upload-button>
+ *
+ *         - Drag and drop area to upload files:
+ *           <alfresco-upload-drag-area [showDialogUpload]="boolean" ></alfresco-upload-drag-area>
+ */
 
 export * from './src/components/upload-button.component';
 export * from './src/components/file-uploading-dialog.component';
 export * from './src/components/upload-drag-area.component';
+export * from './src/services/upload.service';
 export * from './src/directives/file-draggable.directive';
 export * from './src/components/file-uploading-list.component';
-export * from './src/components/file-uploading-list-row.component';
+export * from './src/models/file.model';
 export * from './src/models/permissions.model';
 export * from './src/events/folder-created.event';
 
@@ -41,27 +57,23 @@ export const UPLOAD_DIRECTIVES: any[] = [
     UploadDragAreaComponent,
     UploadButtonComponent,
     FileUploadingDialogComponent,
-    FileUploadingListComponent,
-    FileUploadingListRowComponent
+    FileUploadingListComponent
+];
+
+export const UPLOAD_PROVIDERS: any[] = [
+    UploadService
 ];
 
 @NgModule({
     imports: [
         CoreModule,
-        MaterialModule
+        MdIconModule
     ],
     declarations: [
         ...UPLOAD_DIRECTIVES
     ],
     providers: [
-        {
-            provide: TRANSLATION_PROVIDER,
-            multi: true,
-            useValue: {
-                name: 'ng2-alfresco-upload',
-                source: 'assets/ng2-alfresco-upload'
-            }
-        }
+        ...UPLOAD_PROVIDERS
     ],
     exports: [
         ...UPLOAD_DIRECTIVES
@@ -70,7 +82,10 @@ export const UPLOAD_DIRECTIVES: any[] = [
 export class UploadModule {
     static forRoot(): ModuleWithProviders {
         return {
-            ngModule: UploadModule
+            ngModule: UploadModule,
+            providers: [
+                ...UPLOAD_PROVIDERS
+            ]
         };
     }
 }

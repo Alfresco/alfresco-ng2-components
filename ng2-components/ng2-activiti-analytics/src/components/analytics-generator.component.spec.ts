@@ -15,23 +15,23 @@
  * limitations under the License.
  */
 
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { DiagramsModule } from 'ng2-activiti-diagrams';
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
-import { ChartsModule } from 'ng2-charts';
+import { MdTooltipModule, MdButtonModule, MdIconModule } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
+import { ChartsModule } from 'ng2-charts';
+import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { DiagramsModule } from 'ng2-activiti-diagrams';
 
-import { Chart } from 'ng2-activiti-diagrams';
-import { ReportQuery } from 'ng2-activiti-diagrams';
-import * as analyticMock from '../assets/analyticsComponent.mock';
-import { AnalyticsGeneratorComponent } from '../components/analytics-generator.component';
-import { AnalyticsReportHeatMapComponent } from '../components/analytics-report-heat-map.component';
 import { AnalyticsReportListComponent } from '../components/analytics-report-list.component';
+import { AnalyticsGeneratorComponent } from '../components/analytics-generator.component';
 import { AnalyticsReportParametersComponent } from '../components/analytics-report-parameters.component';
+import { AnalyticsReportHeatMapComponent } from '../components/analytics-report-heat-map.component';
 import { WIDGET_DIRECTIVES } from '../components/widgets/index';
-import { MaterialModule } from '../material.module';
+import { Chart } from '../models/chart.model';
 import { AnalyticsService } from '../services/analytics.service';
+import { ReportQuery } from '../models/report.model';
+import * as analyticMock from '../assets/analyticsComponent.mock';
 
 export const ANALYTICS_DIRECTIVES: any[] = [
     AnalyticsGeneratorComponent,
@@ -45,6 +45,7 @@ export const ANALYTICS_PROVIDERS: any[] = [
 ];
 
 declare let jasmine: any;
+declare let mdDateTimePicker: any;
 
 describe('AnalyticsGeneratorComponent', () => {
 
@@ -59,8 +60,11 @@ describe('AnalyticsGeneratorComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                MaterialModule,
+                MdTooltipModule,
+                MdButtonModule,
+                MdIconModule,
                 ChartsModule,
+
                 DiagramsModule.forRoot()
             ],
             declarations: [

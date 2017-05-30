@@ -17,75 +17,54 @@
 
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { MdSlideToggleModule, MdInputModule } from '@angular/material';
 
-import { AnalyticsModule } from 'ng2-activiti-analytics';
-import { DiagramsModule } from 'ng2-activiti-diagrams';
-import { ActivitiFormModule } from 'ng2-activiti-form';
-import { ActivitiProcessListModule } from 'ng2-activiti-processlist';
-import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
-import { AppConfigService, CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
+import { CoreModule } from 'ng2-alfresco-core';
+import { SearchModule } from 'ng2-alfresco-search';
+import { LoginModule } from 'ng2-alfresco-login';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { DocumentListModule } from 'ng2-alfresco-documentlist';
-import { LoginModule } from 'ng2-alfresco-login';
-import { SearchModule } from 'ng2-alfresco-search';
-import { SocialModule } from 'ng2-alfresco-social';
-import { TagModule } from 'ng2-alfresco-tag';
 import { UploadModule } from 'ng2-alfresco-upload';
-import { UserInfoComponentModule } from 'ng2-alfresco-userinfo';
-import { ViewerModule } from 'ng2-alfresco-viewer';
+import { TagModule } from 'ng2-alfresco-tag';
+import { SocialModule } from 'ng2-alfresco-social';
 import { WebScriptModule } from 'ng2-alfresco-webscript';
-
-import { Editor3DModule } from 'ng2-3d-editor';
-import { ChartsModule } from 'ng2-charts';
+import { ViewerModule } from 'ng2-alfresco-viewer';
+import { ActivitiFormModule } from 'ng2-activiti-form';
+import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
+import { ActivitiProcessListModule } from 'ng2-activiti-processlist';
+import { UserInfoComponentModule } from 'ng2-alfresco-userinfo';
+import { AnalyticsModule } from 'ng2-activiti-analytics';
 import { AppComponent } from './app.component';
 import { routing } from './app.routes';
 import { CustomEditorsModule } from './components/activiti/custom-editor/custom-editor.component';
-import { FormListDemoComponent } from './components/form/form-list-demo.component';
-import { ThemePickerModule } from './components/theme-picker/theme-picker';
-import { MaterialModule } from './material.module';
-import { DebugAppConfigService } from './services/debug-app-config.service';
-
-import { FavoritesComponent } from './components/files/favorites.component';
-import { RecentComponent } from './components/files/recent.component';
-import { SharedLinksComponent } from './components/files/shared-links.component';
-import { SitesComponent } from './components/files/sites.component';
-import { TrashcanComponent } from './components/files/trashcan.component';
+import { Editor3DModule } from 'ng2-3d-editor';
+import { ChartsModule } from 'ng2-charts';
 
 import {
-    AboutComponent,
-    ActivitiAppsViewComponent,
-    ActivitiDemoComponent,
-    ActivitiProcessAttachmentsComponent,
-    ActivitiShowDiagramComponent,
-    ActivitiTaskAttachmentsComponent,
-    DataTableDemoComponent,
-    FilesComponent,
-    FormDemoComponent,
-    FormNodeViewerComponent,
-    FormViewerComponent,
     HomeComponent,
-    LoginDemoComponent,
-    SearchBarComponent,
+    DataTableDemoComponent,
     SearchComponent,
-    SettingsComponent,
-    SocialComponent,
+    SearchBarComponent,
+    LoginDemoComponent,
+    ActivitiDemoComponent,
+    ActivitiAppsView,
+    FormViewer,
+    WebscriptComponent,
     TagComponent,
-    WebscriptComponent
+    SocialComponent,
+    AboutComponent,
+    FilesComponent,
+    FormNodeViewer,
+    SettingComponent
 } from './components/index';
-
-let appConfigFile = 'app.config-dev.json';
-if (process.env.ENV === 'production') {
-    appConfigFile = 'app.config-prod.json';
-}
 
 @NgModule({
     imports: [
         BrowserModule,
         routing,
-        CoreModule.forRoot({
-            appConfigFile: appConfigFile
-        }),
-        MaterialModule,
+        MdInputModule,
+        MdSlideToggleModule,
+        CoreModule.forRoot(),
         LoginModule.forRoot(),
         SearchModule.forRoot(),
         DataTableModule.forRoot(),
@@ -100,11 +79,9 @@ if (process.env.ENV === 'production') {
         ActivitiProcessListModule.forRoot(),
         UserInfoComponentModule.forRoot(),
         AnalyticsModule.forRoot(),
-        DiagramsModule.forRoot(),
         CustomEditorsModule,
         Editor3DModule.forRoot(),
-        ChartsModule,
-        ThemePickerModule
+        ChartsModule
     ],
     declarations: [
         AppComponent,
@@ -114,37 +91,17 @@ if (process.env.ENV === 'production') {
         SearchBarComponent,
         LoginDemoComponent,
         ActivitiDemoComponent,
-        ActivitiTaskAttachmentsComponent,
-        ActivitiProcessAttachmentsComponent,
-        ActivitiShowDiagramComponent,
-        ActivitiAppsViewComponent,
-        FormViewerComponent,
+        ActivitiAppsView,
+        FormViewer,
         WebscriptComponent,
         TagComponent,
         SocialComponent,
         AboutComponent,
         FilesComponent,
-        FormNodeViewerComponent,
-        SettingsComponent,
-        FormDemoComponent,
-        FormListDemoComponent,
-        TrashcanComponent,
-        SharedLinksComponent,
-        SitesComponent,
-        FavoritesComponent,
-        RecentComponent
+        FormNodeViewer,
+        SettingComponent
     ],
-    providers: [
-        { provide: AppConfigService, useClass: DebugAppConfigService },
-        {
-            provide: TRANSLATION_PROVIDER,
-            multi: true,
-            useValue: {
-                name: 'app',
-                source: 'resources'
-            }
-        }
-    ],
+    providers: [],
     bootstrap: [ AppComponent ]
 })
 export class AppModule { }

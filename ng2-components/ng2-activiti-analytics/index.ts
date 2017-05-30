@@ -15,19 +15,20 @@
  * limitations under the License.
  */
 
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
+import { MdTooltipModule, MdButtonModule, MdIconModule } from '@angular/material';
+import { CoreModule } from 'ng2-alfresco-core';
 import { DiagramsModule } from 'ng2-activiti-diagrams';
-import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 
-import { ChartsModule } from 'ng2-charts';
-import { AnalyticsGeneratorComponent } from './src/components/analytics-generator.component';
-import { AnalyticsReportHeatMapComponent } from './src/components/analytics-report-heat-map.component';
 import { AnalyticsReportListComponent } from './src/components/analytics-report-list.component';
 import { AnalyticsReportParametersComponent } from './src/components/analytics-report-parameters.component';
 import { AnalyticsComponent } from './src/components/analytics.component';
-import { WIDGET_DIRECTIVES } from './src/components/widgets/index';
-import { MaterialModule } from './src/material.module';
+import { AnalyticsGeneratorComponent } from './src/components/analytics-generator.component';
+import { AnalyticsReportHeatMapComponent } from './src/components/analytics-report-heat-map.component';
 import { AnalyticsService } from './src/services/analytics.service';
+import { ChartsModule } from 'ng2-charts';
+
+import { WIDGET_DIRECTIVES } from './src/components/widgets/index';
 
 export * from './src/components/analytics.component';
 export * from './src/components/analytics-generator.component';
@@ -54,25 +55,21 @@ export const ANALYTICS_PROVIDERS: any[] = [
         CoreModule,
         ChartsModule,
         DiagramsModule,
-        MaterialModule
+        MdTooltipModule,
+        MdButtonModule,
+        MdIconModule
     ],
     declarations: [
         ...ANALYTICS_DIRECTIVES
     ],
     providers: [
-        ...ANALYTICS_PROVIDERS,
-        {
-            provide: TRANSLATION_PROVIDER,
-            multi: true,
-            useValue: {
-                name: 'ng2-activiti-analytics',
-                source: 'assets/ng2-activiti-analytics'
-            }
-        }
+        ...ANALYTICS_PROVIDERS
     ],
     exports: [
         ...ANALYTICS_DIRECTIVES,
-        MaterialModule
+        MdTooltipModule,
+        MdButtonModule,
+        MdIconModule
     ]
 })
 export class AnalyticsModule {
