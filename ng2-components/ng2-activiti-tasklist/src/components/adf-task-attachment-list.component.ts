@@ -33,9 +33,6 @@ export class TaskAttachmentListComponent implements OnChanges {
     attachmentClick = new EventEmitter();
 
     @Output()
-    attachmentCreate = new EventEmitter();
-
-    @Output()
     success = new EventEmitter();
 
     @Output()
@@ -156,9 +153,4 @@ export class TaskAttachmentListComponent implements OnChanges {
             }
         );
     }
-
-    attachDocumentToTask() {
-        this.attachmentCreate.emit();
-    }
-
 }
