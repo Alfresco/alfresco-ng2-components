@@ -196,12 +196,11 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
 // Simple implementation of the DataRow interface.
 export class ObjectDataRow implements DataRow {
 
-    isSelected: boolean = false;
-
-    constructor(private obj: any) {
+    constructor(private obj: any, public isSelected: boolean = false) {
         if (!obj) {
             throw new Error('Object source not found');
         }
+
     }
 
     getValue(key: string): any {

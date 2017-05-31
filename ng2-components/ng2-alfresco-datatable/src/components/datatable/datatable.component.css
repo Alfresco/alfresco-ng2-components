@@ -109,11 +109,15 @@
 }
 
 .alfresco-datatable__row:focus {
-    outline-offset: -4px;
+    outline-offset: -1px;
+    outline-width: 1px;
+    outline-color: rgb(68,138,255);
+    outline-style: solid;
 }
 
-.alfresco-datatable__row--selected {
-    color: rgb(68,138,255);
+.alfresco-datatable__row--selected,
+.alfresco-datatable__row--selected:hover  {
+    background-color: #e0e0e0;
 }
 
 .adf-upload__dragging > td {

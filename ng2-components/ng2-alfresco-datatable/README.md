@@ -227,6 +227,9 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
+| `selectionMode` | string | 'single' | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows.  |
+| `rowStyle` | string | | The inline style to apply to every row, see [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html) docs for more details and usage examples |
+| `rowStyleClass` | string | | The CSS class to apply to every row |
 | `data` | DataTableAdapter | instance of **ObjectDataTableAdapter** | data source |
 | `rows` | Object[] | [] | The rows that the datatable should show |
 | `multiselect` | boolean | false | Toggles multiple row selection, renders checkboxes at the beginning of each row |

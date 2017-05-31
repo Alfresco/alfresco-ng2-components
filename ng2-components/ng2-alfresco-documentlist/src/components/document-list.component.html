@@ -6,6 +6,7 @@
     (permissionErrorEvent)="onPermissionError($event)">
 </alfresco-document-menu-action>
 <alfresco-datatable
+    [selectionMode]="selectionMode"
     [data]="data"
     [actions]="contentActions"
     [actionsPosition]="contentActionsPosition"
@@ -13,6 +14,8 @@
     [fallbackThumbnail]="fallbackThumbnail"
     [allowDropFiles]="allowDropFiles"
     [contextMenu]="contextMenuActions"
+    [rowStyle]="rowStyle"
+    [rowStyleClass]="rowStyleClass"
     (showRowContextMenu)="onShowRowContextMenu($event)"
     (showRowActionsMenu)="onShowRowActionsMenu($event)"
     (executeRowAction)="onExecuteRowAction($event)"

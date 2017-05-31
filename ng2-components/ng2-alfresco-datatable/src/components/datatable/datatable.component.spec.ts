@@ -18,7 +18,7 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
-import { MdCheckboxChange } from '@angular/material';
+import { MdCheckboxModule, MdCheckboxChange } from '@angular/material';
 import { DataTableComponent } from './datatable.component';
 import { DataTableCellComponent } from './datatable-cell.component';
 import {
@@ -26,7 +26,7 @@ import {
     DataColumn,
     DataSorting,
     ObjectDataTableAdapter,
-    ObjectDataColumn
+    ObjectDataColumn, ObjectDataRow
 } from './../../data/index';
 
 describe('DataTable', () => {
@@ -39,7 +39,8 @@ describe('DataTable', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule.forRoot(),
+                MdCheckboxModule
             ],
             declarations: [
                 DataTableCellComponent,
@@ -52,7 +53,6 @@ describe('DataTable', () => {
         fixture = TestBed.createComponent(DataTableComponent);
         dataTable = fixture.componentInstance;
         element = fixture.debugElement.nativeElement;
-        //fixture.detectChanges();
     });
 
     beforeEach(() => {
@@ -64,6 +64,93 @@ describe('DataTable', () => {
             preventDefault: function () {
             }
         };
+    });
+
+    it('should reset selection on mode change', () => {
+        spyOn(dataTable, 'resetSelection').and.callThrough();
+
+        dataTable.data = new ObjectDataTableAdapter(
+            [
+                { name: '1' },
+                { name: '2' }
+            ],
+            [ new ObjectDataColumn({ key: 'name'}) ]
+        );
+        const rows = dataTable.data.getRows();
+        rows[0].isSelected = true;
+        rows[1].isSelected = true;
+
+        expect(rows[0].isSelected).toBeTruthy();
+        expect(rows[1].isSelected).toBeTruthy();
+
+        dataTable.ngOnChanges({
+            selectionMode: new SimpleChange(null, 'multiple', false)
+        });
+
+        expect(dataTable.resetSelection).toHaveBeenCalled();
+    });
+
+    it('should select only one row with [single] selection mode', () => {
+        dataTable.selectionMode = 'single';
+        dataTable.data = new ObjectDataTableAdapter(
+            [
+                { name: '1' },
+                { name: '2' }
+            ],
+            [ new ObjectDataColumn({ key: 'name'}) ]
+        );
+        const rows = dataTable.data.getRows();
+
+
+        dataTable.onRowClick(rows[0], null);
+        expect(rows[0].isSelected).toBeTruthy();
+        expect(rows[1].isSelected).toBeFalsy();
+
+        dataTable.onRowClick(rows[1], null);
+        expect(rows[0].isSelected).toBeFalsy();
+        expect(rows[1].isSelected).toBeTruthy();
+    });
+
+    it('should unselect the row with [single] selection mode', () => {
+        dataTable.selectionMode = 'single';
+        dataTable.data = new ObjectDataTableAdapter(
+            [
+                { name: '1' },
+                { name: '2' }
+            ],
+            [ new ObjectDataColumn({ key: 'name'}) ]
+        );
+        const rows = dataTable.data.getRows();
+
+        dataTable.onRowClick(rows[0], null);
+        expect(rows[0].isSelected).toBeTruthy();
+        expect(rows[1].isSelected).toBeFalsy();
+
+        dataTable.onRowClick(rows[0], null);
+        expect(rows[0].isSelected).toBeFalsy();
+        expect(rows[1].isSelected).toBeFalsy();
+    });
+
+    it('should select multiple rows with [multiple] selection mode', () => {
+        dataTable.selectionMode = 'multiple';
+        dataTable.data = new ObjectDataTableAdapter(
+            [
+                { name: '1' },
+                { name: '2' }
+            ],
+            [ new ObjectDataColumn({ key: 'name'}) ]
+        );
+        const rows = dataTable.data.getRows();
+
+        const event = new MouseEvent('click', {
+            metaKey: true
+        });
+
+        dataTable.onRowClick(rows[0], event);
+        dataTable.onRowClick(rows[1], event);
+
+        expect(rows[0].isSelected).toBeTruthy();
+        expect(rows[1].isSelected).toBeTruthy();
     });
 
     it('should put actions menu to the right by default', () => {
