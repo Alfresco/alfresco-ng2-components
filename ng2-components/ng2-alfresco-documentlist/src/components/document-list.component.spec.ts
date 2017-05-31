@@ -18,7 +18,7 @@
 import { NgZone, SimpleChange, TemplateRef } from '@angular/core';
 import { DataTableComponent, DataColumn, DataRowEvent } from 'ng2-alfresco-datatable';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { DocumentListComponent } from './document-list.component';
 import { DocumentListService } from './../services/document-list.service';
 import { ContentActionModel } from '../models/content-action.model';
@@ -27,6 +27,65 @@ import { NodeMinimalEntry, NodeMinimal, NodePaging } from '../models/document-li
 import { ShareDataRow, RowFilter, ImageResolver } from './../data/share-datatable-adapter';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { DocumentMenuActionComponent } from './document-menu-action.component';
+import { Observable } from 'rxjs/Rx';
+
+declare let jasmine: any;
+
+
+let fakeNodeAnswerWithEntries = {
+    'list': {
+        'pagination': {
+            'count': 4,
+            'hasMoreItems': false,
+            'totalItems': 14,
+            'skipCount': 10,
+            'maxItems': 10
+        },
+        'entries': [{
+            'entry': {
+                'isFile': true,
+                'createdByUser': { 'id': 'admin', 'displayName': 'Administrator' },
+                'modifiedAt': '2017-05-24T15:08:55.640Z',
+                'nodeType': 'cm:content',
+                'content': {
+                    'mimeType': 'application/rtf',
+                    'mimeTypeName': 'Rich Text Format',
+                    'sizeInBytes': 14530,
+                    'encoding': 'UTF-8'
+                },
+                'parentId': 'd124de26-6ba0-4f40-8d98-4907da2d337a',
+                'createdAt': '2017-05-24T15:08:55.640Z',
+                'path': {
+                    'name': '/Company Home/Guest Home',
+                    'isComplete': true,
+                    'elements': [{
+                        'id': '94acfc73-7014-4475-9bd9-93a2162f0f8c',
+                        'name': 'Company Home'
+                    }, { 'id': 'd124de26-6ba0-4f40-8d98-4907da2d337a', 'name': 'Guest Home' }]
+                },
+                'isFolder': false,
+                'modifiedByUser': { 'id': 'admin', 'displayName': 'Administrator' },
+                'name': 'b_txt_file.rtf',
+                'id': '67b80f77-dbca-4f58-be6c-71b9dd61ea53',
+                'properties': { 'cm:versionLabel': '1.0', 'cm:versionType': 'MAJOR' },
+                'allowableOperations': ['delete', 'update']
+            }
+        }]
+    }
+};
+
+let fakeNodeAnswerWithNOEntries = {
+    'list': {
+        'pagination': {
+            'count': 4,
+            'hasMoreItems': false,
+            'totalItems': 14,
+            'skipCount': 10,
+            'maxItems': 10
+        },
+        'entries': []
+    }
+};
 
 describe('DocumentList', () => {
 
@@ -50,7 +109,7 @@ describe('DocumentList', () => {
             ],
             providers: [
                 DocumentListService,
-                {provide: NgZone, useValue: zone}
+                { provide: NgZone, useValue: zone }
             ]
         }).compileComponents();
     }));
@@ -63,15 +122,29 @@ describe('DocumentList', () => {
         };
 
         componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered'
+            'upgradeAllRegistered', 'upgradeElement'
         ]);
         window['componentHandler'] = componentHandler;
 
         fixture = TestBed.createComponent(DocumentListComponent);
 
+        let translateService = TestBed.get(AlfrescoTranslationService);
+        spyOn(translateService, 'addTranslationFolder').and.stub();
+        spyOn(translateService, 'get').and.callFake((key) => {
+            return Observable.of(key);
+        });
+
         element = fixture.nativeElement;
         documentList = fixture.componentInstance;
         fixture.detectChanges();
+    });
+
+    beforeEach(() => {
+        jasmine.Ajax.install();
+    });
+
+    afterEach(() => {
+        jasmine.Ajax.uninstall();
     });
 
     it('should setup default columns', () => {
@@ -176,7 +249,7 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = {entry: {isFile: true, name: 'xyz', allowableOperations: ['create', 'update']}};
+        let nodeFile = { entry: { isFile: true, name: 'xyz', allowableOperations: ['create', 'update'] } };
 
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
@@ -197,7 +270,7 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = {entry: {isFolder: true, name: 'xyz', allowableOperations: ['create', 'update']}};
+        let nodeFile = { entry: { isFolder: true, name: 'xyz', allowableOperations: ['create', 'update'] } };
 
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
@@ -218,7 +291,7 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = {entry: {isFile: true, name: 'xyz', allowableOperations: ['create', 'update']}};
+        let nodeFile = { entry: { isFile: true, name: 'xyz', allowableOperations: ['create', 'update'] } };
 
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
@@ -238,7 +311,7 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = {entry: {isFolder: true, name: 'xyz', allowableOperations: ['create', 'update']}};
+        let nodeFile = { entry: { isFolder: true, name: 'xyz', allowableOperations: ['create', 'update'] } };
 
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
@@ -258,7 +331,7 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = {entry: {isFile: true, name: 'xyz', allowableOperations: ['create', 'update', 'delete']}};
+        let nodeFile = { entry: { isFile: true, name: 'xyz', allowableOperations: ['create', 'update', 'delete'] } };
 
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
@@ -278,7 +351,7 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = {entry: {isFolder: true, name: 'xyz', allowableOperations: ['create', 'update', 'delete']}};
+        let nodeFile = { entry: { isFolder: true, name: 'xyz', allowableOperations: ['create', 'update', 'delete'] } };
 
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
@@ -297,7 +370,7 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = {entry: {isFile: true, name: 'xyz', allowableOperations: null}};
+        let nodeFile = { entry: { isFile: true, name: 'xyz', allowableOperations: null } };
 
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
@@ -316,7 +389,7 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = {entry: {isFolder: true, name: 'xyz', allowableOperations: null}};
+        let nodeFile = { entry: { isFolder: true, name: 'xyz', allowableOperations: null } };
 
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
@@ -620,7 +693,7 @@ describe('DocumentList', () => {
         });
 
         documentList.currentFolderId = 'wrong-id';
-        documentList.ngOnChanges({currentFolderId: new SimpleChange(null, documentList.currentFolderId, true)});
+        documentList.ngOnChanges({ currentFolderId: new SimpleChange(null, documentList.currentFolderId, true) });
     });
 
     it('should require dataTable to check empty template', () => {
@@ -712,7 +785,38 @@ describe('DocumentList', () => {
     it('should load folder by ID on init', () => {
         documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
         spyOn(documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.resolve());
-        documentList.ngOnChanges({folderNode: new SimpleChange(null, documentList.currentFolderId, true)});
+        documentList.ngOnChanges({ folderNode: new SimpleChange(null, documentList.currentFolderId, true) });
         expect(documentList.loadFolderNodesByFolderNodeId).toHaveBeenCalled();
     });
+
+    it('should load previous page if there are no other elements in multi page table', async(() => {
+        documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
+        documentList.folderNode = new NodeMinimal();
+        documentList.folderNode.id = '1d26e465-dea3-42f3-b415-faa8364b9692';
+        documentList.skipCount = 5;
+        documentList.pageSize = 5;
+        spyOn(documentList, 'isPaginationEnabled').and.returnValue(true);
+        documentList.reload();
+
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            let rowElement = element.querySelector('[data-automation-id="b_txt_file.rtf"]');
+            expect(rowElement).toBeDefined();
+            expect(rowElement).not.toBeNull();
+        });
+
+        jasmine.Ajax.requests.at(0).respondWith({
+            status: 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeNodeAnswerWithNOEntries)
+        });
+
+        jasmine.Ajax.requests.at(1).respondWith({
+            status: 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeNodeAnswerWithEntries)
+        });
+    }));
 });
