@@ -64,6 +64,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     thumbnails: boolean = false;
 
     @Input()
+    selectionMode: string = 'single'; // null|single|multiple
+
+    @Input()
     multiselect: boolean = false;
 
     @Input()
@@ -92,6 +95,12 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     @Input()
     sorting: string[];
+
+    @Input()
+    rowStyle: string;
+
+    @Input()
+    rowStyleClass: string;
 
     skipCount: number = 0;
 

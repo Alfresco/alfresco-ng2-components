@@ -1,8 +1,10 @@
 <div class="p-10">
     <alfresco-datatable
         [data]="data"
+        [selectionMode]="selectionMode"
         [multiselect]="multiselect"
         [actions]="true"
+        rowStyleClass="custom-row-style"
         (showRowActionsMenu)="onShowRowActionsMenu($event)"
         (executeRowAction)="onExecuteRowAction($event)"
         (row-click)="onRowClick($event)"
@@ -21,6 +23,14 @@
 </div>
 <div class="p-10">
     <md-checkbox [(ngModel)]="multiselect">Multiselect</md-checkbox>
+</div>
+<div class="p-10">
+    <p>For 'Multiple' selection mode use Cmd (macOS) or Ctrl (Win) to toggle selection of multiple items.</p>
+    <md-select placeholder="Selection Mode" [(ngModel)]="selectionMode" name="food">
+        <md-option *ngFor="let mode of selectionModes" [value]="mode.value">
+            {{mode.viewValue}}
+        </md-option>
+    </md-select>
 </div>
 <div class="p-10">
     <button md-raised-button (click)="reset()">Reset to default</button>
