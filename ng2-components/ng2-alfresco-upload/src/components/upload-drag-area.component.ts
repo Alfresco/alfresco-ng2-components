@@ -55,9 +55,6 @@ export class UploadDragAreaComponent {
     @Input()
     rootFolderId: string = UploadDragAreaComponent.DEFAULT_ROOT_ID;
 
-    @Input()
-    uploadToECM: boolean = true;
-
     @Output()
     onSuccess = new EventEmitter();
 
@@ -105,18 +102,6 @@ export class UploadDragAreaComponent {
                 this.showUndoNotificationBar(latestFilesAdded);
             }
         }
-    }
-
-    /**
-     * Check il the file is valid or not
-     * @param files
-     * @returns {boolean}
-     */
-    checkValidity(files: File[]): boolean {
-        if (files.length && files[0].type === '') {
-            return false;
-        }
-        return true;
     }
 
     /**
