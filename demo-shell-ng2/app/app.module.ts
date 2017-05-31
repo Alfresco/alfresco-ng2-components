@@ -17,7 +17,7 @@
 
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { MdSlideToggleModule, MdInputModule } from '@angular/material';
+import { MdSlideToggleModule, MdInputModule, MdSelectModule } from '@angular/material';
 
 import { CoreModule } from 'ng2-alfresco-core';
 import { SearchModule } from 'ng2-alfresco-search';
@@ -64,6 +64,7 @@ import {
         routing,
         MdInputModule,
         MdSlideToggleModule,
+        MdSelectModule,
         CoreModule.forRoot(),
         LoginModule.forRoot(),
         SearchModule.forRoot(),

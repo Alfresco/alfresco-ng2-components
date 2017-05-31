@@ -32,20 +32,20 @@
 
                     <!-- Example #1: using custom template with implicit access to data context -->
                     <!--
-                    <template let-entry="$implicit">
+                    <ng-template let-entry="$implicit">
                         <span>Hi! {{entry.data.getValue(entry.row, entry.col)}}</span>
-                    </template>
+                    </ng-template>
                     -->
 
                     <!-- Example #2: using custom template with value access -->
                     <!--
-                    <template let-value="value">
+                    <ng-template let-value="value">
                         <span>Hi! {{value}}</span>
-                    </template>
+                    </ng-template>
                     -->
 
                 </data-column>
-                <!-- Notes: has performance problems due to multiple files/folders causing separate HTTP calls to get tags -->
+                <!-- Notes: has performance overhead due to multiple files/folders causing separate HTTP calls to get tags -->
                 <!--
                 <data-column
                     title="{{'DOCUMENT_LIST.COLUMNS.TAG' | translate}}"

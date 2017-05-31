@@ -53,6 +53,9 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
     rows: any[] = [];
 
     @Input()
+    selectionMode: string = 'single'; // none|single|multiple
+
+    @Input()
     multiselect: boolean = false;
 
     @Input()
@@ -69,6 +72,12 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
 
     @Input()
     allowDropFiles: boolean = false;
+
+    @Input()
+    rowStyle: string;
+
+    @Input()
+    rowStyleClass: string;
 
     @Output()
     rowClick: EventEmitter<DataRowEvent> = new EventEmitter<DataRowEvent>();
@@ -88,10 +97,6 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
     noContentTemplate: TemplateRef<any>;
     isSelectAllChecked: boolean = false;
 
-    get selectedRow(): DataRow {
-        return this.data.selectedRow;
-    }
-
     constructor(@Optional() private el: ElementRef) {
     }
 
@@ -110,6 +115,10 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
                 this.data.setRows(this.convertToRowsData(changes['rows'].currentValue));
             }
             return;
+        }
+
+        if (changes.selectionMode && !changes.selectionMode.isFirstChange()) {
+            this.resetSelection();
         }
     }
 
@@ -146,25 +155,50 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
         }
     }
 
-    onRowClick(row: DataRow, e?: Event) {
+    onRowClick(row: DataRow, e: MouseEvent) {
         if (e) {
             e.preventDefault();
         }
 
-        if (this.data) {
-            this.data.selectedRow = row;
+        if (row) {
+            if (this.data) {
+                const newValue = !row.isSelected;
+                const rows = this.data.getRows();
+
+                if (this.isSingleSelectionMode()) {
+                    rows.forEach(r => r.isSelected = false);
+                    row.isSelected = newValue;
+                }
+
+                if (this.isMultiSelectionMode()) {
+                    const modifier = e.metaKey || e.ctrlKey;
+                    if (!modifier) {
+                        rows.forEach(r => r.isSelected = false);
+                    }
+                    row.isSelected = newValue;
+                }
+            }
+
+            let event = new DataRowEvent(row, e, this);
+            this.rowClick.emit(event);
+
+            if (!event.defaultPrevented && this.el.nativeElement) {
+                this.el.nativeElement.dispatchEvent(
+                    new CustomEvent('row-click', {
+                        detail: event,
+                        bubbles: true
+                    })
+                );
+            }
         }
+    }
 
-        let event = new DataRowEvent(row, e, this);
-        this.rowClick.emit(event);
-
-        if (!event.defaultPrevented && this.el.nativeElement) {
-            this.el.nativeElement.dispatchEvent(
-                new CustomEvent('row-click', {
-                    detail: event,
-                    bubbles: true
-                })
-            );
+    resetSelection(): void {
+        if (this.data) {
+            const rows = this.data.getRows();
+            if (rows && rows.length > 0) {
+                rows.forEach(r => r.isSelected = false);
+            }
         }
     }
 
@@ -267,5 +301,17 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
 
     rowAllowsDrop(row: DataRow): boolean {
         return row.isDropTarget === true;
+    }
+
+    hasSelectionMode(): boolean {
+        return this.isSingleSelectionMode() || this.isMultiSelectionMode();
+    }
+
+    isSingleSelectionMode(): boolean {
+        return this.selectionMode && this.selectionMode.toLowerCase() === 'single';
+    }
+
+    isMultiSelectionMode(): boolean {
+        return this.selectionMode && this.selectionMode.toLowerCase() === 'multiple';
     }
 }

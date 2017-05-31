@@ -1,133 +1,216 @@
-# DocumentList library
+# DocumentList Component for Angular 2
 
-Contains the Document List component and other related components and classes.
+<p>
+  <a title='Build Status Travis' href="https://travis-ci.org/Alfresco/alfresco-ng2-components">
+    <img src='https://travis-ci.org/Alfresco/alfresco-ng2-components.svg?branch=master'  alt='travis
+    Status' />
+  </a>
+  <a title='Build Status AppVeyor' href="https://ci.appveyor.com/project/alfresco/alfresco-ng2-components">
+    <img src='https://ci.appveyor.com/api/projects/status/github/Alfresco/alfresco-ng2-components'  alt='travis
+    Status' />
+  </a>
+  <a href='https://codecov.io/gh/Alfresco/alfresco-ng2-components'>
+    <img src='https://img.shields.io/codecov/c/github/Alfresco/alfresco-ng2-components/master.svg?maxAge=2592000' alt='Coverage Status' />
+  </a>
+  <a href='https://www.npmjs.com/package/ng2-alfresco-documentlist'>
+    <img src='https://img.shields.io/npm/dt/ng2-alfresco-documentlist.svg' alt='npm downloads' />
+  </a>
+  <a href='https://github.com/Alfresco/alfresco-ng2-components/blob/master/LICENSE'>
+     <img src='https://img.shields.io/hexpm/l/plug.svg' alt='license' />
+  </a>
+  <a href='https://www.alfresco.com/'>
+     <img src='https://img.shields.io/badge/style-component-green.svg?label=alfresco' alt='alfresco component' />
+  </a>
+  <a href='https://angular.io/'>
+     <img src='https://img.shields.io/badge/style-2-red.svg?label=angular' alt='angular 2' />
+  </a>
+  <a href='https://www.typescriptlang.org/docs/tutorial.html'>
+     <img src='https://img.shields.io/badge/style-lang-blue.svg?label=typescript' alt='typescript' />
+  </a>
+  <a href='https://www.alfresco.com/'>
+     <img src='https://img.shields.io/badge/style-%3E5.0.0-blue.svg?label=node%20version' alt='node version' />
+  </a>
+</p>
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
+## Prerequisites
 
-<!-- toc -->
+Before you start using this development framework, make sure you have installed all required software and done all the
+necessary configuration [prerequisites](https://github.com/Alfresco/alfresco-ng2-components/blob/master/PREREQUISITES.md).
 
-- [Document List component](#document-list-component)
-  * [Basic Usage](#basic-usage)
-    + [Properties](#properties)
-    + [Events](#events)
-  * [Details](#details)
-    + [DOM Events](#dom-events)
-    + [Data Sources](#data-sources)
-      - [Node ID](#node-id)
-      - [Repository aliases](#repository-aliases)
-      - [DocumentList aliases](#documentlist-aliases)
-    + [Setting default folder](#setting-default-folder)
-    + [Custom icons for selected rows](#custom-icons-for-selected-rows)
-    + [Calling DocumentList api directly](#calling-documentlist-api-directly)
-    + [Custom columns](#custom-columns)
-    + [DataColumn Properties](#datacolumn-properties)
-    + [Column Types](#column-types)
-    + [Underlying node object](#underlying-node-object)
-    + [Date Column](#date-column)
-    + [Location Column](#location-column)
-    + [Column Template](#column-template)
-    + [Actions](#actions)
-    + [Menu actions](#menu-actions)
-    + [Default action handlers](#default-action-handlers)
-      - [Delete - System handler combined with custom handler](#delete---system-handler-combined-with-custom-handler)
-      - [Delete - Show notification message with no permission](#delete---show-notification-message-with-no-permission)
-      - [Delete - Disable button checking the permission](#delete---disable-button-checking-the-permission)
-      - [Download](#download)
-      - [Copy and move](#copy-and-move)
-      - [Error, Permission and success callback](#error-permission-and-success-callback)
-    + [Folder actions](#folder-actions)
-    + [Context Menu](#context-menu)
-    + [Navigation mode](#navigation-mode)
-- [Breadcrumb Component](#breadcrumb-component)
-  * [Basic Usage](#basic-usage-1)
-    + [Properties](#properties-1)
-    + [Events](#events-1)
-- [Dropdown Site Component](#dropdown-site-component)
-  * [Basic Usage](#basic-usage-2)
-    + [Events](#events-2)
-- [Advanced usage and customization](#advanced-usage-and-customization)
-  * [Custom tooltips](#custom-tooltips)
-  * [Custom row filter](#custom-row-filter)
-  * [Custom image resolver](#custom-image-resolver)
-  * [Hiding columns on small screens](#hiding-columns-on-small-screens)
-  * [Custom row permissions style](#custom-row-permissions-style)
-    + [Examples](#examples)
-  * [Custom 'empty folder' template](#custom-empty-folder-template)
-  * [Customizing default actions](#customizing-default-actions)
-- [See also](#see-also)
-- [Project Information](#project-information)
-  * [Prerequisites](#prerequisites)
-  * [Install](#install)
-  * [NPM scripts](#npm-scripts)
-  * [Demo](#demo)
-  * [License](#license)
+## See also
 
-<!-- tocstop -->
+- [Walkthrough: adding indicators to clearly highlight information about a node](docs/metadata-indicators.md)
 
-<!-- markdown-toc end -->
+## Install
 
-## Document List component
+Follow the 3 steps below:
 
-Displays the documents from a repository.
+1. Npm
 
-### Basic Usage
+    ```sh
+    npm install ng2-alfresco-documentlist --save
+    ```
+
+2. Html
+
+    Include these dependencies in your index.html page:
+
+    ```html
+
+      <!-- Google Material Design Lite -->
+      <link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
+      <script src="node_modules/material-design-lite/material.min.js"></script>
+      <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
+
+      <!-- Load the Angular Material 2 stylesheet -->
+      <link href="node_modules/@angular/material/core/theming/prebuilt/deeppurple-amber.css" rel="stylesheet">
+
+      <!-- Polyfill(s) for Safari (pre-10.x) -->
+      <script src="node_modules/intl/dist/Intl.min.js"></script>
+      <script src="node_modules/intl/locale-data/jsonp/en.js"></script>
+
+      <!-- Polyfill(s) for older browsers -->
+      <script src="node_modules/core-js/client/shim.min.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/dom4/1.8.3/dom4.js"></script>
+      <script src="node_modules/element.scrollintoviewifneeded-polyfill/index.js"></script>
+
+      <!-- Polyfill(s) for dialogs -->
+      <script src="node_modules/dialog-polyfill/dialog-polyfill.js"></script>
+      <link rel="stylesheet" type="text/css" href="node_modules/dialog-polyfill/dialog-polyfill.css" />
+      <style>._dialog_overlay { position: static !important; } </style>
+
+      <!-- Modules  -->
+      <script src="node_modules/zone.js/dist/zone.js"></script>
+      <script src="node_modules/reflect-metadata/Reflect.js"></script>
+      <script src="node_modules/systemjs/dist/system.src.js"></script>
+
+    ```
+
+3. SystemJs
+
+    Add the following components to your systemjs.config.js file:
+
+    - ng2-translate
+    - alfresco-js-api
+    - ng2-alfresco-core
+    - ng2-alfresco-datatable
+    - ng2-alfresco-documentlist
+
+    Please refer to the following example file: [systemjs.config.js](demo/systemjs.config.js) .
+
+
+## Basic usage
 
 ```html
-<adf-document-list
+<alfresco-document-list
     #documentList
     [currentFolderId]="'-my-'"
     [contextMenuActions]="true"
-    [contentActions]="true">
-</adf-document-list>
+    [contentActions]="true"
+    [creationMenuActions]="true">
+</alfresco-document-list>
 ```
 
-#### Properties
+Usage example of this component :
 
-The properties currentFolderId, folderNode and node are the entry initialization properties of the document list. They cannot be used together, choose the one that suites more your use case.
+**main.ts**
+
+```ts
+import { NgModule, Component, ViewChild } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { CoreModule } from 'ng2-alfresco-core';
+import { DocumentListModule, DocumentList } from 'ng2-alfresco-documentlist';
+import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+
+@Component({
+    selector: 'alfresco-app-demo',
+    template: `
+        <alfresco-document-list
+            #documentList
+            [currentFolderId]="'-my-'"
+            [contextMenuActions]="true"
+            [contentActions]="true"
+            [creationMenuActions]="true">
+        </alfresco-document-list>
+    `
+})
+class DocumentListDemo {
+
+    @ViewChild(DocumentList)
+    documentList: DocumentListComponent;
+
+    constructor(private authService: AlfrescoAuthenticationService, 
+                private settingsService: AlfrescoSettingsService) {
+        settingsService.ecmHost = 'http://localhost:8080';
+
+        this.authService.login('admin', 'admin').subscribe(
+            ticket => {
+                console.log(ticket);
+                this.documentList.reload();
+            },
+            error => {
+                console.log(error);
+            });
+    }
+}
+
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        DocumentListModule.forRoot()
+    ],
+    declarations: [DocumentListDemo],
+    bootstrap: [DocumentListDemo]
+})
+export class AppModule {
+}
+
+platformBrowserDynamic().bootstrapModule(AppModule);
+```
+
+### Properties
+
+The properties currentFolderId, folderNode and node are the entry initialization properties of the document list. They can not be used together, choose the one that suites more your use case.
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| selectionMode | string | 'single' | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows.  |
-| selection | Array<MinimalNodeEntity> | [] | Contains selected nodes |
-| rowStyle | string | | The inline style to apply to every row, see [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html) docs for more details and usage examples |
-| rowStyleClass | string | | The CSS class to apply to every row |
-| currentFolderId | string | null | The ID of the folder node to display or a reserved string alias for special sources (see **Data Sources**) |
-| folderNode | [MinimalNodeEntryEntity](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md) | null | Currently displayed folder node | 
-| permissionsStyle | [PermissionStyleModel[]](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-documentlist/src/models/permissions-style.model.ts) | null | with this array you can define different styles depending on the permission of the user on that node. The PermissionStyleModel allows you to select also if you want to apply the style only on the file or folder nodes. PermissionStyleModel.permission accepts the following values [Permissions](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-core/src/models/permissions.enum.ts)   [see more](#custom-row-permissions-style). | 
-| node | [NodePaging](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodePaging.md) | null | Document list will show all the nodes contained in the NodePaging entity  | 
-| navigate | boolean | true | Toggles navigation to folder content or file preview |
-| loading | boolean | false | Toggles the loading state and animated spinners for the component. Used in combination with `navigate=false` to perform custom navigation and loading state indication. |
-| navigationMode | string (click,dblclick) | dblclick | User interaction for folder navigation or file preview |
-| thumbnails | boolean | false | Show document thumbnails rather than icons |
-| multiselect | boolean | false | Toggles multiselect mode |
-| contentActions | boolean | false | Toggles content actions for each row |
-| contentActionsPosition | string (left\|right) | right | Position of the content actions dropdown menu. |
-| contextMenuActions | boolean | false | Toggles context menus for each row |
-| enablePagination | boolean | true | Shows pagination |
-| rowFilter | `RowFilter` | | Custom row filter, [see more](#custom-row-filter). |
-| imageResolver | `ImageResolver` | | Custom image resolver, [see more](#custom-image-resolver). |
-| allowDropFiles | boolean | false | Toggle file drop support for rows (see **ng2-alfresco-core/UploadDirective** for more details) |
-| sorting | string[] | | Defines default sorting. The format is an array of 2 strings `[key, direction]` i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want to override default sorting detected by the component based on columns. |
-| locationFormat | string | '/' | The default route for all the location-based columns (if declared). |
+| `selectionMode` | string | 'single' | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows.  |
+| `rowStyle` | string | | The inline style to apply to every row, see [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html) docs for more details and usage examples |
+| `rowStyleClass` | string | | The CSS class to apply to every row |
+| `currentFolderId` | string | null | Initial node ID of displayed folder. Can be `-root-`, `-shared-`, `-my-`, or a fixed node ID  |
+| `folderNode` | `MinimalNodeEntryEntity` | null | Currently displayed folder node | 
+| `node` | `NodePaging` | null | Document list will show all the node contained in the NodePaging entity  | 
+| `navigate` | boolean | true | Toggles navigation to folder content or file preview |
+| `navigationMode` | string (click,dblclick) | dblclick | User interaction for folder navigation or file preview |
+| `thumbnails` | boolean | false | Show document thumbnails rather than icons |
+| `fallbackThumbnail` | string |  | Path to fallback image to use if the row thumbnail is missing |
+| `multiselect` | boolean | false | Toggles multiselect mode |
+| `contentActions` | boolean | false | Toggles content actions for each row |
+| `contentActionsPosition` | string (left\|right) | right | Position of the content actions dropdown menu. |
+| `contextMenuActions` | boolean | false | Toggles context menus for each row |
+| `enablePagination` | boolean | true | Shows pagination |
+| `creationMenuActions` | boolean | true | Toggles the creation menu actions |
+| `rowFilter` | `RowFilter` | | Custom row filter, [see more](#custom-row-filter). |
+| `imageResolver` | `ImageResolver` | | Custom image resolver, [see more](#custom-image-resolver). |
+| `allowDropFiles` | boolean | false | Toggle file drop support for rows (see **ng2-alfresco-core/UploadDirective** for more details) |
+| `sorting` | string[] | | Defines default sorting. The format is an array of 2 strings `[key, direction]` i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want to override default sorting detected by the component based on columns. |
 
-#### Events
+### Events
 
 | Name | Description |
 | --- | --- |
-| nodeClick | emitted when user clicks a list node |
-| nodeDblClick | emitted when user double-clicks list node |
-| folderChange | emitted once current display folder has changed |
-| preview | emitted when user acts upon files with either single or double click (depends on `navigation-mode`), recommended for Viewer components integration  |
-| permissionError | emitted when user is attempting to create a folder via action menu without having the permission to do it |
-| ready | emitted when the documentList is ready and loads all the elements|
+| `nodeClick` | Emitted when user clicks the node |
+| `nodeDblClick` | Emitted when user double-clicks the node |
+| `folderChange` | Emitted upon display folder changed |
+| `preview` | Emitted when document preview is requested either with single or double click |
 
-### Details
-
-For a complete example source code, refer to the
+_For a complete example source code please refer to 
 [DocumentList Demo](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-alfresco-documentlist/demo) 
-repository.
+repository._
 
-#### DOM Events
+### DOM Events
 
 Below are the DOM events the DocumentList component emits. 
 All of them are `bubbling`, meaning you can handle them in any component up the parent hierarchy, even if DocumentList is wrapped by another component(s).
@@ -136,8 +219,6 @@ All of them are `bubbling`, meaning you can handle them in any component up the 
 | --- | --- |
 | node-click | Raised when user clicks the node |
 | node-dblclick | Raised when user double-clicks the node |
-| node-select | Raised when user selects a node |
-| node-unselect | Raised when user unselects a node |
 
 Every event is represented by a [CustomEvent](https://developer.mozilla.org/en/docs/Web/API/CustomEvent) instance, having at least the following properties as part of the `Event.detail` property value:
 
@@ -148,164 +229,35 @@ Every event is represented by a [CustomEvent](https://developer.mozilla.org/en/d
 }
 ```
 
-Please refer to the DataTable documentation to find details about additional DOM events the DocumentList component bubbles up from the DataTable.
+#### Handling DOM events
 
-Below is a basic example of handling DOM events in the parent elements.
+Here's a basic example on handling DOM events in the parent elements:
 
 ```html
 <div (node-click)="onNodeClicked($event)" 
-(node-dblclick)="onNodeDblClicked($event)">
+     (node-dblclick)="onNodeDblClicked($event)">
     <div>
-        <adf-upload-drag-area ...>
-             <adf-document-list ...>
+        <alfresco-upload-drag-area ...>
+             <alfresco-document-list ...>
                 ...
-             </adf-document-list>
-        </adf-upload-drag-area>
+             </alfresco-document-list>
+        </alfresco-upload-drag-area>
     </div>
 </div>
 ```
 
-#### Data Sources
-
-For the Document List data sources you can use one of the following options:
-
-##### Node ID
-
-The unique identifier of the Node. Gets automatically updated when you perform navigation to other folders.
-
-##### Repository aliases
-
-You can use one of the well-known reserved aliases:
-
-- `-root-`
-- `-shared-`
-- `-my-`
-
-##### DocumentList aliases
-
-The DocumentList component also provides support for the following reserved aliases you can use:
-
-- `-trashcan-`, 
-- `-sharedlinks-`
-- `-sites-` 
-- `-favorites-`
-- `-recent-`
-
-Note that due to specific origin of the data the sources above do not support navigation.
-You may want handling single and double clicks yourself to perform navigation to other sources.
-
-DocumentList component supports default presets for all the custom sources mentioned earlier.
-If you don't provide any custom column definition utilizing "data-columns" component, 
-then a default preset will be automatically used at runtime.
-
-Some of the presets use the Location columns that allow you to navigate to the parent folder of the node,
-for instance navigating from the "Favorite" node to the folder containing it.
-There's a possibility to set the default location format using "locationFormat" property, to avoid re-defining entire columns layout.
-
-The default column layout for non-reserved views is:
-
-- Icon
-- Name
-- Size
-- Modified (date)
-- Modified by
-
-__Trashcan__
-
-```html
-<adf-document-list
-    currentFolderId="-trashcan-"
-    locationFormat="/files">
-</adf-document-list>
-```
-
-Default layout:
-
-- Icon
-- Name
-- Location
-- Size
-- Deleted
-- Deleted by
-
-__Shared Links__
-
-```html
-<adf-document-list
-    currentFolderId="-sharedlinks-"
-    locationFormat="/files">
-</adf-document-list>
-```
-
-Default layout:
-
-- Icon
-- Name
-- Location
-- Size
-- Modified
-- Modified by
-- Shared by
-
-__Sites__
-
-```html
-<adf-document-list
-    currentFolderId="-sites-">
-</adf-document-list>
-```
-
-Default layout:
-
-- Icon
-- Title
-- Status
-
-__Favorites__
-
-```html
-<adf-document-list
-    currentFolderId="-favorites-"
-    locationFormat="/files">
-</adf-document-list>
-```
-
-Default layout:
-
-- Icon
-- Name
-- Location
-- Size
-- Modified
-- Modified by
-
-__Recent Files__
-
-```html
-<adf-document-list
-    currentFolderId="-recent-"
-    locationFormat="/files">
-</adf-document-list>
-```
-
-Default layout:
-
-- Icon
-- Name
-- Location
-
-#### Setting default folder
+### Setting default folder
 
 You can set current folder path by assigning a value for `currentFolderId` property. 
 It can be either one of the well-known locations as **-root-**, **-shared-** or **-my-** or a node ID (guid).
 
 There may be scenarios when it is needed to set default path based on relative string value rather than node ID.
-For example when folder name or path is static but its underlying ID is not (i.e. created manually by admin).
-In this case you can use `alfresco-js-api` to get node details based on its relative path.
+For example when folder name or path is static but it's underlying ID is not (i.e. created manually by admin).
+In this case you can use `alfresco-js-api` to get node details based on it's relative path.
 
 Let's try setting default folder to `/Sites/swsdp/documentLibrary` without knowing it's ID beforehand.
-For the sake of simplicity example below shows only main points you may need to pay attention to:
-
+For the sake of simplicity example below shows only main points you may need paying attention to:
+ 
 ```ts
 import { ChangeDetectorRef } from '@angular/core';
 import { AlfrescoApiService } from 'ng2-alfresco-core';
@@ -342,68 +294,12 @@ It helps examining other valuable information you can have access to if needed:
 
 **Important note**: for this particular scenario you must also trigger `changeDetector.detectChanges()` as in the example above. 
 
-#### Custom icons for selected rows
-
-You can use the "class" property of the "DataColumn" component to apply your custom css. 
-
-As an example, this feature can be used to change the look and feel of the icon for the selected rows.
-
-Let's start by assigning an "image-table-cell" class to the thumbnail column:
-
-```html
-<adf-document-list ...>
-    <data-columns>
-        
-        <data-column
-            key="$thumbnail"
-            type="image"
-            [sortable]="false"
-            class="image-table-cell">
-        </data-column>
-        
-        ...
-    </data-columns>
-</adf-document-list>
-```
-
-Now your application can define custom styles to change the content of the column based on some other conditions, like selection state:
-
-```css
-adf-document-list >>> adf-datatable tr.is-selected .image-table-cell {
-    position: relative;
-}
-
-adf-document-list >>> adf-datatable tr.is-selected .image-table-cell::before {
-    content: "\E876"; /* "done" */
-    font-family: "Material Icons";
-    font-size: 24px;
-    line-height: 32px;
-    text-align: center;
-    color: white;
-    position: absolute;
-    width: 32px;
-    height: 32px;
-    top: 50%;
-    left: 50%;
-    margin-top: -16px;
-    margin-left: -14px;
-    border-radius: 100%;
-    background: #00bcd4;
-}
-```
-
-Once your application starts you should see the following icon for each selected row:
-
-![view-child](docs/assets/document-list-custom-icon.png)
-
-#### Calling DocumentList api directly
+### Calling DocumentList api directly
 
 Typically you will be binding DocumentList properties to your application/component class properties:
 
 ```html
-<adf-document-list 
-    [currentFolderId]="myStartFolder">
-</adf-document-list>
+<alfresco-document-list [currentFolderId]="myStartFolder"></alfresco-document-list>
 ```
 
 with the underlying class being implemented similar to the following one:
@@ -417,7 +313,7 @@ export class MyAppComponent {
 }
 ```
 
-However there may be scenarios that require you direct access to DocumentList apis. 
+However there may scenarios that require you direct access to DocumentList apis. 
 You can get reference to the DocumentList instance by means of Angular **Component Interaction** API.
 See more details in [Parent calls a ViewChild](https://angular.io/docs/ts/latest/cookbook/component-communication.html#!#parent-to-view-child) 
 section of the official docs.
@@ -425,10 +321,10 @@ section of the official docs.
 Here's an example of getting reference:
 
 ```html
-<adf-document-list 
+<alfresco-document-list 
     #documentList
     [currentFolderId]="myStartFolder">
-</adf-document-list>
+</alfresco-document-list>
 ```
 
 Note the `#documentList` ID we've just added to be able referencing this component later on.
@@ -437,7 +333,7 @@ Note the `#documentList` ID we've just added to be able referencing this compone
 import { ViewChild, AfterViewInit } from '@angular/core';
 import { DocumentListComponent } from 'ng2-alfresco-documentlist';
 
-@Component({...})
+@Component(...)
 export class MyAppComponent implements AfterViewInit {
 
     myStartFolder: string = '-my-';
@@ -455,7 +351,7 @@ Example above should produce the following browser console output:
 
 ![view-child](docs/assets/viewchild.png)
 
-Now you are able to access DocumentList properties or to call methods directly.
+Now you are able accessing DocumentList properties or calling methods directly.
 
 ```ts
 // print currently displayed folder node object to console
@@ -467,7 +363,44 @@ It is important accessing child components at least at the `AfterViewInit` state
 Any UI click (buttons, links, etc.) event handlers are absolutely fine. This cannot be `ngOnInit` event though.
 You can get more details in [Component lifecycle hooks](https://angular.io/docs/ts/latest/guide/lifecycle-hooks.html) article.
 
-#### Custom columns
+### Breadcrumb Component
+
+DocumentList provides simple breadcrumb element to indicate the current position within a navigation hierarchy.
+
+```html
+<alfresco-document-list-breadcrumb
+    [target]="documentList"
+    [folderNode]="documentList.folderNode">
+</alfresco-document-list-breadcrumb>
+```
+
+![Breadcrumb](docs/assets/breadcrumb.png)
+
+#### Properties
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `target` | DocumentListComponent | DocumentList component to operate with. Upon clicks will instruct the given component to update. |
+| `folderNode` | MinimalNodeEntryEntity | Active node, builds UI based on `folderNode.path.elements` collection. |
+
+### Creation Menu Action
+
+DocumentList provides simple creation menu actions that provide the action to create a new folder.
+
+```html
+<alfresco-document-menu-action 
+    [folderId]="folderId">
+</alfresco-document-menu-action>
+```
+
+![Creation Menu Action](docs/assets/document-list-creation-menu-actions-1.png)
+
+When the "New Folder" button is pressed the dialog appears.
+
+![Creation Menu Action](docs/assets/document-list-creation-menu-actions-2.png)
+
+
+### Custom columns
 
 It is possible to reorder, extend or completely redefine data columns displayed by the component.
 By default special `$thumbnail` and `displayName` columns are rendered.
@@ -475,31 +408,31 @@ By default special `$thumbnail` and `displayName` columns are rendered.
 A custom set of columns can look like the following:
 
 ```html
-<adf-document-list ...>
-    <data-columns>
-        <data-column key="$thumbnail" type="image"></data-column>
-        <data-column 
+<alfresco-document-list ...>
+    <content-columns>
+        <content-column key="$thumbnail" type="image"></content-column>
+        <content-column 
             title="Name" 
             key="name" 
             sortable="true"
             class="full-width ellipsis-cell">
-        </data-column>
-        <data-column 
+        </content-column>
+        <content-column 
             title="Created By" 
             key="createdByUser.displayName"
             sortable="true"
             class="desktop-only">
-        </data-column>
-        <data-column 
+        </content-column>
+        <content-column 
             title="Created On" 
             key="createdAt" 
             type="date" 
             format="medium"
             sortable="true"
             class="desktop-only">
-        </data-column>
-    </data-columns>
-</adf-document-list>
+        </content-column>
+    </content-columns>
+</alfresco-document-list>
 ```
 
 ![Custom columns](docs/assets/custom-columns.png)
@@ -507,7 +440,7 @@ A custom set of columns can look like the following:
 You can also use HTML-based schema declaration used by DataTable, TaskList and other components:
 
 ```html
-<adf-datatable [data]="data" ...>
+<alfresco-datatable [data]="data" ...>
     <data-columns>
         <data-column type="image" key="icon" [sortable]="false"></data-column>
         <data-column key="id" title="Id"></data-column>
@@ -515,7 +448,7 @@ You can also use HTML-based schema declaration used by DataTable, TaskList and o
         <data-column key="name" title="Name" class="full-width name-column"></data-column>
         <data-column key="createdBy.name" title="Created By"></data-column>
     </data-columns>
-</adf-datatable>
+</alfresco-datatable>
 ```
 
 #### DataColumn Properties
@@ -525,26 +458,13 @@ Here's the list of available properties you can define for a Data Column definit
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | key | string | | Data source key, can be either column/property key like `title` or property path like `createdBy.name` |
-| type | string | text | Value type |
+| type | string (text\|image\|date) | text | Value type |
 | format | string | | Value format (if supported by components), for example format of the date |
 | sortable | boolean | true | Toggles ability to sort by this column, for example by clicking the column header |
 | title | string | | Display title of the column, typically used for column headers |
 | template | `TemplateRef` | | Custom column template |
 | sr-title | string | | Screen reader title, used for accessibility purposes |
 | class | string | | Additional CSS class to be applied to column (header and cells) |
-| formatTooltip | Function | | Custom tooltip formatter function. |
-
-#### Column Types
-
-The DataColumn `type` property can take one of the following values:
-
-- text
-- image
-- date
-- fileSize
-- location
-
-#### Underlying node object
 
 DocumentList component assigns an instance of `MinimalNode` type (`alfresco-js-api`) as a data context of each row.
 
@@ -577,69 +497,39 @@ createdByUser.displayName
 Here's a short example:
 
 ```html
-<adf-document-list ...>
-    <data-columns>
-        <data-column key="$thumbnail" type="image"></data-column>
-        <data-column title="Name" key="name" class="full-width ellipsis-cell"></data-column>
-        <data-column 
+<alfresco-document-list ...>
+    <content-columns>
+        <content-column key="$thumbnail" type="image"></content-column>
+        <content-column title="Name" key="name" class="full-width ellipsis-cell"></content-column>
+        <content-column 
             title="Created By" 
             key="createdByUser.displayName">
-        </data-column>
-    </data-columns>
-</adf-document-list>
+        </content-column>
+    </content-columns>
+</alfresco-document-list>
 ```
 
-#### Date Column
+### Column definition
+
+Properties:
+
+| Name | Type | Default | Description
+| --- | --- | --- | --- |
+| `title` | string | | Column title |
+| `sr-title` | string | | Screen reader title, used only when `title` is empty |
+| `key` | string | | Column source key, example: `createdByUser.displayName` |
+| `sortable` | boolean | false | Toggle sorting ability via column header clicks |
+| `class` | string | | CSS class list, example: `full-width ellipsis-cell` |
+| `type` | string | text | Column type, text\|date\|number |
+| `format` | string | | Value format pattern |
+| `template` | `TemplateRef<any>` | | Column template |
 
 For `date` column type the [DatePipe](https://angular.io/docs/ts/latest/api/common/DatePipe-class.html) formatting is used.
 For a full list of available `format` values please refer to [DatePipe](https://angular.io/docs/ts/latest/api/common/DatePipe-class.html) documentation.
 
-ADF also supports additional `timeAgo` value for the `format` property.
-That triggers the date values to be rendered using popular ["Time from now"](https://momentjs.com/docs/#/displaying/fromnow/) format.
-
-#### Location Column
-
-This column is used to display a clickable location link pointing to the parent path of the node.
-
-You are going to use it with custom navigation or when displaying content from the sources like:
-
-- Sites
-- Shared Links
-- Recent Files
-- Favorites
-- Trashcan
-
-or any other location that needs nagivating to the node parent folder easily.
-
-Note that the parent node is evaluated automatically,
-the generated link will be pointing to URL based on the `format` property value with the node `id` value appended:
-
-```text
-/<format>/:id
-```
-
-For example:
-
-```html
-<data-column
-    key="path"
-    type="location"
-    format="/files"
-    title="Location">
-</data-column>
-```
-
-All links rendered in the column above will have an address mapped to `/files`:
-
-```text
-/files/node-1-id
-/files/node-2-id
-...
-```
-
 #### Column Template
 
-It is possible to provide custom column/cell template that may contain other Angular components or HTML elements:
+It is possible providing custom column/cell template that may contain other Angular components or HTML elmements:
 
 Every cell in the DataTable component is bound to the dynamic data context containing the following properties:
 
@@ -653,12 +543,12 @@ You can use all three properties to gain full access to underlying data from wit
 In order to wire HTML templates with the data context you will need defining a variable that is bound to `$implicit` like shown below:
 
 ```html
-<ng-template let-context="$implicit">
+<template let-context="$implicit">
     <!-- template body -->
-</ng-template>
+</template>
 ```
 
-The format of naming is `let-VARIABLE_NAME="$implicit"` where `VARIABLE_NAME` is the name of the variable you want to bind template data context to.
+The format of naming is `let-VARIABLE_NAME="$implicit"` where `VARIABLE_NAME` is the name of the variable you want binding template data context to.
 
 Getting a cell value from the underlying DataTableAdapter:
 
@@ -676,100 +566,68 @@ context.row.getValue('createdByUser.displayName')
 You may want using **row** api to get raw value access.
 
 ```html
-<data-column title="Name" key="name" sortable="true" class="full-width ellipsis-cell">
-    <ng-template let-context="$implicit">
+<content-column title="Name" key="name" sortable="true" class="full-width ellipsis-cell">
+    <template let-context="$implicit">
         <span>Hi! {{context.row.getValue('createdByUser.displayName')}}</span>
         <span>Hi! {{context.row.getValue('name')}}</span>
-    </ng-template>
-</data-column>
+    </template>
+</content-column>
 ```
 
 Use **data** api to get values with post-processing, like datetime/icon conversion._
 
-In the Example below we will prepend `Hi!` to each file and folder name in the list: 
+In the Example below will prepend `Hi!` to each file and folder name in the list: 
 
 ```html
-<data-column title="Name" key="name" sortable="true" class="full-width ellipsis-cell">
-    <ng-template let-entry="$implicit">
+<content-column title="Name" key="name" sortable="true" class="full-width ellipsis-cell">
+    <template let-entry="$implicit">
         <span>Hi! {{entry.data.getValue(entry.row, entry.col)}}</span>
-    </ng-template>
-</data-column>
+    </template>
+</content-column>
 ```
 
-In the Example below we will add the [ng2-alfresco-tag](https://www.npmjs.com/package/ng2-alfresco-tag) component is integrate in the document list.
+In the Example below will add the [ng2-alfresco-tag](https://www.npmjs.com/package/ng2-alfresco-tag) component is integrate in the document list.
 
 ```html
-<data-column
+<content-column
     title="{{'DOCUMENT_LIST.COLUMNS.TAG' | translate}}"
     key="id"
     sortable="true"
     class="full-width ellipsis-cell">
-    <ng-template let-entry="$implicit">
-        <adf-tag-node-list  [nodeId]="entry.data.getValue(entry.row, entry.col)"></adf-tag-node-list>
-    </ng-template>
-</data-column>
+    <template let-entry="$implicit">
+        <alfresco-tag-node-list  [nodeId]="entry.data.getValue(entry.row, entry.col)"></alfresco-tag-node-list>
+    </template>
+</content-column>
 ```
 
 ![Tag component in document List](docs/assets/document-list-tag-template.png)
 
-#### Actions
-
-Properties:
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `target` | string | | "document" or "folder" |
-| `title` | string | | The title of the action as shown in the menu |
-| `handler` | string | | System type actions. Can be "delete", "download", "copy" or "move" |
-| `permission` | string | | The name of the permission |
-
-Events:
-
-| Name | Handler | Description |
-| --- | --- | --- |
-| `execute` | All | Emitted when user clicks on the action. For combined handlers see below |
-| `permissionEvent` | All | Emitted when a permission error happens |
-| `success` | copy, move | Emitted on successful action with the success string message |
-| `error` | copy, move | Emitted on unsuccessful action with the error event |
+### Actions
 
 DocumentList supports declarative actions for Documents and Folders.
-Each action can be bound to either default out-of-the-box handler, to a custom behaviour or to both.
+Each action can be bound to either default out-of-box handler or a custom behavior.
 You can define both folder and document actions at the same time.
 
 #### Menu actions
 
 ```html
-<adf-document-list ...>
+<alfresco-document-list ...>
     <content-actions>
 
-        <!-- system handler -->
         <content-action
-            icon="content_copy"
             target="document"
-            title="copy"
-            permission="update"
-            [disableWithNoPermission]="true"
-            handler="copy">
+            title="System action"
+            handler="system2">
         </content-action>
 
-        <!-- custom handler -->
         <content-action
             target="document"
             title="Custom action"
             (execute)="myCustomAction1($event)">
         </content-action>
 
-        <!-- combined handler -->
-        <content-action
-            target="document"
-            title="Delete with additional custom callback"
-            handler="delete"
-            permission="delete"
-            (execute)="myCustomActionAfterDelete($event)">
-        </content-action>
-
     </content-actions>
-</adf-document-list>
+</alfresco-document-list>
 ```
 
 ```ts
@@ -780,11 +638,6 @@ export class MyView {
         let entry = event.value.entry;
         alert(`Custom document action for ${entry.name}`);
     }
-
-    myCustomActionAfterDelete(event) {
-        let entry = event.value.entry;
-        alert(`Custom callback after delete system action for ${entry.name}`);
-    }
 }
 ```
 
@@ -792,30 +645,24 @@ All document actions are rendered as a dropdown menu as on the picture below:
 
 ![Document Actions](docs/assets/document-actions.png)
 
+
 #### Default action handlers
 
 The following action handlers are provided out-of-box:
 
 - **Download** (document)
-- **Copy** (document, folder)
-- **Move** (document, folder)
 - **Delete** (document, folder)
 
 All system handler names are case-insensitive, `handler="download"` and `handler="DOWNLOAD"`
 will trigger the same `download` action.
 
-##### Delete - System handler combined with custom handler
-
-If you specify both **handler="delete"** and your custom **(execute)="myCustomActionAfterDelete($event)"**, your callback will be invoked after a successful delete happened. A successful delete operation happens if there is neither permission error, nor other network related error for the delete operation request. For handling permission errors see the section below.
-
 ##### Delete - Show notification message with no permission
-
-You can show a notification error when the user doesn't have the right permission to perform the action.
+You can show a notification error when the user don't have the right permission to perform the action.
 The ContentActionComponent provides the event permissionEvent that is raised when the permission specified in the permission property is missing
 You can subscribe to this event from your component and use the NotificationService to show a message.
 
 ```html
-<adf-document-list ...>
+<alfresco-document-list ...>
     <content-actions>
 
         <content-action
@@ -827,15 +674,14 @@ You can subscribe to this event from your component and use the NotificationServ
         </content-action>
 
     </content-actions>
-</adf-document-list>
-```
+</alfresco-document-list>
 
-```ts
+
 export class MyComponent {
 
-    onPermissionsFailed(event: any) {
-        this.notificationService.openSnackMessage(`you don't have the ${event.permission} permission to ${event.action} the ${event.type} `, 4000);
-    }
+onPermissionsFailed(event: any) {
+    this.notificationService.openSnackMessage(`you don't have the ${event.permission} permission to ${event.action} the ${event.type} `, 4000);
+}
 
 }
 ```
@@ -843,13 +689,12 @@ export class MyComponent {
 ![Delete show notification message](docs/assets/content-action-notification-message.png)
 
 ##### Delete - Disable button checking the permission
-
 You can easily disable a button when the user doesn't own the permission to perform the action related to the button.
 The ContentActionComponent provides the property permission that must contain the permission to check and a property disableWithNoPermission that can be true if
- you want to see the button disabled.
+ you want see the button disabled.
 
 ```html
-<adf-document-list ...>
+<alfresco-document-list ...>
     <content-actions>
 
         <content-action
@@ -861,7 +706,7 @@ The ContentActionComponent provides the property permission that must contain th
         </content-action>
 
     </content-actions>
-</adf-document-list>
+</alfresco-document-list>
 ```
 
 ![Delete disable action button](docs/assets/content-action-disable-delete-button.png)
@@ -871,7 +716,7 @@ The ContentActionComponent provides the property permission that must contain th
 Initiates download of the corresponding document file.
 
 ```html
-<adf-document-list ...>
+<alfresco-document-list ...>
     <content-actions>
 
         <content-action
@@ -881,91 +726,33 @@ Initiates download of the corresponding document file.
         </content-action>
 
     </content-actions>
-</adf-document-list>
+</alfresco-document-list>
 ```
 
 ![Download document action](docs/assets/document-action-download.png)
 
-##### Copy and move
-
-Shows the destination chooser dialog for copy and move actions. By default the destination chooser lists all the folders of the subject item's parent (except the selected item which is about to be copied/moved if it was a folder itself also).
-
-![Copy/move dialog](docs/assets/document-action-copymovedialog.png)
-
-```html
-<adf-document-list ...>
-    <content-actions>
-
-        <content-action
-            icon="content_copy"
-            target="document"
-            title="copy"
-            permission="update"
-            [disableWithNoPermission]="true"
-            (error)="onContentActionError($event)"
-            (success)="onContentActionSuccess($event)"
-            (permissionEvent)="onPermissionsFailed($event)"
-            handler="copy">
-        </content-action>
-
-        <content-action
-            icon="redo"
-            target="folder"
-            title="move"
-            permission="update"
-            [disableWithNoPermission]="true"
-            (error)="onContentActionError($event)"
-            (success)="onContentActionSuccess($event)"
-            (permissionEvent)="onPermissionsFailed($event)"
-            handler="move">
-        </content-action>
-
-    </content-actions>
-</adf-document-list>
-```
-
-##### Error, Permission and success callback
-
-Defining error, permission and success callbacks are pretty much the same as doing it for the delete permission handling.
-
-- The error handler callback gets the error object which was raised
-- The success callback's only parameter is the translatable success message string (could be used for showing in snackbar for example)
-- The permissionEvent callback is the same as described above with the delete action
-
-![Copy/move document action](docs/assets/document-action-copymove.png)
-
 #### Folder actions
 
-Folder actions have the same declaration as document actions except ```target="folder"``` attribute value. You can define system, custom or combined handlers as well just as with the document actions.
+Folder actions have the same declaration as document actions except ```taget="folder"``` attribute value.
 
 ```html
-<adf-document-list ...>
+<alfresco-document-list ...>
     <content-actions>
 
-        <!-- system handler -->
         <content-action
             target="folder"
             title="Default folder action 1"
             handler="system1">
         </content-action>
 
-        <!-- custom handler -->
         <content-action
             target="folder"
             title="Custom folder action"
             (execute)="myFolderAction1($event)">
         </content-action>
 
-        <!-- combined handler -->
-        <content-action
-            target="folder"
-            title="Delete with additional custom callback"
-            handler="delete"
-            (execute)="myCustomActionAfterDelete($event)">
-        </content-action>
-
     </content-actions>
-</adf-document-list>
+</alfresco-document-list>
 ```
 
 ```ts
@@ -976,19 +763,14 @@ export class MyView {
         let entry = event.value.entry;
         alert(`Custom folder action for ${entry.name}`);
     }
-
-    myCustomActionAfterDelete(event) {
-        let entry = event.value.entry;
-        alert(`Custom callback after delete system action for ${entry.name}`);
-    }
 }
 ```
 
 ![Folder Actions](docs/assets/folder-actions.png)
 
-#### Context Menu
+### Context Menu
 
-DocumentList also provides integration for 'Context Menu Service' from the 
+DocumentList also provide integration for 'Context Menu Service' from the 
 [ng2-alfresco-core](https://www.npmjs.com/package/ng2-alfresco-core) library.
 
 You can automatically turn all menu actions (for the files and folders) 
@@ -1002,7 +784,7 @@ Enabling context menu is very simple:
 @Component({
     selector: 'my-view',
     template: `
-        <adf-document-list>...</adf-document-list>
+        <alfresco-document-list>...</alfresco-document-list>
         <context-menu-holder></context-menu-holder>
     `
 })
@@ -1012,7 +794,7 @@ export class MyView {
 
 This enables context menu items for documents and folders.
 
-#### Navigation mode
+### Navigation mode
 
 By default DocumentList component uses 'double-click' mode for navigation.
 That means user will see the contents of the folder by double-clicking its name
@@ -1027,96 +809,23 @@ The following navigation modes are supported:
 The following example switches navigation to single clicks:
 
 ```html
-<adf-document-list 
-    [navigationMode]="'click'">
-</adf-document-list>
+<alfresco-document-list [navigationMode]="'click'">
+</alfresco-document-list>
 ```
 
-## Breadcrumb Component
+### Events
 
-Indicates the current position within a navigation hierarchy.
+DocumentList emits the following events:
 
-![Breadcrumb](docs/assets/breadcrumb.png)
-
-### Basic Usage
-
-```html
-<adf-breadcrumb
-    [target]="documentList"
-    [folderNode]="documentList.folderNode">
-</adf-breadcrumb>
-```
-
-***Note:*** the `<adf-document-list-breadcrumb>` and `<adf-breadcrumb>` are the same component - you can still use the old tag name.
-
-#### Properties
-
-| Name | Type | Description |
-| --- | --- | --- |
-| target | DocumentListComponent | (optional) DocumentList component to operate with. Upon clicks will instruct the given component to update. |
-| folderNode | [MinimalNodeEntryEntity](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md) | Active node, builds UI based on `folderNode.path.elements` collection. |
-| root | String |  (optional) Name of the root element of the breadcrumb. You can use this property to rename "Company Home" to "Personal Files" for example.  |
-
-#### Events
-
-| Name | Returned Type | Description |
-| --- | --- | --- |
-| navigate | [PathElementEntity](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/PathElementEntity.md) | emitted when user clicks on a breadcrumb  |
-
-## Dropdown Site Component
-
-Displays a dropdown menu to show and interact with the sites of the current user.
-
-![Dropdown sites](docs/assets/document-list-dropdown-list.png)
-
-### Basic Usage
-
-```html
- <adf-sites-dropdown  
-  (change)="getSiteContent($event)">
- </adf-sites-dropdown>
-```
-
-#### Events
-
-| Name | Returned Type | Description |
-| --- | --- | --- |
-| change | [SiteModel](https://github.com/Alfresco/alfresco-ng2-components/blob/development/ng2-components/ng2-alfresco-documentlist/src/models/site.model.ts) | emitted when user selects a site. When default option is selected an empty model is emitted  |
+| Name | Description |
+| --- | --- |
+| `nodeClick` | emitted when user clicks a list node |
+| `nodeDblClick` | emitted when user double-clicks list node |
+| `folderChange` | emitted once current display folder has changed |
+| `preview` | emitted when user acts upon files with either single or double click (depends on `navigation-mode`), recommended for Viewer components integration  |
+| `permissionError` | emitted when user is attempting to create a folder via action menu but it doesn't have the permission to do it |
 
 ## Advanced usage and customization
-
-### Custom tooltips
-
-You can create custom tooltips for the table cells by providing a `formatTooltip` property with a tooltip formatter function when declaring a data column.
-
-```html
-<data-column
-    title="Name"
-    key="name"
-    [formatTooltip]="getNodeNameTooltip"
-    class="full-width ellipsis-cell">
-</data-column>
-```
-
-And the code in this case will be similar to the following:
-
-```ts
-import { DataColumn, DataRow } from 'ng2-alfresco-datatable';
-
-@Component({...})
-export class MyComponent {
-    ...
-
-    getNodeNameTooltip(row: DataRow, col: DataColumn): string {
-        if (row) {
-            return row.getValue('name');
-        }
-        return null;
-    }
-}
-```
-
-To disable the tooltip your function can return `null` or an empty string.
 
 ### Custom row filter
 
@@ -1132,16 +841,15 @@ myFilter(row: ShareDataRow): boolean {
 _Note that for the sake of simplicity the example code below was reduced to the main points of interest only._
 
 **View1.component.html**
-
 ```html
-<adf-document-list 
+<alfresco-document-list 
     [rowFilter]="folderFilter">
-</adf-document-list>
+</alfresco-document-list>
 ```
 
 **View1.component.ts**
-
 ```ts
+
 import { RowFilter, ShareDataRow } from 'ng2-alfresco-documentlist';
 
 export class View1 {
@@ -1185,9 +893,8 @@ Your function can return `null` or `false` values to fallback to default image r
 _Note that for the sake of simplicity the example code below was reduced to the main points of interest only._
 
 **View1.component.html**
-
 ```html
-<adf-document-list 
+<alfresco-document-list 
     [imageResolver]="folderImageResolver">
     
     <content-columns>
@@ -1195,11 +902,10 @@ _Note that for the sake of simplicity the example code below was reduced to the 
     </content-columns>
     
     
-</adf-document-list>
+</alfresco-document-list>
 ```
 
 **View1.component.ts**
-
 ```ts
 import { DataColumn, DataRow } from 'ng2-alfresco-datatable';
 import { ImageResolver } from 'ng2-alfresco-documentlist';
@@ -1252,7 +958,7 @@ You can hide columns on small screens by means of custom CSS rules:
 Now you can declare columns and assign `desktop-only` class where needed:
 
 ```html
-<adf-document-list ...>
+<alfresco-document-list ...>
     <content-columns>
         
         <!-- always visible columns -->
@@ -1279,7 +985,7 @@ Now you can declare columns and assign `desktop-only` class where needed:
                 class="desktop-only">
         </content-column>
     </content-columns>
-</adf-document-list>
+</alfresco-document-list>
 ```
 
 **Desktop View**
@@ -1290,62 +996,6 @@ Now you can declare columns and assign `desktop-only` class where needed:
 
 ![Responsive Mobile](docs/assets/responsive-mobile.png)
 
-### Custom row permissions style
-
-You can customize the style of the row based on the permissions.
-The property to use is permissionsStyle[]:[PermissionStyleModel[]](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-documentlist/src/models/permissions-style.model.ts).
-The permissionsStyle array can define different styles depending on the permission of the user on that node.
-
-[PermissionStyleModel](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-documentlist/src/models/permissions-style.model.ts)
-
-| Property | Description |
-| --- | --- |
-| isFile/isFolder | allow you to select if you want apply the style to file/folder nodes |
-| permission | is an enum value [Permissions](https://github.com/Alfresco/alfresco-ng2-core/blob/master/ng2-components/ng2-alfresco-documentlist/src/models/permissions.enum.ts) | 
-| css| the name of the class to add | 
-
-#### Examples
-
-If you want to change the style on rows where the user can create content: 
-
-```ts
-let permissionsStyle: PermissionStyleModel[] = [];
-
-this.permissionsStyle.push(new PermissionStyleModel('document-list__create', PermissionsEnum.CREATE));        
-```
-
-```html
-<adf-document-list [permissionsStyle]="permissionsStyle">
-</adf-document-list>
-```
-
-```css
-adf-document-list >>> adf-datatable tr.document-list__create {
-    background: green !important;
-}
-```
-
-If you want to change the style on the folders where the user doesn't have the permission to update: 
-
-```ts
-
-let permissionsStyle: PermissionStyleModel[] = [];
-
-this.permissionsStyle.push(new PermissionStyleModel('document-list__disable', PermissionsEnum.NOT_CREATE, false, true));
-
-```
-
-```html
-<adf-document-list [permissionsStyle]="permissionsStyle">
-</adf-document-list>
-```
-
-```css
-adf-document-list >>> adf-datatable tr.document-list__disable {
-    background: red !important;
-}
-```
-
 ### Custom 'empty folder' template
 
 By default DocumentList provides the following content for the empty folder:
@@ -1355,13 +1005,13 @@ By default DocumentList provides the following content for the empty folder:
 This can be changed by means of the custom html template:
 
 ```html
-<adf-document-list ...>
+<alfresco-document-list ...>
     <empty-folder-content>
         <template>
             <h1>Sorry, no content here</h1>
         </template>
     </empty-folder-content>
-</adf-document-list>
+</alfresco-document-list>
 ```
 
 That will give the following output:
@@ -1380,7 +1030,7 @@ Example below demonstrates how a new action handler can be registered with the
 `DocumentActionsService`.
 
 ```html
-<adf-document-list ...>
+<alfresco-document-list ...>
     <content-actions>
 
         <content-action
@@ -1390,7 +1040,7 @@ Example below demonstrates how a new action handler can be registered with the
         </content-action>
 
     </content-actions>
-</adf-document-list>
+</alfresco-document-list>
 ```
 
 You register custom handler called `my-handler` that will be executing `myDocumentActionHandler`
@@ -1436,37 +1086,54 @@ export class MyView {
 Typically you may want populating all your custom actions at the application root level or
 by means of custom application service.
 
-## See also
+## Build from sources
 
-- [Walkthrough: adding indicators to clearly highlight information about a node](docs/metadata-indicators.md)
+Alternatively you can build component from sources with the following commands:
 
-## Project Information
-
-### Prerequisites
-
-Before you start using this development framework, make sure you have installed all required software and done all the
-necessary configuration [prerequisites](https://github.com/Alfresco/alfresco-ng2-components/blob/master/PREREQUISITES.md).
-
-> If you plan using this component with projects generated by Angular CLI, please refer to the following article: [Using ADF with Angular CLI](https://github.com/Alfresco/alfresco-ng2-components/wiki/Angular-CLI)
-
-### Install
-
-```sh
-npm install ng2-alfresco-documentlist
-
-### Build from sources
-
-You can build component from sources with the following commands:
 
 ```sh
 npm install
 npm run build
 ```
 
-> The `build` task rebuilds all the code, runs tslint, license checks 
-> and other quality check tools before performing unit testing.
+### Build the files and keep watching for changes
 
-### NPM scripts
+```sh
+npm run build:w
+```
+
+## Running unit tests
+
+```sh
+npm test
+```
+
+### Running unit tests in browser
+
+```sh
+npm test-browser
+```
+
+This task rebuilds all the code, runs tslint, license checks and other quality check tools
+before performing unit testing.
+
+### Code coverage
+
+```sh
+npm run coverage
+```
+
+## Demo
+
+If you want have a demo of how the component works, please check the demo folder :
+
+```sh
+cd demo
+npm install
+npm start
+```
+
+## NPM scripts
 
 | Command | Description |
 | --- | --- |
@@ -1475,16 +1142,6 @@ npm run build
 | npm run test-browser | Run unit tests in the browser
 | npm run coverage | Run unit tests and display code coverage report |
 
-### Demo
-
-Please check the demo folder for a demo project
-
-```sh
-cd demo
-npm install
-npm start
-```
-
-### License
+## License
 
 [Apache Version 2.0](https://github.com/Alfresco/alfresco-ng2-components/blob/master/LICENSE)

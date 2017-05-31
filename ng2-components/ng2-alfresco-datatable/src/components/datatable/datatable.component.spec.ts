@@ -16,21 +16,18 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdCheckboxChange } from '@angular/material';
-import { RouterTestingModule } from '@angular/router/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
-import { MaterialModule } from '../../material.module';
-import {
-    DataColumn,
-    DataRow,
-    DataSorting,
-    ObjectDataColumn,
-    ObjectDataTableAdapter
-} from './../../data/index';
-import { DataTableCellComponent } from './datatable-cell.component';
+import { MdCheckboxModule, MdCheckboxChange } from '@angular/material';
 import { DataTableComponent } from './datatable.component';
-import { LocationCellComponent } from './location-cell.component';
+import { DataTableCellComponent } from './datatable-cell.component';
+import {
+    DataRow,
+    DataColumn,
+    DataSorting,
+    ObjectDataTableAdapter,
+    ObjectDataColumn, ObjectDataRow
+} from './../../data/index';
 
 describe('DataTable', () => {
 
@@ -42,13 +39,11 @@ describe('DataTable', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                RouterTestingModule,
-                CoreModule,
-                MaterialModule
+                CoreModule.forRoot(),
+                MdCheckboxModule
             ],
             declarations: [
                 DataTableCellComponent,
-                LocationCellComponent,
                 DataTableComponent
             ]
         }).compileComponents();
@@ -61,35 +56,14 @@ describe('DataTable', () => {
     });
 
     beforeEach(() => {
+        // reset MDL handler
+        window['componentHandler'] = null;
+        // dataTable = new DataTableComponent();
+
         eventMock = {
             preventDefault: function () {
             }
         };
-    });
-
-    it('should change the rows on changing of the data', () => {
-        let newData = new ObjectDataTableAdapter(
-            [
-                { name: 'TEST' },
-                { name: 'FAKE' }
-            ],
-            [new ObjectDataColumn({ key: 'name' })]
-        );
-        dataTable.data = new ObjectDataTableAdapter(
-            [
-                { name: '1' },
-                { name: '2' }
-            ],
-            [new ObjectDataColumn({ key: 'name' })]
-        );
-
-        dataTable.ngOnChanges({
-            data: new SimpleChange(null, newData, false)
-        });
-        fixture.detectChanges();
-
-        expect(element.querySelector('[data-automation-id="text_TEST"]')).not.toBeNull();
-        expect(element.querySelector('[data-automation-id="text_FAKE"]')).not.toBeNull();
     });
 
     it('should reset selection on mode change', () => {
@@ -127,7 +101,7 @@ describe('DataTable', () => {
         );
         const rows = dataTable.data.getRows();
 
-        dataTable.ngOnChanges({});
+
         dataTable.onRowClick(rows[0], null);
         expect(rows[0].isSelected).toBeTruthy();
         expect(rows[1].isSelected).toBeFalsy();
@@ -137,7 +111,7 @@ describe('DataTable', () => {
         expect(rows[1].isSelected).toBeTruthy();
     });
 
-    it('should not unselect the row with [single] selection mode', () => {
+    it('should unselect the row with [single] selection mode', () => {
         dataTable.selectionMode = 'single';
         dataTable.data = new ObjectDataTableAdapter(
             [
@@ -148,33 +122,13 @@ describe('DataTable', () => {
         );
         const rows = dataTable.data.getRows();
 
-        dataTable.ngOnChanges({});
         dataTable.onRowClick(rows[0], null);
         expect(rows[0].isSelected).toBeTruthy();
         expect(rows[1].isSelected).toBeFalsy();
 
         dataTable.onRowClick(rows[0], null);
-        expect(rows[0].isSelected).toBeTruthy();
-        expect(rows[1].isSelected).toBeFalsy();
-    });
-
-    it('should unselect the row with [multiple] selection mode and modifier key', () => {
-        dataTable.selectionMode = 'multiple';
-        dataTable.data = new ObjectDataTableAdapter(
-            [ { name: '1' } ],
-            [ new ObjectDataColumn({ key: 'name'}) ]
-        );
-        const rows = dataTable.data.getRows();
-
-        dataTable.ngOnChanges({});
-        dataTable.onRowClick(rows[0], null);
-        expect(rows[0].isSelected).toBeTruthy();
-
-        dataTable.onRowClick(rows[0], null);
-        expect(rows[0].isSelected).toBeTruthy();
-
-        dataTable.onRowClick(rows[0], <any> { metaKey: true, preventDefault() {} });
         expect(rows[0].isSelected).toBeFalsy();
+        expect(rows[1].isSelected).toBeFalsy();
     });
 
     it('should select multiple rows with [multiple] selection mode', () => {
@@ -192,7 +146,6 @@ describe('DataTable', () => {
             metaKey: true
         });
 
-        dataTable.ngOnChanges({});
         dataTable.onRowClick(rows[0], event);
         dataTable.onRowClick(rows[1], event);
 
@@ -211,7 +164,7 @@ describe('DataTable', () => {
 
         let headers = element.querySelectorAll('th');
         expect(headers.length).toBe(4);
-        expect(headers[headers.length - 1].classList.contains('actions-column')).toBeTruthy();
+        expect(headers[headers.length - 1].classList.contains('alfresco-datatable__actions-header')).toBeTruthy();
     });
 
     it('should put actions menu to the left', () => {
@@ -226,18 +179,18 @@ describe('DataTable', () => {
 
         let headers = element.querySelectorAll('th');
         expect(headers.length).toBe(4);
-        expect(headers[0].classList.contains('actions-column')).toBeTruthy();
+        expect(headers[0].classList.contains('alfresco-datatable__actions-header')).toBeTruthy();
     });
 
     it('should initialize default adapter', () => {
-        let table = new DataTableComponent(null, null);
+        let table = new DataTableComponent(null);
         expect(table.data).toBeUndefined();
-        table.ngOnChanges({'data': new SimpleChange('123', {}, true)});
+        table.ngAfterContentInit();
         expect(table.data).toEqual(jasmine.any(ObjectDataTableAdapter));
     });
 
     it('should load data table on onChange', () => {
-        let table = new DataTableComponent(null, null);
+        let table = new DataTableComponent(null);
         let data = new ObjectDataTableAdapter([], []);
 
         expect(table.data).toBeUndefined();
@@ -260,65 +213,18 @@ describe('DataTable', () => {
             done();
         });
 
-        dataTable.ngOnChanges({});
         dataTable.onRowClick(row, null);
     });
 
-    it('should emit double click if there are two single click in 250ms', (done) => {
-
+    it('should emit row double-click event', done => {
         let row = <DataRow> {};
-        dataTable.ngOnChanges({});
 
-        dataTable.rowDblClick.subscribe( () => {
+        dataTable.rowDblClick.subscribe(e => {
+            expect(e.value).toBe(row);
             done();
         });
 
-        dataTable.onRowClick(row, null);
-        setTimeout(() => {
-                dataTable.onRowClick(row, null);
-            }
-            , 240);
-
-    });
-
-    it('should emit double click if there are more than two single click in 250ms', (done) => {
-
-        let row = <DataRow> {};
-        dataTable.ngOnChanges({});
-
-        dataTable.rowDblClick.subscribe( () => {
-            done();
-        });
-
-        dataTable.onRowClick(row, null);
-        setTimeout(() => {
-
-                dataTable.onRowClick(row, null);
-                dataTable.onRowClick(row, null);
-            }
-            , 240);
-
-    });
-
-    it('should emit single click if there are two single click in more than 250ms', (done) => {
-
-        let row = <DataRow> {};
-        let clickCount = 0;
-
-        dataTable.ngOnChanges({});
-
-        dataTable.rowClick.subscribe( () => {
-            clickCount += 1;
-            if (clickCount === 2) {
-                done();
-            }
-        });
-
-        dataTable.onRowClick(row, null);
-        setTimeout(() => {
-                dataTable.onRowClick(row, null);
-            }
-            , 260);
+        dataTable.onRowDblClick(row, null);
     });
 
     it('should emit row-click dom event', (done) => {
@@ -329,7 +235,6 @@ describe('DataTable', () => {
             done();
         });
 
-        dataTable.ngOnChanges({});
         dataTable.onRowClick(row, null);
     });
 
@@ -340,9 +245,8 @@ describe('DataTable', () => {
             expect(e.detail.value).toBe(row);
             done();
         });
-        dataTable.ngOnChanges({});
-        dataTable.onRowClick(row, null);
-        dataTable.onRowClick(row, null);
+
+        dataTable.onRowDblClick(row, null);
     });
 
     it('should prevent default behaviour on row click event', () => {
@@ -354,14 +258,13 @@ describe('DataTable', () => {
 
     it('should prevent default behaviour on row double-click event', () => {
         let e = jasmine.createSpyObj('event', ['preventDefault']);
-        dataTable.ngOnChanges({});
         dataTable.ngAfterContentInit();
         dataTable.onRowDblClick(null, e);
         expect(e.preventDefault).toHaveBeenCalled();
     });
 
     it('should not sort if column is missing', () => {
-        dataTable.ngOnChanges({'data': new SimpleChange('123', {}, true)});
+        dataTable.ngAfterContentInit();
         let adapter = dataTable.data;
         spyOn(adapter, 'setSorting').and.callThrough();
         dataTable.onColumnHeaderClick(null);
@@ -369,7 +272,7 @@ describe('DataTable', () => {
     });
 
     it('should not sort upon clicking non-sortable column header', () => {
-        dataTable.ngOnChanges({'data': new SimpleChange('123', {}, true)});
+        dataTable.ngAfterContentInit();
         let adapter = dataTable.data;
         spyOn(adapter, 'setSorting').and.callThrough();
 
@@ -382,7 +285,7 @@ describe('DataTable', () => {
     });
 
     it('should set sorting upon column header clicked', () => {
-        dataTable.ngOnChanges({'data': new SimpleChange('123', {}, true)});
+        dataTable.ngAfterContentInit();
         let adapter = dataTable.data;
         spyOn(adapter, 'setSorting').and.callThrough();
 
@@ -401,7 +304,7 @@ describe('DataTable', () => {
     });
 
     it('should invert sorting upon column header clicked', () => {
-        dataTable.ngOnChanges({'data': new SimpleChange('123', {}, true)});
+        dataTable.ngAfterContentInit();
 
         let adapter = dataTable.data;
         let sorting = new DataSorting('column_1', 'asc');
@@ -432,6 +335,19 @@ describe('DataTable', () => {
             })
         );
 
+    });
+
+    it('should upgrade MDL components on view checked', () => {
+        let handler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered']);
+        window['componentHandler'] = handler;
+
+        dataTable.ngAfterContentInit();
+        expect(handler.upgradeAllRegistered).toHaveBeenCalled();
+    });
+
+    it('should upgrade MDL components only when component handler present', () => {
+        expect(window['componentHandler']).toBeNull();
+        dataTable.ngAfterContentInit();
     });
 
     it('should invert "select all" status', () => {
@@ -465,7 +381,7 @@ describe('DataTable', () => {
 
     it('should allow "select all" calls with no rows', () => {
         dataTable.multiselect = true;
-        dataTable.ngOnChanges({'data': new SimpleChange('123', {}, true)});
+        dataTable.ngAfterContentInit();
 
         dataTable.onSelectAllClick(<MdCheckboxChange> { checked: true });
         expect(dataTable.isSelectAllChecked).toBe(true);
@@ -553,13 +469,13 @@ describe('DataTable', () => {
     });
 
     it('should require adapter sorting to evaluate sorting state', () => {
-        dataTable.ngOnChanges({'data': new SimpleChange('123', {}, true)});
+        dataTable.ngAfterContentInit();
         spyOn(dataTable.data, 'getSorting').and.returnValue(null);
         expect(dataTable.isColumnSorted(<DataColumn> {}, 'asc')).toBeFalsy();
     });
 
     it('should evaluate column sorting state', () => {
-        dataTable.ngOnChanges({'data': new SimpleChange('123', {}, true)});
+        dataTable.ngAfterContentInit();
         spyOn(dataTable.data, 'getSorting').and.returnValue(new DataSorting('column_1', 'asc'));
         expect(dataTable.isColumnSorted(<DataColumn> {key: 'column_1'}, 'asc')).toBeTruthy();
         expect(dataTable.isColumnSorted(<DataColumn> {key: 'column_2'}, 'desc')).toBeFalsy();
@@ -588,43 +504,6 @@ describe('DataTable', () => {
         dataTable.fallbackThumbnail = null;
         dataTable.onImageLoadingError(event);
         expect(event.target.src).toBe(originalSrc);
-    });
-
-    it('should not get cell tooltip when row is not provided', () => {
-        const col = <DataColumn> { key: 'name', type: 'text' };
-        expect(dataTable.getCellTooltip(null, col)).toBeNull();
-    });
-
-    it('should not get cell tooltip when column is not provided', () => {
-        const row = <DataRow> {};
-        expect(dataTable.getCellTooltip(row, null)).toBeNull();
-    });
-
-    it('should not get cell tooltip when formatter is not provided', () => {
-        const col = <DataColumn> { key: 'name', type: 'text' };
-        const row = <DataRow> {};
-        expect(dataTable.getCellTooltip(row, col)).toBeNull();
-    });
-
-    it('should use formatter function to generate tooltip', () => {
-        const tooltip = 'tooltip value';
-        const col = <DataColumn> {
-            key: 'name',
-            type: 'text',
-            formatTooltip: () =>  tooltip
-        };
-        const row = <DataRow> {};
-        expect(dataTable.getCellTooltip(row, col)).toBe(tooltip);
-    });
-
-    it('should return null value from the tooltip formatter', () => {
-        const col = <DataColumn> {
-            key: 'name',
-            type: 'text',
-            formatTooltip: () =>  null
-        };
-        const row = <DataRow> {};
-        expect(dataTable.getCellTooltip(row, col)).toBeNull();
     });
 
 });
