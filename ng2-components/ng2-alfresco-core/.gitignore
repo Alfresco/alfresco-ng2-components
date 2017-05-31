@@ -8,7 +8,6 @@ dist
 src/**/*.js
 src/**/*.js.map
 src/**/*.d.ts
-demo/**/*.js
 demo/**/*.js.map
 demo/**/*.d.ts
 index.js

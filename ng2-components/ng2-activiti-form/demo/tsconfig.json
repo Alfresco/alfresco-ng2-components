@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "baseUrl": ".",
         "target": "es5",
         "module": "commonjs",
         "moduleResolution": "node",
@@ -16,6 +17,7 @@
         "noFallthroughCasesInSwitch": true,
         "removeComments": true,
         "declaration": true,
+        "outDir": "./dist",
         "lib": [
             "es2015",
             "dom"
@@ -23,7 +25,9 @@
         "suppressImplicitAnyIndexErrors": true
     },
     "exclude": [
-        "node_modules"
+        "demo",
+        "node_modules",
+        "dist"
     ],
     "angularCompilerOptions": {
         "strictMetadataEmit": false,
