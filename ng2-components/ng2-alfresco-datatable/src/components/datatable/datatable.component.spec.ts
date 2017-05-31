@@ -26,7 +26,7 @@ import {
     DataColumn,
     DataSorting,
     ObjectDataTableAdapter,
-    ObjectDataColumn
+    ObjectDataColumn, ObjectDataRow
 } from './../../data/index';
 
 describe('DataTable', () => {
