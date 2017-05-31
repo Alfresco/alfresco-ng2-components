@@ -15,54 +15,102 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA, NgZone, SimpleChange, TemplateRef } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AlfrescoApiService, AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
-import { DataColumn, DataTableComponent } from 'ng2-alfresco-datatable';
-import { DataTableModule } from 'ng2-alfresco-datatable';
-import { Observable, Subject } from 'rxjs/Rx';
-import { FileNode, FolderNode } from '../assets/document-library.model.mock';
-import {
-    fakeNodeAnswerWithEntries,
-    fakeNodeAnswerWithNOEntries,
-    fakeNodeWithCreatePermission,
-    fakeNodeWithNoPermission
-} from '../assets/document-list.component.mock';
-import { MaterialModule } from '../material.module';
-import { ContentActionModel } from '../models/content-action.model';
-import { NodeMinimal, NodeMinimalEntry, NodePaging } from '../models/document-library.model';
-import { ImageResolver, RowFilter } from './../data/share-datatable-adapter';
-import { DocumentListService } from './../services/document-list.service';
+import { NgZone, SimpleChange, TemplateRef } from '@angular/core';
+import { DataTableComponent, DataColumn, DataRowEvent } from 'ng2-alfresco-datatable';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { DocumentListComponent } from './document-list.component';
+import { DocumentListService } from './../services/document-list.service';
+import { ContentActionModel } from '../models/content-action.model';
+import { FileNode, FolderNode } from '../assets/document-library.model.mock';
+import { NodeMinimalEntry, NodeMinimal, NodePaging } from '../models/document-library.model';
+import { ShareDataRow, RowFilter, ImageResolver } from './../data/share-datatable-adapter';
+import { DataTableModule } from 'ng2-alfresco-datatable';
+import { DocumentMenuActionComponent } from './document-menu-action.component';
+import { Observable } from 'rxjs/Rx';
 
 declare let jasmine: any;
+
+
+let fakeNodeAnswerWithEntries = {
+    'list': {
+        'pagination': {
+            'count': 4,
+            'hasMoreItems': false,
+            'totalItems': 14,
+            'skipCount': 10,
+            'maxItems': 10
+        },
+        'entries': [{
+            'entry': {
+                'isFile': true,
+                'createdByUser': { 'id': 'admin', 'displayName': 'Administrator' },
+                'modifiedAt': '2017-05-24T15:08:55.640Z',
+                'nodeType': 'cm:content',
+                'content': {
+                    'mimeType': 'application/rtf',
+                    'mimeTypeName': 'Rich Text Format',
+                    'sizeInBytes': 14530,
+                    'encoding': 'UTF-8'
+                },
+                'parentId': 'd124de26-6ba0-4f40-8d98-4907da2d337a',
+                'createdAt': '2017-05-24T15:08:55.640Z',
+                'path': {
+                    'name': '/Company Home/Guest Home',
+                    'isComplete': true,
+                    'elements': [{
+                        'id': '94acfc73-7014-4475-9bd9-93a2162f0f8c',
+                        'name': 'Company Home'
+                    }, { 'id': 'd124de26-6ba0-4f40-8d98-4907da2d337a', 'name': 'Guest Home' }]
+                },
+                'isFolder': false,
+                'modifiedByUser': { 'id': 'admin', 'displayName': 'Administrator' },
+                'name': 'b_txt_file.rtf',
+                'id': '67b80f77-dbca-4f58-be6c-71b9dd61ea53',
+                'properties': { 'cm:versionLabel': '1.0', 'cm:versionType': 'MAJOR' },
+                'allowableOperations': ['delete', 'update']
+            }
+        }]
+    }
+};
+
+let fakeNodeAnswerWithNOEntries = {
+    'list': {
+        'pagination': {
+            'count': 4,
+            'hasMoreItems': false,
+            'totalItems': 14,
+            'skipCount': 10,
+            'maxItems': 10
+        },
+        'entries': []
+    }
+};
 
 describe('DocumentList', () => {
 
     let documentList: DocumentListComponent;
-    let documentListService: DocumentListService;
-    let apiService: AlfrescoApiService;
     let fixture: ComponentFixture<DocumentListComponent>;
     let element: HTMLElement;
     let eventMock: any;
+    let componentHandler;
 
     beforeEach(async(() => {
-        let zone = new NgZone({enableLongStackTrace: false});
+        let zone = new NgZone(false);
 
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
-                DataTableModule,
-                MaterialModule
+                CoreModule.forRoot(),
+                DataTableModule.forRoot()
             ],
             declarations: [
-                DocumentListComponent
+                DocumentListComponent,
+                DocumentMenuActionComponent
             ],
             providers: [
                 DocumentListService,
-                {provide: NgZone, useValue: zone}
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+                { provide: NgZone, useValue: zone }
+            ]
         }).compileComponents();
     }));
 
@@ -73,18 +121,21 @@ describe('DocumentList', () => {
             }
         };
 
+        componentHandler = jasmine.createSpyObj('componentHandler', [
+            'upgradeAllRegistered', 'upgradeElement'
+        ]);
+        window['componentHandler'] = componentHandler;
+
         fixture = TestBed.createComponent(DocumentListComponent);
 
         let translateService = TestBed.get(AlfrescoTranslationService);
-        // spyOn(translateService, 'addTranslationFolder').and.stub();
+        spyOn(translateService, 'addTranslationFolder').and.stub();
         spyOn(translateService, 'get').and.callFake((key) => {
             return Observable.of(key);
         });
 
         element = fixture.nativeElement;
         documentList = fixture.componentInstance;
-        documentListService = TestBed.get(DocumentListService);
-        apiService = TestBed.get(AlfrescoApiService);
         fixture.detectChanges();
     });
 
@@ -116,14 +167,16 @@ describe('DocumentList', () => {
         columns.push(column);
 
         documentList.ngAfterContentInit();
-        expect(columns.length).toBe(6);
-        expect(columns[5]).toBe(column);
+        expect(columns.length).toBe(3);
+        expect(columns[2]).toBe(column);
     });
 
-    it('should call action\'s handler with node', () => {
+    it('should execute action with node', () => {
         let node = new FileNode();
         let action = new ContentActionModel();
-        action.handler = () => {};
+        action.handler = function () {
+            console.log('mock handler');
+        };
 
         spyOn(action, 'handler').and.stub();
 
@@ -132,76 +185,19 @@ describe('DocumentList', () => {
 
     });
 
-    it('should call action\'s handler with node and permission', () => {
+    it('should execute action with node and permission', () => {
         let node = new FileNode();
         let action = new ContentActionModel();
-        action.handler = () => {};
+        action.handler = function () {
+            console.log('mock handler');
+        };
         action.permission = 'fake-permission';
+
         spyOn(action, 'handler').and.stub();
 
         documentList.executeContentAction(node, action);
-
         expect(action.handler).toHaveBeenCalledWith(node, documentList, 'fake-permission');
-    });
 
-    it('should call action\'s execute with node if it is defined', () => {
-        let node = new FileNode();
-        let action = new ContentActionModel();
-        action.execute = () => {};
-        spyOn(action, 'execute').and.stub();
-
-        documentList.executeContentAction(node, action);
-
-        expect(action.execute).toHaveBeenCalledWith(node);
-    });
-
-    it('should call action\'s execute only after the handler has been executed', () => {
-        const deleteObservable: Subject<any> = new Subject<any>();
-        let node = new FileNode();
-        let action = new ContentActionModel();
-        action.handler = () => deleteObservable;
-        action.execute = () => {};
-        spyOn(action, 'execute').and.stub();
-
-        documentList.executeContentAction(node, action);
-
-        expect(action.execute).not.toHaveBeenCalled();
-        deleteObservable.next();
-        expect(action.execute).toHaveBeenCalledWith(node);
-    });
-
-    it('should show the loading state during the loading of new elements', (done) => {
-        documentList.ngAfterContentInit();
-        documentList.node = new NodePaging();
-
-        fixture.detectChanges();
-
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(element.querySelector('#adf-document-list-loading')).toBeDefined();
-            done();
-        });
-    });
-
-    it('should empty template be present when no element are present', (done) => {
-        documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
-        documentList.folderNode = new NodeMinimal();
-        documentList.folderNode.id = '1d26e465-dea3-42f3-b415-faa8364b9692';
-        documentList.reload();
-
-        fixture.detectChanges();
-
-        documentList.ready.subscribe(() => {
-            fixture.detectChanges();
-            expect(element.querySelector('#adf-document-list-empty')).toBeDefined();
-            done();
-        });
-
-        jasmine.Ajax.requests.at(0).respondWith({
-            status: 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fakeNodeAnswerWithNOEntries)
-        });
     });
 
     it('should not execute action without node provided', () => {
@@ -253,7 +249,7 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = {entry: {isFile: true, name: 'xyz', allowableOperations: ['create', 'update']}};
+        let nodeFile = { entry: { isFile: true, name: 'xyz', allowableOperations: ['create', 'update'] } };
 
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
@@ -274,7 +270,7 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = {entry: {isFolder: true, name: 'xyz', allowableOperations: ['create', 'update']}};
+        let nodeFile = { entry: { isFolder: true, name: 'xyz', allowableOperations: ['create', 'update'] } };
 
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
@@ -295,7 +291,7 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = {entry: {isFile: true, name: 'xyz', allowableOperations: ['create', 'update']}};
+        let nodeFile = { entry: { isFile: true, name: 'xyz', allowableOperations: ['create', 'update'] } };
 
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
@@ -315,7 +311,7 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = {entry: {isFolder: true, name: 'xyz', allowableOperations: ['create', 'update']}};
+        let nodeFile = { entry: { isFolder: true, name: 'xyz', allowableOperations: ['create', 'update'] } };
 
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
@@ -335,7 +331,7 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = {entry: {isFile: true, name: 'xyz', allowableOperations: ['create', 'update', 'delete']}};
+        let nodeFile = { entry: { isFile: true, name: 'xyz', allowableOperations: ['create', 'update', 'delete'] } };
 
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
@@ -355,7 +351,7 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = {entry: {isFolder: true, name: 'xyz', allowableOperations: ['create', 'update', 'delete']}};
+        let nodeFile = { entry: { isFolder: true, name: 'xyz', allowableOperations: ['create', 'update', 'delete'] } };
 
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
@@ -374,7 +370,7 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = {entry: {isFile: true, name: 'xyz', allowableOperations: null}};
+        let nodeFile = { entry: { isFile: true, name: 'xyz', allowableOperations: null } };
 
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
@@ -393,7 +389,7 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-        let nodeFile = {entry: {isFolder: true, name: 'xyz', allowableOperations: null}};
+        let nodeFile = { entry: { isFolder: true, name: 'xyz', allowableOperations: null } };
 
         let actions = documentList.getNodeActions(nodeFile);
         expect(actions.length).toBe(1);
@@ -691,13 +687,13 @@ describe('DocumentList', () => {
         expect(documentList.navigationMode).toBe(DocumentListComponent.SINGLE_CLICK_NAVIGATION);
     });
 
-    xit('should emit error on wrong folder id', (done) => {
+    it('should emit error on wrong folder id', (done) => {
         documentList.error.subscribe(() => {
             done();
         });
 
         documentList.currentFolderId = 'wrong-id';
-        documentList.ngOnChanges({currentFolderId: new SimpleChange(null, documentList.currentFolderId, true)});
+        documentList.ngOnChanges({ currentFolderId: new SimpleChange(null, documentList.currentFolderId, true) });
     });
 
     it('should require dataTable to check empty template', () => {
@@ -707,7 +703,7 @@ describe('DocumentList', () => {
 
     it('should check [empty folder] template ', () => {
         documentList.emptyFolderTemplate = <TemplateRef<any>> {};
-        documentList.dataTable = new DataTableComponent(null, null);
+        documentList.dataTable = new DataTableComponent(null);
         expect(documentList.dataTable).toBeDefined();
         expect(documentList.isEmptyTemplateDefined()).toBeTruthy();
 
@@ -717,88 +713,83 @@ describe('DocumentList', () => {
 
     it('should empty folder NOT show the pagination', () => {
         documentList.emptyFolderTemplate = <TemplateRef<any>> {};
-        documentList.dataTable = new DataTableComponent(null, null);
+        documentList.dataTable = new DataTableComponent(null);
 
         expect(documentList.isEmpty()).toBeTruthy();
         expect(element.querySelector('alfresco-pagination')).toBe(null);
     });
 
-    it('should set row filter and reload contents if currentFolderId is set when setting rowFilter', () => {
+    it('should set row filter for underlying adapter', () => {
         let filter = <RowFilter> {};
         documentList.currentFolderId = 'id';
         spyOn(documentList.data, 'setFilter').and.callThrough();
-        spyOn(documentListService, 'getFolder');
 
-        documentList.ngOnChanges({rowFilter: new SimpleChange(null, filter, true)});
-
+        documentList.rowFilter = filter;
         expect(documentList.data.setFilter).toHaveBeenCalledWith(filter);
-        expect(documentListService.getFolder).toHaveBeenCalled();
-    });
-
-    it('should NOT reload contents if currentFolderId is NOT set when setting rowFilter', () => {
-        documentList.currentFolderId = null;
-        spyOn(documentListService, 'getFolder');
-
-        documentList.ngOnChanges({rowFilter: new SimpleChange(null, <RowFilter> {}, true)});
-
-        expect(documentListService.getFolder).not.toHaveBeenCalled();
     });
 
     it('should set image resolver for underlying adapter', () => {
         let resolver = <ImageResolver> {};
         spyOn(documentList.data, 'setImageResolver').and.callThrough();
 
-        documentList.ngOnChanges({imageResolver: new SimpleChange(null, resolver, true)});
-
+        documentList.imageResolver = resolver;
         expect(documentList.data.setImageResolver).toHaveBeenCalledWith(resolver);
     });
 
     it('should emit [nodeClick] event on row click', () => {
         let node = new NodeMinimalEntry();
+        let row = new ShareDataRow(node);
+        let event = new DataRowEvent(row, null);
 
         spyOn(documentList, 'onNodeClick').and.callThrough();
-        documentList.onNodeClick(node);
+        documentList.onRowClick(event);
         expect(documentList.onNodeClick).toHaveBeenCalledWith(node);
     });
 
     it('should emit node-click DOM event', (done) => {
         let node = new NodeMinimalEntry();
+        let row = new ShareDataRow(node);
+        let event = new DataRowEvent(row, null);
 
         const htmlElement = fixture.debugElement.nativeElement as HTMLElement;
         htmlElement.addEventListener('node-click', (e: CustomEvent) => {
             done();
         });
 
-        documentList.onNodeClick(node);
+        documentList.onRowClick(event);
     });
 
     it('should emit [nodeDblClick] event on row double-click', () => {
         let node = new NodeMinimalEntry();
+        let row = new ShareDataRow(node);
+        let event = new DataRowEvent(row, null);
 
         spyOn(documentList, 'onNodeDblClick').and.callThrough();
-        documentList.onNodeDblClick(node);
+        documentList.onRowDblClick(event);
         expect(documentList.onNodeDblClick).toHaveBeenCalledWith(node);
     });
 
     it('should emit node-dblclick DOM event', (done) => {
         let node = new NodeMinimalEntry();
+        let row = new ShareDataRow(node);
+        let event = new DataRowEvent(row, null);
 
         const htmlElement = fixture.debugElement.nativeElement as HTMLElement;
         htmlElement.addEventListener('node-dblclick', (e: CustomEvent) => {
             done();
         });
 
-        documentList.onNodeDblClick(node);
+        documentList.onRowDblClick(event);
     });
 
     it('should load folder by ID on init', () => {
         documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
         spyOn(documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.resolve());
-        documentList.ngOnChanges({folderNode: new SimpleChange(null, documentList.currentFolderId, true)});
+        documentList.ngOnChanges({ folderNode: new SimpleChange(null, documentList.currentFolderId, true) });
         expect(documentList.loadFolderNodesByFolderNodeId).toHaveBeenCalled();
     });
 
-    xit('should load previous page if there are no other elements in multi page table', (done) => {
+    it('should load previous page if there are no other elements in multi page table', async(() => {
         documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
         documentList.folderNode = new NodeMinimal();
         documentList.folderNode.id = '1d26e465-dea3-42f3-b415-faa8364b9692';
@@ -809,12 +800,11 @@ describe('DocumentList', () => {
 
         fixture.detectChanges();
 
-        documentList.ready.subscribe(() => {
+        fixture.whenStable().then(() => {
             fixture.detectChanges();
             let rowElement = element.querySelector('[data-automation-id="b_txt_file.rtf"]');
             expect(rowElement).toBeDefined();
             expect(rowElement).not.toBeNull();
-            done();
         });
 
         jasmine.Ajax.requests.at(0).respondWith({
@@ -828,108 +818,5 @@ describe('DocumentList', () => {
             contentType: 'application/json',
             responseText: JSON.stringify(fakeNodeAnswerWithEntries)
         });
-    });
-
-    it('should return true if current folder node has create permission', (done) => {
-        documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
-        documentList.folderNode = new NodeMinimal();
-        documentList.folderNode.id = '1d26e465-dea3-42f3-b415-faa8364b9692';
-        documentList.skipCount = 5;
-        documentList.pageSize = 5;
-        spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.resolve(fakeNodeWithCreatePermission));
-        spyOn(documentListService, 'getFolder').and.returnValue(Promise.resolve(fakeNodeAnswerWithNOEntries));
-
-        let change = new SimpleChange(null, '1d26e465-dea3-42f3-b415-faa8364b9692', true);
-        documentList.ngOnChanges({'currentFolderId': change});
-        fixture.detectChanges();
-
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(documentList.hasCreatePermission()).toBeTruthy();
-            done();
-        });
-    });
-
-    it('should return false if navigate to a folder with no create permission', (done) => {
-        documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
-        documentList.folderNode = new NodeMinimal();
-        documentList.folderNode.id = '1d26e465-dea3-42f3-b415-faa8364b9692';
-        documentList.skipCount = 5;
-        documentList.pageSize = 5;
-        spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.resolve(fakeNodeWithNoPermission));
-        spyOn(documentListService, 'getFolder').and.returnValue(Promise.resolve(fakeNodeAnswerWithNOEntries));
-
-        documentList.loadFolder();
-        let clickedFolderNode = new FolderNode('fake-folder-node');
-        documentList.onNodeDblClick(clickedFolderNode);
-        fixture.detectChanges();
-
-        fixture.whenStable().then(() => {
-            expect(documentList.hasCreatePermission()).toBeFalsy();
-            done();
-        });
-    });
-
-    it('should not perform navigation for virtual sources', () => {
-        const sources = ['-trashcan-', '-sharedlinks-', '-sites-', '-favorites-', '-recent-'];
-        const node = new FolderNode('folder');
-
-        documentList.currentFolderId = 'node-id';
-        expect(documentList.canNavigateFolder(node)).toBeTruthy();
-
-        sources.forEach(source => {
-            documentList.currentFolderId = source;
-            expect(documentList.canNavigateFolder(node)).toBeFalsy();
-        });
-    });
-
-    it('should fetch trashcan', () => {
-        const nodesApi = apiService.getInstance().core.nodesApi;
-        spyOn(nodesApi, 'getDeletedNodes').and.returnValue(Promise.resolve(null));
-
-        documentList.loadFolderByNodeId('-trashcan-');
-        expect(nodesApi.getDeletedNodes).toHaveBeenCalled();
-    });
-
-    it('should fetch shared links', () => {
-        const sharedlinksApi = apiService.getInstance().core.sharedlinksApi;
-        spyOn(sharedlinksApi, 'findSharedLinks').and.returnValue(Promise.resolve(null));
-
-        documentList.loadFolderByNodeId('-sharedlinks-');
-        expect(sharedlinksApi.findSharedLinks).toHaveBeenCalled();
-    });
-
-    it('should fetch sites', () => {
-        const sitesApi = apiService.getInstance().core.sitesApi;
-        spyOn(sitesApi, 'getSites').and.returnValue(Promise.resolve(null));
-
-        documentList.loadFolderByNodeId('-sites-');
-        expect(sitesApi.getSites).toHaveBeenCalled();
-    });
-
-    it('should fetch favorites', () => {
-        const favoritesApi = apiService.getInstance().core.favoritesApi;
-        spyOn(favoritesApi, 'getFavorites').and.returnValue(Promise.resolve(null));
-
-        documentList.loadFolderByNodeId('-favorites-');
-        expect(favoritesApi.getFavorites).toHaveBeenCalled();
-    });
-
-    it('should fetch recent', (done) => {
-
-        const person = { entry: { id: 'person '} };
-        const peopleApi = apiService.getInstance().core.peopleApi;
-        const searchApi = apiService.getInstance().search.searchApi;
-
-        spyOn(peopleApi, 'getPerson').and.returnValue(Promise.resolve(person));
-        spyOn(searchApi, 'search').and.returnValue(Promise.resolve(null));
-
-        documentList.loadFolderByNodeId('-recent-');
-
-        setTimeout(function() {
-            expect(peopleApi.getPerson).toHaveBeenCalledWith('-me-');
-            expect(searchApi.search).toHaveBeenCalled();
-            done();
-        }, 100);
-    });
+    }));
 });
