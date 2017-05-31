@@ -24,9 +24,8 @@ import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { ActivitiContentService } from 'ng2-activiti-form';
 
 import { ActivitiCreateTaskAttachmentComponent } from './activiti-create-task-attachment.component';
-// import { TranslationMock } from './../assets/translation.service.mock';
 
-describe('Activiti Process Instance Create Attachment', () => {
+describe('Activiti Task Create Attachment', () => {
 
     let componentHandler: any;
     let service: ActivitiContentService;
@@ -76,8 +75,13 @@ describe('Activiti Process Instance Create Attachment', () => {
     it('should not call createTaskRelatedContent service when there is no file uploaded', () => {
         let change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'taskId': change });
-        let fileList = new FileList();
-        component.onFileUpload(fileList);
+        let customEvent = {
+            detail: {
+                files: [
+                ]
+            }
+        };
+        component.onFileUpload(customEvent);
         expect(createTaskRelatedContentSpy).not.toHaveBeenCalled();
     });
 
@@ -85,7 +89,14 @@ describe('Activiti Process Instance Create Attachment', () => {
         let change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'taskId': change });
         let file = new File([new Blob()], 'Test');
-        component.onFileUpload(file);
+        let customEvent = {
+            detail: {
+                files: [
+                    file
+                ]
+            }
+        };
+        component.onFileUpload(customEvent);
         expect(createTaskRelatedContentSpy).toHaveBeenCalled();
     });
 });

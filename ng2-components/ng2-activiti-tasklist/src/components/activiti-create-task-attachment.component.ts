@@ -49,27 +49,21 @@ export class ActivitiCreateTaskAttachmentComponent implements OnChanges {
         }
     }
 
-    onFileUpload(files: any) {
+    onFileUpload(e: any) {
+        let files: any = e.detail.files;
 
         if (files.length > 0) {
             for (let i = 0; i < files.length; i++) {
                 let file: File = files[i];
-
-                this.callCreateTaskServiceApi(file);
+                this.activitiContentService.createTaskRelatedContent(this.taskId, file).subscribe(
+                    (res) => {
+                        this.success.emit(res);
+                    },
+                    (err) => {
+                        this.error.emit(err);
+                    }
+                );
             }
-        } else {
-            this.callCreateTaskServiceApi(files);
         }
-    }
-
-    callCreateTaskServiceApi(file: any) {
-        this.activitiContentService.createTaskRelatedContent(this.taskId, file).subscribe(
-            (res) => {
-                this.success.emit(res);
-            },
-            (err) => {
-                this.error.emit(err);
-            }
-        );
     }
 }
