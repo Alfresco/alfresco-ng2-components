@@ -35,7 +35,8 @@ import {
     ActivitiTaskHeader,
     ActivitiStartTaskButton,
     ActivitiPeopleSearch,
-    TaskAttachmentListComponent
+    TaskAttachmentListComponent,
+    ActivitiCreateTaskAttachmentComponent
 } from './src/components/index';
 
 export * from './src/components/index';
@@ -54,7 +55,8 @@ export const ACTIVITI_TASKLIST_DIRECTIVES: any[] = [
     ActivitiTaskHeader,
     ActivitiStartTaskButton,
     ActivitiPeopleSearch,
-    TaskAttachmentListComponent
+    TaskAttachmentListComponent,
+    ActivitiCreateTaskAttachmentComponent
 ];
 
 export const ACTIVITI_TASKLIST_PROVIDERS: any[] = [

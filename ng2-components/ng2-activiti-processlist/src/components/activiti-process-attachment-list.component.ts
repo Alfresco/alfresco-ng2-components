@@ -15,22 +15,25 @@
  * limitations under the License.
  */
 
-import { Component, OnChanges, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import { Component, OnChanges, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService, ContentService } from 'ng2-alfresco-core';
 import { ActivitiContentService } from 'ng2-activiti-form';
 
 @Component({
-    selector: 'activiti-process-attachment-list',
-    styleUrls: ['./activiti-process-attachment-list.component.css'],
-    templateUrl: './activiti-process-attachment-list.component.html'
+    selector: 'adf-task-attachment-list',
+    styleUrls: ['./adf-task-attachment-list.component.css'],
+    templateUrl: './adf-task-attachment-list.component.html'
 })
-export class ActivitiProcessAttachmentListComponent implements OnChanges {
+export class TaskAttachmentListComponent implements OnChanges {
 
     @Input()
-    processInstanceId: string;
+    taskId: string;
 
     @Output()
     attachmentClick = new EventEmitter();
+
+    @Output()
+    success = new EventEmitter();
 
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
@@ -42,14 +45,13 @@ export class ActivitiProcessAttachmentListComponent implements OnChanges {
                 private contentService: ContentService) {
 
         if (translateService) {
-            translateService.addTranslationFolder('ng2-activiti-processlist', 'node_modules/ng2-activiti-processlist/src');
+            translateService.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
         }
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['processInstanceId'] && changes['processInstanceId'].currentValue) {
-            this.processInstanceId = changes['processInstanceId'].currentValue;
-            this.loadAttachmentsByProcessInstanceId(this.processInstanceId);
+        if (changes['taskId'] && changes['taskId'].currentValue) {
+            this.loadAttachmentsByTaskId(changes['taskId'].currentValue);
         }
     }
 
@@ -57,10 +59,10 @@ export class ActivitiProcessAttachmentListComponent implements OnChanges {
         this.attachments = [];
     }
 
-    private loadAttachmentsByProcessInstanceId(processInstanceId: string) {
-        if (processInstanceId) {
+    private loadAttachmentsByTaskId(taskId: string) {
+        if (taskId) {
             this.reset();
-            this.activitiContentService.getProcessRelatedContent(processInstanceId).subscribe(
+            this.activitiContentService.getTaskRelatedContent(taskId).subscribe(
                 (res: any) => {
                     res.data.forEach(content => {
                         this.attachments.push({
@@ -71,10 +73,7 @@ export class ActivitiProcessAttachmentListComponent implements OnChanges {
                             icon: this.activitiContentService.getMimeTypeIcon(content.mimeType)
                         });
                     });
-
-                },
-                (err) => {
-                    this.error.emit(err);
+                    this.success.emit(this.attachments);
                 });
         }
     }
@@ -86,9 +85,6 @@ export class ActivitiProcessAttachmentListComponent implements OnChanges {
                     this.attachments = this.attachments.filter(content => {
                         return content.id !== contentId;
                     });
-                },
-                (err) => {
-                    this.error.emit(err);
                 });
         }
     }
@@ -149,9 +145,6 @@ export class ActivitiProcessAttachmentListComponent implements OnChanges {
         );
     }
 
-    /**
-     * Invoke content download.
-     */
     downloadContent(content: any): void {
         this.activitiContentService.getFileRawContent(content.id).subscribe(
             (blob: Blob) => this.contentService.downloadBlob(blob, content.name),
