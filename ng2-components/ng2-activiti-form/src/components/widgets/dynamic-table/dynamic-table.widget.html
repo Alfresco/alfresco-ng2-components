@@ -4,7 +4,7 @@
 
     <div *ngIf="!editMode">
         <div class="dynamic-table-widget__table-container">
-            <table class="mdl-data-table mdl-js-data-table dynamic-table-widget__table">
+            <table class="mdl-data-table mdl-js-data-table dynamic-table-widget__table" id="dynamic-table-{{content.id}}">
                 <thead>
                     <tr>
                         <th *ngFor="let column of content.visibleColumns"
@@ -14,8 +14,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let row of content.rows"
-                        [class.dynamic-table-widget__row-selected]="row.selected">
+                    <tr *ngFor="let row of content.rows; let idx = index" tabindex="0" id="{{content.id}}-row-{{idx}}"
+                        [class.dynamic-table-widget__row-selected]="row.selected" (keyup)="onKeyPressed($event, row)">
                         <td *ngFor="let column of content.visibleColumns"
                             class="mdl-data-table__cell--non-numeric"
                             (click)="onRowClicked(row)">

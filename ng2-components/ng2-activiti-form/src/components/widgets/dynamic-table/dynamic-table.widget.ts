@@ -42,6 +42,8 @@ export class DynamicTableWidget extends WidgetComponent implements OnInit {
     editMode: boolean = false;
     editRow: DynamicTableRow = null;
 
+    private selectArrayCode = [32, 0, 13];
+
     constructor(private elementRef: ElementRef,
                 private visibilityService: WidgetVisibilityService,
                 private logService: LogService) {
@@ -69,6 +71,16 @@ export class DynamicTableWidget extends WidgetComponent implements OnInit {
         if (this.content) {
             this.content.selectedRow = row;
         }
+    }
+
+    onKeyPressed($event: KeyboardEvent, row: DynamicTableRow) {
+        if (this.content && this.isEnterOrSpacePressed($event.keyCode)) {
+            this.content.selectedRow = row;
+        }
+    }
+
+    private isEnterOrSpacePressed(keycode) {
+        return this.selectArrayCode.indexOf(keycode) !== -1;
     }
 
     hasSelection(): boolean {

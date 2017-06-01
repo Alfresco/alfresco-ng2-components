@@ -17,9 +17,62 @@
 
 import { LogServiceMock } from 'ng2-alfresco-core';
 import { DynamicTableWidget } from './dynamic-table.widget';
-import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './dynamic-table.widget.model';
+import {
+    DynamicTableModel,
+    DynamicTableRow,
+    DynamicTableColumn
+} from './dynamic-table.widget.model';
 import { FormModel, FormFieldTypes, FormFieldModel } from './../core/index';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { CoreModule } from 'ng2-alfresco-core';
+import { RowEditorComponent } from './editors/row.editor';
+import { DropdownEditorComponent } from './editors/dropdown/dropdown.editor';
+import { DateEditorComponent } from './editors/date/date.editor';
+import { BooleanEditorComponent } from './editors/boolean/boolean.editor';
+import { TextEditorComponent } from './editors/text/text.editor';
+
+
+let fakeFormField = {
+    id: "fake-dynamic-table",
+    name: "fake-label",
+    value: [{ 1: 1, 2: 2, 3: 4 }],
+    required: false,
+    readOnly: false,
+    overrideId: false,
+    colspan: 1,
+    placeholder: null,
+    minLength: 0,
+    maxLength: 0,
+    params: {
+        existingColspan: 1,
+        maxColspan: 1
+    },
+    sizeX: 2,
+    sizeY: 2,
+    row: -1,
+    col: -1,
+    columnDefinitions: [
+        {
+            id: 1,
+            name: 1,
+            type: 'String',
+            visible: true
+        },
+        {
+            id: 2,
+            name: 2,
+            type: 'String',
+            visible: true
+        },
+        {
+            id: 3,
+            name: 3,
+            type: 'String',
+            visible: true
+        }
+    ]
+};
 
 describe('DynamicTableWidget', () => {
 
@@ -255,5 +308,60 @@ describe('DynamicTableWidget', () => {
         let column = <DynamicTableColumn> { id: 'key', type: 'Amount', amountCurrency: 'GBP' };
         let actual = widget.getCellValue(row, column);
         expect(actual).toBe('GBP 100');
+    });
+
+    describe('when template is ready', () => {
+        let dynamicTableWidget: DynamicTableWidget;
+        let fixture: ComponentFixture<DynamicTableWidget>;
+        let element: HTMLElement;
+        let componentHandler;
+
+        beforeEach(async(() => {
+            TestBed.configureTestingModule({
+                imports: [CoreModule],
+                providers: [WidgetVisibilityService],
+                declarations: [DynamicTableWidget, RowEditorComponent,
+                    DropdownEditorComponent, DateEditorComponent, BooleanEditorComponent, TextEditorComponent]
+            }).compileComponents().then(() => {
+                fixture = TestBed.createComponent(DynamicTableWidget);
+                dynamicTableWidget = fixture.componentInstance;
+                element = fixture.nativeElement;
+            });
+        }));
+
+        beforeEach(async(() => {
+            componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
+            window['componentHandler'] = componentHandler;
+        }));
+
+        afterEach(() => {
+            fixture.destroy();
+            TestBed.resetTestingModule();
+        });
+
+        beforeEach(() => {
+            dynamicTableWidget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), fakeFormField);
+            dynamicTableWidget.field.type = FormFieldTypes.DYNAMIC_TABLE;
+
+            fixture.detectChanges();
+        });
+
+        it('should select a row when press space bar', async(() => {
+            let rowElement = element.querySelector('#fake-dynamic-table-row-0');
+
+            expect(element.querySelector('#dynamic-table-fake-dynamic-table')).not.toBeNull();
+            expect(rowElement).not.toBeNull();
+            expect(rowElement.className).toBeFalsy();
+
+            let event: any = new Event('keyup');
+            event.keyCode = 32;
+            rowElement.dispatchEvent(event);
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                let selectedRow = element.querySelector('#fake-dynamic-table-row-0');
+                expect(selectedRow.className).toBe('dynamic-table-widget__row-selected');
+            });
+        }));
     });
 });
