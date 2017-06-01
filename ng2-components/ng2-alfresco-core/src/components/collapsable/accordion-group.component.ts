@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnDestroy, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnDestroy, Output, EventEmitter, ViewChild } from '@angular/core';
 import { AccordionComponent } from './accordion.component';
 
 @Component({
     selector: 'adf-accordion-group',
     templateUrl: 'accordion-group.component.html',
-    styleUrls: ['./accordion-group.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./accordion-group.component.css']
+
 })
 export class AccordionGroupComponent implements OnDestroy {
     private _isOpen: boolean = false;
@@ -79,11 +79,13 @@ export class AccordionGroupComponent implements OnDestroy {
     toggleOpen(event: MouseEvent): void {
         event.preventDefault();
         this.isOpen = !this.isOpen;
-        this.headingClick.emit(this.heading);
     }
 
     getAccordionIcon(): string {
         return this.isOpen ? 'expand_less' : 'expand_more';
     }
 
+    onHeadingClick() {
+        this.headingClick.emit(this.heading);
+    }
 }
