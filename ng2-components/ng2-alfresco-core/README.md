@@ -355,6 +355,7 @@ export class MyComponent implements OnInit {
 | `heading` | {string} | optional | The header title. |
 | `isSelected` | {boolean} | optional | Define if the accordion group is selected or not. |
 | `headingIcon` | {string} | optional | The material design icon. |
+| `hasAccordionIcon` | {boolean} | optional | Define if the accordion (expand) icon needs to be shown or not, the default value is true |
 
 
 ## Authentication Service

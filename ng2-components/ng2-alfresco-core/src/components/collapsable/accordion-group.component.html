@@ -1,12 +1,19 @@
 <div class="adf-panel adf-panel-default" [ngClass]="{'adf-panel-open': isOpen}">
-    <div class="adf-panel-heading" [ngClass]="{'adf-panel-heading-selected': isSelected}">
-        <div (click)="onHeadingClick()">
+    <div class="adf-panel-heading" [ngClass]="{'adf-panel-heading-selected': isSelected}" (click)="onHeadingClick()">
+<<<<<<< HEAD
+        <div id="heading-icon" *ngIf="hasHeadingIcon()" class="adf-panel-heading-icon">
+            <i class="material-icons">{{headingIcon}}</i>
+        </div>
+        <div id="heading-text" class="adf-panel-heading-text">{{heading}}</div>        
+=======
+        <div>
             <div id="heading-icon" *ngIf="hasHeadingIcon()" class="adf-panel-heading-icon">
                 <i class="material-icons">{{headingIcon}}</i>
             </div>
             <div id="heading-text" class="adf-panel-heading-text">{{heading}}</div>
         </div>
-        <div id="accordion-button" *ngIf="!isGroupContentEmpty()" class="adf-panel-heading-toggle" (click)="toggleOpen($event)">
+>>>>>>> 5630298bebd14a77d10fb28b2c0a83f946977667
+        <div id="accordion-button" *ngIf="hasAccordionIcon" class="adf-panel-heading-toggle" (click)="toggleOpen($event)">
             <i class="material-icons">{{getAccordionIcon()}}</i>
         </div>
     </div>

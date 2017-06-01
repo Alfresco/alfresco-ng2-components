@@ -37,6 +37,9 @@ export class AccordionGroupComponent implements OnDestroy {
     @Input()
     headingIcon: string;
 
+    @Input()
+    hasAccordionIcon: boolean = true;
+
     @Output()
     headingClick: EventEmitter<any> = new EventEmitter<any>();
 
@@ -84,9 +87,5 @@ export class AccordionGroupComponent implements OnDestroy {
 
     onHeadingClick() {
         this.headingClick.emit(this.heading);
-    }
-
-    isGroupContentEmpty() {
-        return this.contentWrapper.nativeElement.innerHTML.trim().length === 0;
     }
 }
