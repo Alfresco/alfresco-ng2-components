@@ -3,6 +3,7 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 eval JS_API=true
 eval GNU=false
+eval EXEC_COMPONENT=true
 
 eval projects=( "ng2-alfresco-core"
     "ng2-alfresco-datatable"
@@ -28,6 +29,7 @@ show_help() {
     echo "Usage: update-version.sh"
     echo ""
     echo "-sj or -sjsapi  don't update js-api version"
+    echo "-demoshell execute the change version only in the demo shell "
     echo "-v or -version  version to update"
     echo "-gnu for gnu"
 }
@@ -45,6 +47,11 @@ gnu_mode() {
 version_change() {
     echo "====== New version $1 ====="
     VERSION=$1
+}
+
+only_demoshell() {
+    echo "====== UPDATE Only the demo shell versions ====="
+    EXEC_COMPONENT=false
 }
 
 
@@ -143,6 +150,7 @@ while [[ $1  == -* ]]; do
       -v|version) version_change $2; shift 2;;
       -sj|sjsapi) skip_js; shift;;
       -gnu) gnu_mode; shift;;
+      -demoshell) only_demoshell; shift;;
       -*) shift;;
     esac
 done
@@ -161,21 +169,28 @@ fi
 
 cd "$DIR/../"
 
-echo "====== UPDATE COMPONENTS ======"
-
 projectslength=${#projects[@]}
 
-# use for loop to read all values and indexes
-for (( i=0; i<${projectslength}; i++ ));
-do
-   echo "====== UPDATE COMPONENT ${projects[$i]} ======"
-   update_component_version ${projects[$i]}
-   update_component_dependency_version ${projects[$i]}
+if $EXEC_COMPONENT == true; then
+    echo "====== UPDATE COMPONENTS ======"
 
-   if $JS_API == true; then
-    update_component_js_version ${projects[$i]}
-   fi
-done
+    # use for loop to read all values and indexes
+    for (( i=0; i<${projectslength}; i++ ));
+    do
+       echo "====== UPDATE COMPONENT ${projects[$i]} ======"
+       update_component_version ${projects[$i]}
+       update_component_dependency_version ${projects[$i]}
+
+       if $JS_API == true; then
+        update_component_js_version ${projects[$i]}
+       fi
+    done
+
+    echo "====== UPDATE TOTAL BUILD======"
+
+    update_total_build_dependency_version
+    update_total_build_dependency_js_version
+fi
 
 echo "====== UPDATE DEMO SHELL ======"
 
@@ -184,13 +199,6 @@ update_demo_shell_dependency_version
 if $JS_API == true; then
     update_demo_shell_js_version
 fi
-
-
-echo "====== UPDATE TOTAL BUILD======"
-
-update_total_build_dependency_version
-update_total_build_dependency_js_version
-
 
 DESTDIR="$DIR/../demo-shell-ng2/"
 sed "${sedi[@]}" "s/\"version\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"version\": \"${VERSION}\"/g"  ${DIR}/../demo-shell-ng2/package.json
