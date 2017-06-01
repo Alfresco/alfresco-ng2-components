@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { EventEmitter, DebugElement } from '@angular/core';
-import { AlfrescoTranslationService, CoreModule, LogService, LogServiceMock, NotificationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, CoreModule, LogService, LogServiceMock } from 'ng2-alfresco-core';
 
 import { UploadDragAreaComponent } from './upload-drag-area.component';
 import { FileDraggableDirective } from '../directives/file-draggable.directive';
@@ -45,7 +45,6 @@ describe('UploadDragAreaComponent', () => {
             ],
             providers: [
                 UploadService,
-                NotificationService,
                 { provide: AlfrescoTranslationService, useClass: TranslationMock },
                 { provide: LogService, useClass: LogServiceMock }
             ]
@@ -146,93 +145,5 @@ describe('UploadDragAreaComponent', () => {
         component.onFilesEntityDropped(itemEntity);
         expect(uploadService.uploadFilesInTheQueue)
             .toHaveBeenCalledWith('-my-', '/root-fake-/sites-fake/document-library-fake/folder-fake/', null);
-    });
-
-    xit('should throws an exception and show it in the notification bar when the folder already exist', done => {
-        component.currentFolderPath = '/root-fake-/sites-fake/folder-fake';
-        component.showNotificationBar = true;
-
-        fixture.detectChanges();
-        let fakeRest = {
-            response: {
-                body: {
-                    error: {
-                        statusCode: 409
-                    }
-                }
-            }
-        };
-        let fakePromise = new Promise(function (resolve, reject) {
-            reject(fakeRest);
-        });
-        spyOn(uploadService, 'callApiCreateFolder').and.returnValue(fakePromise);
-        spyOn(component, 'showErrorNotificationBar').and.callFake( () => {
-            expect(component.showErrorNotificationBar).toHaveBeenCalledWith('FILE_UPLOAD.MESSAGES.FOLDER_ALREADY_EXIST');
-            done();
-        });
-
-        let folderEntry = {
-            fullPath: '/folder-duplicate-fake',
-            isDirectory: true,
-            isFile: false,
-            name: 'folder-duplicate-fake'
-        };
-
-        component.onFolderEntityDropped(folderEntry);
-    });
-
-    it('should create a folder and call onFilesEntityDropped with the file inside the folder', done => {
-        component.currentFolderPath = '/root-fake-/sites-fake/document-library-fake';
-        component.onSuccess = new EventEmitter();
-
-        fixture.detectChanges();
-
-        let itemEntity = {
-            fullPath: '/folder-fake/file-fake.png',
-            isDirectory: false,
-            isFile: true,
-            name: 'file-fake.png',
-            file: (callbackFile) => {
-                let fileFake = new File(['fakefake'], 'file-fake.png', {type: 'image/png'});
-                callbackFile(fileFake);
-            }
-        };
-
-        let fakeRest = {
-            entry: {
-                isFile: false,
-                isFolder: true,
-                name: 'folder-fake'
-            }
-        };
-        let fakePromise = new Promise(function (resolve, reject) {
-            resolve(fakeRest);
-        });
-        spyOn(uploadService, 'callApiCreateFolder').and.returnValue(fakePromise);
-        spyOn(component, 'onFilesEntityDropped').and.callFake( () => {
-            expect(component.onFilesEntityDropped).toHaveBeenCalledWith(itemEntity);
-        });
-
-        spyOn(component, 'showUndoNotificationBar').and.callFake( () => {
-            expect(component.showUndoNotificationBar).toHaveBeenCalled();
-            done();
-        });
-
-        let folderEntry = {
-            fullPath: '/folder-fake',
-            isDirectory: true,
-            isFile: false,
-            name: 'folder-fake',
-            createReader: () => {
-                return {
-                    readEntries: (callback) => {
-                        let entries = [itemEntity, itemEntity];
-                        callback(entries);
-                    }
-                };
-            }
-        };
-
-        component.onFolderEntityDropped(folderEntry);
     });
 });

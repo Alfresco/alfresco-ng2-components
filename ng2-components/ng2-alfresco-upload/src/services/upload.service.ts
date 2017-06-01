@@ -16,36 +16,38 @@
  */
 
 import { EventEmitter, Injectable } from '@angular/core';
-import { Response } from '@angular/http';
-import { Observer, Observable, Subject } from 'rxjs/Rx';
+import { Subject } from 'rxjs/Rx';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
-import { FolderCreatedEvent } from '../events/folder-created.event';
-import { FileModel } from '../models/file.model';
-import { MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { FileUploadEvent, FileUploadCompleteEvent } from '../events/file.event';
+import { FileModel, FileUploadProgress, FileUploadStatus } from '../models/file.model';
 
-/**
- *
- * UploadService keep the queue of the file to upload and uploads them.
- *
- * @returns {UploadService} .
- */
 @Injectable()
 export class UploadService {
 
     private queue: FileModel[] = [];
-    private filesUploadObserverProgressBar: Observer<FileModel[]>;
-    private totalCompletedObserver: Observer<number>;
+    private cache: { [key: string]: any } = {};
+    private totalComplete: number = 0;
 
-    totalCompleted: number = 0;
-    filesUpload$: Observable<FileModel[]>;
-    totalCompleted$: Observable<any>;
-
-    folderCreated: Subject<FolderCreatedEvent> = new Subject<FolderCreatedEvent>();
+    queueChanged: Subject<FileModel[]> = new Subject<FileModel[]>();
+    fileUpload: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
+    fileUploadStarting: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
+    fileUploadCancelled: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
+    fileUploadProgress: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
+    fileUploadAborted: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
+    fileUploadError: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
+    fileUploadComplete: Subject<FileUploadCompleteEvent> = new Subject<FileUploadCompleteEvent>();
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
-        this.filesUpload$ = new Observable<FileModel[]>(observer => this.filesUploadObserverProgressBar = observer).share();
-        this.totalCompleted$ = new Observable<number>(observer => this.totalCompletedObserver = observer).share();
+    }
+
+    /**
+     * Returns the file Queue
+     *
+     * @return {FileModel[]} - files in the upload queue.
+     */
+    getQueue(): FileModel[] {
+        return this.queue;
     }
 
     /**
@@ -59,9 +61,7 @@ export class UploadService {
     addToQueue(...files: FileModel[]): FileModel[] {
         const allowedFiles = files.filter(f => !f.name.startsWith('.'));
         this.queue = this.queue.concat(allowedFiles);
-        if (this.filesUploadObserverProgressBar) {
-            this.filesUploadObserverProgressBar.next(this.queue);
-        }
+        this.queueChanged.next(this.queue);
         return allowedFiles;
     }
 
@@ -69,125 +69,142 @@ export class UploadService {
      * Pick all the files in the queue that are not been uploaded yet and upload it into the directory folder.
      */
     uploadFilesInTheQueue(rootId: string, directory: string, elementEmit: EventEmitter<any>): void {
-        let filesToUpload = this.queue.filter((file) => {
-            return !file.uploading && !file.done && !file.abort && !file.error;
-        });
+        const files = this.getFilesToUpload();
 
-        filesToUpload.forEach((uploadingFileModel: FileModel) => {
-            uploadingFileModel.setUploading();
+        files.forEach((file: FileModel) => {
+            this.onUploadStarting(file);
 
             const opts: any = {
                 renditions: 'doclib'
             };
 
-            if (uploadingFileModel.options.newVersion === true) {
+            if (file.options.newVersion === true) {
                 opts.overwrite = true;
                 opts.majorVersion = true;
             } else {
                 opts.autoRename = true;
             }
 
-            let promiseUpload = this.apiService.getInstance().upload.uploadFile(uploadingFileModel.file, directory, rootId, null, opts)
-                .on('progress', (progress: any) => {
-                    uploadingFileModel.setProgres(progress);
-                    this.updateFileListStream(this.queue);
-                })
-                .on('abort', () => {
-                    uploadingFileModel.setAbort();
-                    elementEmit.emit({
-                        value: 'File aborted'
-                    });
-                })
-                .on('error', () => {
-                    uploadingFileModel.setError();
-                    elementEmit.emit({
-                        value: 'Error file uploaded'
-                    });
-                })
-                .on('success', (data: any) => {
-                    elementEmit.emit({
-                        value: data
-                    });
-                    uploadingFileModel.onFinished(
-                        data.status,
-                        data.statusText,
-                        data.response
-                    );
-
-                    this.updateFileListStream(this.queue);
-                    if (!uploadingFileModel.abort && !uploadingFileModel.error) {
-                        this.updateFileCounterStream(++this.totalCompleted);
-                    }
+            const promise = this.apiService.getInstance().upload.uploadFile(file.file, directory, rootId, null, opts);
+            promise.on('progress', (progress: FileUploadProgress) => {
+                this.onUploadProgress(file, progress);
+            })
+            .on('abort', () => {
+                this.onUploadAborted(file);
+                elementEmit.emit({
+                    value: 'File aborted'
                 });
+            })
+            .on('error', err => {
+                this.onUploadError(file, err);
+                elementEmit.emit({
+                    value: 'Error file uploaded'
+                });
+            })
+            .on('success', data => {
+                this.onUploadComplete(file);
+                elementEmit.emit({
+                    value: data
+                });
+            })
+            .catch((err) => {
+                this.onUploadError(file, err);
+            });
 
-            uploadingFileModel.setPromiseUpload(promiseUpload);
+            this.cache[file.id] = promise;
         });
     }
 
-    /**
-     * Return all the files in the uploading queue.
-     *
-     * @return {FileModel[]} - files in the upload queue.
-     */
-    getQueue(): FileModel[] {
-        return this.queue;
+    cancelUpload(...files: FileModel[]) {
+        files.forEach(file => {
+            file.status = FileUploadStatus.Cancelled;
+
+            const promise = this.cache[file.id];
+            if (promise) {
+                promise.abort();
+                delete this.cache[file.id];
+            }
+
+            const event = new FileUploadEvent(file, FileUploadStatus.Cancelled);
+            this.fileUpload.next(event);
+            this.fileUploadCancelled.next(event);
+        });
     }
 
-    /**
-     * Create a folder
-     * @param name - the folder name
-     */
-    createFolder(relativePath: string, name: string, parentId?: string): Observable<MinimalNodeEntity> {
-        return Observable.fromPromise(this.callApiCreateFolder(relativePath, name, parentId))
-            .do(data => {
-                this.folderCreated.next({
-                    relativePath: relativePath,
-                    name: name,
-                    parentId: parentId,
-                    node: data
-                });
-            })
-            .catch(err => this.handleError(err));
-    }
-
-    callApiCreateFolder(relativePath: string, name: string, parentId?: string): Promise<MinimalNodeEntity> {
-        return this.apiService.getInstance().nodes.createFolder(name, relativePath, parentId);
-    }
-
-    /**
-     * Throw the error
-     * @param error
-     * @returns {ErrorObservable}
-     */
-    private handleError(error: Response) {
-        // in a real world app, we may send the error to some remote logging infrastructure
-        // instead of just logging it to the console
-        this.logService.error(error);
-        return Observable.throw(error || 'Server error');
-    }
-
-    private updateFileListStream(fileList: FileModel[]) {
-        if (this.filesUploadObserverProgressBar) {
-            this.filesUploadObserverProgressBar.next(fileList);
+    private onUploadStarting(file: FileModel): void {
+        if (file) {
+            file.status = FileUploadStatus.Starting;
+            const event = new FileUploadEvent(file, FileUploadStatus.Starting);
+            this.fileUpload.next(event);
+            this.fileUploadStarting.next(event);
         }
     }
 
-    updateFileCounterStream(total: number) {
-        if (this.totalCompletedObserver) {
-            this.totalCompletedObserver.next(total);
+    private onUploadProgress(file: FileModel, progress: FileUploadProgress): void {
+        if (file) {
+            file.progress = progress;
+            file.status = FileUploadStatus.Progress;
+
+            const event = new FileUploadEvent(file, FileUploadStatus.Progress);
+            this.fileUpload.next(event);
+            this.fileUploadProgress.next(event);
+
+            this.queueChanged.next(this.queue);
         }
     }
 
-    getFolderNode(nodeId: string): Observable<MinimalNodeEntryEntity> {
-        let opts: any = {
-            includeSource: true,
-            include: ['allowableOperations']
-        };
+    private onUploadError(file: FileModel, error: any): void {
+        if (file) {
+            file.status = FileUploadStatus.Error;
 
-        return Observable.fromPromise(this.apiService.getInstance().nodes.getNodeInfo(nodeId, opts))
-            .map((response: any) => {
-                return response;
-            })
-            .catch(err => this.handleError(err));
+            const promise = this.cache[file.id];
+            if (promise) {
+                delete this.cache[file.id];
+            }
+
+            const event = new FileUploadEvent(file, FileUploadStatus.Error, error);
+            this.fileUpload.next(event);
+            this.fileUploadError.next(event);
+        }
+    }
+
+    private onUploadComplete(file: FileModel): void {
+        if (file) {
+            file.status = FileUploadStatus.Complete;
+            this.totalComplete++;
+
+            const promise = this.cache[file.id];
+            if (promise) {
+                delete this.cache[file.id];
+            }
+
+            const event = new FileUploadCompleteEvent(file, this.totalComplete);
+            this.fileUpload.next(event);
+            this.fileUploadComplete.next(event);
+
+            this.queueChanged.next(this.queue);
+        }
+    }
+
+    private onUploadAborted(file: FileModel): void {
+        if (file) {
+            file.status = FileUploadStatus.Aborted;
+
+            const promise = this.cache[file.id];
+            if (promise) {
+                delete this.cache[file.id];
+            }
+
+            const event = new FileUploadEvent(file, FileUploadStatus.Aborted);
+            this.fileUpload.next(event);
+            this.fileUploadAborted.next(event);
+        }
+    }
+
+    private getFilesToUpload(): FileModel[] {
+        let filesToUpload = this.queue.filter(file => {
+            return file.status === FileUploadStatus.Pending;
+        });
+        return filesToUpload;
     }
 }

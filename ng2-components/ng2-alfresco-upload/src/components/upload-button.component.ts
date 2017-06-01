@@ -16,36 +16,15 @@
  */
 
 import { Component, ElementRef, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { Subject } from 'rxjs/Rx';
-import { AlfrescoTranslationService, LogService, NotificationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { Observable, Subject } from 'rxjs/Rx';
+import { AlfrescoApiService, AlfrescoContentService, AlfrescoTranslationService, LogService, NotificationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { UploadService } from '../services/upload.service';
 import { FileModel } from '../models/file.model';
 import { PermissionModel } from '../models/permissions.model';
 
-declare let componentHandler: any;
-
 const ERROR_FOLDER_ALREADY_EXIST = 409;
 
-/**
- * <alfresco-upload-button [showNotificationBar]="boolean"
- *                         [uploadFolders]="boolean"
- *                         [multipleFiles]="boolean"
- *                         [acceptedFilesType]="string"
- *                         (onSuccess)="customMethod($event)">
- * </alfresco-upload-button>
- *
- * This component, provide a set of buttons to upload files to alfresco.
- *
- * @InputParam {boolean} [true] showNotificationBar - hide/show notification bar.
- * @InputParam {boolean} [false] versioning - true to indicate that a major version should be created
- * @InputParam {boolean} [false] uploadFolders - allow/disallow upload folders (only for chrome).
- * @InputParam {boolean} [false] multipleFiles - allow/disallow multiple files.
- * @InputParam {string} [*] acceptedFilesType - array of allowed file extensions.
- * @InputParam {boolean} [false] versioning - true to indicate that a major version should be created
- * @Output - onSuccess - The event is emitted when the file is uploaded
- *
- * @returns {UploadButtonComponent} .
- */
 @Component({
     selector: 'alfresco-upload-button',
     templateUrl: './upload-button.component.html',
@@ -106,7 +85,9 @@ export class UploadButtonComponent implements OnInit, OnChanges {
                 private translateService: AlfrescoTranslationService,
                 private logService: LogService,
                 private notificationService: NotificationService,
-                private settingsService: AlfrescoSettingsService) {
+                private settingsService: AlfrescoSettingsService,
+                private apiService: AlfrescoApiService,
+                private contentService: AlfrescoContentService) {
         if (translateService) {
             translateService.addTranslationFolder('ng2-alfresco-upload', 'node_modules/ng2-alfresco-upload/src');
         }
@@ -172,9 +153,9 @@ export class UploadButtonComponent implements OnInit, OnChanges {
                 let directoryName = this.getDirectoryName(directoryPath);
                 let absolutePath = this.currentFolderPath + this.getDirectoryPath(directoryPath);
 
-                this.uploadService.createFolder(absolutePath, directoryName, this.rootFolderId)
+                this.contentService.createFolder(absolutePath, directoryName, this.rootFolderId)
                     .subscribe(
-                        res => {
+                        _ => {
                             let relativeDir = this.currentFolderPath + '/' + directoryPath;
                             this.uploadFiles(relativeDir, filesDir);
                         },
@@ -269,10 +250,8 @@ export class UploadButtonComponent implements OnInit, OnChanges {
         messageTranslate = this.translateService.get('FILE_UPLOAD.MESSAGES.PROGRESS');
         actionTranslate = this.translateService.get('FILE_UPLOAD.ACTION.UNDO');
 
-        this.notificationService.openSnackMessageAction(messageTranslate.value, actionTranslate.value, 3000).afterDismissed().subscribe(() => {
-            latestFilesAdded.forEach((uploadingFileModel: FileModel) => {
-                uploadingFileModel.emitAbort();
-            });
+        this.notificationService.openSnackMessageAction(messageTranslate.value, actionTranslate.value, 3000).onAction().subscribe(() => {
+            this.uploadService.cancelUpload(...latestFilesAdded);
         });
     }
 
@@ -282,11 +261,12 @@ export class UploadButtonComponent implements OnInit, OnChanges {
      * @returns {string}
      */
     private getErrorMessage(response: any): string {
-        if (response.body && response.body.error.statusCode === ERROR_FOLDER_ALREADY_EXIST) {
+        if (response && response.body && response.body.error.statusCode === ERROR_FOLDER_ALREADY_EXIST) {
             let errorMessage: any;
             errorMessage = this.translateService.get('FILE_UPLOAD.MESSAGES.FOLDER_ALREADY_EXIST');
             return errorMessage.value;
         }
+        return 'Error';
     }
 
     /**
@@ -314,15 +294,28 @@ export class UploadButtonComponent implements OnInit, OnChanges {
 
     checkPermission() {
         if (this.rootFolderId) {
-            this.uploadService.getFolderNode(this.rootFolderId).subscribe(
-                (res) => {
-                    this.permissionValue.next(this.hasCreatePermission(res));
-                },
-                (error) => {
-                    this.onError.emit(error);
-                }
+            this.getFolderNode(this.rootFolderId).subscribe(
+                res => this.permissionValue.next(this.hasCreatePermission(res)),
+                error => this.onError.emit(error)
             );
         }
+    }
+
+    getFolderNode(nodeId: string): Observable<MinimalNodeEntryEntity> {
+        let opts: any = {
+            includeSource: true,
+            include: ['allowableOperations']
+        };
+
+        return Observable.fromPromise(this.apiService.getInstance().nodes.getNodeInfo(nodeId, opts))
+            .catch(err => this.handleError(err));
+    }
+
+    private handleError(error: Response) {
+        // in a real world app, we may send the error to some remote logging infrastructure
+        // instead of just logging it to the console
+        this.logService.error(error);
+        return Observable.throw(error || 'Server error');
     }
 
     private hasCreatePermission(node: any): boolean {

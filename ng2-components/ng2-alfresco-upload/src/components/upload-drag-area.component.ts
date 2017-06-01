@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { AlfrescoTranslationService, LogService, NotificationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, AlfrescoContentService, LogService, NotificationService } from 'ng2-alfresco-core';
 import { UploadService } from '../services/upload.service';
 import { FileModel } from '../models/file.model';
 
@@ -61,7 +61,8 @@ export class UploadDragAreaComponent {
     constructor(private uploadService: UploadService,
                 private translateService: AlfrescoTranslationService,
                 private logService: LogService,
-                private notificationService: NotificationService) {
+                private notificationService: NotificationService,
+                private contentService: AlfrescoContentService) {
         if (translateService) {
             translateService.addTranslationFolder('ng2-alfresco-upload', 'node_modules/ng2-alfresco-upload/src');
         }
@@ -129,7 +130,7 @@ export class UploadDragAreaComponent {
             let relativePath = folder.fullPath.replace(folder.name, '');
             relativePath = this.currentFolderPath + relativePath;
 
-            this.uploadService.createFolder(relativePath, folder.name, this.rootFolderId)
+            this.contentService.createFolder(relativePath, folder.name, this.rootFolderId)
                 .subscribe(
                     message => {
                         this.onSuccess.emit({
@@ -186,9 +187,7 @@ export class UploadDragAreaComponent {
         actionTranslate = this.translateService.get('FILE_UPLOAD.ACTION.UNDO');
 
         this.notificationService.openSnackMessageAction(messageTranslate.value, actionTranslate.value, 3000).onAction().subscribe(() => {
-            latestFilesAdded.forEach((uploadingFileModel: FileModel) => {
-                uploadingFileModel.emitAbort();
-            });
+            this.uploadService.cancelUpload(...latestFilesAdded);
         });
     }
 

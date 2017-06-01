@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
+import { DebugElement, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { UploadButtonComponent } from './upload-button.component';
-import { DebugElement, SimpleChange }    from '@angular/core';
-import { CoreModule, AlfrescoTranslationService, NotificationService } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoTranslationService, AlfrescoContentService} from 'ng2-alfresco-core';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { UploadService } from '../services/upload.service';
 import { Observable } from 'rxjs/Rx';
@@ -31,27 +31,6 @@ describe('UploadButtonComponent', () => {
             files: [file]
         },
         target: {value: 'fake-name-1'}
-    };
-
-    let fakeResolveRest = {
-        entry: {
-            isFile: false,
-            isFolder: true,
-            name: 'fake-folder1'
-        }
-    };
-    let fakeResolvePromise = new Promise(function (resolve, reject) {
-        resolve(fakeResolveRest);
-    });
-
-    let fakeRejectRest = {
-        response: {
-            body: {
-                error: {
-                    statusCode: 409
-                }
-            }
-        }
     };
 
     let fakeFolderNodeWithoutPermission = {
@@ -73,15 +52,12 @@ describe('UploadButtonComponent', () => {
         nodeType: 'cm:folder'
     };
 
-    let fakeRejectPromise = new Promise(function (resolve, reject) {
-        reject(fakeRejectRest);
-    });
-
     let component: UploadButtonComponent;
     let fixture: ComponentFixture<UploadButtonComponent>;
     let debug: DebugElement;
     let element: HTMLElement;
     let uploadService: UploadService;
+    let contentService: AlfrescoContentService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -93,7 +69,6 @@ describe('UploadButtonComponent', () => {
             ],
             providers: [
                 UploadService,
-                NotificationService,
                 {provide: AlfrescoTranslationService, useClass: TranslationMock}
             ]
         }).compileComponents();
@@ -104,6 +79,7 @@ describe('UploadButtonComponent', () => {
 
         fixture = TestBed.createComponent(UploadButtonComponent);
         uploadService = TestBed.get(UploadService);
+        contentService = TestBed.get(AlfrescoContentService);
 
         debug = fixture.debugElement;
         element = fixture.nativeElement;
@@ -141,7 +117,7 @@ describe('UploadButtonComponent', () => {
         component.rootFolderId = '-my-';
         component.disableWithNoPermission = false;
 
-        spyOn(uploadService, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithoutPermission));
+        spyOn(component, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithoutPermission));
 
         fixture.detectChanges();
 
@@ -160,7 +136,7 @@ describe('UploadButtonComponent', () => {
         component.rootFolderId = '-my-';
         component.disableWithNoPermission = true;
 
-        spyOn(uploadService, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithoutPermission));
+        spyOn(component, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithoutPermission));
 
         component.onFilesAdded(fakeEvent);
         let compiled = fixture.debugElement.nativeElement;
@@ -173,7 +149,7 @@ describe('UploadButtonComponent', () => {
         component.rootFolderId = '-my-';
         component.disableWithNoPermission = true;
 
-        spyOn(uploadService, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
+        spyOn(component, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
 
         component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
         component.onFilesAdded(fakeEvent);
@@ -187,7 +163,7 @@ describe('UploadButtonComponent', () => {
         component.rootFolderId = '-my-';
         component.disableWithNoPermission = false;
 
-        spyOn(uploadService, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
+        spyOn(component, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
 
         component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
         component.onFilesAdded(fakeEvent);
@@ -202,7 +178,7 @@ describe('UploadButtonComponent', () => {
         component.currentFolderPath = '/root-fake-/sites-fake/folder-fake';
         component.onSuccess = null;
 
-        spyOn(uploadService, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
+        spyOn(component, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
 
         component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
         uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
@@ -218,7 +194,7 @@ describe('UploadButtonComponent', () => {
         component.rootFolderId = '-my-';
         component.onSuccess = null;
 
-        spyOn(uploadService, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
+        spyOn(component, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
         component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
 
         uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
@@ -233,11 +209,12 @@ describe('UploadButtonComponent', () => {
         component.rootFolderId = '-my-';
         component.currentFolderPath = '/fake-root-path';
 
-        spyOn(uploadService, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
-        spyOn(uploadService, 'callApiCreateFolder').and.returnValue(fakeResolvePromise);
+        spyOn(contentService, 'createFolder').and.returnValue(Observable.of(true));
+        spyOn(component, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
 
         component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
         fixture.detectChanges();
+
         component.onSuccess.subscribe(e => {
             expect(e.value).toEqual('File uploaded');
             done();
@@ -245,22 +222,21 @@ describe('UploadButtonComponent', () => {
 
         spyOn(component, 'uploadFiles').and.callFake(() => {
             component.onSuccess.emit({
-                    value: 'File uploaded'
-                }
-            );
+                value: 'File uploaded'
+            });
         });
         component.onDirectoryAdded(fakeEvent);
     });
 
     it('should emit an onError event when the folder already exist', (done) => {
         component.rootFolderId = '-my-';
-        spyOn(uploadService, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
-        spyOn(uploadService, 'callApiCreateFolder').and.returnValue(fakeRejectPromise);
+        spyOn(contentService, 'createFolder').and.returnValue(Observable.throw(new Error('')));
+        spyOn(component, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
 
         component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
 
         component.onError.subscribe(e => {
-            expect(e.value).toEqual('FILE_UPLOAD.MESSAGES.FOLDER_ALREADY_EXIST');
+            expect(e.value).toEqual('Error');
             done();
         });
 
