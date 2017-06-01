@@ -315,6 +315,7 @@ This component displays detailed information on a specified process instance
 | --- | --- |
 | `processCancelledEmitter` |  Emitted when the current process is cancelled by the user from within the component |
 | `taskFormCompletedEmitter` |  Emitted when the form associated with an active task is completed from within the component |
+| `showProcessDiagram` |  Emitted when the show diagram button is clicked |
 
 ### Process Instance Details Header component
 
@@ -330,13 +331,14 @@ This is a sub-component of the process details component, which renders some gen
 | Name | Description |
 | --- | --- |
 | `processInstance` |  (required): Full details of the process instance to display information about |
+| `showDiagram` |  (optional): If the value is true the button show diagram is shown |
 
 #### Events
 
 
 | Name | Description |
 | --- | --- |
-| `processCancelled` |  Emitted when the Cancel Process button shown by the component is clicked |
+| `showProcessDiagram` |  Emitted when the show diagram button is clicked |
 
 ### Process Instance Tasks component
 

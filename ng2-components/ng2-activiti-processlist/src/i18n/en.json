@@ -24,7 +24,8 @@
             "TASK_SUBTITLE": "Assigned to {{user}}, created {{created}}"
         },
         "BUTTON": {
-            "CANCEL": "Cancel Process"
+            "CANCEL": "Cancel Process",
+            "SHOW_DIAGRAM": "Show Diagram"
         },
         "MESSAGES": {
             "NONE": "No process details found."

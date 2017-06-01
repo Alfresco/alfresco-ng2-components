@@ -30,10 +30,16 @@ declare let componentHandler: any;
 export class ActivitiProcessInstanceHeader {
 
     @Input()
+    showDiagram: boolean = true;
+
+    @Input()
     processInstance: ProcessInstance;
 
     @Output()
     onError: EventEmitter<any> = new EventEmitter<any>();
+
+    @Output()
+    showProcessDiagram: EventEmitter<any> = new EventEmitter<any>();
 
     constructor(private translate: AlfrescoTranslationService,
                 private logService: LogService) {
@@ -63,5 +69,17 @@ export class ActivitiProcessInstanceHeader {
 
     isRunning(): boolean {
         return this.processInstance && !this.processInstance.ended;
+    }
+
+    isDiagramDisabled(): boolean {
+        return !this.isRunning() ? true : undefined;
+    }
+
+    showDiagramEvent() {
+        this.showProcessDiagram.emit({value: this.processInstance.id});
+    }
+
+    isShowDiagram(): boolean {
+        return this.showDiagram;
     }
 }
