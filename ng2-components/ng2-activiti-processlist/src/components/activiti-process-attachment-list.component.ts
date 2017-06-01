@@ -33,9 +33,6 @@ export class ActivitiProcessAttachmentListComponent implements OnChanges {
     attachmentClick = new EventEmitter();
 
     @Output()
-    attachmentCreate = new EventEmitter();
-
-    @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
     attachments: any[] = [];
@@ -162,9 +159,5 @@ export class ActivitiProcessAttachmentListComponent implements OnChanges {
                 this.error.emit(err);
             }
         );
-    }
-
-    attachDocumentToProcess() {
-        this.attachmentCreate.emit();
     }
 }
