@@ -12,3 +12,8 @@
     padding: 100px 10px;
     margin-bottom: 10px;
 }
+
+.upload-attachment-container button {
+    color: rgb(253, 145, 0);
+    opacity: 0.64;
+}

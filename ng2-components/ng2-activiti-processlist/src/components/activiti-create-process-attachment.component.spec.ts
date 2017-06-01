@@ -55,10 +55,7 @@ describe('Activiti Process Instance Create Attachment', () => {
         component = fixture.componentInstance;
         service = fixture.debugElement.injector.get(ActivitiContentService);
 
-        createProcessRelatedContentSpy = spyOn(service, 'createProcessRelatedContent').and.returnValue(Observable.of(
-            {
-              status: true
-            }));
+        createProcessRelatedContentSpy = spyOn(service, 'createProcessRelatedContent').and.returnValue(Observable.of({successCode: true}));
 
         componentHandler = jasmine.createSpyObj('componentHandler', [
             'upgradeAllRegistered',
@@ -76,8 +73,13 @@ describe('Activiti Process Instance Create Attachment', () => {
     it('should not call createProcessRelatedContent service when there is no file uploaded', () => {
         let change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'processInstanceId': change });
-        let fileList = new FileList();
-        component.onFileUpload(fileList);
+        let customEvent = {
+            detail: {
+                files: [
+                ]
+            }
+        };
+        component.onFileUpload(customEvent);
         expect(createProcessRelatedContentSpy).not.toHaveBeenCalled();
     });
 
@@ -85,7 +87,14 @@ describe('Activiti Process Instance Create Attachment', () => {
         let change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'processInstanceId': change });
         let file = new File([new Blob()], 'Test');
-        component.onFileUpload(file);
+        let customEvent = {
+            detail: {
+                files: [
+                    file
+                ]
+            }
+        };
+        component.onFileUpload(customEvent);
         expect(createProcessRelatedContentSpy).toHaveBeenCalled();
     });
 });

@@ -32,6 +32,9 @@ export class ActivitiCreateProcessAttachmentComponent implements OnChanges {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
+    @Output()
+    success: EventEmitter<any> = new EventEmitter<any>();
+
     constructor(private translateService: AlfrescoTranslationService,
                 private activitiContentService: ActivitiContentService) {
 
@@ -46,27 +49,20 @@ export class ActivitiCreateProcessAttachmentComponent implements OnChanges {
         }
     }
 
-    onFileUpload(files: any) {
+    onFileUpload(e: any) {
+        let files: any = e.detail.files;
 
-        if (files.length > 0) {
-            for (let i = 0; i < files.length; i++) {
-                let file: File = files[i];
+        for (let i = 0; i < files.length; i++) {
+            let file: File = files[i];
 
-                this.callCreateProcessServiceApi(file);
-            }
-        } else {
-            this.callCreateProcessServiceApi(files);
+            this.activitiContentService.createProcessRelatedContent(this.processInstanceId, file).subscribe(
+                (res) => {
+                    this.success.emit(res);
+                },
+                (err) => {
+                    this.error.emit(err);
+                }
+            );
         }
-    }
-
-    callCreateProcessServiceApi(file: any) {
-        this.activitiContentService.createProcessRelatedContent(this.processInstanceId, file).subscribe(
-            (res) => {
-
-            },
-            (err) => {
-                this.error.emit(err);
-            }
-        );
     }
 }
