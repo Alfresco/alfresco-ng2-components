@@ -15,28 +15,28 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreModule, LogService } from 'ng2-alfresco-core';
 import { LogServiceMock } from 'ng2-alfresco-core';
-import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
+import { DynamicTableWidget } from './dynamic-table.widget';
+import {
+    DynamicTableModel,
+    DynamicTableRow,
+    DynamicTableColumn
+} from './dynamic-table.widget.model';
+import { FormModel, FormFieldTypes, FormFieldModel } from './../core/index';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
-import { MaterialModule } from '../../material.module';
-import { ErrorWidgetComponent } from '../error/error.component';
-import { EcmModelService } from './../../../services/ecm-model.service';
-import { FormService } from './../../../services/form.service';
-import { FormFieldModel, FormFieldTypes, FormModel } from './../core/index';
-import { DynamicTableWidgetComponent } from './dynamic-table.widget';
-import { DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './dynamic-table.widget.model';
-import { BooleanEditorComponent } from './editors/boolean/boolean.editor';
-import { DateEditorComponent } from './editors/date/date.editor';
-import { DropdownEditorComponent } from './editors/dropdown/dropdown.editor';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { CoreModule } from 'ng2-alfresco-core';
 import { RowEditorComponent } from './editors/row.editor';
+import { DropdownEditorComponent } from './editors/dropdown/dropdown.editor';
+import { DateEditorComponent } from './editors/date/date.editor';
+import { BooleanEditorComponent } from './editors/boolean/boolean.editor';
 import { TextEditorComponent } from './editors/text/text.editor';
 
+
 let fakeFormField = {
-    id: 'fake-dynamic-table',
-    name: 'fake-label',
-    value: [{1: 1, 2: 2, 3: 4}],
+    id: "fake-dynamic-table",
+    name: "fake-label",
+    value: [{ 1: 1, 2: 2, 3: 4 }],
     required: false,
     readOnly: false,
     overrideId: false,
@@ -74,52 +74,24 @@ let fakeFormField = {
     ]
 };
 
-describe('DynamicTableWidgetComponent', () => {
+describe('DynamicTableWidget', () => {
 
-    let widget: DynamicTableWidgetComponent;
-    let fixture: ComponentFixture<DynamicTableWidgetComponent>;
-    let element: HTMLElement;
+    let widget: DynamicTableWidget;
     let table: DynamicTableModel;
-    let logService: LogService;
-
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                CoreModule.forRoot(),
-                MaterialModule
-            ],
-            declarations: [DynamicTableWidgetComponent, RowEditorComponent,
-                DropdownEditorComponent, DateEditorComponent, BooleanEditorComponent,
-                TextEditorComponent, ErrorWidgetComponent],
-            providers: [
-                FormService,
-                {provide: LogService, useClass: LogServiceMock},
-                ActivitiAlfrescoContentService,
-                EcmModelService,
-                WidgetVisibilityService
-            ]
-        }).compileComponents();
-    }));
+    let visibilityService: WidgetVisibilityService;
+    let logService: LogServiceMock;
 
     beforeEach(() => {
+        logService = new LogServiceMock();
         const field = new FormFieldModel(new FormModel());
-        logService = TestBed.get(LogService);
         table = new DynamicTableModel(field);
-        let changeDetectorSpy = jasmine.createSpyObj('cd', ['detectChanges']);
-        let nativeElementSpy = jasmine.createSpyObj('nativeElement', ['querySelector']);
-        changeDetectorSpy.nativeElement = nativeElementSpy;
-        let elementRefSpy = jasmine.createSpyObj('elementRef', ['']);
-        elementRefSpy.nativeElement = nativeElementSpy;
-
-        fixture = TestBed.createComponent(DynamicTableWidgetComponent);
-        element = fixture.nativeElement;
-        widget = fixture.componentInstance;
+        visibilityService = new WidgetVisibilityService(null, logService);
+        widget = new DynamicTableWidget(null, visibilityService, logService);
         widget.content = table;
-
     });
 
     it('should select row on click', () => {
-        let row = <DynamicTableRow> {selected: false};
+        let row = <DynamicTableRow> { selected: false };
         widget.onRowClicked(row);
 
         expect(row.selected).toBeTruthy();
@@ -127,7 +99,7 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should requre table to select clicked row', () => {
-        let row = <DynamicTableRow> {selected: false};
+        let row = <DynamicTableRow> { selected: false };
         widget.content = null;
         widget.onRowClicked(row);
 
@@ -135,7 +107,7 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should reset selected row', () => {
-        let row = <DynamicTableRow> {selected: false};
+        let row = <DynamicTableRow> { selected: false };
         widget.content.rows.push(row);
         widget.content.selectedRow = row;
         expect(widget.content.selectedRow).toBe(row);
@@ -147,7 +119,7 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should check selection', () => {
-        let row = <DynamicTableRow> {selected: false};
+        let row = <DynamicTableRow> { selected: false };
         widget.content.rows.push(row);
         widget.content.selectedRow = row;
         expect(widget.hasSelection()).toBeTruthy();
@@ -225,7 +197,7 @@ describe('DynamicTableWidgetComponent', () => {
         expect(widget.editMode).toBeFalsy();
         expect(widget.editRow).toBeFalsy();
 
-        let row = <DynamicTableRow> {value: true};
+        let row = <DynamicTableRow> { value: true };
         widget.content.selectedRow = row;
 
         expect(widget.editSelection()).toBeTruthy();
@@ -235,7 +207,7 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should copy row', () => {
-        let row = <DynamicTableRow> {value: {opt: {key: '1', value: 1}}};
+        let row = <DynamicTableRow> { value: { opt: { key: '1', value: 1 } } };
         let copy = widget.copyRow(row);
         expect(copy.value).toEqual(row.value);
     });
@@ -247,14 +219,14 @@ describe('DynamicTableWidgetComponent', () => {
 
     it('should retrieve cell value', () => {
         const value = '<value>';
-        let row = <DynamicTableRow> {value: {key: value}};
-        let column = <DynamicTableColumn> {id: 'key'};
+        let row = <DynamicTableRow> { value: { key: value } };
+        let column = <DynamicTableColumn> { id: 'key' };
 
         expect(widget.getCellValue(row, column)).toBe(value);
     });
 
     it('should save changes and add new row', () => {
-        let row = <DynamicTableRow> {isNew: true, value: {key: 'value'}};
+        let row = <DynamicTableRow> { isNew: true, value: { key: 'value' } };
         widget.editMode = true;
         widget.editRow = row;
 
@@ -267,7 +239,7 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should save changes and update row', () => {
-        let row = <DynamicTableRow> {isNew: false, value: {key: 'value'}};
+        let row = <DynamicTableRow> { isNew: false, value: { key: 'value' } };
         widget.editMode = true;
         widget.editRow = row;
         widget.content.selectedRow = row;
@@ -325,31 +297,53 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     it('should prepend default currency for amount columns', () => {
-        let row = <DynamicTableRow> {value: {key: '100'}};
-        let column = <DynamicTableColumn> {id: 'key', type: 'Amount'};
+        let row = <DynamicTableRow> { value: { key: '100' } };
+        let column = <DynamicTableColumn> { id: 'key', type: 'Amount' };
         let actual = widget.getCellValue(row, column);
         expect(actual).toBe('$ 100');
     });
 
     it('should prepend custom currency for amount columns', () => {
-        let row = <DynamicTableRow> {value: {key: '100'}};
-        let column = <DynamicTableColumn> {id: 'key', type: 'Amount', amountCurrency: 'GBP'};
+        let row = <DynamicTableRow> { value: { key: '100' } };
+        let column = <DynamicTableColumn> { id: 'key', type: 'Amount', amountCurrency: 'GBP' };
         let actual = widget.getCellValue(row, column);
         expect(actual).toBe('GBP 100');
     });
 
     describe('when template is ready', () => {
+        let dynamicTableWidget: DynamicTableWidget;
+        let fixture: ComponentFixture<DynamicTableWidget>;
+        let element: HTMLElement;
+        let componentHandler;
 
-        beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({taskId: 'fake-task-id'}), fakeFormField);
-            widget.field.type = FormFieldTypes.DYNAMIC_TABLE;
+        beforeEach(async(() => {
+            TestBed.configureTestingModule({
+                imports: [CoreModule],
+                providers: [WidgetVisibilityService],
+                declarations: [DynamicTableWidget, RowEditorComponent,
+                    DropdownEditorComponent, DateEditorComponent, BooleanEditorComponent, TextEditorComponent]
+            }).compileComponents().then(() => {
+                fixture = TestBed.createComponent(DynamicTableWidget);
+                dynamicTableWidget = fixture.componentInstance;
+                element = fixture.nativeElement;
+            });
+        }));
 
-            fixture.detectChanges();
-        });
+        beforeEach(async(() => {
+            componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
+            window['componentHandler'] = componentHandler;
+        }));
 
         afterEach(() => {
             fixture.destroy();
             TestBed.resetTestingModule();
+        });
+
+        beforeEach(() => {
+            dynamicTableWidget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), fakeFormField);
+            dynamicTableWidget.field.type = FormFieldTypes.DYNAMIC_TABLE;
+
+            fixture.detectChanges();
         });
 
         it('should select a row when press space bar', async(() => {
@@ -366,22 +360,7 @@ describe('DynamicTableWidgetComponent', () => {
 
             fixture.whenStable().then(() => {
                 let selectedRow = element.querySelector('#fake-dynamic-table-row-0');
-                expect(selectedRow.className).toBe('adf-dynamic-table-widget__row-selected');
-            });
-        }));
-
-        it('should focus on add button when a new row is saved', async(() => {
-            let addNewRowButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#fake-dynamic-table-add-row');
-
-            expect(element.querySelector('#dynamic-table-fake-dynamic-table')).not.toBeNull();
-            expect(addNewRowButton).not.toBeNull();
-
-            widget.addNewRow();
-            widget.onSaveChanges();
-            fixture.detectChanges();
-
-            fixture.whenStable().then(() => {
-                expect(document.activeElement.id).toBe('fake-dynamic-table-add-row');
+                expect(selectedRow.className).toBe('dynamic-table-widget__row-selected');
             });
         }));
     });

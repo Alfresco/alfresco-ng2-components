@@ -15,25 +15,27 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, OnInit, Input } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
+import { WidgetComponent } from './../widget.component';
+import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './dynamic-table.widget.model';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
-import { FormService } from './../../../services/form.service';
-import { baseHost , WidgetComponent } from './../widget.component';
-import { DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './dynamic-table.widget.model';
+import { FormFieldModel } from '../core/form-field.model';
 
 @Component({
     selector: 'dynamic-table-widget',
     templateUrl: './dynamic-table.widget.html',
-    styleUrls: ['./dynamic-table.widget.scss'],
-    host: baseHost,
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./dynamic-table.widget.css']
 })
-export class DynamicTableWidgetComponent extends WidgetComponent implements OnInit {
+export class DynamicTableWidget extends WidgetComponent implements OnInit {
 
     ERROR_MODEL_NOT_FOUND = 'Table model not found';
+
+    @Input()
+    field: FormFieldModel;
+
+    @Input()
+    readOnly: boolean = false;
 
     content: DynamicTableModel;
 
@@ -42,12 +44,10 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
 
     private selectArrayCode = [32, 0, 13];
 
-    constructor(public formService: FormService,
-                public elementRef: ElementRef,
+    constructor(private elementRef: ElementRef,
                 private visibilityService: WidgetVisibilityService,
-                private logService: LogService,
-                private cd: ChangeDetectorRef) {
-         super(formService);
+                private logService: LogService) {
+        super();
     }
 
     ngOnInit() {
@@ -55,20 +55,6 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
             this.content = new DynamicTableModel(this.field);
             this.visibilityService.refreshVisibility(this.field.form);
         }
-    }
-
-    forceFocusOnAddButton() {
-        if (this.content) {
-            this.cd.detectChanges();
-            let buttonAddRow = <HTMLButtonElement> this.elementRef.nativeElement.querySelector('#' + this.content.id + '-add-row');
-            if (this.isDynamicTableReady(buttonAddRow)) {
-                buttonAddRow.focus();
-            }
-        }
-    }
-
-    private isDynamicTableReady(buttonAddRow) {
-        return this.field && !this.editMode && buttonAddRow;
     }
 
     isValid() {
@@ -173,13 +159,11 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
             this.logService.error(this.ERROR_MODEL_NOT_FOUND);
         }
         this.editMode = false;
-        this.forceFocusOnAddButton();
     }
 
     onCancelChanges() {
         this.editMode = false;
         this.editRow = null;
-        this.forceFocusOnAddButton();
     }
 
     copyRow(row: DynamicTableRow): DynamicTableRow {

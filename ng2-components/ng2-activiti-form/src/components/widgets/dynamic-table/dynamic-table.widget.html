@@ -1,21 +1,23 @@
-<div class="{{field.className}}"
-    [class.adf-invalid]="!isValid()" *ngIf="field?.isVisible">
-    <div class="adf-label">{{content.name}}<span *ngIf="isRequired()">*</span></div>
+<div class="dynamic-table-widget {{field.className}}"
+    [class.dynamic-table-widget__invalid]="!isValid()" *ngIf="field?.isVisible">
+    <div class="dynamic-table-widget__label">{{content.name}}</div>
 
     <div *ngIf="!editMode">
-        <div class="adf-table-container">
-            <table class="full-width adf-dynamic-table" id="dynamic-table-{{content.id}}">
+        <div class="dynamic-table-widget__table-container">
+            <table class="mdl-data-table mdl-js-data-table dynamic-table-widget__table" id="dynamic-table-{{content.id}}">
                 <thead>
                     <tr>
-                        <th *ngFor="let column of content.visibleColumns">
+                        <th *ngFor="let column of content.visibleColumns"
+                            class="mdl-data-table__cell--non-numeric">
                             {{column.name}}
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let row of content.rows; let idx = index" tabindex="0" id="{{content.id}}-row-{{idx}}"
-                        [class.adf-dynamic-table-widget__row-selected]="row.selected" (keyup)="onKeyPressed($event, row)">
+                        [class.dynamic-table-widget__row-selected]="row.selected" (keyup)="onKeyPressed($event, row)">
                         <td *ngFor="let column of content.visibleColumns"
+                            class="mdl-data-table__cell--non-numeric"
                             (click)="onRowClicked(row)">
                             {{ getCellValue(row, column) }}
                         </td>
@@ -24,29 +26,27 @@
             </table>
         </div>
 
-        <div *ngIf="!readOnly">
-            <button md-button
+        <div class="dynamic-table-widget__buttons" *ngIf="!readOnly">
+            <button class="mdl-button mdl-js-button mdl-button--icon"
                     [disabled]="!hasSelection()"
                     (click)="moveSelectionUp()">
                 <i class="material-icons">arrow_upward</i>
             </button>
-            <button md-button
+            <button class="mdl-button mdl-js-button mdl-button--icon"
                     [disabled]="!hasSelection()"
                     (click)="moveSelectionDown()">
                 <i class="material-icons">arrow_downward</i>
             </button>
-            <button md-button
-                    [disabled]="field.readOnly"
-                    id="{{content.id}}-add-row"
+            <button class="mdl-button mdl-js-button mdl-button--icon"
                     (click)="addNewRow()">
                 <i class="material-icons">add_circle_outline</i>
             </button>
-            <button md-button
+            <button class="mdl-button mdl-js-button mdl-button--icon"
                     [disabled]="!hasSelection()"
                     (click)="deleteSelection()">
                 <i class="material-icons">remove_circle_outline</i>
             </button>
-            <button md-button
+            <button class="mdl-button mdl-js-button mdl-button--icon"
                     [disabled]="!hasSelection()"
                     (click)="editSelection()">
                 <i class="material-icons">edit</i>
@@ -61,6 +61,7 @@
         (save)="onSaveChanges()"
         (cancel)="onCancelChanges()">
      </row-editor>
-    <error-widget [error]="field.validationSummary" ></error-widget>
-    <error-widget class="adf-dropdown-required-message" *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
+
+     <div class="dynamic-table-widget__summary">{{content?.field.validationSummary}}</div>
+
 </div>
