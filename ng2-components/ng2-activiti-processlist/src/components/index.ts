@@ -24,3 +24,4 @@ export * from './activiti-process-comments.component';
 export * from './activiti-process-instance-details.component';
 export * from './activiti-start-process.component';
 export * from './activiti-process-attachment-list.component';
+export * from './activiti-create-process-attachment.component';
