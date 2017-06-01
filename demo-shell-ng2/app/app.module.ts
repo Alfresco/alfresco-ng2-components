@@ -34,6 +34,7 @@ import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
 import { ActivitiProcessListModule } from 'ng2-activiti-processlist';
 import { UserInfoComponentModule } from 'ng2-alfresco-userinfo';
 import { AnalyticsModule } from 'ng2-activiti-analytics';
+import { DiagramsModule } from 'ng2-activiti-diagrams';
 import { AppComponent } from './app.component';
 import { routing } from './app.routes';
 import { CustomEditorsModule } from './components/activiti/custom-editor/custom-editor.component';
@@ -47,6 +48,7 @@ import {
     SearchBarComponent,
     LoginDemoComponent,
     ActivitiDemoComponent,
+    ActivitiShowDiagramComponent,
     ActivitiAppsView,
     FormViewer,
     WebscriptComponent,
@@ -80,6 +82,7 @@ import {
         ActivitiProcessListModule.forRoot(),
         UserInfoComponentModule.forRoot(),
         AnalyticsModule.forRoot(),
+        DiagramsModule.forRoot(),
         CustomEditorsModule,
         Editor3DModule.forRoot(),
         ChartsModule
@@ -92,6 +95,7 @@ import {
         SearchBarComponent,
         LoginDemoComponent,
         ActivitiDemoComponent,
+        ActivitiShowDiagramComponent,
         ActivitiAppsView,
         FormViewer,
         WebscriptComponent,

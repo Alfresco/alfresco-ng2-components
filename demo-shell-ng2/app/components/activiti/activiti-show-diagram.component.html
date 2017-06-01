@@ -1,4 +1,6 @@
 <div>
-    <button md-mini-fab  (click)="onClickBack()" ><md-icon>keyboard_backspace</md-icon></button>
+    <button (click)="onClickBack()" class="mdl-button mdl-button--icon">
+        <i class="material-icons">keyboard_backspace</i>
+    </button>
     <activiti-diagram [processInstanceId]="processDefinitionId"></activiti-diagram>
 </div>

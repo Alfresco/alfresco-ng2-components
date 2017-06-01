@@ -15,31 +15,31 @@
  * limitations under the License.
  */
 
-import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { TaskDetailsEvent } from 'ng2-activiti-tasklist';
-import { LogService } from 'ng2-alfresco-core';
+import {DatePipe} from '@angular/common';
+import {Component, Input, ViewChild, Output, EventEmitter, OnChanges, SimpleChanges} from '@angular/core';
+import {AlfrescoTranslationService, LogService} from 'ng2-alfresco-core';
+import {TaskDetailsEvent} from 'ng2-activiti-tasklist';
 
-import { ProcessInstance } from '../models/process-instance.model';
-import { ProcessService } from './../services/process.service';
-import { ProcessInstanceHeaderComponent } from './process-instance-header.component';
-import { ProcessInstanceTasksComponent } from './process-instance-tasks.component';
+import {ActivitiProcessService} from './../services/activiti-process.service';
+import {ActivitiProcessInstanceHeader} from './activiti-process-instance-header.component';
+import {ActivitiProcessInstanceTasks} from './activiti-process-instance-tasks.component';
+import {ProcessInstance} from '../models/process-instance.model';
 
 @Component({
-    selector: 'adf-process-instance-details, activiti-process-instance-details',
-    templateUrl: './process-instance-details.component.html',
-    styleUrls: ['./process-instance-details.component.css']
+    selector: 'activiti-process-instance-details',
+    templateUrl: './activiti-process-instance-details.component.html',
+    styleUrls: ['./activiti-process-instance-details.component.css']
 })
-export class ProcessInstanceDetailsComponent implements OnChanges {
+export class ActivitiProcessInstanceDetails implements OnChanges {
 
     @Input()
     processInstanceId: string;
 
-    @ViewChild(ProcessInstanceHeaderComponent)
-    processInstanceHeader: ProcessInstanceHeaderComponent;
+    @ViewChild(ActivitiProcessInstanceHeader)
+    processInstanceHeader: ActivitiProcessInstanceHeader;
 
-    @ViewChild(ProcessInstanceTasksComponent)
-    tasksList: ProcessInstanceTasksComponent;
+    @ViewChild(ActivitiProcessInstanceTasks)
+    tasksList: ActivitiProcessInstanceTasks;
 
     @Input()
     showTitle: boolean = true;
@@ -66,8 +66,13 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
      * @param translate Translation service
      * @param activitiProcess   Process service
      */
-    constructor(private activitiProcess: ProcessService,
+    constructor(private translate: AlfrescoTranslationService,
+                private activitiProcess: ActivitiProcessService,
                 private logService: LogService) {
+
+        if (translate) {
+            translate.addTranslationFolder('ng2-activiti-processlist', 'node_modules/ng2-activiti-processlist/src');
+        }
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -103,10 +108,6 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
         return this.processInstanceDetails && !this.processInstanceDetails.ended;
     }
 
-    isDiagramDisabled(): boolean {
-        return !this.isRunning() ? true : undefined;
-    }
-
     cancelProcess() {
         this.activitiProcess.cancelProcess(this.processInstanceId).subscribe(
             (data) => {
@@ -139,8 +140,8 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
         }
     }
 
-    onShowProcessDiagram(processInstanceId: any) {
-        this.showProcessDiagram.emit({value: this.processInstanceId});
+    onShowProcessDiagram(event: any) {
+        this.showProcessDiagram.emit(event);
     }
 
 }
