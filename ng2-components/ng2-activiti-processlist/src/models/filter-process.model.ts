@@ -48,6 +48,25 @@ export class FilterProcessRepresentationModel {
 
 /**
  *
+ * This object represent the parameters to filter a filter.
+ *
+ *
+ * @returns {FilterParamsModel} .
+ */
+export class FilterParamsModel {
+    id: string;
+    name: string;
+    index: number;
+
+    constructor(obj?: any) {
+        this.id = obj && obj.id || null;
+        this.name = obj && obj.name || null;
+        this.index = obj && obj.index;
+    }
+}
+
+/**
+ *
  * This object represent the parameters of a process filter.
  *
  *

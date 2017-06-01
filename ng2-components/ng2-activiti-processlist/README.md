@@ -233,10 +233,12 @@ process instances are displayed in the list.
 
 #### Options
 
-| Name | Description |
-| --- | --- |
-| `appId` | Display filters available to the current user for the application with the specified ID |
-| `appName` | Display filters available to the current user for the application with the specified name |
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `filterParam` | {Object} | optional | The params to filter the task filter. If there is no match the default one (first filter of the list) is selected |
+| `appId` | {string} | optional | Display filters available to the current user for the application with the specified ID. |
+| `appName` | {string} | optional | Display filters available to the current user for the application with the specified name. |
+| `hasIcon` | {boolean} | optional | Toggle to show or not the filter's icon. |
 
 If both `appId` and `appName` are specified then `appName` will take precedence and `appId` will be ignored.
 
@@ -246,7 +248,30 @@ If both `appId` and `appName` are specified then `appName` will take precedence 
 | --- | --- |
 | `onSuccess` | Emitted when the list of filters hase been successfully loaded from the server |
 | `onError` | Emitted when an error occurs |
-| `ilterClick` | Emitted when the user selects a filter from the list |
+| `filterClick` | Emitted when the user selects a filter from the list |
+
+### How filter the activiti process filters
+
+ ```html
+<activiti-process-instance-filters [filterParam]="{index: 0}"></activiti-filters>
+ ```
+
+You can use inside the filterParam one of the following property.
+
+```json
+{
+    "id": "number",
+    "name": "string",
+    "index": "number"
+}
+```
+
+| Name | Description |
+| --- | --- |
+| `id` |  The id of the task filter |
+| `name` |  The name of the task filter, lowercase is checked |
+| `index` |  The position of the filter in the array. The first position is 0 |
+
 
 ### How to create an accordion menu with the processes filter
 

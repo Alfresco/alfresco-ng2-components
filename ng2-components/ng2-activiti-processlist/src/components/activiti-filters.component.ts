@@ -18,7 +18,7 @@
 import { Component, Output, EventEmitter, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Observable, Observer } from 'rxjs/Rx';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
-import { FilterProcessRepresentationModel } from './../models/filter-process.model';
+import { FilterProcessRepresentationModel, FilterParamsModel } from './../models/filter-process.model';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 
 declare let componentHandler: any;
@@ -29,6 +29,9 @@ declare let componentHandler: any;
     styleUrls: ['activiti-filters.component.css']
 })
 export class ActivitiProcessFilters implements OnInit, OnChanges {
+
+    @Input()
+    filterParam: FilterParamsModel;
 
     @Output()
     filterClick: EventEmitter<FilterProcessRepresentationModel> = new EventEmitter<FilterProcessRepresentationModel>();
@@ -99,7 +102,7 @@ export class ActivitiProcessFilters implements OnInit, OnChanges {
                                 this.filterObserver.next(filter);
                             });
 
-                            this.selectFirstFilter();
+                            this.selectTaskFilter(this.filterParam);
                             this.onSuccess.emit(resDefault);
                         },
                         (errDefault: any) => {
@@ -112,7 +115,7 @@ export class ActivitiProcessFilters implements OnInit, OnChanges {
                         this.filterObserver.next(filter);
                     });
 
-                    this.selectFirstFilter();
+                    this.selectTaskFilter(this.filterParam);
                     this.onSuccess.emit(res);
                 }
             },
@@ -130,7 +133,7 @@ export class ActivitiProcessFilters implements OnInit, OnChanges {
         this.activiti.getDeployedApplications(appName).subscribe(
             application => {
                 this.getFiltersByAppId(application.id);
-                this.selectFirstFilter();
+                this.selectTaskFilter(this.filterParam);
             },
             (err) => {
                 this.onError.emit(err);
@@ -149,11 +152,26 @@ export class ActivitiProcessFilters implements OnInit, OnChanges {
     /**
      * Select the first filter of a list if present
      */
-    public selectFirstFilter() {
+    public selectTaskFilter(filterParam: FilterParamsModel) {
+        if (filterParam) {
+            this.filters.filter((taskFilter: FilterProcessRepresentationModel, index) => {
+                if (filterParam.name && filterParam.name.toLowerCase() === taskFilter.name.toLowerCase() ||
+                    filterParam.id === taskFilter.id || filterParam.index === index) {
+                    this.currentFilter = taskFilter;
+                }
+            });
+        }
+        if (this.currentFilter === null) {
+            this.selectDefaultTaskFilter();
+        }
+    }
+
+    /**
+     * Select as default task filter the first in the list
+     */
+    public selectDefaultTaskFilter() {
         if (!this.isFilterListEmpty()) {
             this.currentFilter = this.filters[0];
-        } else {
-            this.currentFilter = null;
         }
     }
 
