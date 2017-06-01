@@ -201,7 +201,7 @@ export class ViewerComponent {
         if (this.mimeType && this.mimeType.indexOf('/')) {
             mimeExtension = this.mimeType.substr(this.mimeType.indexOf('/') + 1, this.mimeType.length);
         }
-        return this.mimeType && this.mimeType.indexOf('video/') === 0 && this.isMediaExtension(mimeExtension);
+        return this.mimeType && (this.mimeType.indexOf('video/') || this.mimeType.indexOf('audio/')) === 0 && this.isMediaExtension(mimeExtension);
     }
 
     /**
@@ -211,7 +211,7 @@ export class ViewerComponent {
      * @returns {boolean}
      */
     private isMediaExtension(extension: string): boolean {
-        return extension === 'mp4' || extension === 'WebM' || extension === 'Ogg';
+        return extension === 'wav' || extension === 'mp4' || extension === 'mp3' || extension === 'WebM' || extension === 'Ogg';
     }
 
     /**
