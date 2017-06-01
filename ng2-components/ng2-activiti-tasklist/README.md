@@ -401,6 +401,58 @@ The component shows all the available filters.
 <activiti-checklist [readOnly]="false" [taskId]="taskId" [assignee]="taskAssignee.id" #activitichecklist></activiti-checklist>
 ```
 
+### Task Attachment List component
+
+This component displays attached documents on a specified task
+
+```html
+<adf-task-attachment-list [taskId]="YOUR_TASK_ID" 
+(attachmentClick)="YOUR_ATTACHMENT_CLICK_EMITTER_HANDLER"></adf-task-attachment-list>
+```
+![task-attachment-list-sample](docs/assets/task-attachment-list.png)
+
+#### Options
+
+
+| Name | Description |
+| --- | --- |
+| `taskId` | (required): The numeric ID of the task to display |
+
+#### Events
+
+
+| Name | Description |
+| --- | --- |
+| `attachmentClick` |  Emitted when the attachment double clicked or selected view option from context menu by the user from within the component |
+
+
+### Create Task Attachment component
+
+This component displays Upload Component(Drag and Click) to upload the attachment to a specified task
+
+```html
+<activiti-create-task-attachment [taskId]="YOUR_TASK_ID" 
+(error)="YOUR_CREATE_ATTACHMENT_ERROR_HANDLER"
+(success)="YOUR_CREATE_ATTACHMENT_SUCCESS_HANDLER"></activiti-create-task-attachment>
+```
+
+![task-create-attachment](docs/assets/task-create-attachment.png)
+
+#### Options
+
+
+| Name | Description |
+| --- | --- |
+| `taskId` | (required): The numeric ID of the task to display |
+
+#### Events
+
+
+| Name | Description |
+| --- | --- |
+| `error` |  Emitted when the error occured while creating/uploading the attachment by the user from within the component |
+| `success` |  Emitted when the attachement created/uploaded successfully from within the component |
+
 ## Build from sources
 
 Alternatively you can build component from sources with the following commands:
