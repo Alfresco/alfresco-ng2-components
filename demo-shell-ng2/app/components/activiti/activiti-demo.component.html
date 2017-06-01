@@ -133,6 +133,7 @@
                             <activiti-process-instance-details
                                 [processInstanceId]="currentProcessInstanceId"
                                 (processCancelled)="processCancelled()"
+                                (showProcessDiagram)="onShowProcessDiagram($event)"
                                 (taskClick)="onProcessDetailsTaskClick($event)">
                             </activiti-process-instance-details>
                         </div>
