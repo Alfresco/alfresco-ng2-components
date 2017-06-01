@@ -80,9 +80,6 @@ export class UploadButtonComponent implements OnInit, OnChanges {
     currentFolderPath: string = '/';
 
     @Input()
-    uploadToECM: boolean = true;
-
-    @Input()
     rootFolderId: string = UploadButtonComponent.DEFAULT_ROOT_ID;
 
     @Input()
@@ -154,9 +151,6 @@ export class UploadButtonComponent implements OnInit, OnChanges {
 
         if (this.hasPermission) {
             this.uploadFiles(this.currentFolderPath, files);
-        } else if (!this.uploadToECM) {
-            this.onSuccess.emit(files);
-            return;
         } else {
             this.permissionEvent.emit(new PermissionModel({type: 'content', action: 'upload', permission: 'create'}));
         }

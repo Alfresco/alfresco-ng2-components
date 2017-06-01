@@ -55,9 +55,6 @@ export class UploadDragAreaComponent {
     @Input()
     rootFolderId: string = UploadDragAreaComponent.DEFAULT_ROOT_ID;
 
-    @Input()
-    uploadToECM: boolean = true;
-
     @Output()
     onSuccess = new EventEmitter();
 
