@@ -26,6 +26,7 @@ import {
     SearchComponent,
     LoginDemoComponent,
     ActivitiDemoComponent,
+    ActivitiShowDiagramComponent,
     ActivitiAppsView,
     WebscriptComponent,
     TagComponent,
@@ -88,6 +89,11 @@ export const appRoutes: Routes = [
     {
         path: 'activiti/apps/:appId/tasks',
         component: ActivitiDemoComponent,
+        canActivate: [AuthGuardBpm]
+    },
+    {
+        path: 'activiti/diagram/:processDefinitionId',
+        component: ActivitiShowDiagramComponent,
         canActivate: [AuthGuardBpm]
     },
     // TODO: check if neeeded

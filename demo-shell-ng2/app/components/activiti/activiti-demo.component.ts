@@ -32,7 +32,7 @@ import {
     ProcessInstance
 } from 'ng2-activiti-processlist';
 import { AnalyticsReportListComponent } from 'ng2-activiti-analytics';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import {
     ObjectDataTableAdapter,
@@ -106,6 +106,7 @@ export class ActivitiDemoComponent implements AfterViewInit {
 
     constructor(private elementRef: ElementRef,
                 private route: ActivatedRoute,
+                private router: Router,
                 private apiService: AlfrescoApiService,
                 private formRenderingService: FormRenderingService,
                 private formService: FormService) {
@@ -287,6 +288,10 @@ export class ActivitiDemoComponent implements AfterViewInit {
                 this.elementRef.nativeElement.appendChild(s);
             }
         });
+    }
+
+    onShowProcessDiagram(event: any) {
+        this.router.navigate(['/activiti/diagram/' + event.value]);
     }
 
     onProcessDetailsTaskClick(event: TaskDetailsEvent) {

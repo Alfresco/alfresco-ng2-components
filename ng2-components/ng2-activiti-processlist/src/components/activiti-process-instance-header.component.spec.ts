@@ -20,7 +20,7 @@ import { By } from '@angular/platform-browser';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { ActivitiProcessInstanceHeader } from './activiti-process-instance-header.component';
 import { TranslationMock } from './../assets/translation.service.mock';
-import { exampleProcess } from './../assets/activiti-process.model.mock';
+import { exampleProcess, processEnded } from './../assets/activiti-process.model.mock';
 import { ProcessInstance } from './../models/process-instance.model';
 import { ActivitiProcessComments } from './activiti-process-comments.component';
 import { ActivitiProcessService } from './../services/activiti-process.service';
@@ -30,6 +30,7 @@ describe('ActivitiProcessInstanceHeader', () => {
     let componentHandler: any;
     let component: ActivitiProcessInstanceHeader;
     let fixture: ComponentFixture<ActivitiProcessInstanceHeader>;
+    let element: HTMLElement;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -51,6 +52,7 @@ describe('ActivitiProcessInstanceHeader', () => {
 
         fixture = TestBed.createComponent(ActivitiProcessInstanceHeader);
         component = fixture.componentInstance;
+        element = fixture.nativeElement;
 
         component.processInstance = new ProcessInstance(exampleProcess);
 
@@ -97,5 +99,34 @@ describe('ActivitiProcessInstanceHeader', () => {
         expect(formValueEl).not.toBeNull();
         expect(formValueEl.nativeElement.innerText).toBe('Nov 10, 2016, 3:37:30 AM');
     });
+
+    it('should render the button show diagram as default', () => {
+        fixture.detectChanges();
+        let formValueEl = fixture.debugElement.query(By.css('[data-automation-id="header-show-diagram"]'));
+        expect(formValueEl).not.toBeNull();
+    });
+
+    it('should render the button show diagram enabled as default', () => {
+        fixture.detectChanges();
+        let showButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#show-diagram-button');
+        expect(showButton).toBeDefined();
+        expect(showButton.disabled).toBeFalsy();
+    });
+
+    it('should render the button show diagram disabled', () => {
+        component.processInstance = new ProcessInstance(processEnded);
+        fixture.detectChanges();
+        let showButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#show-diagram-button');
+        expect(showButton).toBeDefined();
+        expect(showButton.disabled).toBeTruthy();
+    });
+
+    it('should NOT render the button show diagram is the property showDiagram is false', () => {
+        component.showDiagram = false;
+        fixture.detectChanges();
+        let formValueEl = fixture.debugElement.query(By.css('[data-automation-id="header-show-pippo"]'));
+        expect(formValueEl).toBeNull();
+    });
+
 
 });

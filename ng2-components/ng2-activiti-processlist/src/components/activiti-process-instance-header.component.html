@@ -15,5 +15,8 @@
             <span class="activiti-label">{{ 'DETAILS.LABELS.ENDED' | translate }}</span>:
             <span class="activiti-process-header__value">{{getFormatDate(processInstance.ended, 'medium')}}</span>
         </div>
+        <button data-automation-id="header-show-diagram" id="show-diagram-button" md-raised-button *ngIf="isShowDiagram()" [attr.disabled]="isDiagramDisabled()" (click)="showDiagramEvent()" >
+            {{ 'DETAILS.BUTTON.SHOW_DIAGRAM' | translate }}
+        </button>
     </div>
 </div>
