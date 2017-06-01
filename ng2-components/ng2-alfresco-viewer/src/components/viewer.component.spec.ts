@@ -227,6 +227,26 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
             });
         });
 
+        it('should extension file mp3 be loaded', (done) => {
+            component.urlFile = 'fake-url-file.mp3';
+
+            component.ngOnChanges(null).then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('media-player')).not.toBeNull();
+                done();
+            });
+        });
+
+        it('should extension file wav be loaded', (done) => {
+            component.urlFile = 'fake-url-file.wav';
+
+            component.ngOnChanges(null).then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('media-player')).not.toBeNull();
+                done();
+            });
+        });
+
         it('should extension file txt be loaded', (done) => {
             component.urlFile = 'fake-url-file.txt';
 

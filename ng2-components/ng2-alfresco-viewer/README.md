@@ -220,7 +220,7 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 
 | Type | extensions |
 | --- | --- |
-| Media | Mp4,  WebM, Ogv |
+| Media | wav, Mp3, Mp4, WebM, Ogv |
 | Images | png, jpg, jpeg, gif, bmp |
 | Text | pdf, txt |
 
