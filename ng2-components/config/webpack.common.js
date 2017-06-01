@@ -80,12 +80,7 @@ module.exports = {
                 use: ['ts-loader?' + JSON.stringify({
                     "logInfoToStdOut": true,
                     "logLevel": "error",
-                    "configFileName": path.resolve(__dirname, '../tsconfig.json'),
-                    "compilerOptions": {
-                        "typeRoots": [
-                            "./node_modules/@types"
-                        ]
-                    }
+                    "configFileName": path.resolve(__dirname, '../tsconfig.json')
                 }), 'angular2-template-loader'],
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
             },
