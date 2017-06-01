@@ -1,0 +1,15 @@
+<div class="no-attachment-message" *ngIf="isEmpty()">
+    No Attachments Found
+</div>
+<alfresco-datatable *ngIf="!isEmpty()"
+    [rows]="attachments"
+    [actions]="true"
+    (rowDblClick)="openContent($event)"
+    (showRowActionsMenu)="onShowRowActionsMenu($event)"
+    (executeRowAction)="onExecuteRowAction($event)">
+    <data-columns>
+        <data-column key="icon" type="image" class="icon-cell" srTitle="Thumbnail" [sortable]="false"></data-column>
+        <data-column key="name" type="text" title="Name" class="full-width ellipsis-cell" [sortable]="true"></data-column>
+        <data-column key="created" type="date" format="shortDate" title="Created On"></data-column>
+    </data-columns>
+</alfresco-datatable>
