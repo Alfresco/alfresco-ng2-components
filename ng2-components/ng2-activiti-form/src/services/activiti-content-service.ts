@@ -96,16 +96,6 @@ export class ActivitiContentService {
     }
 
     /**
-     * Return all the related content of the process
-     * @param processId
-     * @returns {any}
-     */
-    createProcessRelatedContent(processId: string, content: any): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.contentApi.createRelatedContentOnProcessInstance(processId, content))
-            .catch(err => this.handleError(err));
-    }
-
-    /**
      * Delete a content by Id
      * @param contentId
      * @returns {any}
