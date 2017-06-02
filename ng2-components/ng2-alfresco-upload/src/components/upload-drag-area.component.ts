@@ -22,15 +22,6 @@ import { FileModel } from '../models/file.model';
 
 const ERROR_FOLDER_ALREADY_EXIST = 409;
 
-/**
- * <alfresco-upload-drag-area (onSuccess)="customMethod($event)></alfresco-upload-drag-area>
- *
- * This component, provide a drag and drop are to upload files to alfresco.
- *
- * @Output - onSuccess - The event is emitted when the file is uploaded
- *
- * @returns {UploadDragAreaComponent} .
- */
 @Component({
     selector: 'alfresco-upload-drag-area',
     templateUrl: './upload-drag-area.component.html',
