@@ -128,7 +128,7 @@ export class UploadButtonComponent implements OnInit, OnChanges {
      * @param {File[]} files - files dropped in the drag area.
      */
     onFilesAdded($event: any): void {
-        let files = $event.currentTarget.files;
+        let files: File[] = this.getFiles($event.currentTarget.files);
 
         if (this.hasPermission) {
             this.uploadFiles(this.currentFolderPath, files);
@@ -145,7 +145,7 @@ export class UploadButtonComponent implements OnInit, OnChanges {
      * @param {File[]} files - files of a folder dropped in the drag area.
      */
     onDirectoryAdded($event: any): void {
-        let files = $event.currentTarget.files;
+        let files: File[] = this.getFiles($event.currentTarget.files);
         if (this.hasPermission) {
             let hashMapDir = this.convertIntoHashMap(files);
 
@@ -209,6 +209,18 @@ export class UploadButtonComponent implements OnInit, OnChanges {
             directoryMap.set(directory, filesSomeDir);
         }
         return directoryMap;
+    }
+
+    private getFiles(fileList: FileList): File[] {
+        const result: File[] = [];
+
+        if (fileList && fileList.length > 0) {
+            for (let i = 0; i < fileList.length; i++) {
+                result.push(fileList[i]);
+            }
+        }
+
+        return result;
     }
 
     /**
