@@ -88,6 +88,23 @@ export class AlfrescoContentService {
             .catch(err => this.handleError(err));
     }
 
+    /**
+     * Create a folder
+     * @param name - the folder name
+     */
+    createFolder(relativePath: string, name: string, parentId?: string): Observable<MinimalNodeEntity> {
+        return Observable.fromPromise(this.apiService.getInstance().nodes.createFolder(name, relativePath, parentId))
+            .do(data => {
+                this.folderCreated.next({
+                    relativePath: relativePath,
+                    name: name,
+                    parentId: parentId,
+                    node: data
+                });
+            })
+            .catch(err => this.handleError(err));
+    }
+
     private handleError(error: any) {
         this.logService.error(error);
         return Observable.throw(error || 'Server error');
