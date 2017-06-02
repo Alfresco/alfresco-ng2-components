@@ -45,7 +45,7 @@ export class ActivitiProcessInstanceHeader {
                 private logService: LogService) {
 
         if (translate) {
-            translate.addTranslationFolder('ng2-activiti-processlist', 'node_modules/ng2-activiti-processlist/src');
+            translate.addTranslationFolder('ng2-activiti-processlist', 'assets/ng2-activiti-processlist');
         }
     }
 

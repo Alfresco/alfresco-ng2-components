@@ -65,7 +65,7 @@ export class DocumentMenuActionComponent implements OnChanges {
                 private logService: LogService) {
 
         if (translateService) {
-            translateService.addTranslationFolder('ng2-alfresco-documentlist', 'node_modules/ng2-alfresco-documentlist/src');
+            translateService.addTranslationFolder('ng2-alfresco-documentlist', 'assets/ng2-alfresco-documentlist');
         }
     }
 

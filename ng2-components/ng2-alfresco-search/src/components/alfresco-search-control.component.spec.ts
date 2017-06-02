@@ -69,7 +69,7 @@ describe('AlfrescoSearchControlComponent', () => {
         spyOn(translationService, 'addTranslationFolder');
         fixture.detectChanges();
         expect(translationService.addTranslationFolder)
-            .toHaveBeenCalledWith('ng2-alfresco-search', 'node_modules/ng2-alfresco-search/src');
+            .toHaveBeenCalledWith('ng2-alfresco-search', 'assets/ng2-alfresco-search');
     });
 
     it('should emit searchChange when search term input changed', (done) => {

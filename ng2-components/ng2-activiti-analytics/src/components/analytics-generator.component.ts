@@ -67,7 +67,7 @@ export class AnalyticsGeneratorComponent implements OnChanges {
                 private logService: LogService) {
         logService.info('AnalyticsGeneratorComponent');
         if (translateService) {
-            translateService.addTranslationFolder('ng2-activiti-analytics', 'node_modules/ng2-activiti-analytics/src');
+            translateService.addTranslationFolder('ng2-activiti-analytics', 'assets/ng2-activiti-analytics');
         }
     }
 

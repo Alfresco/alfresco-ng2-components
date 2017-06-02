@@ -60,7 +60,7 @@ export class ActivitiPeople {
                 private peopleService: ActivitiPeopleService,
                 private logService: LogService) {
         if (translateService) {
-            translateService.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
+            translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
         }
         this.peopleSearch$ = new Observable<User[]>(observer => this.peopleSearchObserver = observer).share();
     }

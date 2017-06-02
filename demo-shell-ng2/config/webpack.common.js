@@ -126,13 +126,6 @@ module.exports = {
                 from: '**/*.json',
                 to: 'resources/i18n'
             },
-            ... alfrescoLibs.map(lib => {
-                return {
-                    context: 'node_modules',
-                    from: `${lib}/src/i18n/*.json`,
-                    to: 'node_modules'
-                }
-            }),
             {
                 from: 'favicon-96x96.png'
             },
