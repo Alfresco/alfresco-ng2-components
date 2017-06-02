@@ -30,7 +30,8 @@ import {
     ActivitiProcessComments,
     ActivitiProcessInstanceDetails,
     ActivitiStartProcessInstance,
-    ActivitiProcessAttachmentListComponent
+    ActivitiProcessAttachmentListComponent,
+    ActivitiCreateProcessAttachmentComponent
 } from './src/components/index';
 
 import { ActivitiProcessService } from './src/services/activiti-process.service';
@@ -41,6 +42,7 @@ export * from './src/components/activiti-filters.component';
 export * from './src/components/activiti-process-instance-details.component';
 export * from './src/components/activiti-start-process.component';
 export * from './src/components/activiti-process-attachment-list.component';
+export * from './src/components/activiti-create-process-attachment.component';
 
 // models
 export * from './src/models/index';
@@ -57,7 +59,8 @@ export const ACTIVITI_PROCESSLIST_DIRECTIVES: [any] = [
     ActivitiProcessInstanceVariables,
     ActivitiProcessComments,
     ActivitiStartProcessInstance,
-    ActivitiProcessAttachmentListComponent
+    ActivitiProcessAttachmentListComponent,
+    ActivitiCreateProcessAttachmentComponent
 ];
 
 export const ACTIVITI_PROCESSLIST_PROVIDERS: [any] = [

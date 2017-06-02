@@ -95,6 +95,16 @@ export class ActivitiContentService {
             .catch(err => this.handleError(err));
     }
 
+    /**
+     * Return all the related content of the process instance
+     * @param processInstanceId
+     * @returns {any}
+     */
+    createProcessRelatedContent(processInstanceId: string, content: any): Observable<any> {
+        return Observable.fromPromise(this.apiService.getInstance().activiti.contentApi.createRelatedContentOnProcessInstance(processInstanceId, content))
+            .catch(err => this.handleError(err));
+    }
+
     toJson(res: any) {
         if (res) {
             return res || {};
