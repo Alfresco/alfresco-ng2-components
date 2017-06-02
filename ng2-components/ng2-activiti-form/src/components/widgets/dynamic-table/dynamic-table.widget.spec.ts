@@ -86,7 +86,12 @@ describe('DynamicTableWidget', () => {
         const field = new FormFieldModel(new FormModel());
         table = new DynamicTableModel(field);
         visibilityService = new WidgetVisibilityService(null, logService);
-        widget = new DynamicTableWidget(null, visibilityService, logService);
+        let changeDetectorSpy = jasmine.createSpyObj('cd', ['detectChanges']);
+        let nativeElementSpy = jasmine.createSpyObj('nativeElement', ['querySelector']);
+        changeDetectorSpy.nativeElement = nativeElementSpy;
+        let elementRefSpy = jasmine.createSpyObj('elementRef', ['']);
+        elementRefSpy.nativeElement = nativeElementSpy;
+        widget = new DynamicTableWidget(elementRefSpy, visibilityService, logService, changeDetectorSpy);
         widget.content = table;
     });
 
@@ -334,16 +339,16 @@ describe('DynamicTableWidget', () => {
             window['componentHandler'] = componentHandler;
         }));
 
-        afterEach(() => {
-            fixture.destroy();
-            TestBed.resetTestingModule();
-        });
-
         beforeEach(() => {
             dynamicTableWidget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), fakeFormField);
             dynamicTableWidget.field.type = FormFieldTypes.DYNAMIC_TABLE;
 
             fixture.detectChanges();
+        });
+
+        afterEach(() => {
+            fixture.destroy();
+            TestBed.resetTestingModule();
         });
 
         it('should select a row when press space bar', async(() => {
@@ -361,6 +366,21 @@ describe('DynamicTableWidget', () => {
             fixture.whenStable().then(() => {
                 let selectedRow = element.querySelector('#fake-dynamic-table-row-0');
                 expect(selectedRow.className).toBe('dynamic-table-widget__row-selected');
+            });
+        }));
+
+        it('should focus on add button when a new row is saved', async(() => {
+            let addNewRowButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#fake-dynamic-table-add-row');
+
+            expect(element.querySelector('#dynamic-table-fake-dynamic-table')).not.toBeNull();
+            expect(addNewRowButton).not.toBeNull();
+
+            dynamicTableWidget.addNewRow();
+            dynamicTableWidget.onSaveChanges();
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                expect(document.activeElement.id).toBe('fake-dynamic-table-add-row');
             });
         }));
     });
