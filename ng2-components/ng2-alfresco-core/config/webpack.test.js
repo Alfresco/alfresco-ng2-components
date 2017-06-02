@@ -54,6 +54,7 @@ module.exports = {
             {
                 enforce: 'post',
                 test: /\.ts$/,
+                include: [helpers.root('src')],
                 loader: 'istanbul-instrumenter-loader',
                 exclude: [
                     /node_modules/,

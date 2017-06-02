@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const helpers = require('./helpers');
+const path = require('path');
 
 const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
 
@@ -9,8 +10,11 @@ module.exports = {
 
     resolve: {
         extensions: ['.ts', '.js'],
+        alias: {
+            "ng2-alfresco-core": path.resolve(__dirname, '../../ng2-alfresco-core/index.ts')
+        },
         symlinks: false,
-        modules: [helpers.root('../ng2-components'), helpers.root('node_modules')]
+        modules: [helpers.root('node_modules')]
     },
 
     module: {
@@ -54,6 +58,7 @@ module.exports = {
             {
                 enforce: 'post',
                 test: /\.ts$/,
+                include: [helpers.root('src')],
                 loader: 'istanbul-instrumenter-loader',
                 exclude: [
                     /node_modules/,

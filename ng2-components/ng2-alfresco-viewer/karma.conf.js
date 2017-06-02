@@ -8,6 +8,7 @@ module.exports = function (config) {
 
     files: [
       './node_modules/hammerjs/hammer.js',
+      {pattern: './node_modules/@angular/material/prebuilt-themes/indigo-pink.css', included: true, watched: false},
 
       //diagrams
       './node_modules/chart.js/dist/Chart.js',
