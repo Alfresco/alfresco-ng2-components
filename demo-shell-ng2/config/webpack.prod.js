@@ -74,6 +74,14 @@ module.exports = webpackMerge(commonConfig, {
         }),
 
         new CopyWebpackPlugin([
+            //Deprecation old files translation strategy from 1.6.0 translation files are in the bundles folder
+            ... alfrescoLibs.map(lib => {
+                return {
+                    context: 'node_modules',
+                    from: `${lib}/src/i18n/*`,
+                    to: `assets/${lib}/i18n/*`
+                }
+            }),
             ... alfrescoLibs.map(lib => {
                 return {
                     context: `node_modules/${lib}/bundles/assets/`,
