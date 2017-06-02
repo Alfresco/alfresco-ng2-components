@@ -44,9 +44,59 @@ necessary configuration [prerequisites](https://github.com/Alfresco/alfresco-ng2
 
 ## Install
 
-```sh
-npm install ng2-alfresco-upload --save
-```
+Follow the 3 steps below:
+
+1. Npm
+
+    ```sh
+    npm install ng2-alfresco-upload --save
+    ```
+
+2. Html
+
+    Include these dependencies in your index.html page:
+
+    ```html
+
+      <!-- Google Material Design Lite -->
+      <link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
+      <script src="node_modules/material-design-lite/material.min.js"></script>
+      <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
+
+      <!-- Load the Angular Material 2 stylesheet -->
+      <link href="node_modules/@angular/material/core/theming/prebuilt/deeppurple-amber.css" rel="stylesheet">
+    
+      <!-- Polyfill(s) for Safari (pre-10.x) -->
+      <script src="node_modules/intl/dist/Intl.min.js"></script>
+      <script src="node_modules/intl/locale-data/jsonp/en.js"></script>
+
+      <!-- Polyfill(s) for older browsers -->
+      <script src="node_modules/core-js/client/shim.min.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/dom4/1.8.3/dom4.js"></script>
+      <script src="node_modules/element.scrollintoviewifneeded-polyfill/index.js"></script>
+
+      <!-- Polyfill(s) for dialogs -->
+      <script src="node_modules/dialog-polyfill/dialog-polyfill.js"></script>
+      <link rel="stylesheet" type="text/css" href="node_modules/dialog-polyfill/dialog-polyfill.css" />
+      <style>._dialog_overlay { position: static !important; } </style>
+
+      <!-- Modules  -->
+      <script src="node_modules/zone.js/dist/zone.js"></script>
+      <script src="node_modules/reflect-metadata/Reflect.js"></script>
+      <script src="node_modules/systemjs/dist/system.src.js"></script>
+
+    ```
+
+3. SystemJs
+
+    Add the following components to your systemjs.config.js file:
+
+    - ng2-translate
+    - alfresco-js-api
+    - ng2-alfresco-core
+    - ng2-alfresco-upload
+
+    Please refer to the following example file: [systemjs.config.js](demo/systemjs.config.js) .
 
 ## UploadButtonComponent
 
