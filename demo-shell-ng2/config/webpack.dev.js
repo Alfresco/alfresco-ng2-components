@@ -4,6 +4,25 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const commonConfig = require('./webpack.common.js');
 const helpers = require('./helpers');
 const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
+const alfrescoLibs = [
+    'ng2-activiti-analytics',
+    'ng2-activiti-diagrams',
+    'ng2-activiti-form',
+    'ng2-activiti-processlist',
+    'ng2-activiti-tasklist',
+    'ng2-alfresco-core',
+    'ng2-alfresco-datatable',
+    'ng2-alfresco-documentlist',
+    'ng2-alfresco-login',
+    'ng2-alfresco-search',
+    'ng2-alfresco-tag',
+    'ng2-alfresco-upload',
+    'ng2-alfresco-userinfo',
+    'ng2-alfresco-viewer',
+    'ng2-alfresco-webscript'
+];
 
 module.exports = webpackMerge(commonConfig, {
 
@@ -61,6 +80,15 @@ module.exports = webpackMerge(commonConfig, {
             htmlLoader: {
                 minimize: false // workaround for ng2
             }
-        })
+        }),
+        new CopyWebpackPlugin([
+            ... alfrescoLibs.map(lib => {
+                return {
+                    context: `../ng2-components/${lib}/src/i18n/`,
+                    from: '**/*',
+                    to: `assets/${lib}/i18n/`
+                }
+            })
+        ])
     ]
 });
