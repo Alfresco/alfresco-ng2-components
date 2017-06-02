@@ -18,25 +18,19 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-    name: 'adfFileSize'
+  name: 'adfFileSize'
 })
 export class FileSizePipe implements PipeTransform {
 
-    transform(bytes: number, decimals: number = 2): string {
-        if (bytes == null || bytes === undefined) {
-            return '';
-        }
-
-        if (bytes === 0) {
-            return '0 Bytes';
-        }
-
-        const k = 1024,
-            dm = decimals || 2,
-            sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
-            i = Math.floor(Math.log(bytes) / Math.log(k));
-
-        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+  transform(bytes: number = 0, decimals: number = 2): string {
+    if (bytes === 0) {
+      return '0 Bytes';
     }
+    const k = 1024,
+       dm = decimals || 2,
+       sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+       i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+  }
 
 }

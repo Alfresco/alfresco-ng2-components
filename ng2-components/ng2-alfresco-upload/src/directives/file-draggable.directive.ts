@@ -17,17 +17,6 @@
 
 import { Directive, EventEmitter, Input, Output, OnInit, OnDestroy, ElementRef, NgZone } from '@angular/core';
 
-/**
- * [file-draggable]
- *
- * This directive, provide a drag and drop area for files and folders.
- *
- * @OutputEvent {EventEmitter} onFilesDropped(File)- event fired fot each file dropped
- * in the drag and drop area.
- *
- *
- * @returns {FileDraggableDirective} .
- */
 @Directive({
     selector: '[file-draggable]'
 })

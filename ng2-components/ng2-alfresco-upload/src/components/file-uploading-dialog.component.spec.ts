@@ -16,12 +16,14 @@
  */
 
 import { DebugElement } from '@angular/core';
+import { MdProgressSpinnerModule } from '@angular/material';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
 import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
 import { FileUploadingListComponent } from './file-uploading-list.component';
 import { UploadService } from '../services/upload.service';
 import { FileModel } from '../models/file.model';
+import { FileUploadCompleteEvent } from '../events/file.event';
 
 describe('FileUploadingDialogComponent', () => {
 
@@ -35,7 +37,8 @@ describe('FileUploadingDialogComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule.forRoot(),
+                MdProgressSpinnerModule
             ],
             declarations: [
                 FileUploadingDialogComponent,
@@ -48,8 +51,6 @@ describe('FileUploadingDialogComponent', () => {
     }));
 
     beforeEach(() => {
-        window['componentHandler'] = null;
-
         const fileFake = new File([''], 'fake-name');
         file = new FileModel(fileFake);
 
@@ -70,7 +71,7 @@ describe('FileUploadingDialogComponent', () => {
     });
 
     it('should render completed upload 1 when an element is added to Observer', () => {
-        uploadService.updateFileCounterStream(1);
+        uploadService.fileUploadComplete.next(new FileUploadCompleteEvent(null, 1));
         fixture.detectChanges();
 
         expect(element.querySelector('#total-upload-completed').innerText).toEqual('1');

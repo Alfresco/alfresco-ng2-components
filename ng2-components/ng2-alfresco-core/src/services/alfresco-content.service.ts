@@ -16,14 +16,17 @@
  */
 
 import { Injectable } from '@angular/core';
-
+import { Observable, Subject } from 'rxjs/Rx';
+import { MinimalNodeEntity } from 'alfresco-js-api';
 import { AlfrescoAuthenticationService } from './alfresco-authentication.service';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { LogService } from './log.service.ts';
-import { Observable } from 'rxjs/Rx';
+import { LogService } from './log.service';
+import { FolderCreatedEvent } from '../events/folder-created.event';
 
 @Injectable()
 export class AlfrescoContentService {
+
+    folderCreated: Subject<FolderCreatedEvent> = new Subject<FolderCreatedEvent>();
 
     constructor(public authService: AlfrescoAuthenticationService,
                 public apiService: AlfrescoApiService,
@@ -68,6 +71,23 @@ export class AlfrescoContentService {
         return Observable.fromPromise(this.apiService.getInstance().core.nodesApi.getFileContent(nodeId).then((dataContent) => {
             return dataContent;
         })).catch(this.handleError);
+    }
+
+    /**
+     * Create a folder
+     * @param name - the folder name
+     */
+    createFolder(relativePath: string, name: string, parentId?: string): Observable<MinimalNodeEntity> {
+        return Observable.fromPromise(this.apiService.getInstance().nodes.createFolder(name, relativePath, parentId))
+            .do(data => {
+                this.folderCreated.next({
+                    relativePath: relativePath,
+                    name: name,
+                    parentId: parentId,
+                    node: data
+                });
+            })
+            .catch(err => this.handleError(err));
     }
 
     private handleError(error: any) {

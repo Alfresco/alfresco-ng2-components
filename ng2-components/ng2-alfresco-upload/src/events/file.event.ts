@@ -15,13 +15,22 @@
  * limitations under the License.
  */
 
-import { MinimalNodeEntity } from 'alfresco-js-api';
+import { FileModel, FileUploadStatus } from '../models/file.model';
 
-export interface FolderCreatedEvent {
+export class FileUploadEvent {
 
-    name: string;
-    relativePath?: string;
-    parentId?: string;
-    node?: MinimalNodeEntity;
+    constructor(
+        public readonly file: FileModel,
+        public readonly status: FileUploadStatus = FileUploadStatus.Pending,
+        public readonly error: any = null) {
+    }
+
+}
+
+export class FileUploadCompleteEvent extends FileUploadEvent {
+
+    constructor(file: FileModel, public totalComplete: number = 0) {
+        super(file, FileUploadStatus.Complete);
+    }
 
 }

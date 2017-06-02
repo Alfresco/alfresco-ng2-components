@@ -17,10 +17,10 @@
 
 import { Component, Input, OnInit, AfterViewInit, Optional, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { AlfrescoAuthenticationService, LogService, NotificationService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoContentService, FolderCreatedEvent, LogService, NotificationService } from 'ng2-alfresco-core';
 import { DocumentActionsService, DocumentListComponent, ContentActionHandler, DocumentActionModel, FolderActionModel } from 'ng2-alfresco-documentlist';
 import { FormService } from 'ng2-activiti-form';
-import { UploadService, UploadButtonComponent, UploadDragAreaComponent, FolderCreatedEvent } from 'ng2-alfresco-upload';
+import { UploadService, UploadButtonComponent, UploadDragAreaComponent } from 'ng2-alfresco-upload';
 
 @Component({
     selector: 'files-component',
@@ -73,6 +73,7 @@ export class FilesComponent implements OnInit, AfterViewInit {
                 private router: Router,
                 private notificationService: NotificationService,
                 private uploadService: UploadService,
+                private contentService: AlfrescoContentService,
                 @Optional() private route: ActivatedRoute) {
         documentActions.setHandler('my-handler', this.myDocumentActionHandler.bind(this));
     }
@@ -122,7 +123,7 @@ export class FilesComponent implements OnInit, AfterViewInit {
             this.logService.warn('You are not logged in to BPM');
         }
 
-        this.uploadService.folderCreated.subscribe(value => this.onFolderCreated(value));
+        this.contentService.folderCreated.subscribe(value => this.onFolderCreated(value));
     }
 
     ngAfterViewInit() {

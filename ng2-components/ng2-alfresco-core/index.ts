@@ -41,6 +41,7 @@ import {
     ContentService
 } from './src/services/index';
 
+import { FileSizePipe } from './src/pipes/file-size.pipe';
 import { UploadDirective } from './src/directives/upload.directive';
 import { DataColumnComponent } from './src/components/data-column/data-column.component';
 import { DataColumnListComponent } from './src/components/data-column/data-column-list.component';
@@ -57,6 +58,7 @@ export * from './src/directives/upload.directive';
 export * from './src/utils/index';
 export * from './src/events/base.event';
 export * from './src/events/base-ui.event';
+export * from './src/events/folder-created.event';
 
 export const ALFRESCO_CORE_PROVIDERS: any[] = [
     NotificationService,
@@ -101,7 +103,8 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         ...COLLAPSABLE_DIRECTIVES,
         UploadDirective,
         DataColumnComponent,
-        DataColumnListComponent
+        DataColumnListComponent,
+        FileSizePipe
     ],
     providers: [
         ...ALFRESCO_CORE_PROVIDERS
@@ -119,7 +122,8 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         UploadDirective,
         DataColumnComponent,
         DataColumnListComponent,
-        MdSnackBarModule
+        MdSnackBarModule,
+        FileSizePipe
     ]
 })
 export class CoreModule {

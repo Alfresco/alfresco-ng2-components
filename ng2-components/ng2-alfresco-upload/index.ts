@@ -16,7 +16,7 @@
  */
 
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { MdIconModule } from '@angular/material';
+import { MdIconModule, MdProgressSpinnerModule, MdButtonModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
 
 import { UploadDragAreaComponent } from './src/components/upload-drag-area.component';
@@ -26,22 +26,6 @@ import { FileUploadingDialogComponent } from './src/components/file-uploading-di
 import { FileUploadingListComponent } from './src/components/file-uploading-list.component';
 import { UploadService } from './src/services/upload.service';
 
-/**
- * ng2-alfresco-upload, provide components to upload files to alfresco repository.
- *
- * Components provided:
- *         - A button to upload files
- *           <alfresco-upload-button [showDialogUpload]="boolean"
- *                                   [showNotificationBar]="boolean"
- *                                   [uploadFolders]="boolean"
- *                                   [multipleFiles]="boolean"
- *                                   [acceptedFilesType]="string">
- *           </alfresco-upload-button>
- *
- *         - Drag and drop area to upload files:
- *           <alfresco-upload-drag-area [showDialogUpload]="boolean" ></alfresco-upload-drag-area>
- */
-
 export * from './src/components/upload-button.component';
 export * from './src/components/file-uploading-dialog.component';
 export * from './src/components/upload-drag-area.component';
@@ -50,7 +34,7 @@ export * from './src/directives/file-draggable.directive';
 export * from './src/components/file-uploading-list.component';
 export * from './src/models/file.model';
 export * from './src/models/permissions.model';
-export * from './src/events/folder-created.event';
+export * from './src/events/file.event';
 
 export const UPLOAD_DIRECTIVES: any[] = [
     FileDraggableDirective,
@@ -67,7 +51,9 @@ export const UPLOAD_PROVIDERS: any[] = [
 @NgModule({
     imports: [
         CoreModule,
-        MdIconModule
+        MdIconModule,
+        MdProgressSpinnerModule,
+        MdButtonModule
     ],
     declarations: [
         ...UPLOAD_DIRECTIVES

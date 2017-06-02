@@ -16,21 +16,12 @@
  */
 
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { AlfrescoTranslationService, LogService, NotificationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, AlfrescoContentService, LogService, NotificationService } from 'ng2-alfresco-core';
 import { UploadService } from '../services/upload.service';
 import { FileModel } from '../models/file.model';
 
 const ERROR_FOLDER_ALREADY_EXIST = 409;
 
-/**
- * <alfresco-upload-drag-area (onSuccess)="customMethod($event)></alfresco-upload-drag-area>
- *
- * This component, provide a drag and drop are to upload files to alfresco.
- *
- * @Output - onSuccess - The event is emitted when the file is uploaded
- *
- * @returns {UploadDragAreaComponent} .
- */
 @Component({
     selector: 'alfresco-upload-drag-area',
     templateUrl: './upload-drag-area.component.html',
@@ -61,7 +52,8 @@ export class UploadDragAreaComponent {
     constructor(private uploadService: UploadService,
                 private translateService: AlfrescoTranslationService,
                 private logService: LogService,
-                private notificationService: NotificationService) {
+                private notificationService: NotificationService,
+                private contentService: AlfrescoContentService) {
         if (translateService) {
             translateService.addTranslationFolder('ng2-alfresco-upload', 'assets/ng2-alfresco-upload');
         }
@@ -129,7 +121,7 @@ export class UploadDragAreaComponent {
             let relativePath = folder.fullPath.replace(folder.name, '');
             relativePath = this.currentFolderPath + relativePath;
 
-            this.uploadService.createFolder(relativePath, folder.name, this.rootFolderId)
+            this.contentService.createFolder(relativePath, folder.name, this.rootFolderId)
                 .subscribe(
                     message => {
                         this.onSuccess.emit({
@@ -186,9 +178,7 @@ export class UploadDragAreaComponent {
         actionTranslate = this.translateService.get('FILE_UPLOAD.ACTION.UNDO');
 
         this.notificationService.openSnackMessageAction(messageTranslate.value, actionTranslate.value, 3000).onAction().subscribe(() => {
-            latestFilesAdded.forEach((uploadingFileModel: FileModel) => {
-                uploadingFileModel.emitAbort();
-            });
+            this.uploadService.cancelUpload(...latestFilesAdded);
         });
     }
 
