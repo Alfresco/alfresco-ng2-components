@@ -53,8 +53,7 @@ module.exports = {
             },
             {
                 enforce: 'post',
-                test: /\.ts$/,
-                include: [helpers.root('src')],
+                test: /^(?!.*spec).*\.tsx?$/,
                 loader: 'istanbul-instrumenter-loader',
                 exclude: [
                     /node_modules/,
