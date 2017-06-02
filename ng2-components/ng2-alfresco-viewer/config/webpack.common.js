@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const helpers = require('./helpers');
 const fs = require('fs');
 const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
 
@@ -81,7 +82,7 @@ module.exports = {
                     emitErrors: true,
                     licenseFile: path.resolve(__dirname, './assets/license_header.txt')
                 },
-                exclude: [/node_modules/, /bundles/, /dist/, /demo/, /rendering-queue.services.ts/ ],
+                exclude: [/node_modules/, /bundles/, /dist/, /demo/, /rendering-queue.services.ts/],
             },
             {
                 test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
@@ -110,6 +111,11 @@ module.exports = {
     },
 
     plugins: [
+        new CopyWebpackPlugin([{
+            from: `src/i18n/`,
+            to: `bundles/assets/ng2-alfresco-viewer/i18n/`
+        }]),
+
         new webpack.NoEmitOnErrorsPlugin(),
 
         new webpack.BannerPlugin(fs.readFileSync(path.resolve(__dirname, './assets/license_header_add.txt'), 'utf8')),

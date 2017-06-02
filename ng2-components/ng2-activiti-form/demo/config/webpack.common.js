@@ -103,14 +103,7 @@ module.exports = {
                 context: 'resources/i18n',
                 from: '**/*.json',
                 to: 'resources/i18n'
-            },
-            ... alfrescoLibs.map(lib => {
-                return {
-                    context: 'node_modules',
-                    from: `${lib}/src/i18n/*.json`,
-                    to: 'node_modules'
-                }
-            })
+            }
         ]),
 
         new webpack.optimize.CommonsChunkPlugin({

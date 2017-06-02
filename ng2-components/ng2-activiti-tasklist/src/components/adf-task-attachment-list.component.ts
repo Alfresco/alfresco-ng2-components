@@ -45,7 +45,7 @@ export class TaskAttachmentListComponent implements OnChanges {
                 private contentService: ContentService) {
 
         if (translateService) {
-            translateService.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
+            translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
         }
     }
 

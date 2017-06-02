@@ -58,7 +58,7 @@ export class TagActionsComponent {
 
     constructor(private tagService: TagService, private translateService: AlfrescoTranslationService) {
         if (translateService) {
-            translateService.addTranslationFolder('ng2-alfresco-tag', 'node_modules/ng2-alfresco-tag/src');
+            translateService.addTranslationFolder('ng2-alfresco-tag', 'assets/ng2-alfresco-tag');
         }
 
         this.tagService.refresh.subscribe(() => {
