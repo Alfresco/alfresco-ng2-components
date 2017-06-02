@@ -16,18 +16,9 @@
  */
 
 import { Component, Input } from '@angular/core';
-import { FileModel } from '../models/file.model';
+import { FileModel, FileUploadStatus } from '../models/file.model';
+import { UploadService } from '../services/upload.service';
 
-/**
- * <alfresco-file-uploading-list [files]="files"></alfresco-file-uploading-list>
- *
- * This component show a list of the uploading files contained in the filesUploadingList.
- *
- * @InputParam {FileModel[]} filesUploadingList - list of the uploading files .
- *
- *
- * @returns {FileUploadingListComponent} .
- */
 @Component({
     selector: 'alfresco-file-uploading-list',
     templateUrl: './file-uploading-list.component.html',
@@ -35,8 +26,13 @@ import { FileModel } from '../models/file.model';
 })
 export class FileUploadingListComponent {
 
+    FileUploadStatus = FileUploadStatus;
+
     @Input()
     files: FileModel[];
+
+    constructor(private uploadService: UploadService) {
+    }
 
     /**
      * Cancel file upload
@@ -46,9 +42,7 @@ export class FileUploadingListComponent {
      * @memberOf FileUploadingListComponent
      */
     cancelFileUpload(file: FileModel): void {
-        if (file) {
-            file.emitAbort();
-        }
+        this.uploadService.cancelUpload(file);
     }
 
     /**
@@ -58,21 +52,20 @@ export class FileUploadingListComponent {
         if (event) {
             event.preventDefault();
         }
-        this.files.forEach((uploadingFileModel: FileModel) => {
-            uploadingFileModel.emitAbort();
-        });
+        this.uploadService.cancelUpload(...this.files);
     }
 
     /**
-     * Verify if all the files are in state done or abort
-     * @returns {boolean} - false if there is a file in progress
+     * Check if all the files are not in the Progress state.
+     * @returns {boolean} - false if there is at least one file in Progress
      */
     isUploadCompleted(): boolean {
         let isPending = false;
         let isAllCompleted = true;
+
         for (let i = 0; i < this.files.length && !isPending; i++) {
             let file = this.files[i];
-            if (!file.done && !file.abort) {
+            if (file.status === FileUploadStatus.Progress) {
                 isPending = true;
                 isAllCompleted = false;
             }
