@@ -4,7 +4,7 @@
 
     <div *ngIf="!editMode">
         <div class="dynamic-table-widget__table-container">
-            <table class="mdl-data-table mdl-js-data-table dynamic-table-widget__table" id="dynamic-table-{{content.id}}">
+            <table class="mdl-data-table mdl-js-data-table dynamic-table-widget__table" id="dynamic-table-{{content.id}}" #dynamicTable>
                 <thead>
                     <tr>
                         <th *ngFor="let column of content.visibleColumns"
@@ -38,7 +38,8 @@
                 <i class="material-icons">arrow_downward</i>
             </button>
             <button class="mdl-button mdl-js-button mdl-button--icon"
-                    (click)="addNewRow()">
+                    id="{{content.id}}-add-row"
+                    (click)="addNewRow()" #addRowButton>
                 <i class="material-icons">add_circle_outline</i>
             </button>
             <button class="mdl-button mdl-js-button mdl-button--icon"

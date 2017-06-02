@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, OnInit, Input } from '@angular/core';
+import { Component, ElementRef, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
 import { WidgetComponent } from './../widget.component';
 import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './dynamic-table.widget.model';
@@ -46,7 +46,8 @@ export class DynamicTableWidget extends WidgetComponent implements OnInit {
 
     constructor(private elementRef: ElementRef,
                 private visibilityService: WidgetVisibilityService,
-                private logService: LogService) {
+                private logService: LogService,
+                private cd: ChangeDetectorRef) {
         super();
     }
 
@@ -55,6 +56,20 @@ export class DynamicTableWidget extends WidgetComponent implements OnInit {
             this.content = new DynamicTableModel(this.field);
             this.visibilityService.refreshVisibility(this.field.form);
         }
+    }
+
+    forceFocusOnAddButton() {
+        if (this.content) {
+            this.cd.detectChanges();
+            let buttonAddRow = <HTMLButtonElement>this.elementRef.nativeElement.querySelector('#' + this.content.id + '-add-row');
+            if (this.isDynamicTableReady(buttonAddRow)) {
+                buttonAddRow.focus();
+            }
+        }
+    }
+
+    private isDynamicTableReady(buttonAddRow) {
+        return this.field && !this.editMode && buttonAddRow;
     }
 
     isValid() {
@@ -159,11 +174,13 @@ export class DynamicTableWidget extends WidgetComponent implements OnInit {
             this.logService.error(this.ERROR_MODEL_NOT_FOUND);
         }
         this.editMode = false;
+        this.forceFocusOnAddButton();
     }
 
     onCancelChanges() {
         this.editMode = false;
         this.editRow = null;
+        this.forceFocusOnAddButton();
     }
 
     copyRow(row: DynamicTableRow): DynamicTableRow {
