@@ -15,18 +15,19 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { Component, Input, Output, OnInit, OnDestroy, ElementRef, EventEmitter, ViewChild } from '@angular/core';
 import { Observable, Subject } from 'rxjs/Rx';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { AlfrescoSearchAutocompleteComponent } from './alfresco-search-autocomplete.component';
 import { SearchTermValidator } from './../forms/search-term-validator';
-import { SearchAutocompleteComponent } from './search-autocomplete.component';
 
 @Component({
-    selector: 'adf-search-control, alfresco-search-control',
-    templateUrl: './search-control.component.html',
-    styleUrls: ['./search-control.component.scss']
+    selector: 'alfresco-search-control',
+    templateUrl: './alfresco-search-control.component.html',
+    styleUrls: ['./alfresco-search-control.component.css']
 })
-export class SearchControlComponent implements OnInit, OnDestroy {
+export class AlfrescoSearchControlComponent implements OnInit, OnDestroy {
 
     @Input()
     searchTerm = '';
@@ -39,9 +40,6 @@ export class SearchControlComponent implements OnInit, OnDestroy {
 
     @Input()
     expandable: boolean = true;
-
-    @Input()
-    highlight: boolean = false;
 
     @Output()
     searchChange = new EventEmitter();
@@ -60,8 +58,8 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     @ViewChild('searchInput', {})
     searchInput: ElementRef;
 
-    @ViewChild(SearchAutocompleteComponent)
-    liveSearchComponent: SearchAutocompleteComponent;
+    @ViewChild(AlfrescoSearchAutocompleteComponent)
+    liveSearchComponent: AlfrescoSearchAutocompleteComponent;
 
     @Input()
     liveSearchEnabled: boolean = true;
@@ -87,7 +85,8 @@ export class SearchControlComponent implements OnInit, OnDestroy {
 
     private focusSubject = new Subject<FocusEvent>();
 
-    constructor() {
+    constructor(private translateService: AlfrescoTranslationService) {
+
         this.searchControl = new FormControl(
             this.searchTerm,
             Validators.compose([Validators.required, SearchTermValidator.minAlphanumericChars(3)])
@@ -102,6 +101,8 @@ export class SearchControlComponent implements OnInit, OnDestroy {
         );
 
         this.setupFocusEventHandlers();
+
+        this.translateService.addTranslationFolder('ng2-alfresco-search', 'assets/ng2-alfresco-search');
     }
 
     ngOnDestroy(): void {
@@ -111,7 +112,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     private onSearchTermChange(value: string): void {
         this.searchValid = this.searchControl.valid;
         this.liveSearchTerm = this.searchValid ? value : '';
-        this.searchControl.setValue(value);
+        this.searchControl.setValue(value, true);
         this.searchChange.emit({
             value: value,
             valid: this.searchValid
@@ -150,7 +151,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
      * @param event Submit event that was fired
      */
     onSearch(event): void {
-        this.searchControl.setValue(this.searchTerm);
+        this.searchControl.setValue(this.searchTerm, true);
         if (this.searchControl.valid) {
             this.searchSubmit.emit({
                 value: this.searchTerm

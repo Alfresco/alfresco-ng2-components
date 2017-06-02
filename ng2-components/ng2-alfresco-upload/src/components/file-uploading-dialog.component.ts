@@ -15,89 +15,74 @@
  * limitations under the License.
  */
 
-import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FileModel, FileUploadCompleteEvent, FileUploadDeleteEvent,
-         FileUploadErrorEvent, UploadService } from 'ng2-alfresco-core';
-import { Observable, Subscription } from 'rxjs/Rx';
-import { FileUploadingListComponent } from './file-uploading-list.component';
+import { Component, Input, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
+import { FileModel } from '../models/file.model';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { UploadService } from '../services/upload.service';
 
+/**
+ * <file-uploading-dialog [filesUploadingList]="FileModel[]"></file-uploading-dialog>
+ *
+ * This component is a hideable and minimizable wich contains the list of the uploading
+ * files contained in the filesUploadingList.
+ *
+ * @InputParam {FileModel[]} filesUploadingList - list of the uploading files .
+ *
+ *
+ * @returns {FileUploadingDialogComponent} .
+ */
 @Component({
-    selector: 'adf-file-uploading-dialog, file-uploading-dialog',
+    selector: 'file-uploading-dialog',
     templateUrl: './file-uploading-dialog.component.html',
-    styleUrls: ['./file-uploading-dialog.component.scss']
+    styleUrls: ['./file-uploading-dialog.component.css']
 })
 export class FileUploadingDialogComponent implements OnInit, OnDestroy {
-    @ViewChild(FileUploadingListComponent)
-    uploadList: FileUploadingListComponent;
 
     @Input()
-    position: string = 'right';
+    filesUploadingList: FileModel [];
 
-    filesUploadingList: FileModel[] = [];
     isDialogActive: boolean = false;
     totalCompleted: number = 0;
-    totalErrors: number = 0;
+    totalCompletedMsg: string = 'FILE_UPLOAD.MESSAGES.SINGLE_COMPLETED';
     isDialogMinimized: boolean = false;
-    isConfirmation: boolean = false;
 
-    private listSubscription: Subscription;
-    private counterSubscription: Subscription;
-    private fileUploadSubscription: Subscription;
-    private errorSubscription: Subscription;
+    private listSubscription: any;
+    private counterSubscription: any;
 
-    constructor(
-        private uploadService: UploadService,
-        private changeDetecor: ChangeDetectorRef) {}
-
-    ngOnInit() {
-        this.listSubscription = this.uploadService
-            .queueChanged.subscribe((fileList: FileModel[]) => {
-                this.filesUploadingList = fileList;
-
-                if (this.filesUploadingList.length) {
-                    this.isDialogActive = true;
-                }
-        });
-
-        this.counterSubscription = Observable
-            .merge(
-                this.uploadService.fileUploadComplete,
-                this.uploadService.fileUploadDeleted
-            )
-            .subscribe((event: (FileUploadDeleteEvent|FileUploadCompleteEvent)) => {
-                this.totalCompleted = event.totalComplete;
-            });
-
-        this.errorSubscription = this.uploadService.fileUploadError
-            .subscribe((event: FileUploadErrorEvent) => {
-                this.totalErrors = event.totalError;
-                this.changeDetecor.detectChanges();
-            });
-
-        this.fileUploadSubscription = this.uploadService
-            .fileUpload.subscribe(() => {
-                this.changeDetecor.detectChanges();
-            });
+    constructor(private cd: ChangeDetectorRef,
+                translateService: AlfrescoTranslationService,
+                private uploadService: UploadService) {
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-alfresco-upload', 'assets/ng2-alfresco-upload');
+        }
     }
 
-    /**
-     * Toggle confirmation message.
-     */
-    toggleConfirmation() {
-        this.isConfirmation = !this.isConfirmation;
-
-        if (this.isDialogMinimized) {
-            this.isDialogMinimized = false;
+    ngOnInit() {
+        if (this.uploadService.filesUpload$) {
+            this.listSubscription = this.uploadService.filesUpload$.subscribe((fileList: FileModel[]) => {
+                this.filesUploadingList = fileList;
+                if (this.filesUploadingList.length > 0) {
+                    this.isDialogActive = true;
+                    this.cd.detectChanges();
+                }
+            });
+        }
+        if (this.uploadService.totalCompleted$) {
+            this.counterSubscription = this.uploadService.totalCompleted$.subscribe((total: number) => {
+                this.totalCompleted = total;
+                if (this.totalCompleted > 1) {
+                    this.totalCompletedMsg = 'FILE_UPLOAD.MESSAGES.COMPLETED';
+                }
+                this.cd.detectChanges();
+            });
         }
     }
 
     /**
-     * Cancel uploads and hide confiramtion
+     * Toggle dialog visibility state.
      */
-    cancelAllUploads() {
-        this.toggleConfirmation();
-
-        this.uploadList.cancelAllFiles();
+    toggleVisible(): void {
+        this.isDialogActive = !this.isDialogActive;
     }
 
     /**
@@ -105,28 +90,11 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
      */
     toggleMinimized(): void {
         this.isDialogMinimized = !this.isDialogMinimized;
-        this.changeDetecor.detectChanges();
-    }
-
-    /**
-     * Dismiss dialog
-     */
-    close(): void {
-        this.isConfirmation = false;
-        this.totalCompleted = 0;
-        this.totalErrors = 0;
-        this.filesUploadingList = [];
-        this.isDialogActive = false;
-        this.isDialogMinimized = false;
-        this.uploadService.clearQueue();
-        this.changeDetecor.detectChanges();
     }
 
     ngOnDestroy() {
-        this.uploadService.clearQueue();
         this.listSubscription.unsubscribe();
         this.counterSubscription.unsubscribe();
-        this.fileUploadSubscription.unsubscribe();
-        this.errorSubscription.unsubscribe();
+        this.cd.detach();
     }
 }

@@ -15,28 +15,20 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
+import { Component, Input, Output, EventEmitter, OnInit, TemplateRef } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoSettingsService, LogService } from 'ng2-alfresco-core';
 import { FormSubmitEvent } from '../models/form-submit-event.model';
 
 declare let componentHandler: any;
-declare var require: any;
-
-enum LoginSteps {
-    Landing = 0,
-    Checking = 1,
-    Welcome = 2
-}
 
 @Component({
-    selector: 'adf-login, alfresco-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss'],
-    host: {'(blur)': 'onBlur($event)'},
-    encapsulation: ViewEncapsulation.None
+    selector: 'alfresco-login',
+    templateUrl: './alfresco-login.component.html',
+    styleUrls: ['./alfresco-login.component.css'],
+    host: {'(blur)': 'onBlur($event)'}
 })
-export class LoginComponent implements OnInit {
+export class AlfrescoLoginComponent implements OnInit {
 
     isPasswordShow: boolean = false;
 
@@ -57,9 +49,6 @@ export class LoginComponent implements OnInit {
 
     @Input()
     backgroundImageUrl: string = require('../assets/images/background.svg');
-
-    @Input()
-    copyrightText: string = '© 2016 Alfresco Software, Inc. All Rights Reserved.';
 
     @Input()
     providers: string;
@@ -83,14 +72,10 @@ export class LoginComponent implements OnInit {
     error: boolean = false;
     errorMsg: string;
     success: boolean = false;
-    actualLoginStep: any = LoginSteps.Landing;
-    LoginSteps: any = LoginSteps;
-    rememberMe: boolean = true;
     formError: { [id: string]: string };
     minLength: number = 2;
     footerTemplate: TemplateRef<any>;
     headerTemplate: TemplateRef<any>;
-    data: any;
 
     private _message: { [id: string]: { [id: string]: string } };
 
@@ -106,6 +91,11 @@ export class LoginComponent implements OnInit {
                 private settingsService: AlfrescoSettingsService,
                 private translateService: AlfrescoTranslationService,
                 private logService: LogService) {
+
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-alfresco-login', 'assets/ng2-alfresco-login');
+        }
+
         this.initFormError();
         this.initFormFieldsMessages();
     }
@@ -172,16 +162,13 @@ export class LoginComponent implements OnInit {
      * @param values
      */
     private performLogin(values: any) {
-        this.actualLoginStep = LoginSteps.Checking;
-        this.authService.login(values.username, values.password, this.rememberMe)
+        this.authService.login(values.username, values.password)
             .subscribe(
                 (token: any) => {
-                    this.actualLoginStep = LoginSteps.Welcome;
                     this.success = true;
                     this.onSuccess.emit({token: token, username: values.username, password: values.password});
                 },
                 (err: any) => {
-                    this.actualLoginStep = LoginSteps.Landing;
                     this.displayErrorMessage(err);
                     this.enableError();
                     this.onError.emit(err);
@@ -259,9 +246,9 @@ export class LoginComponent implements OnInit {
     toggleShowPassword() {
         this.isPasswordShow = !this.isPasswordShow;
         if (this.isPasswordShow) {
-            (<HTMLInputElement> document.getElementById('password')).type = 'text';
+            (<HTMLInputElement>document.getElementById('password')).type = 'text';
         } else {
-            (<HTMLInputElement> document.getElementById('password')).type = 'password';
+            (<HTMLInputElement>document.getElementById('password')).type = 'password';
         }
     }
 

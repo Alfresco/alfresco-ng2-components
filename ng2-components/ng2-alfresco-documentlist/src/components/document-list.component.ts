@@ -167,7 +167,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                 private el: ElementRef) {
 
         if (translateService) {
-            translateService.addTranslationFolder('ng2-alfresco-documentlist', 'node_modules/ng2-alfresco-documentlist/src');
+            translateService.addTranslationFolder('ng2-alfresco-documentlist', 'assets/ng2-alfresco-documentlist');
         }
     }
 

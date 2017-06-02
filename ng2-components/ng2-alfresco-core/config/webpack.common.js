@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const helpers = require('./helpers');
 const fs = require('fs');
 const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
 
@@ -110,6 +111,11 @@ module.exports = {
     },
 
     plugins: [
+        new CopyWebpackPlugin([{
+            from: `src/i18n/`,
+            to: `bundles/assets/i18n/`
+        }]),
+
         new webpack.NoEmitOnErrorsPlugin(),
 
         new webpack.BannerPlugin(fs.readFileSync(path.resolve(__dirname, './assets/license_header_add.txt'), 'utf8')),

@@ -15,21 +15,23 @@
  * limitations under the License.
  */
 
-import { Component, DebugElement, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, DebugElement, EventEmitter, Input, Output, OnInit, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 
-import { DataCellEvent, DataTableAdapter, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { ObjectDataTableAdapter, DataTableAdapter, ObjectDataRow, DataCellEvent } from 'ng2-alfresco-datatable';
 import { ProcessInstanceVariable } from './../models/process-instance-variable.model';
-import { ProcessService } from './../services/process.service';
+import { ActivitiProcessService } from './../services/activiti-process.service';
 
+declare let componentHandler: any;
 declare let dialogPolyfill: any;
 
 @Component({
-    selector: 'adf-process-instance-variables, activiti-process-instance-variables',
-    templateUrl: './process-instance-variables.component.html',
-    styleUrls: ['./process-instance-variables.component.css'],
-    providers: [ProcessService]
+    selector: 'activiti-process-instance-variables',
+    templateUrl: './activiti-process-instance-variables.component.html',
+    styleUrls: [],
+    providers: [ActivitiProcessService]
 })
-export class ProcessInstanceVariablesComponent implements OnInit, OnChanges {
+export class ActivitiProcessInstanceVariables implements OnInit, OnChanges {
 
     @Input()
     processInstanceId: string;
@@ -59,14 +61,18 @@ export class ProcessInstanceVariablesComponent implements OnInit, OnChanges {
     variableValue: string;
     variableScope: string;
 
-    isLoading: boolean = true;
-
     /**
      * Constructor
      * @param translate Translation service
      * @param activitiProcess Process service
      */
-    constructor(private activitiProcess: ProcessService) {
+    constructor(private translate: AlfrescoTranslationService,
+                private activitiProcess: ActivitiProcessService) {
+
+        if (translate) {
+            translate.addTranslationFolder('ng2-activiti-processlist', 'assets/ng2-activiti-processlist');
+        }
+
     }
 
     ngOnInit() {
@@ -138,16 +144,13 @@ export class ProcessInstanceVariablesComponent implements OnInit, OnChanges {
 
     private getProcessInstanceVariables(processInstanceId: string) {
         if (processInstanceId) {
-            this.isLoading = true;
             this.activitiProcess.getProcessInstanceVariables(processInstanceId).subscribe(
                 (res: ProcessInstanceVariable[]) => {
                     let instancesRow = this.createDataRow(res);
                     this.renderInstances(instancesRow);
-                    this.isLoading = false;
                 },
                 (err) => {
                     this.error.emit(err);
-                    this.isLoading = false;
                 }
             );
         } else {
@@ -244,7 +247,7 @@ export class ProcessInstanceVariablesComponent implements OnInit, OnChanges {
         this.activitiProcess.deleteProcessInstanceVariable(this.processInstanceId, row.getValue('name')).subscribe(() => {
             this.getProcessInstanceVariables(this.processInstanceId);
         },
-                                                                                                                   (err) => {
+        (err) => {
             this.showErrorDialog();
             this.error.emit(err);
         });

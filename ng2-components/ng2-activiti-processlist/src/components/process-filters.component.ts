@@ -15,20 +15,20 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Observable, Observer } from 'rxjs/Rx';
-import { FilterParamsModel, FilterProcessRepresentationModel } from './../models/filter-process.model';
-import { ProcessService } from './../services/process.service';
+import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
+import { FilterProcessRepresentationModel } from './../models/filter-process.model';
+import { ActivitiProcessService } from './../services/activiti-process.service';
+
+declare let componentHandler: any;
 
 @Component({
-    selector: 'adf-process-instance-filters, activiti-process-instance-filters',
-    templateUrl: './process-filters.component.html',
-    styleUrls: ['process-filters.component.scss']
+    selector: 'activiti-process-instance-filters',
+    templateUrl: './activiti-filters.component.html',
+    styleUrls: ['activiti-filters.component.css']
 })
-export class ProcessFiltersComponent implements OnInit, OnChanges {
-
-    @Input()
-    filterParam: FilterParamsModel;
+export class ActivitiProcessFilters implements OnInit, OnChanges {
 
     @Output()
     filterClick: EventEmitter<FilterProcessRepresentationModel> = new EventEmitter<FilterProcessRepresentationModel>();
@@ -55,8 +55,14 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
 
     filters: FilterProcessRepresentationModel [] = [];
 
-    constructor(private activiti: ProcessService) {
+    constructor(private translate: AlfrescoTranslationService,
+                private activiti: ActivitiProcessService,
+                private logService: LogService) {
         this.filter$ = new Observable<FilterProcessRepresentationModel>(observer => this.filterObserver = observer).share();
+
+        if (translate) {
+            translate.addTranslationFolder('ng2-activiti-processlist', 'assets/ng2-activiti-processlist');
+        }
     }
 
     ngOnInit() {
@@ -82,7 +88,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
      * Return the filter list filtered by appId
      * @param appId - optional
      */
-    getFiltersByAppId(appId?: string) {
+    getFiltersByAppId(appId?: number) {
         this.activiti.getProcessFilters(appId).subscribe(
             (res: FilterProcessRepresentationModel[]) => {
                 if (res.length === 0 && this.isFilterListEmpty()) {
@@ -93,7 +99,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
                                 this.filterObserver.next(filter);
                             });
 
-                            this.selectTaskFilter(this.filterParam);
+                            this.selectFirstFilter();
                             this.onSuccess.emit(resDefault);
                         },
                         (errDefault: any) => {
@@ -106,7 +112,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
                         this.filterObserver.next(filter);
                     });
 
-                    this.selectTaskFilter(this.filterParam);
+                    this.selectFirstFilter();
                     this.onSuccess.emit(res);
                 }
             },
@@ -123,8 +129,8 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
     getFiltersByAppName(appName: string) {
         this.activiti.getDeployedApplications(appName).subscribe(
             application => {
-                this.getFiltersByAppId(application.id.toString());
-                this.selectTaskFilter(this.filterParam);
+                this.getFiltersByAppId(application.id);
+                this.selectFirstFilter();
             },
             (err) => {
                 this.onError.emit(err);
@@ -143,26 +149,11 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
     /**
      * Select the first filter of a list if present
      */
-    public selectTaskFilter(filterParam: FilterParamsModel) {
-        if (filterParam) {
-            this.filters.filter((taskFilter: FilterProcessRepresentationModel, index) => {
-                if (filterParam.name && filterParam.name.toLowerCase() === taskFilter.name.toLowerCase() ||
-                    filterParam.id === taskFilter.id || filterParam.index === index) {
-                    this.currentFilter = taskFilter;
-                }
-            });
-        }
-        if (this.isCurrentFilterEmpty()) {
-            this.selectDefaultTaskFilter();
-        }
-    }
-
-    /**
-     * Select as default task filter the first in the list
-     */
-    public selectDefaultTaskFilter() {
+    public selectFirstFilter() {
         if (!this.isFilterListEmpty()) {
             this.currentFilter = this.filters[0];
+        } else {
+            this.currentFilter = null;
         }
     }
 
@@ -187,10 +178,6 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
      */
     private resetFilter() {
         this.filters = [];
-        this.currentFilter = undefined;
-    }
-
-    private isCurrentFilterEmpty(): boolean {
-        return this.currentFilter === undefined || null ? true : false;
+        this.currentFilter = null;
     }
 }

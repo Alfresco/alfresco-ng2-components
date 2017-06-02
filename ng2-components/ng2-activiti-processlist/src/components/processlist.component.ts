@@ -16,19 +16,19 @@
  */
 
 import { DatePipe } from '@angular/common';
-import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { DataColumnListComponent } from 'ng2-alfresco-core';
-import { DataColumn, DataRowEvent, DataSorting, DataTableAdapter, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, ContentChild, AfterContentInit } from '@angular/core';
+import { AlfrescoTranslationService, DataColumnListComponent } from 'ng2-alfresco-core';
+import { ObjectDataTableAdapter, DataTableAdapter, DataRowEvent, ObjectDataRow, DataSorting, DataColumn } from 'ng2-alfresco-datatable';
 import { ProcessFilterRequestRepresentation } from '../models/process-instance-filter.model';
 import { ProcessInstance } from '../models/process-instance.model';
-import { ProcessService } from '../services/process.service';
+import { ActivitiProcessService } from '../services/activiti-process.service';
 
 @Component({
-    selector: 'adf-process-instance-list, activiti-process-instance-list',
-    styleUrls: ['./processlist.component.css'],
-    templateUrl: './processlist.component.html'
+    selector: 'activiti-process-instance-list',
+    styleUrls: ['./activiti-processlist.component.css'],
+    templateUrl: './activiti-processlist.component.html'
 })
-export class ProcessInstanceListComponent implements OnChanges, AfterContentInit {
+export class ActivitiProcessInstanceListComponent implements OnChanges, AfterContentInit {
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
@@ -62,14 +62,17 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     onError: EventEmitter<any> = new EventEmitter<any>();
 
     currentInstanceId: string;
-    isLoading: boolean = true;
 
     private defaultSchema: DataColumn[] = [
         { type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true },
         { type: 'text', key: 'created', title: 'Created', cssClass: 'hidden', sortable: true }
     ];
 
-    constructor(private processService: ProcessService) {
+    constructor(private processService: ActivitiProcessService,
+                private translate: AlfrescoTranslationService) {
+        if (translate !== null) {
+            translate.addTranslationFolder('ng2-activiti-processlist', 'assets/ng2-activiti-processlist');
+        }
     }
 
     ngAfterContentInit() {
@@ -137,7 +140,6 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     }
 
     private load(requestNode: ProcessFilterRequestRepresentation) {
-        this.isLoading = true;
         this.processService.getProcessInstances(requestNode)
             .subscribe(
                 (response) => {
@@ -145,11 +147,9 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
                     this.renderInstances(instancesRow);
                     this.selectFirst();
                     this.onSuccess.emit(response);
-                    this.isLoading = false;
                 },
                 error => {
                     this.onError.emit(error);
-                    this.isLoading = false;
                 });
     }
 

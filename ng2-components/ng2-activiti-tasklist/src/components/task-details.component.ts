@@ -15,37 +15,20 @@
  * limitations under the License.
  */
 
-import { Component,
-    DebugElement,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges,
-    TemplateRef,
-    ViewChild
-} from '@angular/core';
-import { ContentLinkModel, FormFieldValidator, FormModel, FormOutcomeEvent } from 'ng2-activiti-form';
-import { AlfrescoAuthenticationService, CardViewUpdateService, ClickNotification, LogService, UpdateNotification } from 'ng2-alfresco-core';
-import { Observable, Observer } from 'rxjs/Rx';
-import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
+import { Component, Input, OnInit, ViewChild, Output, EventEmitter, TemplateRef, OnChanges, SimpleChanges, DebugElement} from '@angular/core';
+import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
+import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { User } from '../models/user.model';
-import { PeopleService } from './../services/people.service';
-import { TaskListService } from './../services/tasklist.service';
-
-declare var require: any;
+import { FormService, FormModel, FormOutcomeEvent, ContentLinkModel } from 'ng2-activiti-form';
+import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 
 @Component({
-    selector: 'adf-task-details, activiti-task-details',
-    templateUrl: './task-details.component.html',
-    styleUrls: ['./task-details.component.scss'],
-    providers: [
-        CardViewUpdateService
-    ]
+    selector: 'activiti-task-details',
+    templateUrl: './activiti-task-details.component.html',
+    styleUrls: ['./activiti-task-details.component.css']
 })
-export class TaskDetailsComponent implements OnInit, OnChanges {
+export class ActivitiTaskDetails implements OnInit, OnChanges {
 
     @ViewChild('activiticomments')
     activiticomments: any;
@@ -98,9 +81,6 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     @Input()
     peopleIconImageUrl: string = require('../assets/images/user.jpg');
 
-    @Input()
-    fieldValidators: FormFieldValidator[] = [];
-
     @Output()
     formSaved: EventEmitter<FormModel> = new EventEmitter<FormModel>();
 
@@ -125,9 +105,6 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     @Output()
     executeOutcome: EventEmitter<FormOutcomeEvent> = new EventEmitter<FormOutcomeEvent>();
 
-    @Output()
-    assignTask: EventEmitter<void> = new EventEmitter<void>();
-
     taskDetails: TaskDetailsModel;
     taskFormName: string = null;
 
@@ -135,36 +112,38 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
     noTaskDetailsTemplateComponent: TemplateRef<any>;
 
-    showAssignee: boolean = false;
+    /**
+     * Constructor
+     * @param auth Authentication service
+     * @param translate Translation service
+     * @param activitiForm Form service
+     * @param activitiTaskList Task service
+     */
+    constructor(private translateService: AlfrescoTranslationService,
+                private activitiForm: FormService,
+                private activitiTaskList: ActivitiTaskListService,
+                private logService: LogService) {
 
-    private peopleSearchObserver: Observer<User[]>;
-    peopleSearch$: Observable<User[]>;
-
-    constructor(private activitiTaskList: TaskListService,
-                private authService: AlfrescoAuthenticationService,
-                private peopleService: PeopleService,
-                private logService: LogService,
-                private cardViewUpdateService: CardViewUpdateService) {
-        this.peopleSearch$ = new Observable<User[]>(observer => this.peopleSearchObserver = observer).share();
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
+        }
     }
 
     ngOnInit() {
         if (this.taskId) {
             this.loadDetails(this.taskId);
         }
-
-        this.cardViewUpdateService.itemUpdated$.subscribe(this.updateTaskDetails.bind(this));
-        this.cardViewUpdateService.itemClicked$.subscribe(this.clickTaskDetails.bind(this));
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
-        let taskId = changes.taskId;
-        this.showAssignee = false;
-
+    ngOnChanges(changes: SimpleChanges) {
+        let taskId = changes['taskId'];
         if (taskId && !taskId.currentValue) {
             this.reset();
-        } else if (taskId && taskId.currentValue) {
+            return;
+        }
+        if (taskId && taskId.currentValue) {
             this.loadDetails(taskId.currentValue);
+            return;
         }
     }
 
@@ -190,33 +169,12 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     }
 
     /**
-     * Save a task detail and update it after a successful response
-     *
-     * @param updateNotification
-     */
-    private updateTaskDetails(updateNotification: UpdateNotification) {
-        this.activitiTaskList.updateTask(this.taskId, updateNotification.changed)
-            .subscribe(
-                () => { this.loadDetails(this.taskId); }
-            );
-    }
-
-    private clickTaskDetails(clickNotification: ClickNotification) {
-        console.log(clickNotification.target);
-        if (clickNotification.target.key === 'assignee') {
-            this.showAssignee = true;
-        }
-    }
-
-    /**
      * Load the activiti task details
      * @param taskId
      */
     private loadDetails(taskId: string) {
         this.taskPeople = [];
         this.taskFormName = null;
-        this.readOnlyForm = false;
-
         if (taskId) {
             this.activitiTaskList.getTaskDetails(taskId).subscribe(
                 (res: TaskDetailsModel) => {
@@ -227,7 +185,8 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
                     }
 
                     let endDate: any = res.endDate;
-                    this.readOnlyForm = this.readOnlyForm ? this.readOnlyForm : !!(endDate && !isNaN(endDate.getTime()));
+                    this.readOnlyForm = !!(endDate && !isNaN(endDate.getTime()));
+
                     if (this.taskDetails && this.taskDetails.involvedPeople) {
                         this.taskDetails.involvedPeople.forEach((user) => {
                             this.taskPeople.push(new User(user));
@@ -237,12 +196,8 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
         }
     }
 
-    isAssigned(): boolean {
-        return this.taskDetails.assignee ? true : false;
-    }
-
     isAssignedToMe(): boolean {
-        return this.taskDetails.assignee.email === this.authService.getBpmUsername() ? true : false;
+        return this.taskDetails.assignee ? true : false;
     }
 
     /**
@@ -250,7 +205,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
      * @param processInstanceId
      * @param processDefinitionId
      */
-    private loadNextTask(processInstanceId: string, processDefinitionId: string): void {
+    private loadNextTask(processInstanceId: string, processDefinitionId: string) {
         let requestNode = new TaskQueryRequestRepresentationModel(
             {
                 processInstanceId: processInstanceId,
@@ -260,7 +215,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
         this.activitiTaskList.getTasks(requestNode).subscribe(
             (response) => {
                 if (response && response.length > 0) {
-                    this.taskDetails = new TaskDetailsModel(response[0]);
+                    this.taskDetails = response[0];
                 } else {
                     this.reset();
                 }
@@ -272,28 +227,28 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     /**
      * Complete button clicked
      */
-    onComplete(): void {
+    onComplete() {
         this.activitiTaskList.completeTask(this.taskId).subscribe(
             (res) => this.onFormCompleted(null)
         );
     }
 
-    onFormContentClick(content: ContentLinkModel): void {
+    onFormContentClick(content: ContentLinkModel) {
         this.formContentClicked.emit(content);
     }
 
-    onFormSaved(form: FormModel): void {
+    onFormSaved(form: FormModel) {
         this.formSaved.emit(form);
     }
 
-    onFormCompleted(form: FormModel): void {
+    onFormCompleted(form: FormModel) {
         this.formCompleted.emit(form);
-        if (this.showNextTask && (this.taskDetails.processInstanceId || this.taskDetails.processDefinitionId)) {
+        if (this.showNextTask) {
             this.loadNextTask(this.taskDetails.processInstanceId, this.taskDetails.processDefinitionId);
         }
     }
 
-    onFormLoaded(form: FormModel): void {
+    onFormLoaded(form: FormModel) {
         this.taskFormName = null;
         if (form && form.name) {
             this.taskFormName = form.name;
@@ -301,20 +256,20 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
         this.formLoaded.emit(form);
     }
 
-    onChecklistTaskCreated(task: TaskDetailsModel): void {
+    onChecklistTaskCreated(task: TaskDetailsModel) {
         this.taskCreated.emit(task);
     }
 
-    onChecklistTaskDeleted(taskId: string): void {
+    onChecklistTaskDeleted(taskId: string) {
         this.taskDeleted.emit(taskId);
     }
 
-    onFormError(error: any): void {
+    onFormError(error: any) {
         this.errorDialog.nativeElement.showModal();
         this.onError.emit(error);
     }
 
-    onFormExecuteOutcome(event: FormOutcomeEvent): void {
+    onFormExecuteOutcome(event: FormOutcomeEvent) {
         this.executeOutcome.emit(event);
     }
 
@@ -322,45 +277,11 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
         this.errorDialog.nativeElement.close();
     }
 
-    onClaimTask(taskId: string): void {
+    onClaimTask(taskId: string) {
         this.loadDetails(taskId);
     }
 
-    toggleHeaderContent(): void {
+    toggleHeaderContent() {
         this.showHeaderContent = !this.showHeaderContent;
-    }
-
-    isCompletedTask(): boolean {
-        return this.taskDetails && this.taskDetails.endDate ? true : undefined;
-    }
-
-    searchUser(searchedWord: string) {
-        this.peopleService.getWorkflowUsers(null, searchedWord)
-            .subscribe((users) => {
-                users = users.filter((user) => user.id !== this.taskDetails.assignee.id);
-                this.peopleSearchObserver.next(users);
-            },         error => this.logService.error('Could not load users'));
-    }
-
-    onCloseSearch() {
-        this.showAssignee = false;
-        console.log(this.taskDetails.assignee);
-    }
-
-    assignTaskToUser(selectedUser: User) {
-        this.activitiTaskList.assignTask(this.taskDetails.id, selectedUser).subscribe(
-            (res: any) => {
-                this.logService.info('Task Assigned to ' + selectedUser.email);
-                this.assignTask.emit();
-            });
-        this.showAssignee = false;
-    }
-
-    getTaskHeaderViewClass() {
-        if (this.showAssignee) {
-            return 'assign-edit-view';
-        } else {
-            return 'default-view';
-        }
     }
 }

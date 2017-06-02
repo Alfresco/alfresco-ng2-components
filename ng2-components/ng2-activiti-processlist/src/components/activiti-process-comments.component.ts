@@ -15,27 +15,26 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, ViewChild, OnChanges, SimpleChanges, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
-import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
-import { Comment } from '../models/comment.model';
-import { Observer, Observable } from 'rxjs/Rx';
+import { ActivitiProcessService } from './../services/activiti-process.service';
+import { Comment } from 'ng2-activiti-tasklist';
+import { Observer } from 'rxjs/Observer';
+import { Observable } from 'rxjs/Observable';
 
+declare let componentHandler: any;
 declare let dialogPolyfill: any;
 
 @Component({
-    selector: 'activiti-comments',
-    templateUrl: './activiti-comments.component.html',
-    styleUrls: ['./activiti-comments.component.css'],
-    providers: [ActivitiTaskListService]
+    selector: 'activiti-process-instance-comments',
+    templateUrl: './activiti-process-comments.component.html',
+    styleUrls: ['./activiti-process-comments.component.css'],
+    providers: [ActivitiProcessService]
 })
-export class ActivitiComments implements OnChanges {
+export class ActivitiProcessComments implements OnChanges {
 
     @Input()
-    taskId: string;
-
-    @Input()
-    readOnly: boolean = false;
+    processInstanceId: string;
 
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
@@ -45,7 +44,8 @@ export class ActivitiComments implements OnChanges {
 
     comments: Comment [] = [];
 
-    private commentObserver: Observer<Comment>;
+    commentObserver: Observer<Comment>;
+
     comment$: Observable<Comment>;
 
     message: string;
@@ -53,36 +53,36 @@ export class ActivitiComments implements OnChanges {
     /**
      * Constructor
      * @param translate Translation service
-     * @param activitiTaskList Task service
+     * @param activitiProcess Process service
      */
-    constructor(private translateService: AlfrescoTranslationService,
-                private activitiTaskList: ActivitiTaskListService) {
+    constructor(private translate: AlfrescoTranslationService,
+                private activitiProcess: ActivitiProcessService) {
 
-        if (translateService) {
-            translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
+        if (translate) {
+            translate.addTranslationFolder('ng2-activiti-processlist', 'assets/ng2-activiti-processlist');
         }
 
-        this.comment$ = new Observable<Comment>(observer =>  this.commentObserver = observer).share();
+        this.comment$ = new Observable<Comment>(observer => this.commentObserver = observer).share();
         this.comment$.subscribe((comment: Comment) => {
             this.comments.push(comment);
         });
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        let taskId = changes['taskId'];
-        if (taskId) {
-            if (taskId.currentValue) {
-                this.getTaskComments(taskId.currentValue);
+        let processInstanceId = changes['processInstanceId'];
+        if (processInstanceId) {
+            if (processInstanceId.currentValue) {
+                this.getProcessComments(processInstanceId.currentValue);
             } else {
                 this.resetComments();
             }
         }
     }
 
-    private getTaskComments(taskId: string) {
-        this.resetComments();
-        if (taskId) {
-            this.activitiTaskList.getTaskComments(taskId).subscribe(
+    private getProcessComments(processInstanceId: string) {
+        this.comments = [];
+        if (processInstanceId) {
+            this.activitiProcess.getProcessInstanceComments(processInstanceId).subscribe(
                 (res: Comment[]) => {
                     res.forEach((comment) => {
                         this.commentObserver.next(comment);
@@ -105,11 +105,13 @@ export class ActivitiComments implements OnChanges {
         if (!this.dialog.nativeElement.showModal) {
             dialogPolyfill.registerDialog(this.dialog.nativeElement);
         }
-        this.dialog.nativeElement.showModal();
+        if (this.dialog) {
+            this.dialog.nativeElement.showModal();
+        }
     }
 
     public add() {
-        this.activitiTaskList.addTaskComment(this.taskId, this.message).subscribe(
+        this.activitiProcess.addProcessInstanceComment(this.processInstanceId, this.message).subscribe(
             (res: Comment) => {
                 this.comments.push(res);
                 this.message = '';

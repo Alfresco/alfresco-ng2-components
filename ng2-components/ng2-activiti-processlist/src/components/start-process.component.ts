@@ -15,37 +15,38 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { RestVariable } from 'alfresco-js-api';
-import { StartFormComponent } from 'ng2-activiti-form';
-import { ProcessDefinitionRepresentation } from './../models/process-definition.model';
+import { Component, EventEmitter, Input, Output, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { ActivitiStartForm } from 'ng2-activiti-form';
 import { ProcessInstance } from './../models/process-instance.model';
-import { ProcessService } from './../services/process.service';
+import { ProcessDefinitionRepresentation } from './../models/process-definition.model';
+import { ActivitiProcessService } from './../services/activiti-process.service';
+import { RestVariable } from 'alfresco-js-api';
+
+declare let componentHandler: any;
+declare let dialogPolyfill: any;
 
 @Component({
-    selector: 'adf-start-process, activiti-start-process',
-    templateUrl: './start-process.component.html',
-    styleUrls: ['./start-process.component.scss']
+    selector: 'activiti-start-process',
+    templateUrl: './activiti-start-process.component.html',
+    styleUrls: ['./activiti-start-process.component.css']
 })
-export class StartProcessInstanceComponent implements OnChanges {
+export class ActivitiStartProcessInstance implements OnChanges {
 
     @Input()
     appId: string;
 
     @Input()
-    variables: RestVariable[];
+    variables: RestVariable;
 
     @Output()
     start: EventEmitter<ProcessInstance> = new EventEmitter<ProcessInstance>();
 
     @Output()
-    cancel: EventEmitter<ProcessInstance> = new EventEmitter<ProcessInstance>();
-
-    @Output()
     error: EventEmitter<ProcessInstance> = new EventEmitter<ProcessInstance>();
 
-    @ViewChild(StartFormComponent)
-    startForm: StartFormComponent;
+    @ViewChild(ActivitiStartForm)
+    startForm: ActivitiStartForm;
 
     processDefinitions: ProcessDefinitionRepresentation[] = [];
 
@@ -55,16 +56,23 @@ export class StartProcessInstanceComponent implements OnChanges {
 
     errorMessageId: string = '';
 
-    constructor(private activitiProcess: ProcessService) {
+    constructor(private translate: AlfrescoTranslationService,
+                private activitiProcess: ActivitiProcessService) {
+
+        if (translate) {
+            translate.addTranslationFolder('ng2-activiti-processlist', 'assets/ng2-activiti-processlist');
+        }
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        let appIdChange = changes['appId'];
-        let appId = appIdChange ? appIdChange.currentValue : null;
-        this.load(appId);
+        let appId = changes['appId'];
+        if (appId && (appId.currentValue || appId.currentValue === null)) {
+            this.load(appId.currentValue);
+            return;
+        }
     }
 
-    public load(appId?: string) {
+    public load(appId: string) {
         this.resetSelectedProcessDefinition();
         this.resetErrorMessage();
         this.activitiProcess.getProcessDefinitions(appId).subscribe(
@@ -105,16 +113,8 @@ export class StartProcessInstanceComponent implements OnChanges {
         }
     }
 
-    public cancelStartProcess() {
-        this.cancel.emit();
-    }
-
     hasStartForm() {
         return this.currentProcessDef && this.currentProcessDef.hasStartForm;
-    }
-
-    isProcessDefinitionEmpty() {
-        return this.processDefinitions ? (this.processDefinitions.length > 0 || this.errorMessageId) : this.errorMessageId;
     }
 
     isStartFormMissingOrValid() {
@@ -135,10 +135,6 @@ export class StartProcessInstanceComponent implements OnChanges {
 
     private resetErrorMessage(): void {
         this.errorMessageId = '';
-    }
-
-    hasErrorMessage() {
-        return this.processDefinitions.length === 0 && !this.errorMessageId;
     }
 
     public onOutcomeClick(outcome: string) {

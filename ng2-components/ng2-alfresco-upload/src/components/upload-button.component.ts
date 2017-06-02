@@ -108,7 +108,7 @@ export class UploadButtonComponent implements OnInit, OnChanges {
                 private notificationService: NotificationService,
                 private settingsService: AlfrescoSettingsService) {
         if (translateService) {
-            translateService.addTranslationFolder('ng2-alfresco-upload', 'node_modules/ng2-alfresco-upload/src');
+            translateService.addTranslationFolder('ng2-alfresco-upload', 'assets/ng2-alfresco-upload');
         }
     }
 

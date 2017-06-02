@@ -15,18 +15,19 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { DiagramElementModel, DiagramModel } from '../models/diagram.model';
-import { DiagramColorService } from '../services/diagram-color.service';
+import { Component, ElementRef, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
+import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { DiagramsService } from '../services/diagrams.service';
+import { DiagramColorService } from '../services/diagram-color.service';
 import { RaphaelService } from './raphael/raphael.service';
+import { DiagramModel, DiagramElementModel } from '../models/diagram.model';
 
 @Component({
-    selector: 'adf-diagram, activiti-diagram',
+    selector: 'activiti-diagram',
     styleUrls: ['./diagram.component.css'],
     templateUrl: './diagram.component.html'
 })
-export class DiagramComponent implements OnChanges {
+export class DiagramComponent {
     @Input()
     processDefinitionId: any;
 
@@ -57,11 +58,17 @@ export class DiagramComponent implements OnChanges {
     PADDING_WIDTH: number = 60;
     PADDING_HEIGHT: number = 60;
 
-    diagram: DiagramModel;
+    private diagram: DiagramModel;
 
-    constructor(private diagramColorService: DiagramColorService,
+    constructor(private elementRef: ElementRef,
+                private translateService: AlfrescoTranslationService,
+                private diagramColorService: DiagramColorService,
                 private raphaelService: RaphaelService,
-                private diagramsService: DiagramsService) {
+                private diagramsService: DiagramsService,
+                private logService: LogService) {
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-activiti-diagrams', 'assets/ng2-activiti-diagrams');
+        }
     }
 
     ngOnChanges(changes: SimpleChanges) {

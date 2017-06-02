@@ -15,20 +15,23 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { AppDefinitionRepresentationModel } from '../models/filter.model';
 import { IconModel } from '../models/icon.model';
-import { TaskListService } from './../services/tasklist.service';
+import { Observer } from 'rxjs/Observer';
+import { Observable } from 'rxjs/Observable';
+
+declare let componentHandler: any;
 
 @Component({
-    selector: 'adf-apps, activiti-apps',
-    templateUrl: 'apps-list.component.html',
-    styleUrls: ['./apps-list.component.css', './apps-grid.component.css'],
-    providers: [TaskListService]
+    selector: 'activiti-apps',
+    templateUrl: 'activiti-apps.component.html',
+    styleUrls: ['./activiti-apps.component.css', './activiti-apps-grid.component.css'],
+    providers: [ActivitiTaskListService]
 })
-export class AppsListComponent implements OnInit {
+export class ActivitiApps implements OnInit {
 
     public static LAYOUT_LIST: string = 'LIST';
     public static LAYOUT_GRID: string = 'GRID';
@@ -39,7 +42,7 @@ export class AppsListComponent implements OnInit {
     public static DEFAULT_TASKS_APP_MATERIAL_ICON: string = 'favorite_border';
 
     @Input()
-    layoutType: string = AppsListComponent.LAYOUT_GRID;
+    layoutType: string = ActivitiApps.LAYOUT_GRID;
 
     @Input()
     filtersAppId: any[];
@@ -64,7 +67,13 @@ export class AppsListComponent implements OnInit {
      * @param translate Translate service
      * @param activitiTaskList Task service
      */
-    constructor(private activitiTaskList: TaskListService) {
+    constructor(private translateService: AlfrescoTranslationService,
+                private activitiTaskList: ActivitiTaskListService) {
+
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
+        }
+
         this.apps$ = new Observable<AppDefinitionRepresentationModel>(observer =>  this.appsObserver = observer).share();
     }
 
@@ -85,10 +94,10 @@ export class AppsListComponent implements OnInit {
             (res) => {
                 res = this.filterApps(res);
                 res.forEach((app: AppDefinitionRepresentationModel) => {
-                    if (app.defaultAppId === AppsListComponent.DEFAULT_TASKS_APP) {
-                        app.name = AppsListComponent.DEFAULT_TASKS_APP_NAME;
-                        app.theme = AppsListComponent.DEFAULT_TASKS_APP_THEME;
-                        app.icon = AppsListComponent.DEFAULT_TASKS_APP_ICON;
+                    if (app.defaultAppId === ActivitiApps.DEFAULT_TASKS_APP) {
+                        app.name = ActivitiApps.DEFAULT_TASKS_APP_NAME;
+                        app.theme = ActivitiApps.DEFAULT_TASKS_APP_THEME;
+                        app.icon = ActivitiApps.DEFAULT_TASKS_APP_ICON;
                         this.appsObserver.next(app);
                     } else if (app.deploymentId) {
                         this.appsObserver.next(app);
@@ -145,7 +154,7 @@ export class AppsListComponent implements OnInit {
      * @returns {boolean}
      */
     isValidType(): boolean {
-        if (this.layoutType && (this.layoutType === AppsListComponent.LAYOUT_LIST || this.layoutType === AppsListComponent.LAYOUT_GRID)) {
+        if (this.layoutType && (this.layoutType === ActivitiApps.LAYOUT_LIST || this.layoutType === ActivitiApps.LAYOUT_GRID)) {
             return true;
         }
         return false;
@@ -155,7 +164,7 @@ export class AppsListComponent implements OnInit {
      * Assign the default value to LayoutType
      */
     setDefaultLayoutType(): void {
-        this.layoutType = AppsListComponent.LAYOUT_GRID;
+        this.layoutType = ActivitiApps.LAYOUT_GRID;
     }
 
     /**
@@ -163,7 +172,7 @@ export class AppsListComponent implements OnInit {
      * @returns {boolean}
      */
     isList(): boolean {
-        return this.layoutType === AppsListComponent.LAYOUT_LIST;
+        return this.layoutType === ActivitiApps.LAYOUT_LIST;
     }
 
     /**
@@ -171,7 +180,7 @@ export class AppsListComponent implements OnInit {
      * @returns {boolean}
      */
     isGrid(): boolean {
-        return this.layoutType === AppsListComponent.LAYOUT_GRID;
+        return this.layoutType === ActivitiApps.LAYOUT_GRID;
     }
 
     isEmpty(): boolean {
