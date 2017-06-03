@@ -24,8 +24,8 @@ module.exports = function (config) {
             {pattern: './node_modules/pdfjs-dist/web/pdf_viewer.js', included: true, watched: false},
 
             {pattern:  config.component +'/karma-test-shim.js', watched: false},
-            {pattern: './ng2-**/src/assets/**/*.*', included: false, served: true, watched: false},
-            {pattern: './ng2-**/src/**/*.ts', included: false, served: true, watched: false}
+            {pattern:  config.component +'/src/assets/**/*.*', included: false, served: true, watched: false},
+            {pattern:  config.component +'/src/**/*.ts', included: false, served: true, watched: false}
         ],
 
         webpack: require('./webpack.test'),
