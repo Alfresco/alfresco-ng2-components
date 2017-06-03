@@ -33,7 +33,7 @@ module.exports = {
                 loader: 'tslint-loader',
                 options: {
                     emitErrors: true,
-                    configFile: path.resolve(__dirname, './assets/tslint.json')
+                    failOnHint: true
                 },
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
             },

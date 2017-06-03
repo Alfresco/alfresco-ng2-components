@@ -32,8 +32,7 @@ module.exports = {
                 test: /\.ts$/,
                 loader: 'tslint-loader',
                 options: {
-                    emitErrors: true,
-                    configFile: path.resolve(__dirname, './assets/tslint.json')
+                    emitErrors: true
                 },
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
             },
