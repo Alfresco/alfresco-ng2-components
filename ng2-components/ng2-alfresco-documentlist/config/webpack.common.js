@@ -16,7 +16,13 @@ module.exports = {
     },
 
     resolve: {
-        extensions: ['.ts', '.js']
+        alias: {
+            "ng2-alfresco-core": helpers.root('../ng2-alfresco-core/index.ts'),
+            "ng2-alfresco-datatable": helpers.root('../ng2-alfresco-datatable/index.ts')
+        },
+        extensions: ['.ts', '.js'],
+        symlinks: false,
+        modules: [helpers.root('../../ng2-components'), helpers.root('node_modules')]
     },
 
     module: {
@@ -32,7 +38,8 @@ module.exports = {
                 test: /\.ts$/,
                 loader: 'tslint-loader',
                 options: {
-                    emitErrors: true
+                    emitErrors: true,
+                    failOnHint: true
                 },
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
             },

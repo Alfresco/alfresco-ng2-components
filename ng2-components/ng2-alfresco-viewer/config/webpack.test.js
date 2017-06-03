@@ -6,12 +6,19 @@ module.exports = webpackMerge(commonConfig, {
 
     devtool: 'inline-source-map',
 
-    resolve: {
-        alias: {
-            "ng2-alfresco-core": helpers.root('../ng2-alfresco-core/index.ts')
-        },
-        extensions: ['.ts', '.js'],
-        symlinks: false,
-        modules: [helpers.root('../../ng2-components'), helpers.root('node_modules')]
+    module: {
+        rules: [
+            {
+                test: /\.(txt|pdf)$/,
+                loader: 'file-loader',
+                query: {
+                    name: '[path][name].[ext]',
+                    outputPath: (url)=> {
+                        return url.replace('src', 'dist');
+                    }
+                }
+            }
+        ]
     }
+
 });

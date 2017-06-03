@@ -4,11 +4,5 @@ const commonConfig = require('./webpack.common.js');
 
 module.exports = webpackMerge(commonConfig, {
 
-    devtool: 'inline-source-map',
-
-    resolve: {
-        extensions: ['.ts', '.js'],
-        symlinks: false,
-        modules: [helpers.root('../../ng2-components'), helpers.root('node_modules')]
-    }
+    devtool: 'inline-source-map'
 });

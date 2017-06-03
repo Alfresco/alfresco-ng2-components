@@ -16,7 +16,15 @@ module.exports = {
     },
 
     resolve: {
-        extensions: ['.ts', '.js']
+        alias: {
+            "ng2-alfresco-core": helpers.root('../ng2-alfresco-core/index.ts'),
+            "ng2-alfresco-datatable": helpers.root('../ng2-alfresco-datatable/index.ts'),
+            "ng2-activiti-tasklist": helpers.root('../ng2-activiti-tasklist/index.ts'),
+            "ng2-activiti-form": helpers.root('../ng2-activiti-form/index.ts')
+        },
+        extensions: ['.ts', '.js'],
+        symlinks: false,
+        modules: [helpers.root('../../ng2-components'), helpers.root('node_modules')]
     },
 
     module: {

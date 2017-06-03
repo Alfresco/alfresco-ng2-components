@@ -16,7 +16,13 @@ module.exports = {
     },
 
     resolve: {
-        extensions: ['.ts', '.js']
+        alias: {
+            "ng2-alfresco-core": helpers.root('../ng2-alfresco-core/index.ts'),
+            "ng2-activiti-diagrams": helpers.root('../ng2-activiti-diagrams/index.ts')
+        },
+        extensions: ['.ts', '.js'],
+        symlinks: false,
+        modules: [helpers.root('../../ng2-components'), helpers.root('node_modules')]
     },
 
     module: {
@@ -32,7 +38,8 @@ module.exports = {
                 test: /\.ts$/,
                 loader: 'tslint-loader',
                 options: {
-                    emitErrors: true
+                    emitErrors: true,
+                    failOnHint: true
                 },
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
             },
@@ -64,7 +71,7 @@ module.exports = {
                     emitErrors: true,
                     licenseFile: path.resolve(__dirname, './assets/license_header.txt')
                 },
-                exclude: [/node_modules/, /bundles/, /dist/, /demo/, /rendering-queue.services.ts/ ],
+                exclude: [/node_modules/, /bundles/, /dist/, /demo/, /rendering-queue.services.ts/ ]
             },
             {
                 test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
