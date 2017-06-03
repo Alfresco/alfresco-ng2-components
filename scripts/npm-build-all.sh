@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -f
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 eval RUN_TEST=false
@@ -136,7 +137,7 @@ if $RUN_TEST == true; then
       cd $DESTDIR
       if $EXEC_SINGLE_TEST == true; then
         if [[ $PACKAGE == $SINGLE_TEST ]]; then
-            test_project $SINGLE_TEST
+            test_project $PACKAGE
         fi
       else
         test_project $PACKAGE
