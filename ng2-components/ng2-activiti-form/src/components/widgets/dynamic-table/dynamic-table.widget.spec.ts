@@ -32,10 +32,9 @@ import { DateEditorComponent } from './editors/date/date.editor';
 import { BooleanEditorComponent } from './editors/boolean/boolean.editor';
 import { TextEditorComponent } from './editors/text/text.editor';
 
-
 let fakeFormField = {
-    id: "fake-dynamic-table",
-    name: "fake-label",
+    id: 'fake-dynamic-table',
+    name: 'fake-label',
     value: [{ 1: 1, 2: 2, 3: 4 }],
     required: false,
     readOnly: false,

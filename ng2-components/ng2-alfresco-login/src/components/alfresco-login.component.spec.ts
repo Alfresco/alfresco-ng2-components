@@ -22,6 +22,7 @@ import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AlfrescoLoginComponent } from './alfresco-login.component';
 import { AuthenticationMock } from './../assets/authentication.service.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
+import { MdInputModule } from '@angular/material';
 
 describe('AlfrescoLogin', () => {
     let component: AlfrescoLoginComponent;
@@ -34,6 +35,7 @@ describe('AlfrescoLogin', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+                MdInputModule,
                 CoreModule.forRoot()
             ],
             declarations: [AlfrescoLoginComponent],

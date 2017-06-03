@@ -61,7 +61,7 @@ export let processEnded = new ProcessInstance({
         lastName: 'Jones',
         email: 'bob@app.activiti.com'
     },
-    ended: '2016-11-11T03:37:30.010+0000',
+    ended: '2016-11-11T03:37:30.010+0000'
 });
 
 export let exampleProcessNoName = new ProcessInstance({

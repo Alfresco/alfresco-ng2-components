@@ -16,7 +16,10 @@
  */
 
 import { Component, Input } from '@angular/core';
-import { AlfrescoContentService } from 'ng2-alfresco-core';
+import { SimpleChange }    from '@angular/core';
+import { ContentService } from 'ng2-alfresco-core';
+import { Http, Response, RequestOptions, ResponseContentType }  from '@angular/http';
+import 'rxjs/add/operator/toPromise';
 
 @Component({
     selector: 'txt-viewer',
@@ -26,21 +29,39 @@ import { AlfrescoContentService } from 'ng2-alfresco-core';
 export class TxtViewerComponent {
 
     @Input()
-    nodeId: string;
+    urlFile: any;
+
+    @Input()
+    blobFile: any;
 
     content: string;
 
-    constructor(private alfrescoContentService: AlfrescoContentService) {
+    constructor(private http: Http, private contentService: ContentService) {
     }
 
-    ngOnChanges() {
-        this.getNodeContent(this.nodeId);
-    }
+    ngOnChanges(changes: SimpleChange) {
+        let blobFile = changes['blobFile'];
+        if (blobFile && blobFile.currentValue) {
+            this.urlFile = this.contentService.createTrustedUrl(this.blobFile);
+        }
+        if (!this.urlFile && !this.blobFile) {
+            throw new Error('Attribute urlFile or blobFile is required');
+        }
 
-    private getNodeContent(nodeId) {
-        this.alfrescoContentService.getNodeContent(nodeId).subscribe((nodeContent) => {
-            this.content = nodeContent;
+        return new Promise((resolve, reject) => {
+            this.getUrlContent(resolve, reject);
         });
     }
 
+    private getUrlContent(resolve, reject): void {
+        this.http.get(this.urlFile, new RequestOptions({
+            responseType: ResponseContentType.Text
+        })).toPromise().then(
+            (res: Response) => {
+                this.content =  res.text();
+                resolve();
+            }, (event) => {
+                reject(event);
+            });
+    }
 }
