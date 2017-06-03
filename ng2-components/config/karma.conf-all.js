@@ -1,5 +1,3 @@
-var webpackConfig = require('./webpack.test');
-
 module.exports = function (config) {
     var _config = {
         basePath: '../ng2-components',
@@ -30,7 +28,7 @@ module.exports = function (config) {
             {pattern: './ng2-**/src/**/*.ts', included: false, served: true, watched: false}
         ],
 
-        webpack: webpackConfig,
+        webpack: require('./webpack.test'),
 
         webpackMiddleware: {
             noInfo: true,

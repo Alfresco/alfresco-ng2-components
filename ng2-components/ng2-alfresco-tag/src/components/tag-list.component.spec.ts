@@ -20,6 +20,7 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
 import { TagList } from './../components/tag-list.component';
 import { TagService } from '../services/tag.service';
+import { MdInputModule } from '@angular/material';
 
 declare let jasmine: any;
 
@@ -49,6 +50,7 @@ describe('Test ng2-alfresco-tag Tag list All ECM', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+                MdInputModule,
                 CoreModule.forRoot()
             ],
             declarations: [

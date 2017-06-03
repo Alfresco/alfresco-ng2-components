@@ -28,7 +28,7 @@ module.exports = function (config) {
       {pattern: './src/**/*.ts', included: false, served: true, watched: false}
     ],
 
-    webpack: webpackConfig,
+    webpack: (config.mode === 'coverage') ? require('./webpack.coverage') : require('./webpack.test'),
 
     webpackMiddleware: {
       stats: 'errors-only'

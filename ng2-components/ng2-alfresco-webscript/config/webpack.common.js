@@ -4,6 +4,8 @@ const fs = require('fs');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
+const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
+
 module.exports = {
 
     resolveLoader: {
@@ -13,22 +15,9 @@ module.exports = {
         }
     },
 
-    // require those dependencies but don't bundle them
-    externals: [
-        /^\@angular\//,
-        /^rxjs\//,
-        'moment',
-        'raphael',
-        'ng2-charts',
-        'alfresco-js-api',
-        'ng2-alfresco-core',
-        'ng2-alfresco-datatable',
-        'ng2-activiti-analytics',
-        'ng2-activiti-diagrams',
-        'ng2-activiti-form',
-        "ng2-activiti-tasklist",
-        'ng2-alfresco-documentlist'
-    ],
+    resolve: {
+        extensions: ['.ts', '.js']
+    },
 
     module: {
         rules: [
@@ -36,12 +25,6 @@ module.exports = {
                 enforce: 'pre',
                 test: /\.js$/,
                 loader: 'source-map-loader',
-                exclude: [/node_modules/, /bundles/, /dist/, /demo/]
-            },
-            {
-                enforce: 'pre',
-                test: /\.ts$/,
-                use: 'source-map-loader',
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
             },
             {
@@ -102,18 +85,10 @@ module.exports = {
         ]
     },
 
-    resolve: {
-        extensions: ['.ts', '.js'],
-        symlinks: false,
-        modules: [
-            '../ng2-components', 'node_modules'
-        ]
-    },
-
     plugins: [
         new CopyWebpackPlugin([{
             from: `src/i18n/`,
-            to: `bundles/assets/ng2-alfresco-webscript/i18n/`
+            to: `bundles/assets/ng2-alfresco-tag/i18n/`
         }]),
 
         new webpack.NoEmitOnErrorsPlugin(),
@@ -124,10 +99,18 @@ module.exports = {
             /angular(\\|\/)core(\\|\/)@angular/,
             helpers.root('./src'),
             {}
-        )
+        ),
+        new webpack.DefinePlugin({
+            'process.env': {
+                'ENV': JSON.stringify(ENV)
+            }
+        }),
+        new webpack.LoaderOptionsPlugin({
+                htmlLoader: {
+                    minimize: false // workaround for ng2
+                }
+        })
     ],
-
-    devtool: 'cheap-module-source-map',
 
     node: {
         fs: 'empty',

@@ -32,7 +32,7 @@ module.exports = function (config) {
 
     ],
 
-    webpack: webpackConfig,
+    webpack: (config.mode === 'coverage') ? require('./webpack.coverage') : require('./webpack.test'),
 
     webpackMiddleware: {
       stats: 'errors-only'

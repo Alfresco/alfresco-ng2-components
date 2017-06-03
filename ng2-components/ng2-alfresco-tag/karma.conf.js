@@ -1,6 +1,5 @@
-var webpackConfig = require('./webpack.test');
-
 module.exports = function (config) {
+
   var _config = {
     basePath: '.',
 
@@ -17,12 +16,10 @@ module.exports = function (config) {
       {pattern: 'karma-test-shim.js', watched: false},
       {pattern: './src/assets/**/*.*', included: false, served: true, watched: false},
       {pattern: './src/i18n/**/*.*', included: false, served: true, watched: false},
-      {pattern: './src/**/*.ts', included: false, served: true, watched: false},
-      {pattern: './src/**/*.js', included: false, served: true, watched: false},
-      {pattern: './src/**/*.map', included: false, served: true, watched: false}
+      {pattern: './src/**/*.ts', included: false, served: true, watched: false}
     ],
 
-    webpack: webpackConfig,
+    webpack: (config.mode === 'coverage') ? require('./webpack.coverage') : require('./webpack.test'),
 
     webpackMiddleware: {
       stats: 'errors-only'
@@ -88,6 +85,8 @@ module.exports = function (config) {
         {type: 'lcov'}
       ]
     }
+
+
   };
 
   if (process.env.TRAVIS) {
