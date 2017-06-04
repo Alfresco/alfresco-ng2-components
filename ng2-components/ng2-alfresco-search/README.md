@@ -120,11 +120,20 @@ results component embedded inside the same component.
 </adf-search>
 ```
 
+<<<<<<< HEAD
 Example of a component that displays search results, using the Angular2 router to supply a 'q' parameter containing the
 search term. If no router is present on the page or if the router does not provide such parameter then an empty 
 results page will be shown.
 
 ## Project Information
+=======
+ ```sh
+ npm install
+ npm run build
+ ```
+
+ ## Running unit tests
+>>>>>>> Source Mapping is not working on test debugging (#1931)
 
 ### Prerequisites
 

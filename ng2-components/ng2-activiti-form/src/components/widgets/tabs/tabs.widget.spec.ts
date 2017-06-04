@@ -25,8 +25,14 @@ import { TabModel } from '../core/tab.model';
 import { WIDGET_DIRECTIVES } from '../index';
 import { MASK_DIRECTIVE } from '../index';
 import { FormFieldComponent } from './../../form-field/form-field.component';
+<<<<<<< HEAD
 import { ContentWidgetComponent } from './../content/content.widget';
 import { TabsWidgetComponent } from './tabs.widget';
+=======
+import { ActivitiContent } from './../../activiti-content.component';
+import { CoreModule } from 'ng2-alfresco-core';
+import { MdTabsModule } from '@angular/material';
+>>>>>>> Source Mapping is not working on test debugging (#1931)
 
 describe('TabsWidgetComponent', () => {
 
@@ -86,8 +92,13 @@ describe('TabsWidgetComponent', () => {
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
+<<<<<<< HEAD
                 imports: [CoreModule, MaterialModule ],
                 declarations: [FormFieldComponent, ContentWidgetComponent, WIDGET_DIRECTIVES, MASK_DIRECTIVE]
+=======
+                imports: [CoreModule, MdTabsModule],
+                declarations: [FormFieldComponent, ActivitiContent, WIDGET_DIRECTIVES, MASK_DIRECTIVE]
+>>>>>>> Source Mapping is not working on test debugging (#1931)
             }).compileComponents().then(() => {
                 fixture = TestBed.createComponent(TabsWidgetComponent);
                 tabWidgetComponent = fixture.componentInstance;

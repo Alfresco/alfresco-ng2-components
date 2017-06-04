@@ -195,6 +195,21 @@ describe('ShareDataTableAdapter', () => {
         expect(console.error).toHaveBeenCalled();
     });
 
+<<<<<<< HEAD
+=======
+    it('should generate fallback icon for a file thumbnail with unknown mime type', () => {
+        let adapter = new ShareDataTableAdapter(documentListService, null);
+
+        let file = new FileNode('file', 'wrong-mime');
+        let row = new ShareDataRow(file);
+        let col = <DataColumn> { type: 'image', key: '$thumbnail' };
+
+        let value = adapter.getValue(row, col);
+        expect(value).toContain(`assets/images/ft_ic_miscellaneous`);
+        expect(value).toContain(`svg`);
+    });
+
+>>>>>>> Source Mapping is not working on test debugging (#1931)
     it('should generate fallback icon for a file thumbnail with missing mime type', () => {
         let adapter = new ShareDataTableAdapter(documentListService, null);
 
@@ -215,8 +230,26 @@ describe('ShareDataTableAdapter', () => {
         let file = new FileNode();
         file.entry.content = null;
 
+<<<<<<< HEAD
         let row = new ShareDataRow(file, documentListService, null);
         let col = <DataColumn> {type: 'image', key: '$thumbnail'};
+=======
+        let row = new ShareDataRow(file);
+        let col = <DataColumn> { type: 'image', key: '$thumbnail' };
+
+        let value = adapter.getValue(row, col);
+        expect(value).toContain(`assets/images/ft_ic_miscellaneous`);
+        expect(value).toContain(`svg`);
+    });
+
+    it('should generate fallback icon when document service fails to find one', () => {
+        spyOn(documentListService, 'getMimeTypeIcon').and.returnValue(null);
+        let adapter = new ShareDataTableAdapter(documentListService, null);
+
+        let file = new FileNode();
+        let row = new ShareDataRow(file);
+        let col = <DataColumn> { type: 'image', key: '$thumbnail' };
+>>>>>>> Source Mapping is not working on test debugging (#1931)
 
         let value = adapter.getValue(row, col);
         expect(value).toContain(`assets/images/ft_ic_miscellaneous`);
@@ -272,14 +305,33 @@ describe('ShareDataTableAdapter', () => {
         file.entry.isFolder = false;
         file.entry.content = null;
 
+<<<<<<< HEAD
         let row = new ShareDataRow(file, documentListService, null);
         let col = <DataColumn> {type: 'image', key: '$thumbnail'};
+=======
+        let row = new ShareDataRow(file);
+        let col = <DataColumn> { type: 'image', key: '$thumbnail' };
 
         let value = adapter.getValue(row, col);
         expect(value).toContain(`assets/images/ft_ic_miscellaneous`);
         expect(value).toContain(`svg`);
     });
 
+    it('should require document service to resolve thumbnail', () => {
+        let adapter = new ShareDataTableAdapter(null, null);
+        adapter.thumbnails = true;
+
+        let file = new FileNode();
+        let row = new ShareDataRow(file);
+        let col = <DataColumn> { type: 'image', key: '$thumbnail' };
+>>>>>>> Source Mapping is not working on test debugging (#1931)
+
+        let value = adapter.getValue(row, col);
+        expect(value).toContain(`assets/images/ft_ic_miscellaneous`);
+        expect(value).toContain(`svg`);
+    });
+
+<<<<<<< HEAD
     it('should resolve file icon for content type', () => {
         let adapter = new ShareDataTableAdapter(documentListService, null);
 
@@ -296,6 +348,8 @@ describe('ShareDataTableAdapter', () => {
         expect(value).toContain(`svg`);
     });
 
+=======
+>>>>>>> Source Mapping is not working on test debugging (#1931)
     it('should put folders on top upon sort', () => {
         let file1 = new FileNode('file1');
         let file2 = new FileNode('file2');
@@ -346,6 +400,7 @@ describe('ShareDataTableAdapter', () => {
 });
 
 describe('ShareDataRow', () => {
+<<<<<<< HEAD
 
     let documentListService: DocumentListService;
 
@@ -363,6 +418,8 @@ describe('ShareDataRow', () => {
     beforeEach(() => {
         documentListService = TestBed.get(DocumentListService);
     });
+=======
+>>>>>>> Source Mapping is not working on test debugging (#1931)
 
     it('should wrap node', () => {
         let file = new FileNode();

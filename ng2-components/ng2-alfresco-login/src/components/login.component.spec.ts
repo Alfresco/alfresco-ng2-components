@@ -22,7 +22,11 @@ import { AlfrescoAuthenticationService, CoreModule } from 'ng2-alfresco-core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AuthenticationMock } from './../assets/authentication.service.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
+<<<<<<< HEAD:ng2-components/ng2-alfresco-login/src/components/login.component.spec.ts
 import { LoginComponent } from './login.component';
+=======
+import { MdInputModule } from '@angular/material';
+>>>>>>> Source Mapping is not working on test debugging (#1931):ng2-components/ng2-alfresco-login/src/components/alfresco-login.component.spec.ts
 
 describe('AlfrescoLogin', () => {
     let component: LoginComponent;
@@ -39,7 +43,10 @@ describe('AlfrescoLogin', () => {
         TestBed.configureTestingModule({
             imports: [
                 MdInputModule,
+<<<<<<< HEAD:ng2-components/ng2-alfresco-login/src/components/login.component.spec.ts
                 MdCheckboxModule,
+=======
+>>>>>>> Source Mapping is not working on test debugging (#1931):ng2-components/ng2-alfresco-login/src/components/alfresco-login.component.spec.ts
                 CoreModule.forRoot()
             ],
             declarations: [LoginComponent],

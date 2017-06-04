@@ -31,7 +31,6 @@ import { Observable } from 'rxjs/Rx';
 
 declare let jasmine: any;
 
-
 let fakeNodeAnswerWithEntries = {
     'list': {
         'pagination': {

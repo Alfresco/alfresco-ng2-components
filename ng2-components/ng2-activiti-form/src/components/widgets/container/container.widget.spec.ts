@@ -25,6 +25,7 @@ import { MASK_DIRECTIVE } from '../index';
 import { EcmModelService } from './../../../services/ecm-model.service';
 import { FormService } from './../../../services/form.service';
 import { FormFieldComponent } from './../../form-field/form-field.component';
+<<<<<<< HEAD
 import { ContentWidgetComponent } from './../content/content.widget';
 import { ContainerColumnModel } from './../core/container-column.model';
 import { FormFieldTypes } from './../core/form-field-types';
@@ -32,6 +33,11 @@ import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
 import { ContainerWidgetComponent } from './container.widget';
 import { ContainerWidgetComponentModel } from './container.widget.model';
+=======
+import { ActivitiContent } from './../../activiti-content.component';
+import { fakeFormJson } from '../../../services/assets/widget-visibility.service.mock';
+import { MdTabsModule } from '@angular/material';
+>>>>>>> Source Mapping is not working on test debugging (#1931)
 
 describe('ContainerWidgetComponent', () => {
 
@@ -138,8 +144,27 @@ describe('ContainerWidgetComponent', () => {
     });
 
     describe('when template is ready', () => {
+<<<<<<< HEAD
         let fakeContainerVisible;
         let fakeContainerInvisible;
+=======
+        let containerWidgetComponent: ContainerWidget;
+        let fixture: ComponentFixture<ContainerWidget>;
+        let element: HTMLElement;
+        let fakeContainerVisible: ContainerWidgetModel;
+        let fakeContainerInvisible: ContainerWidgetModel;
+
+        beforeEach(async(() => {
+            TestBed.configureTestingModule({
+                imports: [CoreModule, MdTabsModule],
+                declarations: [FormFieldComponent, ActivitiContent, WIDGET_DIRECTIVES, MASK_DIRECTIVE]
+            }).compileComponents().then(() => {
+                fixture = TestBed.createComponent(ContainerWidget);
+                containerWidgetComponent = fixture.componentInstance;
+                element = fixture.nativeElement;
+            });
+        }));
+>>>>>>> Source Mapping is not working on test debugging (#1931)
 
         beforeEach(() => {
             fakeContainerVisible = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(fakeFormJson), {

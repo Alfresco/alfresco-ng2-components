@@ -142,9 +142,19 @@ necessary configurations, see this [page](https://github.com/Alfresco/alfresco-n
 npm install ng2-activiti-analytics
 ```
 
+<<<<<<< HEAD
 ### Build from sources
 
 You can build the component from sources with the following commands:
+=======
+## Running unit tests
+
+```sh
+npm test
+```
+
+### Running unit tests in browser
+>>>>>>> Source Mapping is not working on test debugging (#1931)
 
 ```sh
 npm install

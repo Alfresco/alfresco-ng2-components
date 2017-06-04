@@ -62,6 +62,33 @@ describe('TextWidgetComponent', () => {
     });
 
     describe('when template is ready', () => {
+<<<<<<< HEAD
+=======
+        let textWidget: TextWidget;
+        let fixture: ComponentFixture<TextWidget>;
+        let element: HTMLInputElement;
+
+        beforeEach(async(() => {
+            componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
+            window['componentHandler'] = componentHandler;
+        }));
+
+        beforeEach(async(() => {
+            TestBed.configureTestingModule({
+                imports: [CoreModule],
+                declarations: [TextWidget, InputMaskDirective]
+            }).compileComponents().then(() => {
+                fixture = TestBed.createComponent(TextWidget);
+                textWidget = fixture.componentInstance;
+                element = fixture.nativeElement;
+            });
+        }));
+
+        afterEach(() => {
+            fixture.destroy();
+            TestBed.resetTestingModule();
+        });
+>>>>>>> Source Mapping is not working on test debugging (#1931)
 
         describe('and no mask is configured on text element', () => {
 
@@ -188,7 +215,11 @@ describe('TextWidgetComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
+<<<<<<< HEAD
                     let textEle: HTMLInputElement = <HTMLInputElement> element.querySelector('#text-id');
+=======
+                    let textEle: HTMLInputElement = <HTMLInputElement>element.querySelector('#text-id');
+>>>>>>> Source Mapping is not working on test debugging (#1931)
                     expect(textEle.value).toBe('1');
                 });
             }));
@@ -204,7 +235,11 @@ describe('TextWidgetComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
+<<<<<<< HEAD
                     let textEle: HTMLInputElement = <HTMLInputElement> element.querySelector('#text-id');
+=======
+                    let textEle: HTMLInputElement = <HTMLInputElement>element.querySelector('#text-id');
+>>>>>>> Source Mapping is not working on test debugging (#1931)
                     expect(textEle.value).toBe('12-345,67%');
                 });
             }));
@@ -219,7 +254,11 @@ describe('TextWidgetComponent', () => {
                     id: 'text-id',
                     name: 'text-name',
                     value: '',
+<<<<<<< HEAD
                     params: {existingColspan: 1, maxColspan: 2, inputMask: '#.##0,00%', inputMaskReversed: true},
+=======
+                    params: { existingColspan: 1, maxColspan: 2, inputMask: '#.##0,00%', inputMaskReversed: true },
+>>>>>>> Source Mapping is not working on test debugging (#1931)
                     type: FormFieldTypes.TEXT,
                     readOnly: false
                 });
@@ -244,7 +283,11 @@ describe('TextWidgetComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
+<<<<<<< HEAD
                     let textEle: HTMLInputElement = <HTMLInputElement> element.querySelector('#text-id');
+=======
+                    let textEle: HTMLInputElement = <HTMLInputElement>element.querySelector('#text-id');
+>>>>>>> Source Mapping is not working on test debugging (#1931)
                     expect(textEle.value).toBe('12,34%');
                 });
             }));

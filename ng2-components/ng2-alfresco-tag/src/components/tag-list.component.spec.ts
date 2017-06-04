@@ -19,8 +19,12 @@ import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigModule, CoreModule } from 'ng2-alfresco-core';
 import { TagService } from '../services/tag.service';
+<<<<<<< HEAD
 import { TagListComponent } from './../components/tag-list.component';
 import { MaterialModule } from './material.module';
+=======
+import { MdInputModule } from '@angular/material';
+>>>>>>> Source Mapping is not working on test debugging (#1931)
 
 declare let jasmine: any;
 
@@ -51,11 +55,16 @@ describe('TagList', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+<<<<<<< HEAD
                 MaterialModule,
                 CoreModule.forRoot(),
                 AppConfigModule.forRoot('app.config.json', {
                     ecmHost: 'http://localhost:9876/ecm'
                 })
+=======
+                MdInputModule,
+                CoreModule.forRoot()
+>>>>>>> Source Mapping is not working on test debugging (#1931)
             ],
             declarations: [
                 TagListComponent

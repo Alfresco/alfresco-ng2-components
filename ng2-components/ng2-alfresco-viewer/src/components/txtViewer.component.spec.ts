@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { TxtViewerComponent } from './txtViewer.component';
-import { DebugElement }    from '@angular/core';
+import { DebugElement, SimpleChange }    from '@angular/core';
 import {
     AlfrescoAuthenticationService,
     AlfrescoSettingsService,
@@ -52,14 +52,22 @@ describe('Test ng2-alfresco-viewer Text View component', () => {
         debug = fixture.debugElement;
         element = fixture.nativeElement;
         component = fixture.componentInstance;
-        component.content = 'example';
-        fixture.detectChanges();
+        component.urlFile = require('../assets/fake-test-file.txt');
     });
 
-
     describe('View', () => {
-        it('Should text container be present', () => {
-            expect(element.querySelector('#adf-viewer-text-container').textContent).toContain('example');
+
+        it('Should text container be present with urlfile', (done) => {
+            fixture.detectChanges();
+            let change = new SimpleChange(null, null, true);
+
+            component.ngOnChanges(change).then(() => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(element.querySelector('#adf-viewer-text-container').textContent).toContain('example');
+                    done();
+                });
+            });
         });
     });
 });

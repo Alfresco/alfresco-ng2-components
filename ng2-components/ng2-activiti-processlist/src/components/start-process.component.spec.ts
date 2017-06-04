@@ -27,11 +27,18 @@ import { ActivitiFormModule, FormService } from 'ng2-activiti-form';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 
+<<<<<<< HEAD:ng2-components/ng2-activiti-processlist/src/components/start-process.component.spec.ts
 import { RestVariable } from 'alfresco-js-api';
 import { ProcessService } from '../services/process.service';
 import { newProcess, taskFormMock, testProcessDefRepr, testProcessDefs, testProcessDefWithForm } from './../assets/start-process.component.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
 import { StartProcessInstanceComponent } from './start-process.component';
+=======
+import { TranslationMock } from './../assets/translation.service.mock';
+import { newProcess, fakeProcessDefs, fakeProcessDefWithForm, taskFormMock } from './../assets/activiti-start-process.component.mock';
+import { ActivitiStartProcessInstance } from './activiti-start-process.component';
+import { ActivitiProcessService } from '../services/activiti-process.service';
+>>>>>>> Source Mapping is not working on test debugging (#1931):ng2-components/ng2-activiti-processlist/src/components/activiti-start-process.component.spec.ts
 
 describe('StartProcessInstanceComponent', () => {
 

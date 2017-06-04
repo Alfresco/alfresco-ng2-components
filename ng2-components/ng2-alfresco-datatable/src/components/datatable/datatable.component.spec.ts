@@ -26,7 +26,7 @@ import {
     DataColumn,
     DataSorting,
     ObjectDataTableAdapter,
-    ObjectDataColumn, ObjectDataRow
+    ObjectDataColumn
 } from './../../data/index';
 
 describe('DataTable', () => {
@@ -100,7 +100,6 @@ describe('DataTable', () => {
             [ new ObjectDataColumn({ key: 'name'}) ]
         );
         const rows = dataTable.data.getRows();
-
 
         dataTable.onRowClick(rows[0], null);
         expect(rows[0].isSelected).toBeTruthy();

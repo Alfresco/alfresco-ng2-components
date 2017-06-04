@@ -16,7 +16,12 @@
  */
 
 import { TestBed } from '@angular/core/testing';
+<<<<<<< HEAD
 import { AlfrescoApiService, CoreModule } from 'ng2-alfresco-core';
+=======
+import { CoreModule, AlfrescoApiService } from 'ng2-alfresco-core';
+import { AnalyticsService } from './analytics.service';
+>>>>>>> Source Mapping is not working on test debugging (#1931)
 import { fakeReportList } from '../assets/analytics.service.mock';
 import { AnalyticsService } from './analytics.service';
 

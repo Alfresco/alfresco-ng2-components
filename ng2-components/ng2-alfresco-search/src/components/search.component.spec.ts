@@ -98,7 +98,12 @@ describe('AlfrescoSearchComponent', () => {
         }
     };
 
+    let componentHandler;
+
     beforeEach(async(() => {
+        componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
+        window['componentHandler'] = componentHandler;
+
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
@@ -116,7 +121,9 @@ describe('AlfrescoSearchComponent', () => {
         });
     }));
 
-    afterEach(() => { fixture.detectChanges(); });
+    afterEach(() => {
+        fixture.detectChanges();
+    });
 
     it('should not have a search term by default', () => {
         expect(component.searchTerm).toBe('');
@@ -189,20 +196,22 @@ describe('AlfrescoSearchComponent', () => {
         it('should display search results when a search term is provided', (done) => {
 
             let searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
-            spyOn(searchService, 'getQueryNodesPromise')
-                .and.returnValue(Promise.resolve(result));
+            spyOn(searchService, 'getQueryNodesPromise').and.returnValue(Promise.resolve(result));
+            component.searchTerm = '';
 
-            component.resultsLoad.subscribe(() => {
-                fixture.detectChanges();
-                expect(searchService.getQueryNodesPromise).toHaveBeenCalled();
-                let resultsEl = element.querySelector('[data-automation-id="text_MyDoc"]');
-                expect(resultsEl).not.toBeNull();
-                expect(resultsEl.innerHTML.trim()).toBe('MyDoc');
-                done();
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                component.resultsLoad.subscribe(() => {
+                    fixture.detectChanges();
+                    let resultsEl = element.querySelector('[data-automation-id="text_MyDoc"]');
+                    expect(resultsEl).not.toBeNull();
+                    expect(resultsEl.innerHTML.trim()).toContain('MyDoc');
+                    done();
+                });
+
+                component.ngOnChanges({searchTerm: new SimpleChange('', 'searchTerm', true)});
             });
-
-            component.searchTerm = 'searchTerm';
-            component.ngOnInit();
         });
 
         it('should display no result if no result are returned', (done) => {
@@ -211,14 +220,20 @@ describe('AlfrescoSearchComponent', () => {
             spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(noResult));
 
-            component.resultsLoad.subscribe(() => {
-                fixture.detectChanges();
-                expect(element.querySelector('.no-result-message')).not.toBeNull();
-                done();
-            });
+            component.searchTerm = '';
 
-            component.searchTerm = 'searchTerm';
-            component.ngOnInit();
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+
+                component.resultsLoad.subscribe(() => {
+                    fixture.detectChanges();
+                    expect(element.querySelector('.no-result-message')).not.toBeNull();
+                    done();
+                });
+
+                component.ngOnChanges({searchTerm: new SimpleChange('', 'searchTerm', true)});
+            });
         });
 
         it('should display an error if an error is encountered running the search', (done) => {
@@ -227,17 +242,23 @@ describe('AlfrescoSearchComponent', () => {
             spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.reject(errorJson));
 
-            component.resultsLoad.subscribe(() => {
-            }, () => {
-                fixture.detectChanges();
-                let errorEl = element.querySelector('[data-automation-id="search_error_message"]');
-                expect(errorEl).not.toBeNull();
-                expect((<any>errorEl).innerText).toBe('SEARCH.RESULTS.ERROR');
-                done();
-            });
+            component.searchTerm = '';
 
-            component.searchTerm = 'searchTerm';
-            component.ngOnInit();
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+
+                component.resultsLoad.subscribe(() => {
+                }, () => {
+                    fixture.detectChanges();
+                    let errorEl = element.querySelector('[data-automation-id="search_error_message"]');
+                    expect(errorEl).not.toBeNull();
+                    expect((<any>errorEl).innerText).toBe('SEARCH.RESULTS.ERROR');
+                    done();
+                });
+
+                component.ngOnChanges({searchTerm: new SimpleChange('', 'searchTerm', true)});
+            });
         });
 
         it('should update search results when the search term input is changed', (done) => {
@@ -246,16 +267,22 @@ describe('AlfrescoSearchComponent', () => {
             spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(result));
 
-            component.resultsLoad.subscribe(() => {
-                fixture.detectChanges();
-                expect(searchService.getQueryNodesPromise).toHaveBeenCalled();
-                let resultsEl = element.querySelector('[data-automation-id="text_MyDoc"]');
-                expect(resultsEl).not.toBeNull();
-                expect(resultsEl.innerHTML.trim()).toBe('MyDoc');
-                done();
-            });
+            component.searchTerm = '';
 
-            component.ngOnChanges({searchTerm: new SimpleChange('', 'searchTerm2', true)});
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                component.resultsLoad.subscribe(() => {
+                    fixture.detectChanges();
+                    expect(searchService.getQueryNodesPromise).toHaveBeenCalled();
+                    let resultsEl = element.querySelector('[data-automation-id="text_MyDoc"]');
+                    expect(resultsEl).not.toBeNull();
+                    expect(resultsEl.innerHTML.trim()).toContain('MyDoc');
+                    done();
+                });
+
+                component.ngOnChanges({searchTerm: new SimpleChange('', 'searchTerm2', true)});
+            });
         });
     });
 
@@ -281,34 +308,43 @@ describe('AlfrescoSearchComponent', () => {
 
             it('should emit preview event when file item clicked', (done) => {
 
-                component.resultsLoad.subscribe(() => {
-                    fixture.detectChanges();
+                component.searchTerm = '';
 
-                    let resultsEl = element.querySelector('[data-automation-id="text_MyDoc"]');
-                    resultsEl.dispatchEvent(new Event('click'));
+                fixture.detectChanges();
 
-                    done();
+                fixture.whenStable().then(() => {
+                    component.resultsLoad.subscribe(() => {
+                        fixture.detectChanges();
+
+                        let resultsEl = element.querySelector('[data-automation-id="text_MyDoc"]');
+                        resultsEl.dispatchEvent(new Event('click'));
+
+                        done();
+                    });
+
+                    component.ngOnChanges({searchTerm: new SimpleChange('', 'searchTerm', true)});
                 });
-
-                component.searchTerm = 'searchTerm';
-                component.ngOnInit();
             });
 
             it('should emit preview event when non-file item is clicked', (done) => {
-
                 querySpy.and.returnValue(Promise.resolve(folderResult));
 
-                component.resultsLoad.subscribe(() => {
-                    fixture.detectChanges();
+                component.searchTerm = '';
 
-                    let resultsEl = element.querySelector('[data-automation-id="text_MyFolder"]');
-                    resultsEl.dispatchEvent(new Event('click'));
+                fixture.detectChanges();
 
-                    done();
+                fixture.whenStable().then(() => {
+                    component.resultsLoad.subscribe(() => {
+                        fixture.detectChanges();
+
+                        let resultsEl = element.querySelector('[data-automation-id="text_MyFolder"]');
+                        resultsEl.dispatchEvent(new Event('click'));
+
+                        done();
+                    });
+
+                    component.ngOnChanges({searchTerm: new SimpleChange('', 'searchTerm', true)});
                 });
-
-                component.searchTerm = 'searchTerm';
-                component.ngOnInit();
             });
         });
 
@@ -319,38 +355,46 @@ describe('AlfrescoSearchComponent', () => {
             });
 
             it('should emit preview event when file item clicked', (done) => {
+                component.searchTerm = '';
 
-                component.resultsLoad.subscribe(() => {
-                    fixture.detectChanges();
+                fixture.detectChanges();
 
-                    let resultsEl = element.querySelector('[data-automation-id="text_MyDoc"]');
-                    resultsEl.dispatchEvent(new Event('dblclick'));
+                fixture.whenStable().then(() => {
+                    component.resultsLoad.subscribe(() => {
+                        fixture.detectChanges();
 
-                    done();
+                        let resultsEl = element.querySelector('[data-automation-id="text_MyDoc"]');
+                        resultsEl.dispatchEvent(new Event('dblclick'));
+
+                        done();
+                    });
+
+                    component.ngOnChanges({searchTerm: new SimpleChange('', 'searchTerm', true)});
                 });
-
-                component.searchTerm = 'searchTerm';
-                component.ngOnInit();
             });
 
             it('should emit preview event when non-file item is clicked', (done) => {
 
                 querySpy.and.returnValue(Promise.resolve(folderResult));
 
-                component.resultsLoad.subscribe(() => {
-                    fixture.detectChanges();
+                component.searchTerm = '';
 
-                    let resultsEl = element.querySelector('[data-automation-id="text_MyFolder"]');
-                    resultsEl.dispatchEvent(new Event('dblclick'));
+                fixture.detectChanges();
 
-                    done();
+                fixture.whenStable().then(() => {
+
+                    component.resultsLoad.subscribe(() => {
+                        fixture.detectChanges();
+
+                        let resultsEl = element.querySelector('[data-automation-id="text_MyFolder"]');
+                        resultsEl.dispatchEvent(new Event('dblclick'));
+
+                        done();
+                    });
+
+                    component.ngOnChanges({searchTerm: new SimpleChange('', 'searchTerm', true)});
                 });
-
-                component.searchTerm = 'searchTerm';
-                component.ngOnInit();
             });
         });
-
     });
-
 });

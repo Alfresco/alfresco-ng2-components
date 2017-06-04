@@ -19,7 +19,18 @@ import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
+<<<<<<< HEAD:ng2-components/ng2-activiti-form/src/components/start-form.component.spec.ts
 import { TranslationMock } from './../assets/translation.service.mock';
+=======
+import { MdTabsModule } from '@angular/material';
+
+import { ActivitiStartForm } from './activiti-start-form.component';
+import { FormFieldComponent } from './form-field/form-field.component';
+import { ActivitiContent } from './activiti-content.component';
+import { WIDGET_DIRECTIVES } from './widgets/index';
+import { MASK_DIRECTIVE } from './widgets/index';
+import { FormService } from './../services/form.service';
+>>>>>>> Source Mapping is not working on test debugging (#1931):ng2-components/ng2-activiti-form/src/components/activiti-start-form.component.spec.ts
 import { EcmModelService } from './../services/ecm-model.service';
 import { FormService } from './../services/form.service';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
@@ -43,7 +54,11 @@ describe('ActivitiStartForm', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+<<<<<<< HEAD:ng2-components/ng2-activiti-form/src/components/start-form.component.spec.ts
                 MaterialModule,
+=======
+                MdTabsModule,
+>>>>>>> Source Mapping is not working on test debugging (#1931):ng2-components/ng2-activiti-form/src/components/activiti-start-form.component.spec.ts
                 CoreModule.forRoot()],
             declarations: [
                 StartFormComponent,

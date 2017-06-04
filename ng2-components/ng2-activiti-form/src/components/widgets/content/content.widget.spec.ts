@@ -21,6 +21,11 @@ import { MdTabsModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { AlfrescoTranslationService, ContentService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
+<<<<<<< HEAD:ng2-components/ng2-activiti-form/src/components/widgets/content/content.widget.spec.ts
+=======
+import { CoreModule, AlfrescoTranslationService, ContentService } from 'ng2-alfresco-core';
+import { MdTabsModule } from '@angular/material';
+>>>>>>> Source Mapping is not working on test debugging (#1931):ng2-components/ng2-activiti-form/src/components/activiti-content.component.spec.ts
 
 import { EcmModelService } from '../../../services/ecm-model.service';
 import { FormService } from '../../../services/form.service';

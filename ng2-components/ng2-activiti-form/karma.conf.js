@@ -15,6 +15,10 @@ module.exports = function (config) {
       './node_modules/moment/min/moment.min.js',
 
       {pattern: './node_modules/ng2-translate/**/*.js', included: false, watched: false},
+<<<<<<< HEAD
+=======
+      {pattern: './node_modules/md-date-time-picker/**/*.js', included: false, served: true, watched: false},
+>>>>>>> Source Mapping is not working on test debugging (#1931)
       {pattern: './node_modules/moment/**/*.js', included: false, served: true, watched: false},
 
       {pattern: 'karma-test-shim.js', watched: false},
