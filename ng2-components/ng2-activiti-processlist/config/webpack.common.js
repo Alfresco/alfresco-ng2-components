@@ -8,6 +8,8 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
 
+const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
+
 module.exports = {
 
     resolveLoader: {

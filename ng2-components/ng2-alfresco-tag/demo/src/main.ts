@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { NgModule, Component, Input, OnInit } from '@angular/core';
+import { NgModule, Component, Input } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
@@ -29,14 +29,10 @@ import { TagModule } from 'ng2-alfresco-tag';
                <input id="ticket" type="text" size="48" (change)="updateTicket()" [(ngModel)]="ticket"><br>
                <label for="host"><b>Insert the ip of your Alfresco instance:</b></label><br>
                <input id="host" type="text" size="48" (change)="updateHost()" [(ngModel)]="ecmHost"><br><br>
-               <div *ngIf="!authenticated" style="color:#FF2323">
-                    Authentication failed to ip {{ ecmHost }} with user: admin, admin, you can still try to add a valid ticket to perform
-                    operations.
-               </div>
                <hr>
                 <label for="nodeId"><b>Insert Node Id</b></label><br>
                 <input id="nodeId" type="text" size="48"  [(ngModel)]="nodeId"><br>
-        <div class="container" *ngIf="authenticated">
+        <div class="container" >
             <div class="mdl-grid">
               <div class="mdl-cell mdl-cell--4-col"><alfresco-tag-node-actions-list [nodeId]="nodeId"></alfresco-tag-node-actions-list></div>
               <div class="mdl-cell mdl-cell--4-col">List Tags ECM <alfresco-tag-list></alfresco-tag-list></div>
@@ -48,13 +44,13 @@ import { TagModule } from 'ng2-alfresco-tag';
         </div>
     `
 })
-class TagDemo implements OnInit {
+class TagDemo {
 
     @Input()
-    nodeId: string = '74cd8a96-8a21-47e5-9b3b-a1b3e296787d';
+    nodeId: string = 'a892714b-56ac-4b42-8b43-db0fa01eef33';
 
     authenticated: boolean;
-    ecmHost: string = 'http://127.0.0.1:8080';
+    ecmHost: string = 'http://localhost:8181/share/proxy';
     ticket: string;
 
     constructor(private authService: AlfrescoAuthenticationService,
@@ -70,30 +66,12 @@ class TagDemo implements OnInit {
         }
     }
 
-    ngOnInit() {
-        this.login();
-    }
-
-    login() {
-        this.authService.login('admin', 'admin').subscribe(
-            ticket => {
-                this.logService.info(ticket);
-                this.ticket = this.authService.getTicketEcm();
-                this.authenticated = true;
-            },
-            error => {
-                this.logService.error(error);
-                this.authenticated = false;
-            });
-    }
-
     public updateTicket(): void {
         this.storage.setItem('ticket-ECM', this.ticket);
     }
 
     public updateHost(): void {
         this.settingsService.ecmHost = this.ecmHost;
-        this.login();
     }
 
     logData(data) {
