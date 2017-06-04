@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { EventEmitter, DebugElement } from '@angular/core';
+import { DebugElement } from '@angular/core';
 import { AlfrescoTranslationService, CoreModule, LogService, LogServiceMock } from 'ng2-alfresco-core';
 
 import { UploadDragAreaComponent } from './upload-drag-area.component';
