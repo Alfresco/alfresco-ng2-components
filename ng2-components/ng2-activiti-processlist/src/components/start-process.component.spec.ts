@@ -26,7 +26,6 @@ import { TranslationMock } from './../assets/translation.service.mock';
 import { newProcess, fakeProcessDefs, fakeProcessDefWithForm, taskFormMock } from './../assets/activiti-start-process.component.mock';
 import { ActivitiStartProcessInstance } from './activiti-start-process.component';
 import { ActivitiProcessService } from '../services/activiti-process.service';
-import { RestVariable } from 'alfresco-js-api';
 
 describe('ActivitiStartProcessInstance', () => {
 
