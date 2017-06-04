@@ -283,7 +283,7 @@ describe('User info component', () => {
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
-                fixture.detectChanges()
+                fixture.detectChanges();
                 expect(element.querySelector('#tab-bar-env').getAttribute('hidden')).not.toBeNull();
             });
         });
