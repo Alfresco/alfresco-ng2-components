@@ -16,6 +16,16 @@ module.exports = webpackMerge(commonConfig, {
                     /node_modules/,
                     /test/
                 ]
+            },
+            {
+                test: /\.(txt|pdf)$/,
+                loader: 'file-loader',
+                query: {
+                    name: '[path][name].[ext]',
+                    outputPath: (url)=> {
+                        return url.replace('src', 'dist');
+                    }
+                }
             }
         ]
     }
