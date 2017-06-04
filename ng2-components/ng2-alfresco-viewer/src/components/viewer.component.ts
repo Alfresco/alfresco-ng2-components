@@ -79,6 +79,7 @@ export class ViewerComponent {
             if (!this.urlFile && !this.blobFile && !this.fileNodeId) {
                 throw new Error('Attribute urlFile or fileNodeId or blobFile is required');
             }
+
             return new Promise((resolve, reject) => {
                 if (this.blobFile) {
                     this.mimeType = this.blobFile.type;
@@ -201,7 +202,7 @@ export class ViewerComponent {
         if (this.mimeType && this.mimeType.indexOf('/')) {
             mimeExtension = this.mimeType.substr(this.mimeType.indexOf('/') + 1, this.mimeType.length);
         }
-        return this.mimeType && (this.mimeType.indexOf('video/') || this.mimeType.indexOf('audio/')) === 0 && this.isMediaExtension(mimeExtension);
+        return (this.mimeType && (this.mimeType.indexOf('video/') === 0 || this.mimeType.indexOf('audio/') === 0)) && this.isMediaExtension(mimeExtension);
     }
 
     /**

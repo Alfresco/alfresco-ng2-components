@@ -15,11 +15,8 @@
  * limitations under the License.
  */
 
-import { ReflectiveInjector } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { async } from '@angular/core/testing';
-import { CoreModule, AlfrescoApiService, LogService } from 'ng2-alfresco-core';
-import { ReportParametersModel, ParameterValueModel } from '../models/report.model';
+import { CoreModule, AlfrescoApiService } from 'ng2-alfresco-core';
 import { AnalyticsService } from './analytics.service';
 import { fakeReportList } from '../assets/analytics.service.mock';
 

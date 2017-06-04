@@ -25,4 +25,3 @@ export let fakeReportList = [
         name: 'Fake Report 2'
     }
 ];
-
