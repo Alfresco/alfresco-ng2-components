@@ -10,7 +10,7 @@ module.exports = webpackMerge(commonConfig, {
         rules: [
             {
                 enforce: 'post',
-                test: /^(?!.*spec).*\.ts?$/,
+                test: /^(?!(.*spec|index|.*mock|.*model|.*event)).*\.ts?$/,
                 loader: 'istanbul-instrumenter-loader',
                 exclude: [
                     /node_modules/,

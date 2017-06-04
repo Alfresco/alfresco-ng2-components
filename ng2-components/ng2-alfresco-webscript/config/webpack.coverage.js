@@ -9,7 +9,7 @@ module.exports = webpackMerge(testConfig, {
         rules: [
             {
                 enforce: 'post',
-                test: /^(?!.*spec).*\.ts?$/,
+                test: /^?!(.*spec|index|.*mock|.*model|.*event).*\.ts?$/,
                 include: [helpers.root('src')],
                 loader: 'istanbul-instrumenter-loader',
                 exclude: [
