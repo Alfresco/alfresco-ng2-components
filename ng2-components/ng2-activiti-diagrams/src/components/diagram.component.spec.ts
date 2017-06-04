@@ -1624,7 +1624,6 @@ describe('Test ng2-activiti-diagrams ', () => {
             });
         }));
 
-
         it('Should render the Start Message Event', async(() => {
             component.onSuccess.subscribe((res) => {
                 fixture.detectChanges();

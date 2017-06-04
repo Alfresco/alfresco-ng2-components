@@ -27,6 +27,7 @@ import {
 } from 'ng2-alfresco-core';
 import { DocumentListService } from './../services/document-list.service';
 import { DocumentMenuActionComponent } from './document-menu-action.component';
+import { MdMenuModule, MdButtonModule, MdIconModule } from '@angular/material';
 
 declare let jasmine: any;
 
@@ -89,7 +90,10 @@ describe('Document menu action', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                CoreModule,
+                MdMenuModule,
+                MdButtonModule,
+                MdIconModule
             ],
             declarations: [DocumentMenuActionComponent],
             providers: [

@@ -128,5 +128,4 @@ describe('ActivitiProcessInstanceHeader', () => {
         expect(formValueEl).toBeNull();
     });
 
-
 });

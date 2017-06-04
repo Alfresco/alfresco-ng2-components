@@ -20,6 +20,7 @@ import { TagNodeList } from '../components/tag-node-list.component';
 import { DebugElement } from '@angular/core';
 import { CoreModule } from 'ng2-alfresco-core';
 import { TagService } from '../services/tag.service';
+import { MdInputModule } from '@angular/material';
 
 declare let jasmine: any;
 
@@ -49,6 +50,7 @@ describe('Test ng2-alfresco-tag Tag relative node list', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+                MdInputModule,
                 CoreModule.forRoot()
             ],
             declarations: [

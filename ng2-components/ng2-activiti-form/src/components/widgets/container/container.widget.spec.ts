@@ -27,6 +27,7 @@ import { MASK_DIRECTIVE } from '../index';
 import { FormFieldComponent } from './../../form-field/form-field.component';
 import { ActivitiContent } from './../../activiti-content.component';
 import { fakeFormJson } from '../../../services/assets/widget-visibility.service.mock';
+import { MdTabsModule } from '@angular/material';
 
 describe('ContainerWidget', () => {
 
@@ -133,7 +134,7 @@ describe('ContainerWidget', () => {
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-                imports: [CoreModule],
+                imports: [CoreModule, MdTabsModule],
                 declarations: [FormFieldComponent, ActivitiContent, WIDGET_DIRECTIVES, MASK_DIRECTIVE]
             }).compileComponents().then(() => {
                 fixture = TestBed.createComponent(ContainerWidget);

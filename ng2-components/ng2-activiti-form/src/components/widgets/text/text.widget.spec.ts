@@ -42,7 +42,6 @@ describe('TextWidget', () => {
         let textWidget: TextWidget;
         let fixture: ComponentFixture<TextWidget>;
         let element: HTMLInputElement;
-        let componentHandler;
 
         beforeEach(async(() => {
             componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
@@ -161,8 +160,8 @@ describe('TextWidget', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let inputElement: HTMLInputElement = <HTMLInputElement>element.querySelector('#text-id');
-                    expect(inputElement.value).toBe('1');
+                    let textEle: HTMLInputElement = <HTMLInputElement>element.querySelector('#text-id');
+                    expect(textEle.value).toBe('1');
                 });
             }));
 
@@ -177,8 +176,8 @@ describe('TextWidget', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let inputElement: HTMLInputElement = <HTMLInputElement>element.querySelector('#text-id');
-                    expect(inputElement.value).toBe('12-345,67%');
+                    let textEle: HTMLInputElement = <HTMLInputElement>element.querySelector('#text-id');
+                    expect(textEle.value).toBe('12-345,67%');
                 });
             }));
         });
@@ -192,7 +191,7 @@ describe('TextWidget', () => {
                     id: 'text-id',
                     name: 'text-name',
                     value: '',
-                    params: { existingColspan: 1, maxColspan: 2, inputMask: "#.##0,00%", inputMaskReversed: true },
+                    params: { existingColspan: 1, maxColspan: 2, inputMask: '#.##0,00%', inputMaskReversed: true },
                     type: FormFieldTypes.TEXT,
                     readOnly: false
                 });
@@ -217,8 +216,8 @@ describe('TextWidget', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let inputElement: HTMLInputElement = <HTMLInputElement>element.querySelector('#text-id');
-                    expect(inputElement.value).toBe('12,34%');
+                    let textEle: HTMLInputElement = <HTMLInputElement>element.querySelector('#text-id');
+                    expect(textEle.value).toBe('12,34%');
                 });
             }));
         });

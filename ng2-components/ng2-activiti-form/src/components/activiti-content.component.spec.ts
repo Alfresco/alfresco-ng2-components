@@ -20,6 +20,7 @@ import { DebugElement, SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 import { CoreModule, AlfrescoTranslationService, ContentService } from 'ng2-alfresco-core';
+import { MdTabsModule } from '@angular/material';
 
 import { ActivitiContent } from './activiti-content.component';
 import { FormService } from '../services/form.service';
@@ -66,6 +67,7 @@ describe('ActivitiContent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+                MdTabsModule,
                 CoreModule.forRoot()
             ],
             declarations: [

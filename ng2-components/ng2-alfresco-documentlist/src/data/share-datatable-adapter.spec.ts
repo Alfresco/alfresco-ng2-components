@@ -217,7 +217,8 @@ describe('ShareDataTableAdapter', () => {
         let col = <DataColumn> { type: 'image', key: '$thumbnail' };
 
         let value = adapter.getValue(row, col);
-        expect(value).toContain(`assets/images/ft_ic_miscellaneous.svg`);
+        expect(value).toContain(`assets/images/ft_ic_miscellaneous`);
+        expect(value).toContain(`svg`);
     });
 
     it('should generate fallback icon for a file thumbnail with missing mime type', () => {
@@ -230,7 +231,8 @@ describe('ShareDataTableAdapter', () => {
         let col = <DataColumn> { type: 'image', key: '$thumbnail' };
 
         let value = adapter.getValue(row, col);
-        expect(value).toContain(`assets/images/ft_ic_miscellaneous.svg`);
+        expect(value).toContain(`assets/images/ft_ic_miscellaneous`);
+        expect(value).toContain(`svg`);
     });
 
     it('should generate fallback icon for a file with no content entry', () => {
@@ -243,7 +245,8 @@ describe('ShareDataTableAdapter', () => {
         let col = <DataColumn> { type: 'image', key: '$thumbnail' };
 
         let value = adapter.getValue(row, col);
-        expect(value).toContain(`assets/images/ft_ic_miscellaneous.svg`);
+        expect(value).toContain(`assets/images/ft_ic_miscellaneous`);
+        expect(value).toContain(`svg`);
     });
 
     it('should generate fallback icon when document service fails to find one', () => {
@@ -255,7 +258,8 @@ describe('ShareDataTableAdapter', () => {
         let col = <DataColumn> { type: 'image', key: '$thumbnail' };
 
         let value = adapter.getValue(row, col);
-        expect(value).toContain(`assets/images/ft_ic_miscellaneous.svg`);
+        expect(value).toContain(`assets/images/ft_ic_miscellaneous`);
+        expect(value).toContain(`svg`);
     });
 
     it('should return image value unmodified', () => {
@@ -279,7 +283,8 @@ describe('ShareDataTableAdapter', () => {
         let col = <DataColumn> { type: 'image', key: '$thumbnail' };
 
         let value = adapter.getValue(row, col);
-        expect(value).toContain(`assets/images/ft_ic_folder.svg`);
+        expect(value).toContain(`assets/images/ft_ic_folder`);
+        expect(value).toContain(`svg`);
     });
 
     it('should resolve file thumbnail', () => {
@@ -309,7 +314,8 @@ describe('ShareDataTableAdapter', () => {
         let col = <DataColumn> { type: 'image', key: '$thumbnail' };
 
         let value = adapter.getValue(row, col);
-        expect(value).toContain(`assets/images/ft_ic_miscellaneous.svg`);
+        expect(value).toContain(`assets/images/ft_ic_miscellaneous`);
+        expect(value).toContain(`svg`);
     });
 
     it('should require document service to resolve thumbnail', () => {
@@ -322,38 +328,6 @@ describe('ShareDataTableAdapter', () => {
 
         let value = adapter.getValue(row, col);
         expect(value).toBeNull();
-    });
-
-    /*
-    it('should log load error', (done) => {
-        let error = 'My Error';
-        documentListService.getFolderReject = true;
-        documentListService.getFolderRejectError = error;
-
-        spyOn(console, 'error').and.stub();
-        spyOn(documentListService, 'getFolder').and.callThrough();
-
-        let adapter = new ShareDataTableAdapter(documentListService, null);
-        adapter.loadPath('/some/path').catch(err => {
-            expect(err).toBe(error);
-            done();
-        });
-    });
-    */
-
-    xit('should generate file icon path based on mime type', () => {
-        let fileName = 'dist/assets/empty_doc_lib.svg';
-        spyOn(documentListService, 'getMimeTypeIcon').and.returnValue(fileName);
-
-        let file = new FileNode('file1', 'text/plain');
-        let row = new ShareDataRow(file);
-        let col = <DataColumn> {type: 'image', key: '$thumbnail'};
-
-        let adapter = new ShareDataTableAdapter(documentListService, null);
-        let value = adapter.getValue(row, col);
-
-        expect(value).toContain(`assets/images/${fileName}`);
-        expect(documentListService.getMimeTypeIcon).toHaveBeenCalled();
     });
 
     it('should put folders on top upon sort', () => {
@@ -403,35 +377,6 @@ describe('ShareDataTableAdapter', () => {
         expect((<ShareDataRow> rows[1]).node).toBe(file1);
     });
 
-    /*
-    it('should preserve sorting on navigation', () => {
-        let file1 = new FileNode('file1');
-        let file2 = new FileNode('file2');
-        let file3 = new FileNode('file3');
-        let file4 = new FileNode('file4');
-
-        let col = <DataColumn> { key: 'name' };
-        let adapter = new ShareDataTableAdapter(documentListService, [col]);
-        adapter.setSorting(new DataSorting('name', 'asc'));
-
-        let page1 = new PageNode([file2, file1]);
-        let page2 = new PageNode([file4, file3]);
-
-        documentListService.getFolderResult = page1;
-        adapter.loadPath('/page1');
-
-        let sorted = adapter.getRows();
-        expect((<ShareDataRow> sorted[0]).node).toBe(file1);
-        expect((<ShareDataRow> sorted[1]).node).toBe(file2);
-
-        documentListService.getFolderResult = page2;
-        adapter.loadPath('/page2');
-
-        sorted = adapter.getRows();
-        expect((<ShareDataRow> sorted[0]).node).toBe(file3);
-        expect((<ShareDataRow> sorted[1]).node).toBe(file4);
-    });
-    */
 });
 
 describe('ShareDataRow', () => {
