@@ -232,7 +232,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         }
 
         if (changes['node'] && changes['node'].currentValue) {
-            this.data.loadPage(changes['node'].currentValue);
+            if (this.data) {
+                this.data.loadPage(changes['node'].currentValue);
+            }
             return;
         }
     }
@@ -363,11 +365,11 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     // gets folder node and its content
     loadFolderByNodeId(nodeId: string) {
         this.documentListService.getFolderNode(nodeId).then(node => {
-            this.folderNode = node;
-            this.currentFolderId = node.id;
-            this.skipCount = 0;
-            this.loadFolderNodesByFolderNodeId(node.id, this.pageSize, this.skipCount).catch(err => this.error.emit(err));
-        })
+                this.folderNode = node;
+                this.currentFolderId = node.id;
+                this.skipCount = 0;
+                this.loadFolderNodesByFolderNodeId(node.id, this.pageSize, this.skipCount).catch(err => this.error.emit(err));
+            })
             .catch(err => this.error.emit(err));
     }
 
