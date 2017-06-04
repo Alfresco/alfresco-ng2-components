@@ -22,7 +22,7 @@ import { Observable } from 'rxjs/Rx';
 
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { ActivitiContentService } from 'ng2-activiti-form';
-import { DataTableModule, ObjectDataRow, DataRowEvent, ObjectDataTableAdapter, DataSorting } from 'ng2-alfresco-datatable';
+import { DataTableModule } from 'ng2-alfresco-datatable';
 
 import { ActivitiProcessAttachmentListComponent } from './activiti-process-attachment-list.component';
 import { TranslationMock } from './../assets/translation.service.mock';
