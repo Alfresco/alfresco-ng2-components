@@ -230,5 +230,16 @@ describe('Test ng2-alfresco-viewer Not Supported Format View component', () => {
                 expect(element.querySelector('#pdf-rendition-viewer')).not.toBeNull('Pdf rendition should be shown.');
             });
         });
+
+        it('should call content service download method if Click on Download button', () => {
+            spyOn(service, 'downloadBlob');
+
+            component.blobFile = new Blob();
+
+            let downloadButton: any = element.querySelector('#viewer-download-button');
+            downloadButton.click();
+
+            expect(service.downloadBlob).toHaveBeenCalled();
+        });
     });
 });
