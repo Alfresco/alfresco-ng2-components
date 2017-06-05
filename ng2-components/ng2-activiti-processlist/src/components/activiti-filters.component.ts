@@ -161,7 +161,7 @@ export class ActivitiProcessFilters implements OnInit, OnChanges {
                 }
             });
         }
-        if (this.currentFilter === null) {
+        if (this.isCurrentFilterEmpty()) {
             this.selectDefaultTaskFilter();
         }
     }
@@ -196,6 +196,10 @@ export class ActivitiProcessFilters implements OnInit, OnChanges {
      */
     private resetFilter() {
         this.filters = [];
-        this.currentFilter = null;
+        this.currentFilter = undefined;
+    }
+
+    private isCurrentFilterEmpty(): boolean {
+        return this.currentFilter === undefined || null ? true : false;
     }
 }
