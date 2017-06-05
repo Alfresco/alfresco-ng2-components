@@ -9,15 +9,6 @@ module.exports = webpackMerge(commonConfig, {
     module: {
         rules: [
             {
-                enforce: 'post',
-                test: /^(?!(.*spec|index|.*mock|.*model|.*event)).*\.ts?$/,
-                loader: 'istanbul-instrumenter-loader',
-                exclude: [
-                    /node_modules/,
-                    /test/
-                ]
-            },
-            {
                 test: /\.(txt|pdf)$/,
                 loader: 'file-loader',
                 query: {

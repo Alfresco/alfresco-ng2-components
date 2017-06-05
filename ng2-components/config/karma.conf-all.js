@@ -1,3 +1,6 @@
+const webpackCoverage = require('./webpack.coverage');
+const helpers = require('./helpers');
+
 module.exports = function (config) {
     var _config = {
         basePath: '../ng2-components',
@@ -6,29 +9,42 @@ module.exports = function (config) {
 
         files: [
             {pattern: './node_modules/hammerjs/hammer.min.js', included: true, watched: false},
-            {pattern: './node_modules/@angular/material/prebuilt-themes/indigo-pink.css', included: true, watched: false},
+            {
+                pattern: './node_modules/@angular/material/prebuilt-themes/indigo-pink.css',
+                included: true,
+                watched: false
+            },
 
             //diagrams
             {pattern: './node_modules/chart.js/dist/Chart.js', included: true, watched: false},
             {pattern: './node_modules/alfresco-js-api/dist/alfresco-js-api.min.js', included: true, watched: false},
             {pattern: './node_modules/raphael/raphael.min.js', included: true, watched: false},
             {pattern: './node_modules/moment/min/moment.min.js', included: true, watched: false},
-            {pattern: './node_modules/md-date-time-picker/dist/js/mdDateTimePicker.min.js', included: true, watched: false},
+            {
+                pattern: './node_modules/md-date-time-picker/dist/js/mdDateTimePicker.min.js',
+                included: true,
+                watched: false
+            },
 
             {pattern: './node_modules/ng2-translate/ng2-translate.js', included: false, watched: false},
-            {pattern: './node_modules/ng2-charts/bundles/ng2-charts.umd.js', included: false, served: true, watched: false},
+            {
+                pattern: './node_modules/ng2-charts/bundles/ng2-charts.umd.js',
+                included: false,
+                served: true,
+                watched: false
+            },
 
             // pdf-js
             {pattern: './node_modules/pdfjs-dist/build/pdf.js', included: true, watched: false},
             {pattern: './node_modules/pdfjs-dist/build/pdf.worker.js', included: true, watched: false},
             {pattern: './node_modules/pdfjs-dist/web/pdf_viewer.js', included: true, watched: false},
 
-            {pattern:  config.component +'/karma-test-shim.js', watched: false},
-            {pattern:  config.component +'/src/assets/**/*.*', included: false, served: true, watched: false},
-            {pattern:  config.component +'/src/**/*.ts', included: false, served: true, watched: false}
+            {pattern: config.component + '/karma-test-shim.js', watched: false},
+            {pattern: config.component + '/src/assets/**/*.*', included: false, served: true, watched: false},
+            {pattern: config.component + '/src/**/*.ts', included: false, served: true, watched: false}
         ],
 
-        webpack: require('./webpack.test'),
+        webpack: webpackCoverage(config),
 
         webpackMiddleware: {
             noInfo: true,
