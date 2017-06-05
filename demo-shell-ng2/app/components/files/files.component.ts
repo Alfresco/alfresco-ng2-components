@@ -17,10 +17,13 @@
 
 import { Component, Input, OnInit, AfterViewInit, Optional, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { MdDialog } from '@angular/material';
 import { AlfrescoAuthenticationService, AlfrescoContentService, FolderCreatedEvent, LogService, NotificationService } from 'ng2-alfresco-core';
 import { DocumentActionsService, DocumentListComponent, ContentActionHandler, DocumentActionModel, FolderActionModel } from 'ng2-alfresco-documentlist';
 import { FormService } from 'ng2-activiti-form';
 import { UploadService, UploadButtonComponent, UploadDragAreaComponent } from 'ng2-alfresco-upload';
+
+import { CreateFolderDialog } from '../../dialogs/create-folder.dialog';
 
 @Component({
     selector: 'files-component',
@@ -74,6 +77,7 @@ export class FilesComponent implements OnInit, AfterViewInit {
                 private notificationService: NotificationService,
                 private uploadService: UploadService,
                 private contentService: AlfrescoContentService,
+                private dialog: MdDialog,
                 @Optional() private route: ActivatedRoute) {
         documentActions.setHandler('my-handler', this.myDocumentActionHandler.bind(this));
     }
@@ -196,5 +200,21 @@ export class FilesComponent implements OnInit, AfterViewInit {
                 this.documentList.reload();
             }
         }
+    }
+
+    onCreateFolderClicked(event: Event) {
+        let dialogRef = this.dialog.open(CreateFolderDialog);
+        dialogRef.afterClosed().subscribe(folderName => {
+            if (folderName) {
+                this.contentService.createFolder('', folderName, this.documentList.currentFolderId).subscribe(
+                    node => {
+                        console.log(node);
+                    },
+                    err => {
+                        console.log(err);
+                    }
+                );
+            }
+        });
     }
 }

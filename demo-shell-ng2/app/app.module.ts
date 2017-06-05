@@ -17,7 +17,7 @@
 
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { MdSlideToggleModule, MdInputModule, MdSelectModule } from '@angular/material';
+import { MdSlideToggleModule, MdInputModule, MdSelectModule, MdDialogModule } from '@angular/material';
 
 import { CoreModule } from 'ng2-alfresco-core';
 import { SearchModule } from 'ng2-alfresco-search';
@@ -40,6 +40,7 @@ import { routing } from './app.routes';
 import { CustomEditorsModule } from './components/activiti/custom-editor/custom-editor.component';
 import { Editor3DModule } from 'ng2-3d-editor';
 import { ChartsModule } from 'ng2-charts';
+import { CreateFolderDialog } from './dialogs/create-folder.dialog';
 
 import {
     HomeComponent,
@@ -64,9 +65,6 @@ import {
     imports: [
         BrowserModule,
         routing,
-        MdInputModule,
-        MdSlideToggleModule,
-        MdSelectModule,
         CoreModule.forRoot(),
         LoginModule.forRoot(),
         SearchModule.forRoot(),
@@ -85,7 +83,11 @@ import {
         DiagramsModule.forRoot(),
         CustomEditorsModule,
         Editor3DModule.forRoot(),
-        ChartsModule
+        ChartsModule,
+        MdInputModule,
+        MdSlideToggleModule,
+        MdSelectModule,
+        MdDialogModule
     ],
     declarations: [
         AppComponent,
@@ -104,9 +106,13 @@ import {
         AboutComponent,
         FilesComponent,
         FormNodeViewer,
-        SettingComponent
+        SettingComponent,
+        CreateFolderDialog
     ],
     providers: [],
-    bootstrap: [ AppComponent ]
+    bootstrap: [ AppComponent ],
+    entryComponents: [
+        CreateFolderDialog
+    ]
 })
 export class AppModule { }

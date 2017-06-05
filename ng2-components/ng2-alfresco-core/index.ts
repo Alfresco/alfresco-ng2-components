@@ -16,12 +16,12 @@
  */
 
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { MdSnackBarModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule, Http } from '@angular/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader } from 'ng2-translate/ng2-translate';
+import { MaterialModule } from './src/material.module';
 
 import {
     AlfrescoAuthenticationService,
@@ -48,6 +48,7 @@ import { DataColumnListComponent } from './src/components/data-column/data-colum
 import { MATERIAL_DESIGN_DIRECTIVES } from './src/components/material/index';
 import { CONTEXT_MENU_PROVIDERS, CONTEXT_MENU_DIRECTIVES } from './src/components/context-menu/index';
 import { COLLAPSABLE_DIRECTIVES } from './src/components/collapsable/index';
+import { AdfToolbarComponent } from './src/components/toolbar/toolbar.component';
 
 export * from './src/services/index';
 export * from './src/components/index';
@@ -95,7 +96,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
             useFactory: (createTranslateLoader),
             deps: [Http, LogService]
         }),
-        MdSnackBarModule
+        MaterialModule
     ],
     declarations: [
         ...MATERIAL_DESIGN_DIRECTIVES,
@@ -104,7 +105,8 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         UploadDirective,
         DataColumnComponent,
         DataColumnListComponent,
-        FileSizePipe
+        FileSizePipe,
+        AdfToolbarComponent
     ],
     providers: [
         ...ALFRESCO_CORE_PROVIDERS
@@ -119,11 +121,12 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         ...MATERIAL_DESIGN_DIRECTIVES,
         ...CONTEXT_MENU_DIRECTIVES,
         ...COLLAPSABLE_DIRECTIVES,
+        MaterialModule,
         UploadDirective,
         DataColumnComponent,
         DataColumnListComponent,
-        MdSnackBarModule,
-        FileSizePipe
+        FileSizePipe,
+        AdfToolbarComponent
     ]
 })
 export class CoreModule {

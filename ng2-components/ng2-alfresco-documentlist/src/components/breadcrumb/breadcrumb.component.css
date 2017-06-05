@@ -5,7 +5,7 @@
     padding: 8px 15px;
     list-style: none;
     background-color: #fafafa;
-    margin: 0 0 4px;
+    margin: 0;
 }
 
 :host .breadcrumb > li {

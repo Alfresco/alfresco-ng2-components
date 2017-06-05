@@ -15,19 +15,19 @@
  * limitations under the License.
  */
 
-import { Observable } from 'rxjs/Rx';
+import { NgModule } from '@angular/core';
+import { MdSnackBarModule, MdToolbarModule, MdButtonModule } from '@angular/material';
 
-export interface AbstractAuthentication {
-    TYPE: string;
-    alfrescoApi: any;
-
-    login(username: string, password: string): Observable<any>;
-
-    logout(): Observable<any>;
-
-    isLoggedIn(): boolean ;
-
-    getTicket(): string;
-
-    saveTicket(ticket: any): void;
-}
+@NgModule({
+    imports: [
+        MdSnackBarModule,
+        MdToolbarModule,
+        MdButtonModule
+    ],
+    exports: [
+        MdSnackBarModule,
+        MdToolbarModule,
+        MdButtonModule
+    ]
+})
+export class MaterialModule {}
