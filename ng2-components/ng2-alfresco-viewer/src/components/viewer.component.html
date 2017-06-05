@@ -64,7 +64,7 @@
                          </span>
 
                         <div *ngIf="!supportedExtension()">
-                            <not-supported-format  *ngIf="!extensionTemplate" [urlFile]="urlFileContent" [nameFile]="displayName"></not-supported-format>
+                            <not-supported-format  *ngIf="!extensionTemplate" [urlFile]="urlFileContent" [blobFile]="blobFile" [nameFile]="displayName"></not-supported-format>
                         </div>
                         <!-- End View Switch -->
 
