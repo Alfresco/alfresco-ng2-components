@@ -176,8 +176,7 @@ export class ActivitiFilters implements OnInit, OnChanges {
             },
             () => {
                 if (filteredFilterList.length > 0) {
-                    let myTaskFilter = filteredFilterList.find(filter => filter.name === 'My Tasks');
-                    this.currentFilter = myTaskFilter ? myTaskFilter : filteredFilterList[0];
+                    this.selectTaskFilter(new FilterParamsModel({name: 'My Tasks'}));
                     this.currentFilter.landingTaskId = taskId;
                     this.filterClick.emit(this.currentFilter);
                 }
@@ -196,7 +195,7 @@ export class ActivitiFilters implements OnInit, OnChanges {
                 }
             });
         }
-        if (this.currentFilter === null) {
+        if (this.isCurrentFilterEmpty()) {
             this.selectDefaultTaskFilter();
         }
     }
@@ -231,6 +230,10 @@ export class ActivitiFilters implements OnInit, OnChanges {
      */
     private resetFilter() {
         this.filters = [];
-        this.currentFilter = null;
+        this.currentFilter = undefined;
+    }
+
+    private isCurrentFilterEmpty(): boolean {
+        return this.currentFilter === undefined || null ? true : false;
     }
 }
