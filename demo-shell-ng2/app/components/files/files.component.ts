@@ -37,6 +37,7 @@ export class FilesComponent implements OnInit, AfterViewInit {
     errorMessage: string = null;
     fileNodeId: any;
     fileShowed: boolean = false;
+    useCustomToolbar = false;
 
     @Input()
     multipleFileUpload: boolean = false;
@@ -216,5 +217,18 @@ export class FilesComponent implements OnInit, AfterViewInit {
                 );
             }
         });
+    }
+
+    onCreateFolderSuccess(event: Event) {
+        this.resetError();
+        this.documentList.reload();
+    }
+
+    onCreateFolderError(event: Event) {
+        console.log(event);
+    }
+
+    onCreateFolderPermissionError(event: Event) {
+        console.log(event);
     }
 }

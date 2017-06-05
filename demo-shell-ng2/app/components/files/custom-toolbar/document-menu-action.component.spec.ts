@@ -25,7 +25,7 @@ import {
     CoreModule,
     LogService
 } from 'ng2-alfresco-core';
-import { DocumentListService } from './../services/document-list.service';
+import { DocumentListModule } from 'ng2-alfresco-documentlist';
 import { DocumentMenuActionComponent } from './document-menu-action.component';
 import { MdMenuModule, MdButtonModule, MdIconModule } from '@angular/material';
 
@@ -91,6 +91,7 @@ describe('Document menu action', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule,
+                DocumentListModule,
                 MdMenuModule,
                 MdButtonModule,
                 MdIconModule
@@ -100,8 +101,7 @@ describe('Document menu action', () => {
                 AlfrescoSettingsService,
                 AlfrescoAuthenticationService,
                 AlfrescoApiService,
-                LogService,
-                DocumentListService
+                LogService
             ]
         });
 

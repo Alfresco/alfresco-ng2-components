@@ -82,9 +82,6 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     contextMenuActions: boolean = false;
 
     @Input()
-    creationMenuActions: boolean = true;
-
-    @Input()
     pageSize: number = DocumentListComponent.DEFAULT_PAGE_SIZE;
 
     @Input()
@@ -144,13 +141,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     preview: EventEmitter<NodeEntityEvent> = new EventEmitter<NodeEntityEvent>();
 
     @Output()
-    success: EventEmitter<any> = new EventEmitter();
-
-    @Output()
     error: EventEmitter<any> = new EventEmitter();
-
-    @Output()
-    permissionError: EventEmitter<any> = new EventEmitter();
 
     @ViewChild(DataTableComponent)
     dataTable: DataTableComponent;
@@ -546,15 +537,6 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         }
     }
 
-    onActionMenuError(event) {
-        this.error.emit(event);
-    }
-
-    onActionMenuSuccess(event) {
-        this.reload();
-        this.success.emit(event);
-    }
-
     onChangePageSize(event: Pagination): void {
         this.pageSize = event.maxItems;
         this.reload();
@@ -568,10 +550,6 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     onPrevPage(event: Pagination): void {
         this.skipCount = event.skipCount;
         this.reload();
-    }
-
-    onPermissionError(event) {
-        this.permissionError.emit(event);
     }
 
     private enforceSingleClickNavigationForMobile(): void {

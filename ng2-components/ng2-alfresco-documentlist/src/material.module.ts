@@ -15,14 +15,17 @@
  * limitations under the License.
  */
 
-import { PermissionModel } from './../models/permissions.model';
+import { NgModule } from '@angular/core';
+import { MdMenuModule, MdButtonModule, MdIconModule } from '@angular/material';
 
-export class PermissionErrorEvent {
+const MATERIAL_MODULES = [
+    MdMenuModule,
+    MdButtonModule,
+    MdIconModule
+];
 
-    readonly error: PermissionModel;
-
-    constructor(error: PermissionModel) {
-        this.error = error;
-    }
-
-}
+@NgModule({
+    imports: MATERIAL_MODULES,
+    exports: MATERIAL_MODULES
+})
+export class MaterialModule {}

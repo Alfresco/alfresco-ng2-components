@@ -1,10 +1,4 @@
 {
     "ALFRESCO_DOCUMENT_LIST": {
-        "BUTTON": {
-            "ACTION_CREATE": "Create...",
-            "ACTION_NEW_FOLDER": "New Folder",
-            "CREATE": "Create",
-            "CANCEL": "Cancel"
-        }
     }
 }
