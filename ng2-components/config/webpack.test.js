@@ -9,18 +9,6 @@ module.exports = webpackMerge(commonConfig, {
     module: {
         rules: [
             {
-<<<<<<< HEAD
-=======
-                enforce: 'post',
-                test: /^(?!(.*spec|index|.*mock|.*model|.*event)).*\.ts?$/,
-                loader: 'istanbul-instrumenter-loader',
-                exclude: [
-                    /node_modules/,
-                    /test/
-                ]
-            },
-            {
->>>>>>> Source Mapping is not working on test debugging (#1931)
                 test: /\.(txt|pdf)$/,
                 loader: 'file-loader',
                 query: {
