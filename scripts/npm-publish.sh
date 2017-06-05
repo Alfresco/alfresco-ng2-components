@@ -9,6 +9,8 @@ eval TOKEN_REGISTRY=""
 eval OPTIONS=""
 eval EXEC_GIT_NPM_INSTALL_JSAPI=false
 eval GIT_ISH=""
+eval EXEC_SLEEP=false
+eval SLEEP_TIME="0"
 
 cd "$DIR/../demo-shell-ng2"
 
@@ -19,6 +21,7 @@ show_help() {
     echo "-r or -registry to publish in an alternative npm registry -registry 'http://npm.local.me:8080/' "
     echo "-token auth token for publish in the npm registry"
     echo "-t or -tag to add a tag when publish a package"
+    echo "--sleep add a sleep before any publish"
     echo "-gitjsapi to build all the components against a commit-ish version of the JS-API"
 }
 
@@ -29,6 +32,11 @@ enable_force(){
 enable_change_registry(){
     NPM_REGISTRY=$1
     EXEC_CHANGE_REGISTRY=true
+}
+
+set_sleep(){
+    SLEEP_TIME=$1
+    EXEC_SLEEP=true
 }
 
 get_token_registry(){
@@ -79,6 +87,7 @@ while [[ $1 == -* ]]; do
       -t|--tag)  add_tag $2; shift 2;;
       -f|--force)  enable_force; shift;;
       -token) get_token_registry $2; shift 2;;
+      --sleep) set_sleep $2; shift 2;;
       -r|--registry) enable_change_registry $2; shift 2;;
       -gitjsapi)  enable_js_api_git_link $2; shift 2;;
       -*) echo "invalid option: $1" 1>&2; show_help; exit 0;;
@@ -130,6 +139,11 @@ do
 
   if $EXEC_CHANGE_REGISTRY == true; then
       npm run rimraf .npmrc
+  fi
+
+  if $EXEC_SLEEP == true; then
+      echo "====== SLEEP ${SLEEP_TIME}"
+      sleep ${SLEEP_TIME}
   fi
 
   cd ${DIR}
