@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Validators } from '@angular/forms';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LogService, StorageService } from 'ng2-alfresco-core';
+import { Validators } from '@angular/forms';
+import { StorageService, LogService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'login-demo',
@@ -36,7 +36,6 @@ export class LoginDemoComponent implements OnInit {
     disableCsrf: boolean = false;
     isECM: boolean = true;
     isBPM: boolean = false;
-    showFooter: boolean = true;
     customMinLenght: number = 2;
 
     constructor(private router: Router,
@@ -95,10 +94,6 @@ export class LoginDemoComponent implements OnInit {
         this.disableCsrf = !this.disableCsrf;
     }
 
-    toggleFooter() {
-        this.showFooter = !this.showFooter;
-    }
-
     updateProvider() {
         if (this.isBPM && this.isECM) {
             this.providers = 'ALL';
@@ -117,5 +112,5 @@ export class LoginDemoComponent implements OnInit {
 
         this.providers = '';
         return this.providers;
-    }
+    };
 }
