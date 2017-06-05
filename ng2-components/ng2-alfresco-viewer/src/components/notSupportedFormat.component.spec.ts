@@ -22,12 +22,14 @@ import {
     AlfrescoAuthenticationService,
     AlfrescoSettingsService,
     AlfrescoApiService,
-    CoreModule
+    CoreModule,
+    ContentService
 } from 'ng2-alfresco-core';
 
 describe('Test ng2-alfresco-viewer Not Supported Format View component', () => {
 
     let component: NotSupportedFormat;
+    let service: ContentService;
     let fixture: ComponentFixture<NotSupportedFormat>;
     let debug: DebugElement;
     let element: HTMLElement;
@@ -41,14 +43,15 @@ describe('Test ng2-alfresco-viewer Not Supported Format View component', () => {
             providers: [
                 AlfrescoSettingsService,
                 AlfrescoAuthenticationService,
-                AlfrescoApiService
+                AlfrescoApiService,
+                ContentService
             ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
         fixture = TestBed.createComponent(NotSupportedFormat);
-
+        service = fixture.debugElement.injector.get(ContentService);
         debug = fixture.debugElement;
         element = fixture.nativeElement;
         component = fixture.componentInstance;
@@ -71,11 +74,23 @@ describe('Test ng2-alfresco-viewer Not Supported Format View component', () => {
     describe('User Interaction', () => {
         it('should call download method if Click on Download button', () => {
             spyOn(window, 'open');
+            component.urlFile = 'test';
 
             let downloadButton: any = element.querySelector('#viewer-download-button');
             downloadButton.click();
 
             expect(window.open).toHaveBeenCalled();
+        });
+
+        it('should call content service download method if Click on Download button', () => {
+            spyOn(service, 'downloadBlob');
+
+            component.blobFile = new Blob();
+
+            let downloadButton: any = element.querySelector('#viewer-download-button');
+            downloadButton.click();
+
+            expect(service.downloadBlob).toHaveBeenCalled();
         });
     });
 });
