@@ -16,6 +16,7 @@
  */
 
 import { Component, Input } from '@angular/core';
+import { ContentService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'not-supported-format',
@@ -30,10 +31,21 @@ export class NotSupportedFormat {
     @Input()
     urlFile: string;
 
+    @Input()
+    blobFile: Blob;
+
+    constructor(private contentService: ContentService) {
+
+    }
+
     /**
      * Download file opening it in a new window
      */
     download() {
-        window.open(this.urlFile);
+        if (this.urlFile) {
+            window.open(this.urlFile);
+        } else {
+            this.contentService.downloadBlob(this.blobFile, this.nameFile);
+        }
     }
 }
