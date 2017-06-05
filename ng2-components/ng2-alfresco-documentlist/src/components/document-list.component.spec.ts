@@ -26,7 +26,6 @@ import { FileNode, FolderNode } from '../assets/document-library.model.mock';
 import { NodeMinimalEntry, NodeMinimal, NodePaging } from '../models/document-library.model';
 import { ShareDataRow, RowFilter, ImageResolver } from './../data/share-datatable-adapter';
 import { DataTableModule } from 'ng2-alfresco-datatable';
-import { DocumentMenuActionComponent } from './document-menu-action.component';
 import { Observable } from 'rxjs/Rx';
 
 declare let jasmine: any;
@@ -103,8 +102,7 @@ describe('DocumentList', () => {
                 DataTableModule.forRoot()
             ],
             declarations: [
-                DocumentListComponent,
-                DocumentMenuActionComponent
+                DocumentListComponent
             ],
             providers: [
                 DocumentListService,
