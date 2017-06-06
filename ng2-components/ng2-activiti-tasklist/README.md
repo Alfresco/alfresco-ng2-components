@@ -358,7 +358,7 @@ The component shows all the available filters.
 
 | Name | Type | Required | Description |
 | --- | --- | --- | --- |
-| `filterParam` | {Object} | optional | The params to filter the task filter. If there is no match the default one (first filter of the list) is selected |
+| `filterParam` | {[Filter Params  models](#filter-params--models)} | optional | The params to filter the task filter. If there is no match the default one (first filter of the list) is selected |
 | `appId` | {string} | optional | Display filters available to the current user for the application with the specified ID. |
 | `appName` | {string} | optional | Display filters available to the current user for the application with the specified name. |
 | `hasIcon` | {boolean} | optional | Toggle to show or not the filter's icon. |
@@ -372,7 +372,7 @@ If both `appId` and `appName` are specified then `appName` will take precedence 
  ```
 
 You can use inside the filterParam one of the following property.
-
+## Filter Params  models
 ```json
 {
     "id": "number",
