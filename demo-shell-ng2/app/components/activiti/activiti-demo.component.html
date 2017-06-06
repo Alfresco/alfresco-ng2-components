@@ -28,6 +28,7 @@
                         <adf-accordion>
                             <adf-accordion-group [heading]="'Tasks'" [isSelected]="true" [isOpen]="true" [headingIcon]="'assignment'">
                                 <activiti-filters
+                                    [filterParam]="{name:'MY tasks'}"
                                     [appId]="appId"
                                     [hasIcon]="false"
                                     (filterClick)="onTaskFilterClick($event)"
@@ -101,6 +102,7 @@
                             <adf-accordion>
                                 <adf-accordion-group [heading]="'Processes'" [isSelected]="true" [isOpen]="true" [headingIcon]="'assessment'">
                                     <activiti-process-instance-filters
+                                        [filterParam]="{index: 0}"
                                         [appId]="appId"
                                         (filterClick)="onProcessFilterClick($event)"
                                         (onSuccess)="onSuccessProcessFilterList($event)">
