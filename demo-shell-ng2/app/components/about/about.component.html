@@ -1,4 +1,10 @@
 <div class="about-container">
+    <div *ngIf="githubUrlCommitAlpha">
+        <h3>Current Commit position</h3>
+        <a [href]="githubUrlCommitAlpha">{{githubUrlCommitAlpha}}</a>
+    </div>
+
+
     <h3>Packages</h3>
     <alfresco-datatable [data]="data"></alfresco-datatable>
 </div>
