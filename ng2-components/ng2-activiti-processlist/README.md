@@ -411,8 +411,8 @@ No events are emitted by this component
 This component displays attached documents on a specified process instance
 
 ```html
-<activiti-process-attachment-list [processInstanceId]="YOUR_PROCESS_INSTANCE_ID" 
-(attachmentClick)="YOUR_ATTACHMENT_CLICK_EMITTER_HANDLER"></activiti-process-attachment-list>
+<adf-process-attachment-list [processInstanceId]="YOUR_PROCESS_INSTANCE_ID" 
+(attachmentClick)="YOUR_ATTACHMENT_CLICK_EMITTER_HANDLER"></adf-process-attachment-list>
 ```
 ![process-attachment-list-sample](docs/assets/process-attachment-list.png)
 
