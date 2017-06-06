@@ -351,10 +351,43 @@ The component shows all the available filters.
 | Name | Description |
 | --- | --- |
 | `filterClick` |  The event is emitted when the filter in the  list is clicked  |
+| `onSuccess` |  The event is emitted when the list is loaded  |
+| `onError` |  The event is emitted if there is an error during the loading  |
 
 #### Options
 
-No options
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `filterParam` | {[Filter Params  models](#filter-params--models)} | optional | The params to filter the task filter. If there is no match the default one (first filter of the list) is selected |
+| `appId` | {string} | optional | Display filters available to the current user for the application with the specified ID. |
+| `appName` | {string} | optional | Display filters available to the current user for the application with the specified name. |
+| `hasIcon` | {boolean} | optional | Toggle to show or not the filter's icon. |
+
+If both `appId` and `appName` are specified then `appName` will take precedence and `appId` will be ignored.
+
+### How filter the activiti task filters
+
+ ```html
+<activiti-filters [filterParam]="{name:'My tasks'}"></activiti-filters>
+ ```
+
+You can use inside the filterParam one of the following property.
+## Filter Params  models
+```json
+{
+    "id": "number",
+    "name": "string",
+    "index": "number"
+}
+```
+
+| Name | Description |
+| --- | --- |
+| `id` |  The id of the task filter |
+| `name` |  The name of the task filter, lowercase is checked |
+| `index` |  The position of the filter in the array. The first position is 0 |
+
+
 
 ### How to create an accordion menu with the task filter
 

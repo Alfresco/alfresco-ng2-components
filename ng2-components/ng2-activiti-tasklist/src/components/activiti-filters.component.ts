@@ -19,7 +19,7 @@ import { Component, Output, EventEmitter, OnInit, Input, SimpleChanges, OnChange
 import { Observer, Observable } from 'rxjs/Rx';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
-import { FilterRepresentationModel } from '../models/filter.model';
+import { FilterRepresentationModel, FilterParamsModel } from '../models/filter.model';
 
 declare let componentHandler: any;
 
@@ -30,6 +30,9 @@ declare let componentHandler: any;
     providers: [ActivitiTaskListService]
 })
 export class ActivitiFilters implements OnInit, OnChanges {
+
+    @Input()
+    filterParam: FilterParamsModel;
 
     @Output()
     filterClick: EventEmitter<FilterRepresentationModel> = new EventEmitter<FilterRepresentationModel>();
@@ -115,7 +118,7 @@ export class ActivitiFilters implements OnInit, OnChanges {
                                 this.filterObserver.next(filter);
                             });
 
-                            this.selectFirstFilter();
+                            this.selectTaskFilter(this.filterParam);
                             this.onSuccess.emit(resDefault);
                         },
                         (errDefault: any) => {
@@ -128,7 +131,7 @@ export class ActivitiFilters implements OnInit, OnChanges {
                         this.filterObserver.next(filter);
                     });
 
-                    this.selectFirstFilter();
+                    this.selectTaskFilter(this.filterParam);
                     this.onSuccess.emit(res);
                 }
             },
@@ -146,7 +149,7 @@ export class ActivitiFilters implements OnInit, OnChanges {
         this.activiti.getDeployedApplications(appName).subscribe(
             application => {
                 this.getFiltersByAppId(application.id);
-                this.selectFirstFilter();
+                this.selectTaskFilter(this.filterParam);
             },
             (err) => {
                 this.onError.emit(err);
@@ -173,8 +176,7 @@ export class ActivitiFilters implements OnInit, OnChanges {
             },
             () => {
                 if (filteredFilterList.length > 0) {
-                    let myTaskFilter = filteredFilterList.find(filter => filter.name === 'My Tasks');
-                    this.currentFilter = myTaskFilter ? myTaskFilter : filteredFilterList[0];
+                    this.selectTaskFilter(new FilterParamsModel({name: 'My Tasks'}));
                     this.currentFilter.landingTaskId = taskId;
                     this.filterClick.emit(this.currentFilter);
                 }
@@ -184,11 +186,26 @@ export class ActivitiFilters implements OnInit, OnChanges {
     /**
      * Select the first filter of a list if present
      */
-    public selectFirstFilter() {
+    public selectTaskFilter(filterParam: FilterParamsModel) {
+        if (filterParam) {
+            this.filters.filter((taskFilter: FilterRepresentationModel, index) => {
+                if (filterParam.name && filterParam.name.toLowerCase() === taskFilter.name.toLowerCase() ||
+                    filterParam.id === taskFilter.id || filterParam.index === index) {
+                    this.currentFilter = taskFilter;
+                }
+            });
+        }
+        if (this.isCurrentFilterEmpty()) {
+            this.selectDefaultTaskFilter();
+        }
+    }
+
+    /**
+     * Select as default task filter the first in the list
+     */
+    public selectDefaultTaskFilter() {
         if (!this.isFilterListEmpty()) {
             this.currentFilter = this.filters[0];
-        } else {
-            this.currentFilter = null;
         }
     }
 
@@ -213,6 +230,10 @@ export class ActivitiFilters implements OnInit, OnChanges {
      */
     private resetFilter() {
         this.filters = [];
-        this.currentFilter = null;
+        this.currentFilter = undefined;
+    }
+
+    private isCurrentFilterEmpty(): boolean {
+        return this.currentFilter === undefined || null ? true : false;
     }
 }
