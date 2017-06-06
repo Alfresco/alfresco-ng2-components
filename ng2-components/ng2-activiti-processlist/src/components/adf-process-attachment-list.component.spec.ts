@@ -24,7 +24,7 @@ import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { ActivitiContentService } from 'ng2-activiti-form';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 
-import { ActivitiProcessAttachmentListComponent } from './activiti-process-attachment-list.component';
+import { ActivitiProcessAttachmentListComponent } from './adf-process-attachment-list.component';
 import { TranslationMock } from './../assets/translation.service.mock';
 
 describe('Activiti Process Instance Attachment List', () => {

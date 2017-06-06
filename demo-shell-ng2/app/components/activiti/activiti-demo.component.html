@@ -138,6 +138,12 @@
                                 (showProcessDiagram)="onShowProcessDiagram($event)"
                                 (taskClick)="onProcessDetailsTaskClick($event)">
                             </activiti-process-instance-details>
+                            <hr>
+                            <h5>Attachments</h5>
+                            <adf-process-attachment-list *ngIf="currentProcessInstanceId"
+                                                      [processInstanceId]="currentProcessInstanceId"
+                                                      (attachmentClick)="onAttachmentClick($event)">
+                            </adf-process-attachment-list>
                         </div>
                         <div class="mdl-cell mdl-cell--10-col task-column mdl-shadow--2dp" *ngIf="isStartProcessMode()">
                             <activiti-start-process [appId]="appId" (start)="onStartProcessInstance($event)"></activiti-start-process>
