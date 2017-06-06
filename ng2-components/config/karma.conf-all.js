@@ -68,7 +68,7 @@ module.exports = function (config) {
         browserDisconnectTolerance: 10,
         browserNoActivityTimeout: 3000000,
 
-        browsers: ['Chrome'],
+        browsers: ['Chrome_headless'],
 
         customLaunchers: {
             Chrome_travis_ci: {
