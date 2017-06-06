@@ -107,8 +107,8 @@ describe('AccordionGroupComponent', () => {
             expect(headName).toEqual(heading);
             done();
         });
-
-        component.onHeadingClick();
+        let header = element.querySelector('.adf-panel-heading');
+        header.click();
     });
 
 });

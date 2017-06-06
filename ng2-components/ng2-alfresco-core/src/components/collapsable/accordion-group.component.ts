@@ -79,13 +79,11 @@ export class AccordionGroupComponent implements OnDestroy {
     toggleOpen(event: MouseEvent): void {
         event.preventDefault();
         this.isOpen = !this.isOpen;
+        this.headingClick.emit(this.heading);
     }
 
     getAccordionIcon(): string {
         return this.isOpen ? 'expand_less' : 'expand_more';
     }
 
-    onHeadingClick() {
-        this.headingClick.emit(this.heading);
-    }
 }
