@@ -16,27 +16,40 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { LogServiceMock } from 'ng2-alfresco-core';
+import { async } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
-import { FilterProcessRepresentationModel } from '../models/filter-process.model';
-import { ProcessService } from '../services/process.service';
-import { ProcessFiltersComponent } from './process-filters.component';
+import { LogServiceMock } from 'ng2-alfresco-core';
+import { ActivitiFilters } from './activiti-filters.component';
+import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
+import { FilterRepresentationModel, FilterParamsModel } from '../models/filter.model';
 
 describe('ActivitiFilters', () => {
 
-    let filterList: ProcessFiltersComponent;
-    let activitiService: ProcessService;
+    let filterList: ActivitiFilters;
+    let activitiService: ActivitiTaskListService;
     let logService: LogServiceMock;
 
     let fakeGlobalFilter = [];
-    fakeGlobalFilter.push(new FilterProcessRepresentationModel({
+    fakeGlobalFilter.push(new FilterRepresentationModel({
         name: 'FakeInvolvedTasks',
+        id: 10,
         filter: { state: 'open', assignment: 'fake-involved' }
     }));
-    fakeGlobalFilter.push(new FilterProcessRepresentationModel({
-        name: 'FakeMyTasks',
+    fakeGlobalFilter.push(new FilterRepresentationModel({
+        name: 'FakeMyTasks1',
+        id: 11,
         filter: { state: 'open', assignment: 'fake-assignee' }
     }));
+    fakeGlobalFilter.push(new FilterRepresentationModel({
+        name: 'FakeMyTasks2',
+        id: 12,
+        filter: { state: 'open', assignment: 'fake-assignee' }
+    }));
+
+    let fakeFilter = new FilterRepresentationModel({
+        name: 'FakeMyTasks1',
+        filter: { state: 'open', assignment: 'fake-assignee' }
+    });
 
     let fakeGlobalFilterPromise = new Promise(function (resolve, reject) {
         resolve(fakeGlobalFilter);
@@ -52,12 +65,12 @@ describe('ActivitiFilters', () => {
 
     beforeEach(() => {
         logService = new LogServiceMock();
-        activitiService = new ProcessService(null, logService);
-        filterList = new ProcessFiltersComponent(activitiService);
+        activitiService = new ActivitiTaskListService(null, logService);
+        filterList = new ActivitiFilters(null, activitiService, logService);
     });
 
     it('should return the filter task list', (done) => {
-        spyOn(activitiService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+        spyOn(activitiService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
         const appId = '1';
         let change = new SimpleChange(null, appId, true);
         filterList.ngOnChanges({ 'appId': change });
@@ -65,9 +78,10 @@ describe('ActivitiFilters', () => {
         filterList.onSuccess.subscribe((res) => {
             expect(res).toBeDefined();
             expect(filterList.filters).toBeDefined();
-            expect(filterList.filters.length).toEqual(2);
+            expect(filterList.filters.length).toEqual(3);
             expect(filterList.filters[0].name).toEqual('FakeInvolvedTasks');
-            expect(filterList.filters[1].name).toEqual('FakeMyTasks');
+            expect(filterList.filters[1].name).toEqual('FakeMyTasks1');
+            expect(filterList.filters[2].name).toEqual('FakeMyTasks2');
             done();
         });
 
@@ -77,11 +91,11 @@ describe('ActivitiFilters', () => {
     it('should return the filter task list, filtered By Name', (done) => {
 
         let fakeDeployedApplicationsPromise = new Promise(function (resolve, reject) {
-            resolve({  id: 1 });
+            resolve({});
         });
 
         spyOn(activitiService, 'getDeployedApplications').and.returnValue(Observable.fromPromise(fakeDeployedApplicationsPromise));
-        spyOn(activitiService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+        spyOn(activitiService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
 
         let change = new SimpleChange(null, 'test', true);
         filterList.ngOnChanges({ 'appName': change });
@@ -97,7 +111,7 @@ describe('ActivitiFilters', () => {
     });
 
     it('should emit an error with a bad response', (done) => {
-        spyOn(activitiService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeErrorFilterPromise));
+        spyOn(activitiService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeErrorFilterPromise));
 
         const appId = '1';
         let change = new SimpleChange(null, appId, true);
@@ -126,15 +140,103 @@ describe('ActivitiFilters', () => {
         filterList.ngOnInit();
     });
 
-    it('should emit an event when a filter is selected', (done) => {
-        let currentFilter = new FilterProcessRepresentationModel({
-            filter: {
-                state: 'open',
-                assignment: 'fake-involved'
-            }
+    it('should select the first filter as default', (done) => {
+        spyOn(activitiService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+
+        const appId = '1';
+        let change = new SimpleChange(null, appId, true);
+        filterList.ngOnChanges({ 'appId': change });
+
+        filterList.onSuccess.subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(filterList.currentFilter).toBeDefined();
+            expect(filterList.currentFilter.name).toEqual('FakeInvolvedTasks');
+            done();
         });
 
-        filterList.filterClick.subscribe((filter: FilterProcessRepresentationModel) => {
+        filterList.ngOnInit();
+    });
+
+    it('should select the task filter based on the input by name param', (done) => {
+        spyOn(activitiService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+
+        filterList.filterParam = new FilterParamsModel({name: 'FakeMyTasks1'});
+
+        const appId = '1';
+        let change = new SimpleChange(null, appId, true);
+        filterList.ngOnChanges({ 'appId': change });
+
+        filterList.onSuccess.subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(filterList.currentFilter).toBeDefined();
+            expect(filterList.currentFilter.name).toEqual('FakeMyTasks1');
+            done();
+        });
+
+        filterList.ngOnInit();
+    });
+
+    it('should select the default task filter if filter input does not exist', (done) => {
+        spyOn(activitiService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+
+        filterList.filterParam = new FilterParamsModel({name: 'UnexistableFilter'});
+
+        const appId = '1';
+        let change = new SimpleChange(null, appId, true);
+        filterList.ngOnChanges({ 'appId': change });
+
+        filterList.onSuccess.subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(filterList.currentFilter).toBeDefined();
+            expect(filterList.currentFilter.name).toEqual('FakeInvolvedTasks');
+            done();
+        });
+
+        filterList.ngOnInit();
+    });
+
+    it('should select the task filter based on the input by index param', (done) => {
+        spyOn(activitiService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+
+        filterList.filterParam = new FilterParamsModel({index: 2});
+
+        const appId = '1';
+        let change = new SimpleChange(null, appId, true);
+        filterList.ngOnChanges({ 'appId': change });
+
+        filterList.onSuccess.subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(filterList.currentFilter).toBeDefined();
+            expect(filterList.currentFilter.name).toEqual('FakeMyTasks2');
+            done();
+        });
+
+        filterList.ngOnInit();
+    });
+
+    it('should select the task filter based on the input by id param', (done) => {
+        spyOn(activitiService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+
+        filterList.filterParam = new FilterParamsModel({id: 10});
+
+        const appId = '1';
+        let change = new SimpleChange(null, appId, true);
+        filterList.ngOnChanges({ 'appId': change });
+
+        filterList.onSuccess.subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(filterList.currentFilter).toBeDefined();
+            expect(filterList.currentFilter.name).toEqual('FakeInvolvedTasks');
+            done();
+        });
+
+        filterList.ngOnInit();
+    });
+
+    it('should emit an event when a filter is selected', (done) => {
+        let currentFilter = new FilterRepresentationModel({ filter: { state: 'open', assignment: 'fake-involved' } });
+
+        filterList.filterClick.subscribe((filter: FilterRepresentationModel) => {
             expect(filter).toBeDefined();
             expect(filter).toEqual(currentFilter);
             expect(filterList.currentFilter).toEqual(currentFilter);
@@ -175,7 +277,7 @@ describe('ActivitiFilters', () => {
     });
 
     it('should return the current filter after one is selected', () => {
-        let filter = new FilterProcessRepresentationModel({
+        let filter = new FilterRepresentationModel({
             name: 'FakeMyTasks',
             filter: { state: 'open', assignment: 'fake-assignee' }
         });
@@ -184,4 +286,34 @@ describe('ActivitiFilters', () => {
         expect(filterList.getCurrentFilter()).toBe(filter);
     });
 
+    it('should load Default list when no appid or taskid are provided', () => {
+        spyOn(filterList, 'getFiltersByAppId').and.stub();
+
+        let change = new SimpleChange(null, null, true);
+        filterList.ngOnChanges({ 'appName': change });
+
+        expect(filterList.getFiltersByAppId).toHaveBeenCalled();
+    });
+
+    it('should change the current filter if a filter with taskid is found', async(() => {
+        spyOn(activitiService, 'isTaskRelatedToFilter').and.returnValue(Observable.of(fakeFilter));
+        filterList.filters = fakeGlobalFilter;
+        filterList.selectFilterWithTask('111');
+
+        expect(filterList.currentFilter.landingTaskId).toBeDefined();
+        expect(filterList.currentFilter.landingTaskId).toBe('111');
+    }));
+
+    it('should not change the current filter if no filter with taskid is found', async(() => {
+        let filter = new FilterRepresentationModel({
+            name: 'FakeMyTasks',
+            filter: { state: 'open', assignment: 'fake-assignee' }
+        });
+        filterList.filters = fakeGlobalFilter;
+        filterList.currentFilter = filter;
+        spyOn(activitiService, 'isTaskRelatedToFilter').and.returnValue(Observable.of(null));
+        filterList.selectFilterWithTask('111');
+
+        expect(filterList.currentFilter).toBe(filter);
+    }));
 });
