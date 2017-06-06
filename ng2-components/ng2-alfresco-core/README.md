@@ -1,4 +1,4 @@
-# Alfresco Angular 2 Components core
+# Alfresco Angular Components Core
 
 <p>
   <a title='Build Status Travis' href="https://travis-ci.org/Alfresco/alfresco-ng2-components">
@@ -46,19 +46,41 @@ npm install --save ng2-alfresco-core
 ## Library content
 
 - Components
-    - Context Menu directive
+    - [Toolbar](#toolbar-component)
+    - [Accordion](#accordion-component)
 - Directives
-    - UploadDirective
+    - [Upload](#upload-directive)
+    - [Context Menu](#context-menu-directive)
 - Services
     - **LogService**, log service implementation
-    - **NotificationService**, Notification service implementation
-    - **AlfrescoApiService**, provides access to Alfresco JS API instance
-    - **AlfrescoAuthenticationService**, main authentication APIs
-    - **AlfrescoTranslationService**, various i18n-related APIs
+    - [NotificationService](#notification-service), Notification service implementation
+    - [AlfrescoApiService](#alfresco-api-service), provides access to Alfresco JS API instance
+    - [AlfrescoAuthenticationService](#authentication-service), main authentication APIs
+    - [AlfrescoTranslationService](#alfrescotranslationservice), various i18n-related APIs
     - **ContextMenuService**, global context menu APIs
+    - [Renditions Service](#renditions-service)
 
+## Toolbar Component
 
-## UploadDirective
+```html
+<adf-toolbar title="Toolbar">
+    <button md-icon-button>
+        <md-icon>create_new_folder</md-icon>
+    </button>
+    <button md-icon-button>
+        <md-icon>delete</md-icon>
+    </button>
+</adf-toolbar>
+```
+
+### Properties
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| title | string | | Toolbar title |
+| color | string | | Toolbar color, can be changed to empty value (default), `primary`, `accent` or `warn`. |
+
+## Upload Directive
 
 Allows your components or common HTML elements reacting on File drag and drop in order to upload content. 
 Used by attaching to an element or component.
