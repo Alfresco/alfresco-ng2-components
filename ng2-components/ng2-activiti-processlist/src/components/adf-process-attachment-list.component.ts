@@ -20,9 +20,9 @@ import { AlfrescoTranslationService, ContentService } from 'ng2-alfresco-core';
 import { ActivitiContentService } from 'ng2-activiti-form';
 
 @Component({
-    selector: 'activiti-process-attachment-list',
-    styleUrls: ['./activiti-process-attachment-list.component.css'],
-    templateUrl: './activiti-process-attachment-list.component.html'
+    selector: 'adf-process-attachment-list',
+    styleUrls: ['./adf-process-attachment-list.component.css'],
+    templateUrl: './adf-process-attachment-list.component.html'
 })
 export class ActivitiProcessAttachmentListComponent implements OnChanges {
 
