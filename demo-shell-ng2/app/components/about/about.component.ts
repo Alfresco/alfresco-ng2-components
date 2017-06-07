@@ -72,7 +72,7 @@ export class AboutComponent implements OnInit {
         if (corePackage) {
             let commitIsh = corePackage.version.split('-');
             if (commitIsh.length > 1) {
-                this.githubUrlCommitAlpha = this.githubUrlCommitAlpha + commitIsh;
+                this.githubUrlCommitAlpha = this.githubUrlCommitAlpha + commitIsh[1];
             } else {
                 this.githubUrlCommitAlpha = this.githubUrlCommitAlpha + corePackage.version;
             }

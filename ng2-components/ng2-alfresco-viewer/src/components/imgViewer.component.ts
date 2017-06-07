@@ -29,7 +29,7 @@ export class ImgViewerComponent implements OnChanges {
     urlFile: string;
 
     @Input()
-    blobFile: any;
+    blobFile: Blob;
 
     @Input()
     nameFile: string;
