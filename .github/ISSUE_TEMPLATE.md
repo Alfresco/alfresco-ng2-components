@@ -6,12 +6,12 @@ Please ask before on our gitter channel https://gitter.im/Alfresco/alfresco-ng2-
 -->
 
 **Type of issue:**  (check with "[x]")
-```
-- [ ] New feature request
-- [ ] Bug  
-- [ ] Support request
-- [ ] Documentation
-```
+
+> - [ ] New feature request
+> - [ ] Bug  
+> - [ ] Support request
+> - [ ] Documentation
+
 **Current behaviour:**
 <!-- Describe the current behaviour. -->
 
