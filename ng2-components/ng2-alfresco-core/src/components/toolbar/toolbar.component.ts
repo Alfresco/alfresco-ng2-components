@@ -15,17 +15,16 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
 
 @Component({
     selector: 'adf-toolbar',
     templateUrl: './toolbar.component.html',
-    styleUrls: ['./toolbar.component.scss'],
+    styleUrls: ['./toolbar.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.None,
-    host: { 'class': 'adf-toolbar' }
+    encapsulation: ViewEncapsulation.None
 })
-export class ToolbarComponent {
+export class AdfToolbarComponent {
 
     @Input()
     title: string = '';
