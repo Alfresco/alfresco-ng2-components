@@ -146,7 +146,7 @@ export class IconModel {
         this.iconsMDL.set('glyphicon-save', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
         this.iconsMDL.set('glyphicon-open', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
         this.iconsMDL.set('glyphicon-saved', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
-        this.iconsMDL.set('glyphicon-send', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
+        this.iconsMDL.set('glyphicon-send', 'send');
         this.iconsMDL.set('glyphicon-floppy-disk', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
         this.iconsMDL.set('glyphicon-credit-card', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
         this.iconsMDL.set('glyphicon-cutlery', IconModel.DEFAULT_TASKS_APP_MATERIAL_ICON);
