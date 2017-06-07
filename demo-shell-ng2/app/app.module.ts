@@ -17,7 +17,6 @@
 
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { MdSlideToggleModule, MdInputModule, MdSelectModule } from '@angular/material';
 
 import { CoreModule, AppConfigService } from 'ng2-alfresco-core';
 import { SearchModule } from 'ng2-alfresco-search';
