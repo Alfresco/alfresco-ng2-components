@@ -15,19 +15,17 @@
  * limitations under the License.
  */
 
-import { Observable } from 'rxjs/Rx';
+import { NgModule } from '@angular/core';
+import { MdMenuModule, MdButtonModule, MdIconModule } from '@angular/material';
 
-export interface AbstractAuthentication {
-    TYPE: string;
-    alfrescoApi: any;
+const MATERIAL_MODULES = [
+    MdMenuModule,
+    MdButtonModule,
+    MdIconModule
+];
 
-    login(username: string, password: string): Observable<any>;
-
-    logout(): Observable<any>;
-
-    isLoggedIn(): boolean ;
-
-    getTicket(): string;
-
-    saveTicket(ticket: any): void;
-}
+@NgModule({
+    imports: MATERIAL_MODULES,
+    exports: MATERIAL_MODULES
+})
+export class MaterialModule {}

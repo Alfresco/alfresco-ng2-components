@@ -21,7 +21,6 @@ import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 
 import { DocumentListComponent } from './src/components/document-list.component';
-import { DocumentMenuActionComponent } from './src/components/document-menu-action.component';
 import { ContentColumnComponent } from './src/components/content-column/content-column.component';
 import { ContentColumnListComponent } from './src/components/content-column/content-column-list.component';
 import { ContentActionComponent } from './src/components/content-action/content-action.component';
@@ -58,7 +57,6 @@ export * from './src/models/permissions.model';
 
 export const DOCUMENT_LIST_DIRECTIVES: any[] = [
     DocumentListComponent,
-    DocumentMenuActionComponent,
     ContentColumnComponent,
     ContentColumnListComponent,
     ContentActionComponent,

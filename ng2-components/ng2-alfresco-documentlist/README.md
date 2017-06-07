@@ -383,23 +383,6 @@ DocumentList provides simple breadcrumb element to indicate the current position
 | `target` | DocumentListComponent | DocumentList component to operate with. Upon clicks will instruct the given component to update. |
 | `folderNode` | MinimalNodeEntryEntity | Active node, builds UI based on `folderNode.path.elements` collection. |
 
-### Creation Menu Action
-
-DocumentList provides simple creation menu actions that provide the action to create a new folder.
-
-```html
-<alfresco-document-menu-action 
-    [folderId]="folderId">
-</alfresco-document-menu-action>
-```
-
-![Creation Menu Action](docs/assets/document-list-creation-menu-actions-1.png)
-
-When the "New Folder" button is pressed the dialog appears.
-
-![Creation Menu Action](docs/assets/document-list-creation-menu-actions-2.png)
-
-
 ### Custom columns
 
 It is possible to reorder, extend or completely redefine data columns displayed by the component.
@@ -823,7 +806,6 @@ DocumentList emits the following events:
 | `nodeDblClick` | emitted when user double-clicks list node |
 | `folderChange` | emitted once current display folder has changed |
 | `preview` | emitted when user acts upon files with either single or double click (depends on `navigation-mode`), recommended for Viewer components integration  |
-| `permissionError` | emitted when user is attempting to create a folder via action menu but it doesn't have the permission to do it |
 
 ## Advanced usage and customization
 

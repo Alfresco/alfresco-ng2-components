@@ -18,10 +18,7 @@
 import { Component, Input, Output, EventEmitter, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
-
-import { DocumentListService } from './../services/document-list.service';
-import { ContentActionModel } from './../models/content-action.model';
-import { PermissionModel } from '../models/permissions.model';
+import { DocumentListService, ContentActionModel, PermissionModel } from 'ng2-alfresco-documentlist';
 
 declare let dialogPolyfill: any;
 
@@ -168,8 +165,12 @@ export class DocumentMenuActionComponent implements OnChanges {
     }
 
     loadCurrentNodePermissions(nodeId: string) {
-        this.documentListService.getFolderNode(nodeId).then(node => {
-            this.allowableOperations = node ? node['allowableOperations'] : null;
-        }).catch(err => this.error.emit(err));
+        if (nodeId) {
+            this.documentListService.getFolderNode(nodeId)
+                .then(node => {
+                    this.allowableOperations = node ? node['allowableOperations'] : null;
+                })
+                .catch(err => this.error.emit(err));
+        }
     }
 }

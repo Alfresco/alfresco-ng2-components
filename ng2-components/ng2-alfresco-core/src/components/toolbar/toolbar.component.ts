@@ -15,14 +15,19 @@
  * limitations under the License.
  */
 
-import { PermissionModel } from './../models/permissions.model';
+import { Component, Input } from '@angular/core';
 
-export class PermissionErrorEvent {
+@Component({
+    selector: 'adf-toolbar',
+    templateUrl: './toolbar.component.html',
+    styleUrls: ['./toolbar.component.css']
+})
+export class AdfToolbarComponent {
 
-    readonly error: PermissionModel;
+    @Input()
+    title: string = '';
 
-    constructor(error: PermissionModel) {
-        this.error = error;
-    }
+    @Input()
+    color: string;
 
 }
