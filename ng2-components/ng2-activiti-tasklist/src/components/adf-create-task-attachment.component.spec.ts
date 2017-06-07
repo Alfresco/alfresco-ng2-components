@@ -22,7 +22,7 @@ import { Observable } from 'rxjs/Rx';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { ActivitiContentService } from 'ng2-activiti-form';
 
-import { ActivitiCreateTaskAttachmentComponent } from './activiti-create-task-attachment.component';
+import { ActivitiCreateTaskAttachmentComponent } from './adf-create-task-attachment.component';
 
 describe('Activiti Task Create Attachment', () => {
 

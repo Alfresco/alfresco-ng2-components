@@ -24,3 +24,17 @@
     text-align: left;
     margin-bottom: 5px;
 }
+
+.no-form-container {
+    text-align: center;
+    font-weight: 600;
+    font-size: 18px;
+    font-family: Muli;
+    padding: 16px;
+}
+
+.action-header {
+    border: 1px solid rgb(224, 224, 224);
+    background: #fff;
+    text-align: left;
+}

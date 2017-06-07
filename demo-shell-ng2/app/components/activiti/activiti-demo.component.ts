@@ -21,7 +21,8 @@ import {
     ActivitiFilters,
     ActivitiTaskList,
     FilterRepresentationModel,
-    TaskDetailsEvent
+    TaskDetailsEvent,
+    TaskAttachmentListComponent
 } from 'ng2-activiti-tasklist';
 import {
     ActivitiProcessFilters,
@@ -59,6 +60,9 @@ export class ActivitiDemoComponent implements AfterViewInit {
 
     @ViewChild(ActivitiTaskList)
     taskList: ActivitiTaskList;
+
+    @ViewChild(TaskAttachmentListComponent)
+    taskAttachList: TaskAttachmentListComponent;
 
     @ViewChild(ActivitiProcessFilters)
     activitiprocessfilter: ActivitiProcessFilters;
@@ -100,6 +104,7 @@ export class ActivitiDemoComponent implements AfterViewInit {
     sub: Subscription;
     blobFile: any;
     flag: boolean = true;
+    createTaskAttach: boolean = false;
 
     dataTasks: ObjectDataTableAdapter;
     dataProcesses: ObjectDataTableAdapter;
@@ -324,6 +329,19 @@ export class ActivitiDemoComponent implements AfterViewInit {
 
     onRowDblClick(event) {
         console.log(event);
+    }
+
+    onCreateTaskSuccess() {
+        this.taskAttachList.reload();
+        this.toggleCreateTakAttach();
+    }
+
+    toggleCreateTakAttach() {
+        this.createTaskAttach = !this.createTaskAttach;
+    }
+
+    isCreateTaskAttachVisible() {
+        return this.createTaskAttach;
     }
 
 }
