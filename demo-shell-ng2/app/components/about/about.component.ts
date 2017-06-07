@@ -29,6 +29,8 @@ export class AboutComponent implements OnInit {
 
     data: ObjectDataTableAdapter;
 
+    githubUrlCommitAlpha: string = 'https://github.com/Alfresco/alfresco-ng2-components/commits/';
+
     constructor(private http: Http,
                 private logService: LogService) {
     }
@@ -42,18 +44,38 @@ export class AboutComponent implements OnInit {
                 return regexp.test(val);
             });
 
-            let alfrescoPackagesTableRappresentation = [];
+            let alfrescoPackagesTableRepresentation = [];
             alfrescoPackages.forEach((val) => {
                 this.logService.log(response.json().dependencies[val]);
-                alfrescoPackagesTableRappresentation.push({name: val, version: response.json().dependencies[val].version});
+                alfrescoPackagesTableRepresentation.push({
+                    name: val,
+                    version: response.json().dependencies[val].version
+                });
             });
 
-            this.logService.log(alfrescoPackagesTableRappresentation);
+            this.gitHubLinkCreation(alfrescoPackagesTableRepresentation);
 
-            this.data = new ObjectDataTableAdapter(alfrescoPackagesTableRappresentation, [
+            this.logService.log(alfrescoPackagesTableRepresentation);
+
+            this.data = new ObjectDataTableAdapter(alfrescoPackagesTableRepresentation, [
                 {type: 'text', key: 'name', title: 'Name', sortable: true},
                 {type: 'text', key: 'version', title: 'Version', sortable: true}
             ]);
         });
+    }
+
+    private gitHubLinkCreation(alfrescoPackagesTableRepresentation): void {
+        let corePackage = alfrescoPackagesTableRepresentation.find((packageUp) => {
+            return packageUp.name === 'ng2-alfresco-core';
+        });
+
+        if (corePackage) {
+            let commitIsh = corePackage.version.split('-');
+            if (commitIsh.length > 1) {
+                this.githubUrlCommitAlpha = this.githubUrlCommitAlpha + commitIsh;
+            } else {
+                this.githubUrlCommitAlpha = this.githubUrlCommitAlpha + corePackage.version;
+            }
+        }
     }
 }
