@@ -24,6 +24,8 @@ import { UploadService, FileUploadCompleteEvent } from 'ng2-alfresco-upload';
 
 import { CreateFolderDialog } from '../../dialogs/create-folder.dialog';
 
+import { CreateFolderDialog } from '../../dialogs/create-folder.dialog';
+
 @Component({
     selector: 'files-component',
     templateUrl: './files.component.html',
@@ -138,6 +140,22 @@ export class FilesComponent implements OnInit {
                 this.contentService.createFolder('', folderName, this.documentList.currentFolderId).subscribe(
                     node => console.log(node),
                     err => console.log(err)
+                );
+            }
+        });
+    }
+
+    onCreateFolderClicked(event: Event) {
+        let dialogRef = this.dialog.open(CreateFolderDialog);
+        dialogRef.afterClosed().subscribe(folderName => {
+            if (folderName) {
+                this.contentService.createFolder('', folderName, this.documentList.currentFolderId).subscribe(
+                    node => {
+                        console.log(node);
+                    },
+                    err => {
+                        console.log(err);
+                    }
                 );
             }
         });
