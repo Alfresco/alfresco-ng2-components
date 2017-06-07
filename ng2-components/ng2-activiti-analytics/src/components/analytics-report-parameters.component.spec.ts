@@ -499,7 +499,7 @@ describe('AnalyticsReportParametersComponent', () => {
                 reportName.focus();
                 component.reportParameters.name = 'FAKE_TEST_NAME';
                 reportName.value = 'FAKE_TEST_NAME';
-                reportName.blur();
+                reportName.dispatchEvent(new Event('blur'));
 
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -514,7 +514,6 @@ describe('AnalyticsReportParametersComponent', () => {
                     contentType: 'json',
                     responseText: analyticParamsMock.reportDefParamStatus
                 });
-
             });
 
             it('Should show a dialog to allowing report save', async(() => {
