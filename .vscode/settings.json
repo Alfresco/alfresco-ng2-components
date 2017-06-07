@@ -11,5 +11,5 @@
         "**/coverage": true
     },
     "editor.renderIndentGuides": true,
-    "tslint.configFile": "ng2-components/config/assets/tslint.json"
+    "tslint.configFile": "ng2-components/tslint.json"
 }
