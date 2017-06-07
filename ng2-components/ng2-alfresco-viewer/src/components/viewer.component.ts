@@ -239,7 +239,7 @@ export class ViewerComponent {
      * @returns {boolean}
      */
     private isText(): boolean {
-        return this.extension === 'txt' || this.mimeType === 'text/txt';
+        return this.extension === 'txt' || this.mimeType === 'text/txt' || this.mimeType === 'text/plain';
     }
 
     /**

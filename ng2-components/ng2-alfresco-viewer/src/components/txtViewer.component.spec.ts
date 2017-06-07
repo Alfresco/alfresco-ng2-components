@@ -52,16 +52,16 @@ describe('Test ng2-alfresco-viewer Text View component', () => {
         debug = fixture.debugElement;
         element = fixture.nativeElement;
         component = fixture.componentInstance;
-        component.urlFile = require('../assets/fake-test-file.txt');
     });
 
     describe('View', () => {
 
         it('Should text container be present with urlfile', (done) => {
             fixture.detectChanges();
-            let change = new SimpleChange(null, null, true);
+            let urlFile = require('../assets/fake-test-file.txt');
+            let change = new SimpleChange(null, urlFile, true);
 
-            component.ngOnChanges(change).then(() => {
+            component.ngOnChanges({ 'urlFile': change }).then(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(element.querySelector('#adf-viewer-text-container').textContent).toContain('example');
@@ -69,5 +69,20 @@ describe('Test ng2-alfresco-viewer Text View component', () => {
                 });
             });
         });
+
+        it('Should text container be present with Blob file', (done) => {
+            let blobFile = new Blob(['text example'], {type: 'text/txt'});
+
+            let change = new SimpleChange(null, blobFile, true);
+
+            component.ngOnChanges({ 'blobFile': change }).then(() => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(element.querySelector('#adf-viewer-text-container').textContent).toContain('example');
+                    done();
+                });
+            });
+        });
+
     });
 });
