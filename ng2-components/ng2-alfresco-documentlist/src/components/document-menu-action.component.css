@@ -15,5 +15,5 @@
     position: relative;
     -webkit-transition: height .35s cubic-bezier(0.4,0.0,1,1),border-color .4s;
     transition: height .35s cubic-bezier(0.4,0.0,1,1),border-color .4s;
-    z-index: 5;
+    z-index: 1;
 }
