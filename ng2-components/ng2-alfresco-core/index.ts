@@ -16,12 +16,13 @@
  */
 
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { MdSnackBarModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule, Http } from '@angular/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader } from 'ng2-translate/ng2-translate';
+import { MaterialModule } from './src/material.module';
+import { AdfToolbarComponent } from './src/components/toolbar/toolbar.component';
 
 import {
     AlfrescoAuthenticationService,
@@ -95,7 +96,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
             useFactory: (createTranslateLoader),
             deps: [Http, LogService]
         }),
-        MdSnackBarModule
+        MaterialModule
     ],
     declarations: [
         ...MATERIAL_DESIGN_DIRECTIVES,
@@ -104,7 +105,8 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         UploadDirective,
         DataColumnComponent,
         DataColumnListComponent,
-        FileSizePipe
+        FileSizePipe,
+        AdfToolbarComponent
     ],
     providers: [
         ...ALFRESCO_CORE_PROVIDERS
@@ -116,14 +118,15 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         ReactiveFormsModule,
         HttpModule,
         TranslateModule,
+        MaterialModule,
         ...MATERIAL_DESIGN_DIRECTIVES,
         ...CONTEXT_MENU_DIRECTIVES,
         ...COLLAPSABLE_DIRECTIVES,
         UploadDirective,
         DataColumnComponent,
         DataColumnListComponent,
-        MdSnackBarModule,
-        FileSizePipe
+        FileSizePipe,
+        AdfToolbarComponent
     ]
 })
 export class CoreModule {

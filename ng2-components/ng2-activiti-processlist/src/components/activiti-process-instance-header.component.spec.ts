@@ -116,9 +116,11 @@ describe('ActivitiProcessInstanceHeader', () => {
     it('should render the button show diagram disabled', () => {
         component.processInstance = new ProcessInstance(processEnded);
         fixture.detectChanges();
-        let showButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#show-diagram-button');
-        expect(showButton).toBeDefined();
-        expect(showButton.disabled).toBeTruthy();
+        fixture.whenStable().then(() => {
+            let showButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#show-diagram-button');
+            expect(showButton).toBeDefined();
+            expect(showButton.disabled).toBeTruthy();
+        });
     });
 
     it('should NOT render the button show diagram is the property showDiagram is false', () => {
