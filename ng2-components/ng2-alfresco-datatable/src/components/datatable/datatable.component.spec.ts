@@ -184,7 +184,7 @@ describe('DataTable', () => {
     it('should initialize default adapter', () => {
         let table = new DataTableComponent(null);
         expect(table.data).toBeUndefined();
-        table.ngAfterContentInit();
+        table.ngOnChanges({'data': new SimpleChange('123', {}, true)});
         expect(table.data).toEqual(jasmine.any(ObjectDataTableAdapter));
     });
 
@@ -263,7 +263,7 @@ describe('DataTable', () => {
     });
 
     it('should not sort if column is missing', () => {
-        dataTable.ngAfterContentInit();
+        dataTable.ngOnChanges({'data': new SimpleChange('123', {}, true)});
         let adapter = dataTable.data;
         spyOn(adapter, 'setSorting').and.callThrough();
         dataTable.onColumnHeaderClick(null);
@@ -271,7 +271,7 @@ describe('DataTable', () => {
     });
 
     it('should not sort upon clicking non-sortable column header', () => {
-        dataTable.ngAfterContentInit();
+        dataTable.ngOnChanges({'data': new SimpleChange('123', {}, true)});
         let adapter = dataTable.data;
         spyOn(adapter, 'setSorting').and.callThrough();
 
@@ -284,7 +284,7 @@ describe('DataTable', () => {
     });
 
     it('should set sorting upon column header clicked', () => {
-        dataTable.ngAfterContentInit();
+        dataTable.ngOnChanges({'data': new SimpleChange('123', {}, true)});
         let adapter = dataTable.data;
         spyOn(adapter, 'setSorting').and.callThrough();
 
@@ -303,7 +303,7 @@ describe('DataTable', () => {
     });
 
     it('should invert sorting upon column header clicked', () => {
-        dataTable.ngAfterContentInit();
+        dataTable.ngOnChanges({'data': new SimpleChange('123', {}, true)});
 
         let adapter = dataTable.data;
         let sorting = new DataSorting('column_1', 'asc');
@@ -380,7 +380,7 @@ describe('DataTable', () => {
 
     it('should allow "select all" calls with no rows', () => {
         dataTable.multiselect = true;
-        dataTable.ngAfterContentInit();
+        dataTable.ngOnChanges({'data': new SimpleChange('123', {}, true)});
 
         dataTable.onSelectAllClick(<MdCheckboxChange> { checked: true });
         expect(dataTable.isSelectAllChecked).toBe(true);
@@ -468,13 +468,13 @@ describe('DataTable', () => {
     });
 
     it('should require adapter sorting to evaluate sorting state', () => {
-        dataTable.ngAfterContentInit();
+        dataTable.ngOnChanges({'data': new SimpleChange('123', {}, true)});
         spyOn(dataTable.data, 'getSorting').and.returnValue(null);
         expect(dataTable.isColumnSorted(<DataColumn> {}, 'asc')).toBeFalsy();
     });
 
     it('should evaluate column sorting state', () => {
-        dataTable.ngAfterContentInit();
+        dataTable.ngOnChanges({'data': new SimpleChange('123', {}, true)});
         spyOn(dataTable.data, 'getSorting').and.returnValue(new DataSorting('column_1', 'asc'));
         expect(dataTable.isColumnSorted(<DataColumn> {key: 'column_1'}, 'asc')).toBeTruthy();
         expect(dataTable.isColumnSorted(<DataColumn> {key: 'column_2'}, 'desc')).toBeFalsy();

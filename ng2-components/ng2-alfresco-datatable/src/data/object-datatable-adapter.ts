@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { TemplateRef } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { ObjectUtils } from 'ng2-alfresco-core';
 import { DataTableAdapter, DataRow, DataColumn, DataSorting } from './datatable-adapter';
@@ -221,6 +222,7 @@ export class ObjectDataColumn implements DataColumn {
     title: string;
     srTitle: string;
     cssClass: string;
+    template?: TemplateRef<any>;
 
     constructor(obj: any) {
         this.key = obj.key;
@@ -229,5 +231,6 @@ export class ObjectDataColumn implements DataColumn {
         this.title = obj.title;
         this.srTitle = obj.srTitle;
         this.cssClass = obj.cssClass;
+        this.template = obj.template;
     }
 }
