@@ -96,7 +96,7 @@ module.exports = {
     plugins: [
         new CopyWebpackPlugin([{
             from: `src/i18n/`,
-            to: `bundles/assets/ng2-alfresco-tag/i18n/`
+            to: `bundles/assets/${path.basename(helpers.root(''))}/i18n/`
         }]),
 
         new webpack.NoEmitOnErrorsPlugin(),
