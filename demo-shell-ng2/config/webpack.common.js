@@ -114,13 +114,6 @@ module.exports = {
         }),
 
         new CopyWebpackPlugin([
-            ... alfrescoLibs.map(lib => {
-                return {
-                    context: `../ng2-components/${lib}/bundles/assets/` ,
-                    from: '**/*',
-                    to: `assets/`
-                }
-            }),
             {
                 context: 'resources/i18n',
                 from: '**/*.json',
