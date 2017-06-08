@@ -198,7 +198,6 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
         if (this.data) {
             this.data.setRows(this.convertToRowsData(rows));
         }
-    }
 
     private setTableSchema() {
         let schema: DataColumn[] = [];
