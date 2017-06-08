@@ -72,7 +72,8 @@ export class UploadDragAreaComponent {
     onUploadFiles(e: CustomEvent) {
         e.stopPropagation();
         e.preventDefault();
-        if (this.enabled) {
+        let isAllowed: boolean = this.isAllowed(e.detail.data.obj.entry);
+        if (isAllowed) {
             let files: FileInfo[] = e.detail.files;
             if (files && files.length > 0) {
                 let parentId = this.rootFolderId;
@@ -200,5 +201,9 @@ export class UploadDragAreaComponent {
             isPermitted = permFound ? true : false;
         }
         return isPermitted;
+    }
+
+    private isAllowed(node: any) {
+        return this.enabled || this.hasCreatePermission(node);
     }
 }
