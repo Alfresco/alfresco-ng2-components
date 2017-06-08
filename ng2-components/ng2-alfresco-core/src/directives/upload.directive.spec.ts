@@ -17,6 +17,7 @@
 
 import { ElementRef } from '@angular/core';
 import { UploadDirective } from './upload.directive';
+import { FileInfo } from './../utils/file-utils';
 
 describe('UploadDirective', () => {
 
@@ -106,30 +107,35 @@ describe('UploadDirective', () => {
         expect(event.preventDefault).not.toHaveBeenCalled();
     });
 
-    it('should raise upload-files event on files drop', () => {
+    it('should raise upload-files event on files drop', (done) => {
         directive.enabled = true;
-        let files = [<File> {}];
         let event = jasmine.createSpyObj('event', ['preventDefault', 'stopPropagation']);
         spyOn(directive, 'getDataTransfer').and.returnValue({});
-        spyOn(directive, 'getFilesDropped').and.returnValue(files);
-        spyOn(nativeElement, 'dispatchEvent').and.stub();
+        spyOn(directive, 'getFilesDropped').and.returnValue(Promise.resolve([
+            <FileInfo> {},
+            <FileInfo> {}
+        ]));
+        spyOn(nativeElement, 'dispatchEvent').and.callFake(_ => {
+            done();
+        });
         directive.onDrop(event);
-        expect(nativeElement.dispatchEvent).toHaveBeenCalled();
     });
 
-    it('should provide dropped files in upload-files event', () => {
+    it('should provide dropped files in upload-files event', (done) => {
         directive.enabled = true;
-        let files = [<File> {}];
+        let files = [
+            <FileInfo> {}
+        ];
         let event = jasmine.createSpyObj('event', ['preventDefault', 'stopPropagation']);
         spyOn(directive, 'getDataTransfer').and.returnValue({});
-        spyOn(directive, 'getFilesDropped').and.returnValue(files);
+        spyOn(directive, 'getFilesDropped').and.returnValue(Promise.resolve(files));
 
         spyOn(nativeElement, 'dispatchEvent').and.callFake(e => {
             expect(e.detail.files.length).toBe(1);
             expect(e.detail.files[0]).toBe(files[0]);
+            done();
         });
         directive.onDrop(event);
-        expect(nativeElement.dispatchEvent).toHaveBeenCalled();
     });
 
 });
