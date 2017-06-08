@@ -101,18 +101,36 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
     }
 
     ngAfterContentInit() {
-        this.loadTable();
+        this.setTableSchema();
+        this.setupMaterialComponents();
+    }
+
+    ngAfterViewInit() {
+        this.setupMaterialComponents();
+    }
+
+    private setupMaterialComponents(): boolean {
+        // workaround for MDL issues with dynamic components
+        if (componentHandler) {
+            componentHandler.upgradeAllRegistered();
+            return true;
+        }
+        return false;
     }
 
     ngOnChanges(changes: SimpleChanges) {
         if (this.isPropertyChanged(changes['data'])) {
-            this.loadTable();
+            if (this.isTableEmpty()) {
+                this.initTable();
+            }
             return;
         }
 
         if (this.isPropertyChanged(changes['rows'])) {
-            if (this.data) {
-                this.data.setRows(this.convertToRowsData(changes['rows'].currentValue));
+            if (this.isTableEmpty()) {
+                this.initTable();
+            } else {
+                this.setTableRows(changes['rows'].currentValue);
             }
             return;
         }
@@ -130,27 +148,28 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
         return rows.map(row => new ObjectDataRow(row));
     }
 
-    loadTable() {
+    private initTable() {
+        this.data = new ObjectDataTableAdapter(this.rows, []);
+    }
+
+    isTableEmpty() {
+        return this.data === undefined || this.data === null;
+    }
+
+    private setTableRows(rows) {
+        if (this.data) {
+            this.data.setRows(this.convertToRowsData(rows));
+        }
+    }
+
+    private setTableSchema() {
         let schema: DataColumn[] = [];
 
         if (this.columnList && this.columnList.columns) {
             schema = this.columnList.columns.map(c => <DataColumn> c);
         }
 
-        if (!this.data) {
-            this.data = new ObjectDataTableAdapter(this.rows, schema);
-        } else {
-            this.setHtmlColumnConfigurationOnObjectAdapter(schema);
-        }
-
-        // workaround for MDL issues with dynamic components
-        if (componentHandler) {
-            componentHandler.upgradeAllRegistered();
-        }
-    }
-
-    private setHtmlColumnConfigurationOnObjectAdapter(schema: DataColumn[]) {
-        if (schema && schema.length > 0) {
+        if (this.data && schema && schema.length > 0) {
             this.data.setColumns(schema);
         }
     }
