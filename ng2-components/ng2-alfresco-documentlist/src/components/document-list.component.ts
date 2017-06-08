@@ -165,6 +165,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     data: ShareDataTableAdapter;
 
     loading: boolean = false;
+    private currentNodeAllowableOperations: string[] = [];
+    private CREATE_PERMISSION = 'create';
 
     constructor(private documentListService: DocumentListService,
                 private ngZone: NgZone,
@@ -329,6 +331,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             this.currentFolderId = node.entry.id;
             this.folderNode = node.entry;
             this.skipCount = 0;
+            this.currentNodeAllowableOperations = node.entry['allowableOperations'] ? node.entry['allowableOperations'] : [];
             this.loadFolder();
             this.folderChange.emit(new NodeEntryEvent(node.entry));
             return true;
@@ -359,11 +362,12 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     loadFolderByNodeId(nodeId: string) {
         this.loading = true;
         this.documentListService.getFolderNode(nodeId).then(node => {
-                this.folderNode = node;
-                this.currentFolderId = node.id;
-                this.skipCount = 0;
-                this.loadFolderNodesByFolderNodeId(node.id, this.pageSize, this.skipCount).catch(err => this.error.emit(err));
-            })
+            this.folderNode = node;
+            this.currentFolderId = node.id;
+            this.skipCount = 0;
+            this.currentNodeAllowableOperations = node['allowableOperations'] ? node['allowableOperations'] : [];
+            this.loadFolderNodesByFolderNodeId(node.id, this.pageSize, this.skipCount).catch(err => this.error.emit(err));
+        })
             .catch(err => this.error.emit(err));
     }
 
@@ -579,6 +583,19 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     updateSkipCount(newSkipCount) {
         this.skipCount = newSkipCount;
+    }
+
+    hasCurrentNodePermission(permission: string): boolean {
+        let hasPermission: boolean = false;
+        if (this.currentNodeAllowableOperations.length > 0) {
+            let permFound = this.currentNodeAllowableOperations.find(element => element === permission);
+            hasPermission = permFound ? true : false;
+        }
+        return hasPermission;
+    }
+
+    hasCreatePermission() {
+        return this.hasCurrentNodePermission(this.CREATE_PERMISSION);
     }
 
 }

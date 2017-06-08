@@ -168,6 +168,20 @@ export class UploadDragAreaComponent {
         });
     }
 
+    /**
+     * Show the error inside Notification bar
+     * @param Error message
+     * @private
+     */
+    showErrorNotificationBar(errorMessage: string) {
+        this.notificationService.openSnackMessage(errorMessage, 3000);
+    }
+
+    /**
+     * Retrive the error message using the error status code
+     * @param response - object that contain the HTTP response
+     * @returns {string}
+     */
     private uploadFiles(files: FileModel[]): void {
         if (this.enabled && files.length) {
             this.uploadService.addToQueue(...files);
@@ -177,5 +191,14 @@ export class UploadDragAreaComponent {
                 this.showUndoNotificationBar(latestFilesAdded);
             }
         }
+    }
+
+    private hasCreatePermission(node: any): boolean {
+        let isPermitted = false;
+        if (node && node['allowableOperations']) {
+            let permFound = node['allowableOperations'].find(element => element === 'create');
+            isPermitted = permFound ? true : false;
+        }
+        return isPermitted;
     }
 }

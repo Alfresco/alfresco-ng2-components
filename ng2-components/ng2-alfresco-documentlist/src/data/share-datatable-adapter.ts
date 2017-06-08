@@ -236,7 +236,7 @@ export class ShareDataRow implements DataRow {
 
     cache: { [key: string]: any } = {};
     isSelected: boolean = false;
-    readonly isDropTarget;
+    isDropTarget: boolean;
 
     get node(): NodeMinimalEntry {
         return this.obj;
@@ -247,7 +247,28 @@ export class ShareDataRow implements DataRow {
             throw new Error(ShareDataRow.ERR_OBJECT_NOT_FOUND);
         }
 
-        this.isDropTarget = obj.entry && obj.entry.isFolder;
+        this.isDropTarget = this.isFolderAndHasPermissionToUpload(obj);
+    }
+
+    isFolderAndHasPermissionToUpload(obj: NodeMinimalEntry): boolean {
+        return this.isFolder(obj) && this.hasCreatePermission(obj);
+    }
+
+    hasCreatePermission(obj: NodeMinimalEntry): boolean {
+        return this.hasPermission(obj, 'create');
+    }
+
+    private hasPermission(obj: NodeMinimalEntry, permission: string): boolean {
+        let hasPermission: boolean = false;
+        if (obj.entry && obj.entry['allowableOperations']) {
+            let permFound = obj.entry['allowableOperations'].find(element => element === permission);
+            hasPermission = permFound ? true : false;
+        }
+        return hasPermission;
+    }
+
+    isFolder(obj: NodeMinimalEntry): boolean {
+        return obj.entry && obj.entry.isFolder;
     }
 
     cacheValue(key: string, value: any): any {
