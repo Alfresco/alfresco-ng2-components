@@ -32,6 +32,9 @@ describe('AlfrescoLogin', () => {
 
     let usernameInput, passwordInput;
 
+    const getLoginErrorElement = () => element.querySelector('#login-error');
+    const getLoginErrorMessage = () => element.querySelector('#login-error .login-error-message').innerText;
+
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
@@ -245,8 +248,8 @@ describe('AlfrescoLogin', () => {
 
         expect(component.error).toBe(true);
         expect(component.success).toBe(false);
-        expect(element.querySelector('#login-error')).toBeDefined();
-        expect(element.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+        expect(getLoginErrorElement()).toBeDefined();
+        expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
     });
 
     it('should return error with a wrong password', () => {
@@ -268,8 +271,8 @@ describe('AlfrescoLogin', () => {
 
         expect(component.error).toBe(true);
         expect(component.success).toBe(false);
-        expect(element.querySelector('#login-error')).toBeDefined();
-        expect(element.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+        expect(getLoginErrorElement()).toBeDefined();
+        expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
     });
 
     it('should return error with a wrong username and password', () => {
@@ -291,8 +294,8 @@ describe('AlfrescoLogin', () => {
 
         expect(component.error).toBe(true);
         expect(component.success).toBe(false);
-        expect(element.querySelector('#login-error')).toBeDefined();
-        expect(element.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+        expect(getLoginErrorElement()).toBeDefined();
+        expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
     });
 
     it('should return CORS error when server CORS error occurs', () => {
@@ -314,8 +317,8 @@ describe('AlfrescoLogin', () => {
 
         expect(component.error).toBe(true);
         expect(component.success).toBe(false);
-        expect(element.querySelector('#login-error')).toBeDefined();
-        expect(element.querySelector('#login-error').innerText).toEqual('ERROR: the network is offline, Origin is not allowed by Access-Control-Allow-Origin');
+        expect(getLoginErrorElement()).toBeDefined();
+        expect(getLoginErrorMessage()).toEqual('ERROR: the network is offline, Origin is not allowed by Access-Control-Allow-Origin');
     });
 
     it('should return CSRF error when server CSRF error occurs', () => {
@@ -337,8 +340,8 @@ describe('AlfrescoLogin', () => {
 
         expect(component.error).toBe(true);
         expect(component.success).toBe(false);
-        expect(element.querySelector('#login-error')).toBeDefined();
-        expect(element.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CSRF');
+        expect(getLoginErrorElement()).toBeDefined();
+        expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CSRF');
     });
 
     it('should return ECOM read-oly error when error occurs', () => {
@@ -360,8 +363,8 @@ describe('AlfrescoLogin', () => {
 
         expect(component.error).toBe(true);
         expect(component.success).toBe(false);
-        expect(element.querySelector('#login-error')).toBeDefined();
-        expect(element.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ECM-LICENSE');
+        expect(getLoginErrorElement()).toBeDefined();
+        expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ECM-LICENSE');
     });
 
     it('should emit onSuccess event after the login has succeeded', () => {
@@ -415,8 +418,8 @@ describe('AlfrescoLogin', () => {
 
         expect(component.error).toBe(true);
         expect(component.success).toBe(false);
-        expect(element.querySelector('#login-error')).toBeDefined();
-        expect(element.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+        expect(getLoginErrorElement()).toBeDefined();
+        expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
         expect(component.onError.emit).toHaveBeenCalledWith('Fake server error');
     });
 
@@ -460,8 +463,8 @@ describe('AlfrescoLogin', () => {
 
         expect(component.error).toBe(true);
         expect(component.success).toBe(false);
-        expect(element.querySelector('#login-error')).toBeDefined();
-        expect(element.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-PROVIDERS');
+        expect(getLoginErrorElement()).toBeDefined();
+        expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-PROVIDERS');
         expect(component.onError.emit).toHaveBeenCalledWith('LOGIN.MESSAGES.LOGIN-ERROR-PROVIDERS');
     });
 });

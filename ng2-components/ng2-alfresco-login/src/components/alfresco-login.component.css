@@ -24,7 +24,7 @@
 :host .content-layout {
     background-size: cover;
     background-position: center;
-    height: 100%;
+    min-height: 100%;
     padding: 0;
 
     -webkit-box-orient: vertical;
@@ -47,10 +47,30 @@
 }
 
 :host .error {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+
+    -webkit-box-orient: horizontal;
+    -moz-box-orient: horizontal;
+    box-orient: horizontal;
+    flex-direction: row;
+
+    -webkit-box-pack: flex-start;
+    -moz-box-pack: flex-start;
+    box-pack: flex-start;
+    justify-content: flex-start;
+
     color: red;
-    padding: 8px;
+    padding: 0px;
     margin-bottom: 4px;
     font-size: 13px;
+}
+
+:host .error .error-icon {
+    margin-right: 10px;
 }
 
 :host .center {
@@ -72,11 +92,18 @@
     height: 36px;
     line-height: 38px;
     border-radius: 4px;
-    background-color: rgba(0, 0, 0, 0.07);
     box-shadow: none;
 }
 
 .login-button-label {
+    color: rgb(255, 255, 255);
+}
+
+:host .mdl-button--raised.mdl-button--colored[disabled] {
+    background-color: rgba(0, 0, 0, 0.07);
+}
+
+:host .mdl-button--raised.mdl-button--colored[disabled] .login-button-label {
     color: rgb(175, 175, 175);
 }
 
@@ -251,6 +278,14 @@
     font-size: 16px;
 }
 
+.adf-login__field >>> input {
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.adf-login__field .mat-focused >>> .mat-input-placeholder {
+    color: rgba(0, 0, 0, 0.38);
+}
+
 .alfresco-login__container {
     background-size: cover;
     background-position: center;
@@ -280,6 +315,11 @@
 
 .adf-login__remember-me {
     padding-top: 22px;
+}
+
+.adf-login__remember-me >>> .mat-checkbox-label {
+    color: #000000;
+    opacity: 0.87;
 }
 
 .adf-login__field {
