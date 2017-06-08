@@ -186,7 +186,7 @@ describe('UploadButtonComponent', () => {
         fixture.detectChanges();
 
         component.onFilesAdded(fakeEvent);
-        expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith('-root-', '/root-fake-/sites-fake/folder-fake', null);
+        expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith(null);
     });
 
     it('should call uploadFile with a custom root folder', () => {
@@ -202,7 +202,7 @@ describe('UploadButtonComponent', () => {
         fixture.detectChanges();
 
         component.onFilesAdded(fakeEvent);
-        expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith('-my-', '/root-fake-/sites-fake/folder-fake', null);
+        expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith(null);
     });
 
     it('should create a folder and emit an File uploaded event', (done) => {
@@ -225,21 +225,6 @@ describe('UploadButtonComponent', () => {
                 value: 'File uploaded'
             });
         });
-        component.onDirectoryAdded(fakeEvent);
-    });
-
-    it('should emit an onError event when the folder already exist', (done) => {
-        component.rootFolderId = '-my-';
-        spyOn(contentService, 'createFolder').and.returnValue(Observable.throw(new Error('')));
-        spyOn(component, 'getFolderNode').and.returnValue(Observable.of(fakeFolderNodeWithPermission));
-
-        component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
-
-        component.onError.subscribe(e => {
-            expect(e.value).toEqual('Error');
-            done();
-        });
-
         component.onDirectoryAdded(fakeEvent);
     });
 

@@ -81,7 +81,7 @@ describe('UploadDragAreaComponent', () => {
 
         component.onFilesDropped(filesList);
         expect(uploadService.addToQueue).toHaveBeenCalledWith(fileFake);
-        expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith('-root-', '/root-fake-/sites-fake/folder-fake', null);
+        expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith(null);
     });
 
     it('should show the loading messages in the notification bar when the files are dropped', () => {
@@ -96,7 +96,7 @@ describe('UploadDragAreaComponent', () => {
         let filesList = [fileFake];
 
         component.onFilesDropped(filesList);
-        expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith('-root-', '/root-fake-/sites-fake/folder-fake', null);
+        expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith(null);
         expect(component.showUndoNotificationBar).toHaveBeenCalled();
     });
 
@@ -119,8 +119,7 @@ describe('UploadDragAreaComponent', () => {
         };
 
         component.onFilesEntityDropped(itemEntity);
-        expect(uploadService.uploadFilesInTheQueue)
-            .toHaveBeenCalledWith('-root-', '/root-fake-/sites-fake/document-library-fake/folder-fake/', null);
+        expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith(null);
     });
 
     it('should upload a file with a custom root folder ID when dropped', () => {
@@ -143,7 +142,6 @@ describe('UploadDragAreaComponent', () => {
         };
 
         component.onFilesEntityDropped(itemEntity);
-        expect(uploadService.uploadFilesInTheQueue)
-            .toHaveBeenCalledWith('-my-', '/root-fake-/sites-fake/document-library-fake/folder-fake/', null);
+        expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith(null);
     });
 });

@@ -23,6 +23,8 @@ export interface FileUploadProgress {
 
 export interface FileUploadOptions {
     newVersion?: boolean;
+    parentId?: string;
+    path?: string;
 }
 
 export enum FileUploadStatus {

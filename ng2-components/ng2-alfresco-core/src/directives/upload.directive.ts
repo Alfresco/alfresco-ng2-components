@@ -16,6 +16,7 @@
  */
 
 import { Directive, Input, HostListener, ElementRef, Renderer, OnInit, NgZone, OnDestroy } from '@angular/core';
+import { FileUtils, FileInfo } from '../utils/file-utils';
 
 @Directive({
     selector: '[adf-upload]'
@@ -129,14 +130,16 @@ export class UploadDirective implements OnInit, OnDestroy {
 
             const dataTranfer = this.getDataTransfer(event);
             if (dataTranfer) {
-                const files = this.getFilesDropped(dataTranfer);
-                this.onUploadFiles(files);
+                this.getFilesDropped(dataTranfer).then(files => {
+                    this.onUploadFiles(files);
+                });
+
             }
         }
         return false;
     }
 
-    onUploadFiles(files: File[]) {
+    onUploadFiles(files: FileInfo[]) {
         if (this.enabled && files.length > 0) {
             let e = new CustomEvent('upload-files', {
                 detail: {
@@ -177,27 +180,55 @@ export class UploadDirective implements OnInit, OnDestroy {
      * Extract files from the DataTransfer object used to hold the data that is being dragged during a drag and drop operation.
      * @param dataTransfer DataTransfer object
      */
-    protected getFilesDropped(dataTransfer: DataTransfer): File[] {
-        const result: File[] = [];
+    protected getFilesDropped(dataTransfer: DataTransfer): Promise<FileInfo[]> {
+        return new Promise(resolve => {
+            const iterations = [];
 
-        if (dataTransfer) {
-            const items: FileList = dataTransfer.files;
-
-            if (items && items.length > 0) {
-                for (let i = 0; i < items.length; i++) {
-                result.push(items[i]);
+            if (dataTransfer) {
+                const items = dataTransfer.items;
+                if (items) {
+                    for (let i = 0; i < items.length; i++) {
+                        if (typeof items[i].webkitGetAsEntry !== 'undefined') {
+                            let item = items[i].webkitGetAsEntry();
+                            if (item) {
+                                if (item.isFile) {
+                                    iterations.push(Promise.resolve(<FileInfo> {
+                                        entry: item,
+                                        file: items[i].getAsFile(),
+                                        relativeFolder: '/'
+                                    }));
+                                } else if (item.isDirectory) {
+                                    iterations.push(new Promise(resolveFolder => {
+                                        FileUtils.flattern(item).then(files => resolveFolder(files));
+                                    }));
+                                }
+                            }
+                        } else {
+                            iterations.push(Promise.resolve(<FileInfo>{
+                                entry: null,
+                                file: items[i].getAsFile(),
+                                relativeFolder: '/'
+                            }));
+                        }
+                    }
+                } else {
+                    // safari or FF
+                    let files = dataTransfer.files;
+                    iterations.push(Promise.resolve(this.getFilesSelected(files)));
                 }
             }
-        }
 
-        return result;
+            Promise.all(iterations).then(result => {
+                resolve(result.reduce((a, b) => a.concat(b), []));
+            });
+        });
     }
 
     /**
      * Extract files from the FileList object used to hold files that user selected by means of File Dialog.
      * @param fileList List of selected files
      */
-    protected getFilesSelected(fileList: FileList) {
+    protected getFilesSelected(fileList: FileList): File[] {
         let result: File[] = [];
         if (fileList && fileList.length > 0) {
             for (let i = 0; i < fileList.length; i++) {
@@ -215,7 +246,11 @@ export class UploadDirective implements OnInit, OnDestroy {
         if (this.isClickMode()) {
             const input = (<HTMLInputElement>e.currentTarget);
             const files = this.getFilesSelected(input.files);
-            this.onUploadFiles(files);
+            this.onUploadFiles(files.map(f => <FileInfo> {
+                entry: null,
+                file: f,
+                relativeFolder: '/'
+            }));
         }
     }
 }

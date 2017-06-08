@@ -21,7 +21,7 @@ import { MdDialog } from '@angular/material';
 import { AlfrescoAuthenticationService, AlfrescoContentService, FolderCreatedEvent, LogService, NotificationService } from 'ng2-alfresco-core';
 import { DocumentActionsService, DocumentListComponent, ContentActionHandler, DocumentActionModel, FolderActionModel } from 'ng2-alfresco-documentlist';
 import { FormService } from 'ng2-activiti-form';
-import { UploadService, UploadButtonComponent, UploadDragAreaComponent } from 'ng2-alfresco-upload';
+import { UploadService, UploadButtonComponent, UploadDragAreaComponent, FileUploadCompleteEvent } from 'ng2-alfresco-upload';
 
 import { CreateFolderDialog } from '../../dialogs/create-folder.dialog';
 
@@ -38,7 +38,7 @@ export class FilesComponent implements OnInit, AfterViewInit {
     fileNodeId: any;
     fileShowed: boolean = false;
 
-    useCustomToolbar = false;
+    useCustomToolbar = true;
 
     @Input()
     multipleFileUpload: boolean = false;
@@ -129,6 +129,7 @@ export class FilesComponent implements OnInit, AfterViewInit {
             this.logService.warn('You are not logged in to BPM');
         }
 
+        this.uploadService.fileUploadComplete.debounceTime(300).subscribe(value => this.onFileUploadComplete(value));
         this.contentService.folderCreated.subscribe(value => this.onFolderCreated(value));
     }
 
@@ -178,6 +179,13 @@ export class FilesComponent implements OnInit, AfterViewInit {
         return function (obj: any, target?: any) {
             window.alert(`Starting BPM process: ${processDefinition.id}`);
         }.bind(this);
+    }
+
+    onFileUploadComplete(event: FileUploadCompleteEvent) {
+        if (event && event.file.options.parentId === this.documentList.currentFolderId) {
+            console.log('Reloading on File upload complete');
+            this.documentList.reload();
+        }
     }
 
     onFolderCreated(event: FolderCreatedEvent) {

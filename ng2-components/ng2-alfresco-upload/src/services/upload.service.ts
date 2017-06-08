@@ -27,6 +27,9 @@ export class UploadService {
     private queue: FileModel[] = [];
     private cache: { [key: string]: any } = {};
     private totalComplete: number = 0;
+    // private batchSize = 3;
+
+    private activeUploads: Promise<any>[] = [];
 
     queueChanged: Subject<FileModel[]> = new Subject<FileModel[]>();
     fileUpload: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
@@ -39,6 +42,10 @@ export class UploadService {
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
+    }
+
+    isUploading(): boolean {
+        return this.activeUploads.length > 0;
     }
 
     /**
@@ -68,8 +75,9 @@ export class UploadService {
     /**
      * Pick all the files in the queue that are not been uploaded yet and upload it into the directory folder.
      */
-    uploadFilesInTheQueue(rootId: string, directory: string, elementEmit: EventEmitter<any>): void {
+    uploadFilesInTheQueue(elementEmit: EventEmitter<any>): void {
         const files = this.getFilesToUpload();
+        // const batch = this.getFileBatch(this.batchSize);
 
         files.forEach((file: FileModel) => {
             this.onUploadStarting(file);
@@ -85,7 +93,13 @@ export class UploadService {
                 opts.autoRename = true;
             }
 
-            const promise = this.apiService.getInstance().upload.uploadFile(file.file, directory, rootId, null, opts);
+            const promise = this.apiService.getInstance().upload.uploadFile(
+                file.file,
+                file.options.path,
+                file.options.parentId,
+                null,
+                opts
+            );
             promise.on('progress', (progress: FileUploadProgress) => {
                 this.onUploadProgress(file, progress);
             })
@@ -207,4 +221,15 @@ export class UploadService {
         });
         return filesToUpload;
     }
+
+    /*
+    private getFileBatch(batchSize: number = 0): Array<FileModel> {
+        const pending = this.queue.filter(file => {
+            return file.status === FileUploadStatus.Pending;
+        });
+
+        let size = batchSize > 0 ? Math.min(batchSize, pending.length) : pending.length;
+        return pending.slice(0, size);
+    }
+    */
 }

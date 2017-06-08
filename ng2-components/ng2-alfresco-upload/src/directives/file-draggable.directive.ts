@@ -73,7 +73,11 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
                     if (typeof items[i].webkitGetAsEntry !== 'undefined') {
                         let item = items[i].webkitGetAsEntry();
                         if (item) {
-                            this.traverseFileTree(item);
+                            if (item.isFile) {
+                                this.onFilesEntityDropped.emit(item);
+                            } else if (item.isDirectory) {
+                                this.onFolderEntityDropped.emit(item);
+                            }
                         }
                     } else {
                         let files = event.dataTransfer.files;
@@ -87,22 +91,6 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
             }
 
             this.element.classList.remove(this.cssClassName);
-        }
-    }
-
-    /**
-     * Travers all the files and folders, and emit an event for each file or directory.
-     *
-     * @param {Object} item - can contains files or folders.
-     */
-    private traverseFileTree(item: any): void {
-        if (item.isFile) {
-            let self = this;
-            self.onFilesEntityDropped.emit(item);
-        } else {
-            if (item.isDirectory) {
-                this.onFolderEntityDropped.emit(item);
-            }
         }
     }
 
