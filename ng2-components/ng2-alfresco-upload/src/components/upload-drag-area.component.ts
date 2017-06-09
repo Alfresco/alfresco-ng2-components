@@ -18,7 +18,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { AlfrescoTranslationService, NotificationService, FileUtils, FileInfo } from 'ng2-alfresco-core';
 import { UploadService } from '../services/upload.service';
-import { FileModel, FileUploadOptions } from '../models/file.model';
+import { FileModel } from '../models/file.model';
 
 @Component({
     selector: 'alfresco-upload-drag-area',
@@ -112,15 +112,14 @@ export class UploadDragAreaComponent {
     onFilesEntityDropped(item: any): void {
         if (this.enabled) {
             item.file((file: File) => {
-                const options: FileUploadOptions = {
+                const fileModel = new FileModel(file, {
                     newVersion: this.versioning,
                     parentId: this.rootFolderId,
                     path: item.fullPath.replace(item.name, '')
-                };
-                const fileModel = new FileModel(file, options);
+                });
                 this.uploadService.addToQueue(fileModel);
+                this.uploadService.uploadFilesInTheQueue(this.onSuccess);
             });
-            this.uploadService.uploadFilesInTheQueue(this.onSuccess);
         }
     }
 
@@ -132,12 +131,11 @@ export class UploadDragAreaComponent {
         if (this.enabled && folder.isDirectory) {
             FileUtils.flattern(folder).then(entries => {
                 let files = entries.map(entry => {
-                    const options: FileUploadOptions = {
+                    return new FileModel(entry.file, {
                         newVersion: this.versioning,
                         parentId: this.rootFolderId,
                         path: entry.relativeFolder
-                    };
-                    return new FileModel(entry.file, options);
+                    });
                 });
                 this.uploadService.addToQueue(...files);
                 /* @deprecated in 1.6.0 */
