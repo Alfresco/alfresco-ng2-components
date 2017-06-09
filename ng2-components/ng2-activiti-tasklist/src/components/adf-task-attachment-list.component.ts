@@ -78,8 +78,10 @@ export class TaskAttachmentListComponent implements OnChanges {
                         });
                     });
                     this.success.emit(this.attachments);
-                });
-        }
+                },
+                (err) => {
+                    this.error.emit(err);
+                });        }
     }
 
     private deleteAttachmentById(contentId: string) {
@@ -89,6 +91,9 @@ export class TaskAttachmentListComponent implements OnChanges {
                     this.attachments = this.attachments.filter(content => {
                         return content.id !== contentId;
                     });
+                },
+                (err) => {
+                    this.error.emit(err);
                 });
         }
     }
