@@ -21,7 +21,8 @@ import {
     ActivitiFilters,
     ActivitiTaskList,
     FilterRepresentationModel,
-    TaskDetailsEvent
+    TaskDetailsEvent,
+    TaskAttachmentListComponent
 } from 'ng2-activiti-tasklist';
 import {
     ActivitiProcessFilters,
@@ -59,6 +60,9 @@ export class ActivitiDemoComponent implements AfterViewInit {
 
     @ViewChild(ActivitiTaskList)
     taskList: ActivitiTaskList;
+
+    @ViewChild(TaskAttachmentListComponent)
+    taskAttachList: TaskAttachmentListComponent;
 
     @ViewChild(ActivitiProcessFilters)
     activitiprocessfilter: ActivitiProcessFilters;
@@ -100,6 +104,7 @@ export class ActivitiDemoComponent implements AfterViewInit {
     sub: Subscription;
     blobFile: any;
     flag: boolean = true;
+    createTaskAttach: boolean = false;
 
     dataTasks: ObjectDataTableAdapter;
     dataProcesses: ObjectDataTableAdapter;
@@ -157,15 +162,15 @@ export class ActivitiDemoComponent implements AfterViewInit {
         this.sub.unsubscribe();
     }
 
-    onTaskFilterClick(filter: FilterRepresentationModel) {
+    onTaskFilterClick(filter: FilterRepresentationModel): void {
         this.applyTaskFilter(filter);
     }
 
-    onReportClick(event: any) {
+    onReportClick(event: any): void {
         this.report = event;
     }
 
-    onSuccessTaskFilterList(event: any) {
+    onSuccessTaskFilterList(event: any): void {
         this.applyTaskFilter(this.activitifilter.getCurrentFilter());
     }
 
@@ -176,7 +181,7 @@ export class ActivitiDemoComponent implements AfterViewInit {
         }
     }
 
-    onStartTaskSuccess(event: any) {
+    onStartTaskSuccess(event: any): void {
         this.activitifilter.selectFilterWithTask(event.id);
         this.currentTaskId = event.id;
     }
@@ -185,88 +190,88 @@ export class ActivitiDemoComponent implements AfterViewInit {
         this.currentTaskId = this.taskList.getCurrentId();
     }
 
-    onProcessFilterClick(event: FilterProcessRepresentationModel) {
+    onProcessFilterClick(event: FilterProcessRepresentationModel): void {
         this.currentProcessInstanceId = null;
         this.processFilter = event;
     }
 
-    onSuccessProcessFilterList() {
+    onSuccessProcessFilterList(): void {
         this.processFilter = this.activitiprocessfilter.getCurrentFilter();
     }
 
-    onSuccessProcessList(event: any) {
+    onSuccessProcessList(event: any): void {
         this.currentProcessInstanceId = this.processList.getCurrentId();
     }
 
-    onTaskRowClick(taskId) {
+    onTaskRowClick(taskId): void {
         this.currentTaskId = taskId;
     }
 
-    onProcessRowClick(processInstanceId) {
+    onProcessRowClick(processInstanceId): void {
         this.currentProcessInstanceId = processInstanceId;
     }
 
-    onEditReport(name: string) {
+    onEditReport(name: string): void {
         this.analyticsreportlist.reload();
     }
 
-    onReportSaved(reportId) {
+    onReportSaved(reportId): void {
         this.analyticsreportlist.reload(reportId);
     }
 
-    onReportDeleted() {
+    onReportDeleted(): void {
         this.analyticsreportlist.reload();
         this.analyticsreportlist.selectReport(null);
     }
 
-    navigateStartProcess() {
+    navigateStartProcess(): void {
         this.resetProcessFilters();
         this.reloadProcessFilters();
         this.currentProcessInstanceId = currentProcessIdNew;
     }
 
-    onStartProcessInstance(instance: ProcessInstance) {
+    onStartProcessInstance(instance: ProcessInstance): void {
         this.currentProcessInstanceId = instance.id;
         this.activitiStartProcess.reset();
         this.resetProcessFilters();
     }
 
-    isStartProcessMode() {
+    isStartProcessMode(): boolean {
         return this.currentProcessInstanceId === currentProcessIdNew;
     }
 
-    processCancelled(data: any) {
+    processCancelled(data: any): void {
         this.currentProcessInstanceId = null;
         this.processList.reload();
     }
 
-    onSuccessNewProcess(data: any) {
+    onSuccessNewProcess(data: any): void {
         this.processList.reload();
     }
 
-    onFormCompleted(form) {
+    onFormCompleted(form): void {
         this.taskList.reload();
         this.currentTaskId = null;
     }
 
-    onFormContentClick(content: any) {
+    onFormContentClick(content: any): void {
         this.fileShowed = true;
         this.content = content.contentBlob;
         this.contentName = content.name;
     }
 
-    onAttachmentClick(content: any) {
+    onAttachmentClick(content: any): void {
         this.fileShowed = true;
         this.content = content.contentBlob;
         this.contentName = content.name;
     }
 
-    onTaskCreated(data: any) {
+    onTaskCreated(data: any): void {
         this.currentTaskId = data.parentTaskId;
         this.taskList.reload();
     }
 
-    onTaskDeleted(data: any) {
+    onTaskDeleted(data: any): void {
         this.taskList.reload();
     }
 
@@ -290,11 +295,11 @@ export class ActivitiDemoComponent implements AfterViewInit {
         });
     }
 
-    onShowProcessDiagram(event: any) {
+    onShowProcessDiagram(event: any): void {
         this.router.navigate(['/activiti/diagram/' + event.value]);
     }
 
-    onProcessDetailsTaskClick(event: TaskDetailsEvent) {
+    onProcessDetailsTaskClick(event: TaskDetailsEvent): void {
         event.preventDefault();
         this.activeTab = 'tasks';
 
@@ -310,20 +315,33 @@ export class ActivitiDemoComponent implements AfterViewInit {
         this.currentTaskId = taskId;
     }
 
-    private resetProcessFilters() {
+    private resetProcessFilters(): void {
         this.processFilter = null;
     }
 
-    private reloadProcessFilters() {
+    private reloadProcessFilters(): void {
         this.activitiprocessfilter.selectFilter(null);
     }
 
-    onRowClick(event) {
+    onRowClick(event): void {
         console.log(event);
     }
 
-    onRowDblClick(event) {
+    onRowDblClick(event): void {
         console.log(event);
+    }
+
+    onCreateTaskSuccess(): void {
+        this.taskAttachList.reload();
+        this.toggleCreateTakAttach();
+    }
+
+    toggleCreateTakAttach(): void {
+        this.createTaskAttach = !this.createTaskAttach;
+    }
+
+    isCreateTaskAttachVisible(): boolean {
+        return this.createTaskAttach;
     }
 
 }

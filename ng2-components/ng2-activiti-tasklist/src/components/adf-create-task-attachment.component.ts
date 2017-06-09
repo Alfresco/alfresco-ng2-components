@@ -20,9 +20,9 @@ import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiContentService } from 'ng2-activiti-form';
 
 @Component({
-    selector: 'activiti-create-task-attachment',
-    styleUrls: ['./activiti-create-task-attachment.component.css'],
-    templateUrl: './activiti-create-task-attachment.component.html'
+    selector: 'adf-create-task-attachment',
+    styleUrls: ['./adf-create-task-attachment.component.css'],
+    templateUrl: './adf-create-task-attachment.component.html'
 })
 export class ActivitiCreateTaskAttachmentComponent implements OnChanges {
 
