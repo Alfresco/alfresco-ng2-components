@@ -49,7 +49,7 @@
                 (error)="onNavigationError($event)"
                 (success)="resetError()"
                 (preview)="showFile($event)"
-                (permissionError)="onPermissionsFailed($event)">
+                (permissionError)="handlePermissionError($event)">
             <data-columns>
                 <data-column key="$thumbnail" type="image" [sortable]="false"></data-column>
                 <data-column
@@ -104,7 +104,7 @@
                         permission="delete"
                         [disableWithNoPermission]="true"
                         title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.DELETE' | translate}}"
-                        (permissionEvent)="onPermissionsFailed($event)"
+                        (permissionEvent)="handlePermissionError($event)"
                         handler="delete">
                 </content-action>
                 <!-- document actions -->
@@ -117,7 +117,7 @@
                         target="document"
                         permission="delete"
                         [disableWithNoPermission]="true"
-                        (permissionEvent)="onPermissionsFailed($event)"
+                        (permissionEvent)="handlePermissionError($event)"
                         title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DELETE' | translate}}"
                         handler="delete">
                 </content-action>
@@ -169,7 +169,7 @@
             [uploadFolders]="folderUpload"
             [versioning]="versioning"
             [disableWithNoPermission]="disableWithNoPermission"
-            (permissionEvent)="onUploadPermissionFailed($event)">
+            (permissionEvent)="handlePermissionError($event)">
         </alfresco-upload-button>
     </div>
     <div *ngIf="acceptedFilesTypeShow">
@@ -183,7 +183,7 @@
             [uploadFolders]="folderUpload"
             [versioning]="versioning"
             [disableWithNoPermission]="disableWithNoPermission"
-            (permissionEvent)="onUploadPermissionFailed($event)">
+            (permissionEvent)="handlePermissionError($event)">
         </alfresco-upload-button>
     </div>
     <section>

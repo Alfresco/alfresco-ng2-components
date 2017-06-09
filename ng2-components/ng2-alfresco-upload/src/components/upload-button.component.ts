@@ -228,13 +228,9 @@ export class UploadButtonComponent implements OnInit, OnChanges {
     }
 
     private hasCreatePermission(node: any): boolean {
-        if (this.hasPermissions(node)) {
+        if (node && node.allowableOperations) {
             return node.allowableOperations.find(permision => permision === 'create') ? true : false;
         }
         return false;
-    }
-
-    private hasPermissions(node: any): boolean {
-        return node && node.allowableOperations ? true : false;
     }
 }

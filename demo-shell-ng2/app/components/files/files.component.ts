@@ -16,9 +16,9 @@
  */
 
 import { Component, Input, OnInit, Optional, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { MdDialog } from '@angular/material';
-import { AlfrescoAuthenticationService, AlfrescoContentService, FolderCreatedEvent, LogService, NotificationService } from 'ng2-alfresco-core';
+import { AlfrescoContentService, FolderCreatedEvent, NotificationService } from 'ng2-alfresco-core';
 import { DocumentListComponent } from 'ng2-alfresco-documentlist';
 import { UploadService, FileUploadCompleteEvent } from 'ng2-alfresco-upload';
 
@@ -63,10 +63,7 @@ export class FilesComponent implements OnInit {
     @ViewChild(DocumentListComponent)
     documentList: DocumentListComponent;
 
-    constructor(private authService: AlfrescoAuthenticationService,
-                private logService: LogService,
-                private changeDetector: ChangeDetectorRef,
-                private router: Router,
+    constructor(private changeDetector: ChangeDetectorRef,
                 private notificationService: NotificationService,
                 private uploadService: UploadService,
                 private contentService: AlfrescoContentService,
@@ -128,20 +125,11 @@ export class FilesComponent implements OnInit {
         }
     }
 
-    onPermissionsFailed(event: any) {
-        this.notificationService.openSnackMessage(`you don't have the ${event.permission} permission to ${event.action} the ${event.type} `, 4000);
-    }
-
-    onUploadPermissionFailed(event: any) {
-        this.notificationService.openSnackMessage(`you don't have the ${event.permission} permission to ${event.action} the ${event.type} `, 4000);
-    }
-
-    reload(event: any) {
-        if (event && event.value && event.value.entry && event.value.entry.parentId) {
-            if (this.documentList.currentFolderId === event.value.entry.parentId) {
-                this.documentList.reload();
-            }
-        }
+    handlePermissionError(event: any) {
+        this.notificationService.openSnackMessage(
+            `You don't have the ${event.permission} permission to ${event.action} the ${event.type} `,
+            4000
+        );
     }
 
     onCreateFolderClicked(event: Event) {
@@ -149,12 +137,8 @@ export class FilesComponent implements OnInit {
         dialogRef.afterClosed().subscribe(folderName => {
             if (folderName) {
                 this.contentService.createFolder('', folderName, this.documentList.currentFolderId).subscribe(
-                    node => {
-                        console.log(node);
-                    },
-                    err => {
-                        console.log(err);
-                    }
+                    node => console.log(node),
+                    err => console.log(err)
                 );
             }
         });
