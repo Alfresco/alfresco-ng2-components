@@ -73,10 +73,25 @@
                         </activiti-task-details>
                         <hr>
                         <h5>Attachments</h5>
-                        <adf-task-attachment-list *ngIf="currentTaskId"
-                          [taskId]="currentTaskId"
-                          (attachmentClick)="onAttachmentClick($event)">
-                        </adf-task-attachment-list>
+                        <div class="adf-no-form-container">
+                            <div class="action-header">
+                                <button class="mdl-button mdl-js-button" (click)="toggleCreateTakAttach()">
+                                    Attach Document
+                                    <i class="material-icons">add</i>
+                                </button>
+                            </div>
+                            <adf-task-attachment-list #taskAttach
+                                                      *ngIf="currentTaskId"
+                                                      [taskId]="currentTaskId"
+                                                      (attachmentClick)="onAttachmentClick($event)">
+                            </adf-task-attachment-list>
+                            <div *ngIf="isCreateTaskAttachVisible()">
+                                <adf-create-task-attachment *ngIf="currentTaskId"
+                                                            [taskId]="currentTaskId"
+                                                            (success)="onCreateTaskSuccess  ()">
+                                </adf-create-task-attachment>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
