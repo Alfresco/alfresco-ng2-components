@@ -36,6 +36,7 @@ describe('Activiti Process Instance Attachment List', () => {
     let getProcessRelatedContentSpy: jasmine.Spy;
     let deleteContentSpy: jasmine.Spy;
     let getFileRawContentSpy: jasmine.Spy;
+    let mockAttachment: any;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -59,31 +60,30 @@ describe('Activiti Process Instance Attachment List', () => {
         component = fixture.componentInstance;
         service = fixture.debugElement.injector.get(ActivitiContentService);
 
-        getProcessRelatedContentSpy = spyOn(service, 'getProcessRelatedContent').and.returnValue(Observable.of(
-            {
-                'size': 2,
-                'total': 2,
-                'start': 0,
-                'data': [{
-                    'id': 4001,
-                    'name': 'Invoice01.pdf',
-                    'created': '2017-05-12T12:50:05.522+0000',
-                    'createdBy': {
-                        'id': 1,
-                        'firstName': 'Apps',
-                        'lastName': 'Administrator',
-                        'email': 'admin@app.activiti.com',
-                        'company': 'Alfresco.com',
-                        'pictureId': 3003
-                    },
-                    'relatedContent': true,
-                    'contentAvailable': true,
-                    'link': false,
-                    'mimeType': 'application/pdf',
-                    'simpleType': 'pdf',
-                    'previewStatus': 'created',
-                    'thumbnailStatus': 'created'
+        mockAttachment = {
+            'size': 2,
+            'total': 2,
+            'start': 0,
+            'data': [{
+                'id': 4001,
+                'name': 'Invoice01.pdf',
+                'created': '2017-05-12T12:50:05.522+0000',
+                'createdBy': {
+                    'id': 1,
+                    'firstName': 'Apps',
+                    'lastName': 'Administrator',
+                    'email': 'admin@app.activiti.com',
+                    'company': 'Alfresco.com',
+                    'pictureId': 3003
                 },
+                'relatedContent': true,
+                'contentAvailable': true,
+                'link': false,
+                'mimeType': 'application/pdf',
+                'simpleType': 'pdf',
+                'previewStatus': 'created',
+                'thumbnailStatus': 'created'
+            },
                 {
                     'id': 4002,
                     'name': 'Invoice02.pdf',
@@ -104,7 +104,9 @@ describe('Activiti Process Instance Attachment List', () => {
                     'previewStatus': 'created',
                     'thumbnailStatus': 'created'
                 }]
-            }));
+        };
+
+        getProcessRelatedContentSpy = spyOn(service, 'getProcessRelatedContent').and.returnValue(Observable.of(mockAttachment));
 
         deleteContentSpy = spyOn(service, 'deleteRelatedContent').and.returnValue(Observable.of({successCode: true}));
 
@@ -132,6 +134,16 @@ describe('Activiti Process Instance Attachment List', () => {
         let change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'processInstanceId': change });
         expect(emitSpy).toHaveBeenCalled();
+    });
+
+    it('should emit a success event when the attachments are loaded', () => {
+        let change = new SimpleChange(null, '123', true);
+        component.success.subscribe((attachments) => {
+            expect(attachments[0].name).toEqual(mockAttachment.data[0].name);
+            expect(attachments[0].id).toEqual(mockAttachment.data[0].id);
+        });
+
+        component.ngOnChanges({'taskId': change});
     });
 
     it('should not attach when no processInstanceId is specified', () => {
