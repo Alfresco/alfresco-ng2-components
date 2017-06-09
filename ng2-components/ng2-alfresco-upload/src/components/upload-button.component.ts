@@ -163,7 +163,7 @@ export class UploadButtonComponent implements OnInit, OnChanges {
             const latestFilesAdded = files.map(f => new FileModel(f, {
                 newVersion: this.versioning,
                 parentId: this.rootFolderId,
-                path: f.webkitRelativePath.replace(/\/[^\/]*$/, '')
+                path: (f.webkitRelativePath || '').replace(/\/[^\/]*$/, '')
             }));
             this.uploadService.addToQueue(...latestFilesAdded);
             this.uploadService.uploadFilesInTheQueue(this.onSuccess);
