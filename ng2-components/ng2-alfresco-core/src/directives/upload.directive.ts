@@ -246,9 +246,9 @@ export class UploadDirective implements OnInit, OnDestroy {
         if (this.isClickMode()) {
             const input = (<HTMLInputElement>e.currentTarget);
             const files = this.getFilesSelected(input.files);
-            this.onUploadFiles(files.map(f => <FileInfo> {
+            this.onUploadFiles(files.map(file => <FileInfo> {
                 entry: null,
-                file: f,
+                file: file,
                 relativeFolder: '/'
             }));
         }
