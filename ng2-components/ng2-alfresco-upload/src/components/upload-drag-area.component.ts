@@ -27,8 +27,6 @@ import { FileModel, FileUploadOptions } from '../models/file.model';
 })
 export class UploadDragAreaComponent {
 
-    private static DEFAULT_ROOT_ID: string = '-root-';
-
     @Input()
     enabled: boolean = true;
 
@@ -54,7 +52,7 @@ export class UploadDragAreaComponent {
     currentFolderPath: string = '/';
 
     @Input()
-    rootFolderId: string = UploadDragAreaComponent.DEFAULT_ROOT_ID;
+    rootFolderId: string = '-root-';
 
     @Output()
     onSuccess = new EventEmitter();
@@ -165,14 +163,5 @@ export class UploadDragAreaComponent {
         this.notificationService.openSnackMessageAction(messageTranslate.value, actionTranslate.value, 3000).onAction().subscribe(() => {
             this.uploadService.cancelUpload(...latestFilesAdded);
         });
-    }
-
-    /**
-     * Show the error inside Notification bar
-     * @param Error message
-     * @private
-     */
-    showErrorNotificationBar(errorMessage: string) {
-        this.notificationService.openSnackMessage(errorMessage, 3000);
     }
 }

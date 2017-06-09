@@ -30,8 +30,6 @@ import { PermissionModel } from '../models/permissions.model';
 })
 export class UploadButtonComponent implements OnInit, OnChanges {
 
-    private static DEFAULT_ROOT_ID: string = '-root-';
-
     @Input()
     disabled: boolean = false;
 
@@ -69,7 +67,7 @@ export class UploadButtonComponent implements OnInit, OnChanges {
     currentFolderPath: string = '/';
 
     @Input()
-    rootFolderId: string = UploadButtonComponent.DEFAULT_ROOT_ID;
+    rootFolderId: string = '-root-';
 
     @Input()
     disableWithNoPermission: boolean = false;
@@ -211,6 +209,7 @@ export class UploadButtonComponent implements OnInit, OnChanges {
         }
     }
 
+    // TODO: move to AlfrescoContentService
     getFolderNode(nodeId: string): Observable<MinimalNodeEntryEntity> {
         let opts: any = {
             includeSource: true,

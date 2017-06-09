@@ -101,16 +101,6 @@
                 <!-- folder actions -->
                 <content-action
                         target="folder"
-                        title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.SYSTEM_1' | translate}}"
-                        handler="system1">
-                </content-action>
-                <content-action
-                        target="folder"
-                        title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.CUSTOM' | translate}}"
-                        (execute)="myFolderAction1($event)">
-                </content-action>
-                <content-action
-                        target="folder"
                         permission="delete"
                         [disableWithNoPermission]="true"
                         title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.DELETE' | translate}}"
@@ -125,26 +115,11 @@
                 </content-action>
                 <content-action
                         target="document"
-                        title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.SYSTEM_2' | translate}}"
-                        handler="system2">
-                </content-action>
-                <content-action
-                        target="document"
-                        title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.CUSTOM' | translate}}"
-                        (execute)="myCustomAction1($event)">
-                </content-action>
-                <content-action
-                        target="document"
                         permission="delete"
                         [disableWithNoPermission]="true"
                         (permissionEvent)="onPermissionsFailed($event)"
                         title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DELETE' | translate}}"
                         handler="delete">
-                </content-action>
-                <content-action
-                        target="folder"
-                        title="Activiti: View Form"
-                        (execute)="viewActivitiForm($event)">
                 </content-action>
             </content-actions>
         </alfresco-document-list>

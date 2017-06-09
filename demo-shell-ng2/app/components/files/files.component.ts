@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, AfterViewInit, Optional, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, OnInit, Optional, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MdDialog } from '@angular/material';
 import { AlfrescoAuthenticationService, AlfrescoContentService, FolderCreatedEvent, LogService, NotificationService } from 'ng2-alfresco-core';
-import { DocumentActionsService, DocumentListComponent, ContentActionHandler, DocumentActionModel, FolderActionModel } from 'ng2-alfresco-documentlist';
-import { FormService } from 'ng2-activiti-form';
-import { UploadService, UploadButtonComponent, UploadDragAreaComponent, FileUploadCompleteEvent } from 'ng2-alfresco-upload';
+import { DocumentListComponent } from 'ng2-alfresco-documentlist';
+import { UploadService, FileUploadCompleteEvent } from 'ng2-alfresco-upload';
 
 import { CreateFolderDialog } from '../../dialogs/create-folder.dialog';
 
@@ -30,7 +29,7 @@ import { CreateFolderDialog } from '../../dialogs/create-folder.dialog';
     templateUrl: './files.component.html',
     styleUrls: ['./files.component.css']
 })
-export class FilesComponent implements OnInit, AfterViewInit {
+export class FilesComponent implements OnInit {
     // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
     currentFolderId: string = '-my-';
 
@@ -64,15 +63,7 @@ export class FilesComponent implements OnInit, AfterViewInit {
     @ViewChild(DocumentListComponent)
     documentList: DocumentListComponent;
 
-    @ViewChild(UploadButtonComponent)
-    uploadButton: UploadButtonComponent;
-
-    @ViewChild(UploadDragAreaComponent)
-    uploadDragArea: UploadDragAreaComponent;
-
-    constructor(private documentActions: DocumentActionsService,
-                private authService: AlfrescoAuthenticationService,
-                private formService: FormService,
+    constructor(private authService: AlfrescoAuthenticationService,
                 private logService: LogService,
                 private changeDetector: ChangeDetectorRef,
                 private router: Router,
@@ -81,19 +72,6 @@ export class FilesComponent implements OnInit, AfterViewInit {
                 private contentService: AlfrescoContentService,
                 private dialog: MdDialog,
                 @Optional() private route: ActivatedRoute) {
-        documentActions.setHandler('my-handler', this.myDocumentActionHandler.bind(this));
-    }
-
-    myDocumentActionHandler(obj: any) {
-        window.alert('my custom action handler');
-    }
-
-    myCustomAction1(event) {
-        alert('Custom document action for ' + event.value.entry.name);
-    }
-
-    myFolderAction1(event) {
-        alert('Custom folder action for ' + event.value.entry.name);
     }
 
     showFile(event) {
@@ -120,35 +98,9 @@ export class FilesComponent implements OnInit, AfterViewInit {
                 }
             });
         }
-        if (this.authService.isBpmLoggedIn()) {
-            this.formService.getProcessDefinitions().subscribe(
-                defs => this.setupBpmActions(defs || []),
-                err => this.logService.error(err)
-            );
-        } else {
-            this.logService.warn('You are not logged in to BPM');
-        }
 
         this.uploadService.fileUploadComplete.debounceTime(300).subscribe(value => this.onFileUploadComplete(value));
         this.contentService.folderCreated.subscribe(value => this.onFolderCreated(value));
-    }
-
-    ngAfterViewInit() {
-        this.uploadButton.onSuccess
-            .debounceTime(100)
-            .subscribe((event) => {
-                this.reload(event);
-            });
-
-        this.uploadDragArea.onSuccess
-            .debounceTime(100)
-            .subscribe((event) => {
-                this.reload(event);
-            });
-    }
-
-    viewActivitiForm(event?: any) {
-        this.router.navigate(['/activiti/tasksnode', event.value.entry.id]);
     }
 
     onNavigationError(err: any) {
@@ -159,26 +111,6 @@ export class FilesComponent implements OnInit, AfterViewInit {
 
     resetError() {
         this.errorMessage = null;
-    }
-
-    private setupBpmActions(actions: any[]) {
-        actions.map(def => {
-            let documentAction = new DocumentActionModel();
-            documentAction.title = 'Activiti: ' + (def.name || 'Unknown process');
-            documentAction.handler = this.getBpmActionHandler(def);
-            this.documentList.actions.push(documentAction);
-
-            let folderAction = new FolderActionModel();
-            folderAction.title = 'Activiti: ' + (def.name || 'Unknown process');
-            folderAction.handler = this.getBpmActionHandler(def);
-            this.documentList.actions.push(folderAction);
-        });
-    }
-
-    private getBpmActionHandler(processDefinition: any): ContentActionHandler {
-        return function (obj: any, target?: any) {
-            window.alert(`Starting BPM process: ${processDefinition.id}`);
-        }.bind(this);
     }
 
     onFileUploadComplete(event: FileUploadCompleteEvent) {
