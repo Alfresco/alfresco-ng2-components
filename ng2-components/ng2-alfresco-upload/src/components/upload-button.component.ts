@@ -160,7 +160,7 @@ export class UploadButtonComponent implements OnInit, OnChanges {
      */
     uploadFiles(files: File[]): void {
         if (files.length > 0) {
-            const latestFilesAdded = files.map(file => new FileModel(f, {
+            const latestFilesAdded = files.map(file => new FileModel(file, {
                 newVersion: this.versioning,
                 parentId: this.rootFolderId,
                 path: (file.webkitRelativePath || '').replace(/\/[^\/]*$/, '')
