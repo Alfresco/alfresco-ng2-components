@@ -456,7 +456,9 @@ This component displays attached documents on a specified task
 
 | Name | Description |
 | --- | --- |
-| `attachmentClick` |  Emitted when the attachment double clicked or selected view option from context menu by the user from within the component |
+| `attachmentClick` |  Emitted when the attachment double clicked or selected view option from context menu by the user from within the component and return a Blob obj of the object clicker|
+| `success` |  Emitted when the attachment list fetch all the attach and return a list of attachments |
+| `error` |  Emitted when the attachment list is not able to fetch the attachments for example network error   |
 
 
 ### Create Task Attachment component
