@@ -63,12 +63,26 @@
 
                 <br>
                 <button type="submit" id="login-button" tabindex="3"
-                        class="center mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+                        class="adf-login-button center mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+                        [class.isChecking]="actualLoginStep === LoginSteps.Checking"
+                        [class.isWelcome]="actualLoginStep === LoginSteps.Welcome"
                         data-automation-id="login-button" [disabled]="!form.valid">
-                            <span class="login-button-label">{{'LOGIN.BUTTON.LOGIN' | translate }}</span>
+
+                            <span *ngIf="actualLoginStep === LoginSteps.Landing" class="login-button-label">{{ 'LOGIN.BUTTON.LOGIN' | translate }}</span>
+
+                            <div *ngIf="actualLoginStep === LoginSteps.Checking" class="adf-interactive-login-label">
+                                <span class="login-button-label">{{ 'LOGIN.BUTTON.CHECKING' | translate }}</span>
+                                <md-spinner id="checking-spinner" class="adf-login-checking-spinner"></md-spinner>
+                            </div>
+
+                            <div *ngIf="actualLoginStep === LoginSteps.Welcome" class="adf-interactive-login-label">
+                                <span class="login-button-label">{{ 'LOGIN.BUTTON.WELCOME' | translate }}</span>
+                                <md-icon class="welcome-icon">done</md-icon>
+                            </div>
+
                 </button>
                 <div *ngIf="showRememberMe" class="adf-login__remember-me" id ="login-remember">
-                    <md-checkbox class="rememberme-cb" checked="true">{{'LOGIN.LABEL.REMEMBER' | translate }}</md-checkbox>
+                    <md-checkbox class="rememberme-cb" checked="true">{{ 'LOGIN.LABEL.REMEMBER' | translate }}</md-checkbox>
                 </div>
             </div>
             <div class="mdl-card__actions mdl-card--border mdl-card__link">

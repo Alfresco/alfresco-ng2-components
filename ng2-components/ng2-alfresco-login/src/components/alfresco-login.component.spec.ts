@@ -64,6 +64,52 @@ describe('AlfrescoLogin', () => {
         fixture.detectChanges();
     });
 
+    describe('Login button', () => {
+
+        const getLoginButton = () => element.querySelector('#login-button');
+        const getLoginButtonText = () => element.querySelector('#login-button span.login-button-label').innerText;
+
+        function loginWithCredentials(username, password) {
+            component.providers = 'ECM';
+            usernameInput.value = username;
+            passwordInput.value = password;
+
+            usernameInput.dispatchEvent(new Event('input'));
+            passwordInput.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+
+            element.querySelector('button').click();
+            fixture.detectChanges();
+        }
+
+        it('should be rendered with the proper key by default', () => {
+            expect(getLoginButton()).not.toBeNull();
+            expect(getLoginButtonText()).toEqual('LOGIN.BUTTON.LOGIN');
+        });
+
+        it('should be changed to the "checking key" after a login attempt', () => {
+            const authService = TestBed.get(AlfrescoAuthenticationService);
+            spyOn(authService, 'login').and.returnValue({ subscribe: () => { } });
+
+            loginWithCredentials('fake-username', 'fake-password');
+
+            expect(element.querySelector('#checking-spinner')).not.toBeNull();
+            expect(getLoginButtonText()).toEqual('LOGIN.BUTTON.CHECKING');
+        });
+
+        it('should be changed back to the default after a failed login attempt', () => {
+            loginWithCredentials('fake-wrong-username', 'fake-wrong-password');
+
+            expect(getLoginButtonText()).toEqual('LOGIN.BUTTON.LOGIN');
+        });
+
+        it('should be changed to the "welcome key" after a successful login attempt', () => {
+            loginWithCredentials('fake-username', 'fake-password');
+
+            expect(getLoginButtonText()).toEqual('LOGIN.BUTTON.WELCOME');
+        });
+    });
+
     it('should render Login form with all the keys to be translated', () => {
         expect(element.querySelector('[for="username"]')).toBeDefined();
         expect(element.querySelector('[for="username"]').innerText).toEqual('LOGIN.LABEL.USERNAME');
@@ -73,9 +119,6 @@ describe('AlfrescoLogin', () => {
 
         expect(element.querySelector('[for="password"]')).toBeDefined();
         expect(element.querySelector('[for="password"]').innerText).toEqual('LOGIN.LABEL.PASSWORD');
-
-        expect(element.querySelector('#login-button')).toBeDefined();
-        expect(element.querySelector('#login-button').innerText).toEqual('LOGIN.BUTTON.LOGIN');
 
         expect(element.querySelector('#login-action-help')).toBeDefined();
         expect(element.querySelector('#login-action-help').innerText).toEqual('LOGIN.ACTION.HELP');

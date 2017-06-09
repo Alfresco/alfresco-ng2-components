@@ -114,6 +114,51 @@
     color: rgb(175, 175, 175);
 }
 
+.adf-login-button.isChecking {
+    background-color: #e0f7fa;
+}
+
+.adf-login-button.isChecking .login-button-label{
+    color: #00bcd4;
+}
+
+.adf-login-button.isWelcome {
+    background-color: #00bcd4;
+    color: #ffffff;
+}
+
+.adf-login-button.isWelcome .welcome-icon {
+    margin: 5px 0 0 10px;
+}
+
+.adf-interactive-login-label {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+
+    -webkit-box-orient: horizontal;
+    -moz-box-orient: horizontal;
+    box-orient: horizontal;
+    flex-direction: row;
+
+    -webkit-box-pack: center;
+    -moz-box-pack: center;
+    box-pack: center;
+    justify-content: center;
+}
+
+.adf-login-checking-spinner {
+    height: 30px;
+    width: 20px;
+    margin-left: 10px;
+}
+
+.adf-login-checking-spinner.mat-spinner >>> path {
+    stroke: #00bcd4;
+}
+
 :host .login-card-wide > .mdl-card__menu {
     color: #000;
 }
@@ -154,7 +199,7 @@
 }
 
 :host .login-action-left a,
-:host .login-action-right {
+:host .login-action-right a {
     text-decoration: none;
 }
 
