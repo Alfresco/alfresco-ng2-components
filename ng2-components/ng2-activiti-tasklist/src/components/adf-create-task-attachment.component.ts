@@ -50,14 +50,11 @@ export class ActivitiCreateTaskAttachmentComponent implements OnChanges {
     }
 
     onFileUpload(event: any) {
-        let filesList: File[] = event.detail.files.map(obj => obj.file);
+        let files: File[] = event.detail.files;
 
-        for (let fileInfoObj of filesList) {
-            let file: File = fileInfoObj;
-            let opts = {
-                isRelatedContent: true
-            };
-            this.activitiContentService.createTaskRelatedContent(this.taskId, file, opts).subscribe(
+        for (let i = 0; i < files.length; i++) {
+            let file: File = files[i];
+            this.activitiContentService.createTaskRelatedContent(this.taskId, file).subscribe(
                 (res) => {
                     this.success.emit(res);
                 },
