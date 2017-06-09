@@ -33,6 +33,9 @@ export class ActivitiProcessAttachmentListComponent implements OnChanges {
     attachmentClick = new EventEmitter();
 
     @Output()
+    success = new EventEmitter();
+
+    @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
     attachments: any[] = [];
@@ -42,14 +45,13 @@ export class ActivitiProcessAttachmentListComponent implements OnChanges {
                 private contentService: ContentService) {
 
         if (translateService) {
-            translateService.addTranslationFolder('ng2-activiti-processlist', 'node_modules/ng2-activiti-processlist/src');
+            translateService.addTranslationFolder('ng2-activiti-processlist', 'assets/ng2-activiti-processlist');
         }
     }
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['processInstanceId'] && changes['processInstanceId'].currentValue) {
-            this.processInstanceId = changes['processInstanceId'].currentValue;
-            this.loadAttachmentsByProcessInstanceId(this.processInstanceId);
+            this.loadAttachmentsByProcessInstanceId(changes['processInstanceId'].currentValue);
         }
     }
 
@@ -71,7 +73,7 @@ export class ActivitiProcessAttachmentListComponent implements OnChanges {
                             icon: this.activitiContentService.getMimeTypeIcon(content.mimeType)
                         });
                     });
-
+                    this.success.emit(this.attachments);
                 },
                 (err) => {
                     this.error.emit(err);
@@ -149,9 +151,6 @@ export class ActivitiProcessAttachmentListComponent implements OnChanges {
         );
     }
 
-    /**
-     * Invoke content download.
-     */
     downloadContent(content: any): void {
         this.activitiContentService.getFileRawContent(content.id).subscribe(
             (blob: Blob) => this.contentService.downloadBlob(blob, content.name),
