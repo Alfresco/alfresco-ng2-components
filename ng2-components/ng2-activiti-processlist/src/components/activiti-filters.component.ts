@@ -132,7 +132,7 @@ export class ActivitiProcessFilters implements OnInit, OnChanges {
     getFiltersByAppName(appName: string) {
         this.activiti.getDeployedApplications(appName).subscribe(
             application => {
-                this.getFiltersByAppId(application.id + '');
+                this.getFiltersByAppId(application.id.toString());
                 this.selectTaskFilter(this.filterParam);
             },
             (err) => {
