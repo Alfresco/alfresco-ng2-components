@@ -22,14 +22,14 @@ import { Observable } from 'rxjs/Rx';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { ActivitiContentService } from 'ng2-activiti-form';
 
-import { ActivitiCreateTaskAttachmentComponent } from './adf-create-task-attachment.component';
+import { ActivitiCreateProcessAttachmentComponent } from './adf-create-process-attachment.component';
 
-describe('Activiti Task Create Attachment', () => {
+describe('Activiti Process Create Attachment', () => {
 
     let componentHandler: any;
     let service: ActivitiContentService;
-    let component: ActivitiCreateTaskAttachmentComponent;
-    let fixture: ComponentFixture<ActivitiCreateTaskAttachmentComponent>;
+    let component: ActivitiCreateProcessAttachmentComponent;
+    let fixture: ComponentFixture<ActivitiCreateProcessAttachmentComponent>;
     let createTaskRelatedContentSpy: jasmine.Spy;
 
     beforeEach(async(() => {
@@ -38,7 +38,7 @@ describe('Activiti Task Create Attachment', () => {
                 CoreModule.forRoot()
             ],
             declarations: [
-                ActivitiCreateTaskAttachmentComponent
+                ActivitiCreateProcessAttachmentComponent
             ],
             providers: [
                 { provide: AlfrescoTranslationService },
@@ -49,11 +49,11 @@ describe('Activiti Task Create Attachment', () => {
 
     beforeEach(() => {
 
-        fixture = TestBed.createComponent(ActivitiCreateTaskAttachmentComponent);
+        fixture = TestBed.createComponent(ActivitiCreateProcessAttachmentComponent);
         component = fixture.componentInstance;
         service = fixture.debugElement.injector.get(ActivitiContentService);
 
-        createTaskRelatedContentSpy = spyOn(service, 'createTaskRelatedContent').and.returnValue(Observable.of(
+        createTaskRelatedContentSpy = spyOn(service, 'createProcessRelatedContent').and.returnValue(Observable.of(
             {
               status: true
             }));

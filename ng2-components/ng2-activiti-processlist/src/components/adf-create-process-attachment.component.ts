@@ -24,16 +24,16 @@ import { ActivitiContentService } from 'ng2-activiti-form';
     styleUrls: ['./adf-create-process-attachment.component.css'],
     templateUrl: './adf-create-process-attachment.component.html'
 })
-export class ActivitiCreateTaskAttachmentComponent implements OnChanges {
+export class ActivitiCreateProcessAttachmentComponent implements OnChanges {
 
     @Input()
     processInstanceId: string;
 
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
+    creationError: EventEmitter<any> = new EventEmitter<any>();
 
     @Output()
-    success: EventEmitter<any> = new EventEmitter<any>();
+    contentCreated: EventEmitter<any> = new EventEmitter<any>();
 
     constructor(private translateService: AlfrescoTranslationService,
                 private activitiContentService: ActivitiContentService) {
@@ -44,8 +44,8 @@ export class ActivitiCreateTaskAttachmentComponent implements OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['taskId'] && changes['taskId'].currentValue) {
-            this.taskId = changes['taskId'].currentValue;
+        if (changes['processInstanceId'] && changes['processInstanceId'].currentValue) {
+            this.processInstanceId = changes['processInstanceId'].currentValue;
         }
     }
 
@@ -56,10 +56,10 @@ export class ActivitiCreateTaskAttachmentComponent implements OnChanges {
             let file: File = files[i];
             this.activitiContentService.createProcessRelatedContent(this.processInstanceId, file).subscribe(
                 (res) => {
-                    this.success.emit(res);
+                    this.contentCreated.emit(res);
                 },
                 (err) => {
-                    this.error.emit(err);
+                    this.creationError.emit(err);
                 }
             );
         }
