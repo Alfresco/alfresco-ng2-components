@@ -18,7 +18,9 @@
         },
         "BUTTON": {
             "COMPLETE": "Complete",
-            "CLAIM": "Claim"
+            "CLAIM": "Claim",
+            "DRAG-ATTACHMENT": "Drop Files Here...",
+            "UPLOAD-ATTACHMENT": "Upload Attachment"
         },
         "MESSAGES": {
             "NONE": "No task details found.",

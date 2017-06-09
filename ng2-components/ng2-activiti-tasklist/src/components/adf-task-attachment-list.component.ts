@@ -55,8 +55,12 @@ export class TaskAttachmentListComponent implements OnChanges {
         }
     }
 
-    reset () {
+    reset(): void {
         this.attachments = [];
+    }
+
+    reload(): void {
+        this.loadAttachmentsByTaskId(this.taskId);
     }
 
     private loadAttachmentsByTaskId(taskId: string) {

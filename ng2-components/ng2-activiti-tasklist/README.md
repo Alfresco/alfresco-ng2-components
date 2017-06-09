@@ -464,9 +464,9 @@ This component displays attached documents on a specified task
 This component displays Upload Component(Drag and Click) to upload the attachment to a specified task
 
 ```html
-<activiti-create-task-attachment [taskId]="YOUR_TASK_ID" 
+<adf-create-task-attachment [taskId]="YOUR_TASK_ID" 
 (error)="YOUR_CREATE_ATTACHMENT_ERROR_HANDLER"
-(success)="YOUR_CREATE_ATTACHMENT_SUCCESS_HANDLER"></activiti-create-task-attachment>
+(success)="YOUR_CREATE_ATTACHMENT_SUCCESS_HANDLER"></adf-create-task-attachment>
 ```
 
 ![task-create-attachment](docs/assets/task-create-attachment.png)
