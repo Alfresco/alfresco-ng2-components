@@ -91,7 +91,7 @@ export class ActivitiProcessFilters implements OnInit, OnChanges {
      * Return the filter list filtered by appId
      * @param appId - optional
      */
-    getFiltersByAppId(appId?: number) {
+    getFiltersByAppId(appId?: string) {
         this.activiti.getProcessFilters(appId).subscribe(
             (res: FilterProcessRepresentationModel[]) => {
                 if (res.length === 0 && this.isFilterListEmpty()) {
@@ -132,7 +132,7 @@ export class ActivitiProcessFilters implements OnInit, OnChanges {
     getFiltersByAppName(appName: string) {
         this.activiti.getDeployedApplications(appName).subscribe(
             application => {
-                this.getFiltersByAppId(application.id);
+                this.getFiltersByAppId(application.id.toString());
                 this.selectTaskFilter(this.filterParam);
             },
             (err) => {

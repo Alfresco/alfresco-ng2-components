@@ -68,11 +68,8 @@ export class ActivitiProcessService {
             }).catch(err => this.handleError(err));
     }
 
-    getProcessFilters(appId: number): Observable<FilterProcessRepresentationModel[]> {
-        let filterOpts = appId ? {
-            appId: appId
-        } : {};
-        return Observable.fromPromise(this.callApiGetUserProcessInstanceFilters(filterOpts))
+    getProcessFilters(appId: string): Observable<FilterProcessRepresentationModel[]> {
+        return Observable.fromPromise(this.callApiProcessFilters(appId))
             .map((response: any) => {
                 let filters: FilterProcessRepresentationModel[] = [];
                 response.data.forEach((filter: FilterProcessRepresentationModel) => {
@@ -103,7 +100,7 @@ export class ActivitiProcessService {
      * @returns {Observable<FilterProcessRepresentationModel>}
      */
     getProcessFilterByName(processName: string, appId?: string): Observable<FilterProcessRepresentationModel> {
-        return Observable.fromPromise(this.callApiGetUserProcessInstanceFilters(appId))
+        return Observable.fromPromise(this.callApiProcessFilters(appId))
             .map((response: any) => {
                 return response.data.find(filter => filter.name === processName);
             }).catch(err => this.handleError(err));
@@ -114,7 +111,7 @@ export class ActivitiProcessService {
      * @param appId
      * @returns {FilterProcessRepresentationModel[]}
      */
-    public createDefaultFilters(appId: number): Observable<FilterProcessRepresentationModel[]> {
+    public createDefaultFilters(appId: string): Observable<FilterProcessRepresentationModel[]> {
         let runnintFilter = this.getRunningFilterInstance(appId);
         let runnintObservable = this.addFilter(runnintFilter);
 
@@ -150,13 +147,13 @@ export class ActivitiProcessService {
         });
     }
 
-    private getRunningFilterInstance(appId: number): FilterProcessRepresentationModel {
+    private getRunningFilterInstance(appId: string): FilterProcessRepresentationModel {
         return new FilterProcessRepresentationModel({
             'name': 'Running',
             'appId': appId,
             'recent': true,
             'icon': 'glyphicon-random',
-            'filter': {'sort': 'created-desc', 'name': '', 'state': 'running'}
+            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'running' }
         });
     }
 
@@ -165,13 +162,13 @@ export class ActivitiProcessService {
      * @param appId
      * @returns {FilterProcessRepresentationModel}
      */
-    private getCompletedFilterInstance(appId: number): FilterProcessRepresentationModel {
+    private getCompletedFilterInstance(appId: string): FilterProcessRepresentationModel {
         return new FilterProcessRepresentationModel({
             'name': 'Completed',
             'appId': appId,
             'recent': false,
             'icon': 'glyphicon-ok-sign',
-            'filter': {'sort': 'created-desc', 'name': '', 'state': 'completed'}
+            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'completed' }
         });
     }
 
@@ -180,13 +177,13 @@ export class ActivitiProcessService {
      * @param appId
      * @returns {FilterProcessRepresentationModel}
      */
-    private getAllFilterInstance(appId: number): FilterProcessRepresentationModel {
+    private getAllFilterInstance(appId: string): FilterProcessRepresentationModel {
         return new FilterProcessRepresentationModel({
             'name': 'All',
             'appId': appId,
             'recent': true,
             'icon': 'glyphicon-th',
-            'filter': {'sort': 'created-desc', 'name': '', 'state': 'all'}
+            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'all' }
         });
     }
 
@@ -210,15 +207,15 @@ export class ActivitiProcessService {
 
     getProcessTasks(id: string, state?: string): Observable<TaskDetailsModel[]> {
         let taskOpts = state ? {
-            processInstanceId: id,
-            state: state
-        } : {
-            processInstanceId: id
-        };
+                processInstanceId: id,
+                state: state
+            } : {
+                processInstanceId: id
+            };
         return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.listTasks(taskOpts))
             .map(this.extractData)
             .map(tasks => tasks.map((task: any) => {
-                task.created =  moment(task.created, 'YYYY-MM-DD').format();
+                task.created = moment(task.created, 'YYYY-MM-DD').format();
                 return task;
             }))
             .catch(err => this.handleError(err));
@@ -255,8 +252,8 @@ export class ActivitiProcessService {
      */
     addProcessInstanceComment(id: string, message: string): Observable<Comment> {
         return Observable.fromPromise(
-            this.apiService.getInstance().activiti.commentsApi.addProcessInstanceComment({message: message}, id)
-            )
+            this.apiService.getInstance().activiti.commentsApi.addProcessInstanceComment({ message: message }, id)
+        )
             .map((response: Comment) => {
                 return new Comment(response.id, response.message, response.created, response.createdBy);
             }).catch(err => this.handleError(err));
@@ -265,14 +262,14 @@ export class ActivitiProcessService {
 
     getProcessDefinitions(appId?: string): Observable<ProcessDefinitionRepresentation[]> {
         let opts = appId ? {
-            latest: true,
-            appDefinitionId: appId
-        } : {
-            latest: true
-        };
+                latest: true,
+                appDefinitionId: appId
+            } : {
+                latest: true
+            };
         return Observable.fromPromise(
             this.apiService.getInstance().activiti.processApi.getProcessDefinitions(opts)
-            )
+        )
             .map(this.extractData)
             .map(processDefs => processDefs.map((pd) => new ProcessDefinitionRepresentation(pd)))
             .catch(err => this.handleError(err));
@@ -294,7 +291,7 @@ export class ActivitiProcessService {
         }
         return Observable.fromPromise(
             this.apiService.getInstance().activiti.processApi.startNewProcessInstance(startRequest)
-            )
+        )
             .map((pd) => new ProcessInstance(pd))
             .catch(err => this.handleError(err));
     }
@@ -302,14 +299,14 @@ export class ActivitiProcessService {
     cancelProcess(processInstanceId: string): Observable<void> {
         return Observable.fromPromise(
             this.apiService.getInstance().activiti.processApi.deleteProcessInstance(processInstanceId)
-            )
+        )
             .catch(err => this.handleError(err));
     }
 
     getProcessInstanceVariables(processDefinitionId: string): Observable<ProcessInstanceVariable[]> {
         return Observable.fromPromise(
             this.apiService.getInstance().activiti.processInstanceVariablesApi.getProcessInstanceVariables(processDefinitionId)
-            )
+        )
             .map((processVars: any[]) => processVars.map((pd) => new ProcessInstanceVariable(pd)))
             .catch(err => this.handleError(err));
     }
@@ -317,19 +314,15 @@ export class ActivitiProcessService {
     createOrUpdateProcessInstanceVariables(processDefinitionId: string, variables: ProcessInstanceVariable[]): Observable<ProcessInstanceVariable[]> {
         return Observable.fromPromise(
             this.apiService.getInstance().activiti.processInstanceVariablesApi.createOrUpdateProcessInstanceVariables(processDefinitionId, variables)
-            )
+        )
             .catch(err => this.handleError(err));
     }
 
     deleteProcessInstanceVariable(processDefinitionId: string, variableName: string): Observable<void> {
         return Observable.fromPromise(
             this.apiService.getInstance().activiti.processInstanceVariablesApi.deleteProcessInstanceVariable(processDefinitionId, variableName)
-            )
+        )
             .catch(err => this.handleError(err));
-    }
-
-    private callApiGetUserProcessInstanceFilters(filterOpts) {
-        return this.apiService.getInstance().activiti.userFiltersApi.getUserProcessInstanceFilters(filterOpts);
     }
 
     private callApiAddFilter(filter: FilterProcessRepresentationModel) {
