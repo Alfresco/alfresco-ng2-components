@@ -58,4 +58,16 @@ export class FileUtils {
             })();
         });
     }
+
+    static toFileArray(fileList: FileList): File[] {
+        let result = [];
+
+        if (fileList && fileList.length > 0) {
+            for (let i = 0; i < fileList.length; i++) {
+                result.push(fileList[i]);
+            }
+        }
+
+        return result;
+    }
 }

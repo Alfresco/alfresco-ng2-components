@@ -112,7 +112,6 @@ export class FilesComponent implements OnInit {
 
     onFileUploadComplete(event: FileUploadCompleteEvent) {
         if (event && event.file.options.parentId === this.documentList.currentFolderId) {
-            console.log('Reloading on File upload complete');
             this.documentList.reload();
         }
     }

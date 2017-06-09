@@ -213,8 +213,15 @@ export class UploadDirective implements OnInit, OnDestroy {
                     }
                 } else {
                     // safari or FF
-                    let files = dataTransfer.files;
-                    iterations.push(Promise.resolve(this.getFilesSelected(files)));
+                    let files = FileUtils
+                        .toFileArray(dataTransfer.files)
+                        .map(file => <FileInfo> {
+                            entry: null,
+                            file: file,
+                            relativeFolder: '/'
+                        });
+
+                    iterations.push(Promise.resolve(files));
                 }
             }
 
@@ -225,27 +232,13 @@ export class UploadDirective implements OnInit, OnDestroy {
     }
 
     /**
-     * Extract files from the FileList object used to hold files that user selected by means of File Dialog.
-     * @param fileList List of selected files
-     */
-    protected getFilesSelected(fileList: FileList): File[] {
-        let result: File[] = [];
-        if (fileList && fileList.length > 0) {
-            for (let i = 0; i < fileList.length; i++) {
-                result.push(fileList[i]);
-            }
-        }
-        return result;
-    }
-
-    /**
      * Invoked when user selects files or folders by means of File Dialog
      * @param e DOM event
      */
     protected onSelectFiles(e: Event) {
         if (this.isClickMode()) {
             const input = (<HTMLInputElement>e.currentTarget);
-            const files = this.getFilesSelected(input.files);
+            const files = FileUtils.toFileArray(input.files);
             this.onUploadFiles(files.map(file => <FileInfo> {
                 entry: null,
                 file: file,

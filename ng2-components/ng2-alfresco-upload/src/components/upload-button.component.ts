@@ -17,7 +17,7 @@
 
 import { Component, ElementRef, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { Observable, Subject } from 'rxjs/Rx';
-import { AlfrescoApiService, AlfrescoContentService, AlfrescoTranslationService, LogService, NotificationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { AlfrescoApiService, AlfrescoContentService, AlfrescoTranslationService, LogService, NotificationService, AlfrescoSettingsService, FileUtils } from 'ng2-alfresco-core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { UploadService } from '../services/upload.service';
 import { FileModel } from '../models/file.model';
@@ -131,7 +131,7 @@ export class UploadButtonComponent implements OnInit, OnChanges {
     }
 
     onFilesAdded($event: any): void {
-        let files: File[] = this.getFiles($event.currentTarget.files);
+        let files: File[] = FileUtils.toFileArray($event.currentTarget.files);
 
         if (this.hasPermission) {
             this.uploadFiles(files);
@@ -144,7 +144,7 @@ export class UploadButtonComponent implements OnInit, OnChanges {
 
     onDirectoryAdded($event: any): void {
         if (this.hasPermission) {
-            let files: File[] = this.getFiles($event.currentTarget.files);
+            let files: File[] = FileUtils.toFileArray($event.currentTarget.files);
             this.uploadFiles(files);
         } else {
             this.permissionEvent.emit(new PermissionModel({type: 'content', action: 'upload', permission: 'create'}));
@@ -160,10 +160,10 @@ export class UploadButtonComponent implements OnInit, OnChanges {
      */
     uploadFiles(files: File[]): void {
         if (files.length > 0) {
-            const latestFilesAdded = files.map(f => new FileModel(f, {
+            const latestFilesAdded = files.map(file => new FileModel(f, {
                 newVersion: this.versioning,
                 parentId: this.rootFolderId,
-                path: (f.webkitRelativePath || '').replace(/\/[^\/]*$/, '')
+                path: (file.webkitRelativePath || '').replace(/\/[^\/]*$/, '')
             }));
             this.uploadService.addToQueue(...latestFilesAdded);
             this.uploadService.uploadFilesInTheQueue(this.onSuccess);
@@ -171,18 +171,6 @@ export class UploadButtonComponent implements OnInit, OnChanges {
                 this.showUndoNotificationBar(latestFilesAdded);
             }
         }
-    }
-
-    private getFiles(fileList: FileList): File[] {
-        const result: File[] = [];
-
-        if (fileList && fileList.length > 0) {
-            for (let i = 0; i < fileList.length; i++) {
-                result.push(fileList[i]);
-            }
-        }
-
-        return result;
     }
 
     /**

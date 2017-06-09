@@ -16,6 +16,7 @@
  */
 
 import { Directive, EventEmitter, Input, Output, OnInit, OnDestroy, ElementRef, NgZone } from '@angular/core';
+import { FileUtils } from 'ng2-alfresco-core';
 
 @Directive({
     selector: '[file-draggable]'
@@ -28,7 +29,7 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
     enabled: boolean = true;
 
     @Output()
-    onFilesDropped: EventEmitter<any> = new EventEmitter();
+    onFilesDropped: EventEmitter<File[]> = new EventEmitter<File[]>();
 
     @Output()
     onFilesEntityDropped: EventEmitter<any> = new EventEmitter();
@@ -80,13 +81,13 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
                             }
                         }
                     } else {
-                        let files = event.dataTransfer.files;
+                        let files = FileUtils.toFileArray(event.dataTransfer.files);
                         this.onFilesDropped.emit(files);
                     }
                 }
             } else {
                 // safari or FF
-                let files = event.dataTransfer.files;
+                let files = FileUtils.toFileArray(event.dataTransfer.files);
                 this.onFilesDropped.emit(files);
             }
 

@@ -79,12 +79,12 @@ export class UploadDragAreaComponent {
                 if (e.detail.data && e.detail.data.obj.entry.isFolder) {
                     parentId = e.detail.data.obj.entry.id || this.rootFolderId;
                 }
-                const fileModels = files.map(f => new FileModel(f.file, {
+                const fileModels = files.map(fileInfo => new FileModel(fileInfo.file, {
                     newVersion: this.versioning,
-                    path: f.relativeFolder,
+                    path: fileInfo.relativeFolder,
                     parentId: parentId
                 }));
-                this.onFilesDropped(fileModels);
+                this.uploadFiles(fileModels);
             }
         }
     }
@@ -94,9 +94,14 @@ export class UploadDragAreaComponent {
      *
      * @param {File[]} files - files dropped in the drag area.
      */
-    onFilesDropped(files: FileModel[]): void {
+    onFilesDropped(files: File[]): void {
         if (this.enabled && files.length) {
-            this.uploadService.addToQueue(...files);
+            const fileModels = files.map(file => new FileModel(file, {
+                newVersion: this.versioning,
+                path: '/',
+                parentId: this.rootFolderId
+            }));
+            this.uploadService.addToQueue(...fileModels);
             this.uploadService.uploadFilesInTheQueue(this.onSuccess);
             let latestFilesAdded = this.uploadService.getQueue();
             if (this.showNotificationBar) {
@@ -161,5 +166,16 @@ export class UploadDragAreaComponent {
         this.notificationService.openSnackMessageAction(messageTranslate.value, actionTranslate.value, 3000).onAction().subscribe(() => {
             this.uploadService.cancelUpload(...latestFilesAdded);
         });
+    }
+
+    private uploadFiles(files: FileModel[]): void {
+        if (this.enabled && files.length) {
+            this.uploadService.addToQueue(...files);
+            this.uploadService.uploadFilesInTheQueue(this.onSuccess);
+            let latestFilesAdded = this.uploadService.getQueue();
+            if (this.showNotificationBar) {
+                this.showUndoNotificationBar(latestFilesAdded);
+            }
+        }
     }
 }
