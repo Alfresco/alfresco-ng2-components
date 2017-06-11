@@ -39,6 +39,12 @@ export class UploadDragAreaComponent {
     @Input()
     enabled: boolean = true;
 
+    /**
+     * @deprecated Deprecated in 1.6.0, you can use UploadService events and NotificationService api instead.
+     *
+     * @type {boolean}
+     * @memberof UploadButtonComponent
+     */
     @Input()
     showNotificationBar: boolean = true;
 
