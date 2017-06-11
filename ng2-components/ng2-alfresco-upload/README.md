@@ -102,68 +102,14 @@ Follow the 3 steps below:
 
 ```html
 <alfresco-upload-button 
-    [showNotificationBar]="true"
+    [rootFolderId]="-my-"
     [uploadFolders]="true"
     [multipleFiles]="false"
     [acceptedFilesType]=".jpg,.gif,.png,.svg"
-    [currentFolderPath]="/Sites/swsdp/documentLibrary"
     [versioning]="false"
     (onSuccess)="customMethod($event)">
 </alfresco-upload-button>
 <file-uploading-dialog></file-uploading-dialog>
-```
-
-Example of an App that declares upload button component :
-
-```ts
-import { NgModule, Component } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
-import { UploadModule } from 'ng2-alfresco-upload';
-
-@Component({
-    selector: 'alfresco-app-demo',
-    template: `
-        <alfresco-upload-button 
-            [showNotificationBar]="true"
-            [uploadFolders]="false"
-            [multipleFiles]="false"
-            [acceptedFilesType]="'.jpg,.gif,.png,.svg'"
-            (onSuccess)="onSuccess($event)">
-        </alfresco-upload-button>
-        <file-uploading-dialog></file-uploading-dialog>
-    `
-})
-export class MyDemoApp {
-
-    constructor(private authService: AlfrescoAuthenticationService, 
-                private settingsService: AlfrescoSettingsService) {
-        settingsService.ecmHost = 'http://localhost:8080';
-
-        this.authService.login('admin', 'admin').subscribe(
-            ticket => console.log(ticket),
-            error => console.log(error)
-        );
-    }
-
-    public onSuccess(event: Object): void {
-        console.log('File uploaded');
-    }
-}
-
-@NgModule({
-    imports: [
-        BrowserModule,
-        CoreModule.forRoot(),
-        UploadModule.forRoot()
-    ],
-    declarations: [ MyDemoApp ],
-    bootstrap:    [ MyDemoApp ]
-})
-export class AppModule { }
-
-platformBrowserDynamic().bootstrapModule(AppModule);
 ```
 
 ### Events
@@ -177,11 +123,12 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | `disabled` | *boolean* | false | Toggle component disabled state |
-| `showNotificationBar` | *boolean* | true | Hide/show notification bar |
+| **(deprecated)** `showNotificationBar` | *boolean* | true | Hide/show notification bar. **Deprecated in 1.6.0: use UploadService events and NotificationService api instead.** |
 | `uploadFolders` | *boolean* | false | Allow/disallow upload folders (only for chrome) |
 | `multipleFiles` | *boolean* | false | Allow/disallow multiple files |
 | `acceptedFilesType` | *string* | * |  array of allowed file extensions , example: ".jpg,.gif,.png,.svg" |
-| `currentFolderPath` | *string* | '/Sites/swsdp/documentLibrary' | define the path where the files are uploaded |
+| **(deprecated)** `currentFolderPath` | *string* | '/Sites/swsdp/documentLibrary' | define the path where the files are uploaded. **Deprecated in 1.6.0: use rootFolderId instead.** |
+| `rootFolderId` | *string* | '-root-' | The ID of the root folder node. |
 | `versioning` | *boolean* | false   |  Versioning false is the default uploader behaviour and it rename using an integer suffix if there is a name clash. Versioning true to indicate that a major version should be created |
 | `staticTitle` | *string* | 'FILE_UPLOAD.BUTTON.UPLOAD_FILE' or 'FILE_UPLOAD.BUTTON.UPLOAD_FOLDER' string in the JSON text file | define the text of the upload button |
 | `disableWithNoPermission` | *boolean* | false |  If the value is true and the user doesn't have the permission to delete the node the button will be disabled |
@@ -199,7 +146,9 @@ You can subscribe to this event from your component and use the NotificationServ
     [rootFolderId]="currentFolderId"
     (permissionEvent)="onUploadPermissionFailed($event)">
 </alfresco-upload-button>
+```
 
+```ts
 export class MyComponent {
 
     onUploadPermissionFailed(event: any) {
@@ -232,61 +181,22 @@ The UploadButtonComponent provides the property disableWithNoPermission that can
 This component, provide a drag and drop are to upload files to alfresco.
 
 ```html
-<alfresco-upload-drag-area 
-    (onSuccess)="customMethod($event)">
+<alfresco-upload-drag-area (onSuccess)="customMethod($event)">
+    <div style="width: 200px; height: 100px; border: 1px solid #888888">
+        DRAG HERE
+    </div>
 </alfresco-upload-drag-area>
 <file-uploading-dialog></file-uploading-dialog>
 ```
 
-Example of an App that declares upload drag and drop component:
-
 ```ts
-import { NgModule, Component } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
-import { UploadModule } from 'ng2-alfresco-upload';
-
-@Component({
-    selector: 'alfresco-app-demo',
-    template: `
-        <alfresco-upload-drag-area (onSuccess)="customMethod($event)" >
-            <div style="width: 200px; height: 100px; border: 1px solid #888888">
-                DRAG HERE
-            </div>
-        </alfresco-upload-drag-area>
-        <file-uploading-dialog></file-uploading-dialog>
-    `
-})
-export class MyDemoApp {
-
-    constructor(private authService: AlfrescoAuthenticationService, 
-                private settingsService: AlfrescoSettingsService) {
-        settingsService.ecmHost = 'http://localhost:8080';
-
-        this.authService.login('admin', 'admin').subscribe(
-            ticket => console.log(ticket),
-            error => console.log(error)
-        );
-    }
+export class AppComponent {
 
     public onSuccess(event: Object): void {
         console.log('File uploaded');
     }
+
 }
-
-@NgModule({
-    imports: [
-        BrowserModule,
-        CoreModule.forRoot(),
-        UploadModule.forRoot()
-    ],
-    declarations: [ MyDemoApp ],
-    bootstrap:    [ MyDemoApp ]
-})
-export class AppModule { }
-
-platformBrowserDynamic().bootstrapModule(AppModule);
 ```
 
 ### Events
@@ -300,9 +210,9 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | `enabled` | *boolean* | true | Toggle component enabled state |
-| `showNotificationBar` | *boolean* | true |  Hide/show notification bar |
-| `rootFolderId` | *string* | '-root-' | The ID of the root folder node.
-| `currentFolderPath` | *string* | '/' | define the path where the files are uploaded |
+| **(deprecated)** `showNotificationBar` | *boolean* | true |  Hide/show notification bar. **Deprecated in 1.6.0: use UploadService events and NotificationService api instead.** |
+| `rootFolderId` | *string* | '-root-' | The ID of the root folder node. |
+| **(deprecated)** `currentFolderPath` | *string* | '/' | define the path where the files are uploaded. **Deprecated in 1.6.0: use rootFolderId instead.** |
 | `versioning` | *boolean* | false |  Versioning false is the default uploader behaviour and it rename using an integer suffix if there is a name clash. Versioning true to indicate that a major version should be created  | 
 
 ## FileUploadingDialogComponent

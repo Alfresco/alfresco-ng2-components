@@ -19,7 +19,7 @@ import { EventEmitter } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
 import { UploadService } from './upload.service';
-import { FileModel } from '../models/file.model';
+import { FileModel, FileUploadOptions } from '../models/file.model';
 
 declare let jasmine: any;
 
@@ -77,9 +77,12 @@ describe('UploadService', () => {
             expect(e.value).toBe('File uploaded');
             done();
         });
-        let fileFake = new FileModel(<File>{name: 'fake-name', size: 10});
+        let fileFake = new FileModel(
+            <File>{name: 'fake-name', size: 10},
+            <FileUploadOptions> { parentId: '-root-', path: 'fake-dir' }
+        );
         service.addToQueue(fileFake);
-        service.uploadFilesInTheQueue('-root-', 'fake-dir', emitter);
+        service.uploadFilesInTheQueue(emitter);
 
         let request = jasmine.Ajax.requests.mostRecent();
         expect(request.url).toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true');
@@ -99,9 +102,12 @@ describe('UploadService', () => {
             expect(e.value).toBe('Error file uploaded');
             done();
         });
-        let fileFake = new FileModel(<File>{name: 'fake-name', size: 10});
+        let fileFake = new FileModel(
+            <File>{name: 'fake-name', size: 10},
+            <FileUploadOptions> { parentId: '-root-' }
+        );
         service.addToQueue(fileFake);
-        service.uploadFilesInTheQueue('-root-', '', emitter);
+        service.uploadFilesInTheQueue(emitter);
         expect(jasmine.Ajax.requests.mostRecent().url)
             .toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true');
 
@@ -121,7 +127,7 @@ describe('UploadService', () => {
         });
         let fileFake = new FileModel(<File>{name: 'fake-name', size: 10});
         service.addToQueue(fileFake);
-        service.uploadFilesInTheQueue('-root-', '', emitter);
+        service.uploadFilesInTheQueue(emitter);
 
         let file = service.getQueue();
         service.cancelUpload(...file);
@@ -132,7 +138,7 @@ describe('UploadService', () => {
 
         const filesFake = new FileModel(<File>{name: 'fake-name', size: 10}, { newVersion: true });
         service.addToQueue(filesFake);
-        service.uploadFilesInTheQueue('-root-', '', emitter);
+        service.uploadFilesInTheQueue(emitter);
 
         expect(jasmine.Ajax.requests.mostRecent().url.endsWith('autoRename=true')).toBe(false);
         expect(jasmine.Ajax.requests.mostRecent().params.has('majorVersion')).toBe(true);
@@ -145,9 +151,12 @@ describe('UploadService', () => {
             expect(e.value).toBe('File uploaded');
             done();
         });
-        let filesFake = new FileModel(<File>{name: 'fake-name', size: 10});
+        let filesFake = new FileModel(
+            <File>{name: 'fake-name', size: 10},
+            <FileUploadOptions> { parentId: '123', path: 'fake-dir' }
+        );
         service.addToQueue(filesFake);
-        service.uploadFilesInTheQueue('123', 'fake-dir', emitter);
+        service.uploadFilesInTheQueue(emitter);
 
         let request = jasmine.Ajax.requests.mostRecent();
         expect(request.url).toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/123/children?autoRename=true');

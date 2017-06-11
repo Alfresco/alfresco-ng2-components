@@ -67,7 +67,6 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
         });
 
         this.uploadService.fileUpload.subscribe(e => {
-            console.log(e);
             this.cd.detectChanges();
         });
     }

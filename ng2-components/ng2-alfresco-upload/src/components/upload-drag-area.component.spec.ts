@@ -67,21 +67,22 @@ describe('UploadDragAreaComponent', () => {
         TestBed.resetTestingModule();
     });
 
-    it('should upload the list of files dropped', () => {
+    it('should upload the list of files dropped', (done) => {
         component.currentFolderPath = '/root-fake-/sites-fake/folder-fake';
         component.onSuccess = null;
         component.showNotificationBar = false;
-        uploadService.addToQueue = jasmine.createSpy('addToQueue');
         uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
 
         fixture.detectChanges();
         const file = <File> {name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json'};
-        let fileFake = new FileModel(file);
-        let filesList = [fileFake];
+        let filesList = [file];
+
+        spyOn(uploadService, 'addToQueue').and.callFake((f: FileModel) => {
+            expect(f.file).toBe(file);
+            done();
+        });
 
         component.onFilesDropped(filesList);
-        expect(uploadService.addToQueue).toHaveBeenCalledWith(fileFake);
-        expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith('-root-', '/root-fake-/sites-fake/folder-fake', null);
     });
 
     it('should show the loading messages in the notification bar when the files are dropped', () => {
@@ -92,11 +93,11 @@ describe('UploadDragAreaComponent', () => {
         component.showUndoNotificationBar = jasmine.createSpy('_showUndoNotificationBar');
 
         fixture.detectChanges();
-        let fileFake = new FileModel(<File> {name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json'});
+        let fileFake = <File> {name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json'};
         let filesList = [fileFake];
 
         component.onFilesDropped(filesList);
-        expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith('-root-', '/root-fake-/sites-fake/folder-fake', null);
+        expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith(null);
         expect(component.showUndoNotificationBar).toHaveBeenCalled();
     });
 
@@ -119,8 +120,7 @@ describe('UploadDragAreaComponent', () => {
         };
 
         component.onFilesEntityDropped(itemEntity);
-        expect(uploadService.uploadFilesInTheQueue)
-            .toHaveBeenCalledWith('-root-', '/root-fake-/sites-fake/document-library-fake/folder-fake/', null);
+        expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith(null);
     });
 
     it('should upload a file with a custom root folder ID when dropped', () => {
@@ -143,7 +143,6 @@ describe('UploadDragAreaComponent', () => {
         };
 
         component.onFilesEntityDropped(itemEntity);
-        expect(uploadService.uploadFilesInTheQueue)
-            .toHaveBeenCalledWith('-my-', '/root-fake-/sites-fake/document-library-fake/folder-fake/', null);
+        expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith(null);
     });
 });
