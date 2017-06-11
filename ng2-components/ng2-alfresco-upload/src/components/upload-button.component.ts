@@ -211,6 +211,7 @@ export class UploadButtonComponent implements OnInit, OnChanges {
         return Observable.throw(error || 'Server error');
     }
 
+    // TODO: move to AlfrescoContentService
     getFolderNode(nodeId: string): Observable<MinimalNodeEntryEntity> {
         let opts: any = {
             includeSource: true,
