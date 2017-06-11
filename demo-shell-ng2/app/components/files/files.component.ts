@@ -150,12 +150,8 @@ export class FilesComponent implements OnInit {
         dialogRef.afterClosed().subscribe(folderName => {
             if (folderName) {
                 this.contentService.createFolder('', folderName, this.documentList.currentFolderId).subscribe(
-                    node => {
-                        console.log(node);
-                    },
-                    err => {
-                        console.log(err);
-                    }
+                    node => console.log(node),
+                    err => console.log(err)
                 );
             }
         });
