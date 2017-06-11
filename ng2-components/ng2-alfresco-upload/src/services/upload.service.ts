@@ -17,7 +17,7 @@
 
 import { EventEmitter, Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Rx';
-import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoApiService } from 'ng2-alfresco-core';
 import { FileUploadEvent, FileUploadCompleteEvent } from '../events/file.event';
 import { FileModel, FileUploadProgress, FileUploadStatus } from '../models/file.model';
 
@@ -27,6 +27,7 @@ export class UploadService {
     private queue: FileModel[] = [];
     private cache: { [key: string]: any } = {};
     private totalComplete: number = 0;
+    private activeTask: Promise<any> = null;
 
     queueChanged: Subject<FileModel[]> = new Subject<FileModel[]>();
     fileUpload: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
@@ -37,8 +38,18 @@ export class UploadService {
     fileUploadError: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
     fileUploadComplete: Subject<FileUploadCompleteEvent> = new Subject<FileUploadCompleteEvent>();
 
-    constructor(private apiService: AlfrescoApiService,
-                private logService: LogService) {
+    constructor(private apiService: AlfrescoApiService) {
+    }
+
+    /**
+     * Checks whether the service is uploading a file.
+     *
+     * @returns {boolean}
+     *
+     * @memberof UploadService
+     */
+    isUploading(): boolean {
+        return this.activeTask ? true : false;
     }
 
     /**
@@ -67,52 +78,32 @@ export class UploadService {
 
     /**
      * Pick all the files in the queue that are not been uploaded yet and upload it into the directory folder.
+     *
+     * @param {EventEmitter<any>} emitter @deprecated emitter to invoke on file status change
+     *
+     * @memberof UploadService
      */
-    uploadFilesInTheQueue(rootId: string, directory: string, elementEmit: EventEmitter<any>): void {
-        const files = this.getFilesToUpload();
+    uploadFilesInTheQueue(emitter: EventEmitter<any>): void {
+        if (!this.activeTask) {
+            let file = this.queue.find(f => f.status === FileUploadStatus.Pending);
+            if (file) {
+                this.onUploadStarting(file);
 
-        files.forEach((file: FileModel) => {
-            this.onUploadStarting(file);
+                const promise = this.beginUpload(file, emitter);
+                this.activeTask = promise;
+                this.cache[file.id] = promise;
 
-            const opts: any = {
-                renditions: 'doclib'
-            };
+                let next = () => {
+                    this.activeTask = null;
+                    setTimeout(() => this.uploadFilesInTheQueue(emitter), 100);
+                };
 
-            if (file.options.newVersion === true) {
-                opts.overwrite = true;
-                opts.majorVersion = true;
-            } else {
-                opts.autoRename = true;
+                promise.then(
+                    () => next(),
+                    () => next()
+                );
             }
-
-            const promise = this.apiService.getInstance().upload.uploadFile(file.file, directory, rootId, null, opts);
-            promise.on('progress', (progress: FileUploadProgress) => {
-                this.onUploadProgress(file, progress);
-            })
-            .on('abort', () => {
-                this.onUploadAborted(file);
-                elementEmit.emit({
-                    value: 'File aborted'
-                });
-            })
-            .on('error', err => {
-                this.onUploadError(file, err);
-                elementEmit.emit({
-                    value: 'Error file uploaded'
-                });
-            })
-            .on('success', data => {
-                this.onUploadComplete(file);
-                elementEmit.emit({
-                    value: data
-                });
-            })
-            .catch((err) => {
-                this.onUploadError(file, err);
-            });
-
-            this.cache[file.id] = promise;
-        });
+        }
     }
 
     cancelUpload(...files: FileModel[]) {
@@ -129,6 +120,46 @@ export class UploadService {
             this.fileUpload.next(event);
             this.fileUploadCancelled.next(event);
         });
+    }
+
+    private beginUpload(file: FileModel, /* @deprecated */emitter: EventEmitter<any>): any {
+        let opts: any = {
+                renditions: 'doclib'
+            };
+
+        if (file.options.newVersion === true) {
+            opts.overwrite = true;
+            opts.majorVersion = true;
+        } else {
+            opts.autoRename = true;
+        }
+        let promise = this.apiService.getInstance().upload.uploadFile(
+            file.file,
+            file.options.path,
+            file.options.parentId,
+            null,
+            opts
+        );
+        promise.on('progress', (progress: FileUploadProgress) => {
+            this.onUploadProgress(file, progress);
+        })
+        .on('abort', () => {
+            this.onUploadAborted(file);
+            emitter.emit({ value: 'File aborted' });
+        })
+        .on('error', err => {
+            this.onUploadError(file, err);
+            emitter.emit({ value: 'Error file uploaded' });
+        })
+        .on('success', data => {
+            this.onUploadComplete(file);
+            emitter.emit({ value: data });
+        })
+        .catch(err => {
+            this.onUploadError(file, err);
+        });
+
+        return promise;
     }
 
     private onUploadStarting(file: FileModel): void {
@@ -199,12 +230,5 @@ export class UploadService {
             this.fileUpload.next(event);
             this.fileUploadAborted.next(event);
         }
-    }
-
-    private getFilesToUpload(): FileModel[] {
-        let filesToUpload = this.queue.filter(file => {
-            return file.status === FileUploadStatus.Pending;
-        });
-        return filesToUpload;
     }
 }
