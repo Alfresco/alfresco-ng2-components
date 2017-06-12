@@ -22,6 +22,7 @@ import { Observable } from 'rxjs/Observable';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 
 declare let componentHandler: any;
+declare var require: any;
 
 @Component({
     selector: 'activiti-people-search',

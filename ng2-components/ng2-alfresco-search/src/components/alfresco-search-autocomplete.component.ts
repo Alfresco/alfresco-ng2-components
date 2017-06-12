@@ -21,6 +21,8 @@ import { MinimalNodeEntity } from 'alfresco-js-api';
 import { AlfrescoSearchService, SearchOptions } from './../services/alfresco-search.service';
 import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
 
+declare var require: any;
+
 @Component({
     selector: 'alfresco-search-autocomplete',
     templateUrl: './alfresco-search-autocomplete.component.html',
