@@ -19,7 +19,9 @@
             "LOGIN-ECM-LICENSE": "Content Services repository is in read-only mode"
         },
         "BUTTON": {
-            "LOGIN": "SIGN IN"
+            "LOGIN": "SIGN IN",
+            "CHECKING": "CHECKING",
+            "WELCOME": "WELCOME"
         },
         "ACTION": {
             "HELP": "NEED HELP?",
