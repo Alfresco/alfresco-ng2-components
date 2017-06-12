@@ -96,13 +96,14 @@ export class ActivitiProcessService {
 
     /**
      * Retrieve the process filter by name
-     * @param processName - string - The name of the filter
+     * @param filterName - string - The name of the filter
+     * @param appId - string - optional - The id of app
      * @returns {Observable<FilterProcessRepresentationModel>}
      */
-    getProcessFilterByName(processName: string, appId?: string): Observable<FilterProcessRepresentationModel> {
+    getProcessFilterByName(filterName: string, appId?: string): Observable<FilterProcessRepresentationModel> {
         return Observable.fromPromise(this.callApiProcessFilters(appId))
             .map((response: any) => {
-                return response.data.find(filter => filter.name === processName);
+                return response.data.find(filter => filter.name === filterName);
             }).catch(err => this.handleError(err));
     }
 
