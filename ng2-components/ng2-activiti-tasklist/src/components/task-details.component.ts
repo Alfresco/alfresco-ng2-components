@@ -23,6 +23,8 @@ import { User } from '../models/user.model';
 import { FormService, FormModel, FormOutcomeEvent, ContentLinkModel } from 'ng2-activiti-form';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 
+declare var require: any;
+
 @Component({
     selector: 'activiti-task-details',
     templateUrl: './activiti-task-details.component.html',

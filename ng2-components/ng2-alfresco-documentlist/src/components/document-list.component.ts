@@ -36,7 +36,7 @@ import { ContentActionModel } from './../models/content-action.model';
 import { ShareDataTableAdapter, ShareDataRow, RowFilter, ImageResolver } from './../data/share-datatable-adapter';
 import { NodeEntityEvent, NodeEntryEvent } from './node.event';
 
-declare var module: any;
+declare var require: any;
 
 @Component({
     selector: 'alfresco-document-list',

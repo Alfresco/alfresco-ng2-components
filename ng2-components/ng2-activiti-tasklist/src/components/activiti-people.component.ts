@@ -22,6 +22,7 @@ import { User } from '../models/user.model';
 import { ActivitiPeopleService } from '../services/activiti-people.service';
 
 declare let dialogPolyfill: any;
+declare var require: any;
 
 @Component({
     selector: 'activiti-people',
