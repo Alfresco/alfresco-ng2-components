@@ -102,7 +102,7 @@ module.exports = webpackMerge(commonConfig, {
                     from: '**/*',
                     to: `assets/${lib}/i18n/`
                 }
-            }),
+            })
         ])
     ]
 });
