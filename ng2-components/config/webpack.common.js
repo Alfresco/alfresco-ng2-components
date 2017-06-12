@@ -3,6 +3,7 @@ const helpers = require('./helpers');
 const fs = require('fs');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+var HappyPack = require('happypack');
 
 const alfrescoLibs = [
     'ng2-activiti-analytics',
@@ -85,7 +86,7 @@ module.exports = {
             },
             {
                 test: /\.ts$/,
-                loader: ['ts-loader', 'angular2-template-loader'],
+                loader: ['happypack/loader?id=ts', 'angular2-template-loader'],
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
             },
             {
@@ -95,7 +96,7 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loader: ['to-string-loader', 'css-loader'],
+                loader: ['happypack/loader?id=css'],
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
             },
             {
@@ -131,6 +132,28 @@ module.exports = {
     },
 
     plugins: [
+        new HappyPack({
+            id: 'ts',
+            threads: 8,
+            loaders: [
+                {
+                    path: 'ts-loader',
+                    query: {
+                        happyPackMode: true,
+                        "compilerOptions": {
+                            "paths": {}
+                        }
+                    }
+                }
+            ]
+        }),
+
+        new HappyPack({
+            id: 'css',
+            threads: 8,
+            loaders: ['to-string-loader', 'css-loader' ]
+        }),
+
         new CopyWebpackPlugin([
             ... alfrescoLibs.map(lib => {
                 return {
@@ -155,9 +178,9 @@ module.exports = {
             }
         }),
         new webpack.LoaderOptionsPlugin({
-                htmlLoader: {
-                    minimize: false // workaround for ng2
-                }
+            htmlLoader: {
+                minimize: false // workaround for ng2
+            }
         })
     ],
 

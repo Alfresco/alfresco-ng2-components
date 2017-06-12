@@ -5,6 +5,7 @@ const commonConfig = require('./webpack.common.js');
 const helpers = require('./helpers');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+var HappyPack = require('happypack');
 
 const alfrescoLibs = [
     'ng2-activiti-analytics',
@@ -40,10 +41,9 @@ module.exports = webpackMerge(commonConfig, {
                 test: /\.ts$/,
                 include: [helpers.root('app'), helpers.root('../ng2-components')],
                 loader: [
-                    'ts-loader',
-                    'angular2-template-loader'
+                    'happypack/loader?id=ts','angular2-template-loader'
                 ],
-                exclude: [ /node_modules/, /public/, /resources/, /dist/]
+                exclude: [/node_modules/, /public/, /resources/, /dist/]
             }
         ]
     },
@@ -74,6 +74,17 @@ module.exports = webpackMerge(commonConfig, {
     },
 
     plugins: [
+        new HappyPack({
+            id: 'ts',
+            threads: 8,
+            loaders: [
+                {
+                    path: 'ts-loader',
+                    query: {happyPackMode: true}
+                }
+            ]
+        }),
+
         new webpack.NoEmitOnErrorsPlugin(),
         new ExtractTextPlugin('[name].[hash].css'),
         new webpack.LoaderOptionsPlugin({
@@ -88,7 +99,7 @@ module.exports = webpackMerge(commonConfig, {
                     from: '**/*',
                     to: `assets/${lib}/i18n/`
                 }
-            }),
+            })
         ])
     ]
 });

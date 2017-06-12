@@ -17,5 +17,6 @@ fonts/
 /karma.conf.js
 /gulpfile.ts
 /.npmignore
+/.happypack
 
 *.tgz

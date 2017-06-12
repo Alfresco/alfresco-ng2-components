@@ -1,5 +1,6 @@
 const webpack = require('webpack');
-const helpers = require('./helpers');
+const helpers= require('./helpers');
+var HappyPack = require('happypack');
 
 module.exports = {
 
@@ -14,7 +15,7 @@ module.exports = {
         rules: [
             {
                 test: /\.ts$/,
-                loaders: ['ts-loader', 'angular2-template-loader'],
+                loaders: ['happypack/loader?id=ts', 'angular2-template-loader'],
                 exclude: [ /public/, /resources/, /dist/]
             },
             {
@@ -36,6 +37,17 @@ module.exports = {
     },
 
     plugins: [
+        new HappyPack({
+            id: 'ts',
+            threads: 4,
+            loaders: [
+                {
+                    path: 'ts-loader',
+                    query: {happyPackMode: true}
+                }
+            ]
+        }),
+
         new webpack.ContextReplacementPlugin(
             // The (\\|\/) piece accounts for path separators in *nix and Windows
             /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
