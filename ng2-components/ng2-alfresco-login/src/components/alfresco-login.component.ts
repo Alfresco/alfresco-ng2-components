@@ -29,6 +29,12 @@ enum LoginSteps {
     Welcome = 2
 }
 
+enum LoginSteps {
+    Landing = 0,
+    Checking = 1,
+    Welcome = 2
+}
+
 @Component({
     selector: 'alfresco-login',
     templateUrl: './alfresco-login.component.html',
