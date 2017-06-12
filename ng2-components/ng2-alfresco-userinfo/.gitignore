@@ -17,3 +17,4 @@ index.js.map.gitignore
 /package/
 /bundles/
 index.d.ts
+/.happypack

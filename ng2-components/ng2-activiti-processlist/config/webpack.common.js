@@ -3,6 +3,7 @@ const helpers = require('./helpers');
 const fs = require('fs');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+var HappyPack = require('happypack');
 
 const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
 
@@ -47,7 +48,7 @@ module.exports = {
             },
             {
                 test: /\.ts$/,
-                use: ['ts-loader', 'angular2-template-loader'],
+                loader: ['happypack/loader?id=ts', 'angular2-template-loader'],
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
             },
             {
@@ -94,6 +95,22 @@ module.exports = {
     },
 
     plugins: [
+        new HappyPack({
+            id: 'ts',
+            threads: 8,
+            loaders: [
+                {
+                    path: 'ts-loader',
+                    query: {
+                        happyPackMode: true,
+                        "compilerOptions": {
+                            "paths": {}
+                        }
+                    }
+                }
+            ]
+        }),
+
         new CopyWebpackPlugin([{
             from: `src/i18n/`,
             to: `bundles/assets/${path.basename(helpers.root(''))}/i18n/`
