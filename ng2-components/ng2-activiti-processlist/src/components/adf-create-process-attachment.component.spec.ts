@@ -17,12 +17,11 @@
 
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { Observable } from 'rxjs/Rx';
-
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { ActivitiContentService } from 'ng2-activiti-form';
-
 import { ActivitiCreateProcessAttachmentComponent } from './adf-create-process-attachment.component';
+
+declare let jasmine: any;
 
 describe('Activiti Process Create Attachment', () => {
 
@@ -30,7 +29,24 @@ describe('Activiti Process Create Attachment', () => {
     let service: ActivitiContentService;
     let component: ActivitiCreateProcessAttachmentComponent;
     let fixture: ComponentFixture<ActivitiCreateProcessAttachmentComponent>;
-    let createTaskRelatedContentSpy: jasmine.Spy;
+    let element: HTMLElement;
+
+    let file = new File([new Blob()], 'Test');
+    let customEvent = { detail: { files: [file] } };
+
+    let fakeUploadResponse = {
+        id: 9999,
+        name: 'BANANA.jpeg',
+        created: '2017-06-12T12:52:11.109Z',
+        createdBy: { id: 2, firstName: 'fake-user', lastName: 'fake-user', email: 'fake-user' },
+        relatedContent: false,
+        contentAvailable: true,
+        link: false,
+        mimeType: 'image/jpeg',
+        simpleType: 'image',
+        previewStatus: 'queued',
+        thumbnailStatus: 'queued'
+    };
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -48,54 +64,96 @@ describe('Activiti Process Create Attachment', () => {
     }));
 
     beforeEach(() => {
-
         fixture = TestBed.createComponent(ActivitiCreateProcessAttachmentComponent);
         component = fixture.componentInstance;
         service = fixture.debugElement.injector.get(ActivitiContentService);
-
-        createTaskRelatedContentSpy = spyOn(service, 'createProcessRelatedContent').and.returnValue(Observable.of(
-            {
-              status: true
-            }));
+        element = fixture.nativeElement;
 
         componentHandler = jasmine.createSpyObj('componentHandler', [
             'upgradeAllRegistered',
             'upgradeElement'
         ]);
         window['componentHandler'] = componentHandler;
+
+        component.processInstanceId = '9999';
+        fixture.detectChanges();
     });
 
-    it('should not call createTaskRelatedContent service when taskId changed', () => {
-        let change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ 'taskId': change });
-        expect(createTaskRelatedContentSpy).not.toHaveBeenCalled();
+    beforeEach(() => {
+        jasmine.Ajax.install();
     });
 
-    it('should not call createTaskRelatedContent service when there is no file uploaded', () => {
+    afterEach(() => {
+        jasmine.Ajax.uninstall();
+    });
+
+    it('should update the processInstanceId when it is changed', () => {
+        component.processInstanceId = null;
+
         let change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ 'taskId': change });
-        let customEvent = {
-            detail: {
-                files: [
-                ]
-            }
-        };
+        component.ngOnChanges({ 'processInstanceId': change });
+
+        expect(component.processInstanceId).toBe('123');
+    });
+
+    it('should emit content created event when the file is uploaded', async(() => {
+        component.contentCreated.subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(res).not.toBeNull();
+            expect(res.id).toBe(9999);
+        });
+
         component.onFileUpload(customEvent);
-        expect(createTaskRelatedContentSpy).not.toHaveBeenCalled();
-    });
 
-    it('should call createTaskRelatedContent service when there is a file uploaded', () => {
-        let change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ 'taskId': change });
-        let file = new File([new Blob()], 'Test');
-        let customEvent = {
-            detail: {
-                files: [
-                    file
-                ]
-            }
-        };
-        component.onFileUpload(customEvent);
-        expect(createTaskRelatedContentSpy).toHaveBeenCalled();
-    });
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeUploadResponse)
+        });
+    }));
+
+    it('should allow user to drag&drop files', async(() => {
+        let dragArea: HTMLElement = <HTMLElement> element.querySelector('#add_new_process_content_area');
+        expect(dragArea).toBeDefined();
+        expect(dragArea).not.toBeNull();
+
+        component.contentCreated.subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(res).not.toBeNull();
+            expect(res.id).toBe(9999);
+        });
+
+        let dropEvent = new CustomEvent('upload-files', customEvent);
+        dragArea.dispatchEvent(dropEvent);
+        fixture.detectChanges();
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeUploadResponse)
+        });
+    }));
+
+    it('should allow user to upload files via button', async(() => {
+        let buttonUpload: HTMLElement = <HTMLElement> element.querySelector('#add_new_process_content_button');
+        expect(buttonUpload).toBeDefined();
+        expect(buttonUpload).not.toBeNull();
+
+        component.contentCreated.subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(res).not.toBeNull();
+            expect(res.id).toBe(9999);
+        });
+
+        let dropEvent = new CustomEvent('upload-files', customEvent);
+        buttonUpload.dispatchEvent(dropEvent);
+        fixture.detectChanges();
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeUploadResponse)
+        });
+    }));
+
 });
