@@ -52,6 +52,7 @@
         "copy-webpack-plugin": "^4.0.1",
         "extract-text-webpack-plugin": "^2.0.0-rc.3",
         "html-webpack-plugin": "^2.28.0",
+        "happypack": "3.0.0",
         "karma": "^0.13.22",
         "karma-chrome-launcher": "~1.0.1",
         "karma-coverage": "^1.1.1",
