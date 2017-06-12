@@ -24,6 +24,8 @@ import { NodePaging, MinimalNodeEntity } from 'alfresco-js-api';
 
 declare var require: any;
 
+declare var require: any;
+
 export class ShareDataTableAdapter implements DataTableAdapter {
 
     ERR_ROW_NOT_FOUND: string = 'Row not found';
