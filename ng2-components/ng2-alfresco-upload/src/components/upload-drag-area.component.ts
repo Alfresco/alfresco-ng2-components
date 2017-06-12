@@ -74,18 +74,18 @@ export class UploadDragAreaComponent {
         event.preventDefault();
         let isAllowed: boolean = this.isAllowed(event.detail.data.obj.entry);
         if (isAllowed) {
-            let files: FileInfo[] = e.detail.files;
+            let files: FileInfo[] = event.detail.files;
             if (files && files.length > 0) {
                 let parentId = this.rootFolderId;
                 if (event.detail.data && event.detail.data.obj.entry.isFolder) {
-                    parentId = e.detail.data.obj.entry.id || this.rootFolderId;
+                    parentId = event.detail.data.obj.entry.id || this.rootFolderId;
                 }
                 const fileModels = files.map(fileInfo => new FileModel(fileInfo.file, {
                     newVersion: this.versioning,
                     path: fileInfo.relativeFolder,
                     parentId: parentId
                 }));
-                this.uploadFiles(fileModels);
+                this.uploadFiles(fileModels, isAllowed);
             }
         }
     }
@@ -178,13 +178,8 @@ export class UploadDragAreaComponent {
         this.notificationService.openSnackMessage(errorMessage, 3000);
     }
 
-    /**
-     * Retrive the error message using the error status code
-     * @param response - object that contain the HTTP response
-     * @returns {string}
-     */
-    private uploadFiles(files: FileModel[]): void {
-        if (this.enabled && files.length) {
+    private uploadFiles(files: FileModel[], isAllowed: boolean): void {
+        if (isAllowed && files.length) {
             this.uploadService.addToQueue(...files);
             this.uploadService.uploadFilesInTheQueue(this.onSuccess);
             let latestFilesAdded = this.uploadService.getQueue();

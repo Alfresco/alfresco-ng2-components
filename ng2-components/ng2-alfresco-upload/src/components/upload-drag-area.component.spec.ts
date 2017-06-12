@@ -185,10 +185,20 @@ describe('UploadDragAreaComponent', () => {
         component.currentFolderPath = '/root-fake-/sites-fake/document-library-fake';
         component.rootFolderId = '-my-';
         component.enabled = false;
-        let fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
+
+        let fakeItem = {
+            fullPath: '/folder-fake/file-fake.png',
+            isDirectory: false,
+            isFile: true,
+            name: 'file-fake.png',
+            file: (callbackFile) => {
+                let fileFake = new File(['fakefake'], 'file-fake.png', {type: 'image/png'});
+                callbackFile(fileFake);
+            }
+        };
 
         fixture.detectChanges();
-        spyOn(uploadService, 'uploadFilesInTheQueue').and.returnValue(Promise.resolve(fileFake));
+        spyOn(uploadService, 'uploadFilesInTheQueue').and.returnValue(Promise.resolve(fakeItem));
         component.onSuccess.subscribe((val) => {
             expect(val).not.toBeNull();
         });
@@ -196,7 +206,7 @@ describe('UploadDragAreaComponent', () => {
         let fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
             detail: {
                 data: fakeShareDataRow,
-                files: [fileFake]
+                files: [fakeItem]
             }
         });
 
