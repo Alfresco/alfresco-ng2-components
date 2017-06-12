@@ -23,6 +23,7 @@ import { EcmUserService } from './../services/ecm-user.service';
 import { BpmUserService } from './../services/bpm-user.service';
 
 declare let componentHandler: any;
+declare var require: any;
 
 @Component({
     selector: 'ng2-alfresco-userinfo',

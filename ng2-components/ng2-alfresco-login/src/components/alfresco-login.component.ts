@@ -21,6 +21,7 @@ import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoSett
 import { FormSubmitEvent } from '../models/form-submit-event.model';
 
 declare let componentHandler: any;
+declare var require: any;
 
 enum LoginSteps {
     Landing = 0,
