@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter, OnInit, AfterViewInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, AfterViewInit, TemplateRef, ContentChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { User } from '../models/user.model';
 import { Observable } from 'rxjs/Observable';
@@ -31,6 +31,8 @@ declare var require: any;
 })
 
 export class ActivitiPeopleSearch implements OnInit, AfterViewInit {
+    @ContentChild(TemplateRef)
+    template: any;
 
     @Input()
     iconImageUrl: string = require('../assets/images/user.jpg');
@@ -47,6 +49,8 @@ export class ActivitiPeopleSearch implements OnInit, AfterViewInit {
     searchUser: FormControl = new FormControl();
 
     userList: User[] = [];
+
+    user: User;
 
     constructor(private translateService: AlfrescoTranslationService) {
         if (translateService) {
@@ -97,5 +101,13 @@ export class ActivitiPeopleSearch implements OnInit, AfterViewInit {
         let firstName = user.firstName && user.firstName !== 'null' ? user.firstName : 'N/A';
         let lastName = user.lastName && user.lastName !== 'null' ? user.lastName : 'N/A';
         return firstName + ' - ' + lastName;
+    }
+
+    setCurrentUser(user: User) {
+        this.user = user;
+    }
+
+    onAddPeople() {
+        this.onRowClick(this.user);
     }
 }

@@ -2,14 +2,7 @@
     <input class="mdl-textfield__input" type="text" id="userSearchText" [value]="" [formControl]="searchUser"/>
     <label class="mdl-textfield__label" for="userSearchText">Search user</label>
 </div>
-<ul class='mdl-list'>
-    <li class="mdl-list__item fix-element-user-list" *ngFor="let user of userList">
-        <button (click)="onRowClick(user)" id="user-{{user.id}}" class="mdl-chip mdl-chip--contact mdl-chip-search-people">
-            <img class="mdl-chip__contact" [src]="iconImageUrl" />
-            <span class="mdl-chip__text mdl-chip-search-people__text">{{getDisplayUser(user)}}</span>
-        </button>
-    </li>
-    <div *ngIf="userList?.length === 0" id="no-user-found">
-        {{'PEOPLE.SEARCH.NO_USERS' | translate }}
-    </div>
-</ul>
+
+<ng-content></ng-content>
+
+<button (click)="onAddPeople()">Add</button>

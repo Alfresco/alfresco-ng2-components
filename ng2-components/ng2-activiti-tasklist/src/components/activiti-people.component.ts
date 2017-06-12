@@ -112,4 +112,10 @@ export class ActivitiPeople {
         return firstName + ' ' + lastName;
     }
 
+    onClickAction(event) {
+        if (event.type === 'remove') {
+            this.removeInvolvedUser(event.value);
+        }
+    }
+
 }
