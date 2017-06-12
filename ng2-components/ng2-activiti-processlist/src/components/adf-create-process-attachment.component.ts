@@ -39,7 +39,7 @@ export class ActivitiCreateProcessAttachmentComponent implements OnChanges {
                 private activitiContentService: ActivitiContentService) {
 
         if (translateService) {
-            translateService.addTranslationFolder('ng2-activiti-processlist', 'node_modules/ng2-activiti-processlist/src');
+            translateService.addTranslationFolder('ng2-activiti-processlist', 'assets/ng2-activiti-processlist/src');
         }
     }
 
