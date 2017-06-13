@@ -9,6 +9,13 @@
         [users]="people"
         [actions]="true"
         (clickAction)="onClickAction($event)">
+        <data-columns>
+            <data-column key="email" class="full-width">
+                <template let-entry="$implicit">
+                    <div class="people-full-name">{{ entry.row.obj.email }}</div>
+                </template>
+            </data-column>
+        </data-columns>
     </activiti-people-list>
 </div>
 <div *ngIf="people?.length === 0" id="no-people-label">
@@ -18,17 +25,10 @@
 <dialog class="mdl-dialog" id="add-people-dialog" #dialog>
     <h4 class="mdl-dialog__title" id="add-people-dialog-title">Involve User</h4>
     <div class="mdl-dialog__content add-people-dialog__content">
-        <activiti-people-search (onSearch)="searchUser($event)"
-                                (onRowClicked)="involveUser($event)"
+        <activiti-people-search (searchPeople)="searchUser($event)"
+                                (success)="involveUser($event)"
                                 [results]="peopleSearch$"
-                                [iconImageUrl]="iconImageUrl" #activitipeoplesearch>
-
-            <activiti-people-list
-                [users]="activitipeoplesearch?.userList"
-                [actions]="false"
-                (onRowClicked)="activitipeoplesearch?.setCurrentUser($event)">
-            </activiti-people-list>
-
+                                #activitipeoplesearch>
         </activiti-people-search>
     </div>
     <div class="mdl-dialog__actions">
