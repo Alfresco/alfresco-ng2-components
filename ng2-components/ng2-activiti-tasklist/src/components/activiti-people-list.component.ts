@@ -15,26 +15,19 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter, TemplateRef, ContentChild } from '@angular/core';
 import { User } from '../models/user.model';
 
 @Component({
     selector: 'activiti-people-list',
-    template: `
-<alfresco-datatable
-    [rows]="users"
-    [actions]="hasActions()"
-    (rowClick)="selectUser($event)"
-    (showRowActionsMenu)="onShowRowActionsMenu($event)"
-    (executeRowAction)="onExecuteRowAction($event)">
-    <data-columns>
-        <data-column key="email" type="text" title="email" class="full-width ellipsis-cell"></data-column>
-    </data-columns>
-</alfresco-datatable>
-`
+    templateUrl: './activiti-people-list.component.html',
+    styleUrls: ['./activiti-people-list.component.css']
 })
 
 export class ActivitiPeopleList implements OnChanges {
+
+    @ContentChild(TemplateRef)
+    template: any;
 
     @Input()
     users: User[];
@@ -43,14 +36,14 @@ export class ActivitiPeopleList implements OnChanges {
     actions: boolean = false;
 
     @Output()
-    onRowClicked: EventEmitter<any> = new EventEmitter();
+    clickRow: EventEmitter<any> = new EventEmitter();
 
     @Output()
     clickAction: EventEmitter<any> = new EventEmitter();
 
     user: User;
 
-    constructor(){}
+    constructor() {}
 
     ngOnChanges(changes: SimpleChanges) {
         console.log(this.users);
@@ -58,7 +51,7 @@ export class ActivitiPeopleList implements OnChanges {
 
     selectUser(event) {
         this.user = event.value.obj;
-        this.onRowClicked.emit(this.user);
+        this.clickRow.emit(this.user);
 
     }
 
@@ -84,4 +77,15 @@ export class ActivitiPeopleList implements OnChanges {
         this.clickAction.emit({type: action.name, value: args.row.obj});
     }
 
+    getDisplayUser(user: User): string {
+        let firstName = user.firstName && user.firstName !== 'null' ? user.firstName : 'N/A';
+        let lastName = user.lastName && user.lastName !== 'null' ? user.lastName : 'N/A';
+        return firstName + ' ' + lastName;
+    }
+
+    getShortName(user: User): string {
+        let firstName = user.firstName && user.firstName !== 'null' ? user.firstName[0] : '';
+        let lastName = user.lastName && user.lastName !== 'null' ? user.lastName[0] : '';
+        return firstName + lastName;
+    }
 }
