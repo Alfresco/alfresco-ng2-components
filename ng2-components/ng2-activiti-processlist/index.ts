@@ -42,7 +42,7 @@ export * from './src/components/activiti-filters.component';
 export * from './src/components/activiti-process-instance-details.component';
 export * from './src/components/activiti-start-process.component';
 export * from './src/components/adf-process-attachment-list.component';
-export * from './src/components/activiti-create-process-attachment.component';
+export * from './src/components/adf-create-process-attachment.component';
 
 // models
 export * from './src/models/index';
