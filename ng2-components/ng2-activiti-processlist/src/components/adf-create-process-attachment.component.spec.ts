@@ -32,7 +32,8 @@ describe('Activiti Process Create Attachment', () => {
     let element: HTMLElement;
 
     let file = new File([new Blob()], 'Test');
-    let customEvent = { detail: { files: [file] } };
+    let fileObj = { entry: null, file: file, relativeFolder: '/' };
+    let customEvent = { detail: { files: [fileObj] } };
 
     let fakeUploadResponse = {
         id: 9999,
