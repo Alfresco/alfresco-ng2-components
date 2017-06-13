@@ -1,8 +1,33 @@
-<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" id="userSearchText" [value]="" [formControl]="searchUser"/>
-    <label class="mdl-textfield__label" for="userSearchText">Search user</label>
+<div class="search-text-header">Add people &amp; groups</div>
+<div class="search-text-container">
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="text" id="userSearchText" [value]="" [formControl]="searchUser"/>
+        <label class="mdl-textfield__label" for="userSearchText">Search user</label>
+    </div>
 </div>
-
-<ng-content></ng-content>
-
-<button (click)="onAddPeople()">Add</button>
+<div class="search-list-container" *ngIf="userList?.length > 0">
+    <activiti-people-list
+    [users]="users"
+    (clickRow)="onRowClick($event)">
+        <data-columns>
+            <data-column key="firstName">
+                <template let-entry="$implicit">
+                    <div class="people-pic">{{getShortName(entry.row.obj)}}</div>
+                </template>
+            </data-column>
+            <data-column key="email" class="full-width">
+                <template let-entry="$implicit">
+                    <div class="people-full-name">{{ getDisplayUser(entry.row.obj) }}</div>
+                </template>
+            </data-column>
+        </data-columns>
+    </activiti-people-list>
+</div>
+<div class="search-list-action-container">
+    <button type="button" id="close-people-dialog" (click)="closeSearchList()" class="mdl-button close">
+        {{'Close' | translate }}
+    </button>
+    <button type="button" id="close-people-dialog" (click)="addInvolvedUser()" class="mdl-button close">
+        {{'Add' | translate }}
+    </button>
+</div>

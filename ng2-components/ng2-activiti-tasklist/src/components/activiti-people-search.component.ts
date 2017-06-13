@@ -35,22 +35,19 @@ export class ActivitiPeopleSearch implements OnInit, AfterViewInit {
     template: any;
 
     @Input()
-    iconImageUrl: string = require('../assets/images/user.jpg');
-
-    @Input()
     results: Observable<User[]>;
 
     @Output()
-    onSearch: EventEmitter<any> = new EventEmitter();
+    searchPeople: EventEmitter<any> = new EventEmitter();
 
     @Output()
-    onRowClicked: EventEmitter<any> = new EventEmitter();
+    success: EventEmitter<any> = new EventEmitter();
 
     searchUser: FormControl = new FormControl();
 
-    userList: User[] = [];
+    users: User[] = [];
 
-    user: User;
+    selectedUser: User;
 
     constructor(private translateService: AlfrescoTranslationService) {
         if (translateService) {
@@ -62,16 +59,16 @@ export class ActivitiPeopleSearch implements OnInit, AfterViewInit {
             .debounceTime(200)
             .subscribe((event: string) => {
                 if (event && event.trim()) {
-                    this.onSearch.emit(event);
+                    this.searchPeople.emit(event);
                 } else {
-                    this.userList = [];
+                    this.users = [];
                 }
             });
     }
 
     ngOnInit() {
         this.results.subscribe((list) => {
-            this.userList = list;
+            this.users = list;
         });
     }
 
@@ -89,25 +86,19 @@ export class ActivitiPeopleSearch implements OnInit, AfterViewInit {
         return isUpgraded;
     }
 
-    onRowClick(userClicked: User) {
-        this.onRowClicked.emit(userClicked);
-        this.userList = this.userList.filter((user) => {
+    onRowClick(event: any) {
+        this.selectedUser = event.value.obj;
+    }
+
+    closeSearchList() {
+        this.success.emit();
+    }
+
+    addInvolvedUser() {
+        this.success.emit(this.selectedUser);
+        this.users = this.users.filter((user) => {
             this.searchUser.reset();
-            return user.id !== userClicked.id;
+            return user.id !== this.selectedUser.id;
         });
-    }
-
-    getDisplayUser(user: User): string {
-        let firstName = user.firstName && user.firstName !== 'null' ? user.firstName : 'N/A';
-        let lastName = user.lastName && user.lastName !== 'null' ? user.lastName : 'N/A';
-        return firstName + ' - ' + lastName;
-    }
-
-    setCurrentUser(user: User) {
-        this.user = user;
-    }
-
-    onAddPeople() {
-        this.onRowClick(this.user);
     }
 }

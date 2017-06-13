@@ -88,7 +88,7 @@ describe('ActivitiPeopleSearch', () => {
     });
 
     it('should show user which can be involved ', (done) => {
-        activitiPeopleSearchComponent.onSearch.subscribe(() => {
+        activitiPeopleSearchComponent.searchPeople.subscribe(() => {
             activitiPeopleSearchComponent.results = Observable.of(userArray);
             activitiPeopleSearchComponent.ngOnInit();
             fixture.detectChanges();
@@ -110,7 +110,7 @@ describe('ActivitiPeopleSearch', () => {
     });
 
     it('should send an event when an user is clicked', (done) => {
-        activitiPeopleSearchComponent.onRowClicked.subscribe((user) => {
+        activitiPeopleSearchComponent.success.subscribe((user) => {
             expect(user).toBeDefined();
             expect(user.firstName).toBe('fake-name');
             done();
