@@ -1,4 +1,4 @@
-# Activiti Process List Component for Angular
+# Activiti Process List Component
 
 Displays lists of process instances both active and completed, using any defined process filter, and renders details for any chosen instance.
 

@@ -1,4 +1,4 @@
-# Activiti Analytics Components for Angular
+# Activiti Analytics Components
 
 ## Prerequisites
 

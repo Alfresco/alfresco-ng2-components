@@ -1,4 +1,4 @@
-# Alfresco Core Components for Angular
+# Alfresco Core Library
 
 ## Prerequisites
 

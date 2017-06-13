@@ -1,4 +1,4 @@
-# APS Form Component for Angular
+# APS Form Component
 
 See it live: [Form Quickstart](https://embed.plnkr.co/YSLXTqb3DtMhVJSqXKkE/)
 

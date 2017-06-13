@@ -1,4 +1,4 @@
-# APS Task List Component for Angular
+# APS Task List Component
 
 Displays lists of process instances both active and completed, using any defined process filter, and
 render details of any chosen instance.
