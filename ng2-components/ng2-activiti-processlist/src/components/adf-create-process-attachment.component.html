@@ -1,0 +1,17 @@
+<div class="upload-attachment-container">
+    <div class="drag-area"
+         id="add_new_process_content_area"
+         (upload-files)="onFileUpload($event)"
+         mode="['click', 'drop']"
+         [adf-upload]="true">
+        {{ 'DETAILS.BUTTON.DRAG-ATTACHMENT' | translate }}
+    </div>
+    <button class="mdl-button mdl-js-button mdl-button--raised"
+            id="add_new_process_content_button"
+            [adf-upload]="true"
+            mode="['click']"
+            [multiple]="true"
+            (upload-files)="onFileUpload($event)">
+        {{ 'DETAILS.BUTTON.UPLOAD-ATTACHMENT' | translate }}
+    </button>
+</div>

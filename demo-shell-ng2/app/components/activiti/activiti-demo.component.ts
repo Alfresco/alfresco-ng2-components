@@ -30,7 +30,8 @@ import {
     ActivitiProcessInstanceListComponent,
     ActivitiStartProcessInstance,
     FilterProcessRepresentationModel,
-    ProcessInstance
+    ProcessInstance,
+    ActivitiProcessAttachmentListComponent
 } from 'ng2-activiti-processlist';
 import { AnalyticsReportListComponent } from 'ng2-activiti-analytics';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -73,6 +74,9 @@ export class ActivitiDemoComponent implements AfterViewInit {
     @ViewChild(ActivitiProcessInstanceDetails)
     activitiprocessdetails: ActivitiProcessInstanceDetails;
 
+    @ViewChild(ActivitiProcessAttachmentListComponent)
+    processAttachList: ActivitiProcessAttachmentListComponent;
+
     @ViewChild(ActivitiStartProcessInstance)
     activitiStartProcess: ActivitiStartProcessInstance;
 
@@ -105,6 +109,7 @@ export class ActivitiDemoComponent implements AfterViewInit {
     blobFile: any;
     flag: boolean = true;
     createTaskAttach: boolean = false;
+    createProcessAttach: boolean = false;
 
     dataTasks: ObjectDataTableAdapter;
     dataProcesses: ObjectDataTableAdapter;
@@ -336,6 +341,11 @@ export class ActivitiDemoComponent implements AfterViewInit {
         this.toggleCreateTakAttach();
     }
 
+    onContentCreated() {
+        this.processAttachList.reload();
+        this.toggleCreateProcessAttach();
+    }
+
     toggleCreateTakAttach(): void {
         this.createTaskAttach = !this.createTaskAttach;
     }
@@ -344,4 +354,11 @@ export class ActivitiDemoComponent implements AfterViewInit {
         return this.createTaskAttach;
     }
 
+    toggleCreateProcessAttach(): void {
+        this.createProcessAttach = !this.createProcessAttach;
+    }
+
+    isCreateProcessAttachVisible(): boolean {
+        return this.createProcessAttach;
+    }
 }

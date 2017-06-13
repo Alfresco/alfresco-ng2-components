@@ -1,14 +1,14 @@
-<div class="upload-attachment-container">
-    <div class="drag-area"
-    (upload-files)="onFileUpload($event)" 
+<div class="adf-upload-attachment-container">
+    <div class="adf-drag-area"
+    (upload-files)="onFileUpload($event)"
     mode="['click', 'drop']"
     [adf-upload]="true">
         Drop Files Here...
     </div>
     <button class="mdl-button mdl-js-button mdl-button--raised"
-    [adf-upload]="true" 
-    mode="['click']" 
-    [multiple]="true" 
+    [adf-upload]="true"
+    mode="['click']"
+    [multiple]="true"
     (upload-files)="onFileUpload($event)">
         Upload Attachment
     </button>
