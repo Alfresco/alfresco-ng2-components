@@ -21,6 +21,8 @@ import { AlfrescoAuthenticationService } from './alfresco-authentication.service
 import { AlfrescoContentService } from './alfresco-content.service';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { StorageService } from './storage.service';
+import { CookieService } from './cookie.service';
+import { CookieServiceMock } from './../assets/cookie.service.mock';
 import { LogService } from './log.service';
 
 declare let jasmine: any;
@@ -42,6 +44,7 @@ describe('AlfrescoContentService', () => {
             AlfrescoAuthenticationService,
             AlfrescoSettingsService,
             StorageService,
+            { provide: CookieService, useClass: CookieServiceMock },
             LogService
         ]);
 

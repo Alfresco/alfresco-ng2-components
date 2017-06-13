@@ -81,6 +81,7 @@ export class AlfrescoLoginComponent implements OnInit {
     success: boolean = false;
     actualLoginStep: any = LoginSteps.Landing;
     LoginSteps: any = LoginSteps;
+    rememberMe: boolean = true;
     formError: { [id: string]: string };
     minLength: number = 2;
     footerTemplate: TemplateRef<any>;
@@ -172,7 +173,7 @@ export class AlfrescoLoginComponent implements OnInit {
      */
     private performLogin(values: any) {
         this.actualLoginStep = LoginSteps.Checking;
-        this.authService.login(values.username, values.password)
+        this.authService.login(values.username, values.password, this.rememberMe)
             .subscribe(
                 (token: any) => {
                     this.actualLoginStep = LoginSteps.Welcome;

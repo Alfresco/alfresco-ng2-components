@@ -20,6 +20,8 @@ import { AlfrescoSettingsService } from './alfresco-settings.service';
 import { AlfrescoAuthenticationService } from './alfresco-authentication.service';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { StorageService } from './storage.service';
+import { CookieService } from './cookie.service';
+import { CookieServiceMock } from './../assets/cookie.service.mock';
 import { LogService } from './log.service';
 
 declare let jasmine: any;
@@ -29,6 +31,7 @@ describe('AlfrescoAuthenticationService', () => {
     let authService: AlfrescoAuthenticationService;
     let settingsService: AlfrescoSettingsService;
     let storage: StorageService;
+    let cookie: CookieService;
 
     beforeEach(() => {
         injector = ReflectiveInjector.resolveAndCreate([
@@ -36,11 +39,13 @@ describe('AlfrescoAuthenticationService', () => {
             AlfrescoApiService,
             AlfrescoAuthenticationService,
             StorageService,
+            { provide: CookieService, useClass: CookieServiceMock },
             LogService
         ]);
 
         authService = injector.get(AlfrescoAuthenticationService);
         settingsService = injector.get(AlfrescoSettingsService);
+        cookie = injector.get(CookieService);
         storage = injector.get(StorageService);
         storage.clear();
 
@@ -49,6 +54,64 @@ describe('AlfrescoAuthenticationService', () => {
 
     afterEach(() => {
         jasmine.Ajax.uninstall();
+    });
+
+    describe('remembe me', () => {
+
+        beforeEach(() => {
+            settingsService.setProviders('ECM');
+        });
+
+        it('should save the remember me cookie as a session cookie after successful login', (done) => {
+            authService.login('fake-username', 'fake-password', false).subscribe(() => {
+                expect(cookie['ALFRESCO_REMEMBER_ME']).not.toBeUndefined();
+                expect(cookie['ALFRESCO_REMEMBER_ME'].expiration).toBeNull();
+                done();
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 201,
+                contentType: 'application/json',
+                responseText: JSON.stringify({'entry': {'id': 'fake-post-ticket', 'userId': 'admin'}})
+            });
+        });
+
+        it('should save the remember me cookie as a persistent cookie after successful login', (done) => {
+            authService.login('fake-username', 'fake-password', true).subscribe(() => {
+                expect(cookie['ALFRESCO_REMEMBER_ME']).not.toBeUndefined();
+                expect(cookie['ALFRESCO_REMEMBER_ME'].expiration).not.toBeNull();
+                done();
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 201,
+                contentType: 'application/json',
+                responseText: JSON.stringify({'entry': {'id': 'fake-post-ticket', 'userId': 'admin'}})
+            });
+        });
+
+        it('should not save the remember me cookie after failed login', (done) => {
+            authService.login('fake-username', 'fake-password').subscribe(
+                (res) => {},
+                (err: any) => {
+                    expect(cookie['ALFRESCO_REMEMBER_ME']).toBeUndefined();
+                    done();
+                });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 403,
+                contentType: 'application/json',
+                responseText: JSON.stringify({
+                    'error': {
+                        'errorKey': 'Login failed',
+                        'statusCode': 403,
+                        'briefSummary': '05150009 Login failed',
+                        'stackTrace': 'For security reasons the stack trace is no longer displayed, but the property is kept for previous versions.',
+                        'descriptionURL': 'https://api-explorer.alfresco.com'
+                    }
+                })
+            });
+        });
     });
 
     describe('when the setting is ECM', () => {

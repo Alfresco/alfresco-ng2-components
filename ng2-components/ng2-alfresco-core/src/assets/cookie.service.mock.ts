@@ -15,18 +15,13 @@
  * limitations under the License.
  */
 
-export * from './content.service';
-export * from './storage.service';
-export * from './cookie.service';
-export * from './alfresco-api.service';
-export * from './alfresco-settings.service';
-export * from './alfresco-content.service';
-export * from './renditions.service';
-export * from './auth-guard.service';
-export * from './auth-guard-ecm.service';
-export * from './auth-guard-bpm.service';
-export * from './notification.service';
-export * from './log.service';
-export * from './alfresco-authentication.service';
-export * from './alfresco-translation.service';
-export * from './alfresco-translate-loader.service';
+export class CookieServiceMock {
+
+    getItem(key: string): string | null {
+        return this[key] && this[key].data || null;
+    }
+
+    setItem(key: string, data: string, expiration: Date | null, path: string | null): void {
+        this[key] = {data, expiration, path};
+    }
+}
