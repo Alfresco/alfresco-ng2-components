@@ -50,18 +50,17 @@ export class ActivitiCreateProcessAttachmentComponent implements OnChanges {
     }
 
     onFileUpload(event: any) {
-        let files: File[] = event.detail.files;
+        let filesList: File[] = event.detail.files;
 
-        for (let i = 0; i < files.length; i++) {
-            let file: File = files[i]['files'];
+        for (let fileInfoObj of filesList) {
+            let file: File = fileInfoObj.file;
             this.activitiContentService.createProcessRelatedContent(this.processInstanceId, file).subscribe(
                 (res) => {
                     this.contentCreated.emit(res);
                 },
                 (err) => {
                     this.creationError.emit(err);
-                }
-            );
+                });
         }
     }
 }
