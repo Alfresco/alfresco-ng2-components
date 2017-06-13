@@ -129,7 +129,29 @@ module.exports = {
         port: 3000,
         historyApiFallback: true,
         host: '0.0.0.0',
-        inline: true
+        inline: true,
+        proxy: {
+            '/ecm': {
+                target: {
+                    host: "0.0.0.0",
+                    protocol: 'http:',
+                    port: 8080
+                },
+                pathRewrite: {
+                    '^/ecm': ''
+                }
+            },
+            '/bpm': {
+                target: {
+                    host: "0.0.0.0",
+                    protocol: 'http:',
+                    port: 9999
+                },
+                pathRewrite: {
+                    '^/bpm': ''
+                }
+            }
+        }
     },
 
     node: {

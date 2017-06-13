@@ -15,26 +15,22 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-    AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
-    AlfrescoTranslationService,
-    LogService,
-    StorageService
-} from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoSettingsService, StorageService, LogService } from 'ng2-alfresco-core';
 
 declare var document: any;
 
 @Component({
-    selector: 'adf-app',
+    selector: 'alfresco-app',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss', './theme.scss'],
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./app.component.css']
 })
 export class AppComponent {
     searchTerm: string = '';
+
+    ecmHost: string = `http://${window.location.hostname}:${window.location.port}/ecm`;
+    bpmHost: string = `http://${window.location.hostname}:${window.location.port}/bpm`;
 
     constructor(private authService: AlfrescoAuthenticationService,
                 private router: Router,
@@ -42,7 +38,13 @@ export class AppComponent {
                 private translateService: AlfrescoTranslationService,
                 private storage: StorageService,
                 private logService: LogService) {
+        this.setEcmHost();
+        this.setBpmHost();
         this.setProvider();
+
+        if (translateService) {
+            translateService.addTranslationFolder('app', 'resources');
+        }
     }
 
     isAPageWithHeaderBar(): boolean {
@@ -69,6 +71,7 @@ export class AppComponent {
 
     navigateToLogin() {
         this.router.navigate(['/login']);
+        this.hideDrawer();
     }
 
     onToggleSearch(event) {
@@ -83,6 +86,30 @@ export class AppComponent {
 
     changeLanguage(lang: string) {
         this.translateService.use(lang);
+        this.hideDrawer();
+    }
+
+    hideDrawer() {
+        // todo: workaround for drawer closing
+        document.querySelector('.mdl-layout').MaterialLayout.toggleDrawer();
+    }
+
+    private setEcmHost() {
+        if (this.storage.hasItem(`ecmHost`)) {
+            this.settingsService.ecmHost = this.storage.getItem(`ecmHost`);
+            this.ecmHost = this.storage.getItem(`ecmHost`);
+        } else {
+            this.settingsService.ecmHost = this.ecmHost;
+        }
+    }
+
+    private setBpmHost() {
+        if (this.storage.hasItem(`bpmHost`)) {
+            this.settingsService.bpmHost = this.storage.getItem(`bpmHost`);
+            this.bpmHost = this.storage.getItem(`bpmHost`);
+        } else {
+            this.settingsService.bpmHost = this.bpmHost;
+        }
     }
 
     private setProvider() {
