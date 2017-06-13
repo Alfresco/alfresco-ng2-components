@@ -4,6 +4,7 @@ npm-debug.log
 
 coverage/
 demo/
+dist/
 node_modules
 typings/
 fonts/
