@@ -18,7 +18,7 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { Observer, Observable } from 'rxjs/Rx';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
-import { User } from '../models/user.model';
+import { User, UserEventModel } from '../models/index';
 import { ActivitiPeopleService } from '../services/activiti-people.service';
 
 declare let dialogPolyfill: any;
@@ -113,7 +113,7 @@ export class ActivitiPeople {
         return firstName + ' ' + lastName;
     }
 
-    onClickAction(event) {
+    onClickAction(event: UserEventModel) {
         if (event.type === 'remove') {
             this.removeInvolvedUser(event.value);
         }

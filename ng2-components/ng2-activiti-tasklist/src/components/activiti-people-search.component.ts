@@ -39,7 +39,7 @@ export class ActivitiPeopleSearch implements OnInit, AfterViewInit {
     searchPeople: EventEmitter<any> = new EventEmitter();
 
     @Output()
-    success: EventEmitter<any> = new EventEmitter();
+    success: EventEmitter<User> = new EventEmitter<User>();
 
     searchUser: FormControl = new FormControl();
 
@@ -84,7 +84,7 @@ export class ActivitiPeopleSearch implements OnInit, AfterViewInit {
         return isUpgraded;
     }
 
-    onRowClick(user: any) {
+    onRowClick(user: User) {
         this.selectedUser = user;
     }
 
