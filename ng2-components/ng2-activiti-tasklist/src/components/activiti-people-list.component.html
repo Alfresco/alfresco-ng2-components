@@ -1,8 +1,7 @@
 <alfresco-datatable
-    [rows]="users"
+    [data]="data"
     [actions]="hasActions()"
     (rowClick)="selectUser($event)"
     (showRowActionsMenu)="onShowRowActionsMenu($event)"
     (executeRowAction)="onExecuteRowAction($event)">
-    <ng-content></ng-content>
 </alfresco-datatable>

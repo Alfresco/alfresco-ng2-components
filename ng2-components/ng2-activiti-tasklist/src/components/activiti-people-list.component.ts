@@ -17,6 +17,10 @@
 
 import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter, TemplateRef, ContentChild } from '@angular/core';
 import { User } from '../models/user.model';
+import { DataColumnListComponent } from 'ng2-alfresco-core';
+import { DataColumn, DataTableAdapter, ObjectDataTableAdapter, ObjectDataRow } from 'ng2-alfresco-datatable';
+
+declare let componentHandler: any;
 
 @Component({
     selector: 'activiti-people-list',
@@ -26,8 +30,7 @@ import { User } from '../models/user.model';
 
 export class ActivitiPeopleList implements OnChanges {
 
-    @ContentChild(TemplateRef)
-    template: any;
+    @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
     @Input()
     users: User[];
@@ -42,11 +45,38 @@ export class ActivitiPeopleList implements OnChanges {
     clickAction: EventEmitter<any> = new EventEmitter();
 
     user: User;
+    data: DataTableAdapter;
 
-    constructor() {}
+    private defaultSchemaColumn: DataColumn[] = [
+        { type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true },
+        { type: 'text', key: 'created', title: 'Created', cssClass: 'hidden', sortable: true }
+    ];
+
+    constructor() {
+        this.data = new ObjectDataTableAdapter([], this.defaultSchemaColumn);
+    }
 
     ngOnChanges(changes: SimpleChanges) {
         console.log(this.users);
+        this.renderInstances(this.createDataRow(this.users));
+    }
+
+    ngAfterContentInit() {
+        this.setupSchema();
+    }
+
+    ngAfterViewInit() {
+        this.setupMaterialComponents(componentHandler);
+    }
+
+    setupMaterialComponents(handler?: any): boolean {
+        // workaround for MDL issues with dynamic components
+        let isUpgraded: boolean = false;
+        if (handler) {
+            handler.upgradeAllRegistered();
+            isUpgraded = true;
+        }
+        return isUpgraded;
     }
 
     selectUser(event) {
@@ -77,15 +107,47 @@ export class ActivitiPeopleList implements OnChanges {
         this.clickAction.emit({type: action.name, value: args.row.obj});
     }
 
-    getDisplayUser(user: User): string {
-        let firstName = user.firstName && user.firstName !== 'null' ? user.firstName : 'N/A';
-        let lastName = user.lastName && user.lastName !== 'null' ? user.lastName : 'N/A';
-        return firstName + ' ' + lastName;
+    /**
+     * Setup html-based (html definitions) or code behind (data adapter) schema.
+     * If component is assigned with an empty data adater the default schema settings applied.
+     */
+    setupSchema(): void {
+        let schema: DataColumn[] = [];
+
+        if (this.columnList && this.columnList.columns && this.columnList.columns.length > 0) {
+            schema = this.columnList.columns.map(c => <DataColumn> c);
+        }
+
+        if (!this.data) {
+            this.data = new ObjectDataTableAdapter([], schema.length > 0 ? schema : this.defaultSchemaColumn);
+        } else {
+            if (schema && schema.length > 0) {
+                this.data.setColumns(schema);
+            } else if (this.data.getColumns().length === 0) {
+                this.data.setColumns(this.defaultSchemaColumn);
+            }
+        }
     }
 
-    getShortName(user: User): string {
-        let firstName = user.firstName && user.firstName !== 'null' ? user.firstName[0] : '';
-        let lastName = user.lastName && user.lastName !== 'null' ? user.lastName[0] : '';
-        return firstName + lastName;
+    /**
+     * Create an array of ObjectDataRow
+     * @param instances
+     * @returns {ObjectDataRow[]}
+     */
+    private createDataRow(instances: any[]): ObjectDataRow[] {
+        let instancesRows: ObjectDataRow[] = [];
+        instances.forEach((row) => {
+            instancesRows.push(new ObjectDataRow(row));
+        });
+        return instancesRows;
+    }
+
+    /**
+     * Render the instances list
+     *
+     * @param instances
+     */
+    private renderInstances(instances: any[]) {
+        this.data.setRows(instances);
     }
 }
