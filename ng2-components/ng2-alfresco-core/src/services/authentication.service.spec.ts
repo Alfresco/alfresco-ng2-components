@@ -15,51 +15,38 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
-import { CookieServiceMock } from './../assets/cookie.service.mock';
-import { AlfrescoApiService } from './alfresco-api.service';
+import { ReflectiveInjector } from '@angular/core';
 import { AlfrescoSettingsService } from './alfresco-settings.service';
-import { AppConfigModule } from './app-config.service';
-import { AuthenticationService } from './authentication.service';
-import { CookieService } from './cookie.service';
-import { LogService } from './log.service';
+import { AlfrescoAuthenticationService } from './alfresco-authentication.service';
+import { AlfrescoApiService } from './alfresco-api.service';
 import { StorageService } from './storage.service';
-import { UserPreferencesService } from './user-preferences.service';
+import { CookieService } from './cookie.service';
+import { CookieServiceMock } from './../assets/cookie.service.mock';
+import { LogService } from './log.service';
 
 declare let jasmine: any;
 
-describe('AuthenticationService', () => {
-    let apiService: AlfrescoApiService;
-    let authService: AuthenticationService;
+describe('AlfrescoAuthenticationService', () => {
+    let injector;
+    let authService: AlfrescoAuthenticationService;
     let settingsService: AlfrescoSettingsService;
-    let preferences: UserPreferencesService;
     let storage: StorageService;
     let cookie: CookieService;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                AppConfigModule
-            ],
-            providers: [
-                AlfrescoSettingsService,
-                AlfrescoApiService,
-                AuthenticationService,
-                StorageService,
-                UserPreferencesService,
-                { provide: CookieService, useClass: CookieServiceMock },
-                LogService
-            ]
-        }).compileComponents();
-    }));
-
     beforeEach(() => {
-        apiService = TestBed.get(AlfrescoApiService);
-        authService = TestBed.get(AuthenticationService);
-        settingsService = TestBed.get(AlfrescoSettingsService);
-        preferences = TestBed.get(UserPreferencesService);
-        cookie = TestBed.get(CookieService);
-        storage = TestBed.get(StorageService);
+        injector = ReflectiveInjector.resolveAndCreate([
+            AlfrescoSettingsService,
+            AlfrescoApiService,
+            AlfrescoAuthenticationService,
+            StorageService,
+            { provide: CookieService, useClass: CookieServiceMock },
+            LogService
+        ]);
+
+        authService = injector.get(AlfrescoAuthenticationService);
+        settingsService = injector.get(AlfrescoSettingsService);
+        cookie = injector.get(CookieService);
+        storage = injector.get(StorageService);
         storage.clear();
 
         jasmine.Ajax.install();
@@ -72,10 +59,10 @@ describe('AuthenticationService', () => {
     describe('remembe me', () => {
 
         beforeEach(() => {
-            preferences.authType = 'ECM';
+            settingsService.setProviders('ECM');
         });
 
-        it('[ECM] should save the remember me cookie as a session cookie after successful login', (done) => {
+        it('should save the remember me cookie as a session cookie after successful login', (done) => {
             authService.login('fake-username', 'fake-password', false).subscribe(() => {
                 expect(cookie['ALFRESCO_REMEMBER_ME']).not.toBeUndefined();
                 expect(cookie['ALFRESCO_REMEMBER_ME'].expiration).toBeNull();
@@ -89,7 +76,7 @@ describe('AuthenticationService', () => {
             });
         });
 
-        it('[ECM] should save the remember me cookie as a persistent cookie after successful login', (done) => {
+        it('should save the remember me cookie as a persistent cookie after successful login', (done) => {
             authService.login('fake-username', 'fake-password', true).subscribe(() => {
                 expect(cookie['ALFRESCO_REMEMBER_ME']).not.toBeUndefined();
                 expect(cookie['ALFRESCO_REMEMBER_ME'].expiration).not.toBeNull();
@@ -103,7 +90,7 @@ describe('AuthenticationService', () => {
             });
         });
 
-        it('[ECM] should not save the remember me cookie after failed login', (done) => {
+        it('should not save the remember me cookie after failed login', (done) => {
             authService.login('fake-username', 'fake-password').subscribe(
                 (res) => {},
                 (err: any) => {
@@ -130,10 +117,10 @@ describe('AuthenticationService', () => {
     describe('when the setting is ECM', () => {
 
         beforeEach(() => {
-            preferences.authType = 'ECM';
+            settingsService.setProviders('ECM');
         });
 
-        it('[ECM] should return an ECM ticket after the login done', (done) => {
+        it('should return an ECM ticket after the login done', (done) => {
             authService.login('fake-username', 'fake-password').subscribe(() => {
                 expect(authService.isLoggedIn()).toBe(true);
                 expect(authService.getTicketEcm()).toEqual('fake-post-ticket');
@@ -148,11 +135,11 @@ describe('AuthenticationService', () => {
             });
         });
 
-        it('[ECM] should save only ECM ticket on localStorage', (done) => {
+        it('should save only ECM ticket on localStorage', (done) => {
             authService.login('fake-username', 'fake-password').subscribe(() => {
                 expect(authService.isLoggedIn()).toBe(true);
                 expect(authService.getTicketBpm()).toBeNull();
-                expect(apiService.getInstance().bpmAuth.isLoggedIn()).toBeFalsy();
+                expect(authService.alfrescoApi.getInstance().bpmAuth.isLoggedIn()).toBeFalsy();
                 done();
             });
 
@@ -163,7 +150,7 @@ describe('AuthenticationService', () => {
             });
         });
 
-        xit('[ECM] should return ticket undefined when the credentials are wrong', (done) => {
+        xit('should return ticket undefined when the credentials are wrong', (done) => {
             authService.login('fake-wrong-username', 'fake-wrong-password').subscribe(
                 (res) => {
                 },
@@ -189,7 +176,7 @@ describe('AuthenticationService', () => {
             });
         });
 
-        it('[ECM] should login in the ECM if no provider are defined calling the login', (done) => {
+        it('should login in the ECM if no provider are defined calling the login', (done) => {
             authService.login('fake-username', 'fake-password').subscribe(() => {
                 done();
             });
@@ -201,7 +188,7 @@ describe('AuthenticationService', () => {
             });
         });
 
-        it('[ECM] should return a ticket undefined after logout', (done) => {
+        it('should return a ticket undefined after logout', (done) => {
             authService.login('fake-username', 'fake-password').subscribe(() => {
                 authService.logout().subscribe(() => {
                     expect(authService.isLoggedIn()).toBe(false);
@@ -222,7 +209,7 @@ describe('AuthenticationService', () => {
             });
         });
 
-        it('[ECM] ticket should be deleted only after logout request is accepted', (done) => {
+        it('ticket should be deleted only after logout request is accepted', (done) => {
 
             authService.login('fake-username', 'fake-password').subscribe(() => {
                 let logoutPromise = authService.logout();
@@ -248,7 +235,7 @@ describe('AuthenticationService', () => {
             });
         });
 
-        it('[ECM] should return false if the user is not logged in', () => {
+        it('should return false if the user is not logged in', () => {
             expect(authService.isLoggedIn()).toBe(false);
             expect(authService.isEcmLoggedIn()).toBe(false);
         });
@@ -257,10 +244,10 @@ describe('AuthenticationService', () => {
     describe('when the setting is BPM', () => {
 
         beforeEach(() => {
-            preferences.authType = 'BPM';
+            settingsService.setProviders('BPM');
         });
 
-        it('[BPM] should return an BPM ticket after the login done', (done) => {
+        it('should return an BPM ticket after the login done', (done) => {
             authService.login('fake-username', 'fake-password').subscribe(() => {
                 expect(authService.isLoggedIn()).toBe(true);
                 expect(authService.getTicketBpm()).toEqual('Basic ZmFrZS11c2VybmFtZTpmYWtlLXBhc3N3b3Jk');
@@ -273,11 +260,11 @@ describe('AuthenticationService', () => {
             });
         });
 
-        it('[BPM] should save only BPM ticket on localStorage', (done) => {
+        it('should save only BPM ticket on localStorage', (done) => {
             authService.login('fake-username', 'fake-password').subscribe(() => {
                 expect(authService.isLoggedIn()).toBe(true);
                 expect(authService.getTicketEcm()).toBeNull();
-                expect(apiService.getInstance().ecmAuth.isLoggedIn()).toBeFalsy();
+                expect(authService.alfrescoApi.getInstance().ecmAuth.isLoggedIn()).toBeFalsy();
                 done();
             });
 
@@ -288,7 +275,7 @@ describe('AuthenticationService', () => {
             });
         });
 
-        xit('[BPM] should return ticket undefined when the credentials are wrong', (done) => {
+        xit('should return ticket undefined when the credentials are wrong', (done) => {
             authService.login('fake-wrong-username', 'fake-wrong-password').subscribe(
                 (res) => {
                 },
@@ -304,7 +291,7 @@ describe('AuthenticationService', () => {
             });
         });
 
-        it('[BPM] ticket should be deleted only after logout request is accepted', (done) => {
+        it('ticket should be deleted only after logout request is accepted', (done) => {
 
             authService.login('fake-username', 'fake-password').subscribe(() => {
                 let logoutPromise = authService.logout();
@@ -328,7 +315,7 @@ describe('AuthenticationService', () => {
             });
         });
 
-        it('[BPM] should return a ticket undefined after logout', (done) => {
+        it('should return a ticket undefined after logout', (done) => {
             authService.login('fake-username', 'fake-password').subscribe(() => {
                 authService.logout().subscribe(() => {
                     expect(authService.isLoggedIn()).toBe(false);
@@ -347,7 +334,7 @@ describe('AuthenticationService', () => {
             });
         });
 
-        it('[BPM] should return an error when the logout return error', (done) => {
+        it('should return an error when the logout return error', (done) => {
             authService.logout().subscribe(
                 (res) => {
                 },
@@ -363,13 +350,39 @@ describe('AuthenticationService', () => {
         });
     });
 
+    describe('Setting service change should reflect in the api', () => {
+
+        beforeEach(() => {
+            settingsService.setProviders('ALL');
+        });
+
+        it('should host ecm url change be reflected in the api configuration', () => {
+            settingsService.ecmHost = '127.99.99.99';
+
+            expect(authService.alfrescoApi.getInstance().config.hostEcm).toBe('127.99.99.99');
+        });
+
+        it('should host bpm url change be reflected in the api configuration', () => {
+            settingsService.bpmHost = '127.99.99.99';
+
+            expect(authService.alfrescoApi.getInstance().config.hostBpm).toBe('127.99.99.99');
+        });
+
+        it('should host bpm provider change be reflected in the api configuration', () => {
+            settingsService.setProviders('ECM');
+
+            expect(authService.alfrescoApi.getInstance().config.provider).toBe('ECM');
+        });
+
+    });
+
     describe('when the setting is both ECM and BPM ', () => {
 
         beforeEach(() => {
-            preferences.authType = 'ALL';
+            settingsService.setProviders('ALL');
         });
 
-        it('[ALL] should return both ECM and BPM tickets after the login done', (done) => {
+        it('should return both ECM and BPM tickets after the login done', (done) => {
             authService.login('fake-username', 'fake-password').subscribe(() => {
                 expect(authService.isLoggedIn()).toBe(true);
                 expect(authService.getTicketEcm()).toEqual('fake-post-ticket');
@@ -390,7 +403,7 @@ describe('AuthenticationService', () => {
             });
         });
 
-        xit('[ALL] should return login fail if only ECM call fail', (done) => {
+        xit('should return login fail if only ECM call fail', (done) => {
             authService.login('fake-username', 'fake-password').subscribe(
                 (res) => {
                 },
@@ -411,7 +424,7 @@ describe('AuthenticationService', () => {
             });
         });
 
-        xit('[ALL] should return login fail if only BPM call fail', (done) => {
+        xit('should return login fail if only BPM call fail', (done) => {
             authService.login('fake-username', 'fake-password').subscribe(
                 (res) => {
                 },
@@ -434,7 +447,7 @@ describe('AuthenticationService', () => {
             });
         });
 
-        xit('[ALL] should return ticket undefined when the credentials are wrong', (done) => {
+        xit('should return ticket undefined when the credentials are wrong', (done) => {
             authService.login('fake-username', 'fake-password').subscribe(
                 (res) => {
                 },

@@ -29,8 +29,10 @@ import {
     AlfrescoTranslationService,
     CoreModule,
     StorageService,
+    CookieService,
     LogService
 } from 'ng2-alfresco-core';
+import { CookieServiceMock } from './../../../ng2-alfresco-core/src/assets/cookie.service.mock';
 import { DocumentListModule } from 'ng2-alfresco-documentlist';
 
 describe('AlfrescoSearchComponent', () => {
@@ -148,6 +150,7 @@ describe('AlfrescoSearchComponent', () => {
             AlfrescoSettingsService,
             AlfrescoApiService,
             StorageService,
+            { provide: CookieService, useClass: CookieServiceMock },
             LogService,
             {provide: ActivatedRoute, useValue: {params: Observable.from([{}])}}
         ]);

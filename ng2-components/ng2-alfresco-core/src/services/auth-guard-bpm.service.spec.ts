@@ -15,46 +15,35 @@
  * limitations under the License.
  */
 
-import { async, inject, TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
-
-import { CookieServiceMock } from './../assets/cookie.service.mock';
-import { AlfrescoApiService } from './alfresco-api.service';
 import { AlfrescoSettingsService } from './alfresco-settings.service';
-import { AppConfigModule } from './app-config.service';
-import { AuthGuardBpm } from './auth-guard-bpm.service';
-import { AuthenticationService } from './authentication.service';
-import { CookieService } from './cookie.service';
-import { LogService } from './log.service';
+import { AlfrescoAuthenticationService } from './alfresco-authentication.service';
+import { AlfrescoApiService } from './alfresco-api.service';
 import { StorageService } from './storage.service';
-import { UserPreferencesService } from './user-preferences.service';
+import { LogService } from './log.service';
+import { CookieService } from './cookie.service';
+import { CookieServiceMock } from './../assets/cookie.service.mock';
+import { AuthGuardBpm } from './auth-guard-bpm.service';
+import { Router} from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TestBed, async, inject } from '@angular/core/testing';
 
 describe('AuthGuardService BPM', () => {
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                AppConfigModule,
-                RouterTestingModule
-            ],
-            declarations: [
-            ],
-            providers: [
-                AuthGuardBpm,
+            providers: [AuthGuardBpm,
                 AlfrescoSettingsService,
                 AlfrescoApiService,
-                AuthenticationService,
+                AlfrescoAuthenticationService,
                 StorageService,
-                UserPreferencesService,
                 { provide: CookieService, useClass: CookieServiceMock },
-                LogService
-            ]
-        }).compileComponents();
-    }));
+                LogService],
+            imports: [RouterTestingModule]
+        });
+    });
 
     it('if the alfresco js api is logged in should canActivate be true',
-        async(inject([AuthGuardBpm, Router, AlfrescoSettingsService, StorageService, AuthenticationService], (auth, router, settingsService, storage, authService) => {
+        async(inject([AuthGuardBpm, Router, AlfrescoSettingsService, StorageService, AlfrescoAuthenticationService], (auth, router, settingsService, storage, authService) => {
             spyOn(router, 'navigate');
 
             authService.isBpmLoggedIn = () => {
@@ -67,7 +56,7 @@ describe('AuthGuardService BPM', () => {
     );
 
     it('if the alfresco js api is NOT logged in should canActivate be false',
-        async(inject([AuthGuardBpm, Router, AlfrescoSettingsService, StorageService, AuthenticationService], (auth, router, settingsService, storage, authService) => {
+        async(inject([AuthGuardBpm, Router, AlfrescoSettingsService, StorageService, AlfrescoAuthenticationService], (auth, router, settingsService, storage, authService) => {
 
             spyOn(router, 'navigate');
 

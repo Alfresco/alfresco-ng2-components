@@ -15,11 +15,19 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
-import { AlfrescoAuthenticationService, AlfrescoContentService, CoreModule } from 'ng2-alfresco-core';
-import { fakeEcmUser } from '../assets/fake-ecm-user.service.mock';
 import { EcmUserService } from '../services/ecm-user.service';
-
+import { fakeEcmUser } from '../assets/fake-ecm-user.service.mock';
+import { ReflectiveInjector } from '@angular/core';
+import {
+    AlfrescoAuthenticationService,
+    AlfrescoContentService,
+    AlfrescoSettingsService,
+    AlfrescoApiService,
+    StorageService,
+    CookieService,
+    LogService
+} from 'ng2-alfresco-core';
+import { CookieServiceMock } from './../../../ng2-alfresco-core/src/assets/cookie.service.mock';
 declare let jasmine: any;
 
 describe('EcmUserService', () => {
@@ -27,22 +35,25 @@ describe('EcmUserService', () => {
     let service: EcmUserService;
     let authService: AlfrescoAuthenticationService;
     let contentService: AlfrescoContentService;
-
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                CoreModule.forRoot()
-            ],
-            providers: [
-                EcmUserService
-            ]
-        }).compileComponents();
-    }));
+    let injector;
 
     beforeEach(() => {
-        service = TestBed.get(EcmUserService);
-        authService = TestBed.get(AlfrescoAuthenticationService);
-        contentService = TestBed.get(AlfrescoContentService);
+        injector = ReflectiveInjector.resolveAndCreate([
+            AlfrescoSettingsService,
+            AlfrescoApiService,
+            AlfrescoAuthenticationService,
+            AlfrescoContentService,
+            EcmUserService,
+            StorageService,
+            { provide: CookieService, useClass: CookieServiceMock },
+            LogService
+        ]);
+    });
+
+    beforeEach(() => {
+        service = injector.get(EcmUserService);
+        authService = injector.get(AlfrescoAuthenticationService);
+        contentService = injector.get(AlfrescoContentService);
     });
 
     beforeEach(() => {

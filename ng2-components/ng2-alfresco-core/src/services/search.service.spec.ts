@@ -15,46 +15,39 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
-import { fakeApi, fakeError, fakeSearch } from '../assets/search.service.mock';
-import { CookieServiceMock } from './../assets/cookie.service.mock';
-import { AlfrescoApiService } from './alfresco-api.service';
-import { AlfrescoSettingsService } from './alfresco-settings.service';
-import { AppConfigModule } from './app-config.service';
-import { AuthenticationService } from './authentication.service';
-import { CookieService } from './cookie.service';
-import { LogService } from './log.service';
-import { SearchService } from './search.service';
-import { StorageService } from './storage.service';
-import { UserPreferencesService } from './user-preferences.service';
+import { ReflectiveInjector } from '@angular/core';
+import { AlfrescoSearchService } from './alfresco-search.service';
+import {
+    AlfrescoAuthenticationService,
+    AlfrescoSettingsService,
+    AlfrescoApiService,
+    StorageService,
+    CookieService,
+    LogService
+} from 'ng2-alfresco-core';
+import { CookieServiceMock } from './../../../ng2-alfresco-core/src/assets/cookie.service.mock';
+import { fakeApi, fakeSearch, fakeError } from '../assets/alfresco-search.service.mock';
 
-describe('SearchService', () => {
+declare let jasmine: any;
 
-    let service: SearchService;
+describe('AlfrescoSearchService', () => {
+
+    let service: AlfrescoSearchService;
     let apiService: AlfrescoApiService;
-
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                AppConfigModule
-            ],
-            providers: [
-                SearchService,
-                AuthenticationService,
-                AlfrescoApiService,
-                AlfrescoSettingsService,
-                AuthenticationService,
-                StorageService,
-                UserPreferencesService,
-                { provide: CookieService, useClass: CookieServiceMock },
-                LogService
-            ]
-        }).compileComponents();
-    }));
+    let injector: ReflectiveInjector;
 
     beforeEach(() => {
-        service = TestBed.get(SearchService);
-        apiService = TestBed.get(AlfrescoApiService);
+        injector = ReflectiveInjector.resolveAndCreate([
+            AlfrescoSearchService,
+            AlfrescoSettingsService,
+            AlfrescoApiService,
+            AlfrescoAuthenticationService,
+            StorageService,
+            { provide: CookieService, useClass: CookieServiceMock },
+            LogService
+        ]);
+        service = injector.get(AlfrescoSearchService);
+        apiService = injector.get(AlfrescoApiService);
         spyOn(apiService, 'getInstance').and.returnValue(fakeApi);
     });
 
