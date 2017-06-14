@@ -152,7 +152,7 @@ export class UploadService {
             emitter.emit({ value: 'Error file uploaded' });
         })
         .on('success', data => {
-            this.onUploadComplete(file);
+            this.onUploadComplete(file, data);
             emitter.emit({ value: data });
         })
         .catch(err => {
@@ -199,7 +199,7 @@ export class UploadService {
         }
     }
 
-    private onUploadComplete(file: FileModel): void {
+    private onUploadComplete(file: FileModel, data: any): void {
         if (file) {
             file.status = FileUploadStatus.Complete;
             this.totalComplete++;
@@ -209,7 +209,7 @@ export class UploadService {
                 delete this.cache[file.id];
             }
 
-            const event = new FileUploadCompleteEvent(file, this.totalComplete);
+            const event = new FileUploadCompleteEvent(file, this.totalComplete, data);
             this.fileUpload.next(event);
             this.fileUploadComplete.next(event);
 
