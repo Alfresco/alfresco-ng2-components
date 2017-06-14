@@ -17,15 +17,15 @@
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
-import { CustomView } from './adf-custom-view.component';
+import { CarView } from './adf-car-view.component';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
-describe('AdfCustomView', () => {
+describe('AdfCardView', () => {
 
     let componentHandler: any;
-    let component: CustomView;
-    let fixture: ComponentFixture<CustomView>;
+    let component: CarView;
+    let fixture: ComponentFixture<CarView>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -33,7 +33,7 @@ describe('AdfCustomView', () => {
                 CoreModule.forRoot()
             ],
             declarations: [
-                CustomView
+                CarView
             ],
             providers: [
             ]
@@ -46,7 +46,7 @@ describe('AdfCustomView', () => {
 
     beforeEach(() => {
 
-        fixture = TestBed.createComponent(CustomView);
+        fixture = TestBed.createComponent(CarView);
         component = fixture.componentInstance;
 
         componentHandler = jasmine.createSpyObj('componentHandler', [
@@ -56,7 +56,7 @@ describe('AdfCustomView', () => {
         window['componentHandler'] = componentHandler;
     });
 
-    it('should render the label and value', () => {
+    it('should render the label and value', async(() => {
         component.properties = [{label: 'My label', value: 'My value'}];
         fixture.detectChanges();
         fixture.whenStable().then(() => {
@@ -71,9 +71,9 @@ describe('AdfCustomView', () => {
             expect(value.nativeElement.innerText).toBe('My value');
         });
 
-    });
+    }));
 
-    it('should render the date in the correct format', () => {
+    it('should render the date in the correct format', async(() => {
         component.properties = [{label: 'My date label', value: '2017-06-14' , format: 'MMM DD YYYY'}];
         fixture.detectChanges();
         fixture.whenStable().then(() => {
@@ -88,9 +88,9 @@ describe('AdfCustomView', () => {
             expect(value.nativeElement.innerText).toBe('Jun 14 2017');
         });
 
-    });
+    }));
 
-    it('should render the default value if the value is empty', () => {
+    it('should render the default value if the value is empty', async(() => {
         component.properties = [{label: 'My default label', default: 'default value'}];
         fixture.detectChanges();
         fixture.whenStable().then(() => {
@@ -105,5 +105,5 @@ describe('AdfCustomView', () => {
             expect(value.nativeElement.innerText).toBe('default value');
         });
 
-    });
+    }));
 });

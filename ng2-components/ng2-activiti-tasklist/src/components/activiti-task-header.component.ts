@@ -16,8 +16,8 @@
  */
 
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
-import { TaskDetailsModel, CustomViewModel } from '../models/index';
+import { AlfrescoTranslationService, LogService, CardViewModel } from 'ng2-alfresco-core';
+import { TaskDetailsModel } from '../models/index';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 
 @Component({
@@ -36,7 +36,7 @@ export class ActivitiTaskHeader implements OnChanges {
     @Output()
     claim: EventEmitter<any> = new EventEmitter<any>();
 
-    properties: CustomViewModel [];
+    properties: CardViewModel [];
 
     constructor(private translateService: AlfrescoTranslationService,
                 private activitiTaskService: ActivitiTaskListService,
@@ -52,14 +52,14 @@ export class ActivitiTaskHeader implements OnChanges {
 
     refreshData() {
         this.properties = [
-            new CustomViewModel({label: 'Status:', value: this.getTaskStatus()}),
-            new CustomViewModel({label: 'Due Date:', value: this.taskDetails.dueDate, default: 'No date'}),
-            new CustomViewModel({label: 'Category:', value: this.taskDetails.category, default: 'No category'}),
-            new CustomViewModel({label: 'Created By:', value: this.taskDetails.assignee.firstName + ' ' + this.taskDetails.assignee.lastName}),
-            new CustomViewModel({label: 'Created:', value: this.taskDetails.created, format: 'MMM DD YYYY'}),
-            new CustomViewModel({label: 'Id:', value: this.taskDetails.id}),
-            new CustomViewModel({label: 'Description:', value: this.taskDetails.description, default: 'No description'}),
-            new CustomViewModel({label: 'Form name:', value: this.formName, default: 'No form'})
+            new CardViewModel({label: 'Status:', value: this.getTaskStatus()}),
+            new CardViewModel({label: 'Due Date:', value: this.taskDetails.dueDate, default: 'No date'}),
+            new CardViewModel({label: 'Category:', value: this.taskDetails.category, default: 'No category'}),
+            new CardViewModel({label: 'Created By:', value: this.taskDetails.assignee.firstName + ' ' + this.taskDetails.assignee.lastName}),
+            new CardViewModel({label: 'Created:', value: this.taskDetails.created, format: 'MMM DD YYYY'}),
+            new CardViewModel({label: 'Id:', value: this.taskDetails.id}),
+            new CardViewModel({label: 'Description:', value: this.taskDetails.description, default: 'No description'}),
+            new CardViewModel({label: 'Form name:', value: this.formName, default: 'No form'})
         ];
     }
 

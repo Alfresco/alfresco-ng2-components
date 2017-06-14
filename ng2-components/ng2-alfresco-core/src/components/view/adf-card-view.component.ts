@@ -20,17 +20,18 @@ import {
     Input,
     OnInit
 } from '@angular/core';
+import { CardViewModel } from '../../models/card-view.model';
 import * as moment from 'moment';
 
 @Component({
-    selector: 'adf-custom-view',
-    templateUrl: './adf-custom-view.component.html',
-    styleUrls: ['./adf-custom-view.component.css']
+    selector: 'adf-card-view',
+    templateUrl: './adf-card-view.component.html',
+    styleUrls: ['./adf-card-view.component.css']
 })
-export class CustomView implements OnInit {
+export class CardView implements OnInit {
 
     @Input()
-    properties: any [];
+    properties: CardViewModel [];
 
     constructor() {
 
@@ -40,7 +41,7 @@ export class CustomView implements OnInit {
 
     }
 
-    getPropertyValue(property: any): string {
+    getPropertyValue(property: CardViewModel): string {
         if (!property.value) {
             return property.default;
         } else if (property.format) {

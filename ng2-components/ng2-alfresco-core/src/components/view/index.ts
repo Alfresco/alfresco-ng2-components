@@ -15,24 +15,8 @@
  * limitations under the License.
  */
 
-/**
- *
- * This object represent the basic structure of a custom view.
- *
- *
- * @returns {CustomViewModel} .
- */
+import { CardView } from './adf-card-view.component';
 
-export class CustomViewModel {
-    label: string;
-    value: any;
-    format: string;
-    default: string;
-
-    constructor(obj?: any) {
-        this.label = obj.label || '';
-        this.value = obj.value;
-        this.format = obj.format;
-        this.default = obj.default;
-    }
-}
+export const VIEW_DIRECTIVES: [any] = [
+    CardView
+];

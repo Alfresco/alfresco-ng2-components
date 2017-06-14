@@ -15,9 +15,4 @@
  * limitations under the License.
  */
 
-export * from './comment.model';
-export * from './filter.model';
-export * from './icon.model';
-export * from './user.model';
-export * from './task-details.model';
-export * from './task-details.event';
+export * from './card-view.model';
