@@ -1,0 +1,18 @@
+:host {
+    width: 100%;
+}
+
+.adf-header__label {
+    font-weight: bold;
+    float: left;
+    width: 50%;
+    word-wrap: break-word;
+}
+
+.adf-header__value {
+    color: rgb(68, 138, 255);
+}
+
+.material-icons {
+    cursor: pointer;
+}

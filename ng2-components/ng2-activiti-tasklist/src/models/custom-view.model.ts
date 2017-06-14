@@ -15,10 +15,24 @@
  * limitations under the License.
  */
 
-export * from './comment.model';
-export * from './filter.model';
-export * from './icon.model';
-export * from './user.model';
-export * from './task-details.model';
-export * from './task-details.event';
-export * from './custom-view.model';
+/**
+ *
+ * This object represent the basic structure of a custom view.
+ *
+ *
+ * @returns {CustomViewModel} .
+ */
+
+export class CustomViewModel {
+    label: string;
+    value: any;
+    format: string;
+    default: string;
+
+    constructor(obj?: any) {
+        this.label = obj.label || '';
+        this.value = obj.value;
+        this.format = obj.format;
+        this.default = obj.default;
+    }
+}

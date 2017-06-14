@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
-import { TaskDetailsModel } from '../models/task-details.model';
+import { TaskDetailsModel, CustomViewModel } from '../models/index';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 
 @Component({
@@ -25,7 +25,7 @@ import { ActivitiTaskListService } from './../services/activiti-tasklist.service
     templateUrl: './activiti-task-header.component.html',
     styleUrls: ['./activiti-task-header.component.css']
 })
-export class ActivitiTaskHeader {
+export class ActivitiTaskHeader implements OnChanges {
 
     @Input()
     formName: string = null;
@@ -36,6 +36,8 @@ export class ActivitiTaskHeader {
     @Output()
     claim: EventEmitter<any> = new EventEmitter<any>();
 
+    properties: CustomViewModel [];
+
     constructor(private translateService: AlfrescoTranslationService,
                 private activitiTaskService: ActivitiTaskListService,
                 private logService: LogService) {
@@ -44,12 +46,33 @@ export class ActivitiTaskHeader {
         }
     }
 
+    ngOnChanges(changes: SimpleChanges) {
+        this.refreshData();
+    }
+
+    refreshData() {
+        this.properties = [
+            new CustomViewModel({label: 'Status:', value: this.getTaskStatus()}),
+            new CustomViewModel({label: 'Due Date:', value: this.taskDetails.dueDate, default: 'No date'}),
+            new CustomViewModel({label: 'Category:', value: this.taskDetails.category, default: 'No category'}),
+            new CustomViewModel({label: 'Created By:', value: this.taskDetails.assignee.firstName + ' ' + this.taskDetails.assignee.lastName}),
+            new CustomViewModel({label: 'Created:', value: this.taskDetails.created, format: 'MMM DD YYYY'}),
+            new CustomViewModel({label: 'Id:', value: this.taskDetails.id}),
+            new CustomViewModel({label: 'Description:', value: this.taskDetails.description, default: 'No description'}),
+            new CustomViewModel({label: 'Form name:', value: this.formName, default: 'No form'})
+        ];
+    }
+
     public hasAssignee(): boolean {
         return (this.taskDetails && this.taskDetails.assignee) ? true : false;
     }
 
     isAssignedToMe(): boolean {
         return this.taskDetails.assignee ? true : false;
+    }
+
+    getTaskStatus(): string {
+        return this.taskDetails.endDate ? 'Completed' : 'Running';
     }
 
     claimTask(taskId: string) {

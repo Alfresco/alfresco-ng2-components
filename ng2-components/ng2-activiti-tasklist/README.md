@@ -199,6 +199,43 @@ You can use inside the filter one of the following property
 }
 ```
 
+## ADF Custom View
+
+The component shows the [Custom View](#custom-view)} object.
+
+```html
+<adf-custom-view
+    [properties]="[{label: 'My Label', value: 'My value'}]">
+</adf-custom-view>
+
+```
+
+### Properties
+
+| Name | Type | Description |
+| --- | --- | --- |
+| properties | {array[ADFCustomView](#adfcustomview)} | (**required**) The custom view to render |
+
+### ADFCustomView
+
+```json
+{
+    "label": "string",
+    "value": "any",
+    "format": "string",
+    "default": "string"
+}
+```
+
+| Name | Type | Description |
+| --- | --- | --- |
+| label | string | The label to render |
+| value | string | The value to render |
+| format | string | The format to use in case the value is a date |
+| default | string | The default value to render in case the value is empty |
+
+![adf-custom-view](docs/assets/adf-custom-view.png)
+
 ## Activiti Filter
 
 The component shows all the available filters.

@@ -1,0 +1,4 @@
+<div class="mdl-cell mdl-cell--12-col" *ngFor="let property of properties; let idx = index">
+    <div class="adf-header__label">{{ property.label }}</div>
+    <div class="adf-header__value">{{ getPropertyValue(property) }}</div>
+</div>
