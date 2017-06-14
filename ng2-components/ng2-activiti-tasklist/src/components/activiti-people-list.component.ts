@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter, ViewChild, ContentChild } from '@angular/core';
-import { User } from '../models/user.model';
+import { User, UserEventModel } from '../models/index';
 import { DataColumnListComponent } from 'ng2-alfresco-core';
 import { DataTableComponent } from 'ng2-alfresco-datatable';
 
@@ -28,7 +28,7 @@ declare let componentHandler: any;
     styleUrls: ['./activiti-people-list.component.css']
 })
 
-export class ActivitiPeopleList implements OnChanges {
+export class ActivitiPeopleList {
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
@@ -42,17 +42,14 @@ export class ActivitiPeopleList implements OnChanges {
     actions: boolean = false;
 
     @Output()
-    clickRow: EventEmitter<any> = new EventEmitter();
+    clickRow: EventEmitter<User> = new EventEmitter<User>();
 
     @Output()
-    clickAction: EventEmitter<any> = new EventEmitter();
+    clickAction: EventEmitter<UserEventModel> = new EventEmitter<UserEventModel>();
 
     user: User;
 
     constructor() {
-    }
-
-    ngOnChanges(changes: SimpleChanges) {
     }
 
     ngAfterContentInit() {
@@ -73,10 +70,9 @@ export class ActivitiPeopleList implements OnChanges {
         return isUpgraded;
     }
 
-    selectUser(event) {
+    selectUser(event: any) {
         this.user = event.value.obj;
         this.clickRow.emit(this.user);
-
     }
 
     hasActions(): boolean {
@@ -98,6 +94,6 @@ export class ActivitiPeopleList implements OnChanges {
     onExecuteRowAction(event: any) {
         let args = event.value;
         let action = args.action;
-        this.clickAction.emit({type: action.name, value: args.row.obj});
+        this.clickAction.emit(new UserEventModel({type: action.name, value: args.row.obj}));
     }
 }
