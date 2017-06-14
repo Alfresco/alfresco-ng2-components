@@ -195,9 +195,9 @@ You can add a template that will be showed when there are no result in your data
     
         <no-content-template>
             <!--Add your custom empty template here-->
-            <template>
+            <ng-template>
                 <h1>Sorry, no content</h1>
-            </template>
+            </ng-template>
         </no-content-template>
         
 </alfresco-datatable>
@@ -239,7 +239,7 @@ You can add a template that will be showed during the loading of your data:
     }
 ```
 
-Note: the ```html <loading-content-template> ``` and ```html <no-content-template> ``` can be used together
+Note: the `<loading-content-template>` and `<no-content-template>` can be used together
 
 #### Column Templates
 
