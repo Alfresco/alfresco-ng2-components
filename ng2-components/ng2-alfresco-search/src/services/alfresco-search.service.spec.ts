@@ -17,7 +17,15 @@
 
 import { ReflectiveInjector } from '@angular/core';
 import { AlfrescoSearchService } from './alfresco-search.service';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService, StorageService, LogService } from 'ng2-alfresco-core';
+import {
+    AlfrescoAuthenticationService,
+    AlfrescoSettingsService,
+    AlfrescoApiService,
+    StorageService,
+    CookieService,
+    LogService
+} from 'ng2-alfresco-core';
+import { CookieServiceMock } from './../../../ng2-alfresco-core/src/assets/cookie.service.mock';
 import { fakeApi, fakeSearch, fakeError } from '../assets/alfresco-search.service.mock';
 
 declare let jasmine: any;
@@ -35,6 +43,7 @@ describe('AlfrescoSearchService', () => {
             AlfrescoApiService,
             AlfrescoAuthenticationService,
             StorageService,
+            { provide: CookieService, useClass: CookieServiceMock },
             LogService
         ]);
         service = injector.get(AlfrescoSearchService);

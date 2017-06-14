@@ -87,7 +87,7 @@ export class AlfrescoAuthenticationService {
      *
      * @returns {boolean}
      */
-    private isRememberMeSet() {
+    private isRememberMeSet(): boolean {
         return (this.cookie.getItem(REMEMBER_ME_COOKIE_KEY) === null) ? false : true;
     }
 
@@ -162,7 +162,7 @@ export class AlfrescoAuthenticationService {
     /**
      * The method save the ECM and BPM ticket in the Storage
      */
-    saveTickets() {
+    saveTickets(): void {
         this.saveTicketEcm();
         this.saveTicketBpm();
     }
@@ -187,15 +187,19 @@ export class AlfrescoAuthenticationService {
 
     /**
      * The method return true if user is logged in on ecm provider
+     *
+     * @returns {boolean}
      */
-    isEcmLoggedIn() {
+    isEcmLoggedIn(): boolean {
         return this.isRememberMeSet() && this.alfrescoApi.getInstance().ecmAuth && !!this.alfrescoApi.getInstance().ecmAuth.isLoggedIn();
     }
 
     /**
      * The method return true if user is logged in on bpm provider
+     *
+     * @returns {boolean}
      */
-    isBpmLoggedIn() {
+    isBpmLoggedIn(): boolean {
         return this.isRememberMeSet() && this.alfrescoApi.getInstance().bpmAuth && !!this.alfrescoApi.getInstance().bpmAuth.isLoggedIn();
     }
 
