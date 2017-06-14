@@ -31,8 +31,6 @@ declare var require: any;
 })
 
 export class ActivitiPeopleSearch implements OnInit, AfterViewInit {
-    @ContentChild(TemplateRef)
-    template: any;
 
     @Input()
     results: Observable<User[]>;
@@ -86,8 +84,8 @@ export class ActivitiPeopleSearch implements OnInit, AfterViewInit {
         return isUpgraded;
     }
 
-    onRowClick(event: any) {
-        this.selectedUser = event.value.obj;
+    onRowClick(user: any) {
+        this.selectedUser = user;
     }
 
     closeSearchList() {
@@ -95,10 +93,25 @@ export class ActivitiPeopleSearch implements OnInit, AfterViewInit {
     }
 
     addInvolvedUser() {
+        if (this.selectedUser === undefined) {
+            return;
+        }
         this.success.emit(this.selectedUser);
         this.users = this.users.filter((user) => {
             this.searchUser.reset();
             return user.id !== this.selectedUser.id;
         });
+    }
+
+    getDisplayUser(user: User): string {
+        let firstName = user.firstName && user.firstName !== 'null' ? user.firstName : 'N/A';
+        let lastName = user.lastName && user.lastName !== 'null' ? user.lastName : 'N/A';
+        return firstName + ' ' + lastName;
+    }
+
+    getShortName(user: User): string {
+        let firstName = user.firstName && user.firstName !== 'null' ? user.firstName[0] : '';
+        let lastName = user.lastName && user.lastName !== 'null' ? user.lastName[0] : '';
+        return firstName + lastName;
     }
 }
