@@ -15,32 +15,30 @@
  * limitations under the License.
  */
 
-/* tslint:disable */
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { FormErrorEvent, FormEvent } from './../events/index';
+import { Component, OnInit, AfterViewChecked, OnChanges, SimpleChanges, Input, Output, EventEmitter } from '@angular/core';
+import { LogService } from 'ng2-alfresco-core';
 import { EcmModelService } from './../services/ecm-model.service';
 import { FormService } from './../services/form.service';
 import { NodeService } from './../services/node.service';
+import { FormModel, FormOutcomeModel, FormValues, FormFieldModel, FormOutcomeEvent } from './widgets/core/index';
 import { ContentLinkModel } from './widgets/core/content-link.model';
-import { FormFieldModel, FormModel, FormOutcomeEvent, FormOutcomeModel, FormValues, FormFieldValidator } from './widgets/core/index';
+import { FormEvent, FormErrorEvent } from './../events/index';
 
-import { WidgetVisibilityService } from './../services/widget-visibility.service';
+import { WidgetVisibilityService }  from './../services/widget-visibility.service';
+
+declare var componentHandler: any;
 
 @Component({
-    selector: 'adf-form, activiti-form',
-    templateUrl: './form.component.html',
-    styleUrls: ['./form.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    selector: 'activiti-form',
+    templateUrl: './activiti-form.component.html',
+    styleUrls: ['./activiti-form.component.css']
 })
-export class FormComponent implements OnInit, OnChanges {
+export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
 
     static SAVE_OUTCOME_ID: string = '$save';
     static COMPLETE_OUTCOME_ID: string = '$complete';
     static START_PROCESS_OUTCOME_ID: string = '$startProcess';
     static CUSTOM_OUTCOME_ID: string = '$custom';
-
-    @Input()
-    form: FormModel;
 
     @Input()
     taskId: string;
@@ -73,9 +71,6 @@ export class FormComponent implements OnInit, OnChanges {
     showCompleteButton: boolean = true;
 
     @Input()
-    disableCompleteButton: boolean = false;
-
-    @Input()
     showSaveButton: boolean = true;
 
     @Input()
@@ -90,9 +85,6 @@ export class FormComponent implements OnInit, OnChanges {
     @Input()
     showValidationIcon: boolean = true;
 
-    @Input()
-    fieldValidators: FormFieldValidator[] = [];
-
     @Output()
     formSaved: EventEmitter<FormModel> = new EventEmitter<FormModel>();
 
@@ -106,20 +98,20 @@ export class FormComponent implements OnInit, OnChanges {
     formLoaded: EventEmitter<FormModel> = new EventEmitter<FormModel>();
 
     @Output()
-    formDataRefreshed: EventEmitter<FormModel> = new EventEmitter<FormModel>();
-
-    @Output()
     executeOutcome: EventEmitter<FormOutcomeEvent> = new EventEmitter<FormOutcomeEvent>();
 
     @Output()
     onError: EventEmitter<any> = new EventEmitter<any>();
+
+    form: FormModel;
 
     debugMode: boolean = false;
 
     constructor(protected formService: FormService,
                 protected visibilityService: WidgetVisibilityService,
                 private ecmModelService: EcmModelService,
-                private nodeService: NodeService) {
+                private nodeService: NodeService,
+                private logService: LogService) {
     }
 
     hasForm(): boolean {
@@ -145,9 +137,6 @@ export class FormComponent implements OnInit, OnChanges {
             if (outcome.name === FormOutcomeModel.SAVE_ACTION) {
                 return true;
             }
-            if (outcome.name === FormOutcomeModel.COMPLETE_ACTION) {
-                return this.disableCompleteButton ? false : this.form.isValid;
-            }
             return this.form.isValid;
         }
         return false;
@@ -159,7 +148,7 @@ export class FormComponent implements OnInit, OnChanges {
                 return this.showCompleteButton;
             }
             if (isFormReadOnly) {
-                return outcome.isSelected;
+                return outcome.isSelected ;
             }
             if (outcome.name === FormOutcomeModel.SAVE_ACTION) {
                 return this.showSaveButton;
@@ -176,6 +165,16 @@ export class FormComponent implements OnInit, OnChanges {
         this.formService.formContentClicked.subscribe((content: ContentLinkModel) => {
             this.formContentClicked.emit(content);
         });
+
+        if (this.nodeId) {
+            this.loadFormForEcmNode();
+        } else {
+            this.loadForm();
+        }
+    }
+
+    ngAfterViewChecked() {
+        this.setupMaterialComponents();
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -199,13 +198,7 @@ export class FormComponent implements OnInit, OnChanges {
 
         let nodeId = changes['nodeId'];
         if (nodeId && nodeId.currentValue) {
-            this.loadFormForEcmNode(nodeId.currentValue);
-            return;
-        }
-
-        let data = changes['data'];
-        if (data && data.currentValue) {
-            this.refreshFormData();
+            this.loadFormForEcmNode();
             return;
         }
     }
@@ -218,27 +211,29 @@ export class FormComponent implements OnInit, OnChanges {
     onOutcomeClicked(outcome: FormOutcomeModel): boolean {
         if (!this.readOnly && outcome && this.form) {
 
-            if (!this.onExecuteOutcome(outcome)) {
+            let args = new FormOutcomeEvent(outcome);
+            this.executeOutcome.emit(args);
+            if (args.defaultPrevented) {
                 return false;
             }
 
             if (outcome.isSystem) {
-                if (outcome.id === FormComponent.SAVE_OUTCOME_ID) {
+                if (outcome.id === ActivitiForm.SAVE_OUTCOME_ID) {
                     this.saveTaskForm();
                     return true;
                 }
 
-                if (outcome.id === FormComponent.COMPLETE_OUTCOME_ID) {
+                if (outcome.id === ActivitiForm.COMPLETE_OUTCOME_ID) {
                     this.completeTaskForm();
                     return true;
                 }
 
-                if (outcome.id === FormComponent.START_PROCESS_OUTCOME_ID) {
+                if (outcome.id === ActivitiForm.START_PROCESS_OUTCOME_ID) {
                     this.completeTaskForm();
                     return true;
                 }
 
-                if (outcome.id === FormComponent.CUSTOM_OUTCOME_ID) {
+                if (outcome.id === ActivitiForm.CUSTOM_OUTCOME_ID) {
                     this.onTaskSaved(this.form);
                     this.storeFormAsMetadata();
                     return true;
@@ -304,14 +299,23 @@ export class FormComponent implements OnInit, OnChanges {
         return taskRepresentation.processDefinitionId && taskRepresentation.processDefinitionDeploymentId !== 'null';
     }
 
+    setupMaterialComponents(): boolean {
+        // workaround for MDL issues with dynamic components
+        if (componentHandler) {
+            componentHandler.upgradeAllRegistered();
+            return true;
+        }
+        return false;
+    }
+
     getFormByTaskId(taskId: string): Promise<FormModel> {
         return new Promise<FormModel>((resolve, reject) => {
-            this.loadFormProcessVariables(this.taskId).then(_ => {
+           this.loadFormProcessVariables(this.taskId).then(_ => {
                 this.formService
                     .getTaskForm(taskId)
                     .subscribe(
                         form => {
-                            this.form = this.parseForm(form);
+                            this.form = new FormModel(form, this.data, this.readOnly, this.formService);
                             this.onFormLoaded(this.form);
                             resolve(this.form);
                         },
@@ -321,7 +325,7 @@ export class FormComponent implements OnInit, OnChanges {
                             resolve(null);
                         }
                     );
-            });
+                });
         });
     }
 
@@ -329,14 +333,14 @@ export class FormComponent implements OnInit, OnChanges {
         this.formService
             .getFormDefinitionById(formId)
             .subscribe(
-            form => {
-                this.formName = form.name;
-                this.form = this.parseForm(form);
-                this.onFormLoaded(this.form);
-            },
-            (error) => {
-                this.handleError(error);
-            }
+                form => {
+                    this.formName = form.name;
+                    this.form = this.parseForm(form);
+                    this.onFormLoaded(this.form);
+                },
+                (error) => {
+                    this.handleError(error);
+                }
             );
     }
 
@@ -344,20 +348,20 @@ export class FormComponent implements OnInit, OnChanges {
         this.formService
             .getFormDefinitionByName(formName)
             .subscribe(
-            id => {
-                this.formService.getFormDefinitionById(id).subscribe(
-                    form => {
-                        this.form = this.parseForm(form);
-                        this.onFormLoaded(this.form);
-                    },
-                    (error) => {
-                        this.handleError(error);
-                    }
-                );
-            },
-            (error) => {
-                this.handleError(error);
-            }
+                id => {
+                    this.formService.getFormDefinitionById(id).subscribe(
+                        form => {
+                            this.form = this.parseForm(form);
+                            this.onFormLoaded(this.form);
+                        },
+                        (error) => {
+                            this.handleError(error);
+                        }
+                    );
+                },
+                (error) => {
+                    this.handleError(error);
+                }
             );
     }
 
@@ -366,11 +370,11 @@ export class FormComponent implements OnInit, OnChanges {
             this.formService
                 .saveTaskForm(this.form.taskId, this.form.values)
                 .subscribe(
-                () => {
-                    this.onTaskSaved(this.form);
-                    this.storeFormAsMetadata();
-                },
-                error => this.onTaskSavedError(this.form, error)
+                    () => {
+                        this.onTaskSaved(this.form);
+                        this.storeFormAsMetadata();
+                    },
+                    error => this.onTaskSavedError(this.form, error)
                 );
         }
     }
@@ -380,11 +384,11 @@ export class FormComponent implements OnInit, OnChanges {
             this.formService
                 .completeTaskForm(this.form.taskId, this.form.values, outcome)
                 .subscribe(
-                () => {
-                    this.onTaskCompleted(this.form);
-                    this.storeFormAsMetadata();
-                },
-                error => this.onTaskCompletedError(this.form, error)
+                    () => {
+                        this.onTaskCompleted(this.form);
+                        this.storeFormAsMetadata();
+                    },
+                    error => this.onTaskCompletedError(this.form, error)
                 );
         }
     }
@@ -398,10 +402,6 @@ export class FormComponent implements OnInit, OnChanges {
             let form = new FormModel(json, this.data, this.readOnly, this.formService);
             if (!json.fields) {
                 form.outcomes = this.getFormDefinitionOutcomes(form);
-            }
-            if (this.fieldValidators && this.fieldValidators.length > 0) {
-                console.log('Applying custom field validators');
-                form.fieldValidators = this.fieldValidators;
             }
             return form;
         }
@@ -425,17 +425,11 @@ export class FormComponent implements OnInit, OnChanges {
         }
     }
 
-    private refreshFormData() {
-        this.form = this.parseForm(this.form.json);
-        this.onFormLoaded(this.form);
-        this.onFormDataRefreshed(this.form);
-    }
-
-    private loadFormForEcmNode(nodeId: string): void {
-        this.nodeService.getNodeMetadata(nodeId).subscribe(data => {
-            this.data = data.metadata;
-            this.loadFormFromActiviti(data.nodeType);
-        },
+    private loadFormForEcmNode(): void {
+        this.nodeService.getNodeMetadata(this.nodeId).subscribe(data => {
+                this.data = data.metadata;
+                this.loadFormFromActiviti(data.nodeType);
+            },
             this.handleError);
     }
 
@@ -464,8 +458,8 @@ export class FormComponent implements OnInit, OnChanges {
     private storeFormAsMetadata() {
         if (this.saveMetadata) {
             this.ecmModelService.createEcmTypeForActivitiForm(this.formName, this.form).subscribe(type => {
-                this.nodeService.createNodeMetadata(type.nodeType || type.entry.prefixedName, EcmModelService.MODEL_NAMESPACE, this.form.values, this.path, this.nameNode);
-            },
+                    this.nodeService.createNodeMetadata(type.nodeType || type.entry.prefixedName, EcmModelService.MODEL_NAMESPACE, this.form.values, this.path, this.nameNode);
+                },
                 (error) => {
                     this.handleError(error);
                 }
@@ -476,11 +470,6 @@ export class FormComponent implements OnInit, OnChanges {
     protected onFormLoaded(form: FormModel) {
         this.formLoaded.emit(form);
         this.formService.formLoaded.next(new FormEvent(form));
-    }
-
-    protected onFormDataRefreshed(form: FormModel) {
-        this.formDataRefreshed.emit(form);
-        this.formService.formDataRefreshed.next(new FormEvent(form));
     }
 
     protected onTaskSaved(form: FormModel) {
@@ -501,21 +490,5 @@ export class FormComponent implements OnInit, OnChanges {
     protected onTaskCompletedError(form: FormModel, error: any) {
         this.handleError(error);
         this.formService.taskCompletedError.next(new FormErrorEvent(form, error));
-    }
-
-    protected onExecuteOutcome(outcome: FormOutcomeModel): boolean {
-        let args = new FormOutcomeEvent(outcome);
-
-        this.formService.executeOutcome.next(args);
-        if (args.defaultPrevented) {
-            return false;
-        }
-
-        this.executeOutcome.emit(args);
-        if (args.defaultPrevented) {
-            return false;
-        }
-
-        return true;
     }
 }
