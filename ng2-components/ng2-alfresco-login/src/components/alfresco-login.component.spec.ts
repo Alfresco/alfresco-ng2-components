@@ -22,7 +22,7 @@ import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AlfrescoLoginComponent } from './alfresco-login.component';
 import { AuthenticationMock } from './../assets/authentication.service.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
-import { MdInputModule } from '@angular/material';
+import { MdInputModule, MdCheckboxModule } from '@angular/material';
 
 describe('AlfrescoLogin', () => {
     let component: AlfrescoLoginComponent;
@@ -39,6 +39,7 @@ describe('AlfrescoLogin', () => {
         TestBed.configureTestingModule({
             imports: [
                 MdInputModule,
+                MdCheckboxModule,
                 CoreModule.forRoot()
             ],
             declarations: [AlfrescoLoginComponent],
@@ -64,23 +65,23 @@ describe('AlfrescoLogin', () => {
         fixture.detectChanges();
     });
 
+    function loginWithCredentials(username, password) {
+        component.providers = 'ECM';
+        usernameInput.value = username;
+        passwordInput.value = password;
+
+        usernameInput.dispatchEvent(new Event('input'));
+        passwordInput.dispatchEvent(new Event('input'));
+        fixture.detectChanges();
+
+        element.querySelector('button').click();
+        fixture.detectChanges();
+    }
+
     describe('Login button', () => {
 
         const getLoginButton = () => element.querySelector('#login-button');
         const getLoginButtonText = () => element.querySelector('#login-button span.login-button-label').innerText;
-
-        function loginWithCredentials(username, password) {
-            component.providers = 'ECM';
-            usernameInput.value = username;
-            passwordInput.value = password;
-
-            usernameInput.dispatchEvent(new Event('input'));
-            passwordInput.dispatchEvent(new Event('input'));
-            fixture.detectChanges();
-
-            element.querySelector('button').click();
-            fixture.detectChanges();
-        }
 
         it('should be rendered with the proper key by default', () => {
             expect(getLoginButton()).not.toBeNull();
@@ -107,6 +108,35 @@ describe('AlfrescoLogin', () => {
             loginWithCredentials('fake-username', 'fake-password');
 
             expect(getLoginButtonText()).toEqual('LOGIN.BUTTON.WELCOME');
+        });
+    });
+
+    describe('Remember me', () => {
+
+        it('should be checked by default', () => {
+            expect(element.querySelector('.rememberme-cb input[type="checkbox"]').checked).toBe(true);
+        });
+
+        it('should set the component\'s rememberMe property properly', () => {
+            element.querySelector('.rememberme-cb').dispatchEvent(new Event('change'));
+            fixture.detectChanges();
+
+            expect(component.rememberMe).toBe(false);
+
+            element.querySelector('.rememberme-cb').dispatchEvent(new Event('change'));
+            fixture.detectChanges();
+
+            expect(component.rememberMe).toBe(true);
+        });
+
+        it('should be taken into consideration during login attempt', () => {
+            const authService = TestBed.get(AlfrescoAuthenticationService);
+            spyOn(authService, 'login').and.returnValue({ subscribe: () => { } });
+            component.rememberMe = false;
+
+            loginWithCredentials('fake-username', 'fake-password');
+
+            expect(authService.login).toHaveBeenCalledWith('fake-username', 'fake-password', false);
         });
     });
 

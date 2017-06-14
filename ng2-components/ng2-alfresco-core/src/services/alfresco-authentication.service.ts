@@ -19,8 +19,12 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs/Rx';
 import { AlfrescoSettingsService } from './alfresco-settings.service';
 import { StorageService } from './storage.service';
+import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
 import { AlfrescoApiService } from './alfresco-api.service';
+
+const REMEMBER_ME_COOKIE_KEY = 'ALFRESCO_REMEMBER_ME';
+const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30 ;
 
 @Injectable()
 export class AlfrescoAuthenticationService {
@@ -28,14 +32,16 @@ export class AlfrescoAuthenticationService {
     onLogin: Subject<any> = new Subject<any>();
     onLogout: Subject<any> = new Subject<any>();
 
-    constructor(private settingsService: AlfrescoSettingsService,
-                public alfrescoApi: AlfrescoApiService,
-                private storage: StorageService,
-                private logService: LogService) {
+    constructor(
+        private settingsService: AlfrescoSettingsService,
+        public alfrescoApi: AlfrescoApiService,
+        private storage: StorageService,
+        private cookie: CookieService,
+        private logService: LogService) {
     }
 
     /**
-     * The method return tru if the user is logged in
+     * The method return true if the user is logged in
      * @returns {boolean}
      */
     isLoggedIn(): boolean {
@@ -48,15 +54,41 @@ export class AlfrescoAuthenticationService {
      * @param password
      * @returns {Observable<R>|Observable<T>}
      */
-    login(username: string, password: string): Observable<{ type: string, ticket: any }> {
+    login(username: string, password: string, rememberMe: boolean = false): Observable<{ type: string, ticket: any }> {
         this.removeTicket();
         return Observable.fromPromise(this.callApiLogin(username, password))
             .map((response: any) => {
+                this.saveRememberMeCookie(rememberMe);
                 this.saveTickets();
                 this.onLogin.next(response);
-                return {type: this.settingsService.getProviders(), ticket: response};
+                return { type: this.settingsService.getProviders(), ticket: response };
             })
             .catch(err => this.handleError(err));
+    }
+
+    /**
+     * The method save the "remember me" cookie as a long life cookie or a session cookie
+     * depending on the given paramter
+     */
+    private saveRememberMeCookie(rememberMe: boolean): void {
+        let expiration = null;
+
+        if (rememberMe) {
+            expiration = new Date();
+            const time = expiration.getTime();
+            const expireTime = time + REMEMBER_ME_UNTIL;
+            expiration.setTime(expireTime);
+        }
+        this.cookie.setItem(REMEMBER_ME_COOKIE_KEY, '1', expiration, null);
+    }
+
+    /**
+     * The method retrieve whether the "remember me" cookie was set or not
+     *
+     * @returns {boolean}
+     */
+    private isRememberMeSet(): boolean {
+        return (this.cookie.getItem(REMEMBER_ME_COOKIE_KEY) === null) ? false : true;
     }
 
     /**
@@ -130,7 +162,7 @@ export class AlfrescoAuthenticationService {
     /**
      * The method save the ECM and BPM ticket in the Storage
      */
-    saveTickets() {
+    saveTickets(): void {
         this.saveTicketEcm();
         this.saveTicketBpm();
     }
@@ -155,16 +187,20 @@ export class AlfrescoAuthenticationService {
 
     /**
      * The method return true if user is logged in on ecm provider
+     *
+     * @returns {boolean}
      */
-    isEcmLoggedIn() {
-        return this.alfrescoApi.getInstance().ecmAuth && !!this.alfrescoApi.getInstance().ecmAuth.isLoggedIn();
+    isEcmLoggedIn(): boolean {
+        return this.isRememberMeSet() && this.alfrescoApi.getInstance().ecmAuth && !!this.alfrescoApi.getInstance().ecmAuth.isLoggedIn();
     }
 
     /**
      * The method return true if user is logged in on bpm provider
+     *
+     * @returns {boolean}
      */
-    isBpmLoggedIn() {
-        return this.alfrescoApi.getInstance().bpmAuth && !!this.alfrescoApi.getInstance().bpmAuth.isLoggedIn();
+    isBpmLoggedIn(): boolean {
+        return this.isRememberMeSet() && this.alfrescoApi.getInstance().bpmAuth && !!this.alfrescoApi.getInstance().bpmAuth.isLoggedIn();
     }
 
     /**

@@ -17,7 +17,16 @@
 
 import { ReflectiveInjector }    from '@angular/core';
 import { AlfrescoThumbnailService } from './alfresco-thumbnail.service';
-import { AlfrescoApiService, AlfrescoAuthenticationService, AlfrescoContentService, AlfrescoSettingsService, StorageService, LogService } from 'ng2-alfresco-core';
+import {
+    AlfrescoApiService,
+    AlfrescoAuthenticationService,
+    AlfrescoContentService,
+    AlfrescoSettingsService,
+    StorageService,
+    CookieService,
+    LogService
+} from 'ng2-alfresco-core';
+import { CookieServiceMock } from './../../../ng2-alfresco-core/src/assets/cookie.service.mock';
 
 describe('AlfrescoThumbnailService', () => {
 
@@ -32,6 +41,7 @@ describe('AlfrescoThumbnailService', () => {
             AlfrescoSettingsService,
             AlfrescoThumbnailService,
             StorageService,
+            { provide: CookieService, useClass: CookieServiceMock },
             LogService
         ]);
 
