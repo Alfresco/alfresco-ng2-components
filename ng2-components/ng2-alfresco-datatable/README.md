@@ -220,6 +220,7 @@ You can add a template that will be showed when there are no result in your data
     [data]="data"
     [actions]="contentActions"
     [multiselect]="multiselect"
+    [loading]=isLoading()"
     (showRowContextMenu)="onShowRowContextMenu($event)"
     (showRowActionsMenu)="onShowRowActionsMenu($event)"
     (executeRowAction)="onExecuteRowAction($event)"
