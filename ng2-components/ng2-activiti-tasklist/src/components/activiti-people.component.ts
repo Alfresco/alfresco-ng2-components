@@ -91,9 +91,10 @@ export class ActivitiPeople {
     }
 
     involveUser(user: User) {
+        this.closeDialog();
         this.peopleService.involveUserWithTask(this.taskId, user.id.toString())
             .subscribe(() => {
-                this.people.push(user);
+                this.people = [...this.people, user];
             }, error => this.logService.error('Impossible to involve user with task'));
     }
 

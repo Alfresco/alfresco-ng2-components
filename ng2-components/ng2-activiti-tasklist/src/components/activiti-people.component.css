@@ -21,3 +21,7 @@
 .material-icons {
     cursor: pointer;
 }
+
+#add-people-dialog {
+    width: 400px;
+}
