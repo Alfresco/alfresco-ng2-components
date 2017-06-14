@@ -116,7 +116,7 @@ _For a complete example source code please refer to
 [DocumentList Demo](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-alfresco-documentlist/demo) 
 repository._
 
-### DOM Events
+## DOM Events
 
 Below are the DOM events the DocumentList component emits. 
 All of them are `bubbling`, meaning you can handle them in any component up the parent hierarchy, even if DocumentList is wrapped by another component(s).
@@ -152,7 +152,7 @@ Here's a basic example on handling DOM events in the parent elements:
 </div>
 ```
 
-### Setting default folder
+## Setting default folder
 
 You can set current folder path by assigning a value for `currentFolderId` property. 
 It can be either one of the well-known locations as **-root-**, **-shared-** or **-my-** or a node ID (guid).
