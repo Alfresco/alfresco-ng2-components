@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter, TemplateRef, ContentChild } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter, ViewChild, ContentChild } from '@angular/core';
 import { User } from '../models/user.model';
 import { DataColumnListComponent } from 'ng2-alfresco-core';
-import { DataColumn, DataTableAdapter, ObjectDataTableAdapter, ObjectDataRow } from 'ng2-alfresco-datatable';
+import { DataTableComponent } from 'ng2-alfresco-datatable';
 
 declare let componentHandler: any;
 
@@ -31,6 +31,9 @@ declare let componentHandler: any;
 export class ActivitiPeopleList implements OnChanges {
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
+
+    @ViewChild(DataTableComponent)
+    peopleDataTable: DataTableComponent;
 
     @Input()
     users: User[];
@@ -45,24 +48,15 @@ export class ActivitiPeopleList implements OnChanges {
     clickAction: EventEmitter<any> = new EventEmitter();
 
     user: User;
-    data: DataTableAdapter;
-
-    private defaultSchemaColumn: DataColumn[] = [
-        { type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true },
-        { type: 'text', key: 'created', title: 'Created', cssClass: 'hidden', sortable: true }
-    ];
 
     constructor() {
-        this.data = new ObjectDataTableAdapter([], this.defaultSchemaColumn);
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        console.log(this.users);
-        this.renderInstances(this.createDataRow(this.users));
     }
 
     ngAfterContentInit() {
-        this.setupSchema();
+        this.peopleDataTable.columnList = this.columnList;
     }
 
     ngAfterViewInit() {
@@ -105,49 +99,5 @@ export class ActivitiPeopleList implements OnChanges {
         let args = event.value;
         let action = args.action;
         this.clickAction.emit({type: action.name, value: args.row.obj});
-    }
-
-    /**
-     * Setup html-based (html definitions) or code behind (data adapter) schema.
-     * If component is assigned with an empty data adater the default schema settings applied.
-     */
-    setupSchema(): void {
-        let schema: DataColumn[] = [];
-
-        if (this.columnList && this.columnList.columns && this.columnList.columns.length > 0) {
-            schema = this.columnList.columns.map(c => <DataColumn> c);
-        }
-
-        if (!this.data) {
-            this.data = new ObjectDataTableAdapter([], schema.length > 0 ? schema : this.defaultSchemaColumn);
-        } else {
-            if (schema && schema.length > 0) {
-                this.data.setColumns(schema);
-            } else if (this.data.getColumns().length === 0) {
-                this.data.setColumns(this.defaultSchemaColumn);
-            }
-        }
-    }
-
-    /**
-     * Create an array of ObjectDataRow
-     * @param instances
-     * @returns {ObjectDataRow[]}
-     */
-    private createDataRow(instances: any[]): ObjectDataRow[] {
-        let instancesRows: ObjectDataRow[] = [];
-        instances.forEach((row) => {
-            instancesRows.push(new ObjectDataRow(row));
-        });
-        return instancesRows;
-    }
-
-    /**
-     * Render the instances list
-     *
-     * @param instances
-     */
-    private renderInstances(instances: any[]) {
-        this.data.setRows(instances);
     }
 }
