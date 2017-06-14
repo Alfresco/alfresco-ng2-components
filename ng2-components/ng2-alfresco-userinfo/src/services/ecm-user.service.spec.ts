@@ -24,8 +24,10 @@ import {
     AlfrescoSettingsService,
     AlfrescoApiService,
     StorageService,
+    CookieService,
     LogService
 } from 'ng2-alfresco-core';
+import { CookieServiceMock } from './../../../ng2-alfresco-core/src/assets/cookie.service.mock';
 declare let jasmine: any;
 
 describe('EcmUserService', () => {
@@ -43,6 +45,7 @@ describe('EcmUserService', () => {
             AlfrescoContentService,
             EcmUserService,
             StorageService,
+            { provide: CookieService, useClass: CookieServiceMock },
             LogService
         ]);
     });

@@ -19,6 +19,8 @@ import { AlfrescoSettingsService } from './alfresco-settings.service';
 import { AlfrescoAuthenticationService } from './alfresco-authentication.service';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { StorageService } from './storage.service';
+import { CookieService } from './cookie.service';
+import { CookieServiceMock } from './../assets/cookie.service.mock';
 import { LogService } from './log.service';
 import { AuthGuard } from './auth-guard.service';
 import { Router} from '@angular/router';
@@ -34,6 +36,7 @@ describe('AuthGuardService', () => {
                 AlfrescoApiService,
                 AlfrescoAuthenticationService,
                 StorageService,
+                { provide: CookieService, useClass: CookieServiceMock },
                 LogService],
             imports: [RouterTestingModule]
         });

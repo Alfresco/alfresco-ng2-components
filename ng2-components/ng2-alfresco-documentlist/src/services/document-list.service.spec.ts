@@ -15,8 +15,18 @@
  * limitations under the License.
  */
 
-import { AlfrescoSettingsService, AlfrescoAuthenticationService, AlfrescoApiService, StorageService, AlfrescoContentService, LogService, LogServiceMock } from 'ng2-alfresco-core';
+import {
+    AlfrescoSettingsService,
+    AlfrescoAuthenticationService,
+    AlfrescoApiService,
+    StorageService,
+    CookieService,
+    AlfrescoContentService,
+    LogService,
+    LogServiceMock
+} from 'ng2-alfresco-core';
 import { FileNode } from '../assets/document-library.model.mock';
+import { CookieServiceMock } from '../../../ng2-alfresco-core/src/assets/cookie.service.mock';
 import { ReflectiveInjector } from '@angular/core';
 import { DocumentListService } from './document-list.service';
 
@@ -100,6 +110,7 @@ describe('DocumentListService', () => {
             AlfrescoContentService,
             DocumentListService,
             StorageService,
+            { provide: CookieService, useClass: CookieServiceMock },
             { provide: LogService, useClass: LogServiceMock }
         ]);
 
