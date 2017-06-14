@@ -15,20 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    OnChanges,
-    SimpleChange,
-    SimpleChanges,
-    Input,
-    Output,
-    EventEmitter,
-    ElementRef,
-    TemplateRef,
-    AfterContentInit,
-    ContentChild,
-    Optional
-} from '@angular/core';
+import { Component, OnChanges, SimpleChange, SimpleChanges, Input, Output, EventEmitter, ElementRef, TemplateRef, AfterContentInit, ContentChild, Optional } from '@angular/core';
 import { DataTableAdapter, DataRow, DataColumn, DataSorting, DataRowEvent, ObjectDataTableAdapter, ObjectDataRow } from '../../data/index';
 import { DataCellEvent } from './data-cell.event';
 import { DataRowActionEvent } from './data-row-action.event';
@@ -94,7 +81,12 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
     @Output()
     executeRowAction: EventEmitter<DataRowActionEvent> = new EventEmitter<DataRowActionEvent>();
 
-    noContentTemplate: TemplateRef<any>;
+    @Input()
+    loading: boolean = false;
+
+    public noContentTemplate: TemplateRef<any>;
+    public loadingTemplate: TemplateRef<any>;
+
     isSelectAllChecked: boolean = false;
 
     constructor(@Optional() private el: ElementRef) {
