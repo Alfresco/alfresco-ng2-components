@@ -199,14 +199,14 @@ You can use inside the filter one of the following property
 }
 ```
 
-## ADF Custom View
+## ADF Card View
 
-The component shows the [Custom View](#custom-view)} object.
+The component shows the [CardViewModel](#cardviewmodel)} object.
 
 ```html
-<adf-custom-view
+<adf-card-view
     [properties]="[{label: 'My Label', value: 'My value'}]">
-</adf-custom-view>
+</adf-card-view>
 
 ```
 
@@ -214,9 +214,9 @@ The component shows the [Custom View](#custom-view)} object.
 
 | Name | Type | Description |
 | --- | --- | --- |
-| properties | {array[ADFCustomView](#adfcustomview)} | (**required**) The custom view to render |
+| properties | {array[CardViewModel](#cardviewmodel)} | (**required**) The custom view to render |
 
-### ADFCustomView
+### CardViewModel
 
 ```json
 {

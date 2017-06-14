@@ -26,12 +26,14 @@
 export class CardViewModel {
     label: string;
     value: any;
+    key: any;
     format: string;
     default: string;
 
     constructor(obj?: any) {
         this.label = obj.label || '';
         this.value = obj.value;
+        this.key = obj.key;
         this.format = obj.format;
         this.default = obj.default;
     }

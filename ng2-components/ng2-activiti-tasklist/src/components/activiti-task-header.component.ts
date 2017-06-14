@@ -51,16 +51,24 @@ export class ActivitiTaskHeader implements OnChanges {
     }
 
     refreshData() {
-        this.properties = [
-            new CardViewModel({label: 'Status:', value: this.getTaskStatus()}),
-            new CardViewModel({label: 'Due Date:', value: this.taskDetails.dueDate, default: 'No date'}),
-            new CardViewModel({label: 'Category:', value: this.taskDetails.category, default: 'No category'}),
-            new CardViewModel({label: 'Created By:', value: this.taskDetails.assignee.firstName + ' ' + this.taskDetails.assignee.lastName}),
-            new CardViewModel({label: 'Created:', value: this.taskDetails.created, format: 'MMM DD YYYY'}),
-            new CardViewModel({label: 'Id:', value: this.taskDetails.id}),
-            new CardViewModel({label: 'Description:', value: this.taskDetails.description, default: 'No description'}),
-            new CardViewModel({label: 'Form name:', value: this.formName, default: 'No form'})
-        ];
+        if (this.taskDetails) {
+            this.properties = [
+                new CardViewModel({label: 'Status:', value: this.getTaskStatus(), key: 'status'}),
+                new CardViewModel({label: 'Due Date:', value: this.taskDetails.dueDate, format: 'MMM DD YYYY', key: 'dueDate', default: 'No date'}),
+                new CardViewModel({label: 'Category:', value: this.taskDetails.category, key: 'category', default: 'No category'}),
+                new CardViewModel(
+                    {
+                        label: 'Created By:',
+                        value: this.taskDetails.getFullName(),
+                        key: 'assignee',
+                        default: 'No assignee'
+                    }),
+                new CardViewModel({label: 'Created:', value: this.taskDetails.created, format: 'MMM DD YYYY', key: 'created'}),
+                new CardViewModel({label: 'Id:', value: this.taskDetails.id, key: 'id'}),
+                new CardViewModel({label: 'Description:', value: this.taskDetails.description, key: 'description', default: 'No description'}),
+                new CardViewModel({label: 'Form name:', value: this.formName, key: 'formName', default: 'No form'})
+            ];
+        }
     }
 
     public hasAssignee(): boolean {
