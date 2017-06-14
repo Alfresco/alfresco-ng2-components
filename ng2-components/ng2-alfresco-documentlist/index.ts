@@ -16,7 +16,7 @@
  */
 
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { MdMenuModule, MdButtonModule, MdIconModule } from '@angular/material';
+import { MdMenuModule, MdButtonModule, MdIconModule, MdProgressSpinnerModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 
@@ -79,7 +79,8 @@ export const DOCUMENT_LIST_PROVIDERS: any[] = [
         DataTableModule,
         MdMenuModule,
         MdButtonModule,
-        MdIconModule
+        MdIconModule,
+        MdProgressSpinnerModule
     ],
     declarations: [
         ...DOCUMENT_LIST_DIRECTIVES

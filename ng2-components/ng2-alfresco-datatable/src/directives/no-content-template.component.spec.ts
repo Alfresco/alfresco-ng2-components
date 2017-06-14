@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { NoContentTemplateComponent } from '../datatable/no-content-template.component';
+import { NoContentTemplateComponent } from './no-content-template.component';
 import { Injector } from '@angular/core';
 import { getTestBed, TestBed } from '@angular/core/testing';
-import { DataTableComponent } from './datatable.component';
+import { DataTableComponent } from '../components/datatable/datatable.component';
 
 describe('NoContentTemplateComponent', () => {
     let injector: Injector;
