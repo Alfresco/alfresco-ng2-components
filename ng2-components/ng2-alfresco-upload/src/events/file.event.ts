@@ -29,7 +29,7 @@ export class FileUploadEvent {
 
 export class FileUploadCompleteEvent extends FileUploadEvent {
 
-    constructor(file: FileModel, public totalComplete: number = 0) {
+    constructor(file: FileModel, public totalComplete: number = 0, public data?: any) {
         super(file, FileUploadStatus.Complete);
     }
 
