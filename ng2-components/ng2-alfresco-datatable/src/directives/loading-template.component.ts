@@ -15,27 +15,22 @@
  * limitations under the License.
  */
 
-import {
-    Directive,
-    ContentChild,
-    TemplateRef,
-    AfterContentInit
-} from '@angular/core';
-import { DataTableComponent } from './datatable.component';
+import { Directive, ContentChild, TemplateRef, AfterContentInit } from '@angular/core';
+import { DataTableComponent } from '../components/datatable/datatable.component';
 
 @Directive({
-    selector: 'no-content-template'
+    selector: 'loading-content-template'
 })
-export class NoContentTemplateComponent implements AfterContentInit {
+export class LoadingContentTemplateComponent implements AfterContentInit {
 
     @ContentChild(TemplateRef)
     template: any;
 
-    constructor(
-        private dataTable: DataTableComponent) {
+    constructor(private dataTable: DataTableComponent) {
     }
 
     ngAfterContentInit() {
-        this.dataTable.noContentTemplate = this.template;
+        this.dataTable.loadingTemplate = this.template;
     }
+
 }

@@ -42,3 +42,7 @@
     object-fit: contain;
     margin-top: 17px;
 }
+
+.adf-document-list-loading-margin {
+    margin: auto;
+}

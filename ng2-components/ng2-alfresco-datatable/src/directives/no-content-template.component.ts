@@ -15,5 +15,21 @@
  * limitations under the License.
  */
 
-export * from './datatable.component';
-export * from './datatable-cell.component';
+import { Directive, ContentChild, TemplateRef, AfterContentInit } from '@angular/core';
+import { DataTableComponent } from '../components/datatable/datatable.component';
+
+@Directive({
+    selector: 'no-content-template'
+})
+export class NoContentTemplateComponent implements AfterContentInit {
+
+    @ContentChild(TemplateRef)
+    template: any;
+
+    constructor(private dataTable: DataTableComponent) {
+    }
+
+    ngAfterContentInit() {
+        this.dataTable.noContentTemplate = this.template;
+    }
+}
