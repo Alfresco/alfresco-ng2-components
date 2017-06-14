@@ -17,13 +17,18 @@
 
 import { Injectable, APP_INITIALIZER, NgModule, ModuleWithProviders } from '@angular/core';
 import { Http } from '@angular/http';
+import { ObjectUtils } from '../utils/object-utils';
 
 @Injectable()
 export class AppConfigService {
 
-    config: any = {};
+    private config: any = {};
 
     constructor(private http: Http) {}
+
+    get<T>(key: string): T {
+        return <T> ObjectUtils.getValue(this.config, key);
+    };
 
     load(resource: string = 'app.config.json'): Promise<any> {
         console.log('Loading app config: ' + resource);
