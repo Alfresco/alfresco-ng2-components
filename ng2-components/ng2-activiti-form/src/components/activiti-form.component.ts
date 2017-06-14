@@ -28,48 +28,6 @@ import { WidgetVisibilityService }  from './../services/widget-visibility.servic
 
 declare var componentHandler: any;
 
-/**
- * @Input
- * ActivitiForm can show 4 types of forms searching by 4 type of params:
- *   1) Form attached to a task passing the {taskId}.
- *
- *   2) Form that are only defined with the {formId} (in this case you receive only the form definition and the form will not be
- *   attached to any process, useful in case you want to use ActivitiForm as form designer), in this case you can pass also other 2
- *   parameters:
- *      - {saveOption} as parameter to tell what is the function to call on the save action.
- *      - {data} to fill the form field with some data, the id of the form must to match the name of the field of the provided data object.
- *
- *   3) Form that are only defined with the {formName} (in this case you receive only the form definition and the form will not be
- *   attached to any process, useful in case you want to use ActivitiForm as form designer),
- *   in this case you can pass also other 2 parameters:
- *      - {saveOption} as parameter to tell what is the function to call on the save action.
- *      - {data} to fill the form field with some data, the id of the form must to match the name of the field of the provided data object.
- *
- *   4) Form that show the metadata of a {nodeId}
- *
- *   {showTitle} boolean - to hide the title of the form pass false, default true;
- *
- *   {showRefreshButton} boolean - to hide the refresh button of the form pass false, default true;
- *
- *   {showDebugButton} boolean - to show the debug options, default false;
- *
- *   {showCompleteButton} boolean - to hide the complete button of the form pass false, default true;
- *
- *   {showSaveButton} boolean - to hide the save button of the form pass false, default true;
- *
- *   {saveMetadata} boolean - store the value of the form as metadata, default false;
- *
- *   {path} string - path of the folder where to store the metadata;
- *
- *   {nameNode} string (optional) - Name to assign to the new node where the metadata are stored;
- *
- *   @Output
- *   {formLoaded} EventEmitter - This event is fired when the form is loaded, it pass all the value in the form.
- *   {formSaved} EventEmitter - This event is fired when the form is saved, it pass all the value in the form.
- *   {formCompleted} EventEmitter - This event is fired when the form is completed, it pass all the value in the form.
- *
- * @returns {ActivitiForm} .
- */
 @Component({
     selector: 'activiti-form',
     templateUrl: './activiti-form.component.html',
