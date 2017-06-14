@@ -689,6 +689,7 @@ DocumentList emits the following events:
 | folderChange | emitted once current display folder has changed |
 | preview | emitted when user acts upon files with either single or double click (depends on `navigation-mode`), recommended for Viewer components integration  |
 | permissionError | emitted when user is attempting to create a folder via action menu but it doesn't have the permission to do it |
+| ready | emitted when the documentList is ready and load all the elements|
 
 ## Advanced usage and customization
 

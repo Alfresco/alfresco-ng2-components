@@ -15,10 +15,21 @@
  * limitations under the License.
  */
 
-<<<<<<< HEAD:ng2-components/ng2-activiti-analytics/src/models/index.ts
-export * from './chart.model';
-export * from './report.model';
-=======
-export * from './datatable.component';
-export * from './datatable-cell.component';
->>>>>>> [ADF-524] Datatable loading state (#1958):ng2-components/ng2-alfresco-datatable/src/components/datatable/index.ts
+import { Directive, ContentChild, TemplateRef, AfterContentInit } from '@angular/core';
+import { DataTableComponent } from '../components/datatable/datatable.component';
+
+@Directive({
+    selector: 'no-content-template'
+})
+export class NoContentTemplateComponent implements AfterContentInit {
+
+    @ContentChild(TemplateRef)
+    template: any;
+
+    constructor(private dataTable: DataTableComponent) {
+    }
+
+    ngAfterContentInit() {
+        this.dataTable.noContentTemplate = this.template;
+    }
+}

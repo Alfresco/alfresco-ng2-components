@@ -147,6 +147,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     success: EventEmitter<any> = new EventEmitter();
 
     @Output()
+    ready: EventEmitter<any> = new EventEmitter();
+
+    @Output()
     error: EventEmitter<any> = new EventEmitter();
 
     @Output()
@@ -160,6 +163,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     emptyFolderTemplate: TemplateRef<any>;
     contextActionHandler: Subject<any> = new Subject();
     data: ShareDataTableAdapter;
+
+    loading: boolean = false;
 
     constructor(private documentListService: DocumentListService,
                 private ngZone: NgZone,
@@ -223,19 +228,12 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     ngOnChanges(changes: SimpleChanges) {
         if (changes['folderNode'] && changes['folderNode'].currentValue) {
             this.loadFolder();
-            return;
-        }
-
-        if (changes['currentFolderId'] && changes['currentFolderId'].currentValue) {
+        } else if (changes['currentFolderId'] && changes['currentFolderId'].currentValue) {
             this.loadFolderByNodeId(changes['currentFolderId'].currentValue);
-            return;
-        }
-
-        if (changes['node'] && changes['node'].currentValue) {
+        } else if (changes['node'] && changes['node'].currentValue) {
             if (this.data) {
                 this.data.loadPage(changes['node'].currentValue);
             }
-            return;
         }
     }
 
@@ -243,17 +241,11 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         this.ngZone.run(() => {
             if (this.folderNode) {
                 this.loadFolder();
-                return;
-            }
-
-            if (this.currentFolderId) {
+            } else if (this.currentFolderId) {
                 this.loadFolderByNodeId(this.currentFolderId);
-                return;
-            }
-
-            if (this.node) {
+            } else if (this.node) {
                 this.data.loadPage(this.node);
-                return;
+                this.ready.emit();
             }
         });
     }
@@ -356,6 +348,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     loadFolder() {
+        this.loading = true;
         let nodeId = this.folderNode ? this.folderNode.id : this.currentFolderId;
         if (nodeId) {
             this.loadFolderNodesByFolderNodeId(nodeId, this.pageSize, this.skipCount).catch(err => this.error.emit(err));
@@ -364,6 +357,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     // gets folder node and its content
     loadFolderByNodeId(nodeId: string) {
+        this.loading = true;
         this.documentListService.getFolderNode(nodeId).then(node => {
                 this.folderNode = node;
                 this.currentFolderId = node.id;
@@ -375,40 +369,34 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     loadFolderNodesByFolderNodeId(id: string, maxItems: number, skipCount: number): Promise<any> {
         return new Promise((resolve, reject) => {
-            if (id && this.documentListService) {
-                this.documentListService
-                    .getFolder(null, {
-                        maxItems: maxItems,
-                        skipCount: skipCount,
-                        rootFolderId: id
-                    })
-                    .subscribe(
-                        val => {
-                            if (this.checkIfTheCurrentPageIsEmpty(val, skipCount)) {
-                                this.updateSkipCount(skipCount - maxItems);
-                                this.loadFolderNodesByFolderNodeId(id, maxItems, skipCount - maxItems);
-                            } else {
-                                this.data.loadPage(<NodePaging>val);
-                                this.pagination = val.list.pagination;
+            this.documentListService
+                .getFolder(null, {
+                    maxItems: maxItems,
+                    skipCount: skipCount,
+                    rootFolderId: id
+                })
+                .subscribe(
+                    val => {
+                        if (this.isCurrentPageEmpty(val, skipCount)) {
+                            this.updateSkipCount(skipCount - maxItems);
+                            this.loadFolderNodesByFolderNodeId(id, maxItems, skipCount - maxItems).then(() => {
                                 resolve(true);
-                            }
-                        },
-                        error => {
-                            reject(error);
-                        });
-            } else {
-                resolve(false);
-            }
+                            }, () => {
+                                reject(error);
+                            });
+                        } else {
+                            this.data.loadPage(<NodePaging>val);
+                            this.pagination = val.list.pagination;
+                            this.loading = false;
+                            this.ready.emit();
+                            resolve(true);
+                        }
+                    },
+                    error => {
+                        reject(error);
+                    });
         });
 
-    }
-
-    private checkIfTheCurrentPageIsEmpty(node, skipCount): boolean {
-        let isCheckNeeded: boolean = false;
-        if (this.isCurrentPageEmpty(node, skipCount)) {
-            isCheckNeeded = true;
-        }
-        return isCheckNeeded;
     }
 
     private isCurrentPageEmpty(node, skipCount): boolean {
@@ -592,4 +580,5 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     updateSkipCount(newSkipCount) {
         this.skipCount = newSkipCount;
     }
+
 }

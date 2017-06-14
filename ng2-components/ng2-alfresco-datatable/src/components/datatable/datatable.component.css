@@ -26,11 +26,20 @@
 
 /* Empty folder */
 
-:host .no-content-container {
+:host .adf-no-content-container {
     padding: 0 !important;
 }
 
-:host .no-content-container > img {
+:host .adf-no-content-container > img {
+    width: 100%;
+}
+/* Loading folder */
+
+:host .adf-loading-content-container {
+    padding: 0 !important;
+}
+
+:host .adf-loading-content-container > img {
     width: 100%;
 }
 

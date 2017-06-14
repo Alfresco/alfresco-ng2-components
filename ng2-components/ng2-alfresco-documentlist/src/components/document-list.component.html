@@ -16,6 +16,7 @@
     [contextMenu]="contextMenuActions"
     [rowStyle]="rowStyle"
     [rowStyleClass]="rowStyleClass"
+    [loading]="loading"
     (showRowContextMenu)="onShowRowContextMenu($event)"
     (showRowActionsMenu)="onShowRowActionsMenu($event)"
     (executeRowAction)="onExecuteRowAction($event)"
@@ -24,20 +25,31 @@
     <div *ngIf="!isEmptyTemplateDefined()">
         <no-content-template>
             <ng-template>
-                <div class="document-list_empty_template">
-                    <div class="document-list__this-space-is-empty">This folder is empty</div>
-                    <div class="document-list__drag-drop">Drag and Drop</div>
-                    <div class="document-list__any-files-here-to-add">any files here to add</div>
-                    <img [src]="emptyFolderImageUrl" class="document-list__empty_doc_lib">
-                </div>
+                <!--put your cutom template here-->
+                <md-progress-spinner
+                    class="adf-document-list-loading-margin"
+                    [color]="'primary'"
+                    [mode]="'indeterminate'">
+                </md-progress-spinner>
             </ng-template>
         </no-content-template>
     </div>
+    <div>
+        <loading-content-template>
+            <ng-template>
+                <md-progress-spinner id="adf-document-list-loading"
+                    class="adf-document-list-loading-margin"
+                    [color]="'primary'"
+                    [mode]="'indeterminate'">
+                </md-progress-spinner>
+            </ng-template>
+        </loading-content-template>
+    </div>
 </alfresco-datatable>
 <alfresco-pagination *ngIf="isPaginationEnabled()"
-    (changePageSize)="onChangePageSize($event)"
-    (nextPage)="onNextPage($event)"
-    (prevPage)="onPrevPage($event)"
-    [pagination]="pagination"
-    [supportedPageSizes]="[5, 10, 15, 20]">
+                     (changePageSize)="onChangePageSize($event)"
+                     (nextPage)="onNextPage($event)"
+                     (prevPage)="onPrevPage($event)"
+                     [pagination]="pagination"
+                     [supportedPageSizes]="[5, 10, 15, 20]">
 </alfresco-pagination>

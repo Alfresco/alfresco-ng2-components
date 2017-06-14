@@ -123,6 +123,7 @@ export class DataTableDemo {
 | fallbackThumbnail | string |  | Fallback image for row ehre thubnail is missing|
 | contextMenu | boolean | false | Toggles custom context menu for the component |
 | allowDropFiles | boolean | false | Toggle file drop support for rows (see **ng2-alfresco-core/UploadDirective** for more details) |
+| loading | boolean | false | Flag that indicate if the datable is in loading state and need to show the loading template. Read the documentation above to know how to configure a loading template  |
 
 ### DataColumn Properties
 
@@ -176,7 +177,9 @@ onRowClick(event) {
 
 ![](docs/assets/datatable-dom-events.png)
 
-### Advanced usage
+### Empty content template
+
+You can add a template that will be showed when there are no result in your datatable:
 
 ```html
 <alfresco-datatable
@@ -188,13 +191,55 @@ onRowClick(event) {
     (executeRowAction)="onExecuteRowAction($event)"
     (rowClick)="onRowClick($event)"
     (rowDblClick)="onRowDblClick($event)">
-    <no-content-template>
-        <template>
-            <h1>Sorry, no content</h1>
-        </template>
-    </no-content-template>
+    
+    
+        <no-content-template>
+            <!--Add your custom empty template here-->
+            <ng-template>
+                <h1>Sorry, no content</h1>
+            </ng-template>
+        </no-content-template>
+        
 </alfresco-datatable>
 ```
+
+### Loading content template
+
+You can add a template that will be showed during the loading of your data:
+
+```html
+<alfresco-datatable
+    [data]="data"
+    [actions]="contentActions"
+    [multiselect]="multiselect"
+    [loading]=isLoading()"
+    (showRowContextMenu)="onShowRowContextMenu($event)"
+    (showRowActionsMenu)="onShowRowActionsMenu($event)"
+    (executeRowAction)="onExecuteRowAction($event)"
+    (rowClick)="onRowClick($event)"
+    (rowDblClick)="onRowDblClick($event)">
+    
+        <loading-content-template>
+            <ng-template>
+               <!--Add your custom loading template here-->
+                <md-progress-spinner
+                    class="adf-document-list-loading-margin"
+                    [color]="'primary'"
+                    [mode]="'indeterminate'">
+                </md-progress-spinner>
+            </ng-template>
+        </loading-content-template>
+        
+</alfresco-datatable>
+```
+
+```js
+    isLoading(): boolean {
+        //your custom logic to identify if you are in a loading state 
+    }
+```
+
+Note: the `<loading-content-template>` and `<no-content-template>` can be used together
 
 #### Column Templates
 

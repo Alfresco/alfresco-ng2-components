@@ -38,7 +38,8 @@
 
         <!-- Actions (left) -->
         <td *ngIf="actions && actionsPosition === 'left'" class="alfresco-datatable__actions-cell">
-            <button [id]="'action_menu_' + idx" alfresco-mdl-button class="mdl-button--icon" [attr.data-automation-id]="actions_menu">
+            <button [id]="'action_menu_' + idx" alfresco-mdl-button class="mdl-button--icon"
+                    [attr.data-automation-id]="actions_menu">
                 <i class="material-icons">more_vert</i>
             </button>
             <ul alfresco-mdl-menu class="mdl-menu--bottom-left"
@@ -66,21 +67,23 @@
                     <div *ngSwitchCase="'image'" class="cell-value">
                         <i *ngIf="isIconValue(row, col)" class="material-icons icon-cell">{{asIconValue(row, col)}}</i>
                         <img *ngIf="!isIconValue(row, col)"
-                            class="image-cell"
-                            alt="{{ iconAltTextKey(data.getValue(row, col)) | translate }}"
-                            src="{{ data.getValue(row, col) }}"
-                            (error)="onImageLoadingError($event)">
+                             class="image-cell"
+                             alt="{{ iconAltTextKey(data.getValue(row, col)) | translate }}"
+                             src="{{ data.getValue(row, col) }}"
+                             (error)="onImageLoadingError($event)">
                     </div>
                     <div *ngSwitchCase="'icon'" class="cell-value">
                         <img class="image-cell"
-                            alt="{{ iconAltTextKey(data.getValue(row, col)) | translate }}"
-                            src="{{ data.getValue(row, col) }}"
-                            (error)="onImageLoadingError($event)">
+                             alt="{{ iconAltTextKey(data.getValue(row, col)) | translate }}"
+                             src="{{ data.getValue(row, col) }}"
+                             (error)="onImageLoadingError($event)">
                     </div>
-                    <div *ngSwitchCase="'date'" class="cell-value" [attr.data-automation-id]="'date_' + data.getValue(row, col)">
+                    <div *ngSwitchCase="'date'" class="cell-value"
+                         [attr.data-automation-id]="'date_' + data.getValue(row, col)">
                         <alfresco-datatable-cell [data]="data" [column]="col" [row]="row"></alfresco-datatable-cell>
                     </div>
-                    <div *ngSwitchCase="'text'" class="cell-value" [attr.data-automation-id]="'text_' + data.getValue(row, col)">
+                    <div *ngSwitchCase="'text'" class="cell-value"
+                         [attr.data-automation-id]="'text_' + data.getValue(row, col)">
                         <alfresco-datatable-cell [data]="data" [column]="col" [row]="row"></alfresco-datatable-cell>
                     </div>
                     <span *ngSwitchDefault class="cell-value">
@@ -98,7 +101,8 @@
 
         <!-- Actions (right) -->
         <td *ngIf="actions && actionsPosition === 'right'" class="alfresco-datatable__actions-cell">
-            <button [id]="'action_menu_' + idx" alfresco-mdl-button class="mdl-button--icon" [attr.data-automation-id]="actions_menu">
+            <button [id]="'action_menu_' + idx" alfresco-mdl-button class="mdl-button--icon"
+                    [attr.data-automation-id]="actions_menu">
                 <i class="material-icons">more_vert</i>
             </button>
             <ul alfresco-mdl-menu class="mdl-menu--bottom-right"
@@ -113,12 +117,21 @@
         </td>
 
     </tr>
-    <tr *ngIf="data.getRows().length === 0">
-        <td class="mdl-data-table__cell--non-numeric no-content-container"
+    <tr *ngIf="data.getRows().length === 0 && !loading">
+        <td class="mdl-data-table__cell--non-numeric adf-no-content-container"
             [attr.colspan]="1 + data.getColumns().length">
             <ng-template *ngIf="noContentTemplate"
-                      ngFor [ngForOf]="[data]"
-                      [ngForTemplate]="noContentTemplate">
+                         ngFor [ngForOf]="[data]"
+                         [ngForTemplate]="noContentTemplate">
+            </ng-template>
+        </td>
+    </tr>
+    <tr *ngIf="loading">
+        <td class="mdl-data-table__cell--non-numeric adf-loading-content-container"
+            [attr.colspan]="1 + data.getColumns().length">
+            <ng-template *ngIf="loadingTemplate"
+                         ngFor [ngForOf]="[data]"
+                         [ngForTemplate]="loadingTemplate">
             </ng-template>
         </td>
     </tr>
