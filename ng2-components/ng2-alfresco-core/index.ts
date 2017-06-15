@@ -22,6 +22,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader } from 'ng2-translate/ng2-translate';
 import { MaterialModule } from './src/material.module';
+import { AppConfigModule } from './src/services/app-config.service';
 import { AdfToolbarComponent } from './src/components/toolbar/toolbar.component';
 
 import {
@@ -40,7 +41,8 @@ import {
     LogService,
     LogServiceMock,
     NotificationService,
-    ContentService
+    ContentService,
+    AppConfigService, InitAppConfigServiceProvider
 } from './src/services/index';
 
 import { FileSizePipe } from './src/pipes/file-size.pipe';
@@ -98,7 +100,8 @@ export function createTranslateLoader(http: Http, logService: LogService) {
             useFactory: (createTranslateLoader),
             deps: [Http, LogService]
         }),
-        MaterialModule
+        MaterialModule,
+        AppConfigModule
     ],
     declarations: [
         ...MATERIAL_DESIGN_DIRECTIVES,
@@ -132,11 +135,16 @@ export function createTranslateLoader(http: Http, logService: LogService) {
     ]
 })
 export class CoreModule {
-    static forRoot(): ModuleWithProviders {
+    static forRoot(opts: any = {}): ModuleWithProviders {
+
+        const appConfigFile = opts.appConfigFile || 'app.config.json';
+
         return {
             ngModule: CoreModule,
             providers: [
-                ...ALFRESCO_CORE_PROVIDERS
+                ...ALFRESCO_CORE_PROVIDERS,
+                AppConfigService,
+                InitAppConfigServiceProvider(appConfigFile)
             ]
         };
     }

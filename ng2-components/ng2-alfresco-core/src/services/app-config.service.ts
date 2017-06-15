@@ -15,46 +15,39 @@
  * limitations under the License.
  */
 
-import { APP_INITIALIZER, Injectable, ModuleWithProviders, NgModule } from '@angular/core';
-import { Http, HttpModule } from '@angular/http';
+import { Injectable, APP_INITIALIZER, NgModule, ModuleWithProviders } from '@angular/core';
+import { Http } from '@angular/http';
 import { ObjectUtils } from '../utils/object-utils';
 
 @Injectable()
 export class AppConfigService {
 
     private config: any = {
-        'ecmHost': 'http://{hostname}:{port}/ecm',
-        'bpmHost': 'http://{hostname}:{port}/bpm'
+        'ecmHost': 'http://localhost:3000/ecm',
+        'bpmHost': 'http://localhost:3000/bpm',
+        'application': {
+            'name': 'Alfresco'
+        }
     };
 
     configFile: string = null;
 
     constructor(private http: Http) {}
 
-    get<T>(key: string, defaultValue?: T): T {
-        let result: any = ObjectUtils.getValue(this.config, key);
-        if (typeof result === 'string') {
-            const map = new Map<string, string>();
-            map.set('hostname', location.hostname);
-            map.set('port', location.port);
-            result = this.formatString(result, map);
-        }
-        if (result === undefined) {
-            return defaultValue;
-        }
-        return <T> result;
-    }
+    get<T>(key: string): T {
+        return <T> ObjectUtils.getValue(this.config, key);
+    };
 
-    load(resource: string = 'app.config.json', values?: {}): Promise<any> {
+    load(resource: string = 'app.config.json'): Promise<any> {
+        console.log('Loading app config: ' + resource);
         this.configFile = resource;
-        return new Promise(resolve => {
-            this.config = Object.assign({}, values || {});
+        return new Promise((resolve, reject) => {
             this.http.get(resource).subscribe(
                 data => {
                     this.config = Object.assign({}, this.config, data.json() || {});
                     resolve(this.config);
                 },
-                () => {
+                (err) => {
                     const errorMessage = `Error loading ${resource}`;
                     console.log(errorMessage);
                     resolve(this.config);
@@ -62,24 +55,13 @@ export class AppConfigService {
             );
         });
     }
-
-    private formatString(str: string, map: Map<string, string>): string {
-        let result = str;
-
-        map.forEach((value, key) => {
-            const expr = new RegExp('{' + key + '}', 'gm');
-            result = result.replace(expr, value);
-        });
-
-        return result;
-    }
 }
 
-export function InitAppConfigServiceProvider(resource: string, values?: {}): any {
+export function InitAppConfigServiceProvider(resource: string): any {
     return {
         provide: APP_INITIALIZER,
         useFactory: (configService: AppConfigService) => {
-            return () => configService.load(resource, values);
+            return () => configService.load(resource);
         },
         deps: [
             AppConfigService
@@ -89,20 +71,17 @@ export function InitAppConfigServiceProvider(resource: string, values?: {}): any
 }
 
 @NgModule({
-    imports: [
-        HttpModule
-    ],
     providers: [
         AppConfigService
     ]
 })
 export class AppConfigModule {
-    static forRoot(resource: string, values?: {}): ModuleWithProviders {
+    static forRoot(resource: string): ModuleWithProviders {
         return {
             ngModule: AppConfigModule,
             providers: [
                 AppConfigService,
-                InitAppConfigServiceProvider(resource, values)
+                InitAppConfigServiceProvider(resource)
             ]
         };
     }
