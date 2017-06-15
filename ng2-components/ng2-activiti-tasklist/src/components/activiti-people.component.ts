@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Observer, Observable } from 'rxjs/Rx';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { User, UserEventModel } from '../models/index';

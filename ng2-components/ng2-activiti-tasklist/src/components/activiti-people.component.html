@@ -1,7 +1,10 @@
 <div class="mdl-grid mdl-shadow--2dp assignment-top-container">
     <div class="assignment-header">
-        <div class="assigment-count">
+        <div *ngIf="hasPeople()" class="assigment-count" id="people-title">
             {{ 'TASK_DETAILS.LABELS.PEOPLE' | translate }} {{ ' (' + people.length + ')' }}
+        </div>
+        <div *ngIf="!hasPeople()" class="assigment-count" id="no-people-label">
+            {{ 'TASK_DETAILS.PEOPLE.NONE' | translate }}
         </div>
         <div *ngIf="isEditMode()" class="add-people" (click)="onAddAssignement()">
             <i class="material-icons">person_add</i>

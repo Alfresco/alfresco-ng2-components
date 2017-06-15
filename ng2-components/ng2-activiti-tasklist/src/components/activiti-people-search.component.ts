@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter, OnInit, AfterViewInit, TemplateRef, ContentChild } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, AfterViewInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { User } from '../models/user.model';
 import { Observable } from 'rxjs/Observable';
