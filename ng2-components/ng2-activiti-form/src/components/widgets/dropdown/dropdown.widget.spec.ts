@@ -253,6 +253,24 @@ describe('DropdownWidget', () => {
                         expect(dropDownElement.selectedOptions[0].textContent).toBe('Choose one...');
                     });
             }));
+
+            it('should be disabled when the field is readonly', async(() => {
+                dropDownWidget.field = new FormFieldModel(new FormModel({ processDefinitionId: 'fake-process-id' }), {
+                    id: 'dropdown-id',
+                    name: 'date-name',
+                    type: 'dropdown',
+                    readOnly: 'true',
+                    restUrl: 'fake-rest-url'
+                });
+
+                fixture.detectChanges();
+                fixture.whenStable()
+                    .then(() => {
+                        let dropDownElement: HTMLSelectElement = <HTMLSelectElement> element.querySelector('#dropdown-id');
+                        expect(dropDownElement).not.toBeNull();
+                        expect(dropDownElement.disabled).toBeTruthy();
+                    });
+            }));
         });
     });
 });
