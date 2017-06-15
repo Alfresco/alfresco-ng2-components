@@ -15,7 +15,18 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewChild, Output, EventEmitter, TemplateRef, OnChanges, SimpleChanges, DebugElement} from '@angular/core';
+import {
+    Component,
+    Input,
+    OnInit,
+    ViewChild,
+    Output,
+    EventEmitter,
+    TemplateRef,
+    OnChanges,
+    SimpleChanges,
+    DebugElement
+} from '@angular/core';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { TaskDetailsModel } from '../models/task-details.model';
@@ -187,8 +198,7 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
                     }
 
                     let endDate: any = res.endDate;
-                    this.readOnlyForm = !!(endDate && !isNaN(endDate.getTime()));
-
+                    this.readOnlyForm = this.readOnlyForm ? this.readOnlyForm : !!(endDate && !isNaN(endDate.getTime()));
                     if (this.taskDetails && this.taskDetails.involvedPeople) {
                         this.taskDetails.involvedPeople.forEach((user) => {
                             this.taskPeople.push(new User(user));

@@ -15,55 +15,30 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormFieldTypes } from '../core/form-field-types';
+import { TextWidget } from './text.widget';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { CoreModule } from 'ng2-alfresco-core';
+import { InputMaskDirective } from './text-mask.component';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
-import { InputMaskDirective } from './text-mask.component';
-import { TextWidgetComponent } from './text.widget';
+import { FormFieldTypes } from '../core/form-field-types';
 
-import { CoreModule } from 'ng2-alfresco-core';
-import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
-import { MaterialModule } from '../../material.module';
-import { ErrorWidgetComponent } from '../error/error.component';
-import { EcmModelService } from './../../../services/ecm-model.service';
-import { FormService } from './../../../services/form.service';
+describe('TextWidget', () => {
 
-describe('TextWidgetComponent', () => {
-
-    let widget: TextWidgetComponent;
-    let fixture: ComponentFixture<TextWidgetComponent>;
-    let element: HTMLElement;
-
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                CoreModule.forRoot(),
-                MaterialModule
-            ],
-            declarations: [
-                TextWidgetComponent,
-                ErrorWidgetComponent,
-                InputMaskDirective
-            ],
-            providers: [
-                FormService,
-                EcmModelService,
-                ActivitiAlfrescoContentService
-            ]
-        }).compileComponents();
-    }));
+    let widget: TextWidget;
+    let componentHandler;
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TextWidgetComponent);
+        widget = new TextWidget();
 
-        widget = fixture.componentInstance;
-        element = fixture.nativeElement;
+        componentHandler = jasmine.createSpyObj('componentHandler', [
+            'upgradeAllRegistered'
+        ]);
+
+        window['componentHandler'] = componentHandler;
     });
 
     describe('when template is ready', () => {
-<<<<<<< HEAD
-=======
         let textWidget: TextWidget;
         let fixture: ComponentFixture<TextWidget>;
         let element: HTMLInputElement;
@@ -88,14 +63,13 @@ describe('TextWidgetComponent', () => {
             fixture.destroy();
             TestBed.resetTestingModule();
         });
->>>>>>> Source Mapping is not working on test debugging (#1931)
 
         describe('and no mask is configured on text element', () => {
 
             let inputElement: HTMLInputElement;
 
             beforeEach(() => {
-                widget.field = new FormFieldModel(new FormModel({taskId: 'fake-task-id'}), {
+                textWidget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'text-id',
                     name: 'text-name',
                     value: '',
@@ -104,41 +78,24 @@ describe('TextWidgetComponent', () => {
                 });
 
                 fixture.detectChanges();
-                inputElement = <HTMLInputElement> element.querySelector('#text-id');
+                inputElement = <HTMLInputElement>element.querySelector('#text-id');
             });
 
             it('should raise ngModelChange event', async(() => {
                 inputElement.value = 'TEXT';
-                expect(widget.field.value).toBe('');
+                expect(textWidget.field.value).toBe('');
                 inputElement.dispatchEvent(new Event('input'));
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    expect(widget.field).not.toBeNull();
-                    expect(widget.field.value).not.toBeNull();
-                    expect(widget.field.value).toBe('TEXT');
+                    expect(textWidget.field).not.toBeNull();
+                    expect(textWidget.field.value).not.toBeNull();
+                    expect(textWidget.field.value).toBe('TEXT');
                 });
             }));
 
-        });
-
-        describe('and no mask is configured on text element', () => {
-
-            let inputElement: HTMLInputElement;
-
-            beforeEach(() => {
-                widget.field = new FormFieldModel(new FormModel({taskId: 'fake-task-id'}), {
-                    id: 'text-id',
-                    name: 'text-name',
-                    value: '',
-                    type: FormFieldTypes.TEXT,
-                    readOnly: true
-                });
-
-                fixture.detectChanges();
-                inputElement = <HTMLInputElement> element.querySelector('#text-id');
-            });
-
             it('should be disabled on readonly forms', async(() => {
+                textWidget.field.form.readOnly = true;
+
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(inputElement).toBeDefined();
@@ -146,7 +103,6 @@ describe('TextWidgetComponent', () => {
                     expect(inputElement.disabled).toBeTruthy();
                 });
             }));
-
         });
 
         describe('and mask is configured on text element', () => {
@@ -154,17 +110,17 @@ describe('TextWidgetComponent', () => {
             let inputElement: HTMLInputElement;
 
             beforeEach(() => {
-                widget.field = new FormFieldModel(new FormModel({taskId: 'fake-task-id'}), {
+                textWidget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'text-id',
                     name: 'text-name',
                     value: '',
-                    params: {inputMask: '##-##0,00%'},
+                    params: { inputMask: '##-##0,00%' },
                     type: FormFieldTypes.TEXT,
                     readOnly: false
                 });
 
                 fixture.detectChanges();
-                inputElement = <HTMLInputElement> element.querySelector('#text-id');
+                inputElement = <HTMLInputElement>element.querySelector('#text-id');
             });
 
             it('should show text widget', () => {
@@ -176,7 +132,7 @@ describe('TextWidgetComponent', () => {
                 expect(element.querySelector('#text-id')).not.toBeNull();
 
                 inputElement.value = 'F';
-                widget.field.value = 'F';
+                textWidget.field.value = 'F';
                 let event: any = new Event('keyup');
                 event.keyCode = '70';
                 inputElement.dispatchEvent(event);
@@ -184,7 +140,7 @@ describe('TextWidgetComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    inputElement = <HTMLInputElement> element.querySelector('#text-id');
+                    inputElement = <HTMLInputElement>element.querySelector('#text-id');
                     expect(inputElement.value).toBe('');
                 });
             }));
@@ -193,13 +149,13 @@ describe('TextWidgetComponent', () => {
                 expect(element.querySelector('#text-id')).not.toBeNull();
 
                 inputElement.value = 'F';
-                widget.field.value = 'F';
+                textWidget.field.value = 'F';
                 inputElement.dispatchEvent(new Event('input'));
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    inputElement = <HTMLInputElement> element.querySelector('#text-id');
+                    inputElement = <HTMLInputElement>element.querySelector('#text-id');
                     expect(inputElement.value).toBe('');
                 });
             }));
@@ -208,18 +164,14 @@ describe('TextWidgetComponent', () => {
                 expect(element.querySelector('#text-id')).not.toBeNull();
 
                 inputElement.value = '1';
-                widget.field.value = '1';
+                textWidget.field.value = '1';
                 let event: any = new Event('keyup');
                 event.keyCode = '49';
                 inputElement.dispatchEvent(event);
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-<<<<<<< HEAD
-                    let textEle: HTMLInputElement = <HTMLInputElement> element.querySelector('#text-id');
-=======
                     let textEle: HTMLInputElement = <HTMLInputElement>element.querySelector('#text-id');
->>>>>>> Source Mapping is not working on test debugging (#1931)
                     expect(textEle.value).toBe('1');
                 });
             }));
@@ -228,18 +180,14 @@ describe('TextWidgetComponent', () => {
                 expect(element.querySelector('#text-id')).not.toBeNull();
 
                 inputElement.value = '12345678';
-                widget.field.value = '12345678';
+                textWidget.field.value = '12345678';
                 let event: any = new Event('keyup');
                 event.keyCode = '49';
                 inputElement.dispatchEvent(event);
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-<<<<<<< HEAD
-                    let textEle: HTMLInputElement = <HTMLInputElement> element.querySelector('#text-id');
-=======
                     let textEle: HTMLInputElement = <HTMLInputElement>element.querySelector('#text-id');
->>>>>>> Source Mapping is not working on test debugging (#1931)
                     expect(textEle.value).toBe('12-345,67%');
                 });
             }));
@@ -250,21 +198,17 @@ describe('TextWidgetComponent', () => {
             let inputElement: HTMLInputElement;
 
             beforeEach(() => {
-                widget.field = new FormFieldModel(new FormModel({taskId: 'fake-task-id'}), {
+                textWidget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'text-id',
                     name: 'text-name',
                     value: '',
-<<<<<<< HEAD
-                    params: {existingColspan: 1, maxColspan: 2, inputMask: '#.##0,00%', inputMaskReversed: true},
-=======
                     params: { existingColspan: 1, maxColspan: 2, inputMask: '#.##0,00%', inputMaskReversed: true },
->>>>>>> Source Mapping is not working on test debugging (#1931)
                     type: FormFieldTypes.TEXT,
                     readOnly: false
                 });
 
                 fixture.detectChanges();
-                inputElement = <HTMLInputElement> element.querySelector('#text-id');
+                inputElement = <HTMLInputElement>element.querySelector('#text-id');
             });
 
             afterEach(() => {
@@ -276,21 +220,18 @@ describe('TextWidgetComponent', () => {
                 expect(element.querySelector('#text-id')).not.toBeNull();
 
                 inputElement.value = '1234';
-                widget.field.value = '1234';
+                textWidget.field.value = '1234';
                 let event: any = new Event('keyup');
                 event.keyCode = '49';
                 inputElement.dispatchEvent(event);
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-<<<<<<< HEAD
-                    let textEle: HTMLInputElement = <HTMLInputElement> element.querySelector('#text-id');
-=======
                     let textEle: HTMLInputElement = <HTMLInputElement>element.querySelector('#text-id');
->>>>>>> Source Mapping is not working on test debugging (#1931)
                     expect(textEle.value).toBe('12,34%');
                 });
             }));
         });
     });
+
 });
