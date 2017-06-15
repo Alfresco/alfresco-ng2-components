@@ -16,48 +16,32 @@
  */
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
-import { CarView } from './adf-car-view.component';
+import { CardView } from './adf-card-view.component';
+import { CardViewModel } from '../../models/card-view.model';
 import { By } from '@angular/platform-browser';
-import { Observable } from 'rxjs/Rx';
 
 describe('AdfCardView', () => {
 
-    let componentHandler: any;
-    let component: CarView;
-    let fixture: ComponentFixture<CarView>;
+    let fixture: ComponentFixture<CardView>;
+    let component: CardView;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [
-                CoreModule.forRoot()
-            ],
             declarations: [
-                CarView
+                CardView
             ],
             providers: [
             ]
         }).compileComponents();
-
-        let translateService = TestBed.get(AlfrescoTranslationService);
-        spyOn(translateService, 'addTranslationFolder').and.stub();
-        spyOn(translateService, 'get').and.callFake((key) => { return Observable.of(key); });
     }));
 
     beforeEach(() => {
-
-        fixture = TestBed.createComponent(CarView);
+        fixture = TestBed.createComponent(CardView);
         component = fixture.componentInstance;
-
-        componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered',
-            'upgradeElement'
-        ]);
-        window['componentHandler'] = componentHandler;
     });
 
     it('should render the label and value', async(() => {
-        component.properties = [{label: 'My label', value: 'My value'}];
+        component.properties = [new CardViewModel({label: 'My label', value: 'My value'});
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
@@ -74,7 +58,10 @@ describe('AdfCardView', () => {
     }));
 
     it('should render the date in the correct format', async(() => {
-        component.properties = [{label: 'My date label', value: '2017-06-14' , format: 'MMM DD YYYY'}];
+        component.properties = [new CardViewModel({
+            label: 'My date label', value: '2017-06-14',
+            format: 'MMM DD YYYY'
+        })];
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
@@ -91,7 +78,10 @@ describe('AdfCardView', () => {
     }));
 
     it('should render the default value if the value is empty', async(() => {
-        component.properties = [{label: 'My default label', default: 'default value'}];
+        component.properties = [new CardViewModel({
+            label: 'My default label',
+            default: 'default value'
+        })];
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
