@@ -104,4 +104,11 @@ export class TaskDetailsModel {
 
         return fullName.trim();
     }
+
+    getFullName(): string {
+        if (this.assignee) {
+            return this.assignee.firstName + ' ' + this.assignee.lastName;
+        }
+        return '';
+    }
 }

@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
-import { TaskDetailsModel } from '../models/task-details.model';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { AlfrescoTranslationService, LogService, CardViewModel } from 'ng2-alfresco-core';
+import { TaskDetailsModel } from '../models/index';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 
 @Component({
@@ -25,7 +25,7 @@ import { ActivitiTaskListService } from './../services/activiti-tasklist.service
     templateUrl: './activiti-task-header.component.html',
     styleUrls: ['./activiti-task-header.component.css']
 })
-export class ActivitiTaskHeader {
+export class ActivitiTaskHeader implements OnChanges {
 
     @Input()
     formName: string = null;
@@ -36,11 +36,38 @@ export class ActivitiTaskHeader {
     @Output()
     claim: EventEmitter<any> = new EventEmitter<any>();
 
+    properties: CardViewModel [];
+
     constructor(private translateService: AlfrescoTranslationService,
                 private activitiTaskService: ActivitiTaskListService,
                 private logService: LogService) {
         if (translateService) {
             translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
+        }
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        this.refreshData();
+    }
+
+    refreshData() {
+        if (this.taskDetails) {
+            this.properties = [
+                new CardViewModel({label: 'Status:', value: this.getTaskStatus(), key: 'status'}),
+                new CardViewModel({label: 'Due Date:', value: this.taskDetails.dueDate, format: 'MMM DD YYYY', key: 'dueDate', default: 'No date'}),
+                new CardViewModel({label: 'Category:', value: this.taskDetails.category, key: 'category', default: 'No category'}),
+                new CardViewModel(
+                    {
+                        label: 'Created By:',
+                        value: this.taskDetails.getFullName(),
+                        key: 'assignee',
+                        default: 'No assignee'
+                    }),
+                new CardViewModel({label: 'Created:', value: this.taskDetails.created, format: 'MMM DD YYYY', key: 'created'}),
+                new CardViewModel({label: 'Id:', value: this.taskDetails.id, key: 'id'}),
+                new CardViewModel({label: 'Description:', value: this.taskDetails.description, key: 'description', default: 'No description'}),
+                new CardViewModel({label: 'Form name:', value: this.formName, key: 'formName', default: 'No form'})
+            ];
         }
     }
 
@@ -50,6 +77,10 @@ export class ActivitiTaskHeader {
 
     isAssignedToMe(): boolean {
         return this.taskDetails.assignee ? true : false;
+    }
+
+    getTaskStatus(): string {
+        return this.taskDetails.endDate ? 'Completed' : 'Running';
     }
 
     claimTask(taskId: string) {
