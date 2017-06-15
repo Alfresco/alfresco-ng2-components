@@ -114,4 +114,8 @@ export class ActivitiPeopleSearch implements OnInit, AfterViewInit {
         let lastName = user.lastName && user.lastName !== 'null' ? user.lastName[0] : '';
         return firstName + lastName;
     }
+
+    hasUsers() {
+        return (this.users && this.users.length > 0);
+    }
 }

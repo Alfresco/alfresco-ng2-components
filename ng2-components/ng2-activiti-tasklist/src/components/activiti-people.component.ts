@@ -111,7 +111,7 @@ export class ActivitiPeople {
     }
 
     hasPeople() {
-        return this.people.length > 0;
+        return this.people && this.people.length > 0;
     }
 
     isEditMode() {

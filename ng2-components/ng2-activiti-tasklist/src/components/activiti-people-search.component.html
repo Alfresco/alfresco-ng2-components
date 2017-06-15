@@ -5,7 +5,7 @@
         <label class="mdl-textfield__label" for="userSearchText">Search user</label>
     </div>
 </div>
-<div class="search-list-container" *ngIf="users?.length > 0">
+<div class="search-list-container" *ngIf="hasUsers()">
     <activiti-people-list
     [users]="users"
     (clickRow)="onRowClick($event)">
