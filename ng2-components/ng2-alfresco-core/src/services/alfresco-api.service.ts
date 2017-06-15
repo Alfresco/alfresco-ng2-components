@@ -17,7 +17,6 @@
 
 import { Injectable } from '@angular/core';
 import { AlfrescoApi } from  'alfresco-js-api';
-import * as alfrescoApi from  'alfresco-js-api';
 import { AlfrescoSettingsService } from './alfresco-settings.service';
 import { StorageService } from './storage.service';
 
@@ -79,7 +78,7 @@ export class AlfrescoApiService {
     }
 
     private init() {
-        this.alfrescoApi = <AlfrescoApi>new alfrescoApi({
+        this.alfrescoApi = new AlfrescoApi({
             provider: this.provider,
             ticketEcm: this.ticketEcm,
             ticketBpm: this.ticketBpm,
