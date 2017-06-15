@@ -102,6 +102,9 @@ module.exports = {
                 to: 'resources/i18n'
             },
             {
+                from: 'app.config.json'
+            },
+            {
                 from: 'favicon-96x96.png'
             },
             {
