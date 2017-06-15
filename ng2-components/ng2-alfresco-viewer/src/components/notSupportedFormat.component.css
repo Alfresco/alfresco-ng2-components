@@ -1,23 +1,25 @@
 
+.viewer-margin {
+    margin: auto !important;
+    padding: 16px;
+}
+
 .viewer-download-text  {
     text-align: center;
     word-wrap: break-word;
 }
 
-.viewer-margin-cloud-download{
-    margin-right: 20px;
-}
-
-.viewer-margin {
-    margin: auto !important;
-}
-
-.center-element {
+.button-container {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
 }
 
-.full_width{
-    width :95% !important;
+.button-container button {
+    line-height: 40px;
+}
+
+.viewer-button-icon {
+    margin-right: 20px;
+    margin-top: -5px;
 }
