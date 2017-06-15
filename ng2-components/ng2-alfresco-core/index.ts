@@ -52,17 +52,21 @@ import { DataColumnListComponent } from './src/components/data-column/data-colum
 import { MATERIAL_DESIGN_DIRECTIVES } from './src/components/material/index';
 import { CONTEXT_MENU_PROVIDERS, CONTEXT_MENU_DIRECTIVES } from './src/components/context-menu/index';
 import { COLLAPSABLE_DIRECTIVES } from './src/components/collapsable/index';
+import { VIEW_DIRECTIVES } from './src/components/view/index';
 
 export * from './src/services/index';
 export * from './src/components/index';
 export * from './src/components/data-column/data-column.component';
 export * from './src/components/data-column/data-column-list.component';
 export * from './src/components/collapsable/index';
+export * from './src/components/view/index';
 export * from './src/directives/upload.directive';
 export * from './src/utils/index';
 export * from './src/events/base.event';
 export * from './src/events/base-ui.event';
 export * from './src/events/folder-created.event';
+
+export * from './src/models/index';
 
 export const ALFRESCO_CORE_PROVIDERS: any[] = [
     NotificationService,
@@ -107,6 +111,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         ...MATERIAL_DESIGN_DIRECTIVES,
         ...CONTEXT_MENU_DIRECTIVES,
         ...COLLAPSABLE_DIRECTIVES,
+        ...VIEW_DIRECTIVES,
         UploadDirective,
         DataColumnComponent,
         DataColumnListComponent,
@@ -127,6 +132,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         ...MATERIAL_DESIGN_DIRECTIVES,
         ...CONTEXT_MENU_DIRECTIVES,
         ...COLLAPSABLE_DIRECTIVES,
+        ...VIEW_DIRECTIVES,
         UploadDirective,
         DataColumnComponent,
         DataColumnListComponent,

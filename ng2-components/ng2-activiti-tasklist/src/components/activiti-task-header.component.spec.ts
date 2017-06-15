@@ -64,57 +64,64 @@ describe('ActivitiTaskHeader', () => {
         window['componentHandler'] = componentHandler;
     });
 
-    it('should render empty component if no form details provided', () => {
+    it('should render empty component if no task details provided', () => {
         component.taskDetails = undefined;
         fixture.detectChanges();
         expect(fixture.debugElement.children.length).toBe(0);
     });
 
     it('should display assignee', () => {
+        component.ngOnChanges({});
         fixture.detectChanges();
-        let formNameEl = fixture.debugElement.query(By.css('[data-automation-id="header-assignee"] .activiti-task-header__value'));
+        let formNameEl = fixture.debugElement.query(By.css('[data-automation-id="header-assignee"] .adf-header__value'));
         expect(formNameEl.nativeElement.innerText).toBe('Wilbur Adams');
     });
 
     it('should display placeholder if no assignee', () => {
         component.taskDetails.assignee = null;
+        component.ngOnChanges({});
         fixture.detectChanges();
-        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-assignee"] .activiti-task-header__value'));
-        expect(valueEl.nativeElement.innerText).toBe('TASK_DETAILS.ASSIGNEE.NONE');
+        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-assignee"] .adf-header__value'));
+        expect(valueEl.nativeElement.innerText).toBe('No assignee');
     });
 
     it('should display the claim button if no assignee', () => {
         component.taskDetails.assignee = null;
+        component.ngOnChanges({});
         fixture.detectChanges();
         let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
         expect(valueEl.nativeElement.innerText).toBe('TASK_DETAILS.BUTTON.CLAIM');
     });
 
     it('should display due date', () => {
-        component.taskDetails.dueDate = '2016-11-03T15:25:42.749+0000';
+        component.taskDetails.dueDate = '2016-11-03';
+        component.ngOnChanges({});
         fixture.detectChanges();
-        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-due-date"] .activiti-task-header__value'));
-        expect(valueEl.nativeElement.innerText).toBe('2016-11-03T15:25:42.749+0000');
+        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-header__value'));
+        expect(valueEl.nativeElement.innerText).toBe('Nov 03 2016');
     });
 
     it('should display placeholder if no due date', () => {
         component.taskDetails.dueDate = null;
+        component.ngOnChanges({});
         fixture.detectChanges();
-        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-due-date"] .activiti-task-header__value'));
-        expect(valueEl.nativeElement.innerText).toBe('TASK_DETAILS.DUE.NONE');
+        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-header__value'));
+        expect(valueEl.nativeElement.innerText).toBe('No date');
     });
 
     it('should display form name', () => {
         component.formName = 'test form';
+        component.ngOnChanges({});
         fixture.detectChanges();
-        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-form-name"] .activiti-task-header__value'));
+        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-formName"] .adf-header__value'));
         expect(valueEl.nativeElement.innerText).toBe('test form');
     });
 
     it('should not display form name if no form name provided', () => {
+        component.ngOnChanges({});
         fixture.detectChanges();
-        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-form-name"] .activiti-task-header__value'));
-        expect(valueEl).toBeNull();
+        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-formName"] .adf-header__value'));
+        expect(valueEl.nativeElement.innerText).toBe('No form');
     });
 
 });

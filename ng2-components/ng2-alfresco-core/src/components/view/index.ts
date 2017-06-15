@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-export * from './context-menu/index';
-export * from './material/index';
-export * from './collapsable/index';
-export * from './view/index';
+import { CardView } from './adf-card-view.component';
+
+export const VIEW_DIRECTIVES: [any] = [
+    CardView
+];
