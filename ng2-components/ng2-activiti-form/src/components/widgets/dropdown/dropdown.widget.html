@@ -4,6 +4,7 @@
     <select class="dropdown-widget__select"
             [attr.id]="field.id"
             [(ngModel)]="field.value"
+            [disabled]="field.readOnly"
             (ngModelChange)="checkVisibility(field)">
         <option *ngFor="let opt of field.options" [value]="getOptionValue(opt, field.value)" [id]="opt.id">{{opt.name}}</option>
     </select>
