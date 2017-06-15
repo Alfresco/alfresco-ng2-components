@@ -29,8 +29,8 @@ declare var document: any;
 export class AppComponent {
     searchTerm: string = '';
 
-    ecmHost: string = `http://${window.location.hostname}:${window.location.port}/ecm`;
-    bpmHost: string = `http://${window.location.hostname}:${window.location.port}/bpm`;
+    ecmHost: string = `http://${window.location.hostname}` + (window.location.port ? `:${window.location.port}` : '') + `/ecm`;
+    bpmHost: string = `http://${window.location.hostname}` + (window.location.port ? `:${window.location.port}` : '') + `/bpm`;
 
     constructor(private authService: AlfrescoAuthenticationService,
                 private router: Router,
