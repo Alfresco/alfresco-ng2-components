@@ -143,7 +143,7 @@ If you want completely enable CORS call on your Content service and Process serv
 
 * [Enable Cross Origin Resource Sharing (CORS) in Alfresco Process Services](http://docs.alfresco.com/process-services1.6/topics/enabling-cors.html)
 
-* [Enable Cross Origin Resource Sharing (CORS) in Alfresco Content Services
+* Enable Cross Origin Resource Sharing (CORS) in Alfresco Content Services 
 
 This is the easiest way, add the [enablecors](https://artifacts.alfresco.com/nexus/service/local/repositories/releases/content/org/alfresco/enablecors/1.0/enablecors-1.0.jar) 
 platform module JAR to the *$ALF_INSTALL_DIR/modules/platform* directory and restart the server.
