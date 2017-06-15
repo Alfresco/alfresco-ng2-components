@@ -245,6 +245,10 @@ api.nodes.addNode('-root-', body, {});
 
 The `AppConfigService` service provides support for loading and accessing global application configuration settings that you store on the server side in the form of a JSON file.
 
+> You may need this service when deploying your ADF-based application to production servers. 
+> There can be more than one server running web apps with different settings, like different addresses for Alfreco Content/Process services.
+> Or there is a need to change global settings for all the clients.
+
 The service is already pre-configured to look for the "app.config.json" file in the application root address.
 
 That allows deploying ADF-based web applications to multiple servers together with different settings files, for example having development, staging or production environments.
@@ -262,6 +266,9 @@ Example of the default settings file content:
     }
 }
 ```
+
+Please note that settings above are default ones coming with the server. 
+You can override the values in your custom `app.config.json` file if needed. 
 
 You can also change the path or name of the configuration file when importing the CoreModule in your main application.
 
@@ -301,7 +308,8 @@ export class AppComponent {
 }
 ```
 
-
+You custom components can also benefit from the `AppConfigService`,
+you can put an unlimited number of settings and optionally a nested JSON hierarchy.
 
 ## Notification Service
 

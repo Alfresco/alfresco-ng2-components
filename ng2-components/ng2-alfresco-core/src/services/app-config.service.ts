@@ -22,7 +22,13 @@ import { ObjectUtils } from '../utils/object-utils';
 @Injectable()
 export class AppConfigService {
 
-    private config: any = {};
+    private config: any = {
+        'ecmHost': 'http://localhost:3000/ecm',
+        'bpmHost': 'http://localhost:3000/bpm',
+        'application': {
+            'name': 'Alfresco'
+        }
+    };
 
     constructor(private http: Http) {}
 
@@ -35,7 +41,7 @@ export class AppConfigService {
         return new Promise((resolve, reject) => {
             this.http.get(resource).subscribe(
                 data => {
-                    this.config = data.json() || {};
+                    this.config = Object.assign({}, this.config, data.json() || {});
                     resolve(this.config);
                 },
                 (err) => {
