@@ -1,34 +1,38 @@
-<span class="activiti-label mdl-badge" id="people-title"
-      [attr.data-badge]="people?.length">{{ 'TASK_DETAILS.LABELS.PEOPLE' | translate }}</span>
-<div *ngIf="!readOnly" id="addPeople" (click)="showDialog()" class="icon material-icons people__icon">add</div>
-<div *ngIf="!readOnly" class="mdl-tooltip" data-mdl-for="addPeople">
-    Add a person
-</div>
-<div class="menu-container" *ngIf="people?.length > 0">
-    <activiti-people-list
-        [users]="people"
-        [actions]="true"
-        (clickAction)="onClickAction($event)">
-        <data-columns>
-            <data-column key="email" class="full-width">
-                <ng-template let-entry="$implicit">
-                    <div class="people-full-name">{{ entry.row.obj.email }}</div>
-                </ng-template>
-            </data-column>
-        </data-columns>
-    </activiti-people-list>
-</div>
-<div *ngIf="people?.length === 0" id="no-people-label">
-    {{ 'TASK_DETAILS.PEOPLE.NONE' | translate }}
-</div>
-
-<dialog class="mdl-dialog" id="add-people-dialog" #dialog>
-    <h4 class="mdl-dialog__title" id="add-people-dialog-title">Involve User</h4>
-    <div class="mdl-dialog__content add-people-dialog__content">
-        <activiti-people-search (searchPeople)="searchUser($event)"
-                                (success)="involveUser($event)"
-                                [results]="peopleSearch$"
-                                #activitipeoplesearch>
+<div class="mdl-grid mdl-shadow--2dp assignment-top-container">
+    <div class="assignment-header">
+        <div class="assigment-count">
+            {{ 'TASK_DETAILS.LABELS.PEOPLE' | translate }} {{ ' (' + people.length + ')' }}
+        </div>
+        <div *ngIf="isEditMode()" class="add-people" (click)="onAddAssignement()">
+            <i class="material-icons">person_add</i>
+        </div>
+    </div>
+    <div class="assignment-container" *ngIf="showAssignment">
+        <activiti-people-search
+        (searchPeople)="searchUser($event)"
+        (success)="involveUser($event)"
+        [results]="peopleSearch$">
         </activiti-people-search>
     </div>
-</dialog>
+    <div class="assignment-list-container" *ngIf="hasPeople()">
+        <activiti-people-list
+        [users]="people"
+        [actions]="isEditMode()"
+        (clickAction)="onClickAction($event)">
+            <data-columns>
+                <data-column key="firstName">
+                    <template let-entry="$implicit">
+                        <div class="people-pic">{{getShortName(entry.row.obj)}}</div>
+                    </template>
+                </data-column>
+                <data-column key="email" class="full-width">
+                    <template let-entry="$implicit">
+                        <div class="people-full-name">{{ getDisplayUser(entry.row.obj) }}</div>
+                        <div class="people-email">{{ entry.row.obj.email }}</div>
+                        <div class="people-edit-label">{{ 'can edit' | translate }}</div>
+                    </template>
+                </data-column>
+            </data-columns>
+        </activiti-people-list>
+    </div>
+</div>

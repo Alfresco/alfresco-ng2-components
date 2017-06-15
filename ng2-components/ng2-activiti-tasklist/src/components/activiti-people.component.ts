@@ -22,7 +22,6 @@ import { User, UserEventModel } from '../models/index';
 import { ActivitiPeopleService } from '../services/activiti-people.service';
 
 declare let dialogPolyfill: any;
-declare var require: any;
 
 @Component({
     selector: 'activiti-people',
@@ -43,11 +42,7 @@ export class ActivitiPeople {
     @Input()
     readOnly: boolean = false;
 
-    @ViewChild('dialog')
-    dialog: any;
-
-    @ViewChild('activitipeoplesearch')
-    activitipeoplesearch: any;
+    showAssignment: boolean = false;
 
     private peopleSearchObserver: Observer<User[]>;
     peopleSearch$: Observable<User[]>;
@@ -61,26 +56,9 @@ export class ActivitiPeople {
                 private peopleService: ActivitiPeopleService,
                 private logService: LogService) {
         if (translateService) {
-            translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
+            translateService.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
         }
         this.peopleSearch$ = new Observable<User[]>(observer => this.peopleSearchObserver = observer).share();
-    }
-
-    public showDialog() {
-        if (!this.dialog.nativeElement.showModal) {
-            dialogPolyfill.registerDialog(this.dialog.nativeElement);
-        }
-        if (this.dialog) {
-            this.dialog.nativeElement.showModal();
-        }
-    }
-
-    public closeDialog() {
-        if (this.dialog) {
-            this.dialog.nativeElement.close();
-            this.peopleSearchObserver.next([]);
-            this.activitipeoplesearch.searchUser.reset();
-        }
     }
 
     searchUser(searchedWord: string) {
@@ -91,7 +69,10 @@ export class ActivitiPeople {
     }
 
     involveUser(user: User) {
-        this.closeDialog();
+        this.showAssignment = false;
+        if (user === undefined || user === null) {
+            return;
+        }
         this.peopleService.involveUserWithTask(this.taskId, user.id.toString())
             .subscribe(() => {
                 this.people = [...this.people, user];
@@ -113,10 +94,28 @@ export class ActivitiPeople {
         return firstName + ' ' + lastName;
     }
 
+    getShortName(user: User): string {
+        let firstName = user.firstName && user.firstName !== 'null' ? user.firstName[0] : '';
+        let lastName = user.lastName && user.lastName !== 'null' ? user.lastName[0] : '';
+        return firstName + lastName;
+    }
+
+    onAddAssignement() {
+        this.showAssignment = true;
+    }
+
     onClickAction(event: UserEventModel) {
         if (event.type === 'remove') {
             this.removeInvolvedUser(event.value);
         }
+    }
+
+    hasPeople() {
+        return this.people.length > 0;
+    }
+
+    isEditMode() {
+        return !this.readOnly;
     }
 
 }
