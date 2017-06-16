@@ -15,42 +15,27 @@
  * limitations under the License.
  */
 
-import { Inject, Injectable, OpaqueToken } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import { AlfrescoTranslateLoader } from './translate-loader.service';
-
-export const TRANSLATION_PROVIDER = new OpaqueToken('Injection token for translation providers.');
-
-export interface TranslationProvider {
-    name: string;
-    source: string;
-}
+import { TranslateService } from '@ngx-translate/core';
+import { AlfrescoTranslateLoader } from './alfresco-translate-loader.service';
 
 @Injectable()
-export class TranslationService {
+export class AlfrescoTranslationService {
     defaultLang: string = 'en';
     userLang: string = 'en';
     customLoader: AlfrescoTranslateLoader;
 
-    constructor(public translate: TranslateService,
-                @Inject(TRANSLATION_PROVIDER) providers: TranslationProvider[]) {
+    constructor(public translate: TranslateService) {
         this.userLang = translate.getBrowserLang() || this.defaultLang;
         translate.setDefaultLang(this.defaultLang);
-
         this.customLoader = <AlfrescoTranslateLoader> this.translate.currentLoader;
         this.use(this.userLang);
-
-        if (providers && providers.length > 0) {
-            for (let provider of providers) {
-                this.addTranslationFolder(provider.name, provider.source);
-            }
-        }
     }
 
     addTranslationFolder(name: string = '', path: string = '') {
-        if (!this.customLoader.providerRegistered(name)) {
-            this.customLoader.registerProvider(name, path);
+        if (!this.customLoader.existComponent(name)) {
+            this.customLoader.addComponentList(name, path);
             if (this.userLang !== this.defaultLang) {
                 this.translate.getTranslation(this.defaultLang).subscribe(() => {
                     this.translate.getTranslation(this.userLang).subscribe(

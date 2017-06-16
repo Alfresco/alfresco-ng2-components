@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { Injector } from '@angular/core';
-import { getTestBed, TestBed } from '@angular/core/testing';
-import { HttpModule, Response, ResponseOptions, XHRBackend } from '@angular/http';
+import { ResponseOptions, Response, XHRBackend, HttpModule } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import {getTestBed, TestBed} from '@angular/core/testing';
 
+import { AlfrescoTranslateLoader } from './alfresco-translate-loader.service';
+import { AlfrescoTranslationService } from './alfresco-translation.service';
 import { LogService } from './log.service';
-import { AlfrescoTranslateLoader } from './translate-loader.service';
-import { TRANSLATION_PROVIDER, TranslationService } from './translation.service';
 
 let componentJson1 = ' {"TEST": "This is a test", "TEST2": "This is another test"} ' ;
 
@@ -34,9 +34,9 @@ const mockBackendResponse = (connection: MockConnection, response: string) => {
 describe('TranslateLoader', () => {
     let injector: Injector;
     let backend: any;
-    let translationService: TranslationService;
+    let alfrescoTranslationService: AlfrescoTranslationService;
     let connection: MockConnection; // this will be set when a new connection is emitted from the backend.
-    let customLoader: AlfrescoTranslateLoader;
+    let customLoader;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -50,39 +50,31 @@ describe('TranslateLoader', () => {
                 })
             ],
             providers: [
-                TranslationService,
+                AlfrescoTranslationService,
                 LogService,
-                { provide: XHRBackend, useClass: MockBackend },
-                {
-                    provide: TRANSLATION_PROVIDER,
-                    multi: true,
-                    useValue: {
-                        name: 'ng2-alfresco-core',
-                        source: 'assets/ng2-alfresco-core'
-                    }
-                }
+                {provide: XHRBackend, useClass: MockBackend}
             ]
         });
         injector = getTestBed();
         backend = injector.get(XHRBackend);
-        translationService = injector.get(TranslationService);
+        alfrescoTranslationService = injector.get(AlfrescoTranslationService);
         backend.connections.subscribe((c: MockConnection) => connection = c);
-        customLoader = <AlfrescoTranslateLoader> translationService.translate.currentLoader;
+        customLoader = alfrescoTranslationService.translate.currentLoader;
     });
 
     it('should be able to provide any TranslateLoader', () => {
-        expect(translationService).toBeDefined();
-        expect(translationService.translate.currentLoader).toBeDefined();
-        expect(translationService.translate.currentLoader instanceof AlfrescoTranslateLoader).toBeTruthy();
+        expect(alfrescoTranslationService).toBeDefined();
+        expect(alfrescoTranslationService.translate.currentLoader).toBeDefined();
+        expect(alfrescoTranslationService.translate.currentLoader instanceof AlfrescoTranslateLoader).toBeTruthy();
     });
 
     it('should add the component to the list', () => {
-        customLoader.registerProvider('login', 'path/login');
-        expect(customLoader.providerRegistered('login')).toBeTruthy();
+        customLoader.addComponentList('login', 'path/login');
+        expect(customLoader.existComponent('login')).toBeTruthy();
     });
 
     it('should return the Json translation ', () => {
-        customLoader.registerProvider('login', 'path/login');
+        customLoader.addComponentList('login', 'path/login');
         customLoader.getTranslation('en').subscribe(
             (response) => {
                 expect(response).toBeDefined();

@@ -16,9 +16,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { TranslateLoader } from '@ngx-translate/core';
+import { Response, Http } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
+import { TranslateLoader } from '@ngx-translate/core';
 import { ComponentTranslationModel } from '../models/component.model';
 import { LogService } from './log.service';
 
@@ -27,24 +27,19 @@ export class AlfrescoTranslateLoader implements TranslateLoader {
 
     private prefix: string = 'i18n';
     private suffix: string = '.json';
-    private providers: ComponentTranslationModel[] = [];
+    private _componentList: ComponentTranslationModel[] = [];
     private queue: string [][] = [];
 
     constructor(private http: Http,
                 private logService: LogService) {
     }
 
-    registerProvider(name: string, path: string) {
-        let registered = this.providers.find(provider => provider.name === name);
-        if (registered) {
-            registered.path = path;
-        } else {
-            this.providers.push(new ComponentTranslationModel({name: name, path: path}));
-        }
+    addComponentList(nameInput: string, pathInput: string) {
+        this._componentList.push(new ComponentTranslationModel({name: nameInput, path: pathInput}));
     }
 
-    providerRegistered(name: string): boolean {
-        return this.providers.find(x => x.name === name) ? true : false;
+    existComponent(name: string): boolean {
+        return this._componentList.find(x => x.name === name) ? true : false;
     }
 
     getComponentToFetch(lang: string) {
@@ -52,7 +47,7 @@ export class AlfrescoTranslateLoader implements TranslateLoader {
         if (!this.queue[lang]) {
             this.queue[lang] = [];
         }
-        this.providers.forEach((component) => {
+        this._componentList.forEach((component) => {
             if (!this.isComponentInQueue(lang, component.name)) {
                 this.queue[lang].push(component.name);
                 observableBatch.push(this.http.get(`${component.path}/${this.prefix}/${lang}${this.suffix}`)
@@ -80,7 +75,7 @@ export class AlfrescoTranslateLoader implements TranslateLoader {
 
     getFullTranslationJSON(lang: string) {
         let fullTranslation: string = '';
-        let cloneList = this.providers.slice(0);
+        let cloneList = this._componentList.slice(0);
         cloneList.reverse().forEach((component) => {
             if (component.json && component.json[lang]) {
                 fullTranslation += JSON.stringify(component.json[lang]);
