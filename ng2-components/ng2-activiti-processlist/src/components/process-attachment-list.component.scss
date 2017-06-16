@@ -1,20 +1,12 @@
-adf-datatable /deep/ .column-header {
-    color: #232323;
-    font-size: 15px;
+.document-list_empty_template {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
-adf-datatable /deep/ .data-cell {
-    cursor: pointer !important;
-}
-
-.adf-attachment-list-loading-margin {
-    margin-left: calc((100% - 100px) / 2);
-    margin-right: calc((100% - 100px) / 2);
-}
-
-adf-empty-list-header /deep/ div {
+.document-list__this-space-is-empty {
     height: 32px;
-    opacity: 0.26 !important;
+    opacity: 0.26;
     font-family: Muli, Helvetica, Arial, sans-serif;
     font-size: 24px;
     line-height: 1.33;
@@ -22,7 +14,7 @@ adf-empty-list-header /deep/ div {
     color: #000000;
 }
 
-.adf-empty-list-drag_drop {
+.document-list__drag-drop {
     height: 56px;
     opacity: 0.54;
     font-family: Muli, Helvetica, Arial, sans-serif;
@@ -30,10 +22,10 @@ adf-empty-list-header /deep/ div {
     line-height: 1;
     letter-spacing: -2px;
     color: #000000;
-    margin-top: 40px !important;
+    margin-top: 40px;
 }
 
-.adf-empty-list__any-files-here-to-add {
+.document-list__any-files-here-to-add {
     height: 24px;
     opacity: 0.54;
     font-family: Muli, Helvetica, Arial, sans-serif;
@@ -44,9 +36,26 @@ adf-empty-list-header /deep/ div {
     margin-top: 17px;
 }
 
-.adf-empty-list__empty_doc_lib {
+.document-list__empty_doc_lib {
     width: 565px;
     height: 161px;
     object-fit: contain;
     margin-top: 17px;
+}
+
+.adf-document-list-loading-margin {
+    margin: auto;
+}
+
+.adf-document-list-loading-container {
+    min-height: 300px;
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -webkit-flex; /* NEW - Chrome */
+    display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    -webkit-box-flex-direction: row;
+    -moz-box-flex-direction: row;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    height: 100%;
 }
