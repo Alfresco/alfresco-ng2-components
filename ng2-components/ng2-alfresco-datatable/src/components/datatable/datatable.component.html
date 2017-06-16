@@ -7,6 +7,7 @@
         <th *ngIf="actions && actionsPosition === 'left'" class="alfresco-datatable__actions-header">
             <span class="sr-only">Actions</span>
         </th>
+
         <!-- Columns -->
         <th *ngIf="multiselect">
             <md-checkbox [checked]="isSelectAllChecked" (change)="onSelectAllClick($event)"></md-checkbox>
@@ -28,6 +29,7 @@
     </tr>
     </thead>
     <tbody>
+    <ng-container *ngIf="!loading">
 
     <ng-container *ngIf="!loading">
         <tr *ngFor="let row of data.getRows(); let idx = index" tabindex="0"
