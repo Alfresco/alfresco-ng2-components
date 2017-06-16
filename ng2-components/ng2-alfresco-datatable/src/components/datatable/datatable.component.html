@@ -1,98 +1,93 @@
 <table
     *ngIf="data"
-    class="full-width adf-data-table">
-
-    <thead *ngIf="showHeader">
+    class="mdl-data-table mdl-js-data-table full-width mdl-data-table-fix-firefox">
+    <thead>
     <tr>
         <!-- Actions (left) -->
-        <th *ngIf="actions && actionsPosition === 'left'" class="actions-column">
+        <th *ngIf="actions && actionsPosition === 'left'" class="alfresco-datatable__actions-header">
             <span class="sr-only">Actions</span>
         </th>
+
         <!-- Columns -->
         <th *ngIf="multiselect">
             <md-checkbox [checked]="isSelectAllChecked" (change)="onSelectAllClick($event)"></md-checkbox>
         </th>
-        <th class="adf-data-table-cell--{{col.type || 'text'}} {{col.cssClass}}"
+        <th class="mdl-data-table__cell--non-numeric non-selectable {{col.cssClass}}"
             *ngFor="let col of data.getColumns()"
-            [class.sortable]="col.sortable"
             [attr.data-automation-id]="'auto_id_' + col.key"
-            [class.adf-data-table__header--sorted-asc]="isColumnSorted(col, 'asc')"
-            [class.adf-data-table__header--sorted-desc]="isColumnSorted(col, 'desc')"
-            (click)="onColumnHeaderClick(col)"
-            (keyup.enter)="onColumnHeaderClick(col)"
-            role="button"
-            tabindex="0"
-            title="{{col.title}}">
+            [class.column-header]="col.title"
+            [class.mdl-data-table__header--sorted-ascending]="isColumnSorted(col, 'asc')"
+            [class.mdl-data-table__header--sorted-descending]="isColumnSorted(col, 'desc')"
+            (click)="onColumnHeaderClick(col)">
             <span *ngIf="col.srTitle" class="sr-only">{{col.srTitle}}</span>
             <span *ngIf="col.title">{{col.title}}</span>
         </th>
         <!-- Actions (right) -->
-        <th *ngIf="actions && actionsPosition === 'right'" class="actions-column">
+        <th *ngIf="actions && actionsPosition === 'right'" class="alfresco-datatable__actions-header">
             <span class="sr-only">Actions</span>
         </th>
     </tr>
     </thead>
-
     <tbody>
     <ng-container *ngIf="!loading">
+
+    <ng-container *ngIf="!loading">
         <tr *ngFor="let row of data.getRows(); let idx = index" tabindex="0"
-            [class.is-selected]="row.isSelected"
+            class="alfresco-datatable__row"
+            [class.alfresco-datatable__row--selected]="row.isSelected"
             [adf-upload]="allowDropFiles && rowAllowsDrop(row)" [adf-upload-data]="row"
             [ngStyle]="rowStyle"
-            [ngClass]="getRowStyle(row)">
+            [ngClass]="rowStyleClass">
 
             <!-- Actions (left) -->
-            <td *ngIf="actions && actionsPosition === 'left'">
-                <button md-icon-button [mdMenuTriggerFor]="menu"
-                    [attr.data-automation-id]="'action_menu_' + idx">
-                    <md-icon>more_vert</md-icon>
+            <td *ngIf="actions && actionsPosition === 'left'" class="alfresco-datatable__actions-cell">
+                <button [id]="'action_menu_' + idx" alfresco-mdl-button class="mdl-button--icon"
+                        [attr.data-automation-id]="actions_menu">
+                    <i class="material-icons">more_vert</i>
                 </button>
-                <md-menu #menu="mdMenu">
-                    <button md-menu-item *ngFor="let action of getRowActions(row)"
+                <ul alfresco-mdl-menu class="mdl-menu--bottom-left"
+                    [attr.for]="'action_menu_' + idx">
+                    <li class="mdl-menu__item" [attr.disabled]="action.disabled"
                         [attr.data-automation-id]="action.title"
-                        [disabled]="action.disabled"
+                        *ngFor="let action of getRowActions(row)"
                         (click)="onExecuteRowAction(row, action)">
-                        <md-icon *ngIf="action.icon">{{ action.icon }}</md-icon>
-                        <span>{{ action.title }}</span>
-                    </button>
-                </md-menu>
+                        {{action.title}}
+                    </li>
+                </ul>
             </td>
 
             <td *ngIf="multiselect">
-                <md-checkbox
-                    [checked]="row.isSelected"
-                    (change)="onCheckboxChange(row, $event)">
-                </md-checkbox>
+                <md-checkbox [(ngModel)]="row.isSelected"></md-checkbox>
             </td>
             <td *ngFor="let col of data.getColumns()"
-                class="adf-data-table-cell adf-data-table-cell--{{col.type || 'text'}} {{col.cssClass}}"
+                class="mdl-data-table__cell--non-numeric non-selectable data-cell {{col.cssClass}}"
                 (click)="onRowClick(row, $event)"
-                (keyup.enter)="onRowClick(row, $event)"
                 [context-menu]="getContextMenuActions(row, col)"
-                [context-menu-enabled]="contextMenu"
-                tabindex="0"
-                role="button">
+                [context-menu-enabled]="contextMenu">
                 <div *ngIf="!col.template" class="cell-container">
                     <ng-container [ngSwitch]="col.type">
                         <div *ngSwitchCase="'image'" class="cell-value">
-                            <i *ngIf="isIconValue(row, col)" class="material-icons">{{ asIconValue(row, col) }}</i>
+                            <i *ngIf="isIconValue(row, col)" class="material-icons icon-cell">{{asIconValue(row,
+                                col)}}</i>
                             <img *ngIf="!isIconValue(row, col)"
+                                 class="image-cell"
                                  alt="{{ iconAltTextKey(data.getValue(row, col)) | translate }}"
                                  src="{{ data.getValue(row, col) }}"
                                  (error)="onImageLoadingError($event)">
                         </div>
                         <div *ngSwitchCase="'icon'" class="cell-value">
-                            <img alt="{{ iconAltTextKey(data.getValue(row, col)) | translate }}"
+                            <img class="image-cell"
+                                 alt="{{ iconAltTextKey(data.getValue(row, col)) | translate }}"
                                  src="{{ data.getValue(row, col) }}"
                                  (error)="onImageLoadingError($event)">
                         </div>
                         <div *ngSwitchCase="'date'" class="cell-value"
                              [attr.data-automation-id]="'date_' + data.getValue(row, col)">
-                            <adf-datatable-cell [data]="data" [column]="col" [row]="row"></adf-datatable-cell>
+                            <alfresco-datatable-cell [data]="data" [column]="col" [row]="row"></alfresco-datatable-cell>
                         </div>
                         <div *ngSwitchCase="'text'" class="cell-value"
                              [attr.data-automation-id]="'text_' + data.getValue(row, col)">
-                            <adf-datatable-cell [data]="data" [column]="col" [row]="row"></adf-datatable-cell>
+                            <alfresco-datatable-cell [data]="data" [column]="col" [row]="row"></alfresco-datatable-cell>
                         </div>
                     <span *ngSwitchDefault class="cell-value">
                     <!-- empty cell for unknown column type -->
@@ -109,35 +104,34 @@
 
             <!-- Actions (right) -->
             <td *ngIf="actions && actionsPosition === 'right'" class="alfresco-datatable__actions-cell">
-                <button md-icon-button [mdMenuTriggerFor]="menu"
-                    [attr.data-automation-id]="'action_menu_' + idx">
-                    <md-icon>more_vert</md-icon>
+                <button [id]="'action_menu_' + idx" alfresco-mdl-button class="mdl-button--icon"
+                        [attr.data-automation-id]="actions_menu">
+                    <i class="material-icons">more_vert</i>
                 </button>
-                <md-menu #menu="mdMenu">
-                    <button md-menu-item *ngFor="let action of getRowActions(row)"
+                <ul alfresco-mdl-menu class="mdl-menu--bottom-right"
+                    [attr.for]="'action_menu_' + idx">
+                    <li class="mdl-menu__item" [attr.disabled]="action.disabled || undefined"
                         [attr.data-automation-id]="action.title"
-                        [disabled]="action.disabled"
+                        *ngFor="let action of getRowActions(row)"
                         (click)="onExecuteRowAction(row, action)">
-                        <md-icon *ngIf="action.icon">{{ action.icon }}</md-icon>
-                        <span>{{ action.title }}</span>
-                    </button>
-                </md-menu>
+                        {{action.title}}
+                    </li>
+                </ul>
             </td>
 
         </tr>
         <tr *ngIf="data.getRows().length === 0">
-            <td class="adf-no-content-container"
+            <td class="mdl-data-table__cell--non-numeric adf-no-content-container"
                 [attr.colspan]="1 + data.getColumns().length">
                 <ng-template *ngIf="noContentTemplate"
                              ngFor [ngForOf]="[data]"
                              [ngForTemplate]="noContentTemplate">
                 </ng-template>
-                <ng-content select="adf-empty-list"></ng-content>
             </td>
         </tr>
     </ng-container>
     <tr *ngIf="loading">
-        <td class="adf-loading-content-container"
+        <td class="mdl-data-table__cell--non-numeric adf-loading-content-container"
             [attr.colspan]="1 + data.getColumns().length">
             <ng-template *ngIf="loadingTemplate"
                          ngFor [ngForOf]="[data]"
