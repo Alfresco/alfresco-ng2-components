@@ -1,5 +1,38 @@
 # DataTable Component
 
+<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
+
+<!-- toc -->
+
+  * [Prerequisites](#prerequisites)
+  * [Install](#install)
+  * [Basic usage](#basic-usage)
+    + [DataTable Properties](#datatable-properties)
+    + [DataColumn Properties](#datacolumn-properties)
+    + [DataTable Events](#datatable-events)
+    + [DataTable DOM Events](#datatable-dom-events)
+    + [Empty content template](#empty-content-template)
+    + [Loading content template](#loading-content-template)
+      - [Column Templates](#column-templates)
+      - [rowClick event](#rowclick-event)
+      - [rowDblClick event](#rowdblclick-event)
+      - [showRowContextMenu event](#showrowcontextmenu-event)
+      - [showRowActionsMenu event](#showrowactionsmenu-event)
+      - [executeRowAction event](#executerowaction-event)
+  * [Data sources](#data-sources)
+  * [Generate schema](#generate-schema)
+- [Pagination Component](#pagination-component)
+    + [Properties](#properties)
+    + [Events](#events)
+  * [Build from sources](#build-from-sources)
+  * [NPM scripts](#npm-scripts)
+  * [Demo](#demo)
+  * [License](#license)
+
+<!-- tocstop -->
+
+<!-- markdown-toc end -->
+
 See it live: [DataTable Quickstart](https://embed.plnkr.co/80qr4YFBeHjLMdAV0F6l/)
 
 ## Prerequisites
