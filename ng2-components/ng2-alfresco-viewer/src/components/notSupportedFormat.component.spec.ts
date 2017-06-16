@@ -18,21 +18,35 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { NotSupportedFormat } from './notSupportedFormat.component';
 import { DebugElement }    from '@angular/core';
+import { Subject } from 'rxjs';
 import {
     AlfrescoAuthenticationService,
     AlfrescoSettingsService,
-    AlfrescoApiService,
     CoreModule,
-    ContentService
+    ContentService,
+    AlfrescoApiService,
+    LogService,
+    RenditionsService
 } from 'ng2-alfresco-core';
 
+type RenditionResponse = {
+    entry: {
+        status: string
+    }
+};
+
 describe('Test ng2-alfresco-viewer Not Supported Format View component', () => {
+
+    const nodeId = 'not-supported-node-id';
 
     let component: NotSupportedFormat;
     let service: ContentService;
     let fixture: ComponentFixture<NotSupportedFormat>;
     let debug: DebugElement;
     let element: HTMLElement;
+    let renditionsService: RenditionsService;
+
+    let renditionSubject: Subject<RenditionResponse>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -44,7 +58,9 @@ describe('Test ng2-alfresco-viewer Not Supported Format View component', () => {
                 AlfrescoSettingsService,
                 AlfrescoAuthenticationService,
                 AlfrescoApiService,
-                ContentService
+                ContentService,
+                RenditionsService,
+                LogService
             ]
         }).compileComponents();
     }));
@@ -55,10 +71,18 @@ describe('Test ng2-alfresco-viewer Not Supported Format View component', () => {
         debug = fixture.debugElement;
         element = fixture.nativeElement;
         component = fixture.componentInstance;
-        fixture.detectChanges();
+        component.nodeId = nodeId;
+
+        renditionSubject = new Subject<RenditionResponse>();
+        renditionsService = TestBed.get(RenditionsService);
+        spyOn(renditionsService, 'getRendition').and.returnValue(renditionSubject);
     });
 
     describe('View', () => {
+
+        beforeEach(() => {
+            fixture.detectChanges();
+        });
 
         it('should be present Download button', () => {
             expect(element.querySelector('#viewer-download-button')).not.toBeNull();
@@ -71,7 +95,61 @@ describe('Test ng2-alfresco-viewer Not Supported Format View component', () => {
         });
     });
 
+    describe('Convertibility to pdf', () => {
+
+        it('should not show the "Convert to PDF" button by default', () => {
+            fixture.detectChanges();
+            expect(element.querySelector('#viewer-convert-button')).toBeNull();
+        });
+
+        it('should be checked on ngInit', () => {
+            fixture.detectChanges();
+            expect(renditionsService.getRendition).toHaveBeenCalledWith(nodeId, 'pdf');
+        });
+
+        it('should NOT be checked on ngInit if  nodeId is not set', () => {
+            component.nodeId = null;
+            fixture.detectChanges();
+            expect(renditionsService.getRendition).not.toHaveBeenCalled();
+        });
+
+        it('should show the "Convert to PDF" button if the node is convertible', async(() => {
+            fixture.detectChanges();
+            renditionSubject.next({ entry: { status: 'NOT_CREATED' } });
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#viewer-convert-button')).not.toBeNull();
+            });
+        }));
+
+        it('should NOT show the "Convert to PDF" button if the node is NOT convertible', async(() => {
+            component.convertible = true;
+            fixture.detectChanges();
+            renditionSubject.error(new Error('Mocked error'));
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#viewer-convert-button')).toBeNull();
+            });
+        }));
+
+        it('should NOT show the "Convert to PDF" button if the node is already converted', async(() => {
+            renditionSubject.next({ entry: { status: 'CREATED' } });
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#viewer-convert-button')).toBeNull();
+            });
+        }));
+    });
+
     describe('User Interaction', () => {
+
+        beforeEach(() => {
+            fixture.detectChanges();
+        });
+
         it('should call download method if Click on Download button', () => {
             spyOn(window, 'open');
             component.urlFile = 'test';

@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core';
-import { ContentService } from 'ng2-alfresco-core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ContentService, RenditionsService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'not-supported-format',
     templateUrl: './notSupportedFormat.component.html',
     styleUrls: ['./notSupportedFormat.component.css']
 })
-export class NotSupportedFormat {
+export class NotSupportedFormat implements OnInit {
 
     @Input()
     nameFile: string;
@@ -34,9 +34,15 @@ export class NotSupportedFormat {
     @Input()
     blobFile: Blob;
 
-    constructor(private contentService: ContentService) {
+    @Input()
+    nodeId: string|null = null;
 
-    }
+    convertible: boolean = false;
+
+    constructor(
+        private contentService: ContentService,
+        private renditionsService: RenditionsService
+    ) {}
 
     /**
      * Download file opening it in a new window
@@ -47,5 +53,23 @@ export class NotSupportedFormat {
         } else {
             this.contentService.downloadBlob(this.blobFile, this.nameFile);
         }
+    }
+
+    ngOnInit() {
+        if (this.nodeId) {
+            this.checkRendition();
+        }
+    }
+
+    checkRendition(encoding: string = 'pdf'): void {
+        this.renditionsService.getRendition(this.nodeId, encoding)
+            .subscribe(
+                (response: any) => {
+                    if (response.entry.status === 'NOT_CREATED') {
+                        this.convertible = true;
+                    }
+                },
+                () => { this.convertible = false; }
+            );
     }
 }

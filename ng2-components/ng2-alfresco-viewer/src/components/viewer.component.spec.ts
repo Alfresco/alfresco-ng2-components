@@ -74,6 +74,8 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
 
         component.showToolbar = true;
         component.urlFile = 'base/src/assets/fake-test-file.pdf';
+        component.mimeType = 'application/pdf';
+        component.ngOnChanges(null);
         fixture.detectChanges();
     });
 
@@ -196,7 +198,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
         });
     });
 
-    describe('Extension Type Test', () => {
+    describe('Exteznsion Type Test', () => {
         it('should  extension file pdf  be loaded', (done) => {
             component.urlFile = 'base/src/assets/fake-test-file.pdf';
 
@@ -259,6 +261,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
 
         it('should the not supported div be loaded if the file is a not supported extension', (done) => {
             component.urlFile = 'fake-url-file.unsupported';
+            component.mimeType = '';
 
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();

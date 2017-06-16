@@ -1,4 +1,8 @@
 
+.unsupported-container {
+    width: 600px;
+}
+
 .viewer-margin {
     margin: auto !important;
     padding: 16px;
@@ -20,6 +24,6 @@
 }
 
 .viewer-button-icon {
-    margin-right: 20px;
+    margin-right: 10px;
     margin-top: -5px;
 }

@@ -1,4 +1,4 @@
-<section class="section--center mdl-grid mdl-grid--no-spacing">
+<section class="section--center mdl-grid mdl-grid--no-spacing unsupported-container" >
     <div class="viewer-margin mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone mdl-shadow--2dp">
         <div class="viewer-download-text mdl-card__supporting-text">
             <h4>File '<span>{{nameFile}}</span>' is of an unsupported format</h4>
@@ -7,7 +7,7 @@
             <button id="viewer-download-button" aria-label="Download" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" (click)="download()">
                 <i class="viewer-button-icon material-icons">cloud_download</i>   Download
             </button>
-            <button id="viewer-convert-button" aria-label="Convert to PDF" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary" (click)="convertToPdf()">
+            <button *ngIf="convertible" id="viewer-convert-button" aria-label="Convert to PDF" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary" (click)="convertToPdf()">
                 <i class="viewer-button-icon material-icons">insert_drive_file</i>   Convert to PDF
             </button>
         </div>
