@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Response, Http } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { TranslateLoader } from 'ng2-translate/ng2-translate';
+import { TranslateLoader } from '@ngx-translate/core';
 import { ComponentTranslationModel } from '../models/component.model';
 import { LogService } from './log.service';
 
