@@ -1,5 +1,49 @@
 # APS Task List Component
 
+<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
+
+<!-- toc -->
+
+- [Prerequisites](#prerequisites)
+- [Install](#install)
+- [Activiti Task List](#activiti-task-list)
+  * [DataColumn Properties](#datacolumn-properties)
+  * [Events](#events)
+  * [Properties](#properties)
+- [Activiti Task Details](#activiti-task-details)
+  * [Properties](#properties-1)
+  * [Events](#events-1)
+  * [Custom 'empty Activiti Task Details' template](#custom-empty-activiti-task-details-template)
+- [Activiti Apps Component](#activiti-apps-component)
+  * [Properties](#properties-2)
+  * [Events](#events-2)
+  * [How filter the activiti apps](#how-filter-the-activiti-apps)
+- [ADF Card View](#adf-card-view)
+  * [Properties](#properties-3)
+  * [CardViewModel](#cardviewmodel)
+- [Activiti Filter](#activiti-filter)
+  * [Properties](#properties-4)
+  * [Events](#events-3)
+  * [How filter the activiti task filters](#how-filter-the-activiti-task-filters)
+  * [FilterParamsModel](#filterparamsmodel)
+  * [How to create an accordion menu with the task filter](#how-to-create-an-accordion-menu-with-the-task-filter)
+- [Activiti Checklist Component](#activiti-checklist-component)
+  * [Properties](#properties-5)
+- [Task Attachment List Component](#task-attachment-list-component)
+  * [Properties](#properties-6)
+  * [Events](#events-4)
+- [Create Task Attachment Component](#create-task-attachment-component)
+  * [Properties](#properties-7)
+    + [Events](#events-5)
+- [Build from sources](#build-from-sources)
+- [NPM scripts](#npm-scripts)
+- [Demo](#demo)
+- [License](#license)
+
+<!-- tocstop -->
+
+<!-- markdown-toc end -->
+
 Displays lists of process instances both active and completed, using any defined process filter, and
 render details of any chosen instance.
 

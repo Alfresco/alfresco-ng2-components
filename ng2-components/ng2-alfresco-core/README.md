@@ -1,5 +1,13 @@
 # Alfresco Core Library
 
+<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
+
+<!-- toc -->
+
+<!-- tocstop -->
+
+<!-- markdown-toc end -->
+
 ## Prerequisites
 
 Before you start using this development framework, make sure you have installed all required software and done all the 

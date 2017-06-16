@@ -1,5 +1,26 @@
 # Alfresco Tag Component
 
+<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
+
+<!-- toc -->
+
+- [Prerequisites](#prerequisites)
+- [Install](#install)
+- [Basic usage](#basic-usage)
+- [alfresco-tag-node-actions-list](#alfresco-tag-node-actions-list)
+  * [Properties](#properties)
+- [alfresco-tag-node-list](#alfresco-tag-node-list)
+  * [Properties](#properties-1)
+- [alfresco-tag-list](#alfresco-tag-list)
+- [Build from sources](#build-from-sources)
+- [NPM scripts](#npm-scripts)
+- [Demo](#demo)
+- [License](#license)
+
+<!-- tocstop -->
+
+<!-- markdown-toc end -->
+
 ## Prerequisites
 
 Before you start using this development framework, make sure you have installed all required software and done all the
