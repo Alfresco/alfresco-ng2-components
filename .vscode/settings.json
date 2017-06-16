@@ -5,10 +5,8 @@
         "**/.svn": true,
         "**/.hg": true,
         "**/.DS_Store": true,
-        "**/*.js": { "when": "$(basename).ts"},
-        "**/*.js.map": { "when": "$(basename).ts"},
-        "**/*.d.ts": { "when": "$(basename).ts"},
-        "**/coverage": true
+        "**/coverage": true,
+        "**/.happypack": true
     },
     "editor.renderIndentGuides": true,
     "tslint.configFile": "ng2-components/tslint.json"
