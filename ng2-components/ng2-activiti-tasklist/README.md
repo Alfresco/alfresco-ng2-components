@@ -18,22 +18,19 @@
   * [Properties](#properties-2)
   * [Events](#events-2)
   * [How filter the activiti apps](#how-filter-the-activiti-apps)
-- [ADF Card View](#adf-card-view)
-  * [Properties](#properties-3)
-  * [CardViewModel](#cardviewmodel)
 - [Activiti Filter](#activiti-filter)
-  * [Properties](#properties-4)
+  * [Properties](#properties-3)
   * [Events](#events-3)
   * [How filter the activiti task filters](#how-filter-the-activiti-task-filters)
   * [FilterParamsModel](#filterparamsmodel)
   * [How to create an accordion menu with the task filter](#how-to-create-an-accordion-menu-with-the-task-filter)
 - [Activiti Checklist Component](#activiti-checklist-component)
-  * [Properties](#properties-5)
+  * [Properties](#properties-4)
 - [Task Attachment List Component](#task-attachment-list-component)
-  * [Properties](#properties-6)
+  * [Properties](#properties-5)
   * [Events](#events-4)
 - [Create Task Attachment Component](#create-task-attachment-component)
-  * [Properties](#properties-7)
+  * [Properties](#properties-6)
     + [Events](#events-5)
 - [Build from sources](#build-from-sources)
 - [NPM scripts](#npm-scripts)
@@ -243,42 +240,6 @@ You can use inside the filter one of the following property
 }
 ```
 
-## ADF Card View
-
-The component shows the [CardViewModel](#cardviewmodel)} object.
-
-```html
-<adf-card-view
-    [properties]="[{label: 'My Label', value: 'My value'}]">
-</adf-card-view>
-
-```
-
-### Properties
-
-| Name | Type | Description |
-| --- | --- | --- |
-| properties | {array[CardViewModel](#cardviewmodel)} | (**required**) The custom view to render |
-
-### CardViewModel
-
-```json
-{
-    "label": "string",
-    "value": "any",
-    "format": "string",
-    "default": "string"
-}
-```
-
-| Name | Type | Description |
-| --- | --- | --- |
-| label | string | The label to render |
-| value | string | The value to render |
-| format | string | The format to use in case the value is a date |
-| default | string | The default value to render in case the value is empty |
-
-![adf-custom-view](docs/assets/adf-custom-view.png)
 
 ## Activiti Filter
 

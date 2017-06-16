@@ -4,6 +4,37 @@
 
 <!-- toc -->
 
+- [Prerequisites](#prerequisites)
+- [Install](#install)
+- [Library content](#library-content)
+- [Toolbar Component](#toolbar-component)
+  * [Properties](#properties)
+- [Upload Directive](#upload-directive)
+  * [Basic usage](#basic-usage)
+  * [Modes](#modes)
+    + [Click mode](#click-mode)
+    + [Drop mode](#drop-mode)
+  * [Events](#events)
+  * [Styling](#styling)
+- [Alfresco Api Service](#alfresco-api-service)
+- [AppConfigService](#appconfigservice)
+- [Notification Service](#notification-service)
+- [Context Menu directive](#context-menu-directive)
+- [Accordion Component](#accordion-component)
+  * [Properties](#properties-1)
+- [Authentication Service](#authentication-service)
+  * [Events](#events-1)
+- [ADF Card View](#adf-card-view)
+  * [Properties](#properties-2)
+  * [CardViewModel](#cardviewmodel)
+- [AlfrescoTranslationService](#alfrescotranslationservice)
+- [Renditions Service](#renditions-service)
+- [Build from sources](#build-from-sources)
+- [Build from sources](#build-from-sources-1)
+- [NPM scripts](#npm-scripts)
+- [Demo](#demo)
+- [License](#license)
+
 <!-- tocstop -->
 
 <!-- markdown-toc end -->
@@ -458,6 +489,43 @@ export class AppComponent {
     }
 }
 ```
+
+## ADF Card View
+
+The component shows the [CardViewModel](#cardviewmodel)} object.
+
+```html
+<adf-card-view
+    [properties]="[{label: 'My Label', value: 'My value'}]">
+</adf-card-view>
+
+```
+
+### Properties
+
+| Name | Type | Description |
+| --- | --- | --- |
+| properties | {array[CardViewModel](#cardviewmodel)} | (**required**) The custom view to render |
+
+### CardViewModel
+
+```json
+{
+    "label": "string",
+    "value": "any",
+    "format": "string",
+    "default": "string"
+}
+```
+
+| Name | Type | Description |
+| --- | --- | --- |
+| label | string | The label to render |
+| value | string | The value to render |
+| format | string | The format to use in case the value is a date |
+| default | string | The default value to render in case the value is empty |
+
+![adf-custom-view](docs/assets/adf-custom-view.png)
 
 ## AlfrescoTranslationService
 
