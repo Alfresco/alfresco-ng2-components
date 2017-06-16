@@ -385,7 +385,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                             this.updateSkipCount(skipCount - maxItems);
                             this.loadFolderNodesByFolderNodeId(id, maxItems, skipCount - maxItems).then(() => {
                                 resolve(true);
-                            }, () => {
+                            }, (error) => {
                                 reject(error);
                             });
                         } else {
