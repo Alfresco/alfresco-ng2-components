@@ -1,5 +1,37 @@
 # APS Form Component
 
+<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
+
+<!-- toc -->
+
+- [Library Contents](#library-contents)
+  * [Components](#components)
+  * [Services](#services)
+- [Prerequisites](#prerequisites)
+- [Install](#install)
+- [ActivitiForm Component](#activitiform-component)
+  * [Properties](#properties)
+  * [Advanced properties](#advanced-properties)
+  * [Events](#events)
+  * [Controlling outcome execution behaviour](#controlling-outcome-execution-behaviour)
+- [Activiti Content Component](#activiti-content-component)
+  * [Properties](#properties-1)
+  * [Events](#events-1)
+- [FormService Service](#formservice-service)
+  * [Events](#events-2)
+  * [Methods](#methods)
+- [Common scenarios](#common-scenarios)
+  * [Changing field value based on another field](#changing-field-value-based-on-another-field)
+- [See also](#see-also)
+- [Build from sources](#build-from-sources)
+- [NPM scripts](#npm-scripts)
+- [Demo](#demo)
+- [License](#license)
+
+<!-- tocstop -->
+
+<!-- markdown-toc end -->
+
 See it live: [Form Quickstart](https://embed.plnkr.co/YSLXTqb3DtMhVJSqXKkE/)
 
 ## Library Contents

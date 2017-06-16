@@ -1,5 +1,26 @@
 # Alfresco Webscript Component
 
+<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
+
+<!-- toc -->
+
+- [Prerequisites](#prerequisites)
+- [Install](#install)
+- [Basic usage](#basic-usage)
+- [Properties](#properties)
+- [Webscript View HTML example](#webscript-view-html-example)
+- [Webscript View DATATABLE example](#webscript-view-datatable-example)
+- [Webscript View JSON example](#webscript-view-json-example)
+- [Build from sources](#build-from-sources)
+- [NPM scripts](#npm-scripts)
+- [Demo](#demo)
+- [License](#license)
+
+<!-- tocstop -->
+
+<!-- markdown-toc end -->
+
+
 ## Prerequisites
 
 Before you start using this development framework, make sure you have installed all required software and done all the

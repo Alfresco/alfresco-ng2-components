@@ -1,5 +1,51 @@
 # DocumentList Component
 
+<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
+
+<!-- toc -->
+
+- [Prerequisites](#prerequisites)
+- [See also](#see-also)
+- [Install](#install)
+- [Basic usage](#basic-usage)
+- [Properties](#properties)
+- [Events](#events)
+- [DOM Events](#dom-events)
+- [Handling DOM events](#handling-dom-events)
+- [Setting default folder](#setting-default-folder)
+- [Calling DocumentList api directly](#calling-documentlist-api-directly)
+- [Breadcrumb Component](#breadcrumb-component)
+  * [Properties](#properties-1)
+- [Creation Menu Action](#creation-menu-action)
+- [Custom columns](#custom-columns)
+  * [DataColumn Properties](#datacolumn-properties)
+- [Column definition](#column-definition)
+  * [Column Template](#column-template)
+  * [Actions](#actions)
+    + [Menu actions](#menu-actions)
+    + [Default action handlers](#default-action-handlers)
+      - [Delete - Show notification message with no permission](#delete---show-notification-message-with-no-permission)
+      - [Delete - Disable button checking the permission](#delete---disable-button-checking-the-permission)
+      - [Download](#download)
+    + [Folder actions](#folder-actions)
+  * [Context Menu](#context-menu)
+  * [Navigation mode](#navigation-mode)
+  * [Events](#events-1)
+- [Advanced usage and customization](#advanced-usage-and-customization)
+  * [Custom row filter](#custom-row-filter)
+  * [Custom image resolver](#custom-image-resolver)
+  * [Hiding columns on small screens](#hiding-columns-on-small-screens)
+  * [Custom 'empty folder' template](#custom-empty-folder-template)
+  * [Customizing default actions](#customizing-default-actions)
+- [Build from sources](#build-from-sources)
+- [NPM scripts](#npm-scripts)
+- [Demo](#demo)
+- [License](#license)
+
+<!-- tocstop -->
+
+<!-- markdown-toc end -->
+
 ## Prerequisites
 
 Before you start using this development framework, make sure you have installed all required software and done all the

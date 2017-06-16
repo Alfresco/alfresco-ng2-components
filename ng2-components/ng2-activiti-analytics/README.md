@@ -1,5 +1,29 @@
 # Activiti Analytics Components
 
+<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
+
+<!-- toc -->
+
+- [Prerequisites](#prerequisites)
+- [Install](#install)
+- [Activiti Analytics List Component](#activiti-analytics-list-component)
+  * [Properties](#properties)
+  * [Events](#events)
+- [Activiti Analytics Component](#activiti-analytics-component)
+  * [Properties](#properties-1)
+  * [Events](#events-1)
+- [Analytics Generator Component](#analytics-generator-component)
+  * [Properties](#properties-2)
+  * [Events](#events-2)
+- [Build from sources](#build-from-sources)
+- [NPM scripts](#npm-scripts)
+- [Demo](#demo)
+- [License](#license)
+
+<!-- tocstop -->
+
+<!-- markdown-toc end -->
+
 ## Prerequisites
 
 Before you start using this development framework, make sure you have installed all required software and done all the

@@ -1,5 +1,29 @@
 # Login Component
 
+<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
+
+<!-- toc -->
+
+- [Prerequisites](#prerequisites)
+- [Install](#install)
+- [Basic usage](#basic-usage)
+- [Properties](#properties)
+- [Events](#events)
+- [Change footer content](#change-footer-content)
+- [Change header content](#change-header-content)
+- [Extra content](#extra-content)
+- [Custom logo and background](#custom-logo-and-background)
+- [Customize Validation rules](#customize-validation-rules)
+- [Controlling form submit execution behaviour](#controlling-form-submit-execution-behaviour)
+- [Build from sources](#build-from-sources)
+- [NPM scripts](#npm-scripts)
+- [Demo](#demo)
+- [License](#license)
+
+<!-- tocstop -->
+
+<!-- markdown-toc end -->
+
 ## Prerequisites
 
 Before you start using this development framework, make sure you have installed all required software and done all the
