@@ -167,6 +167,27 @@ describe('DocumentList', () => {
         });
     });
 
+    it('should empty template be present when no element are present', (done) => {
+        documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
+        documentList.folderNode = new NodeMinimal();
+        documentList.folderNode.id = '1d26e465-dea3-42f3-b415-faa8364b9692';
+        documentList.reload();
+
+        fixture.detectChanges();
+
+        documentList.ready.subscribe(() => {
+            fixture.detectChanges();
+            expect(element.querySelector('#adf-document-list-empty')).toBeDefined();
+            done();
+        });
+
+        jasmine.Ajax.requests.at(0).respondWith({
+            status: 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeNodeAnswerWithNOEntries)
+        });
+    });
+
     it('should not execute action without node provided', () => {
         let action = new ContentActionModel();
         action.handler = function () {
