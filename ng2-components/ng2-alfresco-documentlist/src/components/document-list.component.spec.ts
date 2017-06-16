@@ -167,7 +167,7 @@ describe('DocumentList', () => {
         });
     });
 
-    it('should empty template be present whe no element are present', (done) => {
+    it('should empty template be present when no element are present', (done) => {
         documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
         documentList.folderNode = new NodeMinimal();
         documentList.folderNode.id = '1d26e465-dea3-42f3-b415-faa8364b9692';
