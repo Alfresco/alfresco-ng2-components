@@ -25,6 +25,41 @@ import { TranslationMock } from '../assets/translation.service.mock';
 import { UploadService } from '../services/upload.service';
 import { FileModel } from '../models/file.model';
 
+let fakeShareDataRow = {
+    obj: {
+        entry: {
+            createdAt: '2017-06-04T04:32:15.597Z',
+            path: {
+                name: '/Company Home/User Homes/Test',
+                isComplete: true,
+                elements: [
+                    {
+                        id: '94acfc73-7014-4475-9bd9-93a2162f0f8c',
+                        name: 'Company Home'
+                    },
+                    {
+                        id: '55052317-7e59-4058-8e07-769f41e615e1',
+                        name: 'User Homes'
+                    },
+                    {
+                        id: '70e1cc6a-6918-468a-b84a-1048093b06fd',
+                        name: 'Test'
+                    }
+                ]
+            },
+            isFolder: true,
+            name: 'pippo',
+            id: '7462d28e-bd43-4b91-9e7b-0d71598680ac',
+            nodeType: 'cm:folder',
+            allowableOperations: [
+                'delete',
+                'update',
+                'create'
+            ]
+        }
+    }
+};
+
 describe('UploadDragAreaComponent', () => {
 
     let component: UploadDragAreaComponent;
@@ -145,4 +180,37 @@ describe('UploadDragAreaComponent', () => {
         component.onFilesEntityDropped(itemEntity);
         expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith(null);
     });
+
+    it('should upload a file when user has create permission on target folder', async(() => {
+        component.currentFolderPath = '/root-fake-/sites-fake/document-library-fake';
+        component.rootFolderId = '-my-';
+        component.enabled = false;
+
+        let fakeItem = {
+            fullPath: '/folder-fake/file-fake.png',
+            isDirectory: false,
+            isFile: true,
+            name: 'file-fake.png',
+            file: (callbackFile) => {
+                let fileFake = new File(['fakefake'], 'file-fake.png', {type: 'image/png'});
+                callbackFile(fileFake);
+            }
+        };
+
+        fixture.detectChanges();
+        spyOn(uploadService, 'uploadFilesInTheQueue').and.returnValue(Promise.resolve(fakeItem));
+        component.onSuccess.subscribe((val) => {
+            expect(val).not.toBeNull();
+        });
+
+        let fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
+            detail: {
+                data: fakeShareDataRow,
+                files: [fakeItem]
+            }
+        });
+
+        component.onUploadFiles(fakeCustomEvent);
+    }));
+
 });

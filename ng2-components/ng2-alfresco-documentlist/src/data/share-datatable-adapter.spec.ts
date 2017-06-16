@@ -405,4 +405,26 @@ describe('ShareDataRow', () => {
         expect(row.hasValue('missing')).toBeFalsy();
     });
 
+    it('should be set as drop target when user has permission for that node', () => {
+        let file = new FolderNode('test');
+        file.entry['allowableOperations'] = ['create'];
+        let row = new ShareDataRow(file);
+
+        expect(row.isDropTarget).toBeTruthy();
+    });
+
+    it('should not be set as drop target when user has permission for that node', () => {
+        let file = new FolderNode('test');
+        let row = new ShareDataRow(file);
+
+        expect(row.isDropTarget).toBeFalsy();
+    });
+
+    it('should not be set as drop target when element is not a Folder', () => {
+        let file = new FileNode('test');
+        let row = new ShareDataRow(file);
+
+        expect(row.isDropTarget).toBeFalsy();
+    });
+
 });
