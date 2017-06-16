@@ -1,5 +1,49 @@
 # Activiti Process List Component
 
+<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
+
+<!-- toc -->
+
+- [Prerequisites](#prerequisites)
+- [Install](#install)
+- [Activiti Process Instance List](#activiti-process-instance-list)
+  * [Properties](#properties)
+  * [Events](#events)
+- [Process Filters Component](#process-filters-component)
+  * [Properties](#properties-1)
+  * [Events](#events-1)
+  * [How filter the activiti process filters](#how-filter-the-activiti-process-filters)
+- [FilterParamsModel](#filterparamsmodel)
+  * [How to create an accordion menu with the processes filter](#how-to-create-an-accordion-menu-with-the-processes-filter)
+- [Start Process component](#start-process-component)
+  * [Properties](#properties-2)
+  * [Events](#events-2)
+- [Process Details component](#process-details-component)
+  * [Properties](#properties-3)
+  * [Events](#events-3)
+- [Process Instance Details Header component](#process-instance-details-header-component)
+  * [Properties](#properties-4)
+  * [Events](#events-4)
+- [Process Instance Tasks component](#process-instance-tasks-component)
+  * [Properties](#properties-5)
+  * [Events](#events-5)
+- [Process Instance Comments component](#process-instance-comments-component)
+  * [Properties](#properties-6)
+- [Process Attachment List component](#process-attachment-list-component)
+  * [Properties](#properties-7)
+  * [Events](#events-6)
+- [Create Process Attachment component](#create-process-attachment-component)
+  * [Properties](#properties-8)
+  * [Events](#events-7)
+- [Build from sources](#build-from-sources)
+- [NPM scripts](#npm-scripts)
+- [Demo](#demo)
+- [License](#license)
+
+<!-- tocstop -->
+
+<!-- markdown-toc end -->
+
 Displays lists of process instances both active and completed, using any defined process filter, and renders details for any chosen instance.
 
 ## Prerequisites

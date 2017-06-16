@@ -1,5 +1,25 @@
 # Alfresco File Viewer Component
 
+
+<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
+
+<!-- toc -->
+
+- [Prerequisites](#prerequisites)
+- [Install](#install)
+- [Basic usage](#basic-usage)
+- [Properties](#properties)
+- [Supported file formats](#supported-file-formats)
+- [Custom extension handler](#custom-extension-handler)
+- [Build from sources](#build-from-sources)
+- [NPM scripts](#npm-scripts)
+- [Demo](#demo)
+- [License](#license)
+
+<!-- tocstop -->
+
+<!-- markdown-toc end -->
+
 See it live: [Viewer Quickstart](https://embed.plnkr.co/iTuG1lFIXfsP95l6bDW6/)
 
 ## Prerequisites

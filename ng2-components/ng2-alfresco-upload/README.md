@@ -1,5 +1,36 @@
 # Alfresco Upload Component
 
+<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
+
+<!-- toc -->
+
+- [Content](#content)
+  * [Components](#components)
+  * [Services](#services)
+  * [Directives](#directives)
+- [Prerequisites](#prerequisites)
+- [Install](#install)
+- [UploadButtonComponent](#uploadbuttoncomponent)
+  * [Properties](#properties)
+  * [Events](#events)
+  * [Advanced usage](#advanced-usage)
+    + [How to show notification message with no permission](#how-to-show-notification-message-with-no-permission)
+    + [How to disable the button when the delete permission is missing](#how-to-disable-the-button-when-the-delete-permission-is-missing)
+- [UploadDragAreaComponent](#uploaddragareacomponent)
+  * [Properties](#properties-1)
+  * [Events](#events-1)
+- [FileUploadingDialogComponent](#fileuploadingdialogcomponent)
+- [UploadService](#uploadservice)
+  * [Events](#events-2)
+- [Build from sources](#build-from-sources)
+- [NPM scripts](#npm-scripts)
+- [Demo](#demo)
+- [License](#license)
+
+<!-- tocstop -->
+
+<!-- markdown-toc end -->
+
 ## Content
 
 ### Components

@@ -105,16 +105,6 @@
     "angular2",
     "typescript"
   ],
-  "license-check-config": {
-    "src": [
-      "**/*.js",
-      "**/*.ts",
-      "!/**/coverage/**/*",
-      "!/**/demo/**/*",
-      "!/**/node_modules/**/*",
-      "!/**/typings/**/*",
-      "!*.js"
-    ],
     "contributors": [
       {
         "name": "Maurizio Vitale",
