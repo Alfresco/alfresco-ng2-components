@@ -21,6 +21,7 @@ import { DataCellEvent } from './data-cell.event';
 import { DataRowActionEvent } from './data-row-action.event';
 import { DataColumnListComponent } from 'ng2-alfresco-core';
 import { MdCheckboxChange } from '@angular/material';
+import { Observable, Observer } from 'rxjs/Rx';
 
 declare var componentHandler;
 
@@ -89,7 +90,11 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
 
     isSelectAllChecked: boolean = false;
 
+    private clickObserver: Observer<DataRowEvent>;
+    click$: Observable<DataRowEvent>;
+
     constructor(@Optional() private el: ElementRef) {
+        this.click$ = new Observable<DataRowEvent>(observer => this.clickObserver = observer).share();
     }
 
     ngAfterContentInit() {
@@ -111,6 +116,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
+        this.initAndSubscribeClickStream();
         if (this.isPropertyChanged(changes['data'])) {
             if (this.isTableEmpty()) {
                 this.initTable();
@@ -138,6 +144,46 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
 
     convertToRowsData(rows: any []): ObjectDataRow[] {
         return rows.map(row => new ObjectDataRow(row));
+    }
+
+    private initAndSubscribeClickStream() {
+        let singleClickStream = this.click$
+            .buffer(this.click$.debounceTime(250))
+            .map(list => list)
+            .filter(x => x.length === 1);
+
+        singleClickStream.subscribe((obj: DataRowEvent[]) => {
+            let event: DataRowEvent = obj[0];
+            let el = obj[0].sender.el;
+            this.rowClick.emit(event);
+            if (!event.defaultPrevented && el.nativeElement) {
+                el.nativeElement.dispatchEvent(
+                    new CustomEvent('row-click', {
+                        detail: event,
+                        bubbles: true
+                    })
+                );
+            }
+        });
+
+        let multiClickStream = this.click$
+            .buffer(this.click$.debounceTime(250))
+            .map(list => list)
+            .filter(x => x.length >= 2);
+
+        multiClickStream.subscribe((obj: DataRowEvent[]) => {
+            let event: DataRowEvent = obj[0];
+            let el = obj[0].sender.el;
+            this.rowDblClick.emit(event);
+            if (!event.defaultPrevented && el.nativeElement) {
+                el.nativeElement.dispatchEvent(
+                    new CustomEvent('row-dblclick', {
+                        detail: event,
+                        bubbles: true
+                    })
+                );
+            }
+        });
     }
 
     private initTable() {
@@ -190,17 +236,8 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
                 }
             }
 
-            let event = new DataRowEvent(row, e, this);
-            this.rowClick.emit(event);
-
-            if (!event.defaultPrevented && this.el.nativeElement) {
-                this.el.nativeElement.dispatchEvent(
-                    new CustomEvent('row-click', {
-                        detail: event,
-                        bubbles: true
-                    })
-                );
-            }
+            let dataRowEvent = new DataRowEvent(row, e, this);
+            this.clickObserver.next(dataRowEvent);
         }
     }
 
@@ -217,18 +254,8 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
         if (e) {
             e.preventDefault();
         }
-
-        let event = new DataRowEvent(row, e, this);
-        this.rowDblClick.emit(event);
-
-        if (!event.defaultPrevented && this.el.nativeElement) {
-            this.el.nativeElement.dispatchEvent(
-                new CustomEvent('row-dblclick', {
-                    detail: event,
-                    bubbles: true
-                })
-            );
-        }
+        let dataRowEvent = new DataRowEvent(row, e, this);
+        this.clickObserver.next(dataRowEvent);
     }
 
     onColumnHeaderClick(column: DataColumn) {
