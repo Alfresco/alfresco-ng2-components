@@ -80,7 +80,7 @@
     "ng2-alfresco-datatable": "1.5.0",
     "ng2-alfresco-documentlist": "1.5.0",
     "ng2-charts": "1.5.0",
-    "ng2-translate": "2.5.0",
+    "@ngx-translate/core": "^7.0.0",
     "pdfjs-dist": "1.5.404",
     "raphael": "2.2.7",
     "reflect-metadata": "0.1.10",
