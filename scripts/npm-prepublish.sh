@@ -135,7 +135,7 @@ do
   npm install
 
   echo "====== PREPUBLISHING: ${DESTDIR} ===== npm prepublish ${OPTIONS}"
-  npm prepublish || exit 1
+  npm run prepublish || exit 1
 
   if $EXEC_CHANGE_REGISTRY == true; then
       npm run rimraf .npmrc
