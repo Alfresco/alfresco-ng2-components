@@ -63,7 +63,8 @@
             <a class="mdl-navigation__link" href="" routerLink="/settings" (click)="hideDrawer()">Settings</a>
         </nav>
     </div>
-    <main class="mdl-layout__content">
+    <main class="mdl-layout__content" (dragover)="onDragOverMainPage($event)"
+          (drop)="onDragOverMainPage($event)">
         <div class="page-content">
             <router-outlet></router-outlet>
         </div>

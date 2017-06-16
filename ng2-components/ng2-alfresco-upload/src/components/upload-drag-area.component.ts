@@ -67,24 +67,25 @@ export class UploadDragAreaComponent {
 
     /**
      * Handles 'upload-files' events raised by child components.
-     * @param e DOM event
+     * @param event DOM event
      */
-    onUploadFiles(e: CustomEvent) {
-        e.stopPropagation();
-        e.preventDefault();
-        if (this.enabled) {
-            let files: FileInfo[] = e.detail.files;
+    onUploadFiles(event: CustomEvent) {
+        event.stopPropagation();
+        event.preventDefault();
+        let isAllowed: boolean = this.isAllowed(event.detail.data.obj.entry);
+        if (isAllowed) {
+            let files: FileInfo[] = event.detail.files;
             if (files && files.length > 0) {
                 let parentId = this.rootFolderId;
-                if (e.detail.data && e.detail.data.obj.entry.isFolder) {
-                    parentId = e.detail.data.obj.entry.id || this.rootFolderId;
+                if (event.detail.data && event.detail.data.obj.entry.isFolder) {
+                    parentId = event.detail.data.obj.entry.id || this.rootFolderId;
                 }
                 const fileModels = files.map(fileInfo => new FileModel(fileInfo.file, {
                     newVersion: this.versioning,
                     path: fileInfo.relativeFolder,
                     parentId: parentId
                 }));
-                this.uploadFiles(fileModels);
+                this.uploadFiles(fileModels, isAllowed);
             }
         }
     }
@@ -168,8 +169,17 @@ export class UploadDragAreaComponent {
         });
     }
 
-    private uploadFiles(files: FileModel[]): void {
-        if (this.enabled && files.length) {
+    /**
+     * Show the error inside Notification bar
+     * @param Error message
+     * @private
+     */
+    showErrorNotificationBar(errorMessage: string) {
+        this.notificationService.openSnackMessage(errorMessage, 3000);
+    }
+
+    private uploadFiles(files: FileModel[], isAllowed: boolean): void {
+        if (isAllowed && files.length) {
             this.uploadService.addToQueue(...files);
             this.uploadService.uploadFilesInTheQueue(this.onSuccess);
             let latestFilesAdded = this.uploadService.getQueue();
@@ -177,5 +187,18 @@ export class UploadDragAreaComponent {
                 this.showUndoNotificationBar(latestFilesAdded);
             }
         }
+    }
+
+    private hasCreatePermission(node: any): boolean {
+        let isPermitted = false;
+        if (node && node['allowableOperations']) {
+            let permFound = node['allowableOperations'].find(element => element === 'create');
+            isPermitted = permFound ? true : false;
+        }
+        return isPermitted;
+    }
+
+    private isAllowed(node: any) {
+        return this.enabled || this.hasCreatePermission(node);
     }
 }

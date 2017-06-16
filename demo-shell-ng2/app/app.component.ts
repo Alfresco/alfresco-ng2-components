@@ -17,7 +17,13 @@
 
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoSettingsService, StorageService, LogService } from 'ng2-alfresco-core';
+import {
+    AlfrescoTranslationService,
+    AlfrescoAuthenticationService,
+    AlfrescoSettingsService,
+    StorageService,
+    LogService
+} from 'ng2-alfresco-core';
 
 declare var document: any;
 
@@ -116,5 +122,10 @@ export class AppComponent {
         if (this.storage.hasItem(`providers`)) {
             this.settingsService.setProviders(this.storage.getItem(`providers`));
         }
+    }
+
+    onDragOverMainPage(event: any): boolean {
+        event.preventDefault();
+        return false;
     }
 }

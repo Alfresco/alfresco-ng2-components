@@ -1,7 +1,8 @@
 <div class="container">
     <alfresco-upload-drag-area
-            [rootFolderId]="documentList.currentFolderId"
-            [versioning] = "versioning">
+        [rootFolderId]="documentList.currentFolderId"
+        [versioning]="versioning"
+        [enabled]="documentList.hasCreatePermission()">
         <alfresco-document-list-breadcrumb
             [target]="documentList"
             [folderNode]="documentList.folderNode">
