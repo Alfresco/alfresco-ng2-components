@@ -39,7 +39,6 @@ export class AppConfigService {
     };
 
     load(resource: string = 'app.config.json'): Promise<any> {
-        console.log('Loading app config: ' + resource);
         this.configFile = resource;
         return new Promise((resolve, reject) => {
             this.http.get(resource).subscribe(

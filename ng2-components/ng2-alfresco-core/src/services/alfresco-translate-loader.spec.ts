@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { TranslateModule, TranslateLoader } from 'ng2-translate/ng2-translate';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { Injector } from '@angular/core';
 import { ResponseOptions, Response, XHRBackend, HttpModule } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
@@ -43,8 +43,10 @@ describe('TranslateLoader', () => {
             imports: [
                 HttpModule,
                 TranslateModule.forRoot({
-                    provide: TranslateLoader,
-                    useClass: AlfrescoTranslateLoader
+                    loader: {
+                        provide: TranslateLoader,
+                        useClass: AlfrescoTranslateLoader
+                    }
                 })
             ],
             providers: [
