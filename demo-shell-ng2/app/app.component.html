@@ -1,96 +1,72 @@
-<md-toolbar color="primary" *ngIf="!isAPageWithHeaderBar()">
-    <ng2-alfresco-userinfo
-        class="user-profile"
-        [menuPositionX]="'before'"
-        [menuPositionY]="'above'">
-    </ng2-alfresco-userinfo>
+<!-- Always shows a header, even in smaller screens. -->
+<div mdl class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header main_header_adf" [ngClass]="{hide: isAPageWithHeaderBar()}">
+        <div class="mdl-button-padding mdl-layout__header-row">
 
-    <span>ADF Demo Application</span>
+            <!-- User Info -->
+            <ng2-alfresco-userinfo class="user-profile" [menuOpenType]="left">
+            </ng2-alfresco-userinfo>
 
-    <div class="app-menu--spacer"></div>
+            <!-- Title -->
+            <span class="mdl-layout-title">Demo Application</span>
+            <!-- Add spacer, to align navigation to the right -->
+            <div class="mdl-layout-spacer"></div>
 
-    <search-bar (expand)="onToggleSearch($event)"></search-bar>
+            <!-- Search bar -->
+            <search-bar (expand)="onToggleSearch($event)"></search-bar>
 
-    <a md-button data-automation-id="home" href="" routerLink="/">Home</a>
-    <a md-button data-automation-id="files" href="" routerLink="/files">Content Services</a>
-    <a md-button data-automation-id="activiti" href="" routerLink="/activiti">Process Services</a>
-    <a md-button data-automation-id="login" href="" routerLink="/login">Login</a>
+            <!-- Navigation. We hide it in small screens. -->
+            <nav class="mdl-navigation mdl-layout--large-screen-only">
+                <a class="mdl-navigation__link" data-automation-id="home" href="" routerLink="/">Home</a>
+                <a class="mdl-navigation__link" data-automation-id="files" href="" routerLink="/files">DocumentList</a>
+                <a class="mdl-navigation__link" data-automation-id="activiti" href="" routerLink="/activiti">Process Services</a>
+                <a class="mdl-navigation__link" data-automation-id="login" href="" routerLink="/login">Login</a>
+                <a class="mdl-navigation__link" data-automation-id="settings" href="" routerLink="/settings">Settings</a>
+            </nav>
 
-    <theme-picker></theme-picker>
-    <button md-icon-button [mdMenuTriggerFor]="langMenu">
-        <md-icon>language</md-icon>
-    </button>
-    <md-menu #langMenu="mdMenu">
-        <button md-menu-item (click)="changeLanguage('en')">English</button>
-        <button md-menu-item (click)="changeLanguage('it')">Italian</button>
-        <button md-menu-item (click)="changeLanguage('ru')">Russian</button>
-    </md-menu>
+        </div>
+    </header>
 
-    <button md-icon-button [mdMenuTriggerFor]="appMenu">
-        <md-icon>more_vert</md-icon>
-    </button>
-    <md-menu #appMenu="mdMenu">
-        <a md-menu-item href="" routerLink="/trashcan">
-            <md-icon>extension</md-icon>
-            <span>DL: Trashcan</span>
-        </a>
-        <a md-menu-item href="" routerLink="/shared-links">
-            <md-icon>extension</md-icon>
-            <span>DL: Shared Links</span>
-        </a>
-        <a md-menu-item href="" routerLink="/sites">
-            <md-icon>extension</md-icon>
-            <span>DL: Sites</span>
-        </a>
-        <a md-menu-item href="" routerLink="/favorites">
-            <md-icon>extension</md-icon>
-            <span>DL: Favorites</span>
-        </a>
-        <a md-menu-item href="" routerLink="/recent">
-            <md-icon>extension</md-icon>
-            <span>DL: Recent</span>
-        </a>
-        <a md-menu-item href="" routerLink="/datatable">
-            <md-icon>view_module</md-icon>
-            <span>DataTable</span>
-        </a>
-        <a md-menu-item href="" routerLink="/form">
-            <md-icon>poll</md-icon>
-            <span>Form</span>
-        </a>
-        <a md-menu-item href="" routerLink="/form-list">
-            <md-icon>library_books</md-icon>
-            <span>Form List</span>
-        </a>
-        <a md-menu-item href="" routerLink="/uploader">
-            <md-icon>file_upload</md-icon>
-            <span>Uploader</span>
-        </a>
-        <a md-menu-item href="" routerLink="/webscript">
-            <md-icon>extension</md-icon>
-            <span>Webscript</span>
-        </a>
-        <a md-menu-item href="" routerLink="/tag">
-            <md-icon>local_offer</md-icon>
-            <span>Tag</span>
-        </a>
-        <a md-menu-item href="" routerLink="/social">
-            <md-icon>thumb_up</md-icon>
-            <span>Social</span>
-        </a>
-        <a md-menu-item href="" routerLink="/settings">
-            <md-icon>settings</md-icon>
-            <span>Settings</span>
-        </a>
-        <a md-menu-item href="" routerLink="/about">
-            <md-icon>info_outline</md-icon>
-            <span>About</span>
-        </a>
-        <button md-menu-item (click)="onLogout($event)">
-            <md-icon>exit_to_app</md-icon>
-            <span>Logout</span>
-        </button>
-    </md-menu>
-</md-toolbar>
-
-<router-outlet></router-outlet>
+    <div class="mdl-layout__drawer">
+        <nav class="mdl-navigation">
+            <a class="mdl-navigation__link" (click)="onLogout($event)">
+                <label tabindex="0">Logout</label>
+            </a>
+        </nav>
+        <span class="mdl-layout-title">Languages</span>
+        <nav class="mdl-navigation">
+            <a class="mdl-navigation__link" (click)="changeLanguage('en')">
+                <span class="flag-icon flag-icon-gb"></span>
+                <label tabindex="0"> English</label>
+            </a>
+            <a class="mdl-navigation__link" (click)="changeLanguage('it')">
+                <span class="flag-icon flag-icon-it"></span>
+                <label tabindex="0"> Italian</label>
+            </a>
+            <a class="mdl-navigation__link" (click)="changeLanguage('ru')">
+                <span class="flag-icon flag-icon-ru"></span>
+                <label tabindex="0"> Russian</label>
+            </a>
+        </nav>
+        <span class="mdl-layout-title">Components</span>
+        <nav class="mdl-navigation">
+            <a class="mdl-navigation__link" href="" routerLink="/" (click)="hideDrawer()">Home</a>
+            <a class="mdl-navigation__link" href="" routerLink="/files" (click)="hideDrawer()">DocumentList</a>
+            <a class="mdl-navigation__link" href="" routerLink="/datatable" (click)="hideDrawer()">DataTable</a>
+            <a class="mdl-navigation__link" href="" routerLink="/uploader" (click)="hideDrawer()">Uploader</a>
+            <a class="mdl-navigation__link" href="" routerLink="/login" (click)="hideDrawer()">Login</a>
+            <a class="mdl-navigation__link" href="" routerLink="/activiti" (click)="hideDrawer()">Process Services</a>
+            <a class="mdl-navigation__link" href="" routerLink="/webscript" (click)="hideDrawer()">Webscript</a>
+            <a class="mdl-navigation__link" href="" routerLink="/tag" (click)="hideDrawer()">Tag</a>
+            <a class="mdl-navigation__link" href="" routerLink="/social" (click)="hideDrawer()">Social</a>
+            <a class="mdl-navigation__link" href="" routerLink="/about" (click)="hideDrawer()">About</a>
+            <a class="mdl-navigation__link" href="" routerLink="/settings" (click)="hideDrawer()">Settings</a>
+        </nav>
+    </div>
+    <main class="mdl-layout__content" (dragover)="onDragOverMainPage($event)"
+          (drop)="onDragOverMainPage($event)">
+        <div class="page-content">
+            <router-outlet></router-outlet>
+        </div>
+    </main>
+</div>
