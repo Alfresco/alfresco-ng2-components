@@ -11,23 +11,23 @@
     (clickRow)="onRowClick($event)">
         <data-columns>
             <data-column key="firstName">
-                <template let-entry="$implicit">
+                <ng-template let-entry="$implicit">
                     <div class="people-pic">{{getShortName(entry.row.obj)}}</div>
-                </template>
+                </ng-template>
             </data-column>
             <data-column key="email" class="full-width">
-                <template let-entry="$implicit">
+                <ng-template let-entry="$implicit">
                     <div class="people-full-name">{{ getDisplayUser(entry.row.obj) }}</div>
-                </template>
+                </ng-template>
             </data-column>
         </data-columns>
     </activiti-people-list>
 </div>
 <div class="search-list-action-container">
-    <button type="button" id="close-people-dialog" (click)="closeSearchList()" class="mdl-button close">
+    <button type="button" id="close-people-search" (click)="closeSearchList()" class="mdl-button close">
         {{'PEOPLE.DIALOG_CLOSE' | translate }}
     </button>
-    <button type="button" id="close-people-dialog" (click)="addInvolvedUser()" class="mdl-button close">
+    <button type="button" id="add-people" (click)="addInvolvedUser()" class="mdl-button close">
         {{'PEOPLE.ADD_USER' | translate }}
     </button>
 </div>

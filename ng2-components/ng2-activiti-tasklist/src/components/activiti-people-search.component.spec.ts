@@ -19,7 +19,10 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { Observable } from 'rxjs/Observable';
 import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiPeopleSearch } from './activiti-people-search.component';
+import { ActivitiPeopleList } from './activiti-people-list.component';
+import { DataTableModule } from 'ng2-alfresco-datatable';
 import { User } from '../models/user.model';
+import { By } from '@angular/platform-browser';
 
 declare let jasmine: any;
 
@@ -49,10 +52,12 @@ describe('ActivitiPeopleSearch', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule.forRoot(),
+                DataTableModule
             ],
             declarations: [
-                ActivitiPeopleSearch
+                ActivitiPeopleSearch,
+                ActivitiPeopleList
             ]
         }).compileComponents().then(() => {
 
@@ -78,12 +83,11 @@ describe('ActivitiPeopleSearch', () => {
         expect(element.querySelector('#userSearchText')).not.toBeNull();
     });
 
-    it('should show no user found to involve message', () => {
+    it('should hide people-list container', () => {
         fixture.detectChanges();
         fixture.whenStable()
             .then(() => {
-                expect(element.querySelector('#no-user-found')).not.toBeNull();
-                expect(element.querySelector('#no-user-found').textContent).toContain('PEOPLE.SEARCH.NO_USERS');
+                expect(element.querySelector('.search-list-container')).toBeNull();
             });
     });
 
@@ -94,12 +98,8 @@ describe('ActivitiPeopleSearch', () => {
             fixture.detectChanges();
             fixture.whenStable()
                 .then(() => {
-                    expect(element.querySelector('#user-1')).not.toBeNull();
-                    expect(element.querySelector('#user-1').textContent)
-                        .toContain('fake-name - fake-last');
-                    expect(element.querySelector('#user-2')).not.toBeNull();
-                    expect(element.querySelector('#user-2').textContent)
-                        .toContain('fake-involve-name - fake-involve-last');
+                    expect(element.querySelector('activiti-people-list alfresco-datatable tbody tr')).not.toBeNull();
+                    expect(fixture.debugElement.queryAll(By.css('activiti-people-list alfresco-datatable tbody tr')).length).toBe(2);
                     done();
                 });
         });
@@ -120,8 +120,9 @@ describe('ActivitiPeopleSearch', () => {
         fixture.detectChanges();
         fixture.whenStable()
             .then(() => {
-                let userToSelect = <HTMLElement> element.querySelector('#user-1');
-                userToSelect.click();
+                activitiPeopleSearchComponent.onRowClick(fakeUser);
+                let addUserButton = <HTMLElement> element.querySelector('#add-people');
+                addUserButton.click();
             });
     });
 
@@ -129,13 +130,14 @@ describe('ActivitiPeopleSearch', () => {
         activitiPeopleSearchComponent.results = Observable.of(userArray);
         activitiPeopleSearchComponent.ngOnInit();
         fixture.detectChanges();
-        let userToSelect = <HTMLElement> element.querySelector('#user-1');
-        userToSelect.click();
+        activitiPeopleSearchComponent.onRowClick(fakeUser);
+        let addUserButton = <HTMLElement> element.querySelector('#add-people');
+        addUserButton.click();
 
         fixture.detectChanges();
         fixture.whenStable()
             .then(() => {
-                expect(element.querySelector('#user-1')).toBeNull();
+                expect(fixture.debugElement.queryAll(By.css('activiti-people-list alfresco-datatable tbody tr')).length).toBe(1);
                 done();
             });
     });
