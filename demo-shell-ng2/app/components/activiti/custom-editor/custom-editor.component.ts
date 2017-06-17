@@ -16,7 +16,7 @@
  */
 
 import { NgModule, Component } from '@angular/core';
-import { WidgetComponent } from 'ng2-activiti-form';
+import { WidgetComponent, FormService } from 'ng2-activiti-form';
 
 @Component({
     selector: 'custom-editor',
@@ -24,17 +24,29 @@ import { WidgetComponent } from 'ng2-activiti-form';
         <div style="color: red">Look, I'm a custom editor!</div>
     `
 })
-export class CustomEditorComponent extends WidgetComponent {}
+export class CustomEditorComponent extends WidgetComponent {
+
+    constructor(private formService: FormService) {
+        super();
+    }
+}
 
 @Component({
     selector: 'custom-stencil-01',
     template: `<div style="color: green">ADF version of custom Activiti stencil</div>`
 })
-export class CustomStencil01 extends WidgetComponent {}
+export class CustomStencil01 extends WidgetComponent {
+
+    constructor(private formService: FormService) {
+        super();
+    }
+}
 
 @NgModule({
     declarations: [ CustomEditorComponent, CustomStencil01 ],
     exports: [ CustomEditorComponent, CustomStencil01 ],
     entryComponents: [ CustomEditorComponent, CustomStencil01 ]
 })
-export class CustomEditorsModule {}
+export class CustomEditorsModule {
+
+}

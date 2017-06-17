@@ -17,15 +17,17 @@
 
 import { Component, ElementRef, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
-import { WidgetComponent } from './../widget.component';
+import { WidgetComponent , baseHost } from './../widget.component';
 import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './dynamic-table.widget.model';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { FormFieldModel } from '../core/form-field.model';
+import { FormService } from './../../../services/form.service';
 
 @Component({
     selector: 'dynamic-table-widget',
     templateUrl: './dynamic-table.widget.html',
-    styleUrls: ['./dynamic-table.widget.css']
+    styleUrls: ['./dynamic-table.widget.css'],
+    host: baseHost
 })
 export class DynamicTableWidget extends WidgetComponent implements OnInit {
 
@@ -44,7 +46,8 @@ export class DynamicTableWidget extends WidgetComponent implements OnInit {
 
     private selectArrayCode = [32, 0, 13];
 
-    constructor(private elementRef: ElementRef,
+    constructor(private formService: FormService,
+                private elementRef: ElementRef,
                 private visibilityService: WidgetVisibilityService,
                 private logService: LogService,
                 private cd: ChangeDetectorRef) {

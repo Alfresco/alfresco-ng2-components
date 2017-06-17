@@ -17,18 +17,19 @@
 
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
-import { WidgetComponent } from './../widget.component';
+import { WidgetComponent , baseHost } from './../widget.component';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 import { ExternalContent } from '../core/external-content';
 import { ExternalContentLink } from '../core/external-content-link';
 import { FormFieldModel } from '../core/form-field.model';
+import { FormService } from './../../../services/form.service';
 
 declare let dialogPolyfill: any;
 
 @Component({
     selector: 'attach-widget',
     templateUrl: './attach.widget.html',
-    styleUrls: ['./attach.widget.css']
+    styleUrls: ['./attach.widget.css'], host: baseHost
 })
 export class AttachWidget extends WidgetComponent implements OnInit {
 
@@ -52,7 +53,8 @@ export class AttachWidget extends WidgetComponent implements OnInit {
     @ViewChild('dialog')
     dialog: any;
 
-    constructor(private contentService: ActivitiAlfrescoContentService,
+    constructor(private formService: FormService,
+                private contentService: ActivitiAlfrescoContentService,
                 private logService: LogService) {
         super();
     }

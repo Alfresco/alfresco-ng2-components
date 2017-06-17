@@ -17,7 +17,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
-import { WidgetComponent } from './../widget.component';
+import { WidgetComponent , baseHost } from './../widget.component';
 import { FormService } from '../../../services/form.service';
 import { FormFieldOption } from './../core/form-field-option';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
@@ -25,7 +25,8 @@ import { WidgetVisibilityService } from '../../../services/widget-visibility.ser
 @Component({
     selector: 'radio-buttons-widget',
     templateUrl: './radio-buttons.widget.html',
-    styleUrls: ['./radio-buttons.widget.css']
+    styleUrls: ['./radio-buttons.widget.css'],
+    host: baseHost
 })
 export class RadioButtonsWidget extends WidgetComponent implements OnInit {
 

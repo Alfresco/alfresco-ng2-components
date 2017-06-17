@@ -368,6 +368,17 @@ The result should be as following:
 
 ![](docs/assets/form-service-sample-01.png)
 
+### Listen all form Events 
+
+If you want listen all the events fired the form you can subscribe to this Subject :
+
+```ts
+formService.formEvents.subscribe((e: Event) => {
+  console.log('Event fired:' + event.type)  
+  console.log('Event Target:' + event.target)  
+});
+```
+
 ## See also
 
 - [Form Stencils with Angular 2](docs/stencils.md)

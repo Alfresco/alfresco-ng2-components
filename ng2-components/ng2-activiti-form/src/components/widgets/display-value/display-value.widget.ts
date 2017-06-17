@@ -17,7 +17,7 @@
 
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import * as moment from 'moment';
-import { WidgetComponent } from './../widget.component';
+import { WidgetComponent , baseHost } from './../widget.component';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormService } from '../../../services/form.service';
 import { FormFieldOption } from './../core/form-field-option';
@@ -27,7 +27,8 @@ import { NumberFieldValidator } from '../core/form-field-validator';
 @Component({
     selector: 'display-value-widget',
     templateUrl: './display-value.widget.html',
-    styleUrls: ['./display-value.widget.css']
+    styleUrls: ['./display-value.widget.css'],
+    host: baseHost
 })
 export class DisplayValueWidget extends WidgetComponent implements OnInit {
 

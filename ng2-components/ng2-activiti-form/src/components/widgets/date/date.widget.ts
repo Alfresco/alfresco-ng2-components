@@ -16,8 +16,9 @@
  */
 
 import { Component, ElementRef, OnInit, AfterViewChecked } from '@angular/core';
-import { WidgetComponent } from './../widget.component';
+import { WidgetComponent , baseHost } from './../widget.component';
 import * as moment from 'moment';
+import { FormService } from './../../../services/form.service';
 
 declare let mdDateTimePicker: any;
 declare var componentHandler: any;
@@ -25,13 +26,15 @@ declare var componentHandler: any;
 @Component({
     selector: 'date-widget',
     templateUrl: './date.widget.html',
-    styleUrls: ['./date.widget.css']
+    styleUrls: ['./date.widget.css'],
+    host: baseHost
 })
 export class DateWidget extends WidgetComponent implements OnInit, AfterViewChecked {
 
     datePicker: any;
 
-    constructor(private elementRef: ElementRef) {
+    constructor(private formService: FormService,
+                private elementRef: ElementRef) {
         super();
     }
 

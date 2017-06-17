@@ -16,12 +16,19 @@
  */
 
 import { Component } from '@angular/core';
-import { WidgetComponent } from './../widget.component';
+import { WidgetComponent , baseHost } from './../widget.component';
+import { FormService } from './../../../services/form.service';
 
 @Component({
     selector: 'number-widget',
     templateUrl: './number.widget.html',
-    styleUrls: ['./number.widget.css']
+    styleUrls: ['./number.widget.css'],
+    host: baseHost
 })
 export class NumberWidget extends WidgetComponent {
+
+    constructor(private formService: FormService) {
+        super();
+    }
+
 }

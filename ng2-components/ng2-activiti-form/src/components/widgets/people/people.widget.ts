@@ -16,7 +16,7 @@
  */
 
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { WidgetComponent } from './../widget.component';
+import { WidgetComponent , baseHost } from './../widget.component';
 import { FormService } from '../../../services/form.service';
 import { GroupModel } from '../core/group.model';
 import { GroupUserModel } from '../core/group-user.model';
@@ -24,7 +24,8 @@ import { GroupUserModel } from '../core/group-user.model';
 @Component({
     selector: 'people-widget',
     templateUrl: './people.widget.html',
-    styleUrls: ['./people.widget.css']
+    styleUrls: ['./people.widget.css'],
+    host: baseHost
 })
 export class PeopleWidget extends WidgetComponent implements OnInit {
 

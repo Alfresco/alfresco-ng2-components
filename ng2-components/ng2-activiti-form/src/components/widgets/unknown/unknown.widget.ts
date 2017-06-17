@@ -16,7 +16,8 @@
  */
 
 import { Component } from '@angular/core';
-import { WidgetComponent } from './../widget.component';
+import { WidgetComponent , baseHost } from './../widget.component';
+import { FormService } from './../../../services/form.service';
 
 @Component({
     selector: 'unknown-widget',
@@ -25,7 +26,12 @@ import { WidgetComponent } from './../widget.component';
             <i class="material-icons">error_outline</i>
             <span style="color: red">Unknown type: {{field.type}}</span>
         </div>
-    `
+    `,
+    host: baseHost
 })
 export class UnknownWidget extends WidgetComponent {
+
+    constructor(private formService: FormService) {
+        super();
+    }
 }

@@ -16,16 +16,20 @@
  */
 
 import { Component } from '@angular/core';
-import { WidgetComponent } from './../widget.component';
+import { WidgetComponent , baseHost} from './../widget.component';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
+import { FormService } from './../../../services/form.service';
 
 @Component({
     selector: 'checkbox-widget',
-    templateUrl: './checkbox.widget.html'
+    templateUrl: './checkbox.widget.html',
+    host: baseHost
+,
+host: baseHost
 })
 export class CheckboxWidget extends WidgetComponent {
 
-    constructor(private visibilityService: WidgetVisibilityService) {
+    constructor(private visibilityService: WidgetVisibilityService, private formService: FormService) {
         super();
     }
 

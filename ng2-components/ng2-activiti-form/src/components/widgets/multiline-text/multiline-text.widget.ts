@@ -16,12 +16,18 @@
  */
 
 import { Component } from '@angular/core';
-import { WidgetComponent } from './../widget.component';
+import { WidgetComponent , baseHost } from './../widget.component';
+import { FormService } from './../../../services/form.service';
 
 @Component({
     selector: 'multiline-text-widget',
     templateUrl: './multiline-text.widget.html',
-    styleUrls: ['./multiline-text.widget.css']
+    styleUrls: ['./multiline-text.widget.css'],
+    host: baseHost
 })
 export class MultilineTextWidget extends WidgetComponent {
+
+    constructor(private formService: FormService) {
+        super();
+    }
 }

@@ -18,14 +18,15 @@
 import { Component, OnInit } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
 import { FormService } from './../../../services/form.service';
-import { WidgetComponent } from './../widget.component';
+import { WidgetComponent , baseHost } from './../widget.component';
 import { FormFieldOption } from './../core/form-field-option';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 
 @Component({
     selector: 'typeahead-widget',
     templateUrl: './typeahead.widget.html',
-    styleUrls: ['./typeahead.widget.css']
+    styleUrls: ['./typeahead.widget.css'],
+    host: baseHost
 })
 export class TypeaheadWidget extends WidgetComponent implements OnInit {
 

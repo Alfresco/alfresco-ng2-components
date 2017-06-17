@@ -17,8 +17,21 @@
 
 import { Input, AfterViewInit, Output, EventEmitter, ElementRef } from '@angular/core';
 import { FormFieldModel } from './core/index';
+import { FormService } from './../../services/form.service';
 
 declare var componentHandler: any;
+
+export const baseHost = {
+    '(click)': 'event($event)',
+    '(blur)': 'event($event)',
+    '(change)': 'event($event)',
+    '(focus)': 'event($event)',
+    '(focusin)': 'event($event)',
+    '(focusout)': 'event($event)',
+    '(input)': 'event($event)',
+    '(invalid)': 'event($event)',
+    '(select)': 'event($event)'
+};
 
 /**
  * Base widget component.
@@ -27,6 +40,9 @@ export class WidgetComponent implements AfterViewInit {
 
     static DEFAULT_HYPERLINK_URL: string = '#';
     static DEFAULT_HYPERLINK_SCHEME: string = 'http://';
+
+    constructor(protected formService: FormService) {
+    }
 
     @Input()
     field: FormFieldModel;
@@ -110,5 +126,9 @@ export class WidgetComponent implements AfterViewInit {
             return field.displayText || field.hyperlinkUrl;
         }
         return null;
+    }
+
+    private event(event: Event): void {
+        this.formService.formEvents.next(event);
     }
 }
