@@ -15,20 +15,21 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, AfterViewInit } from '@angular/core';
 import { Observer, Observable } from 'rxjs/Rx';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { User, UserEventModel } from '../models/index';
 import { ActivitiPeopleService } from '../services/activiti-people.service';
 
-declare let dialogPolyfill: any;
+declare let componentHandler: any;
+declare var require: any;
 
 @Component({
     selector: 'activiti-people',
     templateUrl: './activiti-people.component.html',
     styleUrls: ['./activiti-people.component.css']
 })
-export class ActivitiPeople {
+export class ActivitiPeople implements AfterViewInit {
 
     @Input()
     iconImageUrl: string = require('../assets/images/user.jpg');
@@ -59,6 +60,20 @@ export class ActivitiPeople {
             translateService.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
         }
         this.peopleSearch$ = new Observable<User[]>(observer => this.peopleSearchObserver = observer).share();
+    }
+
+    ngAfterViewInit() {
+        this.setupMaterialComponents(componentHandler);
+    }
+
+    setupMaterialComponents(handler?: any): boolean {
+        // workaround for MDL issues with dynamic components
+        let isUpgraded: boolean = false;
+        if (handler) {
+            handler.upgradeAllRegistered();
+            isUpgraded = true;
+        }
+        return isUpgraded;
     }
 
     searchUser(searchedWord: string) {

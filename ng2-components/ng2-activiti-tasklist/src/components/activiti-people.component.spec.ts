@@ -16,12 +16,15 @@
  */
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { CoreModule, AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
-import { ActivitiPeopleService } from '../services/activiti-people.service';
-import { ActivitiPeople } from './activiti-people.component';
 import { ActivitiPeopleSearch } from './activiti-people-search.component';
+import { ActivitiPeopleList } from './activiti-people-list.component';
+import { ActivitiPeople } from './activiti-people.component';
+import { DataTableModule } from 'ng2-alfresco-datatable';
 import { User } from '../models/user.model';
+import { ActivitiPeopleService } from '../services/activiti-people.service';
+import { By } from '@angular/platform-browser';
 
 declare let jasmine: any;
 
@@ -32,7 +35,7 @@ const fakeUser: User = new User({
     email: 'fake@mail.com'
 });
 
-const fakeUserToInvolve: User = new User({
+const fakeSecondUser: User = new User({
     id: 'fake-involve-id',
     firstName: 'fake-involve-name',
     lastName: 'fake-involve-last',
@@ -45,21 +48,25 @@ describe('ActivitiPeople', () => {
     let fixture: ComponentFixture<ActivitiPeople>;
     let element: HTMLElement;
     let componentHandler;
+    let userArray = [fakeUser, fakeSecondUser];
     let logService: LogService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule.forRoot(),
+                DataTableModule
             ],
             declarations: [
-                ActivitiPeople,
-                ActivitiPeopleSearch
+                ActivitiPeopleSearch,
+                ActivitiPeopleList,
+                ActivitiPeople
             ],
             providers: [
                 ActivitiPeopleService
             ]
         }).compileComponents().then(() => {
+
             logService = TestBed.get(LogService);
 
             let translateService = TestBed.get(AlfrescoTranslationService);
@@ -74,12 +81,19 @@ describe('ActivitiPeople', () => {
             ]);
 
             window['componentHandler'] = componentHandler;
+            activitiPeopleComponent.people = [];
+            fixture.detectChanges();
         });
     }));
 
     it('should show people component title', () => {
-        expect(element.querySelector('#people-title')).toBeDefined();
-        expect(element.querySelector('#people-title')).not.toBeNull();
+        activitiPeopleComponent.people = [...userArray];
+        fixture.whenStable()
+            .then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#people-title')).toBeDefined();
+                expect(element.querySelector('#people-title')).not.toBeNull();
+            });
     });
 
     it('should show no people involved message', () => {
@@ -95,7 +109,7 @@ describe('ActivitiPeople', () => {
 
         beforeEach(() => {
             activitiPeopleComponent.taskId = 'fake-task-id';
-            activitiPeopleComponent.people.push(fakeUser);
+            activitiPeopleComponent.people.push(...userArray);
             fixture.detectChanges();
         });
 
@@ -108,9 +122,11 @@ describe('ActivitiPeople', () => {
         });
 
         it('should show people involved', () => {
-            expect(element.querySelector('#user-fake-id')).not.toBeNull();
-            expect(element.querySelector('#user-fake-id').textContent).toContain('fake-name');
-            expect(element.querySelector('#user-fake-id').textContent).toContain('fake-last');
+            fixture.whenStable()
+                .then(() => {
+                    expect(element.querySelector('.assignment-list-container')).not.toBeNull();
+                    expect(fixture.debugElement.queryAll(By.css('activiti-people-list alfresco-datatable tbody tr')).length).toBe(2);
+                });
         });
 
         it('should remove pepole involved', async(() => {
@@ -118,24 +134,26 @@ describe('ActivitiPeople', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200
             });
+            fixture.detectChanges();
             fixture.whenStable()
                 .then(() => {
                     fixture.detectChanges();
-                    expect(element.querySelector('#user-fake-id')).toBeNull();
+                    expect(element.querySelector('.assignment-list-container')).not.toBeNull();
+                    expect(fixture.debugElement.queryAll(By.css('activiti-people-list alfresco-datatable tbody tr')).length).toBe(1);
                 });
         }));
 
         it('should involve pepole', async(() => {
-            activitiPeopleComponent.involveUser(fakeUserToInvolve);
+            activitiPeopleComponent.involveUser(fakeUser);
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200
             });
+            fixture.detectChanges();
             fixture.whenStable()
                 .then(() => {
                     fixture.detectChanges();
-                    expect(element.querySelector('#user-fake-involve-id')).not.toBeNull();
-                    expect(element.querySelector('#user-fake-involve-id').textContent)
-                        .toBe('fake-involve-name fake-involve-last');
+                    expect(element.querySelector('.assignment-list-container')).not.toBeNull();
+                    expect(fixture.debugElement.queryAll(By.css('activiti-people-list alfresco-datatable tbody tr')).length).toBe(3);
                 });
         }));
 
@@ -203,8 +221,7 @@ describe('ActivitiPeople', () => {
         }));
 
         it('should not remove user if remove involved user fail', async(() => {
-            activitiPeopleComponent.people.push(fakeUser);
-            fixture.detectChanges();
+            activitiPeopleComponent.people.push(...userArray);
             activitiPeopleComponent.removeInvolvedUser(fakeUser);
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 403
@@ -212,22 +229,20 @@ describe('ActivitiPeople', () => {
             fixture.whenStable()
                 .then(() => {
                     fixture.detectChanges();
-                    expect(element.querySelector('#user-fake-id')).not.toBeNull();
-                    expect(element.querySelector('#user-fake-id').textContent)
-                        .toBe('fake-name fake-last');
+                    expect(element.querySelector('.assignment-list-container')).not.toBeNull();
+                    expect(fixture.debugElement.queryAll(By.css('activiti-people-list alfresco-datatable tbody tr')).length).toBe(2);
                 });
         }));
 
         it('should not involve user if involve user fail', async(() => {
-            activitiPeopleComponent.involveUser(fakeUserToInvolve);
+            activitiPeopleComponent.involveUser(fakeUser);
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 403
             });
             fixture.whenStable()
                 .then(() => {
                     fixture.detectChanges();
-                    expect(element.querySelector('#user-fake-id')).toBeNull();
-                    expect(element.querySelector('#no-people-label').textContent).toContain('TASK_DETAILS.PEOPLE.NONE');
+                    expect(element.querySelector('.assignment-list-container')).toBeNull();
                 });
         }));
     });
