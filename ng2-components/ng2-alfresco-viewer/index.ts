@@ -29,6 +29,7 @@ import { CoreModule } from 'ng2-alfresco-core';
 
 import { ViewerComponent } from './src/components/viewer.component';
 import { RenderingQueueServices } from './src/services/rendering-queue.services';
+import { RenditionConversionService } from './src/services/rendition-conversion.service';
 import { ImgViewerComponent } from './src/components/imgViewer.component';
 import { MediaPlayerComponent } from './src/components/mediaPlayer.component';
 import { NotSupportedFormat } from './src/components/notSupportedFormat.component';
@@ -39,6 +40,7 @@ import { MdIconModule, MdButtonModule, MdProgressSpinnerModule } from '@angular/
 
 export * from './src/components/viewer.component';
 export * from './src/services/rendering-queue.services';
+export * from './src/services/rendition-conversion.service';
 export * from './src/components/imgViewer.component';
 export * from './src/components/mediaPlayer.component';
 export * from './src/components/notSupportedFormat.component';
@@ -56,7 +58,8 @@ export const VIEWER_DIRECTIVES: any[] = [
 ];
 
 export const VIEWER_PROVIDERS: any[] = [
-    RenderingQueueServices
+    RenderingQueueServices,
+    RenditionConversionService
 ];
 
 @NgModule({

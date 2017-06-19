@@ -17,6 +17,8 @@
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { NotSupportedFormat } from './notSupportedFormat.component';
+import { PdfViewerComponent } from './pdfViewer.component';
+import { RenditionConversionService } from '../services/rendition-conversion.service';
 import { DebugElement }    from '@angular/core';
 import { MdIconModule, MdButtonModule, MdProgressSpinnerModule } from '@angular/material';
 import { Subject } from 'rxjs';
@@ -57,13 +59,17 @@ describe('Test ng2-alfresco-viewer Not Supported Format View component', () => {
                 MdButtonModule,
                 MdProgressSpinnerModule
             ],
-            declarations: [NotSupportedFormat],
+            declarations: [
+                NotSupportedFormat,
+                PdfViewerComponent
+            ],
             providers: [
                 AlfrescoSettingsService,
                 AlfrescoAuthenticationService,
                 AlfrescoApiService,
                 ContentService,
                 RenditionsService,
+                RenditionConversionService,
                 LogService
             ]
         }).compileComponents();
@@ -204,19 +210,6 @@ describe('Test ng2-alfresco-viewer Not Supported Format View component', () => {
                 fixture.detectChanges();
 
                 expect(convertButton.disabled).toBe(true);
-            });
-
-            it('should trigger the conversion event if clicked on the "Convert to PDF button"', (done) => {
-                renditionSubject.next({ entry: { status: 'NOT_CREATED' } });
-                fixture.detectChanges();
-
-                component.conversionRequest.subscribe((encoding) => {
-                    expect(encoding).toEqual('pdf');
-                    done();
-                });
-
-                let convertButton: any = element.querySelector('#viewer-convert-button');
-                convertButton.click();
             });
         });
     });

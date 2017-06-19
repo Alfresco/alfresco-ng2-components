@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ContentService, RenditionsService } from 'ng2-alfresco-core';
+// import { RenditionConversionService } from '../services/rendition-conversion.service';
 
 const DEFAULT_CONVERSION_ENCODING = 'pdf';
 
@@ -39,15 +40,17 @@ export class NotSupportedFormat implements OnInit {
     @Input()
     nodeId: string|null = null;
 
-    @Output()
-    conversionRequest: EventEmitter<string> = new EventEmitter<string>();
+    @Input()
+    showToolbar: boolean = true;
 
     convertible: boolean = false;
     isConversionStarted: boolean = false;
+    renditionUrl: string|null = null;
 
     constructor(
         private contentService: ContentService,
         private renditionsService: RenditionsService
+        // private renditionConversionService: RenditionConversionService
     ) {}
 
     /**
@@ -91,6 +94,5 @@ export class NotSupportedFormat implements OnInit {
      */
     convert(encoding: string = DEFAULT_CONVERSION_ENCODING): void {
         this.isConversionStarted = true;
-        this.conversionRequest.emit(encoding);
     }
 }
