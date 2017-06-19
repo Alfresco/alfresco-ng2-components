@@ -1,10 +1,25 @@
 <div class="about-container">
+
+    <h3>Server settings</h3>
+    <small>The values below are taken from the AppConfigService and loaded from the '{{ configFile }}' file.</small>
+    <div>
+        Alfresco Process Services URL: <strong>{{ bpmHost }}</strong>
+    </div>
+
+    <div>
+        Alfresco Content Services URL: <strong>{{ ecmHost }}</strong>
+    </div>
+
     <div *ngIf="githubUrlCommitAlpha">
-        <h3>Current Commit position</h3>
-        <a [href]="githubUrlCommitAlpha">{{githubUrlCommitAlpha}}</a>
+        <h3>Source code</h3>
+        <small>You are running the project based on the following commit:</small>
+        <div>
+            <a [href]="githubUrlCommitAlpha">{{githubUrlCommitAlpha}}</a>
+        </div>
     </div>
 
 
     <h3>Packages</h3>
+    <small>Current project is using the following ADF libraries:</small>
     <alfresco-datatable [data]="data"></alfresco-datatable>
 </div>
