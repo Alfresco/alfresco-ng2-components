@@ -101,6 +101,7 @@ describe('DataTable', () => {
         );
         const rows = dataTable.data.getRows();
 
+        dataTable.ngOnChanges({});
         dataTable.onRowClick(rows[0], null);
         expect(rows[0].isSelected).toBeTruthy();
         expect(rows[1].isSelected).toBeFalsy();
@@ -121,6 +122,7 @@ describe('DataTable', () => {
         );
         const rows = dataTable.data.getRows();
 
+        dataTable.ngOnChanges({});
         dataTable.onRowClick(rows[0], null);
         expect(rows[0].isSelected).toBeTruthy();
         expect(rows[1].isSelected).toBeFalsy();
@@ -145,6 +147,7 @@ describe('DataTable', () => {
             metaKey: true
         });
 
+        dataTable.ngOnChanges({});
         dataTable.onRowClick(rows[0], event);
         dataTable.onRowClick(rows[1], event);
 
@@ -212,18 +215,65 @@ describe('DataTable', () => {
             done();
         });
 
+        dataTable.ngOnChanges({});
         dataTable.onRowClick(row, null);
     });
 
-    it('should emit row double-click event', done => {
-        let row = <DataRow> {};
+    it('should emit double click if there are two single click in 250ms', (done) => {
 
-        dataTable.rowDblClick.subscribe(e => {
-            expect(e.value).toBe(row);
+        let row = <DataRow> {};
+        dataTable.ngOnChanges({});
+
+        dataTable.rowDblClick.subscribe( () => {
             done();
         });
 
-        dataTable.onRowDblClick(row, null);
+        dataTable.onRowClick(row, null);
+        setTimeout(() => {
+                dataTable.onRowClick(row, null);
+            }
+            , 240);
+
+    });
+
+    it('should emit double click if there are more than two single click in 250ms', (done) => {
+
+        let row = <DataRow> {};
+        dataTable.ngOnChanges({});
+
+        dataTable.rowDblClick.subscribe( () => {
+            done();
+        });
+
+        dataTable.onRowClick(row, null);
+        setTimeout(() => {
+
+                dataTable.onRowClick(row, null);
+                dataTable.onRowClick(row, null);
+            }
+            , 240);
+
+    });
+
+    it('should emit single click if there are two single click in more than 250ms', (done) => {
+
+        let row = <DataRow> {};
+        let clickCount = 0;
+
+        dataTable.ngOnChanges({});
+
+        dataTable.rowClick.subscribe( () => {
+            clickCount += 1;
+            if (clickCount === 2) {
+                done();
+            }
+        });
+
+        dataTable.onRowClick(row, null);
+        setTimeout(() => {
+                dataTable.onRowClick(row, null);
+            }
+            , 260);
     });
 
     it('should emit row-click dom event', (done) => {
@@ -234,6 +284,7 @@ describe('DataTable', () => {
             done();
         });
 
+        dataTable.ngOnChanges({});
         dataTable.onRowClick(row, null);
     });
 
@@ -244,8 +295,9 @@ describe('DataTable', () => {
             expect(e.detail.value).toBe(row);
             done();
         });
-
-        dataTable.onRowDblClick(row, null);
+        dataTable.ngOnChanges({});
+        dataTable.onRowClick(row, null);
+        dataTable.onRowClick(row, null);
     });
 
     it('should prevent default behaviour on row click event', () => {
@@ -257,6 +309,7 @@ describe('DataTable', () => {
 
     it('should prevent default behaviour on row double-click event', () => {
         let e = jasmine.createSpyObj('event', ['preventDefault']);
+        dataTable.ngOnChanges({});
         dataTable.ngAfterContentInit();
         dataTable.onRowDblClick(null, e);
         expect(e.preventDefault).toHaveBeenCalled();
