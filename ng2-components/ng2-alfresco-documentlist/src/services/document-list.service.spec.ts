@@ -15,30 +15,22 @@
  * limitations under the License.
  */
 
+import { TestBed, async } from '@angular/core/testing';
 import {
-    AlfrescoSettingsService,
-    AlfrescoAuthenticationService,
-    AlfrescoApiService,
-    StorageService,
+    CoreModule,
     CookieService,
-    AlfrescoContentService,
     LogService,
     LogServiceMock
 } from 'ng2-alfresco-core';
 import { FileNode } from '../assets/document-library.model.mock';
 import { CookieServiceMock } from '../../../ng2-alfresco-core/src/assets/cookie.service.mock';
-import { ReflectiveInjector } from '@angular/core';
 import { DocumentListService } from './document-list.service';
 
 declare let jasmine: any;
 
 describe('DocumentListService', () => {
 
-    let injector;
     let service: DocumentListService;
-    let settingsService: AlfrescoSettingsService;
-    let authService: AlfrescoAuthenticationService;
-    let alfrescoApiService: AlfrescoApiService;
 
     let fakeEntryNode = {
         'entry': {
@@ -101,23 +93,21 @@ describe('DocumentListService', () => {
         }
     };
 
-    beforeEach(() => {
-        injector = ReflectiveInjector.resolveAndCreate([
-            AlfrescoApiService,
-            AlfrescoAuthenticationService,
-            AlfrescoSettingsService,
-            AlfrescoApiService,
-            AlfrescoContentService,
-            DocumentListService,
-            StorageService,
-            { provide: CookieService, useClass: CookieServiceMock },
-            { provide: LogService, useClass: LogServiceMock }
-        ]);
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule
+            ],
+            providers: [
+                DocumentListService,
+                { provide: CookieService, useClass: CookieServiceMock },
+                { provide: LogService, useClass: LogServiceMock }
+            ]
+        }).compileComponents();
+    }));
 
-        settingsService = injector.get(AlfrescoSettingsService);
-        authService = injector.get(AlfrescoAuthenticationService);
-        alfrescoApiService = injector.get(AlfrescoApiService);
-        service = injector.get(DocumentListService);
+    beforeEach(() => {
+        service = TestBed.get(DocumentListService);
         jasmine.Ajax.install();
     });
 
