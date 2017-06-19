@@ -15,35 +15,29 @@
  * limitations under the License.
  */
 
-import { ReflectiveInjector } from '@angular/core';
-import {
-    AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
-    AlfrescoApiService,
-    StorageService,
-    LogService
-} from 'ng2-alfresco-core';
+import { TestBed, async } from '@angular/core/testing';
+import { CoreModule } from 'ng2-alfresco-core';
 import { RatingService } from '../services/rating.service';
 
 declare let jasmine: any;
 
 describe('Rating service', () => {
 
-    let service, injector;
+    let service;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule.forRoot()
+            ],
+            providers: [
+                RatingService
+            ]
+        }).compileComponents();
+    }));
 
     beforeEach(() => {
-        injector = ReflectiveInjector.resolveAndCreate([
-            AlfrescoSettingsService,
-            AlfrescoApiService,
-            AlfrescoAuthenticationService,
-            RatingService,
-            StorageService,
-            LogService
-        ]);
-    });
-
-    beforeEach(() => {
-        service = injector.get(RatingService);
+        service = TestBed.get(RatingService);
     });
 
     beforeEach(() => {
