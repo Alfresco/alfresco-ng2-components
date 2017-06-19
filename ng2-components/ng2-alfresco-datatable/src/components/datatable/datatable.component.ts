@@ -91,7 +91,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
     isSelectAllChecked: boolean = false;
 
     private clickObserver: Observer<DataRowEvent>;
-    click$: Observable<DataRowEvent>;
+    private click$: Observable<DataRowEvent>;
 
     constructor(@Optional() private el: ElementRef) {
         this.click$ = new Observable<DataRowEvent>(observer => this.clickObserver = observer).share();
