@@ -90,7 +90,7 @@ describe('AnalyticsReportListComponent', () => {
         });
 
         it('should return the default reports when the report list is empty', (done) => {
-            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/app/rest/reporting/reports').andReturn({
+            jasmine.Ajax.stubRequest('http://localhost:3000/bpm/activiti-app/app/rest/reporting/reports').andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: []
@@ -98,13 +98,13 @@ describe('AnalyticsReportListComponent', () => {
 
             fixture.detectChanges();
 
-            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/app/rest/reporting/default-reports').andReturn({
+            jasmine.Ajax.stubRequest('http://localhost:3000/bpm/activiti-app/app/rest/reporting/default-reports').andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: []
             });
 
-            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/app/rest/reporting/reports').andReturn({
+            jasmine.Ajax.stubRequest('http://localhost:3000/bpm/activiti-app/app/rest/reporting/reports').andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: reportList

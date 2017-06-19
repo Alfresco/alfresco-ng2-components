@@ -15,21 +15,11 @@
  * limitations under the License.
  */
 
-import { ReflectiveInjector } from '@angular/core';
-import { async } from '@angular/core/testing';
-import {
-    AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
-    AlfrescoApiService,
-    StorageService,
-    LogService
-} from 'ng2-alfresco-core';
+import { TestBed, async } from '@angular/core/testing';
+import { CoreModule } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './activiti-tasklist.service';
 import { TaskDetailsModel } from '../models/task-details.model';
-import {
-    FilterRepresentationModel,
-    TaskQueryRequestRepresentationModel
-} from '../models/filter.model';
+import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { Comment } from '../models/comment.model';
 import {
     fakeFilters,
@@ -56,21 +46,20 @@ declare let jasmine: any;
 describe('Activiti TaskList Service', () => {
 
     let service: ActivitiTaskListService;
-    let injector;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule.forRoot()
+            ],
+            providers: [
+                ActivitiTaskListService
+            ]
+        }).compileComponents();
+    }));
 
     beforeEach(() => {
-        injector = ReflectiveInjector.resolveAndCreate([
-            AlfrescoSettingsService,
-            AlfrescoApiService,
-            AlfrescoAuthenticationService,
-            ActivitiTaskListService,
-            StorageService,
-            LogService
-        ]);
-    });
-
-    beforeEach(() => {
-        service = injector.get(ActivitiTaskListService);
+        service = TestBed.get(ActivitiTaskListService);
     });
 
     beforeEach(() => {
