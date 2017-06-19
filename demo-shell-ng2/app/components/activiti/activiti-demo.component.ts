@@ -20,6 +20,7 @@ import {
     ActivitiApps,
     ActivitiFilters,
     ActivitiTaskList,
+    ActivitiTaskDetails,
     FilterRepresentationModel,
     TaskDetailsEvent,
     TaskAttachmentListComponent
@@ -73,6 +74,9 @@ export class ActivitiDemoComponent implements AfterViewInit {
 
     @ViewChild(ActivitiProcessInstanceDetails)
     activitiprocessdetails: ActivitiProcessInstanceDetails;
+
+    @ViewChild(ActivitiTaskDetails)
+    activitidetails: ActivitiTaskDetails;
 
     @ViewChild(ActivitiProcessAttachmentListComponent)
     processAttachList: ActivitiProcessAttachmentListComponent;
@@ -360,5 +364,9 @@ export class ActivitiDemoComponent implements AfterViewInit {
 
     isCreateProcessAttachVisible(): boolean {
         return this.createProcessAttach;
+    }
+
+    isTaskCompleted(): boolean {
+        return this.activitidetails.isCompletedTask();
     }
 }

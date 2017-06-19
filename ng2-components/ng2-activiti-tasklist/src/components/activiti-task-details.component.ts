@@ -296,4 +296,8 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
     toggleHeaderContent() {
         this.showHeaderContent = !this.showHeaderContent;
     }
+
+    isCompletedTask(): boolean {
+        return this.taskDetails && this.taskDetails.endDate ? true : undefined;
+    }
 }
