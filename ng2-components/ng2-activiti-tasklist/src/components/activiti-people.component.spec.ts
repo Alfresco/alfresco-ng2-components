@@ -81,8 +81,6 @@ describe('ActivitiPeople', () => {
             ]);
 
             window['componentHandler'] = componentHandler;
-            activitiPeopleComponent.people = [];
-            fixture.detectChanges();
         });
     }));
 
@@ -110,7 +108,6 @@ describe('ActivitiPeople', () => {
         beforeEach(() => {
             activitiPeopleComponent.taskId = 'fake-task-id';
             activitiPeopleComponent.people.push(...userArray);
-            fixture.detectChanges();
         });
 
         beforeEach(() => {
@@ -124,38 +121,37 @@ describe('ActivitiPeople', () => {
         it('should show people involved', () => {
             fixture.whenStable()
                 .then(() => {
+                    fixture.detectChanges();
                     expect(element.querySelector('.assignment-list-container')).not.toBeNull();
                     expect(fixture.debugElement.queryAll(By.css('activiti-people-list alfresco-datatable tbody tr')).length).toBe(2);
                 });
         });
 
-        it('should remove pepole involved', async(() => {
+        it('should remove pepole involved', () => {
             activitiPeopleComponent.removeInvolvedUser(fakeUser);
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200
             });
-            fixture.detectChanges();
             fixture.whenStable()
                 .then(() => {
                     fixture.detectChanges();
                     expect(element.querySelector('.assignment-list-container')).not.toBeNull();
                     expect(fixture.debugElement.queryAll(By.css('activiti-people-list alfresco-datatable tbody tr')).length).toBe(1);
                 });
-        }));
+        });
 
-        it('should involve pepole', async(() => {
+        it('should involve pepole', () => {
             activitiPeopleComponent.involveUser(fakeUser);
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200
             });
-            fixture.detectChanges();
             fixture.whenStable()
                 .then(() => {
                     fixture.detectChanges();
                     expect(element.querySelector('.assignment-list-container')).not.toBeNull();
                     expect(fixture.debugElement.queryAll(By.css('activiti-people-list alfresco-datatable tbody tr')).length).toBe(3);
                 });
-        }));
+        });
 
         it('should return an observable with user search results', (done) => {
             activitiPeopleComponent.peopleSearch$.subscribe((users) => {
@@ -210,7 +206,7 @@ describe('ActivitiPeople', () => {
             jasmine.Ajax.uninstall();
         });
 
-        it('should log error message when search fails', async(() => {
+        it('should log error message when search fails', () => {
             activitiPeopleComponent.peopleSearch$.subscribe(() => {
                 expect(logService.error).toHaveBeenCalledWith('Could not load users');
             });
@@ -218,9 +214,9 @@ describe('ActivitiPeople', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 403
             });
-        }));
+        });
 
-        it('should not remove user if remove involved user fail', async(() => {
+        it('should not remove user if remove involved user fail', () => {
             activitiPeopleComponent.people.push(...userArray);
             activitiPeopleComponent.removeInvolvedUser(fakeUser);
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -232,9 +228,9 @@ describe('ActivitiPeople', () => {
                     expect(element.querySelector('.assignment-list-container')).not.toBeNull();
                     expect(fixture.debugElement.queryAll(By.css('activiti-people-list alfresco-datatable tbody tr')).length).toBe(2);
                 });
-        }));
+        });
 
-        it('should not involve user if involve user fail', async(() => {
+        it('should not involve user if involve user fail', () => {
             activitiPeopleComponent.involveUser(fakeUser);
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 403
@@ -244,6 +240,6 @@ describe('ActivitiPeople', () => {
                     fixture.detectChanges();
                     expect(element.querySelector('.assignment-list-container')).toBeNull();
                 });
-        }));
+        });
     });
 });
