@@ -23,10 +23,6 @@ module.exports = function (config) {
       {pattern: './src/**/*.ts', included: false, served: true, watched: false}
     ],
 
-    proxies: {
-      '/app.config.json': 'config/assets/app.config.json'
-    },
-
     webpack: (config.mode === 'coverage') ? require('./webpack.coverage') : require('./webpack.test'),
 
     webpackMiddleware: {
