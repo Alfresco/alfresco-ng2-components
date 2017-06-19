@@ -33,8 +33,7 @@ import {
     SocialComponent,
     AboutComponent,
     FormViewer,
-    FormNodeViewer,
-    SettingComponent
+    FormNodeViewer
 } from './components/index';
 
 import { UploadButtonComponent } from 'ng2-alfresco-upload';
@@ -129,8 +128,7 @@ export const appRoutes: Routes = [
         component: SocialComponent,
         canActivate: [AuthGuardEcm]
     },
-    { path: 'about', component: AboutComponent },
-    { path: 'settings', component: SettingComponent }
+    { path: 'about', component: AboutComponent }
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);
