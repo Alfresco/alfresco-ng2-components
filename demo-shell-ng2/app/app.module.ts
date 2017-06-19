@@ -58,8 +58,7 @@ import {
     SocialComponent,
     AboutComponent,
     FilesComponent,
-    FormNodeViewer,
-    SettingComponent
+    FormNodeViewer
 } from './components/index';
 
 @NgModule({
@@ -104,7 +103,6 @@ import {
         AboutComponent,
         FilesComponent,
         FormNodeViewer,
-        SettingComponent,
         CreateFolderDialog
     ],
     providers: [],
