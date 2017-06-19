@@ -6,11 +6,30 @@
 .viewer-margin {
     margin: auto !important;
     padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .viewer-download-text  {
     text-align: center;
     word-wrap: break-word;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.viewer-download-text h4 {
+    margin: 0;
+}
+
+.adf-conversion-spinner {
+    margin: 16px 0;
+}
+
+.viewer-margin >>> .adf-conversion-spinner.mat-spinner path {
+    stroke: #00BFD4;
 }
 
 .button-container {

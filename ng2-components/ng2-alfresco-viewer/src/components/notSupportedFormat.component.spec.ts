@@ -18,6 +18,7 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { NotSupportedFormat } from './notSupportedFormat.component';
 import { DebugElement }    from '@angular/core';
+import { MdIconModule, MdButtonModule, MdProgressSpinnerModule } from '@angular/material';
 import { Subject } from 'rxjs';
 import {
     AlfrescoAuthenticationService,
@@ -51,7 +52,10 @@ describe('Test ng2-alfresco-viewer Not Supported Format View component', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                CoreModule,
+                MdIconModule,
+                MdButtonModule,
+                MdProgressSpinnerModule
             ],
             declarations: [NotSupportedFormat],
             providers: [
@@ -93,6 +97,10 @@ describe('Test ng2-alfresco-viewer Not Supported Format View component', () => {
             fixture.detectChanges();
             expect(element.querySelector('h4 span').innerHTML).toEqual('Example Content.xls');
         });
+
+        it('should NOT show loading spinner by default', () => {
+            expect(element.querySelector('#conversion-spinner')).toBeNull('Conversion spinner should NOT be shown by default');
+        });
     });
 
     describe('Convertibility to pdf', () => {
@@ -107,7 +115,7 @@ describe('Test ng2-alfresco-viewer Not Supported Format View component', () => {
             expect(renditionsService.getRendition).toHaveBeenCalledWith(nodeId, 'pdf');
         });
 
-        it('should NOT be checked on ngInit if  nodeId is not set', () => {
+        it('should NOT be checked on ngInit if nodeId is not set', () => {
             component.nodeId = null;
             fixture.detectChanges();
             expect(renditionsService.getRendition).not.toHaveBeenCalled();
@@ -150,25 +158,66 @@ describe('Test ng2-alfresco-viewer Not Supported Format View component', () => {
             fixture.detectChanges();
         });
 
-        it('should call download method if Click on Download button', () => {
-            spyOn(window, 'open');
-            component.urlFile = 'test';
+        describe('Download', () => {
 
-            let downloadButton: any = element.querySelector('#viewer-download-button');
-            downloadButton.click();
+            it('should call download method if Click on Download button', () => {
+                spyOn(window, 'open');
+                component.urlFile = 'test';
 
-            expect(window.open).toHaveBeenCalled();
+                let downloadButton: any = element.querySelector('#viewer-download-button');
+                downloadButton.click();
+
+                expect(window.open).toHaveBeenCalled();
+            });
+
+            it('should call content service download method if Click on Download button', () => {
+                spyOn(service, 'downloadBlob');
+
+                component.blobFile = new Blob();
+
+                let downloadButton: any = element.querySelector('#viewer-download-button');
+                downloadButton.click();
+
+                expect(service.downloadBlob).toHaveBeenCalled();
+            });
         });
 
-        it('should call content service download method if Click on Download button', () => {
-            spyOn(service, 'downloadBlob');
+        describe('Conversion', () => {
 
-            component.blobFile = new Blob();
+            it('should show loading spinner if clicked on the "Convert to PDF button"', () => {
+                renditionSubject.next({ entry: { status: 'NOT_CREATED' } });
+                fixture.detectChanges();
 
-            let downloadButton: any = element.querySelector('#viewer-download-button');
-            downloadButton.click();
+                let convertButton: any = element.querySelector('#viewer-convert-button');
+                convertButton.click();
+                fixture.detectChanges();
 
-            expect(service.downloadBlob).toHaveBeenCalled();
+                expect(element.querySelector('#conversion-spinner')).not.toBeNull('Conversion spinner should be shown');
+            });
+
+            it('should disable the "Convert to PDF button" after the button was clicked', () => {
+                renditionSubject.next({ entry: { status: 'NOT_CREATED' } });
+                fixture.detectChanges();
+
+                let convertButton: any = element.querySelector('#viewer-convert-button');
+                convertButton.click();
+                fixture.detectChanges();
+
+                expect(convertButton.disabled).toBe(true);
+            });
+
+            it('should trigger the conversion event if clicked on the "Convert to PDF button"', (done) => {
+                renditionSubject.next({ entry: { status: 'NOT_CREATED' } });
+                fixture.detectChanges();
+
+                component.conversionRequest.subscribe((encoding) => {
+                    expect(encoding).toEqual('pdf');
+                    done();
+                });
+
+                let convertButton: any = element.querySelector('#viewer-convert-button');
+                convertButton.click();
+            });
         });
     });
 });

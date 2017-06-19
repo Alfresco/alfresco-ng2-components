@@ -15,8 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { ContentService, RenditionsService } from 'ng2-alfresco-core';
+
+const DEFAULT_CONVERSION_ENCODING = 'pdf';
 
 @Component({
     selector: 'not-supported-format',
@@ -37,7 +39,11 @@ export class NotSupportedFormat implements OnInit {
     @Input()
     nodeId: string|null = null;
 
+    @Output()
+    conversionRequest: EventEmitter<string> = new EventEmitter<string>();
+
     convertible: boolean = false;
+    isConversionStarted: boolean = false;
 
     constructor(
         private contentService: ContentService,
@@ -61,7 +67,12 @@ export class NotSupportedFormat implements OnInit {
         }
     }
 
-    checkRendition(encoding: string = 'pdf'): void {
+    /**
+     * Update component's button according to the given rendition's availability
+     *
+     * @param {string} encoding - the rendition id
+     */
+    checkRendition(encoding: string = DEFAULT_CONVERSION_ENCODING): void {
         this.renditionsService.getRendition(this.nodeId, encoding)
             .subscribe(
                 (response: any) => {
@@ -71,5 +82,15 @@ export class NotSupportedFormat implements OnInit {
                 },
                 () => { this.convertible = false; }
             );
+    }
+
+    /**
+     * Set the component to loading state and send the conversion starting signal to parent component
+     *
+     * @param {string} encoding - the rendition id
+     */
+    convert(encoding: string = DEFAULT_CONVERSION_ENCODING): void {
+        this.isConversionStarted = true;
+        this.conversionRequest.emit(encoding);
     }
 }

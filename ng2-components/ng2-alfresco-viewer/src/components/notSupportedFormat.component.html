@@ -1,14 +1,15 @@
-<section class="section--center mdl-grid mdl-grid--no-spacing unsupported-container" >
+<section class="unsupported-container">
     <div class="viewer-margin mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone mdl-shadow--2dp">
-        <div class="viewer-download-text mdl-card__supporting-text">
+        <div *ngIf="!isConversionStarted" class="viewer-download-text mdl-card__supporting-text">
             <h4>File '<span>{{nameFile}}</span>' is of an unsupported format</h4>
         </div>
+        <md-spinner *ngIf="isConversionStarted" id="conversion-spinner" class="adf-conversion-spinner" color="primary"></md-spinner>
         <div class="button-container mdl-card__actions">
-            <button id="viewer-download-button" aria-label="Download" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" (click)="download()">
-                <i class="viewer-button-icon material-icons">cloud_download</i>   Download
+            <button md-button id="viewer-download-button" aria-label="Download" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" (click)="download()">
+                <md-icon class="viewer-button-icon">cloud_download</md-icon>   Download
             </button>
-            <button *ngIf="convertible" id="viewer-convert-button" aria-label="Convert to PDF" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary" (click)="convertToPdf()">
-                <i class="viewer-button-icon material-icons">insert_drive_file</i>   Convert to PDF
+            <button md-button *ngIf="convertible" [disabled]="isConversionStarted" id="viewer-convert-button" aria-label="Convert to PDF" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary" (click)="convert()">
+                <md-icon class="viewer-button-icon">insert_drive_file</md-icon>   Convert to PDF
             </button>
         </div>
     </div>
