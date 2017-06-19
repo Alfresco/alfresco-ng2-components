@@ -30,7 +30,7 @@ export class RenditionConversionService {
 
     constructor(private renditionsService: RenditionsService) {}
 
-    public convert(nodeId: string, encoding: string) {
+    convert(nodeId: string, encoding: string) {
         const conversion: Subject<any> = new Subject<any>();
 
         // this.renditionsService.createRendition(nodeId, encoding)

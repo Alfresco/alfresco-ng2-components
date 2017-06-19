@@ -22,6 +22,7 @@ import { NotSupportedFormat } from './notSupportedFormat.component';
 import { MediaPlayerComponent } from './mediaPlayer.component';
 import { ImgViewerComponent } from './imgViewer.component';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
+import { RenditionConversionService } from '../services/rendition-conversion.service';
 import { ViewerComponent } from './viewer.component';
 import { EventMock } from '../assets/event.mock';
 import { DebugElement }    from '@angular/core';
@@ -58,7 +59,8 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
                 AlfrescoSettingsService,
                 AlfrescoAuthenticationService,
                 AlfrescoApiService,
-                RenderingQueueServices
+                RenderingQueueServices,
+                RenditionConversionService
             ]
         }).compileComponents();
     }));

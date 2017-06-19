@@ -17,7 +17,8 @@
 
 import { Component, Input, OnInit } from '@angular/core';
 import { ContentService, RenditionsService } from 'ng2-alfresco-core';
-// import { RenditionConversionService } from '../services/rendition-conversion.service';
+import { RenditionConversionService } from '../services/rendition-conversion.service';
+import { AlfrescoApiService } from 'ng2-alfresco-core';
 
 const DEFAULT_CONVERSION_ENCODING = 'pdf';
 
@@ -45,12 +46,14 @@ export class NotSupportedFormat implements OnInit {
 
     convertible: boolean = false;
     isConversionStarted: boolean = false;
+    isConversionFinished: boolean = false;
     renditionUrl: string|null = null;
 
     constructor(
         private contentService: ContentService,
-        private renditionsService: RenditionsService
-        // private renditionConversionService: RenditionConversionService
+        private renditionsService: RenditionsService,
+        private renditionConversionService: RenditionConversionService,
+        private apiService: AlfrescoApiService
     ) {}
 
     /**
@@ -94,5 +97,18 @@ export class NotSupportedFormat implements OnInit {
      */
     convert(encoding: string = DEFAULT_CONVERSION_ENCODING): void {
         this.isConversionStarted = true;
+        // this.convert(this.nodeId, encoding)
+        //     .subscribe(
+        //         () => {},
+        //         (error) => {
+        //             // Some kind of error handling
+        //             this.isConversionStarted = false;
+        //         },
+        //         () => {
+        //             this.isConversionStarted = false;
+        //             this.isConversionFinished = true;
+        //             this.renditionUrl = this.apiService.getInstance().content.getRenditionUrl(this.nodeId, encoding);
+        //         }
+        //     );
     }
 }

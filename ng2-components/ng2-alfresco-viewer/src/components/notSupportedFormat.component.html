@@ -1,4 +1,4 @@
-<section class="unsupported-container">
+<section *ngIf="!isConversionFinished" class="unsupported-container">
     <div class="viewer-margin mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone mdl-shadow--2dp">
         <div *ngIf="!isConversionStarted" class="viewer-download-text mdl-card__supporting-text">
             <h4>File '<span>{{nameFile}}</span>' is of an unsupported format</h4>
@@ -15,4 +15,4 @@
     </div>
 </section>
 
-<pdf-viewer *ngIf="false" [showToolbar]="showToolbar" [urlFile]="renditionUrl" [nameFile]="nameFile"></pdf-viewer>
+<pdf-viewer *ngIf="isConversionFinished" [showToolbar]="showToolbar" [urlFile]="renditionUrl" [nameFile]="nameFile"></pdf-viewer>
