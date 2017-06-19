@@ -32,6 +32,9 @@
 - [Create Task Attachment Component](#create-task-attachment-component)
   * [Properties](#properties-6)
     + [Events](#events-5)
+- [Activiti Task Header](#activiti-task-header)
+  * [Properties](#properties-7)
+  * [Events](#events-6)
 - [Build from sources](#build-from-sources)
 - [NPM scripts](#npm-scripts)
 - [Demo](#demo)
@@ -387,6 +390,41 @@ This component displays Upload Component(Drag and Click) to upload the attachmen
 | --- | --- |
 | error | Raised when the error occured while creating/uploading the attachment by the user from within the component |
 | success | Raised when the attachement created/uploaded successfully from within the component |
+
+## Activiti Task Header
+
+The component shows all the information related to a task. 
+The purpose of the component is populate the local variable called `properties` (array of CardViewModel), with all the information that we want display.
+
+```html
+<activiti-task-header
+    [taskDetails]="taskDetails">
+</activiti-task-header>
+```
+
+### Properties
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| taskDetails | [TaskDetailsModel](#taskdetailsmodel) | | (**required**) The task details related to the task. |
+| formName | string | | The name of the form. |
+
+### Events
+
+| Name | Description |
+| --- | --- |
+| claim | Raised when the task is claimed. |
+
+## TaskDetailsModel
+```json
+{ 
+    "id": "string", 
+    "assignee": "User", 
+    "dueDate": "data", 
+    "endDate": "string", 
+    "description": "string"
+}
+```
 
 ## Build from sources
 
