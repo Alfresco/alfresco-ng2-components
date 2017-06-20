@@ -1,7 +1,6 @@
 {
-<<<<<<< HEAD
-    "ecmHost": "http://{hostname}",
-    "bpmHost": "http://{hostname}",
+    "ecmHost": "http://{hostname}:{port}/ecm",
+    "bpmHost": "http://{hostname}:{port}/bpm",
     "application": {
         "name": "Alfresco"
     },
@@ -26,11 +25,5 @@
                 }
             ]
         }
-=======
-    "ecmHost": "http://localhost:3000/ecm",
-    "bpmHost": "http://localhost:3000/bpm",
-    "application": {
-        "name": "Alfresco"
->>>>>>> [ADF-847] upgrade to use application configuration service (#1986)
     }
 }

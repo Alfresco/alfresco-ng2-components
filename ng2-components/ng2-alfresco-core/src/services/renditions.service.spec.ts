@@ -15,14 +15,23 @@
  * limitations under the License.
  */
 
+<<<<<<< HEAD
 import { async, TestBed } from '@angular/core/testing';
 import { fakeRedition, fakeReditionCreated, fakeReditionsList } from '../assets/renditionsService.mock';
+=======
+import { TestBed, async } from '@angular/core/testing';
+>>>>>>> [ADF-847] upgrade to use application configuration service (#1986)
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AlfrescoSettingsService } from './alfresco-settings.service';
 import { AppConfigModule } from './app-config.service';
 import { LogService } from './log.service';
+<<<<<<< HEAD
 import { RenditionsService } from './renditions.service';
 import { StorageService } from './storage.service';
+=======
+import { fakeRedition, fakeReditionCreated, fakeReditionsList } from '../assets/renditionsService.mock';
+import { AppConfigModule } from './app-config.service';
+>>>>>>> [ADF-847] upgrade to use application configuration service (#1986)
 
 declare let jasmine: any;
 
@@ -70,8 +79,12 @@ describe('RenditionsService', () => {
 
     it('Create redition service should call the server with the ID passed and the asked encoding', (done) => {
         service.createRendition('fake-node-id', 'pdf').subscribe((res) => {
+<<<<<<< HEAD
             expect(jasmine.Ajax.requests.mostRecent().method).toBe('POST');
             expect(jasmine.Ajax.requests.mostRecent().url).toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/renditions');
+=======
+            expect(jasmine.Ajax.requests.mostRecent().url).toBe('http://localhost:3000/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/renditions');
+>>>>>>> [ADF-847] upgrade to use application configuration service (#1986)
             done();
         });
 

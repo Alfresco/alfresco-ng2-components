@@ -22,17 +22,7 @@ import { Observable } from 'rxjs/Rx';
 import { AlfrescoSearchComponent } from './alfresco-search.component';
 import { TranslationMock } from './../assets/translation.service.mock';
 import { AlfrescoSearchService } from '../services/alfresco-search.service';
-import {
-    AlfrescoSettingsService,
-    AlfrescoApiService,
-    AlfrescoAuthenticationService,
-    AlfrescoTranslationService,
-    CoreModule,
-    StorageService,
-    CookieService,
-    LogService
-} from 'ng2-alfresco-core';
-import { CookieServiceMock } from './../../../ng2-alfresco-core/src/assets/cookie.service.mock';
+import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { DocumentListModule } from 'ng2-alfresco-documentlist';
 
 describe('AlfrescoSearchComponent', () => {
@@ -114,7 +104,7 @@ describe('AlfrescoSearchComponent', () => {
             declarations: [AlfrescoSearchComponent], // declare the test component
             providers: [
                 AlfrescoSearchService,
-                {provide: AlfrescoTranslationService, useClass: TranslationMock}
+                { provide: AlfrescoTranslationService, useClass: TranslationMock }
             ]
         }).compileComponents().then(() => {
             fixture = TestBed.createComponent(AlfrescoSearchComponent);
@@ -143,26 +133,8 @@ describe('AlfrescoSearchComponent', () => {
         expect(search.searchTerm).toBe('exampleTerm692');
     });
 
-    it('should have a null search term if no query param provided via RouteParams', () => {
-        let injector = ReflectiveInjector.resolveAndCreate([
-            AlfrescoSearchService,
-            AlfrescoAuthenticationService,
-            AlfrescoSettingsService,
-            AlfrescoApiService,
-            StorageService,
-            { provide: CookieService, useClass: CookieServiceMock },
-            LogService,
-            {provide: ActivatedRoute, useValue: {params: Observable.from([{}])}}
-        ]);
-        let search = new AlfrescoSearchComponent(injector.get(AlfrescoSearchService), null, injector.get(ActivatedRoute));
-
-        search.ngOnInit();
-
-        expect(search.searchTerm).toBeNull();
-    });
-
     it('should setup i18n folder', () => {
-        let translationService = fixture.debugElement.injector.get(AlfrescoTranslationService);
+        let translationService = TestBed.get(AlfrescoTranslationService);
         spyOn(translationService, 'addTranslationFolder');
 
         fixture.detectChanges();
@@ -198,7 +170,7 @@ describe('AlfrescoSearchComponent', () => {
 
         it('should display search results when a search term is provided', (done) => {
 
-            let searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
+            let searchService = TestBed.get(AlfrescoSearchService);
             spyOn(searchService, 'getQueryNodesPromise').and.returnValue(Promise.resolve(result));
             component.searchTerm = '';
 
@@ -219,7 +191,7 @@ describe('AlfrescoSearchComponent', () => {
 
         it('should display no result if no result are returned', (done) => {
 
-            let searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
+            let searchService = TestBed.get(AlfrescoSearchService);
             spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(noResult));
 
@@ -241,7 +213,7 @@ describe('AlfrescoSearchComponent', () => {
 
         it('should display an error if an error is encountered running the search', (done) => {
 
-            let searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
+            let searchService = TestBed.get(AlfrescoSearchService);
             spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.reject(errorJson));
 
@@ -266,7 +238,7 @@ describe('AlfrescoSearchComponent', () => {
 
         it('should update search results when the search term input is changed', (done) => {
 
-            let searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
+            let searchService = TestBed.get(AlfrescoSearchService);
             spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(result));
 
@@ -298,7 +270,7 @@ describe('AlfrescoSearchComponent', () => {
 
         beforeEach(() => {
             debugElement = fixture.debugElement;
-            searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
+            searchService = TestBed.get(AlfrescoSearchService);
             querySpy = spyOn(searchService, 'getQueryNodesPromise').and.returnValue(Promise.resolve(result));
             emitSpy = spyOn(component.preview, 'emit');
         });

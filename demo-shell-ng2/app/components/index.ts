@@ -29,5 +29,4 @@ export { SocialComponent } from './social/social.component';
 export { AboutComponent } from './about/about.component';
 export { FilesComponent } from './files/files.component';
 export { FormNodeViewer } from './activiti/form-node-viewer.component';
-export { SettingComponent } from './setting/setting.component';
 export { ActivitiAppsView } from './activiti/apps.view';

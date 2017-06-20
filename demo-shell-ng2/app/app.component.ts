@@ -35,17 +35,12 @@ declare var document: any;
 export class AppComponent {
     searchTerm: string = '';
 
-    ecmHost: string = `http://${window.location.hostname}` + (window.location.port ? `:${window.location.port}` : '') + `/ecm`;
-    bpmHost: string = `http://${window.location.hostname}` + (window.location.port ? `:${window.location.port}` : '') + `/bpm`;
-
     constructor(private authService: AlfrescoAuthenticationService,
                 private router: Router,
                 private settingsService: AlfrescoSettingsService,
                 private translateService: AlfrescoTranslationService,
                 private storage: StorageService,
                 private logService: LogService) {
-        this.setEcmHost();
-        this.setBpmHost();
         this.setProvider();
 
         if (translateService) {
@@ -98,24 +93,6 @@ export class AppComponent {
     hideDrawer() {
         // todo: workaround for drawer closing
         document.querySelector('.mdl-layout').MaterialLayout.toggleDrawer();
-    }
-
-    private setEcmHost() {
-        if (this.storage.hasItem(`ecmHost`)) {
-            this.settingsService.ecmHost = this.storage.getItem(`ecmHost`);
-            this.ecmHost = this.storage.getItem(`ecmHost`);
-        } else {
-            this.settingsService.ecmHost = this.ecmHost;
-        }
-    }
-
-    private setBpmHost() {
-        if (this.storage.hasItem(`bpmHost`)) {
-            this.settingsService.bpmHost = this.storage.getItem(`bpmHost`);
-            this.bpmHost = this.storage.getItem(`bpmHost`);
-        } else {
-            this.settingsService.bpmHost = this.bpmHost;
-        }
     }
 
     private setProvider() {

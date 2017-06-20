@@ -15,11 +15,23 @@
  * limitations under the License.
  */
 
+<<<<<<< HEAD:ng2-components/ng2-activiti-tasklist/src/services/tasklist.service.spec.ts
 import { async, TestBed } from '@angular/core/testing';
 import { AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import {
+=======
+import { TestBed, async } from '@angular/core/testing';
+import { CoreModule } from 'ng2-alfresco-core';
+import { ActivitiTaskListService } from './activiti-tasklist.service';
+import { TaskDetailsModel } from '../models/task-details.model';
+import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
+import { Comment } from '../models/comment.model';
+import {
+    fakeFilters,
+    fakeAppPromise,
+>>>>>>> [ADF-847] upgrade to use application configuration service (#1986):ng2-components/ng2-activiti-tasklist/src/services/activiti-tasklist.service.spec.ts
     fakeAppFilter,
     fakeAppPromise,
     fakeApps,
@@ -50,6 +62,7 @@ declare let jasmine: any;
 
 describe('Activiti TaskList Service', () => {
 
+<<<<<<< HEAD:ng2-components/ng2-activiti-tasklist/src/services/tasklist.service.spec.ts
     let service: TaskListService;
 
     beforeEach(async(() => {
@@ -67,6 +80,23 @@ describe('Activiti TaskList Service', () => {
 
     beforeEach(() => {
         service = TestBed.get(TaskListService);
+=======
+    let service: ActivitiTaskListService;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule.forRoot()
+            ],
+            providers: [
+                ActivitiTaskListService
+            ]
+        }).compileComponents();
+    }));
+
+    beforeEach(() => {
+        service = TestBed.get(ActivitiTaskListService);
+>>>>>>> [ADF-847] upgrade to use application configuration service (#1986):ng2-components/ng2-activiti-tasklist/src/services/activiti-tasklist.service.spec.ts
     });
 
     beforeEach(() => {

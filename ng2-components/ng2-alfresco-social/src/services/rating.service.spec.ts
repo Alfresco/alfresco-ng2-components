@@ -15,7 +15,11 @@
  * limitations under the License.
  */
 
+<<<<<<< HEAD
 import { async, TestBed } from '@angular/core/testing';
+=======
+import { TestBed, async } from '@angular/core/testing';
+>>>>>>> [ADF-847] upgrade to use application configuration service (#1986)
 import { CoreModule } from 'ng2-alfresco-core';
 import { RatingService } from '../services/rating.service';
 

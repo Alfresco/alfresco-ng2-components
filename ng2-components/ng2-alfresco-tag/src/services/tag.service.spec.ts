@@ -15,8 +15,13 @@
  * limitations under the License.
  */
 
+<<<<<<< HEAD
 import { async, TestBed } from '@angular/core/testing';
 import { AppConfigModule, CoreModule } from 'ng2-alfresco-core';
+=======
+import { TestBed, async } from '@angular/core/testing';
+import { CoreModule } from 'ng2-alfresco-core';
+>>>>>>> [ADF-847] upgrade to use application configuration service (#1986)
 import { TagService } from '../services/tag.service';
 
 declare let jasmine: any;
@@ -28,10 +33,14 @@ describe('TagService', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+<<<<<<< HEAD
                 CoreModule.forRoot(),
                 AppConfigModule.forRoot('app.config.json', {
                     ecmHost: 'http://localhost:9876/ecm'
                 })
+=======
+                CoreModule.forRoot()
+>>>>>>> [ADF-847] upgrade to use application configuration service (#1986)
             ],
             providers: [
                 TagService
@@ -57,7 +66,11 @@ describe('TagService', () => {
             service.removeTag('fake-node-id', 'fake-tag').subscribe(() => {
                 expect(jasmine.Ajax.requests.mostRecent().method).toBe('DELETE');
                 expect(jasmine.Ajax.requests.mostRecent().url)
+<<<<<<< HEAD
                     .toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags/fake-tag');
+=======
+                    .toBe('http://localhost:3000/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags/fake-tag');
+>>>>>>> [ADF-847] upgrade to use application configuration service (#1986)
                 done();
             });
 
@@ -70,7 +83,11 @@ describe('TagService', () => {
             service.addTag('fake-node-id', 'fake-tag').subscribe(() => {
                 expect(jasmine.Ajax.requests.mostRecent().method).toBe('POST');
                 expect(jasmine.Ajax.requests.mostRecent().url)
+<<<<<<< HEAD
                     .toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags');
+=======
+                    .toBe('http://localhost:3000/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags');
+>>>>>>> [ADF-847] upgrade to use application configuration service (#1986)
                 done();
             });
 
@@ -83,7 +100,11 @@ describe('TagService', () => {
             service.getAllTheTags().subscribe(() => {
                 expect(jasmine.Ajax.requests.mostRecent().method).toBe('GET');
                 expect(jasmine.Ajax.requests.mostRecent().url)
+<<<<<<< HEAD
                     .toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/tags');
+=======
+                    .toBe('http://localhost:3000/ecm/alfresco/api/-default-/public/alfresco/versions/1/tags');
+>>>>>>> [ADF-847] upgrade to use application configuration service (#1986)
                 done();
             });
 
@@ -96,7 +117,11 @@ describe('TagService', () => {
             service.getTagsByNodeId('fake-node-id').subscribe(() => {
                 expect(jasmine.Ajax.requests.mostRecent().method).toBe('GET');
                 expect(jasmine.Ajax.requests.mostRecent().url)
+<<<<<<< HEAD
                     .toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags');
+=======
+                    .toBe('http://localhost:3000/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags');
+>>>>>>> [ADF-847] upgrade to use application configuration service (#1986)
                 done();
             });
 

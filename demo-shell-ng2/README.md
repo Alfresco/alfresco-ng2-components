@@ -1,7 +1,11 @@
 
 # ADF Demo Application
 
+<<<<<<< HEAD
 Please note that this application is not an official product, but a testing and demo application to showcase complex interactions of ADF components.
+=======
+Please note that this application is not an official product, but a testing and demo application to showcase complex interactions for ADF components.
+>>>>>>> [ADF-847] upgrade to use application configuration service (#1986)
 
 ## Installing
 
@@ -15,7 +19,11 @@ npm install
 
 ## Proxy settings and CORS
 
+<<<<<<< HEAD
 To simplify development and reduce the time to get the application started, we have the following Proxy settings:
+=======
+To simplify development and reduce the time to get started the application features the following Proxy settings:
+>>>>>>> [ADF-847] upgrade to use application configuration service (#1986)
 
 - **http://localhost:3000/ecm** is mapped to **http://localhost:8080**
 - **http://localhost:3000/bpm** is mapped to **http://localhost:9999**

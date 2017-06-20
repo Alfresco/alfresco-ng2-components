@@ -18,7 +18,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
 import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
-import { LogService } from 'ng2-alfresco-core';
+import { LogService, AppConfigService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'about-page',
@@ -28,10 +28,14 @@ import { LogService } from 'ng2-alfresco-core';
 export class AboutComponent implements OnInit {
 
     data: ObjectDataTableAdapter;
-
     githubUrlCommitAlpha: string = 'https://github.com/Alfresco/alfresco-ng2-components/commits/';
 
+    configFile: string = '';
+    ecmHost: string = '';
+    bpmHost: string = '';
+
     constructor(private http: Http,
+                private appConfig: AppConfigService,
                 private logService: LogService) {
     }
 
@@ -62,6 +66,10 @@ export class AboutComponent implements OnInit {
                 {type: 'text', key: 'version', title: 'Version', sortable: true}
             ]);
         });
+
+        this.configFile = this.appConfig.configFile;
+        this.ecmHost = this.appConfig.get<string>('ecmHost');
+        this.bpmHost = this.appConfig.get<string>('bpmHost');
     }
 
     private gitHubLinkCreation(alfrescoPackagesTableRepresentation): void {

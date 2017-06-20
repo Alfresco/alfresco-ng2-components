@@ -16,7 +16,7 @@
  */
 
 import { Injectable, APP_INITIALIZER, NgModule, ModuleWithProviders } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpModule, Http } from '@angular/http';
 import { ObjectUtils } from '../utils/object-utils';
 
 @Injectable()
@@ -70,6 +70,9 @@ export function InitAppConfigServiceProvider(resource: string): any {
 }
 
 @NgModule({
+    imports: [
+        HttpModule
+    ],
     providers: [
         AppConfigService
     ]

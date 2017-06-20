@@ -15,8 +15,13 @@
  * limitations under the License.
  */
 
+<<<<<<< HEAD
 import { async, TestBed } from '@angular/core/testing';
 import { AlfrescoApiService } from './alfresco-api.service';
+=======
+import { TestBed, async } from '@angular/core/testing';
+import { AppConfigModule } from './app-config.service';
+>>>>>>> [ADF-847] upgrade to use application configuration service (#1986)
 import { AlfrescoSettingsService } from './alfresco-settings.service';
 import { AppConfigModule } from './app-config.service';
 import { StorageService } from './storage.service';
@@ -31,11 +36,18 @@ describe('AlfrescoSettingsService', () => {
             imports: [
                 AppConfigModule
             ],
+<<<<<<< HEAD
             providers: [
                 AlfrescoApiService,
                 AlfrescoSettingsService,
                 UserPreferencesService,
                 StorageService
+=======
+            declarations: [
+            ],
+            providers: [
+                AlfrescoSettingsService
+>>>>>>> [ADF-847] upgrade to use application configuration service (#1986)
             ]
         }).compileComponents();
     }));
