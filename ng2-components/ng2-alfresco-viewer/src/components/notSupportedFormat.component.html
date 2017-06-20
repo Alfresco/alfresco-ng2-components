@@ -8,8 +8,11 @@
             <button md-button id="viewer-download-button" aria-label="Download" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" (click)="download()">
                 <md-icon class="viewer-button-icon">cloud_download</md-icon>   Download
             </button>
-            <button md-button *ngIf="convertible" [disabled]="isConversionStarted" id="viewer-convert-button" aria-label="Convert to PDF" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary" (click)="convert()">
+            <button md-button *ngIf="convertible" [disabled]="isConversionStarted" id="viewer-convert-button" aria-label="Convert to PDF" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary" (click)="convertToPdf()">
                 <md-icon class="viewer-button-icon">insert_drive_file</md-icon>   Convert to PDF
+            </button>
+            <button md-button *ngIf="displayable" id="viewer-display-button" aria-label="Show PDF" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary" (click)="showPDF()">
+                <md-icon class="viewer-button-icon">insert_drive_file</md-icon>   Show PDF
             </button>
         </div>
     </div>

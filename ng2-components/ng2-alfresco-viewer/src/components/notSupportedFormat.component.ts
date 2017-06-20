@@ -17,7 +17,6 @@
 
 import { Component, Input, OnInit } from '@angular/core';
 import { ContentService, RenditionsService } from 'ng2-alfresco-core';
-import { RenditionConversionService } from '../services/rendition-conversion.service';
 import { AlfrescoApiService } from 'ng2-alfresco-core';
 
 const DEFAULT_CONVERSION_ENCODING = 'pdf';
@@ -45,6 +44,7 @@ export class NotSupportedFormat implements OnInit {
     showToolbar: boolean = true;
 
     convertible: boolean = false;
+    displayable: boolean = false;
     isConversionStarted: boolean = false;
     isConversionFinished: boolean = false;
     renditionUrl: string|null = null;
@@ -52,7 +52,6 @@ export class NotSupportedFormat implements OnInit {
     constructor(
         private contentService: ContentService,
         private renditionsService: RenditionsService,
-        private renditionConversionService: RenditionConversionService,
         private apiService: AlfrescoApiService
     ) {}
 
@@ -84,31 +83,44 @@ export class NotSupportedFormat implements OnInit {
                 (response: any) => {
                     if (response.entry.status === 'NOT_CREATED') {
                         this.convertible = true;
+                        this.displayable = false;
+                    } else if (response.entry.status === 'CREATED') {
+                        this.convertible = false;
+                        this.displayable = true;
                     }
                 },
-                () => { this.convertible = false; }
+                () => {
+                    this.convertible = false;
+                    this.displayable = false;
+                }
             );
     }
 
     /**
      * Set the component to loading state and send the conversion starting signal to parent component
-     *
-     * @param {string} encoding - the rendition id
      */
-    convert(encoding: string = DEFAULT_CONVERSION_ENCODING): void {
+    convertToPdf(): void {
         this.isConversionStarted = true;
-        // this.convert(this.nodeId, encoding)
-        //     .subscribe(
-        //         () => {},
-        //         (error) => {
-        //             // Some kind of error handling
-        //             this.isConversionStarted = false;
-        //         },
-        //         () => {
-        //             this.isConversionStarted = false;
-        //             this.isConversionFinished = true;
-        //             this.renditionUrl = this.apiService.getInstance().content.getRenditionUrl(this.nodeId, encoding);
-        //         }
-        //     );
+
+        this.renditionsService.convert(this.nodeId, DEFAULT_CONVERSION_ENCODING)
+            .subscribe(
+                () => {},
+                (error) => {
+                    // Some kind of error handling
+                    this.isConversionStarted = false;
+                },
+                () => {
+                    this.isConversionStarted = false;
+                    this.showPDF();
+                }
+            );
+    }
+
+    /**
+     * Show the PDF rendition of the node
+     */
+    showPDF(): void {
+        this.isConversionFinished = true;
+        this.renditionUrl = this.apiService.getInstance().content.getRenditionUrl(this.nodeId, DEFAULT_CONVERSION_ENCODING);
     }
 }

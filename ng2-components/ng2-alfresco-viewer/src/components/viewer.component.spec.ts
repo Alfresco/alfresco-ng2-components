@@ -22,7 +22,6 @@ import { NotSupportedFormat } from './notSupportedFormat.component';
 import { MediaPlayerComponent } from './mediaPlayer.component';
 import { ImgViewerComponent } from './imgViewer.component';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
-import { RenditionConversionService } from '../services/rendition-conversion.service';
 import { ViewerComponent } from './viewer.component';
 import { EventMock } from '../assets/event.mock';
 import { DebugElement }    from '@angular/core';
@@ -30,7 +29,8 @@ import {
     AlfrescoAuthenticationService,
     AlfrescoSettingsService,
     AlfrescoApiService,
-    CoreModule
+    CoreModule,
+    RenditionsService
 } from 'ng2-alfresco-core';
 
 declare let jasmine: any;
@@ -60,7 +60,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
                 AlfrescoAuthenticationService,
                 AlfrescoApiService,
                 RenderingQueueServices,
-                RenditionConversionService
+                RenditionsService
             ]
         }).compileComponents();
     }));
