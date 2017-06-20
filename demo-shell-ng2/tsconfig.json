@@ -38,7 +38,9 @@
             "ng2-alfresco-upload": ["../ng2-components/ng2-alfresco-upload/"],
             "ng2-alfresco-viewer": ["../ng2-components/ng2-alfresco-viewer/"],
             "ng2-alfresco-webscript": ["../ng2-components/ng2-alfresco-webscript/"],
-            "ng2-alfresco-userinfo": ["../ng2-components/ng2-alfresco-userinfo/"]
+            "ng2-alfresco-userinfo": ["../ng2-components/ng2-alfresco-userinfo/"],
+            "@angular/*": ["../ng2-components/node_modules/@angular/*"],
+            "rxjs/*": ["../ng2-components/node_modules/rxjs/*"]
         },
         "suppressImplicitAnyIndexErrors": true
     },

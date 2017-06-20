@@ -18,7 +18,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule, AppConfigService } from 'ng2-alfresco-core';
 import { SearchModule } from 'ng2-alfresco-search';
 import { LoginModule } from 'ng2-alfresco-login';
 import { DataTableModule } from 'ng2-alfresco-datatable';
@@ -42,6 +42,7 @@ import { CustomEditorsModule } from './components/activiti/custom-editor/custom-
 import { Editor3DModule } from 'ng2-3d-editor';
 import { ChartsModule } from 'ng2-charts';
 import { CreateFolderDialog } from './dialogs/create-folder.dialog';
+import { DebugAppConfigService } from './services/debug-app-config.service';
 
 import {
     HomeComponent,
@@ -58,7 +59,8 @@ import {
     SocialComponent,
     AboutComponent,
     FilesComponent,
-    FormNodeViewer
+    FormNodeViewer,
+    SettingsComponent
 } from './components/index';
 
 let appConfigFile = 'app.config-dev.json';
@@ -110,9 +112,12 @@ if (process.env.ENV === 'production') {
         AboutComponent,
         FilesComponent,
         FormNodeViewer,
-        CreateFolderDialog
+        CreateFolderDialog,
+        SettingsComponent
     ],
-    providers: [],
+    providers: [
+        { provide: AppConfigService, useClass: DebugAppConfigService }
+    ],
     bootstrap: [ AppComponent ],
     entryComponents: [
         CreateFolderDialog
