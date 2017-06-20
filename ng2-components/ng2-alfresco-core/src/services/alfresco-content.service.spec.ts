@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ReflectiveInjector } from '@angular/core';
+import { TestBed, async } from '@angular/core/testing';
 import { AlfrescoSettingsService } from './alfresco-settings.service';
 import { AlfrescoAuthenticationService } from './alfresco-authentication.service';
 import { AlfrescoContentService } from './alfresco-content.service';
@@ -24,12 +24,13 @@ import { StorageService } from './storage.service';
 import { CookieService } from './cookie.service';
 import { CookieServiceMock } from './../assets/cookie.service.mock';
 import { LogService } from './log.service';
+import { AppConfigModule } from './app-config.service';
 
 declare let jasmine: any;
 
 describe('AlfrescoContentService', () => {
 
-    let injector, contentService: AlfrescoContentService;
+    let contentService: AlfrescoContentService;
     let authService: AlfrescoAuthenticationService;
     let settingsService: AlfrescoSettingsService;
     let storage: StorageService;
@@ -37,21 +38,30 @@ describe('AlfrescoContentService', () => {
 
     const nodeId = 'fake-node-id';
 
-    beforeEach(() => {
-        injector = ReflectiveInjector.resolveAndCreate([
-            AlfrescoApiService,
-            AlfrescoContentService,
-            AlfrescoAuthenticationService,
-            AlfrescoSettingsService,
-            StorageService,
-            { provide: CookieService, useClass: CookieServiceMock },
-            LogService
-        ]);
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                AppConfigModule
+            ],
+            declarations: [
+            ],
+            providers: [
+                AlfrescoApiService,
+                AlfrescoContentService,
+                AlfrescoAuthenticationService,
+                AlfrescoSettingsService,
+                StorageService,
+                { provide: CookieService, useClass: CookieServiceMock },
+                LogService
+            ]
+        }).compileComponents();
+    }));
 
-        authService = injector.get(AlfrescoAuthenticationService);
-        settingsService = injector.get(AlfrescoSettingsService);
-        contentService = injector.get(AlfrescoContentService);
-        storage = injector.get(StorageService);
+    beforeEach(() => {
+        authService = TestBed.get(AlfrescoAuthenticationService);
+        settingsService = TestBed.get(AlfrescoSettingsService);
+        contentService = TestBed.get(AlfrescoContentService);
+        storage = TestBed.get(StorageService);
         storage.clear();
 
         node = {
@@ -73,7 +83,7 @@ describe('AlfrescoContentService', () => {
 
     it('should return a valid content URL', (done) => {
         authService.login('fake-username', 'fake-password').subscribe(() => {
-            expect(contentService.getContentUrl(node)).toBe('http://localhost:8080/alfresco/api/' +
+            expect(contentService.getContentUrl(node)).toBe('http://localhost:3000/ecm/alfresco/api/' +
                 '-default-/public/alfresco/versions/1/nodes/fake-node-id/content?attachment=false&alf_ticket=fake-post-ticket');
             done();
         });
@@ -88,7 +98,7 @@ describe('AlfrescoContentService', () => {
     it('should return a valid thumbnail URL', (done) => {
         authService.login('fake-username', 'fake-password').subscribe(() => {
             expect(contentService.getDocumentThumbnailUrl(node))
-                .toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco' +
+                .toBe('http://localhost:3000/ecm/alfresco/api/-default-/public/alfresco' +
                     '/versions/1/nodes/fake-node-id/renditions/doclib/content?attachment=false&alf_ticket=fake-post-ticket');
             done();
         });

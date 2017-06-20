@@ -17,7 +17,7 @@
 
 import { Component, ElementRef, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { Observable, Subject } from 'rxjs/Rx';
-import { AlfrescoApiService, AlfrescoContentService, AlfrescoTranslationService, LogService, NotificationService, AlfrescoSettingsService, FileUtils } from 'ng2-alfresco-core';
+import { AlfrescoApiService, AlfrescoContentService, AlfrescoTranslationService, LogService, NotificationService, FileUtils } from 'ng2-alfresco-core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { UploadService } from '../services/upload.service';
 import { FileModel } from '../models/file.model';
@@ -93,7 +93,6 @@ export class UploadButtonComponent implements OnInit, OnChanges {
                 private translateService: AlfrescoTranslationService,
                 private logService: LogService,
                 private notificationService: NotificationService,
-                private settingsService: AlfrescoSettingsService,
                 private apiService: AlfrescoApiService,
                 private contentService: AlfrescoContentService) {
         if (translateService) {
@@ -102,10 +101,6 @@ export class UploadButtonComponent implements OnInit, OnChanges {
     }
 
     ngOnInit() {
-        this.settingsService.ecmHostSubject.subscribe((hostEcm: string) => {
-            this.checkPermission();
-        });
-
         this.permissionValue.subscribe((permission: boolean) => {
             this.hasPermission = permission;
         });

@@ -15,37 +15,27 @@
  * limitations under the License.
  */
 
-import { ReflectiveInjector }    from '@angular/core';
+import { TestBed, async } from '@angular/core/testing';
 import { AlfrescoThumbnailService } from './alfresco-thumbnail.service';
-import {
-    AlfrescoApiService,
-    AlfrescoAuthenticationService,
-    AlfrescoContentService,
-    AlfrescoSettingsService,
-    StorageService,
-    CookieService,
-    LogService
-} from 'ng2-alfresco-core';
-import { CookieServiceMock } from './../../../ng2-alfresco-core/src/assets/cookie.service.mock';
+import { CoreModule } from 'ng2-alfresco-core';
 
 describe('AlfrescoThumbnailService', () => {
 
-    let injector: ReflectiveInjector;
     let service: AlfrescoThumbnailService;
 
-    beforeEach(() => {
-        injector = ReflectiveInjector.resolveAndCreate([
-            AlfrescoApiService,
-            AlfrescoAuthenticationService,
-            AlfrescoContentService,
-            AlfrescoSettingsService,
-            AlfrescoThumbnailService,
-            StorageService,
-            { provide: CookieService, useClass: CookieServiceMock },
-            LogService
-        ]);
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule.forRoot()
+            ],
+            providers: [
+                AlfrescoThumbnailService
+            ]
+        }).compileComponents();
+    }));
 
-        service = injector.get(AlfrescoThumbnailService);
+    beforeEach(() => {
+        service = TestBed.get(AlfrescoThumbnailService);
     });
 
     it('should return the correct icon for a plain text file', () => {

@@ -295,13 +295,13 @@ describe('AnalyticsReportParametersComponent', () => {
                 done();
             });
 
-            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/app/rest/reporting/report-params/1').andReturn({
+            jasmine.Ajax.stubRequest('http://localhost:3000/bpm/activiti-app/app/rest/reporting/report-params/1').andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: analyticParamsMock.reportDefParamProcessDef
             });
 
-            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/app/rest/reporting/process-definitions').andReturn({
+            jasmine.Ajax.stubRequest('http://localhost:3000/bpm/activiti-app/app/rest/reporting/process-definitions').andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: analyticParamsMock.reportDefParamProcessDefOptionsNoApp
@@ -326,7 +326,7 @@ describe('AnalyticsReportParametersComponent', () => {
                 done();
             });
 
-            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/app/rest/reporting/report-params/1').andReturn({
+            jasmine.Ajax.stubRequest('http://localhost:3000/bpm/activiti-app/app/rest/reporting/report-params/1').andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: analyticParamsMock.reportDefParamProcessDef
@@ -334,7 +334,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
             let appId = '1';
 
-            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/api/enterprise/process-definitions?appDefinitionId=' + appId).andReturn({
+            jasmine.Ajax.stubRequest('http://localhost:3000/bpm/activiti-app/api/enterprise/process-definitions?appDefinitionId=' + appId).andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: analyticParamsMock.reportDefParamProcessDefOptionsApp
@@ -392,13 +392,13 @@ describe('AnalyticsReportParametersComponent', () => {
                 done();
             });
 
-            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/app/rest/reporting/report-params/1').andReturn({
+            jasmine.Ajax.stubRequest('http://localhost:3000/bpm/activiti-app/app/rest/reporting/report-params/1').andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: analyticParamsMock.reportDefParamProcessDef
             });
 
-            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/app/rest/reporting/process-definitions').andReturn({
+            jasmine.Ajax.stubRequest('http://localhost:3000/bpm/activiti-app/app/rest/reporting/process-definitions').andReturn({
                 status: 404,
                 contentType: 'json',
                 responseText: []

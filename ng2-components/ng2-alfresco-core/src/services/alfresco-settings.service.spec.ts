@@ -15,35 +15,32 @@
  * limitations under the License.
  */
 
+import { TestBed, async } from '@angular/core/testing';
+import { AppConfigModule } from './app-config.service';
 import { AlfrescoSettingsService } from './alfresco-settings.service';
 
 describe('AlfrescoSettingsService', () => {
 
     let service: AlfrescoSettingsService;
 
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                AppConfigModule
+            ],
+            declarations: [
+            ],
+            providers: [
+                AlfrescoSettingsService
+            ]
+        }).compileComponents();
+    }));
+
     beforeEach(() => {
-        service = new AlfrescoSettingsService();
+        service = TestBed.get(AlfrescoSettingsService);
     });
 
-    it('should have default ECM host', () => {
-        expect(service.ecmHost).toBe(AlfrescoSettingsService.DEFAULT_ECM_ADDRESS);
-    });
-
-    it('should change host ECM', () => {
-        // this test ensures 'host' getter/setter working properly
-        let address = 'http://192.168.0.1';
-        service.ecmHost = address;
-        expect(service.ecmHost).toBe(address);
-    });
-
-    it('should have default BPM host', () => {
-        expect(service.bpmHost).toBe(AlfrescoSettingsService.DEFAULT_BPM_ADDRESS);
-    });
-
-    it('should change host BPM', () => {
-        // this test ensures 'host' getter/setter working properly
-        let address = 'http://192.168.0.1';
-        service.bpmHost = address;
-        expect(service.bpmHost).toBe(address);
+    it('should be exposed by the module', () => {
+        expect(service).toBeDefined();
     });
 });
