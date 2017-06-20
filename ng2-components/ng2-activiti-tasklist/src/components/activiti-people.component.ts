@@ -57,7 +57,7 @@ export class ActivitiPeople implements AfterViewInit {
                 private peopleService: ActivitiPeopleService,
                 private logService: LogService) {
         if (translateService) {
-            translateService.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
+            translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
         }
         this.peopleSearch$ = new Observable<User[]>(observer => this.peopleSearchObserver = observer).share();
     }
@@ -85,9 +85,6 @@ export class ActivitiPeople implements AfterViewInit {
 
     involveUser(user: User) {
         this.showAssignment = false;
-        if (user === undefined || user === null) {
-            return;
-        }
         this.peopleService.involveUserWithTask(this.taskId, user.id.toString())
             .subscribe(() => {
                 this.people = [...this.people, user];
@@ -103,16 +100,16 @@ export class ActivitiPeople implements AfterViewInit {
             }, error => this.logService.error('Impossible to remove involved user from task'));
     }
 
-    getDisplayUser(user: User): string {
-        let firstName = user.firstName && user.firstName !== 'null' ? user.firstName : 'N/A';
-        let lastName = user.lastName && user.lastName !== 'null' ? user.lastName : 'N/A';
-        return firstName + ' ' + lastName;
-    }
-
-    getShortName(user: User): string {
-        let firstName = user.firstName && user.firstName !== 'null' ? user.firstName[0] : '';
-        let lastName = user.lastName && user.lastName !== 'null' ? user.lastName[0] : '';
-        return firstName + lastName;
+    getDisplayUser(user: User, delimiter: string = '-', shortFlag: boolean = false): string {
+        let firstName = user.firstName && user.firstName !== 'null' ? user.firstName : '';
+        let lastName = user.lastName && user.lastName !== 'null' ? user.lastName : '';
+        if (shortFlag) {
+            firstName = firstName !== '' ? firstName[0] : '';
+            lastName = lastName !== '' ? lastName[0] : '';
+            return firstName + lastName;
+        } else {
+            return firstName + delimiter + lastName;
+        }
     }
 
     onAddAssignement() {
@@ -131,6 +128,10 @@ export class ActivitiPeople implements AfterViewInit {
 
     isEditMode() {
         return !this.readOnly;
+    }
+
+    onCloseSearch() {
+        this.showAssignment = false;
     }
 
 }

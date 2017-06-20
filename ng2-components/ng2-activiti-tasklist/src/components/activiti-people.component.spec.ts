@@ -24,7 +24,6 @@ import { ActivitiPeople } from './activiti-people.component';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { User } from '../models/user.model';
 import { ActivitiPeopleService } from '../services/activiti-people.service';
-import { By } from '@angular/platform-browser';
 
 declare let jasmine: any;
 
@@ -81,21 +80,24 @@ describe('ActivitiPeople', () => {
             ]);
 
             window['componentHandler'] = componentHandler;
+
+            activitiPeopleComponent.people = [];
+            activitiPeopleComponent.readOnly = true;
+            fixture.detectChanges();
         });
     }));
 
-    it('should show people component title', () => {
+    it('should show people component title', async(() => {
         activitiPeopleComponent.people = [...userArray];
+        fixture.detectChanges();
         fixture.whenStable()
             .then(() => {
-                fixture.detectChanges();
                 expect(element.querySelector('#people-title')).toBeDefined();
                 expect(element.querySelector('#people-title')).not.toBeNull();
             });
-    });
+    }));
 
     it('should show no people involved message', () => {
-        fixture.detectChanges();
         fixture.whenStable()
             .then(() => {
                 expect(element.querySelector('#no-people-label')).not.toBeNull();
@@ -108,6 +110,7 @@ describe('ActivitiPeople', () => {
         beforeEach(() => {
             activitiPeopleComponent.taskId = 'fake-task-id';
             activitiPeopleComponent.people.push(...userArray);
+            fixture.detectChanges();
         });
 
         beforeEach(() => {
@@ -118,16 +121,16 @@ describe('ActivitiPeople', () => {
             jasmine.Ajax.uninstall();
         });
 
-        it('should show people involved', () => {
+        it('should show people involved', async(() => {
             fixture.whenStable()
                 .then(() => {
-                    fixture.detectChanges();
-                    expect(element.querySelector('.assignment-list-container')).not.toBeNull();
-                    expect(fixture.debugElement.queryAll(By.css('activiti-people-list alfresco-datatable tbody tr')).length).toBe(2);
+                    let gatewayElement: any = element.querySelector('#assignment-people-list tbody');
+                    expect(gatewayElement).not.toBeNull();
+                    expect(gatewayElement.children.length).toBe(2);
                 });
-        });
+        }));
 
-        it('should remove pepole involved', () => {
+        it('should remove pepole involved', async(() => {
             activitiPeopleComponent.removeInvolvedUser(fakeUser);
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200
@@ -135,12 +138,13 @@ describe('ActivitiPeople', () => {
             fixture.whenStable()
                 .then(() => {
                     fixture.detectChanges();
-                    expect(element.querySelector('.assignment-list-container')).not.toBeNull();
-                    expect(fixture.debugElement.queryAll(By.css('activiti-people-list alfresco-datatable tbody tr')).length).toBe(1);
+                    let gatewayElement: any = element.querySelector('#assignment-people-list tbody');
+                    expect(gatewayElement).not.toBeNull();
+                    expect(gatewayElement.children.length).toBe(1);
                 });
-        });
+        }));
 
-        it('should involve pepole', () => {
+        it('should involve pepole', async(() => {
             activitiPeopleComponent.involveUser(fakeUser);
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200
@@ -148,10 +152,11 @@ describe('ActivitiPeople', () => {
             fixture.whenStable()
                 .then(() => {
                     fixture.detectChanges();
-                    expect(element.querySelector('.assignment-list-container')).not.toBeNull();
-                    expect(fixture.debugElement.queryAll(By.css('activiti-people-list alfresco-datatable tbody tr')).length).toBe(3);
+                    let gatewayElement: any = element.querySelector('#assignment-people-list tbody');
+                    expect(gatewayElement).not.toBeNull();
+                    expect(gatewayElement.children.length).toBe(3);
                 });
-        });
+        }));
 
         it('should return an observable with user search results', (done) => {
             activitiPeopleComponent.peopleSearch$.subscribe((users) => {
@@ -200,13 +205,15 @@ describe('ActivitiPeople', () => {
 
         beforeEach(() => {
             jasmine.Ajax.install();
+            activitiPeopleComponent.people.push(...userArray);
+            fixture.detectChanges();
         });
 
         afterEach(() => {
             jasmine.Ajax.uninstall();
         });
 
-        it('should log error message when search fails', () => {
+        it('should log error message when search fails', async(() => {
             activitiPeopleComponent.peopleSearch$.subscribe(() => {
                 expect(logService.error).toHaveBeenCalledWith('Could not load users');
             });
@@ -214,10 +221,9 @@ describe('ActivitiPeople', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 403
             });
-        });
+        }));
 
-        it('should not remove user if remove involved user fail', () => {
-            activitiPeopleComponent.people.push(...userArray);
+        it('should not remove user if remove involved user fail', async(() => {
             activitiPeopleComponent.removeInvolvedUser(fakeUser);
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 403
@@ -225,12 +231,13 @@ describe('ActivitiPeople', () => {
             fixture.whenStable()
                 .then(() => {
                     fixture.detectChanges();
-                    expect(element.querySelector('.assignment-list-container')).not.toBeNull();
-                    expect(fixture.debugElement.queryAll(By.css('activiti-people-list alfresco-datatable tbody tr')).length).toBe(2);
+                    let gatewayElement: any = element.querySelector('#assignment-people-list tbody');
+                    expect(gatewayElement).not.toBeNull();
+                    expect(gatewayElement.children.length).toBe(2);
                 });
-        });
+        }));
 
-        it('should not involve user if involve user fail', () => {
+        it('should not involve user if involve user fail', async(() => {
             activitiPeopleComponent.involveUser(fakeUser);
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 403
@@ -238,8 +245,10 @@ describe('ActivitiPeople', () => {
             fixture.whenStable()
                 .then(() => {
                     fixture.detectChanges();
-                    expect(element.querySelector('.assignment-list-container')).toBeNull();
+                    let gatewayElement: any = element.querySelector('#assignment-people-list tbody');
+                    expect(gatewayElement).not.toBeNull();
+                    expect(gatewayElement.children.length).toBe(2);
                 });
-        });
+        }));
     });
 });

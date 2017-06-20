@@ -14,10 +14,11 @@
         <activiti-people-search
         (searchPeople)="searchUser($event)"
         (success)="involveUser($event)"
+        (closeSearch)="onCloseSearch()"
         [results]="peopleSearch$">
         </activiti-people-search>
     </div>
-    <div class="assignment-list-container" *ngIf="hasPeople()">
+    <div class="assignment-list-container" id="assignment-people-list" *ngIf="hasPeople()">
         <activiti-people-list
         [users]="people"
         [actions]="isEditMode()"
@@ -25,12 +26,12 @@
             <data-columns>
                 <data-column key="firstName">
                     <ng-template let-entry="$implicit">
-                        <div class="people-pic">{{getShortName(entry.row.obj)}}</div>
+                        <div class="people-pic">{{getDisplayUser(entry.row.obj, '', true)}}</div>
                     </ng-template>
                 </data-column>
                 <data-column key="email" class="full-width">
                     <ng-template let-entry="$implicit">
-                        <div class="people-full-name">{{ getDisplayUser(entry.row.obj) }}</div>
+                        <div class="people-full-name">{{ getDisplayUser(entry.row.obj, ' ') }}</div>
                         <div class="people-email">{{ entry.row.obj.email }}</div>
                         <div class="people-edit-label">can edit</div>
                     </ng-template>

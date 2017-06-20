@@ -22,7 +22,6 @@ import { ActivitiPeopleSearch } from './activiti-people-search.component';
 import { ActivitiPeopleList } from './activiti-people-list.component';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { User } from '../models/user.model';
-import { By } from '@angular/platform-browser';
 
 declare let jasmine: any;
 
@@ -87,8 +86,9 @@ describe('ActivitiPeopleSearch', () => {
         fixture.detectChanges();
         fixture.whenStable()
             .then(() => {
-                expect(element.querySelector('.search-list-container')).toBeNull();
+                expect(element.querySelector('#search-people-list')).toBeNull();
             });
+
     });
 
     it('should show user which can be involved ', (done) => {
@@ -98,8 +98,9 @@ describe('ActivitiPeopleSearch', () => {
             fixture.detectChanges();
             fixture.whenStable()
                 .then(() => {
-                    expect(element.querySelector('activiti-people-list alfresco-datatable tbody tr')).not.toBeNull();
-                    expect(fixture.debugElement.queryAll(By.css('activiti-people-list alfresco-datatable tbody tr')).length).toBe(2);
+                    let gatewayElement: any = element.querySelector('#search-people-list tbody');
+                    expect(gatewayElement).not.toBeNull();
+                    expect(gatewayElement.children.length).toBe(2);
                     done();
                 });
         });
@@ -137,7 +138,9 @@ describe('ActivitiPeopleSearch', () => {
         fixture.detectChanges();
         fixture.whenStable()
             .then(() => {
-                expect(fixture.debugElement.queryAll(By.css('activiti-people-list alfresco-datatable tbody tr')).length).toBe(1);
+                let gatewayElement: any = element.querySelector('#search-people-list tbody');
+                expect(gatewayElement).not.toBeNull();
+                expect(gatewayElement.children.length).toBe(1);
                 done();
             });
     });

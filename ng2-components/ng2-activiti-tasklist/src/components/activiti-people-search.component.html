@@ -5,19 +5,19 @@
         <label class="mdl-textfield__label" for="userSearchText">Search user</label>
     </div>
 </div>
-<div class="search-list-container" *ngIf="hasUsers()">
+<div class="search-list-container" id="search-people-list" *ngIf="hasUsers()">
     <activiti-people-list
     [users]="users"
     (clickRow)="onRowClick($event)">
         <data-columns>
             <data-column key="firstName">
                 <ng-template let-entry="$implicit">
-                    <div class="people-pic">{{getShortName(entry.row.obj)}}</div>
+                    <div class="people-pic">{{getDisplayUser(entry.row.obj, '', true)}}</div>
                 </ng-template>
             </data-column>
             <data-column key="email" class="full-width">
                 <ng-template let-entry="$implicit">
-                    <div class="people-full-name">{{ getDisplayUser(entry.row.obj) }}</div>
+                    <div class="people-full-name">{{ getDisplayUser(entry.row.obj, ' ') }}</div>
                 </ng-template>
             </data-column>
         </data-columns>

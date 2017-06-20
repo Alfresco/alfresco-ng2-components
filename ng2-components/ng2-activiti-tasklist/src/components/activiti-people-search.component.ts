@@ -41,6 +41,9 @@ export class ActivitiPeopleSearch implements OnInit, AfterViewInit {
     @Output()
     success: EventEmitter<User> = new EventEmitter<User>();
 
+    @Output()
+    closeSearch = new EventEmitter();
+
     searchUser: FormControl = new FormControl();
 
     users: User[] = [];
@@ -89,7 +92,7 @@ export class ActivitiPeopleSearch implements OnInit, AfterViewInit {
     }
 
     closeSearchList() {
-        this.success.emit();
+        this.closeSearch.emit();
     }
 
     addInvolvedUser() {
@@ -103,16 +106,16 @@ export class ActivitiPeopleSearch implements OnInit, AfterViewInit {
         });
     }
 
-    getDisplayUser(user: User): string {
-        let firstName = user.firstName && user.firstName !== 'null' ? user.firstName : 'N/A';
-        let lastName = user.lastName && user.lastName !== 'null' ? user.lastName : 'N/A';
-        return firstName + ' ' + lastName;
-    }
-
-    getShortName(user: User): string {
-        let firstName = user.firstName && user.firstName !== 'null' ? user.firstName[0] : '';
-        let lastName = user.lastName && user.lastName !== 'null' ? user.lastName[0] : '';
-        return firstName + lastName;
+    getDisplayUser(user: User, delimiter: string = '-', shortFlag: boolean = false): string {
+        let firstName = user.firstName && user.firstName !== 'null' ? user.firstName : '';
+        let lastName = user.lastName && user.lastName !== 'null' ? user.lastName : '';
+        if (shortFlag) {
+            firstName = firstName !== '' ? firstName[0] : '';
+            lastName = lastName !== '' ? lastName[0] : '';
+            return firstName + lastName;
+        } else {
+            return firstName + delimiter + lastName;
+        }
     }
 
     hasUsers() {
