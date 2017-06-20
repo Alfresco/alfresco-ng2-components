@@ -231,15 +231,46 @@ describe('Test ng2-alfresco-viewer Not Supported Format View component', () => {
             });
         });
 
-        it('should call content service download method if Click on Download button', () => {
-            spyOn(service, 'downloadBlob');
+        describe('Conversion', () => {
 
-            component.blobFile = new Blob();
+            function clickOnConvertButton() {
+                renditionSubject.next({ entry: { status: 'NOT_CREATED' } });
+                fixture.detectChanges();
 
-            let downloadButton: any = element.querySelector('#viewer-download-button');
-            downloadButton.click();
+                let convertButton: any = element.querySelector('#viewer-convert-button');
+                convertButton.click();
+                fixture.detectChanges();
+            }
 
-            expect(service.downloadBlob).toHaveBeenCalled();
+            it('should show loading spinner and disable the "Convert to PDF button" after the button was clicked', () => {
+                clickOnConvertButton();
+
+                let convertButton: any = element.querySelector('#viewer-convert-button');
+                expect(element.querySelector('#conversion-spinner')).not.toBeNull('Conversion spinner should be shown');
+                expect(convertButton.disabled).toBe(true);
+            });
+
+            it('should re-enable the "Convert to PDF button" and hide spinner after unsuccessful conversion and hide loading spinner', () => {
+                clickOnConvertButton();
+
+                conversionSubject.error(new Error());
+                fixture.detectChanges();
+
+                let convertButton: any = element.querySelector('#viewer-convert-button');
+                expect(element.querySelector('#conversion-spinner')).toBeNull('Conversion spinner should be shown');
+                expect(convertButton.disabled).toBe(false);
+            });
+
+            it('should show the pdf rendition after successful conversion', () => {
+                clickOnConvertButton();
+
+                conversionSubject.next();
+                conversionSubject.complete();
+                fixture.detectChanges();
+                fixture.detectChanges();
+
+                expect(element.querySelector('#pdf-rendition-viewer')).not.toBeNull('Pdf rendition should be shown.');
+            });
         });
     });
 });
