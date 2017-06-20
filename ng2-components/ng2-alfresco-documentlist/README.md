@@ -7,16 +7,17 @@
 - [Prerequisites](#prerequisites)
 - [See also](#see-also)
 - [Install](#install)
-- [Basic usage](#basic-usage)
-- [Properties](#properties)
-- [Events](#events)
-- [DOM Events](#dom-events)
-- [Handling DOM events](#handling-dom-events)
-- [Setting default folder](#setting-default-folder)
+- [Document List](#document-list)
+  * [Properties](#properties)
+  * [Events](#events)
+  * [DOM Events](#dom-events)
+  * [Handling DOM events](#handling-dom-events)
+  * [Setting default folder](#setting-default-folder)
 - [Calling DocumentList api directly](#calling-documentlist-api-directly)
 - [Breadcrumb Component](#breadcrumb-component)
   * [Properties](#properties-1)
-- [Creation Menu Action](#creation-menu-action)
+  * [Events](#events-1)
+- [Menu Actions](#menu-actions)
 - [Custom columns](#custom-columns)
   * [DataColumn Properties](#datacolumn-properties)
 - [Column definition](#column-definition)
@@ -30,7 +31,7 @@
     + [Folder actions](#folder-actions)
   * [Context Menu](#context-menu)
   * [Navigation mode](#navigation-mode)
-  * [Events](#events-1)
+  * [Events](#events-2)
 - [Advanced usage and customization](#advanced-usage-and-customization)
   * [Custom row filter](#custom-row-filter)
   * [Custom image resolver](#custom-image-resolver)
@@ -63,7 +64,7 @@ necessary configuration [prerequisites](https://github.com/Alfresco/alfresco-ng2
 npm install ng2-alfresco-documentlist
 ```
 
-## Basic usage
+## Document List
 
 ```html
 <alfresco-document-list
@@ -75,7 +76,7 @@ npm install ng2-alfresco-documentlist
 </alfresco-document-list>
 ```
 
-## Properties
+### Properties
 
 The properties currentFolderId, folderNode and node are the entry initialization properties of the document list. They can not be used together, choose the one that suites more your use case.
 
@@ -85,7 +86,7 @@ The properties currentFolderId, folderNode and node are the entry initialization
 | rowStyle | string | | The inline style to apply to every row, see [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html) docs for more details and usage examples |
 | rowStyleClass | string | | The CSS class to apply to every row |
 | currentFolderId | string | null | Initial node ID of displayed folder. Can be `-root-`, `-shared-`, `-my-`, or a fixed node ID  |
-| folderNode | `MinimalNodeEntryEntity` | null | Currently displayed folder node | 
+| folderNode | `[MinimalNodeEntryEntity](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)` | null | Currently displayed folder node | 
 | node | `NodePaging` | null | Document list will show all the node contained in the NodePaging entity  | 
 | navigate | boolean | true | Toggles navigation to folder content or file preview |
 | navigationMode | string (click,dblclick) | dblclick | User interaction for folder navigation or file preview |
@@ -102,7 +103,7 @@ The properties currentFolderId, folderNode and node are the entry initialization
 | allowDropFiles | boolean | false | Toggle file drop support for rows (see **ng2-alfresco-core/UploadDirective** for more details) |
 | sorting | string[] | | Defines default sorting. The format is an array of 2 strings `[key, direction]` i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want to override default sorting detected by the component based on columns. |
 
-## Events
+### Events
 
 | Name | Description |
 | --- | --- |
@@ -115,7 +116,7 @@ _For a complete example source code please refer to
 [DocumentList Demo](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-alfresco-documentlist/demo) 
 repository._
 
-## DOM Events
+### DOM Events
 
 Below are the DOM events the DocumentList component emits. 
 All of them are `bubbling`, meaning you can handle them in any component up the parent hierarchy, even if DocumentList is wrapped by another component(s).
@@ -134,7 +135,7 @@ Every event is represented by a [CustomEvent](https://developer.mozilla.org/en/d
 }
 ```
 
-## Handling DOM events
+### Handling DOM events
 
 Here's a basic example on handling DOM events in the parent elements:
 
@@ -151,7 +152,7 @@ Here's a basic example on handling DOM events in the parent elements:
 </div>
 ```
 
-## Setting default folder
+### Setting default folder
 
 You can set current folder path by assigning a value for `currentFolderId` property. 
 It can be either one of the well-known locations as **-root-**, **-shared-** or **-my-** or a node ID (guid).
@@ -275,10 +276,10 @@ You can get more details in [Component lifecycle hooks](https://angular.io/docs/
 DocumentList provides simple breadcrumb element to indicate the current position within a navigation hierarchy.
 
 ```html
-<alfresco-document-list-breadcrumb
+<adf-breadcrumb
     [target]="documentList"
     [folderNode]="documentList.folderNode">
-</alfresco-document-list-breadcrumb>
+</adf-breadcrumb>
 ```
 
 ![Breadcrumb](docs/assets/breadcrumb.png)
@@ -287,10 +288,17 @@ DocumentList provides simple breadcrumb element to indicate the current position
 
 | Name | Type | Description |
 | --- | --- | --- |
-| target | DocumentListComponent | DocumentList component to operate with. Upon clicks will instruct the given component to update. |
-| folderNode | MinimalNodeEntryEntity | Active node, builds UI based on `folderNode.path.elements` collection. |
+| target | DocumentListComponent | (optional) DocumentList component to operate with. Upon clicks will instruct the given component to update. |
+| folderNode | [MinimalNodeEntryEntity](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md) | Active node, builds UI based on `folderNode.path.elements` collection. |
+| root | String | (optional) Name of the folder where you want start the breadcrumb. Note the root will always be showed as first element
 
-## Creation Menu Action
+### Events
+
+| Name | Returned Type | Description |
+| --- | --- | --- |
+| navigate | [PathElementEntity](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/PathElementEntity.md) |emitted when user clicks on a breadcrumb  |
+
+## Menu Actions
 
 DocumentList provides simple creation menu actions that provide the action to create a new folder.
 

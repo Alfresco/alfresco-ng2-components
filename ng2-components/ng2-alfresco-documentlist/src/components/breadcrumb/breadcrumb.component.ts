@@ -20,14 +20,17 @@ import { MinimalNodeEntryEntity, PathElementEntity } from 'alfresco-js-api';
 import { DocumentListComponent } from '../document-list.component';
 
 @Component({
-    selector: 'alfresco-document-list-breadcrumb',
+    selector: 'adf-breadcrumb, alfresco-document-list-breadcrumb',
     templateUrl: './breadcrumb.component.html',
-    styleUrls: ['./breadcrumb.component.css']
+    styleUrls: ['./breadcrumb.component.scss']
 })
-export class DocumentListBreadcrumbComponent implements OnChanges {
+export class BreadcrumbComponent implements OnChanges {
 
     @Input()
     folderNode: MinimalNodeEntryEntity;
+
+    @Input()
+    root: string;
 
     @Input()
     target: DocumentListComponent;
@@ -35,27 +38,46 @@ export class DocumentListBreadcrumbComponent implements OnChanges {
     route: PathElementEntity[] = [];
 
     @Output()
-    navigate: EventEmitter<any> = new EventEmitter();
+    navigate: EventEmitter<PathElementEntity> = new EventEmitter<PathElementEntity>();
 
-    ngOnChanges(changes: SimpleChanges) {
-        if (changes['folderNode']) {
+    public ngOnChanges(changes: SimpleChanges): void {
+        if (changes.folderNode) {
 
-            let node: MinimalNodeEntryEntity = changes['folderNode'].currentValue;
+            let node: MinimalNodeEntryEntity = changes.folderNode.currentValue;
+
             if (node) {
-                // see https://github.com/Alfresco/alfresco-js-api/issues/139
                 let route = <PathElementEntity[]> (node.path.elements || []);
+
                 route.push(<PathElementEntity> {
                     id: node.id,
                     name: node.name
                 });
+
+                if (this.root) {
+                    let isRoot = false;
+                    route = route.filter((currentElement) => {
+                        if (currentElement.name === this.root) {
+                            isRoot = true;
+                        }
+                        return isRoot;
+                    });
+
+                    if (route.length === 0) {
+                        route.push(<PathElementEntity> {
+                            id: undefined,
+                            name: this.root
+                        });
+                    }
+                }
+
                 this.route = route;
             }
         }
     }
 
-    onRoutePathClick(route: PathElementEntity, e?: Event) {
-        if (e) {
-            e.preventDefault();
+    public onRoutePathClick(route: PathElementEntity, event?: Event): void {
+        if (event) {
+            event.preventDefault();
         }
 
         if (route) {
