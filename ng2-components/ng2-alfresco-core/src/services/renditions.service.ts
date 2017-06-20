@@ -76,6 +76,19 @@ export class RenditionsService {
             .catch(err => this.handleError(err));
     }
 
+    convert(nodeId: string, encoding: string, pollingInterval: number|undefined) {
+        return this.createRendition(nodeId, encoding)
+            .concatMap(() => this.pollRendition(nodeId, encoding, pollingInterval));
+    }
+
+    private pollRendition(nodeId: string, encoding: string, interval: number = 1000) {
+        return Observable.interval(interval)
+            .switchMap(() => this.getRendition(nodeId, encoding))
+            .takeWhile((data) => {
+                return (data.entry.status !== 'CREATED');
+            });
+    }
+
     private handleError(error: any): Observable<any> {
         this.logService.error(error);
         return Observable.throw(error || 'Server error');

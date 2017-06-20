@@ -35,6 +35,7 @@ import { NotSupportedFormat } from './src/components/notSupportedFormat.componen
 import { PdfViewerComponent } from './src/components/pdfViewer.component';
 import { TxtViewerComponent } from './src/components/txtViewer.component';
 import { ExtensionViewerDirective } from './src/directives/extension-viewer.directive';
+import { MdIconModule, MdButtonModule, MdProgressSpinnerModule } from '@angular/material';
 
 export * from './src/components/viewer.component';
 export * from './src/services/rendering-queue.services';
@@ -60,7 +61,10 @@ export const VIEWER_PROVIDERS: any[] = [
 
 @NgModule({
     imports: [
-        CoreModule
+        CoreModule,
+        MdIconModule,
+        MdButtonModule,
+        MdProgressSpinnerModule
     ],
     declarations: [
         ...VIEWER_DIRECTIVES
