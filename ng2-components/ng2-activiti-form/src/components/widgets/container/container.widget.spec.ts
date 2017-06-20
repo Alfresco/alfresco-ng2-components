@@ -27,7 +27,7 @@ import { ActivitiContent } from './../../activiti-content.component';
 import { fakeFormJson } from '../../../services/assets/widget-visibility.service.mock';
 import { MdTabsModule } from '@angular/material';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService, CoreModule } from 'ng2-alfresco-core';
+import { CoreModule } from 'ng2-alfresco-core';
 import { FormService } from './../../../services/form.service';
 import { EcmModelService } from './../../../services/ecm-model.service';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
@@ -45,16 +45,14 @@ describe('ContainerWidget', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule, MdTabsModule
+                CoreModule.forRoot(),
+                MdTabsModule
             ],
             declarations: [FormFieldComponent, ActivitiContent, WIDGET_DIRECTIVES, MASK_DIRECTIVE],
             providers: [
                 FormService,
-                AlfrescoAuthenticationService,
                 EcmModelService,
-                ActivitiAlfrescoContentService,
-                AlfrescoSettingsService,
-                AlfrescoApiService
+                ActivitiAlfrescoContentService
             ]
         }).compileComponents();
     }));

@@ -26,7 +26,7 @@ import { DropdownEditorComponent } from './editors/dropdown/dropdown.editor';
 import { DateEditorComponent } from './editors/date/date.editor';
 import { BooleanEditorComponent } from './editors/boolean/boolean.editor';
 import { TextEditorComponent } from './editors/text/text.editor';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService, CoreModule, LogService } from 'ng2-alfresco-core';
+import { CoreModule, LogService } from 'ng2-alfresco-core';
 import { FormService } from './../../../services/form.service';
 import { EcmModelService } from './../../../services/ecm-model.service';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
@@ -85,7 +85,7 @@ describe('DynamicTableWidget', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                CoreModule.forRoot()
             ],
             declarations: [DynamicTableWidget, RowEditorComponent,
                 DropdownEditorComponent, DateEditorComponent, BooleanEditorComponent, TextEditorComponent],
@@ -93,11 +93,8 @@ describe('DynamicTableWidget', () => {
                 FormService,
                 {provide: LogService, useClass: LogServiceMock},
                 ActivitiAlfrescoContentService,
-                AlfrescoAuthenticationService,
                 EcmModelService,
-                WidgetVisibilityService,
-                AlfrescoSettingsService,
-                AlfrescoApiService
+                WidgetVisibilityService
             ]
         }).compileComponents();
     }));

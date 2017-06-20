@@ -21,7 +21,7 @@ import { WidgetComponent } from './widget.component';
 import { FormFieldModel } from './core/form-field.model';
 import { FormModel } from './core/form.model';
 import { FormService } from './../../services/form.service';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService, CoreModule } from 'ng2-alfresco-core';
+import { CoreModule } from 'ng2-alfresco-core';
 import { EcmModelService } from './../../services/ecm-model.service';
 import { ActivitiAlfrescoContentService } from '../../services/activiti-alfresco.service';
 
@@ -39,16 +39,13 @@ describe('WidgetComponent', () => {
         window['componentHandler'] = componentHandler;
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                CoreModule.forRoot()
             ],
             declarations: [WidgetComponent],
             providers: [
                 FormService,
-                AlfrescoAuthenticationService,
                 EcmModelService,
-                ActivitiAlfrescoContentService,
-                AlfrescoSettingsService,
-                AlfrescoApiService
+                ActivitiAlfrescoContentService
             ]
         }).compileComponents();
     }));

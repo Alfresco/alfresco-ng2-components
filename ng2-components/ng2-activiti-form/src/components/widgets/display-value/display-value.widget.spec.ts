@@ -24,7 +24,7 @@ import { FormFieldTypes } from '../core/form-field-types';
 import { FormModel } from '../core/form.model';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService, CoreModule } from 'ng2-alfresco-core';
+import { CoreModule } from 'ng2-alfresco-core';
 import { FormService } from './../../../services/form.service';
 import { EcmModelService } from './../../../services/ecm-model.service';
 
@@ -39,7 +39,7 @@ describe('DisplayValueWidget', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                CoreModule.forRoot()
             ],
             declarations: [
                 DisplayValueWidget,
@@ -47,11 +47,8 @@ describe('DisplayValueWidget', () => {
             ],
             providers: [
                 FormService,
-                AlfrescoAuthenticationService,
                 EcmModelService,
-                WidgetVisibilityService,
-                AlfrescoSettingsService,
-                AlfrescoApiService
+                WidgetVisibilityService
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         }).compileComponents();

@@ -22,7 +22,7 @@ import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { FormFieldTypes } from '../core/form-field-types';
 
-import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService, CoreModule } from 'ng2-alfresco-core';
+import { CoreModule } from 'ng2-alfresco-core';
 import { FormService } from './../../../services/form.service';
 import { EcmModelService } from './../../../services/ecm-model.service';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
@@ -38,7 +38,7 @@ describe('TextWidget', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                CoreModule.forRoot()
             ],
             declarations: [
                 TextWidget,
@@ -46,11 +46,8 @@ describe('TextWidget', () => {
             ],
             providers: [
                 FormService,
-                AlfrescoAuthenticationService,
                 EcmModelService,
-                ActivitiAlfrescoContentService,
-                AlfrescoSettingsService,
-                AlfrescoApiService
+                ActivitiAlfrescoContentService
             ]
         }).compileComponents();
     }));
