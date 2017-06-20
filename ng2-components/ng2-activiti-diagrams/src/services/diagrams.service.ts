@@ -30,7 +30,7 @@ export class DiagramsService {
     }
 
     getProcessDefinitionModel(processDefinitionId: string): Observable<any> {
-        let url = `${this.settingsService.getBPMApiBaseUrl()}/app/rest/process-definitions/${processDefinitionId}/model-json`;
+        let url = `${this.settingsService.bpmHost}/activiti-app/app/rest/process-definitions/${processDefinitionId}/model-json`;
         let options = this.getRequestOptions();
         return this.http
             .get(url, options)
@@ -41,7 +41,7 @@ export class DiagramsService {
     }
 
     getRunningProcessDefinitionModel(processInstanceId: string): Observable<any> {
-        let url = `${this.settingsService.getBPMApiBaseUrl()}/app/rest/process-instances/${processInstanceId}/model-json`;
+        let url = `${this.settingsService.bpmHost}/activiti-app/app/rest/process-instances/${processInstanceId}/model-json`;
         let options = this.getRequestOptions();
         return this.http
             .get(url, options)

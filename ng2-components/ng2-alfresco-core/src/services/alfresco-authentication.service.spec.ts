@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ReflectiveInjector } from '@angular/core';
+import { TestBed, async } from '@angular/core/testing';
 import { AlfrescoSettingsService } from './alfresco-settings.service';
 import { AlfrescoAuthenticationService } from './alfresco-authentication.service';
 import { AlfrescoApiService } from './alfresco-api.service';
@@ -23,30 +23,39 @@ import { StorageService } from './storage.service';
 import { CookieService } from './cookie.service';
 import { CookieServiceMock } from './../assets/cookie.service.mock';
 import { LogService } from './log.service';
+import { AppConfigModule } from './app-config.service';
 
 declare let jasmine: any;
 
 describe('AlfrescoAuthenticationService', () => {
-    let injector;
+    let apiService: AlfrescoApiService;
     let authService: AlfrescoAuthenticationService;
     let settingsService: AlfrescoSettingsService;
     let storage: StorageService;
     let cookie: CookieService;
 
-    beforeEach(() => {
-        injector = ReflectiveInjector.resolveAndCreate([
-            AlfrescoSettingsService,
-            AlfrescoApiService,
-            AlfrescoAuthenticationService,
-            StorageService,
-            { provide: CookieService, useClass: CookieServiceMock },
-            LogService
-        ]);
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                AppConfigModule
+            ],
+            providers: [
+                AlfrescoSettingsService,
+                AlfrescoApiService,
+                AlfrescoAuthenticationService,
+                StorageService,
+                { provide: CookieService, useClass: CookieServiceMock },
+                LogService
+            ]
+        }).compileComponents();
+    }));
 
-        authService = injector.get(AlfrescoAuthenticationService);
-        settingsService = injector.get(AlfrescoSettingsService);
-        cookie = injector.get(CookieService);
-        storage = injector.get(StorageService);
+    beforeEach(() => {
+        apiService = TestBed.get(AlfrescoApiService);
+        authService = TestBed.get(AlfrescoAuthenticationService);
+        settingsService = TestBed.get(AlfrescoSettingsService);
+        cookie = TestBed.get(CookieService);
+        storage = TestBed.get(StorageService);
         storage.clear();
 
         jasmine.Ajax.install();
@@ -348,32 +357,6 @@ describe('AlfrescoAuthenticationService', () => {
                 'status': 403
             });
         });
-    });
-
-    describe('Setting service change should reflect in the api', () => {
-
-        beforeEach(() => {
-            settingsService.setProviders('ALL');
-        });
-
-        it('should host ecm url change be reflected in the api configuration', () => {
-            settingsService.ecmHost = '127.99.99.99';
-
-            expect(authService.alfrescoApi.getInstance().config.hostEcm).toBe('127.99.99.99');
-        });
-
-        it('should host bpm url change be reflected in the api configuration', () => {
-            settingsService.bpmHost = '127.99.99.99';
-
-            expect(authService.alfrescoApi.getInstance().config.hostBpm).toBe('127.99.99.99');
-        });
-
-        it('should host bpm provider change be reflected in the api configuration', () => {
-            settingsService.setProviders('ECM');
-
-            expect(authService.alfrescoApi.getInstance().config.provider).toBe('ECM');
-        });
-
     });
 
     describe('when the setting is both ECM and BPM ', () => {

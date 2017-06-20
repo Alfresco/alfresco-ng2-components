@@ -15,35 +15,29 @@
  * limitations under the License.
  */
 
-import { ReflectiveInjector } from '@angular/core';
-import {
-    AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
-    AlfrescoApiService,
-    StorageService,
-    LogService
-} from 'ng2-alfresco-core';
+import { TestBed, async } from '@angular/core/testing';
+import { CoreModule } from 'ng2-alfresco-core';
 import { TagService } from '../services/tag.service';
 
 declare let jasmine: any;
 
 describe('Tag service', () => {
 
-    let service, injector;
+    let service: TagService;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule.forRoot()
+            ],
+            providers: [
+                TagService
+            ]
+        }).compileComponents();
+    }));
 
     beforeEach(() => {
-        injector = ReflectiveInjector.resolveAndCreate([
-            AlfrescoSettingsService,
-            AlfrescoApiService,
-            AlfrescoAuthenticationService,
-            TagService,
-            StorageService,
-            LogService
-        ]);
-    });
-
-    beforeEach(() => {
-        service = injector.get(TagService);
+        service = TestBed.get(TagService);
     });
 
     beforeEach(() => {
@@ -60,7 +54,7 @@ describe('Tag service', () => {
             service.removeTag('fake-node-id', 'fake-tag').subscribe(() => {
                 expect(jasmine.Ajax.requests.mostRecent().method).toBe('DELETE');
                 expect(jasmine.Ajax.requests.mostRecent().url)
-                    .toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags/fake-tag');
+                    .toBe('http://localhost:3000/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags/fake-tag');
                 done();
             });
 
@@ -73,7 +67,7 @@ describe('Tag service', () => {
             service.addTag('fake-node-id', 'fake-tag').subscribe(() => {
                 expect(jasmine.Ajax.requests.mostRecent().method).toBe('POST');
                 expect(jasmine.Ajax.requests.mostRecent().url)
-                    .toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags');
+                    .toBe('http://localhost:3000/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags');
                 done();
             });
 
@@ -86,7 +80,7 @@ describe('Tag service', () => {
             service.getAllTheTags().subscribe(() => {
                 expect(jasmine.Ajax.requests.mostRecent().method).toBe('GET');
                 expect(jasmine.Ajax.requests.mostRecent().url)
-                    .toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/tags');
+                    .toBe('http://localhost:3000/ecm/alfresco/api/-default-/public/alfresco/versions/1/tags');
                 done();
             });
 
@@ -99,7 +93,7 @@ describe('Tag service', () => {
             service.getTagsByNodeId('fake-node-id').subscribe(() => {
                 expect(jasmine.Ajax.requests.mostRecent().method).toBe('GET');
                 expect(jasmine.Ajax.requests.mostRecent().url)
-                    .toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags');
+                    .toBe('http://localhost:3000/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags');
                 done();
             });
 

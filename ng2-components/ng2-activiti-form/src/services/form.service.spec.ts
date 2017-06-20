@@ -15,14 +15,8 @@
  * limitations under the License.
  */
 
-import { ReflectiveInjector } from '@angular/core';
-import {
-    AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
-    AlfrescoApiService,
-    StorageService,
-    LogService
-} from 'ng2-alfresco-core';
+import { TestBed, async } from '@angular/core/testing';
+import { CoreModule, AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { FormService } from './form.service';
 import { Response, ResponseOptions } from '@angular/http';
@@ -69,24 +63,26 @@ function createFakeBlob() {
 
 describe('Form service', () => {
 
-    let service, injector, apiService, logService;
+    let service: FormService;
+    let apiService: AlfrescoApiService;
+    let logService: LogService;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule
+            ],
+            providers: [
+                EcmModelService,
+                FormService
+            ]
+        }).compileComponents();
+    }));
 
     beforeEach(() => {
-        injector = ReflectiveInjector.resolveAndCreate([
-            AlfrescoSettingsService,
-            AlfrescoApiService,
-            AlfrescoAuthenticationService,
-            EcmModelService,
-            StorageService,
-            FormService,
-            LogService
-        ]);
-    });
-
-    beforeEach(() => {
-        service = injector.get(FormService);
-        apiService = injector.get(AlfrescoApiService);
-        logService = injector.get(LogService);
+        service = TestBed.get(FormService);
+        apiService = TestBed.get(AlfrescoApiService);
+        logService = TestBed.get(LogService);
     });
 
     beforeEach(() => {
@@ -530,7 +526,7 @@ describe('Form service', () => {
 
             function stubCreateForm() {
                 jasmine.Ajax.stubRequest(
-                    'http://localhost:9999/activiti-app/api/enterprise/models'
+                    'http://localhost:3000/bpm/activiti-app/api/enterprise/models'
                 ).andReturn({
                     status: 200,
                     statusText: 'HTTP/1.1 200 OK',
@@ -541,7 +537,7 @@ describe('Form service', () => {
 
             function stubGetEcmModel() {
                 jasmine.Ajax.stubRequest(
-                    'http://localhost:8080/alfresco/api/-default-/private/alfresco/versions/1/cmm/activitiFormsModel/types'
+                    'http://localhost:3000/ecm/alfresco/api/-default-/private/alfresco/versions/1/cmm/activitiFormsModel/types'
                 ).andReturn({
                     status: 200,
                     statusText: 'HTTP/1.1 200 OK',
@@ -562,7 +558,7 @@ describe('Form service', () => {
 
             function stubAddFieldsToAForm() {
                 jasmine.Ajax.stubRequest(
-                    'http://localhost:9999/activiti-app/api/enterprise/editor/form-models/' + formId
+                    'http://localhost:3000/bpm/activiti-app/api/enterprise/editor/form-models/' + formId
                 ).andReturn({
                     status: 200,
                     statusText: 'HTTP/1.1 200 OK',

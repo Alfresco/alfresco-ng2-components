@@ -15,35 +15,30 @@
  * limitations under the License.
  */
 
-import { ReflectiveInjector } from '@angular/core';
-import {
-    AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
-    AlfrescoApiService,
-    StorageService,
-    LogService
-} from 'ng2-alfresco-core';
+import { TestBed, async } from '@angular/core/testing';
+import { CoreModule } from 'ng2-alfresco-core';
 import { BpmUserService } from '../services/bpm-user.service';
 import { BpmUserModel } from '../models/bpm-user.model';
+
 declare let jasmine: any;
 
 describe('Bpm user service', () => {
 
-    let service, injector;
+    let service: BpmUserService;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule.forRoot()
+            ],
+            providers: [
+                BpmUserService
+            ]
+        }).compileComponents();
+    }));
 
     beforeEach(() => {
-        injector = ReflectiveInjector.resolveAndCreate([
-            AlfrescoSettingsService,
-            AlfrescoApiService,
-            AlfrescoAuthenticationService,
-            BpmUserService,
-            StorageService,
-            LogService
-        ]);
-    });
-
-    beforeEach(() => {
-        service = injector.get(BpmUserService);
+        service = TestBed.get(BpmUserService);
     });
 
     beforeEach(() => {

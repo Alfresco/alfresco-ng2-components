@@ -6,7 +6,6 @@
 
 - [Prerequisites](#prerequisites)
 - [Install](#install)
-- [Library content](#library-content)
 - [Toolbar Component](#toolbar-component)
   * [Properties](#properties)
 - [Upload Directive](#upload-directive)
@@ -51,24 +50,6 @@ necessary configuration, see this [page](https://github.com/Alfresco/alfresco-ng
 ```sh
 npm install ng2-alfresco-core
 ```
-
-## Library content
-
-- Components
-    - [Toolbar](#toolbar-component)
-    - [Accordion](#accordion-component)
-- Directives
-    - [Upload](#upload-directive)
-    - [Context Menu](#context-menu-directive)
-- Services
-    - [AppConfigService](#appconfigservice), application configuration
-    - **LogService**, log service implementation
-    - [NotificationService](#notification-service), Notification service implementation
-    - [AlfrescoApiService](#alfresco-api-service), provides access to Alfresco JS API instance
-    - [AlfrescoAuthenticationService](#authentication-service), main authentication APIs
-    - [AlfrescoTranslationService](#alfrescotranslationservice), various i18n-related APIs
-    - **ContextMenuService**, global context menu APIs
-    - [Renditions Service](#renditions-service)
 
 ## Toolbar Component
 
@@ -349,6 +330,28 @@ export class AppComponent {
 
 You custom components can also benefit from the `AppConfigService`,
 you can put an unlimited number of settings and optionally a nested JSON hierarchy.
+
+### Different configurations based on environment settings
+
+The CoreModule allows you to provide custom application configuration path.
+That means you can evaluate the final file name based on conditions, for example environment settings:
+
+```ts
+let appConfigFile = 'app.config-dev.json';
+if (process.env.ENV === 'production') {
+    appConfigFile = 'app.config-prod.json';
+}
+
+@NgModule({
+    imports: [
+        ...
+        CoreModule.forRoot({
+            appConfigFile: appConfigFile
+        }),
+        ...
+    ]
+})
+```
 
 ## Notification Service
 

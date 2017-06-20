@@ -58,15 +58,21 @@ import {
     SocialComponent,
     AboutComponent,
     FilesComponent,
-    FormNodeViewer,
-    SettingComponent
+    FormNodeViewer
 } from './components/index';
+
+let appConfigFile = 'app.config-dev.json';
+if (process.env.ENV === 'production') {
+    appConfigFile = 'app.config-prod.json';
+}
 
 @NgModule({
     imports: [
         BrowserModule,
         routing,
-        CoreModule.forRoot(),
+        CoreModule.forRoot({
+            appConfigFile: appConfigFile
+        }),
         MaterialModule,
         LoginModule.forRoot(),
         SearchModule.forRoot(),
@@ -104,7 +110,6 @@ import {
         AboutComponent,
         FilesComponent,
         FormNodeViewer,
-        SettingComponent,
         CreateFolderDialog
     ],
     providers: [],

@@ -1,14 +1,7 @@
 
-<h1 align="center">Alfresco Angular 2 Components</h1>
-<p align="center">
-  <img title="alfresco" alt='alfresco' src='../assets/alfresco.png'  width="280px" height="150px" ></img>
-  <img title="angular2" alt='angular2' src='../assets/angular2.png'  width="150px" height="150px" ></img>
-</p>
-<p align="center">
-    <a href='https://github.com/mgechev/angular2-style-guide'>
-      <img src='https://mgechev.github.io/angular2-style-guide/images/badge.svg' alt='style' />
-    </a>
-</p>
+# ADF Demo Application
+
+Please note that this application is not an official product, but a testing and demo application to showcase complex interactions for ADF components.
 
 ## Installing
 
@@ -18,6 +11,53 @@ To correctly use this demo check that on your machine is running [Node](https://
 git clone https://github.com/Alfresco/alfresco-ng2-components.git
 cd alfresco-ng2-components/demo-shell-ng2/
 npm install
+```
+
+## Proxy settings and CORS
+
+To simplify development and reduce the time to get started the application features the following Proxy settings:
+
+- **http://localhost:3000/ecm** is mapped to **http://localhost:8080**
+- **http://localhost:3000/bpm** is mapped to **http://localhost:9999**
+
+The settings above address most common scenarios for running ACS on port 8080 and APS on port 9999 and allow you to skip the CORS configuration.
+
+If you would like to change default proxy settings, please edit the `config/webpack.common.js` file.
+
+## Application settings (server-side)
+
+All server-side application settings are stored in the `app.config-dev.json` and `app.config-prod.json` files. 
+By default the configuration files have the content similar to the following one:
+
+```json
+{
+    "ecmHost": "http://localhost:3000/ecm",
+    "bpmHost": "http://localhost:3000/bpm",
+    "application": {
+        "name": "Alfresco"
+    }
+}
+```
+
+You can add any additional settings to the application configuration file if needed.
+
+Configuration files are picked based on environment settings (see `app.module.ts` for more details).
+
+```ts
+let appConfigFile = 'app.config-dev.json';
+if (process.env.ENV === 'production') {
+    appConfigFile = 'app.config-prod.json';
+}
+
+@NgModule({
+    imports: [
+        ...
+        CoreModule.forRoot({
+            appConfigFile: appConfigFile
+        }),
+        ...
+    ]
+})
 ```
 
 ## Development build
@@ -59,42 +99,3 @@ If you want to run the demo shell with the latest change from the development br
 ./npm-clean.sh
 ./start-linked.sh -install
 ```
-
-## Multi-language
-To support a new language you need to create your language file (.json) and add it to `i18n/` folder.
-
-```json
-{
-        "username" : "Username",
-        "input-required-message": "Required",
-        "input-min-message": "Your username needs to be at least 4 characters.",
-        "login-button": "Login"
-}
-```
-
-Directory structure:
-```
-.
-├── i18n/
-│   ├── en.json
-│   ├── it.json
-│   └── fr.json
-```
-
-## Custom-files
-
-If you need to add custom files on your project you can add this files in the folders public
-
-```
-.
-├── public/
-│   ├── images/
-│   ├── css/
-│   └── js/
-```
-
-the public folder above wil be copied in the root of your project and you can refer to them for example as
-
- * './images/custom_image.png'
- * './js/custom_script.js'
- * './css/custom_style.css'
