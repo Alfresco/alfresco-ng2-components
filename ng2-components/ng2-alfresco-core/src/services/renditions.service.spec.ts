@@ -88,7 +88,7 @@ describe('RenditionsService', () => {
             service.convert('fake-node-id', 'pdf');
 
             expect(jasmine.Ajax.requests.mostRecent().method).toBe('POST');
-            expect(jasmine.Ajax.requests.mostRecent().url).toBe('http://localhost:3000/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/renditions');
+            expect(jasmine.Ajax.requests.mostRecent().url).toBe('http://localhost:3000/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/renditions');
             done();
         });
     });
