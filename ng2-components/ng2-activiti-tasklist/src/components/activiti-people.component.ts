@@ -100,16 +100,16 @@ export class ActivitiPeople implements AfterViewInit {
             }, error => this.logService.error('Impossible to remove involved user from task'));
     }
 
-    getDisplayUser(user: User, delimiter: string = '-', shortFlag: boolean = false): string {
-        let firstName = user.firstName && user.firstName !== 'null' ? user.firstName : '';
-        let lastName = user.lastName && user.lastName !== 'null' ? user.lastName : '';
-        if (shortFlag) {
-            firstName = firstName !== '' ? firstName[0] : '';
-            lastName = lastName !== '' ? lastName[0] : '';
-            return firstName + lastName;
-        } else {
-            return firstName + delimiter + lastName;
-        }
+    getDisplayUser(firstName: string, lastName: string, delimiter: string = '-'): string {
+        firstName = (firstName !== null ? firstName : '');
+        lastName = (lastName !== null ? lastName : '');
+        return firstName + delimiter + lastName;
+    }
+
+    getInitialUserName(firstName: string, lastName: string) {
+        firstName = (firstName !== null && firstName !== '' ? firstName[0] : '');
+        lastName = (lastName !== null && lastName !== '' ? lastName[0] : '');
+        return this.getDisplayUser(firstName, lastName, '');
     }
 
     onAddAssignement() {

@@ -26,12 +26,12 @@
             <data-columns>
                 <data-column key="firstName">
                     <ng-template let-entry="$implicit">
-                        <div class="people-pic">{{getDisplayUser(entry.row.obj, '', true)}}</div>
+                        <div class="people-pic">{{getInitialUserName(entry.row.obj.firstName, entry.row.obj.lastName)}}</div>
                     </ng-template>
                 </data-column>
                 <data-column key="email" class="full-width">
                     <ng-template let-entry="$implicit">
-                        <div class="people-full-name">{{ getDisplayUser(entry.row.obj, ' ') }}</div>
+                        <div class="people-full-name">{{ getDisplayUser(entry.row.obj.firstName, entry.row.obj.lastName, ' ') }}</div>
                         <div class="people-email">{{ entry.row.obj.email }}</div>
                         <div class="people-edit-label">can edit</div>
                     </ng-template>
