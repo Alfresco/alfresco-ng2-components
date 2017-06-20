@@ -26,7 +26,8 @@ If you would like to change default proxy settings, please edit the `config/webp
 
 ## Application settings (server-side)
 
-All server-side application settings are stored in the `app.config.json` file by default and have the content similar to the following one:
+All server-side application settings are stored in the `app.config-dev.json` and `app.config-prod.json` files. 
+By default the configuration files have the content similar to the following one:
 
 ```json
 {
@@ -39,6 +40,25 @@ All server-side application settings are stored in the `app.config.json` file by
 ```
 
 You can add any additional settings to the application configuration file if needed.
+
+Configuration files are picked based on environment settings (see `app.module.ts` for more details).
+
+```ts
+let appConfigFile = 'app.config-dev.json';
+if (process.env.ENV === 'production') {
+    appConfigFile = 'app.config-prod.json';
+}
+
+@NgModule({
+    imports: [
+        ...
+        CoreModule.forRoot({
+            appConfigFile: appConfigFile
+        }),
+        ...
+    ]
+})
+```
 
 ## Development build
 
