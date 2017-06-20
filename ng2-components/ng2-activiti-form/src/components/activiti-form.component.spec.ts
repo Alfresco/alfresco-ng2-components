@@ -800,4 +800,18 @@ describe('ActivitiForm', () => {
         expect(formComponent.isOutcomeButtonEnabled(outcome)).toBeFalsy();
     });
 
+    it('should raise [executeOutcome] event for formService', (done) => {
+        formService.executeOutcome.subscribe(() => {
+            done();
+        });
+
+        let outcome = new FormOutcomeModel(new FormModel(), {
+            id: ActivitiForm.CUSTOM_OUTCOME_ID,
+            name: 'Custom'
+        });
+
+        formComponent.form = new FormModel();
+        formComponent.onOutcomeClicked(outcome);
+    });
+
 });

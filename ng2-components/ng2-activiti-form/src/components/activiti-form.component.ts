@@ -211,9 +211,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     onOutcomeClicked(outcome: FormOutcomeModel): boolean {
         if (!this.readOnly && outcome && this.form) {
 
-            let args = new FormOutcomeEvent(outcome);
-            this.executeOutcome.emit(args);
-            if (args.defaultPrevented) {
+            if (!this.onExecuteOutcome(outcome)) {
                 return false;
             }
 
@@ -490,5 +488,21 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     protected onTaskCompletedError(form: FormModel, error: any) {
         this.handleError(error);
         this.formService.taskCompletedError.next(new FormErrorEvent(form, error));
+    }
+
+    protected onExecuteOutcome(outcome: FormOutcomeModel): boolean {
+        let args = new FormOutcomeEvent(outcome);
+
+        this.formService.executeOutcome.next(args);
+        if (args.defaultPrevented) {
+            return false;
+        }
+
+        this.executeOutcome.emit(args);
+        if (args.defaultPrevented) {
+            return false;
+        }
+
+        return true;
     }
 }
