@@ -314,6 +314,7 @@ class MyComponent {
 | taskCompletedError | FormErrorEvent | Raised when a task is completed unsuccessfully  |
 | taskSaved | FormEvent | Raised when a task is saved successfully |
 | taskSavedError | FormErrorEvent | Raised when a task is saved unsuccessfully |
+| executeOutcome | FormOutcomeEvent | Raised when a form outcome is executed |
 
 ### Methods
 
