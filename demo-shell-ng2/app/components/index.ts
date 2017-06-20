@@ -30,3 +30,4 @@ export { AboutComponent } from './about/about.component';
 export { FilesComponent } from './files/files.component';
 export { FormNodeViewer } from './activiti/form-node-viewer.component';
 export { ActivitiAppsView } from './activiti/apps.view';
+export { SettingsComponent } from './settings/settings.component';
