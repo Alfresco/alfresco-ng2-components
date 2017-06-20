@@ -72,24 +72,26 @@
                             (taskDeleted)="onTaskDeleted($event)">
                         </activiti-task-details>
                         <hr>
-                        <h5>Attachments</h5>
-                        <div class="adf-no-form-container">
-                            <div class="action-header">
-                                <button class="mdl-button mdl-js-button" (click)="toggleCreateTakAttach()">
-                                    Attach Document
-                                    <i class="material-icons">add</i>
-                                </button>
-                            </div>
-                            <adf-task-attachment-list #taskAttach
-                                                      *ngIf="currentTaskId"
-                                                      [taskId]="currentTaskId"
-                                                      (attachmentClick)="onAttachmentClick($event)">
-                            </adf-task-attachment-list>
-                            <div *ngIf="isCreateTaskAttachVisible()">
-                                <adf-create-task-attachment *ngIf="currentTaskId"
-                                                            [taskId]="currentTaskId"
-                                                            (success)="onCreateTaskSuccess()">
-                                </adf-create-task-attachment>
+                        <div id="attachment-task-list" *ngIf="currentTaskId">
+                            <h5>Attachments</h5>
+                            <div class="adf-no-form-container">
+                                <div class="action-header">
+                                    <button [attr.disabled]="isTaskCompleted()" class="mdl-button mdl-js-button" (click)="toggleCreateTakAttach()">
+                                        Attach Document
+                                        <i class="material-icons">add</i>
+                                    </button>
+                                </div>
+                                <adf-task-attachment-list #taskAttach
+                                                          *ngIf="currentTaskId"
+                                                          [taskId]="currentTaskId"
+                                                          (attachmentClick)="onAttachmentClick($event)">
+                                </adf-task-attachment-list>
+                                <div *ngIf="isCreateTaskAttachVisible()">
+                                    <adf-create-task-attachment *ngIf="currentTaskId"
+                                                                [taskId]="currentTaskId"
+                                                                (success)="onCreateTaskSuccess()">
+                                    </adf-create-task-attachment>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -154,22 +156,24 @@
                                 (taskClick)="onProcessDetailsTaskClick($event)">
                             </activiti-process-instance-details>
                             <hr>
+                            <div id="attachment-process-list" *ngIf="currentProcessInstanceId">
                             <h5>Attachments</h5>
-                            <div class="action-header">
-                                <button id="show_process_attach" class="mdl-button mdl-js-button" (click)="toggleCreateProcessAttach()">
-                                    Attach Document
-                                    <i class="material-icons">add</i>
-                                </button>
-                            </div>
-                            <adf-process-attachment-list *ngIf="currentProcessInstanceId"
-                                                      [processInstanceId]="currentProcessInstanceId"
-                                                      (attachmentClick)="onAttachmentClick($event)">
-                            </adf-process-attachment-list>
-                            <div *ngIf="isCreateProcessAttachVisible()">
-                                <adf-create-process-attachment *ngIf="currentProcessInstanceId"
-                                                            [processInstanceId]="currentProcessInstanceId"
-                                                            (contentCreated)="onContentCreated()">
-                                </adf-create-process-attachment>
+                                <div class="action-header">
+                                    <button id="show_process_attach" class="mdl-button mdl-js-button" (click)="toggleCreateProcessAttach()">
+                                        Attach Document
+                                        <i class="material-icons">add</i>
+                                    </button>
+                                </div>
+                                <adf-process-attachment-list *ngIf="currentProcessInstanceId"
+                                                          [processInstanceId]="currentProcessInstanceId"
+                                                          (attachmentClick)="onAttachmentClick($event)">
+                                </adf-process-attachment-list>
+                                <div *ngIf="isCreateProcessAttachVisible()">
+                                    <adf-create-process-attachment *ngIf="currentProcessInstanceId"
+                                                                [processInstanceId]="currentProcessInstanceId"
+                                                                (contentCreated)="onContentCreated()">
+                                    </adf-create-process-attachment>
+                                </div>
                             </div>
                         </div>
                         <div class="mdl-cell mdl-cell--10-col task-column mdl-shadow--2dp" *ngIf="isStartProcessMode()">
