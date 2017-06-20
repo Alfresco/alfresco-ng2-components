@@ -103,24 +103,18 @@ export class NotSupportedFormat implements OnInit {
         this.isConversionStarted = true;
 
         this.renditionsService.convert(this.nodeId, DEFAULT_CONVERSION_ENCODING)
-            .subscribe(
-                () => {},
-                (error) => {
-                    // Some kind of error handling
-                    this.isConversionStarted = false;
-                },
-                () => {
-                    this.isConversionStarted = false;
-                    this.showPDF();
-                }
-            );
+            .subscribe({
+                error: (error) => { this.isConversionStarted = false; },
+                complete: () => { this.showPDF(); }
+            });
     }
 
     /**
      * Show the PDF rendition of the node
      */
     showPDF(): void {
-        this.isConversionFinished = true;
         this.renditionUrl = this.apiService.getInstance().content.getRenditionUrl(this.nodeId, DEFAULT_CONVERSION_ENCODING);
+        this.isConversionStarted = false;
+        this.isConversionFinished = true;
     }
 }

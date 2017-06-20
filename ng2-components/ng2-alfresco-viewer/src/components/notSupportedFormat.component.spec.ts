@@ -48,7 +48,8 @@ describe('Test ng2-alfresco-viewer Not Supported Format View component', () => {
     let element: HTMLElement;
     let renditionsService: RenditionsService;
 
-    let renditionSubject: Subject<RenditionResponse>;
+    let renditionSubject: Subject<RenditionResponse>,
+        conversionSubject: Subject<any>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -82,8 +83,10 @@ describe('Test ng2-alfresco-viewer Not Supported Format View component', () => {
         component.nodeId = nodeId;
 
         renditionSubject = new Subject<RenditionResponse>();
+        conversionSubject = new Subject<any>();
         renditionsService = TestBed.get(RenditionsService);
         spyOn(renditionsService, 'getRendition').and.returnValue(renditionSubject);
+        spyOn(renditionsService, 'convert').and.returnValue(conversionSubject);
     });
 
     describe('View', () => {
@@ -188,26 +191,43 @@ describe('Test ng2-alfresco-viewer Not Supported Format View component', () => {
 
         describe('Conversion', () => {
 
-            it('should show loading spinner if clicked on the "Convert to PDF button"', () => {
+            function clickOnConvertButton() {
                 renditionSubject.next({ entry: { status: 'NOT_CREATED' } });
                 fixture.detectChanges();
 
                 let convertButton: any = element.querySelector('#viewer-convert-button');
                 convertButton.click();
                 fixture.detectChanges();
+            }
 
+            it('should show loading spinner and disable the "Convert to PDF button" after the button was clicked', () => {
+                clickOnConvertButton();
+
+                let convertButton: any = element.querySelector('#viewer-convert-button');
                 expect(element.querySelector('#conversion-spinner')).not.toBeNull('Conversion spinner should be shown');
+                expect(convertButton.disabled).toBe(true);
             });
 
-            it('should disable the "Convert to PDF button" after the button was clicked', () => {
-                renditionSubject.next({ entry: { status: 'NOT_CREATED' } });
+            it('should re-enable the "Convert to PDF button" and hide spinner after unsuccessful conversion and hide loading spinner', () => {
+                clickOnConvertButton();
+
+                conversionSubject.error(new Error());
                 fixture.detectChanges();
 
                 let convertButton: any = element.querySelector('#viewer-convert-button');
-                convertButton.click();
+                expect(element.querySelector('#conversion-spinner')).toBeNull('Conversion spinner should be shown');
+                expect(convertButton.disabled).toBe(false);
+            });
+
+            it('should show the pdf rendition after successful conversion', () => {
+                clickOnConvertButton();
+
+                conversionSubject.next();
+                conversionSubject.complete();
+                fixture.detectChanges();
                 fixture.detectChanges();
 
-                expect(convertButton.disabled).toBe(true);
+                expect(element.querySelector('#pdf-rendition-viewer')).not.toBeNull('Pdf rendition should be shown.');
             });
         });
     });

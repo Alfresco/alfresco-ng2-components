@@ -76,12 +76,12 @@ export class RenditionsService {
             .catch(err => this.handleError(err));
     }
 
-    convert(nodeId: string, encoding: string) {
+    convert(nodeId: string, encoding: string, pollingInterval: number|undefined) {
         return this.createRendition(nodeId, encoding)
-            .concatMap(() => this.pollRendition(nodeId, encoding));
+            .concatMap(() => this.pollRendition(nodeId, encoding, pollingInterval));
     }
 
-    private pollRendition(nodeId: string, encoding: string, interval: number = 2000) {
+    private pollRendition(nodeId: string, encoding: string, interval: number = 1000) {
         return Observable.interval(interval)
             .switchMap(() => this.getRendition(nodeId, encoding))
             .takeWhile((data) => {
