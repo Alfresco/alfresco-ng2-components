@@ -36,6 +36,10 @@ export class AboutComponent implements OnInit {
 
     githubUrlCommitAlpha: string = 'https://github.com/Alfresco/alfresco-ng2-components/commits/';
 
+    configFile: string = '';
+    ecmHost: string = '';
+    bpmHost: string = '';
+
     constructor(private http: Http,
                 private appConfig: AppConfigService,
                 private logService: LogService) {
