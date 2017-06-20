@@ -42,7 +42,7 @@ export class RenditionsService {
                 }
                 observer.next(isAvailable);
                 observer.complete();
-            },                                            () => {
+            }, () => {
                 observer.next(false);
                 observer.complete();
             });
@@ -54,7 +54,7 @@ export class RenditionsService {
             this.getRendition(nodeId, encoding).subscribe(() => {
                 observer.next(true);
                 observer.complete();
-            },                                            () => {
+            }, () => {
                 observer.next(false);
                 observer.complete();
             });
@@ -76,7 +76,7 @@ export class RenditionsService {
             .catch(err => this.handleError(err));
     }
 
-    convert(nodeId: string, encoding: string, pollingInterval: number = 1000) {
+    convert(nodeId: string, encoding: string, pollingInterval: number|undefined) {
         return this.createRendition(nodeId, encoding)
             .concatMap(() => this.pollRendition(nodeId, encoding, pollingInterval));
     }

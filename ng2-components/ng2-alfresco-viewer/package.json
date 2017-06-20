@@ -10,7 +10,7 @@
     "test": "karma start karma.conf.js --reporters mocha,coverage --single-run --mode coverage",
     "test-browser": "karma start karma.conf.js --reporters kjhtml --component",
     "coverage": "npm run test && wsrv -o -p 9875 ./coverage/report",
-    "prepublish" : "npm run build"
+    "prepublish": "npm run build"
   },
   "main": "bundles/ng2-alfresco-viewer.js",
   "repository": {
@@ -45,7 +45,6 @@
     "@angular/platform-browser": "~4.0.0",
     "@angular/platform-browser-dynamic": "~4.0.0",
     "@angular/router": "~4.0.0",
-
     "@angular/material": "2.0.0-beta.6",
     "alfresco-js-api": "~1.5.0",
     "core-js": "2.4.1",

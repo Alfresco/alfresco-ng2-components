@@ -143,7 +143,9 @@
     "wsrv": "^0.1.7",
     "node-sass": "4.5.3",
     "sass-loader": "6.0.5",
-    "markdown-toc": "1.1.0"
+    "license-check": "1.1.5",
+    "markdown-toc": "1.1.0",
+    "happypack": "3.0.0"
   },
   "license": "Apache-2.0",
   "module": "./index.js",
