@@ -151,7 +151,8 @@ export class ActivitiDemoComponent implements AfterViewInit {
         });
 
         formService.formEvents.subscribe((event: Event) => {
-            console.log(`Event` + event);
+            console.log('Event fired:' + event.type);
+            console.log('Event Target:' + event.target);
         });
 
     }

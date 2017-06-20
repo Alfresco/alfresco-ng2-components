@@ -17,59 +17,62 @@
 
 import { TextWidget } from './text.widget';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { CoreModule } from 'ng2-alfresco-core';
 import { InputMaskDirective } from './text-mask.component';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { FormFieldTypes } from '../core/form-field-types';
 
+import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService, CoreModule } from 'ng2-alfresco-core';
+import { FormService } from './../../../services/form.service';
+import { EcmModelService } from './../../../services/ecm-model.service';
+import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
+
 describe('TextWidget', () => {
 
     let widget: TextWidget;
+    let fixture: ComponentFixture<TextWidget>;
+    let debug: DebugElement;
     let componentHandler;
+    let element: HTMLElement;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule
+            ],
+            declarations: [
+                TextWidget,
+                InputMaskDirective
+            ],
+            providers: [
+                FormService,
+                AlfrescoAuthenticationService,
+                EcmModelService,
+                ActivitiAlfrescoContentService,
+                AlfrescoSettingsService,
+                AlfrescoApiService
+            ]
+        }).compileComponents();
+    }));
 
     beforeEach(() => {
-        widget = new TextWidget();
+        fixture = TestBed.createComponent(TextWidget);
 
-        componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered'
-        ]);
-
+        debug = fixture.debugElement;
+        widget = fixture.componentInstance;
+        element = fixture.nativeElement;
+        componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
         window['componentHandler'] = componentHandler;
     });
 
     describe('when template is ready', () => {
-        let textWidget: TextWidget;
-        let fixture: ComponentFixture<TextWidget>;
-        let element: HTMLInputElement;
-
-        beforeEach(async(() => {
-            componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
-            window['componentHandler'] = componentHandler;
-        }));
-
-        beforeEach(async(() => {
-            TestBed.configureTestingModule({
-                imports: [CoreModule],
-                declarations: [TextWidget, InputMaskDirective]
-            }).compileComponents().then(() => {
-                fixture = TestBed.createComponent(TextWidget);
-                textWidget = fixture.componentInstance;
-                element = fixture.nativeElement;
-            });
-        }));
-
-        afterEach(() => {
-            fixture.destroy();
-            TestBed.resetTestingModule();
-        });
 
         describe('and no mask is configured on text element', () => {
 
             let inputElement: HTMLInputElement;
 
             beforeEach(() => {
-                textWidget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'text-id',
                     name: 'text-name',
                     value: '',
@@ -83,18 +86,18 @@ describe('TextWidget', () => {
 
             it('should raise ngModelChange event', async(() => {
                 inputElement.value = 'TEXT';
-                expect(textWidget.field.value).toBe('');
+                expect(widget.field.value).toBe('');
                 inputElement.dispatchEvent(new Event('input'));
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    expect(textWidget.field).not.toBeNull();
-                    expect(textWidget.field.value).not.toBeNull();
-                    expect(textWidget.field.value).toBe('TEXT');
+                    expect(widget.field).not.toBeNull();
+                    expect(widget.field.value).not.toBeNull();
+                    expect(widget.field.value).toBe('TEXT');
                 });
             }));
 
             it('should be disabled on readonly forms', async(() => {
-                textWidget.field.form.readOnly = true;
+                widget.field.form.readOnly = true;
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
@@ -110,7 +113,7 @@ describe('TextWidget', () => {
             let inputElement: HTMLInputElement;
 
             beforeEach(() => {
-                textWidget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'text-id',
                     name: 'text-name',
                     value: '',
@@ -132,7 +135,7 @@ describe('TextWidget', () => {
                 expect(element.querySelector('#text-id')).not.toBeNull();
 
                 inputElement.value = 'F';
-                textWidget.field.value = 'F';
+                widget.field.value = 'F';
                 let event: any = new Event('keyup');
                 event.keyCode = '70';
                 inputElement.dispatchEvent(event);
@@ -149,7 +152,7 @@ describe('TextWidget', () => {
                 expect(element.querySelector('#text-id')).not.toBeNull();
 
                 inputElement.value = 'F';
-                textWidget.field.value = 'F';
+                widget.field.value = 'F';
                 inputElement.dispatchEvent(new Event('input'));
                 fixture.detectChanges();
 
@@ -164,7 +167,7 @@ describe('TextWidget', () => {
                 expect(element.querySelector('#text-id')).not.toBeNull();
 
                 inputElement.value = '1';
-                textWidget.field.value = '1';
+                widget.field.value = '1';
                 let event: any = new Event('keyup');
                 event.keyCode = '49';
                 inputElement.dispatchEvent(event);
@@ -180,7 +183,7 @@ describe('TextWidget', () => {
                 expect(element.querySelector('#text-id')).not.toBeNull();
 
                 inputElement.value = '12345678';
-                textWidget.field.value = '12345678';
+                widget.field.value = '12345678';
                 let event: any = new Event('keyup');
                 event.keyCode = '49';
                 inputElement.dispatchEvent(event);
@@ -198,7 +201,7 @@ describe('TextWidget', () => {
             let inputElement: HTMLInputElement;
 
             beforeEach(() => {
-                textWidget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'text-id',
                     name: 'text-name',
                     value: '',
@@ -220,7 +223,7 @@ describe('TextWidget', () => {
                 expect(element.querySelector('#text-id')).not.toBeNull();
 
                 inputElement.value = '1234';
-                textWidget.field.value = '1234';
+                widget.field.value = '1234';
                 let event: any = new Event('keyup');
                 event.keyCode = '49';
                 inputElement.dispatchEvent(event);
@@ -233,5 +236,4 @@ describe('TextWidget', () => {
             }));
         });
     });
-
 });

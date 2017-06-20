@@ -17,13 +17,42 @@
 
 import { AmountWidget } from './amount.widget';
 import { FormFieldModel } from './../core/form-field.model';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService, CoreModule } from 'ng2-alfresco-core';
+import { FormService } from './../../../services/form.service';
+import { EcmModelService } from './../../../services/ecm-model.service';
+import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 
 describe('AmountWidget', () => {
 
     let widget: AmountWidget;
+    let fixture: ComponentFixture<AmountWidget>;
+    let debug: DebugElement;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule
+            ],
+            declarations: [
+                AmountWidget
+            ],
+            providers: [
+                FormService,
+                AlfrescoAuthenticationService,
+                EcmModelService,
+                ActivitiAlfrescoContentService,
+                AlfrescoSettingsService,
+                AlfrescoApiService
+            ]
+        }).compileComponents();
+    }));
 
     beforeEach(() => {
-        widget = new AmountWidget();
+        fixture = TestBed.createComponent(AmountWidget);
+
+        debug = fixture.debugElement;
+        widget = fixture.componentInstance;
     });
 
     it('should setup currentcy from field', () => {

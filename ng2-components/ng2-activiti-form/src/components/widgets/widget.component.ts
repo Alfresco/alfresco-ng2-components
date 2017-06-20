@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { Input, AfterViewInit, Output, EventEmitter, ElementRef } from '@angular/core';
+import { Component, Input, AfterViewInit, Output, EventEmitter, ElementRef } from '@angular/core';
 import { FormFieldModel } from './core/index';
 import { FormService } from './../../services/form.service';
 
-declare var componentHandler: any;
+declare let componentHandler: any;
 
 export const baseHost = {
     '(click)': 'event($event)',
@@ -36,13 +36,15 @@ export const baseHost = {
 /**
  * Base widget component.
  */
+@Component({
+    selector: 'base-widget',
+    template: '',
+    host: baseHost
+})
 export class WidgetComponent implements AfterViewInit {
 
     static DEFAULT_HYPERLINK_URL: string = '#';
     static DEFAULT_HYPERLINK_SCHEME: string = 'http://';
-
-    constructor(protected formService: FormService) {
-    }
 
     @Input()
     field: FormFieldModel;
@@ -50,6 +52,9 @@ export class WidgetComponent implements AfterViewInit {
     /** @deprecated used only to trigger visibility engine, components should do that internally if needed */
     @Output()
     fieldChanged: EventEmitter<FormFieldModel> = new EventEmitter<FormFieldModel>();
+
+    constructor(protected formService: FormService) {
+    }
 
     hasField() {
         return this.field ? true : false;
@@ -128,7 +133,7 @@ export class WidgetComponent implements AfterViewInit {
         return null;
     }
 
-    private event(event: Event): void {
+    protected event(event: Event): void {
         this.formService.formEvents.next(event);
     }
 }

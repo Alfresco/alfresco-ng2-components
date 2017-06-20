@@ -18,7 +18,7 @@
 import { HyperlinkWidget } from './hyperlink.widget';
 import { FormModel } from './../core/form.model';
 import { FormFieldModel } from './../core/form-field.model';
-import { WidgetComponent , baseHost } from './../widget.component';
+import { WidgetComponent } from './../widget.component';
 
 describe('HyperlinkWidget', () => {
 
