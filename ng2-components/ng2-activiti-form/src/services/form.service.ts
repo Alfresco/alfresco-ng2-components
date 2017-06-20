@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs/Rx';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
-import { FormValues } from './../components/widgets/core/index';
+import { FormValues, FormOutcomeEvent } from './../components/widgets/core/index';
 import { FormDefinitionModel } from '../models/form-definition.model';
 import { EcmModelService } from './ecm-model.service';
 import { GroupModel } from './../components/widgets/core/group.model';
@@ -39,6 +39,8 @@ export class FormService {
     taskSaved: Subject<FormEvent> = new Subject<FormEvent>();
     taskSavedError: Subject<FormErrorEvent> = new Subject<FormErrorEvent>();
     formContentClicked: Subject<ContentLinkModel> = new Subject<ContentLinkModel>();
+
+    executeOutcome: Subject<FormOutcomeEvent> = new Subject<FormOutcomeEvent>();
 
     constructor(private ecmModelService: EcmModelService,
                 private apiService: AlfrescoApiService,
