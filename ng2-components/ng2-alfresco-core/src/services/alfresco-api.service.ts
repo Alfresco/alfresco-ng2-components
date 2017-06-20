@@ -54,7 +54,7 @@ export class AlfrescoApiService {
     }
 
     private init() {
-        this.alfrescoApi = <AlfrescoApi>new alfrescoApi({
+        this.alfrescoApi = <AlfrescoApi>new AlfrescoApi({
             provider: this.provider,
             ticketEcm: this.storage.getItem('ticket-ECM'),
             ticketBpm: this.storage.getItem('ticket-BPM'),
