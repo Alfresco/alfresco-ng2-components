@@ -34,3 +34,59 @@
 .mdl-chip-search-people__text{
     padding-left: 10px;
 }
+
+.search-text-header{
+    font-weight: bold;
+    opacity: 0.54;
+}
+
+.search-list-container{
+    max-height: 152px;
+    width: 100%;
+    overflow-y: auto;
+}
+
+activiti-people-list >>> alfresco-datatable >>> thead {
+    display: none;
+}
+
+.search-list-action-container {
+    border-top: 1px solid #eee;
+    text-align: right;
+    padding: 5px 0px;
+    margin-top: 5px;
+}
+
+.search-list-action-container>button{
+    opacity: 0.54;
+    font-weight: bolder;
+}
+
+.search-list-action-container>button:hover{
+    color: rgb(255, 152, 0);
+}
+
+activiti-people-list >>> alfresco-datatable >>> .people-full-name {
+    font-family: 'Muli';
+}
+
+activiti-people-list >>> alfresco-datatable >>> .people-pic {
+    background: #ffc800;
+    padding: 10px 6px;
+    border-radius: 100px;
+    color: #fff;
+    text-align: center;
+    font-weight: bolder;
+    font-size: 16px;
+    font-family: Muli;
+    text-transform: uppercase;
+    min-width: 30px;
+}
+
+activiti-people-list >>> alfresco-datatable >>> td.mdl-data-table__cell--non-numeric.non-selectable.data-cell{
+    padding: 4px 12px;
+}
+
+.mdl-textfield {
+    width: 100%;
+}

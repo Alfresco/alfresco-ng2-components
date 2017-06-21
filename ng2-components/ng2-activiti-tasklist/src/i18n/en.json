@@ -12,9 +12,10 @@
             "ASSIGNEE": "Assignee",
             "DUE": "Due",
             "FORM": "Form",
-            "PEOPLE": "People",
+            "PEOPLE": "People this task is shared with",
             "COMMENTS": "Comments",
-            "CHECKLIST": "Checklist"
+            "CHECKLIST": "Checklist",
+            "ADD_PEOPLE": "Add people & groups"
         },
         "BUTTON": {
             "COMPLETE": "Complete",
@@ -84,6 +85,7 @@
     },
     "PEOPLE": {
         "DIALOG_CLOSE": "CLOSE",
+        "ADD_USER": "ADD",
         "SEARCH": {
             "NO_USERS": "No user found to involve"
         }

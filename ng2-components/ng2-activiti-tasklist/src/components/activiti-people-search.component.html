@@ -1,15 +1,33 @@
-<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" id="userSearchText" [value]="" [formControl]="searchUser"/>
-    <label class="mdl-textfield__label" for="userSearchText">Search user</label>
-</div>
-<ul class='mdl-list'>
-    <li class="mdl-list__item fix-element-user-list" *ngFor="let user of userList">
-        <button (click)="onRowClick(user)" id="user-{{user.id}}" class="mdl-chip mdl-chip--contact mdl-chip-search-people">
-            <img class="mdl-chip__contact" [src]="iconImageUrl" />
-            <span class="mdl-chip__text mdl-chip-search-people__text">{{getDisplayUser(user)}}</span>
-        </button>
-    </li>
-    <div *ngIf="userList?.length === 0" id="no-user-found">
-        {{'PEOPLE.SEARCH.NO_USERS' | translate }}
+<div class="search-text-header">{{ 'TASK_DETAILS.LABELS.ADD_PEOPLE' | translate }}</div>
+<div class="search-text-container">
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="text" id="userSearchText" [value]="" [formControl]="searchUser"/>
+        <label class="mdl-textfield__label" for="userSearchText">Search user</label>
     </div>
-</ul>
+</div>
+<div class="search-list-container" id="search-people-list" *ngIf="hasUsers()">
+    <activiti-people-list
+    [users]="users"
+    (clickRow)="onRowClick($event)">
+        <data-columns>
+            <data-column key="firstName">
+                <ng-template let-entry="$implicit">
+                    <div class="people-pic">{{getInitialUserName(entry.row.obj.firstName, entry.row.obj.lastName)}}</div>
+                </ng-template>
+            </data-column>
+            <data-column key="email" class="full-width">
+                <ng-template let-entry="$implicit">
+                    <div class="people-full-name">{{ getDisplayUser(entry.row.obj.firstName, entry.row.obj.lastName, ' ') }}</div>
+                </ng-template>
+            </data-column>
+        </data-columns>
+    </activiti-people-list>
+</div>
+<div class="search-list-action-container">
+    <button type="button" id="close-people-search" (click)="closeSearchList()" class="mdl-button close">
+        {{'PEOPLE.DIALOG_CLOSE' | translate }}
+    </button>
+    <button type="button" id="add-people" (click)="addInvolvedUser()" class="mdl-button close">
+        {{'PEOPLE.ADD_USER' | translate }}
+    </button>
+</div>
