@@ -18,7 +18,7 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { Observable } from 'rxjs/Observable';
 import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
-import { ActivitiPeopleList } from './activiti-people-list.component';
+import { PeopleList } from './adf-people-list.component';
 import { User, UserEventModel } from '../models/index';
 import { DataTableModule, ObjectDataRow, DataRowEvent, DataRowActionEvent } from 'ng2-alfresco-datatable';
 
@@ -31,10 +31,10 @@ const fakeUser: User = new User({
     email: 'fake@mail.com'
 });
 
-describe('ActivitiPeopleList', () => {
+describe('PeopleList', () => {
 
-    let activitiPeopleListComponent: ActivitiPeopleList;
-    let fixture: ComponentFixture<ActivitiPeopleList>;
+    let peopleListComponent: PeopleList;
+    let fixture: ComponentFixture<PeopleList>;
     let element: HTMLElement;
     let componentHandler;
 
@@ -45,7 +45,7 @@ describe('ActivitiPeopleList', () => {
                 DataTableModule
             ],
             declarations: [
-                ActivitiPeopleList
+                PeopleList
             ]
         }).compileComponents().then(() => {
 
@@ -53,8 +53,8 @@ describe('ActivitiPeopleList', () => {
             spyOn(translateService, 'addTranslationFolder').and.stub();
             spyOn(translateService.translate, 'get').and.callFake((key) => { return Observable.of(key); });
 
-            fixture = TestBed.createComponent(ActivitiPeopleList);
-            activitiPeopleListComponent = fixture.componentInstance;
+            fixture = TestBed.createComponent(PeopleList);
+            peopleListComponent = fixture.componentInstance;
             element = fixture.nativeElement;
             componentHandler = jasmine.createSpyObj('componentHandler', [
                 'upgradeAllRegistered'
@@ -69,15 +69,15 @@ describe('ActivitiPeopleList', () => {
         let row = new ObjectDataRow(fakeUser);
         let rowEvent = new DataRowEvent(row, null);
 
-        activitiPeopleListComponent.clickRow.subscribe(selectedUser => {
+        peopleListComponent.clickRow.subscribe(selectedUser => {
             expect(selectedUser.id).toEqual('1');
             expect(selectedUser.email).toEqual('fake@mail.com');
-            expect(activitiPeopleListComponent.user.id).toEqual('1');
-            expect(activitiPeopleListComponent.user.email).toEqual('fake@mail.com');
+            expect(peopleListComponent.user.id).toEqual('1');
+            expect(peopleListComponent.user.email).toEqual('fake@mail.com');
             done();
         });
 
-        activitiPeopleListComponent.selectUser(rowEvent);
+        peopleListComponent.selectUser(rowEvent);
     });
 
     it('should emit row action event', (done) => {
@@ -88,13 +88,13 @@ describe('ActivitiPeopleList', () => {
         };
         let rowActionEvent = new DataRowActionEvent(row, removeObj);
 
-        activitiPeopleListComponent.clickAction.subscribe((selectedAction: UserEventModel) => {
+        peopleListComponent.clickAction.subscribe((selectedAction: UserEventModel) => {
             expect(selectedAction.type).toEqual('remove');
             expect(selectedAction.value.id).toEqual('1');
             expect(selectedAction.value.email).toEqual('fake@mail.com');
             done();
         });
 
-        activitiPeopleListComponent.onExecuteRowAction(rowActionEvent);
+        peopleListComponent.onExecuteRowAction(rowActionEvent);
     });
 });
