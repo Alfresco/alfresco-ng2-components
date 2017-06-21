@@ -33,6 +33,9 @@ export class ActivitiTaskHeader implements OnChanges {
     @Input()
     taskDetails: TaskDetailsModel;
 
+    @Input()
+    propertyNames: string [] = ['status', 'due_date', 'category', 'created_by', 'created', 'id', 'description', 'form_name'];
+
     @Output()
     claim: EventEmitter<any> = new EventEmitter<any>();
 
@@ -52,23 +55,42 @@ export class ActivitiTaskHeader implements OnChanges {
 
     refreshData() {
         if (this.taskDetails) {
-            this.properties = [
-                new CardViewModel({label: 'Status:', value: this.getTaskStatus(), key: 'status'}),
-                new CardViewModel({label: 'Due Date:', value: this.taskDetails.dueDate, format: 'MMM DD YYYY', key: 'dueDate', default: 'No date'}),
-                new CardViewModel({label: 'Category:', value: this.taskDetails.category, key: 'category', default: 'No category'}),
-                new CardViewModel(
-                    {
-                        label: 'Created By:',
-                        value: this.taskDetails.getFullName(),
-                        key: 'assignee',
-                        default: 'No assignee'
-                    }),
-                new CardViewModel({label: 'Created:', value: this.taskDetails.created, format: 'MMM DD YYYY', key: 'created'}),
-                new CardViewModel({label: 'Id:', value: this.taskDetails.id, key: 'id'}),
-                new CardViewModel({label: 'Description:', value: this.taskDetails.description, key: 'description', default: 'No description'}),
-                new CardViewModel({label: 'Form name:', value: this.formName, key: 'formName', default: 'No form'})
-            ];
+            this.propertyNames.forEach( propertyName => {
+                let property: CardViewModel = this.createProperty(propertyName);
+                if (this.properties) {
+                    this.properties.push(property);
+                } else {
+                    this.properties = [property];
+                }
+            });
         }
+    }
+
+    private createProperty(propertyName: string): CardViewModel {
+        let property: CardViewModel;
+        if (propertyName === 'status') {
+            property = new CardViewModel({label: 'Status:', value: this.getTaskStatus(), key: 'status'});
+        } else if (propertyName === 'due_date') {
+            property = new CardViewModel({label: 'Due Date:', value: this.taskDetails.dueDate, format: 'MMM DD YYYY', key: 'dueDate', default: 'No date'});
+        } else if (propertyName === 'category') {
+            property = new CardViewModel({label: 'Category:', value: this.taskDetails.category, key: 'category', default: 'No category'});
+        } else if (propertyName === 'created_by') {
+            property = new CardViewModel({
+                    label: 'Created By:',
+                    value: this.taskDetails.getFullName(),
+                    key: 'assignee',
+                    default: 'No assignee'
+                });
+        } else if (propertyName === 'created') {
+            property = new CardViewModel({label: 'Created:', value: this.taskDetails.created, format: 'MMM DD YYYY', key: 'created'});
+        } else if (propertyName === 'id') {
+            property = new CardViewModel({label: 'Id:', value: this.taskDetails.id, key: 'id'});
+        } else if (propertyName === 'description') {
+            property = new CardViewModel({label: 'Description:', value: this.taskDetails.description, key: 'description', default: 'No description'});
+        } else if (propertyName === 'form_name') {
+            property = new CardViewModel({label: 'Form name:', value: this.formName, key: 'formName', default: 'No form'});
+        }
+        return property;
     }
 
     public hasAssignee(): boolean {
