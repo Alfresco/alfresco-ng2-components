@@ -425,6 +425,31 @@ The purpose of the component is populate the local variable called `properties` 
     "description": "string"
 }
 ```
+## Task People Component
+
+This component displays involved users to a specified task
+
+```html
+<activiti-people 
+    [people]="YOUR_INVOLVED_PEOPLE_LIST" 
+    [taskId]="YOUR_TASK_ID"
+    [readOnly]="YOUR_READ_ONLY_FLAG">
+</activiti-people>
+```
+
+![activiti-people](docs/assets/activiti_people.png)
+
+### Properties
+
+| Name | Type | Description |
+| --- | --- | --- |
+| people | User[] | The array of User object to display |
+| taskId | string | The numeric ID of the task |
+| readOnly | boolean | The boolean flag |
+
+#### Events
+
+No Events
 
 ## Build from sources
 

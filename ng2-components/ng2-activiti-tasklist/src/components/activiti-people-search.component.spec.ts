@@ -19,6 +19,8 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { Observable } from 'rxjs/Observable';
 import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiPeopleSearch } from './activiti-people-search.component';
+import { ActivitiPeopleList } from './activiti-people-list.component';
+import { DataTableModule } from 'ng2-alfresco-datatable';
 import { User } from '../models/user.model';
 
 declare let jasmine: any;
@@ -49,10 +51,12 @@ describe('ActivitiPeopleSearch', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule.forRoot(),
+                DataTableModule
             ],
             declarations: [
-                ActivitiPeopleSearch
+                ActivitiPeopleSearch,
+                ActivitiPeopleList
             ]
         }).compileComponents().then(() => {
 
@@ -78,28 +82,25 @@ describe('ActivitiPeopleSearch', () => {
         expect(element.querySelector('#userSearchText')).not.toBeNull();
     });
 
-    it('should show no user found to involve message', () => {
+    it('should hide people-list container', () => {
         fixture.detectChanges();
         fixture.whenStable()
             .then(() => {
-                expect(element.querySelector('#no-user-found')).not.toBeNull();
-                expect(element.querySelector('#no-user-found').textContent).toContain('PEOPLE.SEARCH.NO_USERS');
+                expect(element.querySelector('#search-people-list')).toBeNull();
             });
+
     });
 
     it('should show user which can be involved ', (done) => {
-        activitiPeopleSearchComponent.onSearch.subscribe(() => {
+        activitiPeopleSearchComponent.searchPeople.subscribe(() => {
             activitiPeopleSearchComponent.results = Observable.of(userArray);
             activitiPeopleSearchComponent.ngOnInit();
             fixture.detectChanges();
             fixture.whenStable()
                 .then(() => {
-                    expect(element.querySelector('#user-1')).not.toBeNull();
-                    expect(element.querySelector('#user-1').textContent)
-                        .toContain('fake-name - fake-last');
-                    expect(element.querySelector('#user-2')).not.toBeNull();
-                    expect(element.querySelector('#user-2').textContent)
-                        .toContain('fake-involve-name - fake-involve-last');
+                    let gatewayElement: any = element.querySelector('#search-people-list tbody');
+                    expect(gatewayElement).not.toBeNull();
+                    expect(gatewayElement.children.length).toBe(2);
                     done();
                 });
         });
@@ -110,7 +111,7 @@ describe('ActivitiPeopleSearch', () => {
     });
 
     it('should send an event when an user is clicked', (done) => {
-        activitiPeopleSearchComponent.onRowClicked.subscribe((user) => {
+        activitiPeopleSearchComponent.success.subscribe((user) => {
             expect(user).toBeDefined();
             expect(user.firstName).toBe('fake-name');
             done();
@@ -120,8 +121,9 @@ describe('ActivitiPeopleSearch', () => {
         fixture.detectChanges();
         fixture.whenStable()
             .then(() => {
-                let userToSelect = <HTMLElement> element.querySelector('#user-1');
-                userToSelect.click();
+                activitiPeopleSearchComponent.onRowClick(fakeUser);
+                let addUserButton = <HTMLElement> element.querySelector('#add-people');
+                addUserButton.click();
             });
     });
 
@@ -129,13 +131,16 @@ describe('ActivitiPeopleSearch', () => {
         activitiPeopleSearchComponent.results = Observable.of(userArray);
         activitiPeopleSearchComponent.ngOnInit();
         fixture.detectChanges();
-        let userToSelect = <HTMLElement> element.querySelector('#user-1');
-        userToSelect.click();
+        activitiPeopleSearchComponent.onRowClick(fakeUser);
+        let addUserButton = <HTMLElement> element.querySelector('#add-people');
+        addUserButton.click();
 
         fixture.detectChanges();
         fixture.whenStable()
             .then(() => {
-                expect(element.querySelector('#user-1')).toBeNull();
+                let gatewayElement: any = element.querySelector('#search-people-list tbody');
+                expect(gatewayElement).not.toBeNull();
+                expect(gatewayElement.children.length).toBe(1);
                 done();
             });
     });

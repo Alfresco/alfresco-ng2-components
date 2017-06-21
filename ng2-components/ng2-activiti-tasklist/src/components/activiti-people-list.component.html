@@ -1,0 +1,7 @@
+<alfresco-datatable
+    [rows]="users"
+    [actions]="hasActions()"
+    (rowClick)="selectUser($event)"
+    (showRowActionsMenu)="onShowRowActionsMenu($event)"
+    (executeRowAction)="onExecuteRowAction($event)">
+</alfresco-datatable>

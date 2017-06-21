@@ -15,10 +15,19 @@
  * limitations under the License.
  */
 
-export * from './comment.model';
-export * from './filter.model';
-export * from './icon.model';
-export * from './user.model';
-export * from './task-details.model';
-export * from './task-details.event';
-export * from './user-event.model';
+/**
+ *
+ * This object represent the User Event.
+ *
+ *
+ * @returns {UserEventModel} .
+ */
+export class UserEventModel {
+    type: string = '';
+    value: any = {};
+
+    constructor(obj?: any) {
+        this.type = obj && obj.type;
+        this.value = obj && obj.value || {};
+    }
+}
