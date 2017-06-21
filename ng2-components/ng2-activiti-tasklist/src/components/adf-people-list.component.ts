@@ -28,7 +28,7 @@ declare let componentHandler: any;
     styleUrls: ['./adf-people-list.component.css']
 })
 
-export class AdfPeopleList {
+export class PeopleList {
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 

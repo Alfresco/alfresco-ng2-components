@@ -28,4 +28,4 @@ export * from './activiti-task-details.component';
 export * from './activiti-start-task.component';
 export * from './activiti-people-search.component';
 export * from './adf-create-task-attachment.component';
-export * from './activiti-people-list.component';
+export * from './adf-people-list.component';
