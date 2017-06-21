@@ -18,10 +18,12 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
-import { FormService, EcmModelService } from 'ng2-activiti-form';
+import { FormService, EcmModelService, FormFieldOption } from 'ng2-activiti-form';
 
 @Injectable()
 export class InMemoryFormService extends FormService {
+
+    restFieldValues: Map<string, Map<string, FormFieldOption[]>> = new Map();
 
     constructor(ecmModelService: EcmModelService,
                 apiService: AlfrescoApiService,
@@ -30,9 +32,18 @@ export class InMemoryFormService extends FormService {
     }
 
     /** @override */
-    getRestFieldValues(taskId: string, field: string): Observable<any> {
+    getRestFieldValues(taskId: string, field: string): Observable<FormFieldOption[]> {
+        // return super.getRestFieldValues(taskId, field);
         console.log(`getRestFieldValues: ${taskId} => ${field}`);
-        return super.getRestFieldValues(taskId, field);
+        return new Observable<FormFieldOption[]>(observer => {
+            let values: FormFieldOption[] = [];
+            const fields = this.restFieldValues.get(taskId);
+            if (fields) {
+                values = fields.get(field) || [];
+            }
+            console.log(values);
+            observer.next(values);
+        });
     }
 
 }

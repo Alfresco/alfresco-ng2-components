@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormModel, FormService } from 'ng2-activiti-form';
+import { Component, OnInit, ViewChild, AfterViewInit, Inject } from '@angular/core';
+import { FormModel, FormService, FormFieldOption } from 'ng2-activiti-form';
+import { InMemoryFormService } from '../../services/in-memory-form.service';
 import { DemoForm } from './demo-form';
 import { ActivitiForm } from 'ng2-activiti-form';
 
@@ -27,6 +28,9 @@ declare var componentHandler;
     templateUrl: 'form-demo.component.html',
     styleUrls: [
         'form-demo.component.css'
+    ],
+    providers: [
+        { provide: FormService, useClass: InMemoryFormService }
     ]
 })
 export class FormDemoComponent implements OnInit {
@@ -42,7 +46,16 @@ export class FormDemoComponent implements OnInit {
     storedData: any = {};
     restoredData: any = {};
 
-    constructor(private formService: FormService) {
+    constructor(@Inject(FormService) private formService: InMemoryFormService) {
+        // Setup REST fields values for 'label10' typeahead
+        const fields = new Map<string, FormFieldOption[]>();
+        fields.set('label10', [
+            { id: 'f1', name: 'Field 1' },
+            { id: 'f2', name: 'Field 2' }
+        ]);
+        formService.restFieldValues.set('7501', fields);
+
+        // Prevent default outcome actions
         formService.executeOutcome.subscribe(e => {
             e.preventDefault();
             console.log(e.outcome);

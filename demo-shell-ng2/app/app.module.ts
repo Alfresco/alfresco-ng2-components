@@ -28,7 +28,7 @@ import { TagModule } from 'ng2-alfresco-tag';
 import { SocialModule } from 'ng2-alfresco-social';
 import { WebScriptModule } from 'ng2-alfresco-webscript';
 import { ViewerModule } from 'ng2-alfresco-viewer';
-import { ActivitiFormModule, FormService } from 'ng2-activiti-form';
+import { ActivitiFormModule } from 'ng2-activiti-form';
 import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
 import { ActivitiProcessListModule } from 'ng2-activiti-processlist';
 import { UserInfoComponentModule } from 'ng2-alfresco-userinfo';
@@ -43,7 +43,6 @@ import { Editor3DModule } from 'ng2-3d-editor';
 import { ChartsModule } from 'ng2-charts';
 import { CreateFolderDialog } from './dialogs/create-folder.dialog';
 import { DebugAppConfigService } from './services/debug-app-config.service';
-import { InMemoryFormService } from './services/in-memory-form.service';
 
 import {
     HomeComponent,
@@ -119,8 +118,7 @@ if (process.env.ENV === 'production') {
         FormDemoComponent
     ],
     providers: [
-        { provide: AppConfigService, useClass: DebugAppConfigService },
-        { provide: FormService, useClass: InMemoryFormService }
+        { provide: AppConfigService, useClass: DebugAppConfigService }
     ],
     bootstrap: [ AppComponent ],
     entryComponents: [
