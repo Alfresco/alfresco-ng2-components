@@ -35,9 +35,6 @@ import 'ng2-alfresco-userinfo';
 require('script-loader!dialog-polyfill/dialog-polyfill');
 import 'dialog-polyfill/dialog-polyfill.css';
 
-// Flags
-import 'flag-icon-css/css/flag-icon.min.css';
-
 // Load the Angular Material 2 stylesheet
 import '@angular/material/prebuilt-themes/indigo-pink.css';
 
