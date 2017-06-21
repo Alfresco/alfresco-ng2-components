@@ -60,7 +60,8 @@ import {
     AboutComponent,
     FilesComponent,
     FormNodeViewer,
-    SettingsComponent
+    SettingsComponent,
+    FormDemoComponent
 } from './components/index';
 
 let appConfigFile = 'app.config-dev.json';
@@ -113,7 +114,8 @@ if (process.env.ENV === 'production') {
         FilesComponent,
         FormNodeViewer,
         CreateFolderDialog,
-        SettingsComponent
+        SettingsComponent,
+        FormDemoComponent
     ],
     providers: [
         { provide: AppConfigService, useClass: DebugAppConfigService }
