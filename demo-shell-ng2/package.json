@@ -71,7 +71,6 @@
     "core-js": "2.4.1",
     "dialog-polyfill": "^0.4.7",
     "element.scrollintoviewifneeded-polyfill": "^1.0.1",
-    "flag-icon-css": "2.3.0",
     "intl": "^1.2.5",
     "material-design-icons": "2.2.3",
     "material-design-lite": "1.2.1",
