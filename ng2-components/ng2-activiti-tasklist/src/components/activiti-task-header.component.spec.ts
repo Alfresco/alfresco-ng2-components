@@ -124,4 +124,60 @@ describe('ActivitiTaskHeader', () => {
         expect(valueEl.nativeElement.innerText).toBe('No form');
     });
 
+    it('should display all properties if no property name is provided', () => {
+        component.ngOnChanges({});
+        fixture.detectChanges();
+        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-status"] .adf-header__value'));
+        expect(valueEl.nativeElement.innerText).not.toBeNull();
+
+        valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-header__value'));
+        expect(valueEl.nativeElement.innerText).not.toBeNull();
+
+        valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-category"] .adf-header__value'));
+        expect(valueEl.nativeElement.innerText).not.toBeNull();
+
+        valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-assignee"] .adf-header__value'));
+        expect(valueEl.nativeElement.innerText).not.toBeNull();
+
+        valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-created"] .adf-header__value'));
+        expect(valueEl.nativeElement.innerText).not.toBeNull();
+
+        valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-id"] .adf-header__value'));
+        expect(valueEl.nativeElement.innerText).not.toBeNull();
+
+        valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-description"] .adf-header__value'));
+        expect(valueEl.nativeElement.innerText).not.toBeNull();
+
+        valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-formName"] .adf-header__value'));
+        expect(valueEl.nativeElement.innerText).not.toBeNull();
+    });
+
+    it('should display only provided properties', () => {
+        component.propertyNames = ['status'];
+        component.ngOnChanges({});
+        fixture.detectChanges();
+        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-status"] .adf-header__value'));
+        expect(valueEl.nativeElement.innerText).not.toBeNull();
+
+        valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"]'));
+        expect(valueEl).toBeNull();
+
+        valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-category"]'));
+        expect(valueEl).toBeNull();
+
+        valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-assignee"]'));
+        expect(valueEl).toBeNull();
+
+        valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-created"]'));
+        expect(valueEl).toBeNull();
+
+        valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-id"]'));
+        expect(valueEl).toBeNull();
+
+        valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-description"]'));
+        expect(valueEl).toBeNull();
+
+        valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-formName"]'));
+        expect(valueEl).toBeNull();
+    });
 });
