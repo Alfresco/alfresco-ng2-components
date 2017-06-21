@@ -58,7 +58,7 @@ describe('ActivitiPeople', () => {
             ],
             declarations: [
                 ActivitiPeopleSearch,
-                ActivitiPeopleList,
+                PeopleList,
                 ActivitiPeople
             ],
             providers: [
