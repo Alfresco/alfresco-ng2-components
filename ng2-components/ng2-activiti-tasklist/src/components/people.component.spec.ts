@@ -15,18 +15,15 @@
  * limitations under the License.
  */
 
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdButtonModule, MdInputModule } from '@angular/material';
-import { AppConfigService, CoreModule, LogService, TranslationService } from 'ng2-alfresco-core';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { Observable } from 'rxjs/Observable';
+import { CoreModule, AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
+import { ActivitiPeopleSearch } from './activiti-people-search.component';
+import { ActivitiPeopleList } from './activiti-people-list.component';
+import { ActivitiPeople } from './activiti-people.component';
 import { DataTableModule } from 'ng2-alfresco-datatable';
-import { AppConfigServiceMock } from '../assets/app-config.service.mock';
-import { TranslationMock } from '../assets/translation.service.mock';
 import { User } from '../models/user.model';
-import { PeopleService } from '../services/people.service';
-import { PeopleListComponent } from './people-list.component';
-import { PeopleSearchComponent } from './people-search.component';
-import { PeopleComponent } from './people.component';
+import { ActivitiPeopleService } from '../services/activiti-people.service';
 
 declare let jasmine: any;
 
@@ -44,10 +41,10 @@ const fakeSecondUser: User = new User({
     email: 'fake-involve@mail.com'
 });
 
-describe('PeopleComponent', () => {
+describe('ActivitiPeople', () => {
 
-    let activitiPeopleComponent: PeopleComponent;
-    let fixture: ComponentFixture<PeopleComponent>;
+    let activitiPeopleComponent: ActivitiPeople;
+    let fixture: ComponentFixture<ActivitiPeople>;
     let element: HTMLElement;
     let componentHandler;
     let userArray = [fakeUser, fakeSecondUser];
@@ -57,25 +54,25 @@ describe('PeopleComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                DataTableModule,
-                MdButtonModule,
-                MdInputModule
+                DataTableModule
             ],
             declarations: [
-                PeopleSearchComponent,
-                PeopleListComponent,
-                PeopleComponent
+                ActivitiPeopleSearch,
+                ActivitiPeopleList,
+                ActivitiPeople
             ],
             providers: [
-                PeopleService,
-                { provide: TranslationService, useClass: TranslationMock },
-                { provide: AppConfigService, useClass: AppConfigServiceMock }
-            ],
-            schemas: [ NO_ERRORS_SCHEMA ]
+                ActivitiPeopleService
+            ]
         }).compileComponents().then(() => {
 
             logService = TestBed.get(LogService);
-            fixture = TestBed.createComponent(PeopleComponent);
+
+            let translateService = TestBed.get(AlfrescoTranslationService);
+            spyOn(translateService, 'addTranslationFolder').and.stub();
+            spyOn(translateService.translate, 'get').and.callFake((key) => { return Observable.of(key); });
+
+            fixture = TestBed.createComponent(ActivitiPeople);
             activitiPeopleComponent = fixture.componentInstance;
             element = fixture.nativeElement;
             componentHandler = jasmine.createSpyObj('componentHandler', [
@@ -190,7 +187,7 @@ describe('PeopleComponent', () => {
             });
         });
 
-        xit('should return an empty list for not valid search', (done) => {
+        it('should return an empty list for not valid search', (done) => {
             activitiPeopleComponent.peopleSearch$.subscribe((users) => {
                 expect(users.length).toBe(0);
                 done();

@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, AfterViewInit } from '@angular/core';
 import { Observer, Observable } from 'rxjs/Rx';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
-import { User } from '../models/user.model';
+import { User, UserEventModel } from '../models/index';
 import { ActivitiPeopleService } from '../services/activiti-people.service';
 
-declare let dialogPolyfill: any;
+declare let componentHandler: any;
 declare var require: any;
 
 @Component({
@@ -29,7 +29,7 @@ declare var require: any;
     templateUrl: './activiti-people.component.html',
     styleUrls: ['./activiti-people.component.css']
 })
-export class ActivitiPeople {
+export class ActivitiPeople implements AfterViewInit {
 
     @Input()
     iconImageUrl: string = require('../assets/images/user.jpg');
@@ -43,11 +43,7 @@ export class ActivitiPeople {
     @Input()
     readOnly: boolean = false;
 
-    @ViewChild('dialog')
-    dialog: any;
-
-    @ViewChild('activitipeoplesearch')
-    activitipeoplesearch: any;
+    showAssignment: boolean = false;
 
     private peopleSearchObserver: Observer<User[]>;
     peopleSearch$: Observable<User[]>;
@@ -66,21 +62,18 @@ export class ActivitiPeople {
         this.peopleSearch$ = new Observable<User[]>(observer => this.peopleSearchObserver = observer).share();
     }
 
-    public showDialog() {
-        if (!this.dialog.nativeElement.showModal) {
-            dialogPolyfill.registerDialog(this.dialog.nativeElement);
-        }
-        if (this.dialog) {
-            this.dialog.nativeElement.showModal();
-        }
+    ngAfterViewInit() {
+        this.setupMaterialComponents(componentHandler);
     }
 
-    public closeDialog() {
-        if (this.dialog) {
-            this.dialog.nativeElement.close();
-            this.peopleSearchObserver.next([]);
-            this.activitipeoplesearch.searchUser.reset();
+    setupMaterialComponents(handler?: any): boolean {
+        // workaround for MDL issues with dynamic components
+        let isUpgraded: boolean = false;
+        if (handler) {
+            handler.upgradeAllRegistered();
+            isUpgraded = true;
         }
+        return isUpgraded;
     }
 
     searchUser(searchedWord: string) {
@@ -91,9 +84,10 @@ export class ActivitiPeople {
     }
 
     involveUser(user: User) {
+        this.showAssignment = false;
         this.peopleService.involveUserWithTask(this.taskId, user.id.toString())
             .subscribe(() => {
-                this.people.push(user);
+                this.people = [...this.people, user];
             }, error => this.logService.error('Impossible to involve user with task'));
     }
 
@@ -106,10 +100,38 @@ export class ActivitiPeople {
             }, error => this.logService.error('Impossible to remove involved user from task'));
     }
 
-    getDisplayUser(user: User): string {
-        let firstName = user.firstName && user.firstName !== 'null' ? user.firstName : 'N/A';
-        let lastName = user.lastName && user.lastName !== 'null' ? user.lastName : 'N/A';
-        return firstName + ' ' + lastName;
+    getDisplayUser(firstName: string, lastName: string, delimiter: string = '-'): string {
+        firstName = (firstName !== null ? firstName : '');
+        lastName = (lastName !== null ? lastName : '');
+        return firstName + delimiter + lastName;
+    }
+
+    getInitialUserName(firstName: string, lastName: string) {
+        firstName = (firstName !== null && firstName !== '' ? firstName[0] : '');
+        lastName = (lastName !== null && lastName !== '' ? lastName[0] : '');
+        return this.getDisplayUser(firstName, lastName, '');
+    }
+
+    onAddAssignement() {
+        this.showAssignment = true;
+    }
+
+    onClickAction(event: UserEventModel) {
+        if (event.type === 'remove') {
+            this.removeInvolvedUser(event.value);
+        }
+    }
+
+    hasPeople() {
+        return this.people && this.people.length > 0;
+    }
+
+    isEditMode() {
+        return !this.readOnly;
+    }
+
+    onCloseSearch() {
+        this.showAssignment = false;
     }
 
 }

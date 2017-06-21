@@ -15,7 +15,10 @@
  * limitations under the License.
  */
 
-export * from './context-menu/index';
-export * from './material/index';
-export * from './collapsable/index';
-export * from './view/index';
+export * from './comment.model';
+export * from './filter.model';
+export * from './icon.model';
+export * from './user.model';
+export * from './task-details.model';
+export * from './task-details.event';
+export * from './user-event.model';

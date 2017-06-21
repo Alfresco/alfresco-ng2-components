@@ -15,16 +15,13 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdButtonModule, MdInputModule } from '@angular/material';
-import { AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
-import { DataTableModule } from 'ng2-alfresco-datatable';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { Observable } from 'rxjs/Observable';
-import { AppConfigServiceMock } from '../assets/app-config.service.mock';
-import { TranslationMock } from '../assets/translation.service.mock';
+import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { ActivitiPeopleSearch } from './activiti-people-search.component';
+import { ActivitiPeopleList } from './activiti-people-list.component';
+import { DataTableModule } from 'ng2-alfresco-datatable';
 import { User } from '../models/user.model';
-import { PeopleListComponent } from './people-list.component';
-import { PeopleSearchComponent } from './people-search.component';
 
 declare let jasmine: any;
 
@@ -42,10 +39,10 @@ const fakeSecondUser: User = new User({
     email: 'fake-involve@mail.com'
 });
 
-describe('PeopleSearchComponent', () => {
+describe('ActivitiPeopleSearch', () => {
 
-    let peopleSearchComponent: PeopleSearchComponent;
-    let fixture: ComponentFixture<PeopleSearchComponent>;
+    let activitiPeopleSearchComponent: ActivitiPeopleSearch;
+    let fixture: ComponentFixture<ActivitiPeopleSearch>;
     let element: HTMLElement;
     let componentHandler;
     let userArray = [fakeUser, fakeSecondUser];
@@ -55,29 +52,27 @@ describe('PeopleSearchComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                DataTableModule,
-                MdButtonModule,
-                MdInputModule
+                DataTableModule
             ],
             declarations: [
-                PeopleSearchComponent,
-                PeopleListComponent
-            ],
-            providers: [
-                { provide: AppConfigService, useClass: AppConfigServiceMock },
-                { provide: TranslationService, useClass: TranslationMock }
+                ActivitiPeopleSearch,
+                ActivitiPeopleList
             ]
         }).compileComponents().then(() => {
 
-            fixture = TestBed.createComponent(PeopleSearchComponent);
-            peopleSearchComponent = fixture.componentInstance;
+            let translateService = TestBed.get(AlfrescoTranslationService);
+            spyOn(translateService, 'addTranslationFolder').and.stub();
+            spyOn(translateService.translate, 'get').and.callFake((key) => { return Observable.of(key); });
+
+            fixture = TestBed.createComponent(ActivitiPeopleSearch);
+            activitiPeopleSearchComponent = fixture.componentInstance;
             element = fixture.nativeElement;
             componentHandler = jasmine.createSpyObj('componentHandler', [
                 'upgradeAllRegistered'
             ]);
 
             window['componentHandler'] = componentHandler;
-            peopleSearchComponent.results = Observable.of([]);
+            activitiPeopleSearchComponent.results = Observable.of([]);
             fixture.detectChanges();
         });
     }));
@@ -97,9 +92,9 @@ describe('PeopleSearchComponent', () => {
     });
 
     it('should show user which can be involved ', (done) => {
-        peopleSearchComponent.searchPeople.subscribe(() => {
-            peopleSearchComponent.results = Observable.of(userArray);
-            peopleSearchComponent.ngOnInit();
+        activitiPeopleSearchComponent.searchPeople.subscribe(() => {
+            activitiPeopleSearchComponent.results = Observable.of(userArray);
+            activitiPeopleSearchComponent.ngOnInit();
             fixture.detectChanges();
             fixture.whenStable()
                 .then(() => {
@@ -111,32 +106,32 @@ describe('PeopleSearchComponent', () => {
         });
         searchInput = element.querySelector('#userSearchText');
         searchInput.value = 'fake-search';
-        peopleSearchComponent.searchUser.markAsDirty();
+        activitiPeopleSearchComponent.searchUser.markAsDirty();
         searchInput.dispatchEvent(new Event('input'));
     });
 
     it('should send an event when an user is clicked', (done) => {
-        peopleSearchComponent.success.subscribe((user) => {
+        activitiPeopleSearchComponent.success.subscribe((user) => {
             expect(user).toBeDefined();
             expect(user.firstName).toBe('fake-name');
             done();
         });
-        peopleSearchComponent.results = Observable.of(userArray);
-        peopleSearchComponent.ngOnInit();
+        activitiPeopleSearchComponent.results = Observable.of(userArray);
+        activitiPeopleSearchComponent.ngOnInit();
         fixture.detectChanges();
         fixture.whenStable()
             .then(() => {
-                peopleSearchComponent.onRowClick(fakeUser);
+                activitiPeopleSearchComponent.onRowClick(fakeUser);
                 let addUserButton = <HTMLElement> element.querySelector('#add-people');
                 addUserButton.click();
             });
     });
 
     it('should remove clicked user', (done) => {
-        peopleSearchComponent.results = Observable.of(userArray);
-        peopleSearchComponent.ngOnInit();
+        activitiPeopleSearchComponent.results = Observable.of(userArray);
+        activitiPeopleSearchComponent.ngOnInit();
         fixture.detectChanges();
-        peopleSearchComponent.onRowClick(fakeUser);
+        activitiPeopleSearchComponent.onRowClick(fakeUser);
         let addUserButton = <HTMLElement> element.querySelector('#add-people');
         addUserButton.click();
 
