@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 var HappyPack = require('happypack');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
 
@@ -87,6 +88,7 @@ module.exports = {
     },
 
     plugins: [
+        new ForkTsCheckerWebpackPlugin(),
         new HappyPack({
             id: 'ts',
             threads: 8,
