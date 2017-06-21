@@ -19,7 +19,7 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { Observable } from 'rxjs/Observable';
 import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiPeopleSearch } from './activiti-people-search.component';
-import { ActivitiPeopleList } from './activiti-people-list.component';
+import { PeopleList } from './adf-people-list.component';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { User } from '../models/user.model';
 
@@ -56,7 +56,7 @@ describe('ActivitiPeopleSearch', () => {
             ],
             declarations: [
                 ActivitiPeopleSearch,
-                ActivitiPeopleList
+                PeopleList
             ]
         }).compileComponents().then(() => {
 

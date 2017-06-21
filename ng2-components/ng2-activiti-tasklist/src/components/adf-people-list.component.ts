@@ -23,12 +23,12 @@ import { DataTableComponent } from 'ng2-alfresco-datatable';
 declare let componentHandler: any;
 
 @Component({
-    selector: 'activiti-people-list',
-    templateUrl: './activiti-people-list.component.html',
-    styleUrls: ['./activiti-people-list.component.css']
+    selector: 'adf-people-list',
+    templateUrl: './adf-people-list.component.html',
+    styleUrls: ['./adf-people-list.component.css']
 })
 
-export class ActivitiPeopleList {
+export class PeopleList {
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 

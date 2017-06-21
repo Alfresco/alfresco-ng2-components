@@ -19,7 +19,7 @@
         </activiti-people-search>
     </div>
     <div class="assignment-list-container" id="assignment-people-list" *ngIf="hasPeople()">
-        <activiti-people-list
+        <adf-people-list
         [users]="people"
         [actions]="isEditMode()"
         (clickAction)="onClickAction($event)">
@@ -37,6 +37,6 @@
                     </ng-template>
                 </data-column>
             </data-columns>
-        </activiti-people-list>
+        </adf-people-list>
     </div>
 </div>

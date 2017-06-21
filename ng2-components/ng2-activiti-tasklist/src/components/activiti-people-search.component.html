@@ -6,7 +6,7 @@
     </div>
 </div>
 <div class="search-list-container" id="search-people-list" *ngIf="hasUsers()">
-    <activiti-people-list
+    <adf-people-list
     [users]="users"
     (clickRow)="onRowClick($event)">
         <data-columns>
@@ -21,7 +21,7 @@
                 </ng-template>
             </data-column>
         </data-columns>
-    </activiti-people-list>
+    </adf-people-list>
 </div>
 <div class="search-list-action-container">
     <button type="button" id="close-people-search" (click)="closeSearchList()" class="mdl-button close">
