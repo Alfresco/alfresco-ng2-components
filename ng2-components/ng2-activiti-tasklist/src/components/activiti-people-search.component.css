@@ -24,7 +24,7 @@
 
 .mdl-chip-search-people:hover{
     background-color: #c1c1c1;
-    cursor: pointer; 
+    cursor: pointer;
 }
 
 .mdl-chip-search-people img{
@@ -46,7 +46,7 @@
     overflow-y: auto;
 }
 
-activiti-people-list >>> alfresco-datatable >>> thead {
+adf-people-list >>> alfresco-datatable >>> thead {
     display: none;
 }
 
@@ -66,11 +66,11 @@ activiti-people-list >>> alfresco-datatable >>> thead {
     color: rgb(255, 152, 0);
 }
 
-activiti-people-list >>> alfresco-datatable >>> .people-full-name {
+adf-people-list >>> alfresco-datatable >>> .people-full-name {
     font-family: 'Muli';
 }
 
-activiti-people-list >>> alfresco-datatable >>> .people-pic {
+adf-people-list >>> alfresco-datatable >>> .people-pic {
     background: #ffc800;
     padding: 10px 6px;
     border-radius: 100px;
@@ -83,7 +83,7 @@ activiti-people-list >>> alfresco-datatable >>> .people-pic {
     min-width: 30px;
 }
 
-activiti-people-list >>> alfresco-datatable >>> td.mdl-data-table__cell--non-numeric.non-selectable.data-cell{
+adf-people-list >>> alfresco-datatable >>> td.mdl-data-table__cell--non-numeric.non-selectable.data-cell{
     padding: 4px 12px;
 }
 

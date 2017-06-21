@@ -37,7 +37,7 @@ import {
     ActivitiPeopleSearch,
     TaskAttachmentListComponent,
     ActivitiCreateTaskAttachmentComponent,
-    ActivitiPeopleList
+    PeopleList
 } from './src/components/index';
 
 export * from './src/components/index';
@@ -59,7 +59,7 @@ export const ACTIVITI_TASKLIST_DIRECTIVES: any[] = [
     ActivitiPeopleSearch,
     TaskAttachmentListComponent,
     ActivitiCreateTaskAttachmentComponent,
-    ActivitiPeopleList
+    PeopleList
 ];
 
 export const ACTIVITI_TASKLIST_PROVIDERS: any[] = [
