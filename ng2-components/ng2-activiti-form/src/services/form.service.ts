@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs/Rx';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
-import { FormValues, FormOutcomeEvent } from './../components/widgets/core/index';
+import { FormModel, FormValues, FormOutcomeEvent, FormOutcomeModel } from './../components/widgets/core/index';
 import { FormDefinitionModel } from '../models/form-definition.model';
 import { EcmModelService } from './ecm-model.service';
 import { GroupModel } from './../components/widgets/core/group.model';
@@ -45,6 +45,23 @@ export class FormService {
     constructor(private ecmModelService: EcmModelService,
                 private apiService: AlfrescoApiService,
                 private logService: LogService) {
+    }
+
+    parseForm(json: any, data?: FormValues, readOnly: boolean = false): FormModel {
+        if (json) {
+            let form = new FormModel(json, data, readOnly, this);
+            if (!json.fields) {
+                form.outcomes = [
+                    new FormOutcomeModel(form, {
+                        id: '$custom',
+                        name: FormOutcomeModel.SAVE_ACTION,
+                        isSystem: true
+                    })
+                ];
+            }
+            return form;
+        }
+        return null;
     }
 
     /**

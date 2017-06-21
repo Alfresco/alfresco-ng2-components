@@ -41,6 +41,9 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     static CUSTOM_OUTCOME_ID: string = '$custom';
 
     @Input()
+    form: FormModel;
+
+    @Input()
     taskId: string;
 
     @Input()
@@ -102,8 +105,6 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
 
     @Output()
     onError: EventEmitter<any> = new EventEmitter<any>();
-
-    form: FormModel;
 
     debugMode: boolean = false;
 
