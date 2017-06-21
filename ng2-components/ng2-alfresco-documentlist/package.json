@@ -75,6 +75,7 @@
     "cssnano": "^3.8.1",
     "extract-text-webpack-plugin": "^2.0.0-rc.3",
     "file-loader": "0.11.1",
+    "fork-ts-checker-webpack-plugin": "^0.2.3",
     "html-loader": "^0.4.4",
     "html-webpack-plugin": "^2.28.0",
     "istanbul-instrumenter-loader": "0.2.0",
