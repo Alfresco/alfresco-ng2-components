@@ -231,7 +231,7 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
         this.activitiTaskList.getTasks(requestNode).subscribe(
             (response) => {
                 if (response && response.length > 0) {
-                    this.taskDetails = response[0];
+                    this.taskDetails = <TaskDetailsModel>response[0];
                 } else {
                     this.reset();
                 }
