@@ -35,7 +35,9 @@
             "ng2-alfresco-viewer": ["../ng2-alfresco-viewer/"],
             "ng2-alfresco-webscript": ["../ng2-alfresco-webscript/"],
             "ng2-alfresco-userinfo": ["../ng2-alfresco-userinfo"],
-            "alfresco-js-api": ["../node_modules/alfresco-js-api/"]
+            "alfresco-js-api": ["./node_modules/alfresco-js-api/"],
+            "@angular/*": ["./node_modules/@angular/*"],
+            "rxjs/*": ["./node_modules/rxjs/*"]
         },
         "lib": [
             "es2015",
