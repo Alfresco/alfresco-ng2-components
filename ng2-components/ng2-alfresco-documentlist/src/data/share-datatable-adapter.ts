@@ -19,8 +19,8 @@ import { DatePipe } from '@angular/common';
 import { ObjectUtils } from 'ng2-alfresco-core';
 import { DataTableAdapter, DataRow, DataColumn, DataSorting } from 'ng2-alfresco-datatable';
 
-import { NodePaging, NodeMinimalEntry } from './../models/document-library.model';
 import { DocumentListService } from './../services/document-list.service';
+import { NodePaging, MinimalNodeEntity } from 'alfresco-js-api';
 
 declare var require: any;
 
@@ -238,11 +238,11 @@ export class ShareDataRow implements DataRow {
     isSelected: boolean = false;
     isDropTarget: boolean;
 
-    get node(): NodeMinimalEntry {
+    get node(): MinimalNodeEntity {
         return this.obj;
     }
 
-    constructor(private obj: NodeMinimalEntry) {
+    constructor(private obj: MinimalNodeEntity) {
         if (!obj) {
             throw new Error(ShareDataRow.ERR_OBJECT_NOT_FOUND);
         }
@@ -250,15 +250,15 @@ export class ShareDataRow implements DataRow {
         this.isDropTarget = this.isFolderAndHasPermissionToUpload(obj);
     }
 
-    isFolderAndHasPermissionToUpload(obj: NodeMinimalEntry): boolean {
+    isFolderAndHasPermissionToUpload(obj: MinimalNodeEntity): boolean {
         return this.isFolder(obj) && this.hasCreatePermission(obj);
     }
 
-    hasCreatePermission(obj: NodeMinimalEntry): boolean {
+    hasCreatePermission(obj: MinimalNodeEntity): boolean {
         return this.hasPermission(obj, 'create');
     }
 
-    private hasPermission(obj: NodeMinimalEntry, permission: string): boolean {
+    private hasPermission(obj: MinimalNodeEntity, permission: string): boolean {
         let hasPermission: boolean = false;
         if (obj.entry && obj.entry['allowableOperations']) {
             let permFound = obj.entry['allowableOperations'].find(element => element === permission);
@@ -267,7 +267,7 @@ export class ShareDataRow implements DataRow {
         return hasPermission;
     }
 
-    isFolder(obj: NodeMinimalEntry): boolean {
+    isFolder(obj: MinimalNodeEntity): boolean {
         return obj.entry && obj.entry.isFolder;
     }
 

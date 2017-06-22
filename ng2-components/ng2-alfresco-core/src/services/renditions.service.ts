@@ -76,7 +76,7 @@ export class RenditionsService {
             .catch(err => this.handleError(err));
     }
 
-    convert(nodeId: string, encoding: string, pollingInterval: number|undefined) {
+    convert(nodeId: string, encoding: string, pollingInterval: number = 1000) {
         return this.createRendition(nodeId, encoding)
             .concatMap(() => this.pollRendition(nodeId, encoding, pollingInterval));
     }

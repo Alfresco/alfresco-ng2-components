@@ -41,7 +41,7 @@ describe('Activiti Task Create Attachment', () => {
                 ActivitiCreateTaskAttachmentComponent
             ],
             providers: [
-                { provide: AlfrescoTranslationService },
+                {provide: AlfrescoTranslationService},
                 ActivitiContentService
             ]
         }).compileComponents();
@@ -55,7 +55,7 @@ describe('Activiti Task Create Attachment', () => {
 
         createTaskRelatedContentSpy = spyOn(service, 'createTaskRelatedContent').and.returnValue(Observable.of(
             {
-              status: true
+                status: true
             }));
 
         componentHandler = jasmine.createSpyObj('componentHandler', [
@@ -67,17 +67,16 @@ describe('Activiti Task Create Attachment', () => {
 
     it('should not call createTaskRelatedContent service when taskId changed', () => {
         let change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ 'taskId': change });
+        component.ngOnChanges({'taskId': change});
         expect(createTaskRelatedContentSpy).not.toHaveBeenCalled();
     });
 
     it('should not call createTaskRelatedContent service when there is no file uploaded', () => {
         let change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ 'taskId': change });
-        let customEvent = {
+        component.ngOnChanges({'taskId': change});
+        let customEvent: any = {
             detail: {
-                files: [
-                ]
+                files: []
             }
         };
         component.onFileUpload(customEvent);
@@ -86,7 +85,7 @@ describe('Activiti Task Create Attachment', () => {
 
     it('should call createTaskRelatedContent service when there is a file uploaded', () => {
         let change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({ 'taskId': change });
+        component.ngOnChanges({'taskId': change});
         let file = new File([new Blob()], 'Test');
         let customEvent = {
             detail: {

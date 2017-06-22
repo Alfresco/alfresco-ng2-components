@@ -65,7 +65,6 @@ export * from './src/utils/index';
 export * from './src/events/base.event';
 export * from './src/events/base-ui.event';
 export * from './src/events/folder-created.event';
-
 export * from './src/models/index';
 
 export const ALFRESCO_CORE_PROVIDERS: any[] = [
