@@ -27,6 +27,7 @@ export class UploadService {
     private queue: FileModel[] = [];
     private cache: { [key: string]: any } = {};
     private totalComplete: number = 0;
+    private totalAborted: number = 0;
     private activeTask: Promise<any> = null;
 
     queueChanged: Subject<FileModel[]> = new Subject<FileModel[]>();
@@ -98,6 +99,8 @@ export class UploadService {
                     setTimeout(() => this.uploadFilesInTheQueue(emitter), 100);
                 };
 
+                promise.next = next;
+
                 promise.then(
                     () => next(),
                     () => next()
@@ -120,6 +123,12 @@ export class UploadService {
             this.fileUpload.next(event);
             this.fileUploadCancelled.next(event);
         });
+    }
+
+    clearQueue() {
+        this.queue = [];
+        this.totalComplete = 0;
+        this.totalAborted = 0;
     }
 
     private beginUpload(file: FileModel, /* @deprecated */emitter: EventEmitter<any>): any {
@@ -209,7 +218,7 @@ export class UploadService {
                 delete this.cache[file.id];
             }
 
-            const event = new FileUploadCompleteEvent(file, this.totalComplete, data);
+            const event = new FileUploadCompleteEvent(file, this.totalComplete, data, this.totalAborted);
             this.fileUpload.next(event);
             this.fileUploadComplete.next(event);
 
@@ -220,6 +229,7 @@ export class UploadService {
     private onUploadAborted(file: FileModel): void {
         if (file) {
             file.status = FileUploadStatus.Aborted;
+            this.totalAborted++;
 
             const promise = this.cache[file.id];
             if (promise) {
@@ -229,6 +239,7 @@ export class UploadService {
             const event = new FileUploadEvent(file, FileUploadStatus.Aborted);
             this.fileUpload.next(event);
             this.fileUploadAborted.next(event);
+            promise.next();
         }
     }
 }
