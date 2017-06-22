@@ -9,7 +9,7 @@
                 <i class="material-icons up" title="expand upload list">keyboard_arrow_up</i>
             </div>
 
-            <div *ngIf="canCloseDialogWindow" id="button-close-upload-list" class="close-button" (click)="toggleVisible()" (keyup.enter)="toggleVisible()" tabindex="0" title="close upload list">
+            <div *ngIf="showCloseButton" id="button-close-upload-list" class="close-button" (click)="toggleVisible()" (keyup.enter)="toggleVisible()" tabindex="0" title="close upload list">
                 <i class="material-icons">clear</i>
             </div>
         </div>

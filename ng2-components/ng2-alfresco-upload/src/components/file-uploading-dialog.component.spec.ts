@@ -123,7 +123,7 @@ describe('FileUploadingDialogComponent', () => {
         uploadService.fileUpload.next(new FileUploadCompleteEvent(file, 1, { status: FileUploadStatus.Complete }, 0));
     }));
 
-    fit('should show the close button when the file upload is in error', async(() => {
+    it('should show the close button when the file upload is in error', async(() => {
         component.isDialogActive = true;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
@@ -134,7 +134,7 @@ describe('FileUploadingDialogComponent', () => {
         uploadService.fileUpload.next(new FileUploadEvent(file, FileUploadStatus.Error));
     }));
 
-    fit('should show the close button when the file upload is cancelled', async(() => {
+    it('should show the close button when the file upload is cancelled', async(() => {
         component.isDialogActive = true;
         fixture.detectChanges();
         fixture.whenStable().then(() => {

@@ -39,7 +39,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
 
     private listSubscription: any;
     private counterSubscription: any;
-    private canCloseDialogWindow: boolean = false;
+    private showCloseButton: boolean = false;
 
     constructor(private cd: ChangeDetectorRef,
                 translateService: AlfrescoTranslationService,
@@ -57,7 +57,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
                 this.isDialogActive = true;
                 this.cd.detectChanges();
             }
-            this.canCloseDialogWindow = false;
+            this.showCloseButton = false;
         });
 
         this.counterSubscription = this.uploadService.fileUploadComplete.subscribe((event: FileUploadCompleteEvent) => {
@@ -68,7 +68,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
             this.cd.detectChanges();
         });
 
-        this.uploadService.fileUpload.subscribe(event => {
+        this.uploadService.fileUpload.subscribe((event: FileUploadCompleteEvent) => {
             if (event.status !== FileUploadStatus.Progress) {
                 this.isUploadProcessCompleted(event);
             }
@@ -100,14 +100,14 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
 
     private isUploadProcessCompleted(event: FileUploadCompleteEvent) {
         if (this.isAllFileUploadEnded(event) && this.isUploadStateCompleted(event.status)) {
-            this.showCloseButton();
+            this.showCloseDialogButton();
         } else if (event.status === FileUploadStatus.Error || event.status === FileUploadStatus.Cancelled) {
-            this.showCloseButton();
+            this.showCloseDialogButton();
         }
     }
 
-    private showCloseButton() {
-        this.canCloseDialogWindow = true;
+    private showCloseDialogButton() {
+        this.showCloseButton = true;
     }
 
     private isAllFileUploadEnded(event: FileUploadCompleteEvent) {
