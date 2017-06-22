@@ -40,7 +40,6 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     private listSubscription: any;
     private counterSubscription: any;
     private canCloseDialogWindow: boolean = false;
-    private completedStates: number[] = [FileUploadStatus.Complete, FileUploadStatus.Cancelled];
 
     constructor(private cd: ChangeDetectorRef,
                 translateService: AlfrescoTranslationService,
@@ -58,24 +57,21 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
                 this.isDialogActive = true;
                 this.cd.detectChanges();
             }
-
             this.canCloseDialogWindow = false;
-            this.uploadService.fileUpload.debounceTime(300).subscribe((event: FileUploadCompleteEvent) => {
-                if (event.status !== FileUploadStatus.Progress) {
-                    this.isUploadProcessCompleted(event);
-                }
-            });
         });
 
-        this.counterSubscription = this.uploadService.fileUploadComplete.subscribe((e: FileUploadCompleteEvent) => {
-            this.totalCompleted = e.totalComplete;
+        this.counterSubscription = this.uploadService.fileUploadComplete.subscribe((event: FileUploadCompleteEvent) => {
+            this.totalCompleted = event.totalComplete;
             if (this.totalCompleted > 1) {
                 this.totalCompletedMsg = 'FILE_UPLOAD.MESSAGES.COMPLETED';
             }
             this.cd.detectChanges();
         });
 
-        this.uploadService.fileUpload.subscribe(e => {
+        this.uploadService.fileUpload.subscribe(event => {
+            if (event.status !== FileUploadStatus.Progress) {
+                this.isUploadProcessCompleted(event);
+            }
             this.cd.detectChanges();
         });
     }
@@ -103,23 +99,22 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     }
 
     private isUploadProcessCompleted(event: FileUploadCompleteEvent) {
-        if (this.isUploadEnded(event) && this.isUploadValidState(event.status)) {
+        if (this.isAllFileUploadEnded(event) && this.isUploadStateCompleted(event.status)) {
             this.showCloseButton();
         } else if (event.status === FileUploadStatus.Error || event.status === FileUploadStatus.Cancelled) {
             this.showCloseButton();
         }
     }
 
-    private showCloseButton(){
+    private showCloseButton() {
         this.canCloseDialogWindow = true;
-        this.cd.detectChanges();
     }
 
-    private isUploadEnded(event: FileUploadCompleteEvent) {
+    private isAllFileUploadEnded(event: FileUploadCompleteEvent) {
         return event.totalComplete === this.uploadService.getQueue().length - event.totalAborted;
     }
 
-    private isUploadValidState(state): boolean {
-        return this.completedStates.indexOf(state) !== -1;
+    private isUploadStateCompleted(state): boolean {
+        return FileUploadStatus.Complete === state;
     }
 }

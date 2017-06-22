@@ -22,8 +22,8 @@ import { CoreModule } from 'ng2-alfresco-core';
 import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
 import { FileUploadingListComponent } from './file-uploading-list.component';
 import { UploadService } from '../services/upload.service';
-import { FileModel } from '../models/file.model';
-import { FileUploadCompleteEvent } from '../events/file.event';
+import { FileModel, FileUploadStatus } from '../models/file.model';
+import { FileUploadCompleteEvent, FileUploadEvent } from '../events/file.event';
 
 describe('FileUploadingDialogComponent', () => {
 
@@ -110,4 +110,38 @@ describe('FileUploadingDialogComponent', () => {
 
         expect(element.querySelector('.minimize-button').getAttribute('class')).toEqual('minimize-button active');
     });
+
+    it('should show the close button when the file upload is completed', async(() => {
+        component.isDialogActive = true;
+        uploadService.addToQueue(new FileModel(<File> { name: 'file' }));
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            let closeButton = element.querySelector('#button-close-upload-list');
+            expect(closeButton).not.toBeNull();
+        });
+
+        uploadService.fileUpload.next(new FileUploadCompleteEvent(file, 1, { status: FileUploadStatus.Complete }, 0));
+    }));
+
+    fit('should show the close button when the file upload is in error', async(() => {
+        component.isDialogActive = true;
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            let closeButton = element.querySelector('#button-close-upload-list');
+            expect(closeButton).not.toBeNull();
+        });
+
+        uploadService.fileUpload.next(new FileUploadEvent(file, FileUploadStatus.Error));
+    }));
+
+    fit('should show the close button when the file upload is cancelled', async(() => {
+        component.isDialogActive = true;
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            let closeButton = element.querySelector('#button-close-upload-list');
+            expect(closeButton).not.toBeNull();
+        });
+
+        uploadService.fileUpload.next(new FileUploadEvent(file, FileUploadStatus.Cancelled));
+    }));
 });

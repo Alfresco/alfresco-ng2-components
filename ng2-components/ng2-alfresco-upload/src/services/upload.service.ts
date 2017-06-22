@@ -125,7 +125,7 @@ export class UploadService {
         });
     }
 
-    clearQueue(){
+    clearQueue() {
         this.queue = [];
         this.totalComplete = 0;
         this.totalAborted = 0;
