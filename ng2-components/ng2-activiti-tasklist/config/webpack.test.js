@@ -8,6 +8,7 @@ module.exports = webpackMerge(commonConfig, {
 
     resolve: {
         alias: {
+            "ng2-alfresco-form": helpers.root('../ng2-alfresco-form/index.ts'),
             "ng2-alfresco-core": helpers.root('../ng2-alfresco-core/index.ts'),
             "ng2-alfresco-datatable": helpers.root('../ng2-alfresco-datatable/index.ts')
         },

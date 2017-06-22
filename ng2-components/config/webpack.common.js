@@ -136,14 +136,15 @@ module.exports = {
         new ForkTsCheckerWebpackPlugin(),
         new HappyPack({
             id: 'ts',
-            threads: 8,
+            threads: 2,
             loaders: [
                 {
                     path: 'ts-loader',
                     query: {
                         happyPackMode: true,
                         "compilerOptions": {
-                            "paths": {}
+                            "paths": {
+                            }
                         }
                     }
                 }
@@ -152,7 +153,7 @@ module.exports = {
 
         new HappyPack({
             id: 'css',
-            threads: 8,
+            threads: 2,
             loaders: ['to-string-loader', 'css-loader' ]
         }),
 
