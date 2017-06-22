@@ -85,7 +85,7 @@ describe('RenditionsService', () => {
     describe('convert', () => {
 
         it('should call the server with the ID passed and the asked encoding for creation', (done) => {
-            service.convert('fake-node-id', 'pdf');
+            service.convert('fake-node-id', 'pdf', 1000);
 
             expect(jasmine.Ajax.requests.mostRecent().method).toBe('POST');
             expect(jasmine.Ajax.requests.mostRecent().url).toBe('http://localhost:3000/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/renditions');
