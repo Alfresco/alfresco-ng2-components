@@ -35,16 +35,13 @@
             "ng2-alfresco-viewer": ["../ng2-alfresco-viewer/"],
             "ng2-alfresco-webscript": ["../ng2-alfresco-webscript/"],
             "ng2-alfresco-userinfo": ["../ng2-alfresco-userinfo"],
-            "alfresco-js-api": ["./node_modules/alfresco-js-api/"],
-            "@angular/*": ["./node_modules/@angular/*"],
-            "rxjs/*": ["./node_modules/rxjs/*"]
+            "alfresco-js-api": ["../node_modules/alfresco-js-api/"]
         },
         "lib": [
             "es2015",
             "dom"
         ],
-        "suppressImplicitAnyIndexErrors": true,
-        "noUnusedLocals": true
+        "suppressImplicitAnyIndexErrors": true
     },
     "exclude": [
         "demo",

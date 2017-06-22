@@ -41,7 +41,7 @@ describe('AdfCardView', () => {
     });
 
     it('should render the label and value', async(() => {
-        component.properties = [new CardViewModel({label: 'My label', value: 'My value'});
+        component.properties = [new CardViewModel({label: 'My label', value: 'My value'})];
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();

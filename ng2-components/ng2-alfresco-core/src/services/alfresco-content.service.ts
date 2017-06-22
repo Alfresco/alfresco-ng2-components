@@ -17,7 +17,6 @@
 
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs/Rx';
-import { MinimalNodeEntity } from 'alfresco-js-api';
 import { AlfrescoAuthenticationService } from './alfresco-authentication.service';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { LogService } from './log.service';
@@ -72,15 +71,14 @@ export class AlfrescoContentService {
             return dataContent;
         })).catch(this.handleError);
     }
-
     /**
      * Create a folder
      * @param name - the folder name
      */
-    createFolder(relativePath: string, name: string, parentId?: string): Observable<MinimalNodeEntity> {
+    createFolder(relativePath: string, name: string, parentId?: string): Observable<FolderCreatedEvent> {
         return Observable.fromPromise(this.apiService.getInstance().nodes.createFolder(name, relativePath, parentId))
             .do(data => {
-                this.folderCreated.next({
+                this.folderCreated.next(<FolderCreatedEvent>{
                     relativePath: relativePath,
                     name: name,
                     parentId: parentId,
