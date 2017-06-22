@@ -26,7 +26,7 @@ import { WidgetComponent, FormService } from 'ng2-activiti-form';
 })
 export class CustomEditorComponent extends WidgetComponent {
 
-    constructor(private formService: FormService) {
+    constructor(public formService: FormService) {
         super();
     }
 }
@@ -37,7 +37,7 @@ export class CustomEditorComponent extends WidgetComponent {
 })
 export class CustomStencil01 extends WidgetComponent {
 
-    constructor(private formService: FormService) {
+    constructor(public formService: FormService) {
         super();
     }
 }
