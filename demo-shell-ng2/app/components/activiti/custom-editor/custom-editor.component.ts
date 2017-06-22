@@ -16,7 +16,7 @@
  */
 
 import { NgModule, Component } from '@angular/core';
-import { WidgetComponent, FormService } from 'ng2-activiti-form';
+import { WidgetComponent } from 'ng2-activiti-form';
 
 @Component({
     selector: 'custom-editor',
@@ -26,7 +26,7 @@ import { WidgetComponent, FormService } from 'ng2-activiti-form';
 })
 export class CustomEditorComponent extends WidgetComponent {
 
-    constructor(public formService: FormService) {
+    constructor() {
         super();
     }
 }
@@ -37,7 +37,7 @@ export class CustomEditorComponent extends WidgetComponent {
 })
 export class CustomStencil01 extends WidgetComponent {
 
-    constructor(public formService: FormService) {
+    constructor() {
         super();
     }
 }

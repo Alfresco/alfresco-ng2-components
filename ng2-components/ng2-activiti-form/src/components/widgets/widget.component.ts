@@ -53,7 +53,7 @@ export class WidgetComponent implements AfterViewInit {
     @Output()
     fieldChanged: EventEmitter<FormFieldModel> = new EventEmitter<FormFieldModel>();
 
-    constructor(public formService: FormService) {
+    constructor(public formService?: FormService) {
     }
 
     hasField() {
