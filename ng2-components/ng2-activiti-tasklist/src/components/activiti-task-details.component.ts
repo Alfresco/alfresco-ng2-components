@@ -35,6 +35,7 @@ import { FormService, FormModel, FormOutcomeEvent, ContentLinkModel } from 'ng2-
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 
 declare var require: any;
+declare let dialogPolyfill: any;
 
 @Component({
     selector: 'activiti-task-details',
@@ -51,6 +52,9 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
 
     @ViewChild('errorDialog')
     errorDialog: DebugElement;
+
+    @ViewChild('dialogPeople')
+    peopleDialog: any;
 
     @Input()
     debugMode: boolean = false;
@@ -287,6 +291,19 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
 
     closeErrorDialog(): void {
         this.errorDialog.nativeElement.close();
+    }
+
+    public showPeopleDialog() {
+        if (!this.peopleDialog.nativeElement.showModal) {
+            dialogPolyfill.registerDialog(this.peopleDialog.nativeElement);
+        }
+        this.peopleDialog.nativeElement.showModal();
+    }
+
+    public closePeopleDialog() {
+        if (this.peopleDialog) {
+            this.peopleDialog.nativeElement.close();
+        }
     }
 
     onClaimTask(taskId: string) {

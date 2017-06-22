@@ -20,12 +20,7 @@
         </activiti-task-header>
         <div *ngIf="showHeaderContent" class="mdl-grid">
             <div *ngIf="showInvolvePeople" class="mdl-cell mdl-cell--4-col">
-                <activiti-people
-                    [iconImageUrl]="peopleIconImageUrl"
-                    [people]="taskPeople"
-                    [readOnly]="readOnlyForm"
-                    [taskId]="taskDetails.id">
-                </activiti-people>
+                <button type="button" md-button md-raised-button (click)="showPeopleDialog()">{{'TASK_DETAILS.LABELS.INVOLVED_PEOPLE'|translate}}</button>
             </div>
             <div *ngIf="showComments" class="mdl-cell mdl-cell--4-col">
                 <activiti-comments #activiticomments
@@ -72,6 +67,18 @@
             <h3>{{'TASK_DETAILS.ERROR.TITLE'|translate}}</h3>
             <p>{{'TASK_DETAILS.ERROR.DESCRIPTION'|translate}}</p>
             <button type="button" class="mdl-button" (click)="closeErrorDialog()">{{'TASK_DETAILS.ERROR.CLOSE'|translate}}</button>
+        </div>
+    </dialog>
+    <dialog class="mdl-dialog people-dialog" #dialogPeople>
+        <div class="mdl-dialog__content">
+            <activiti-people
+                        [iconImageUrl]="peopleIconImageUrl"
+                        [people]="taskPeople"
+                        [readOnly]="readOnlyForm"
+                        [taskId]="taskDetails.id">
+            </activiti-people>
+            <br><br>
+            <button type="button" md-button md-raised-button (click)="closePeopleDialog()">{{'TASK_DETAILS.ERROR.CLOSE'|translate}}</button>
         </div>
     </dialog>
 </div>
