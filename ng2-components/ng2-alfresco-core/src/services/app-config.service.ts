@@ -36,7 +36,7 @@ export class AppConfigService {
 
     get<T>(key: string): T {
         return <T> ObjectUtils.getValue(this.config, key);
-    };
+    }
 
     load(resource: string = 'app.config.json'): Promise<any> {
         this.configFile = resource;

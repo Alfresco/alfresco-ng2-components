@@ -112,7 +112,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             this.data.setFilter(value);
             this.loadFolderNodesByFolderNodeId(this.currentFolderId, this.pageSize, this.skipCount);
         }
-    };
+    }
 
     @Input()
     set imageResolver(value: ImageResolver) {
