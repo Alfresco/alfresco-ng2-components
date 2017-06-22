@@ -31,7 +31,6 @@ describe('AttachWidget', () => {
 
     let widget: AttachWidget;
     let fixture: ComponentFixture<AttachWidget>;
-    let debug: DebugElement;
     let element: HTMLElement;
     let contentService: ActivitiAlfrescoContentService;
     let dialogPolyfill: any;
@@ -56,7 +55,6 @@ describe('AttachWidget', () => {
         fixture = TestBed.createComponent(AttachWidget);
         contentService = TestBed.get(ActivitiAlfrescoContentService);
 
-        debug = fixture.debugElement;
         element = fixture.nativeElement;
         widget = fixture.componentInstance;
 

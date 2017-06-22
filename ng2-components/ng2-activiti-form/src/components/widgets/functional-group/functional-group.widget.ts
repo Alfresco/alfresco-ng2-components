@@ -34,9 +34,9 @@ export class FunctionalGroupWidget extends WidgetComponent implements OnInit {
     minTermLength: number = 1;
     groupId: string;
 
-    constructor(private formService: FormService,
-                private elementRef: ElementRef) {
-        super();
+    constructor(public formService: FormService,
+                public elementRef: ElementRef) {
+         super(formService);
     }
 
     // TODO: investigate, called 2 times

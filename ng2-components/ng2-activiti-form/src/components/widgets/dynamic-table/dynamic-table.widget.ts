@@ -46,12 +46,12 @@ export class DynamicTableWidget extends WidgetComponent implements OnInit {
 
     private selectArrayCode = [32, 0, 13];
 
-    constructor(private formService: FormService,
-                private elementRef: ElementRef,
+    constructor(public formService: FormService,
+                public elementRef: ElementRef,
                 private visibilityService: WidgetVisibilityService,
                 private logService: LogService,
                 private cd: ChangeDetectorRef) {
-        super();
+         super(formService);
     }
 
     ngOnInit() {

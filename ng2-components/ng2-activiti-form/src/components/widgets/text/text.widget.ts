@@ -30,8 +30,8 @@ export class TextWidget extends WidgetComponent implements OnInit {
     private mask;
     private isMaskReversed;
 
-    constructor(private formService: FormService) {
-        super();
+    constructor(public formService: FormService) {
+         super(formService);
     }
 
     ngOnInit() {

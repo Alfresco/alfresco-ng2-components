@@ -39,7 +39,7 @@ export class DropdownEditorComponent implements OnInit {
     @Input()
     column: DynamicTableColumn;
 
-    constructor(private formService: FormService,
+    constructor(public formService: FormService,
                 private logService: LogService) {
     }
 

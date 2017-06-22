@@ -31,8 +31,8 @@ export class AmountWidget extends WidgetComponent implements OnInit {
 
     currency: string = AmountWidget.DEFAULT_CURRENCY;
 
-    constructor(private formService: FormService) {
-        super();
+    constructor(public formService: FormService) {
+        super(formService);
     }
 
     ngOnInit() {

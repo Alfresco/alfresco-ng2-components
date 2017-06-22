@@ -32,7 +32,6 @@ describe('DisplayValueWidget', () => {
 
     let widget: DisplayValueWidget;
     let fixture: ComponentFixture<DisplayValueWidget>;
-    let debug: DebugElement;
     let element: HTMLElement;
     let formService: FormService;
 
@@ -58,7 +57,6 @@ describe('DisplayValueWidget', () => {
         fixture = TestBed.createComponent(DisplayValueWidget);
         formService = TestBed.get(FormService);
 
-        debug = fixture.debugElement;
         element = fixture.nativeElement;
         widget = fixture.componentInstance;
     });

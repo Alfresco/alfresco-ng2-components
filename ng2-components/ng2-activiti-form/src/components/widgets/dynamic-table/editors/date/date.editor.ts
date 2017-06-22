@@ -43,7 +43,7 @@ export class DateEditorComponent implements OnInit {
     @Input()
     column: DynamicTableColumn;
 
-    constructor(private elementRef: ElementRef) {}
+    constructor(public elementRef: ElementRef) {}
 
     ngOnInit() {
         this.settings = {

@@ -35,10 +35,10 @@ export class TypeaheadWidget extends WidgetComponent implements OnInit {
     value: string;
     options: FormFieldOption[] = [];
 
-    constructor(private formService: FormService,
+    constructor(public formService: FormService,
                 private visibilityService: WidgetVisibilityService,
                 private logService: LogService) {
-        super();
+         super(formService);
     }
 
     ngOnInit() {

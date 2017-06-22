@@ -30,8 +30,8 @@ export class HyperlinkWidget extends WidgetComponent implements OnInit {
     linkUrl: string = WidgetComponent.DEFAULT_HYPERLINK_URL;
     linkText: string = null;
 
-    constructor(private formService: FormService) {
-        super();
+    constructor(public formService: FormService) {
+         super(formService);
     }
 
     ngOnInit() {

@@ -76,7 +76,6 @@ describe('DynamicTableWidget', () => {
 
     let widget: DynamicTableWidget;
     let fixture: ComponentFixture<DynamicTableWidget>;
-    let debug: DebugElement;
     let element: HTMLElement;
     let table: DynamicTableModel;
     let logService: LogService;
@@ -110,7 +109,6 @@ describe('DynamicTableWidget', () => {
         elementRefSpy.nativeElement = nativeElementSpy;
 
         fixture = TestBed.createComponent(DynamicTableWidget);
-        debug = fixture.debugElement;
         element = fixture.nativeElement;
         widget = fixture.componentInstance;
         widget.content = table;

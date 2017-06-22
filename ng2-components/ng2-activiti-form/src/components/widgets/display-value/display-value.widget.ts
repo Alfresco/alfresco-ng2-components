@@ -50,9 +50,9 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
     hasFile: boolean = false;
     showDocumentContent: boolean = true;
 
-    constructor(private formService: FormService,
+    constructor(public formService: FormService,
                 private visibilityService: WidgetVisibilityService) {
-        super();
+         super(formService);
     }
 
     ngOnInit() {

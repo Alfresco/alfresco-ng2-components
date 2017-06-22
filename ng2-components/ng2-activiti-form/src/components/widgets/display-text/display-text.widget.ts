@@ -27,8 +27,8 @@ import { FormService } from './../../../services/form.service';
 })
 export class DisplayTextWidget extends WidgetComponent {
 
-    constructor(private formService: FormService) {
-        super();
+    constructor(public formService: FormService) {
+         super(formService);
     }
 
 }

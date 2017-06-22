@@ -33,9 +33,9 @@ export class DateWidget extends WidgetComponent implements OnInit, AfterViewChec
 
     datePicker: any;
 
-    constructor(private formService: FormService,
-                private elementRef: ElementRef) {
-        super();
+    constructor(public formService: FormService,
+                public elementRef: ElementRef) {
+         super(formService);
     }
 
     ngOnInit() {

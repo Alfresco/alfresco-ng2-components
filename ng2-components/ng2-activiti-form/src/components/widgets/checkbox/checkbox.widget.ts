@@ -24,13 +24,11 @@ import { FormService } from './../../../services/form.service';
     selector: 'checkbox-widget',
     templateUrl: './checkbox.widget.html',
     host: baseHost
-,
-host: baseHost
 })
 export class CheckboxWidget extends WidgetComponent {
 
-    constructor(private visibilityService: WidgetVisibilityService, private formService: FormService) {
-        super();
+    constructor(private visibilityService: WidgetVisibilityService, public formService: FormService) {
+         super(formService);
     }
 
     onChange() {

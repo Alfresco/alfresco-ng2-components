@@ -53,10 +53,10 @@ export class AttachWidget extends WidgetComponent implements OnInit {
     @ViewChild('dialog')
     dialog: any;
 
-    constructor(private formService: FormService,
+    constructor(public formService: FormService,
                 private contentService: ActivitiAlfrescoContentService,
                 private logService: LogService) {
-        super();
+         super(formService);
     }
 
     ngOnInit() {

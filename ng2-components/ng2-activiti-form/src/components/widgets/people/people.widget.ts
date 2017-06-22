@@ -35,9 +35,9 @@ export class PeopleWidget extends WidgetComponent implements OnInit {
     users: GroupUserModel[] = [];
     groupId: string;
 
-    constructor(private formService: FormService,
-                private elementRef: ElementRef) {
-        super();
+    constructor(public formService: FormService,
+                public elementRef: ElementRef) {
+         super(formService);
     }
 
     // TODO: investigate, called 2 times

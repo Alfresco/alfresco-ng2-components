@@ -30,10 +30,10 @@ import { WidgetVisibilityService } from '../../../services/widget-visibility.ser
 })
 export class DropdownWidget extends WidgetComponent implements OnInit {
 
-    constructor(private formService: FormService,
+    constructor(public formService: FormService,
                 private visibilityService: WidgetVisibilityService,
                 private logService: LogService) {
-        super();
+         super(formService);
     }
 
     ngOnInit() {

@@ -30,7 +30,6 @@ describe('DateWidget', () => {
 
     let widget: DateWidget;
     let fixture: ComponentFixture<DateWidget>;
-    let debug: DebugElement;
     let componentHandler;
     let nativeElement: any;
     let element: HTMLElement;
@@ -61,7 +60,6 @@ describe('DateWidget', () => {
         fixture = TestBed.createComponent(DateWidget);
 
         element = fixture.nativeElement;
-        debug = fixture.debugElement;
         widget = fixture.componentInstance;
         componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
         window['componentHandler'] = componentHandler;

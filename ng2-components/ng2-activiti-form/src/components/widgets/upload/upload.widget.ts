@@ -32,9 +32,9 @@ export class UploadWidget extends WidgetComponent implements OnInit {
     fileName: string;
     displayText: string;
 
-    constructor(private formService: FormService,
+    constructor(public formService: FormService,
                 private logService: LogService) {
-        super();
+         super(formService);
     }
 
     ngOnInit() {

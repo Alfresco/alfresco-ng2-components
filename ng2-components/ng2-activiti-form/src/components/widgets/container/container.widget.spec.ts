@@ -36,7 +36,6 @@ describe('ContainerWidget', () => {
 
     let widget: ContainerWidget;
     let fixture: ComponentFixture<ContainerWidget>;
-    let debug: DebugElement;
     let element: HTMLElement;
     let contentService: ActivitiAlfrescoContentService;
     let componentHandler;
@@ -61,7 +60,6 @@ describe('ContainerWidget', () => {
         fixture = TestBed.createComponent(ContainerWidget);
         contentService = TestBed.get(ActivitiAlfrescoContentService);
 
-        debug = fixture.debugElement;
         element = fixture.nativeElement;
         widget = fixture.componentInstance;
 

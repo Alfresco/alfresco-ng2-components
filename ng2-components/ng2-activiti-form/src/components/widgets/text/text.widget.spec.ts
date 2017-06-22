@@ -31,7 +31,6 @@ describe('TextWidget', () => {
 
     let widget: TextWidget;
     let fixture: ComponentFixture<TextWidget>;
-    let debug: DebugElement;
     let componentHandler;
     let element: HTMLElement;
 
@@ -55,7 +54,6 @@ describe('TextWidget', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(TextWidget);
 
-        debug = fixture.debugElement;
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
         componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);

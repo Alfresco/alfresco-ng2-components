@@ -32,8 +32,8 @@ export class ContainerWidget extends WidgetComponent implements OnInit, AfterVie
 
     content: ContainerWidgetModel;
 
-    constructor(private formService: FormService) {
-        super();
+    constructor(public formService: FormService) {
+         super(formService);
     }
 
     onExpanderClicked() {

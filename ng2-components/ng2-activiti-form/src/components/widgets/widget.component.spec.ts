@@ -29,7 +29,6 @@ describe('WidgetComponent', () => {
 
     let widget: WidgetComponent;
     let fixture: ComponentFixture<WidgetComponent>;
-    let debug: DebugElement;
     let element: HTMLElement;
     let componentHandler;
     let formService: FormService;
@@ -54,7 +53,6 @@ describe('WidgetComponent', () => {
         fixture = TestBed.createComponent(WidgetComponent);
         formService = TestBed.get(FormService);
 
-        debug = fixture.debugElement;
         element = fixture.nativeElement;
         widget = fixture.componentInstance;
 

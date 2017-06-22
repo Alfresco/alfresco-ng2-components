@@ -31,7 +31,7 @@ import { FormService } from './../../../services/form.service';
 })
 export class UnknownWidget extends WidgetComponent {
 
-    constructor(private formService: FormService) {
-        super();
+    constructor(public formService: FormService) {
+         super(formService);
     }
 }
