@@ -17,13 +17,14 @@
 
 import { Component, OnInit } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
-import { WidgetComponent } from './../widget.component';
+import { WidgetComponent , baseHost } from './../widget.component';
 import { FormService } from '../../../services/form.service';
 
 @Component({
     selector: 'upload-widget',
     templateUrl: './upload.widget.html',
-    styleUrls: ['./upload.widget.css']
+    styleUrls: ['./upload.widget.css'],
+    host: baseHost
 })
 export class UploadWidget extends WidgetComponent implements OnInit {
 
@@ -31,9 +32,9 @@ export class UploadWidget extends WidgetComponent implements OnInit {
     fileName: string;
     displayText: string;
 
-    constructor(private formService: FormService,
+    constructor(public formService: FormService,
                 private logService: LogService) {
-        super();
+         super(formService);
     }
 
     ngOnInit() {

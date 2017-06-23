@@ -16,30 +16,49 @@
  */
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { CoreModule, LogServiceMock } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { DisplayValueWidget } from './display-value.widget';
-import { FormService } from '../../../services/form.service';
 import { ActivitiContent } from '../../activiti-content.component';
-import { EcmModelService } from '../../../services/ecm-model.service';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormModel } from '../core/form.model';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { CoreModule } from 'ng2-alfresco-core';
+import { FormService } from './../../../services/form.service';
+import { EcmModelService } from './../../../services/ecm-model.service';
 
 describe('DisplayValueWidget', () => {
 
     let widget: DisplayValueWidget;
+    let fixture: ComponentFixture<DisplayValueWidget>;
+    let element: HTMLElement;
     let formService: FormService;
-    let visibilityService: WidgetVisibilityService;
-    let logService: LogServiceMock;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule.forRoot()
+            ],
+            declarations: [
+                DisplayValueWidget,
+                ActivitiContent
+            ],
+            providers: [
+                FormService,
+                EcmModelService,
+                WidgetVisibilityService
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        }).compileComponents();
+    }));
 
     beforeEach(() => {
-        logService = new LogServiceMock();
-        formService = new FormService(null, null, logService);
-        visibilityService = new WidgetVisibilityService(null, logService);
-        widget = new DisplayValueWidget(formService, visibilityService);
+        fixture = TestBed.createComponent(DisplayValueWidget);
+        formService = TestBed.get(FormService);
+
+        element = fixture.nativeElement;
+        widget = fixture.componentInstance;
     });
 
     it('should require field to setup default value', () => {
@@ -609,35 +628,15 @@ describe('DisplayValueWidget', () => {
     });
 
     describe('UI check', () => {
-        let widgetUI: DisplayValueWidget;
-        let fixture: ComponentFixture<DisplayValueWidget>;
-        let element: HTMLElement;
         let componentHandler;
 
         beforeEach(async(() => {
             componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
             window['componentHandler'] = componentHandler;
-            TestBed.configureTestingModule({
-                imports: [CoreModule],
-                declarations: [
-                    DisplayValueWidget,
-                    ActivitiContent
-                ],
-                providers: [
-                    EcmModelService,
-                    FormService,
-                    WidgetVisibilityService
-                ],
-                schemas: [CUSTOM_ELEMENTS_SCHEMA]
-            }).compileComponents().then(() => {
-                fixture = TestBed.createComponent(DisplayValueWidget);
-                widgetUI = fixture.componentInstance;
-                element = fixture.nativeElement;
-            });
         }));
 
         beforeEach(() => {
-            spyOn(widgetUI, 'setupMaterialTextField').and.stub();
+            spyOn(widget, 'setupMaterialTextField').and.stub();
         });
 
         afterEach(() => {
@@ -646,7 +645,7 @@ describe('DisplayValueWidget', () => {
         });
 
         it('should show the checkbox on when [BOOLEAN] field is true', async(() => {
-            widgetUI.field = new FormFieldModel(null, {
+            widget.field = new FormFieldModel(null, {
                 id: 'fake-checkbox-id',
                 type: FormFieldTypes.DISPLAY_VALUE,
                 value: 'true',
@@ -667,7 +666,7 @@ describe('DisplayValueWidget', () => {
         }));
 
         it('should show the checkbox off when [BOOLEAN] field is false', async(() => {
-            widgetUI.field = new FormFieldModel(null, {
+            widget.field = new FormFieldModel(null, {
                 id: 'fake-checkbox-id',
                 type: FormFieldTypes.DISPLAY_VALUE,
                 value: 'false',
@@ -688,7 +687,7 @@ describe('DisplayValueWidget', () => {
         }));
 
         it('should show the dropdown value taken from options when field has options', async(() => {
-            widgetUI.field = new FormFieldModel(null, {
+            widget.field = new FormFieldModel(null, {
                 id: 'fake-dropdown-id',
                 type: FormFieldTypes.DISPLAY_VALUE,
                 value: '1',
@@ -713,7 +712,7 @@ describe('DisplayValueWidget', () => {
         }));
 
         it('should show the dropdown value taken from value when field has no options', async(() => {
-            widgetUI.field = new FormFieldModel(null, {
+            widget.field = new FormFieldModel(null, {
                 id: 'fake-dropdown-id',
                 type: FormFieldTypes.DISPLAY_VALUE,
                 value: 'FAKE',

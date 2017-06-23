@@ -15,14 +15,32 @@
  * limitations under the License.
  */
 
-import { Input, AfterViewInit, Output, EventEmitter, ElementRef } from '@angular/core';
+import { Component, Input, AfterViewInit, Output, EventEmitter, ElementRef } from '@angular/core';
 import { FormFieldModel } from './core/index';
+import { FormService } from './../../services/form.service';
 
-declare var componentHandler: any;
+declare let componentHandler: any;
+
+export const baseHost = {
+    '(click)': 'event($event)',
+    '(blur)': 'event($event)',
+    '(change)': 'event($event)',
+    '(focus)': 'event($event)',
+    '(focusin)': 'event($event)',
+    '(focusout)': 'event($event)',
+    '(input)': 'event($event)',
+    '(invalid)': 'event($event)',
+    '(select)': 'event($event)'
+};
 
 /**
  * Base widget component.
  */
+@Component({
+    selector: 'base-widget',
+    template: '',
+    host: baseHost
+})
 export class WidgetComponent implements AfterViewInit {
 
     static DEFAULT_HYPERLINK_URL: string = '#';
@@ -34,6 +52,9 @@ export class WidgetComponent implements AfterViewInit {
     /** @deprecated used only to trigger visibility engine, components should do that internally if needed */
     @Output()
     fieldChanged: EventEmitter<FormFieldModel> = new EventEmitter<FormFieldModel>();
+
+    constructor(public formService?: FormService) {
+    }
 
     hasField() {
         return this.field ? true : false;
@@ -110,5 +131,9 @@ export class WidgetComponent implements AfterViewInit {
             return field.displayText || field.hyperlinkUrl;
         }
         return null;
+    }
+
+    protected event(event: Event): void {
+        this.formService.formEvents.next(event);
     }
 }

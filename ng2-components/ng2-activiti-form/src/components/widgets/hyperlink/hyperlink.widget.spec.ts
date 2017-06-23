@@ -25,7 +25,7 @@ describe('HyperlinkWidget', () => {
     let widget: HyperlinkWidget;
 
     beforeEach(() => {
-        widget = new HyperlinkWidget();
+        widget = new HyperlinkWidget(null);
     });
 
     it('should get link text from field display text', () => {

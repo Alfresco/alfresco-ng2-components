@@ -16,18 +16,24 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { WidgetComponent } from './../widget.component';
+import { WidgetComponent , baseHost } from './../widget.component';
+import { FormService } from './../../../services/form.service';
 
 @Component({
     selector: 'amount-widget',
     templateUrl: './amount.widget.html',
-    styleUrls: ['./amount.widget.css']
+    styleUrls: ['./amount.widget.css'],
+    host: baseHost
 })
 export class AmountWidget extends WidgetComponent implements OnInit {
 
     static DEFAULT_CURRENCY: string = '$';
 
     currency: string = AmountWidget.DEFAULT_CURRENCY;
+
+    constructor(public formService: FormService) {
+        super(formService);
+    }
 
     ngOnInit() {
         if (this.field && this.field.currency) {

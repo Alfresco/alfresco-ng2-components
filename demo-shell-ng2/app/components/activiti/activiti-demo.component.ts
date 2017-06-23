@@ -150,6 +150,11 @@ export class ActivitiDemoComponent implements AfterViewInit {
             console.log(`Field value changed. Form: ${e.form.id}, Field: ${e.field.id}, Value: ${e.field.value}`);
         });
 
+        formService.formEvents.subscribe((event: Event) => {
+            console.log('Event fired:' + event.type);
+            console.log('Event Target:' + event.target);
+        });
+
     }
 
     ngOnInit() {

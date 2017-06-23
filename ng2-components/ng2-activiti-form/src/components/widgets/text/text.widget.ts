@@ -16,17 +16,23 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { WidgetComponent } from './../widget.component';
+import { WidgetComponent , baseHost } from './../widget.component';
+import { FormService } from './../../../services/form.service';
 
 @Component({
     selector: 'text-widget',
     templateUrl: './text.widget.html',
-    styleUrls: ['./text.widget.css']
+    styleUrls: ['./text.widget.css'],
+    host: baseHost
 })
 export class TextWidget extends WidgetComponent implements OnInit {
 
     private mask;
     private isMaskReversed;
+
+    constructor(public formService: FormService) {
+         super(formService);
+    }
 
     ngOnInit() {
         if (this.field.params && this.field.params['inputMask']) {

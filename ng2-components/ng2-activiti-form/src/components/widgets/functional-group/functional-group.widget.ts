@@ -16,14 +16,15 @@
  */
 
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { WidgetComponent } from './../widget.component';
+import { WidgetComponent , baseHost } from './../widget.component';
 import { FormService } from '../../../services/form.service';
 import { GroupModel } from './../core/group.model';
 
 @Component({
     selector: 'functional-group-widget',
     templateUrl: './functional-group.widget.html',
-    styleUrls: ['./functional-group.widget.css']
+    styleUrls: ['./functional-group.widget.css'],
+    host: baseHost
 })
 export class FunctionalGroupWidget extends WidgetComponent implements OnInit {
 
@@ -33,9 +34,9 @@ export class FunctionalGroupWidget extends WidgetComponent implements OnInit {
     minTermLength: number = 1;
     groupId: string;
 
-    constructor(private formService: FormService,
-                private elementRef: ElementRef) {
-        super();
+    constructor(public formService: FormService,
+                public elementRef: ElementRef) {
+         super(formService);
     }
 
     // TODO: investigate, called 2 times
