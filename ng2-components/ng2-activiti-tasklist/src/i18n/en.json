@@ -15,6 +15,7 @@
             "PEOPLE": "People this task is shared with",
             "COMMENTS": "Comments",
             "CHECKLIST": "Checklist",
+            "INVOLVED_PEOPLE": "Involved people",
             "ADD_PEOPLE": "Add people & groups"
         },
         "BUTTON": {
