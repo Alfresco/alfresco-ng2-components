@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-import { FormFieldModel } from './../core/form-field.model';
+import { HyperlinkWidget } from './hyperlink.widget';
 import { FormModel } from './../core/form.model';
+import { FormFieldModel } from './../core/form-field.model';
 import { WidgetComponent } from './../widget.component';
-import { HyperlinkWidgetComponent } from './hyperlink.widget';
 
-describe('HyperlinkWidgetComponent', () => {
+describe('HyperlinkWidget', () => {
 
-    let widget: HyperlinkWidgetComponent;
+    let widget: HyperlinkWidget;
 
     beforeEach(() => {
-        widget = new HyperlinkWidgetComponent(null);
+        widget = new HyperlinkWidget(null);
     });
 
     it('should get link text from field display text', () => {

@@ -15,25 +15,22 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
+import { AttachWidget } from './attach.widget';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
-import { MaterialModule } from '../../material.module';
+import { FormFieldModel } from './../core/form-field.model';
+import { FormFieldTypes } from '../core/form-field-types';
 import { ExternalContent } from '../core/external-content';
 import { ExternalContentLink } from '../core/external-content-link';
-import { FormFieldTypes } from '../core/form-field-types';
-import { ErrorWidgetComponent } from '../error/error.component';
-import { EcmModelService } from './../../../services/ecm-model.service';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { CoreModule } from 'ng2-alfresco-core';
 import { FormService } from './../../../services/form.service';
-import { FormFieldModel } from './../core/form-field.model';
-import { FormModel } from './../core/form.model';
-import { AttachWidgetComponent } from './attach.widget';
+import { EcmModelService } from './../../../services/ecm-model.service';
 
-describe('AttachWidgetComponent', () => {
+describe('AttachWidget', () => {
 
-    let widget: AttachWidgetComponent;
-    let fixture: ComponentFixture<AttachWidgetComponent>;
+    let widget: AttachWidget;
+    let fixture: ComponentFixture<AttachWidget>;
     let element: HTMLElement;
     let contentService: ActivitiAlfrescoContentService;
     let dialogPolyfill: any;
@@ -41,12 +38,10 @@ describe('AttachWidgetComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
-                MaterialModule
+                CoreModule.forRoot()
             ],
             declarations: [
-                AttachWidgetComponent,
-                ErrorWidgetComponent
+                AttachWidget
             ],
             providers: [
                 FormService,
@@ -57,7 +52,7 @@ describe('AttachWidgetComponent', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(AttachWidgetComponent);
+        fixture = TestBed.createComponent(AttachWidget);
         contentService = TestBed.get(ActivitiAlfrescoContentService);
 
         element = fixture.nativeElement;
@@ -151,7 +146,7 @@ describe('AttachWidgetComponent', () => {
     });
 
     it('should reset', () => {
-        widget.field = new FormFieldModel(new FormModel(), {
+        widget.field = new FormFieldModel(null, {
             type: FormFieldTypes.UPLOAD,
             value: [{name: 'filename'}]
         });

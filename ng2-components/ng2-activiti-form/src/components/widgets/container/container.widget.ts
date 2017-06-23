@@ -15,24 +15,22 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { AfterViewInit, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, AfterViewInit, OnInit } from '@angular/core';
+import { ContainerWidgetModel } from './container.widget.model';
+import { WidgetComponent , baseHost } from './../widget.component';
 import { FormService } from './../../../services/form.service';
-import { FormFieldModel } from './../core/form-field.model';
-import { baseHost , WidgetComponent } from './../widget.component';
-import { ContainerWidgetComponentModel } from './container.widget.model';
+
+declare var componentHandler: any;
 
 @Component({
     selector: 'container-widget',
     templateUrl: './container.widget.html',
-    styleUrls: ['./container.widget.scss'],
-    host: baseHost,
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./container.widget.css'],
+    host: baseHost
 })
-export class ContainerWidgetComponent extends WidgetComponent implements OnInit, AfterViewInit {
+export class ContainerWidget extends WidgetComponent implements OnInit, AfterViewInit {
 
-    content: ContainerWidgetComponentModel;
+    content: ContainerWidgetModel;
 
     constructor(public formService: FormService) {
          super(formService);
@@ -46,42 +44,20 @@ export class ContainerWidgetComponent extends WidgetComponent implements OnInit,
 
     ngOnInit() {
         if (this.field) {
-            this.content = new ContainerWidgetComponentModel(this.field);
+            this.content = new ContainerWidgetModel(this.field);
         }
     }
 
-    /**
-     * Serializes column fields
-     */
-    get fields(): FormFieldModel[] {
-        const fields = [];
-
-        let rowContainsElement = true,
-            rowIndex = 0;
-
-        while (rowContainsElement) {
-            rowContainsElement = false;
-            for (let i = 0; i < this.content.columns.length; i++ ) {
-                let field = this.content.columns[i].fields[rowIndex];
-                if (field) {
-                    rowContainsElement = true;
-                }
-
-                fields.push(field);
-            }
-            rowIndex++;
-        }
-
-        return fields;
+    ngAfterViewInit() {
+        this.setupMaterialComponents();
     }
 
-    /**
-     * Calculate the column width based on the numberOfColumns and current field's colspan property
-     *
-     * @param field
-     */
-    getColumnWith(field: FormFieldModel): string {
-        const colspan = field ? field.colspan : 1;
-        return (100 / this.content.json.numberOfColumns) * colspan + '%';
+    setupMaterialComponents(): boolean {
+        // workaround for MDL issues with dynamic components
+        if (componentHandler) {
+            componentHandler.upgradeAllRegistered();
+            return true;
+        }
+        return false;
     }
 }

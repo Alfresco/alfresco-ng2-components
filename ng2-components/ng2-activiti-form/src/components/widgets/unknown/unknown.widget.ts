@@ -15,28 +15,21 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
+import { WidgetComponent , baseHost } from './../widget.component';
 import { FormService } from './../../../services/form.service';
-import { baseHost , WidgetComponent } from './../widget.component';
 
 @Component({
     selector: 'unknown-widget',
     template: `
-            <md-list class="adf-unknown-widget">
-                <md-list-item>
-                     <md-icon class="md-24">error_outline</md-icon>
-                     <span class="adf-unknown-text">Unknown type: {{field.type}}</span>
-                </md-list-item>
-            </md-list>
-
+        <div>
+            <i class="material-icons">error_outline</i>
+            <span style="color: red">Unknown type: {{field.type}}</span>
+        </div>
     `,
-    styleUrls: ['./unknown.widget.scss'],
-    host: baseHost,
-    encapsulation: ViewEncapsulation.None
+    host: baseHost
 })
-export class UnknownWidgetComponent extends WidgetComponent {
+export class UnknownWidget extends WidgetComponent {
 
     constructor(public formService: FormService) {
          super(formService);

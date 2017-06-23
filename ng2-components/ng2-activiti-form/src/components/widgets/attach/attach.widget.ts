@@ -15,26 +15,23 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { Component, EventEmitter, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { LogService } from 'ng2-alfresco-core';
+import { WidgetComponent , baseHost } from './../widget.component';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 import { ExternalContent } from '../core/external-content';
 import { ExternalContentLink } from '../core/external-content-link';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormService } from './../../../services/form.service';
-import { baseHost , WidgetComponent } from './../widget.component';
 
 declare let dialogPolyfill: any;
 
 @Component({
     selector: 'attach-widget',
     templateUrl: './attach.widget.html',
-    styleUrls: ['./attach.widget.css'],
-    host: baseHost,
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./attach.widget.css'], host: baseHost
 })
-export class AttachWidgetComponent extends WidgetComponent implements OnInit {
+export class AttachWidget extends WidgetComponent implements OnInit {
 
     selectedFolderPathId: string;
     selectedFolderSiteId: string;
@@ -43,6 +40,9 @@ export class AttachWidgetComponent extends WidgetComponent implements OnInit {
     fileName: string;
     selectedFolderNodes: [ExternalContent];
     selectedFile: ExternalContent;
+
+    @Input()
+    field: FormFieldModel;
 
     @Output()
     fieldChanged: EventEmitter<FormFieldModel> = new EventEmitter<FormFieldModel>();
@@ -54,7 +54,8 @@ export class AttachWidgetComponent extends WidgetComponent implements OnInit {
     dialog: any;
 
     constructor(public formService: FormService,
-                private contentService: ActivitiAlfrescoContentService) {
+                private contentService: ActivitiAlfrescoContentService,
+                private logService: LogService) {
          super(formService);
     }
 

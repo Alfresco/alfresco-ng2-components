@@ -15,23 +15,20 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
-import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { FormService } from './../../../services/form.service';
+import { WidgetComponent , baseHost } from './../widget.component';
 import { FormFieldOption } from './../core/form-field-option';
-import { baseHost , WidgetComponent } from './../widget.component';
+import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 
 @Component({
     selector: 'typeahead-widget',
     templateUrl: './typeahead.widget.html',
-    styleUrls: ['./typeahead.widget.scss'],
-    host: baseHost,
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./typeahead.widget.css'],
+    host: baseHost
 })
-export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit {
+export class TypeaheadWidget extends WidgetComponent implements OnInit {
 
     popupVisible: boolean = false;
     minTermLength: number = 1;
