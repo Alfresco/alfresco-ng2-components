@@ -27,7 +27,7 @@ import { ContentColumnListComponent } from './src/components/content-column/cont
 import { ContentActionComponent } from './src/components/content-action/content-action.component';
 import { ContentActionListComponent } from './src/components/content-action/content-action-list.component';
 import { EmptyFolderContentComponent } from './src/components/empty-folder/empty-folder-content.component';
-import { DocumentListBreadcrumbComponent } from './src/components/breadcrumb/breadcrumb.component';
+import { BreadcrumbComponent } from './src/components/breadcrumb/breadcrumb.component';
 
 import { FolderActionsService } from './src/services/folder-actions.service';
 import { DocumentActionsService } from './src/services/document-actions.service';
@@ -64,7 +64,7 @@ export const DOCUMENT_LIST_DIRECTIVES: any[] = [
     ContentActionComponent,
     ContentActionListComponent,
     EmptyFolderContentComponent,
-    DocumentListBreadcrumbComponent
+    BreadcrumbComponent
 ];
 
 export const DOCUMENT_LIST_PROVIDERS: any[] = [

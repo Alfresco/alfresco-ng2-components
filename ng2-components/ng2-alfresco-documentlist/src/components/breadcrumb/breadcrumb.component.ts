@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { MinimalNodeEntryEntity, PathElementEntity } from 'alfresco-js-api';
 import { DocumentListComponent } from '../document-list.component';
 
@@ -23,10 +23,7 @@ import { DocumentListComponent } from '../document-list.component';
     selector: 'adf-breadcrumb, alfresco-document-list-breadcrumb',
     templateUrl: './breadcrumb.component.html',
     styleUrls: ['./breadcrumb.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    host: {
-        'class': 'adf-breadcrumb'
-    }
+    encapsulation: ViewEncapsulation.None
 })
 export class BreadcrumbComponent implements OnChanges {
 
@@ -44,29 +41,48 @@ export class BreadcrumbComponent implements OnChanges {
     @Output()
     navigate: EventEmitter<PathElementEntity> = new EventEmitter<PathElementEntity>();
 
-    ngOnChanges(changes: SimpleChanges): void {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.folderNode) {
 
-            const node: MinimalNodeEntryEntity = changes.folderNode.currentValue;
+            let node: MinimalNodeEntryEntity = changes.folderNode.currentValue;
 
-            if (node && node.path) {
-                const route = <PathElementEntity[]> (node.path.elements || []).slice();
+            if (node) {
+                let route = <PathElementEntity[]> (node.path.elements || []);
 
                 route.push(<PathElementEntity> {
                     id: node.id,
                     name: node.name
                 });
 
-                if (this.root && route.length > 0) {
-                    route[0].name = this.root;
-                }
+                this.checkRoot(route);
 
                 this.route = route;
             }
         }
     }
 
-    onRoutePathClick(route: PathElementEntity, event?: Event): void {
+    private checkRoot(route) {
+        if (this.root) {
+            
+            let isRoot = false;
+            route = route.filter((currentElement) => {
+                if (currentElement.name === this.root) {
+                    isRoot = true;
+                }
+                return isRoot;
+            });
+
+            if (route.length === 0) {
+                route.push(<PathElementEntity> {
+                    id: undefined,
+                    name: this.root
+                });
+            }
+        }
+        return route;
+    };
+
+    public onRoutePathClick(route: PathElementEntity, event?: Event): void {
         if (event) {
             event.preventDefault();
         }

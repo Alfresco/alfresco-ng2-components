@@ -1,6 +1,2 @@
-@import 'mixins';
-@import 'variables';
-@import 'colors';
-@import '_all-theme';
-@import '~@angular/material/theming';
-
+@import './_variables-color.scss';
+@import './_variables-mdl-overrides.scss';
