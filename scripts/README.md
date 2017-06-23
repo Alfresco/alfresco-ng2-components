@@ -219,10 +219,10 @@ For development environment configuration please refer to [project docs](../demo
 ./npm-relock-pkgs.sh
 ```
 
-* Regenerate package-lock.json files for ng2-alfersco-core and ng2-alfresco-search components
+* Regenerate package-lock.json files for ng2-alfresco-core and ng2-alfresco-search components
 
 ```sh
-./npm-relock-pkgs.sh ng2-alfersco-core ng2-alfresco-search
+./npm-relock-pkgs.sh ng2-alfresco-core ng2-alfresco-search
 ```
 
 * Regenerate package-lock.json files for every package and run test suite for them
@@ -231,10 +231,10 @@ For development environment configuration please refer to [project docs](../demo
 ./npm-relock-pkgs.sh -t
 ```
 
-* Regenerate package-lock.json files for for ng2-alfersco-core and ng2-alfresco-search components and run test suite for them
+* Regenerate package-lock.json files for for ng2-alfresco-core and ng2-alfresco-search components and run test suite for them
 
 ```sh
-./npm-relock-pkgs.sh -t ng2-alfersco-core ng2-alfresco-search
+./npm-relock-pkgs.sh -t ng2-alfresco-core ng2-alfresco-search
 ```
 
 # npm-clean.sh
