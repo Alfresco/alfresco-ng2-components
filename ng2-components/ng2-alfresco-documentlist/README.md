@@ -282,6 +282,9 @@ DocumentList provides simple breadcrumb element to indicate the current position
 </adf-breadcrumb>
 ```
 
+***Note:*** the `<alfresco-document-list-breadcrumb>` and `<adf-breadcrumb>` are the same component you can still use the old tag name
+
+
 ![Breadcrumb](docs/assets/breadcrumb.png)
 
 ### Properties
