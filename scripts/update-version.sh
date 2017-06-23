@@ -4,6 +4,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 eval JS_API=true
 eval GNU=false
 eval EXEC_COMPONENT=true
+eval DIFFERENT_JS_API=false
 
 eval projects=( "ng2-alfresco-core"
     "ng2-alfresco-datatable"
@@ -29,6 +30,7 @@ show_help() {
     echo "Usage: update-version.sh"
     echo ""
     echo "-sj or -sjsapi  don't update js-api version"
+    echo "-vj or -versionjsapi  to use a different version of js-api"
     echo "-demoshell execute the change version only in the demo shell "
     echo "-v or -version  version to update"
     echo "-gnu for gnu"
@@ -47,6 +49,12 @@ gnu_mode() {
 version_change() {
     echo "====== New version $1 ====="
     VERSION=$1
+}
+
+version_js_change() {
+    echo "====== Alfresco JS-API version $1 ====="
+    VERSION_JS_API=$1
+    DIFFERENT_JS_API=true
 }
 
 only_demoshell() {
@@ -93,13 +101,13 @@ update_total_build_dependency_version(){
 }
 
 update_total_build_dependency_js_version(){
-    echo "====== UPDATE VERSION OF TOTAL BUILD to  alfresco-js-api version ${VERSION} ======"
+    echo "====== UPDATE VERSION OF TOTAL BUILD to  alfresco-js-api version ${1} ======"
     DESTDIR="$DIR/../ng2-components/"
     PACKAGETOCHANGE="alfresco-js-api"
 
-    echo "====== UPDATE DEPENDENCY VERSION of ${1} to ~${VERSION} in ${DESTDIR}======"
-    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"${VERSION}\"/g"  ${DESTDIR}/package.json
-    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"~${VERSION}\"/g"  ${DESTDIR}/package.json
+    echo "====== UPDATE DEPENDENCY VERSION of total build to ~${1} in ${DESTDIR}======"
+    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
+    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"~${1}\"/g"  ${DESTDIR}/package.json
 }
 
 update_component_js_version(){
@@ -108,15 +116,15 @@ update_component_js_version(){
 
    PACKAGETOCHANGE="alfresco-js-api"
 
-   echo "====== UPDATE DEPENDENCY VERSION of alfresco-js-api to ~${VERSION} in ${1}======"
+   echo "====== UPDATE DEPENDENCY VERSION of alfresco-js-api to ~${2} in ${1}======"
 
-   sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"${VERSION}\"/g"  ${DESTDIR}/package.json
-   sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"~${VERSION}\"/g"  ${DESTDIR}/package.json
+   sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"${2}\"/g"  ${DESTDIR}/package.json
+   sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"~${2}\"/g"  ${DESTDIR}/package.json
 
-   echo "====== UPDATE DEPENDENCY VERSION of alfresco-js-api to ${VERSION} in ${1} DEMO ======"
+   echo "====== UPDATE DEPENDENCY VERSION of alfresco-js-api to ${2} in ${1} DEMO ======"
 
-   sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"${VERSION}\"/g"  ${DESTDIR}/demo/package.json
-   sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"~${VERSION}\"/g"  ${DESTDIR}/demo/package.json
+   sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"${2}\"/g"  ${DESTDIR}/demo/package.json
+   sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"~${2}\"/g"  ${DESTDIR}/demo/package.json
 }
 
 update_demo_shell_dependency_version(){
@@ -133,14 +141,14 @@ update_demo_shell_dependency_version(){
 }
 
 update_demo_shell_js_version(){
-    echo "====== UPDATE VERSION OF DEMO-SHELL to  alfresco-js-api version ${VERSION} ======"
+    echo "====== UPDATE VERSION OF DEMO-SHELL to  alfresco-js-api version ${1} ======"
     DESTDIR="$DIR/../demo-shell-ng2/"
     PACKAGETOCHANGE="alfresco-js-api"
 
-    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"${VERSION}\"/g"  ${DESTDIR}/package.json
+    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
 
-    echo "====== UPDATE DEPENDENCY VERSION of ${1} to ~${VERSION} in ${DESTDIR}======"
-    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"~${VERSION}\"/g"  ${DESTDIR}/package.json
+    echo "====== UPDATE DEPENDENCY VERSION of ${PACKAGETOCHANGE}  to ~${1} in ${DESTDIR}======"
+    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"~${1}\"/g"  ${DESTDIR}/package.json
 }
 
 
@@ -149,6 +157,7 @@ while [[ $1  == -* ]]; do
       -h|--help|-\?) show_help; exit 0;;
       -v|version) version_change $2; shift 2;;
       -sj|sjsapi) skip_js; shift;;
+      -vj|versionjsapi)  version_js_change $2; shift 2;;
       -gnu) gnu_mode; shift;;
       -demoshell) only_demoshell; shift;;
       -*) shift;;
@@ -182,14 +191,28 @@ if $EXEC_COMPONENT == true; then
        update_component_dependency_version ${projects[$i]}
 
        if $JS_API == true; then
-        update_component_js_version ${projects[$i]}
+
+        if $DIFFERENT_JS_API == true; then
+
+            update_component_js_version ${projects[$i]} ${VERSION_JS_API}
+        else
+            update_component_js_version ${projects[$i]} ${VERSION}
+        fi
+
        fi
     done
 
     echo "====== UPDATE TOTAL BUILD======"
 
     update_total_build_dependency_version
-    update_total_build_dependency_js_version
+
+    if $JS_API == true; then
+        if $DIFFERENT_JS_API == true; then
+            update_total_build_dependency_js_version ${VERSION_JS_API}
+        else
+            update_total_build_dependency_js_version ${VERSION}
+        fi
+    fi
 fi
 
 echo "====== UPDATE DEMO SHELL ======"
@@ -197,7 +220,11 @@ echo "====== UPDATE DEMO SHELL ======"
 update_demo_shell_dependency_version
 
 if $JS_API == true; then
-    update_demo_shell_js_version
+    if $DIFFERENT_JS_API == true; then
+        update_demo_shell_js_version ${VERSION_JS_API}
+    else
+        update_demo_shell_js_version ${VERSION}
+    fi
 fi
 
 DESTDIR="$DIR/../demo-shell-ng2/"
