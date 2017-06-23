@@ -3,10 +3,10 @@
         [rootFolderId]="documentList.currentFolderId"
         [versioning]="versioning"
         [enabled]="documentList.hasCreatePermission()">
-        <alfresco-document-list-breadcrumb
+        <adf-breadcrumb
             [target]="documentList"
             [folderNode]="documentList.folderNode">
-        </alfresco-document-list-breadcrumb>
+        </adf-breadcrumb>
         <div *ngIf="errorMessage" class="error-message">
             <button (click)="resetError()" class="mdl-button mdl-js-button mdl-button--icon">
                 <i class="material-icons">highlight_off</i>

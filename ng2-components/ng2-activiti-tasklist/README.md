@@ -35,6 +35,7 @@
 - [Activiti Task Header](#activiti-task-header)
   * [Properties](#properties-7)
   * [Events](#events-6)
+- [TaskDetailsModel](#taskdetailsmodel)
 - [Build from sources](#build-from-sources)
 - [NPM scripts](#npm-scripts)
 - [Demo](#demo)

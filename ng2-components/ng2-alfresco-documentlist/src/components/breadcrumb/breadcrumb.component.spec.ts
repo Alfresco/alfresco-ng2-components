@@ -16,21 +16,37 @@
  */
 
 import { PathElementEntity } from 'alfresco-js-api';
-import { DocumentListBreadcrumbComponent } from './breadcrumb.component';
+import { BreadcrumbComponent } from './breadcrumb.component';
 import { DocumentListComponent } from '../document-list.component';
+import { CoreModule } from 'ng2-alfresco-core';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { fakeNodeWithCreatePermission } from '../../assets/document-list.component.mock';
+import { SimpleChange } from '@angular/core';
 
-describe('DocumentListBreadcrumb', () => {
+declare let jasmine: any;
 
-    let component;
+describe('Breadcrumb', () => {
+
+    let component: BreadcrumbComponent;
+    let fixture: ComponentFixture<BreadcrumbComponent>;
+    let element: HTMLElement;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule.forRoot()
+            ],
+            declarations: [
+                BreadcrumbComponent
+            ]
+        }).compileComponents();
+    }));
 
     beforeEach(() => {
-        component = new DocumentListBreadcrumbComponent();
-    });
+        fixture = TestBed.createComponent(BreadcrumbComponent);
 
-    it('should set current path', () => {
-        let path = '/some/path';
-        component.currentFolderPath = path;
-        expect(component.currentFolderPath).toBe(path);
+        element = fixture.nativeElement;
+        component = fixture.componentInstance;
     });
 
     it('should prevent default click behavior', () => {
@@ -39,10 +55,20 @@ describe('DocumentListBreadcrumb', () => {
         expect(event.preventDefault).toHaveBeenCalled();
     });
 
+    it('should root be present as default node if the path is null', () => {
+        let change = new SimpleChange(null, fakeNodeWithCreatePermission, true);
+
+        component.root = 'default';
+        component.ngOnChanges({'folderNode': change});
+
+        console.log(component.route);
+        expect(component.route[0].name).toBe('default');
+    });
+
     it('should emit navigation event', (done) => {
-        let node = <PathElementEntity> { id: '-id-', name: 'name' };
+        let node = <PathElementEntity> {id: '-id-', name: 'name'};
         component.navigate.subscribe(val => {
-            expect(val.value).toBe(node);
+            expect(val).toBe(node);
             done();
         });
 
@@ -53,7 +79,7 @@ describe('DocumentListBreadcrumb', () => {
         let documentList = new DocumentListComponent(null, null, null, null);
         spyOn(documentList, 'loadFolderByNodeId').and.stub();
 
-        let node = <PathElementEntity> { id: '-id-', name: 'name' };
+        let node = <PathElementEntity> {id: '-id-', name: 'name'};
         component.target = documentList;
 
         component.onRoutePathClick(node, null);
