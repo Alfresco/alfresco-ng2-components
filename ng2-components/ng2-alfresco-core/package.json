@@ -10,7 +10,7 @@
     "test": "karma start karma.conf.js --reporters mocha,coverage --single-run --mode coverage",
     "test-browser": "karma start karma.conf.js --reporters kjhtml --component",
     "coverage": "npm run test && wsrv -o -p 9875 ./coverage/report",
-    "prepublish": "npm run build"
+    "prepublishOnly": "npm run build"
   },
   "main": "bundles/ng2-alfresco-core.js",
   "repository": {
@@ -100,7 +100,7 @@
     "package-json-merge": "0.0.1",
     "raw-loader": "^0.5.1",
     "remap-istanbul": "^0.6.3",
-    "rimraf": "^2.5.4",
+    "rimraf": "^2.6.1",
     "run-sequence": "^1.2.2",
     "sass-loader": "6.0.2",
     "script-loader": "0.7.0",

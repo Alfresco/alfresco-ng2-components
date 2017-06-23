@@ -10,7 +10,7 @@
     "test": "karma start karma.conf.js --reporters mocha,coverage --single-run --mode coverage",
     "test-browser": "karma start karma.conf.js --reporters kjhtml --component",
     "coverage": "npm run test && wsrv -o -p 9875 ./coverage/report",
-    "prepublish": "npm run build"
+    "prepublishOnly": "npm run build"
   },
   "main": "bundles/ng2-activiti-processlist.js",
   "repository": {
