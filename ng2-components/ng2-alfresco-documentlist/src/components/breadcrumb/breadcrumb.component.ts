@@ -63,7 +63,6 @@ export class BreadcrumbComponent implements OnChanges {
 
     private checkRoot(route) {
         if (this.root) {
-            
             let isRoot = false;
             route = route.filter((currentElement) => {
                 if (currentElement.name === this.root) {
@@ -80,7 +79,7 @@ export class BreadcrumbComponent implements OnChanges {
             }
         }
         return route;
-    };
+    }
 
     public onRoutePathClick(route: PathElementEntity, event?: Event): void {
         if (event) {
