@@ -9,11 +9,7 @@ module.exports = webpackMerge(testConfig, {
         rules: [
             {
                 enforce: 'post',
-<<<<<<< HEAD
                 test: /^(?!(.*spec|index|.*mock|.*model|.*event)).*\.ts?$/,
-=======
-                test: /^?!(.*spec|index|.*mock|.*model|.*event).*\.ts?$/,
->>>>>>> Source Mapping is not working on test debugging (#1931)
                 include: [helpers.root('src')],
                 loader: 'istanbul-instrumenter-loader',
                 exclude: [
