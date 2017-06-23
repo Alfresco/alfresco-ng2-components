@@ -54,29 +54,29 @@ export class BreadcrumbComponent implements OnChanges {
                     name: node.name
                 });
 
-                this.checkRoot(route);
+                if (this.root) {
+                    route = this.checkRoot(route);
+                }
 
                 this.route = route;
             }
         }
     }
 
-    private checkRoot(route) {
-        if (this.root) {
-            let isRoot = false;
-            route = route.filter((currentElement) => {
-                if (currentElement.name === this.root) {
-                    isRoot = true;
-                }
-                return isRoot;
-            });
-
-            if (route.length === 0) {
-                route.push(<PathElementEntity> {
-                    id: undefined,
-                    name: this.root
-                });
+    private checkRoot(route: PathElementEntity[]): PathElementEntity[] {
+        let isRoot = false;
+        route = route.filter((currentElement) => {
+            if (currentElement.name === this.root) {
+                isRoot = true;
             }
+            return isRoot;
+        });
+
+        if (route.length === 0) {
+            route.push(<PathElementEntity> {
+                id: undefined,
+                name: this.root
+            });
         }
         return route;
     }
