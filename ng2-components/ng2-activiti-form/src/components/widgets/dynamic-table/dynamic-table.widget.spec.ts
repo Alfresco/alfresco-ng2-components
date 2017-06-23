@@ -17,11 +17,7 @@
 
 import { LogServiceMock } from 'ng2-alfresco-core';
 import { DynamicTableWidget } from './dynamic-table.widget';
-import {
-    DynamicTableModel,
-    DynamicTableRow,
-    DynamicTableColumn
-} from './dynamic-table.widget.model';
+import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './dynamic-table.widget.model';
 import { FormModel, FormFieldTypes, FormFieldModel } from './../core/index';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
@@ -35,17 +31,20 @@ import { FormService } from './../../../services/form.service';
 import { EcmModelService } from './../../../services/ecm-model.service';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { CoreModule } from 'ng2-alfresco-core';
 import { RowEditorComponent } from './editors/row.editor';
 import { DropdownEditorComponent } from './editors/dropdown/dropdown.editor';
 import { DateEditorComponent } from './editors/date/date.editor';
 import { BooleanEditorComponent } from './editors/boolean/boolean.editor';
 import { TextEditorComponent } from './editors/text/text.editor';
+import { CoreModule, LogService } from 'ng2-alfresco-core';
+import { FormService } from './../../../services/form.service';
+import { EcmModelService } from './../../../services/ecm-model.service';
+import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 
 let fakeFormField = {
     id: 'fake-dynamic-table',
     name: 'fake-label',
-    value: [{ 1: 1, 2: 2, 3: 4 }],
+    value: [{1: 1, 2: 2, 3: 4}],
     required: false,
     readOnly: false,
     overrideId: false,

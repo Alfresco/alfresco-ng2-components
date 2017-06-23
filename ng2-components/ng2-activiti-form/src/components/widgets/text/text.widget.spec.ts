@@ -103,7 +103,7 @@ describe('TextWidget', () => {
             }));
 
             it('should be disabled on readonly forms', async(() => {
-                textWidget.field.form.readOnly = true;
+                widget.field.form.readOnly = true;
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
