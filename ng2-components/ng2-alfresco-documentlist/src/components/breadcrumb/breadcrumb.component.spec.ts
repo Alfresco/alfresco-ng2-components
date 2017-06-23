@@ -61,7 +61,6 @@ describe('Breadcrumb', () => {
         component.root = 'default';
         component.ngOnChanges({'folderNode': change});
 
-        console.log(component.route);
         expect(component.route[0].name).toBe('default');
     });
 
