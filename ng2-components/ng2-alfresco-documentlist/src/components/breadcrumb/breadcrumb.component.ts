@@ -15,19 +15,23 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { MinimalNodeEntryEntity, PathElementEntity } from 'alfresco-js-api';
 import { DocumentListComponent } from '../document-list.component';
 
 @Component({
-    selector: 'alfresco-document-list-breadcrumb',
+    selector: 'adf-breadcrumb, alfresco-document-list-breadcrumb',
     templateUrl: './breadcrumb.component.html',
-    styleUrls: ['./breadcrumb.component.css']
+    styleUrls: ['./breadcrumb.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
-export class DocumentListBreadcrumbComponent implements OnChanges {
+export class BreadcrumbComponent implements OnChanges {
 
     @Input()
     folderNode: MinimalNodeEntryEntity;
+
+    @Input()
+    root: string;
 
     @Input()
     target: DocumentListComponent;
@@ -35,33 +39,56 @@ export class DocumentListBreadcrumbComponent implements OnChanges {
     route: PathElementEntity[] = [];
 
     @Output()
-    navigate: EventEmitter<any> = new EventEmitter();
+    navigate: EventEmitter<PathElementEntity> = new EventEmitter<PathElementEntity>();
 
-    ngOnChanges(changes: SimpleChanges) {
-        if (changes['folderNode']) {
+    public ngOnChanges(changes: SimpleChanges): void {
+        if (changes.folderNode) {
 
-            let node: MinimalNodeEntryEntity = changes['folderNode'].currentValue;
+            let node: MinimalNodeEntryEntity = changes.folderNode.currentValue;
+
             if (node) {
-                // see https://github.com/Alfresco/alfresco-js-api/issues/139
                 let route = <PathElementEntity[]> (node.path.elements || []);
+
                 route.push(<PathElementEntity> {
                     id: node.id,
                     name: node.name
                 });
+
+                this.checkRoot(route);
+
                 this.route = route;
             }
         }
     }
 
-    onRoutePathClick(route: PathElementEntity, e?: Event) {
-        if (e) {
-            e.preventDefault();
+    private checkRoot(route) {
+        if (this.root) {
+            
+            let isRoot = false;
+            route = route.filter((currentElement) => {
+                if (currentElement.name === this.root) {
+                    isRoot = true;
+                }
+                return isRoot;
+            });
+
+            if (route.length === 0) {
+                route.push(<PathElementEntity> {
+                    id: undefined,
+                    name: this.root
+                });
+            }
+        }
+        return route;
+    };
+
+    public onRoutePathClick(route: PathElementEntity, event?: Event): void {
+        if (event) {
+            event.preventDefault();
         }
 
         if (route) {
-            this.navigate.emit({
-                value: route
-            });
+            this.navigate.emit(route);
 
             if (this.target) {
                 this.target.loadFolderByNodeId(route.id);
