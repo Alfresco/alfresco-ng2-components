@@ -315,6 +315,7 @@ class MyComponent {
 | taskSaved | FormEvent | Raised when a task is saved successfully |
 | taskSavedError | FormErrorEvent | Raised when a task is saved unsuccessfully |
 | executeOutcome | FormOutcomeEvent | Raised when a form outcome is executed |
+| formEvents | Event | You can subscribe to this event to listen : ( click, blur, change, focus, focusin, focusout, input, invalid, select) of any elements in the form , see doc below|
 
 ### Methods
 
@@ -367,6 +368,17 @@ You subscribe to the `formFieldValueChanged` event and check whether event is ra
 The result should be as following:
 
 ![](docs/assets/form-service-sample-01.png)
+
+### Listen all form Events 
+
+If you want listen all the events fired the form you can subscribe to this Subject :
+
+```ts
+formService.formEvents.subscribe((event: Event) => {
+  console.log('Event fired:' + event.type);
+  console.log('Event Target:' + event.target);
+});
+```
 
 ## See also
 

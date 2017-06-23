@@ -20,20 +20,55 @@ import { ContainerWidgetModel } from './container.widget.model';
 import { FormModel } from './../core/form.model';
 import { FormFieldTypes } from './../core/form-field-types';
 import { FormFieldModel } from './../core/form-field.model';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { CoreModule } from 'ng2-alfresco-core';
 import { WIDGET_DIRECTIVES } from '../index';
 import { MASK_DIRECTIVE } from '../index';
 import { FormFieldComponent } from './../../form-field/form-field.component';
 import { ActivitiContent } from './../../activiti-content.component';
 import { fakeFormJson } from '../../../services/assets/widget-visibility.service.mock';
 import { MdTabsModule } from '@angular/material';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { CoreModule } from 'ng2-alfresco-core';
+import { FormService } from './../../../services/form.service';
+import { EcmModelService } from './../../../services/ecm-model.service';
+import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 
 describe('ContainerWidget', () => {
 
+    let widget: ContainerWidget;
+    let fixture: ComponentFixture<ContainerWidget>;
+    let element: HTMLElement;
+    let contentService: ActivitiAlfrescoContentService;
     let componentHandler;
+    let dialogPolyfill;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule.forRoot(),
+                MdTabsModule
+            ],
+            declarations: [FormFieldComponent, ActivitiContent, WIDGET_DIRECTIVES, MASK_DIRECTIVE],
+            providers: [
+                FormService,
+                EcmModelService,
+                ActivitiAlfrescoContentService
+            ]
+        }).compileComponents();
+    }));
 
     beforeEach(() => {
+        fixture = TestBed.createComponent(ContainerWidget);
+        contentService = TestBed.get(ActivitiAlfrescoContentService);
+
+        element = fixture.nativeElement;
+        widget = fixture.componentInstance;
+
+        dialogPolyfill = {
+            registerDialog(obj: any) {
+                obj.showModal = function () {
+                };
+            }
+        };
         componentHandler = jasmine.createSpyObj('componentHandler', [
             'upgradeAllRegistered'
         ]);
@@ -43,25 +78,22 @@ describe('ContainerWidget', () => {
 
     it('should wrap field with model instance', () => {
         let field = new FormFieldModel(null);
-        let container = new ContainerWidget();
-        container.field = field;
-        container.ngOnInit();
-        expect(container.content).toBeDefined();
-        expect(container.content.field).toBe(field);
+        widget.field = field;
+        widget.ngOnInit();
+        expect(widget.content).toBeDefined();
+        expect(widget.content.field).toBe(field);
     });
 
     it('should upgrade MDL content on view init', () => {
-        let container = new ContainerWidget();
-        container.ngAfterViewInit();
+        widget.ngAfterViewInit();
         expect(componentHandler.upgradeAllRegistered).toHaveBeenCalled();
     });
 
     it('should setup MDL content only if component handler available', () => {
-        let container = new ContainerWidget();
-        expect(container.setupMaterialComponents()).toBeTruthy();
+        expect(widget.setupMaterialComponents()).toBeTruthy();
 
         window['componentHandler'] = null;
-        expect(container.setupMaterialComponents()).toBeFalsy();
+        expect(widget.setupMaterialComponents()).toBeFalsy();
     });
 
     it('should toggle underlying group container', () => {
@@ -72,7 +104,6 @@ describe('ContainerWidget', () => {
             }
         }));
 
-        let widget = new ContainerWidget();
         widget.content = container;
 
         expect(container.isExpanded).toBeTruthy();
@@ -87,7 +118,6 @@ describe('ContainerWidget', () => {
             type: FormFieldTypes.GROUP
         }));
 
-        let widget = new ContainerWidget();
         widget.content = container;
 
         expect(container.isExpanded).toBeTruthy();
@@ -96,6 +126,7 @@ describe('ContainerWidget', () => {
     });
 
     it('should toggle only group container', () => {
+
         let container = new ContainerWidgetModel(new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.CONTAINER,
             params: {
@@ -103,7 +134,6 @@ describe('ContainerWidget', () => {
             }
         }));
 
-        let widget = new ContainerWidget();
         widget.content = container;
 
         expect(container.isExpanded).toBeTruthy();
@@ -112,7 +142,6 @@ describe('ContainerWidget', () => {
     });
 
     it('should send an event when a value is changed in the form', (done) => {
-        let widget = new ContainerWidget();
         let fakeForm = new FormModel();
         let fakeField = new FormFieldModel(fakeForm, {id: 'fakeField', value: 'fakeValue'});
         widget.fieldChanged.subscribe(field => {
@@ -126,22 +155,8 @@ describe('ContainerWidget', () => {
     });
 
     describe('when template is ready', () => {
-        let containerWidgetComponent: ContainerWidget;
-        let fixture: ComponentFixture<ContainerWidget>;
-        let element: HTMLElement;
-        let fakeContainerVisible: ContainerWidgetModel;
-        let fakeContainerInvisible: ContainerWidgetModel;
-
-        beforeEach(async(() => {
-            TestBed.configureTestingModule({
-                imports: [CoreModule, MdTabsModule],
-                declarations: [FormFieldComponent, ActivitiContent, WIDGET_DIRECTIVES, MASK_DIRECTIVE]
-            }).compileComponents().then(() => {
-                fixture = TestBed.createComponent(ContainerWidget);
-                containerWidgetComponent = fixture.componentInstance;
-                element = fixture.nativeElement;
-            });
-        }));
+        let fakeContainerVisible;
+        let fakeContainerInvisible;
 
         beforeEach(() => {
             componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
@@ -168,7 +183,7 @@ describe('ContainerWidget', () => {
         });
 
         it('should show the container header when it is visible', () => {
-            containerWidgetComponent.content = fakeContainerVisible;
+            widget.content = fakeContainerVisible;
             fixture.detectChanges();
             fixture.whenStable()
                 .then(() => {
@@ -179,7 +194,7 @@ describe('ContainerWidget', () => {
         });
 
         it('should not show the container header when it is not visible', () => {
-            containerWidgetComponent.content = fakeContainerInvisible;
+            widget.content = fakeContainerInvisible;
             fixture.detectChanges();
             fixture.whenStable()
                 .then(() => {
@@ -188,23 +203,23 @@ describe('ContainerWidget', () => {
         });
 
         it('should hide header when it becomes not visible', async(() => {
-            containerWidgetComponent.content = fakeContainerVisible;
+            widget.content = fakeContainerVisible;
             fixture.detectChanges();
-            containerWidgetComponent.fieldChanged.subscribe((res) => {
-                containerWidgetComponent.content.field.isVisible = false;
+            widget.fieldChanged.subscribe((res) => {
+                widget.content.field.isVisible = false;
                 fixture.detectChanges();
                 fixture.whenStable()
                     .then(() => {
                         expect(element.querySelector('.container-widget__header').classList.contains('hidden')).toBe(true);
                     });
             });
-            containerWidgetComponent.onFieldChanged(null);
+            widget.onFieldChanged(null);
         }));
 
         it('should show header when it becomes visible', async(() => {
-            containerWidgetComponent.content = fakeContainerInvisible;
-            containerWidgetComponent.fieldChanged.subscribe((res) => {
-                containerWidgetComponent.content.field.isVisible = true;
+            widget.content = fakeContainerInvisible;
+            widget.fieldChanged.subscribe((res) => {
+                widget.content.field.isVisible = true;
                 fixture.detectChanges();
                 fixture.whenStable()
                     .then(() => {
@@ -214,7 +229,7 @@ describe('ContainerWidget', () => {
                         expect(element.querySelector('#container-header-label').innerHTML).toContain('fake-cont-2-name');
                     });
             });
-            containerWidgetComponent.onFieldChanged(null);
+            widget.onFieldChanged(null);
         }));
 
     });

@@ -34,6 +34,7 @@ export class FormService {
 
     formLoaded: Subject<FormEvent> = new Subject<FormEvent>();
     formFieldValueChanged: Subject<FormFieldEvent> = new Subject<FormFieldEvent>();
+    formEvents: Subject<Event> = new Subject<Event>();
     taskCompleted: Subject<FormEvent> = new Subject<FormEvent>();
     taskCompletedError: Subject<FormErrorEvent> = new Subject<FormErrorEvent>();
     taskSaved: Subject<FormEvent> = new Subject<FormEvent>();
