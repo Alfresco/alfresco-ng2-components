@@ -102,7 +102,16 @@ module.exports = {
             },
             {
                 test: /\.component.scss$/,
-                use: ['to-string-loader', 'raw-loader', 'sass-loader']
+                use: [{
+                    loader: "to-string-loader"
+                }, {
+                    loader: "raw-loader"
+                }, {
+                    loader: "sass-loader",
+                    options: {
+                        includePaths: [ path.resolve(__dirname, '../../ng2-components/ng2-alfresco-core/styles')]
+                    }
+                }]
             },
             {
                 enforce: 'pre',

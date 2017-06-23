@@ -15,14 +15,15 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { MinimalNodeEntryEntity, PathElementEntity } from 'alfresco-js-api';
 import { DocumentListComponent } from '../document-list.component';
 
 @Component({
     selector: 'adf-breadcrumb, alfresco-document-list-breadcrumb',
     templateUrl: './breadcrumb.component.html',
-    styleUrls: ['./breadcrumb.component.scss']
+    styleUrls: ['./breadcrumb.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class BreadcrumbComponent implements OnChanges {
 
@@ -81,9 +82,7 @@ export class BreadcrumbComponent implements OnChanges {
         }
 
         if (route) {
-            this.navigate.emit({
-                value: route
-            });
+            this.navigate.emit(route);
 
             if (this.target) {
                 this.target.loadFolderByNodeId(route.id);

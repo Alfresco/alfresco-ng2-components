@@ -68,7 +68,7 @@ describe('Breadcrumb', () => {
     it('should emit navigation event', (done) => {
         let node = <PathElementEntity> {id: '-id-', name: 'name'};
         component.navigate.subscribe(val => {
-            expect(val.value).toBe(node);
+            expect(val).toBe(node);
             done();
         });
 
