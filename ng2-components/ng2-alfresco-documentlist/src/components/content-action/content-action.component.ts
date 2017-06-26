@@ -106,6 +106,9 @@ export class ContentActionComponent implements OnInit, OnChanges {
 
             if (ltarget === 'document') {
                 if (this.documentActions) {
+                    this.documentActions.permissionEvent.subscribe((permision) => {
+                        this.permissionEvent.emit(permision);
+                    });
                     return this.documentActions.getHandler(name);
                 }
                 return null;

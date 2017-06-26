@@ -22,8 +22,9 @@ import { Observable } from 'rxjs/Rx';
 import { AlfrescoSearchComponent } from './alfresco-search.component';
 import { TranslationMock } from './../assets/translation.service.mock';
 import { AlfrescoSearchService } from '../services/alfresco-search.service';
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, CoreModule, NotificationService } from 'ng2-alfresco-core';
 import { DocumentListModule } from 'ng2-alfresco-documentlist';
+import { PermissionModel } from 'ng2-alfresco-documentlist';
 
 describe('AlfrescoSearchComponent', () => {
 
@@ -104,7 +105,8 @@ describe('AlfrescoSearchComponent', () => {
             declarations: [AlfrescoSearchComponent], // declare the test component
             providers: [
                 AlfrescoSearchService,
-                { provide: AlfrescoTranslationService, useClass: TranslationMock }
+                { provide: AlfrescoTranslationService, useClass: TranslationMock },
+                { provide: NotificationService, useClass: NotificationService }
             ]
         }).compileComponents().then(() => {
             fixture = TestBed.createComponent(AlfrescoSearchComponent);
@@ -126,7 +128,7 @@ describe('AlfrescoSearchComponent', () => {
             {provide: ActivatedRoute, useValue: {params: Observable.from([{q: 'exampleTerm692'}])}}
         ]);
 
-        let search = new AlfrescoSearchComponent(null, null, injector.get(ActivatedRoute));
+        let search = new AlfrescoSearchComponent(null, null, null, injector.get(ActivatedRoute));
 
         search.ngOnInit();
 
@@ -140,6 +142,15 @@ describe('AlfrescoSearchComponent', () => {
         fixture.detectChanges();
 
         expect(translationService.addTranslationFolder).toHaveBeenCalledWith('ng2-alfresco-search', 'assets/ng2-alfresco-search');
+    });
+
+    it('should show the Notification snackbar on permission error', () => {
+        const notoficationService = TestBed.get(NotificationService);
+        spyOn(notoficationService, 'openSnackMessage');
+
+        component.handlePermission(new PermissionModel());
+
+        expect(notoficationService.openSnackMessage).toHaveBeenCalledWith('PERMISSON.LACKOF', 3000);
     });
 
     describe('Search results', () => {

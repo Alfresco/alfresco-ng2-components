@@ -18,7 +18,8 @@
 import { Component, EventEmitter, Input, Output, Optional, OnChanges, SimpleChanges, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { AlfrescoSearchService, SearchOptions } from './../services/alfresco-search.service';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, NotificationService } from 'ng2-alfresco-core';
+import { PermissionModel } from 'ng2-alfresco-documentlist';
 import { NodePaging, Pagination } from 'alfresco-js-api';
 
 @Component({
@@ -66,6 +67,7 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
 
     constructor(private searchService: AlfrescoSearchService,
                 private translateService: AlfrescoTranslationService,
+                private notificationService: NotificationService,
                 @Optional() private route: ActivatedRoute) {
     }
 
@@ -146,5 +148,10 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
     public onPrevPage(event: Pagination): void {
         this.skipCount = event.skipCount;
         this.displaySearchResults(this.searchTerm);
+    }
+
+    public handlePermission(permission: PermissionModel): void {
+        let permissionErrorMessage: any = this.translateService.get('PERMISSON.LACKOF', permission);
+        this.notificationService.openSnackMessage(permissionErrorMessage.value, 3000);
     }
 }
