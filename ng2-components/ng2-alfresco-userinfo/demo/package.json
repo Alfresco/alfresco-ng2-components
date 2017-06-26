@@ -108,10 +108,5 @@
         "name": "Vito Albano",
         "email": "vito.albano@alfresco.com"
       }
-    ],
-    "path": "assets/license_header.txt",
-    "blocking": true,
-    "logInfo": false,
-    "logError": true
-  }
+    ]
 }
