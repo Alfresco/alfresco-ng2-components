@@ -44,6 +44,8 @@ while [[ $1 == -* ]]; do
     esac
 done
 
+npm install rimraf -g
+
 for PACKAGE in \
   ng2-alfresco-core \
   ng2-alfresco-datatable \
@@ -67,7 +69,6 @@ do
   cd ${DESTDIR}
 
   echo "====== INSTALL AND CLEAN ${PACKAGE} ===== "
-  npm install rimraf
   npm run clean
 
   npm install
