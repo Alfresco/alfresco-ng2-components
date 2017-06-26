@@ -128,7 +128,7 @@
     "null-loader": "^0.1.1",
     "raw-loader": "^0.5.1",
     "rimraf": "^2.6.1",
-    "sass-loader": "6.0.5",
+    "sass-loader": "^6.0.5",
     "script-loader": "0.7.0",
     "source-map-loader": "^0.1.6",
     "sourcemap-istanbul-instrumenter-loader": "^0.2.0",
