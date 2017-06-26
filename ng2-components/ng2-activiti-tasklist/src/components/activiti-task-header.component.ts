@@ -52,6 +52,7 @@ export class ActivitiTaskHeader implements OnChanges {
 
     refreshData() {
         if (this.taskDetails) {
+
             this.properties = [
                 new CardViewModel({label: 'Status:', value: this.getTaskStatus(), key: 'status'}),
                 new CardViewModel({label: 'Due Date:', value: this.taskDetails.dueDate, format: 'MMM DD YYYY', key: 'dueDate', default: 'No date'}),

@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    Component,
+import { Component,
     Input,
     OnInit,
     ViewChild,
@@ -152,15 +151,13 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
         }
     }
 
-    ngOnChanges(changes: SimpleChanges) {
-        let taskId = changes['taskId'];
+    ngOnChanges(changes: SimpleChanges): void {
+        let taskId = changes.taskId;
+
         if (taskId && !taskId.currentValue) {
             this.reset();
-            return;
-        }
-        if (taskId && taskId.currentValue) {
+        } else if (taskId && taskId.currentValue) {
             this.loadDetails(taskId.currentValue);
-            return;
         }
     }
 
@@ -221,7 +218,7 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
      * @param processInstanceId
      * @param processDefinitionId
      */
-    private loadNextTask(processInstanceId: string, processDefinitionId: string) {
+    private loadNextTask(processInstanceId: string, processDefinitionId: string): void {
         let requestNode = new TaskQueryRequestRepresentationModel(
             {
                 processInstanceId: processInstanceId,
@@ -231,7 +228,7 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
         this.activitiTaskList.getTasks(requestNode).subscribe(
             (response) => {
                 if (response && response.length > 0) {
-                    this.taskDetails = <TaskDetailsModel>response[0];
+                    this.taskDetails = new TaskDetailsModel(response[0]);
                 } else {
                     this.reset();
                 }
@@ -243,28 +240,28 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
     /**
      * Complete button clicked
      */
-    onComplete() {
+    onComplete(): void {
         this.activitiTaskList.completeTask(this.taskId).subscribe(
             (res) => this.onFormCompleted(null)
         );
     }
 
-    onFormContentClick(content: ContentLinkModel) {
+    onFormContentClick(content: ContentLinkModel): void {
         this.formContentClicked.emit(content);
     }
 
-    onFormSaved(form: FormModel) {
+    onFormSaved(form: FormModel): void {
         this.formSaved.emit(form);
     }
 
-    onFormCompleted(form: FormModel) {
+    onFormCompleted(form: FormModel): void {
         this.formCompleted.emit(form);
         if (this.showNextTask) {
             this.loadNextTask(this.taskDetails.processInstanceId, this.taskDetails.processDefinitionId);
         }
     }
 
-    onFormLoaded(form: FormModel) {
+    onFormLoaded(form: FormModel): void {
         this.taskFormName = null;
         if (form && form.name) {
             this.taskFormName = form.name;
@@ -272,20 +269,20 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
         this.formLoaded.emit(form);
     }
 
-    onChecklistTaskCreated(task: TaskDetailsModel) {
+    onChecklistTaskCreated(task: TaskDetailsModel): void {
         this.taskCreated.emit(task);
     }
 
-    onChecklistTaskDeleted(taskId: string) {
+    onChecklistTaskDeleted(taskId: string): void {
         this.taskDeleted.emit(taskId);
     }
 
-    onFormError(error: any) {
+    onFormError(error: any): void {
         this.errorDialog.nativeElement.showModal();
         this.onError.emit(error);
     }
 
-    onFormExecuteOutcome(event: FormOutcomeEvent) {
+    onFormExecuteOutcome(event: FormOutcomeEvent): void {
         this.executeOutcome.emit(event);
     }
 
@@ -293,24 +290,24 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
         this.errorDialog.nativeElement.close();
     }
 
-    public showPeopleDialog() {
+    public showPeopleDialog(): void {
         if (!this.peopleDialog.nativeElement.showModal) {
             dialogPolyfill.registerDialog(this.peopleDialog.nativeElement);
         }
         this.peopleDialog.nativeElement.showModal();
     }
 
-    public closePeopleDialog() {
+    public closePeopleDialog(): void {
         if (this.peopleDialog) {
             this.peopleDialog.nativeElement.close();
         }
     }
 
-    onClaimTask(taskId: string) {
+    onClaimTask(taskId: string): void {
         this.loadDetails(taskId);
     }
 
-    toggleHeaderContent() {
+    toggleHeaderContent(): void {
         this.showHeaderContent = !this.showHeaderContent;
     }
 
