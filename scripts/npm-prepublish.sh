@@ -86,7 +86,7 @@ do
   fi
 
   echo "====== PREPUBLISHING: ${DESTDIR} ===== npm prepublish ${OPTIONS}"
-  npm run prepublish || exit 1
+  npm run prepublishOnly || exit 1
 
   cd ${DIR}
 done
