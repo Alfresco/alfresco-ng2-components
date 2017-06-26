@@ -5,6 +5,8 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 eval OPTIONS=""
 eval EXEC_GIT_NPM_INSTALL_JSAPI=false
 eval GIT_ISH=""
+eval EXEC_VERSION_JSAPI=false
+eval JSAPI_VERSION=""
 
 cd "$DIR/../demo-shell-ng2"
 
@@ -12,6 +14,7 @@ show_help() {
     echo "Usage: npm-prepublish.sh"
     echo ""
     echo "-gitjsapi to build all the components against a commit-ish version of the JS-API"
+    echo "-vjsapi install different version from npm of JS-API defined in the package.json"
 }
 
 enable_js_api_git_link() {
@@ -19,10 +22,24 @@ enable_js_api_git_link() {
     EXEC_GIT_NPM_INSTALL_JSAPI=true
 }
 
+version_js_api() {
+    JSAPI_VERSION=$1
+
+    if [[ "${JSAPI_VERSION}" == "" ]]
+    then
+      echo "JSAPI version required with -vJSApi"
+      exit 0
+    fi
+
+    EXEC_VERSION_JSAPI=true
+}
+
+
 while [[ $1 == -* ]]; do
     case "$1" in
       -h|--help|-\?) show_help; exit 0;;
       -gitjsapi)  enable_js_api_git_link $2; shift 2;;
+      -vjsapi)  version_js_api $2; shift 2;;
       -*) echo "invalid option: $1" 1>&2; show_help; exit 0;;
     esac
 done
@@ -53,7 +70,9 @@ do
   npm install rimraf
   npm run clean
 
-  if $EXEC_GIT_NPM_INSTALL_JSAPI == true; then
+  npm install
+
+    if $EXEC_GIT_NPM_INSTALL_JSAPI == true; then
     echo "====== Use the alfresco JS-API  '$GIT_ISH'====="
     npm install $GIT_ISH
     cd  "${DESTDIR}/node_modules/alfresco-js-api"
@@ -61,7 +80,10 @@ do
     cd ${DESTDIR}
   fi
 
-  npm install
+  if $EXEC_VERSION_JSAPI == true; then
+    echo "====== Use the alfresco JS-API '$JSAPI_VERSION'====="
+    npm install alfresco-js-api@${JSAPI_VERSION}
+  fi
 
   echo "====== PREPUBLISHING: ${DESTDIR} ===== npm prepublish ${OPTIONS}"
   npm run prepublish || exit 1
