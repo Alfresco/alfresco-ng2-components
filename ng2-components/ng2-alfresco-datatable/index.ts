@@ -16,7 +16,6 @@
  */
 
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { MdCheckboxModule, MdMenuModule, MdIconModule, MdButtonModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
 import { MaterialModule } from './src/material.module';
 
