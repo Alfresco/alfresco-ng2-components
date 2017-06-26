@@ -49,7 +49,10 @@ export function directives() {
         MaterialModule
     ],
     declarations: directives(),
-    exports: directives()
+    exports: [
+        ...directives(),
+        MaterialModule
+    ]
 })
 export class DataTableModule {
     static forRoot(): ModuleWithProviders {
