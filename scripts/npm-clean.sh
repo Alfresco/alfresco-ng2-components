@@ -39,11 +39,12 @@ while [[ $1  == -* ]]; do
     esac
 done
 
+npm install rimraf
+
 for PACKAGE in ${projects[@]}
 do
     echo "====== clean component: ${PACKAGE} ====="
     cd "$DIR/../ng2-components/${PACKAGE}"
-    npm install rimraf
     npm run clean
 
     if $EXEC_CLEAN_DEMO == true; then

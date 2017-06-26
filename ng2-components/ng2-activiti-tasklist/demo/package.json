@@ -114,10 +114,5 @@
         "name": "Eugenio Romano",
         "email": "eugenio.romano@alfresco.com"
       }
-    ],
-    "path": "assets/license_header.txt",
-    "blocking": true,
-    "logInfo": false,
-    "logError": true
-  }
+    ]
 }
