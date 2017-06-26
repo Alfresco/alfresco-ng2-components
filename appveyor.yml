@@ -6,7 +6,7 @@ branches:
     - dev-build-test
 
 environment:
-  nodejs_version: "6"
+  nodejs_version: "8"
 
   matrix:
   - COMPONENT_NAME: ng2-components-activiti
