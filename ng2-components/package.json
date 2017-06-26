@@ -18,7 +18,7 @@
     "pretest": "",
     "posttest": "",
     "publish:prod": "",
-    "webpack": "node  --max_old_space_size=4096 node_modules/webpack/bin/webpack.js"
+    "webpack": "node node_modules/webpack/bin/webpack.js"
   },
   "main": "./index.js",
   "repository": {
