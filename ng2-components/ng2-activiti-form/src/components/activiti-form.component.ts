@@ -433,7 +433,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
         }
     }
 
-    private refreshFormData(){
+    private refreshFormData() {
         this.form = new FormModel(this.form.json, this.data, this.readOnly, this.formService);
         this.onFormLoaded(this.form);
         this.onFormDataRefreshed(this.form);
