@@ -123,7 +123,7 @@
     "loader-utils": "^1.1.0",
     "markdown-toc": "1.1.0",
     "merge-stream": "^1.0.1",
-    "node-sass": "4.5.3",
+    "node-sass": "^4.5.3",
     "null-loader": "^0.1.1",
     "package-json-merge": "0.0.1",
     "raw-loader": "^0.5.1",

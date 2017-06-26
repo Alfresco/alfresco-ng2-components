@@ -97,7 +97,7 @@
     "karma-webpack": "^2.0.2",
     "loader-utils": "^1.1.0",
     "merge-stream": "^1.0.1",
-    "node-sass": "^3.13.1",
+    "node-sass": "^4.5.3",
     "null-loader": "^0.1.1",
     "package-json-merge": "0.0.1",
     "raw-loader": "^0.5.1",
