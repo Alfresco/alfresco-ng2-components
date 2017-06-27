@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormModel, FormService } from 'ng2-activiti-form';
 import { DemoForm } from './demo-form';
 import { ActivitiForm } from 'ng2-activiti-form';
@@ -29,17 +29,15 @@ declare var componentHandler;
         'form-demo.component.css'
     ]
 })
-export class FormDemoComponent implements OnInit, AfterViewInit {
+export class FormDemoComponent implements OnInit {
 
     @ViewChild(ActivitiForm)
     activitiForm: ActivitiForm;
 
     form: FormModel;
-    activeTab: string = 'demo';
+    formId: string;
     storedData: any = {};
     restoredData: any = {};
-    formToLoadName: string = null;
-    showError: boolean = false;
 
     constructor(private formService: FormService) {
         formService.executeOutcome.subscribe(e => {
@@ -49,10 +47,7 @@ export class FormDemoComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-        let formDefinitionJSON: any = DemoForm.getDefinition();
-        let form = this.formService.parseForm(formDefinitionJSON);
-        console.log(form);
-        this.form = form;
+        this.formList.push({ name: 'Demo Form Definition', lastUpdatedByFullName: 'Demo Name User', lastUpdated: '2017-06-23T13:20:30.754+0000', isFake: true });
     }
 
     ngAfterViewInit() {
@@ -62,16 +57,24 @@ export class FormDemoComponent implements OnInit, AfterViewInit {
         }
     }
 
-    changeToStoreForm() {
-        this.activeTab = 'store';
-        this.showError = false;
+    onRowDblClick(event: CustomEvent) {
+        let rowForm = event.detail.value.obj;
+
+        if (rowForm.isFake) {
+            let formDefinitionJSON: any = DemoForm.getDefinition();
+            let form = this.formService.parseForm(formDefinitionJSON);
+            this.form = form;
+        } else {
+            this.formService.getFormDefinitionById(rowForm.id).subscribe((definition) => {
+                let form = this.formService.parseForm(definition);
+                this.form = form;
+            });
+        }
+        console.log(rowForm);
     }
 
-    changeToDemoForm() {
-        this.activeTab = 'demo';
-        let formDefinitionJSON: any = DemoForm.getDefinition();
-        let demoForm = this.formService.parseForm(formDefinitionJSON);
-        this.form = demoForm;
+    isEmptyForm() {
+        return this.form === null || this.form === undefined;
     }
 
     store() {
@@ -80,11 +83,6 @@ export class FormDemoComponent implements OnInit, AfterViewInit {
         console.log(this.storedData);
         console.log('DATA SAVED');
         this.restoredData = null;
-    }
-
-    restore() {
-        this.restoredData = this.storedData;
-        this.storedData = {};
     }
 
     clone(objToCopyFrom, objToCopyTo) {
@@ -96,27 +94,9 @@ export class FormDemoComponent implements OnInit, AfterViewInit {
         return objToCopyTo;
     }
 
-    loadForm() {
-        if (this.formToLoadName) {
-            this.showError = false;
-            this.formService
-                .getFormDefinitionByName(this.formToLoadName)
-                .debounceTime(7000)
-                .subscribe(
-                id => {
-                    this.formService.getFormDefinitionById(id).subscribe(
-                        form => {
-                            this.form = this.formService.parseForm(form);
-                        },
-                        (error) => {
-                            this.showError = true;
-                        }
-                    );
-                },
-                (error) => {
-                    this.showError = true;
-                }
-                );
-        }
+    restore() {
+        this.restoredData = this.storedData;
+        this.storedData = {};
     }
+
 }
