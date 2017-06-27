@@ -99,13 +99,13 @@ cd "$DIR/../ng2-components/"
 
 if $EXEC_CLEAN == true; then
   echo "====== Clean ng2-components ====="
-  npm install rimraf
+  npm install rimraf -g
   npm run clean
 fi
 
 if $EXEC_INSTALL == true; then
     echo "====== Regenerate global ng2-components package.json ====="
-    npm install package-json-merge
+    npm install package-json-merge -g
     npm run pkg-build
     echo "====== Install ng2-components dependencies ====="
     npm install
