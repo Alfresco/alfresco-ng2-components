@@ -21,7 +21,10 @@ import { HttpModule, Http } from '@angular/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+
 import { MaterialModule } from './src/material.module';
+import { ContextMenuModule } from './src/components/context-menu/context-menu.module';
+
 import { AppConfigModule } from './src/services/app-config.service';
 import { AdfToolbarComponent } from './src/components/toolbar/toolbar.component';
 
@@ -50,10 +53,10 @@ import { UploadDirective } from './src/directives/upload.directive';
 import { DataColumnComponent } from './src/components/data-column/data-column.component';
 import { DataColumnListComponent } from './src/components/data-column/data-column-list.component';
 import { MATERIAL_DESIGN_DIRECTIVES } from './src/components/material/index';
-import { CONTEXT_MENU_PROVIDERS, CONTEXT_MENU_DIRECTIVES } from './src/components/context-menu/index';
 import { COLLAPSABLE_DIRECTIVES } from './src/components/collapsable/index';
 import { VIEW_DIRECTIVES } from './src/components/view/index';
 
+export { ContextMenuModule } from './src/components/context-menu/context-menu.module';
 export * from './src/services/index';
 export * from './src/components/index';
 export * from './src/components/data-column/data-column.component';
@@ -67,25 +70,26 @@ export * from './src/events/base-ui.event';
 export * from './src/events/folder-created.event';
 export * from './src/models/index';
 
-export const ALFRESCO_CORE_PROVIDERS: any[] = [
-    NotificationService,
-    LogService,
-    LogServiceMock,
-    AlfrescoAuthenticationService,
-    AlfrescoContentService,
-    AlfrescoSettingsService,
-    StorageService,
-    CookieService,
-    AlfrescoApiService,
-    AlfrescoTranslateLoader,
-    AlfrescoTranslationService,
-    RenditionsService,
-    ContentService,
-    AuthGuard,
-    AuthGuardEcm,
-    AuthGuardBpm,
-    ...CONTEXT_MENU_PROVIDERS
-];
+export function providers() {
+    return [
+        NotificationService,
+        LogService,
+        LogServiceMock,
+        AlfrescoAuthenticationService,
+        AlfrescoContentService,
+        AlfrescoSettingsService,
+        StorageService,
+        CookieService,
+        AlfrescoApiService,
+        AlfrescoTranslateLoader,
+        AlfrescoTranslationService,
+        RenditionsService,
+        ContentService,
+        AuthGuard,
+        AuthGuardEcm,
+        AuthGuardBpm
+    ];
+}
 
 export function createTranslateLoader(http: Http, logService: LogService) {
     return new AlfrescoTranslateLoader(http, logService);
@@ -106,11 +110,11 @@ export function createTranslateLoader(http: Http, logService: LogService) {
             }
         }),
         MaterialModule,
-        AppConfigModule
+        AppConfigModule,
+        ContextMenuModule
     ],
     declarations: [
         ...MATERIAL_DESIGN_DIRECTIVES,
-        ...CONTEXT_MENU_DIRECTIVES,
         ...COLLAPSABLE_DIRECTIVES,
         ...VIEW_DIRECTIVES,
         UploadDirective,
@@ -119,9 +123,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         FileSizePipe,
         AdfToolbarComponent
     ],
-    providers: [
-        ...ALFRESCO_CORE_PROVIDERS
-    ],
+    providers: providers(),
     exports: [
         BrowserAnimationsModule,
         CommonModule,
@@ -130,8 +132,8 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         HttpModule,
         TranslateModule,
         MaterialModule,
+        ContextMenuModule,
         ...MATERIAL_DESIGN_DIRECTIVES,
-        ...CONTEXT_MENU_DIRECTIVES,
         ...COLLAPSABLE_DIRECTIVES,
         ...VIEW_DIRECTIVES,
         UploadDirective,
@@ -149,7 +151,7 @@ export class CoreModule {
         return {
             ngModule: CoreModule,
             providers: [
-                ...ALFRESCO_CORE_PROVIDERS,
+                ...providers(),
                 AppConfigService,
                 InitAppConfigServiceProvider(appConfigFile)
             ]

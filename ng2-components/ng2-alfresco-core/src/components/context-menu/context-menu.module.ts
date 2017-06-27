@@ -15,19 +15,27 @@
  * limitations under the License.
  */
 
-import { ContextMenuService } from './context-menu.service';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
 import { ContextMenuHolderComponent } from './context-menu-holder.component';
 import { ContextMenuDirective } from './context-menu.directive';
+import { ContextMenuService } from './context-menu.service';
 
-export * from './context-menu.service';
-export * from './context-menu-holder.component';
-export * from './context-menu.directive';
-
-export const CONTEXT_MENU_PROVIDERS: [any] = [
-    ContextMenuService
-];
-
-export const CONTEXT_MENU_DIRECTIVES: [any] = [
-    ContextMenuHolderComponent,
-    ContextMenuDirective
-];
+@NgModule({
+    imports: [
+        CommonModule
+    ],
+    declarations: [
+        ContextMenuHolderComponent,
+        ContextMenuDirective
+    ],
+    exports: [
+        ContextMenuHolderComponent,
+        ContextMenuDirective
+    ],
+    providers: [
+        ContextMenuService
+    ]
+})
+export class ContextMenuModule {}
