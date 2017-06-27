@@ -33,6 +33,7 @@ export class FormService {
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
     formLoaded: Subject<FormEvent> = new Subject<FormEvent>();
+    formDataRefreshed: Subject<FormEvent> = new Subject<FormEvent>();
     formFieldValueChanged: Subject<FormFieldEvent> = new Subject<FormFieldEvent>();
     formEvents: Subject<Event> = new Subject<Event>();
     taskCompleted: Subject<FormEvent> = new Subject<FormEvent>();

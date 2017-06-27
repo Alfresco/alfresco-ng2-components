@@ -23,6 +23,7 @@ import { FormModel, FormOutcomeModel, FormFieldModel, FormOutcomeEvent, FormFiel
 import { FormService } from './../services/form.service';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
 import { NodeService } from './../services/node.service';
+import { fakeForm } from '../assets/activiti-form.component.mock';
 
 describe('ActivitiForm', () => {
 
@@ -107,14 +108,14 @@ describe('ActivitiForm', () => {
     it('should enable custom outcome buttons', () => {
         let formModel = new FormModel();
         formComponent.form = formModel;
-        let outcome = new FormOutcomeModel(formModel, {id: 'action1', name: 'Action 1'});
+        let outcome = new FormOutcomeModel(formModel, { id: 'action1', name: 'Action 1' });
         expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeTruthy();
     });
 
     it('should allow controlling [complete] button visibility', () => {
         let formModel = new FormModel();
         formComponent.form = formModel;
-        let outcome = new FormOutcomeModel(formModel, {id: '$save', name: FormOutcomeModel.SAVE_ACTION});
+        let outcome = new FormOutcomeModel(formModel, { id: '$save', name: FormOutcomeModel.SAVE_ACTION });
 
         formComponent.showSaveButton = true;
         expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeTruthy();
@@ -127,7 +128,7 @@ describe('ActivitiForm', () => {
         let formModel = new FormModel();
         formModel.readOnly = true;
         formComponent.form = formModel;
-        let outcome = new FormOutcomeModel(formModel, {id: '$complete', name: FormOutcomeModel.COMPLETE_ACTION});
+        let outcome = new FormOutcomeModel(formModel, { id: '$complete', name: FormOutcomeModel.COMPLETE_ACTION });
 
         formComponent.showCompleteButton = true;
         expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeTruthy();
@@ -137,23 +138,23 @@ describe('ActivitiForm', () => {
         let formModel = new FormModel();
         formModel.readOnly = true;
         formComponent.form = formModel;
-        let outcome = new FormOutcomeModel(formModel, {id: '$save', name: FormOutcomeModel.SAVE_ACTION});
+        let outcome = new FormOutcomeModel(formModel, { id: '$save', name: FormOutcomeModel.SAVE_ACTION });
 
         formComponent.showSaveButton = true;
         expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeFalsy();
     });
 
     it('should show [custom-outcome] button with readOnly form and selected custom-outcome', () => {
-        let formModel = new FormModel({selectedOutcome: 'custom-outcome'});
+        let formModel = new FormModel({ selectedOutcome: 'custom-outcome' });
         formModel.readOnly = true;
         formComponent.form = formModel;
-        let outcome = new FormOutcomeModel(formModel, {id: '$customoutome', name: 'custom-outcome'});
+        let outcome = new FormOutcomeModel(formModel, { id: '$customoutome', name: 'custom-outcome' });
 
         formComponent.showCompleteButton = true;
         formComponent.showSaveButton = true;
         expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeTruthy();
 
-        outcome = new FormOutcomeModel(formModel, {id: '$customoutome2', name: 'custom-outcome2'});
+        outcome = new FormOutcomeModel(formModel, { id: '$customoutome2', name: 'custom-outcome2' });
         expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeFalsy();
     });
 
@@ -161,7 +162,7 @@ describe('ActivitiForm', () => {
         let formModel = new FormModel();
         formModel.readOnly = false;
         formComponent.form = formModel;
-        let outcome = new FormOutcomeModel(formModel, {id: '$save', name: FormOutcomeModel.COMPLETE_ACTION});
+        let outcome = new FormOutcomeModel(formModel, { id: '$save', name: FormOutcomeModel.COMPLETE_ACTION });
 
         formComponent.showCompleteButton = true;
         expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeTruthy();
@@ -191,7 +192,7 @@ describe('ActivitiForm', () => {
     it('should get process variable if is a process task', () => {
         spyOn(formService, 'getTaskForm').and.callFake((taskId) => {
             return Observable.create(observer => {
-                observer.next({taskId: taskId});
+                observer.next({ taskId: taskId });
                 observer.complete();
             });
         });
@@ -199,7 +200,7 @@ describe('ActivitiForm', () => {
         spyOn(visibilityService, 'getTaskProcessVariable').and.returnValue(Observable.of({}));
         spyOn(formService, 'getTask').and.callFake((taskId) => {
             return Observable.create(observer => {
-                observer.next({taskId: taskId, processDefinitionId: '10201'});
+                observer.next({ taskId: taskId, processDefinitionId: '10201' });
                 observer.complete();
             });
         });
@@ -214,7 +215,7 @@ describe('ActivitiForm', () => {
     it('should not get process variable if is not a process task', () => {
         spyOn(formService, 'getTaskForm').and.callFake((taskId) => {
             return Observable.create(observer => {
-                observer.next({taskId: taskId});
+                observer.next({ taskId: taskId });
                 observer.complete();
             });
         });
@@ -222,7 +223,7 @@ describe('ActivitiForm', () => {
         spyOn(visibilityService, 'getTaskProcessVariable').and.returnValue(Observable.of({}));
         spyOn(formService, 'getTask').and.callFake((taskId) => {
             return Observable.create(observer => {
-                observer.next({taskId: taskId, processDefinitionId: 'null'});
+                observer.next({ taskId: taskId, processDefinitionId: 'null' });
                 observer.complete();
             });
         });
@@ -259,7 +260,7 @@ describe('ActivitiForm', () => {
         const taskId = '<task id>';
 
         let change = new SimpleChange(null, taskId, true);
-        formComponent.ngOnChanges({'taskId': change});
+        formComponent.ngOnChanges({ 'taskId': change });
 
         expect(formComponent.getFormByTaskId).toHaveBeenCalledWith(taskId);
     });
@@ -269,7 +270,7 @@ describe('ActivitiForm', () => {
         const formId = '123';
 
         let change = new SimpleChange(null, formId, true);
-        formComponent.ngOnChanges({'formId': change});
+        formComponent.ngOnChanges({ 'formId': change });
 
         expect(formComponent.getFormDefinitionByFormId).toHaveBeenCalledWith(formId);
     });
@@ -279,7 +280,7 @@ describe('ActivitiForm', () => {
         const formName = '<form>';
 
         let change = new SimpleChange(null, formName, true);
-        formComponent.ngOnChanges({'formName': change});
+        formComponent.ngOnChanges({ 'formName': change });
 
         expect(formComponent.getFormDefinitionByFormName).toHaveBeenCalledWith(formName);
     });
@@ -304,7 +305,7 @@ describe('ActivitiForm', () => {
         spyOn(formComponent, 'getFormDefinitionByFormId').and.stub();
         spyOn(formComponent, 'getFormDefinitionByFormName').and.stub();
 
-        formComponent.ngOnChanges({'tag': new SimpleChange(null, 'hello world', true)});
+        formComponent.ngOnChanges({ 'tag': new SimpleChange(null, 'hello world', true) });
 
         expect(formComponent.getFormByTaskId).not.toHaveBeenCalled();
         expect(formComponent.getFormDefinitionByFormId).not.toHaveBeenCalled();
@@ -314,7 +315,7 @@ describe('ActivitiForm', () => {
     it('should complete form on custom outcome click', () => {
         let formModel = new FormModel();
         let outcomeName = 'Custom Action';
-        let outcome = new FormOutcomeModel(formModel, {id: 'custom1', name: outcomeName});
+        let outcome = new FormOutcomeModel(formModel, { id: 'custom1', name: outcomeName });
 
         let saved = false;
         formComponent.form = formModel;
@@ -379,7 +380,7 @@ describe('ActivitiForm', () => {
     it('should do nothing when clicking outcome for readonly form', () => {
         let formModel = new FormModel();
         const outcomeName = 'Custom Action';
-        let outcome = new FormOutcomeModel(formModel, {id: 'custom1', name: outcomeName});
+        let outcome = new FormOutcomeModel(formModel, { id: 'custom1', name: outcomeName });
 
         formComponent.form = formModel;
         spyOn(formComponent, 'completeTaskForm').and.stub();
@@ -398,7 +399,7 @@ describe('ActivitiForm', () => {
     it('should require loaded form when clicking outcome', () => {
         let formModel = new FormModel();
         const outcomeName = 'Custom Action';
-        let outcome = new FormOutcomeModel(formModel, {id: 'custom1', name: outcomeName});
+        let outcome = new FormOutcomeModel(formModel, { id: 'custom1', name: outcomeName });
 
         formComponent.readOnly = false;
         formComponent.form = null;
@@ -407,7 +408,7 @@ describe('ActivitiForm', () => {
 
     it('should not execute unknown system outcome', () => {
         let formModel = new FormModel();
-        let outcome = new FormOutcomeModel(formModel, {id: 'unknown', name: 'Unknown', isSystem: true});
+        let outcome = new FormOutcomeModel(formModel, { id: 'unknown', name: 'Unknown', isSystem: true });
 
         formComponent.form = formModel;
         expect(formComponent.onOutcomeClicked(outcome)).toBeFalsy();
@@ -415,12 +416,12 @@ describe('ActivitiForm', () => {
 
     it('should require custom action name to complete form', () => {
         let formModel = new FormModel();
-        let outcome = new FormOutcomeModel(formModel, {id: 'custom'});
+        let outcome = new FormOutcomeModel(formModel, { id: 'custom' });
 
         formComponent.form = formModel;
         expect(formComponent.onOutcomeClicked(outcome)).toBeFalsy();
 
-        outcome = new FormOutcomeModel(formModel, {id: 'custom', name: 'Custom'});
+        outcome = new FormOutcomeModel(formModel, { id: 'custom', name: 'Custom' });
         spyOn(formComponent, 'completeTaskForm').and.stub();
         expect(formComponent.onOutcomeClicked(outcome)).toBeTruthy();
     });
@@ -429,7 +430,7 @@ describe('ActivitiForm', () => {
         spyOn(formService, 'getTask').and.returnValue(Observable.of({}));
         spyOn(formService, 'getTaskForm').and.callFake((taskId) => {
             return Observable.create(observer => {
-                observer.next({taskId: taskId});
+                observer.next({ taskId: taskId });
                 observer.complete();
             });
         });
@@ -465,7 +466,7 @@ describe('ActivitiForm', () => {
         spyOn(formService, 'getTask').and.returnValue(Observable.of({}));
         spyOn(formService, 'getTaskForm').and.callFake((taskId) => {
             return Observable.create(observer => {
-                observer.next({taskId: taskId});
+                observer.next({ taskId: taskId });
                 observer.complete();
             });
         });
@@ -481,7 +482,7 @@ describe('ActivitiForm', () => {
     it('should fetch and parse form definition by id', () => {
         spyOn(formService, 'getFormDefinitionById').and.callFake((formId) => {
             return Observable.create(observer => {
-                observer.next({id: formId});
+                observer.next({ id: formId });
                 observer.complete();
             });
         });
@@ -520,7 +521,7 @@ describe('ActivitiForm', () => {
 
         spyOn(formService, 'getFormDefinitionById').and.callFake((formName) => {
             return Observable.create(observer => {
-                observer.next({name: formName});
+                observer.next({ name: formName });
                 observer.complete();
             });
         });
@@ -556,8 +557,8 @@ describe('ActivitiForm', () => {
         let formModel = new FormModel({
             taskId: '123',
             fields: [
-                {id: 'field1'},
-                {id: 'field2'}
+                { id: 'field1' },
+                { id: 'field2' }
             ]
         });
         formComponent.form = formModel;
@@ -573,7 +574,7 @@ describe('ActivitiForm', () => {
         spyOn(formService, 'saveTaskForm').and.callFake(() => Observable.throw(error));
         spyOn(formComponent, 'handleError').and.stub();
 
-        formComponent.form = new FormModel({taskId: '123'});
+        formComponent.form = new FormModel({ taskId: '123' });
         formComponent.saveTaskForm();
 
         expect(formComponent.handleError).toHaveBeenCalledWith(error);
@@ -618,8 +619,8 @@ describe('ActivitiForm', () => {
         let formModel = new FormModel({
             taskId: '123',
             fields: [
-                {id: 'field1'},
-                {id: 'field2'}
+                { id: 'field1' },
+                { id: 'field2' }
             ]
         });
 
@@ -638,7 +639,7 @@ describe('ActivitiForm', () => {
         let form = formComponent.parseForm({
             id: '<id>',
             fields: [
-                {id: 'field1', type: FormFieldTypes.CONTAINER}
+                { id: 'field1', type: FormFieldTypes.CONTAINER }
             ]
         });
 
@@ -651,7 +652,7 @@ describe('ActivitiForm', () => {
     it('should provide outcomes for form definition', () => {
         spyOn(formComponent, 'getFormDefinitionOutcomes').and.callThrough();
 
-        let form = formComponent.parseForm({id: '<id>'});
+        let form = formComponent.parseForm({ id: '<id>' });
         expect(formComponent.getFormDefinitionOutcomes).toHaveBeenCalledWith(form);
     });
 
@@ -724,7 +725,7 @@ describe('ActivitiForm', () => {
         let metadata = {};
         spyOn(nodeService, 'getNodeMetadata').and.returnValue(
             Observable.create(observer => {
-                observer.next({metadata: metadata});
+                observer.next({ metadata: metadata });
                 observer.complete();
             })
         );
@@ -812,6 +813,32 @@ describe('ActivitiForm', () => {
 
         formComponent.form = new FormModel();
         formComponent.onOutcomeClicked(outcome);
+    });
+
+    it('should refresh form values when data is changed', () => {
+        formComponent.form = new FormModel(fakeForm);
+        let formFields = formComponent.form.getFormFields();
+
+        let labelField = formFields.find(field => field.id === 'label');
+        let radioField = formFields.find(field => field.id === 'raduio');
+        expect(labelField.value).toBe('empty');
+        expect(radioField.value).toBeNull();
+
+        let formValues: any = {};
+        formValues.label = {
+            id: 'option_1',
+            name: 'test1'
+        };
+        formValues.raduio = { id: 'option_1', name: 'Option 1' };
+        let change = new SimpleChange(null, formValues, false);
+        formComponent.data = formValues;
+        formComponent.ngOnChanges({ 'data': change });
+
+        formFields = formComponent.form.getFormFields();
+        labelField = formFields.find(field => field.id === 'label');
+        radioField = formFields.find(field => field.id === 'raduio');
+        expect(labelField.value).toBe('option_1');
+        expect(radioField.value).toBe('option_1');
     });
 
 });
