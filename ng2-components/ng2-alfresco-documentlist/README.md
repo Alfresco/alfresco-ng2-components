@@ -606,6 +606,7 @@ will trigger the same `download` action.
 If you specify both of the **handler="delete"** and your custom **(execute)="myCustomActionAfterDelete($event)"**, your callback will be invoked after a successful delete happened. A successful delete operation happens if there is neither permission error, neither other network related error for the delete operation request. For handling permission errors see the section below.
 
 ##### Delete - Show notification message with no permission
+
 You can show a notification error when the user don't have the right permission to perform the action.
 The ContentActionComponent provides the event permissionEvent that is raised when the permission specified in the permission property is missing
 You can subscribe to this event from your component and use the NotificationService to show a message.
@@ -629,9 +630,9 @@ You can subscribe to this event from your component and use the NotificationServ
 ```ts
 export class MyComponent {
 
-onPermissionsFailed(event: any) {
-    this.notificationService.openSnackMessage(`you don't have the ${event.permission} permission to ${event.action} the ${event.type} `, 4000);
-}
+    onPermissionsFailed(event: any) {
+        this.notificationService.openSnackMessage(`you don't have the ${event.permission} permission to ${event.action} the ${event.type} `, 4000);
+    }
 
 }
 ```
@@ -639,6 +640,7 @@ onPermissionsFailed(event: any) {
 ![Delete show notification message](docs/assets/content-action-notification-message.png)
 
 ##### Delete - Disable button checking the permission
+
 You can easily disable a button when the user doesn't own the permission to perform the action related to the button.
 The ContentActionComponent provides the property permission that must contain the permission to check and a property disableWithNoPermission that can be true if
  you want see the button disabled.
