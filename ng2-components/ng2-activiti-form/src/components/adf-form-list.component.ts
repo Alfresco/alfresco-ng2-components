@@ -50,12 +50,12 @@ export class ADFFormList implements OnInit, OnChanges {
 
     getForms(){
         this.formService.getForms().subscribe((forms)=> {
-            this.forms = [...this.forms, ...forms];
+            this.forms.push(...forms);
         });
     }
 
     addForm(form) {
-        this.forms = [...this.forms, ...form];
+        this.forms.push(form);
     }
 
 }
