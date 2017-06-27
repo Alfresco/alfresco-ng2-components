@@ -52,7 +52,12 @@ import { FileSizePipe } from './src/pipes/file-size.pipe';
 import { UploadDirective } from './src/directives/upload.directive';
 import { DataColumnComponent } from './src/components/data-column/data-column.component';
 import { DataColumnListComponent } from './src/components/data-column/data-column-list.component';
-import { MATERIAL_DESIGN_DIRECTIVES } from './src/components/material/index';
+
+import { MDL } from './src/components/material/mdl-upgrade-element.directive';
+import { AlfrescoMdlButtonDirective } from './src/components/material/mdl-button.directive';
+import { AlfrescoMdlMenuDirective } from './src/components/material/mdl-menu.directive';
+import { AlfrescoMdlTextFieldDirective } from './src/components/material/mdl-textfield.directive';
+
 import { COLLAPSABLE_DIRECTIVES } from './src/components/collapsable/index';
 import { VIEW_DIRECTIVES } from './src/components/view/index';
 
@@ -91,6 +96,15 @@ export function providers() {
     ];
 }
 
+export function obsoleteMdlDirectives() {
+    return [
+        MDL,
+        AlfrescoMdlButtonDirective,
+        AlfrescoMdlMenuDirective,
+        AlfrescoMdlTextFieldDirective
+    ];
+}
+
 export function createTranslateLoader(http: Http, logService: LogService) {
     return new AlfrescoTranslateLoader(http, logService);
 }
@@ -114,7 +128,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         ContextMenuModule
     ],
     declarations: [
-        ...MATERIAL_DESIGN_DIRECTIVES,
+        ...obsoleteMdlDirectives(),
         ...COLLAPSABLE_DIRECTIVES,
         ...VIEW_DIRECTIVES,
         UploadDirective,
@@ -133,7 +147,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         TranslateModule,
         MaterialModule,
         ContextMenuModule,
-        ...MATERIAL_DESIGN_DIRECTIVES,
+        ...obsoleteMdlDirectives(),
         ...COLLAPSABLE_DIRECTIVES,
         ...VIEW_DIRECTIVES,
         UploadDirective,

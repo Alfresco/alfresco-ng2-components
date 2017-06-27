@@ -15,6 +15,5 @@
  * limitations under the License.
  */
 
-export * from './material/index';
 export * from './collapsable/index';
 export * from './view/index';
