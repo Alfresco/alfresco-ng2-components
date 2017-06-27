@@ -24,9 +24,10 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 
 import { MaterialModule } from './src/material.module';
 import { ContextMenuModule } from './src/components/context-menu/context-menu.module';
-
-import { AppConfigModule } from './src/services/app-config.service';
+import { CardViewModule } from './src/components/view/card-view.module';
+import { CollapsableModule } from './src/components/collapsable/collapsable.module';
 import { AdfToolbarComponent } from './src/components/toolbar/toolbar.component';
+import { AppConfigModule } from './src/services/app-config.service';
 
 import {
     AlfrescoAuthenticationService,
@@ -58,16 +59,12 @@ import { AlfrescoMdlButtonDirective } from './src/components/material/mdl-button
 import { AlfrescoMdlMenuDirective } from './src/components/material/mdl-menu.directive';
 import { AlfrescoMdlTextFieldDirective } from './src/components/material/mdl-textfield.directive';
 
-import { COLLAPSABLE_DIRECTIVES } from './src/components/collapsable/index';
-import { VIEW_DIRECTIVES } from './src/components/view/index';
-
 export { ContextMenuModule } from './src/components/context-menu/context-menu.module';
+export { CardViewModule } from './src/components/view/card-view.module';
+export { CollapsableModule } from './src/components/collapsable/collapsable.module';
 export * from './src/services/index';
-export * from './src/components/index';
 export * from './src/components/data-column/data-column.component';
 export * from './src/components/data-column/data-column-list.component';
-export * from './src/components/collapsable/index';
-export * from './src/components/view/index';
 export * from './src/directives/upload.directive';
 export * from './src/utils/index';
 export * from './src/events/base.event';
@@ -125,12 +122,12 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         }),
         MaterialModule,
         AppConfigModule,
-        ContextMenuModule
+        ContextMenuModule,
+        CardViewModule,
+        CollapsableModule
     ],
     declarations: [
         ...obsoleteMdlDirectives(),
-        ...COLLAPSABLE_DIRECTIVES,
-        ...VIEW_DIRECTIVES,
         UploadDirective,
         DataColumnComponent,
         DataColumnListComponent,
@@ -147,9 +144,9 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         TranslateModule,
         MaterialModule,
         ContextMenuModule,
+        CardViewModule,
+        CollapsableModule,
         ...obsoleteMdlDirectives(),
-        ...COLLAPSABLE_DIRECTIVES,
-        ...VIEW_DIRECTIVES,
         UploadDirective,
         DataColumnComponent,
         DataColumnListComponent,

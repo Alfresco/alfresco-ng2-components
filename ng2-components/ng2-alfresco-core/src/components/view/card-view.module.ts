@@ -15,10 +15,19 @@
  * limitations under the License.
  */
 
-import {AccordionComponent} from './accordion.component';
-import {AccordionGroupComponent} from './accordion-group.component';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { CardView } from './adf-card-view.component';
 
-export const COLLAPSABLE_DIRECTIVES: [any] = [
-    AccordionComponent,
-    AccordionGroupComponent
-];
+@NgModule({
+    imports: [
+        CommonModule
+    ],
+    declarations: [
+        CardView
+    ],
+    exports: [
+        CardView
+    ]
+})
+export class CardViewModule {}
