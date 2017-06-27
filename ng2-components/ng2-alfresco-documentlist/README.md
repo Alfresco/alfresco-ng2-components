@@ -86,7 +86,7 @@ The properties currentFolderId, folderNode and node are the entry initialization
 | rowStyle | string | | The inline style to apply to every row, see [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html) docs for more details and usage examples |
 | rowStyleClass | string | | The CSS class to apply to every row |
 | currentFolderId | string | null | Initial node ID of displayed folder. Can be `-root-`, `-shared-`, `-my-`, or a fixed node ID  |
-| folderNode | `[MinimalNodeEntryEntity](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)` | null | Currently displayed folder node | 
+| folderNode | [MinimalNodeEntryEntity](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md) | null | Currently displayed folder node | 
 | node | `NodePaging` | null | Document list will show all the node contained in the NodePaging entity  | 
 | navigate | boolean | true | Toggles navigation to folder content or file preview |
 | navigationMode | string (click,dblclick) | dblclick | User interaction for folder navigation or file preview |
@@ -293,7 +293,7 @@ DocumentList provides simple breadcrumb element to indicate the current position
 | --- | --- | --- |
 | target | DocumentListComponent | (optional) DocumentList component to operate with. Upon clicks will instruct the given component to update. |
 | folderNode | [MinimalNodeEntryEntity](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md) | Active node, builds UI based on `folderNode.path.elements` collection. |
-| root | String | (optional) Name of the folder where you want start the breadcrumb. Note the root will always be showed as first element
+| root | String |  (optional) Name of the folder where you want start the breadcrumb. Note the root will always be showed as first element and it will continue to be displayed until you are not in a subfolder of it. |
 
 ### Events
 
