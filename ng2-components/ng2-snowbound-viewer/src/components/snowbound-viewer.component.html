@@ -1,0 +1,47 @@
+<div id="snowbound-viewer" *ngIf="showViewer" [ngClass]="{'all-space': !overlayMode}">
+    <!--Overlay mode backdrop-->
+    <div *ngIf="overlayMode">
+        <div id="viewer-shadow-transparent" class="viewer-shadow-transparent"></div>
+    </div>
+
+    <!--Main Viewer Display-->
+    <div id="viewer-main-container" class="all-space" [ngClass]="{'viewer-overlay-view': overlayMode }">
+
+        <div [ngClass]="{'mdl-layout mdl-js-layout mdl-layout--fixed-header': overlayMode, 'all-space': !overlayMode}">
+
+            <header *ngIf="overlayMode" class="mdl-layout__header">
+                <div class="mdl-layout__header-row">
+
+                    <!-- File Title -->
+                    <span id="viewer-name-file" class="mdl-layout-title viewer-name-file">{{displayName}}</span>
+
+                    <span class="vertical-divider"></span>
+
+                    <div class="mdl-layout-spacer"></div>
+
+                    <!-- Start Navigation -->
+                    <nav class="mdl-navigation">
+                        <div id="viewer-toolbar-view-options">
+                            <button *ngIf="overlayMode"
+                                    class="mdl-color--black mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
+                                    (click)="close()">
+                                <i id="viewer-close-button" class="icon material-icons">close</i>
+                            </button>
+                        </div>
+                    </nav>
+                    <!-- End Navigation -->
+                </div>
+            </header>
+
+            <main id="page-content" class="mdl-layout__content" [ngClass]="{'all-space': !overlayMode }">
+
+                <div class="mdl-grid">
+                    <div id="viewer-content-container" *ngIf="isLoaded()"
+                         class="center-element mdl-cell mdl-cell--12-col">
+                        <iframe [src]="viewerURL()" class="full-height full-width"></iframe>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</div>
