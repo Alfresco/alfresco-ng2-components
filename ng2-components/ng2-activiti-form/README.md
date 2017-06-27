@@ -179,6 +179,7 @@ The recommended set of properties can be found in the following table:
 | formLoaded | Invoked when form is loaded or reloaded. |
 | formSaved | Invoked when form is submitted with `Save` or custom outcomes.  |
 | formCompleted | Invoked when form is submitted with `Complete` outcome.  |
+| formDataRefreshed | Invoked when form values are refreshed due a data property change  |
 | executeOutcome | Invoked when any outcome is executed, default behaviour can be prevented via `event.preventDefault()` |
 | onError | Invoked at any error |
 
