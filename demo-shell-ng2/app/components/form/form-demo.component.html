@@ -1,4 +1,32 @@
-<div class="form-container">
-    <activiti-form [form]="form">
-    </activiti-form>
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+        <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+            <a id="demo-form" href="#demo" class="mdl-layout__tab" [class.is-active]="activeTab === 'demo'" (click)="changeToDemoForm()">DEMO</a>
+            <a id="store-form" href="#store" class="mdl-layout__tab" [class.is-active]="activeTab === 'processes'" (click)="changeToStoreForm()">STORE</a>
+        </div>
+    </header>
+    <main class="mdl-layout__content activiti">
+        <section class="mdl-layout__tab-panel" [class.is-active]="activeTab === 'demo'" id="demo">
+            <div class="form-container">
+                <activiti-form [form]="form">
+                </activiti-form>
+            </div>
+        </section>
+        <section class="mdl-layout__tab-panel" [class.is-active]="activeTab === 'store'" id="store">
+            <span>FORM NAME TO VISUALIZE</span>
+            <input [(ngModel)]="formToLoadName" class="mdl-textfield__input" type="text" (ngModelChange)="loadForm()">
+            <div *ngIf="formToLoadName && formToLoadName !== '' " class="store-form-container">
+                <activiti-form [form]="form" [data]="restoredData" #storeForm>
+                </activiti-form>
+                <button class="mdl-button mdl-js-button" (click)="store()">STORE</button>
+                <button class="mdl-button mdl-js-button" (click)="restore()">RESTORE</button>
+            </div>
+            <div>
+                <span> Please create in APS the form with the name you entered</span>
+            </div>
+            <div *ngIf="showError">
+                <span> Form Name not valid or form not present</span>
+            </div>
+        </section>
+    </main>
 </div>
