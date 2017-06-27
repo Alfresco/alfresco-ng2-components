@@ -11,7 +11,6 @@ show_help() {
     echo "Usage: npm-clean.sh"
     echo "--save"
     echo "--save-dev"
-    echo "-p name of the package"
     echo "-sd or -skipDemo skip the clean of the demo folder of any components"
 }
 
@@ -37,24 +36,21 @@ clea_demo() {
     EXEC_DEMO=false
 }
 
-name_pkg(){
-    NAME_PKG=$1
-}
-
 save(){
+    NAME_PKG=$1
     SAVE_OPT=true
 }
 
 save_dev(){
+    NAME_PKG=$1
     SAVE_DEV_OPT=true
 }
 
 while [[ $1  == -* ]]; do
     case "$1" in
       -h|--help|-\?) show_help; exit 0;;
-      -p)  name_pkg $2; shift 2;;
-      --save)  save; shift;;
-      --save-dev)  save_dev; shift;;
+      --save)  save $2; shift 2;;
+      --save-dev)  save_dev $2; shift 2;;
       -sd|--skipDemo) clea_demo; shift;;
       -*) echo "invalid option: $1" 1>&2; show_help; exit 0;;
     esac
@@ -70,6 +66,7 @@ do
     fi
 
     if $SAVE_DEV_OPT == true; then
+     echo "======  npm install --save-dev ${NAME_PKG} ====="
       npm install --save-dev ${NAME_PKG}
     fi
 done
@@ -85,6 +82,7 @@ fi
 
 
 cd "$DIR/../ng2-components"
+
 if $SAVE_OPT == true; then
   npm install --save ${NAME_PKG}
 fi

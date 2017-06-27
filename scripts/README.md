@@ -259,3 +259,22 @@ For development environment configuration please refer to [project docs](../demo
 | -h or --help    | show the help  |
 | -r or --registry   | against which register you want do this check |
 | -v or --version    | the version of the components to check |
+
+
+***npm-add-pkg.sh*** check the bundles in the package npm are present
+
+Add a package across all the pacakge json in the project
+
+| Option | Description |
+| --- | --- |
+| -h or --help    | show the help  |
+| --save   | save it in dependencies |
+| --save-dev   | save it in dev dependencies |
+| -sd   | skip the demo projects |
+
+
+* Add a package in the project
+
+```sh
+./npm-add-pkg.sh --save-dev NPM_NAME
+```
