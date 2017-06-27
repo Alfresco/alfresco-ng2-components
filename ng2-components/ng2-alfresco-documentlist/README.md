@@ -25,6 +25,7 @@
   * [Actions](#actions)
     + [Menu actions](#menu-actions)
     + [Default action handlers](#default-action-handlers)
+      - [Delete - System handler combined with custom handler](#delete---system-handler-combined-with-custom-handler)
       - [Delete - Show notification message with no permission](#delete---show-notification-message-with-no-permission)
       - [Delete - Disable button checking the permission](#delete---disable-button-checking-the-permission)
       - [Download](#download)
