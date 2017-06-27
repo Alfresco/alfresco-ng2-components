@@ -134,8 +134,8 @@ export class ActivitiContentService {
         return icon || ActivitiContentService.DEFAULT_MIME_TYPE_ICON;
     }
 
-    createTaskRelatedContent(taskId: string, file: any) {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.contentApi.createRelatedContentOnTask(taskId, file))
+    createTaskRelatedContent(taskId: string, file: any, opts?: any) {
+        return Observable.fromPromise(this.apiService.getInstance().activiti.contentApi.createRelatedContentOnTask(taskId, file, opts))
             .catch(err => this.handleError(err));
     }
 }
