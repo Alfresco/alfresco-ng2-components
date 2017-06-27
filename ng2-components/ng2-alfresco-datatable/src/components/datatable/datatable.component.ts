@@ -15,15 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, OnChanges, SimpleChange, SimpleChanges, Input, Output, EventEmitter, ElementRef, TemplateRef, AfterContentInit, ContentChild, Optional } from '@angular/core';
-import { MdCheckboxChange } from '@angular/material';
-import { Observable, Observer } from 'rxjs/Rx';
-import { DataColumnListComponent } from 'ng2-alfresco-core';
-
+import { Component, OnChanges, DoCheck, IterableDiffers, SimpleChange, SimpleChanges, Input, Output, EventEmitter, ElementRef, TemplateRef, AfterContentInit, ContentChild, Optional } from '@angular/core';
 import { DataTableAdapter, DataRow, DataColumn, DataSorting, DataRowEvent } from '../../data/datatable-adapter';
 import { ObjectDataTableAdapter, ObjectDataRow } from '../../data/object-datatable-adapter';
 import { DataCellEvent } from './data-cell.event';
 import { DataRowActionEvent } from './data-row-action.event';
+import { DataColumnListComponent } from 'ng2-alfresco-core';
+import { MdCheckboxChange } from '@angular/material';
+import { Observable, Observer, Subscription } from 'rxjs/Rx';
 
 declare var componentHandler;
 
@@ -32,7 +31,7 @@ declare var componentHandler;
     styleUrls: ['./datatable.component.css'],
     templateUrl: './datatable.component.html'
 })
-export class DataTableComponent implements AfterContentInit, OnChanges {
+export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck {
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
@@ -100,7 +99,11 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
     private multiClickSub: Subscription;
     private singleClickSub: Subscription;
 
-    constructor(@Optional() private el: ElementRef) {
+    private differ: any;
+
+    constructor(@Optional() private el: ElementRef,
+        private differs: IterableDiffers) {
+        this.differ = differs.find([]).create(null);
         this.click$ = new Observable<DataRowEvent>(observer => this.clickObserver = observer).share();
     }
 
@@ -123,7 +126,6 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        this.unsubscribe();
         this.initAndSubscribeClickStream();
         if (this.isPropertyChanged(changes['data'])) {
             if (this.isTableEmpty()) {
@@ -143,6 +145,13 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
 
         if (changes.selectionMode && !changes.selectionMode.isFirstChange()) {
             this.resetSelection();
+        }
+    }
+
+    ngDoCheck() {
+        var changes = this.differ.diff(this.rows);
+        if (changes) {
+            this.setTableRows(this.rows);
         }
     }
 
@@ -359,12 +368,4 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
         return this.selectionMode && this.selectionMode.toLowerCase() === 'multiple';
     }
 
-    unsubscribe() {
-        if (this.multiClickSub) {
-            this.multiClickSub.unsubscribe();
-        }
-        if (this.singleClickSub) {
-            this.singleClickSub.unsubscribe();
-        }
-    }
 }
