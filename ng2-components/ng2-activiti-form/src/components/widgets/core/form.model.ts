@@ -109,7 +109,7 @@ export class FormModel {
             }
             if (json.fields) {
                 let saveOutcome = new FormOutcomeModel(this, { id: FormModel.SAVE_OUTCOME, name: 'Save', isSystem: true });
-                let completeOutcome = new FormOutcomeModel(this, {id: FormModel.COMPLETE_OUTCOME, name: 'Complete', isSystem: true });
+                let completeOutcome = new FormOutcomeModel(this, { id: FormModel.COMPLETE_OUTCOME, name: 'Complete', isSystem: true });
                 let startProcessOutcome = new FormOutcomeModel(this, { id: FormModel.START_PROCESS_OUTCOME, name: 'Start Process', isSystem: true });
 
                 let customOutcomes = (json.outcomes || []).map(obj => new FormOutcomeModel(this, obj));
@@ -137,7 +137,7 @@ export class FormModel {
             let field = this.fields[i];
 
             if (field instanceof ContainerModel) {
-                let container = <ContainerModel> field;
+                let container = <ContainerModel>field;
                 result.push(container.field);
                 result.push(...container.field.fields);
             }
@@ -203,7 +203,11 @@ export class FormModel {
         for (let field of this.getFormFields()) {
             if (data[field.id]) {
                 field.json.value = data[field.id];
-                field.value = data[field.id];
+                field.value = field.parseValue(field.json);
+                if (field.type === FormFieldTypes.DROPDOWN ||
+                    field.type === FormFieldTypes.RADIO_BUTTONS) {
+                    field.value = data[field.id].id;
+                }
             }
         }
     }

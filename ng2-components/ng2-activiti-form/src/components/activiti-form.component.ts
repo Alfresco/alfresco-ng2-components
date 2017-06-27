@@ -101,6 +101,9 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     formLoaded: EventEmitter<FormModel> = new EventEmitter<FormModel>();
 
     @Output()
+    formDataRefreshed: EventEmitter<FormModel> = new EventEmitter<FormModel>();
+
+    @Output()
     executeOutcome: EventEmitter<FormOutcomeEvent> = new EventEmitter<FormOutcomeEvent>();
 
     @Output()
@@ -200,6 +203,12 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
         let nodeId = changes['nodeId'];
         if (nodeId && nodeId.currentValue) {
             this.loadFormForEcmNode();
+            return;
+        }
+
+        let data = changes['data'];
+        if (data && data.currentValue) {
+            this.refreshFormData();
             return;
         }
     }
@@ -424,6 +433,12 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
         }
     }
 
+    private refreshFormData() {
+        this.form = new FormModel(this.form.json, this.data, this.readOnly, this.formService);
+        this.onFormLoaded(this.form);
+        this.onFormDataRefreshed(this.form);
+    }
+
     private loadFormForEcmNode(): void {
         this.nodeService.getNodeMetadata(this.nodeId).subscribe(data => {
                 this.data = data.metadata;
@@ -469,6 +484,11 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     protected onFormLoaded(form: FormModel) {
         this.formLoaded.emit(form);
         this.formService.formLoaded.next(new FormEvent(form));
+    }
+
+    protected onFormDataRefreshed(form: FormModel) {
+        this.formDataRefreshed.emit(form);
+        this.formService.formDataRefreshed.next(new FormEvent(form));
     }
 
     protected onTaskSaved(form: FormModel) {
