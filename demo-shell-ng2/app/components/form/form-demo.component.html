@@ -1,4 +1,4 @@
-<adf-form-list #formlist
+<adf-form-list [forms]="formList"
     (row-dblclick)="onRowDblClick($event)">
 </adf-form-list>
 <div class="form-container" *ngIf="!isEmptyForm()">

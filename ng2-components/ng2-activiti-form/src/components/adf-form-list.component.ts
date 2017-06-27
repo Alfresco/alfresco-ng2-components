@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, OnChanges, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
+import { Component, OnChanges, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
 import { FormService } from './../services/form.service';
 
@@ -24,13 +24,10 @@ import { FormService } from './../services/form.service';
     templateUrl: './adf-form-list.component.html',
     styleUrls: ['./adf-form-list.component.css']
 })
-export class ADFFormList implements OnInit, OnChanges {
+export class ADFFormList implements OnChanges {
 
     @Input()
     forms: any [] = [];
-
-    @Output()
-    formClick = new EventEmitter();
 
     constructor(protected formService: FormService,
                 private logService: LogService) {
@@ -40,22 +37,14 @@ export class ADFFormList implements OnInit, OnChanges {
         this.getForms();
     }
 
-    ngOnInit() {
-        this.getForms();
-    }
-
     isEmpty(): boolean {
         return this.forms && this.forms.length === 0;
     }
 
-    getForms(){
-        this.formService.getForms().subscribe((forms)=> {
+    getForms() {
+        this.formService.getForms().subscribe((forms) => {
             this.forms.push(...forms);
         });
-    }
-
-    addForm(form) {
-        this.forms.push(form);
     }
 
 }
