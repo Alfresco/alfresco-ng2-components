@@ -58,12 +58,10 @@ do
 done
 
 cd "$DIR/../demo-shell-ng2"
-npm install rimraf
 npm run clean
 
 
 cd "$DIR/../ng2-components"
-npm install rimraf
 npm run clean
 
 cd ${DIR}
