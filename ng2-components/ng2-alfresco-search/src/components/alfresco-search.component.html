@@ -65,6 +65,7 @@
                     title="{{'SEARCH.DOCUMENT_LIST.ACTIONS.DOCUMENT.DELETE' | translate}}"
                     permission="delete"
                     handler="delete"
+                    (execute)="onContentDelete($event)"
                     (permissionEvent)="handlePermission($event)">
                 </content-action>
             </content-actions>

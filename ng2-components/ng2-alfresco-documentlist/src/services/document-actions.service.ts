@@ -16,6 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { ContentActionHandler } from '../models/content-action.model';
 import { DocumentListService } from './document-list.service';
 import { AlfrescoContentService } from 'ng2-alfresco-core';
@@ -74,7 +75,7 @@ export class DocumentActionsService {
         window.alert('standard document action 2');
     }
 
-    private download(obj: any): boolean {
+    private download(obj: any): Observable<boolean> {
         if (this.canExecuteAction(obj) && this.contentService) {
             let link = document.createElement('a');
             document.body.appendChild(link);
@@ -82,21 +83,26 @@ export class DocumentActionsService {
             link.href = this.contentService.getContentUrl(obj);
             link.click();
             document.body.removeChild(link);
-            return true;
+            return Observable.of(true);
         }
-        return false;
+        return Observable.of(false);
     }
 
-    private deleteNode(obj: any, target?: any, permission?: string) {
+    private deleteNode(obj: any, target?: any, permission?: string): Observable<any> {
+        let handlerObservale: Observable<any>;
+
         if (this.canExecuteAction(obj)) {
             if (this.hasPermission(obj.entry, permission)) {
-                this.documentListService.deleteNode(obj.entry.id).subscribe(() => {
+                handlerObservale = this.documentListService.deleteNode(obj.entry.id);
+                handlerObservale.subscribe(() => {
                     if (target && typeof target.reload === 'function') {
                         target.reload();
                     }
                 });
+                return handlerObservale;
             } else {
                 this.permissionEvent.next(new PermissionModel({type: 'content', action: 'delete', permission: permission}));
+                return Observable.throw(new Error('No permission to delete'));
             }
         }
     }

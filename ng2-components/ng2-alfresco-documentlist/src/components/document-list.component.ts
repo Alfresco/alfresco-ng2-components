@@ -19,7 +19,7 @@ import {
     Component, OnInit, Input, OnChanges, Output, SimpleChanges, EventEmitter, ElementRef,
     AfterContentInit, TemplateRef, NgZone, ViewChild, HostListener, ContentChild
 } from '@angular/core';
-import { Subject } from 'rxjs/Rx';
+import { Subject, Observable } from 'rxjs/Rx';
 import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, Pagination } from 'alfresco-js-api';
 import { AlfrescoTranslationService, DataColumnListComponent } from 'ng2-alfresco-core';
 import {
@@ -346,7 +346,17 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
      */
     executeContentAction(node: MinimalNodeEntity, action: ContentActionModel) {
         if (node && node.entry && action) {
-            action.handler(node, this, action.permission);
+            let handlerSub;
+
+            if (typeof action.handler === 'function') {
+                handlerSub = action.handler(node, this, action.permission);
+            } else {
+                handlerSub = Observable.of(true);
+            }
+
+            if (typeof action.execute === 'function') {
+                handlerSub.subscribe(() => { action.execute(node); });
+            }
         }
     }
 

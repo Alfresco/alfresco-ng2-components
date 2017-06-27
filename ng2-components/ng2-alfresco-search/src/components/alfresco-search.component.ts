@@ -109,7 +109,7 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
     private displaySearchResults(searchTerm) {
         if (searchTerm && this.searchService) {
             let searchOpts: SearchOptions = {
-                include: ['path'],
+                include: ['path', 'allowableOperations'],
                 skipCount: this.skipCount,
                 rootNodeId: this.rootNodeId,
                 nodeType: this.resultType,
@@ -147,6 +147,10 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
 
     public onPrevPage(event: Pagination): void {
         this.skipCount = event.skipCount;
+        this.displaySearchResults(this.searchTerm);
+    }
+
+    public onContentDelete(entry: any) {
         this.displaySearchResults(this.searchTerm);
     }
 

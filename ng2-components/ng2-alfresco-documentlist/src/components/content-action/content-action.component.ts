@@ -77,11 +77,11 @@ export class ContentActionComponent implements OnInit, OnChanges {
 
         if (this.handler) {
             this.model.handler = this.getSystemHandler(this.target, this.handler);
-        } else if (this.execute) {
-            this.model.handler = (document: any): void => {
-                this.execute.emit({
-                    value: document
-                });
+        }
+
+        if (this.execute) {
+            this.model.execute = (value: any): void => {
+                this.execute.emit({ value });
             };
         }
 
