@@ -1,0 +1,8 @@
+<alfresco-datatable *ngIf="!isEmpty()"
+    [rows]="forms">
+    <data-columns>
+        <data-column key="name" type="text" title="Name" class="ellipsis-cell" [sortable]="true"></data-column>
+        <data-column key="lastUpdatedByFullName" type="text" title="User" class="ellipsis-cell" [sortable]="true"></data-column>
+        <data-column key="lastUpdated" type="date" format="shortDate" title="Date"></data-column>
+    </data-columns>
+</alfresco-datatable>

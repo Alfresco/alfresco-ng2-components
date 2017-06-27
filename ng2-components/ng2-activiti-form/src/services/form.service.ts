@@ -137,7 +137,11 @@ export class FormService {
             'modelType': 2
         };
 
-        return Observable.fromPromise(this.apiService.getInstance().activiti.modelsApi.getModels(opts));
+        return Observable.fromPromise(
+            this.apiService.getInstance().activiti.modelsApi.getModels(opts))
+            .map((response: any) => <any[]> response.data || [])
+            .catch(err => this.handleError(err));
+
     }
 
     /**
