@@ -21,7 +21,7 @@ import { DataCellEvent } from './data-cell.event';
 import { DataRowActionEvent } from './data-row-action.event';
 import { DataColumnListComponent } from 'ng2-alfresco-core';
 import { MdCheckboxChange } from '@angular/material';
-import { Observable, Observer } from 'rxjs/Rx';
+import { Observable, Observer, Subscription } from 'rxjs/Rx';
 
 declare var componentHandler;
 
@@ -93,6 +93,11 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
     private clickObserver: Observer<DataRowEvent>;
     private click$: Observable<DataRowEvent>;
 
+    private schema: DataColumn[] = [];
+
+    private multiClickSub: Subscription;
+    private singleClickSub: Subscription;
+
     constructor(@Optional() private el: ElementRef) {
         this.click$ = new Observable<DataRowEvent>(observer => this.clickObserver = observer).share();
     }
@@ -116,6 +121,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
+        this.unsubscribe();
         this.initAndSubscribeClickStream();
         if (this.isPropertyChanged(changes['data'])) {
             if (this.isTableEmpty()) {
@@ -152,7 +158,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
             .map(list => list)
             .filter(x => x.length === 1);
 
-        singleClickStream.subscribe((obj: DataRowEvent[]) => {
+        this.singleClickSub = singleClickStream.subscribe((obj: DataRowEvent[]) => {
             let event: DataRowEvent = obj[0];
             let el = obj[0].sender.el;
             this.rowClick.emit(event);
@@ -171,7 +177,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
             .map(list => list)
             .filter(x => x.length >= 2);
 
-        multiClickStream.subscribe((obj: DataRowEvent[]) => {
+        this.multiClickSub = multiClickStream.subscribe((obj: DataRowEvent[]) => {
             let event: DataRowEvent = obj[0];
             let el = obj[0].sender.el;
             this.rowDblClick.emit(event);
@@ -187,7 +193,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
     }
 
     private initTable() {
-        this.data = new ObjectDataTableAdapter(this.rows, []);
+        this.data = new ObjectDataTableAdapter(this.rows, this.schema);
     }
 
     isTableEmpty() {
@@ -201,14 +207,12 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
     }
 
     private setTableSchema() {
-        let schema: DataColumn[] = [];
-
         if (this.columnList && this.columnList.columns) {
-            schema = this.columnList.columns.map(c => <DataColumn> c);
+            this.schema = this.columnList.columns.map(c => <DataColumn> c);
         }
 
-        if (this.data && schema && schema.length > 0) {
-            this.data.setColumns(schema);
+        if (this.data && this.schema && this.schema.length > 0) {
+            this.data.setColumns(this.schema);
         }
     }
 
@@ -351,5 +355,14 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
 
     isMultiSelectionMode(): boolean {
         return this.selectionMode && this.selectionMode.toLowerCase() === 'multiple';
+    }
+
+    unsubscribe() {
+        if (this.multiClickSub) {
+            this.multiClickSub.unsubscribe();
+        }
+        if (this.singleClickSub) {
+            this.singleClickSub.unsubscribe();
+        }
     }
 }

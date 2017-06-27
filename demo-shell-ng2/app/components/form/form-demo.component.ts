@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core';
-import { FormModel, FormService } from 'ng2-activiti-form';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormModel, FormService, ADFFormList } from 'ng2-activiti-form';
 import { DemoForm } from './demo-form';
 
 @Component({
@@ -28,7 +28,11 @@ import { DemoForm } from './demo-form';
 })
 export class FormDemoComponent implements OnInit {
 
+    @ViewChild(ADFFormList)
+    formList: ADFFormList;
+
     form: FormModel;
+    formId: string;
 
     constructor(private formService: FormService) {
         formService.executeOutcome.subscribe(e => {
@@ -38,9 +42,29 @@ export class FormDemoComponent implements OnInit {
     }
 
     ngOnInit() {
-        let formDefinitionJSON: any = DemoForm.getDefinition();
-        let form = this.formService.parseForm(formDefinitionJSON);
-        console.log(form);
-        this.form = form;
+        if (this.formList) {
+            this.formList.addForm({ name: 'Demo Form Definition', lastUpdatedByFullName: 'Demo Name User', lastUpdated: '2017-06-23T13:20:30.754+0000', isFake: true });
+        }
     }
+
+    onRowDblClick(event: CustomEvent) {
+        let rowForm = event.detail.value.obj;
+
+        if (rowForm.isFake) {
+            let formDefinitionJSON: any = DemoForm.getDefinition();
+            let form = this.formService.parseForm(formDefinitionJSON);
+            this.form = form;
+        } else {
+            this.formService.getFormDefinitionById(rowForm.id).subscribe((definition) => {
+                let form = this.formService.parseForm(definition);
+                this.form = form;
+            });
+        }
+        console.log(rowForm);
+    }
+
+    isEmptyForm() {
+        return this.form === null || this.form === undefined;
+    }
+
 }

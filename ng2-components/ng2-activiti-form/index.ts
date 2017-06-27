@@ -18,8 +18,9 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { MdCheckboxModule, MdTabsModule, MdCardModule, MdButtonModule, MdIconModule, MdSlideToggleModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
-
+import { DataTableModule } from 'ng2-alfresco-datatable';
 import { ActivitiForm } from './src/components/activiti-form.component';
+import { ADFFormList } from './src/components/adf-form-list.component';
 import { ActivitiContent } from './src/components/activiti-content.component';
 import { FormFieldComponent } from './src/components/form-field/form-field.component';
 import { ActivitiStartForm } from './src/components/activiti-start-form.component';
@@ -34,6 +35,7 @@ import { HttpModule } from '@angular/http';
 import { WIDGET_DIRECTIVES, MASK_DIRECTIVE } from './src/components/widgets/index';
 
 export * from './src/components/activiti-form.component';
+export * from './src/components/adf-form-list.component';
 export * from './src/components/activiti-content.component';
 export * from './src/components/activiti-start-form.component';
 export * from './src/services/form.service';
@@ -46,6 +48,7 @@ export * from './src/events/index';
 
 export const ACTIVITI_FORM_DIRECTIVES: any[] = [
     ActivitiForm,
+    ADFFormList,
     ActivitiContent,
     ActivitiStartForm,
     FormFieldComponent,
@@ -65,6 +68,7 @@ export const ACTIVITI_FORM_PROVIDERS: any[] = [
 @NgModule({
     imports: [
         CoreModule,
+        DataTableModule,
         HttpModule,
         MdCheckboxModule,
         MdTabsModule,
