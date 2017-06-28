@@ -22,6 +22,7 @@
   * [Methods](#methods)
 - [Common scenarios](#common-scenarios)
   * [Changing field value based on another field](#changing-field-value-based-on-another-field)
+  * [Listen all form Events](#listen-all-form-events)
 - [See also](#see-also)
 - [Build from sources](#build-from-sources)
 - [NPM scripts](#npm-scripts)

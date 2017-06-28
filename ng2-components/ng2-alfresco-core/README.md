@@ -17,6 +17,7 @@
   * [Styling](#styling)
 - [Alfresco Api Service](#alfresco-api-service)
 - [AppConfigService](#appconfigservice)
+  * [Different configurations based on environment settings](#different-configurations-based-on-environment-settings)
 - [Notification Service](#notification-service)
 - [Context Menu directive](#context-menu-directive)
 - [Accordion Component](#accordion-component)
