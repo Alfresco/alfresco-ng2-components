@@ -58,6 +58,7 @@ import { MDL } from './src/components/material/mdl-upgrade-element.directive';
 import { AlfrescoMdlButtonDirective } from './src/components/material/mdl-button.directive';
 import { AlfrescoMdlMenuDirective } from './src/components/material/mdl-menu.directive';
 import { AlfrescoMdlTextFieldDirective } from './src/components/material/mdl-textfield.directive';
+import { AlfrescoMdlTooltipDirective } from './src/components/material/mdl-tooltip.directive';
 
 export { ContextMenuModule } from './src/components/context-menu/context-menu.module';
 export { CardViewModule } from './src/components/view/card-view.module';
@@ -98,7 +99,8 @@ export function obsoleteMdlDirectives() {
         MDL,
         AlfrescoMdlButtonDirective,
         AlfrescoMdlMenuDirective,
-        AlfrescoMdlTextFieldDirective
+        AlfrescoMdlTextFieldDirective,
+        AlfrescoMdlTooltipDirective
     ];
 }
 

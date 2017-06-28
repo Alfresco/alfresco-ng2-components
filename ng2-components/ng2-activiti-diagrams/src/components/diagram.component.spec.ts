@@ -68,7 +68,8 @@ describe('Test ng2-activiti-diagrams ', () => {
         element = fixture.nativeElement;
         fixture.detectChanges();
         componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered'
+            'upgradeAllRegistered',
+            'upgradeElement'
         ]);
         window['componentHandler'] = componentHandler;
     });
