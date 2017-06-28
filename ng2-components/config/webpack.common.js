@@ -34,7 +34,8 @@ module.exports = {
     resolveLoader: {
         alias: {
             "file-multi-loader": path.resolve(__dirname, "./custom-loaders/file-loader-multi"),
-            "license-check": path.resolve(__dirname, "./custom-loaders/license-check")
+            "license-check": path.resolve(__dirname, "./custom-loaders/license-check"),
+            "generate-list-component-loader": path.resolve(__dirname, "./custom-loaders/generateListComponent")
         }
     },
 
