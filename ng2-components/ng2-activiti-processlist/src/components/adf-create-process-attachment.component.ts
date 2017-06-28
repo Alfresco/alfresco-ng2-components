@@ -54,7 +54,10 @@ export class ActivitiCreateProcessAttachmentComponent implements OnChanges {
 
         for (let fileInfoObj of filesList) {
             let file: File = fileInfoObj;
-            this.activitiContentService.createProcessRelatedContent(this.processInstanceId, file).subscribe(
+            let opts = {
+                isRelatedContent: true
+            };
+            this.activitiContentService.createProcessRelatedContent(this.processInstanceId, file, opts).subscribe(
                 (res) => {
                     this.contentCreated.emit(res);
                 },
