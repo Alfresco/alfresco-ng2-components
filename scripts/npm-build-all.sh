@@ -11,6 +11,8 @@ eval EXEC_SINGLE_TEST=false
 eval EXEC_GIT_NPM_INSTALL_JSAPI=false
 eval GIT_ISH=""
 eval SINGLE_TEST=""
+eval EXEC_VERSION_JSAPI=false
+eval JSAPI_VERSION=""
 
 eval projects=( "ng2-alfresco-core"
     "ng2-alfresco-datatable"
@@ -39,6 +41,7 @@ show_help() {
     echo "-sb or skip build"
     echo "-ft or -fast test build all your local component and run also the test in one single karma-test-shim (high memory consuming and less details)"
     echo "-gitjsapi to build all the components against a commit-ish version of the JS-API"
+    echo "-vjsapi install different version from npm of JS-API defined in the package.json"
 }
 
 enable_test(){
@@ -65,6 +68,18 @@ enable_js_api_git_link() {
     EXEC_GIT_NPM_INSTALL_JSAPI=true
 }
 
+version_js_api() {
+    JSAPI_VERSION=$1
+
+    if [[ "${JSAPI_VERSION}" == "" ]]
+    then
+      echo "JSAPI version required with -vJSApi"
+      exit 0
+    fi
+
+    EXEC_VERSION_JSAPI=true
+}
+
 clean() {
     EXEC_CLEAN=true
 }
@@ -88,6 +103,7 @@ while [[ $1 == -* ]]; do
                        ;;
       -ft|--fasttest)  enable_fast_test; shift;;
       -gitjsapi)  enable_js_api_git_link $2; shift 2;;
+      -vjsapi)  version_js_api $2; shift 2;;
       -c|--clean)  clean; shift;;
       -si|--skipinstall)  exec_install; shift;;
       -sb|--skipbuild)  exclude_build; shift;;
@@ -117,6 +133,11 @@ if $EXEC_GIT_NPM_INSTALL_JSAPI == true; then
   cd "$DIR/../ng2-components/node_modules/alfresco-js-api"
   npm install
   cd "$DIR/../ng2-components/"
+fi
+
+if $EXEC_VERSION_JSAPI == true; then
+  echo "====== Use the alfresco JS-API '$JSAPI_VERSION'====="
+  npm install alfresco-js-api@${JSAPI_VERSION}
 fi
 
 if $EXEC_BUILD == true; then
