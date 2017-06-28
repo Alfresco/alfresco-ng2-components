@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnChanges, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
+import { Component, OnChanges, Input, SimpleChanges } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
 import { FormService } from './../services/form.service';
 
