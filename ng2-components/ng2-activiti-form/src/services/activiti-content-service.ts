@@ -100,8 +100,8 @@ export class ActivitiContentService {
      * @param processInstanceId
      * @returns {any}
      */
-    createProcessRelatedContent(processInstanceId: string, content: any): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.contentApi.createRelatedContentOnProcessInstance(processInstanceId, content))
+    createProcessRelatedContent(processInstanceId: string, content: any, opts?: any): Observable<any> {
+        return Observable.fromPromise(this.apiService.getInstance().activiti.contentApi.createRelatedContentOnProcessInstance(processInstanceId, content, opts))
             .catch(err => this.handleError(err));
     }
 
