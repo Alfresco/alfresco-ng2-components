@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormModel, FormService } from 'ng2-activiti-form';
 import { DemoForm } from './demo-form';
 import { ActivitiForm } from 'ng2-activiti-form';
@@ -33,10 +33,12 @@ export class FormDemoComponent implements OnInit {
 
     @ViewChild(ActivitiForm)
     activitiForm: ActivitiForm;
+
     formList: any [] = [];
 
     form: FormModel;
     formId: string;
+
     storedData: any = {};
     restoredData: any = {};
 
