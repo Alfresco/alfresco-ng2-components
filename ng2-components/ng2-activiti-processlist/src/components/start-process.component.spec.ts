@@ -209,7 +209,7 @@ describe('ActivitiStartProcessInstance', () => {
         it('should call service to start process with the variables setted', async(() => {
             let inputProcessVariable: RestVariable[] = [];
 
-            let variable: RestVariable;
+            let variable: RestVariable = {};
             variable.name = 'nodeId';
             variable.value = 'id';
 

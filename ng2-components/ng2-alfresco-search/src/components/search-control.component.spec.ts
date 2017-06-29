@@ -78,7 +78,7 @@ describe('AlfrescoSearchControlComponent', () => {
             expect(e.valid).toBe(true);
             done();
         });
-        component.searchControl.setValue('customSearchTerm211', true);
+        component.searchControl.setValue('customSearchTerm211');
         fixture.detectChanges();
     });
 
@@ -293,7 +293,7 @@ describe('AlfrescoSearchControlComponent', () => {
             fixture.detectChanges();
             let formEl: HTMLElement = element.querySelector('form');
             component.searchTerm = 'searchTerm1';
-            component.searchControl.setValue('searchTerm1', true);
+            component.searchControl.setValue('searchTerm1');
             fixture.detectChanges();
             formEl.dispatchEvent(new Event('submit'));
 
