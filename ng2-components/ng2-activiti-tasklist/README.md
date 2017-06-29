@@ -413,6 +413,8 @@ The purpose of the component is populate the local variable called `properties` 
 | taskDetails | [TaskDetailsModel](#taskdetailsmodel) | | (**required**) The task details related to the task. |
 | formName | string | | The name of the form. |
 
+![adf-task-header](docs/assets/adf-task-header.png)
+
 ### Events
 
 | Name | Description |
