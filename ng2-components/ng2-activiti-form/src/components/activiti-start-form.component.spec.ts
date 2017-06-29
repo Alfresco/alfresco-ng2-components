@@ -30,6 +30,7 @@ import { EcmModelService } from './../services/ecm-model.service';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { TranslationMock } from './../assets/translation.service.mock';
+import { MdInputModule } from '@angular/material';
 
 describe('ActivitiStartForm', () => {
 
@@ -46,6 +47,7 @@ describe('ActivitiStartForm', () => {
         TestBed.configureTestingModule({
             imports: [
                 MdTabsModule,
+                MdInputModule,
                 CoreModule.forRoot()],
             declarations: [
                 ActivitiStartForm,

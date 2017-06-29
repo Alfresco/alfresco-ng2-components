@@ -1,14 +1,21 @@
-<div class="mdl-textfield mdl-js-textfield amount-widget {{field.className}}"
+<div class="amount-widget__container amount-widget {{field.className}}"
      [class.amount-widget__invalid]="!field.isValid">
-    <label [attr.for]="field.id">{{field.name}}, {{currency}}<span *ngIf="isRequired()">*</span></label>
-    <input class="mdl-textfield__input"
-           type="text"
-           [attr.id]="field.id"
-           [attr.required]="isRequired()"
-           [value]="field.value"
-           [(ngModel)]="field.value"
-           (ngModelChange)="checkVisibility(field)"
-           [disabled]="field.readOnly"
-           placeholder="{{field.placeholder}}">
-    <span *ngIf="field.validationSummary" class="mdl-textfield__error">{{field.validationSummary}}</span>
+    <div>
+        <label>{{field.name}} <span *ngIf="isRequired()">*</span></label>
+    </div>
+    <md-input-container floatPlaceholder="never" color="" class="amount-widget__input">
+        <span mdPrefix class="adf-amount-widget__prefix-spacing"> {{currency }}</span>
+        <input mdInput
+                class="adf-amount-widget"
+                type="text"
+                [attr.id]="field.id"
+                [attr.required]="isRequired()"
+                [value]="field.value"
+                [(ngModel)]="field.value"
+                (ngModelChange)="checkVisibility(field)"
+                [disabled]="field.readOnly"
+                placeholder="{{field.placeholder}}"
+                hideRequiredMarker="true">
+    <span *ngIf="field.validationSummary" class="mdl-textfield__error cutomize-spacing">{{field.validationSummary}}</span>
+    </md-input-container>
 </div>

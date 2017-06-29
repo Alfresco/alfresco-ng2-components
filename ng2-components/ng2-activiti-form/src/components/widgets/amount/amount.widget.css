@@ -2,6 +2,37 @@
     width: 100%;
 }
 
+.amount-widget__container {
+    position: relative;
+    font-size: 16px;
+    display: inline-block;
+    box-sizing: border-box;
+    width: 300px;
+    max-width: 100%;
+    margin: 0;
+    padding: 20px 0;
+}
+
+.adf-amount-widget {
+    vertical-align: baseline !important;
+}
+
+.adf-amount-widget__prefix-spacing {
+    padding-right: 5px;
+}
+
+:host() .amount-widget__input {
+    width: 100%;
+}
+
+.cutomize-spacing {
+    padding-top: 3px;
+}
+
+md-input-container >>> .mat-input-wrapper {
+    margin-top: 0px;
+    padding-top: 4px;
+}
 
 .amount-widget__invalid .mdl-textfield__input {
     border-color: #d50000;
