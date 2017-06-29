@@ -13,7 +13,8 @@
     + [DataTable DOM Events](#datatable-dom-events)
     + [Empty content template](#empty-content-template)
     + [Loading content template](#loading-content-template)
-      - [Column Templates](#column-templates)
+    + [Column Templates](#column-templates)
+    + [Events](#events)
       - [rowClick event](#rowclick-event)
       - [rowDblClick event](#rowdblclick-event)
       - [showRowContextMenu event](#showrowcontextmenu-event)
@@ -23,7 +24,7 @@
   * [Generate schema](#generate-schema)
 - [Pagination Component](#pagination-component)
     + [Properties](#properties)
-    + [Events](#events)
+    + [Events](#events-1)
   * [Build from sources](#build-from-sources)
   * [NPM scripts](#npm-scripts)
   * [Demo](#demo)
@@ -274,7 +275,7 @@ You can add a template that will be showed during the loading of your data:
 
 Note: the `<loading-content-template>` and `<no-content-template>` can be used together
 
-#### Column Templates
+### Column Templates
 
 It is possible assigning a custom column template like the following:
 
@@ -319,6 +320,8 @@ In the second case `entry` variable is holding a reference to the following data
     col: DataColumn
 }
 ```
+
+### Events
 
 #### rowClick event
 
