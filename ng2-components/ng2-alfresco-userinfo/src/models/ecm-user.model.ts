@@ -16,8 +16,9 @@
  */
 
 import { EcmCompanyModel } from './ecm-company.model';
+import { Person } from 'alfresco-js-api';
 
-export class EcmUserModel {
+export class EcmUserModel implements Person {
     id: string;
     firstName: string;
     lastName: string;
@@ -33,7 +34,7 @@ export class EcmUserModel {
     company: EcmCompanyModel;
     mobile: string;
     telephone: string;
-    statusUpdatedAt: string;
+    statusUpdatedAt: Date;
     userStatus: string;
     enabled: boolean;
     emailNotificationsEnabled: boolean;

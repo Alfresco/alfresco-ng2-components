@@ -21,3 +21,4 @@ export * from './icon.model';
 export * from './user.model';
 export * from './task-details.model';
 export * from './task-details.event';
+export * from './user-event.model';

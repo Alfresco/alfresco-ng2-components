@@ -101,7 +101,7 @@ export class ActivitiTaskList implements OnChanges, AfterContentInit {
                 private taskListService: ActivitiTaskListService,
                 private logService: LogService) {
         if (translateService) {
-            translateService.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
+            translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
         }
     }
 

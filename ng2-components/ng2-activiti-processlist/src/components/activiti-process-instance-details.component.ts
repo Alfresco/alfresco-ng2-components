@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { DatePipe } from '@angular/common';
-import { Component, Input, ViewChild, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
-import { TaskDetailsEvent } from 'ng2-activiti-tasklist';
+import {DatePipe} from '@angular/common';
+import {Component, Input, ViewChild, Output, EventEmitter, OnChanges, SimpleChanges} from '@angular/core';
+import {AlfrescoTranslationService, LogService} from 'ng2-alfresco-core';
+import {TaskDetailsEvent} from 'ng2-activiti-tasklist';
 
-import { ActivitiProcessService } from './../services/activiti-process.service';
-import { ActivitiProcessInstanceHeader } from './activiti-process-instance-header.component';
-import { ActivitiProcessInstanceTasks } from './activiti-process-instance-tasks.component';
-import { ProcessInstance } from '../models/process-instance.model';
+import {ActivitiProcessService} from './../services/activiti-process.service';
+import {ActivitiProcessInstanceHeader} from './activiti-process-instance-header.component';
+import {ActivitiProcessInstanceTasks} from './activiti-process-instance-tasks.component';
+import {ProcessInstance} from '../models/process-instance.model';
 
 @Component({
     selector: 'activiti-process-instance-details',
@@ -58,6 +58,9 @@ export class ActivitiProcessInstanceDetails implements OnChanges {
 
     processInstanceDetails: ProcessInstance;
 
+    @Output()
+    showProcessDiagram: EventEmitter<any> = new EventEmitter<any>();
+
     /**
      * Constructor
      * @param translate Translation service
@@ -68,7 +71,7 @@ export class ActivitiProcessInstanceDetails implements OnChanges {
                 private logService: LogService) {
 
         if (translate) {
-            translate.addTranslationFolder('ng2-activiti-processlist', 'node_modules/ng2-activiti-processlist/src');
+            translate.addTranslationFolder('ng2-activiti-processlist', 'assets/ng2-activiti-processlist');
         }
     }
 
@@ -136,4 +139,9 @@ export class ActivitiProcessInstanceDetails implements OnChanges {
             this.logService.error(`ProcessListInstanceHeader: error parsing date ${value} to format ${format}`);
         }
     }
+
+    onShowProcessDiagram(event: any) {
+        this.showProcessDiagram.emit(event);
+    }
+
 }

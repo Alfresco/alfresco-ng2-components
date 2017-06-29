@@ -1,4 +1,4 @@
-# ALFRESCO ANGULAR 2 COMPONENTS
+# ALFRESCO ANGULAR COMPONENTS
 
 [![Join the chat at https://gitter.im/Alfresco/alfresco-ng2-components](https://badges.gitter.im/Alfresco/alfresco-ng2-components.svg)](https://gitter.im/Alfresco/alfresco-ng2-components?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -17,27 +17,6 @@
   <a href='https://github.com/Alfresco/alfresco-ng2-components/blob/master/LICENSE'>
      <img src='https://img.shields.io/hexpm/l/plug.svg' alt='license' />
   </a>
-  <a href='https://www.alfresco.com/'>
-     <img src='https://img.shields.io/badge/style-component-green.svg?label=alfresco' alt='alfresco component' />
-  </a>
-  <a href='https://angular.io/'>
-     <img src='https://img.shields.io/badge/style-2-red.svg?label=angular' alt='angular 2' />
-  </a>
-  <a href='https://www.typescriptlang.org/docs/tutorial.html'>
-     <img src='https://img.shields.io/badge/style-lang-blue.svg?label=typescript' alt='typescript' />
-  </a>
-  <a href='https://www.alfresco.com/'>
-     <img src='https://img.shields.io/badge/style-%3E5.0.0-blue.svg?label=node%20version' alt='node version' />
-  </a>
-</p>
-  
-<p align="center">
-  <img title="alfresco" alt='alfresco' src='assets/alfresco.png'  width="280px" height="150px"></img>
-  <img title="angular2" alt='angular2' src='assets/angular2.png'  width="150px" height="150px"></img>    
-</p>
-
-<p align="center">
-  <img title="browser stack" alt='browser stack' src='assets/browserstack.png'  width="350px" height="225px"></img>
 </p>
 
 ## Introduction

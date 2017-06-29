@@ -59,7 +59,7 @@ export class ActivitiComments implements OnChanges {
                 private activitiTaskList: ActivitiTaskListService) {
 
         if (translateService) {
-            translateService.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
+            translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
         }
 
         this.comment$ = new Observable<Comment>(observer =>  this.commentObserver = observer).share();

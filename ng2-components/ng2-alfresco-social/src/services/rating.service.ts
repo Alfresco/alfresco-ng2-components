@@ -19,6 +19,7 @@ import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { AlfrescoApiService } from 'ng2-alfresco-core';
+import { RatingBody } from 'alfresco-js-api';
 
 @Injectable()
 export class RatingService {
@@ -32,8 +33,8 @@ export class RatingService {
             .catch(this.handleError);
     }
 
-    postRating(nodeId: string, ratingType: string, vote: any): any {
-        let ratingBody = {
+    postRating(nodeId: string, ratingType: any, vote: any): any {
+        let ratingBody: RatingBody = {
             'id': ratingType,
             'myRating': vote
         };
@@ -42,8 +43,8 @@ export class RatingService {
             .catch(this.handleError);
     }
 
-    deleteRating(nodeId: string, ratingId: string): any {
-        return Observable.fromPromise(this.apiService.getInstance().core.ratingsApi.removeRating(nodeId, ratingId))
+    deleteRating(nodeId: string, ratingType: any): any {
+        return Observable.fromPromise(this.apiService.getInstance().core.ratingsApi.removeRating(nodeId, ratingType))
             .map(res => res)
             .catch(this.handleError);
     }

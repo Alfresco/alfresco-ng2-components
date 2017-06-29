@@ -105,6 +105,11 @@ export class FormFieldModel extends FormWidgetModel {
         return this._readOnly;
     }
 
+    set readOnly(readOnly: boolean) {
+        this._readOnly = readOnly;
+        this.updateForm();
+    }
+
     get isValid(): boolean {
         return this._isValid;
     }
@@ -292,8 +297,6 @@ export class FormFieldModel extends FormWidgetModel {
                 let rbEntry: FormFieldOption[] = this.options.filter(opt => opt.id === this.value);
                 if (rbEntry.length > 0) {
                     this.form.values[this.id] = rbEntry[0];
-                } else if (this.options.length > 0) {
-                    this.form.values[this.id] = this.options[0];
                 }
                 break;
             case FormFieldTypes.UPLOAD:

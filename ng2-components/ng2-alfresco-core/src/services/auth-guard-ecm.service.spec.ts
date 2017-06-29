@@ -15,29 +15,41 @@
  * limitations under the License.
  */
 
+import { TestBed, async, inject } from '@angular/core/testing';
+import { Router} from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+
 import { AlfrescoSettingsService } from './alfresco-settings.service';
 import { AlfrescoAuthenticationService } from './alfresco-authentication.service';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { StorageService } from './storage.service';
+import { CookieService } from './cookie.service';
+import { CookieServiceMock } from './../assets/cookie.service.mock';
 import { LogService } from './log.service';
 import { AuthGuardEcm } from './auth-guard-ecm.service';
-import { Router} from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
-import { TestBed, async, inject } from '@angular/core/testing';
+import { AppConfigModule } from './app-config.service';
 
 describe('AuthGuardService ECM', () => {
 
-    beforeEach(() => {
+    beforeEach(async(() => {
         TestBed.configureTestingModule({
-            providers: [AuthGuardEcm,
+            imports: [
+                AppConfigModule,
+                RouterTestingModule
+            ],
+            declarations: [
+            ],
+            providers: [
+                AuthGuardEcm,
                 AlfrescoSettingsService,
                 AlfrescoApiService,
                 AlfrescoAuthenticationService,
                 StorageService,
-                LogService],
-            imports: [RouterTestingModule]
-        });
-    });
+                { provide: CookieService, useClass: CookieServiceMock },
+                LogService
+            ]
+        }).compileComponents();
+    }));
 
     it('if the alfresco js api is logged in should canActivate be true',
         async(inject([AuthGuardEcm, Router, AlfrescoSettingsService, StorageService, AlfrescoAuthenticationService], (auth, router, settingsService, storage, authService) => {

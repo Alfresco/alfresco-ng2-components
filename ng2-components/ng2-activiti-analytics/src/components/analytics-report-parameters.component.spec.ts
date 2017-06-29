@@ -17,6 +17,7 @@
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { DebugElement, SimpleChange } from '@angular/core';
+import { MdTooltipModule, MdButtonModule, OVERLAY_PROVIDERS } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
 import * as moment from 'moment';
 import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
@@ -42,14 +43,17 @@ describe('AnalyticsReportParametersComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule.forRoot(),
+                MdTooltipModule,
+                MdButtonModule
             ],
             declarations: [
                 AnalyticsReportParametersComponent,
                 ...WIDGET_DIRECTIVES
             ],
             providers: [
-                AnalyticsService
+                AnalyticsService,
+                OVERLAY_PROVIDERS
             ]
         }).compileComponents();
 
@@ -291,13 +295,13 @@ describe('AnalyticsReportParametersComponent', () => {
                 done();
             });
 
-            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/app/rest/reporting/report-params/1').andReturn({
+            jasmine.Ajax.stubRequest('http://localhost:3000/bpm/activiti-app/app/rest/reporting/report-params/1').andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: analyticParamsMock.reportDefParamProcessDef
             });
 
-            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/app/rest/reporting/process-definitions').andReturn({
+            jasmine.Ajax.stubRequest('http://localhost:3000/bpm/activiti-app/app/rest/reporting/process-definitions').andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: analyticParamsMock.reportDefParamProcessDefOptionsNoApp
@@ -322,7 +326,7 @@ describe('AnalyticsReportParametersComponent', () => {
                 done();
             });
 
-            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/app/rest/reporting/report-params/1').andReturn({
+            jasmine.Ajax.stubRequest('http://localhost:3000/bpm/activiti-app/app/rest/reporting/report-params/1').andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: analyticParamsMock.reportDefParamProcessDef
@@ -330,7 +334,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
             let appId = '1';
 
-            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/api/enterprise/process-definitions?appDefinitionId=' + appId).andReturn({
+            jasmine.Ajax.stubRequest('http://localhost:3000/bpm/activiti-app/api/enterprise/process-definitions?appDefinitionId=' + appId).andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: analyticParamsMock.reportDefParamProcessDefOptionsApp
@@ -388,13 +392,13 @@ describe('AnalyticsReportParametersComponent', () => {
                 done();
             });
 
-            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/app/rest/reporting/report-params/1').andReturn({
+            jasmine.Ajax.stubRequest('http://localhost:3000/bpm/activiti-app/app/rest/reporting/report-params/1').andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: analyticParamsMock.reportDefParamProcessDef
             });
 
-            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/app/rest/reporting/process-definitions').andReturn({
+            jasmine.Ajax.stubRequest('http://localhost:3000/bpm/activiti-app/app/rest/reporting/process-definitions').andReturn({
                 status: 404,
                 contentType: 'json',
                 responseText: []
@@ -483,7 +487,7 @@ describe('AnalyticsReportParametersComponent', () => {
                 validForm = true;
             });
 
-            xit('Should be able to change the report title', (done) => {
+            it('Should be able to change the report title', (done) => {
 
                 let title: HTMLElement = element.querySelector('h4');
                 title.click();
@@ -495,7 +499,7 @@ describe('AnalyticsReportParametersComponent', () => {
                 reportName.focus();
                 component.reportParameters.name = 'FAKE_TEST_NAME';
                 reportName.value = 'FAKE_TEST_NAME';
-                reportName.blur();
+                reportName.dispatchEvent(new Event('blur'));
 
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -510,13 +514,13 @@ describe('AnalyticsReportParametersComponent', () => {
                     contentType: 'json',
                     responseText: analyticParamsMock.reportDefParamStatus
                 });
-
             });
 
             it('Should show a dialog to allowing report save', async(() => {
-                component.saveReportSuccess.subscribe(() => {
+                component.saveReportSuccess.subscribe((repId) => {
                     let reportDialogTitle: HTMLElement = <HTMLElement>element.querySelector('#report-dialog');
                     expect(reportDialogTitle.getAttribute('open')).toBeNull();
+                    expect(repId).toBe('1');
                 });
 
                 component.submit(values);

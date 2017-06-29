@@ -23,6 +23,7 @@ import { EcmUserService } from './../services/ecm-user.service';
 import { BpmUserService } from './../services/bpm-user.service';
 
 declare let componentHandler: any;
+declare var require: any;
 
 @Component({
     selector: 'ng2-alfresco-userinfo',
@@ -54,7 +55,7 @@ export class UserInfoComponent implements OnInit {
                 private authService: AlfrescoAuthenticationService,
                 private translateService: AlfrescoTranslationService) {
         if (translateService) {
-            translateService.addTranslationFolder('ng2-alfresco-userinfo', 'node_modules/ng2-alfresco-userinfo/src');
+            translateService.addTranslationFolder('ng2-alfresco-userinfo', 'assets/ng2-alfresco-userinfo');
         }
         authService.onLogin.subscribe((response) => {
             this.getUserInfo();

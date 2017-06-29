@@ -16,13 +16,19 @@
  */
 
 import { Component } from '@angular/core';
-import { WidgetComponent } from './../widget.component';
+import { WidgetComponent , baseHost } from './../widget.component';
+import { FormService } from './../../../services/form.service';
 
 @Component({
     selector: 'display-text-widget',
     templateUrl: './display-text.widget.html',
-    styleUrls: ['./display-text.widget.css']
+    styleUrls: ['./display-text.widget.css'],
+    host: baseHost
 })
 export class DisplayTextWidget extends WidgetComponent {
+
+    constructor(public formService: FormService) {
+         super(formService);
+    }
 
 }

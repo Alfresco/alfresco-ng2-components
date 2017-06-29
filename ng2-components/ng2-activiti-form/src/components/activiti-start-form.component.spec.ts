@@ -18,6 +18,7 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
+import { MdTabsModule } from '@angular/material';
 
 import { ActivitiStartForm } from './activiti-start-form.component';
 import { FormFieldComponent } from './form-field/form-field.component';
@@ -43,7 +44,9 @@ describe('ActivitiStartForm', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [CoreModule.forRoot()],
+            imports: [
+                MdTabsModule,
+                CoreModule.forRoot()],
             declarations: [
                 ActivitiStartForm,
                 FormFieldComponent,

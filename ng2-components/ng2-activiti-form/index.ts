@@ -16,6 +16,7 @@
  */
 
 import { NgModule, ModuleWithProviders } from '@angular/core';
+import { MdCheckboxModule, MdTabsModule, MdCardModule, MdButtonModule, MdIconModule, MdSlideToggleModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
 
 import { ActivitiForm } from './src/components/activiti-form.component';
@@ -64,7 +65,13 @@ export const ACTIVITI_FORM_PROVIDERS: any[] = [
 @NgModule({
     imports: [
         CoreModule,
-        HttpModule
+        HttpModule,
+        MdCheckboxModule,
+        MdTabsModule,
+        MdCardModule,
+        MdButtonModule,
+        MdIconModule,
+        MdSlideToggleModule
     ],
     declarations: [
         ...ACTIVITI_FORM_DIRECTIVES,
@@ -77,7 +84,13 @@ export const ACTIVITI_FORM_PROVIDERS: any[] = [
         ...ACTIVITI_FORM_PROVIDERS
     ],
     exports: [
-        ...ACTIVITI_FORM_DIRECTIVES
+        ...ACTIVITI_FORM_DIRECTIVES,
+        MdCheckboxModule,
+        MdTabsModule,
+        MdCardModule,
+        MdButtonModule,
+        MdIconModule,
+        MdSlideToggleModule
     ]
 })
 export class ActivitiFormModule {

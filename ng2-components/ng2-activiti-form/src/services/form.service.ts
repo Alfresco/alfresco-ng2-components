@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs/Rx';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
-import { FormValues } from './../components/widgets/core/index';
+import { FormModel, FormValues, FormOutcomeEvent, FormOutcomeModel } from './../components/widgets/core/index';
 import { FormDefinitionModel } from '../models/form-definition.model';
 import { EcmModelService } from './ecm-model.service';
 import { GroupModel } from './../components/widgets/core/group.model';
@@ -33,16 +33,37 @@ export class FormService {
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
     formLoaded: Subject<FormEvent> = new Subject<FormEvent>();
+    formDataRefreshed: Subject<FormEvent> = new Subject<FormEvent>();
     formFieldValueChanged: Subject<FormFieldEvent> = new Subject<FormFieldEvent>();
+    formEvents: Subject<Event> = new Subject<Event>();
     taskCompleted: Subject<FormEvent> = new Subject<FormEvent>();
     taskCompletedError: Subject<FormErrorEvent> = new Subject<FormErrorEvent>();
     taskSaved: Subject<FormEvent> = new Subject<FormEvent>();
     taskSavedError: Subject<FormErrorEvent> = new Subject<FormErrorEvent>();
     formContentClicked: Subject<ContentLinkModel> = new Subject<ContentLinkModel>();
 
+    executeOutcome: Subject<FormOutcomeEvent> = new Subject<FormOutcomeEvent>();
+
     constructor(private ecmModelService: EcmModelService,
                 private apiService: AlfrescoApiService,
                 private logService: LogService) {
+    }
+
+    parseForm(json: any, data?: FormValues, readOnly: boolean = false): FormModel {
+        if (json) {
+            let form = new FormModel(json, data, readOnly, this);
+            if (!json.fields) {
+                form.outcomes = [
+                    new FormOutcomeModel(form, {
+                        id: '$custom',
+                        name: FormOutcomeModel.SAVE_ACTION,
+                        isSystem: true
+                    })
+                ];
+            }
+            return form;
+        }
+        return null;
     }
 
     /**

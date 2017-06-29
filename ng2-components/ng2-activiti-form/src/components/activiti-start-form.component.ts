@@ -88,7 +88,7 @@ export class ActivitiStartForm extends ActivitiForm implements AfterViewChecked,
         super(formService, visibilityService, null, null, logService);
 
         if (this.translate) {
-            this.translate.addTranslationFolder('ng2-activiti-form', 'node_modules/ng2-activiti-form/src');
+            this.translate.addTranslationFolder('ng2-activiti-form', 'assets/ng2-activiti-form');
         }
 
         this.showTitle = false;

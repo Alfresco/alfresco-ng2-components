@@ -32,6 +32,7 @@ export interface DataTableAdapter {
 
 export interface DataRow {
     isSelected: boolean;
+    isDropTarget?: boolean;
     hasValue(key: string): boolean;
     getValue(key: string): any;
 }

@@ -62,3 +62,29 @@ body, html {
     border: 0px;
     cursor: pointer;
 }
+
+.adf-flag-icon-gb {
+    background-image: url(./flags/gb.svg);
+}
+
+.adf-flag-icon-it {
+    background-image: url(./flags/it.svg);
+}
+
+.adf-flag-icon-ru {
+    background-image: url(./flags/ru.svg);
+}
+
+.adf-flag-icon:before {
+    content: "\00a0";
+}
+
+.adf-flag-icon {
+    background-size: contain;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    position: relative;
+    display: inline-block;
+    width: 1.33333333em;
+    line-height: 1em;
+}

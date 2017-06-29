@@ -28,48 +28,6 @@ import { WidgetVisibilityService }  from './../services/widget-visibility.servic
 
 declare var componentHandler: any;
 
-/**
- * @Input
- * ActivitiForm can show 4 types of forms searching by 4 type of params:
- *   1) Form attached to a task passing the {taskId}.
- *
- *   2) Form that are only defined with the {formId} (in this case you receive only the form definition and the form will not be
- *   attached to any process, useful in case you want to use ActivitiForm as form designer), in this case you can pass also other 2
- *   parameters:
- *      - {saveOption} as parameter to tell what is the function to call on the save action.
- *      - {data} to fill the form field with some data, the id of the form must to match the name of the field of the provided data object.
- *
- *   3) Form that are only defined with the {formName} (in this case you receive only the form definition and the form will not be
- *   attached to any process, useful in case you want to use ActivitiForm as form designer),
- *   in this case you can pass also other 2 parameters:
- *      - {saveOption} as parameter to tell what is the function to call on the save action.
- *      - {data} to fill the form field with some data, the id of the form must to match the name of the field of the provided data object.
- *
- *   4) Form that show the metadata of a {nodeId}
- *
- *   {showTitle} boolean - to hide the title of the form pass false, default true;
- *
- *   {showRefreshButton} boolean - to hide the refresh button of the form pass false, default true;
- *
- *   {showDebugButton} boolean - to show the debug options, default false;
- *
- *   {showCompleteButton} boolean - to hide the complete button of the form pass false, default true;
- *
- *   {showSaveButton} boolean - to hide the save button of the form pass false, default true;
- *
- *   {saveMetadata} boolean - store the value of the form as metadata, default false;
- *
- *   {path} string - path of the folder where to store the metadata;
- *
- *   {nameNode} string (optional) - Name to assign to the new node where the metadata are stored;
- *
- *   @Output
- *   {formLoaded} EventEmitter - This event is fired when the form is loaded, it pass all the value in the form.
- *   {formSaved} EventEmitter - This event is fired when the form is saved, it pass all the value in the form.
- *   {formCompleted} EventEmitter - This event is fired when the form is completed, it pass all the value in the form.
- *
- * @returns {ActivitiForm} .
- */
 @Component({
     selector: 'activiti-form',
     templateUrl: './activiti-form.component.html',
@@ -81,6 +39,9 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     static COMPLETE_OUTCOME_ID: string = '$complete';
     static START_PROCESS_OUTCOME_ID: string = '$startProcess';
     static CUSTOM_OUTCOME_ID: string = '$custom';
+
+    @Input()
+    form: FormModel;
 
     @Input()
     taskId: string;
@@ -140,12 +101,13 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     formLoaded: EventEmitter<FormModel> = new EventEmitter<FormModel>();
 
     @Output()
+    formDataRefreshed: EventEmitter<FormModel> = new EventEmitter<FormModel>();
+
+    @Output()
     executeOutcome: EventEmitter<FormOutcomeEvent> = new EventEmitter<FormOutcomeEvent>();
 
     @Output()
     onError: EventEmitter<any> = new EventEmitter<any>();
-
-    form: FormModel;
 
     debugMode: boolean = false;
 
@@ -243,6 +205,12 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
             this.loadFormForEcmNode();
             return;
         }
+
+        let data = changes['data'];
+        if (data && data.currentValue) {
+            this.refreshFormData();
+            return;
+        }
     }
 
     /**
@@ -253,9 +221,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     onOutcomeClicked(outcome: FormOutcomeModel): boolean {
         if (!this.readOnly && outcome && this.form) {
 
-            let args = new FormOutcomeEvent(outcome);
-            this.executeOutcome.emit(args);
-            if (args.defaultPrevented) {
+            if (!this.onExecuteOutcome(outcome)) {
                 return false;
             }
 
@@ -467,6 +433,12 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
         }
     }
 
+    private refreshFormData() {
+        this.form = new FormModel(this.form.json, this.data, this.readOnly, this.formService);
+        this.onFormLoaded(this.form);
+        this.onFormDataRefreshed(this.form);
+    }
+
     private loadFormForEcmNode(): void {
         this.nodeService.getNodeMetadata(this.nodeId).subscribe(data => {
                 this.data = data.metadata;
@@ -514,6 +486,11 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
         this.formService.formLoaded.next(new FormEvent(form));
     }
 
+    protected onFormDataRefreshed(form: FormModel) {
+        this.formDataRefreshed.emit(form);
+        this.formService.formDataRefreshed.next(new FormEvent(form));
+    }
+
     protected onTaskSaved(form: FormModel) {
         this.formSaved.emit(form);
         this.formService.taskSaved.next(new FormEvent(form));
@@ -532,5 +509,21 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     protected onTaskCompletedError(form: FormModel, error: any) {
         this.handleError(error);
         this.formService.taskCompletedError.next(new FormErrorEvent(form, error));
+    }
+
+    protected onExecuteOutcome(outcome: FormOutcomeModel): boolean {
+        let args = new FormOutcomeEvent(outcome);
+
+        this.formService.executeOutcome.next(args);
+        if (args.defaultPrevented) {
+            return false;
+        }
+
+        this.executeOutcome.emit(args);
+        if (args.defaultPrevented) {
+            return false;
+        }
+
+        return true;
     }
 }

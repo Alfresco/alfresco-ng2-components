@@ -17,18 +17,24 @@
 
 import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { ContainerWidgetModel } from './container.widget.model';
-import { WidgetComponent } from './../widget.component';
+import { WidgetComponent , baseHost } from './../widget.component';
+import { FormService } from './../../../services/form.service';
 
 declare var componentHandler: any;
 
 @Component({
     selector: 'container-widget',
     templateUrl: './container.widget.html',
-    styleUrls: ['./container.widget.css']
+    styleUrls: ['./container.widget.css'],
+    host: baseHost
 })
 export class ContainerWidget extends WidgetComponent implements OnInit, AfterViewInit {
 
     content: ContainerWidgetModel;
+
+    constructor(public formService: FormService) {
+         super(formService);
+    }
 
     onExpanderClicked() {
         if (this.content && this.content.isCollapsible()) {

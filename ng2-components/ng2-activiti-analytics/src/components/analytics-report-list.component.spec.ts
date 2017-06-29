@@ -28,14 +28,14 @@ declare let jasmine: any;
 describe('AnalyticsReportListComponent', () => {
 
     let reportList = [
-        {'id': 2002, 'name': 'Fake Test Process definition heat map'},
-        {'id': 2003, 'name': 'Fake Test Process definition overview'},
-        {'id': 2004, 'name': 'Fake Test Process instances overview'},
-        {'id': 2005, 'name': 'Fake Test Task overview'},
-        {'id': 2006, 'name': 'Fake Test Task service level agreement'}
+        { 'id': 2002, 'name': 'Fake Test Process definition heat map' },
+        { 'id': 2003, 'name': 'Fake Test Process definition overview' },
+        { 'id': 2004, 'name': 'Fake Test Process instances overview' },
+        { 'id': 2005, 'name': 'Fake Test Task overview' },
+        { 'id': 2006, 'name': 'Fake Test Task service level agreement' }
     ];
 
-    let reportSelected = {'id': 2003, 'name': 'Fake Test Process definition overview'};
+    let reportSelected = { 'id': 2003, 'name': 'Fake Test Process definition overview' };
 
     let component: AnalyticsReportListComponent;
     let fixture: ComponentFixture<AnalyticsReportListComponent>;
@@ -57,7 +57,9 @@ describe('AnalyticsReportListComponent', () => {
 
         let translateService = TestBed.get(AlfrescoTranslationService);
         spyOn(translateService, 'addTranslationFolder').and.stub();
-        spyOn(translateService, 'get').and.callFake((key) => { return Observable.of(key); });
+        spyOn(translateService, 'get').and.callFake((key) => {
+            return Observable.of(key);
+        });
     }));
 
     beforeEach(() => {
@@ -88,7 +90,7 @@ describe('AnalyticsReportListComponent', () => {
         });
 
         it('should return the default reports when the report list is empty', (done) => {
-            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/app/rest/reporting/reports').andReturn({
+            jasmine.Ajax.stubRequest('http://localhost:3000/bpm/activiti-app/app/rest/reporting/reports').andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: []
@@ -96,13 +98,13 @@ describe('AnalyticsReportListComponent', () => {
 
             fixture.detectChanges();
 
-            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/app/rest/reporting/default-reports').andReturn({
+            jasmine.Ajax.stubRequest('http://localhost:3000/bpm/activiti-app/app/rest/reporting/default-reports').andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: []
             });
 
-            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/app/rest/reporting/reports').andReturn({
+            jasmine.Ajax.stubRequest('http://localhost:3000/bpm/activiti-app/app/rest/reporting/reports').andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: reportList
@@ -174,19 +176,40 @@ describe('AnalyticsReportListComponent', () => {
 
         it('Should return false if the current report is different', () => {
             component.selectReport(reportSelected);
-            let anotherReport = {'id': 111, 'name': 'Another Fake Test Process definition overview'};
+            let anotherReport = { 'id': 111, 'name': 'Another Fake Test Process definition overview' };
             expect(component.isSelected(anotherReport)).toBe(false);
         });
 
         it('Should reload the report list', (done) => {
             component.initObserver();
-            let report = new ReportParametersModel({'id': 2002, 'name': 'Fake Test Process definition heat map'});
+            let report = new ReportParametersModel({ 'id': 2002, 'name': 'Fake Test Process definition heat map' });
             component.reports = [report];
             expect(component.reports.length).toEqual(1);
             component.reload();
 
             component.onSuccess.subscribe(() => {
                 expect(component.reports.length).toEqual(5);
+                done();
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: reportList
+            });
+        });
+
+        it('Should reload the report list and select the report with the given id', (done) => {
+            component.initObserver();
+            expect(component.reports.length).toEqual(0);
+
+            component.reload(2002);
+
+            component.onSuccess.subscribe(() => {
+                expect(component.reports.length).toEqual(5);
+                expect(component.currentReport).toBeDefined();
+                expect(component.currentReport).not.toBeNull();
+                expect(component.currentReport.id).toEqual(2002);
                 done();
             });
 

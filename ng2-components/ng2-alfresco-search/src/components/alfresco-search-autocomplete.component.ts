@@ -21,6 +21,8 @@ import { MinimalNodeEntity } from 'alfresco-js-api';
 import { AlfrescoSearchService, SearchOptions } from './../services/alfresco-search.service';
 import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
 
+declare var require: any;
+
 @Component({
     selector: 'alfresco-search-autocomplete',
     templateUrl: './alfresco-search-autocomplete.component.html',
@@ -74,7 +76,7 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         if (this.translateService) {
-            this.translateService.addTranslationFolder('ng2-alfresco-search', 'node_modules/ng2-alfresco-search/src');
+            this.translateService.addTranslationFolder('ng2-alfresco-search', 'assets/ng2-alfresco-search');
         }
     }
 

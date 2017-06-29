@@ -15,17 +15,19 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, OnInit, Input } from '@angular/core';
+import { Component, ElementRef, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
-import { WidgetComponent } from './../widget.component';
+import { WidgetComponent , baseHost } from './../widget.component';
 import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './dynamic-table.widget.model';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { FormFieldModel } from '../core/form-field.model';
+import { FormService } from './../../../services/form.service';
 
 @Component({
     selector: 'dynamic-table-widget',
     templateUrl: './dynamic-table.widget.html',
-    styleUrls: ['./dynamic-table.widget.css']
+    styleUrls: ['./dynamic-table.widget.css'],
+    host: baseHost
 })
 export class DynamicTableWidget extends WidgetComponent implements OnInit {
 
@@ -42,10 +44,14 @@ export class DynamicTableWidget extends WidgetComponent implements OnInit {
     editMode: boolean = false;
     editRow: DynamicTableRow = null;
 
-    constructor(private elementRef: ElementRef,
+    private selectArrayCode = [32, 0, 13];
+
+    constructor(public formService: FormService,
+                public elementRef: ElementRef,
                 private visibilityService: WidgetVisibilityService,
-                private logService: LogService) {
-        super();
+                private logService: LogService,
+                private cd: ChangeDetectorRef) {
+         super(formService);
     }
 
     ngOnInit() {
@@ -53,6 +59,20 @@ export class DynamicTableWidget extends WidgetComponent implements OnInit {
             this.content = new DynamicTableModel(this.field);
             this.visibilityService.refreshVisibility(this.field.form);
         }
+    }
+
+    forceFocusOnAddButton() {
+        if (this.content) {
+            this.cd.detectChanges();
+            let buttonAddRow = <HTMLButtonElement>this.elementRef.nativeElement.querySelector('#' + this.content.id + '-add-row');
+            if (this.isDynamicTableReady(buttonAddRow)) {
+                buttonAddRow.focus();
+            }
+        }
+    }
+
+    private isDynamicTableReady(buttonAddRow) {
+        return this.field && !this.editMode && buttonAddRow;
     }
 
     isValid() {
@@ -69,6 +89,16 @@ export class DynamicTableWidget extends WidgetComponent implements OnInit {
         if (this.content) {
             this.content.selectedRow = row;
         }
+    }
+
+    onKeyPressed($event: KeyboardEvent, row: DynamicTableRow) {
+        if (this.content && this.isEnterOrSpacePressed($event.keyCode)) {
+            this.content.selectedRow = row;
+        }
+    }
+
+    private isEnterOrSpacePressed(keycode) {
+        return this.selectArrayCode.indexOf(keycode) !== -1;
     }
 
     hasSelection(): boolean {
@@ -147,11 +177,13 @@ export class DynamicTableWidget extends WidgetComponent implements OnInit {
             this.logService.error(this.ERROR_MODEL_NOT_FOUND);
         }
         this.editMode = false;
+        this.forceFocusOnAddButton();
     }
 
     onCancelChanges() {
         this.editMode = false;
         this.editRow = null;
+        this.forceFocusOnAddButton();
     }
 
     copyRow(row: DynamicTableRow): DynamicTableRow {

@@ -15,17 +15,27 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ObjectDataTableAdapter, DataSorting, ObjectDataRow, ObjectDataColumn, DataCellEvent, DataRowActionEvent } from 'ng2-alfresco-datatable';
 
 @Component({
     selector: 'datatable-demo',
-    templateUrl: './datatable-demo.component.html'
+    templateUrl: './datatable-demo.component.html',
+    styleUrls: ['./datatable-demo.component.css']
 })
 export class DataTableDemoComponent {
 
     multiselect: boolean = false;
     data: ObjectDataTableAdapter;
+
+    @Input()
+    selectionMode = 'single';
+
+    selectionModes = [
+        { value: 'none', viewValue: 'None' },
+        { value: 'single', viewValue: 'Single' },
+        { value: 'multiple', viewValue: 'Multiple' }
+    ];
 
     private _imageUrl: string = 'http://placehold.it/140x100';
     private _createdBy: any = {

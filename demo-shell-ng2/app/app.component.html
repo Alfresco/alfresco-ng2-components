@@ -20,6 +20,7 @@
                 <a class="mdl-navigation__link" data-automation-id="home" href="" routerLink="/">Home</a>
                 <a class="mdl-navigation__link" data-automation-id="files" href="" routerLink="/files">DocumentList</a>
                 <a class="mdl-navigation__link" data-automation-id="activiti" href="" routerLink="/activiti">Process Services</a>
+                <a class="mdl-navigation__link" data-automation-id="form" href="" routerLink="/form">Form</a>
                 <a class="mdl-navigation__link" data-automation-id="login" href="" routerLink="/login">Login</a>
                 <a class="mdl-navigation__link" data-automation-id="settings" href="" routerLink="/settings">Settings</a>
             </nav>
@@ -36,15 +37,15 @@
         <span class="mdl-layout-title">Languages</span>
         <nav class="mdl-navigation">
             <a class="mdl-navigation__link" (click)="changeLanguage('en')">
-                <span class="flag-icon flag-icon-gb"></span>
+                <span class="adf-flag-icon adf-flag-icon-gb"></span>
                 <label tabindex="0"> English</label>
             </a>
             <a class="mdl-navigation__link" (click)="changeLanguage('it')">
-                <span class="flag-icon flag-icon-it"></span>
+                <span class="adf-flag-icon adf-flag-icon-it"></span>
                 <label tabindex="0"> Italian</label>
             </a>
             <a class="mdl-navigation__link" (click)="changeLanguage('ru')">
-                <span class="flag-icon flag-icon-ru"></span>
+                <span class="adf-flag-icon adf-flag-icon-ru"></span>
                 <label tabindex="0"> Russian</label>
             </a>
         </nav>
@@ -63,7 +64,8 @@
             <a class="mdl-navigation__link" href="" routerLink="/settings" (click)="hideDrawer()">Settings</a>
         </nav>
     </div>
-    <main class="mdl-layout__content">
+    <main class="mdl-layout__content" (dragover)="onDragOverMainPage($event)"
+          (drop)="onDragOverMainPage($event)">
         <div class="page-content">
             <router-outlet></router-outlet>
         </div>

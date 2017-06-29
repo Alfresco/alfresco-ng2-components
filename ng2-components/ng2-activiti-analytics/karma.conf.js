@@ -8,6 +8,7 @@ module.exports = function (config) {
 
     files: [
       './node_modules/hammerjs/hammer.js',
+      {pattern: './node_modules/@angular/material/prebuilt-themes/indigo-pink.css', included: true, watched: false},
 
       //diagrams
       './node_modules/chart.js/dist/Chart.js',
@@ -27,7 +28,7 @@ module.exports = function (config) {
       {pattern: './src/**/*.ts', included: false, served: true, watched: false}
     ],
 
-    webpack: webpackConfig,
+    webpack: (config.mode === 'coverage') ? require('./webpack.coverage') : require('./webpack.test'),
 
     webpackMiddleware: {
       stats: 'errors-only'

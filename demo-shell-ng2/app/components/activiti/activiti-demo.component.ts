@@ -20,8 +20,10 @@ import {
     ActivitiApps,
     ActivitiFilters,
     ActivitiTaskList,
+    ActivitiTaskDetails,
     FilterRepresentationModel,
-    TaskDetailsEvent
+    TaskDetailsEvent,
+    TaskAttachmentListComponent
 } from 'ng2-activiti-tasklist';
 import {
     ActivitiProcessFilters,
@@ -29,10 +31,11 @@ import {
     ActivitiProcessInstanceListComponent,
     ActivitiStartProcessInstance,
     FilterProcessRepresentationModel,
-    ProcessInstance
+    ProcessInstance,
+    ActivitiProcessAttachmentListComponent
 } from 'ng2-activiti-processlist';
 import { AnalyticsReportListComponent } from 'ng2-activiti-analytics';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import {
     ObjectDataTableAdapter,
@@ -60,6 +63,9 @@ export class ActivitiDemoComponent implements AfterViewInit {
     @ViewChild(ActivitiTaskList)
     taskList: ActivitiTaskList;
 
+    @ViewChild(TaskAttachmentListComponent)
+    taskAttachList: TaskAttachmentListComponent;
+
     @ViewChild(ActivitiProcessFilters)
     activitiprocessfilter: ActivitiProcessFilters;
 
@@ -68,6 +74,12 @@ export class ActivitiDemoComponent implements AfterViewInit {
 
     @ViewChild(ActivitiProcessInstanceDetails)
     activitiprocessdetails: ActivitiProcessInstanceDetails;
+
+    @ViewChild(ActivitiTaskDetails)
+    activitidetails: ActivitiTaskDetails;
+
+    @ViewChild(ActivitiProcessAttachmentListComponent)
+    processAttachList: ActivitiProcessAttachmentListComponent;
 
     @ViewChild(ActivitiStartProcessInstance)
     activitiStartProcess: ActivitiStartProcessInstance;
@@ -100,12 +112,15 @@ export class ActivitiDemoComponent implements AfterViewInit {
     sub: Subscription;
     blobFile: any;
     flag: boolean = true;
+    createTaskAttach: boolean = false;
+    createProcessAttach: boolean = false;
 
     dataTasks: ObjectDataTableAdapter;
     dataProcesses: ObjectDataTableAdapter;
 
     constructor(private elementRef: ElementRef,
                 private route: ActivatedRoute,
+                private router: Router,
                 private apiService: AlfrescoApiService,
                 private formRenderingService: FormRenderingService,
                 private formService: FormService) {
@@ -115,8 +130,8 @@ export class ActivitiDemoComponent implements AfterViewInit {
         this.dataProcesses = new ObjectDataTableAdapter(
             [],
             [
-                {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
-                {type: 'text', key: 'started', title: 'Started', cssClass: 'hidden', sortable: true}
+                { type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true },
+                { type: 'text', key: 'started', title: 'Started', cssClass: 'hidden', sortable: true }
             ]
         );
         this.dataProcesses.setSorting(new DataSorting('started', 'desc'));
@@ -133,6 +148,11 @@ export class ActivitiDemoComponent implements AfterViewInit {
 
         formService.formFieldValueChanged.subscribe((e: FormFieldEvent) => {
             console.log(`Field value changed. Form: ${e.form.id}, Field: ${e.field.id}, Value: ${e.field.value}`);
+        });
+
+        formService.formEvents.subscribe((event: Event) => {
+            console.log('Event fired:' + event.type);
+            console.log('Event Target:' + event.target);
         });
 
     }
@@ -156,15 +176,15 @@ export class ActivitiDemoComponent implements AfterViewInit {
         this.sub.unsubscribe();
     }
 
-    onTaskFilterClick(filter: FilterRepresentationModel) {
+    onTaskFilterClick(filter: FilterRepresentationModel): void {
         this.applyTaskFilter(filter);
     }
 
-    onReportClick(event: any) {
+    onReportClick(event: any): void {
         this.report = event;
     }
 
-    onSuccessTaskFilterList(event: any) {
+    onSuccessTaskFilterList(event: any): void {
         this.applyTaskFilter(this.activitifilter.getCurrentFilter());
     }
 
@@ -175,7 +195,7 @@ export class ActivitiDemoComponent implements AfterViewInit {
         }
     }
 
-    onStartTaskSuccess(event: any) {
+    onStartTaskSuccess(event: any): void {
         this.activitifilter.selectFilterWithTask(event.id);
         this.currentTaskId = event.id;
     }
@@ -184,88 +204,88 @@ export class ActivitiDemoComponent implements AfterViewInit {
         this.currentTaskId = this.taskList.getCurrentId();
     }
 
-    onProcessFilterClick(event: FilterProcessRepresentationModel) {
+    onProcessFilterClick(event: FilterProcessRepresentationModel): void {
         this.currentProcessInstanceId = null;
         this.processFilter = event;
     }
 
-    onSuccessProcessFilterList() {
+    onSuccessProcessFilterList(): void {
         this.processFilter = this.activitiprocessfilter.getCurrentFilter();
     }
 
-    onSuccessProcessList(event: any) {
+    onSuccessProcessList(event: any): void {
         this.currentProcessInstanceId = this.processList.getCurrentId();
     }
 
-    onTaskRowClick(taskId) {
+    onTaskRowClick(taskId): void {
         this.currentTaskId = taskId;
     }
 
-    onProcessRowClick(processInstanceId) {
+    onProcessRowClick(processInstanceId): void {
         this.currentProcessInstanceId = processInstanceId;
     }
 
-    onEditReport(name: string) {
+    onEditReport(name: string): void {
         this.analyticsreportlist.reload();
     }
 
-    onReportSaved() {
-        this.analyticsreportlist.reload();
+    onReportSaved(reportId): void {
+        this.analyticsreportlist.reload(reportId);
     }
 
-    onReportDeleted() {
-        this.selectFirstReport = true;
+    onReportDeleted(): void {
         this.analyticsreportlist.reload();
+        this.analyticsreportlist.selectReport(null);
     }
 
-    navigateStartProcess() {
+    navigateStartProcess(): void {
         this.resetProcessFilters();
         this.reloadProcessFilters();
         this.currentProcessInstanceId = currentProcessIdNew;
     }
 
-    onStartProcessInstance(instance: ProcessInstance) {
+    onStartProcessInstance(instance: ProcessInstance): void {
         this.currentProcessInstanceId = instance.id;
         this.activitiStartProcess.reset();
         this.resetProcessFilters();
     }
 
-    isStartProcessMode() {
+    isStartProcessMode(): boolean {
         return this.currentProcessInstanceId === currentProcessIdNew;
     }
 
-    processCancelled(data: any) {
+    processCancelled(data: any): void {
         this.currentProcessInstanceId = null;
         this.processList.reload();
     }
 
-    onSuccessNewProcess(data: any) {
+    onSuccessNewProcess(data: any): void {
         this.processList.reload();
     }
 
-    onFormCompleted(form) {
+    onFormCompleted(form): void {
         this.taskList.reload();
         this.currentTaskId = null;
     }
 
-    onFormContentClick(content: any) {
+    onFormContentClick(content: any): void {
         this.fileShowed = true;
         this.content = content.contentBlob;
         this.contentName = content.name;
     }
 
-    onAttachmentClick(content: any) {
+    onAttachmentClick(content: any): void {
         this.fileShowed = true;
         this.content = content.contentBlob;
         this.contentName = content.name;
     }
 
-    onTaskCreated(data: any) {
+    onTaskCreated(data: any): void {
         this.currentTaskId = data.parentTaskId;
         this.taskList.reload();
     }
 
-    onTaskDeleted(data: any) {
+    onTaskDeleted(data: any): void {
         this.taskList.reload();
     }
 
@@ -289,7 +309,11 @@ export class ActivitiDemoComponent implements AfterViewInit {
         });
     }
 
-    onProcessDetailsTaskClick(event: TaskDetailsEvent) {
+    onShowProcessDiagram(event: any): void {
+        this.router.navigate(['/activiti/diagram/' + event.value]);
+    }
+
+    onProcessDetailsTaskClick(event: TaskDetailsEvent): void {
         event.preventDefault();
         this.activeTab = 'tasks';
 
@@ -305,20 +329,49 @@ export class ActivitiDemoComponent implements AfterViewInit {
         this.currentTaskId = taskId;
     }
 
-    private resetProcessFilters() {
+    private resetProcessFilters(): void {
         this.processFilter = null;
     }
 
-    private reloadProcessFilters() {
+    private reloadProcessFilters(): void {
         this.activitiprocessfilter.selectFilter(null);
     }
 
-    onRowClick(event) {
+    onRowClick(event): void {
         console.log(event);
     }
 
-    onRowDblClick(event) {
+    onRowDblClick(event): void {
         console.log(event);
     }
 
+    onCreateTaskSuccess(): void {
+        this.taskAttachList.reload();
+        this.toggleCreateTakAttach();
+    }
+
+    onContentCreated() {
+        this.processAttachList.reload();
+        this.toggleCreateProcessAttach();
+    }
+
+    toggleCreateTakAttach(): void {
+        this.createTaskAttach = !this.createTaskAttach;
+    }
+
+    isCreateTaskAttachVisible(): boolean {
+        return this.createTaskAttach;
+    }
+
+    toggleCreateProcessAttach(): void {
+        this.createProcessAttach = !this.createProcessAttach;
+    }
+
+    isCreateProcessAttachVisible(): boolean {
+        return this.createProcessAttach;
+    }
+
+    isTaskCompleted(): boolean {
+        return this.activitidetails.isCompletedTask();
+    }
 }

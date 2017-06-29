@@ -24,7 +24,10 @@
             "TASK_SUBTITLE": "Assigned to {{user}}, created {{created}}"
         },
         "BUTTON": {
-            "CANCEL": "Cancel Process"
+            "CANCEL": "Cancel Process",
+            "SHOW_DIAGRAM": "Show Diagram",
+            "DRAG-ATTACHMENT": "Drop Files Here...",
+            "UPLOAD-ATTACHMENT": "Upload Attachment"
         },
         "MESSAGES": {
             "NONE": "No process details found."

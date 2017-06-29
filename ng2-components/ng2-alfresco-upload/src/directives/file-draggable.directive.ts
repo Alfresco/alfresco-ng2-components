@@ -15,19 +15,9 @@
  * limitations under the License.
  */
 
-import { Directive, EventEmitter, Output, OnInit, OnDestroy, ElementRef, NgZone } from '@angular/core';
+import { Directive, EventEmitter, Input, Output, OnInit, OnDestroy, ElementRef, NgZone } from '@angular/core';
+import { FileUtils } from 'ng2-alfresco-core';
 
-/**
- * [file-draggable]
- *
- * This directive, provide a drag and drop area for files and folders.
- *
- * @OutputEvent {EventEmitter} onFilesDropped(File)- event fired fot each file dropped
- * in the drag and drop area.
- *
- *
- * @returns {FileDraggableDirective} .
- */
 @Directive({
     selector: '[file-draggable]'
 })
@@ -35,8 +25,11 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
 
     files: File [];
 
+    @Input('file-draggable')
+    enabled: boolean = true;
+
     @Output()
-    onFilesDropped: EventEmitter<any> = new EventEmitter();
+    onFilesDropped: EventEmitter<File[]> = new EventEmitter<File[]>();
 
     @Output()
     onFilesEntityDropped: EventEmitter<any> = new EventEmitter();
@@ -72,7 +65,7 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
      * @param event DOM event.
      */
     onDropFiles(event: any): void {
-        if (!event.defaultPrevented) {
+        if (this.enabled && !event.defaultPrevented) {
             this.preventDefault(event);
 
             let items = event.dataTransfer.items;
@@ -81,36 +74,24 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
                     if (typeof items[i].webkitGetAsEntry !== 'undefined') {
                         let item = items[i].webkitGetAsEntry();
                         if (item) {
-                            this.traverseFileTree(item);
+                            if (item.isFile) {
+                                this.onFilesEntityDropped.emit(item);
+                            } else if (item.isDirectory) {
+                                this.onFolderEntityDropped.emit(item);
+                            }
                         }
                     } else {
-                        let files = event.dataTransfer.files;
+                        let files = FileUtils.toFileArray(event.dataTransfer.files);
                         this.onFilesDropped.emit(files);
                     }
                 }
             } else {
                 // safari or FF
-                let files = event.dataTransfer.files;
+                let files = FileUtils.toFileArray(event.dataTransfer.files);
                 this.onFilesDropped.emit(files);
             }
 
             this.element.classList.remove(this.cssClassName);
-        }
-    }
-
-    /**
-     * Travers all the files and folders, and emit an event for each file or directory.
-     *
-     * @param {Object} item - can contains files or folders.
-     */
-    private traverseFileTree(item: any): void {
-        if (item.isFile) {
-            let self = this;
-            self.onFilesEntityDropped.emit(item);
-        } else {
-            if (item.isDirectory) {
-                this.onFolderEntityDropped.emit(item);
-            }
         }
     }
 
@@ -120,7 +101,7 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
      * @param {event} event - DOM event.
      */
     onDragEnter(event: Event): void {
-        if (!event.defaultPrevented) {
+        if (this.enabled && !event.defaultPrevented) {
             this.preventDefault(event);
             this.element.classList.add(this.cssClassName);
         }
@@ -132,7 +113,7 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
      * @param {event} event - DOM event.
      */
     onDragLeave(event: Event): void {
-        if (!event.defaultPrevented) {
+        if (this.enabled && !event.defaultPrevented) {
             this.preventDefault(event);
             this.element.classList.remove(this.cssClassName);
         }
@@ -144,7 +125,7 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
      * @param event
      */
     onDragOver(event: Event): void {
-        if (!event.defaultPrevented) {
+        if (this.enabled && !event.defaultPrevented) {
             this.preventDefault(event);
             this.element.classList.add(this.cssClassName);
         }

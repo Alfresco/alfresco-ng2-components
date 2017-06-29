@@ -53,7 +53,7 @@ export class ActivitiContent implements OnChanges {
                 private logService: LogService,
                 private contentService: ContentService) {
         if (this.translate) {
-            this.translate.addTranslationFolder('ng2-activiti-form', 'node_modules/ng2-activiti-form/src');
+            this.translate.addTranslationFolder('ng2-activiti-form', 'assets/ng2-activiti-form');
         }
     }
 

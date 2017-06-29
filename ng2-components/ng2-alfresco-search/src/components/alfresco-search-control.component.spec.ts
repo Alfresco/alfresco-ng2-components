@@ -21,14 +21,7 @@ import { AlfrescoSearchAutocompleteComponent } from './alfresco-search-autocompl
 import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
 import { TranslationMock } from './../assets/translation.service.mock';
 import { result } from './../assets/alfresco-search.component.mock';
-import {
-    AlfrescoSettingsService,
-    AlfrescoApiService,
-    AlfrescoAuthenticationService,
-    AlfrescoContentService,
-    AlfrescoTranslationService,
-    CoreModule
-} from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AlfrescoSearchService } from '../services/alfresco-search.service';
 
 describe('AlfrescoSearchControlComponent', () => {
@@ -42,7 +35,7 @@ describe('AlfrescoSearchControlComponent', () => {
         window['componentHandler'] = componentHandler;
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                CoreModule.forRoot()
             ],
             declarations: [
                 AlfrescoSearchControlComponent,
@@ -51,10 +44,6 @@ describe('AlfrescoSearchControlComponent', () => {
             providers: [
                 {provide: AlfrescoTranslationService, useClass: TranslationMock},
                 AlfrescoThumbnailService,
-                AlfrescoSettingsService,
-                AlfrescoApiService,
-                AlfrescoAuthenticationService,
-                AlfrescoContentService,
                 AlfrescoSearchService
             ]
         }).compileComponents().then(() => {
@@ -65,11 +54,11 @@ describe('AlfrescoSearchControlComponent', () => {
     }));
 
     it('should setup i18n folder', () => {
-        let translationService = fixture.debugElement.injector.get(AlfrescoTranslationService);
+        let translationService = TestBed.get(AlfrescoTranslationService);
         spyOn(translationService, 'addTranslationFolder');
         fixture.detectChanges();
         expect(translationService.addTranslationFolder)
-            .toHaveBeenCalledWith('ng2-alfresco-search', 'node_modules/ng2-alfresco-search/src');
+            .toHaveBeenCalledWith('ng2-alfresco-search', 'assets/ng2-alfresco-search');
     });
 
     it('should emit searchChange when search term input changed', (done) => {
@@ -89,7 +78,7 @@ describe('AlfrescoSearchControlComponent', () => {
             expect(e.valid).toBe(true);
             done();
         });
-        component.searchControl.setValue('customSearchTerm211', true);
+        component.searchControl.setValue('customSearchTerm211');
         fixture.detectChanges();
     });
 
@@ -210,7 +199,7 @@ describe('AlfrescoSearchControlComponent', () => {
         });
 
         it('should keep find-as-you-type control visible when user tabs into results', (done) => {
-            let searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
+            let searchService = TestBed.get(AlfrescoSearchService);
             spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(result));
 
@@ -304,7 +293,7 @@ describe('AlfrescoSearchControlComponent', () => {
             fixture.detectChanges();
             let formEl: HTMLElement = element.querySelector('form');
             component.searchTerm = 'searchTerm1';
-            component.searchControl.setValue('searchTerm1', true);
+            component.searchControl.setValue('searchTerm1');
             fixture.detectChanges();
             formEl.dispatchEvent(new Event('submit'));
 

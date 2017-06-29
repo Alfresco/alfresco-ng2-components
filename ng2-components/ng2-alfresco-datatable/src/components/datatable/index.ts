@@ -16,5 +16,4 @@
  */
 
 export * from './datatable.component';
-export * from './no-content-template.component';
 export * from './datatable-cell.component';

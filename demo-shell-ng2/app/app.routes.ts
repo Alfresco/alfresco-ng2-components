@@ -26,6 +26,7 @@ import {
     SearchComponent,
     LoginDemoComponent,
     ActivitiDemoComponent,
+    ActivitiShowDiagramComponent,
     ActivitiAppsView,
     WebscriptComponent,
     TagComponent,
@@ -33,7 +34,8 @@ import {
     AboutComponent,
     FormViewer,
     FormNodeViewer,
-    SettingComponent
+    SettingsComponent,
+    FormDemoComponent
 } from './components/index';
 
 import { UploadButtonComponent } from 'ng2-alfresco-upload';
@@ -90,6 +92,11 @@ export const appRoutes: Routes = [
         component: ActivitiDemoComponent,
         canActivate: [AuthGuardBpm]
     },
+    {
+        path: 'activiti/diagram/:processDefinitionId',
+        component: ActivitiShowDiagramComponent,
+        canActivate: [AuthGuardBpm]
+    },
     // TODO: check if neeeded
     {
         path: 'activiti/appId/:appId',
@@ -124,7 +131,8 @@ export const appRoutes: Routes = [
         canActivate: [AuthGuardEcm]
     },
     { path: 'about', component: AboutComponent },
-    { path: 'settings', component: SettingComponent }
+    { path: 'settings', component: SettingsComponent },
+    { path: 'form', component: FormDemoComponent }
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);

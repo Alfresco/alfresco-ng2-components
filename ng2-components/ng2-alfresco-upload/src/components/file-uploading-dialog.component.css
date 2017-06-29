@@ -14,7 +14,7 @@
 }
 
 :host .file-dialog {
-    width: 700px;
+    width: 550px;
     display: none;
     -webkit-box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .2);
     box-shadow: -2px -1px 8px 3px rgba(0, 0, 0, .2);

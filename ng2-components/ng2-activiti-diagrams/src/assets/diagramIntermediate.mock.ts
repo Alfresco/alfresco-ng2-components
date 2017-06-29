@@ -52,7 +52,6 @@ export let intermediateCatchingTimeEventCompleted = {
     eventDefinition: {type: 'timer'}
 };
 
-
 export let intermediateCatchingErrorEvent = {
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
     type: 'IntermediateCatchEvent',
@@ -126,7 +125,6 @@ export let intermediateCatchingSignalEventCompleted = {
     properties: [{}],
     eventDefinition: {type: 'signal'}
 };
-
 
 export let intermediateCatchingMessageEvent = {
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',

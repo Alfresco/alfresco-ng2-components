@@ -31,20 +31,20 @@ eval projects=( "ng2-activiti-diagrams"
 clea_demo() {
     EXEC_CLEAN_DEMO=false
 }
-
 while [[ $1  == -* ]]; do
     case "$1" in
       -h|--help|-\?) show_help; exit 0;;
-      -sd|--skipDemo) update; shift;;
+      -sd|--skipDemo) clea_demo; shift;;
       -*) echo "invalid option: $1" 1>&2; show_help; exit 0;;
     esac
 done
+
+npm install rimraf
 
 for PACKAGE in ${projects[@]}
 do
     echo "====== clean component: ${PACKAGE} ====="
     cd "$DIR/../ng2-components/${PACKAGE}"
-    npm install rimraf
     npm run clean
 
     if $EXEC_CLEAN_DEMO == true; then
@@ -58,12 +58,10 @@ do
 done
 
 cd "$DIR/../demo-shell-ng2"
-npm install rimraf
 npm run clean
 
 
 cd "$DIR/../ng2-components"
-npm install rimraf
 npm run clean
 
 cd ${DIR}

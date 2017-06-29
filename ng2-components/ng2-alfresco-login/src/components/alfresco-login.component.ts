@@ -21,6 +21,13 @@ import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoSett
 import { FormSubmitEvent } from '../models/form-submit-event.model';
 
 declare let componentHandler: any;
+declare var require: any;
+
+enum LoginSteps {
+    Landing = 0,
+    Checking = 1,
+    Welcome = 2
+}
 
 @Component({
     selector: 'alfresco-login',
@@ -72,6 +79,9 @@ export class AlfrescoLoginComponent implements OnInit {
     error: boolean = false;
     errorMsg: string;
     success: boolean = false;
+    actualLoginStep: any = LoginSteps.Landing;
+    LoginSteps: any = LoginSteps;
+    rememberMe: boolean = true;
     formError: { [id: string]: string };
     minLength: number = 2;
     footerTemplate: TemplateRef<any>;
@@ -93,7 +103,7 @@ export class AlfrescoLoginComponent implements OnInit {
                 private logService: LogService) {
 
         if (translateService) {
-            translateService.addTranslationFolder('ng2-alfresco-login', 'node_modules/ng2-alfresco-login/src');
+            translateService.addTranslationFolder('ng2-alfresco-login', 'assets/ng2-alfresco-login');
         }
 
         this.initFormError();
@@ -162,13 +172,16 @@ export class AlfrescoLoginComponent implements OnInit {
      * @param values
      */
     private performLogin(values: any) {
-        this.authService.login(values.username, values.password)
+        this.actualLoginStep = LoginSteps.Checking;
+        this.authService.login(values.username, values.password, this.rememberMe)
             .subscribe(
                 (token: any) => {
+                    this.actualLoginStep = LoginSteps.Welcome;
                     this.success = true;
                     this.onSuccess.emit({token: token, username: values.username, password: values.password});
                 },
                 (err: any) => {
+                    this.actualLoginStep = LoginSteps.Landing;
                     this.displayErrorMessage(err);
                     this.enableError();
                     this.onError.emit(err);

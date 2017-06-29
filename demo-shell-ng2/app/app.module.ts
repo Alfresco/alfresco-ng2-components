@@ -18,7 +18,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule, AppConfigService } from 'ng2-alfresco-core';
 import { SearchModule } from 'ng2-alfresco-search';
 import { LoginModule } from 'ng2-alfresco-login';
 import { DataTableModule } from 'ng2-alfresco-datatable';
@@ -33,12 +33,16 @@ import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
 import { ActivitiProcessListModule } from 'ng2-activiti-processlist';
 import { UserInfoComponentModule } from 'ng2-alfresco-userinfo';
 import { AnalyticsModule } from 'ng2-activiti-analytics';
+import { DiagramsModule } from 'ng2-activiti-diagrams';
+
+import { MaterialModule } from './material.module';
 import { AppComponent } from './app.component';
 import { routing } from './app.routes';
 import { CustomEditorsModule } from './components/activiti/custom-editor/custom-editor.component';
 import { Editor3DModule } from 'ng2-3d-editor';
-import { MaterialModule } from '@angular/material';
 import { ChartsModule } from 'ng2-charts';
+import { CreateFolderDialog } from './dialogs/create-folder.dialog';
+import { DebugAppConfigService } from './services/debug-app-config.service';
 
 import {
     HomeComponent,
@@ -47,6 +51,7 @@ import {
     SearchBarComponent,
     LoginDemoComponent,
     ActivitiDemoComponent,
+    ActivitiShowDiagramComponent,
     ActivitiAppsView,
     FormViewer,
     WebscriptComponent,
@@ -55,15 +60,23 @@ import {
     AboutComponent,
     FilesComponent,
     FormNodeViewer,
-    SettingComponent
+    SettingsComponent,
+    FormDemoComponent
 } from './components/index';
+
+let appConfigFile = 'app.config-dev.json';
+if (process.env.ENV === 'production') {
+    appConfigFile = 'app.config-prod.json';
+}
 
 @NgModule({
     imports: [
         BrowserModule,
         routing,
-        MaterialModule.forRoot(),
-        CoreModule.forRoot(),
+        CoreModule.forRoot({
+            appConfigFile: appConfigFile
+        }),
+        MaterialModule,
         LoginModule.forRoot(),
         SearchModule.forRoot(),
         DataTableModule.forRoot(),
@@ -78,6 +91,7 @@ import {
         ActivitiProcessListModule.forRoot(),
         UserInfoComponentModule.forRoot(),
         AnalyticsModule.forRoot(),
+        DiagramsModule.forRoot(),
         CustomEditorsModule,
         Editor3DModule.forRoot(),
         ChartsModule
@@ -90,6 +104,7 @@ import {
         SearchBarComponent,
         LoginDemoComponent,
         ActivitiDemoComponent,
+        ActivitiShowDiagramComponent,
         ActivitiAppsView,
         FormViewer,
         WebscriptComponent,
@@ -98,9 +113,16 @@ import {
         AboutComponent,
         FilesComponent,
         FormNodeViewer,
-        SettingComponent
+        CreateFolderDialog,
+        SettingsComponent,
+        FormDemoComponent
     ],
-    providers: [],
-    bootstrap: [ AppComponent ]
+    providers: [
+        { provide: AppConfigService, useClass: DebugAppConfigService }
+    ],
+    bootstrap: [ AppComponent ],
+    entryComponents: [
+        CreateFolderDialog
+    ]
 })
 export class AppModule { }

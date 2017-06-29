@@ -4,6 +4,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const commonConfig = require('./webpack.common.js');
 const helpers = require('./helpers');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+var HappyPack = require('happypack');
 
 const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
 
@@ -27,7 +28,7 @@ const alfrescoLibs = [
 
 module.exports = webpackMerge(commonConfig, {
 
-    devtool: 'source-map',
+    devtool: 'eval',
 
     output: {
         path: helpers.root('dist'),
@@ -46,21 +47,33 @@ module.exports = webpackMerge(commonConfig, {
             {
                 test: /\.ts$/,
                 include: [helpers.root('app'), helpers.root('../ng2-components')],
-                use: ['ts-loader?' + JSON.stringify({
-                    "compilerOptions": {
-                        "paths": {}
-                    }
-                }), 'angular2-template-loader'],
-                exclude: [ /node_modules/, /public/, /resources/, /dist/]
+                use: ['happypack/loader?id=ts', 'angular2-template-loader'],
+                exclude: [/node_modules/, /public/, /resources/, /dist/]
             }
         ]
     },
 
     plugins: [
+        new HappyPack({
+            id: 'ts',
+            threads: 4,
+            loaders: [
+                {
+                    path: 'ts-loader',
+                    query: {
+                        happyPackMode: true,
+                        "compilerOptions": {
+                            "paths": {}
+                        }
+                    }
+                }
+            ]
+        }),
+
         new CopyWebpackPlugin([
             ... alfrescoLibs.map(lib => {
                 return {
-                    context: `node_modules/${lib}/bundles/assets/` ,
+                    context: `node_modules/${lib}/bundles/assets/`,
                     from: '**/*',
                     to: `assets/`
                 }

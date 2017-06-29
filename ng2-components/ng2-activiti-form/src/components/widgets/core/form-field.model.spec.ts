@@ -68,7 +68,7 @@ describe('FormFieldModel', () => {
         expect(field.options).toBeDefined();
         expect(field.options.length).toBe(0);
 
-        field = new FormFieldModel(new FormModel(), { options: null });
+        field = new FormFieldModel(new FormModel(), {options: null});
         expect(field.options).toBeDefined();
         expect(field.options.length).toBe(0);
     });
@@ -77,13 +77,13 @@ describe('FormFieldModel', () => {
         let field = new FormFieldModel(new FormModel(), null);
         expect(field.params).toEqual({});
 
-        field = new FormFieldModel(new FormModel(), { params: null });
+        field = new FormFieldModel(new FormModel(), {params: null});
         expect(field.params).toEqual({});
     });
 
     it('should update form on every value change', () => {
         let form = new FormModel();
-        let field = new FormFieldModel(form, { id: 'field1' });
+        let field = new FormFieldModel(form, {id: 'field1'});
         let value = 10;
 
         spyOn(field, 'updateForm').and.callThrough();
@@ -105,7 +105,7 @@ describe('FormFieldModel', () => {
 
     it('should take own readonly state if form is writable', () => {
         let form = new FormModel();
-        let field = new FormFieldModel(form, { readOnly:  true });
+        let field = new FormFieldModel(form, {readOnly: true});
 
         expect(form.readOnly).toBeFalsy();
         expect(field.readOnly).toBeTruthy();
@@ -241,8 +241,8 @@ describe('FormFieldModel', () => {
         let field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.RADIO_BUTTONS,
             options: [
-                { id: 'opt1', value: 'Option 1' },
-                { id: 'opt2', value: 'Option 2' }
+                {id: 'opt1', value: 'Option 1'},
+                {id: 'opt2', value: 'Option 2'}
             ],
             value: 'opt2'
         });
@@ -279,8 +279,8 @@ describe('FormFieldModel', () => {
             id: 'dropdown-2',
             type: FormFieldTypes.DROPDOWN,
             options: [
-                { id: 'opt1', name: 'Option 1' },
-                { id: 'opt2', name: 'Option 2' }
+                {id: 'opt1', name: 'Option 1'},
+                {id: 'opt2', name: 'Option 2'}
             ]
         });
 
@@ -294,8 +294,8 @@ describe('FormFieldModel', () => {
             id: 'radio-1',
             type: FormFieldTypes.RADIO_BUTTONS,
             options: [
-                { id: 'opt1', value: 'Option 1' },
-                { id: 'opt2', value: 'Option 2' }
+                {id: 'opt1', value: 'Option 1'},
+                {id: 'opt2', value: 'Option 2'}
             ]
         });
 
@@ -309,8 +309,8 @@ describe('FormFieldModel', () => {
             id: 'radio-2',
             type: FormFieldTypes.RADIO_BUTTONS,
             options: [
-                { id: 'opt1', value: 'Option 1' },
-                { id: 'opt2', value: 'Option 2' }
+                {id: 'opt1', value: 'Option 1'},
+                {id: 'opt2', value: 'Option 2'}
             ]
         });
 
@@ -332,21 +332,21 @@ describe('FormFieldModel', () => {
         });
     });
 
-    it('should be able to check if the field has options available', () =>{
+    it('should be able to check if the field has options available', () => {
         let form = new FormModel();
         let field = new FormFieldModel(form, {
             id: 'dropdown-happy',
             type: FormFieldTypes.DROPDOWN,
             options: [
-                { id: 'opt1', name: 'Option 1' },
-                { id: 'opt2', name: 'Option 2' }
+                {id: 'opt1', name: 'Option 1'},
+                {id: 'opt2', name: 'Option 2'}
             ]
         });
 
         expect(field.hasOptions()).toBeTruthy();
     });
 
-    it('should return false if field has no options', () =>{
+    it('should return false if field has no options', () => {
         let form = new FormModel();
         let field = new FormFieldModel(form, {
             id: 'dropdown-sad',

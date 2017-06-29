@@ -14,7 +14,9 @@
             "FORM": "Form",
             "PEOPLE": "Persone",
             "COMMENTS": "Commenti",
-            "CHECKLIST": "Checklist"
+            "CHECKLIST": "Checklist",
+            "INVOLVED_PEOPLE": "Persone coinvolte",
+            "ADD_PEOPLE": "Aggiungi persone & gruppi"
         },
         "BUTTON": {
             "COMPLETE": "Completa",
