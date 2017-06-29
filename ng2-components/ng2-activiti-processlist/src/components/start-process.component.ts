@@ -37,7 +37,7 @@ export class ActivitiStartProcessInstance implements OnChanges {
     appId: string;
 
     @Input()
-    variables: RestVariable;
+    variables: RestVariable[];
 
     @Output()
     start: EventEmitter<ProcessInstance> = new EventEmitter<ProcessInstance>();
