@@ -26,6 +26,7 @@ import { TranslationMock } from './../assets/translation.service.mock';
 import { newProcess, fakeProcessDefs, fakeProcessDefWithForm, taskFormMock } from './../assets/activiti-start-process.component.mock';
 import { ActivitiStartProcessInstance } from './activiti-start-process.component';
 import { ActivitiProcessService } from '../services/activiti-process.service';
+import { RestVariable } from 'alfresco-js-api';
 
 describe('ActivitiStartProcessInstance', () => {
 
@@ -206,9 +207,9 @@ describe('ActivitiStartProcessInstance', () => {
         }));
 
         it('should call service to start process with the variables setted', async(() => {
-            let inputProcessVariable = [];
+            let inputProcessVariable:RestVariable[] = [];
 
-            let variable: any = {};
+            let variable: RestVariable;
             variable.name = 'nodeId';
             variable.value = 'id';
 
