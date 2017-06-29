@@ -276,7 +276,7 @@ export class ActivitiProcessService {
             .catch(err => this.handleError(err));
     }
 
-    startProcess(processDefinitionId: string, name: string, outcome?: string, startFormValues?: any, variables?: RestVariable): Observable<ProcessInstance> {
+    startProcess(processDefinitionId: string, name: string, outcome?: string, startFormValues?: any, variables?: RestVariable[]): Observable<ProcessInstance> {
         let startRequest: any = {
             name: name,
             processDefinitionId: processDefinitionId
