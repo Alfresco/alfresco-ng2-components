@@ -10,6 +10,7 @@
 - [Basic usage](#basic-usage)
 - [Properties](#properties)
 - [Supported file formats](#supported-file-formats)
+- [PDF Conversion](#pdf-conversion)
 - [Custom extension handler](#custom-extension-handler)
 - [Build from sources](#build-from-sources)
 - [NPM scripts](#npm-scripts)
@@ -75,6 +76,13 @@ Using with file url:
 | Media | wav, Mp3, Mp4, WebM, Ogv |
 | Images | png, jpg, jpeg, gif, bmp |
 | Text | pdf, txt |
+
+## PDF Conversion
+
+![Rendition](docs/assets/renditions.png)                         
+
+Note for unsupported extension the viewer will offer the possibility to convert it in PDF is that kind of extension is supported by the [content service renditions service](https://community.alfresco.com/docs/DOC-5879-rendition-service)
+
 
 ## Custom extension handler
 
