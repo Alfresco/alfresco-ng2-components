@@ -15,24 +15,21 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { WidgetComponent , baseHost } from './../widget.component';
 import { FormService } from './../../../services/form.service';
-import { baseHost , WidgetComponent } from './../widget.component';
 
 @Component({
     selector: 'amount-widget',
     templateUrl: './amount.widget.html',
-    styleUrls: ['./amount.widget.scss'],
-    host: baseHost,
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./amount.widget.css'],
+    host: baseHost
 })
-export class AmountWidgetComponent extends WidgetComponent implements OnInit {
+export class AmountWidget extends WidgetComponent implements OnInit {
 
     static DEFAULT_CURRENCY: string = '$';
 
-    currency: string = AmountWidgetComponent.DEFAULT_CURRENCY;
+    currency: string = AmountWidget.DEFAULT_CURRENCY;
 
     constructor(public formService: FormService) {
         super(formService);

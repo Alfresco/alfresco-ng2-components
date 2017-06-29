@@ -151,7 +151,7 @@ export class FormModel {
             let field = this.fields[i];
 
             if (field instanceof ContainerModel) {
-                let container = <ContainerModel> field;
+                let container = <ContainerModel>field;
                 result.push(container.field);
 
                 container.field.columns.forEach((column) => {

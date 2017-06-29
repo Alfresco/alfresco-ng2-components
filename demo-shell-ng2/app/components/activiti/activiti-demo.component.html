@@ -1,213 +1,225 @@
-<md-tab-group>
-    <md-tab id="tasks-header" href="#tasks" (click)="activeTab = 'tasks'" label="{{'PS-TAB.TASKS-TAB' | translate}}">
-        <div class="page-content">
-            <div class="activiti-demo-grid">
-                <div class="activiti-demo-grid-item activiti-demo-tasks-menu">
-                    <div class="activiti-demo-list-buttons">
-                        <button color="primary" md-raised-button data-automation-id="btn-start-task" class="activiti-demo-list-buttons-start" (click)="navigateStartTask()">
-                            <md-icon>add</md-icon>
-                            <span>{{'PS-TAB.START-TASK' | translate}}</span>
-                        </button>
-                    </div>
-                    <adf-accordion>
-                        <adf-accordion-group [heading]="'Tasks'" [isSelected]="true" [isOpen]="true"
-                                             [headingIcon]="'assignment'">
-                            <activiti-filters
-                                [filterParam]="{name:'MY tasks'}"
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+    <header class="mdl-layout__header">
+
+        <!-- TABS -->
+
+        <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+            <a id="tasks-header" href="#tasks" class="mdl-layout__tab" [class.is-active]="activeTab === 'tasks'" (click)="activeTab = 'tasks'">TASKS</a>
+            <a id="processes-header" href="#processes" class="mdl-layout__tab" [class.is-active]="activeTab === 'processes'" (click)="activeTab = 'processes'">PROCESSES</a>
+            <a id="report-header" href="#report" class="mdl-layout__tab" [class.is-active]="activeTab === 'reports'" (click)="activeTab = 'reports'">REPORTS</a>
+        </div>
+    </header>
+
+    <main class="mdl-layout__content activiti">
+
+        <!--  TASKS COMPONENT -->
+
+        <section class="mdl-layout__tab-panel" [class.is-active]="activeTab === 'tasks'" id="tasks">
+            <div class="page-content">
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--2-col task-column mdl-shadow--2dp">
+                        <div class="list-buttons">
+                            <activiti-start-task
                                 [appId]="appId"
-                                [hasIcon]="false"
-                                (filterClick)="onTaskFilterClick($event)"
-                                (onSuccess)="onSuccessTaskFilterList($event)"
-                                #activitifilter>
-                            </activiti-filters>
-                        </adf-accordion-group>
-                    </adf-accordion>
-                </div>
-                <div class="activiti-demo-grid-item activiti-demo-tasks-list"
-                     *ngIf="taskFilter && !isStartTaskMode()">
-                    <activiti-tasklist
-                        [appId]="taskFilter?.appId"
-                        [processDefinitionKey]="taskFilter?.filter?.processDefinitionKey"
-                        [name]="taskFilter?.filter?.name"
-                        [assignment]="taskFilter?.filter?.assignment"
-                        [state]="taskFilter?.filter?.state"
-                        [sort]="taskFilter?.filter?.sort"
-                        [data]="dataTasks"
-                        [landingTaskId]="currentTaskId"
-                        (rowClick)="onTaskRowClick($event)"
-                        (onSuccess)="onSuccessTaskList($event)"
-                        (row-click)="onRowClick($event)"
-                        (row-dblclick)="onRowDblClick($event)"
-                        #activititasklist>
-                        <!-- Custom column definition demo -->
-                        <!--
-                        <data-columns>
-                            <data-column key="name" title="NAME" class="full-width name-column"></data-column>
-                            <data-column key="created" title="Created" class="hidden"></data-column>
-                        </data-columns>
-                        -->
-                    </activiti-tasklist>
-                </div>
-                <div class="activiti-demo-grid-item activiti-demo-tasks-details" *ngIf="!isStartTaskMode()"
-                     [class.mdl-cell--7-col]="taskFilter && !isStartTaskMode()"
-                     [class.mdl-cell--10-col]="!taskFilter || isStartTaskMode()">
-                    <activiti-task-details #activitidetails
-                                           [debugMode]="true"
-                                           [taskId]="currentTaskId"
-                                           [fieldValidators]="fieldValidators"
-                                           (formCompleted)="onFormCompleted($event)"
-                                           (formContentClicked)="onFormContentClick($event)"
-                                           (taskCreated)="onTaskCreated($event)"
-                                           (assignTask)="onAssignTask()"
-                                           (taskDeleted)="onTaskDeleted($event)">
-                    </activiti-task-details>
-                    <hr>
-                    <div *ngIf="currentTaskId">
-                        {{'PS-TAB.AUDIT-LOG' | translate}}
-                        <button
-                            adf-task-audit
-                            [task-id]="currentTaskId"
-                            [download]="true"
-                            md-icon-button (clicked)="onAuditClick($event)" (error)="onAuditError($event)">
-                            <md-icon>assignment_ind</md-icon>
-                        </button>
+                                (onSuccess)="onStartTaskSuccess($event)">
+                            </activiti-start-task>
+                        </div>
+                        <adf-accordion>
+                            <adf-accordion-group [heading]="'Tasks'" [isSelected]="true" [isOpen]="true" [headingIcon]="'assignment'">
+                                <activiti-filters
+                                    [filterParam]="{name:'MY tasks'}"
+                                    [appId]="appId"
+                                    [hasIcon]="false"
+                                    (filterClick)="onTaskFilterClick($event)"
+                                    (onSuccess)="onSuccessTaskFilterList($event)"
+                                    #activitifilter>
+                                </activiti-filters>
+                            </adf-accordion-group>
+                        </adf-accordion>
+                    </div>
+                    <div class="mdl-cell mdl-cell--3-col task-column mdl-shadow--2dp list-column">
+                        <activiti-tasklist
+                            [appId]="taskFilter?.appId"
+                            [processDefinitionKey]="taskFilter?.filter?.processDefinitionKey"
+                            [name]="taskFilter?.filter?.name"
+                            [assignment]="taskFilter?.filter?.assignment"
+                            [state]="taskFilter?.filter?.state"
+                            [sort]="taskFilter?.filter?.sort"
+                            [data]="dataTasks"
+                            [landingTaskId]="currentTaskId"
+                            (rowClick)="onTaskRowClick($event)"
+                            (onSuccess)="onSuccessTaskList($event)"
+                            (row-click)="onRowClick($event)"
+                            (row-dblclick)="onRowDblClick($event)"
+                            #activititasklist>
+                            <!-- Custom column definition demo -->
+                            <!--
+                            <data-columns>
+                                <data-column key="name" title="NAME" class="full-width name-column"></data-column>
+                                <data-column key="created" title="Created" class="hidden"></data-column>
+                            </data-columns>
+                            -->
+                        </activiti-tasklist>
+                    </div>
+                    <div class="mdl-cell mdl-cell--7-col task-column mdl-shadow--2dp">
+                        <activiti-task-details #activitidetails
+                            [debugMode]="true"
+                            [taskId]="currentTaskId"
+                            (formCompleted)="onFormCompleted($event)"
+                            (formContentClicked)="onFormContentClick($event)"
+                            (taskCreated)="onTaskCreated($event)"
+                            (taskDeleted)="onTaskDeleted($event)">
+                        </activiti-task-details>
                         <hr>
+                        <div id="attachment-task-list" *ngIf="currentTaskId">
+                            <h5>Attachments</h5>
+                            <div class="adf-no-form-container">
+                                <div class="action-header">
+                                    <button [attr.disabled]="isTaskCompleted()" class="mdl-button mdl-js-button" (click)="toggleCreateTakAttach()">
+                                        Attach Document
+                                        <i class="material-icons">add</i>
+                                    </button>
+                                </div>
+                                <adf-task-attachment-list #taskAttach
+                                                          *ngIf="currentTaskId"
+                                                          [taskId]="currentTaskId"
+                                                          (attachmentClick)="onAttachmentClick($event)">
+                                </adf-task-attachment-list>
+                                <div *ngIf="isCreateTaskAttachVisible()">
+                                    <adf-create-task-attachment *ngIf="currentTaskId"
+                                                                [taskId]="currentTaskId"
+                                                                (success)="onCreateTaskSuccess()">
+                                    </adf-create-task-attachment>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <md-card>
-                        <md-card-content>
-                            <activiti-task-attachments
-                                [taskId]="currentTaskId">
-                            </activiti-task-attachments>
-                        </md-card-content>
-                    </md-card>
-                </div>
-                <div class="activiti-demo-grid-item activiti-demo-tasks-start" *ngIf="isStartTaskMode()">
-                    <adf-start-task
-                        [appId]="appId"
-                        (success)="onStartTaskSuccess($event)"
-                        (cancel)="onCancelStartTask()">
-                    </adf-start-task>
                 </div>
             </div>
-        </div>
-    </md-tab>
-    <md-tab id="processes-header" href="#processes" (click)="activeTab = 'processes'"
-            label="{{'PS-TAB.PROCESSES-TAB' | translate}}">
-        <div class="page-content">
-            <div class="mdl-grid">
-                <div class="mdl-cell mdl-cell--2-col task-column  mdl-shadow--2dp">
-                    <div class="list-buttons">
-                        <button
-                            md-raised-button
-                            data-automation-id="btn-start-process"
-                            (click)="navigateStartProcess()">
-                            <md-icon>add</md-icon>
-                            <span>START PROCESS</span>
-                        </button>
+        </section>
+
+
+        <!--  PROCESS COMPONENT -->
+
+        <section class="mdl-layout__tab-panel" [class.is-active]="activeTab === 'processes'" id="processes">
+            <div class="page-content" *ngIf="activeTab === 'processes'">
+                <div class="page-content">
+                    <div class="mdl-grid">
+                        <div class="mdl-cell mdl-cell--2-col task-column  mdl-shadow--2dp">
+                            <div class="list-buttons">
+                                <button
+                                    md-raised-button
+                                    data-automation-id="btn-start-process"
+                                    (click)="navigateStartProcess()">
+                                    <md-icon>add</md-icon>
+                                    <span>START PROCESS</span>
+                                </button>
+                            </div>
+                            <adf-accordion>
+                                <adf-accordion-group [heading]="'Processes'" [isSelected]="true" [isOpen]="true" [headingIcon]="'assessment'">
+                                    <activiti-process-instance-filters
+                                        [filterParam]="{index: 0}"
+                                        [appId]="appId"
+                                        (filterClick)="onProcessFilterClick($event)"
+                                        (onSuccess)="onSuccessProcessFilterList($event)">
+                                    </activiti-process-instance-filters>
+                                </adf-accordion-group>
+                            </adf-accordion>
+                        </div>
+                        <div class="mdl-cell mdl-cell--3-col task-column list-column mdl-shadow--2dp" *ngIf="processFilter && !isStartProcessMode()">
+                            <activiti-process-instance-list
+                                *ngIf="processFilter?.hasFilter()" [appId]="processFilter.appId"
+                                [processDefinitionKey]="processFilter.filter.processDefinitionKey"
+                                [name]="processFilter.filter.name"
+                                [state]="processFilter.filter.state"
+                                [sort]="processFilter.filter.sort"
+                                [data]="dataProcesses"
+                                (rowClick)="onProcessRowClick($event)"
+                                (onSuccess)="onSuccessProcessList($event)">
+                                <!-- Custom column definition demo -->
+                                <!--
+                                <data-columns>
+                                    <data-column key="name" title="NAME" class="full-width name-column"></data-column>
+                                    <data-column key="created" title="Created" class="hidden"></data-column>
+                                </data-columns>
+                                -->
+                            </activiti-process-instance-list>
+                        </div>
+                        <div class="mdl-cell task-column mdl-shadow--2dp" *ngIf="!isStartProcessMode()"
+                            [class.mdl-cell--7-col]="processFilter && !isStartProcessMode()"
+                            [class.mdl-cell--10-col]="!processFilter || isStartProcessMode()">
+                            <activiti-process-instance-details
+                                [processInstanceId]="currentProcessInstanceId"
+                                (processCancelled)="processCancelled()"
+                                (showProcessDiagram)="onShowProcessDiagram($event)"
+                                (taskClick)="onProcessDetailsTaskClick($event)">
+                            </activiti-process-instance-details>
+                            <hr>
+                            <div id="attachment-process-list" *ngIf="currentProcessInstanceId">
+                            <h5>Attachments</h5>
+                                <div class="action-header">
+                                    <button id="show_process_attach" class="mdl-button mdl-js-button" (click)="toggleCreateProcessAttach()">
+                                        Attach Document
+                                        <i class="material-icons">add</i>
+                                    </button>
+                                </div>
+                                <adf-process-attachment-list *ngIf="currentProcessInstanceId"
+                                                          [processInstanceId]="currentProcessInstanceId"
+                                                          (attachmentClick)="onAttachmentClick($event)">
+                                </adf-process-attachment-list>
+                                <div *ngIf="isCreateProcessAttachVisible()">
+                                    <adf-create-process-attachment *ngIf="currentProcessInstanceId"
+                                                                [processInstanceId]="currentProcessInstanceId"
+                                                                (contentCreated)="onContentCreated()">
+                                    </adf-create-process-attachment>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mdl-cell mdl-cell--10-col task-column mdl-shadow--2dp" *ngIf="isStartProcessMode()">
+                            <activiti-start-process [appId]="appId" (start)="onStartProcessInstance($event)"></activiti-start-process>
+                        </div>
                     </div>
-                    <adf-accordion>
-                        <adf-accordion-group [heading]="'Processes'" [isSelected]="true" [isOpen]="true"
-                                             [headingIcon]="'assessment'">
-                            <activiti-process-instance-filters
-                                [filterParam]="{index: 0}"
-                                [appId]="appId"
-                                (filterClick)="onProcessFilterClick($event)"
-                                (onSuccess)="onSuccessProcessFilterList($event)">
-                            </activiti-process-instance-filters>
-                        </adf-accordion-group>
-                    </adf-accordion>
                 </div>
-                <div class="mdl-cell mdl-cell--3-col task-column mdl-shadow--2dp"
-                     *ngIf="processFilter && !isStartProcessMode()">
-                    <activiti-process-instance-list
-                        *ngIf="processFilter?.hasFilter()" [appId]="processFilter.appId"
-                        [processDefinitionKey]="processFilter.filter.processDefinitionKey"
-                        [name]="processFilter.filter.name"
-                        [state]="processFilter.filter.state"
-                        [sort]="processFilter.filter.sort"
-                        [data]="dataProcesses"
-                        (rowClick)="onProcessRowClick($event)"
-                        (onSuccess)="onSuccessProcessList($event)">
-                        <!-- Custom column definition demo -->
-                        <!--
-                        <data-columns>
-                            <data-column key="name" title="NAME" class="full-width name-column"></data-column>
-                            <data-column key="created" title="Created" class="hidden"></data-column>
-                        </data-columns>
-                        -->
-                    </activiti-process-instance-list>
-                </div>
-                <div class="mdl-cell task-column mdl-shadow--2dp" *ngIf="!isStartProcessMode()"
-                     [class.mdl-cell--7-col]="processFilter && !isStartProcessMode()"
-                     [class.mdl-cell--10-col]="!processFilter || isStartProcessMode()">
-                    <activiti-process-instance-details
-                        [processInstanceId]="currentProcessInstanceId"
-                        (processCancelled)="processCancelled()"
-                        (showProcessDiagram)="onShowProcessDiagram($event)"
-                        (taskClick)="onProcessDetailsTaskClick($event)">
-                    </activiti-process-instance-details>
-                    <hr>
-                    <div *ngIf="currentProcessInstanceId">
-                        {{'PS-TAB.START-PROCESS' | translate}}
-                        <button adf-process-audit
-                                [process-id]="currentProcessInstanceId"
-                                [download]="true" md-icon-button
-                                [format]="'pdf'"
-                                (clicked)="onAuditClick($event)"
-                                (error)="onAuditError($event)">
-                            <md-icon>assignment_ind</md-icon>
-                        </button>
+            </div>
+        </section>
+
+
+        <!--  ANALYTICS COMPONENT -->
+
+        <section class="mdl-layout__tab-panel" [class.is-active]="activeTab === 'reports'" id="report">
+            <div class="page-content" *ngIf="activeTab === 'reports'">
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--4-col task-column mdl-shadow--2dp">
+                        <span><h5>Report List</h5></span>
                         <hr>
+                        <analytics-report-list
+                            [appId]="appId"
+                            [selectFirst]="selectFirstReport"
+                            (reportClick)="onReportClick($event)"
+                            #analyticsreportlist>
+                        </analytics-report-list>
                     </div>
-                    <md-card>
-                        <md-card-content>
-                            <activiti-process-attachments
-                                [processId]="currentProcessInstanceId">
-                            </activiti-process-attachments>
-                        </md-card-content>
-                    </md-card>
-                </div>
-                <div class="mdl-cell mdl-cell--10-col task-column mdl-shadow--2dp"
-                     *ngIf="isStartProcessMode()">
-                    <adf-start-process
-                        [appId]="appId"
-                        (start)="onStartProcessInstance($event)"
-                        (cancel)="onCancelProcessInstance()">
-                    </adf-start-process>
-                </div>
-            </div>
-        </div>
-    </md-tab>
-    <md-tab id="report-header" href="#report" (click)="activeTab = 'reports'"
-            label="{{'PS-TAB.REPORTS-TAB' | translate}}">
-        <div class="mdl-grid">
-            <div class="mdl-cell mdl-cell--4-col task-column mdl-shadow--2dp">
-                <span><h5>Report List</h5></span>
-                <hr>
-                <analytics-report-list
-                    [appId]="appId"
-                    [selectFirst]="selectFirstReport"
-                    (reportClick)="onReportClick($event)"
-                    #analyticsreportlist>
-                </analytics-report-list>
-            </div>
-            <div class="mdl-cell mdl-cell--8-col task-column mdl-shadow--2dp">
-                <activiti-analytics
-                    *ngIf="report"
-                    [appId]="appId"
-                    [reportId]="report.id"
-                    [hideParameters]="false"
-                    (editReport)="onEditReport($event)"
-                    (reportSaved)="onReportSaved($event)"
-                    (reportDeleted)="onReportDeleted()">
-                </activiti-analytics>
-                <div *ngIf="!report">
-                    <span>{{'ANALYTICS_REPORT.NO_REPORT_MESSAGE' | translate}}</span>
+                    <div class="mdl-cell mdl-cell--8-col task-column mdl-shadow--2dp">
+                        <activiti-analytics
+                            *ngIf="report"
+                            [appId]="appId"
+                            [reportId]="report.id"
+                            [hideParameters]="false"
+                            (editReport)="onEditReport($event)"
+                            (reportSaved)="onReportSaved($event)"
+                            (reportDeleted)="onReportDeleted()">
+                        </activiti-analytics>
+                        <div *ngIf="!report">
+                            <span>{{'ANALYTICS_REPORT.NO_REPORT_MESSAGE' | translate}}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </md-tab>
-</md-tab-group>
+        </section>
+
+    </main>
+</div>
 
 <div *ngIf="fileShowed">
     <alfresco-viewer

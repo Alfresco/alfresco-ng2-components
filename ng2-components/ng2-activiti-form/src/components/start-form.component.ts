@@ -15,13 +15,23 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
-import { LogService } from 'ng2-alfresco-core';
+import {
+    Component,
+    AfterViewChecked,
+    OnChanges,
+    SimpleChanges,
+    Input,
+    ViewChild,
+    ElementRef,
+    Output,
+    EventEmitter
+} from '@angular/core';
+import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
+import { ActivitiForm } from './activiti-form.component';
 import { FormService } from './../services/form.service';
-import { WidgetVisibilityService } from './../services/widget-visibility.service';
-import { FormComponent } from './form.component';
-import { ContentLinkModel } from './widgets/core/content-link.model';
+import { WidgetVisibilityService }  from './../services/widget-visibility.service';
 import { FormOutcomeModel } from './widgets/core/index';
+import { ContentLinkModel } from './widgets/core/content-link.model';
 
 /**
  * Displays the start form for a named process definition, which can be used to retrieve values to start a new process.
@@ -38,15 +48,14 @@ import { FormOutcomeModel } from './widgets/core/index';
  *  {formSaved} EventEmitter - This event is fired when the form is saved, it pass all the value in the form.
  *  {formCompleted} EventEmitter - This event is fired when the form is completed, it pass all the value in the form.
  *
- * @returns {FormComponent} .
+ * @returns {ActivitiForm} .
  */
 @Component({
-    selector: 'adf-start-form, activiti-start-form',
-    templateUrl: './start-form.component.html',
-    styleUrls: ['./form.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    selector: 'activiti-start-form',
+    templateUrl: './activiti-start-form.component.html',
+    styleUrls: ['./activiti-form.component.css']
 })
-export class StartFormComponent extends FormComponent implements OnChanges, OnInit {
+export class ActivitiStartForm extends ActivitiForm implements AfterViewChecked, OnChanges {
 
     @Input()
     processDefinitionId: string;
@@ -72,10 +81,16 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
     @ViewChild('outcomesContainer', {})
     outcomesContainer: ElementRef = null;
 
-    constructor(formService: FormService,
+    constructor(private translate: AlfrescoTranslationService,
+                formService: FormService,
                 visibilityService: WidgetVisibilityService,
                 logService: LogService) {
-        super(formService, visibilityService, null, null);
+        super(formService, visibilityService, null, null, logService);
+
+        if (this.translate) {
+            this.translate.addTranslationFolder('ng2-activiti-form', 'assets/ng2-activiti-form');
+        }
+
         this.showTitle = false;
     }
 

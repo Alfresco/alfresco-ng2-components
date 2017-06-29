@@ -15,16 +15,13 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PathElementEntity } from 'alfresco-js-api';
-import { CoreModule } from 'ng2-alfresco-core';
-import { DataTableModule } from 'ng2-alfresco-datatable';
-import { fakeNodeWithCreatePermission } from '../../assets/document-list.component.mock';
-import { MaterialModule } from '../../material.module';
-import { DocumentListService } from '../../services/document-list.service';
-import { DocumentListComponent } from '../document-list.component';
 import { BreadcrumbComponent } from './breadcrumb.component';
+import { DocumentListComponent } from '../document-list.component';
+import { CoreModule } from 'ng2-alfresco-core';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { fakeNodeWithCreatePermission } from '../../assets/document-list.component.mock';
+import { SimpleChange } from '@angular/core';
 
 declare let jasmine: any;
 
@@ -33,24 +30,14 @@ describe('Breadcrumb', () => {
     let component: BreadcrumbComponent;
     let fixture: ComponentFixture<BreadcrumbComponent>;
     let element: HTMLElement;
-    let documentList: DocumentListComponent;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
-                DataTableModule,
-                MaterialModule
+                CoreModule.forRoot()
             ],
             declarations: [
-                DocumentListComponent,
                 BreadcrumbComponent
-            ],
-            providers: [
-                DocumentListService
-            ],
-            schemas: [
-                CUSTOM_ELEMENTS_SCHEMA
             ]
         }).compileComponents();
     }));
@@ -60,8 +47,6 @@ describe('Breadcrumb', () => {
 
         element = fixture.nativeElement;
         component = fixture.componentInstance;
-
-        documentList = TestBed.createComponent(DocumentListComponent).componentInstance;
     });
 
     it('should prevent default click behavior', () => {
@@ -90,6 +75,7 @@ describe('Breadcrumb', () => {
     });
 
     it('should update document list on click', (done) => {
+        let documentList = new DocumentListComponent(null, null, null, null);
         spyOn(documentList, 'loadFolderByNodeId').and.stub();
 
         let node = <PathElementEntity> {id: '-id-', name: 'name'};
@@ -101,4 +87,5 @@ describe('Breadcrumb', () => {
             done();
         }, 0);
     });
+
 });

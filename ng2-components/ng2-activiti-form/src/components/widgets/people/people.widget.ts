@@ -15,22 +15,19 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
+import { WidgetComponent , baseHost } from './../widget.component';
 import { FormService } from '../../../services/form.service';
-import { GroupUserModel } from '../core/group-user.model';
 import { GroupModel } from '../core/group.model';
-import { baseHost , WidgetComponent } from './../widget.component';
+import { GroupUserModel } from '../core/group-user.model';
 
 @Component({
     selector: 'people-widget',
     templateUrl: './people.widget.html',
-    styleUrls: ['./people.widget.scss'],
-    host: baseHost,
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./people.widget.css'],
+    host: baseHost
 })
-export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
+export class PeopleWidget extends WidgetComponent implements OnInit {
 
     popupVisible: boolean = false;
     minTermLength: number = 1;
@@ -122,5 +119,16 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         if (event) {
             event.preventDefault();
         }
+    }
+
+    setupMaterialComponents(handler: any): boolean {
+        super.setupMaterialComponents(handler);
+        if (handler) {
+            if (this.elementRef && this.value) {
+                this.setupMaterialTextField(this.elementRef, handler, this.value);
+                return true;
+            }
+        }
+        return false;
     }
 }

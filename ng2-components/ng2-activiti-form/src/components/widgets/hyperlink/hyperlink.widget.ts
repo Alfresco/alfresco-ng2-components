@@ -15,20 +15,17 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { WidgetComponent , baseHost } from './../widget.component';
 import { FormService } from './../../../services/form.service';
-import { baseHost , WidgetComponent } from './../widget.component';
 
 @Component({
     selector: 'hyperlink-widget',
     templateUrl: './hyperlink.widget.html',
-    styleUrls: ['./hyperlink.widget.scss'],
-    host: baseHost,
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./hyperlink.widget.css'],
+    host: baseHost
 })
-export class HyperlinkWidgetComponent extends WidgetComponent implements OnInit {
+export class HyperlinkWidget extends WidgetComponent implements OnInit {
 
     linkUrl: string = WidgetComponent.DEFAULT_HYPERLINK_URL;
     linkText: string = null;

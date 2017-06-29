@@ -1,123 +1,77 @@
 <div class="container">
-    <div class="adf-demo-site-container-style" id="demo-container">
-        <adf-sites-dropdown (change)="getSiteContent($event)">
-        </adf-sites-dropdown>
-    </div>
     <alfresco-upload-drag-area
-        [parentId]="documentList.currentFolderId"
+        [rootFolderId]="documentList.currentFolderId"
         [versioning]="versioning"
-        [adf-node-permission]="'create'"
-        [adf-nodes]="getCurrentDocumentListNode()">
+        [enabled]="documentList.hasCreatePermission()">
+        <adf-breadcrumb
+            [target]="documentList"
+            [folderNode]="documentList.folderNode">
+        </adf-breadcrumb>
         <div *ngIf="errorMessage" class="error-message">
-            <button (click)="resetError()" md-icon-button>
-                <md-icon>highlight_off</md-icon>
+            <button (click)="resetError()" class="mdl-button mdl-js-button mdl-button--icon">
+                <i class="material-icons">highlight_off</i>
             </button>
             <span class="error-message--text">{{errorMessage}}</span>
         </div>
-        <adf-toolbar [color]="toolbarColor">
-            <adf-toolbar-title>
-                <adf-breadcrumb *ngIf="!useDropdownBreadcrumb"
-                    class="files-breadcrumb"
-                    root="Personal Files"
-                    [target]="documentList"
-                    [folderNode]="documentList.folderNode">
-                </adf-breadcrumb>
-                <adf-dropdown-breadcrumb  *ngIf="useDropdownBreadcrumb"
-                    class="files-breadcrumb"
-                    [target]="documentList"
-                    [folderNode]="documentList.folderNode">
-                </adf-dropdown-breadcrumb>
-            </adf-toolbar-title>
-
-            <adf-toolbar-divider></adf-toolbar-divider>
-
-            <button md-icon-button
-                (click)="onCreateFolderClicked($event)">
-                <md-icon>create_new_folder</md-icon>
-            </button>
-            <button md-icon-button
-                [disabled]="!hasSelection(documentList.selection)"
-                title="Download"
-                (click)="downloadNodes(documentList.selection)">
-                <md-icon>get_app</md-icon>
-            </button>
-            <button md-icon-button
-                    adf-node-permission="delete"
-                    [adf-nodes]="documentList.selection">
-                <md-icon>delete</md-icon>
-            </button>
-
-            <button md-icon-button [mdMenuTriggerFor]="themePicker">
-                <md-icon>format_color_fill</md-icon>
-            </button>
-
-            <md-menu #themePicker="mdMenu">
-                <button md-menu-item (click)="toolbarColor = 'default'">Default</button>
-                <button md-menu-item (click)="toolbarColor = 'primary'">Primary</button>
-                <button md-menu-item (click)="toolbarColor = 'accent'">Accent</button>
-                <button md-menu-item (click)="toolbarColor = 'warn'">Warn</button>
-            </md-menu>
-
-            <adf-toolbar-divider></adf-toolbar-divider>
-
-            <button md-icon-button [mdMenuTriggerFor]="menu">
-                <md-icon>more_vert</md-icon>
-            </button>
-            <md-menu #menu="mdMenu">
-                <button md-menu-item>
-                    <md-icon>dialpad</md-icon>
-                    <span>Redial</span>
+        <ng-container *ngIf="useCustomToolbar">
+            <adf-toolbar title="Toolbar">
+                <button md-icon-button (click)="onCreateFolderClicked($event)">
+                    <md-icon>create_new_folder</md-icon>
                 </button>
-                <button md-menu-item disabled>
-                    <md-icon>voicemail</md-icon>
-                    <span>Check voicemail</span>
+                <button md-icon-button>
+                    <md-icon>delete</md-icon>
                 </button>
-                <button md-menu-item>
-                    <md-icon>notifications_off</md-icon>
-                    <span>Disable alerts</span>
+                <button md-icon-button [mdMenuTriggerFor]="menu">
+                    <md-icon>more_vert</md-icon>
                 </button>
-            </md-menu>
-        </adf-toolbar>
-        <adf-document-list
+                <md-menu #menu="mdMenu">
+                    <button md-menu-item>
+                        <md-icon>dialpad</md-icon>
+                        <span>Redial</span>
+                    </button>
+                    <button md-menu-item disabled>
+                        <md-icon>voicemail</md-icon>
+                        <span>Check voicemail</span>
+                    </button>
+                    <button md-menu-item>
+                        <md-icon>notifications_off</md-icon>
+                        <span>Disable alerts</span>
+                    </button>
+                </md-menu>
+            </adf-toolbar>
+        </ng-container>
+        <alfresco-document-list
                 #documentList
-                [permissionsStyle]="permissionsStyle"
+                [creationMenuActions]="!useCustomToolbar"
                 [currentFolderId]="currentFolderId"
                 [contextMenuActions]="true"
                 [contentActions]="true"
                 [allowDropFiles]="true"
-                [selectionMode]="selectionMode"
-                [multiselect]="multiselect"
                 (error)="onNavigationError($event)"
                 (success)="resetError()"
                 (preview)="showFile($event)"
-                (folderChange)="onFolderChange($event)"
                 (permissionError)="handlePermissionError($event)">
             <data-columns>
+                <data-column key="$thumbnail" type="image" [sortable]="false"></data-column>
                 <data-column
-                    key="$thumbnail"
-                    type="image"
-                    [sortable]="false"
-                    class="image-table-cell">
-                </data-column>
-                <data-column
-                    key="name"
-                    title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
-                    [formatTooltip]="getNodeNameTooltip"
-                    class="full-width ellipsis-cell">
-                </data-column>
-                <!-- Location column demo -->
-                <!--
-                <data-column
-                    key="path"
-                    type="location"
-                    format="/files"
-                    title="Location">
-                </data-column>
-                -->
-                <data-column
-                    key="content.sizeInBytes"
-                    title="Size"
-                    type="fileSize">
+                        title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
+                        key="name"
+                        class="full-width ellipsis-cell">
+
+                    <!-- Example #1: using custom template with implicit access to data context -->
+                    <!--
+                    <ng-template let-entry="$implicit">
+                        <span>Hi! {{entry.data.getValue(entry.row, entry.col)}}</span>
+                    </ng-template>
+                    -->
+
+                    <!-- Example #2: using custom template with value access -->
+                    <!--
+                    <ng-template let-value="value">
+                        <span>Hi! {{value}}</span>
+                    </ng-template>
+                    -->
+
                 </data-column>
                 <!-- Notes: has performance overhead due to multiple files/folders causing separate HTTP calls to get tags -->
                 <!--
@@ -125,139 +79,79 @@
                     title="{{'DOCUMENT_LIST.COLUMNS.TAG' | translate}}"
                     key="id"
                     class="full-width ellipsis-cell">
-                    <ng-template let-entry="$implicit">
+                    <template let-entry="$implicit">
                         <alfresco-tag-node-list  [nodeId]="entry.data.getValue(entry.row, entry.col)"></alfresco-tag-node-list>
-                    </ng-template>
+                    </template>
                 </data-column>
                 -->
                 <data-column
-                    title="{{'DOCUMENT_LIST.COLUMNS.CREATED_BY' | translate}}"
-                    key="createdByUser.displayName"
-                    class="desktop-only">
+                        title="{{'DOCUMENT_LIST.COLUMNS.CREATED_BY' | translate}}"
+                        key="createdByUser.displayName"
+                        class="desktop-only">
                 </data-column>
                 <data-column
-                    title="{{'DOCUMENT_LIST.COLUMNS.CREATED' | translate}}"
-                    key="createdAt"
-                    type="date"
-                    format="timeAgo"
-                    class="desktop-only">
+                        title="{{'DOCUMENT_LIST.COLUMNS.CREATED_ON' | translate}}"
+                        key="createdAt"
+                        type="date"
+                        format="medium"
+                        class="desktop-only">
                 </data-column>
             </data-columns>
 
             <content-actions>
                 <!-- folder actions -->
                 <content-action
-                    icon="content_copy"
-                    target="folder"
-                    title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.COPY' | translate}}"
-                    permission="update"
-                    [disableWithNoPermission]="true"
-                    (error)="onContentActionError($event)"
-                    (success)="onContentActionSuccess($event)"
-                    handler="copy">
-                </content-action>
-                <content-action
-                    icon="redo"
-                    target="folder"
-                    title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.MOVE' | translate}}"
-                    permission="update"
-                    [disableWithNoPermission]="true"
-                    (error)="onContentActionError($event)"
-                    (success)="onContentActionSuccess($event)"
-                    handler="move">
-                </content-action>
-                <content-action
-                    icon="delete"
-                    target="folder"
-                    permission="delete"
-                    [disableWithNoPermission]="true"
-                    title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.DELETE' | translate}}"
-                    (permissionEvent)="handlePermissionError($event)"
-                    handler="delete">
+                        target="folder"
+                        permission="delete"
+                        [disableWithNoPermission]="true"
+                        title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.DELETE' | translate}}"
+                        (permissionEvent)="handlePermissionError($event)"
+                        handler="delete">
                 </content-action>
                 <!-- document actions -->
                 <content-action
-                    icon="content_copy"
-                    target="document"
-                    title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.COPY' | translate}}"
-                    permission="update"
-                    [disableWithNoPermission]="true"
-                    (error)="onContentActionError($event)"
-                    (success)="onContentActionSuccess($event)"
-                    handler="copy">
+                        target="document"
+                        title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DOWNLOAD' | translate}}"
+                        handler="download">
                 </content-action>
                 <content-action
-                    icon="redo"
-                    target="document"
-                    title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.MOVE' | translate}}"
-                    permission="update"
-                    [disableWithNoPermission]="true"
-                    (error)="onContentActionError($event)"
-                    (success)="onContentActionSuccess($event)"
-                    handler="move">
-                </content-action>
-                <content-action
-                    icon="delete"
-                    target="document"
-                    permission="delete"
-                    [disableWithNoPermission]="true"
-                    (permissionEvent)="handlePermissionError($event)"
-                    title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DELETE' | translate}}"
-                    handler="delete">
+                        target="document"
+                        permission="delete"
+                        [disableWithNoPermission]="true"
+                        (permissionEvent)="handlePermissionError($event)"
+                        title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DELETE' | translate}}"
+                        handler="delete">
                 </content-action>
             </content-actions>
-        </adf-document-list>
+        </alfresco-document-list>
     </alfresco-upload-drag-area>
 </div>
 
 <context-menu-holder></context-menu-holder>
 
-<p>Current folder ID: {{ documentList.currentFolderId }}</p>
-
-<div class="p-10">
-    Selected Nodes:
-    <ul>
-        <li *ngFor="let node of documentList.selection">
-            {{ node.entry.name }}
-        </li>
-    </ul>
-</div>
-
 <div class="container">
-    <section *ngIf="!useViewerDialog">
-        <md-slide-toggle [color]="'primary'" [(ngModel)]="useInlineViewer">Use inline viewer (no overlay)</md-slide-toggle>
+    <section>
+        <md-slide-toggle [(ngModel)]="useCustomToolbar">Use custom toolbar</md-slide-toggle>
     </section>
 
     <section>
-        <md-slide-toggle [color]="'primary'" [(ngModel)]="useViewerDialog">Use File Viewer dialog</md-slide-toggle>
+        <md-slide-toggle [(ngModel)]="multipleFileUpload">Multiple File Upload</md-slide-toggle>
     </section>
 
     <section>
-        <md-slide-toggle [color]="'primary'" [(ngModel)]="multiselect">Multiselect (with checkboxes)</md-slide-toggle>
+        <md-slide-toggle [(ngModel)]="folderUpload">Folder upload</md-slide-toggle>
     </section>
 
     <section>
-        <md-slide-toggle [color]="'primary'" [(ngModel)]="useDropdownBreadcrumb">Dropdown breadcrumb</md-slide-toggle>
+        <md-slide-toggle [(ngModel)]="acceptedFilesTypeShow">Custom extensions filter</md-slide-toggle>
     </section>
 
     <section>
-        <md-slide-toggle [color]="'primary'" [(ngModel)]="multipleFileUpload">Multiple File Upload</md-slide-toggle>
+        <md-slide-toggle [(ngModel)]="versioning">Enable versioning</md-slide-toggle>
     </section>
 
     <section>
-        <md-slide-toggle [color]="'primary'" [(ngModel)]="folderUpload">Folder upload</md-slide-toggle>
-    </section>
-
-    <section>
-        <md-slide-toggle [color]="'primary'" [(ngModel)]="acceptedFilesTypeShow">Custom extensions filter</md-slide-toggle>
-    </section>
-
-    <section>
-        <md-slide-toggle [color]="'primary'" [(ngModel)]="versioning">Enable versioning</md-slide-toggle>
-    </section>
-
-    <section>
-        <md-slide-toggle [color]="'primary'" [(ngModel)]="disableWithNoPermission">Disable upload button when user has no permissions</md-slide-toggle>
+        <md-slide-toggle [(ngModel)]="disableWithNoPermission">Disable upload button when user has no permissions</md-slide-toggle>
     </section>
 
     <h5>Upload</h5>
@@ -269,22 +163,19 @@
     <div *ngIf="!acceptedFilesTypeShow">
         <alfresco-upload-button
             #uploadButton
-            tooltip="Custom tooltip"
             [disabled]="!enableUpload"
             data-automation-id="multiple-file-upload"
             [rootFolderId]="documentList.currentFolderId"
             [multipleFiles]="multipleFileUpload"
             [uploadFolders]="folderUpload"
             [versioning]="versioning"
-            [adf-node-permission]="'create'"
-            [adf-nodes]="getCurrentDocumentListNode()"
+            [disableWithNoPermission]="disableWithNoPermission"
             (permissionEvent)="handlePermissionError($event)">
         </alfresco-upload-button>
     </div>
     <div *ngIf="acceptedFilesTypeShow">
         <alfresco-upload-button
             #uploadButton
-            tooltip="Custom tooltip"
             [disabled]="!enableUpload"
             data-automation-id="multiple-file-upload"
             [rootFolderId]="documentList.currentFolderId"
@@ -292,8 +183,7 @@
             [multipleFiles]="multipleFileUpload"
             [uploadFolders]="folderUpload"
             [versioning]="versioning"
-            [adf-node-permission]="'create'"
-            [adf-nodes]="getCurrentDocumentListNode()"
+            [disableWithNoPermission]="disableWithNoPermission"
             (permissionEvent)="handlePermissionError($event)">
         </alfresco-upload-button>
     </div>
@@ -302,39 +192,29 @@
     </section>
 </div>
 
-<div class="p-10">
-    <p>For 'Multiple' selection mode use Cmd (macOS) or Ctrl (Win) to toggle selection of multiple items.</p>
-    <md-select placeholder="Selection Mode" [(ngModel)]="selectionMode" name="food">
-        <md-option *ngFor="let mode of selectionModes" [value]="mode.value">
-            {{mode.viewValue}}
-        </md-option>
-    </md-select>
-</div>
-
 <file-uploading-dialog #fileDialog></file-uploading-dialog>
 
-<div *ngIf="showViewer">
-    <ng-container *ngIf="!useInlineViewer">
-        <alfresco-viewer
-            [(showViewer)]="showViewer"
-            [fileNodeId]="fileNodeId"
-            [overlayMode]="true">
+<div *ngIf="fileShowed">
+    <alfresco-viewer [(showViewer)]="fileShowed"
+                     [fileNodeId]="fileNodeId"
+                     [overlayMode]="true">
 
-            <extension-viewer [supportedExtensions]="['obj','3DS']" #extension>
-                <ng-template let-urlFileContent="urlFileContent" let-extension="extension" >
-                    <threed-viewer [urlFile]="urlFileContent" [extension]="extension" ></threed-viewer>
-                </ng-template>
-            </extension-viewer>
+        <extension-viewer [supportedExtensions]="['obj','3DS']" #extension>
+            <ng-template let-urlFileContent="urlFileContent" let-extension="extension" >
+                <threed-viewer [urlFile]="urlFileContent" [extension]="extension" ></threed-viewer>
+            </ng-template>
+        </extension-viewer>
 
-        </alfresco-viewer>
-    </ng-container>
+    </alfresco-viewer>
 
-    <ng-container *ngIf="useInlineViewer">
-        <div class="adf-not-overlay-viewer">
-            <alfresco-viewer
-                [(showViewer)]="showViewer"
-                [fileNodeId]="fileNodeId">
-            </alfresco-viewer>
-        </div>
-    </ng-container>
+    <!-- Comment the viewer above and uncomment that one below if you want test the overlay false viewer-->
+
+    <!--<div *ngIf="fileShowed" class="adf-not-overlay-viewer">-->
+        <!--<alfresco-viewer [(showViewer)]="fileShowed"-->
+                         <!--[fileNodeId]="fileNodeId"-->
+                         <!--[overlayMode]="false">-->
+        <!--</alfresco-viewer>-->
+    <!--</div>-->
+
 </div>
+

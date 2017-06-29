@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
-import { AlfrescoAuthenticationService, AlfrescoContentService, CoreModule } from 'ng2-alfresco-core';
-import { fakeEcmUser } from '../assets/fake-ecm-user.service.mock';
+import { TestBed, async } from '@angular/core/testing';
 import { EcmUserService } from '../services/ecm-user.service';
+import { fakeEcmUser } from '../assets/fake-ecm-user.service.mock';
+import { CoreModule, AlfrescoAuthenticationService, AlfrescoContentService} from 'ng2-alfresco-core';
 
 declare let jasmine: any;
 

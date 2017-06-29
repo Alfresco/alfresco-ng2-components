@@ -4,6 +4,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const helpers = require('./helpers');
 const path = require('path');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -25,7 +26,7 @@ module.exports = {
                 test: /\.js$/,
                 include: [helpers.root('app'), helpers.root('../ng2-components')],
                 loader: 'source-map-loader',
-                exclude: [/node_modules/, /public/, /resources/, /dist/]
+                exclude: [ /node_modules/, /public/, /resources/, /dist/]
             },
             {
                 enforce: 'pre',
@@ -33,22 +34,20 @@ module.exports = {
                 loader: 'tslint-loader',
                 include: [helpers.root('app')],
                 options: {
-                    emitErrors: true,
-                    fix: true
+                    emitErrors: true
                 },
-                exclude: [/node_modules/, /public/, /resources/, /dist/]
+                exclude: [ /node_modules/, /public/, /resources/, /dist/]
             },
             {
                 enforce: 'pre',
                 test: /\.ts$/,
                 use: 'source-map-loader',
-                exclude: [/public/, /resources/, /dist/]
+                exclude: [ /public/, /resources/, /dist/]
             },
             {
                 test: /\.html$/,
-                include: [helpers.root('app'), helpers.root('../ng2-components')],
                 loader: 'html-loader',
-                exclude: [/node_modules/, /public/, /resources/, /dist/]
+                exclude: [ /node_modules/, /public/, /resources/, /dist/]
             },
             {
                 test: /\.css$/,
@@ -64,6 +63,19 @@ module.exports = {
                 loader: 'raw-loader'
             },
             {
+                test: /\.component.scss$/,
+                use: [{
+                    loader: "to-string-loader"
+                }, {
+                    loader: "raw-loader"
+                }, {
+                    loader: "sass-loader",
+                    options: {
+                        includePaths: [ path.resolve(__dirname, '../../ng2-components/ng2-alfresco-core/styles')]
+                    }
+                }]
+            },
+            {
                 test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
                 loader: 'file-loader?name=assets/[name].[hash].[ext]'
             },
@@ -76,12 +88,14 @@ module.exports = {
                     emitErrors: true,
                     licenseFile: path.resolve(__dirname, '../assets/license_header.txt')
                 },
-                exclude: [/node_modules/, /bundles/, /dist/, /demo/]
+                exclude: [/node_modules/, /bundles/, /dist/, /demo/],
             }
         ]
     },
 
     plugins: [
+        new ForkTsCheckerWebpackPlugin(),
+        // Workaround for angular/angular#11580
         new webpack.ContextReplacementPlugin(
             // The (\\|\/) piece accounts for path separators in *nix and Windows
             /angular(\\|\/)core(\\|\/)@angular/,

@@ -16,30 +16,16 @@
  */
 
 import { NgModule } from '@angular/core';
-import {
-    MdButtonModule,
-    MdDialogModule,
-    MdInputModule,
-    MdProgressBarModule,
-    MdSnackBarModule,
-    MdTabsModule,
-    MdToolbarModule
-} from '@angular/material';
+import { MdSnackBarModule, MdToolbarModule, MdButtonModule } from '@angular/material';
 
-export function modules() {
-    return [
-        MdButtonModule,
-        MdDialogModule,
-        MdInputModule,
-        MdProgressBarModule,
-        MdSnackBarModule,
-        MdToolbarModule,
-        MdTabsModule
-    ];
-}
+const MATERIAL_MODULES = [
+    MdSnackBarModule,
+    MdToolbarModule,
+    MdButtonModule
+];
 
 @NgModule({
-    imports: modules(),
-    exports: modules()
+    imports: MATERIAL_MODULES,
+    exports: MATERIAL_MODULES
 })
 export class MaterialModule {}

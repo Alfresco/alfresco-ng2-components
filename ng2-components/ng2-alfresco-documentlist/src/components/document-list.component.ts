@@ -16,23 +16,30 @@
  */
 
 import {
-    AfterContentInit, Component, ContentChild, ElementRef, EventEmitter, HostListener, Input, NgZone,
-    OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild
+    Component, OnInit, Input, OnChanges, Output, SimpleChanges, EventEmitter, ElementRef,
+    AfterContentInit, TemplateRef, NgZone, ViewChild, HostListener, ContentChild
 } from '@angular/core';
-import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, Pagination, PersonEntry } from 'alfresco-js-api';
-import { AlfrescoApiService, DataColumnListComponent } from 'ng2-alfresco-core';
-import { DataCellEvent, DataColumn, DataRowActionEvent, DataSorting, DataTableComponent, ObjectDataColumn } from 'ng2-alfresco-datatable';
-import { Observable, Subject } from 'rxjs/Rx';
-import { ImageResolver, RowFilter, ShareDataRow, ShareDataTableAdapter } from './../data/share-datatable-adapter';
-import { ContentActionModel } from './../models/content-action.model';
-import { PermissionStyleModel } from './../models/permissions-style.model';
+import { Subject } from 'rxjs/Rx';
+import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, Pagination } from 'alfresco-js-api';
+import { AlfrescoTranslationService, DataColumnListComponent } from 'ng2-alfresco-core';
+import {
+    DataRowEvent,
+    DataTableComponent,
+    ObjectDataColumn,
+    DataCellEvent,
+    DataRowActionEvent,
+    DataColumn,
+    DataSorting
+} from 'ng2-alfresco-datatable';
 import { DocumentListService } from './../services/document-list.service';
+import { ContentActionModel } from './../models/content-action.model';
+import { ShareDataTableAdapter, ShareDataRow, RowFilter, ImageResolver } from './../data/share-datatable-adapter';
 import { NodeEntityEvent, NodeEntryEvent } from './node.event';
 
 declare var require: any;
 
 @Component({
-    selector: 'adf-document-list, alfresco-document-list',
+    selector: 'alfresco-document-list',
     styleUrls: ['./document-list.component.css'],
     templateUrl: './document-list.component.html'
 })
@@ -45,10 +52,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
     @Input()
-    permissionsStyle: PermissionStyleModel[] = [];
-
-    @Input()
-    locationFormat: string = '/';
+    fallbackThumbnail: string = require('../assets/images/ft_ic_miscellaneous.svg');
 
     @Input()
     navigate: boolean = true;
@@ -78,6 +82,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     contextMenuActions: boolean = false;
 
     @Input()
+    creationMenuActions: boolean = true;
+
+    @Input()
     pageSize: number = DocumentListComponent.DEFAULT_PAGE_SIZE;
 
     @Input()
@@ -95,18 +102,24 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     @Input()
     rowStyleClass: string;
 
-    @Input()
-    loading: boolean = false;
-
-    selection = new Array<MinimalNodeEntity>();
     skipCount: number = 0;
+
     pagination: Pagination;
 
     @Input()
-    rowFilter: RowFilter|null = null;
+    set rowFilter(value: RowFilter) {
+        if (this.data && value && this.currentFolderId) {
+            this.data.setFilter(value);
+            this.loadFolderNodesByFolderNodeId(this.currentFolderId, this.pageSize, this.skipCount);
+        }
+    }
 
     @Input()
-    imageResolver: ImageResolver|null = null;
+    set imageResolver(value: ImageResolver) {
+        if (this.data) {
+            this.data.setImageResolver(value);
+        }
+    }
 
     // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
     @Input()
@@ -131,10 +144,16 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     preview: EventEmitter<NodeEntityEvent> = new EventEmitter<NodeEntityEvent>();
 
     @Output()
+    success: EventEmitter<any> = new EventEmitter();
+
+    @Output()
     ready: EventEmitter<any> = new EventEmitter();
 
     @Output()
     error: EventEmitter<any> = new EventEmitter();
+
+    @Output()
+    permissionError: EventEmitter<any> = new EventEmitter();
 
     @ViewChild(DataTableComponent)
     dataTable: DataTableComponent;
@@ -145,37 +164,18 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     contextActionHandler: Subject<any> = new Subject();
     data: ShareDataTableAdapter;
 
+    loading: boolean = false;
     private currentNodeAllowableOperations: string[] = [];
     private CREATE_PERMISSION = 'create';
 
     constructor(private documentListService: DocumentListService,
                 private ngZone: NgZone,
-                private elementRef: ElementRef,
-                private apiService: AlfrescoApiService) {
-    }
+                private translateService: AlfrescoTranslationService,
+                private el: ElementRef) {
 
-    private get nodesApi() {
-        return this.apiService.getInstance().core.nodesApi;
-    }
-
-    private get sharedLinksApi() {
-        return this.apiService.getInstance().core.sharedlinksApi;
-    }
-
-    private get sitesApi() {
-        return this.apiService.getInstance().core.sitesApi;
-    }
-
-    private get favoritesApi() {
-        return this.apiService.getInstance().core.favoritesApi;
-    }
-
-    private get peopleApi() {
-        return this.apiService.getInstance().core.peopleApi;
-    }
-
-    private get searchApi() {
-        return this.apiService.getInstance().search.searchApi;
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-alfresco-documentlist', 'assets/ng2-alfresco-documentlist');
+        }
     }
 
     getContextActions(node: MinimalNodeEntity) {
@@ -203,16 +203,6 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     ngOnInit() {
         this.data = new ShareDataTableAdapter(this.documentListService, null, this.getDefaultSorting());
         this.data.thumbnails = this.thumbnails;
-        this.data.permissionsStyle = this.permissionsStyle;
-
-        if (this.rowFilter) {
-            this.data.setFilter(this.rowFilter);
-        }
-
-        if (this.imageResolver) {
-            this.data.setImageResolver(this.imageResolver);
-        }
-
         this.contextActionHandler.subscribe(val => this.contextActionCallback(val));
 
         this.enforceSingleClickNavigationForMobile();
@@ -233,7 +223,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
         let columns = this.data.getColumns();
         if (!columns || columns.length === 0) {
-            this.setupDefaultColumns(this.currentFolderId);
+            this.setupDefaultColumns();
         }
     }
 
@@ -242,16 +232,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             this.loadFolder();
         } else if (changes['currentFolderId'] && changes['currentFolderId'].currentValue) {
             this.loadFolderByNodeId(changes['currentFolderId'].currentValue);
-        } else if (this.data) {
-            if (changes['node'] && changes['node'].currentValue) {
+        } else if (changes['node'] && changes['node'].currentValue) {
+            if (this.data) {
                 this.data.loadPage(changes['node'].currentValue);
-            } else if (changes['rowFilter']) {
-                this.data.setFilter(changes['rowFilter'].currentValue);
-                if (this.currentFolderId) {
-                    this.loadFolderNodesByFolderNodeId(this.currentFolderId, this.pageSize, this.skipCount);
-                }
-            } else if (changes['imageResolver']) {
-                this.data.setImageResolver(changes['imageResolver'].currentValue);
             }
         }
     }
@@ -283,7 +266,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     isEmpty() {
-        return !this.data || this.data.getRows().length === 0;
+        return this.data.getRows().length === 0;
     }
 
     isPaginationEnabled() {
@@ -344,7 +327,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     performNavigation(node: MinimalNodeEntity): boolean {
-        if (this.canNavigateFolder(node)) {
+        if (node && node.entry && node.entry.isFolder) {
             this.currentFolderId = node.entry.id;
             this.folderNode = node.entry;
             this.skipCount = 0;
@@ -363,17 +346,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
      */
     executeContentAction(node: MinimalNodeEntity, action: ContentActionModel) {
         if (node && node.entry && action) {
-            let handlerSub;
-
-            if (typeof action.handler === 'function') {
-                handlerSub = action.handler(node, this, action.permission);
-            } else {
-                handlerSub = Observable.of(true);
-            }
-
-            if (typeof action.execute === 'function') {
-                handlerSub.subscribe(() => { action.execute(node); });
-            }
+            action.handler(node, this, action.permission);
         }
     }
 
@@ -388,28 +361,14 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     // gets folder node and its content
     loadFolderByNodeId(nodeId: string) {
         this.loading = true;
-
-        if (nodeId === '-trashcan-') {
-            this.loadTrashcan();
-        } else if (nodeId === '-sharedlinks-') {
-            this.loadSharedLinks();
-        } else if (nodeId === '-sites-') {
-            this.loadSites();
-        } else if (nodeId === '-favorites-') {
-            this.loadFavorites();
-        } else if (nodeId === '-recent-') {
-            this.loadRecent();
-        } else {
-            this.documentListService
-                .getFolderNode(nodeId).then(node => {
-                    this.folderNode = node;
-                    this.currentFolderId = node.id;
-                    this.skipCount = 0;
-                    this.currentNodeAllowableOperations = node['allowableOperations'] ? node['allowableOperations'] : [];
-                    this.loadFolderNodesByFolderNodeId(node.id, this.pageSize, this.skipCount).catch(err => this.error.emit(err));
-                })
-                .catch(err => this.error.emit(err));
-        }
+        this.documentListService.getFolderNode(nodeId).then(node => {
+            this.folderNode = node;
+            this.currentFolderId = node.id;
+            this.skipCount = 0;
+            this.currentNodeAllowableOperations = node['allowableOperations'] ? node['allowableOperations'] : [];
+            this.loadFolderNodesByFolderNodeId(node.id, this.pageSize, this.skipCount).catch(err => this.error.emit(err));
+        })
+            .catch(err => this.error.emit(err));
     }
 
     loadFolderNodesByFolderNodeId(id: string, maxItems: number, skipCount: number): Promise<any> {
@@ -424,12 +383,13 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                     val => {
                         if (this.isCurrentPageEmpty(val, skipCount)) {
                             this.updateSkipCount(skipCount - maxItems);
-                            this.loadFolderNodesByFolderNodeId(id, maxItems, skipCount - maxItems).then(
-                                () => resolve(true),
-                                error => reject(error)
-                            );
+                            this.loadFolderNodesByFolderNodeId(id, maxItems, skipCount - maxItems).then(() => {
+                                resolve(true);
+                            }, (error) => {
+                                reject(error);
+                            });
                         } else {
-                            this.data.loadPage(<NodePaging> val);
+                            this.data.loadPage(<NodePaging>val);
                             this.pagination = val.list.pagination;
                             this.loading = false;
                             this.ready.emit();
@@ -441,107 +401,6 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                     });
         });
 
-    }
-
-    private loadTrashcan(): void {
-        const options = {
-            include: [ 'path', 'properties' ],
-            maxItems: this.pageSize,
-            skipCount: this.skipCount
-        };
-        this.nodesApi.getDeletedNodes(options).then((page: NodePaging) => {
-            this.onPageLoaded(page);
-        });
-    }
-
-    private loadSharedLinks(): void {
-        const options = {
-            include: [ 'properties', 'allowableOperations', 'path' ],
-            maxItems: this.pageSize,
-            skipCount: this.skipCount
-        };
-        this.sharedLinksApi.findSharedLinks(options).then((page: NodePaging) => {
-           this.onPageLoaded(page);
-        });
-    }
-
-    private loadSites(): void {
-        const options = {
-            include: [ 'properties' ],
-            maxItems: this.pageSize,
-            skipCount: this.skipCount
-        };
-
-        this.sitesApi.getSites(options).then((page: NodePaging) => {
-            this.onPageLoaded(page);
-        });
-    }
-
-    private loadFavorites(): void {
-        const options = {
-            maxItems: this.pageSize,
-            skipCount: this.skipCount,
-            where: '(EXISTS(target/file) OR EXISTS(target/folder))',
-            include: [ 'properties', 'allowableOperations', 'path' ]
-        };
-
-        this.favoritesApi.getFavorites('-me-', options).then((result: NodePaging) => {
-            let page: NodePaging = {
-                list: {
-                    entries: result.list.entries
-                        .map(({ entry: { target }}: any) => ({
-                            entry: target.file || target.folder
-                        }))
-                        .map(({ entry }: any) => {
-                            entry.properties = {
-                                'cm:title': entry.title,
-                                'cm:description': entry.description
-                            };
-                            return { entry };
-                        }),
-                    pagination: result.list.pagination
-                }
-            };
-            this.onPageLoaded(page);
-        });
-    }
-
-    private loadRecent(): void {
-        this.peopleApi.getPerson('-me-').then((person: PersonEntry) => {
-            const username = person.entry.id;
-            const query = {
-                query: {
-                    query: '*',
-                    language: 'afts'
-                },
-                filterQueries: [
-                    { query: `cm:modified:[NOW/DAY-30DAYS TO NOW/DAY+1DAY]` },
-                    { query: `cm:modifier:${username} OR cm:creator:${username}` },
-                    { query: `TYPE:"content" AND -TYPE:"app:filelink" AND -TYPE:"fm:post"` }
-                ],
-                include: [ 'path', 'properties', 'allowableOperations' ],
-                sort: [{
-                    type: 'FIELD',
-                    field: 'cm:modified',
-                    ascending: false
-                }],
-                paging: {
-                    maxItems: this.pageSize,
-                    skipCount: this.skipCount
-                }
-            };
-
-            this.searchApi.search(query).then(page => this.onPageLoaded(page));
-        });
-    }
-
-    private onPageLoaded(page: NodePaging) {
-        if (page) {
-            this.data.loadPage(page);
-            this.pagination = page.list.pagination;
-            this.loading = false;
-            this.ready.emit();
-        }
     }
 
     private isCurrentPageEmpty(node, skipCount): boolean {
@@ -559,9 +418,23 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     /**
      * Creates a set of predefined columns.
      */
-    setupDefaultColumns(preset: string = 'default'): void {
-        const columns = this.getLayoutPreset(preset);
-        this.data.setColumns(columns);
+    setupDefaultColumns(): void {
+        let colThumbnail = new ObjectDataColumn({
+            type: 'image',
+            key: '$thumbnail',
+            title: '',
+            srTitle: 'Thumbnail'
+        });
+
+        let colName = new ObjectDataColumn({
+            type: 'text',
+            key: 'name',
+            title: 'Name',
+            cssClass: 'full-width',
+            sortable: true
+        });
+
+        this.data.setColumns([colThumbnail, colName]);
     }
 
     onPreviewFile(node: MinimalNodeEntity) {
@@ -578,7 +451,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             },
             bubbles: true
         });
-        this.elementRef.nativeElement.dispatchEvent(domEvent);
+        this.el.nativeElement.dispatchEvent(domEvent);
 
         const event = new NodeEntityEvent(node);
         this.nodeClick.emit(event);
@@ -598,6 +471,11 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         }
     }
 
+    onRowClick(event: DataRowEvent) {
+        let item = (<ShareDataRow> event.value).node;
+        this.onNodeClick(item);
+    }
+
     onNodeDblClick(node: MinimalNodeEntity) {
         const domEvent = new CustomEvent('node-dblclick', {
             detail: {
@@ -606,7 +484,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             },
             bubbles: true
         });
-        this.elementRef.nativeElement.dispatchEvent(domEvent);
+        this.el.nativeElement.dispatchEvent(domEvent);
 
         const event = new NodeEntityEvent(node);
         this.nodeDblClick.emit(event);
@@ -626,28 +504,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         }
     }
 
-    onNodeSelect(event: { row: ShareDataRow, selection: Array<ShareDataRow> }) {
-        this.selection = event.selection.map(entry => entry.node);
-        const domEvent = new CustomEvent('node-select', {
-            detail: {
-                node: event.row.node,
-                selection: this.selection
-            },
-            bubbles: true
-        });
-        this.elementRef.nativeElement.dispatchEvent(domEvent);
-    }
-
-    onNodeUnselect(event: { row: ShareDataRow, selection: Array<ShareDataRow> }) {
-        this.selection = event.selection.map(entry => entry.node);
-        const domEvent = new CustomEvent('node-unselect', {
-            detail: {
-                node: event.row.node,
-                selection: this.selection
-            },
-            bubbles: true
-        });
-        this.elementRef.nativeElement.dispatchEvent(domEvent);
+    onRowDblClick(event?: DataRowEvent) {
+        let item = (<ShareDataRow> event.value).node;
+        this.onNodeDblClick(item);
     }
 
     onShowRowContextMenu(event: DataCellEvent) {
@@ -679,6 +538,15 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         }
     }
 
+    onActionMenuError(event) {
+        this.error.emit(event);
+    }
+
+    onActionMenuSuccess(event) {
+        this.reload();
+        this.success.emit(event);
+    }
+
     onChangePageSize(event: Pagination): void {
         this.pageSize = event.maxItems;
         this.reload();
@@ -694,6 +562,10 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         this.reload();
     }
 
+    onPermissionError(event) {
+        this.permissionError.emit(event);
+    }
+
     private enforceSingleClickNavigationForMobile(): void {
         if (this.isMobile()) {
             this.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
@@ -707,20 +579,6 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             defaultSorting = new DataSorting(key, direction);
         }
         return defaultSorting;
-    }
-
-    canNavigateFolder(node: MinimalNodeEntity): boolean {
-        const restricted = ['-trashcan-', '-sharedlinks-', '-sites-', '-favorites-', '-recent-'];
-
-        if (restricted.indexOf(this.currentFolderId) > -1) {
-            return false;
-        }
-
-        if (node && node.entry && node.entry.isFolder) {
-            return true;
-        }
-
-        return false;
     }
 
     updateSkipCount(newSkipCount) {
@@ -740,231 +598,4 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         return this.hasCurrentNodePermission(this.CREATE_PERMISSION);
     }
 
-    private getLayoutPreset(name: string = 'default'): DataColumn[] {
-        const presets = {
-            '-trashcan-': [
-                {
-                    key: '$thumbnail',
-                    type: 'image',
-                    srTitle: 'ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL',
-                    sortable: false
-                },
-                {
-                    key: 'name',
-                    type: 'text',
-                    title: 'ADF-DOCUMENT-LIST.LAYOUT.NAME',
-                    cssClass: 'full-width ellipsis-cell',
-                    sortable: true
-                },
-                {
-                    key: 'path',
-                    type: 'location',
-                    title: 'ADF-DOCUMENT-LIST.LAYOUT.LOCATION',
-                    format: this.locationFormat,
-                    sortable: true
-                },
-                {
-                    key: 'content.sizeInBytes',
-                    type: 'fileSize',
-                    title: 'ADF-DOCUMENT-LIST.LAYOUT.SIZE',
-                    sortable: true
-                },
-                {
-                    key: 'archivedAt',
-                    type: 'date',
-                    title: 'ADF-DOCUMENT-LIST.LAYOUT.DELETED_ON',
-                    format: 'timeAgo',
-                    sortable: true
-                },
-                {
-                    key: 'archivedByUser.displayName',
-                    type: 'text',
-                    title: 'ADF-DOCUMENT-LIST.LAYOUT.DELETED_BY',
-                    sortable: true
-                }
-            ],
-            '-sites-': [
-                {
-                    key: '$thumbnail',
-                    type: 'image',
-                    srTitle: 'ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL',
-                    sortable: false
-                },
-                {
-                    key: 'title',
-                    type: 'text',
-                    title: 'ADF-DOCUMENT-LIST.LAYOUT.NAME',
-                    cssClass: 'full-width ellipsis-cell',
-                    sortable: true
-                },
-                {
-                    key: 'visibility',
-                    type: 'text',
-                    title: 'ADF-DOCUMENT-LIST.LAYOUT.STATUS',
-                    sortable: true
-                }
-            ],
-            '-favorites-': [
-                {
-                    key: '$thumbnail',
-                    type: 'image',
-                    srTitle: 'ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL',
-                    sortable: false
-                },
-                {
-                    key: 'name',
-                    type: 'text',
-                    title: 'ADF-DOCUMENT-LIST.LAYOUT.NAME',
-                    cssClass: 'full-width ellipsis-cell',
-                    sortable: true
-                },
-                {
-                    key: 'path',
-                    type: 'location',
-                    title: 'ADF-DOCUMENT-LIST.LAYOUT.LOCATION',
-                    format: this.locationFormat,
-                    sortable: true
-                },
-                {
-                    key: 'content.sizeInBytes',
-                    type: 'fileSize',
-                    title: 'ADF-DOCUMENT-LIST.LAYOUT.SIZE',
-                    sortable: true
-                },
-                {
-                    key: 'modifiedAt',
-                    type: 'date',
-                    title: 'ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_ON',
-                    format: 'timeAgo',
-                    sortable: true
-                },
-                {
-                    key: 'modifiedByUser.displayName',
-                    type: 'text',
-                    title: 'ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_BY',
-                    sortable: true
-                }
-            ],
-            '-recent-': [
-                {
-                    key: '$thumbnail',
-                    type: 'image',
-                    srTitle: 'ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL',
-                    sortable: false
-                },
-                {
-                    key: 'name',
-                    type: 'text',
-                    title: 'ADF-DOCUMENT-LIST.LAYOUT.NAME',
-                    cssClass: 'full-width ellipsis-cell',
-                    sortable: true
-                },
-                {
-                    key: 'path',
-                    type: 'location',
-                    title: 'ADF-DOCUMENT-LIST.LAYOUT.LOCATION',
-                    cssClass: 'ellipsis-cell',
-                    format: this.locationFormat,
-                    sortable: true
-                },
-                {
-                    key: 'content.sizeInBytes',
-                    type: 'fileSize',
-                    title: 'ADF-DOCUMENT-LIST.LAYOUT.SIZE',
-                    sortable: true
-                },
-                {
-                    key: 'modifiedAt',
-                    type: 'date',
-                    title: 'ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_ON',
-                    format: 'timeAgo',
-                    sortable: true
-                }
-            ],
-            '-sharedlinks-': [
-                {
-                    key: '$thumbnail',
-                    type: 'image',
-                    srTitle: 'ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL',
-                    sortable: false
-                },
-                {
-                    key: 'name',
-                    type: 'text',
-                    title: 'ADF-DOCUMENT-LIST.LAYOUT.NAME',
-                    cssClass: 'full-width ellipsis-cell',
-                    sortable: true
-                },
-                {
-                    key: 'path',
-                    type: 'location',
-                    title: 'ADF-DOCUMENT-LIST.LAYOUT.LOCATION',
-                    cssClass: 'ellipsis-cell',
-                    format: this.locationFormat,
-                    sortable: true
-                },
-                {
-                    key: 'content.sizeInBytes',
-                    type: 'fileSize',
-                    title: 'ADF-DOCUMENT-LIST.LAYOUT.SIZE',
-                    sortable: true
-                },
-                {
-                    key: 'modifiedAt',
-                    type: 'date',
-                    title: 'ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_ON',
-                    format: 'timeAgo',
-                    sortable: true
-                },
-                {
-                    key: 'modifiedByUser.displayName',
-                    type: 'text',
-                    title: 'ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_BY',
-                    sortable: true
-                },
-                {
-                    key: 'sharedByUser.displayName',
-                    type: 'text',
-                    title: 'ADF-DOCUMENT-LIST.LAYOUT.SHARED_BY',
-                    sortable: true
-                }
-            ],
-            'default': [
-                {
-                    key: '$thumbnail',
-                    type: 'image',
-                    srTitle: 'ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL',
-                    sortable: false
-                },
-                {
-                    key: 'name',
-                    type: 'text',
-                    title: 'ADF-DOCUMENT-LIST.LAYOUT.NAME',
-                    cssClass: 'full-width ellipsis-cell',
-                    sortable: true
-                },
-                {
-                    key: 'content.sizeInBytes',
-                    type: 'fileSize',
-                    title: 'ADF-DOCUMENT-LIST.LAYOUT.SIZE',
-                    sortable: true
-                },
-                {
-                    key: 'modifiedAt',
-                    type: 'date',
-                    title: 'ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_ON',
-                    format: 'timeAgo',
-                    sortable: true
-                },
-                {
-                    key: 'modifiedByUser.displayName',
-                    type: 'text',
-                    title: 'ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_BY',
-                    sortable: true
-                }
-            ]
-        };
-
-        return (presets[name] || presets['default']).map(col => new ObjectDataColumn(col));
-    }
 }

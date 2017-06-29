@@ -16,20 +16,13 @@
  */
 
 import { NgModule } from '@angular/core';
-import {
-    MdDialogModule,
-    MdInputModule,
-    MdProgressBarModule,
-    MdSelectModule,
-    MdSlideToggleModule
-} from '@angular/material';
+import { MdSlideToggleModule, MdInputModule, MdSelectModule, MdDialogModule } from '@angular/material';
 
 const MATERIAL_MODULES = [
     MdSlideToggleModule,
     MdInputModule,
     MdSelectModule,
-    MdDialogModule,
-    MdProgressBarModule
+    MdDialogModule
 ];
 
 @NgModule({

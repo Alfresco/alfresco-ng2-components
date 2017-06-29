@@ -15,25 +15,26 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA, NgZone, SimpleChange, TemplateRef } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AlfrescoApiService, AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
-import { DataColumn, DataTableComponent } from 'ng2-alfresco-datatable';
-import { DataTableModule } from 'ng2-alfresco-datatable';
-import { Observable, Subject } from 'rxjs/Rx';
+import { NgZone, SimpleChange, TemplateRef } from '@angular/core';
+import { DataTableComponent, DataColumn, DataRowEvent } from 'ng2-alfresco-datatable';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { DocumentListComponent } from './document-list.component';
+import { DocumentListService } from './../services/document-list.service';
+import { ContentActionModel } from '../models/content-action.model';
 import { FileNode, FolderNode } from '../assets/document-library.model.mock';
+import { NodeMinimalEntry, NodeMinimal, NodePaging } from '../models/document-library.model';
+import { ShareDataRow, RowFilter, ImageResolver } from './../data/share-datatable-adapter';
+import { DataTableModule } from 'ng2-alfresco-datatable';
+import { DocumentMenuActionComponent } from './document-menu-action.component';
+import { Observable } from 'rxjs/Rx';
 import {
-    fakeNodeAnswerWithEntries,
     fakeNodeAnswerWithNOEntries,
+    fakeNodeAnswerWithEntries,
     fakeNodeWithCreatePermission,
     fakeNodeWithNoPermission
 } from '../assets/document-list.component.mock';
-import { MaterialModule } from '../material.module';
-import { ContentActionModel } from '../models/content-action.model';
-import { NodeMinimal, NodeMinimalEntry, NodePaging } from '../models/document-library.model';
-import { ImageResolver, RowFilter } from './../data/share-datatable-adapter';
-import { DocumentListService } from './../services/document-list.service';
-import { DocumentListComponent } from './document-list.component';
+import { MdProgressSpinnerModule } from '@angular/material';
 
 declare let jasmine: any;
 
@@ -41,28 +42,28 @@ describe('DocumentList', () => {
 
     let documentList: DocumentListComponent;
     let documentListService: DocumentListService;
-    let apiService: AlfrescoApiService;
     let fixture: ComponentFixture<DocumentListComponent>;
     let element: HTMLElement;
     let eventMock: any;
+    let componentHandler;
 
     beforeEach(async(() => {
         let zone = new NgZone({enableLongStackTrace: false});
 
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
-                DataTableModule,
-                MaterialModule
+                CoreModule.forRoot(),
+                DataTableModule.forRoot(),
+                MdProgressSpinnerModule
             ],
             declarations: [
-                DocumentListComponent
+                DocumentListComponent,
+                DocumentMenuActionComponent
             ],
             providers: [
                 DocumentListService,
                 {provide: NgZone, useValue: zone}
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            ]
         }).compileComponents();
     }));
 
@@ -73,10 +74,15 @@ describe('DocumentList', () => {
             }
         };
 
+        componentHandler = jasmine.createSpyObj('componentHandler', [
+            'upgradeAllRegistered', 'upgradeElement'
+        ]);
+        window['componentHandler'] = componentHandler;
+
         fixture = TestBed.createComponent(DocumentListComponent);
 
         let translateService = TestBed.get(AlfrescoTranslationService);
-        // spyOn(translateService, 'addTranslationFolder').and.stub();
+        spyOn(translateService, 'addTranslationFolder').and.stub();
         spyOn(translateService, 'get').and.callFake((key) => {
             return Observable.of(key);
         });
@@ -84,7 +90,6 @@ describe('DocumentList', () => {
         element = fixture.nativeElement;
         documentList = fixture.componentInstance;
         documentListService = TestBed.get(DocumentListService);
-        apiService = TestBed.get(AlfrescoApiService);
         fixture.detectChanges();
     });
 
@@ -116,14 +121,16 @@ describe('DocumentList', () => {
         columns.push(column);
 
         documentList.ngAfterContentInit();
-        expect(columns.length).toBe(6);
-        expect(columns[5]).toBe(column);
+        expect(columns.length).toBe(3);
+        expect(columns[2]).toBe(column);
     });
 
-    it('should call action\'s handler with node', () => {
+    it('should execute action with node', () => {
         let node = new FileNode();
         let action = new ContentActionModel();
-        action.handler = () => {};
+        action.handler = function () {
+            console.log('mock handler');
+        };
 
         spyOn(action, 'handler').and.stub();
 
@@ -132,42 +139,19 @@ describe('DocumentList', () => {
 
     });
 
-    it('should call action\'s handler with node and permission', () => {
+    it('should execute action with node and permission', () => {
         let node = new FileNode();
         let action = new ContentActionModel();
-        action.handler = () => {};
+        action.handler = function () {
+            console.log('mock handler');
+        };
         action.permission = 'fake-permission';
+
         spyOn(action, 'handler').and.stub();
 
         documentList.executeContentAction(node, action);
-
         expect(action.handler).toHaveBeenCalledWith(node, documentList, 'fake-permission');
-    });
 
-    it('should call action\'s execute with node if it is defined', () => {
-        let node = new FileNode();
-        let action = new ContentActionModel();
-        action.execute = () => {};
-        spyOn(action, 'execute').and.stub();
-
-        documentList.executeContentAction(node, action);
-
-        expect(action.execute).toHaveBeenCalledWith(node);
-    });
-
-    it('should call action\'s execute only after the handler has been executed', () => {
-        const deleteObservable: Subject<any> = new Subject<any>();
-        let node = new FileNode();
-        let action = new ContentActionModel();
-        action.handler = () => deleteObservable;
-        action.execute = () => {};
-        spyOn(action, 'execute').and.stub();
-
-        documentList.executeContentAction(node, action);
-
-        expect(action.execute).not.toHaveBeenCalled();
-        deleteObservable.next();
-        expect(action.execute).toHaveBeenCalledWith(node);
     });
 
     it('should show the loading state during the loading of new elements', (done) => {
@@ -691,7 +675,7 @@ describe('DocumentList', () => {
         expect(documentList.navigationMode).toBe(DocumentListComponent.SINGLE_CLICK_NAVIGATION);
     });
 
-    xit('should emit error on wrong folder id', (done) => {
+    it('should emit error on wrong folder id', (done) => {
         documentList.error.subscribe(() => {
             done();
         });
@@ -707,7 +691,7 @@ describe('DocumentList', () => {
 
     it('should check [empty folder] template ', () => {
         documentList.emptyFolderTemplate = <TemplateRef<any>> {};
-        documentList.dataTable = new DataTableComponent(null, null);
+        documentList.dataTable = new DataTableComponent(null);
         expect(documentList.dataTable).toBeDefined();
         expect(documentList.isEmptyTemplateDefined()).toBeTruthy();
 
@@ -717,78 +701,73 @@ describe('DocumentList', () => {
 
     it('should empty folder NOT show the pagination', () => {
         documentList.emptyFolderTemplate = <TemplateRef<any>> {};
-        documentList.dataTable = new DataTableComponent(null, null);
+        documentList.dataTable = new DataTableComponent(null);
 
         expect(documentList.isEmpty()).toBeTruthy();
         expect(element.querySelector('alfresco-pagination')).toBe(null);
     });
 
-    it('should set row filter and reload contents if currentFolderId is set when setting rowFilter', () => {
+    it('should set row filter for underlying adapter', () => {
         let filter = <RowFilter> {};
         documentList.currentFolderId = 'id';
         spyOn(documentList.data, 'setFilter').and.callThrough();
-        spyOn(documentListService, 'getFolder');
 
-        documentList.ngOnChanges({rowFilter: new SimpleChange(null, filter, true)});
-
+        documentList.rowFilter = filter;
         expect(documentList.data.setFilter).toHaveBeenCalledWith(filter);
-        expect(documentListService.getFolder).toHaveBeenCalled();
-    });
-
-    it('should NOT reload contents if currentFolderId is NOT set when setting rowFilter', () => {
-        documentList.currentFolderId = null;
-        spyOn(documentListService, 'getFolder');
-
-        documentList.ngOnChanges({rowFilter: new SimpleChange(null, <RowFilter> {}, true)});
-
-        expect(documentListService.getFolder).not.toHaveBeenCalled();
     });
 
     it('should set image resolver for underlying adapter', () => {
         let resolver = <ImageResolver> {};
         spyOn(documentList.data, 'setImageResolver').and.callThrough();
 
-        documentList.ngOnChanges({imageResolver: new SimpleChange(null, resolver, true)});
-
+        documentList.imageResolver = resolver;
         expect(documentList.data.setImageResolver).toHaveBeenCalledWith(resolver);
     });
 
     it('should emit [nodeClick] event on row click', () => {
         let node = new NodeMinimalEntry();
+        let row = new ShareDataRow(node);
+        let event = new DataRowEvent(row, null);
 
         spyOn(documentList, 'onNodeClick').and.callThrough();
-        documentList.onNodeClick(node);
+        documentList.onRowClick(event);
         expect(documentList.onNodeClick).toHaveBeenCalledWith(node);
     });
 
     it('should emit node-click DOM event', (done) => {
         let node = new NodeMinimalEntry();
+        let row = new ShareDataRow(node);
+        let event = new DataRowEvent(row, null);
 
         const htmlElement = fixture.debugElement.nativeElement as HTMLElement;
         htmlElement.addEventListener('node-click', (e: CustomEvent) => {
             done();
         });
 
-        documentList.onNodeClick(node);
+        documentList.onRowClick(event);
     });
 
     it('should emit [nodeDblClick] event on row double-click', () => {
         let node = new NodeMinimalEntry();
+        let row = new ShareDataRow(node);
+        let event = new DataRowEvent(row, null);
 
         spyOn(documentList, 'onNodeDblClick').and.callThrough();
-        documentList.onNodeDblClick(node);
+        documentList.onRowDblClick(event);
         expect(documentList.onNodeDblClick).toHaveBeenCalledWith(node);
     });
 
     it('should emit node-dblclick DOM event', (done) => {
         let node = new NodeMinimalEntry();
+        let row = new ShareDataRow(node);
+        let event = new DataRowEvent(row, null);
 
         const htmlElement = fixture.debugElement.nativeElement as HTMLElement;
         htmlElement.addEventListener('node-dblclick', (e: CustomEvent) => {
             done();
         });
 
-        documentList.onNodeDblClick(node);
+        documentList.onRowDblClick(event);
     });
 
     it('should load folder by ID on init', () => {
@@ -868,68 +847,5 @@ describe('DocumentList', () => {
             expect(documentList.hasCreatePermission()).toBeFalsy();
             done();
         });
-    });
-
-    it('should not perform navigation for virtual sources', () => {
-        const sources = ['-trashcan-', '-sharedlinks-', '-sites-', '-favorites-', '-recent-'];
-        const node = new FolderNode('folder');
-
-        documentList.currentFolderId = 'node-id';
-        expect(documentList.canNavigateFolder(node)).toBeTruthy();
-
-        sources.forEach(source => {
-            documentList.currentFolderId = source;
-            expect(documentList.canNavigateFolder(node)).toBeFalsy();
-        });
-    });
-
-    it('should fetch trashcan', () => {
-        const nodesApi = apiService.getInstance().core.nodesApi;
-        spyOn(nodesApi, 'getDeletedNodes').and.returnValue(Promise.resolve(null));
-
-        documentList.loadFolderByNodeId('-trashcan-');
-        expect(nodesApi.getDeletedNodes).toHaveBeenCalled();
-    });
-
-    it('should fetch shared links', () => {
-        const sharedlinksApi = apiService.getInstance().core.sharedlinksApi;
-        spyOn(sharedlinksApi, 'findSharedLinks').and.returnValue(Promise.resolve(null));
-
-        documentList.loadFolderByNodeId('-sharedlinks-');
-        expect(sharedlinksApi.findSharedLinks).toHaveBeenCalled();
-    });
-
-    it('should fetch sites', () => {
-        const sitesApi = apiService.getInstance().core.sitesApi;
-        spyOn(sitesApi, 'getSites').and.returnValue(Promise.resolve(null));
-
-        documentList.loadFolderByNodeId('-sites-');
-        expect(sitesApi.getSites).toHaveBeenCalled();
-    });
-
-    it('should fetch favorites', () => {
-        const favoritesApi = apiService.getInstance().core.favoritesApi;
-        spyOn(favoritesApi, 'getFavorites').and.returnValue(Promise.resolve(null));
-
-        documentList.loadFolderByNodeId('-favorites-');
-        expect(favoritesApi.getFavorites).toHaveBeenCalled();
-    });
-
-    it('should fetch recent', (done) => {
-
-        const person = { entry: { id: 'person '} };
-        const peopleApi = apiService.getInstance().core.peopleApi;
-        const searchApi = apiService.getInstance().search.searchApi;
-
-        spyOn(peopleApi, 'getPerson').and.returnValue(Promise.resolve(person));
-        spyOn(searchApi, 'search').and.returnValue(Promise.resolve(null));
-
-        documentList.loadFolderByNodeId('-recent-');
-
-        setTimeout(function() {
-            expect(peopleApi.getPerson).toHaveBeenCalledWith('-me-');
-            expect(searchApi.search).toHaveBeenCalled();
-            done();
-        }, 100);
     });
 });

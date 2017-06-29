@@ -15,20 +15,19 @@
  * limitations under the License.
  */
 
-import { async, inject, TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
+import { TestBed, async, inject } from '@angular/core/testing';
+import { Router} from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { CookieServiceMock } from './../assets/cookie.service.mock';
-import { AlfrescoApiService } from './alfresco-api.service';
 import { AlfrescoSettingsService } from './alfresco-settings.service';
-import { AppConfigModule } from './app-config.service';
-import { AuthGuardEcm } from './auth-guard-ecm.service';
-import { AuthenticationService } from './authentication.service';
-import { CookieService } from './cookie.service';
-import { LogService } from './log.service';
+import { AlfrescoAuthenticationService } from './alfresco-authentication.service';
+import { AlfrescoApiService } from './alfresco-api.service';
 import { StorageService } from './storage.service';
-import { UserPreferencesService } from './user-preferences.service';
+import { CookieService } from './cookie.service';
+import { CookieServiceMock } from './../assets/cookie.service.mock';
+import { LogService } from './log.service';
+import { AuthGuardEcm } from './auth-guard-ecm.service';
+import { AppConfigModule } from './app-config.service';
 
 describe('AuthGuardService ECM', () => {
 
@@ -44,9 +43,8 @@ describe('AuthGuardService ECM', () => {
                 AuthGuardEcm,
                 AlfrescoSettingsService,
                 AlfrescoApiService,
-                AuthenticationService,
+                AlfrescoAuthenticationService,
                 StorageService,
-                UserPreferencesService,
                 { provide: CookieService, useClass: CookieServiceMock },
                 LogService
             ]
@@ -54,7 +52,7 @@ describe('AuthGuardService ECM', () => {
     }));
 
     it('if the alfresco js api is logged in should canActivate be true',
-        async(inject([AuthGuardEcm, Router, AlfrescoSettingsService, StorageService, AuthenticationService], (auth, router, settingsService, storage, authService) => {
+        async(inject([AuthGuardEcm, Router, AlfrescoSettingsService, StorageService, AlfrescoAuthenticationService], (auth, router, settingsService, storage, authService) => {
             spyOn(router, 'navigate');
 
             authService.isEcmLoggedIn = () => {
@@ -67,7 +65,7 @@ describe('AuthGuardService ECM', () => {
     );
 
     it('if the alfresco js api is NOT logged in should canActivate be false',
-        async(inject([AuthGuardEcm, Router, AlfrescoSettingsService, StorageService, AuthenticationService], (auth, router, settingsService, storage, authService) => {
+        async(inject([AuthGuardEcm, Router, AlfrescoSettingsService, StorageService, AlfrescoAuthenticationService], (auth, router, settingsService, storage, authService) => {
 
             spyOn(router, 'navigate');
 

@@ -15,19 +15,18 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { ContentService, LogService } from 'ng2-alfresco-core';
+import { Component, OnChanges, SimpleChanges, Input, Output, EventEmitter } from '@angular/core';
+import { AlfrescoTranslationService, LogService, ContentService } from 'ng2-alfresco-core';
+import { FormService } from './../services/form.service';
+import { ContentLinkModel } from './widgets/core/content-link.model';
 import { Observable } from 'rxjs/Rx';
-import { ContentLinkModel } from '../core/content-link.model';
-import { FormService } from './../../../services/form.service';
 
 @Component({
-    selector: 'adf-content, activiti-content',
-    templateUrl: './content.widget.html',
-    styleUrls: ['./content.widget.scss'],
-    encapsulation: ViewEncapsulation.None
+    selector: 'activiti-content',
+    templateUrl: './activiti-content.component.html',
+    styleUrls: ['./activiti-content.component.css']
 })
-export class ContentWidgetComponent implements OnChanges {
+export class ActivitiContent implements OnChanges {
 
     @Input()
     id: string;
@@ -49,9 +48,13 @@ export class ContentWidgetComponent implements OnChanges {
 
     content: ContentLinkModel;
 
-    constructor(protected formService: FormService,
+    constructor(private translate: AlfrescoTranslationService,
+                protected formService: FormService,
                 private logService: LogService,
                 private contentService: ContentService) {
+        if (this.translate) {
+            this.translate.addTranslationFolder('ng2-activiti-form', 'assets/ng2-activiti-form');
+        }
     }
 
     ngOnChanges(changes: SimpleChanges) {

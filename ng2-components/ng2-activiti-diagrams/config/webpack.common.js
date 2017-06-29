@@ -40,8 +40,7 @@ module.exports = {
                 loader: 'tslint-loader',
                 options: {
                     emitErrors: true,
-                    failOnHint: true,
-                    fix: true
+                    failOnHint: true
                 },
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
             },
@@ -61,17 +60,8 @@ module.exports = {
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
             },
             {
-                test: /\.scss$/,
-                use: [{
-                    loader: "to-string-loader"
-                }, {
-                    loader: "raw-loader"
-                }, {
-                    loader: "sass-loader",
-                    options: {
-                        includePaths: [ path.resolve(__dirname, '../../ng2-alfresco-core/styles')]
-                    }
-                }],
+                test: /\.component.scss$/,
+                use: ['to-string-loader', 'raw-loader', 'sass-loader'],
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
             },
             {

@@ -27,8 +27,6 @@ function eraseContentList() {
         var businessRegexDirective = /(?:<!-- BUSINESS DIRECTIVE START-->)([\s\S]*?)(?:<!-- BUSINESS DIRECTIVE END-->)/;
         var contentRegexDirective = /(?:<!-- CONTENT DIRECTIVE START-->)([\s\S]*?)(?:<!-- CONTENT DIRECTIVE END-->)/;
         var coreRegexDirective = /(?:<!-- CORE DIRECTIVE START-->)([\s\S]*?)(?:<!-- CORE DIRECTIVE END-->)/;
-        var servicessRegex = /(?:<!-- SERVICES START-->)([\s\S]*?)(?:<!-- SERVICES END-->)/;
-
 
         readmeContent = readmeContent.replace(businessRegex, '<!-- BUSINESS START--><!-- BUSINESS END-->');
         readmeContent = readmeContent.replace(contentRegex, '<!-- CONTENT START--><!-- CONTENT END-->');
@@ -37,8 +35,6 @@ function eraseContentList() {
         readmeContent = readmeContent.replace(businessRegexDirective, '<!-- BUSINESS DIRECTIVE START--><!-- BUSINESS DIRECTIVE END-->');
         readmeContent = readmeContent.replace(contentRegexDirective, '<!-- CONTENT DIRECTIVE START--><!-- CONTENT DIRECTIVE END-->');
         readmeContent = readmeContent.replace(coreRegexDirective, '<!-- CORE DIRECTIVE START--><!-- CORE DIRECTIVE END-->');
-
-        readmeContent = readmeContent.replace(servicessRegex, '<!-- SERVICES START--><!-- SERVICES END-->');
 
         writeFile(readmeFilePath, readmeContent)
     }
@@ -51,16 +47,17 @@ function generateListComponent(currentFileContent, webpackInstance) {
         var componentSection = componentReg.exec(currentFileContent);
 
         if (componentSection) {
-
-            var selectorReg = /(adf)([a-zA-Z]|-)+((?!,)|(?! ))/g;
+            var selectorReg = /(selector)(\s?):(\s?)('|")((.|)*)('|")/gm;
             var selector = selectorReg.exec(componentSection[0]);
 
-                if (selector) {
+
+            if (selector) {
+                if (selector[0].indexOf('alfresco') > 0 || selector[0].indexOf('activiti') > 0 || selector[0].indexOf('adf') > 0) {
+                    var selector = selector[0].replace("selector: '[", "").replace("']", '').replace("]", '').replace("selector: '", "").replace("'", '');
                     var removeRoot = webpackInstance.resourcePath.substr(webpackInstance.resourcePath.indexOf('/ng2-components') + 16, webpackInstance.resourcePath.length);
                     var url = removeRoot.substr(0, removeRoot.indexOf('src')) + 'README.md';
 
-
-                    var link = '- [' + selector[0] + '](' + url + ')';
+                    var link = '- [' + selector + '](' + url + ')';
 
                     if (webpackInstance.resourcePath.match('ng2-alfresco-core')) {
                         readmeContent = readmeContent.replace('<!-- CORE START-->', '<!-- CORE START-->\n' + link);
@@ -71,14 +68,14 @@ function generateListComponent(currentFileContent, webpackInstance) {
                     }
                 }
             }
-
+        }
 
 
         var directiveReg = /(@Directive)(\s?)\((\s?){(\s?)((.|\n)*)}(\s?)\)/gm;
         var directiveSection = directiveReg.exec(currentFileContent);
 
         if (directiveSection) {
-            var selectorReg = /(adf)([a-zA-Z]|-)+((?!,)|(?! ))/g;
+            var selectorReg = /(selector)(\s?):(\s?)('|")((.|)*)('|")/gm;
             var selector = selectorReg.exec(directiveSection[0]);
 
             if (selector) {
@@ -106,32 +103,6 @@ function generateListComponent(currentFileContent, webpackInstance) {
     }
 }
 
-function generateListservices(currentFileContent, webpackInstance) {
-    if (!isFileEmpty(currentFileContent)) {
-
-        var servicesReg = /(@Injectable\(\))(([a-zA-Z ]|\n)*)/gm;
-        var servicesSection = servicesReg.exec(currentFileContent);
-
-        if (servicesSection) {
-
-            var selectorReg = /([a-zA-Z])+Service/g;
-            var selector = selectorReg.exec(servicesSection[0]);
-
-            if (selector) {
-                var url = webpackInstance.resourcePath.substr(webpackInstance.resourcePath.indexOf('/ng2-components') + 16, webpackInstance.resourcePath.length);
-
-                var link = '- [' + selector[0] + '](' + url + ')';
-
-                readmeContent = readmeContent.replace('<!-- SERVICES START-->', '<!-- SERVICES START-->\n' + link);
-
-            }
-        }
-
-        writeFile(readmeFilePath, readmeContent);
-
-        return true;
-    }
-}
 
 module.exports = function (input, map) {
     this.cacheable && this.cacheable();
@@ -146,7 +117,6 @@ module.exports = function (input, map) {
     if (readmeContent) {
         eraseContentList();
         generateListComponent(input, this);
-        generateListservices(input, this);
     }
     callback(null, input, map);
 }

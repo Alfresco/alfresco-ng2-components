@@ -15,30 +15,40 @@
  * limitations under the License.
  */
 
-import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { DataColumnListComponent } from 'ng2-alfresco-core';
-import { DataColumn, DataRowEvent, DataTableAdapter, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
-import { Observable } from 'rxjs/Rx';
+import {
+    Component,
+    Input,
+    Output,
+    ContentChild,
+    AfterContentInit,
+    EventEmitter,
+    OnChanges,
+    SimpleChanges
+} from '@angular/core';
+import { AlfrescoTranslationService, LogService, DataColumnListComponent } from 'ng2-alfresco-core';
+import {
+    ObjectDataTableAdapter,
+    DataTableAdapter,
+    DataRowEvent,
+    ObjectDataRow,
+    DataColumn
+} from 'ng2-alfresco-datatable';
+import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
-import { TaskDetailsModel } from '../models/task-details.model';
-import { TaskListService } from './../services/tasklist.service';
 
 @Component({
-    selector: 'adf-tasklist, activiti-tasklist',
-    templateUrl: './tasklist.component.html',
-    styleUrls: ['./tasklist.component.css']
+    selector: 'activiti-tasklist',
+    templateUrl: './activiti-tasklist.component.html',
+    styleUrls: ['./activiti-tasklist.component.css']
 })
-export class TaskListComponent implements OnChanges, AfterContentInit {
+export class ActivitiTaskList implements OnChanges, AfterContentInit {
 
-    requestNode: TaskQueryRequestRepresentationModel;
+    private requestNode: TaskQueryRequestRepresentationModel;
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
     @Input()
     appId: string;
-
-    @Input()
-    processInstanceId: string;
 
     @Input()
     processDefinitionKey: string;
@@ -72,15 +82,13 @@ export class TaskListComponent implements OnChanges, AfterContentInit {
 
     currentInstanceId: string;
 
-    isLoading: boolean = true;
-
     /**
      * Toggles custom data source mode.
      * When enabled the component reloads data from it's current source instead of the server side.
      * This allows generating and displaying custom data sets (i.e. filtered out content).
      *
      * @type {boolean}
-     * @memberOf TaskListComponent
+     * @memberOf ActivitiTaskList
      */
     hasCustomDataSource: boolean = false;
 
@@ -89,7 +97,12 @@ export class TaskListComponent implements OnChanges, AfterContentInit {
         { type: 'text', key: 'created', title: 'Created', cssClass: 'hidden', sortable: true }
     ];
 
-    constructor(private taskListService: TaskListService) {
+    constructor(private translateService: AlfrescoTranslationService,
+                private taskListService: ActivitiTaskListService,
+                private logService: LogService) {
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
+        }
     }
 
     ngAfterContentInit() {
@@ -135,7 +148,6 @@ export class TaskListComponent implements OnChanges, AfterContentInit {
         let changed: boolean = false;
 
         let appId = changes['appId'];
-        let processInstanceId = changes['processInstanceId'];
         let processDefinitionKey = changes['processDefinitionKey'];
         let state = changes['state'];
         let sort = changes['sort'];
@@ -143,8 +155,6 @@ export class TaskListComponent implements OnChanges, AfterContentInit {
         let assignment = changes['assignment'];
         let landingTaskId = changes['landingTaskId'];
         if (appId && appId.currentValue) {
-            changed = true;
-        } else if (processInstanceId && processInstanceId.currentValue) {
             changed = true;
         } else if (processDefinitionKey && processDefinitionKey.currentValue) {
             changed = true;
@@ -170,25 +180,23 @@ export class TaskListComponent implements OnChanges, AfterContentInit {
     }
 
     private load(requestNode: TaskQueryRequestRepresentationModel) {
-        this.isLoading = true;
-        this.loadTasksByState().subscribe(
-            (response) => {
-                let instancesRow = this.createDataRow(response);
-                this.renderInstances(instancesRow);
-                this.selectTask(requestNode.landingTaskId);
-                this.onSuccess.emit(response);
-                this.isLoading = false;
-            }, (error) => {
-                this.onError.emit(error);
-                this.isLoading = false;
+        this.taskListService.getTotalTasks(requestNode).subscribe(
+            (res) => {
+                requestNode.size = res.total;
+                this.taskListService.getTasks(requestNode).subscribe(
+                    (response) => {
+                        let instancesRow = this.createDataRow(response);
+                        this.renderInstances(instancesRow);
+                        this.selectTask(requestNode.landingTaskId);
+                        this.onSuccess.emit(response);
+                    }, (error) => {
+                        this.onError.emit(error);
+                    });
+            }, (err) => {
+                this.onError.emit(err);
             });
     }
 
-    private loadTasksByState(): Observable<TaskDetailsModel[]> {
-        return this.requestNode.state === 'all'
-               ? this.taskListService.findAllTasksWhitoutState(this.requestNode)
-               : this.taskListService.findAllTaskByState(this.requestNode);
-    }
     /**
      * Create an array of ObjectDataRow
      * @param instances
@@ -283,7 +291,6 @@ export class TaskListComponent implements OnChanges, AfterContentInit {
     private createRequestNode() {
         let requestNode = {
             appDefinitionId: this.appId,
-            processInstanceId: this.processInstanceId,
             processDefinitionKey: this.processDefinitionKey,
             text: this.name,
             assignment: this.assignment,

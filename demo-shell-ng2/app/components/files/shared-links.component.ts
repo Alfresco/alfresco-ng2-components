@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
-
-@Component({
-    selector: 'adf-shared-links-demo',
-    templateUrl: 'shared-links.component.html'
-})
-export class SharedLinksComponent {
-}
+export * from './comment.model';
+export * from './filter.model';
+export * from './icon.model';
+export * from './user.model';
+export * from './task-details.model';
+export * from './task-details.event';
+export * from './user-event.model';

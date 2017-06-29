@@ -20,9 +20,7 @@
   * [Properties](#properties-1)
   * [Events](#events-1)
 - [FileUploadingDialogComponent](#fileuploadingdialogcomponent)
-  * [Properties](#properties-2)
 - [UploadService](#uploadservice)
-  * [Ignore list configuration](#ignore-list-configuration)
   * [Events](#events-2)
 - [Build from sources](#build-from-sources)
 - [NPM scripts](#npm-scripts)
@@ -66,14 +64,14 @@ npm install ng2-alfresco-upload
 ## UploadButtonComponent
 
 ```html
-<adf-upload-button 
-    [parentId]="-my-"
+<alfresco-upload-button 
+    [rootFolderId]="-my-"
     [uploadFolders]="true"
     [multipleFiles]="false"
     [acceptedFilesType]=".jpg,.gif,.png,.svg"
     [versioning]="false"
     (onSuccess)="customMethod($event)">
-</adf-upload-button>
+</alfresco-upload-button>
 <file-uploading-dialog></file-uploading-dialog>
 ```
 
@@ -83,17 +81,14 @@ npm install ng2-alfresco-upload
 | --- | --- | --- | --- |
 | disabled | boolean | false | Toggle component disabled state |
 | **(deprecated)** showNotificationBar | boolean | true | Hide/show notification bar. **Deprecated in 1.6.0: use UploadService events and NotificationService api instead.** |
-| uploadFolders | boolean | false | Allow/disallow upload folders (only for Chrome) |
+| uploadFolders | boolean | false | Allow/disallow upload folders (only for chrome) |
 | multipleFiles | boolean | false | Allow/disallow multiple files |
 | acceptedFilesType | string | * |  array of allowed file extensions , example: ".jpg,.gif,.png,.svg" |
 | **(deprecated)** currentFolderPath | string | '/Sites/swsdp/documentLibrary' | define the path where the files are uploaded. **Deprecated in 1.6.0: use rootFolderId instead.** |
-| **(deprecated)** rootFolderId | string | '-root-' | The ID of the root folder node.
-**Deprecated in 1.6.2: use parentId instead.** |
-| parentId | string | empty | The ID of the root. It can be the nodeId if you are using the upload for the Content Service or taskId/processId for the Process Service. |
-| versioning | boolean | false | Versioning false is the default uploader behaviour and it renames the file using an integer suffix if there is a name clash. Versioning true to indicate that a major version should be created |
+| rootFolderId | string | '-root-' | The ID of the root folder node. |
+| versioning | boolean | false | Versioning false is the default uploader behaviour and it rename using an integer suffix if there is a name clash. Versioning true to indicate that a major version should be created |
 | staticTitle | string | (predefined) | define the text of the upload button |
-| **(deprecated)** disableWithNoPermission ***use node permission directive from core instead*** | boolean | false |  If the value is true and the user doesn't have the permission to delete the node the button will be disabled |
-| tooltip | string | | Custom tooltip |
+| disableWithNoPermission | boolean | false |  If the value is true and the user doesn't have the permission to delete the node the button will be disabled |
 
 ### Events
 
@@ -110,10 +105,10 @@ The UploadButtonComponent provides the event permissionEvent that is raised when
 You can subscribe to this event from your component and use the NotificationService to show a message.
 
 ```html
-<adf-upload-button
+<alfresco-upload-button
     [rootFolderId]="currentFolderId"
     (permissionEvent)="onUploadPermissionFailed($event)">
-</adf-upload-button>
+</alfresco-upload-button>
 ```
 
 ```ts
@@ -132,28 +127,28 @@ export class MyComponent {
 
 #### How to disable the button when the delete permission is missing
 
-You can easily disable the button when the user doesn't have the permission to perform the action.
+You can easily disable the button when the user doesn't own the permission to perform the action.
 The UploadButtonComponent provides the property disableWithNoPermission that can be true. In this way the button should be disabled if the delete permission is missing for the node.
 
 ```html
-<adf-upload-button
+<alfresco-upload-button
     [rootFolderId]="currentFolderId"
     [disableWithNoPermission]="true">
-</adf-upload-button>
+</alfresco-upload-button>
 ```
 
 ![Upload disable button](docs/assets/upload-disable-button.png)
 
 ## UploadDragAreaComponent
 
-This component provides a drag and drop area to upload files to Alfresco.
+This component, provide a drag and drop are to upload files to alfresco.
 
 ```html
-<adf-upload-drag-area (onSuccess)="customMethod($event)">
+<alfresco-upload-drag-area (onSuccess)="customMethod($event)">
     <div style="width: 200px; height: 100px; border: 1px solid #888888">
         DRAG HERE
     </div>
-</adf-upload-drag-area>
+</alfresco-upload-drag-area>
 <file-uploading-dialog></file-uploading-dialog>
 ```
 
@@ -171,12 +166,11 @@ export class AppComponent {
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| disabled | boolean | false | Toggle component disabled state |
-| **(deprecated)** enabled | boolean | true | Toggle component enabled state |
+| enabled | boolean | true | Toggle component enabled state |
 | **(deprecated)** showNotificationBar | boolean | true |  Hide/show notification bar. **Deprecated in 1.6.0: use UploadService events and NotificationService api instead.** |
 | rootFolderId | string | '-root-' | The ID of the root folder node. |
 | **(deprecated)** currentFolderPath | string | '/' | define the path where the files are uploaded. **Deprecated in 1.6.0: use rootFolderId instead.** |
-| versioning | boolean | false |  Versioning false is the default uploader behaviour and it renames the file using an integer suffix if there is a name clash. Versioning true to indicate that a major version should be created  | 
+| versioning | boolean | false |  Versioning false is the default uploader behaviour and it rename using an integer suffix if there is a name clash. Versioning true to indicate that a major version should be created  | 
 
 ### Events
 
@@ -186,47 +180,16 @@ export class AppComponent {
 
 ## FileUploadingDialogComponent
 
-This component provides a dialog that shows all the files uploaded with upload button or drag & drop area components.
+This component provides a dialog that shows all the files uploaded with upload button or drag & drop area components. 
 This component should be used in combination with upload button or drag & drop area.
 
 ```html
 <file-uploading-dialog></file-uploading-dialog>
 ```
 
-### Properties
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| position | string | 'right' | Dialog position. Accepted values are 'left' or 'right' |
-
 ## UploadService
 
 Provides access to various APIs related to file upload features.
-
-### Ignore list configuration
-
-Is possible add an ignore list for files that you don't want to allow upload on your CS.
-The configuration of this service is saved in the ***app.config.json file***.If you want more details about the configuration service follow this [link](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-alfresco-core#appconfigservice).
-In the example below you can see how filtered out the : '.git', '.DS_Store' and 'desktop.ini'.
-
-**app.config.json**
-
-```json
-{
-    "ecmHost": "http://localhost:3000/ecm",
-    "bpmHost": "http://localhost:3000/bpm",
-    "application": {
-        "name": "Alfresco"
-    },
-    "files": {
-          "excluded": [".DS_Store", "desktop.ini", ".git"]
-    }
-}
-```
-
-Note:
-- Standard glob patterns work.
-- You can end patterns with a forward slash / to specify a directory.
 
 ### Events
 
@@ -240,7 +203,6 @@ Note:
 | fileUploadAborted | FileUploadEvent | Raised when file upload gets aborted by the server. |
 | fileUploadError | FileUploadEvent | Raised when an error occurs to file upload. |
 | fileUploadComplete | FileUploadCompleteEvent | Raised when file upload is complete. |
-| fileUploadDelete | FileUploadDeleteEvent | Raised when uploaded file is removed from server. |
 
 ## Build from sources
 

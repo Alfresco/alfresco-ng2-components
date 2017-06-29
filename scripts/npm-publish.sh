@@ -17,10 +17,10 @@ cd "$DIR/../demo-shell-ng2"
 show_help() {
     echo "Usage: npm-publish.sh"
     echo ""
-    echo "-f or --force publish the package with force"
-    echo "-r or --registry to publish in an alternative npm registry -registry 'http://npm.local.me:8080/' "
+    echo "-f or -force publish the package with force"
+    echo "-r or -registry to publish in an alternative npm registry -registry 'http://npm.local.me:8080/' "
     echo "-token auth token for publish in the npm registry"
-    echo "-t or --tag to add a tag when publish a package"
+    echo "-t or -tag to add a tag when publish a package"
     echo "--sleep add a sleep before any publish"
     echo "-gitjsapi to build all the components against a commit-ish version of the JS-API"
 }

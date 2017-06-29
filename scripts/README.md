@@ -8,16 +8,16 @@
 
 
 The Alfresco application development framework comes with a demo project that you can run to get a
-feel of what's available.
+feel for what's available.
 
-* Start by navigating into the app development framework source folder, and then the scripts folder:
+* Start by navigating into the app development framework source folder, and then the script folder:
 
 ```ssh
  cd alfresco-ng2-components
  cd scripts
 ```
 
-# Quick examples developed with ADF
+# Quick examples if you want develop the ADF framework
 
 * Start the demo shell using the JS-API from the development branch and the local component in the ng2-components folder
 
@@ -31,7 +31,7 @@ feel of what's available.
 ./npm-build-all.sh -gitjsapi development
 ```
 
-* Build the ng2-components folder using the JS-API from the development branch and run the tests on it
+* Build the ng2-components folder using the JS-API from the development branch and run the test on it
 
 ```sh
 ./npm-build-all.sh -t -gitjsapi development
@@ -39,32 +39,32 @@ feel of what's available.
 
 # start.sh
 
-***start.sh*** script provide an easy way to deal with the npm command and the correct sequence to run the task on demo-shell during development phases.
+***start.sh*** script provide a easy way to deal with the npm command and the correct sequence to run the task on demo-shell during develop phases.
 
 ## Options
 
-The default behaviour of the ***start.sh*** script always runs the install and the start of the demo shell on the port 3000, but with some of the options below this behaviour can be changed.
+The default behaviour of the ***start.sh*** script always run the install and the start of the demo shell on the port 3000, anyway with some of the options below this behaviour can be changed 
 All the commands before can be used in combination
 
 | Option | Description |
 | --- | --- |
 | -h or --help    | show the help  |
 | -u or --update  | run the update of the node_modules packages on the demo shell  |
-| -c or --clean   | clean the demo shell folder before starting it  |
-| -t or --test    | run the tests on the demo-shell  |
+| -c or --clean   | clean the demo shell folder before to start it  |
+| -t or --test    | run the test on the demo-shell  |
 | -r or --registry    |  Start the demo using an alternative npm registry  |
-| -v or --version    | Use the version defined in the pacakge.json . Download from npm and Install a different version of the ng2-components (this option is not compatible with -dev)  |
+| -v or --version    | Instead to use the version defined in the pacakge.json . Download from npm and Install a different version of the ng2-components (this option is not compatible with -dev)  |
 | -si or --skipinstall    | skip the install of the node_modules  |
-| -ss or --skipstart    | skip the start of the demo shell and only build it providing a dist folder in the relative demo-shell-ng2 folder  |
-| -dev or --develop    | Start the demo in development mode building the relative folder ng2-components with all the components and pointing to those components instead of the ng2-components present in the node_modules folder |
-| -dist     | Start the demo shell using a light server and the files built in the dist folder, particular useful to test the final result of the project |
-| -gitjsapi   | Start the demo shell using an alfresco-js-api referenced by commit-ish version of the JS-API |
-| -vjsapi   | Use the version defined in the pacakge.json. Download from npm and install a different version of JS-API  |
+| -ss or --skipstart    | skip the start of the demo shell and oly build it providing a dist folder in the relative demo-shell-ng2 folder  |
+| -dev or --develop    | Start the demo in development mode building the relative folder ng2-components with all the components and pointing to those components instead to the ng2-components present in the node_modules folder |
+| -dist     | Start the demo shell using a light server and the files builded in the dist folder, particular useful to test the final result of the project |
+| -gitjsapi   | if you want start the demo shell using an alfresco-js-api referenced by commit-ish version of the JS-API |
+| -vjsapi   | Instead to use the version defined in the pacakge.json . Download from npm and Install a different version of JS-API  |
 
 
 ## Examples
 
-* Start the demo and install all the dependencies 
+* Start the demo and Install all the dependencies 
 
 ```sh
 ./start.sh 
@@ -88,7 +88,7 @@ All the commands before can be used in combination
 ./start.sh -update or -u
 ```
 
-* Use instead the version defined in the pacakge.json. Download from npm and install a different version of the ng2-components (this option is not compatible with -dev)  |
+* Instead to use the version defined in the pacakge.json . Download from npm and Install a different version of the ng2-components (this option is not compatible with -dev)  |
 
 ```sh
 ./start.sh -version or -v COMPONENTS_VERSION
@@ -96,19 +96,19 @@ All the commands before can be used in combination
 ./start.sh -v 1.4.0
 ```
 
-* Start the demo in development mode building the relative folder ng2-components with all the components and pointing to this component instead of the node_modules one
+* Start the demo in development mode building the relative folder ng2-components with all the components and pointing to this component instead to the node_modules one
 
 ```sh
 ./start.sh -develop or -dev
 ```
 
-* Start the demo shell using a light server using the files built in the dist folder
+* Start the demo shell using a light server using the files builded in the dist folder
 
 ```sh
 ./start.sh -dist
 ```
 
-* Start the demo shell using an alfresco-js-api referenced by commit-ish version of the JS-API
+* If you want start the demo shell using an alfresco-js-api referenced by commit-ish version of the JS-API
 
 ```sh
 ./start.sh -gitjsapi commit-ish
@@ -118,14 +118,14 @@ All the commands before can be used in combination
 ./start.sh -gitjsapi de92be966e2ce7eca642ca9e9d7647ba4f849356
 ```
 
-* Start the alfresco-js-api against a commit-ish version of the JS-API
+* If you want start the alfresco-js-api against a commit-ish version of the JS-API
 
 ```sh
 ./start.sh -vjsapi 1.4.0
 
 ```
 
-* Run the Demo shell tests
+* If you want run the Demo shell test
 
 ```sh
 ./start.sh -t
@@ -134,7 +134,7 @@ All the commands before can be used in combination
 
 # npm-build-all.sh
 
-***npm-build-all.sh*** this script provides an easy way to deal with the npm command and the correct sequence to build the ng2-components
+***npm-build-all.sh*** this script provide a easy way to deal with the npm command and the correct sequence to build the ng2-components
 
 ## Options
 
@@ -144,32 +144,32 @@ The default behaviour of the ***npm-build-all.sh*** install node_modules and bui
 | Option | Description |
 | --- | --- |
 | -h or --help    | show the help  |
-| -t or --test    | Run the tests, this parameter accepts also a wildcard to execute tests for example -t "ng2-alfresco-core" |
-| -c or --clean   | clean the ng2_components folders before start from all the temp builds files as node_modules  |
-| -gitjsapi   | start the demo shell using an alfresco-js-api referenced by commit-ish version of the JS-API |
-| -si or --skipinstall    | skip the installation of the node_modules  |
-| -sb or --skipbuild    | skip the creation of the bundles files and skip the errors and lint checks inside the components |
+| -t or --test    | If you want run the test, this parameter accept also a wildecard to execute test for example -t "ng2-alfresco-core" |
+| -c or --clean   | clean the ng2_components folders before to start from all the temp builds file as node_modules  |
+| -gitjsapi   | if you want start the demo shell using an alfresco-js-api referenced by commit-ish version of the JS-API |
+| -si or --skipinstall    | skip the install of the node_modules  |
+| -sb or --skipbuild    | skip the creation of the bundles files and skip the  errors and lint check inside the components |
 
       
-* Build all your local components:
+* If you want to build all your local component:
 
 ```sh
 ./npm-build-all.sh
 ```
 
-* Build all your local components and run the tests:
+* If you want to build all your local component and run the test:
 
 ```sh
 ./npm-build-all.sh -t or -test
 ```
 
-* Clean the ng2-components folder node_modules before build
+* If you want clean the ng2-components folder node_modules before to build
 
 ```sh
 ./npm-build-all.sh -c
 ```
 
-* Build all the components against a commit-ish version of the JS-API
+* If you want build to build all the components against a commit-ish version of the JS-API
 
 ```sh
  ./npm-build-all.sh -gitjsapi commit-ish
@@ -179,19 +179,19 @@ The default behaviour of the ***npm-build-all.sh*** install node_modules and bui
  ./npm-build-all.sh -gitjsapi de92be966e2ce7eca642ca9e9d7647ba4f849356
 ```
 
-* Skip initial build and run only all the test
+* If you want avoid initial build and run only all the test
 
 ```sh
 ./npm-build-all.sh -s -t
 ```
 
-* Skip initial installation of node_modules
+* If you want skip initial install node_modules
 
 ```sh
 ./npm-build-all.sh -si
 ```
 
-* Clean all your local components and the demo shell:
+* If you want clean all your local component and the demo shell:
 
 ```sh
 ./npm-clean.sh
@@ -209,7 +209,7 @@ For development environment configuration please refer to [project docs](../demo
 | Option | Description |
 | --- | --- |
 | -h or --help    | show the help  |
-| -t or --test    | run the test suites after "npm install" of each component
+| -t or --test    | If you want run the test suites after "npm install" of each component
 
 ## Examples
 
@@ -225,13 +225,13 @@ For development environment configuration please refer to [project docs](../demo
 ./npm-relock-pkgs.sh ng2-alfresco-core ng2-alfresco-search
 ```
 
-* Regenerate package-lock.json files for every package and run test suites for them
+* Regenerate package-lock.json files for every package and run test suite for them
 
 ```sh
 ./npm-relock-pkgs.sh -t
 ```
 
-* Regenerate package-lock.json files for for ng2-alfresco-core and ng2-alfresco-search components and run test suites for them
+* Regenerate package-lock.json files for for ng2-alfresco-core and ng2-alfresco-search components and run test suite for them
 
 ```sh
 ./npm-relock-pkgs.sh -t ng2-alfresco-core ng2-alfresco-search
@@ -239,13 +239,14 @@ For development environment configuration please refer to [project docs](../demo
 
 # npm-clean.sh
 
-***npm-clean.sh*** clean all the projects folders : ng2-components and  demo-shell-ng2.
+***npm-clean.sh*** clean all the projects folder : ng2-components, ng2-components/*.*/demo and  demo-shell-ng2.
 
 ## Options
 
 | Option | Description |
 | --- | --- |
 | -h or --help    | show the help  |
+| -sd or --skipDemo   | skip the demo folder clean |
 
 # npm-check-bundles.sh
 
@@ -256,7 +257,7 @@ For development environment configuration please refer to [project docs](../demo
 | Option | Description |
 | --- | --- |
 | -h or --help    | show the help  |
-| -r or --registry   | against which register you want to do this check |
+| -r or --registry   | against which register you want do this check |
 | -v or --version    | the version of the components to check |
 
 
@@ -269,6 +270,8 @@ Add a package across all the pacakge json in the project
 | -h or --help    | show the help  |
 | --save   | save it in dependencies |
 | --save-dev   | save it in dev dependencies |
+| -sd   | skip the demo projects |
+
 
 * Add a package in the project
 

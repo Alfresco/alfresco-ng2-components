@@ -32,15 +32,13 @@ export class FilterProcessRepresentationModel {
     index: number;
 
     constructor(obj?: any) {
-        if (obj) {
-            this.id = obj.id || null;
-            this.appId = obj.appId || null;
-            this.name = obj.name || null;
-            this.recent = !!obj.recent;
-            this.icon = obj.icon || null;
-            this.filter = obj.filter || null;
-            this.index = obj.index;
-        }
+        this.id = obj && obj.id || null;
+        this.appId = obj && obj.appId || null;
+        this.name = obj && obj.name || null;
+        this.recent = obj && obj.recent || false;
+        this.icon = obj && obj.icon || null;
+        this.filter = obj && obj.filter || null;
+        this.index = obj && obj.index;
     }
 
     hasFilter() {
@@ -61,9 +59,9 @@ export class FilterParamsModel {
     index: number;
 
     constructor(obj?: any) {
-        this.id = obj.id || null;
-        this.name = obj.name || null;
-        this.index = obj.index;
+        this.id = obj && obj.id || null;
+        this.name = obj && obj.name || null;
+        this.index = obj && obj.index;
     }
 }
 
@@ -79,7 +77,7 @@ export class ProcessFilterParamRepresentationModel {
     sort: string;
 
     constructor(obj?: any) {
-        this.state = obj.state || null;
-        this.sort = obj.sort || null;
+        this.state = obj && obj.state || null;
+        this.sort = obj && obj.sort || null;
     }
 }

@@ -16,7 +16,9 @@
  */
 
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs/Rx';
+import { ActivatedRoute } from '@angular/router';
+import {Location} from '@angular/common';
 
 @Component({
     selector: 'activiti-show-diagram',
@@ -25,19 +27,23 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ActivitiShowDiagramComponent {
 
+    sub: Subscription;
     processDefinitionId: string;
-    appId: string;
 
     constructor(private route: ActivatedRoute,
-                private router: Router) {
-        this.route.params.subscribe(params => {
+                private location: Location) {
+        this.sub = this.route.params.subscribe(params => {
             this.processDefinitionId = params['processDefinitionId'];
-            this.appId = params['appId'];
         });
+
+    }
+
+    ngOnDestroy() {
+        this.sub.unsubscribe();
     }
 
     onClickBack() {
-        this.router.navigate(['/activiti/apps/' + this.appId + '/processes']);
+        this.location.back();
     }
 
 }

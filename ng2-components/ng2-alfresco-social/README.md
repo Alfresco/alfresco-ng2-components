@@ -37,7 +37,7 @@ npm install ng2-alfresco-social
 
 ## Basic usage
 
-In this component there are two different components:
+In this component are present two different components:
 
 * adf-like
 * adf-rating

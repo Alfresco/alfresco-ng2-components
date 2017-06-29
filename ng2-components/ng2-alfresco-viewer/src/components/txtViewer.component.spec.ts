@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { DebugElement, SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { TxtViewerComponent } from './txtViewer.component';
+import { DebugElement, SimpleChange }    from '@angular/core';
 import {
-    AlfrescoApiService,
     AlfrescoAuthenticationService,
     AlfrescoSettingsService,
+    AlfrescoApiService,
     CoreModule
 } from 'ng2-alfresco-core';
-import { TxtViewerComponent } from './txtViewer.component';
 
 describe('Test ng2-alfresco-viewer Text View component', () => {
 
@@ -64,7 +64,7 @@ describe('Test ng2-alfresco-viewer Text View component', () => {
             component.ngOnChanges({ 'urlFile': change }).then(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
-                    expect(element.querySelector('.adf-txt-viewer-content').textContent).toContain('example');
+                    expect(element.querySelector('#adf-viewer-text-container').textContent).toContain('example');
                     done();
                 });
             });
@@ -78,7 +78,7 @@ describe('Test ng2-alfresco-viewer Text View component', () => {
             component.ngOnChanges({ 'blobFile': change }).then(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
-                    expect(element.querySelector('.adf-txt-viewer-content').textContent).toContain('example');
+                    expect(element.querySelector('#adf-viewer-text-container').textContent).toContain('example');
                     done();
                 });
             });

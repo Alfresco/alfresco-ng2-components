@@ -18,6 +18,7 @@ eval projects=( "ng2-alfresco-core"
     "ng2-alfresco-search"
     "ng2-alfresco-social"
     "ng2-alfresco-tag"
+    "ng2-alfresco-social"
     "ng2-alfresco-upload"
     "ng2-alfresco-viewer"
     "ng2-alfresco-webscript"
@@ -68,12 +69,6 @@ update_component_version() {
    sed "${sedi[@]}" "s/\"version\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"version\": \"${VERSION}\"/g"  ${DESTDIR}/package.json
 }
 
-clean_lock() {
-   echo "====== clean lock file ${1} ======"
-   DESTDIR="$DIR/../ng2-components/${1}"
-   rm ${DESTDIR}/package-lock.json
-}
-
 update_component_dependency_version(){
    DESTDIR="$DIR/../ng2-components/${1}"
 
@@ -84,7 +79,14 @@ update_component_dependency_version(){
        sed "${sedi[@]}" "s/\"${projects[$j]}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${projects[$j]}\": \"${VERSION}\"/g"  ${DESTDIR}/package.json
        sed "${sedi[@]}" "s/\"${projects[$j]}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${projects[$j]}\": \"~${VERSION}\"/g"  ${DESTDIR}/package.json
 
-    done
+       if [[ "${1}" != "ng2-alfresco-core" ]]
+       then
+        echo "====== UPDATE DEPENDENCY VERSION of ${projects[$j]} to ~${VERSION} in ${1} DEMO ======"
+        sed "${sedi[@]}" "s/\"${projects[$j]}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${projects[$j]}\": \"${VERSION}\"/g"  ${DESTDIR}/demo/package.json
+        sed "${sedi[@]}" "s/\"${projects[$j]}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${projects[$j]}\": \"~${VERSION}\"/g"  ${DESTDIR}/demo/package.json
+       fi
+
+     done
 }
 
 update_total_build_dependency_version(){
@@ -99,23 +101,30 @@ update_total_build_dependency_version(){
 }
 
 update_total_build_dependency_js_version(){
-    echo "====== UPDATE DEPENDENCY VERSION of total build to ~${1} in ${DESTDIR}======"
+    echo "====== UPDATE VERSION OF TOTAL BUILD to  alfresco-js-api version ${1} ======"
     DESTDIR="$DIR/../ng2-components/"
     PACKAGETOCHANGE="alfresco-js-api"
 
+    echo "====== UPDATE DEPENDENCY VERSION of total build to ~${1} in ${DESTDIR}======"
     sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
-    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
+    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"~${1}\"/g"  ${DESTDIR}/package.json
 }
 
 update_component_js_version(){
-   echo "====== UPDATE DEPENDENCY VERSION of alfresco-js-api in ${1} to ${2} ======"
+   echo "====== UPDATE DEPENDENCY VERSION of alfresco-js-api in ${1} to ${VERSION} ======"
    DESTDIR="$DIR/../ng2-components/${1}"
 
    PACKAGETOCHANGE="alfresco-js-api"
 
-   sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"${2}\"/g"  ${DESTDIR}/package.json
-   sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"${2}\"/g"  ${DESTDIR}/package.json
+   echo "====== UPDATE DEPENDENCY VERSION of alfresco-js-api to ~${2} in ${1}======"
 
+   sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"${2}\"/g"  ${DESTDIR}/package.json
+   sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"~${2}\"/g"  ${DESTDIR}/package.json
+
+   echo "====== UPDATE DEPENDENCY VERSION of alfresco-js-api to ${2} in ${1} DEMO ======"
+
+   sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"${2}\"/g"  ${DESTDIR}/demo/package.json
+   sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"~${2}\"/g"  ${DESTDIR}/demo/package.json
 }
 
 update_demo_shell_dependency_version(){
@@ -124,8 +133,9 @@ update_demo_shell_dependency_version(){
    do
     echo "====== UPDATE VERSION OF DEMO-SHELL to ${projects[$k]} version ${VERSION} ======"
     DESTDIR="$DIR/../demo-shell-ng2/"
-
     sed "${sedi[@]}" "s/\"${projects[$k]}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${projects[$k]}\": \"${VERSION}\"/g"  ${DESTDIR}/package.json
+
+    echo "====== UPDATE DEPENDENCY VERSION of ${1} to ~${VERSION} in ${DESTDIR}======"
     sed "${sedi[@]}" "s/\"${projects[$k]}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${projects[$k]}\": \"~${VERSION}\"/g"  ${DESTDIR}/package.json
    done
 }
@@ -136,14 +146,11 @@ update_demo_shell_js_version(){
     PACKAGETOCHANGE="alfresco-js-api"
 
     sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
-    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
+
+    echo "====== UPDATE DEPENDENCY VERSION of ${PACKAGETOCHANGE}  to ~${1} in ${DESTDIR}======"
+    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"~${1}\"/g"  ${DESTDIR}/package.json
 }
 
-clean_lock_demo_shell(){
-   echo "====== clean lock file demo-shell ======"
-    DESTDIR="$DIR/../demo-shell-ng2/"
-    rm ${DESTDIR}/package-lock.json
-}
 
 while [[ $1  == -* ]]; do
     case "$1" in
@@ -179,7 +186,6 @@ if $EXEC_COMPONENT == true; then
     # use for loop to read all values and indexes
     for (( i=0; i<${projectslength}; i++ ));
     do
-       clean_lock ${projects[$i]}
        echo "====== UPDATE COMPONENT ${projects[$i]} ======"
        update_component_version ${projects[$i]}
        update_component_dependency_version ${projects[$i]}
@@ -187,6 +193,7 @@ if $EXEC_COMPONENT == true; then
        if $JS_API == true; then
 
         if $DIFFERENT_JS_API == true; then
+
             update_component_js_version ${projects[$i]} ${VERSION_JS_API}
         else
             update_component_js_version ${projects[$i]} ${VERSION}
@@ -210,8 +217,6 @@ fi
 
 echo "====== UPDATE DEMO SHELL ======"
 
-clean_lock_demo_shell
-
 update_demo_shell_dependency_version
 
 if $JS_API == true; then
@@ -224,9 +229,3 @@ fi
 
 DESTDIR="$DIR/../demo-shell-ng2/"
 sed "${sedi[@]}" "s/\"version\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"version\": \"${VERSION}\"/g"  ${DIR}/../demo-shell-ng2/package.json
-
-if $EXEC_COMPONENT == true; then
-    rm ${DIR}/../ng2-components/package-lock.json
-    sed "${sedi[@]}" "s/\"version\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"version\": \"${VERSION}\"/g"  ${DIR}/../ng2-components/package.json
-    sed "${sedi[@]}" "s/\"version\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"version\": \"${VERSION}\"/g"  ${DIR}/../ng2-components/package-base.json
-fi

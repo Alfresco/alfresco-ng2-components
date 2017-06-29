@@ -18,6 +18,7 @@
 import { ElementRef } from '@angular/core';
 import { FileInfo } from './../utils/file-utils';
 import { UploadDirective } from './upload.directive';
+import { FileInfo } from './../utils/file-utils';
 
 describe('UploadDirective', () => {
 

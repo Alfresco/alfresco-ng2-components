@@ -7,6 +7,7 @@ eval EXEC_CLEAN_DEMO=true
 show_help() {
     echo "Usage: npm-clean.sh"
     echo ""
+    echo "-sd or -skipDemo skip the clean of the demo folder of any components"
 }
 
 eval projects=( "ng2-activiti-diagrams"
@@ -21,14 +22,19 @@ eval projects=( "ng2-activiti-diagrams"
       "ng2-alfresco-search"
       "ng2-alfresco-social"
       "ng2-alfresco-tag"
+      "ng2-alfresco-social"
       "ng2-alfresco-upload"
       "ng2-alfresco-viewer"
       "ng2-alfresco-webscript"
       "ng2-alfresco-userinfo" )
 
+clea_demo() {
+    EXEC_CLEAN_DEMO=false
+}
 while [[ $1  == -* ]]; do
     case "$1" in
       -h|--help|-\?) show_help; exit 0;;
+      -sd|--skipDemo) clea_demo; shift;;
       -*) echo "invalid option: $1" 1>&2; show_help; exit 0;;
     esac
 done
@@ -40,6 +46,15 @@ do
     echo "====== clean component: ${PACKAGE} ====="
     cd "$DIR/../ng2-components/${PACKAGE}"
     npm run clean
+
+    if $EXEC_CLEAN_DEMO == true; then
+       if [ -d "$DIR/../ng2-components/${PACKAGE}/demo" ]; then
+        echo "====== clean component demo: ${PACKAGE} ====="
+        cd "$DIR/../ng2-components/${PACKAGE}/demo"
+        npm install rimraf
+        npm run clean
+       fi
+    fi
 done
 
 cd "$DIR/../demo-shell-ng2"

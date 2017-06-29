@@ -15,45 +15,31 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
-import { fakeApi, fakeError, fakeSearch } from '../assets/search.service.mock';
-import { CookieServiceMock } from './../assets/cookie.service.mock';
-import { AlfrescoApiService } from './alfresco-api.service';
-import { AlfrescoSettingsService } from './alfresco-settings.service';
-import { AppConfigModule } from './app-config.service';
-import { AuthenticationService } from './authentication.service';
-import { CookieService } from './cookie.service';
-import { LogService } from './log.service';
-import { SearchService } from './search.service';
-import { StorageService } from './storage.service';
-import { UserPreferencesService } from './user-preferences.service';
+import { TestBed, async } from '@angular/core/testing';
+import { AlfrescoSearchService } from './alfresco-search.service';
+import { CoreModule, AlfrescoApiService } from 'ng2-alfresco-core';
+import { fakeApi, fakeSearch, fakeError } from '../assets/alfresco-search.service.mock';
 
-describe('SearchService', () => {
+declare let jasmine: any;
 
-    let service: SearchService;
+describe('AlfrescoSearchService', () => {
+
+    let service: AlfrescoSearchService;
     let apiService: AlfrescoApiService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                AppConfigModule
+                CoreModule
             ],
             providers: [
-                SearchService,
-                AuthenticationService,
-                AlfrescoApiService,
-                AlfrescoSettingsService,
-                AuthenticationService,
-                StorageService,
-                UserPreferencesService,
-                { provide: CookieService, useClass: CookieServiceMock },
-                LogService
+                AlfrescoSearchService
             ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
-        service = TestBed.get(SearchService);
+        service = TestBed.get(AlfrescoSearchService);
         apiService = TestBed.get(AlfrescoApiService);
         spyOn(apiService, 'getInstance').and.returnValue(fakeApi);
     });

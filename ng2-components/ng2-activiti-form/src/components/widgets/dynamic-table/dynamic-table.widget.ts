@@ -15,25 +15,29 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
+import { WidgetComponent , baseHost } from './../widget.component';
+import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './dynamic-table.widget.model';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
+import { FormFieldModel } from '../core/form-field.model';
 import { FormService } from './../../../services/form.service';
-import { baseHost , WidgetComponent } from './../widget.component';
-import { DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './dynamic-table.widget.model';
 
 @Component({
     selector: 'dynamic-table-widget',
     templateUrl: './dynamic-table.widget.html',
-    styleUrls: ['./dynamic-table.widget.scss'],
-    host: baseHost,
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./dynamic-table.widget.css'],
+    host: baseHost
 })
-export class DynamicTableWidgetComponent extends WidgetComponent implements OnInit {
+export class DynamicTableWidget extends WidgetComponent implements OnInit {
 
     ERROR_MODEL_NOT_FOUND = 'Table model not found';
+
+    @Input()
+    field: FormFieldModel;
+
+    @Input()
+    readOnly: boolean = false;
 
     content: DynamicTableModel;
 
@@ -60,7 +64,7 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
     forceFocusOnAddButton() {
         if (this.content) {
             this.cd.detectChanges();
-            let buttonAddRow = <HTMLButtonElement> this.elementRef.nativeElement.querySelector('#' + this.content.id + '-add-row');
+            let buttonAddRow = <HTMLButtonElement>this.elementRef.nativeElement.querySelector('#' + this.content.id + '-add-row');
             if (this.isDynamicTableReady(buttonAddRow)) {
                 buttonAddRow.focus();
             }

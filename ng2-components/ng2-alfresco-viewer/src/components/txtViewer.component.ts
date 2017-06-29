@@ -15,19 +15,17 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
-import { SimpleChanges } from '@angular/core';
-import { Http, RequestOptions, Response, ResponseContentType } from '@angular/http';
+import { Component, Input } from '@angular/core';
+import { SimpleChanges }    from '@angular/core';
+import { Http, Response, RequestOptions, ResponseContentType }  from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 @Component({
-    selector: 'adf-txt-viewer',
+    selector: 'txt-viewer',
     templateUrl: './txtViewer.component.html',
-    styleUrls: ['./txtViewer.component.scss'],
-    host: { 'class': 'adf-txt-viewer' },
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./txtViewer.component.css']
 })
-export class TxtViewerComponent implements OnChanges {
+export class TxtViewerComponent {
 
     @Input()
     urlFile: any;

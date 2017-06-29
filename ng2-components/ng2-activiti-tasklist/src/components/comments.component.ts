@@ -15,19 +15,21 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { Observable, Observer } from 'rxjs/Rx';
-
+import { Component, Input, Output, ViewChild, OnChanges, SimpleChanges, EventEmitter } from '@angular/core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { Comment } from '../models/comment.model';
-import { PeopleService } from '../services/people.service';
-import { TaskListService } from '../services/tasklist.service';
+import { Observer, Observable } from 'rxjs/Rx';
+
+declare let dialogPolyfill: any;
 
 @Component({
-    selector: 'adf-comments, activiti-comments',
-    templateUrl: './comments.component.html',
-    styleUrls: ['./comments.component.css']
+    selector: 'activiti-comments',
+    templateUrl: './activiti-comments.component.html',
+    styleUrls: ['./activiti-comments.component.css'],
+    providers: [ActivitiTaskListService]
 })
-export class CommentsComponent implements OnChanges {
+export class ActivitiComments implements OnChanges {
 
     @Input()
     taskId: string;
@@ -38,6 +40,9 @@ export class CommentsComponent implements OnChanges {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
+    @ViewChild('dialog')
+    dialog: any;
+
     comments: Comment [] = [];
 
     private commentObserver: Observer<Comment>;
@@ -45,14 +50,18 @@ export class CommentsComponent implements OnChanges {
 
     message: string;
 
-    beingAdded: boolean = false;
-
     /**
      * Constructor
      * @param translate Translation service
      * @param activitiTaskList Task service
      */
-    constructor(private activitiTaskList: TaskListService, private peopleService: PeopleService) {
+    constructor(private translateService: AlfrescoTranslationService,
+                private activitiTaskList: ActivitiTaskListService) {
+
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
+        }
+
         this.comment$ = new Observable<Comment>(observer =>  this.commentObserver = observer).share();
         this.comment$.subscribe((comment: Comment) => {
             this.comments.push(comment);
@@ -70,58 +79,51 @@ export class CommentsComponent implements OnChanges {
         }
     }
 
-    private getTaskComments(taskId: string): void {
+    private getTaskComments(taskId: string) {
         this.resetComments();
         if (taskId) {
-            this.activitiTaskList.getComments(taskId).subscribe(
+            this.activitiTaskList.getTaskComments(taskId).subscribe(
                 (res: Comment[]) => {
-                    res = res.sort((comment1: Comment, comment2: Comment) => {
-                        let date1 = new Date(comment1.created);
-                        let date2 = new Date(comment2.created);
-                        return date1 > date2 ? -1 : date1 < date2 ? 1 : 0;
-                    });
                     res.forEach((comment) => {
-                        comment.createdBy.userImage = this.peopleService.getUserImage(comment.createdBy);
                         this.commentObserver.next(comment);
                     });
-                    },
-                (err) => {
-                    this.error.emit(err);
-                }
-            );
-        }
-    }
-
-    private resetComments(): void {
-        this.comments = [];
-    }
-
-    add(): void {
-        if (this.message && this.message.trim() && !this.beingAdded) {
-            this.beingAdded = true;
-            this.activitiTaskList.addComment(this.taskId, this.message)
-            .subscribe(
-                (res: Comment) => {
-                        res.createdBy.userImage = this.peopleService.getUserImage(res.createdBy);
-                        this.comments.unshift(res);
-                        this.message = '';
-                        this.beingAdded = false;
-
                 },
                 (err) => {
                     this.error.emit(err);
-                    this.beingAdded = false;
                 }
             );
+        } else {
+            this.resetComments();
         }
     }
 
-    clear(): void {
-        this.message = '';
+    private resetComments() {
+        this.comments = [];
     }
 
-    isReadOnly(): boolean {
-        return this.readOnly;
+    public showDialog() {
+        if (!this.dialog.nativeElement.showModal) {
+            dialogPolyfill.registerDialog(this.dialog.nativeElement);
+        }
+        this.dialog.nativeElement.showModal();
     }
 
+    public add() {
+        this.activitiTaskList.addTaskComment(this.taskId, this.message).subscribe(
+            (res: Comment) => {
+                this.comments.push(res);
+                this.message = '';
+            },
+            (err) => {
+                this.error.emit(err);
+            }
+        );
+        this.cancel();
+    }
+
+    public cancel() {
+        if (this.dialog) {
+            this.dialog.nativeElement.close();
+        }
+    }
 }

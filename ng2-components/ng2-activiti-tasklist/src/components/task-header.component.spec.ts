@@ -15,24 +15,22 @@
  * limitations under the License.
  */
 
-import { DebugElement } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AlfrescoTranslationService, CardViewUpdateService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
+import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
 
-import { TaskDetailsModel } from '../models/task-details.model';
+import { ActivitiTaskHeader } from './activiti-task-header.component';
 import { taskDetailsMock } from './../assets/task-details.mock';
-import { TaskListService } from './../services/tasklist.service';
-import { TaskHeaderComponent } from './task-header.component';
+import { TaskDetailsModel } from '../models/task-details.model';
+import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 
-describe('TaskHeaderComponent', () => {
+describe('ActivitiTaskHeader', () => {
 
-    let service: TaskListService;
+    let service: ActivitiTaskListService;
     let componentHandler: any;
-    let component: TaskHeaderComponent;
-    let fixture: ComponentFixture<TaskHeaderComponent>;
-    let debugElement: DebugElement;
+    let component: ActivitiTaskHeader;
+    let fixture: ComponentFixture<ActivitiTaskHeader>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -40,11 +38,10 @@ describe('TaskHeaderComponent', () => {
                 CoreModule.forRoot()
             ],
             declarations: [
-                TaskHeaderComponent
+                ActivitiTaskHeader
             ],
             providers: [
-                TaskListService,
-                CardViewUpdateService
+                ActivitiTaskListService
             ]
         }).compileComponents();
 
@@ -54,10 +51,9 @@ describe('TaskHeaderComponent', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TaskHeaderComponent);
+        fixture = TestBed.createComponent(ActivitiTaskHeader);
         component = fixture.componentInstance;
-        service = TestBed.get(TaskListService);
-        debugElement = fixture.debugElement;
+        service = TestBed.get(ActivitiTaskListService);
 
         component.taskDetails = new TaskDetailsModel(taskDetailsMock);
 
@@ -77,7 +73,7 @@ describe('TaskHeaderComponent', () => {
     it('should display assignee', () => {
         component.ngOnChanges({});
         fixture.detectChanges();
-        let formNameEl = fixture.debugElement.query(By.css('[data-automation-id="header-assignee"] .adf-property-value'));
+        let formNameEl = fixture.debugElement.query(By.css('[data-automation-id="header-assignee"] .adf-header__value'));
         expect(formNameEl.nativeElement.innerText).toBe('Wilbur Adams');
     });
 
@@ -85,41 +81,8 @@ describe('TaskHeaderComponent', () => {
         component.taskDetails.assignee = null;
         component.ngOnChanges({});
         fixture.detectChanges();
-        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-assignee"] .adf-property-value'));
+        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-assignee"] .adf-header__value'));
         expect(valueEl.nativeElement.innerText).toBe('No assignee');
-    });
-
-    it('should display created-by', () => {
-        component.ngOnChanges({});
-        fixture.detectChanges();
-        let formNameEl = fixture.debugElement.query(By.css('[data-automation-id="header-created-by"] .adf-property-value'));
-        expect(formNameEl.nativeElement.innerText).toBe('Wilbur Adams');
-    });
-
-    it('should display placeholder if no created-by', () => {
-        component.taskDetails.assignee = null;
-        component.ngOnChanges({});
-        fixture.detectChanges();
-        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-created-by"] .adf-property-value'));
-        expect(valueEl.nativeElement.innerText).toBe('No assignee');
-    });
-
-    it('should set editable to false if the task has already completed', () => {
-        component.taskDetails.endDate = '05/05/2002';
-        component.ngOnChanges({});
-        fixture.detectChanges();
-
-        let datePicker = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-dueDate"]`));
-        expect(datePicker).toBeNull('Datepicker should NOT be in DOM');
-    });
-
-    it('should set editable to true if the task has not completed yet', () => {
-        component.taskDetails.endDate = undefined;
-        component.ngOnChanges({});
-        fixture.detectChanges();
-
-        let datePicker = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-dueDate"]`));
-        expect(datePicker).not.toBeNull('Datepicker should be in DOM');
     });
 
     it('should display the claim button if no assignee', () => {
@@ -134,30 +97,30 @@ describe('TaskHeaderComponent', () => {
         component.taskDetails.dueDate = '2016-11-03';
         component.ngOnChanges({});
         fixture.detectChanges();
-        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value'));
-        expect(valueEl.nativeElement.innerText.trim()).toBe('Nov 03 2016');
+        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-header__value'));
+        expect(valueEl.nativeElement.innerText).toBe('Nov 03 2016');
     });
 
     it('should display placeholder if no due date', () => {
         component.taskDetails.dueDate = null;
         component.ngOnChanges({});
         fixture.detectChanges();
-        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value'));
-        expect(valueEl.nativeElement.innerText.trim()).toBe('No date');
+        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-header__value'));
+        expect(valueEl.nativeElement.innerText).toBe('No date');
     });
 
     it('should display form name', () => {
         component.formName = 'test form';
         component.ngOnChanges({});
         fixture.detectChanges();
-        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-formName"] .adf-property-value'));
+        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-formName"] .adf-header__value'));
         expect(valueEl.nativeElement.innerText).toBe('test form');
     });
 
     it('should not display form name if no form name provided', () => {
         component.ngOnChanges({});
         fixture.detectChanges();
-        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-formName"] .adf-property-value'));
+        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-formName"] .adf-header__value'));
         expect(valueEl.nativeElement.innerText).toBe('No form');
     });
 

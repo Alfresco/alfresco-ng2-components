@@ -15,18 +15,19 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ThumbnailService } from 'ng2-alfresco-core';
-import { AlfrescoTranslationService, CoreModule, SearchService } from 'ng2-alfresco-core';
-import { result } from './../assets/search.component.mock';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { AlfrescoSearchControlComponent } from './alfresco-search-control.component';
+import { AlfrescoSearchAutocompleteComponent } from './alfresco-search-autocomplete.component';
+import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
 import { TranslationMock } from './../assets/translation.service.mock';
-import { SearchAutocompleteComponent } from './search-autocomplete.component';
-import { SearchControlComponent } from './search-control.component';
+import { result } from './../assets/alfresco-search.component.mock';
+import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { AlfrescoSearchService } from '../services/alfresco-search.service';
 
-describe('SearchControlComponent', () => {
+describe('AlfrescoSearchControlComponent', () => {
 
-    let fixture: ComponentFixture<SearchControlComponent>;
-    let component: SearchControlComponent, element: HTMLElement;
+    let fixture: ComponentFixture<AlfrescoSearchControlComponent>;
+    let component: AlfrescoSearchControlComponent, element: HTMLElement;
     let componentHandler;
 
     beforeEach(async(() => {
@@ -37,20 +38,28 @@ describe('SearchControlComponent', () => {
                 CoreModule.forRoot()
             ],
             declarations: [
-                SearchControlComponent,
-                SearchAutocompleteComponent
+                AlfrescoSearchControlComponent,
+                AlfrescoSearchAutocompleteComponent
             ],
             providers: [
                 {provide: AlfrescoTranslationService, useClass: TranslationMock},
-                ThumbnailService,
-                SearchService
+                AlfrescoThumbnailService,
+                AlfrescoSearchService
             ]
         }).compileComponents().then(() => {
-            fixture = TestBed.createComponent(SearchControlComponent);
+            fixture = TestBed.createComponent(AlfrescoSearchControlComponent);
             component = fixture.componentInstance;
             element = fixture.nativeElement;
         });
     }));
+
+    it('should setup i18n folder', () => {
+        let translationService = TestBed.get(AlfrescoTranslationService);
+        spyOn(translationService, 'addTranslationFolder');
+        fixture.detectChanges();
+        expect(translationService.addTranslationFolder)
+            .toHaveBeenCalledWith('ng2-alfresco-search', 'assets/ng2-alfresco-search');
+    });
 
     it('should emit searchChange when search term input changed', (done) => {
         fixture.componentInstance.searchChange.subscribe(e => {
@@ -156,13 +165,13 @@ describe('SearchControlComponent', () => {
 
         it('should display a find-as-you-type control by default', () => {
             fixture.detectChanges();
-            let autocomplete: Element = element.querySelector('adf-search-autocomplete');
+            let autocomplete: Element = element.querySelector('alfresco-search-autocomplete');
             expect(autocomplete).not.toBeNull();
         });
 
         it('should make find-as-you-type control hidden initially', () => {
             fixture.detectChanges();
-            let autocomplete: Element = element.querySelector('adf-search-autocomplete');
+            let autocomplete: Element = element.querySelector('alfresco-search-autocomplete');
             expect(autocomplete.classList.contains('active')).toBe(false);
         });
 
@@ -171,7 +180,7 @@ describe('SearchControlComponent', () => {
             inputEl.dispatchEvent(new FocusEvent('focus'));
             window.setTimeout(() => { // wait for debounce() to complete
                 fixture.detectChanges();
-                let autocomplete: Element = element.querySelector('adf-search-autocomplete');
+                let autocomplete: Element = element.querySelector('alfresco-search-autocomplete');
                 expect(autocomplete.classList.contains('active')).toBe(true);
                 done();
             }, 100);
@@ -183,14 +192,14 @@ describe('SearchControlComponent', () => {
             inputEl.dispatchEvent(new FocusEvent('blur'));
             window.setTimeout(() => {
                 fixture.detectChanges();
-                let autocomplete: Element = element.querySelector('adf-search-autocomplete');
+                let autocomplete: Element = element.querySelector('alfresco-search-autocomplete');
                 expect(autocomplete.classList.contains('active')).toBe(false);
                 done();
             }, 100);
         });
 
         it('should keep find-as-you-type control visible when user tabs into results', (done) => {
-            let searchService = TestBed.get(SearchService);
+            let searchService = TestBed.get(AlfrescoSearchService);
             spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(result));
 
@@ -201,7 +210,7 @@ describe('SearchControlComponent', () => {
             component.onAutoCompleteFocus(new FocusEvent('focus'));
             window.setTimeout(() => { // wait for debounce() to complete
                 fixture.detectChanges();
-                let autocomplete: Element = element.querySelector('adf-search-autocomplete');
+                let autocomplete: Element = element.querySelector('alfresco-search-autocomplete');
                 expect(autocomplete.classList.contains('active')).toBe(true);
                 done();
             }, 100);
@@ -214,7 +223,7 @@ describe('SearchControlComponent', () => {
                 key: 'Escape'
             }));
             fixture.detectChanges();
-            let autocomplete: Element = element.querySelector('adf-search-autocomplete');
+            let autocomplete: Element = element.querySelector('alfresco-search-autocomplete');
             expect(autocomplete.classList.contains('active')).toBe(false);
         });
 
@@ -228,7 +237,7 @@ describe('SearchControlComponent', () => {
                 key: 'ArrowDown'
             }));
             fixture.detectChanges();
-            let autocomplete: Element = element.querySelector('adf-search-autocomplete');
+            let autocomplete: Element = element.querySelector('alfresco-search-autocomplete');
             expect(autocomplete.classList.contains('active')).toBe(true);
         });
 
@@ -271,7 +280,7 @@ describe('SearchControlComponent', () => {
         it('should NOT display a find-as-you-type control when configured not to', () => {
             fixture.componentInstance.liveSearchEnabled = false;
             fixture.detectChanges();
-            let autocomplete: Element = element.querySelector('adf-search-autocomplete');
+            let autocomplete: Element = element.querySelector('alfresco-search-autocomplete');
             expect(autocomplete).toBeNull();
         });
 

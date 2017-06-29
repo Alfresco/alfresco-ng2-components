@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdCheckboxModule, MdInputModule } from '@angular/material';
 import { AlfrescoAuthenticationService, CoreModule } from 'ng2-alfresco-core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { AlfrescoLoginComponent } from './alfresco-login.component';
 import { AuthenticationMock } from './../assets/authentication.service.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
-import { LoginComponent } from './login.component';
+import { MdInputModule, MdCheckboxModule } from '@angular/material';
 
 describe('AlfrescoLogin', () => {
-    let component: LoginComponent;
-    let fixture: ComponentFixture<LoginComponent>;
+    let component: AlfrescoLoginComponent;
+    let fixture: ComponentFixture<AlfrescoLoginComponent>;
     let debug: DebugElement;
     let element: any;
 
@@ -42,7 +42,7 @@ describe('AlfrescoLogin', () => {
                 MdCheckboxModule,
                 CoreModule.forRoot()
             ],
-            declarations: [LoginComponent],
+            declarations: [AlfrescoLoginComponent],
             providers: [
                 {provide: AlfrescoAuthenticationService, useClass: AuthenticationMock},
                 {provide: AlfrescoTranslationService, useClass: TranslationMock}
@@ -51,7 +51,7 @@ describe('AlfrescoLogin', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(LoginComponent);
+        fixture = TestBed.createComponent(AlfrescoLoginComponent);
 
         debug = fixture.debugElement;
         element = fixture.nativeElement;
@@ -81,7 +81,7 @@ describe('AlfrescoLogin', () => {
     describe('Login button', () => {
 
         const getLoginButton = () => element.querySelector('#login-button');
-        const getLoginButtonText = () => element.querySelector('#login-button span.adf-login-button-label').innerText;
+        const getLoginButtonText = () => element.querySelector('#login-button span.login-button-label').innerText;
 
         it('should be rendered with the proper key by default', () => {
             expect(getLoginButton()).not.toBeNull();
@@ -150,27 +150,11 @@ describe('AlfrescoLogin', () => {
         expect(element.querySelector('[for="password"]')).toBeDefined();
         expect(element.querySelector('[for="password"]').innerText).toEqual('LOGIN.LABEL.PASSWORD');
 
-        expect(element.querySelector('#adf-login-action-left')).toBeDefined();
-        expect(element.querySelector('#adf-login-action-left').innerText).toEqual('LOGIN.ACTION.HELP');
+        expect(element.querySelector('#login-action-help')).toBeDefined();
+        expect(element.querySelector('#login-action-help').innerText).toEqual('LOGIN.ACTION.HELP');
 
-        expect(element.querySelector('#adf-login-action-right')).toBeDefined();
-        expect(element.querySelector('#adf-login-action-right').innerText).toEqual('LOGIN.ACTION.REGISTER');
-    });
-
-    describe('Copyright text', () => {
-
-        it('should render the default copyright text', () => {
-            expect(element.querySelector('[data-automation-id="login-copyright"]')).toBeDefined();
-            expect(element.querySelector('[data-automation-id="login-copyright"]').innerText).toEqual('© 2016 Alfresco Software, Inc. All Rights Reserved.');
-        });
-
-        it('should render the customised copyright text', () => {
-            component.copyrightText = 'customised';
-            fixture.detectChanges();
-
-            expect(element.querySelector('[data-automation-id="login-copyright"]')).toBeDefined();
-            expect(element.querySelector('[data-automation-id="login-copyright"]').innerText).toEqual('customised');
-        });
+        expect(element.querySelector('#login-action-register')).toBeDefined();
+        expect(element.querySelector('#login-action-register').innerText).toEqual('LOGIN.ACTION.REGISTER');
     });
 
     it('should render user and password input fields with default values', () => {
@@ -478,7 +462,7 @@ describe('AlfrescoLogin', () => {
         expect(component.error).toBe(false);
         expect(component.success).toBe(true);
         expect(element.querySelector('#login-success')).toBeDefined();
-        expect(element.querySelector('#login-success').innerHTML).toContain('LOGIN.MESSAGES.LOGIN-SUCCESS');
+        expect(element.querySelector('#login-success').innerHTML).toEqual('LOGIN.MESSAGES.LOGIN-SUCCESS');
         expect(component.onSuccess.emit).toHaveBeenCalledWith({
             token: true,
             username: 'fake-username',

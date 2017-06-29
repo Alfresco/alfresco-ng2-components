@@ -1,0 +1,143 @@
+:host .full-width { width: 100%; }
+
+:host .icon-cell {
+    font-size: 24px;
+    cursor: default;
+}
+
+:host .image-cell {
+    width: 24px;
+    height: 24px;
+    cursor: default;
+}
+
+:host .data-cell {
+    cursor: default;
+}
+
+:host .column-header {
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* IE/Edge */
+    -webkit-touch-callout: none; /* iOS Safari */
+}
+
+/* Empty folder */
+
+:host .adf-no-content-container {
+    padding: 0 !important;
+}
+
+:host .adf-no-content-container > img {
+    width: 100%;
+}
+/* Loading folder */
+
+:host .adf-loading-content-container {
+    padding: 0 !important;
+}
+
+:host .adf-loading-content-container > img {
+    width: 100%;
+}
+
+
+:host .ellipsis-cell .cell-container {
+    height: 1em;
+}
+
+/* visible content */
+:host .ellipsis-cell .cell-value {
+    display: block;
+    position: absolute;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1em;		/* for vertical align of text */
+}
+
+
+/* cell stretching content */
+:host .ellipsis-cell > div:after {
+    content: attr(title);
+    overflow: hidden;
+    height: 0;
+    display: block;
+}
+
+/* Utils */
+
+:host .non-selectable {
+    user-select: none;
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* IE/Edge */
+    -webkit-touch-callout: none; /* iOS Safari */
+}
+
+:host .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+/* small desktop */
+@media all and (max-width: 1200px) {}
+
+/* tablet */
+@media all and (max-width: 1024px) {}
+
+/* mobile phone */
+@media all and (max-width: 768px) {
+    .desktop-only {
+        display: none;
+    }
+}
+
+@media (max-device-width: 768px){
+    .desktop-only {
+        display: none;
+    }
+}
+
+.mdl-data-table-fix-firefox {
+    border-collapse: unset;
+    border-spacing: 0;
+}
+
+.alfresco-datatable__row:focus {
+    outline-offset: -1px;
+    outline-width: 1px;
+    outline-color: rgb(68,138,255);
+    outline-style: solid;
+}
+
+.alfresco-datatable__row--selected,
+.alfresco-datatable__row--selected:hover  {
+    background-color: #e0e0e0;
+}
+
+.adf-upload__dragging > td {
+    border-top: 1px dashed rgb(68,138,255);
+    border-bottom: 1px dashed rgb(68,138,255);
+}
+
+.adf-upload__dragging > td:first-child {
+    border-left: 1px dashed rgb(68,138,255);
+}
+
+.adf-upload__dragging > td:last-child {
+    border-right: 1px dashed rgb(68,138,255);
+}

@@ -15,23 +15,22 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import {
+    AlfrescoTranslationService,
     AlfrescoAuthenticationService,
     AlfrescoSettingsService,
-    AlfrescoTranslationService,
-    LogService,
-    StorageService
+    StorageService,
+    LogService
 } from 'ng2-alfresco-core';
 
 declare var document: any;
 
 @Component({
-    selector: 'adf-app',
+    selector: 'alfresco-app',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss', './theme.scss'],
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./app.component.css']
 })
 export class AppComponent {
     searchTerm: string = '';
@@ -43,6 +42,10 @@ export class AppComponent {
                 private storage: StorageService,
                 private logService: LogService) {
         this.setProvider();
+
+        if (translateService) {
+            translateService.addTranslationFolder('app', 'resources');
+        }
     }
 
     isAPageWithHeaderBar(): boolean {
@@ -69,6 +72,7 @@ export class AppComponent {
 
     navigateToLogin() {
         this.router.navigate(['/login']);
+        this.hideDrawer();
     }
 
     onToggleSearch(event) {
@@ -83,11 +87,22 @@ export class AppComponent {
 
     changeLanguage(lang: string) {
         this.translateService.use(lang);
+        this.hideDrawer();
+    }
+
+    hideDrawer() {
+        // todo: workaround for drawer closing
+        document.querySelector('.mdl-layout').MaterialLayout.toggleDrawer();
     }
 
     private setProvider() {
         if (this.storage.hasItem(`providers`)) {
             this.settingsService.setProviders(this.storage.getItem(`providers`));
         }
+    }
+
+    onDragOverMainPage(event: any): boolean {
+        event.preventDefault();
+        return false;
     }
 }

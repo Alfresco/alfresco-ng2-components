@@ -35,9 +35,6 @@
 - [Create Process Attachment component](#create-process-attachment-component)
   * [Properties](#properties-8)
   * [Events](#events-7)
-- [Process Audit Directive](#process-audit-directive)
-  * [Properties](#properties-9)
-    + [Events](#events-8)
 - [Build from sources](#build-from-sources)
 - [NPM scripts](#npm-scripts)
 - [Demo](#demo)
@@ -69,10 +66,10 @@ This component renders a list containing all the process instances matched by th
 **app.component.html**
 
 ```html
-<adf-process-instance-list 
+<activiti-process-instance-list 
     [appId]="'1'" 
     [state]="'open'">
-</adf-process-instance-list>
+</activiti-process-instance-list>
 ```
 
 ### Properties
@@ -108,13 +105,13 @@ Process filters are a collection of criteria used to filter process instances, w
 by users. This component displays a list of available filters and allows the user to select any given
 filter as the active filter.
 
-The most common usage is in driving a process instance list to allow the user to choose which
+The most common usage is in driving a process instance list in order to allow the user to choose which
 process instances are displayed in the list.
 
 ```html
-<adf-process-instance-filters
+<activiti-process-instance-filters
     appId="1001">
-</adf-process-instance-filters>
+</activiti-process-instance-filters>
 ```
 
 ### Properties
@@ -132,16 +129,16 @@ If both `appId` and `appName` are specified then `appName` will take precedence 
 
 | Name | Description |
 | --- | --- |
-| onSuccess | Raised when the list of filters has been successfully loaded from the server |
+| onSuccess | Raised when the list of filters hase been successfully loaded from the server |
 | onError | Raised when an error occurs |
 | filterClick | Raised when the user selects a filter from the list |
 
 ### How filter the activiti process filters
 
  ```html
-<adf-process-instance-filters 
+<activiti-process-instance-filters 
     [filterParam]="{index: 0}">
-</adf-filters>
+</activiti-filters>
  ```
 
 You can use inside the filterParam one of the following property.
@@ -173,11 +170,11 @@ The AccordionComponent is exposed by the alfresco-core.
         [heading]="'Processes'" 
         [isSelected]="true" 
         [headingIcon]="'assessment'">
-        <adf-process-instance-filters
+        <activiti-process-instance-filters
             [appId]="appId"
             (filterClick)="onProcessFilterClick($event)"
             (onSuccess)="onSuccessProcessFilterList($event)">
-        </adf-process-instance-filters>
+        </activiti-process-instance-filters>
     </adf-accordion-group>
 </adf-accordion>
 ```
@@ -186,38 +183,39 @@ The AccordionComponent is exposed by the alfresco-core.
 
 ## Start Process component
 
-Displays Start Process, allowing the user to specify some basic details needed to start a new process instance.
+Displays a button which in turn displays a dialog when clicked, allowing the user
+to specify some basic details needed to start a new process instance.
 
 ```html
-<adf-start-process 
+<activiti-start-process 
     appId="YOUR_APP_ID" >
-</adf-start-process>
+</activiti-start-process>
 ```
-![adf-start-process ](docs/assets/start-process.png)
 
 ### Properties
 
 | Name | Description |
 | --- | --- |
 | appId |  (required): Limit the list of processes which can be started to those contained in the specified app |
-| variables | Variables in input to the process [RestVariable](https://github.com/Alfresco/alfresco-js-api/tree/master/src/alfresco-activiti-rest-api/docs/RestVariable.md)|
+| variables | Variables in input to the process [RestVariable]**](https://github.com/Alfresco/alfresco-js-api/tree/master/src/alfresco-activiti-rest-api/docs/RestVariable.md)|
+
 
 ### Events
 
 | Name | Description |
 | --- | --- |
 | start | Raised when the process start |
-| cancel | Raised when the process canceled |
 | error | Raised when the start process fail |
+
 
 ## Process Details component
 
 This component displays detailed information on a specified process instance
 
 ```html
-<adf-process-instance-details 
+<activiti-process-instance-details 
     processInstanceId="YOUR_PROCESS_INSTANCE_ID">
-</adf-process-instance-details>
+</activiti-process-instance-details>
 ```
 
 ### Properties
@@ -239,31 +237,33 @@ This component displays detailed information on a specified process instance
 This is a sub-component of the process details component, which renders some general information about the selected process.
 
 ```html
-<adf-process-instance-header   
+<activiti-process-instance-header   
     processInstance="localProcessDetails">
-</adf-process-instance-details>
+</activiti-process-instance-details>
 ```
-![adf-process-instance-header](docs/assets/adf-process-instance-header-attachment.png)
 
 ### Properties
 
 | Name | Type| Description |
 | --- | --- | --- |
-| processInstance | [ProcessInstanceModel](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-activiti-processlist/src/models/process-instance.model.ts) | (**required**): Full details of the process instance to display information about |
+| processInstance | string | (**required**): Full details of the process instance to display information about |
+| showDiagram | boolean | If the value is true the button show diagram is shown |
 
 ### Events
 
-No events
+| Name | Description |
+| --- | --- |
+| showProcessDiagram | Raised when the show diagram button is clicked |
 
 ## Process Instance Tasks component
 
 Lists both the active and completed tasks associated with a particular process instance
 
 ```html
-<adf-process-instance-tasks 
+<activiti-process-instance-tasks 
     processInstanceId="YOUR_PROCESS_INSTANCE_ID" 
     showRefreshButton="true">
-</adf-process-instance-tasks>
+</activiti-process-instance-tasks>
 ```
 
 ### Properties
@@ -281,12 +281,12 @@ Lists both the active and completed tasks associated with a particular process i
 
 ## Process Instance Comments component
 
-Displays comments associated with a particular process instance and allows the user to add new comments
+Displays comments associated with a particular process instances and allows the user to add new comments
 
 ```html
-<adf-process-instance-comments 
+<activiti-process-instance-comments 
     processInstanceId="YOUR_PROCESS_INSTANCE_ID">
-</adf-process-instance-comments>
+</activiti-process-instance-comments>
 ```
 
 ### Properties
@@ -302,7 +302,7 @@ This component displays attached documents on a specified process instance
 ```html
 <adf-process-attachment-list 
     [processInstanceId]="YOUR_PROCESS_INSTANCE_ID"
-    (attachmentClick)="YOUR_ATTACHMENT_CLICK_EMITTER_HANDLER">
+    (attachmentClick="YOUR_ATTACHMENT_CLICK_EMITTER_HANDLER">
 </adf-process-attachment-list>
 ```
 ![process-attachment-list-sample](docs/assets/process-attachment-list.png)
@@ -312,7 +312,6 @@ This component displays attached documents on a specified process instance
 | Name | Type | Description |
 | --- | --- | -- |
 | processInstanceId | string | (**required**): The ID of the process instance to display |
-| disabled | boolean | false | Disable/Enable read only mode for attachement list |
 
 ### Events
 
@@ -327,11 +326,11 @@ This component displays attached documents on a specified process instance
 This component displays Upload Component(Drag and Click) to upload the attachment to a specified process instance
 
 ```html
-<adf-create-process-attachment 
+<activiti-create-process-attachment 
     [processInstanceId]="YOUR_PROCESS_INSTANCE_ID"
     (error)="YOUR_CREATE_ATTACHMENT_ERROR_HANDLER"
     (success)="YOUR_CREATE_ATTACHMENT_SUCCESS_HANDLER">
-</adf-create-process-attachment>
+</activiti-create-process-attachment>
 ```
 
 ![process-create-attachment](docs/assets/process-create-attachment.png)
@@ -346,41 +345,8 @@ This component displays Upload Component(Drag and Click) to upload the attachmen
 
 | Name | Description |
 | --- | --- |
-| error | Raised when the error occurred while creating/uploading the attachment by the user from within the component |
-| success | Raised when the attachment created/uploaded successfully from within the component |
-
-## Process Audit Directive
-
-This directive provide a way to fetch the Process Audit information in the pdf or json format.
-
-```html
-<button 
-    adf-process-audit
-    [process-id]="processId"
-    [format]="'pdf'"
-    [download]="true"
-    md-icon-button (clicked)="onAuditClick($event)" (error)="onAuditError($event)" >
-    <md-icon>assignment_ind</md-icon>
-</button>
-```
-
-![adf-process-audit-directive](docs/assets/adf-process-audit-directive.png)
-
-### Properties
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| taskId | string | | (**required**) The id of the task. |
-| format | string | pdf | In whitch format you want the task audit information (pdf or json). |
-| download | boolean | false | True If you want download the file on the click event. |
-| fileName | string | Audit | Represent the name of the file to download in case the format is pdf. |
-
-#### Events
-
-| Name | Description |
-| --- | --- |
-| clicked | Raised when the task audit info is ready |
-| error | Raised if there is an error during fetching task information |
+| error | Raised when the error occured while creating/uploading the attachment by the user from within the component |
+| success | Raised when the attachement created/uploaded successfully from within the component |
 
 ## Build from sources
 

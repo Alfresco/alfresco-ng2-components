@@ -15,23 +15,21 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreModule, LogService } from 'ng2-alfresco-core';
 import { LogServiceMock } from 'ng2-alfresco-core';
+import { DynamicTableWidget } from './dynamic-table.widget';
+import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './dynamic-table.widget.model';
+import { FormModel, FormFieldTypes, FormFieldModel } from './../core/index';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
-import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
-import { MaterialModule } from '../../material.module';
-import { ErrorWidgetComponent } from '../error/error.component';
-import { EcmModelService } from './../../../services/ecm-model.service';
-import { FormService } from './../../../services/form.service';
-import { FormFieldModel, FormFieldTypes, FormModel } from './../core/index';
-import { DynamicTableWidgetComponent } from './dynamic-table.widget';
-import { DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './dynamic-table.widget.model';
-import { BooleanEditorComponent } from './editors/boolean/boolean.editor';
-import { DateEditorComponent } from './editors/date/date.editor';
-import { DropdownEditorComponent } from './editors/dropdown/dropdown.editor';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { RowEditorComponent } from './editors/row.editor';
+import { DropdownEditorComponent } from './editors/dropdown/dropdown.editor';
+import { DateEditorComponent } from './editors/date/date.editor';
+import { BooleanEditorComponent } from './editors/boolean/boolean.editor';
 import { TextEditorComponent } from './editors/text/text.editor';
+import { CoreModule, LogService } from 'ng2-alfresco-core';
+import { FormService } from './../../../services/form.service';
+import { EcmModelService } from './../../../services/ecm-model.service';
+import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 
 let fakeFormField = {
     id: 'fake-dynamic-table',
@@ -74,23 +72,22 @@ let fakeFormField = {
     ]
 };
 
-describe('DynamicTableWidgetComponent', () => {
+describe('DynamicTableWidget', () => {
 
-    let widget: DynamicTableWidgetComponent;
-    let fixture: ComponentFixture<DynamicTableWidgetComponent>;
+    let widget: DynamicTableWidget;
+    let fixture: ComponentFixture<DynamicTableWidget>;
     let element: HTMLElement;
     let table: DynamicTableModel;
     let logService: LogService;
+    let componentHandler: any;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
-                MaterialModule
+                CoreModule.forRoot()
             ],
-            declarations: [DynamicTableWidgetComponent, RowEditorComponent,
-                DropdownEditorComponent, DateEditorComponent, BooleanEditorComponent,
-                TextEditorComponent, ErrorWidgetComponent],
+            declarations: [DynamicTableWidget, RowEditorComponent,
+                DropdownEditorComponent, DateEditorComponent, BooleanEditorComponent, TextEditorComponent],
             providers: [
                 FormService,
                 {provide: LogService, useClass: LogServiceMock},
@@ -111,7 +108,7 @@ describe('DynamicTableWidgetComponent', () => {
         let elementRefSpy = jasmine.createSpyObj('elementRef', ['']);
         elementRefSpy.nativeElement = nativeElementSpy;
 
-        fixture = TestBed.createComponent(DynamicTableWidgetComponent);
+        fixture = TestBed.createComponent(DynamicTableWidget);
         element = fixture.nativeElement;
         widget = fixture.componentInstance;
         widget.content = table;
@@ -340,6 +337,11 @@ describe('DynamicTableWidgetComponent', () => {
 
     describe('when template is ready', () => {
 
+        beforeEach(async(() => {
+            componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
+            window['componentHandler'] = componentHandler;
+        }));
+
         beforeEach(() => {
             widget.field = new FormFieldModel(new FormModel({taskId: 'fake-task-id'}), fakeFormField);
             widget.field.type = FormFieldTypes.DYNAMIC_TABLE;
@@ -366,7 +368,7 @@ describe('DynamicTableWidgetComponent', () => {
 
             fixture.whenStable().then(() => {
                 let selectedRow = element.querySelector('#fake-dynamic-table-row-0');
-                expect(selectedRow.className).toBe('adf-dynamic-table-widget__row-selected');
+                expect(selectedRow.className).toBe('dynamic-table-widget__row-selected');
             });
         }));
 

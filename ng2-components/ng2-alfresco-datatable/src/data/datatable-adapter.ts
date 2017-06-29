@@ -33,7 +33,6 @@ export interface DataTableAdapter {
 export interface DataRow {
     isSelected: boolean;
     isDropTarget?: boolean;
-    cssClass?: string;
     hasValue(key: string): boolean;
     getValue(key: string): any;
 }
@@ -47,7 +46,6 @@ export interface DataColumn {
     srTitle?: string;
     cssClass?: string;
     template?: TemplateRef<any>;
-    formatTooltip?: Function;
 }
 
 export class DataSorting {

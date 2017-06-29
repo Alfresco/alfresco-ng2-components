@@ -15,20 +15,17 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
+import { WidgetComponent , baseHost } from './../widget.component';
 import { FormService } from './../../../services/form.service';
-import { baseHost , WidgetComponent } from './../widget.component';
 
 @Component({
     selector: 'number-widget',
     templateUrl: './number.widget.html',
-    styleUrls: ['./number.widget.scss'],
-    host: baseHost,
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./number.widget.css'],
+    host: baseHost
 })
-export class NumberWidgetComponent extends WidgetComponent {
+export class NumberWidget extends WidgetComponent {
 
     constructor(public formService: FormService) {
          super(formService);

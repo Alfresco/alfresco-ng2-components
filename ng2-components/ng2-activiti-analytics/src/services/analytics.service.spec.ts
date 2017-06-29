@@ -16,9 +16,9 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { AlfrescoApiService, CoreModule } from 'ng2-alfresco-core';
-import { fakeReportList } from '../assets/analytics.service.mock';
+import { CoreModule, AlfrescoApiService } from 'ng2-alfresco-core';
 import { AnalyticsService } from './analytics.service';
+import { fakeReportList } from '../assets/analytics.service.mock';
 
 declare let jasmine: any;
 

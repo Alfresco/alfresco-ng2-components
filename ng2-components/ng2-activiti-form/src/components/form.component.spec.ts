@@ -15,31 +15,55 @@
  * limitations under the License.
  */
 
+import { Observable } from 'rxjs/Rx';
 import { SimpleChange } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
-import { Observable } from 'rxjs/Rx';
-import { fakeForm } from '../assets/form.component.mock';
+import { ActivitiForm } from './activiti-form.component';
+import { FormModel, FormOutcomeModel, FormFieldModel, FormOutcomeEvent, FormFieldTypes } from './widgets/index';
 import { FormService } from './../services/form.service';
-import { NodeService } from './../services/node.service';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
-import { FormComponent } from './form.component';
-import { FormFieldModel, FormFieldTypes, FormModel, FormOutcomeEvent, FormOutcomeModel } from './widgets/index';
+import { NodeService } from './../services/node.service';
+import { fakeForm } from '../assets/activiti-form.component.mock';
 
-describe('FormComponent', () => {
+describe('ActivitiForm', () => {
 
+    let componentHandler: any;
     let formService: FormService;
-    let formComponent: FormComponent;
+    let formComponent: ActivitiForm;
     let visibilityService: WidgetVisibilityService;
     let nodeService: NodeService;
     let logService: LogService;
 
     beforeEach(() => {
+        componentHandler = jasmine.createSpyObj('componentHandler', [
+            'upgradeAllRegistered'
+        ]);
+        window['componentHandler'] = componentHandler;
+
         logService = new LogService();
         visibilityService = new WidgetVisibilityService(null, logService);
         spyOn(visibilityService, 'refreshVisibility').and.stub();
         formService = new FormService(null, null, logService);
         nodeService = new NodeService(null);
-        formComponent = new FormComponent(formService, visibilityService, null, nodeService);
+        formComponent = new ActivitiForm(formService, visibilityService, null, nodeService, logService);
+    });
+
+    it('should upgrade MDL content on view checked', () => {
+        formComponent.ngAfterViewChecked();
+        expect(componentHandler.upgradeAllRegistered).toHaveBeenCalled();
+    });
+
+    it('should setup MDL content only if component handler available', () => {
+        expect(formComponent.setupMaterialComponents()).toBeTruthy();
+
+        window['componentHandler'] = null;
+        expect(formComponent.setupMaterialComponents()).toBeFalsy();
+    });
+
+    it('should start loading form on init', () => {
+        spyOn(formComponent, 'loadForm').and.stub();
+        formComponent.ngOnInit();
+        expect(formComponent.loadForm).toHaveBeenCalled();
     });
 
     it('should check form', () => {
@@ -166,17 +190,17 @@ describe('FormComponent', () => {
     });
 
     it('should get process variable if is a process task', () => {
-        spyOn(formService, 'getTaskForm').and.callFake((currentTaskId) => {
+        spyOn(formService, 'getTaskForm').and.callFake((taskId) => {
             return Observable.create(observer => {
-                observer.next({ taskId: currentTaskId });
+                observer.next({ taskId: taskId });
                 observer.complete();
             });
         });
 
         spyOn(visibilityService, 'getTaskProcessVariable').and.returnValue(Observable.of({}));
-        spyOn(formService, 'getTask').and.callFake((currentTaskId) => {
+        spyOn(formService, 'getTask').and.callFake((taskId) => {
             return Observable.create(observer => {
-                observer.next({ taskId: currentTaskId, processDefinitionId: '10201' });
+                observer.next({ taskId: taskId, processDefinitionId: '10201' });
                 observer.complete();
             });
         });
@@ -189,17 +213,17 @@ describe('FormComponent', () => {
     });
 
     it('should not get process variable if is not a process task', () => {
-        spyOn(formService, 'getTaskForm').and.callFake((currentTaskId) => {
+        spyOn(formService, 'getTaskForm').and.callFake((taskId) => {
             return Observable.create(observer => {
-                observer.next({ taskId: currentTaskId });
+                observer.next({ taskId: taskId });
                 observer.complete();
             });
         });
 
         spyOn(visibilityService, 'getTaskProcessVariable').and.returnValue(Observable.of({}));
-        spyOn(formService, 'getTask').and.callFake((currentTaskId) => {
+        spyOn(formService, 'getTask').and.callFake((taskId) => {
             return Observable.create(observer => {
-                observer.next({ taskId: currentTaskId, processDefinitionId: 'null' });
+                observer.next({ taskId: taskId, processDefinitionId: 'null' });
                 observer.complete();
             });
         });
@@ -307,7 +331,7 @@ describe('FormComponent', () => {
     it('should save form on [save] outcome click', () => {
         let formModel = new FormModel();
         let outcome = new FormOutcomeModel(formModel, {
-            id: FormComponent.SAVE_OUTCOME_ID,
+            id: ActivitiForm.SAVE_OUTCOME_ID,
             name: 'Save',
             isSystem: true
         });
@@ -323,7 +347,7 @@ describe('FormComponent', () => {
     it('should complete form on [complete] outcome click', () => {
         let formModel = new FormModel();
         let outcome = new FormOutcomeModel(formModel, {
-            id: FormComponent.COMPLETE_OUTCOME_ID,
+            id: ActivitiForm.COMPLETE_OUTCOME_ID,
             name: 'Complete',
             isSystem: true
         });
@@ -339,7 +363,7 @@ describe('FormComponent', () => {
     it('should emit form saved event on custom outcome click', () => {
         let formModel = new FormModel();
         let outcome = new FormOutcomeModel(formModel, {
-            id: FormComponent.CUSTOM_OUTCOME_ID,
+            id: ActivitiForm.CUSTOM_OUTCOME_ID,
             name: 'Custom',
             isSystem: true
         });
@@ -404,9 +428,9 @@ describe('FormComponent', () => {
 
     it('should fetch and parse form by task id', (done) => {
         spyOn(formService, 'getTask').and.returnValue(Observable.of({}));
-        spyOn(formService, 'getTaskForm').and.callFake((currentTaskId) => {
+        spyOn(formService, 'getTaskForm').and.callFake((taskId) => {
             return Observable.create(observer => {
-                observer.next({ taskId: currentTaskId });
+                observer.next({ taskId: taskId });
                 observer.complete();
             });
         });
@@ -456,9 +480,9 @@ describe('FormComponent', () => {
     });
 
     it('should fetch and parse form definition by id', () => {
-        spyOn(formService, 'getFormDefinitionById').and.callFake((currentFormId) => {
+        spyOn(formService, 'getFormDefinitionById').and.callFake((formId) => {
             return Observable.create(observer => {
-                observer.next({ id: currentFormId });
+                observer.next({ id: formId });
                 observer.complete();
             });
         });
@@ -488,16 +512,16 @@ describe('FormComponent', () => {
     });
 
     it('should fetch and parse form definition by form name', () => {
-        spyOn(formService, 'getFormDefinitionByName').and.callFake((currentFormName) => {
+        spyOn(formService, 'getFormDefinitionByName').and.callFake((formName) => {
             return Observable.create(observer => {
-                observer.next(currentFormName);
+                observer.next(formName);
                 observer.complete();
             });
         });
 
-        spyOn(formService, 'getFormDefinitionById').and.callFake((currentFormName) => {
+        spyOn(formService, 'getFormDefinitionById').and.callFake((formName) => {
             return Observable.create(observer => {
-                observer.next({ name: currentFormName });
+                observer.next({ name: formName });
                 observer.complete();
             });
         });
@@ -632,10 +656,23 @@ describe('FormComponent', () => {
         expect(formComponent.getFormDefinitionOutcomes).toHaveBeenCalledWith(form);
     });
 
+    /*
+     it('should update the visibility when the container raise the change event', (valueChanged) => {
+     spyOn(formComponent, 'checkVisibility').and.callThrough();
+     let widget = new ContainerWidget();
+     let fakeForm = new FormModel();
+     let fakeField = new FormFieldModel(fakeForm, {id: 'fakeField', value: 'fakeValue'});
+     widget.formValueChanged.subscribe(field => { valueChanged(); });
+     widget.fieldChanged(fakeField);
+
+     expect(formComponent.checkVisibility).toHaveBeenCalledWith(fakeField);
+     });
+     */
+
     it('should prevent default outcome execution', () => {
 
         let outcome = new FormOutcomeModel(new FormModel(), {
-            id: FormComponent.CUSTOM_OUTCOME_ID,
+            id: ActivitiForm.CUSTOM_OUTCOME_ID,
             name: 'Custom'
         });
 
@@ -652,7 +689,7 @@ describe('FormComponent', () => {
 
     it('should not prevent default outcome execution', () => {
         let outcome = new FormOutcomeModel(new FormModel(), {
-            id: FormComponent.CUSTOM_OUTCOME_ID,
+            id: ActivitiForm.CUSTOM_OUTCOME_ID,
             name: 'Custom'
         });
 
@@ -695,8 +732,8 @@ describe('FormComponent', () => {
         spyOn(formComponent, 'loadFormFromActiviti').and.stub();
 
         const nodeId = '<id>';
-        let change = new SimpleChange(null, nodeId, false);
-        formComponent.ngOnChanges({'nodeId' : change});
+        formComponent.nodeId = nodeId;
+        formComponent.ngOnInit();
 
         expect(nodeService.getNodeMetadata).toHaveBeenCalledWith(nodeId);
         expect(formComponent.loadFormFromActiviti).toHaveBeenCalled();
@@ -709,7 +746,7 @@ describe('FormComponent', () => {
         formComponent.form = formModel;
 
         let outcome = new FormOutcomeModel(new FormModel(), {
-            id: FormComponent.CUSTOM_OUTCOME_ID,
+            id: ActivitiForm.CUSTOM_OUTCOME_ID,
             name: 'Custom'
         });
 
@@ -735,7 +772,7 @@ describe('FormComponent', () => {
         expect(formModel.isValid).toBeFalsy();
 
         let outcome = new FormOutcomeModel(new FormModel(), {
-            id: FormComponent.SAVE_OUTCOME_ID,
+            id: ActivitiForm.SAVE_OUTCOME_ID,
             name: FormOutcomeModel.SAVE_ACTION
         });
 
@@ -757,22 +794,11 @@ describe('FormComponent', () => {
         expect(formModel.isValid).toBeFalsy();
 
         let outcome = new FormOutcomeModel(new FormModel(), {
-            id: FormComponent.CUSTOM_OUTCOME_ID,
+            id: ActivitiForm.CUSTOM_OUTCOME_ID,
             name: 'Custom'
         });
 
         expect(formComponent.isOutcomeButtonEnabled(outcome)).toBeFalsy();
-    });
-
-    it('should disable complete outcome button when disableCompleteButton is true', () => {
-        let formModel = new FormModel();
-        formComponent.form = formModel;
-        formComponent.disableCompleteButton = true;
-
-        expect(formModel.isValid).toBeTruthy();
-        let completeOutcome = formComponent.form.outcomes.find(outcome => outcome.name === FormOutcomeModel.COMPLETE_ACTION);
-
-        expect(formComponent.isOutcomeButtonEnabled(completeOutcome)).toBeFalsy();
     });
 
     it('should raise [executeOutcome] event for formService', (done) => {
@@ -781,7 +807,7 @@ describe('FormComponent', () => {
         });
 
         let outcome = new FormOutcomeModel(new FormModel(), {
-            id: FormComponent.CUSTOM_OUTCOME_ID,
+            id: ActivitiForm.CUSTOM_OUTCOME_ID,
             name: 'Custom'
         });
 
@@ -814,4 +840,5 @@ describe('FormComponent', () => {
         expect(labelField.value).toBe('option_1');
         expect(radioField.value).toBe('option_1');
     });
+
 });

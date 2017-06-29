@@ -16,28 +16,22 @@
  */
 
 import { DebugElement, ReflectiveInjector, SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { AlfrescoTranslationService, CoreModule, NotificationService, SearchService } from 'ng2-alfresco-core';
-import { DocumentListModule } from 'ng2-alfresco-documentlist';
-import { PermissionModel } from 'ng2-alfresco-documentlist';
 import { Observable } from 'rxjs/Rx';
+import { AlfrescoSearchComponent } from './alfresco-search.component';
 import { TranslationMock } from './../assets/translation.service.mock';
-import { SearchComponent } from './search.component';
+import { AlfrescoSearchService } from '../services/alfresco-search.service';
+import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { DocumentListModule } from 'ng2-alfresco-documentlist';
 
-describe('SearchComponent', () => {
+describe('AlfrescoSearchComponent', () => {
 
-    let fixture: ComponentFixture<SearchComponent>, element: HTMLElement;
-    let component: SearchComponent;
+    let fixture: ComponentFixture<AlfrescoSearchComponent>, element: HTMLElement;
+    let component: AlfrescoSearchComponent;
 
     let result = {
         list: {
-            pagination: {
-                hasMoreItems: false,
-                maxItems: 25,
-                skipCount: 0,
-                totalItems: 1
-            },
             entries: [
                 {
                     entry: {
@@ -61,12 +55,6 @@ describe('SearchComponent', () => {
 
     let folderResult = {
         list: {
-            pagination: {
-                hasMoreItems: false,
-                maxItems: 25,
-                skipCount: 0,
-                totalItems: 1
-            },
             entries: [
                 {
                     entry: {
@@ -88,12 +76,6 @@ describe('SearchComponent', () => {
 
     let noResult = {
         list: {
-            pagination: {
-                hasMoreItems: false,
-                maxItems: 25,
-                skipCount: 0,
-                totalItems: 0
-            },
             entries: []
         }
     };
@@ -119,14 +101,13 @@ describe('SearchComponent', () => {
                 CoreModule.forRoot(),
                 DocumentListModule.forRoot()
             ],
-            declarations: [SearchComponent], // declare the test component
+            declarations: [AlfrescoSearchComponent], // declare the test component
             providers: [
-                SearchService,
-                {provide: AlfrescoTranslationService, useClass: TranslationMock},
-                {provide: NotificationService, useClass: NotificationService}
+                AlfrescoSearchService,
+                { provide: AlfrescoTranslationService, useClass: TranslationMock }
             ]
         }).compileComponents().then(() => {
-            fixture = TestBed.createComponent(SearchComponent);
+            fixture = TestBed.createComponent(AlfrescoSearchComponent);
             component = fixture.componentInstance;
             element = fixture.nativeElement;
         });
@@ -145,54 +126,51 @@ describe('SearchComponent', () => {
             {provide: ActivatedRoute, useValue: {params: Observable.from([{q: 'exampleTerm692'}])}}
         ]);
 
-        let search = new SearchComponent(null, null, null, injector.get(ActivatedRoute));
+        let search = new AlfrescoSearchComponent(null, null, injector.get(ActivatedRoute));
 
         search.ngOnInit();
 
         expect(search.searchTerm).toBe('exampleTerm692');
     });
 
-    it('should show the Notification snackbar on permission error', () => {
-        const notoficationService = TestBed.get(NotificationService);
-        spyOn(notoficationService, 'openSnackMessage');
+    it('should setup i18n folder', () => {
+        let translationService = TestBed.get(AlfrescoTranslationService);
+        spyOn(translationService, 'addTranslationFolder');
 
-        component.handlePermission(new PermissionModel());
+        fixture.detectChanges();
 
-        expect(notoficationService.openSnackMessage).toHaveBeenCalledWith('PERMISSON.LACKOF', 3000);
+        expect(translationService.addTranslationFolder).toHaveBeenCalledWith('ng2-alfresco-search', 'assets/ng2-alfresco-search');
     });
 
     describe('Search results', () => {
 
-        it('should add wildcard in the search parameters', (done) => {
-            let searchTerm = 'searchTerm6368';
-            let searchTermOut = 'searchTerm6368*';
-            let options = {
-                include: ['path', 'allowableOperations'],
+        it('should call search service with the correct parameters', (done) => {
+            let searchTerm = 'searchTerm63688', options = {
+                include: ['path'],
                 skipCount: 0,
                 rootNodeId: '-my-',
                 nodeType: 'my:type',
                 maxItems: 20,
                 orderBy: null
             };
-
             component.searchTerm = searchTerm;
             component.rootNodeId = '-my-';
             component.resultType = 'my:type';
-            let searchService = fixture.debugElement.injector.get(SearchService);
+            let searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
             spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(result));
             fixture.detectChanges();
 
             component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
-                expect(searchService.getQueryNodesPromise).toHaveBeenCalledWith(searchTermOut, options);
+                expect(searchService.getQueryNodesPromise).toHaveBeenCalledWith(searchTerm, options);
                 done();
             });
         });
 
         it('should display search results when a search term is provided', (done) => {
 
-            let searchService = TestBed.get(SearchService);
+            let searchService = TestBed.get(AlfrescoSearchService);
             spyOn(searchService, 'getQueryNodesPromise').and.returnValue(Promise.resolve(result));
             component.searchTerm = '';
 
@@ -213,7 +191,7 @@ describe('SearchComponent', () => {
 
         it('should display no result if no result are returned', (done) => {
 
-            let searchService = TestBed.get(SearchService);
+            let searchService = TestBed.get(AlfrescoSearchService);
             spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(noResult));
 
@@ -235,7 +213,7 @@ describe('SearchComponent', () => {
 
         it('should display an error if an error is encountered running the search', (done) => {
 
-            let searchService = TestBed.get(SearchService);
+            let searchService = TestBed.get(AlfrescoSearchService);
             spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.reject(errorJson));
 
@@ -250,7 +228,7 @@ describe('SearchComponent', () => {
                     fixture.detectChanges();
                     let errorEl = element.querySelector('[data-automation-id="search_error_message"]');
                     expect(errorEl).not.toBeNull();
-                    expect((<any> errorEl).innerText).toBe('SEARCH.RESULTS.ERROR');
+                    expect((<any>errorEl).innerText).toBe('SEARCH.RESULTS.ERROR');
                     done();
                 });
 
@@ -260,7 +238,7 @@ describe('SearchComponent', () => {
 
         it('should update search results when the search term input is changed', (done) => {
 
-            let searchService = TestBed.get(SearchService);
+            let searchService = TestBed.get(AlfrescoSearchService);
             spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(result));
 
@@ -286,13 +264,13 @@ describe('SearchComponent', () => {
     describe('search result interactions', () => {
 
         let debugElement: DebugElement;
-        let searchService: SearchService;
+        let searchService: AlfrescoSearchService;
         let querySpy: jasmine.Spy;
         let emitSpy: jasmine.Spy;
 
         beforeEach(() => {
             debugElement = fixture.debugElement;
-            searchService = TestBed.get(SearchService);
+            searchService = TestBed.get(AlfrescoSearchService);
             querySpy = spyOn(searchService, 'getQueryNodesPromise').and.returnValue(Promise.resolve(result));
             emitSpy = spyOn(component.preview, 'emit');
         });
@@ -300,7 +278,7 @@ describe('SearchComponent', () => {
         describe('click results', () => {
 
             beforeEach(() => {
-                component.navigationMode = SearchComponent.SINGLE_CLICK_NAVIGATION;
+                component.navigationMode = AlfrescoSearchComponent.SINGLE_CLICK_NAVIGATION;
             });
 
             it('should emit preview event when file item clicked', (done) => {
@@ -348,7 +326,7 @@ describe('SearchComponent', () => {
         describe('double click results', () => {
 
             beforeEach(() => {
-                component.navigationMode = SearchComponent.DOUBLE_CLICK_NAVIGATION;
+                component.navigationMode = AlfrescoSearchComponent.DOUBLE_CLICK_NAVIGATION;
             });
 
             it('should emit preview event when file item clicked', (done) => {

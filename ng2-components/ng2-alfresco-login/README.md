@@ -41,16 +41,16 @@ npm install ng2-alfresco-login
 
 ## Basic usage
 
-This component allows to authenticate to Alfresco Content Services and Alfresco Process Services.
+This component allow to authenticate to Alfresco One and Alfresco Activiti.
 
 **app.component.html**
 
 ```html
-<adf-login 
+<alfresco-login 
     [providers]="'ALL'"
     (onSuccess)="mySuccessMethod($event)"
     (onError)="myErrorMethod($event)">
-</adf-login>
+</alfresco-login>
 ```
 
 **app.component.ts**
@@ -72,12 +72,11 @@ export class AppComponent {
 
 | Name | Type | Default Value | Description |
 | --- | --- | --- | --- |
-| providers | string | ECM | Possible valid values are ECM, BPM or ALL. The default behaviour of this component will log in only in the ECM . If you want to log in in both systems the correct value to use is ALL |
-| disableCsrf | boolean | false | To prevent the CSRF Token from being submitted. Only for Alfresco Process Services call |
+| providers | string | ECM | Possible valid value are ECM, BPM or ALL. The default behaviour of this component will logged in only in the ECM . If you want log in in both system the correct value to use is ALL |
+| disableCsrf | boolean | false | To prevent the CSRF Token from been submitted. Only for Activiti call |
 | needHelpLink | string | | It will change the url of the NEED HELP link in the footer  |
 | registerLink | string | | It will change the url of the REGISTER link in the footer |
 | logoImageUrl | string | Alfresco logo image | To change the logo image with a customised image |
-| copyrightText | string | © 2017 Alfresco Software, Inc. All Rights Reserved. | The copyright text below the login box |
 | backgroundImageUrl | string | Alfresco background image | To change the background image with a customised image |
 | fieldsValidation | { [key: string]: any; }, extra?: { [key: string]: any; } |  | Use it to customise the validation rules of the login form |
 | showRememberMe | boolean | false | Toggle `Remember me` checkbox visibility |
@@ -98,9 +97,9 @@ export class AppComponent {
 You can replace the entire content in the footer of the login component with your custom content.
 
 ```html
-<adf-login ...>
+<alfresco-login ...>
     <login-footer><template>My custom HTML for the footer</template></login-footer>
-</adf-login>`
+</alfresco-login>`
 ```
 
 ## Change header content
@@ -110,22 +109,22 @@ You can replace the entire content in the footer of the login component with you
 You can replace the entire content in the header of the login component with your custom content.
 
 ```html
-<adf-login ...>
+<alfresco-login ...>
     <login-header><template>My custom HTML for the header</template></login-header>
-</adf-login>`
+</alfresco-login>`
 ```
 
 ## Extra content
 
 You can put additional html content between `alfresco-login` tags to get it rendered as part of the login dialog.
-This becomes handy in case you need to extend it with custom input fields handled by your application or parent component:
+This becomes handy in case you need extending it with custom input fields handled by your application or parent component:
 
 ```html
-<adf-login ...>
+<alfresco-login ...>
     <div>
-        <div>Your extra content</div>
+        <div>You extra content</div>
     </div>
-</adf-login>
+</alfresco-login>
 ```
 
 Here's an example of custom content:
@@ -137,10 +136,10 @@ Here's an example of custom content:
 It is possible changing logo and background images to custom values.
 
 ```html
-<adf-login 
+<alfresco-login 
     [backgroundImageUrl]="'http://images.freeimages.com/images/previews/638/wood-wall-for-background-1634466.jpg'"
     [logoImageUrl]="'http://images.freeimages.com/images/previews/eac/honeybee-with-a-house-1633609.jpg'">
-</adf-login>
+</alfresco-login>
 ```
 
 Should give you something like the following:
@@ -150,24 +149,24 @@ Should give you something like the following:
 Alternatively you can bind to your component properties and provide values dynamically if needed:
 
 ```html
-<adf-login
+<alfresco-login
     [backgroundImageUrl]="myCustomBackground"
     [logoImageUrl]="myCustomLogo">
-</adf-login>
+</alfresco-login>
 ```
 
 ## Customize Validation rules
 
-If needed it is possible to customise the validation rules of the login
+If needed it is possible customise the validation rules of the login
 form. You can add/modify the default rules of the login form.
 
 **MyCustomLogin.component.html**
 
 ```html
-<adf-login 
+<alfresco-login 
     [fieldsValidation]="customValidation"
     #alfrescologin>
-</adf-login>
+</alfresco-login>
 ```
 
 **MyCustomLogin.component.ts**
@@ -208,10 +207,10 @@ Alternatively you may want just running additional code without suppressing defa
 **MyCustomLogin.component.html**
 
 ```html
-<adf-login 
+<alfresco-login 
     (executeSubmit)="validateForm($event)" 
     #alfrescologin>
-</adf-login>
+</alfresco-login>
 ```
 
 **MyCustomLogin.component.ts**

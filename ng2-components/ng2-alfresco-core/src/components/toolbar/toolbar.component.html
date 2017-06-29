@@ -1,6 +1,5 @@
 <md-toolbar [color]="color">
-    <span *ngIf="title">{{ title }}</span>
-    <ng-content select="adf-toolbar-title"></ng-content>
+    <span>{{ title }}</span>
     <span class="adf-toolbar--spacer"></span>
     <ng-content></ng-content>
 </md-toolbar>

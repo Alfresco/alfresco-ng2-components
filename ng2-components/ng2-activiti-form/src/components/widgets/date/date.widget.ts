@@ -15,62 +15,81 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector  */
-
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { DateAdapter, MD_DATE_FORMATS } from '@angular/material';
+import { Component, ElementRef, OnInit, AfterViewChecked } from '@angular/core';
+import { WidgetComponent , baseHost } from './../widget.component';
 import * as moment from 'moment';
-import { Moment } from 'moment';
-import { MOMENT_DATE_FORMATS, MomentDateAdapter } from 'ng2-alfresco-core';
 import { FormService } from './../../../services/form.service';
-import { baseHost , WidgetComponent } from './../widget.component';
+
+declare let mdDateTimePicker: any;
+declare var componentHandler: any;
 
 @Component({
     selector: 'date-widget',
-    providers: [
-        {provide: DateAdapter, useClass: MomentDateAdapter},
-        {provide: MD_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS}],
     templateUrl: './date.widget.html',
-    styleUrls: ['./date.widget.scss'],
-    host: baseHost,
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./date.widget.css'],
+    host: baseHost
 })
-export class DateWidgetComponent extends WidgetComponent implements OnInit {
+export class DateWidget extends WidgetComponent implements OnInit, AfterViewChecked {
 
-    minDate: Moment;
-    maxDate: Moment;
+    datePicker: any;
 
-    constructor(public formService: FormService, public dateAdapter: DateAdapter<Moment>) {
-        super(formService);
+    constructor(public formService: FormService,
+                public elementRef: ElementRef) {
+         super(formService);
     }
 
     ngOnInit() {
-        let momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
-        momentDateAdapter.overrideDisplyaFormat = this.field.dateDisplayFormat;
+
+        let settings: any = {
+            type: 'date',
+            past: moment().subtract(100, 'years'),
+            future: moment().add(100, 'years')
+        };
 
         if (this.field) {
+
             if (this.field.minValue) {
-                this.minDate = moment(this.field.minValue, this.field.dateDisplayFormat);
+                settings.past = moment(this.field.minValue, this.field.dateDisplayFormat);
             }
 
             if (this.field.maxValue) {
-                this.maxDate = moment(this.field.maxValue, this.field.dateDisplayFormat);
+                settings.future = moment(this.field.maxValue, this.field.dateDisplayFormat);
             }
+
+            if (this.field.value) {
+                settings.init = moment(this.field.value, this.field.dateDisplayFormat);
+            }
+        }
+
+        this.datePicker = new mdDateTimePicker.default(settings);
+    }
+
+    ngAfterViewChecked() {
+        if (this.elementRef) {
+            let dataLocator = '#' + this.field.id;
+            this.datePicker.trigger = this.elementRef.nativeElement.querySelector(dataLocator);
         }
     }
 
-    onDateChanged(newDateValue) {
-        this.field.validationSummary = '';
-
-        if (newDateValue) {
-            let momentDate = moment(newDateValue, this.field.dateDisplayFormat, true);
-            if (!momentDate.isValid()) {
-                this.field.validationSummary = this.field.dateDisplayFormat;
-            }else {
-                this.field.value = newDateValue;
+    onDateChanged() {
+        if (this.field.value) {
+            let value = moment(this.field.value, this.field.dateDisplayFormat);
+            if (!value.isValid()) {
+                value = moment();
             }
+            this.datePicker.time = value;
         }
         this.checkVisibility(this.field);
+    }
+
+    onDateSelected() {
+        let newValue = this.datePicker.time.format(this.field.dateDisplayFormat);
+        this.field.value = newValue;
+        this.checkVisibility(this.field);
+
+        if (this.elementRef) {
+            this.setupMaterialTextField(this.elementRef, componentHandler, newValue);
+        }
     }
 
 }

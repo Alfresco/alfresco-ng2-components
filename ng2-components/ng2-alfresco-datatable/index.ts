@@ -15,58 +15,47 @@
  * limitations under the License.
  */
 
-import { ModuleWithProviders, NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
-import { MaterialModule } from './src/material.module';
+import { NgModule, ModuleWithProviders } from '@angular/core';
+import { MdCheckboxModule, MdMenuModule, MdIconModule, MdButtonModule } from '@angular/material';
+import { CoreModule } from 'ng2-alfresco-core';
 
 export * from './src/data/index';
+export * from './src/components/index';
+export * from './src/components/pagination/index';
+export * from './src/components/datatable/data-cell.event';
+export * from './src/components/datatable/data-row-action.event';
 
-export { DataTableCellComponent } from './src/components/datatable/datatable-cell.component';
-export { DataTableComponent } from './src/components/datatable/datatable.component';
-export { EmptyListComponent } from './src/components/datatable/empty-list.component';
-export { DataCellEvent, DataCellEventModel } from './src/components/datatable/data-cell.event';
-export { DataRowActionEvent, DataRowActionModel } from './src/components/datatable/data-row-action.event';
-
-import { DataTableCellComponent } from './src/components/datatable/datatable-cell.component';
 import { DataTableComponent } from './src/components/datatable/datatable.component';
-import { EmptyListComponent } from './src/components/datatable/empty-list.component';
-import { LocationCellComponent } from './src/components/datatable/location-cell.component';
-import { LoadingContentTemplateDirective } from './src/directives/loading-template.directive';
-import { NoContentTemplateDirective } from './src/directives/no-content-template.directive';
+import { NoContentTemplateComponent } from './src/directives/no-content-template.component';
+import { LoadingContentTemplateComponent } from './src/directives/loading-template.component';
+import { PaginationComponent } from './src/components/pagination/pagination.component';
+import { DataTableCellComponent } from './src/components/datatable/datatable-cell.component';
 
-export function directives() {
-    return [
-        DataTableComponent,
-        EmptyListComponent,
-        DataTableCellComponent,
-        LocationCellComponent,
-        NoContentTemplateDirective,
-        LoadingContentTemplateDirective
-    ];
-}
+export const ALFRESCO_DATATABLE_DIRECTIVES: [any] = [
+    DataTableComponent,
+    DataTableCellComponent,
+    NoContentTemplateComponent,
+    LoadingContentTemplateComponent,
+    PaginationComponent
+];
 
 @NgModule({
     imports: [
-        RouterModule,
         CoreModule,
-        MaterialModule
+        MdCheckboxModule,
+        MdMenuModule,
+        MdIconModule,
+        MdButtonModule
     ],
-    declarations: directives(),
-    providers: [
-        {
-            provide: TRANSLATION_PROVIDER,
-            multi: true,
-            useValue: {
-                name: 'ng2-alfresco-datatable',
-                source: 'assets/ng2-alfresco-datatable'
-            }
-        }
+    declarations: [
+        ...ALFRESCO_DATATABLE_DIRECTIVES
     ],
     exports: [
-        ...directives(),
-        MaterialModule,
-        RouterModule
+        ...ALFRESCO_DATATABLE_DIRECTIVES,
+        MdCheckboxModule,
+        MdMenuModule,
+        MdIconModule,
+        MdButtonModule
     ]
 })
 export class DataTableModule {

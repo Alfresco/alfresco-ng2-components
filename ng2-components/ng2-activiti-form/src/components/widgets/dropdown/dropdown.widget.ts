@@ -15,23 +15,20 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
 import { FormService } from '../../../services/form.service';
-import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
+import { WidgetComponent , baseHost } from './../widget.component';
 import { FormFieldOption } from './../core/form-field-option';
-import { baseHost , WidgetComponent } from './../widget.component';
+import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 
 @Component({
     selector: 'dropdown-widget',
     templateUrl: './dropdown.widget.html',
-    styleUrls: ['./dropdown.widget.scss'],
-    host: baseHost,
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./dropdown.widget.css'],
+    host: baseHost
 })
-export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
+export class DropdownWidget extends WidgetComponent implements OnInit {
 
     constructor(public formService: FormService,
                 private visibilityService: WidgetVisibilityService,

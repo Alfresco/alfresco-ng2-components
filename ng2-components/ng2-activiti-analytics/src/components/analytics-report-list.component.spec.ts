@@ -16,12 +16,12 @@
  */
 
 import { DebugElement } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReportParametersModel } from 'ng2-activiti-diagrams';
-import { AlfrescoTranslationService, AppConfigModule, CoreModule } from 'ng2-alfresco-core';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
+import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AnalyticsReportListComponent } from '../components/analytics-report-list.component';
 import { AnalyticsService } from '../services/analytics.service';
+import { ReportParametersModel } from '../models/report.model';
 
 declare let jasmine: any;
 
@@ -45,10 +45,7 @@ describe('AnalyticsReportListComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
-                AppConfigModule.forRoot('app.config.json', {
-                    bpmHost: 'http://localhost:9876/bpm'
-                })
+                CoreModule.forRoot()
             ],
             declarations: [
                 AnalyticsReportListComponent
@@ -93,7 +90,7 @@ describe('AnalyticsReportListComponent', () => {
         });
 
         it('should return the default reports when the report list is empty', (done) => {
-            jasmine.Ajax.stubRequest('http://localhost:9876/bpm/activiti-app/app/rest/reporting/reports').andReturn({
+            jasmine.Ajax.stubRequest('http://localhost:3000/bpm/activiti-app/app/rest/reporting/reports').andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: []
@@ -101,13 +98,13 @@ describe('AnalyticsReportListComponent', () => {
 
             fixture.detectChanges();
 
-            jasmine.Ajax.stubRequest('http://localhost:9876/bpm/activiti-app/app/rest/reporting/default-reports').andReturn({
+            jasmine.Ajax.stubRequest('http://localhost:3000/bpm/activiti-app/app/rest/reporting/default-reports').andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: []
             });
 
-            jasmine.Ajax.stubRequest('http://localhost:9876/bpm/activiti-app/app/rest/reporting/reports').andReturn({
+            jasmine.Ajax.stubRequest('http://localhost:3000/bpm/activiti-app/app/rest/reporting/reports').andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: reportList

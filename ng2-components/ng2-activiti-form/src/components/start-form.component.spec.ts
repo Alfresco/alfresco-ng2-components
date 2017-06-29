@@ -16,25 +16,27 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
-import { TranslationMock } from './../assets/translation.service.mock';
-import { EcmModelService } from './../services/ecm-model.service';
-import { FormService } from './../services/form.service';
-import { WidgetVisibilityService } from './../services/widget-visibility.service';
+import { MdTabsModule } from '@angular/material';
+
+import { ActivitiStartForm } from './activiti-start-form.component';
 import { FormFieldComponent } from './form-field/form-field.component';
-import { MaterialModule } from './material.module';
-import { StartFormComponent } from './start-form.component';
-import { ContentWidgetComponent } from './widgets/content/content.widget';
-import { MASK_DIRECTIVE } from './widgets/index';
+import { ActivitiContent } from './activiti-content.component';
 import { WIDGET_DIRECTIVES } from './widgets/index';
+import { MASK_DIRECTIVE } from './widgets/index';
+import { FormService } from './../services/form.service';
+import { EcmModelService } from './../services/ecm-model.service';
+import { WidgetVisibilityService } from './../services/widget-visibility.service';
+import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { TranslationMock } from './../assets/translation.service.mock';
 
 describe('ActivitiStartForm', () => {
 
+    let componentHandler: any;
     let formService: FormService;
-    let component: StartFormComponent;
-    let fixture: ComponentFixture<StartFormComponent>;
+    let component: ActivitiStartForm;
+    let fixture: ComponentFixture<ActivitiStartForm>;
     let getStartFormSpy: jasmine.Spy;
 
     const exampleId1 = 'my:process1';
@@ -43,12 +45,12 @@ describe('ActivitiStartForm', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                MaterialModule,
+                MdTabsModule,
                 CoreModule.forRoot()],
             declarations: [
-                StartFormComponent,
+                ActivitiStartForm,
                 FormFieldComponent,
-                ContentWidgetComponent,
+                ActivitiContent,
                 ...WIDGET_DIRECTIVES,
                 ...MASK_DIRECTIVE
             ],
@@ -63,7 +65,7 @@ describe('ActivitiStartForm', () => {
 
     beforeEach(() => {
 
-        fixture = TestBed.createComponent(StartFormComponent);
+        fixture = TestBed.createComponent(ActivitiStartForm);
         component = fixture.componentInstance;
         formService = fixture.debugElement.injector.get(FormService);
 
@@ -71,6 +73,11 @@ describe('ActivitiStartForm', () => {
             processDefinitionName: 'my:process'
         }));
 
+        componentHandler = jasmine.createSpyObj('componentHandler', [
+            'upgradeAllRegistered',
+            'upgradeElement'
+        ]);
+        window['componentHandler'] = componentHandler;
     });
 
     it('should load start form on change if processDefinitionId defined', () => {

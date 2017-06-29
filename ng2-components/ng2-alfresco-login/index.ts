@@ -15,29 +15,23 @@
  * limitations under the License.
  */
 
-import { ModuleWithProviders, NgModule } from '@angular/core';
-import { MdCheckboxModule, MdIconModule, MdInputModule, MdProgressSpinnerModule } from '@angular/material';
-import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
+import { CoreModule } from 'ng2-alfresco-core';
+import { MdInputModule, MdIconModule, MdCheckboxModule, MdProgressSpinnerModule } from '@angular/material';
 
-import { LoginComponent } from './src/components/login.component';
-import { LoginFooterDirective } from './src/directives/login-footer.directive';
 import { LoginHeaderDirective } from './src/directives/login-header.directive';
+import { LoginFooterDirective } from './src/directives/login-footer.directive';
 
-export { LoginHeaderDirective } from './src/directives/login-header.directive';
-export { LoginFooterDirective } from './src/directives/login-footer.directive';
-export { LoginComponent } from './src/components/login.component';
+import { AlfrescoLoginComponent } from './src/components/alfresco-login.component';
 
-// Old Deprecated export
-import { LoginComponent as AlfrescoLoginComponent } from './src/components/login.component';
-export { LoginComponent as AlfrescoLoginComponent } from './src/components/login.component';
+export * from './src/directives/login-header.directive';
+export * from './src/directives/login-footer.directive';
+export * from './src/components/alfresco-login.component';
 
 export const ALFRESCO_LOGIN_DIRECTIVES: any[] = [
-    LoginComponent,
+    AlfrescoLoginComponent,
     LoginFooterDirective,
-    LoginHeaderDirective,
-
-    // Old Deprecated export
-    AlfrescoLoginComponent
+    LoginHeaderDirective
 ];
 
 @NgModule({
@@ -51,16 +45,7 @@ export const ALFRESCO_LOGIN_DIRECTIVES: any[] = [
     declarations: [
         ...ALFRESCO_LOGIN_DIRECTIVES
     ],
-    providers: [
-        {
-            provide: TRANSLATION_PROVIDER,
-            multi: true,
-            useValue: {
-                name: 'ng2-alfresco-login',
-                source: 'assets/ng2-alfresco-login'
-            }
-        }
-    ],
+    providers: [],
     exports: [
         ...ALFRESCO_LOGIN_DIRECTIVES,
         MdInputModule,

@@ -16,14 +16,14 @@
  */
 
 import { DebugElement } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigModule, CoreModule } from 'ng2-alfresco-core';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { WebscriptComponent } from '../src/webscript.component';
 
 declare let jasmine: any;
 
-describe('WebscriptComponent', () => {
+describe('Test ng2-alfresco-webscript', () => {
 
     let component: WebscriptComponent;
     let fixture: ComponentFixture<WebscriptComponent>;
@@ -34,9 +34,6 @@ describe('WebscriptComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                AppConfigModule.forRoot('app.config.json', {
-                    ecmHost: 'http://localhost:9876/ecm'
-                }),
                 DataTableModule
             ],
             declarations: [
@@ -90,7 +87,7 @@ describe('WebscriptComponent', () => {
 
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
-                expect(jasmine.Ajax.requests.mostRecent().url).toBe('http://localhost:9876/ecm/alfresco/service/sample/folder/Company%20Home');
+                expect(jasmine.Ajax.requests.mostRecent().url).toBe('http://localhost:3000/ecm/alfresco/service/sample/folder/Company%20Home');
                 done();
             });
 

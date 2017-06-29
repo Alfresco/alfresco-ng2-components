@@ -43,8 +43,7 @@
             "es2015",
             "dom"
         ],
-        "suppressImplicitAnyIndexErrors": true,
-        "noUnusedLocals": true
+        "suppressImplicitAnyIndexErrors": true
     },
     "exclude": [
         "*/node_modules",

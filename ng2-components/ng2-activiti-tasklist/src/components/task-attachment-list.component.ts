@@ -15,22 +15,19 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, OnChanges, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
+import { AlfrescoTranslationService, ContentService } from 'ng2-alfresco-core';
 import { ActivitiContentService } from 'ng2-activiti-form';
-import { ContentService, ThumbnailService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'adf-task-attachment-list',
-    styleUrls: ['./task-attachment-list.component.scss'],
-    templateUrl: './task-attachment-list.component.html'
+    styleUrls: ['./adf-task-attachment-list.component.css'],
+    templateUrl: './adf-task-attachment-list.component.html'
 })
 export class TaskAttachmentListComponent implements OnChanges {
 
     @Input()
     taskId: string;
-
-    @Input()
-    disabled: boolean = false;
 
     @Output()
     attachmentClick = new EventEmitter();
@@ -41,15 +38,15 @@ export class TaskAttachmentListComponent implements OnChanges {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    @Input()
-    emptyListImageUrl: string = require('./../assets/images/empty_doc_lib.svg');
-
     attachments: any[] = [];
-    isLoading: boolean = true;
 
-    constructor(private activitiContentService: ActivitiContentService,
-                private contentService: ContentService,
-                private thumbnailService: ThumbnailService) {
+    constructor(private translateService: AlfrescoTranslationService,
+                private activitiContentService: ActivitiContentService,
+                private contentService: ContentService) {
+
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
+        }
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -66,41 +63,25 @@ export class TaskAttachmentListComponent implements OnChanges {
         this.loadAttachmentsByTaskId(this.taskId);
     }
 
-    add(content: any): void {
-        this.attachments.push({
-            id: content.id,
-            name: content.name,
-            created: content.created,
-            createdBy: content.createdBy.firstName + ' ' + content.createdBy.lastName,
-            icon: this.thumbnailService.getMimeTypeIcon(content.mimeType)
-        });
-    }
-
     private loadAttachmentsByTaskId(taskId: string) {
         if (taskId) {
-            this.isLoading = true;
             this.reset();
             this.activitiContentService.getTaskRelatedContent(taskId).subscribe(
                 (res: any) => {
-                    let attachList = [];
                     res.data.forEach(content => {
-                        attachList.push({
+                        this.attachments.push({
                             id: content.id,
                             name: content.name,
                             created: content.created,
                             createdBy: content.createdBy.firstName + ' ' + content.createdBy.lastName,
-                            icon: this.thumbnailService.getMimeTypeIcon(content.mimeType)
+                            icon: this.activitiContentService.getMimeTypeIcon(content.mimeType)
                         });
                     });
-                    this.attachments = attachList;
                     this.success.emit(this.attachments);
-                    this.isLoading = false;
                 },
                 (err) => {
                     this.error.emit(err);
-                    this.isLoading = false;
-                });
-        }
+                });        }
     }
 
     private deleteAttachmentById(contentId: string) {
@@ -139,12 +120,9 @@ export class TaskAttachmentListComponent implements OnChanges {
 
         event.value.actions = [
             viewAction,
+            removeAction,
             downloadAction
         ];
-
-        if (!this.disabled) {
-            event.value.actions.splice(1, 0, removeAction);
-        }
     }
 
     onExecuteRowAction(event: any) {
@@ -183,9 +161,5 @@ export class TaskAttachmentListComponent implements OnChanges {
                 this.error.emit(err);
             }
         );
-    }
-
-    isDisabled(): boolean {
-        return this.disabled;
     }
 }

@@ -19,7 +19,7 @@ import { EventEmitter } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
 import { UploadService } from './upload.service';
-import { FileModel } from '../models/file.model';
+import { FileModel, FileUploadOptions } from '../models/file.model';
 
 declare let jasmine: any;
 
@@ -48,15 +48,15 @@ describe('UploadService', () => {
     });
 
     it('should add an element in the queue and returns it', () => {
-        let filesFake = new FileModel(<File>{name: 'fake-name', size: 10});
+        let filesFake = new FileModel(<File>{ name: 'fake-name', size: 10 });
         service.addToQueue(filesFake);
         expect(service.getQueue().length).toEqual(1);
     });
 
     it('should add two elements in the queue and returns them', () => {
         let filesFake = [
-            new FileModel(<File>{name: 'fake-name', size: 10}),
-            new FileModel(<File>{name: 'fake-name2', size: 20})
+            new FileModel(<File>{ name: 'fake-name', size: 10 }),
+            new FileModel(<File>{ name: 'fake-name2', size: 20 })
         ];
         service.addToQueue(...filesFake);
         expect(service.getQueue().length).toEqual(2);
@@ -77,12 +77,15 @@ describe('UploadService', () => {
             expect(e.value).toBe('File uploaded');
             done();
         });
-        let fileFake = new FileModel(<File>{name: 'fake-name', size: 10});
+        let fileFake = new FileModel(
+            <File>{ name: 'fake-name', size: 10 },
+            <FileUploadOptions> { parentId: '-root-', path: 'fake-dir' }
+        );
         service.addToQueue(fileFake);
-        service.uploadFilesInTheQueue('-root-', 'fake-dir', emitter);
+        service.uploadFilesInTheQueue(emitter);
 
         let request = jasmine.Ajax.requests.mostRecent();
-        expect(request.url).toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true');
+        expect(request.url).toBe('http://localhost:3000/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true');
         expect(request.method).toBe('POST');
 
         jasmine.Ajax.requests.mostRecent().respondWith({
@@ -99,11 +102,14 @@ describe('UploadService', () => {
             expect(e.value).toBe('Error file uploaded');
             done();
         });
-        let fileFake = new FileModel(<File>{name: 'fake-name', size: 10});
+        let fileFake = new FileModel(
+            <File>{ name: 'fake-name', size: 10 },
+            <FileUploadOptions> { parentId: '-root-' }
+        );
         service.addToQueue(fileFake);
-        service.uploadFilesInTheQueue('-root-', '', emitter);
+        service.uploadFilesInTheQueue(emitter);
         expect(jasmine.Ajax.requests.mostRecent().url)
-            .toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true');
+            .toBe('http://localhost:3000/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true');
 
         jasmine.Ajax.requests.mostRecent().respondWith({
             'status': 404,
@@ -119,102 +125,20 @@ describe('UploadService', () => {
             expect(e.value).toEqual('File aborted');
             done();
         });
-        let fileFake = new FileModel(<File>{name: 'fake-name', size: 10});
+        let fileFake = new FileModel(<File>{ name: 'fake-name', size: 10 });
         service.addToQueue(fileFake);
-        service.uploadFilesInTheQueue('-root-', '', emitter);
+        service.uploadFilesInTheQueue(emitter);
 
         let file = service.getQueue();
-        file[0].emitAbort();
-    });
-
-    it('should make XHR error request after the xhr error is called', (done) => {
-        let emitter = new EventEmitter();
-
-        emitter.subscribe(e => {
-            expect(e.value).toBe('Error file uploaded');
-            done();
-        });
-        let fileFake = new FileModel(<File>{name: 'fake-name', size: 10});
-        service.addToQueue(fileFake);
-        service.uploadFilesInTheQueue('-root-', '', emitter);
-
-        let file = service.getQueue();
-        file[0].emitError();
-    });
-
-    it('should make XHR progress request after the onprogress is called', (done) => {
-        let fakeProgress = {
-            loaded: 500,
-            total: 1234,
-            percent: 44
-        };
-        let filesFake = new FileModel(<File>{name: 'fake-name', size: 10});
-        service.addToQueue(filesFake);
-        service.filesUpload$.subscribe((file) => {
-            expect(file).toBeDefined();
-            expect(file[0]).toBeDefined();
-            expect(file[0].progress).toEqual(fakeProgress);
-            done();
-        });
-        service.uploadFilesInTheQueue('-root-', '', null);
-
-        let file = service.getQueue();
-
-        file[0].emitProgres(fakeProgress);
-    });
-
-    it('should make XHR done request after the folder is created', (done) => {
-        let fakeRest = {
-            entry: {
-                isFile: false,
-                isFolder: true,
-                name: 'fake-folder'
-            }
-        };
-        let fakePromise = new Promise(function (resolve, reject) {
-            resolve(fakeRest);
-        });
-        spyOn(service, 'callApiCreateFolder').and.returnValue(fakePromise);
-        let defaultPath = '';
-        let folderName = 'fake-folder';
-        service.createFolder(defaultPath, folderName).subscribe(res => {
-            expect(res).toEqual(fakeRest);
-            done();
-        });
-    });
-
-    it('should throws an exception when a folder already exist', (done) => {
-        let fakeRest = {
-            response: {
-                body: {
-                    error: {
-                        statusCode: 409
-                    }
-                }
-            }
-        };
-        let fakePromise = new Promise(function (resolve, reject) {
-            reject(fakeRest);
-        });
-        spyOn(service, 'callApiCreateFolder').and.returnValue(fakePromise);
-        let defaultPath = '';
-        let folderName = 'folder-duplicate-fake';
-        service.createFolder(defaultPath, folderName).subscribe(
-            res => {
-            },
-            error => {
-                expect(error).toEqual(fakeRest);
-                done();
-            }
-        );
+        service.cancelUpload(...file);
     });
 
     it('If versioning is true autoRename should not be present and majorVersion should be a param', () => {
         let emitter = new EventEmitter();
 
-        const filesFake = new FileModel(<File>{name: 'fake-name', size: 10}, { newVersion: true });
+        const filesFake = new FileModel(<File>{ name: 'fake-name', size: 10 }, { newVersion: true });
         service.addToQueue(filesFake);
-        service.uploadFilesInTheQueue('-root-', '', emitter);
+        service.uploadFilesInTheQueue(emitter);
 
         expect(jasmine.Ajax.requests.mostRecent().url.endsWith('autoRename=true')).toBe(false);
         expect(jasmine.Ajax.requests.mostRecent().params.has('majorVersion')).toBe(true);
@@ -227,12 +151,15 @@ describe('UploadService', () => {
             expect(e.value).toBe('File uploaded');
             done();
         });
-        let filesFake = new FileModel(<File>{name: 'fake-name', size: 10});
+        let filesFake = new FileModel(
+            <File>{ name: 'fake-name', size: 10 },
+            <FileUploadOptions> { parentId: '123', path: 'fake-dir' }
+        );
         service.addToQueue(filesFake);
-        service.uploadFilesInTheQueue('123', 'fake-dir', emitter);
+        service.uploadFilesInTheQueue(emitter);
 
         let request = jasmine.Ajax.requests.mostRecent();
-        expect(request.url).toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/123/children?autoRename=true');
+        expect(request.url).toBe('http://localhost:3000/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/123/children?autoRename=true');
         expect(request.method).toBe('POST');
 
         jasmine.Ajax.requests.mostRecent().respondWith({
@@ -240,5 +167,27 @@ describe('UploadService', () => {
             contentType: 'text/plain',
             responseText: 'File uploaded'
         });
+    });
+
+    it('should start downloading the next one if a file of the list is aborted', (done) => {
+        let emitter = new EventEmitter();
+
+        service.fileUploadAborted.subscribe(e => {
+            expect(e).not.toBeNull();
+        });
+
+        service.fileUploadCancelled.subscribe(e => {
+            expect(e).not.toBeNull();
+            done();
+        });
+
+        let fileFake1 = new FileModel(<File>{ name: 'fake-name1', size: 10 });
+        let fileFake2 = new FileModel(<File>{ name: 'fake-name2', size: 10 });
+        let filelist = [fileFake1, fileFake2];
+        service.addToQueue(...filelist);
+        service.uploadFilesInTheQueue(emitter);
+
+        let file = service.getQueue();
+        service.cancelUpload(...file);
     });
 });

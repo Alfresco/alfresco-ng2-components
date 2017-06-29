@@ -15,39 +15,39 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreModule } from 'ng2-alfresco-core';
-import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
-import { fakeFormJson } from '../../../services/assets/widget-visibility.service.mock';
-import { MaterialModule } from '../../material.module';
-import { WIDGET_DIRECTIVES } from '../index';
-import { MASK_DIRECTIVE } from '../index';
-import { EcmModelService } from './../../../services/ecm-model.service';
-import { FormService } from './../../../services/form.service';
-import { FormFieldComponent } from './../../form-field/form-field.component';
-import { ContentWidgetComponent } from './../content/content.widget';
-import { ContainerColumnModel } from './../core/container-column.model';
+import { ContainerWidget } from './container.widget';
+import { ContainerWidgetModel } from './container.widget.model';
+import { FormModel } from './../core/form.model';
 import { FormFieldTypes } from './../core/form-field-types';
 import { FormFieldModel } from './../core/form-field.model';
-import { FormModel } from './../core/form.model';
-import { ContainerWidgetComponent } from './container.widget';
-import { ContainerWidgetComponentModel } from './container.widget.model';
+import { WIDGET_DIRECTIVES } from '../index';
+import { MASK_DIRECTIVE } from '../index';
+import { FormFieldComponent } from './../../form-field/form-field.component';
+import { ActivitiContent } from './../../activiti-content.component';
+import { fakeFormJson } from '../../../services/assets/widget-visibility.service.mock';
+import { MdTabsModule } from '@angular/material';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { CoreModule } from 'ng2-alfresco-core';
+import { FormService } from './../../../services/form.service';
+import { EcmModelService } from './../../../services/ecm-model.service';
+import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 
-describe('ContainerWidgetComponent', () => {
+describe('ContainerWidget', () => {
 
-    let widget: ContainerWidgetComponent;
-    let fixture: ComponentFixture<ContainerWidgetComponent>;
+    let widget: ContainerWidget;
+    let fixture: ComponentFixture<ContainerWidget>;
     let element: HTMLElement;
     let contentService: ActivitiAlfrescoContentService;
+    let componentHandler;
     let dialogPolyfill;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                MaterialModule
+                MdTabsModule
             ],
-            declarations: [FormFieldComponent, ContentWidgetComponent, WIDGET_DIRECTIVES, MASK_DIRECTIVE],
+            declarations: [FormFieldComponent, ActivitiContent, WIDGET_DIRECTIVES, MASK_DIRECTIVE],
             providers: [
                 FormService,
                 EcmModelService,
@@ -57,7 +57,7 @@ describe('ContainerWidgetComponent', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ContainerWidgetComponent);
+        fixture = TestBed.createComponent(ContainerWidget);
         contentService = TestBed.get(ActivitiAlfrescoContentService);
 
         element = fixture.nativeElement;
@@ -69,6 +69,11 @@ describe('ContainerWidgetComponent', () => {
                 };
             }
         };
+        componentHandler = jasmine.createSpyObj('componentHandler', [
+            'upgradeAllRegistered'
+        ]);
+
+        window['componentHandler'] = componentHandler;
     });
 
     it('should wrap field with model instance', () => {
@@ -79,8 +84,20 @@ describe('ContainerWidgetComponent', () => {
         expect(widget.content.field).toBe(field);
     });
 
+    it('should upgrade MDL content on view init', () => {
+        widget.ngAfterViewInit();
+        expect(componentHandler.upgradeAllRegistered).toHaveBeenCalled();
+    });
+
+    it('should setup MDL content only if component handler available', () => {
+        expect(widget.setupMaterialComponents()).toBeTruthy();
+
+        window['componentHandler'] = null;
+        expect(widget.setupMaterialComponents()).toBeFalsy();
+    });
+
     it('should toggle underlying group container', () => {
-        let container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(), {
+        let container = new ContainerWidgetModel(new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.GROUP,
             params: {
                 allowCollapse: true
@@ -97,7 +114,7 @@ describe('ContainerWidgetComponent', () => {
     });
 
     it('should toggle only collapsible container', () => {
-        let container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(), {
+        let container = new ContainerWidgetModel(new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.GROUP
         }));
 
@@ -110,7 +127,7 @@ describe('ContainerWidgetComponent', () => {
 
     it('should toggle only group container', () => {
 
-        let container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(), {
+        let container = new ContainerWidgetModel(new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.CONTAINER,
             params: {
                 allowCollapse: true
@@ -142,13 +159,15 @@ describe('ContainerWidgetComponent', () => {
         let fakeContainerInvisible;
 
         beforeEach(() => {
-            fakeContainerVisible = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(fakeFormJson), {
+            componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
+            window['componentHandler'] = componentHandler;
+            fakeContainerVisible = new ContainerWidgetModel(new FormFieldModel(new FormModel(fakeFormJson), {
                 fieldType: FormFieldTypes.GROUP,
                 id: 'fake-cont-id-1',
                 name: 'fake-cont-1-name',
                 type: FormFieldTypes.GROUP
             }));
-            fakeContainerInvisible = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(fakeFormJson), {
+            fakeContainerInvisible = new ContainerWidgetModel(new FormFieldModel(new FormModel(fakeFormJson), {
                 fieldType: FormFieldTypes.GROUP,
                 id: 'fake-cont-id-2',
                 name: 'fake-cont-2-name',
@@ -212,57 +231,7 @@ describe('ContainerWidgetComponent', () => {
             });
             widget.onFieldChanged(null);
         }));
+
     });
 
-    describe('fields', () => {
-
-        it('should serializes the content fields', () => {
-            const field1 = <FormFieldModel> {id: '1'},
-                field2 = <FormFieldModel> {id: '2'},
-                field3 = <FormFieldModel> {id: '3'},
-                field4 = <FormFieldModel> {id: '4'},
-                field5 = <FormFieldModel> {id: '5'},
-                field6 = <FormFieldModel> {id: '6'};
-
-            let container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel()));
-            container.columns = [
-                <ContainerColumnModel> { fields: [
-                    field1,
-                    field2,
-                    field3
-                ] },
-                <ContainerColumnModel> { fields: [
-                    field4,
-                    field5
-                ] },
-                <ContainerColumnModel> { fields: [
-                    field6
-                ] }
-            ];
-
-            widget.content = container;
-
-            expect(widget.fields[0].id).toEqual('1');
-            expect(widget.fields[1].id).toEqual('4');
-            expect(widget.fields[2].id).toEqual('6');
-            expect(widget.fields[3].id).toEqual('2');
-            expect(widget.fields[4].id).toEqual('5');
-            expect(widget.fields[5]).toEqual(undefined);
-            expect(widget.fields[6].id).toEqual('3');
-            expect(widget.fields[7]).toEqual(undefined);
-            expect(widget.fields[8]).toEqual(undefined);
-        });
-    });
-
-    describe('getColumnWith', () => {
-
-        it('should calculate the column width based on the numberOfColumns and current field\'s colspan property', () => {
-            let container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(), { numberOfColumns: 4 }));
-            widget.content = container;
-
-            expect(widget.getColumnWith(undefined)).toBe('25%');
-            expect(widget.getColumnWith(<FormFieldModel> { colspan: 1 })).toBe('25%');
-            expect(widget.getColumnWith(<FormFieldModel> { colspan: 3 })).toBe('75%');
-        });
-    });
 });

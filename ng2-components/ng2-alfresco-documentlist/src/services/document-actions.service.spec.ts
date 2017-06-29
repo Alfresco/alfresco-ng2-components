@@ -15,30 +15,23 @@
  * limitations under the License.
  */
 
-import { AlfrescoContentService, AlfrescoTranslationService, NotificationService } from 'ng2-alfresco-core';
-import { FileNode, FolderNode } from '../assets/document-library.model.mock';
-import { DocumentListServiceMock } from '../assets/document-list.service.mock';
+import { AlfrescoContentService } from 'ng2-alfresco-core';
 import { ContentActionHandler } from '../models/content-action.model';
 import { DocumentActionsService } from './document-actions.service';
+import { DocumentListServiceMock } from '../assets/document-list.service.mock';
 import { DocumentListService } from './document-list.service';
-import { NodeActionsService } from './node-actions.service';
+import { FileNode, FolderNode } from '../assets/document-library.model.mock';
 
 describe('DocumentActionsService', () => {
 
     let service: DocumentActionsService;
     let documentListService: DocumentListService;
     let contentService: AlfrescoContentService;
-    let translateService: AlfrescoTranslationService;
-    let notificationService: NotificationService;
-    let nodeActionsService: NodeActionsService;
 
     beforeEach(() => {
         documentListService = new DocumentListServiceMock();
         contentService = new AlfrescoContentService(null, null, null);
-        translateService = <AlfrescoTranslationService> { addTranslationFolder: () => {}};
-        nodeActionsService = new NodeActionsService(null, null, null);
-        notificationService = new NotificationService(null);
-        service = new DocumentActionsService(nodeActionsService, documentListService, contentService);
+        service = new DocumentActionsService(documentListService, contentService);
     });
 
     it('should register default download action', () => {
@@ -70,7 +63,7 @@ describe('DocumentActionsService', () => {
         let file = new FileNode();
         expect(service.canExecuteAction(file)).toBeTruthy();
 
-        service = new DocumentActionsService(nodeActionsService);
+        service = new DocumentActionsService(null);
         expect(service.canExecuteAction(file)).toBeFalsy();
     });
 
@@ -85,6 +78,23 @@ describe('DocumentActionsService', () => {
         expect(service.setHandler(null, handler)).toBeFalsy();
         expect(service.setHandler('', handler)).toBeFalsy();
         expect(service.setHandler('my-handler', handler)).toBeTruthy();
+    });
+
+    // TODO: to be removed once demo handlers are removed
+    it('should execute demo actions', () => {
+        spyOn(window, 'alert').and.stub();
+
+        service.getHandler('system1')(null);
+        expect(window.alert).toHaveBeenCalledWith('standard document action 1');
+
+        service.getHandler('system2')(null);
+        expect(window.alert).toHaveBeenCalledWith('standard document action 2');
+    });
+
+    // TODO: to be removed once demo handlers are removed
+    it('should register demo handlers', () => {
+        expect(service.getHandler('system1')).toBeDefined();
+        expect(service.getHandler('system2')).toBeDefined();
     });
 
     it('should register delete action', () => {
@@ -106,20 +116,6 @@ describe('DocumentActionsService', () => {
 
     });
 
-    it('should call the error on the returned Observable if there are no permissions', (done) => {
-        spyOn(documentListService, 'deleteNode').and.callThrough();
-
-        let file = new FileNode();
-        const deleteObservable = service.getHandler('delete')(file);
-
-        deleteObservable.subscribe({
-            error: (error) => {
-                expect(error.message).toEqual('No permission to delete');
-                done();
-            }
-        });
-    });
-
     it('should delete the file node if there is the delete permission', () => {
         spyOn(documentListService, 'deleteNode').and.callThrough();
 
@@ -135,10 +131,10 @@ describe('DocumentActionsService', () => {
     it('should not delete the file node if there is no delete permission', (done) => {
         spyOn(documentListService, 'deleteNode').and.callThrough();
 
-        service.permissionEvent.subscribe((permissionBack) => {
-            expect(permissionBack).toBeDefined();
-            expect(permissionBack.type).toEqual('content');
-            expect(permissionBack.action).toEqual('delete');
+        service.permissionEvent.subscribe((permission) => {
+            expect(permission).toBeDefined();
+            expect(permission.type).toEqual('content');
+            expect(permission.action).toEqual('delete');
             done();
         });
 
@@ -191,29 +187,22 @@ describe('DocumentActionsService', () => {
     });
 
     it('should require internal service for download action', () => {
-        let actionService = new DocumentActionsService(nodeActionsService, null, contentService);
+        let actionService = new DocumentActionsService(null, contentService);
         let file = new FileNode();
         let result = actionService.getHandler('download')(file);
-        result.subscribe((value) => {
-            expect(value).toBeFalsy();
-        });
+        expect(result).toBeFalsy();
     });
 
     it('should require content service for download action', () => {
-        let actionService = new DocumentActionsService(nodeActionsService, documentListService, null);
+        let actionService = new DocumentActionsService(documentListService, null);
         let file = new FileNode();
         let result = actionService.getHandler('download')(file);
-        result.subscribe((value) => {
-            expect(value).toBeFalsy();
-        });
+        expect(result).toBeFalsy();
     });
 
     it('should require file node for download action', () => {
         let folder = new FolderNode();
-        let result = service.getHandler('download')(folder);
-        result.subscribe((value) => {
-            expect(value).toBeFalsy();
-        });
+        expect(service.getHandler('download')(folder)).toBeFalsy();
     });
 
     it('should delete file node', () => {
@@ -223,10 +212,9 @@ describe('DocumentActionsService', () => {
         let file = new FileNode();
         let fileWithPermission: any = file;
         fileWithPermission.entry.allowableOperations = [permission];
-        const deleteObservale = service.getHandler('delete')(fileWithPermission, null, permission);
+        service.getHandler('delete')(fileWithPermission, null, permission);
 
         expect(documentListService.deleteNode).toHaveBeenCalledWith(file.entry.id);
-        expect(deleteObservale.subscribe).toBeDefined();
     });
 
     it('should support deletion only file node', () => {

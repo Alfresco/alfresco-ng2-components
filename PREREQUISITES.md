@@ -3,10 +3,10 @@
 The [Angular 2](https://angular.io/) based application development framework requires the following:
 
 - An Alfresco Platform Repository (version [201609 Early Access](https://community.alfresco.com/docs/DOC-6372-alfresco-community-edition-file-list-201609-ea) or newer) 
-- [Download and install the process service](https://www.alfresco.com/products/bpm/alfresco-activiti/trial)
+- [Download and install Activiti](https://www.alfresco.com/products/bpm/alfresco-activiti/trial)
 - [Node.js](https://nodejs.org/en/) JavaScript runtime.
 - [npm](https://www.npmjs.com/) package manager for JavaScript.
-- (If you use CS and PS together) Make sure your user has the same username and password in both system
+- (If you use ECM and BPM together) Make sure your user has the same username and password in both system
 - [If you are experiencing CORS problem read this guide](/ALFRESCOCORS.md)
 
 *Note: Default username for activiti is "admin@app.activiti.com" and "admin" for Alfresco, and also the default password are different. Change them to be equal.*

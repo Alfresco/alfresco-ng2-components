@@ -16,8 +16,7 @@
             "COMMENTS": "Comments",
             "CHECKLIST": "Checklist",
             "INVOLVED_PEOPLE": "Involved people",
-            "ADD_PEOPLE": "Add people & groups",
-            "ADD_ASSIGNEE": "Add new assignee"
+            "ADD_PEOPLE": "Add people & groups"
         },
         "BUTTON": {
             "COMPLETE": "Complete",
@@ -44,7 +43,6 @@
         "COMMENTS": {
             "NONE": "No comments.",
             "ADD": "Add a comment",
-            "HEADER": "Comments",
             "DIALOG": {
                 "TITLE": "New comment",
                 "LABELS": {
@@ -72,45 +70,25 @@
     },
     "START_TASK": {
         "BUTTON": "CREATE TASK",
-        "FORM": {
+        "DIALOG": {
             "TITLE": "Start Task",
             "LABEL": {
                 "NONE": "None",
                 "NAME": "Name",
                 "DESCRIPTION": "Description",
-                "ATTACHFORM": "Attach a Form",
-                "ASSIGNEE": "Assignee",
-                "FORM": "Form",
-                "DATE": "Choose a Date"
+                "ATTACHFORM" : "Attach a Form"
             },
             "ACTION": {
                 "START": "Start",
                 "CANCEL": "Cancel"
-            },
-            "DATE": {
-                "ERROR": "Date format DD/MM/YYYY"
             }
         }
     },
     "PEOPLE": {
         "DIALOG_CLOSE": "CLOSE",
         "ADD_USER": "ADD",
-        "ADD_ASSIGNEE": "ASSIGN",
-        "SEARCH_USER": "Search user",
         "SEARCH": {
             "NO_USERS": "No user found to involve"
-        }
-    },
-    "TASK-ATTACHMENT": {
-        "EMPTY": {
-            "HEADER": "This list is empty",
-            "DRAG-AND-DROP": {
-                "TITLE": "Drag and drop",
-                "SUBTITLE": "any files here to add"
-            }
-        },
-        "EMPTY-LIST": {
-            "HEADER": "No documents are available"
         }
     }
 }

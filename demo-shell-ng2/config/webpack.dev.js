@@ -6,7 +6,6 @@ const helpers = require('./helpers');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 var HappyPack = require('happypack');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const alfrescoLibs = [
     'ng2-activiti-analytics',
@@ -28,7 +27,7 @@ const alfrescoLibs = [
 
 module.exports = webpackMerge(commonConfig, {
 
-    devtool: 'cheap-module-source-map',
+    devtool: 'cheap-module-eval-source-map',
 
     output: {
         path: helpers.root('dist'),
@@ -45,20 +44,7 @@ module.exports = webpackMerge(commonConfig, {
                     'happypack/loader?id=ts','angular2-template-loader'
                 ],
                 exclude: [/node_modules/, /public/, /resources/, /dist/]
-            },
-            {
-                test: /\.scss$/,
-                use: [{
-                    loader: "to-string-loader"
-                }, {
-                    loader: "raw-loader"
-                }, {
-                    loader: "sass-loader",
-                    options: {
-                        includePaths: [path.resolve(__dirname, '../../ng2-components/ng2-alfresco-core/styles')]
-                    }
-                }]
-            },
+            }
         ]
     },
 
@@ -88,8 +74,6 @@ module.exports = webpackMerge(commonConfig, {
     },
 
     plugins: [
-        new ForkTsCheckerWebpackPlugin({tsconfig: "tsconfig.dev.json"}),
-
         new HappyPack({
             id: 'ts',
             threads: 8,
@@ -116,13 +100,6 @@ module.exports = webpackMerge(commonConfig, {
                     to: `assets/${lib}/i18n/`
                 }
             })
-        ]),
-        new CopyWebpackPlugin([
-            {
-                context: `../ng2-components/ng2-alfresco-core/prebuilt-themes/`,
-                from: '**/*.css',
-                to: 'prebuilt-themes'
-            }
         ])
     ]
 });

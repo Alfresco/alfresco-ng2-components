@@ -34,7 +34,8 @@ module.exports = {
     resolveLoader: {
         alias: {
             "file-multi-loader": path.resolve(__dirname, "./custom-loaders/file-loader-multi"),
-            "license-check": path.resolve(__dirname, "./custom-loaders/license-check")
+            "license-check": path.resolve(__dirname, "./custom-loaders/license-check"),
+            "generate-list-component-loader": path.resolve(__dirname, "./custom-loaders/generateListComponent")
         }
     },
 
@@ -80,10 +81,8 @@ module.exports = {
                 test: /\.ts$/,
                 loader: 'tslint-loader',
                 options: {
-                    configFile : helpers.root('tslint.json'),
                     emitErrors: true,
-                    failOnHint: true,
-                    fix: true
+                    failOnHint: true
                 },
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
             },
@@ -103,7 +102,7 @@ module.exports = {
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
             },
             {
-                test: /\.scss$/,
+                test: /\.component.scss$/,
                 use: [{
                     loader: "to-string-loader"
                 }, {

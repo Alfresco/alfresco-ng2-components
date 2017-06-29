@@ -15,20 +15,20 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
-import { BpmUserModel } from './../models/bpm-user.model';
+import { Component, OnInit, Input } from '@angular/core';
+import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { EcmUserModel } from './../models/ecm-user.model';
-import { BpmUserService } from './../services/bpm-user.service';
+import { BpmUserModel } from './../models/bpm-user.model';
 import { EcmUserService } from './../services/ecm-user.service';
+import { BpmUserService } from './../services/bpm-user.service';
 
+declare let componentHandler: any;
 declare var require: any;
 
 @Component({
-    selector: 'adf-userinfo, ng2-alfresco-userinfo',
-    styleUrls: ['./user-info.component.scss'],
-    templateUrl: './user-info.component.html',
-    encapsulation: ViewEncapsulation.None
+    selector: 'ng2-alfresco-userinfo',
+    styleUrls: ['./user-info.component.css'],
+    templateUrl: './user-info.component.html'
 })
 export class UserInfoComponent implements OnInit {
 
@@ -39,10 +39,7 @@ export class UserInfoComponent implements OnInit {
     bpmBackgroundImage: string = require('../assets/images/bpm-background.png');
 
     @Input()
-    menuPositionX: string = 'after';
-
-    @Input()
-    menuPositionY: string = 'below';
+    menuOpenType: string = 'right';
 
     @Input()
     fallBackThumbnailImage: string;
@@ -55,7 +52,11 @@ export class UserInfoComponent implements OnInit {
 
     constructor(private ecmUserService: EcmUserService,
                 private bpmUserService: BpmUserService,
-                private authService: AlfrescoAuthenticationService) {
+                private authService: AlfrescoAuthenticationService,
+                private translateService: AlfrescoTranslationService) {
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-alfresco-userinfo', 'assets/ng2-alfresco-userinfo');
+        }
         authService.onLogin.subscribe((response) => {
             this.getUserInfo();
         });

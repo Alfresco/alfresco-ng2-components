@@ -15,16 +15,27 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector  */
-import * as moment from 'moment';
-import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
-import { ContainerColumnModel } from './container-column.model';
-import { FormFieldMetadata } from './form-field-metadata';
+import { FormWidgetModel } from './form-widget.model';
 import { FormFieldOption } from './form-field-option';
 import { FormFieldTypes } from './form-field-types';
-import { NumberFieldValidator } from './form-field-validator';
-import { FormWidgetModel } from './form-widget.model';
+import { FormFieldMetadata } from './form-field-metadata';
 import { FormModel } from './form.model';
+import { ContainerColumnModel } from './container-column.model';
+import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
+import {
+    FormFieldValidator,
+    RequiredFieldValidator,
+    NumberFieldValidator,
+    MinLengthFieldValidator,
+    MaxLengthFieldValidator,
+    MinValueFieldValidator,
+    MaxValueFieldValidator,
+    RegExFieldValidator,
+    DateFieldValidator,
+    MinDateFieldValidator,
+    MaxDateFieldValidator
+} from './form-field-validator';
+import * as moment from 'moment';
 
 // Maps to FormFieldRepresentation
 export class FormFieldModel extends FormWidgetModel {
@@ -32,7 +43,6 @@ export class FormFieldModel extends FormWidgetModel {
     private _value: string;
     private _readOnly: boolean = false;
     private _isValid: boolean = true;
-    private _required: boolean = false;
 
     readonly defaultDateFormat: string = 'D-M-YYYY';
 
@@ -41,9 +51,9 @@ export class FormFieldModel extends FormWidgetModel {
     id: string;
     name: string;
     type: string;
+    required: boolean;
     overrideId: boolean;
     tab: string;
-    rowspan: number = 1;
     colspan: number = 1;
     placeholder: string = null;
     minLength: number = 0;
@@ -76,6 +86,7 @@ export class FormFieldModel extends FormWidgetModel {
     // util members
     emptyOption: FormFieldOption;
     validationSummary: string;
+    validators: FormFieldValidator[] = [];
 
     get value(): any {
         return this._value;
@@ -99,15 +110,6 @@ export class FormFieldModel extends FormWidgetModel {
         this.updateForm();
     }
 
-    get required(): boolean {
-        return this._required;
-    }
-
-    set required(value: boolean) {
-        this._required = value;
-        this.updateForm();
-    }
-
     get isValid(): boolean {
         return this._isValid;
     }
@@ -115,11 +117,13 @@ export class FormFieldModel extends FormWidgetModel {
     validate(): boolean {
         this.validationSummary = null;
 
-        let validators = this.form.fieldValidators || [];
-        for (let validator of validators) {
-            if (!validator.validate(this)) {
-                this._isValid = false;
-                return this._isValid;
+        // TODO: consider doing that on value setter and caching result
+        if (this.validators && this.validators.length > 0) {
+            for (let i = 0; i < this.validators.length; i++) {
+                if (!this.validators[i].validate(this)) {
+                    this._isValid = false;
+                    return this._isValid;
+                }
             }
         }
 
@@ -135,8 +139,8 @@ export class FormFieldModel extends FormWidgetModel {
             this.id = json.id;
             this.name = json.name;
             this.type = json.type;
-            this._required = <boolean> json.required;
-            this._readOnly = <boolean> json.readOnly || json.type === 'readonly';
+            this.required = <boolean> json.required;
+            this._readOnly = <boolean> json.readOnly;
             this.overrideId = <boolean> json.overrideId;
             this.tab = json.tab;
             this.restUrl = json.restUrl;
@@ -157,7 +161,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.hyperlinkUrl = json.hyperlinkUrl;
             this.displayText = json.displayText;
             this.visibilityCondition = <WidgetVisibilityModel> json.visibilityCondition;
-            this.enableFractions = <boolean> json.enableFractions;
+            this.enableFractions = <boolean>json.enableFractions;
             this.currency = json.currency;
             this.dateDisplayFormat = json.dateDisplayFormat || this.defaultDateFormat;
             this._value = this.parseValue(json);
@@ -166,62 +170,49 @@ export class FormFieldModel extends FormWidgetModel {
                 this.placeholder = json.placeholder;
             }
 
-            if (FormFieldTypes.isReadOnlyType(json.type)) {
-                if (json.params && json.params.field && json.params.field.responseVariable) {
-                    this.value = this.getVariablesValue(json.params.field.name, form);
-                }
+            // <container>
+            this.numberOfColumns = <number> json.numberOfColumns;
+
+            let columnSize: number = 12;
+            if (this.numberOfColumns > 1) {
+                columnSize = 12 / this.numberOfColumns;
             }
 
-            if (FormFieldTypes.isContainerType(json.type)) {
-                this.containerFactory(json, form);
+            for (let i = 0; i < this.numberOfColumns; i++) {
+                let col = new ContainerColumnModel();
+                col.size = columnSize;
+                this.columns.push(col);
             }
+
+            if (json.fields) {
+                Object.keys(json.fields).map(key => {
+                    let fields = (json.fields[key] || []).map(f => new FormFieldModel(form, f));
+                    let col = this.columns[parseInt(key, 10) - 1];
+                    col.fields = fields;
+                    this.fields.push(...fields);
+                });
+            }
+            // </container>
         }
 
         if (this.hasEmptyValue && this.options && this.options.length > 0) {
             this.emptyOption = this.options[0];
         }
 
+        this.validators = [
+            new RequiredFieldValidator(),
+            new NumberFieldValidator(),
+            new MinLengthFieldValidator(),
+            new MaxLengthFieldValidator(),
+            new MinValueFieldValidator(),
+            new MaxValueFieldValidator(),
+            new RegExFieldValidator(),
+            new DateFieldValidator(),
+            new MinDateFieldValidator(),
+            new MaxDateFieldValidator()
+        ];
+
         this.updateForm();
-    }
-
-    private getVariablesValue(variableName: string, form: FormModel) {
-        let variable = form.json.variables.find((currentVariable) => {
-            return currentVariable.name === variableName;
-        });
-
-        if (variable.type === 'boolean') {
-            return JSON.parse(variable.value);
-        }
-
-        return variable.value;
-    }
-
-    private containerFactory(json: any, form: FormModel): void {
-        this.numberOfColumns = <number> json.numberOfColumns || 1;
-
-        this.fields = json.fields;
-
-        this.rowspan = 1;
-        this.colspan = 1;
-
-        if (json.fields) {
-            for (let currentField in json.fields) {
-                if (json.fields.hasOwnProperty(currentField)) {
-                    let col = new ContainerColumnModel();
-
-                    let fields: FormFieldModel[] = (json.fields[currentField] || []).map(f => new FormFieldModel(form, f));
-                    col.fields = fields;
-                    col.rowspan = json.fields[currentField].length;
-
-                    col.fields.forEach((colFields: any) => {
-                        this.colspan = colFields.colspan > this.colspan ? colFields.colspan : this.colspan;
-                    });
-
-                    this.rowspan = this.rowspan < col.rowspan ? col.rowspan : this.rowspan;
-                    this.columns.push(col);
-                }
-            }
-        }
     }
 
     parseValue(json: any): any {
@@ -310,7 +301,7 @@ export class FormFieldModel extends FormWidgetModel {
                 break;
             case FormFieldTypes.UPLOAD:
                 if (this.value && this.value.length > 0) {
-                    this.form.values[this.id] = this.value.map(elem => elem.id).join(',');
+                    this.form.values[this.id] = `${this.value[0].id}`;
                 } else {
                     this.form.values[this.id] = null;
                 }

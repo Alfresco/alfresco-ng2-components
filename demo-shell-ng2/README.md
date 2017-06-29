@@ -1,11 +1,11 @@
 
 # ADF Demo Application
 
-Please note that this application is not an official product, but a testing and demo application to showcase complex interactions of ADF components.
+Please note that this application is not an official product, but a testing and demo application to showcase complex interactions for ADF components.
 
 ## Installing
 
-To correctly use this demo check that on your machine you have [Node](https://nodejs.org/en/) version 5.x.x or higher.
+To correctly use this demo check that on your machine is running [Node](https://nodejs.org/en/) version 5.x.x or higher.
 
 ```sh
 git clone https://github.com/Alfresco/alfresco-ng2-components.git
@@ -15,7 +15,7 @@ npm install
 
 ## Proxy settings and CORS
 
-To simplify development and reduce the time to get the application started, we have the following Proxy settings:
+To simplify development and reduce the time to get started the application features the following Proxy settings:
 
 - **http://localhost:3000/ecm** is mapped to **http://localhost:8080**
 - **http://localhost:3000/bpm** is mapped to **http://localhost:9999**
@@ -82,18 +82,18 @@ npm run start:dist
 ```
 
 This command builds project in `production` mode.
-All output is placed to `dist` folder and can be served to your preferred web server.
+All output is placed to `dist` folder and can be served your preferred web server.
 You should need no additional files outside the `dist` folder.
 
 ### Important notes
 
 By default demo application is configured to use [wsrv](https://www.npmjs.com/package/wsrv) tool (lightweight web server)
-to serve production build output. It will be running at `0.0.0.0` address with port `3000` and allow you to access your application
-via network. However, you can use any web server of your choice in production.
+to serve production build output. It will be running at `0.0.0.0` address with port `3000` and allow you accessing your application
+via network. However you can use any web server of your choice in production.
 
 ## Development branch build
 
-If you want to run the demo shell with the latest changes from the development branch, use the following command from the /script folder:
+If you want to run the demo shell with the latest change from the development branch, use the following command from the /script folder:
 
 ```sh
 ./npm-clean.sh

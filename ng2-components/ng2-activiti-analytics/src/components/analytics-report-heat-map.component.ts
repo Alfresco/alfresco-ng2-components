@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AnalyticsService } from '../services/analytics.service';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 
 @Component({
-    selector: 'adf-analytics-report-heat-map, analytics-report-heat-map',
+    selector: 'analytics-report-heat-map',
     templateUrl: './analytics-report-heat-map.component.html'
 })
 export class AnalyticsReportHeatMapComponent implements  OnInit {
@@ -41,8 +42,12 @@ export class AnalyticsReportHeatMapComponent implements  OnInit {
     currentMetricColors: string;
     metricType: string;
 
-    constructor(private analyticsService: AnalyticsService,
+    constructor(private translateService: AlfrescoTranslationService,
+                private analyticsService: AnalyticsService,
                 private formBuilder: FormBuilder) {
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-activiti-analytics', 'assets/ng2-activiti-analytics');
+        }
     }
 
     ngOnInit() {

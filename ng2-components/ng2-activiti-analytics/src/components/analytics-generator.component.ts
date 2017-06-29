@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
-import { ReportQuery } from 'ng2-activiti-diagrams';
-import { Chart } from 'ng2-activiti-diagrams';
+import { Component, EventEmitter, OnChanges, Input, Output, SimpleChanges } from '@angular/core';
+import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { AnalyticsService } from '../services/analytics.service';
+import { ReportQuery } from '../models/report.model';
+import { Chart } from '../models/chart.model';
 
 @Component({
-    selector: 'adf-analytics-generator, activiti-analytics-generator',
+    selector: 'activiti-analytics-generator',
     templateUrl: './analytics-generator.component.html',
-    styleUrls: ['./analytics-generator.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./analytics-generator.component.css']
 })
 export class AnalyticsGeneratorComponent implements OnChanges {
 
@@ -62,10 +62,16 @@ export class AnalyticsGeneratorComponent implements OnChanges {
         }
     };
 
-    constructor(private analyticsService: AnalyticsService) {
+    constructor(private translateService: AlfrescoTranslationService,
+                private analyticsService: AnalyticsService,
+                private logService: LogService) {
+        logService.info('AnalyticsGeneratorComponent');
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-activiti-analytics', 'assets/ng2-activiti-analytics');
+        }
     }
 
-    ngOnChanges() {
+    ngOnChanges(changes: SimpleChanges) {
         if (this.reportId && this.reportParamQuery) {
             this.generateReport(this.reportId, this.reportParamQuery);
         } else {

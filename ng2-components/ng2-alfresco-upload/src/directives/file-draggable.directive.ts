@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output } from '@angular/core';
+import { Directive, EventEmitter, Input, Output, OnInit, OnDestroy, ElementRef, NgZone } from '@angular/core';
 import { FileUtils } from 'ng2-alfresco-core';
 
 @Directive({
@@ -40,7 +40,7 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
     private cssClassName: string = 'file-draggable__input-focus';
     private element: HTMLElement;
 
-    constructor(el: ElementRef, private ngZone: NgZone) {
+    constructor(private el: ElementRef, private ngZone: NgZone) {
         this.element = el.nativeElement;
     }
 

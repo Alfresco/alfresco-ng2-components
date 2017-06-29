@@ -25,7 +25,6 @@
         },
         "BUTTON": {
             "CANCEL": "Cancel Process",
-            "CLOSE": "Close",
             "SHOW_DIAGRAM": "Show Diagram",
             "DRAG-ATTACHMENT": "Drop Files Here...",
             "UPLOAD-ATTACHMENT": "Upload Attachment"
@@ -88,7 +87,7 @@
     "START_PROCESS": {
         "BUTTON": "Start Process",
         "NO_PROCESS_DEFINITIONS": "You cannot start a process as there are no process definitions available",
-        "FORM": {
+        "DIALOG": {
             "TITLE": "Start Process",
             "LABEL": {
                 "TYPE": "Type",
@@ -103,18 +102,6 @@
         "ERROR": {
           "LOAD_PROCESS_DEFS": "Could not load process definitions, please check you have access.",
           "START": "Could not start new process instance, please check you have permission."
-        }
-    },
-    "PROCESS-ATTACHMENT": {
-        "EMPTY": {
-            "HEADER": "This list is empty",
-            "DRAG-AND-DROP": {
-                "TITLE": "Drag and drop",
-                "SUBTITLE": "any files here to add"
-            }
-        },
-        "EMPTY-LIST": {
-            "HEADER": "No documents are available"
         }
     }
 }
