@@ -1,5 +1,6 @@
 # Alfresco File Viewer Component
 
+
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
 
 <!-- toc -->
@@ -35,72 +36,35 @@ necessary configuration [prerequisites](https://github.com/Alfresco/alfresco-ng2
 npm install ng2-alfresco-viewer
 ```
 
-### Configuring PDF.js library
-
-In order to configure your webpack-enabled application with the PDF.js library please follow the next steps.
-
-Install pdfjs-dist
-
-```sh
-npm install pdfjs-dist
-```
-
-Update `vendors.ts` by appending the following:
-
-```ts
-// PDF.js
-require('pdfjs-dist/web/compatibility.js');
-const pdfjsLib = require('pdfjs-dist');
-pdfjsLib.PDFJS.workerSrc = './pdf.worker.js';
-require('pdfjs-dist/web/pdf_viewer.js');
-```
-
-The code above enables the "viewer" component and "compatibility" mode for all the browsers.
-It also configures the web worker for PDF.js library to render PDF files in the background.
-
-Update the `plugins` section of the `webpack.common.js` file with the next lines:
-
-```js
-new CopyWebpackPlugin([
-    ...
-    {
-        from: 'node_modules/pdfjs-dist/build/pdf.worker.js',
-        to: 'pdf.worker.js'
-    }
-])
-```
-
-The Viewer component now should be able displaying PDF files.
-
 ## Basic usage
 
 Using with node id:
 
 ```html
-<adf-viewer 
+<alfresco-viewer 
     [showViewer]="true" 
     [overlayMode]="true" 
     [fileNodeId]="'d367023a-7ebe-4f3a-a7d0-4f27c43f1045'">
-</adf-viewer>
+</alfresco-viewer>
 ```
 
 Using with file url:
 
 ```html
-<adf-viewer 
+<alfresco-viewer 
     [overlayMode]="true" 
     [urlFile]="'filename.pdf'">
-</adf-viewer>
+</alfresco-viewer>
 ```
 
 ## Properties
 
 | Attribute | Options | Default | Description |
 | --- | --- | --- | --- |
-| fileNodeId | string | | Node Id of the file to load |
-| urlFile | string | | If you want to load an external file that does not come from ECM you can use this Url where to load the file |
-| urlBlob | Blob | | If you want to load a Blob File |
-| overlayMode | boolean | false | If `true` show the Viewer full page over the present content otherwise will fit the parent div |
+| fileNodeId | string | | Node Id of the file to load the file |
+| urlFile | string | | If you want load an external file that not comes from the ECM you can use this Url where to load the file |
+| urlBlob | Blob | | If you want load a Blob File |
+| overlayMode | boolean | false | if `true` Show the Viewer full page over the present content otherwise will fit the parent div |
 | showViewer | boolean | true | Hide or show the viewer |
 | showToolbar | boolean | true | Hide or show the toolbars |
 | displayName | string | | You can specify the name of the file |
@@ -117,16 +81,17 @@ Using with file url:
 
 ![Rendition](docs/assets/renditions.png)                         
 
-Note for unsupported extensions the viewer will offer the possibility to convert to PDF if that kind of extension is supported by the [content service renditions service](https://community.alfresco.com/docs/DOC-5879-rendition-service)
+Note for unsupported extension the viewer will offer the possibility to convert it in PDF is that kind of extension is supported by the [content service renditions service](https://community.alfresco.com/docs/DOC-5879-rendition-service)
+
 
 ## Custom extension handler
 
-If you want to handle other file formats that are not yet supported by the ng2-alfresco-viewer you can define your own custom handler.
+If you want handle other file formats that are not yet supported by the ng2-alfresco-viewer you can define your own custom handler.
 
-Below you can find an example with the use of `extension-viewer` if you can handle 3d files
+Below you can find an example where with the use of `extension-viewer` if you can handle 3d files
 
 ```html
-<adf-viewer 
+<alfresco-viewer 
     [(showViewer)]="fileShowed"
     [fileNodeId]="fileNodeId"
     [overlayMode]="true">
@@ -140,15 +105,15 @@ Below you can find an example with the use of `extension-viewer` if you can hand
         </template>
     </extension-viewer>
 
-</adf-viewer> 
+</alfresco-viewer> 
 ```
 
-Note: you need adding `ng2-3d-editor` dependency to your `package.json` file to make the example above work.
+Note: you need adding `ng2-3d-editor` dependency to your `package.json` file to make example above work.
 
 It is possible to define multiple `extension-viewer` templates:
 
 ```html
-<adf-viewer 
+<alfresco-viewer 
     [(showViewer)]="fileShowed"
     [fileNodeId]="fileNodeId"
     [overlayMode]="true">
@@ -168,7 +133,7 @@ It is possible to define multiple `extension-viewer` templates:
             </my-custom-txt-component>
         </template>
     </extension-viewer>
-</adf-viewer> 
+</alfresco-viewer> 
 ```
 
 ## Build from sources

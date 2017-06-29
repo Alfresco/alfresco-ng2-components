@@ -15,29 +15,27 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import * as moment from 'moment';
-import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
-import { ContainerColumnModel } from './container-column.model';
-import { FormFieldMetadata } from './form-field-metadata';
+import { FormWidgetModel } from './form-widget.model';
 import { FormFieldOption } from './form-field-option';
 import { FormFieldTypes } from './form-field-types';
-import {
-    DateFieldValidator,
-    FormFieldValidator,
-    MaxDateFieldValidator,
-    MaxLengthFieldValidator,
-    MaxValueFieldValidator,
-    MinDateFieldValidator,
-    MinLengthFieldValidator,
-    MinValueFieldValidator,
-    NumberFieldValidator,
-    RegExFieldValidator,
-    RequiredFieldValidator
-} from './form-field-validator';
-import { FormWidgetModel } from './form-widget.model';
+import { FormFieldMetadata } from './form-field-metadata';
 import { FormModel } from './form.model';
+import { ContainerColumnModel } from './container-column.model';
+import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
+import {
+    FormFieldValidator,
+    RequiredFieldValidator,
+    NumberFieldValidator,
+    MinLengthFieldValidator,
+    MaxLengthFieldValidator,
+    MinValueFieldValidator,
+    MaxValueFieldValidator,
+    RegExFieldValidator,
+    DateFieldValidator,
+    MinDateFieldValidator,
+    MaxDateFieldValidator
+} from './form-field-validator';
+import * as moment from 'moment';
 
 // Maps to FormFieldRepresentation
 export class FormFieldModel extends FormWidgetModel {
@@ -163,7 +161,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.hyperlinkUrl = json.hyperlinkUrl;
             this.displayText = json.displayText;
             this.visibilityCondition = <WidgetVisibilityModel> json.visibilityCondition;
-            this.enableFractions = <boolean> json.enableFractions;
+            this.enableFractions = <boolean>json.enableFractions;
             this.currency = json.currency;
             this.dateDisplayFormat = json.dateDisplayFormat || this.defaultDateFormat;
             this._value = this.parseValue(json);

@@ -15,25 +15,25 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ThumbnailService } from 'ng2-alfresco-core';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { AlfrescoSearchAutocompleteComponent } from './alfresco-search-autocomplete.component';
+import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
+import { TranslationMock } from './../assets/translation.service.mock';
+import { result, results, folderResult, noResult, errorJson } from './../assets/alfresco-search.component.mock';
+import { AlfrescoSearchService } from '../services/alfresco-search.service';
 import {
     AlfrescoApiService,
+    AlfrescoSettingsService,
     AlfrescoAuthenticationService,
     AlfrescoContentService,
-    AlfrescoSettingsService,
     AlfrescoTranslationService,
-    CoreModule,
-    SearchService
+    CoreModule
 } from 'ng2-alfresco-core';
-import { errorJson, folderResult, noResult, result, results } from './../assets/search.component.mock';
-import { TranslationMock } from './../assets/translation.service.mock';
-import { SearchAutocompleteComponent } from './search-autocomplete.component';
 
-describe('SearchAutocompleteComponent', () => {
+describe('AlfrescoSearchAutocompleteComponent', () => {
 
-    let fixture: ComponentFixture<SearchAutocompleteComponent>, element: HTMLElement;
-    let component: SearchAutocompleteComponent;
+    let fixture: ComponentFixture<AlfrescoSearchAutocompleteComponent>, element: HTMLElement;
+    let component: AlfrescoSearchAutocompleteComponent;
 
     let updateSearchTerm = (newSearchTerm: string): void => {
         let oldSearchTerm = component.searchTerm;
@@ -46,18 +46,18 @@ describe('SearchAutocompleteComponent', () => {
             imports: [
                 CoreModule
             ],
-            declarations: [ SearchAutocompleteComponent ], // declare the test component
+            declarations: [ AlfrescoSearchAutocompleteComponent ], // declare the test component
             providers: [
                 {provide: AlfrescoTranslationService, useClass: TranslationMock},
-                ThumbnailService,
+                AlfrescoThumbnailService,
                 AlfrescoSettingsService,
                 AlfrescoApiService,
                 AlfrescoAuthenticationService,
                 AlfrescoContentService,
-                SearchService
+                AlfrescoSearchService
             ]
         }).compileComponents().then(() => {
-            fixture = TestBed.createComponent(SearchAutocompleteComponent);
+            fixture = TestBed.createComponent(AlfrescoSearchAutocompleteComponent);
             component = fixture.componentInstance;
             element = fixture.nativeElement;
         });
@@ -75,7 +75,7 @@ describe('SearchAutocompleteComponent', () => {
         let searchService;
 
         beforeEach(() => {
-            searchService = fixture.debugElement.injector.get(SearchService);
+            searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
         });
 
         it('should clear results straight away when a new search term is entered', async(() => {
@@ -110,25 +110,6 @@ describe('SearchAutocompleteComponent', () => {
             updateSearchTerm('searchTerm');
         });
 
-        it('should highlight the searched word', (done) => {
-            component.highlight = true;
-            spyOn(searchService, 'getQueryNodesPromise')
-                .and.returnValue(Promise.resolve(results));
-
-            component.resultsLoad.subscribe(() => {
-                fixture.detectChanges();
-                let el: any = element.querySelectorAll('table[data-automation-id="autocomplete_results"] tbody tr')[1].children[1].children[0];
-                expect(el.innerText).toEqual('MyDoc');
-                let spanHighlight = el.children[0];
-                expect(spanHighlight.classList[0]).toEqual('highlight');
-                expect(spanHighlight.innerText).toEqual('My');
-                done();
-            });
-
-            updateSearchTerm('My');
-
-        });
-
         it('should limit the number of returned search results to the configured maximum', (done) => {
 
             spyOn(searchService, 'getQueryNodesPromise')
@@ -149,14 +130,19 @@ describe('SearchAutocompleteComponent', () => {
             spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(result));
 
-            let thumbnailService = fixture.debugElement.injector.get(ThumbnailService);
+            let thumbnailService = fixture.debugElement.injector.get(AlfrescoThumbnailService);
             spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue('fake-type-icon.svg');
+            spyOn(thumbnailService, 'getMimeTypeKey').and.returnValue('FAKE_TYPE');
+
+            let path = 'http://localhost/fake-type-icon.svg';
+            spyOn(component, 'resolveIconPath').and.returnValue(path);
 
             component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
                 let imgEl = <any> element.querySelector('#result_row_0 img');
                 expect(imgEl).not.toBeNull();
-                expect(imgEl.src).toContain('fake-type-icon.svg');
+                expect(imgEl.src).toBe(path);
+                expect(imgEl.alt).toBe('SEARCH.ICONS.FAKE_TYPE');
                 done();
             });
 
@@ -184,7 +170,7 @@ describe('SearchAutocompleteComponent', () => {
         let searchService;
 
         beforeEach(() => {
-            searchService = fixture.debugElement.injector.get(SearchService);
+            searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
             spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.reject(errorJson));
         });
@@ -225,7 +211,7 @@ describe('SearchAutocompleteComponent', () => {
         let searchService;
 
         beforeEach(() => {
-            searchService = fixture.debugElement.injector.get(SearchService);
+            searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
         });
 
         it('should emit fileSelect event when file item clicked', (done) => {
@@ -247,7 +233,8 @@ describe('SearchAutocompleteComponent', () => {
 
         it('should emit fileSelect event if when folder item clicked', (done) => {
 
-            spyOn(searchService, 'getQueryNodesPromise').and.returnValue(Promise.resolve(folderResult));
+            spyOn(searchService, 'getQueryNodesPromise')
+                .and.returnValue(Promise.resolve(folderResult));
 
             spyOn(component.fileSelect, 'emit');
             component.resultsLoad.subscribe(() => {
@@ -267,7 +254,7 @@ describe('SearchAutocompleteComponent', () => {
         let searchService;
 
         beforeEach(() => {
-            searchService = fixture.debugElement.injector.get(SearchService);
+            searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
             spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(results));
         });
@@ -379,7 +366,7 @@ describe('SearchAutocompleteComponent', () => {
         let searchService;
 
         beforeEach(() => {
-            searchService = fixture.debugElement.injector.get(SearchService);
+            searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
             spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(result));
         });

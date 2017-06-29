@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { MinimalNodeEntryEntity, PathElementEntity } from 'alfresco-js-api';
 import { DocumentListComponent } from '../document-list.component';
 
@@ -23,10 +23,7 @@ import { DocumentListComponent } from '../document-list.component';
     selector: 'adf-breadcrumb, alfresco-document-list-breadcrumb',
     templateUrl: './breadcrumb.component.html',
     styleUrls: ['./breadcrumb.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    host: {
-        'class': 'adf-breadcrumb'
-    }
+    encapsulation: ViewEncapsulation.None
 })
 export class BreadcrumbComponent implements OnChanges {
 
@@ -50,7 +47,7 @@ export class BreadcrumbComponent implements OnChanges {
             let node: MinimalNodeEntryEntity = changes.folderNode.currentValue;
 
             if (node) {
-                let route = <PathElementEntity[]> (node.path.elements || []).slice();
+                let route = <PathElementEntity[]> (node.path.elements || []);
 
                 route.push(<PathElementEntity> {
                     id: node.id,

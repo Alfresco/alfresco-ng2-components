@@ -12,6 +12,10 @@
     padding: 10px 10px 10px 10px;
 }
 
+.list-column {
+    width: 320px;
+}
+
 .mdl-layout__header {
     z-index: 1;
 }

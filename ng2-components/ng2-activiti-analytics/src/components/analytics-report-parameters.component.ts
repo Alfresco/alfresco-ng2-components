@@ -16,34 +16,34 @@
  */
 
 import {
-    AfterContentChecked,
-    AfterViewChecked,
     Component,
     EventEmitter,
-    Input,
-    OnChanges,
-    OnDestroy,
     OnInit,
+    OnChanges,
+    Input,
     Output,
     SimpleChanges,
+    OnDestroy,
+    AfterViewChecked,
+    AfterContentChecked,
     ViewChild
 } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import * as moment from 'moment';
-import { AlfrescoTranslationService, ContentService, LogService } from 'ng2-alfresco-core';
-import {
-    ParameterValueModel,
-    ReportParameterDetailsModel,
-    ReportParametersModel,
-    ReportQuery
-} from '../models/report.model';
+import { AlfrescoTranslationService, LogService, ContentService } from 'ng2-alfresco-core';
 import { AnalyticsService } from '../services/analytics.service';
+import {
+    ReportParametersModel,
+    ReportQuery,
+    ParameterValueModel,
+    ReportParameterDetailsModel
+} from '../models/report.model';
 
 declare var componentHandler;
 declare let dialogPolyfill: any;
 
 @Component({
-    selector: 'adf-analytics-report-parameters, analytics-report-parameters',
+    selector: 'analytics-report-parameters',
     templateUrl: './analytics-report-parameters.component.html',
     styleUrls: ['./analytics-report-parameters.component.css']
 })
@@ -94,16 +94,13 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
 
     reportForm: FormGroup;
 
-    action: string;
-
-    isEditable: boolean = false;
-
-    reportName: string;
-
     private dropDownSub;
     private reportParamsSub;
     private paramOpts;
+    private isEditable: boolean = false;
+    private action: string;
     private reportParamQuery: ReportQuery;
+    private reportName: string;
     private hideParameters: boolean = true;
     private formValidState: boolean = false;
 
@@ -159,37 +156,37 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                 case 'processDefinition':
                     formBuilderGroup.processDefGroup = new FormGroup({
                         processDefinitionId: new FormControl(null, Validators.required, null)
-                    },                                               Validators.required);
+                    }, Validators.required);
                     break;
                 case 'duration':
                     formBuilderGroup.durationGroup = new FormGroup({
                         duration: new FormControl(null, Validators.required, null)
-                    },                                             Validators.required);
+                    }, Validators.required);
                     break;
                 case 'dateInterval':
                     formBuilderGroup.dateIntervalGroup = new FormGroup({
                         dateRangeInterval: new FormControl(null, Validators.required, null)
-                    },                                                 Validators.required);
+                    }, Validators.required);
                     break;
                 case 'boolean':
                     formBuilderGroup.typeFilteringGroup = new FormGroup({
                         typeFiltering: new FormControl(null, Validators.required, null)
-                    },                                                  Validators.required);
+                    }, Validators.required);
                     break;
                 case 'task':
                     formBuilderGroup.taskGroup = new FormGroup({
                         taskName: new FormControl(null, Validators.required, null)
-                    },                                         Validators.required);
+                    }, Validators.required);
                     break;
                 case 'integer':
                     formBuilderGroup.processInstanceGroup = new FormGroup({
                         slowProcessInstanceInteger: new FormControl(null, Validators.required, null)
-                    },                                                    Validators.required);
+                    }, Validators.required);
                     break;
                 case 'status':
                     formBuilderGroup.statusGroup = new FormGroup({
                         status: new FormControl(null, Validators.required, null)
-                    },                                           Validators.required);
+                    }, Validators.required);
                     break;
                 default:
                     return;
@@ -382,7 +379,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     deleteReport(reportId: string) {
         this.analyticsService.deleteReport(reportId).subscribe(() => {
             this.deleteReportSuccess.emit(reportId);
-        },                                                     error => this.logService.error(error));
+        }, error => this.logService.error(error));
     }
 
     ngAfterViewChecked() {

@@ -4,32 +4,31 @@
 
 <!-- toc -->
 
-- [Prerequisites](#prerequisites)
-- [Install](#install)
-- [Basic usage](#basic-usage)
-  * [DataTable Properties](#datatable-properties)
-  * [DataColumn Properties](#datacolumn-properties)
-  * [DataTable Events](#datatable-events)
-  * [DataTable DOM Events](#datatable-dom-events)
-  * [Custom Empty content template](#custom-empty-content-template)
-  * [Default Empty content template](#default-empty-content-template)
-  * [Loading content template](#loading-content-template)
-  * [Column Templates](#column-templates)
-  * [Events](#events)
-    + [rowClick event](#rowclick-event)
-    + [rowDblClick event](#rowdblclick-event)
-    + [showRowContextMenu event](#showrowcontextmenu-event)
-    + [showRowActionsMenu event](#showrowactionsmenu-event)
-    + [executeRowAction event](#executerowaction-event)
-- [Data sources](#data-sources)
-- [Generate schema](#generate-schema)
+  * [Prerequisites](#prerequisites)
+  * [Install](#install)
+  * [Basic usage](#basic-usage)
+    + [DataTable Properties](#datatable-properties)
+    + [DataColumn Properties](#datacolumn-properties)
+    + [DataTable Events](#datatable-events)
+    + [DataTable DOM Events](#datatable-dom-events)
+    + [Empty content template](#empty-content-template)
+    + [Loading content template](#loading-content-template)
+    + [Column Templates](#column-templates)
+    + [Events](#events)
+      - [rowClick event](#rowclick-event)
+      - [rowDblClick event](#rowdblclick-event)
+      - [showRowContextMenu event](#showrowcontextmenu-event)
+      - [showRowActionsMenu event](#showrowactionsmenu-event)
+      - [executeRowAction event](#executerowaction-event)
+  * [Data sources](#data-sources)
+  * [Generate schema](#generate-schema)
 - [Pagination Component](#pagination-component)
-  * [Properties](#properties)
-  * [Events](#events-1)
-- [Build from sources](#build-from-sources)
-- [NPM scripts](#npm-scripts)
-- [Demo](#demo)
-- [License](#license)
+    + [Properties](#properties)
+    + [Events](#events-1)
+  * [Build from sources](#build-from-sources)
+  * [NPM scripts](#npm-scripts)
+  * [Demo](#demo)
+  * [License](#license)
 
 <!-- tocstop -->
 
@@ -55,11 +54,10 @@ npm install ng2-alfresco-datatable
 **app.component.html**
 
 ```html
-<adf-datatable 
+<alfresco-datatable 
     [data]="data">
-</adf-datatable>
+</alfresco-datatable>
 ```
-
 **app.component.ts**
 
 ```ts
@@ -102,7 +100,7 @@ export class DataTableDemo {
 You can also use HTML-based schema declaration like shown below:
 
 ```html
-<adf-datatable [data]="data">
+<alfresco-datatable [data]="data">
     <data-columns>
         <data-column key="icon" type="image" [sortable]="false"></data-column>
         <data-column key="id" title="Id"></data-column>
@@ -110,7 +108,7 @@ You can also use HTML-based schema declaration like shown below:
         <data-column key="name" title="Name" class="full-width name-column"></data-column>
         <data-column key="createdBy.name" title="Created By"></data-column>
     </data-columns>
-</adf-datatable>
+</alfresco-datatable>
 ```
 
 ```ts
@@ -156,12 +154,10 @@ export class DataTableDemo {
 | multiselect | boolean | false | Toggles multiple row selection, renders checkboxes at the beginning of each row |
 | actions | boolean | false | Toggles data actions column |
 | actionsPosition | string (left\|right) | right | Position of the actions dropdown menu. | 
-| fallbackThumbnail | string |  | Fallback image for row where thumbnail is missing|
+| fallbackThumbnail | string |  | Fallback image for row ehre thubnail is missing|
 | contextMenu | boolean | false | Toggles custom context menu for the component |
 | allowDropFiles | boolean | false | Toggle file drop support for rows (see **ng2-alfresco-core/UploadDirective** for more details) |
-| loading | boolean | false | Flag that indicates if the datatable is in loading state and needs to show the loading template. Read the documentation above to see how to configure a loading template  |
-| showHeader | boolean | true | Toggles header visibility |
-| selection | DataRow[] | [] | Contains selected rows |
+| loading | boolean | false | Flag that indicate if the datable is in loading state and need to show the loading template. Read the documentation above to know how to configure a loading template  |
 
 ### DataColumn Properties
 
@@ -190,22 +186,19 @@ Here's the list of available properties you can define for a Data Column definit
 
 ### DataTable DOM Events
 
-Below are the DOM events raised by DataTable component.
-These events bubble up the component tree and can be handled by any parent component.
+Below are the DOM events raised by DataTable component. 
 
 | Name | Description |
 | --- | --- |
-| row-click | Raised when user clicks a row |
-| row-dblclick | Raised when user double-clicks a row |
-| row-select | Raised after user selects a row |
-| row-unselect | Raised after user unselects a row |
+| row-click | Emitted when user clicks the row |
+| row-dblclick | Emitted when user double-clicks the row |
 
-For example:
+These events are bubbled up the element tree and can be subscribed to from within parent components.
 
 ```html
 <root-component (row-click)="onRowClick($event)">
     <child-component>
-        <adf-datatable></adf-datatable>
+        <alfresco-datatable></alfresco-datatable>
     </child-component>
 </root-component>
 ```
@@ -218,12 +211,12 @@ onRowClick(event) {
 
 ![](docs/assets/datatable-dom-events.png)
 
-### Custom Empty content template
+### Empty content template
 
-You can add a template that will be shown when there are no results in your datatable:
+You can add a template that will be showed when there are no result in your datatable:
 
 ```html
-<adf-datatable
+<alfresco-datatable
     [data]="data"
     [actions]="contentActions"
     [multiselect]="multiselect"
@@ -241,49 +234,15 @@ You can add a template that will be shown when there are no results in your data
             </ng-template>
         </no-content-template>
         
-</adf-datatable>
+</alfresco-datatable>
 ```
-
-### Default Empty content template
-
-You can use the empty list component if you want to show the default ADF empty template:
-
-```html
-<adf-datatable
-    [data]="data"
-    [actions]="contentActions"
-    [multiselect]="multiselect"
-    (showRowContextMenu)="onShowRowContextMenu($event)"
-    (showRowActionsMenu)="onShowRowActionsMenu($event)"
-    (executeRowAction)="onExecuteRowAction($event)"
-    (rowClick)="onRowClick($event)"
-    (rowDblClick)="onRowDblClick($event)">
-        
-        <adf-empty-list 
-            [emptyListImageUrl]="'my-background-image.svg'"
-            [emptyMsg]="'My custom msg'"
-            [dragDropMsg]="'My drag and drop msg'"
-            [additionalMsg]="'My additional msg'">
-        </adf-empty-list>
-        
-</adf-datatable>
-```
-
-| Name | Type | Default | Description
-| --- | --- | --- | --- |
-| emptyListImageUrl | String | empty_doc_lib.svg | The default image used as background |
-| emptyMsg | String | This list is empty | The default title message |
-| dragDropMsg | String | Drag and drop | The default drag and drop message |
-| additionalMsg | String | Drag and drop | The default additional message |
-
-![](docs/assets/adf-empty-list.png)
 
 ### Loading content template
 
-You can add a template that will be shown during the loading of your data:
+You can add a template that will be showed during the loading of your data:
 
 ```html
-<adf-datatable
+<alfresco-datatable
     [data]="data"
     [actions]="contentActions"
     [multiselect]="multiselect"
@@ -305,7 +264,7 @@ You can add a template that will be shown during the loading of your data:
             </ng-template>
         </loading-content-template>
         
-</adf-datatable>
+</alfresco-datatable>
 ```
 
 ```js
@@ -318,10 +277,10 @@ Note: the `<loading-content-template>` and `<no-content-template>` can be used t
 
 ### Column Templates
 
-It is possible to assign a custom column template like the following:
+It is possible assigning a custom column template like the following:
 
 ```html
-<adf-datatable ...>
+<alfresco-datatable ...>
     <data-columns>
         <data-column title="Version" key="properties.cm:versionLabel">
             <template let-value="value">
@@ -329,7 +288,7 @@ It is possible to assign a custom column template like the following:
             </template>
         </data-column>
     </data-columns>
-</adf-datatable>
+</alfresco-datatable>
 ```
 
 Example above shows access to the underlying cell value by binding `value` property to the underlying context `value`:
@@ -441,7 +400,7 @@ _This event is cancellable, you can use `event.preventDefault()` to prevent defa
 DataTable will automatically render provided menu items.
 
 _Please refer to [ContextMenu](https://www.npmjs.com/package/ng2-alfresco-core) 
-documentation for more details on context actions format and behaviour._
+documentation for more details on context actions format and behavior._
 
 #### showRowActionsMenu event
 
@@ -473,13 +432,13 @@ then `executeRowAction` will be automatically executed when user clicks
 corresponding menu item.
 
 ```html
-<adf-datatable
+<alfresco-datatable
     [data]="data"
     [multiselect]="multiselect"
     [actions]="true"
     (showRowActionsMenu)="onShowRowActionsMenu($event)"
     (executeRowAction)="onExecuteRowAction($event)">
-</adf-datatable>
+</alfresco-datatable>
 ```
 
 ```ts
@@ -507,7 +466,7 @@ onExecuteRowAction(event: DataRowActionEvent) {
 
 ![](docs/assets/datatable-actions-console.png)
 
-Developers are allowed to use any payloads as row actions.
+Developers are allowed putting any payloads as row actions.
 The only requirement for the objects is having `title` property.
 
 Once corresponding action is clicked in the dropdown menu DataTable invokes `executeRowAction` event
@@ -534,11 +493,9 @@ interface DataTableAdapter {
 }
 
 interface DataRow {
-     isSelected: boolean;
-     isDropTarget?: boolean;
-     hasValue(key: string): boolean;
-     getValue(key: string): any;
-     cssClass?: string;
+    isSelected: boolean;
+    hasValue(key: string): boolean;
+    getValue(key: string): any;
 }
 
 interface DataColumn {
@@ -553,7 +510,7 @@ interface DataColumn {
 }
 ```
 
-DataTable provides [ObjectDataTableAdapter](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-datatable/src/data/object-datatable-adapter.ts) out-of-the-box. 
+DataTable provides [ObjectDataTableAdapter](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-datatable/src/data/object-datatable-adapter.ts) out-of-box. 
 This is a simple data adapter implementation that binds to object arrays 
 and turns object fields into columns:
 
@@ -584,7 +541,7 @@ let data = new ObjectDataTableAdapter(
 
 ## Generate schema 
 
-It is possible to auto generate your schema if you have only the data row  
+Is possible to auto generate your schema if you have only the data row  
 
 ```ts
 let data =  [
@@ -613,19 +570,20 @@ let schema = ObjectDataTableAdapter.generateSchema(data);
 
 ```
 
-## Pagination Component
+# Pagination Component
 
-The pagination object is a generic component to paginate component. The Alfresco API are paginated and return a Pagination object. You can use the pagination object to feed the pagination component and then listen to the event which returns the current pagination and query again the API with the options chosen by the user.
+The pagination object is a generic component to paginate component. The Alfresco API are paginated and returns a Pagination object. You can use the pagination object to feed the pagination component and then listen to the event which return the current pagination and query again the API with the options choose by the user.
 
 ![DataTable demo](docs/assets/pagination-demo.png)
+
 
 ### Properties
 
 | Name | Type | Default | Description
 | --- | --- | --- | --- |
-| supportedPageSizes | numer[] | [5, 10, 20, 50, 100] | This array describes the set of options shown in the pick list |
-| maxItems | boolean | false | Max number of elements shown per page. If you pick another size from the pick list this option will be overwritten |
-| pagination | Pagination | {count: 0, totalItems: 0, skipCount: 0, maxItems: 20 , hasMoreItems: true} | The Alfresco Api returns a pagination object, you can use it to feed the pagination component, or create your own. |
+| supportedPageSizes | numer[] | [5, 10, 20, 50, 100] | This array describe the set of options showed in the pick list |
+| maxItems | boolean | false | Max number of element showed per page. If you pick another size from the pick list this option will be overwritten |
+| pagination | Pagination | {count: 0, totalItems: 0, skipCount: 0, maxItems: 20 , hasMoreItems: true} | The Alfresco Api return a pagination object, you can use it to feed the pagination component, or create your own. |
 
 ### Events
 
@@ -633,7 +591,7 @@ The pagination object is a generic component to paginate component. The Alfresco
 | --- | --- |
 | changePageSize | Emitted when user picks one of the options from the pick list |
 | nextPage | Emitted when user clicks next page button |
-| prevPage | Emitted when user clicks previous page button |
+| prevPage | Emitted when user clicks prev page button |
 
 All the events carry with them the current pagination object.
 

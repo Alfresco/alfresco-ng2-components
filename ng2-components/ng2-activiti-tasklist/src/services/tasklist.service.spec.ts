@@ -15,37 +15,37 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed, async } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
-import {
-    fakeAppFilter,
-    fakeAppPromise,
-    fakeApps,
-    fakeErrorTaskList,
-    fakeFilter,
-    fakeFilters,
-    fakeFilterWithProcessDefinitionKey,
-    fakeFormList,
-    fakeRepresentationFilter1,
-    fakeRepresentationFilter2,
-    fakeTaskDetails,
-    fakeTaskList,
-    fakeTaskListDifferentProcessDefinitionKey,
-    fakeTasksChecklist,
-    fakeTasksComment,
-    fakeUser,
-    secondFakeTaskList
-} from '../assets/tasklist-service.mock';
-import { Comment } from '../models/comment.model';
-import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
+import { ActivitiTaskListService } from './activiti-tasklist.service';
 import { TaskDetailsModel } from '../models/task-details.model';
-import { TaskListService } from './tasklist.service';
+import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
+import { Comment } from '../models/comment.model';
+import {
+    fakeFilters,
+    fakeAppPromise,
+    fakeAppFilter,
+    fakeFilter,
+    fakeTaskList,
+    fakeErrorTaskList,
+    fakeTasksComment,
+    fakeTasksChecklist,
+    fakeTaskDetails,
+    fakeUser,
+    fakeApps,
+    fakeRepresentationFilter1,
+    secondFakeTaskList,
+    fakeRepresentationFilter2,
+    fakeFormList,
+    fakeTaskListDifferentProcessDefinitionKey,
+    fakeFilterWithProcessDefinitionKey
+} from '../assets/tasklist-service.mock';
 
 declare let jasmine: any;
 
 describe('Activiti TaskList Service', () => {
 
-    let service: TaskListService;
+    let service: ActivitiTaskListService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -53,13 +53,13 @@ describe('Activiti TaskList Service', () => {
                 CoreModule.forRoot()
             ],
             providers: [
-                TaskListService
+                ActivitiTaskListService
             ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
-        service = TestBed.get(TaskListService);
+        service = TestBed.get(ActivitiTaskListService);
     });
 
     beforeEach(() => {
@@ -161,7 +161,7 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should return the task list filtered', (done) => {
-            service.getTasks(<TaskQueryRequestRepresentationModel> fakeFilter).subscribe(
+            service.getTasks(<TaskQueryRequestRepresentationModel>fakeFilter).subscribe(
                 res => {
                     expect(res).toBeDefined();
                     expect(res.length).toEqual(1);
@@ -181,7 +181,7 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should return the task list filtered by processDefinitionKey', (done) => {
-            service.getTasks(<TaskQueryRequestRepresentationModel> fakeFilterWithProcessDefinitionKey).subscribe(
+            service.getTasks(<TaskQueryRequestRepresentationModel>fakeFilterWithProcessDefinitionKey).subscribe(
                 res => {
                     expect(res).toBeDefined();
                     expect(res.length).toEqual(1);
@@ -202,7 +202,7 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should throw an exception when the response is wrong', () => {
-            service.getTasks(<TaskQueryRequestRepresentationModel> fakeFilter).subscribe(
+            service.getTasks(<TaskQueryRequestRepresentationModel>fakeFilter).subscribe(
                 (res) => {
                 },
                 (err: any) => {
@@ -240,7 +240,7 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should return the tasks comments ', (done) => {
-            service.getComments('999').subscribe(
+            service.getTaskComments('999').subscribe(
                 (res: Comment[]) => {
                     expect(res).toBeDefined();
                     expect(res.length).toEqual(2);
@@ -327,7 +327,7 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should add a comment task ', (done) => {
-            service.addComment('999', 'fake-comment-message').subscribe(
+            service.addTaskComment('999', 'fake-comment-message').subscribe(
                 (res: Comment) => {
                     expect(res).toBeDefined();
                     expect(res.id).not.toEqual('');
@@ -367,7 +367,7 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should return the total number of tasks', (done) => {
-            service.getTotalTasks(<TaskQueryRequestRepresentationModel> fakeFilter).subscribe(
+            service.getTotalTasks(<TaskQueryRequestRepresentationModel>fakeFilter).subscribe(
                 res => {
                     expect(res).toBeDefined();
                     expect(res.size).toEqual(1);
@@ -550,22 +550,6 @@ describe('Activiti TaskList Service', () => {
             let taskId = '111';
 
             service.claimTask(taskId).subscribe(
-                (res: any) => {
-                    done();
-                }
-            );
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify({})
-            });
-        });
-
-        it('should update a task', (done) => {
-            let taskId = '111';
-
-            service.updateTask(taskId, {property: 'value'}).subscribe(
                 (res: any) => {
                     done();
                 }

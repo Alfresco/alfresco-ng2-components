@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Directive, ElementRef, HostListener, Input, NgZone, OnDestroy, OnInit, Renderer } from '@angular/core';
-import { FileInfo, FileUtils } from '../utils/file-utils';
+import { Directive, Input, HostListener, ElementRef, Renderer, OnInit, NgZone, OnDestroy } from '@angular/core';
+import { FileUtils, FileInfo } from '../utils/file-utils';
 
 @Directive({
     selector: '[adf-upload]'
@@ -204,7 +204,7 @@ export class UploadDirective implements OnInit, OnDestroy {
                                 }
                             }
                         } else {
-                            iterations.push(Promise.resolve(<FileInfo> {
+                            iterations.push(Promise.resolve(<FileInfo>{
                                 entry: null,
                                 file: items[i].getAsFile(),
                                 relativeFolder: '/'
@@ -237,7 +237,7 @@ export class UploadDirective implements OnInit, OnDestroy {
      */
     protected onSelectFiles(e: Event) {
         if (this.isClickMode()) {
-            const input = (<HTMLInputElement> e.currentTarget);
+            const input = (<HTMLInputElement>e.currentTarget);
             const files = FileUtils.toFileArray(input.files);
             this.onUploadFiles(files.map(file => <FileInfo> {
                 entry: null,

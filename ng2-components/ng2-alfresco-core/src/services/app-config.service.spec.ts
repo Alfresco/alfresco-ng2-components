@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { inject, TestBed } from '@angular/core/testing';
-import { HttpModule, Response, ResponseOptions, XHRBackend } from '@angular/http';
+import { TestBed, inject } from '@angular/core/testing';
+import { HttpModule, XHRBackend, Response, ResponseOptions } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { AppConfigModule, AppConfigService } from './app-config.service';
 
@@ -28,9 +28,6 @@ describe('AppConfigService', () => {
         'bpmHost': 'http://localhost:4000/ecm',
         'application': {
             'name': 'Custom Name'
-        },
-        'files': {
-            'excluded': ['exluded']
         }
     };
 
@@ -89,15 +86,6 @@ describe('AppConfigService', () => {
         const name = 'custom.config.json';
         appConfigService.load(name).then(() => {
             expect(appConfigService.configFile).toBe(name);
-        });
-    });
-
-    it('should take excluded file list', () => {
-        expect(appConfigService.configFile).toBeNull();
-
-        const name = 'custom.config.json';
-        appConfigService.load(name).then(() => {
-            expect(appConfigService.get('files.excluded')[0]).toBe('exluded');
         });
     });
 });

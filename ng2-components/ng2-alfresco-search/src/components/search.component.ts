@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, OnInit, Optional, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, Optional, OnChanges, SimpleChanges, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { AlfrescoSearchService, SearchOptions } from './../services/alfresco-search.service';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { NodePaging, Pagination } from 'alfresco-js-api';
-import { AlfrescoTranslationService, NotificationService, SearchOptions, SearchService } from 'ng2-alfresco-core';
-import { PermissionModel } from 'ng2-alfresco-documentlist';
 
 @Component({
-    selector: 'adf-search, alfresco-search',
-    styleUrls: ['./search.component.css'],
-    templateUrl: './search.component.html'
+    selector: 'alfresco-search',
+    styleUrls: ['./alfresco-search.component.css'],
+    templateUrl: './alfresco-search.component.html'
 })
-export class SearchComponent implements OnChanges, OnInit {
+export class AlfrescoSearchComponent implements OnChanges, OnInit {
 
     static SINGLE_CLICK_NAVIGATION: string = 'click';
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
@@ -47,7 +47,7 @@ export class SearchComponent implements OnChanges, OnInit {
     resultType: string = null;
 
     @Input()
-    navigationMode: string = SearchComponent.DOUBLE_CLICK_NAVIGATION; // click|dblclick
+    navigationMode: string = AlfrescoSearchComponent.DOUBLE_CLICK_NAVIGATION; // click|dblclick
 
     @Input()
     emptyFolderImageUrl: string = require('../assets/images/empty_doc_lib.svg');
@@ -64,9 +64,8 @@ export class SearchComponent implements OnChanges, OnInit {
     skipCount: number = 0;
     nodeResults: NodePaging;
 
-    constructor(private searchService: SearchService,
+    constructor(private searchService: AlfrescoSearchService,
                 private translateService: AlfrescoTranslationService,
-                private notificationService: NotificationService,
                 @Optional() private route: ActivatedRoute) {
     }
 
@@ -107,9 +106,8 @@ export class SearchComponent implements OnChanges, OnInit {
      */
     private displaySearchResults(searchTerm) {
         if (searchTerm && this.searchService) {
-            searchTerm = searchTerm + '*';
             let searchOpts: SearchOptions = {
-                include: ['path', 'allowableOperations'],
+                include: ['path'],
                 skipCount: this.skipCount,
                 rootNodeId: this.rootNodeId,
                 nodeType: this.resultType,
@@ -127,7 +125,7 @@ export class SearchComponent implements OnChanges, OnInit {
                     },
                     error => {
                         if (error.status !== 400) {
-                            this.errorMessage = <any> error;
+                            this.errorMessage = <any>error;
                             this.resultsLoad.error(error);
                         }
                     }
@@ -148,14 +146,5 @@ export class SearchComponent implements OnChanges, OnInit {
     public onPrevPage(event: Pagination): void {
         this.skipCount = event.skipCount;
         this.displaySearchResults(this.searchTerm);
-    }
-
-    public onContentDelete(entry: any) {
-        this.displaySearchResults(this.searchTerm);
-    }
-
-    public handlePermission(permission: PermissionModel): void {
-        let permissionErrorMessage: any = this.translateService.get('PERMISSON.LACKOF', permission);
-        this.notificationService.openSnackMessage(permissionErrorMessage.value, 3000);
     }
 }

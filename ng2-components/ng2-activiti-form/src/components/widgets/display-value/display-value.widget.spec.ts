@@ -16,22 +16,22 @@
  */
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
-import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
-import { ActivitiContentComponent } from '../../activiti-content.component';
+import { DisplayValueWidget } from './display-value.widget';
+import { ActivitiContent } from '../../activiti-content.component';
+import { FormFieldModel } from './../core/form-field.model';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormModel } from '../core/form.model';
-import { EcmModelService } from './../../../services/ecm-model.service';
+import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { CoreModule } from 'ng2-alfresco-core';
 import { FormService } from './../../../services/form.service';
-import { FormFieldModel } from './../core/form-field.model';
-import { DisplayValueWidgetComponent } from './display-value.widget';
+import { EcmModelService } from './../../../services/ecm-model.service';
 
-describe('DisplayValueWidgetComponent', () => {
+describe('DisplayValueWidget', () => {
 
-    let widget: DisplayValueWidgetComponent;
-    let fixture: ComponentFixture<DisplayValueWidgetComponent>;
+    let widget: DisplayValueWidget;
+    let fixture: ComponentFixture<DisplayValueWidget>;
     let element: HTMLElement;
     let formService: FormService;
 
@@ -41,8 +41,8 @@ describe('DisplayValueWidgetComponent', () => {
                 CoreModule.forRoot()
             ],
             declarations: [
-                DisplayValueWidgetComponent,
-                ActivitiContentComponent
+                DisplayValueWidget,
+                ActivitiContent
             ],
             providers: [
                 FormService,
@@ -54,7 +54,7 @@ describe('DisplayValueWidgetComponent', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(DisplayValueWidgetComponent);
+        fixture = TestBed.createComponent(DisplayValueWidget);
         formService = TestBed.get(FormService);
 
         element = fixture.nativeElement;

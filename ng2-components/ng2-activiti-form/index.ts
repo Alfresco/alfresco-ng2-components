@@ -15,29 +15,27 @@
  * limitations under the License.
  */
 
-import { ModuleWithProviders, NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
-import { MdButtonModule, MdCardModule, MdCheckboxModule, MdIconModule, MdInputModule, MdSlideToggleModule, MdTabsModule } from '@angular/material';
+import { NgModule, ModuleWithProviders } from '@angular/core';
+import { MdCheckboxModule, MdTabsModule, MdCardModule, MdButtonModule, MdIconModule, MdSlideToggleModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
-import { DataTableModule } from 'ng2-alfresco-datatable';
-import { ActivitiContentComponent } from './src/components/activiti-content.component';
+
+import { ActivitiForm } from './src/components/activiti-form.component';
+import { ActivitiContent } from './src/components/activiti-content.component';
 import { FormFieldComponent } from './src/components/form-field/form-field.component';
-import { FormListComponent } from './src/components/form-list.component';
-import { FormComponent } from './src/components/form.component';
-import { StartFormComponent } from './src/components/start-form.component';
-import { MASK_DIRECTIVE, WIDGET_DIRECTIVES } from './src/components/widgets/index';
-import { ActivitiAlfrescoContentService } from './src/services/activiti-alfresco.service';
+import { ActivitiStartForm } from './src/components/activiti-start-form.component';
+import { FormService } from './src/services/form.service';
 import { ActivitiContentService } from './src/services/activiti-content-service';
 import { EcmModelService } from './src/services/ecm-model.service';
-import { FormRenderingService } from './src/services/form-rendering.service';
-import { FormService } from './src/services/form.service';
 import { NodeService } from './src/services/node.service';
 import { WidgetVisibilityService } from './src/services/widget-visibility.service';
+import { ActivitiAlfrescoContentService } from './src/services/activiti-alfresco.service';
+import { FormRenderingService } from './src/services/form-rendering.service';
+import { HttpModule } from '@angular/http';
+import { WIDGET_DIRECTIVES, MASK_DIRECTIVE } from './src/components/widgets/index';
 
-export * from './src/components/form.component';
-export * from './src/components/form-list.component';
+export * from './src/components/activiti-form.component';
 export * from './src/components/activiti-content.component';
-export * from './src/components/start-form.component';
+export * from './src/components/activiti-start-form.component';
 export * from './src/services/form.service';
 export * from './src/services/activiti-content-service';
 export * from './src/components/widgets/index';
@@ -46,26 +44,12 @@ export * from './src/services/node.service';
 export * from './src/services/form-rendering.service';
 export * from './src/events/index';
 
-// Old deprecated import
-import {ActivitiContentComponent as ActivitiContent } from './src/components/activiti-content.component';
-import {FormComponent as ActivitiForm } from './src/components/form.component';
-import {StartFormComponent as ActivitiStartForm } from './src/components/start-form.component';
-export {FormComponent as ActivitiForm} from './src/components/form.component';
-export {ActivitiContentComponent as ActivitiContent} from './src/components/activiti-content.component';
-export {StartFormComponent as ActivitiStartForm} from './src/components/start-form.component';
-
 export const ACTIVITI_FORM_DIRECTIVES: any[] = [
-    FormComponent,
-    FormListComponent,
-    ActivitiContentComponent,
-    StartFormComponent,
-    FormFieldComponent,
-    ...WIDGET_DIRECTIVES,
-
-    // Old Deprecated export
     ActivitiForm,
     ActivitiContent,
-    ActivitiStartForm
+    ActivitiStartForm,
+    FormFieldComponent,
+    ...WIDGET_DIRECTIVES
 ];
 
 export const ACTIVITI_FORM_PROVIDERS: any[] = [
@@ -81,15 +65,13 @@ export const ACTIVITI_FORM_PROVIDERS: any[] = [
 @NgModule({
     imports: [
         CoreModule,
-        DataTableModule,
         HttpModule,
         MdCheckboxModule,
         MdTabsModule,
         MdCardModule,
         MdButtonModule,
         MdIconModule,
-        MdSlideToggleModule,
-        MdInputModule
+        MdSlideToggleModule
     ],
     declarations: [
         ...ACTIVITI_FORM_DIRECTIVES,
@@ -108,8 +90,7 @@ export const ACTIVITI_FORM_PROVIDERS: any[] = [
         MdCardModule,
         MdButtonModule,
         MdIconModule,
-        MdSlideToggleModule,
-        MdInputModule
+        MdSlideToggleModule
     ]
 })
 export class ActivitiFormModule {

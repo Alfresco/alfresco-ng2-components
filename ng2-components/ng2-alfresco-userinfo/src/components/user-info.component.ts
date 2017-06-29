@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit } from '@angular/core';
-import { AlfrescoAuthenticationService, AlfrescoTranslationService } from 'ng2-alfresco-core';
-import { BpmUserModel } from './../models/bpm-user.model';
+import { Component, OnInit, Input } from '@angular/core';
+import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { EcmUserModel } from './../models/ecm-user.model';
-import { BpmUserService } from './../services/bpm-user.service';
+import { BpmUserModel } from './../models/bpm-user.model';
 import { EcmUserService } from './../services/ecm-user.service';
+import { BpmUserService } from './../services/bpm-user.service';
 
 declare let componentHandler: any;
 declare var require: any;
 
 @Component({
-    selector: 'adf-userinfo, ng2-alfresco-userinfo',
+    selector: 'ng2-alfresco-userinfo',
     styleUrls: ['./user-info.component.css'],
     templateUrl: './user-info.component.html'
 })

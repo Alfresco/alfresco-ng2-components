@@ -15,27 +15,27 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdInputModule, MdTabsModule } from '@angular/material';
-import { CoreModule } from 'ng2-alfresco-core';
-import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
-import { fakeFormJson } from '../../../services/assets/widget-visibility.service.mock';
-import { WIDGET_DIRECTIVES } from '../index';
-import { MASK_DIRECTIVE } from '../index';
-import { EcmModelService } from './../../../services/ecm-model.service';
-import { FormService } from './../../../services/form.service';
-import { ActivitiContentComponent } from './../../activiti-content.component';
-import { FormFieldComponent } from './../../form-field/form-field.component';
+import { ContainerWidget } from './container.widget';
+import { ContainerWidgetModel } from './container.widget.model';
+import { FormModel } from './../core/form.model';
 import { FormFieldTypes } from './../core/form-field-types';
 import { FormFieldModel } from './../core/form-field.model';
-import { FormModel } from './../core/form.model';
-import { ContainerWidgetComponent } from './container.widget';
-import { ContainerWidgetComponentModel } from './container.widget.model';
+import { WIDGET_DIRECTIVES } from '../index';
+import { MASK_DIRECTIVE } from '../index';
+import { FormFieldComponent } from './../../form-field/form-field.component';
+import { ActivitiContent } from './../../activiti-content.component';
+import { fakeFormJson } from '../../../services/assets/widget-visibility.service.mock';
+import { MdTabsModule } from '@angular/material';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { CoreModule } from 'ng2-alfresco-core';
+import { FormService } from './../../../services/form.service';
+import { EcmModelService } from './../../../services/ecm-model.service';
+import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 
-describe('ContainerWidgetComponent', () => {
+describe('ContainerWidget', () => {
 
-    let widget: ContainerWidgetComponent;
-    let fixture: ComponentFixture<ContainerWidgetComponent>;
+    let widget: ContainerWidget;
+    let fixture: ComponentFixture<ContainerWidget>;
     let element: HTMLElement;
     let contentService: ActivitiAlfrescoContentService;
     let componentHandler;
@@ -45,10 +45,9 @@ describe('ContainerWidgetComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                MdTabsModule,
-                MdInputModule
+                MdTabsModule
             ],
-            declarations: [FormFieldComponent, ActivitiContentComponent, WIDGET_DIRECTIVES, MASK_DIRECTIVE],
+            declarations: [FormFieldComponent, ActivitiContent, WIDGET_DIRECTIVES, MASK_DIRECTIVE],
             providers: [
                 FormService,
                 EcmModelService,
@@ -58,7 +57,7 @@ describe('ContainerWidgetComponent', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ContainerWidgetComponent);
+        fixture = TestBed.createComponent(ContainerWidget);
         contentService = TestBed.get(ActivitiAlfrescoContentService);
 
         element = fixture.nativeElement;
@@ -98,7 +97,7 @@ describe('ContainerWidgetComponent', () => {
     });
 
     it('should toggle underlying group container', () => {
-        let container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(), {
+        let container = new ContainerWidgetModel(new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.GROUP,
             params: {
                 allowCollapse: true
@@ -115,7 +114,7 @@ describe('ContainerWidgetComponent', () => {
     });
 
     it('should toggle only collapsible container', () => {
-        let container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(), {
+        let container = new ContainerWidgetModel(new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.GROUP
         }));
 
@@ -128,7 +127,7 @@ describe('ContainerWidgetComponent', () => {
 
     it('should toggle only group container', () => {
 
-        let container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(), {
+        let container = new ContainerWidgetModel(new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.CONTAINER,
             params: {
                 allowCollapse: true
@@ -162,13 +161,13 @@ describe('ContainerWidgetComponent', () => {
         beforeEach(() => {
             componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
             window['componentHandler'] = componentHandler;
-            fakeContainerVisible = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(fakeFormJson), {
+            fakeContainerVisible = new ContainerWidgetModel(new FormFieldModel(new FormModel(fakeFormJson), {
                 fieldType: FormFieldTypes.GROUP,
                 id: 'fake-cont-id-1',
                 name: 'fake-cont-1-name',
                 type: FormFieldTypes.GROUP
             }));
-            fakeContainerInvisible = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(fakeFormJson), {
+            fakeContainerInvisible = new ContainerWidgetModel(new FormFieldModel(new FormModel(fakeFormJson), {
                 fieldType: FormFieldTypes.GROUP,
                 id: 'fake-cont-id-2',
                 name: 'fake-cont-2-name',

@@ -1,12 +1,12 @@
 <div class="container">
-    <div class="adf-demo-site-container-style" id="demo-container">
-        <adf-sites-dropdown (change)="getSiteContent($event)">
-        </adf-sites-dropdown>
-    </div>
     <alfresco-upload-drag-area
-        [parentId]="documentList.currentFolderId"
+        [rootFolderId]="documentList.currentFolderId"
         [versioning]="versioning"
         [enabled]="documentList.hasCreatePermission()">
+        <adf-breadcrumb
+            [target]="documentList"
+            [folderNode]="documentList.folderNode">
+        </adf-breadcrumb>
         <div *ngIf="errorMessage" class="error-message">
             <button (click)="resetError()" class="mdl-button mdl-js-button mdl-button--icon">
                 <i class="material-icons">highlight_off</i>
@@ -14,37 +14,13 @@
             <span class="error-message--text">{{errorMessage}}</span>
         </div>
         <ng-container *ngIf="useCustomToolbar">
-            <adf-toolbar [color]="toolbarColor">
-                <adf-toolbar-title>
-                    <adf-breadcrumb *ngIf="!useDropdownBreadcrumb"
-                        class="files-breadcrumb"
-                        [target]="documentList"
-                        [folderNode]="documentList.folderNode">
-                    </adf-breadcrumb>
-                    <adf-dropdown-breadcrumb  *ngIf="useDropdownBreadcrumb"
-                        class="files-breadcrumb"
-                        [target]="documentList"
-                        [folderNode]="documentList.folderNode">
-                    </adf-dropdown-breadcrumb>
-                </adf-toolbar-title>
+            <adf-toolbar title="Toolbar">
                 <button md-icon-button (click)="onCreateFolderClicked($event)">
                     <md-icon>create_new_folder</md-icon>
                 </button>
                 <button md-icon-button>
                     <md-icon>delete</md-icon>
                 </button>
-
-                <button md-icon-button [mdMenuTriggerFor]="themePicker">
-                    <md-icon>format_color_fill</md-icon>
-                </button>
-
-                <md-menu #themePicker="mdMenu">
-                    <button md-menu-item (click)="toolbarColor = 'default'">Default</button>
-                    <button md-menu-item (click)="toolbarColor = 'primary'">Primary</button>
-                    <button md-menu-item (click)="toolbarColor = 'accent'">Accent</button>
-                    <button md-menu-item (click)="toolbarColor = 'warn'">Warn</button>
-                </md-menu>
-
                 <button md-icon-button [mdMenuTriggerFor]="menu">
                     <md-icon>more_vert</md-icon>
                 </button>
@@ -64,31 +40,38 @@
                 </md-menu>
             </adf-toolbar>
         </ng-container>
-        <adf-document-list
+        <alfresco-document-list
                 #documentList
-                [permissionsStyle]="permissionsStyle"
                 [creationMenuActions]="!useCustomToolbar"
                 [currentFolderId]="currentFolderId"
                 [contextMenuActions]="true"
                 [contentActions]="true"
                 [allowDropFiles]="true"
-                [selectionMode]="selectionMode"
-                [multiselect]="multiselect"
                 (error)="onNavigationError($event)"
                 (success)="resetError()"
                 (preview)="showFile($event)"
                 (permissionError)="handlePermissionError($event)">
             <data-columns>
-                <data-column
-                    key="$thumbnail"
-                    type="image"
-                    [sortable]="false"
-                    class="image-table-cell">
-                </data-column>
+                <data-column key="$thumbnail" type="image" [sortable]="false"></data-column>
                 <data-column
                         title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
                         key="name"
                         class="full-width ellipsis-cell">
+
+                    <!-- Example #1: using custom template with implicit access to data context -->
+                    <!--
+                    <ng-template let-entry="$implicit">
+                        <span>Hi! {{entry.data.getValue(entry.row, entry.col)}}</span>
+                    </ng-template>
+                    -->
+
+                    <!-- Example #2: using custom template with value access -->
+                    <!--
+                    <ng-template let-value="value">
+                        <span>Hi! {{value}}</span>
+                    </ng-template>
+                    -->
+
                 </data-column>
                 <!-- Notes: has performance overhead due to multiple files/folders causing separate HTTP calls to get tags -->
                 <!--
@@ -102,105 +85,51 @@
                 </data-column>
                 -->
                 <data-column
-                    title="{{'DOCUMENT_LIST.COLUMNS.CREATED_BY' | translate}}"
-                    key="createdByUser.displayName"
-                    class="desktop-only">
+                        title="{{'DOCUMENT_LIST.COLUMNS.CREATED_BY' | translate}}"
+                        key="createdByUser.displayName"
+                        class="desktop-only">
                 </data-column>
                 <data-column
-                    title="{{'DOCUMENT_LIST.COLUMNS.CREATED_ON' | translate}}"
-                    key="createdAt"
-                    type="date"
-                    format="medium"
-                    class="desktop-only">
+                        title="{{'DOCUMENT_LIST.COLUMNS.CREATED_ON' | translate}}"
+                        key="createdAt"
+                        type="date"
+                        format="medium"
+                        class="desktop-only">
                 </data-column>
             </data-columns>
 
             <content-actions>
                 <!-- folder actions -->
                 <content-action
-                    icon="content_copy"
-                    target="folder"
-                    title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.COPY' | translate}}"
-                    permission="update"
-                    [disableWithNoPermission]="true"
-                    handler="copy">
-                </content-action>
-                <content-action
-                    icon="redo"
-                    target="folder"
-                    title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.MOVE' | translate}}"
-                    permission="update"
-                    [disableWithNoPermission]="true"
-                    handler="move">
-                </content-action>
-                <content-action
-                    icon="delete"
-                    target="folder"
-                    permission="delete"
-                    [disableWithNoPermission]="true"
-                    title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.DELETE' | translate}}"
-                    (permissionEvent)="handlePermissionError($event)"
-                    handler="delete">
+                        target="folder"
+                        permission="delete"
+                        [disableWithNoPermission]="true"
+                        title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.DELETE' | translate}}"
+                        (permissionEvent)="handlePermissionError($event)"
+                        handler="delete">
                 </content-action>
                 <!-- document actions -->
                 <content-action
-                    icon="file_download"
-                    target="document"
-                    title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DOWNLOAD' | translate}}"
-                    handler="download">
+                        target="document"
+                        title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DOWNLOAD' | translate}}"
+                        handler="download">
                 </content-action>
                 <content-action
-                    icon="content_copy"
-                    target="document"
-                    title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.COPY' | translate}}"
-                    permission="update"
-                    [disableWithNoPermission]="true"
-                    handler="copy">
-                </content-action>
-                <content-action
-                    icon="redo"
-                    target="document"
-                    title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.MOVE' | translate}}"
-                    permission="update"
-                    [disableWithNoPermission]="true"
-                    handler="move">
-                </content-action>
-                <content-action
-                    icon="delete"
-                    target="document"
-                    permission="delete"
-                    [disableWithNoPermission]="true"
-                    (permissionEvent)="handlePermissionError($event)"
-                    title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DELETE' | translate}}"
-                    handler="delete">
+                        target="document"
+                        permission="delete"
+                        [disableWithNoPermission]="true"
+                        (permissionEvent)="handlePermissionError($event)"
+                        title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DELETE' | translate}}"
+                        handler="delete">
                 </content-action>
             </content-actions>
-        </adf-document-list>
+        </alfresco-document-list>
     </alfresco-upload-drag-area>
 </div>
 
 <context-menu-holder></context-menu-holder>
 
-<p>Current folder ID: {{ documentList.currentFolderId }}</p>
-
-<div class="p-10">
-    Selected Nodes:
-    <ul>
-        <li *ngFor="let node of documentList.selection">
-            {{ node.entry.name }}
-        </li>
-    </ul>
-</div>
-
 <div class="container">
-    <section>
-        <md-slide-toggle [(ngModel)]="multiselect">Multiselect (with checkboxes)</md-slide-toggle>
-    </section>
-
-    <section>
-        <md-slide-toggle [(ngModel)]="useDropdownBreadcrumb">Dropdown breadcrumb</md-slide-toggle>
-    </section>
-
     <section>
         <md-slide-toggle [(ngModel)]="useCustomToolbar">Use custom toolbar</md-slide-toggle>
     </section>
@@ -263,15 +192,6 @@
     </section>
 </div>
 
-<div class="p-10">
-    <p>For 'Multiple' selection mode use Cmd (macOS) or Ctrl (Win) to toggle selection of multiple items.</p>
-    <md-select placeholder="Selection Mode" [(ngModel)]="selectionMode" name="food">
-        <md-option *ngFor="let mode of selectionModes" [value]="mode.value">
-            {{mode.viewValue}}
-        </md-option>
-    </md-select>
-</div>
-
 <file-uploading-dialog #fileDialog></file-uploading-dialog>
 
 <div *ngIf="fileShowed">
@@ -297,3 +217,4 @@
     <!--</div>-->
 
 </div>
+

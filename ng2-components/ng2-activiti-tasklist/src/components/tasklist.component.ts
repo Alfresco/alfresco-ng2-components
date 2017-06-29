@@ -16,34 +16,34 @@
  */
 
 import {
-    AfterContentInit,
     Component,
-    ContentChild,
-    EventEmitter,
     Input,
-    OnChanges,
     Output,
+    ContentChild,
+    AfterContentInit,
+    EventEmitter,
+    OnChanges,
     SimpleChanges
 } from '@angular/core';
-import { AlfrescoTranslationService, DataColumnListComponent, LogService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, LogService, DataColumnListComponent } from 'ng2-alfresco-core';
 import {
-    DataColumn,
-    DataRowEvent,
+    ObjectDataTableAdapter,
     DataTableAdapter,
+    DataRowEvent,
     ObjectDataRow,
-    ObjectDataTableAdapter
+    DataColumn
 } from 'ng2-alfresco-datatable';
+import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
-import { TaskListService } from './../services/tasklist.service';
 
 @Component({
-    selector: 'adf-tasklist, activiti-tasklist',
-    templateUrl: './tasklist.component.html',
-    styleUrls: ['./tasklist.component.css']
+    selector: 'activiti-tasklist',
+    templateUrl: './activiti-tasklist.component.html',
+    styleUrls: ['./activiti-tasklist.component.css']
 })
-export class TaskListComponent implements OnChanges, AfterContentInit {
+export class ActivitiTaskList implements OnChanges, AfterContentInit {
 
-    requestNode: TaskQueryRequestRepresentationModel;
+    private requestNode: TaskQueryRequestRepresentationModel;
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
@@ -82,15 +82,13 @@ export class TaskListComponent implements OnChanges, AfterContentInit {
 
     currentInstanceId: string;
 
-    isLoading: boolean = true;
-
     /**
      * Toggles custom data source mode.
      * When enabled the component reloads data from it's current source instead of the server side.
      * This allows generating and displaying custom data sets (i.e. filtered out content).
      *
      * @type {boolean}
-     * @memberOf TaskListComponent
+     * @memberOf ActivitiTaskList
      */
     hasCustomDataSource: boolean = false;
 
@@ -100,7 +98,7 @@ export class TaskListComponent implements OnChanges, AfterContentInit {
     ];
 
     constructor(private translateService: AlfrescoTranslationService,
-                private taskListService: TaskListService,
+                private taskListService: ActivitiTaskListService,
                 private logService: LogService) {
         if (translateService) {
             translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
@@ -182,7 +180,6 @@ export class TaskListComponent implements OnChanges, AfterContentInit {
     }
 
     private load(requestNode: TaskQueryRequestRepresentationModel) {
-        this.isLoading = true;
         this.taskListService.getTotalTasks(requestNode).subscribe(
             (res) => {
                 requestNode.size = res.total;
@@ -192,14 +189,11 @@ export class TaskListComponent implements OnChanges, AfterContentInit {
                         this.renderInstances(instancesRow);
                         this.selectTask(requestNode.landingTaskId);
                         this.onSuccess.emit(response);
-                        this.isLoading = false;
                     }, (error) => {
                         this.onError.emit(error);
-                        this.isLoading = false;
                     });
             }, (err) => {
                 this.onError.emit(err);
-                this.isLoading = false;
             });
     }
 

@@ -16,12 +16,13 @@
  */
 
 import { DatePipe } from '@angular/common';
-import { MinimalNode, MinimalNodeEntity, NodePaging } from 'alfresco-js-api';
 import { ObjectUtils } from 'ng2-alfresco-core';
-import { PermissionsEnum } from 'ng2-alfresco-core';
-import { DataColumn, DataRow, DataSorting, DataTableAdapter } from 'ng2-alfresco-datatable';
-import { PermissionStyleModel } from './../models/permissions-style.model';
+import { DataTableAdapter, DataRow, DataColumn, DataSorting } from 'ng2-alfresco-datatable';
+
 import { DocumentListService } from './../services/document-list.service';
+import { NodePaging, MinimalNodeEntity } from 'alfresco-js-api';
+
+declare var require: any;
 
 export class ShareDataTableAdapter implements DataTableAdapter {
 
@@ -39,7 +40,6 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     private imageResolver: ImageResolver;
 
     thumbnails: boolean = false;
-    permissionsStyle: PermissionStyleModel[];
     selectedRow: DataRow;
 
     constructor(private documentListService: DocumentListService,
@@ -106,23 +106,30 @@ export class ShareDataTableAdapter implements DataTableAdapter {
                 let node = (<ShareDataRow> row).node;
 
                 if (node.entry.isFolder) {
-                    return this.documentListService.getMimeTypeIcon('folder');
+                    return this.getImagePath('ft_ic_folder.svg');
                 }
 
                 if (node.entry.isFile) {
+
                     if (this.thumbnails) {
-                        return this.documentListService.getDocumentThumbnailUrl(node);
+                        if (this.documentListService) {
+                            return this.documentListService.getDocumentThumbnailUrl(node);
+                        }
+                        return null;
                     }
 
                     if (node.entry.content) {
                         let mimeType = node.entry.content.mimeType;
                         if (mimeType) {
-                            return this.documentListService.getMimeTypeIcon(mimeType);
+                            let icon = this.documentListService.getMimeTypeIcon(mimeType);
+                            if (icon) {
+                                return this.getImagePath(icon);
+                            }
                         }
                     }
                 }
 
-                return this.documentListService.getDefaultMimeTypeIcon();
+                return this.getImagePath('ft_ic_miscellaneous.svg');
             }
 
         }
@@ -192,7 +199,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         if (page && page.list) {
             let data = page.list.entries;
             if (data && data.length > 0) {
-                rows = data.map(item => new ShareDataRow(item, this.documentListService, this.permissionsStyle));
+                rows = data.map(item => new ShareDataRow(item));
 
                 if (this.filter) {
                     rows = rows.filter(this.filter);
@@ -218,6 +225,9 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         this.rows = rows;
     }
 
+    getImagePath(id: string): any {
+        return require('../assets/images/' + id);
+    }
 }
 
 export class ShareDataRow implements DataRow {
@@ -227,51 +237,34 @@ export class ShareDataRow implements DataRow {
     cache: { [key: string]: any } = {};
     isSelected: boolean = false;
     isDropTarget: boolean;
-    cssClass: string = '';
 
     get node(): MinimalNodeEntity {
         return this.obj;
     }
 
-    constructor(private obj: MinimalNodeEntity, private documentListService: DocumentListService, private permissionsStyle: PermissionStyleModel[]) {
+    constructor(private obj: MinimalNodeEntity) {
         if (!obj) {
             throw new Error(ShareDataRow.ERR_OBJECT_NOT_FOUND);
         }
 
         this.isDropTarget = this.isFolderAndHasPermissionToUpload(obj);
-
-        if (permissionsStyle) {
-            this.cssClass = this.getPermissionClass(obj);
-        }
-    }
-
-    getPermissionClass(nodeEntity: MinimalNodeEntity): string {
-        let permissionsClasses = '';
-
-        this.permissionsStyle.forEach((currentPermissionsStyle: PermissionStyleModel) => {
-
-            if (this.applyPermissionStyleToFolder(nodeEntity.entry, currentPermissionsStyle) || this.applyPermissionStyleToFile(nodeEntity.entry, currentPermissionsStyle)) {
-
-                if (this.documentListService.hasPermission(nodeEntity.entry, currentPermissionsStyle.permission)) {
-                     permissionsClasses += ` ${currentPermissionsStyle.css}`;
-                }
-            }
-
-        });
-
-        return permissionsClasses;
-    }
-
-    private applyPermissionStyleToFile(node: MinimalNode, currentPermissionsStyle: PermissionStyleModel): boolean {
-        return (currentPermissionsStyle.isFile && node.isFile);
-    }
-
-    private applyPermissionStyleToFolder(node: MinimalNode, currentPermissionsStyle: PermissionStyleModel): boolean {
-        return (currentPermissionsStyle.isFolder && node.isFolder);
     }
 
     isFolderAndHasPermissionToUpload(obj: MinimalNodeEntity): boolean {
-        return this.isFolder(obj) && this.documentListService.hasPermission(obj.entry, 'create');
+        return this.isFolder(obj) && this.hasCreatePermission(obj);
+    }
+
+    hasCreatePermission(obj: MinimalNodeEntity): boolean {
+        return this.hasPermission(obj, 'create');
+    }
+
+    private hasPermission(obj: MinimalNodeEntity, permission: string): boolean {
+        let hasPermission: boolean = false;
+        if (obj.entry && obj.entry['allowableOperations']) {
+            let permFound = obj.entry['allowableOperations'].find(element => element === permission);
+            hasPermission = permFound ? true : false;
+        }
+        return hasPermission;
     }
 
     isFolder(obj: MinimalNodeEntity): boolean {
@@ -295,6 +288,10 @@ export class ShareDataRow implements DataRow {
     }
 }
 
-export type RowFilter = (value: ShareDataRow, index: number, array: ShareDataRow[]) => any;
+export interface RowFilter {
+    (value: ShareDataRow, index: number, array: ShareDataRow[]): any;
+}
 
-export type ImageResolver = (row: DataRow, column: DataColumn) => string;
+export interface ImageResolver {
+    (row: DataRow, column: DataColumn): string;
+}

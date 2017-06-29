@@ -15,14 +15,12 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
 import { Component, OnInit } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
-import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { FormService } from './../../../services/form.service';
+import { WidgetComponent , baseHost } from './../widget.component';
 import { FormFieldOption } from './../core/form-field-option';
-import { baseHost , WidgetComponent } from './../widget.component';
+import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 
 @Component({
     selector: 'typeahead-widget',
@@ -30,7 +28,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
     styleUrls: ['./typeahead.widget.css'],
     host: baseHost
 })
-export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit {
+export class TypeaheadWidget extends WidgetComponent implements OnInit {
 
     popupVisible: boolean = false;
     minTermLength: number = 1;

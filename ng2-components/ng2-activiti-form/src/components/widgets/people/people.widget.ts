@@ -15,13 +15,11 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
+import { WidgetComponent , baseHost } from './../widget.component';
 import { FormService } from '../../../services/form.service';
-import { GroupUserModel } from '../core/group-user.model';
 import { GroupModel } from '../core/group.model';
-import { baseHost , WidgetComponent } from './../widget.component';
+import { GroupUserModel } from '../core/group-user.model';
 
 @Component({
     selector: 'people-widget',
@@ -29,7 +27,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
     styleUrls: ['./people.widget.css'],
     host: baseHost
 })
-export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
+export class PeopleWidget extends WidgetComponent implements OnInit {
 
     popupVisible: boolean = false;
     minTermLength: number = 1;

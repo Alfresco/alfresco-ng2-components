@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, OnChanges, Input, Output, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
-import { Chart } from '../models/chart.model';
-import { ReportQuery } from '../models/report.model';
 import { AnalyticsService } from '../services/analytics.service';
+import { ReportQuery } from '../models/report.model';
+import { Chart } from '../models/chart.model';
 
 @Component({
-    selector: 'adf-analytics-generator, activiti-analytics-generator',
+    selector: 'activiti-analytics-generator',
     templateUrl: './analytics-generator.component.html',
     styleUrls: ['./analytics-generator.component.css']
 })

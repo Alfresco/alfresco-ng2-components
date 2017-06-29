@@ -10,15 +10,15 @@
         },
         "ACTIONS": {
             "FOLDER": {
-                "COPY": "Copy",
-                "MOVE": "Move",
+                "SYSTEM_1": "System folder action 1",
+                "CUSTOM": "Custom folder action",
                 "DELETE": "Delete"
             },
             "DOCUMENT": {
                 "DOWNLOAD": "Download",
-                "COPY": "Copy",
-                "MOVE": "Move",
-                "DELETE": "Delete"
+                "DELETE": "Delete",
+                "SYSTEM_2": "System document action 2",
+                "CUSTOM": "Custom action"
             }
         }
     },

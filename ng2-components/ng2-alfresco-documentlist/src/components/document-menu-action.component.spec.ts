@@ -15,12 +15,19 @@
  * limitations under the License.
  */
 
-import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdButtonModule, MdIconModule, MdMenuModule } from '@angular/material';
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { SimpleChange } from '@angular/core';
+import {
+    AlfrescoAuthenticationService,
+    AlfrescoSettingsService,
+    AlfrescoTranslationService,
+    AlfrescoApiService,
+    CoreModule,
+    LogService
+} from 'ng2-alfresco-core';
 import { DocumentListService } from './../services/document-list.service';
 import { DocumentMenuActionComponent } from './document-menu-action.component';
+import { MdMenuModule, MdButtonModule, MdIconModule } from '@angular/material';
 
 declare let jasmine: any;
 
@@ -83,14 +90,17 @@ describe('Document menu action', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
+                CoreModule,
                 MdMenuModule,
                 MdButtonModule,
                 MdIconModule
             ],
             declarations: [DocumentMenuActionComponent],
             providers: [
-                AlfrescoTranslationService,
+                AlfrescoSettingsService,
+                AlfrescoAuthenticationService,
+                AlfrescoApiService,
+                LogService,
                 DocumentListService
             ]
         });

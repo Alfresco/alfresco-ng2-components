@@ -15,21 +15,21 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LogServiceMock } from 'ng2-alfresco-core';
-import { CoreModule, LogService } from 'ng2-alfresco-core';
+import { DynamicTableWidget } from './dynamic-table.widget';
+import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './dynamic-table.widget.model';
+import { FormModel, FormFieldTypes, FormFieldModel } from './../core/index';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
-import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
-import { EcmModelService } from './../../../services/ecm-model.service';
-import { FormService } from './../../../services/form.service';
-import { FormFieldModel, FormFieldTypes, FormModel } from './../core/index';
-import { DynamicTableWidgetComponent } from './dynamic-table.widget';
-import { DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './dynamic-table.widget.model';
-import { BooleanEditorComponent } from './editors/boolean/boolean.editor';
-import { DateEditorComponent } from './editors/date/date.editor';
-import { DropdownEditorComponent } from './editors/dropdown/dropdown.editor';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { RowEditorComponent } from './editors/row.editor';
+import { DropdownEditorComponent } from './editors/dropdown/dropdown.editor';
+import { DateEditorComponent } from './editors/date/date.editor';
+import { BooleanEditorComponent } from './editors/boolean/boolean.editor';
 import { TextEditorComponent } from './editors/text/text.editor';
+import { CoreModule, LogService } from 'ng2-alfresco-core';
+import { FormService } from './../../../services/form.service';
+import { EcmModelService } from './../../../services/ecm-model.service';
+import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 
 let fakeFormField = {
     id: 'fake-dynamic-table',
@@ -72,10 +72,10 @@ let fakeFormField = {
     ]
 };
 
-describe('DynamicTableWidgetComponent', () => {
+describe('DynamicTableWidget', () => {
 
-    let widget: DynamicTableWidgetComponent;
-    let fixture: ComponentFixture<DynamicTableWidgetComponent>;
+    let widget: DynamicTableWidget;
+    let fixture: ComponentFixture<DynamicTableWidget>;
     let element: HTMLElement;
     let table: DynamicTableModel;
     let logService: LogService;
@@ -86,7 +86,7 @@ describe('DynamicTableWidgetComponent', () => {
             imports: [
                 CoreModule.forRoot()
             ],
-            declarations: [DynamicTableWidgetComponent, RowEditorComponent,
+            declarations: [DynamicTableWidget, RowEditorComponent,
                 DropdownEditorComponent, DateEditorComponent, BooleanEditorComponent, TextEditorComponent],
             providers: [
                 FormService,
@@ -108,7 +108,7 @@ describe('DynamicTableWidgetComponent', () => {
         let elementRefSpy = jasmine.createSpyObj('elementRef', ['']);
         elementRefSpy.nativeElement = nativeElementSpy;
 
-        fixture = TestBed.createComponent(DynamicTableWidgetComponent);
+        fixture = TestBed.createComponent(DynamicTableWidget);
         element = fixture.nativeElement;
         widget = fixture.componentInstance;
         widget.content = table;

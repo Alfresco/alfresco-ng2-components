@@ -1,21 +1,11 @@
 @import 'theming';
 
-$breadcrumb-chevron-spacer: 2px;
+$breadcrumb-chevron-spacer: 10px;
 
 .adf-breadcrumb {
     display: flex;
-
-    &.mat-primary {
-        color: mat-color($primary);
-    }
-
-    &.mat-accent {
-        color: mat-color($accent);
-    }
-
-    &.mat-warn {
-        color: mat-color($warn);
-    }
+    flex: 1;
+    width: 0;
 
     &-container {
         margin: 0;
@@ -24,14 +14,14 @@ $breadcrumb-chevron-spacer: 2px;
         cursor: default;
         display: flex;
         overflow: hidden;
-        height: 25px;
     }
 
     &-item {
-        padding-right: $breadcrumb-chevron-spacer;
+        position: relative;
+        padding-right: 24px + $breadcrumb-chevron-spacer;
+        color: $alfresco-secondary-text-color;
+        flex: 0 1 auto;
         overflow: hidden;
-        display: flex;
-        line-height: 24px;
 
         &-anchor {
             color: inherit;
@@ -43,8 +33,24 @@ $breadcrumb-chevron-spacer: 2px;
             overflow: hidden;
         }
 
-        &.active {
-            display: block;
+        &-anchor:hover, &-last {
+            color: $alfresco-primary-text-color;
+        }
+
+        &-chevron {
+            position: absolute;
+            right: $breadcrumb-chevron-spacer / 2;
+            top: 50%;
+            margin-top: -12px;
+        }
+
+        &-last {
+            font-weight: bold;
+            flex: 1 0 auto;
+
+            &-chevron {
+                display: none;
+            }
         }
     }
 }

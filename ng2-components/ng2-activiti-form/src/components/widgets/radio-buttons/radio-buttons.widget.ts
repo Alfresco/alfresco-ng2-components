@@ -15,14 +15,12 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
 import { Component, OnInit } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
+import { WidgetComponent , baseHost } from './../widget.component';
 import { FormService } from '../../../services/form.service';
-import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { FormFieldOption } from './../core/form-field-option';
-import { baseHost , WidgetComponent } from './../widget.component';
+import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 
 @Component({
     selector: 'radio-buttons-widget',
@@ -30,7 +28,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
     styleUrls: ['./radio-buttons.widget.css'],
     host: baseHost
 })
-export class RadioButtonsWidgetComponent extends WidgetComponent implements OnInit {
+export class RadioButtonsWidget extends WidgetComponent implements OnInit {
 
     constructor(public formService: FormService,
                 private visibilityService: WidgetVisibilityService,

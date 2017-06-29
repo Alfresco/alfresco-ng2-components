@@ -15,12 +15,10 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
+import { WidgetComponent , baseHost } from './../widget.component';
 import { FormService } from '../../../services/form.service';
 import { GroupModel } from './../core/group.model';
-import { baseHost , WidgetComponent } from './../widget.component';
 
 @Component({
     selector: 'functional-group-widget',
@@ -28,7 +26,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
     styleUrls: ['./functional-group.widget.css'],
     host: baseHost
 })
-export class FunctionalGroupWidgetComponent extends WidgetComponent implements OnInit {
+export class FunctionalGroupWidget extends WidgetComponent implements OnInit {
 
     value: string;
     popupVisible: boolean = false;

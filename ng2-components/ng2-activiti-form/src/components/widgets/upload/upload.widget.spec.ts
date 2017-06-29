@@ -15,24 +15,24 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreModule } from 'ng2-alfresco-core';
-import { EcmModelService } from '../../../services/ecm-model.service';
-import { FormService } from '../../../services/form.service';
-import { FormFieldTypes } from '../core/form-field-types';
-import { FormModel } from '../core/form.model';
+import { UploadWidget } from './upload.widget';
 import { FormFieldModel } from './../core/form-field.model';
-import { UploadWidgetComponent } from './upload.widget';
+import { FormFieldTypes } from '../core/form-field-types';
+import { FormService } from '../../../services/form.service';
+import { EcmModelService } from '../../../services/ecm-model.service';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { CoreModule } from 'ng2-alfresco-core';
+import { FormModel } from '../core/form.model';
 
-describe('UploadWidgetComponent', () => {
+describe('UploadWidget', () => {
 
     let componentHandler;
-    let widget: UploadWidgetComponent;
+    let widget: UploadWidget;
     let formService: FormService;
 
     beforeEach(() => {
         formService = new FormService(null, null, null);
-        widget = new UploadWidgetComponent(formService, null);
+        widget = new UploadWidget(formService, null);
     });
 
     it('should setup with field data', () => {
@@ -85,8 +85,8 @@ describe('UploadWidgetComponent', () => {
     });
 
     describe('when template is ready', () => {
-        let uploadWidgetComponent: UploadWidgetComponent;
-        let fixture: ComponentFixture<UploadWidgetComponent>;
+        let uploadWidget: UploadWidget;
+        let fixture: ComponentFixture<UploadWidget>;
         let element: HTMLInputElement;
         let inputElement: HTMLInputElement;
 
@@ -98,11 +98,11 @@ describe('UploadWidgetComponent', () => {
         beforeEach(async(() => {
             TestBed.configureTestingModule({
                 imports: [CoreModule],
-                declarations: [UploadWidgetComponent],
+                declarations: [UploadWidget],
                 providers: [FormService, EcmModelService]
             }).compileComponents().then(() => {
-                fixture = TestBed.createComponent(UploadWidgetComponent);
-                uploadWidgetComponent = fixture.componentInstance;
+                fixture = TestBed.createComponent(UploadWidget);
+                uploadWidget = fixture.componentInstance;
                 element = fixture.nativeElement;
             });
         }));
@@ -113,51 +113,26 @@ describe('UploadWidgetComponent', () => {
         });
 
         beforeEach(() => {
-            uploadWidgetComponent.field = new FormFieldModel(new FormModel({ taskId: 'fake-upload-id' }), {
+            uploadWidget.field = new FormFieldModel(new FormModel({ taskId: 'fake-upload-id' }), {
                 id: 'upload-id',
                 name: 'upload-name',
                 value: '',
                 type: FormFieldTypes.UPLOAD,
                 readOnly: false
             });
+
+            fixture.detectChanges();
+            inputElement = <HTMLInputElement>element.querySelector('#upload-id');
         });
 
         it('should be disabled on readonly forms', async(() => {
-            uploadWidgetComponent.field.form.readOnly = true;
-            fixture.detectChanges();
-            inputElement = <HTMLInputElement>element.querySelector('#upload-id');
+            uploadWidget.field.form.readOnly = true;
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 expect(inputElement).toBeDefined();
                 expect(inputElement).not.toBeNull();
                 expect(inputElement.disabled).toBeTruthy();
-            });
-        }));
-
-        it('should have the multiple attribute when is selected in parameters', async(() => {
-            uploadWidgetComponent.field.params.multiple = true;
-            fixture.detectChanges();
-            inputElement = <HTMLInputElement>element.querySelector('#upload-id');
-
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(inputElement).toBeDefined();
-                expect(inputElement).not.toBeNull();
-                expect(inputElement.getAttributeNode('multiple')).toBeTruthy();
-            });
-        }));
-
-        it('should not have the multiple attribute if multiple is false', async(() => {
-            uploadWidgetComponent.field.params.multiple = false;
-            fixture.detectChanges();
-            inputElement = <HTMLInputElement>element.querySelector('#upload-id');
-
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(inputElement).toBeDefined();
-                expect(inputElement).not.toBeNull();
-                expect(inputElement.getAttributeNode('multiple')).toBeFalsy();
             });
         }));
 

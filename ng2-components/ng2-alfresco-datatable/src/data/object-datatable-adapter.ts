@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { TemplateRef } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { TemplateRef } from '@angular/core';
 import { ObjectUtils } from 'ng2-alfresco-core';

@@ -1,0 +1,11 @@
+<div *ngIf="taskDetails">
+    <div class="mdl-grid mdl-shadow--2dp">
+
+        <adf-card-view [properties]="properties"></adf-card-view>
+
+        <button *ngIf="!isAssignedToMe()" data-automation-id="header-claim-button" type="button" id="claim-task"
+                (click)="claimTask(taskDetails.id)" class="mdl-button">{{ 'TASK_DETAILS.BUTTON.CLAIM' | translate }}
+        </button>
+
+    </div>
+</div>

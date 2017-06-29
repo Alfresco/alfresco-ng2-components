@@ -15,24 +15,17 @@
  * limitations under the License.
  */
 
-import { AfterViewInit, Directive, ElementRef } from '@angular/core';
-
-declare var componentHandler;
-
-@Directive({
-    selector: '[adf-mdl-button] ,[alfresco-mdl-button]'
-})
-export class AlfrescoMdlButtonDirective implements AfterViewInit {
-
-    constructor(private element: ElementRef) {}
-
-    ngAfterViewInit() {
-        if (componentHandler) {
-            let el = this.element.nativeElement;
-            el.classList.add('mdl-button');
-            el.classList.add('mdl-js-button');
-            el.classList.add('mdl-js-ripple-effect');
-            componentHandler.upgradeElement(el, 'MaterialButton');
-        }
-    }
-}
+export * from './activiti-apps.component';
+export * from './activiti-tasklist.component';
+export * from './activiti-checklist.component';
+export * from './activiti-comments.component';
+export * from './adf-task-attachment-list.component';
+export * from './activiti-people.component';
+export * from './activiti-task-header.component';
+export * from './no-task-detail-template.component';
+export * from './activiti-filters.component';
+export * from './activiti-task-details.component';
+export * from './activiti-start-task.component';
+export * from './activiti-people-search.component';
+export * from './adf-create-task-attachment.component';
+export * from './adf-people-list.component';

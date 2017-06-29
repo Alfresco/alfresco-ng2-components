@@ -15,11 +15,9 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
 import { Component } from '@angular/core';
+import { WidgetComponent , baseHost } from './../widget.component';
 import { FormService } from './../../../services/form.service';
-import { baseHost , WidgetComponent } from './../widget.component';
 
 @Component({
     selector: 'display-text-widget',
@@ -27,7 +25,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
     styleUrls: ['./display-text.widget.css'],
     host: baseHost
 })
-export class DisplayTextWidgetComponentComponent extends WidgetComponent {
+export class DisplayTextWidget extends WidgetComponent {
 
     constructor(public formService: FormService) {
          super(formService);

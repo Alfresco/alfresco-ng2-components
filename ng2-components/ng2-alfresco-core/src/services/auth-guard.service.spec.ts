@@ -15,20 +15,19 @@
  * limitations under the License.
  */
 
-import { async, inject, TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
+import { TestBed, async, inject } from '@angular/core/testing';
+import { Router} from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { CookieServiceMock } from './../assets/cookie.service.mock';
-import { AlfrescoApiService } from './alfresco-api.service';
 import { AlfrescoSettingsService } from './alfresco-settings.service';
-import { AppConfigModule } from './app-config.service';
-import { AuthGuard } from './auth-guard.service';
-import { AuthenticationService } from './authentication.service';
-import { CookieService } from './cookie.service';
-import { LogService } from './log.service';
+import { AlfrescoAuthenticationService } from './alfresco-authentication.service';
+import { AlfrescoApiService } from './alfresco-api.service';
 import { StorageService } from './storage.service';
-import { UserPreferencesService } from './user-preferences.service';
+import { CookieService } from './cookie.service';
+import { CookieServiceMock } from './../assets/cookie.service.mock';
+import { LogService } from './log.service';
+import { AuthGuard } from './auth-guard.service';
+import { AppConfigModule } from './app-config.service';
 
 describe('AuthGuardService', () => {
 
@@ -42,8 +41,7 @@ describe('AuthGuardService', () => {
                 AuthGuard,
                 AlfrescoSettingsService,
                 AlfrescoApiService,
-                AuthenticationService,
-                UserPreferencesService,
+                AlfrescoAuthenticationService,
                 StorageService,
                 { provide: CookieService, useClass: CookieServiceMock },
                 LogService
@@ -52,7 +50,7 @@ describe('AuthGuardService', () => {
     }));
 
     it('if the alfresco js api is logged in should canActivate be true',
-        async(inject([AuthGuard, Router, AlfrescoSettingsService, StorageService, AuthenticationService], (auth, router, settingsService, storage, authService) => {
+        async(inject([AuthGuard, Router, AlfrescoSettingsService, StorageService, AlfrescoAuthenticationService], (auth, router, settingsService, storage, authService) => {
             spyOn(router, 'navigate');
 
             authService.isLoggedIn = () => {
@@ -65,7 +63,7 @@ describe('AuthGuardService', () => {
     );
 
     it('if the alfresco js api is NOT logged in should canActivate be false',
-        async(inject([AuthGuard, Router, AlfrescoSettingsService, StorageService, AuthenticationService], (auth, router, settingsService, storage, authService) => {
+        async(inject([AuthGuard, Router, AlfrescoSettingsService, StorageService, AlfrescoAuthenticationService], (auth, router, settingsService, storage, authService) => {
 
             spyOn(router, 'navigate');
 

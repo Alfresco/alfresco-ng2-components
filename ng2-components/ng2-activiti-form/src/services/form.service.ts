@@ -16,15 +16,15 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 import { Observable, Subject } from 'rxjs/Rx';
+import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
+import { FormModel, FormValues, FormOutcomeEvent, FormOutcomeModel } from './../components/widgets/core/index';
 import { FormDefinitionModel } from '../models/form-definition.model';
-import { ContentLinkModel } from './../components/widgets/core/content-link.model';
-import { GroupUserModel } from './../components/widgets/core/group-user.model';
-import { GroupModel } from './../components/widgets/core/group.model';
-import { FormModel, FormOutcomeEvent, FormOutcomeModel, FormValues } from './../components/widgets/core/index';
-import { FormErrorEvent, FormEvent, FormFieldEvent } from './../events/index';
 import { EcmModelService } from './ecm-model.service';
+import { GroupModel } from './../components/widgets/core/group.model';
+import { GroupUserModel } from './../components/widgets/core/group-user.model';
+import { FormEvent, FormErrorEvent, FormFieldEvent } from './../events/index';
+import { ContentLinkModel } from './../components/widgets/core/content-link.model';
 
 @Injectable()
 export class FormService {
@@ -100,27 +100,15 @@ export class FormService {
             stencilSet: 0
         };
 
-        return Observable.fromPromise(
-            this.apiService.getInstance().activiti.modelsApi.createModel(dataModel)
-        );
-    }
-
-    saveForm(formId: string, formModel: FormDefinitionModel): Observable<any> {
-        return Observable.fromPromise(
-            this.apiService.getInstance().activiti.editorApi.saveForm(formId, formModel)
-        );
+        return Observable.fromPromise(this.apiService.getInstance().activiti.modelsApi.createModel(dataModel));
     }
 
     /**
-     * @deprecated in 1.7.0, use saveForm API instead
      * Add Fileds to A form
      * @returns {Observable<any>}
      */
     addFieldsToAForm(formId: string, formModel: FormDefinitionModel): Observable<any> {
-        console.log('addFieldsToAForm is deprecated in 1.7.0, use saveForm API instead');
-        return Observable.fromPromise(
-            this.apiService.getInstance().activiti.editorApi.saveForm(formId, formModel)
-        );
+        return Observable.fromPromise(this.apiService.getInstance().activiti.editorApi.saveForm(formId, formModel));
     }
 
     /**
@@ -133,12 +121,12 @@ export class FormService {
         };
 
         return Observable.fromPromise(
-            this.apiService.getInstance().activiti.modelsApi.getModels(opts)
-        )
-        .map(function (forms: any) {
-            return forms.data.find(formdata => formdata.name === name);
-        })
-        .catch(err => this.handleError(err));
+            this.apiService.getInstance().activiti.modelsApi.getModels(opts))
+            .map(function (forms: any) {
+                return forms.data.find(formdata => formdata.name === name);
+            })
+            .catch(err => this.handleError(err)
+            );
     }
 
     /**
@@ -150,9 +138,7 @@ export class FormService {
             'modelType': 2
         };
 
-        return Observable.fromPromise(this.apiService.getInstance().activiti.modelsApi.getModels(opts))
-            .map(this.toJsonArray)
-            .catch(err => this.handleError(err));
+        return Observable.fromPromise(this.apiService.getInstance().activiti.modelsApi.getModels(opts));
     }
 
     /**

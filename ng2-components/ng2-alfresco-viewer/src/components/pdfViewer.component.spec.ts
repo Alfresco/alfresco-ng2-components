@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-import { DebugElement } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import {
-    AlfrescoApiService,
-    AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
-    CoreModule
-} from 'ng2-alfresco-core';
-import { EventMock } from '../assets/event.mock';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { PdfViewerComponent } from './pdfViewer.component';
+import { EventMock } from '../assets/event.mock';
+import { DebugElement }    from '@angular/core';
+import {
+    AlfrescoAuthenticationService,
+    AlfrescoSettingsService,
+    AlfrescoApiService,
+    CoreModule
+} from 'ng2-alfresco-core';
 
 describe('Test ng2-alfresco-viewer PdfViewer component', () => {
 

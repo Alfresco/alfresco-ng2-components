@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
+import { Component, Input, Output, EventEmitter, OnInit, TemplateRef } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoSettingsService, LogService } from 'ng2-alfresco-core';
 import { FormSubmitEvent } from '../models/form-submit-event.model';
 
 declare let componentHandler: any;
@@ -30,12 +30,12 @@ enum LoginSteps {
 }
 
 @Component({
-    selector: 'adf-login, alfresco-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.css'],
+    selector: 'alfresco-login',
+    templateUrl: './alfresco-login.component.html',
+    styleUrls: ['./alfresco-login.component.css'],
     host: {'(blur)': 'onBlur($event)'}
 })
-export class LoginComponent implements OnInit {
+export class AlfrescoLoginComponent implements OnInit {
 
     isPasswordShow: boolean = false;
 
@@ -56,9 +56,6 @@ export class LoginComponent implements OnInit {
 
     @Input()
     backgroundImageUrl: string = require('../assets/images/background.svg');
-
-    @Input()
-    copyrightText: string = '© 2016 Alfresco Software, Inc. All Rights Reserved.';
 
     @Input()
     providers: string;
@@ -89,7 +86,6 @@ export class LoginComponent implements OnInit {
     minLength: number = 2;
     footerTemplate: TemplateRef<any>;
     headerTemplate: TemplateRef<any>;
-    data: any;
 
     private _message: { [id: string]: { [id: string]: string } };
 
@@ -263,9 +259,9 @@ export class LoginComponent implements OnInit {
     toggleShowPassword() {
         this.isPasswordShow = !this.isPasswordShow;
         if (this.isPasswordShow) {
-            (<HTMLInputElement> document.getElementById('password')).type = 'text';
+            (<HTMLInputElement>document.getElementById('password')).type = 'text';
         } else {
-            (<HTMLInputElement> document.getElementById('password')).type = 'password';
+            (<HTMLInputElement>document.getElementById('password')).type = 'password';
         }
     }
 

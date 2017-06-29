@@ -17,24 +17,24 @@
 
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs/Rx';
-import { AlfrescoApiService } from './alfresco-api.service';
+import { AlfrescoSettingsService } from './alfresco-settings.service';
+import { StorageService } from './storage.service';
 import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
-import { StorageService } from './storage.service';
-import { UserPreferencesService } from './user-preferences.service';
+import { AlfrescoApiService } from './alfresco-api.service';
 
 const REMEMBER_ME_COOKIE_KEY = 'ALFRESCO_REMEMBER_ME';
 const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30 ;
 
 @Injectable()
-export class AuthenticationService {
+export class AlfrescoAuthenticationService {
 
     onLogin: Subject<any> = new Subject<any>();
     onLogout: Subject<any> = new Subject<any>();
 
     constructor(
-        private preferences: UserPreferencesService,
-        private alfrescoApi: AlfrescoApiService,
+        private settingsService: AlfrescoSettingsService,
+        public alfrescoApi: AlfrescoApiService,
         private storage: StorageService,
         private cookie: CookieService,
         private logService: LogService) {
@@ -61,10 +61,7 @@ export class AuthenticationService {
                 this.saveRememberMeCookie(rememberMe);
                 this.saveTickets();
                 this.onLogin.next(response);
-                return {
-                    type: this.preferences.authType,
-                    ticket: response
-                };
+                return { type: this.settingsService.getProviders(), ticket: response };
             })
             .catch(err => this.handleError(err));
     }
@@ -211,7 +208,7 @@ export class AuthenticationService {
      *
      * @returns {string} The username value
      *
-     * @memberof AuthenticationService
+     * @memberof AlfrescoAuthenticationService
      */
     getEcmUsername(): string {
         return this.alfrescoApi.getInstance().ecmAuth.username;
@@ -222,7 +219,7 @@ export class AuthenticationService {
      *
      * @returns {string} The username value
      *
-     * @memberof AuthenticationService
+     * @memberof AlfrescoAuthenticationService
      */
     getBpmUsername(): string {
         return this.alfrescoApi.getInstance().bpmAuth.username;

@@ -139,7 +139,7 @@ export class FormModel {
             let field = this.fields[i];
 
             if (field instanceof ContainerModel) {
-                let container = <ContainerModel> field;
+                let container = <ContainerModel>field;
                 result.push(container.field);
                 result.push(...container.field.fields);
             }

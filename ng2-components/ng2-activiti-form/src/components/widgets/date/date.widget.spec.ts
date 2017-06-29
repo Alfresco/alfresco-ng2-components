@@ -15,21 +15,21 @@
  * limitations under the License.
  */
 
-import { ElementRef } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import * as moment from 'moment';
-import { CoreModule } from 'ng2-alfresco-core';
-import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
-import { EcmModelService } from './../../../services/ecm-model.service';
-import { FormService } from './../../../services/form.service';
+import { DateWidget } from './date.widget';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
-import { DateWidgetComponent } from './date.widget';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import * as moment from 'moment';
+import { CoreModule } from 'ng2-alfresco-core';
+import { FormService } from './../../../services/form.service';
+import { EcmModelService } from './../../../services/ecm-model.service';
+import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
+import { ElementRef } from '@angular/core';
 
-describe('DateWidgetComponent', () => {
+describe('DateWidget', () => {
 
-    let widget: DateWidgetComponent;
-    let fixture: ComponentFixture<DateWidgetComponent>;
+    let widget: DateWidget;
+    let fixture: ComponentFixture<DateWidget>;
     let componentHandler;
     let nativeElement: any;
     let element: HTMLElement;
@@ -40,7 +40,7 @@ describe('DateWidgetComponent', () => {
                 CoreModule.forRoot()
             ],
             declarations: [
-                DateWidgetComponent
+                DateWidget
             ],
             providers: [
                 FormService,
@@ -57,7 +57,7 @@ describe('DateWidgetComponent', () => {
             }
         };
 
-        fixture = TestBed.createComponent(DateWidgetComponent);
+        fixture = TestBed.createComponent(DateWidget);
 
         element = fixture.nativeElement;
         widget = fixture.componentInstance;
@@ -273,20 +273,6 @@ describe('DateWidgetComponent', () => {
                     });
             });
             widget.checkVisibility(widget.field);
-        }));
-
-        it('should disable date button when is readonly', async(() => {
-            widget.field.readOnly = false;
-            fixture.detectChanges();
-
-            let dateButton = <HTMLButtonElement> element.querySelector('#date-field-id-button');
-            expect(dateButton.disabled).toBeFalsy();
-
-            widget.field.readOnly = true;
-            fixture.detectChanges();
-
-            dateButton = <HTMLButtonElement> element.querySelector('#date-field-id-button');
-            expect(dateButton.disabled).toBeTruthy();
         }));
     });
 });

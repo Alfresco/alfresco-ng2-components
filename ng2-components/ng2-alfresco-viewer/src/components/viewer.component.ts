@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, HostListener, Inject, Input, OnChanges, OnDestroy, Output, TemplateRef } from '@angular/core';
+import { Component, ElementRef, Input, Output, HostListener, EventEmitter, Inject, TemplateRef } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 
 @Component({
-    selector: 'adf-viewer, alfresco-viewer',
+    selector: 'alfresco-viewer',
     templateUrl: './viewer.component.html',
     styleUrls: ['./viewer.component.css']
 })
-export class ViewerComponent implements OnDestroy, OnChanges {
+export class ViewerComponent {
 
     @Input()
     urlFile: string = '';
@@ -101,7 +101,7 @@ export class ViewerComponent implements OnDestroy, OnChanges {
                         this.extensionChange.emit(this.extension);
                         this.loaded = true;
                         resolve();
-                    },                                                                    function (error) {
+                    }, function (error) {
                         reject(error);
                         this.logService.error('This node does not exist');
                     });
@@ -169,7 +169,7 @@ export class ViewerComponent implements OnDestroy, OnChanges {
      *
      * @returns {boolean}
      */
-    public isImage(): boolean {
+    private isImage(): boolean {
         return this.isImageExtension() || this.isImageMimeType();
     }
 
@@ -178,7 +178,7 @@ export class ViewerComponent implements OnDestroy, OnChanges {
      *
      * @returns {boolean}
      */
-    public isMedia(): boolean {
+    private isMedia(): boolean {
         return this.isMediaExtension(this.extension) || this.isMediaMimeType();
     }
 
@@ -229,7 +229,7 @@ export class ViewerComponent implements OnDestroy, OnChanges {
      *
      * @returns {boolean}
      */
-    public isPdf(): boolean {
+    private isPdf(): boolean {
         return this.extension === 'pdf' || this.mimeType === 'application/pdf';
     }
 
@@ -238,7 +238,7 @@ export class ViewerComponent implements OnDestroy, OnChanges {
      *
      * @returns {boolean}
      */
-    public isText(): boolean {
+    private isText(): boolean {
         return this.extension === 'txt' || this.mimeType === 'text/txt' || this.mimeType === 'text/plain';
     }
 

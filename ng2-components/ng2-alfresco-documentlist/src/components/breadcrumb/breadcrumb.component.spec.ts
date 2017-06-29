@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PathElementEntity } from 'alfresco-js-api';
-import { CoreModule } from 'ng2-alfresco-core';
-import { fakeNodeWithCreatePermission } from '../../assets/document-list.component.mock';
-import { DocumentListComponent } from '../document-list.component';
 import { BreadcrumbComponent } from './breadcrumb.component';
+import { DocumentListComponent } from '../document-list.component';
+import { CoreModule } from 'ng2-alfresco-core';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { fakeNodeWithCreatePermission } from '../../assets/document-list.component.mock';
+import { SimpleChange } from '@angular/core';
 
 declare let jasmine: any;
 
@@ -87,4 +87,5 @@ describe('Breadcrumb', () => {
             done();
         }, 0);
     });
+
 });

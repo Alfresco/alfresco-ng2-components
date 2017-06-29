@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { TagService } from './../services/tag.service';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 
 /**
  *
@@ -27,11 +27,11 @@ import { TagService } from './../services/tag.service';
  */
 
 @Component({
-    selector: 'adf-tag-node-actions-list, alfresco-tag-node-actions-list',
+    selector: 'alfresco-tag-node-actions-list',
     templateUrl: './tag-actions.component.html',
     styleUrls: ['./tag-actions.component.css']
 })
-export class TagActionsComponent implements OnChanges {
+export class TagActionsComponent {
 
     @Input()
     nodeId: string;
@@ -88,7 +88,7 @@ export class TagActionsComponent implements OnChanges {
                 this.errorMsg = error;
             });
             this.error.emit(this.errorMsg);
-        } else {
+        }else {
             this.tagService.addTag(this.nodeId, this.newTagName).subscribe(() => {
                 this.newTagName = '';
                 this.successAdd.emit(this.nodeId);

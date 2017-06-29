@@ -24,18 +24,18 @@
  *          </alfresco-viewer>
  */
 
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CoreModule } from 'ng2-alfresco-core';
 
-import { MdButtonModule, MdIconModule, MdProgressSpinnerModule } from '@angular/material';
+import { ViewerComponent } from './src/components/viewer.component';
+import { RenderingQueueServices } from './src/services/rendering-queue.services';
 import { ImgViewerComponent } from './src/components/imgViewer.component';
 import { MediaPlayerComponent } from './src/components/mediaPlayer.component';
-import { NotSupportedFormatComponent } from './src/components/notSupportedFormat.component';
+import { NotSupportedFormat } from './src/components/notSupportedFormat.component';
 import { PdfViewerComponent } from './src/components/pdfViewer.component';
 import { TxtViewerComponent } from './src/components/txtViewer.component';
-import { ViewerComponent } from './src/components/viewer.component';
 import { ExtensionViewerDirective } from './src/directives/extension-viewer.directive';
-import { RenderingQueueServices } from './src/services/rendering-queue.services';
+import { MdIconModule, MdButtonModule, MdProgressSpinnerModule } from '@angular/material';
 
 export * from './src/components/viewer.component';
 export * from './src/services/rendering-queue.services';
@@ -50,7 +50,7 @@ export const VIEWER_DIRECTIVES: any[] = [
     ImgViewerComponent,
     TxtViewerComponent,
     MediaPlayerComponent,
-    NotSupportedFormatComponent,
+    NotSupportedFormat,
     PdfViewerComponent,
     ExtensionViewerDirective
 ];

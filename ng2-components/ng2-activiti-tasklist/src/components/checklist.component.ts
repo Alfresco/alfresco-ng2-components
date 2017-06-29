@@ -15,21 +15,21 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, OnChanges, SimpleChanges, EventEmitter, Output } from '@angular/core';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
-import { Observable, Observer } from 'rxjs/Rx';
+import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { TaskDetailsModel } from '../models/task-details.model';
-import { TaskListService } from './../services/tasklist.service';
+import { Observer, Observable } from 'rxjs/Rx';
 
 declare let dialogPolyfill: any;
 
 @Component({
-    selector: 'adf-checklist, activiti-checklist',
-    templateUrl: './checklist.component.html',
-    styleUrls: ['./checklist.component.css'],
-    providers: [TaskListService]
+    selector: 'activiti-checklist',
+    templateUrl: './activiti-checklist.component.html',
+    styleUrls: ['./activiti-checklist.component.css'],
+    providers: [ActivitiTaskListService]
 })
-export class ChecklistComponent implements OnInit, OnChanges {
+export class ActivitiChecklist implements OnInit, OnChanges {
 
     @Input()
     taskId: string;
@@ -65,7 +65,7 @@ export class ChecklistComponent implements OnInit, OnChanges {
      * @param translate
      */
     constructor(private translateService: AlfrescoTranslationService,
-                private activitiTaskList: TaskListService,
+                private activitiTaskList: ActivitiTaskListService,
                 private logService: LogService) {
 
         if (translateService) {

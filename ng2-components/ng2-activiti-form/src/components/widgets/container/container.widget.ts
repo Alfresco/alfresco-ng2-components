@@ -15,12 +15,10 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, AfterViewInit, OnInit } from '@angular/core';
+import { ContainerWidgetModel } from './container.widget.model';
+import { WidgetComponent , baseHost } from './../widget.component';
 import { FormService } from './../../../services/form.service';
-import { baseHost , WidgetComponent } from './../widget.component';
-import { ContainerWidgetComponentModel } from './container.widget.model';
 
 declare var componentHandler: any;
 
@@ -30,9 +28,9 @@ declare var componentHandler: any;
     styleUrls: ['./container.widget.css'],
     host: baseHost
 })
-export class ContainerWidgetComponent extends WidgetComponent implements OnInit, AfterViewInit {
+export class ContainerWidget extends WidgetComponent implements OnInit, AfterViewInit {
 
-    content: ContainerWidgetComponentModel;
+    content: ContainerWidgetModel;
 
     constructor(public formService: FormService) {
          super(formService);
@@ -46,7 +44,7 @@ export class ContainerWidgetComponent extends WidgetComponent implements OnInit,
 
     ngOnInit() {
         if (this.field) {
-            this.content = new ContainerWidgetComponentModel(this.field);
+            this.content = new ContainerWidgetModel(this.field);
         }
     }
 

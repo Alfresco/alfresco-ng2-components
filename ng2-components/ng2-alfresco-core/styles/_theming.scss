@@ -1,15 +1,2 @@
-@import 'mixins';
-@import 'variables';
-@import 'colors';
-@import 'mdl-overrides';
-
-@import '~@angular/material/theming';
-
-@include mat-core();
-
-$primary: mat-palette($alfresco-primary);
-$accent:  mat-palette($alfresco-accent);
-$warn:    mat-palette($alfresco-warn);
-$theme:   mat-light-theme($primary, $accent, $warn);
-
-@include angular-material-theme($theme);
+@import './_variables-color.scss';
+@import './_variables-mdl-overrides.scss';

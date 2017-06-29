@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { DebugElement, SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdButtonModule, MdTooltipModule, OVERLAY_PROVIDERS } from '@angular/material';
-import * as moment from 'moment';
-import { AlfrescoTranslationService, AppConfigModule, CoreModule } from 'ng2-alfresco-core';
+import { MdTooltipModule, MdButtonModule, OVERLAY_PROVIDERS } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
+import * as moment from 'moment';
+import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
 
-import * as analyticParamsMock from '../assets/analyticsParamsReportComponent.mock';
 import { AnalyticsReportParametersComponent } from '../components/analytics-report-parameters.component';
 import { WIDGET_DIRECTIVES } from '../components/widgets/index';
-import { ReportParametersModel } from '../models/report.model';
 import { AnalyticsService } from '../services/analytics.service';
+import { ReportParametersModel } from '../models/report.model';
+import * as analyticParamsMock from '../assets/analyticsParamsReportComponent.mock';
 
 declare let jasmine: any;
 declare let mdDateTimePicker: any;
@@ -44,9 +44,6 @@ describe('AnalyticsReportParametersComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                AppConfigModule.forRoot('app.config.json', {
-                    bpmHost: 'http://localhost:9876/bpm'
-                }),
                 MdTooltipModule,
                 MdButtonModule
             ],
@@ -298,13 +295,13 @@ describe('AnalyticsReportParametersComponent', () => {
                 done();
             });
 
-            jasmine.Ajax.stubRequest('http://localhost:9876/bpm/activiti-app/app/rest/reporting/report-params/1').andReturn({
+            jasmine.Ajax.stubRequest('http://localhost:3000/bpm/activiti-app/app/rest/reporting/report-params/1').andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: analyticParamsMock.reportDefParamProcessDef
             });
 
-            jasmine.Ajax.stubRequest('http://localhost:9876/bpm/activiti-app/app/rest/reporting/process-definitions').andReturn({
+            jasmine.Ajax.stubRequest('http://localhost:3000/bpm/activiti-app/app/rest/reporting/process-definitions').andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: analyticParamsMock.reportDefParamProcessDefOptionsNoApp
@@ -329,7 +326,7 @@ describe('AnalyticsReportParametersComponent', () => {
                 done();
             });
 
-            jasmine.Ajax.stubRequest('http://localhost:9876/bpm/activiti-app/app/rest/reporting/report-params/1').andReturn({
+            jasmine.Ajax.stubRequest('http://localhost:3000/bpm/activiti-app/app/rest/reporting/report-params/1').andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: analyticParamsMock.reportDefParamProcessDef
@@ -337,7 +334,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
             let appId = '1';
 
-            jasmine.Ajax.stubRequest('http://localhost:9876/bpm/activiti-app/api/enterprise/process-definitions?appDefinitionId=' + appId).andReturn({
+            jasmine.Ajax.stubRequest('http://localhost:3000/bpm/activiti-app/api/enterprise/process-definitions?appDefinitionId=' + appId).andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: analyticParamsMock.reportDefParamProcessDefOptionsApp
@@ -395,13 +392,13 @@ describe('AnalyticsReportParametersComponent', () => {
                 done();
             });
 
-            jasmine.Ajax.stubRequest('http://localhost:9876/bpm/activiti-app/app/rest/reporting/report-params/1').andReturn({
+            jasmine.Ajax.stubRequest('http://localhost:3000/bpm/activiti-app/app/rest/reporting/report-params/1').andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: analyticParamsMock.reportDefParamProcessDef
             });
 
-            jasmine.Ajax.stubRequest('http://localhost:9876/bpm/activiti-app/app/rest/reporting/process-definitions').andReturn({
+            jasmine.Ajax.stubRequest('http://localhost:3000/bpm/activiti-app/app/rest/reporting/process-definitions').andReturn({
                 status: 404,
                 contentType: 'json',
                 responseText: []

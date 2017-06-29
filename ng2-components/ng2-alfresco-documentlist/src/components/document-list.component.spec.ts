@@ -16,25 +16,25 @@
  */
 
 import { NgZone, SimpleChange, TemplateRef } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
-import { DataColumn, DataRowEvent, DataTableComponent } from 'ng2-alfresco-datatable';
-import { DataTableModule } from 'ng2-alfresco-datatable';
-import { Observable, Subject } from 'rxjs/Rx';
+import { DataTableComponent, DataColumn, DataRowEvent } from 'ng2-alfresco-datatable';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { DocumentListComponent } from './document-list.component';
+import { DocumentListService } from './../services/document-list.service';
+import { ContentActionModel } from '../models/content-action.model';
 import { FileNode, FolderNode } from '../assets/document-library.model.mock';
+import { NodeMinimalEntry, NodeMinimal, NodePaging } from '../models/document-library.model';
+import { ShareDataRow, RowFilter, ImageResolver } from './../data/share-datatable-adapter';
+import { DataTableModule } from 'ng2-alfresco-datatable';
+import { DocumentMenuActionComponent } from './document-menu-action.component';
+import { Observable } from 'rxjs/Rx';
 import {
-    fakeNodeAnswerWithEntries,
     fakeNodeAnswerWithNOEntries,
+    fakeNodeAnswerWithEntries,
     fakeNodeWithCreatePermission,
     fakeNodeWithNoPermission
 } from '../assets/document-list.component.mock';
-import { MaterialModule } from '../material.module';
-import { ContentActionModel } from '../models/content-action.model';
-import { NodeMinimal, NodeMinimalEntry, NodePaging } from '../models/document-library.model';
-import { ImageResolver, RowFilter, ShareDataRow } from './../data/share-datatable-adapter';
-import { DocumentListService } from './../services/document-list.service';
-import { DocumentListComponent } from './document-list.component';
-import { DocumentMenuActionComponent } from './document-menu-action.component';
+import { MdProgressSpinnerModule } from '@angular/material';
 
 declare let jasmine: any;
 
@@ -54,7 +54,7 @@ describe('DocumentList', () => {
             imports: [
                 CoreModule.forRoot(),
                 DataTableModule.forRoot(),
-                MaterialModule
+                MdProgressSpinnerModule
             ],
             declarations: [
                 DocumentListComponent,
@@ -125,10 +125,12 @@ describe('DocumentList', () => {
         expect(columns[2]).toBe(column);
     });
 
-    it('should call action\'s handler with node', () => {
+    it('should execute action with node', () => {
         let node = new FileNode();
         let action = new ContentActionModel();
-        action.handler = () => {};
+        action.handler = function () {
+            console.log('mock handler');
+        };
 
         spyOn(action, 'handler').and.stub();
 
@@ -137,42 +139,19 @@ describe('DocumentList', () => {
 
     });
 
-    it('should call action\'s handler with node and permission', () => {
+    it('should execute action with node and permission', () => {
         let node = new FileNode();
         let action = new ContentActionModel();
-        action.handler = () => {};
+        action.handler = function () {
+            console.log('mock handler');
+        };
         action.permission = 'fake-permission';
+
         spyOn(action, 'handler').and.stub();
 
         documentList.executeContentAction(node, action);
-
         expect(action.handler).toHaveBeenCalledWith(node, documentList, 'fake-permission');
-    });
 
-    it('should call action\'s execute with node if it is defined', () => {
-        let node = new FileNode();
-        let action = new ContentActionModel();
-        action.execute = () => {};
-        spyOn(action, 'execute').and.stub();
-
-        documentList.executeContentAction(node, action);
-
-        expect(action.execute).toHaveBeenCalledWith(node);
-    });
-
-    it('should call action\'s execute only after the handler has been executed', () => {
-        const deleteObservable: Subject<any> = new Subject<any>();
-        let node = new FileNode();
-        let action = new ContentActionModel();
-        action.handler = () => deleteObservable;
-        action.execute = () => {};
-        spyOn(action, 'execute').and.stub();
-
-        documentList.executeContentAction(node, action);
-
-        expect(action.execute).not.toHaveBeenCalled();
-        deleteObservable.next();
-        expect(action.execute).toHaveBeenCalledWith(node);
     });
 
     it('should show the loading state during the loading of new elements', (done) => {
@@ -712,7 +691,7 @@ describe('DocumentList', () => {
 
     it('should check [empty folder] template ', () => {
         documentList.emptyFolderTemplate = <TemplateRef<any>> {};
-        documentList.dataTable = new DataTableComponent(null, null, null);
+        documentList.dataTable = new DataTableComponent(null);
         expect(documentList.dataTable).toBeDefined();
         expect(documentList.isEmptyTemplateDefined()).toBeTruthy();
 
@@ -722,7 +701,7 @@ describe('DocumentList', () => {
 
     it('should empty folder NOT show the pagination', () => {
         documentList.emptyFolderTemplate = <TemplateRef<any>> {};
-        documentList.dataTable = new DataTableComponent(null, null, null);
+        documentList.dataTable = new DataTableComponent(null);
 
         expect(documentList.isEmpty()).toBeTruthy();
         expect(element.querySelector('alfresco-pagination')).toBe(null);
@@ -747,44 +726,48 @@ describe('DocumentList', () => {
 
     it('should emit [nodeClick] event on row click', () => {
         let node = new NodeMinimalEntry();
-        let row = new ShareDataRow(node, null, null);
+        let row = new ShareDataRow(node);
+        let event = new DataRowEvent(row, null);
 
         spyOn(documentList, 'onNodeClick').and.callThrough();
-        documentList.onNodeClick(node);
+        documentList.onRowClick(event);
         expect(documentList.onNodeClick).toHaveBeenCalledWith(node);
     });
 
     it('should emit node-click DOM event', (done) => {
         let node = new NodeMinimalEntry();
-        let row = new ShareDataRow(node, null, null);
+        let row = new ShareDataRow(node);
+        let event = new DataRowEvent(row, null);
 
         const htmlElement = fixture.debugElement.nativeElement as HTMLElement;
         htmlElement.addEventListener('node-click', (e: CustomEvent) => {
             done();
         });
 
-        documentList.onNodeClick(node);
+        documentList.onRowClick(event);
     });
 
     it('should emit [nodeDblClick] event on row double-click', () => {
         let node = new NodeMinimalEntry();
-        let row = new ShareDataRow(node, null, null);
+        let row = new ShareDataRow(node);
+        let event = new DataRowEvent(row, null);
 
         spyOn(documentList, 'onNodeDblClick').and.callThrough();
-        documentList.onNodeDblClick(node);
+        documentList.onRowDblClick(event);
         expect(documentList.onNodeDblClick).toHaveBeenCalledWith(node);
     });
 
     it('should emit node-dblclick DOM event', (done) => {
         let node = new NodeMinimalEntry();
-        let row = new ShareDataRow(node, null, null);
+        let row = new ShareDataRow(node);
+        let event = new DataRowEvent(row, null);
 
         const htmlElement = fixture.debugElement.nativeElement as HTMLElement;
         htmlElement.addEventListener('node-dblclick', (e: CustomEvent) => {
             done();
         });
 
-        documentList.onNodeDblClick(node);
+        documentList.onRowDblClick(event);
     });
 
     it('should load folder by ID on init', () => {

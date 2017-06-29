@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-import { ChangeDetectorRef, Component, Input, OnInit, Optional, ViewChild } from '@angular/core';
-import { MdDialog } from '@angular/material';
+import { Component, Input, OnInit, Optional, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { AlfrescoContentService, FileUploadCompleteEvent, FolderCreatedEvent, NotificationService, PermissionsEnum, SiteModel, UploadService } from 'ng2-alfresco-core';
-import { DocumentListComponent, DropdownSitesComponent, PermissionStyleModel } from 'ng2-alfresco-documentlist';
+import { MdDialog } from '@angular/material';
+import { AlfrescoContentService, FolderCreatedEvent, NotificationService } from 'ng2-alfresco-core';
+import { DocumentListComponent } from 'ng2-alfresco-documentlist';
+import { UploadService, FileUploadCompleteEvent } from 'ng2-alfresco-upload';
 
-import { CreateFolderDialogComponent } from '../../dialogs/create-folder.dialog';
+import { CreateFolderDialog } from '../../dialogs/create-folder.dialog';
 
 @Component({
     selector: 'files-component',
@@ -37,20 +38,6 @@ export class FilesComponent implements OnInit {
     fileShowed: boolean = false;
 
     useCustomToolbar = true;
-    toolbarColor = 'default';
-    useDropdownBreadcrumb = false;
-
-    selectionModes = [
-        { value: 'none', viewValue: 'None' },
-        { value: 'single', viewValue: 'Single' },
-        { value: 'multiple', viewValue: 'Multiple' }
-    ];
-
-    @Input()
-    selectionMode = 'multiple';
-
-    @Input()
-    multiselect = false;
 
     @Input()
     multipleFileUpload: boolean = false;
@@ -75,8 +62,6 @@ export class FilesComponent implements OnInit {
 
     @ViewChild(DocumentListComponent)
     documentList: DocumentListComponent;
-
-    permissionsStyle: PermissionStyleModel[] = [];
 
     constructor(private changeDetector: ChangeDetectorRef,
                 private notificationService: NotificationService,
@@ -113,9 +98,6 @@ export class FilesComponent implements OnInit {
 
         this.uploadService.fileUploadComplete.debounceTime(300).subscribe(value => this.onFileUploadComplete(value));
         this.contentService.folderCreated.subscribe(value => this.onFolderCreated(value));
-
-        // this.permissionsStyle.push(new PermissionStyleModel('document-list__create', PermissionsEnum.CREATE));
-        // this.permissionsStyle.push(new PermissionStyleModel('document-list__disable', PermissionsEnum.NOT_CREATE, false, true));
     }
 
     onNavigationError(err: any) {
@@ -150,7 +132,7 @@ export class FilesComponent implements OnInit {
     }
 
     onCreateFolderClicked(event: Event) {
-        let dialogRef = this.dialog.open(CreateFolderDialogComponent);
+        let dialogRef = this.dialog.open(CreateFolderDialog);
         dialogRef.afterClosed().subscribe(folderName => {
             if (folderName) {
                 this.contentService.createFolder('', folderName, this.documentList.currentFolderId).subscribe(
@@ -159,9 +141,5 @@ export class FilesComponent implements OnInit {
                 );
             }
         });
-    }
-
-    getSiteContent(site: SiteModel) {
-        this.currentFolderId = site && site.guid ? site.guid : '-my-';
     }
 }

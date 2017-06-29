@@ -15,20 +15,20 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
+import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
-import { AlfrescoContentService, AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 
-import { PermissionModel } from '../models/permissions.model';
-import { ContentActionModel } from './../models/content-action.model';
 import { DocumentListService } from './../services/document-list.service';
+import { ContentActionModel } from './../models/content-action.model';
+import { PermissionModel } from '../models/permissions.model';
 
 declare let dialogPolyfill: any;
 
 const ERROR_FOLDER_ALREADY_EXIST = 409;
 
 @Component({
-    selector: 'adf-document-menu-action, alfresco-document-menu-action',
+    selector: 'alfresco-document-menu-action',
     styleUrls: ['./document-menu-action.component.css'],
     templateUrl: './document-menu-action.component.html'
 })
@@ -62,8 +62,7 @@ export class DocumentMenuActionComponent implements OnChanges {
 
     constructor(private documentListService: DocumentListService,
                 private translateService: AlfrescoTranslationService,
-                private logService: LogService,
-                private contentService: AlfrescoContentService) {
+                private logService: LogService) {
 
         if (translateService) {
             translateService.addTranslationFolder('ng2-alfresco-documentlist', 'assets/ng2-alfresco-documentlist');
@@ -155,8 +154,17 @@ export class DocumentMenuActionComponent implements OnChanges {
         return !this.hasCreatePermission() && this.disableWithNoPermission ? true : undefined;
     }
 
+    hasPermission(permission: string): boolean {
+        let hasPermission: boolean = false;
+        if (this.allowableOperations) {
+            let permFound = this.allowableOperations.find(element => element === permission);
+            hasPermission = permFound ? true : false;
+        }
+        return hasPermission;
+    }
+
     hasCreatePermission() {
-        return this.contentService.hasPermission(this, 'create');
+        return this.hasPermission('create');
     }
 
     loadCurrentNodePermissions(nodeId: string) {

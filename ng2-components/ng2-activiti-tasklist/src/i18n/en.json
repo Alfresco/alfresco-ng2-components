@@ -43,7 +43,6 @@
         "COMMENTS": {
             "NONE": "No comments.",
             "ADD": "Add a comment",
-            "HEADER": "Comments",
             "DIALOG": {
                 "TITLE": "New comment",
                 "LABELS": {
@@ -71,16 +70,13 @@
     },
     "START_TASK": {
         "BUTTON": "CREATE TASK",
-        "FORM": {
+        "DIALOG": {
             "TITLE": "Start Task",
             "LABEL": {
                 "NONE": "None",
                 "NAME": "Name",
                 "DESCRIPTION": "Description",
-                "ATTACHFORM" : "Attach a Form",
-                "ASSIGNEE"   : "Assignee",
-                "FORM"       : "Form",
-                "DATE"       : "Choose a Date"
+                "ATTACHFORM" : "Attach a Form"
             },
             "ACTION": {
                 "START": "Start",

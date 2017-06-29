@@ -16,23 +16,30 @@
  */
 
 import {
-    AfterContentInit, Component, ContentChild, ElementRef, EventEmitter, HostListener, Input, NgZone,
-    OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild
+    Component, OnInit, Input, OnChanges, Output, SimpleChanges, EventEmitter, ElementRef,
+    AfterContentInit, TemplateRef, NgZone, ViewChild, HostListener, ContentChild
 } from '@angular/core';
+import { Subject } from 'rxjs/Rx';
 import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, Pagination } from 'alfresco-js-api';
 import { AlfrescoTranslationService, DataColumnListComponent } from 'ng2-alfresco-core';
-import { DataCellEvent, DataColumn, DataRow, DataRowActionEvent, DataRowEvent, DataSorting, DataTableComponent, ObjectDataColumn } from 'ng2-alfresco-datatable';
-import { Observable, Subject } from 'rxjs/Rx';
-import { ImageResolver, RowFilter, ShareDataRow, ShareDataTableAdapter } from './../data/share-datatable-adapter';
-import { ContentActionModel } from './../models/content-action.model';
-import { PermissionStyleModel } from './../models/permissions-style.model';
+import {
+    DataRowEvent,
+    DataTableComponent,
+    ObjectDataColumn,
+    DataCellEvent,
+    DataRowActionEvent,
+    DataColumn,
+    DataSorting
+} from 'ng2-alfresco-datatable';
 import { DocumentListService } from './../services/document-list.service';
+import { ContentActionModel } from './../models/content-action.model';
+import { ShareDataTableAdapter, ShareDataRow, RowFilter, ImageResolver } from './../data/share-datatable-adapter';
 import { NodeEntityEvent, NodeEntryEvent } from './node.event';
 
 declare var require: any;
 
 @Component({
-    selector: 'adf-document-list, alfresco-document-list',
+    selector: 'alfresco-document-list',
     styleUrls: ['./document-list.component.css'],
     templateUrl: './document-list.component.html'
 })
@@ -45,7 +52,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
     @Input()
-    permissionsStyle: PermissionStyleModel[] = [];
+    fallbackThumbnail: string = require('../assets/images/ft_ic_miscellaneous.svg');
 
     @Input()
     navigate: boolean = true;
@@ -95,11 +102,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     @Input()
     rowStyleClass: string;
 
-    @Input()
-    loading: boolean = false;
-
-    selection = new Array<MinimalNodeEntity>();
     skipCount: number = 0;
+
     pagination: Pagination;
 
     @Input()
@@ -160,13 +164,14 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     contextActionHandler: Subject<any> = new Subject();
     data: ShareDataTableAdapter;
 
+    loading: boolean = false;
     private currentNodeAllowableOperations: string[] = [];
     private CREATE_PERMISSION = 'create';
 
     constructor(private documentListService: DocumentListService,
                 private ngZone: NgZone,
-                translateService: AlfrescoTranslationService,
-                private elementRef: ElementRef) {
+                private translateService: AlfrescoTranslationService,
+                private el: ElementRef) {
 
         if (translateService) {
             translateService.addTranslationFolder('ng2-alfresco-documentlist', 'assets/ng2-alfresco-documentlist');
@@ -198,8 +203,6 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     ngOnInit() {
         this.data = new ShareDataTableAdapter(this.documentListService, null, this.getDefaultSorting());
         this.data.thumbnails = this.thumbnails;
-
-        this.data.permissionsStyle = this.permissionsStyle;
         this.contextActionHandler.subscribe(val => this.contextActionCallback(val));
 
         this.enforceSingleClickNavigationForMobile();
@@ -263,7 +266,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     isEmpty() {
-        return !this.data || this.data.getRows().length === 0;
+        return this.data.getRows().length === 0;
     }
 
     isPaginationEnabled() {
@@ -343,17 +346,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
      */
     executeContentAction(node: MinimalNodeEntity, action: ContentActionModel) {
         if (node && node.entry && action) {
-            let handlerSub;
-
-            if (typeof action.handler === 'function') {
-                handlerSub = action.handler(node, this, action.permission);
-            } else {
-                handlerSub = Observable.of(true);
-            }
-
-            if (typeof action.execute === 'function') {
-                handlerSub.subscribe(() => { action.execute(node); });
-            }
+            action.handler(node, this, action.permission);
         }
     }
 
@@ -390,12 +383,13 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                     val => {
                         if (this.isCurrentPageEmpty(val, skipCount)) {
                             this.updateSkipCount(skipCount - maxItems);
-                            this.loadFolderNodesByFolderNodeId(id, maxItems, skipCount - maxItems).then(
-                                () => resolve(true),
-                                error => reject(error)
-                            );
+                            this.loadFolderNodesByFolderNodeId(id, maxItems, skipCount - maxItems).then(() => {
+                                resolve(true);
+                            }, (error) => {
+                                reject(error);
+                            });
                         } else {
-                            this.data.loadPage(<NodePaging> val);
+                            this.data.loadPage(<NodePaging>val);
                             this.pagination = val.list.pagination;
                             this.loading = false;
                             this.ready.emit();
@@ -457,7 +451,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             },
             bubbles: true
         });
-        this.elementRef.nativeElement.dispatchEvent(domEvent);
+        this.el.nativeElement.dispatchEvent(domEvent);
 
         const event = new NodeEntityEvent(node);
         this.nodeClick.emit(event);
@@ -477,6 +471,11 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         }
     }
 
+    onRowClick(event: DataRowEvent) {
+        let item = (<ShareDataRow> event.value).node;
+        this.onNodeClick(item);
+    }
+
     onNodeDblClick(node: MinimalNodeEntity) {
         const domEvent = new CustomEvent('node-dblclick', {
             detail: {
@@ -485,7 +484,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             },
             bubbles: true
         });
-        this.elementRef.nativeElement.dispatchEvent(domEvent);
+        this.el.nativeElement.dispatchEvent(domEvent);
 
         const event = new NodeEntityEvent(node);
         this.nodeDblClick.emit(event);
@@ -505,28 +504,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         }
     }
 
-    onNodeSelect(event: { row: ShareDataRow, selection: Array<ShareDataRow> }) {
-        this.selection = event.selection.map(entry => entry.node);
-        const domEvent = new CustomEvent('node-select', {
-            detail: {
-                node: event.row.node,
-                selection: this.selection
-            },
-            bubbles: true
-        });
-        this.elementRef.nativeElement.dispatchEvent(domEvent);
-    }
-
-    onNodeUnselect(event: { row: ShareDataRow, selection: Array<ShareDataRow> }) {
-        this.selection = event.selection.map(entry => entry.node);
-        const domEvent = new CustomEvent('node-unselect', {
-            detail: {
-                node: event.row.node,
-                selection: this.selection
-            },
-            bubbles: true
-        });
-        this.elementRef.nativeElement.dispatchEvent(domEvent);
+    onRowDblClick(event?: DataRowEvent) {
+        let item = (<ShareDataRow> event.value).node;
+        this.onNodeDblClick(item);
     }
 
     onShowRowContextMenu(event: DataCellEvent) {

@@ -7,7 +7,6 @@
         <input *ngIf="!hasFile"
                #file
                type="file"
-               [multiple]="multipleOption"
                [attr.id]="field.id"
                [disabled]="field.readOnly"
                class="upload-widget__file"

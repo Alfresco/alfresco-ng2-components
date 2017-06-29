@@ -15,8 +15,14 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
-import { CookieService, CoreModule, LogService, LogServiceMock } from 'ng2-alfresco-core';
+import { TestBed, async } from '@angular/core/testing';
+import {
+    CoreModule,
+    CookieService,
+    LogService,
+    LogServiceMock
+} from 'ng2-alfresco-core';
+import { FileNode } from '../assets/document-library.model.mock';
 import { CookieServiceMock } from '../../../ng2-alfresco-core/src/assets/cookie.service.mock';
 import { DocumentListService } from './document-list.service';
 
@@ -109,6 +115,26 @@ describe('DocumentListService', () => {
         jasmine.Ajax.uninstall();
     });
 
+    it('should require node to get thumbnail url', () => {
+        expect(service.getDocumentThumbnailUrl(null)).toBeNull();
+    });
+
+    it('should require content service to get thumbnail url', () => {
+        let file = new FileNode();
+        expect(service.getDocumentThumbnailUrl(file)).not.toBeNull();
+    });
+
+    it('should resolve fallback icon for mime type', () => {
+        let icon = service.getMimeTypeIcon('image/png');
+        expect(icon).toBe(service.mimeTypeIcons['image/png']);
+    });
+
+    it('should resolve default icon for mime type', () => {
+        expect(service.getMimeTypeIcon(null)).toBe(DocumentListService.DEFAULT_MIME_TYPE_ICON);
+        expect(service.getMimeTypeIcon('')).toBe(DocumentListService.DEFAULT_MIME_TYPE_ICON);
+        expect(service.getMimeTypeIcon('missing/type')).toBe(DocumentListService.DEFAULT_MIME_TYPE_ICON);
+    });
+
     it('should create a folder in the path', () => {
         service.createFolder('fake-name', 'fake-path').subscribe(
             res => {
@@ -176,25 +202,5 @@ describe('DocumentListService', () => {
             status: 204,
             contentType: 'json'
         });
-    });
-
-    it('should copy a node', (done) => {
-        service.copyNode('node-id', 'parent-id').subscribe(done);
-
-        expect(jasmine.Ajax.requests.mostRecent().method).toBe('POST');
-        expect(jasmine.Ajax.requests.mostRecent().url).toContain('/nodes/node-id/copy');
-        expect(jasmine.Ajax.requests.mostRecent().params).toEqual(JSON.stringify({ targetParentId: 'parent-id' }));
-
-        jasmine.Ajax.requests.mostRecent().respondWith({ status: 200, contentType: 'json' });
-    });
-
-    it('should move a node', (done) => {
-        service.moveNode('node-id', 'parent-id').subscribe(done);
-
-        expect(jasmine.Ajax.requests.mostRecent().method).toBe('POST');
-        expect(jasmine.Ajax.requests.mostRecent().url).toContain('/nodes/node-id/move');
-        expect(jasmine.Ajax.requests.mostRecent().params).toEqual(JSON.stringify({ targetParentId: 'parent-id' }));
-
-        jasmine.Ajax.requests.mostRecent().respondWith({ status: 200, contentType: 'json' });
     });
 });

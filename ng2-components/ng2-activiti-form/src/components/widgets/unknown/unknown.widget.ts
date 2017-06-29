@@ -15,11 +15,9 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
 import { Component } from '@angular/core';
+import { WidgetComponent , baseHost } from './../widget.component';
 import { FormService } from './../../../services/form.service';
-import { baseHost , WidgetComponent } from './../widget.component';
 
 @Component({
     selector: 'unknown-widget',
@@ -31,7 +29,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
     `,
     host: baseHost
 })
-export class UnknownWidgetComponent extends WidgetComponent {
+export class UnknownWidget extends WidgetComponent {
 
     constructor(public formService: FormService) {
          super(formService);

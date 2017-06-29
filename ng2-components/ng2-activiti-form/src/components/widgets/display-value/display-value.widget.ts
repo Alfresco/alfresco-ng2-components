@@ -15,16 +15,14 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import * as moment from 'moment';
-import { FormService } from '../../../services/form.service';
-import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
+import { WidgetComponent , baseHost } from './../widget.component';
 import { FormFieldTypes } from '../core/form-field-types';
-import { NumberFieldValidator } from '../core/form-field-validator';
+import { FormService } from '../../../services/form.service';
 import { FormFieldOption } from './../core/form-field-option';
-import { baseHost , WidgetComponent } from './../widget.component';
+import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
+import { NumberFieldValidator } from '../core/form-field-validator';
 
 @Component({
     selector: 'display-value-widget',
@@ -32,7 +30,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
     styleUrls: ['./display-value.widget.css'],
     host: baseHost
 })
-export class DisplayValueWidgetComponent extends WidgetComponent implements OnInit {
+export class DisplayValueWidget extends WidgetComponent implements OnInit {
 
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();

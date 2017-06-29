@@ -15,16 +15,14 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
+import { WidgetComponent , baseHost } from './../widget.component';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 import { ExternalContent } from '../core/external-content';
 import { ExternalContentLink } from '../core/external-content-link';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormService } from './../../../services/form.service';
-import { baseHost , WidgetComponent } from './../widget.component';
 
 declare let dialogPolyfill: any;
 
@@ -33,7 +31,7 @@ declare let dialogPolyfill: any;
     templateUrl: './attach.widget.html',
     styleUrls: ['./attach.widget.css'], host: baseHost
 })
-export class AttachWidgetComponent extends WidgetComponent implements OnInit {
+export class AttachWidget extends WidgetComponent implements OnInit {
 
     selectedFolderPathId: string;
     selectedFolderSiteId: string;

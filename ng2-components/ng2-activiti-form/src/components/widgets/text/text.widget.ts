@@ -15,11 +15,9 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
 import { Component, OnInit } from '@angular/core';
+import { WidgetComponent , baseHost } from './../widget.component';
 import { FormService } from './../../../services/form.service';
-import { baseHost , WidgetComponent } from './../widget.component';
 
 @Component({
     selector: 'text-widget',
@@ -27,13 +25,13 @@ import { baseHost , WidgetComponent } from './../widget.component';
     styleUrls: ['./text.widget.css'],
     host: baseHost
 })
-export class TextWidgetComponent extends WidgetComponent implements OnInit {
+export class TextWidget extends WidgetComponent implements OnInit {
 
-    mask;
-    isMaskReversed;
+    private mask;
+    private isMaskReversed;
 
     constructor(public formService: FormService) {
-        super(formService);
+         super(formService);
     }
 
     ngOnInit() {

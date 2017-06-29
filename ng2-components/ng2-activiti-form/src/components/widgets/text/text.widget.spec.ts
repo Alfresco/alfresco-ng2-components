@@ -15,22 +15,22 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormFieldTypes } from '../core/form-field-types';
+import { TextWidget } from './text.widget';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { InputMaskDirective } from './text-mask.component';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
-import { InputMaskDirective } from './text-mask.component';
-import { TextWidgetComponent } from './text.widget';
+import { FormFieldTypes } from '../core/form-field-types';
 
 import { CoreModule } from 'ng2-alfresco-core';
-import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
-import { EcmModelService } from './../../../services/ecm-model.service';
 import { FormService } from './../../../services/form.service';
+import { EcmModelService } from './../../../services/ecm-model.service';
+import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 
-describe('TextWidgetComponent', () => {
+describe('TextWidget', () => {
 
-    let widget: TextWidgetComponent;
-    let fixture: ComponentFixture<TextWidgetComponent>;
+    let widget: TextWidget;
+    let fixture: ComponentFixture<TextWidget>;
     let componentHandler;
     let element: HTMLElement;
 
@@ -40,7 +40,7 @@ describe('TextWidgetComponent', () => {
                 CoreModule.forRoot()
             ],
             declarations: [
-                TextWidgetComponent,
+                TextWidget,
                 InputMaskDirective
             ],
             providers: [
@@ -52,7 +52,7 @@ describe('TextWidgetComponent', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TextWidgetComponent);
+        fixture = TestBed.createComponent(TextWidget);
 
         widget = fixture.componentInstance;
         element = fixture.nativeElement;

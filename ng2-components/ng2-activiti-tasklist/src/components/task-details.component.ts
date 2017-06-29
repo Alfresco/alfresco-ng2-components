@@ -16,35 +16,32 @@
  */
 
 import { Component,
-    DebugElement,
-    EventEmitter,
     Input,
-    OnChanges,
     OnInit,
+    ViewChild,
     Output,
-    SimpleChanges,
+    EventEmitter,
     TemplateRef,
-    ViewChild
+    OnChanges,
+    SimpleChanges,
+    DebugElement
 } from '@angular/core';
-import { ContentLinkModel, FormModel, FormOutcomeEvent, FormService } from 'ng2-activiti-form';
-import { AlfrescoAuthenticationService, AlfrescoTranslationService, CardViewUpdateService, ClickNotification, LogService, UpdateNotification } from 'ng2-alfresco-core';
-import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
+import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
+import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { User } from '../models/user.model';
-import { TaskListService } from './../services/tasklist.service';
+import { FormService, FormModel, FormOutcomeEvent, ContentLinkModel } from 'ng2-activiti-form';
+import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 
 declare var require: any;
 declare let dialogPolyfill: any;
 
 @Component({
-    selector: 'adf-task-details, activiti-task-details',
-    templateUrl: './task-details.component.html',
-    styleUrls: ['./task-details.component.css'],
-    providers: [
-        CardViewUpdateService
-    ]
+    selector: 'activiti-task-details',
+    templateUrl: './activiti-task-details.component.html',
+    styleUrls: ['./activiti-task-details.component.css']
 })
-export class TaskDetailsComponent implements OnInit, OnChanges {
+export class ActivitiTaskDetails implements OnInit, OnChanges {
 
     @ViewChild('activiticomments')
     activiticomments: any;
@@ -54,6 +51,9 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
     @ViewChild('errorDialog')
     errorDialog: DebugElement;
+
+    @ViewChild('dialogPeople')
+    peopleDialog: any;
 
     @Input()
     debugMode: boolean = false;
@@ -129,20 +129,16 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     noTaskDetailsTemplateComponent: TemplateRef<any>;
 
     /**
-     *
-     * @param translateService
-     * @param activitiForm
-     * @param activitiTaskList
-     * @param logService
-     * @param authService
+     * Constructor
+     * @param auth Authentication service
+     * @param translate Translation service
+     * @param activitiForm Form service
+     * @param activitiTaskList Task service
      */
     constructor(private translateService: AlfrescoTranslationService,
                 private activitiForm: FormService,
-                private activitiTaskList: TaskListService,
-                private logService: LogService,
-                private authService: AlfrescoAuthenticationService,
-                private cardViewUpdateService: CardViewUpdateService
-) {
+                private activitiTaskList: ActivitiTaskListService,
+                private logService: LogService) {
 
         if (translateService) {
             translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
@@ -153,9 +149,6 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
         if (this.taskId) {
             this.loadDetails(this.taskId);
         }
-
-        this.cardViewUpdateService.itemUpdated$.subscribe(this.updateTaskDetails.bind(this));
-        this.cardViewUpdateService.itemClicked$.subscribe(this.clickTaskDetails.bind(this));
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -190,22 +183,6 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     }
 
     /**
-     * Save a task detail and update it after a successful response
-     *
-     * @param updateNotification
-     */
-    private updateTaskDetails(updateNotification: UpdateNotification) {
-        this.activitiTaskList.updateTask(this.taskId, updateNotification.changed)
-            .subscribe(
-                () => { this.loadDetails(this.taskId); }
-            );
-    }
-
-    private clickTaskDetails(clickNotification: ClickNotification) {
-        console.log(clickNotification.target);
-    }
-
-    /**
      * Load the activiti task details
      * @param taskId
      */
@@ -232,12 +209,8 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
         }
     }
 
-    isAssigned(): boolean {
-        return this.taskDetails.assignee ? true : false;
-    }
-
     isAssignedToMe(): boolean {
-        return this.taskDetails.assignee.email === this.authService.getBpmUsername() ? true : false;
+        return this.taskDetails.assignee ? true : false;
     }
 
     /**
@@ -315,6 +288,19 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
     closeErrorDialog(): void {
         this.errorDialog.nativeElement.close();
+    }
+
+    public showPeopleDialog(): void {
+        if (!this.peopleDialog.nativeElement.showModal) {
+            dialogPolyfill.registerDialog(this.peopleDialog.nativeElement);
+        }
+        this.peopleDialog.nativeElement.showModal();
+    }
+
+    public closePeopleDialog(): void {
+        if (this.peopleDialog) {
+            this.peopleDialog.nativeElement.close();
+        }
     }
 
     onClaimTask(taskId: string): void {

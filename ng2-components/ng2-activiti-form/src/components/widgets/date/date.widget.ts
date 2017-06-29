@@ -15,12 +15,10 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { AfterViewChecked, Component, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, AfterViewChecked } from '@angular/core';
+import { WidgetComponent , baseHost } from './../widget.component';
 import * as moment from 'moment';
 import { FormService } from './../../../services/form.service';
-import { baseHost , WidgetComponent } from './../widget.component';
 
 declare let mdDateTimePicker: any;
 declare var componentHandler: any;
@@ -31,7 +29,7 @@ declare var componentHandler: any;
     styleUrls: ['./date.widget.css'],
     host: baseHost
 })
-export class DateWidgetComponent extends WidgetComponent implements OnInit, AfterViewChecked {
+export class DateWidget extends WidgetComponent implements OnInit, AfterViewChecked {
 
     datePicker: any;
 

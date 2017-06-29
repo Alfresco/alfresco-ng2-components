@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
+import { Observer, Observable } from 'rxjs/Rx';
 import { LogService } from 'ng2-alfresco-core';
-import { Observable, Observer } from 'rxjs/Rx';
-import { ReportParametersModel } from '../models/report.model';
 import { AnalyticsService } from '../services/analytics.service';
+import { ReportParametersModel } from '../models/report.model';
 
 @Component({
-    selector: ' adf-analytics-report-list, analytics-report-list',
+    selector: 'analytics-report-list',
     templateUrl: './analytics-report-list.component.html',
     styleUrls: ['./analytics-report-list.component.css']
 })

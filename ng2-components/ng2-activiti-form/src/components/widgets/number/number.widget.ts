@@ -15,11 +15,9 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
 import { Component } from '@angular/core';
+import { WidgetComponent , baseHost } from './../widget.component';
 import { FormService } from './../../../services/form.service';
-import { baseHost , WidgetComponent } from './../widget.component';
 
 @Component({
     selector: 'number-widget',
@@ -27,7 +25,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
     styleUrls: ['./number.widget.css'],
     host: baseHost
 })
-export class NumberWidgetComponent extends WidgetComponent {
+export class NumberWidget extends WidgetComponent {
 
     constructor(public formService: FormService) {
          super(formService);

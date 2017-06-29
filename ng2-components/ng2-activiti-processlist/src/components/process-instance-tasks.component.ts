@@ -15,23 +15,23 @@
  * limitations under the License.
  */
 
+import { Component, Input, Output, OnInit, ViewChild, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { TaskDetailsEvent, TaskDetailsModel } from 'ng2-activiti-tasklist';
-import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { Observable, Observer } from 'rxjs/Rx';
+import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
+import { ActivitiProcessService } from './../services/activiti-process.service';
+import { TaskDetailsModel, TaskDetailsEvent } from 'ng2-activiti-tasklist';
 import { ProcessInstance } from '../models/process-instance.model';
-import { ProcessService } from './../services/process.service';
 
 declare let componentHandler: any;
 declare let dialogPolyfill: any;
 
 @Component({
-    selector: 'adf-process-instance-tasks, activiti-process-instance-tasks',
-    templateUrl: './process-instance-tasks.component.html',
-    styleUrls: ['./process-instance-tasks.component.css']
+    selector: 'activiti-process-instance-tasks',
+    templateUrl: './activiti-process-instance-tasks.component.html',
+    styleUrls: ['./activiti-process-instance-tasks.component.css']
 })
-export class ProcessInstanceTasksComponent implements OnInit, OnChanges {
+export class ActivitiProcessInstanceTasks implements OnInit, OnChanges {
 
     @Input()
     processInstanceDetails: ProcessInstance;
@@ -67,7 +67,7 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges {
     taskClick: EventEmitter<TaskDetailsEvent> = new EventEmitter<TaskDetailsEvent>();
 
     constructor(private translate: AlfrescoTranslationService,
-                private activitiProcess: ProcessService,
+                private activitiProcess: ActivitiProcessService,
                 private logService: LogService) {
         if (translate) {
             translate.addTranslationFolder('ng2-activiti-processlist', 'assets/ng2-activiti-processlist');

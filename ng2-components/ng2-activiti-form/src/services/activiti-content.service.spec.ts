@@ -16,15 +16,13 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdProgressSpinnerModule } from '@angular/material';
-import { By } from '@angular/platform-browser';
-import { TranslateService } from '@ngx-translate/core';
-import { ActivitiContentService } from 'ng2-activiti-form';
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
-import { Observable } from 'rxjs/Rx';
+import { ActivitiContentService } from 'ng2-activiti-form';
 import { TaskAttachmentListComponent } from './adf-task-attachment-list.component';
+import { Observable } from 'rxjs/Rx';
+import { By } from '@angular/platform-browser';
 
 declare let jasmine: any;
 
@@ -43,8 +41,7 @@ describe('TaskAttachmentList', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                DataTableModule.forRoot(),
-                MdProgressSpinnerModule
+                DataTableModule
             ],
             declarations: [
                 TaskAttachmentListComponent
@@ -54,14 +51,9 @@ describe('TaskAttachmentList', () => {
             ]
         }).compileComponents();
 
-        let translateService: AlfrescoTranslationService = TestBed.get(AlfrescoTranslationService);
+        let translateService = TestBed.get(AlfrescoTranslationService);
         spyOn(translateService, 'addTranslationFolder').and.stub();
         spyOn(translateService, 'get').and.callFake((key) => {
-            return Observable.of(key);
-        });
-
-        let nativeTranslateService: TranslateService = TestBed.get(TranslateService);
-        spyOn(nativeTranslateService, 'get').and.callFake((key) => {
             return Observable.of(key);
         });
     }));
@@ -160,23 +152,22 @@ describe('TaskAttachmentList', () => {
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(fixture.debugElement.queryAll(By.css('adf-datatable tbody tr')).length).toBe(2);
+            expect(fixture.debugElement.queryAll(By.css('alfresco-datatable tbody tr')).length).toBe(2);
         });
     }));
 
-    it('should show the empty list component when the attachments list is empty', async(() => {
+    it('should not display attachments when the task has no attachments', async(() => {
+        component.taskId = '123';
         getTaskRelatedContentSpy.and.returnValue(Observable.of({
             'size': 0,
             'total': 0,
             'start': 0,
             'data': []
         }));
-        let change = new SimpleChange(null, '123', true);
-        component.ngOnChanges({'taskId': change});
-
+        fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('adf-empty-list .empty-list__this-space-is-empty').innerHTML).toEqual('ADF-DATATABLE.EMPTY.HEADER');
+            expect(fixture.debugElement.queryAll(By.css('alfresco-datatable tbody tr')).length).toBe(0);
         });
     }));
 
@@ -187,6 +178,7 @@ describe('TaskAttachmentList', () => {
 
         beforeEach(async(() => {
             component.taskId = '123';
+            fixture.detectChanges();
             fixture.whenStable().then(() => {
                 getTaskRelatedContentSpy.calls.reset();
             });
@@ -212,6 +204,7 @@ describe('TaskAttachmentList', () => {
 
         beforeEach(async(() => {
             component.taskId = '123';
+            fixture.detectChanges();
             fixture.whenStable();
         }));
 

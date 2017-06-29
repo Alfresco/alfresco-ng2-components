@@ -15,26 +15,26 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdInputModule, MdTabsModule } from '@angular/material';
-import { CoreModule } from 'ng2-alfresco-core';
-import { fakeFormJson } from '../../../services/assets/widget-visibility.service.mock';
-import { FormFieldModel } from '../core/form-field.model';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { FormModel } from '../core/form.model';
+import { FormFieldModel } from '../core/form-field.model';
+import { fakeFormJson } from '../../../services/assets/widget-visibility.service.mock';
+import { TabsWidget } from './tabs.widget';
 import { TabModel } from '../core/tab.model';
-import { MASK_DIRECTIVE } from '../index';
 import { WIDGET_DIRECTIVES } from '../index';
-import { ActivitiContentComponent } from './../../activiti-content.component';
+import { MASK_DIRECTIVE } from '../index';
 import { FormFieldComponent } from './../../form-field/form-field.component';
-import { TabsWidgetComponent } from './tabs.widget';
+import { ActivitiContent } from './../../activiti-content.component';
+import { CoreModule } from 'ng2-alfresco-core';
+import { MdTabsModule } from '@angular/material';
 
-describe('TabsWidgetComponent', () => {
+describe('TabsWidget', () => {
 
     let componentHandler;
-    let widget: TabsWidgetComponent;
+    let widget: TabsWidget;
 
     beforeEach(() => {
-        widget = new TabsWidgetComponent();
+        widget = new TabsWidget();
 
         componentHandler = jasmine.createSpyObj('componentHandler', [
             'upgradeAllRegistered'
@@ -97,18 +97,18 @@ describe('TabsWidgetComponent', () => {
     });
 
     describe('when template is ready', () => {
-        let tabWidgetComponent: TabsWidgetComponent;
-        let fixture: ComponentFixture<TabsWidgetComponent>;
+        let tabWidgetComponent: TabsWidget;
+        let fixture: ComponentFixture<TabsWidget>;
         let element: HTMLElement;
         let fakeTabVisible: TabModel;
         let fakeTabInvisible: TabModel;
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-                imports: [CoreModule, MdTabsModule, MdInputModule],
-                declarations: [FormFieldComponent, ActivitiContentComponent, WIDGET_DIRECTIVES, MASK_DIRECTIVE]
+                imports: [CoreModule, MdTabsModule],
+                declarations: [FormFieldComponent, ActivitiContent, WIDGET_DIRECTIVES, MASK_DIRECTIVE]
             }).compileComponents().then(() => {
-                fixture = TestBed.createComponent(TabsWidgetComponent);
+                fixture = TestBed.createComponent(TabsWidget);
                 tabWidgetComponent = fixture.componentInstance;
                 element = fixture.nativeElement;
             });

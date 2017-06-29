@@ -16,19 +16,18 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdCheckboxChange } from '@angular/material';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
-import { MaterialModule } from '../../material.module';
-import {
-    DataColumn,
-    DataRow,
-    DataSorting,
-    ObjectDataColumn,
-    ObjectDataTableAdapter
-} from './../../data/index';
-import { DataTableCellComponent } from './datatable-cell.component';
+import { MdCheckboxModule, MdCheckboxChange } from '@angular/material';
 import { DataTableComponent } from './datatable.component';
+import { DataTableCellComponent } from './datatable-cell.component';
+import {
+    DataRow,
+    DataColumn,
+    DataSorting,
+    ObjectDataTableAdapter,
+    ObjectDataColumn
+} from './../../data/index';
 
 describe('DataTable', () => {
 
@@ -41,7 +40,7 @@ describe('DataTable', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                MaterialModule
+                MdCheckboxModule
             ],
             declarations: [
                 DataTableCellComponent,
@@ -57,35 +56,14 @@ describe('DataTable', () => {
     });
 
     beforeEach(() => {
+        // reset MDL handler
+        window['componentHandler'] = null;
+        // dataTable = new DataTableComponent();
+
         eventMock = {
             preventDefault: function () {
             }
         };
-    });
-
-    it('should change the rows on changing of the data', () => {
-        let newData = new ObjectDataTableAdapter(
-            [
-                { name: 'TEST' },
-                { name: 'FAKE' }
-            ],
-            [new ObjectDataColumn({ key: 'name' })]
-        );
-        dataTable.data = new ObjectDataTableAdapter(
-            [
-                { name: '1' },
-                { name: '2' }
-            ],
-            [new ObjectDataColumn({ key: 'name' })]
-        );
-
-        dataTable.ngOnChanges({
-            data: new SimpleChange(null, newData, false)
-        });
-        fixture.detectChanges();
-
-        expect(element.querySelector('[data-automation-id="text_TEST"]')).not.toBeNull();
-        expect(element.querySelector('[data-automation-id="text_FAKE"]')).not.toBeNull();
     });
 
     it('should reset selection on mode change', () => {
@@ -188,7 +166,7 @@ describe('DataTable', () => {
 
         let headers = element.querySelectorAll('th');
         expect(headers.length).toBe(4);
-        expect(headers[headers.length - 1].classList.contains('actions-column')).toBeTruthy();
+        expect(headers[headers.length - 1].classList.contains('alfresco-datatable__actions-header')).toBeTruthy();
     });
 
     it('should put actions menu to the left', () => {
@@ -203,18 +181,18 @@ describe('DataTable', () => {
 
         let headers = element.querySelectorAll('th');
         expect(headers.length).toBe(4);
-        expect(headers[0].classList.contains('actions-column')).toBeTruthy();
+        expect(headers[0].classList.contains('alfresco-datatable__actions-header')).toBeTruthy();
     });
 
     it('should initialize default adapter', () => {
-        let table = new DataTableComponent(null, null, null);
+        let table = new DataTableComponent(null);
         expect(table.data).toBeUndefined();
         table.ngOnChanges({'data': new SimpleChange('123', {}, true)});
         expect(table.data).toEqual(jasmine.any(ObjectDataTableAdapter));
     });
 
     it('should load data table on onChange', () => {
-        let table = new DataTableComponent(null, null, null);
+        let table = new DataTableComponent(null);
         let data = new ObjectDataTableAdapter([], []);
 
         expect(table.data).toBeUndefined();
@@ -409,6 +387,19 @@ describe('DataTable', () => {
             })
         );
 
+    });
+
+    it('should upgrade MDL components on view checked', () => {
+        let handler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered']);
+        window['componentHandler'] = handler;
+
+        dataTable.ngAfterContentInit();
+        expect(handler.upgradeAllRegistered).toHaveBeenCalled();
+    });
+
+    it('should upgrade MDL components only when component handler present', () => {
+        expect(window['componentHandler']).toBeNull();
+        dataTable.ngAfterContentInit();
     });
 
     it('should invert "select all" status', () => {

@@ -37,16 +37,16 @@ npm install ng2-alfresco-search
 ## Basic usage
 
 ```html
-<adf-search-control 
+<alfresco-search-control 
     [searchTerm]="searchTerm"
     inputType="search"
     (searchChange)="onSearchChange($event);"
     (searchSubmit)="onSearchSubmit($event);"
     (fileSelect)="onSearchResultSelect($event);">
-</adf-search-control>
+</alfresco-search-control>
 ```
 
-Example of a component that uses the search control. In this example the search term is simply logged to the console
+Example of an component that uses the search control. In this example the search term is simply logged to the console
 but instead the component could emit an event to be consumed upstream, or it could trigger a change inside a search
 results component embedded inside the same component.
 
@@ -57,19 +57,18 @@ results component embedded inside the same component.
 | searchTerm | string  | |  Search term to pre-populate the field with |
 | inputType | string  | "text" | Type of the input field to render, e.g. "search" or "text" (default) |
 | expandable | boolean |  true  | Whether to use an expanding search control, if false then a regular input is used. |
-| autocomplete | boolean | true  | Whether the browser should offer field auto-completion for the input field to the user. |
-| highlight | boolean | false  | Use the true value if you want to see the searched word highlighted. |
-| liveSearchEnabled | boolean | true  | Whether find-as-you-type suggestions should be offered for matching content items. Set to false to disable. |
-| liveSearchRoot | string | "-root-" | NodeRef or node name where the search should start. |
-| liveSearchResultType | string | |  Node type to filter live search results by, e.g. 'cm:content'. |
-| liveSearchMaxResults | number | 5 |  Maximum number of results to show in the live search. |
-| liveSearchResultSort | string | |  Criteria to sort live search results by, must be one of "name" ,  "modifiedAt" or "createdAt" |
+| autocomplete | boolean | true  | Whether the browser should offer field auto-completion for the input field to the   user. |
+| liveSearchEnabled | boolean | true  | Whether find-as-you-type suggestions should be offered for matching  content  items. Set to false to disable. |
+| liveSearchRoot | boolean | "-root-" | NodeRef or node name where the search should start. |
+| liveSearchResultType | boolean | |  Node type to filter live search results by, e.g. 'cm:content'. |
+| liveSearchMaxResults | boolean | 5 |  Maximum number of results to show in the live search. |
+| liveSearchResultSort | boolean | |  Criteria to sort live search results by, must be one of "name" ,  "modifiedAt" or "createdAt" |
 
 ## Events
 
 | Name | Description |
 | --- | --- |
-| searchChange | Emitted when the search term is changed. The search term is provided in the 'value' property of the returned object.  If the term is less than three characters in length then the term is truncated to an empty string. |
+| searchChange | Emitted when the search term is changed. The search term is provided in the 'value' property of the returned object.  If the term is at less than three characters in length then the term is truncated to an empty string. |
 | searchSubmit | Emitted when the search form is submitted. The search term is provided in the 'value' property of the returned object. |
 | fileSelect | Emitted when a file item from the list of find-as-you-type results is selected |
 | expand | Emitted when the expanded state of the control changes based on focus events and the content of the input control |
@@ -77,31 +76,31 @@ results component embedded inside the same component.
 ## Basic usage Search results
 
 ```html
-<adf-search 
+<alfresco-search 
     [searchTerm]="searchTerm">
-</adf-search>
+</alfresco-search>
 ```
 
-Example of a component that displays search results, using the Angular2 router to supply a 'q' parameter containing the
-search term. If no router is present on the page or if the router does not provide such parameter then an empty 
+Example of an component that displays search results, using the Angular2 router to supply a 'q' parameter containing the
+search term. If no router is present on the page of if the router does not provide such a parameter then an empty 
 results page will be shown.
 
 ### Properties
 
 | Name | Type | Optional | Default | Description |
 | --- | --- | --- | --- | --- |
-| searchTerm | string | | Search term to use when executing the search. Updating this value will run a new search and update the results  |
-| rootNodeId | string | "-root-" | NodeRef or node name where the search should start. |
-| resultType | string | | Node type to filter search results by, e.g. 'cm:content', 'cm:folder' if you want only the files. |
-| maxResults | number  | 20  | Maximum number of results to show in the search. |
-| resultSort | string  | | Criteria to sort search results by, must be one of "name" , "modifiedAt" or "createdAt" |
+| searchTerm | string | | Search term to use when executing the search. Updating this value will run a new  search and update the results  |
+| rootNodeId | boolean | "-root-" | NodeRef or node name where the search should start. |
+| resultType | boolean | | Node type to filter search results by, e.g. 'cm:content'. |
+| maxResults | boolean  | 20  | Maximum number of results to show in the search. |
+| resultSort | boolean  | | Criteria to sort search results by, must be one of "name" , "modifiedAt" or   "createdAt" |
 | navigationMode | string  | "dblclick" | Event used to initiate a navigation action to a specific result, one of "click" or "dblclick" |
 
 ### Events
 
 | Name | Description |
 | --- | --- |
-| preview | Emitted when user acts upon files with either single or double click (depends on `navigation-mode`), recommended for Viewer components integration  |
+| preview | emitted when user acts upon files with either single or double click (depends on `navigation-mode`), recommended for Viewer components integration  |
 | resultsLoad | Emitted when search results have fully loaded |
 
 ## Build from sources

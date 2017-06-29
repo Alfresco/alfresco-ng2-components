@@ -15,24 +15,24 @@
  * limitations under the License.
  */
 
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { DebugElement, SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdTabsModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
-import { AlfrescoTranslationService, ContentService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
+import { CoreModule, AlfrescoTranslationService, ContentService } from 'ng2-alfresco-core';
+import { MdTabsModule } from '@angular/material';
 
+import { ActivitiContent } from './activiti-content.component';
 import { FormService } from '../services/form.service';
 import { EcmModelService } from './../services/ecm-model.service';
-import { ActivitiContentComponent } from './activiti-content.component';
 import { ContentLinkModel } from './widgets/index';
 
 declare let jasmine: any;
 
-describe('ActivitiContentComponent', () => {
+describe('ActivitiContent', () => {
 
-    let component: ActivitiContentComponent;
-    let fixture: ComponentFixture<ActivitiContentComponent>;
+    let component: ActivitiContent;
+    let fixture: ComponentFixture<ActivitiContent>;
     let debug: DebugElement;
     let element: HTMLElement;
 
@@ -71,7 +71,7 @@ describe('ActivitiContentComponent', () => {
                 CoreModule.forRoot()
             ],
             declarations: [
-                ActivitiContentComponent
+                ActivitiContent
             ],
             providers: [
                 FormService,
@@ -96,7 +96,7 @@ describe('ActivitiContentComponent', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ActivitiContentComponent);
+        fixture = TestBed.createComponent(ActivitiContent);
         component = fixture.componentInstance;
         debug = fixture.debugElement;
         element = fixture.nativeElement;

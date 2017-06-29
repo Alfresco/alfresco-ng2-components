@@ -16,28 +16,27 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdTabsModule } from '@angular/material';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
+import { MdTabsModule } from '@angular/material';
 
-import { MdInputModule } from '@angular/material';
+import { ActivitiStartForm } from './activiti-start-form.component';
+import { FormFieldComponent } from './form-field/form-field.component';
+import { ActivitiContent } from './activiti-content.component';
+import { WIDGET_DIRECTIVES } from './widgets/index';
+import { MASK_DIRECTIVE } from './widgets/index';
+import { FormService } from './../services/form.service';
+import { EcmModelService } from './../services/ecm-model.service';
+import { WidgetVisibilityService } from './../services/widget-visibility.service';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { TranslationMock } from './../assets/translation.service.mock';
-import { EcmModelService } from './../services/ecm-model.service';
-import { FormService } from './../services/form.service';
-import { WidgetVisibilityService } from './../services/widget-visibility.service';
-import { ActivitiContentComponent } from './activiti-content.component';
-import { StartFormComponent } from './start-form.component';
-import { FormFieldComponent } from './form-field/form-field.component';
-import { MASK_DIRECTIVE } from './widgets/index';
-import { WIDGET_DIRECTIVES } from './widgets/index';
 
 describe('ActivitiStartForm', () => {
 
     let componentHandler: any;
     let formService: FormService;
-    let component: StartFormComponent;
-    let fixture: ComponentFixture<StartFormComponent>;
+    let component: ActivitiStartForm;
+    let fixture: ComponentFixture<ActivitiStartForm>;
     let getStartFormSpy: jasmine.Spy;
 
     const exampleId1 = 'my:process1';
@@ -47,12 +46,11 @@ describe('ActivitiStartForm', () => {
         TestBed.configureTestingModule({
             imports: [
                 MdTabsModule,
-                MdInputModule,
                 CoreModule.forRoot()],
             declarations: [
-                StartFormComponent,
+                ActivitiStartForm,
                 FormFieldComponent,
-                ActivitiContentComponent,
+                ActivitiContent,
                 ...WIDGET_DIRECTIVES,
                 ...MASK_DIRECTIVE
             ],
@@ -67,7 +65,7 @@ describe('ActivitiStartForm', () => {
 
     beforeEach(() => {
 
-        fixture = TestBed.createComponent(StartFormComponent);
+        fixture = TestBed.createComponent(ActivitiStartForm);
         component = fixture.componentInstance;
         formService = fixture.debugElement.injector.get(FormService);
 

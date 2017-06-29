@@ -15,20 +15,20 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
+import { Component, Output, EventEmitter, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Observable, Observer } from 'rxjs/Rx';
-import { FilterParamsModel, FilterProcessRepresentationModel } from './../models/filter-process.model';
-import { ProcessService } from './../services/process.service';
+import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
+import { FilterProcessRepresentationModel, FilterParamsModel } from './../models/filter-process.model';
+import { ActivitiProcessService } from './../services/activiti-process.service';
 
 declare let componentHandler: any;
 
 @Component({
-    selector: 'adf-process-instance-filters, activiti-process-instance-filters',
-    templateUrl: './process-filters.component.html',
-    styleUrls: ['process-filters.component.css']
+    selector: 'activiti-process-instance-filters',
+    templateUrl: './activiti-filters.component.html',
+    styleUrls: ['activiti-filters.component.css']
 })
-export class ProcessFiltersComponent implements OnInit, OnChanges {
+export class ActivitiProcessFilters implements OnInit, OnChanges {
 
     @Input()
     filterParam: FilterParamsModel;
@@ -59,7 +59,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
     filters: FilterProcessRepresentationModel [] = [];
 
     constructor(private translate: AlfrescoTranslationService,
-                private activiti: ProcessService,
+                private activiti: ActivitiProcessService,
                 private logService: LogService) {
         this.filter$ = new Observable<FilterProcessRepresentationModel>(observer => this.filterObserver = observer).share();
 

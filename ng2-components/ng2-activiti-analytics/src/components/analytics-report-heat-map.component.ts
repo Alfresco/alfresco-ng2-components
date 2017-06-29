@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AnalyticsService } from '../services/analytics.service';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 
 @Component({
-    selector: 'adf-analytics-report-heat-map, analytics-report-heat-map',
+    selector: 'analytics-report-heat-map',
     templateUrl: './analytics-report-heat-map.component.html'
 })
 export class AnalyticsReportHeatMapComponent implements  OnInit {

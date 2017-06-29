@@ -15,31 +15,30 @@
  * limitations under the License.
  */
 
-import { ModuleWithProviders } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard, AuthGuardBpm, AuthGuardEcm } from 'ng2-alfresco-core';
+import { ModuleWithProviders }  from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard, AuthGuardEcm, AuthGuardBpm } from 'ng2-alfresco-core';
 
 import {
-    AboutComponent,
-    ActivitiAppsViewComponent,
+    HomeComponent,
+    FilesComponent,
+    DataTableDemoComponent,
+    SearchComponent,
+    LoginDemoComponent,
     ActivitiDemoComponent,
     ActivitiShowDiagramComponent,
-    DataTableDemoComponent,
-    FilesComponent,
-    FormDemoComponent,
-    FormNodeViewerComponent,
-    FormViewerComponent,
-    HomeComponent,
-    LoginDemoComponent,
-    SearchComponent,
-    SettingsComponent,
-    SocialComponent,
+    ActivitiAppsView,
+    WebscriptComponent,
     TagComponent,
-    WebscriptComponent
+    SocialComponent,
+    AboutComponent,
+    FormViewer,
+    FormNodeViewer,
+    SettingsComponent,
+    FormDemoComponent
 } from './components/index';
 
 import { UploadButtonComponent } from 'ng2-alfresco-upload';
-import { FormListDemoComponent } from './components/form/form-list-demo.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginDemoComponent },
@@ -80,12 +79,12 @@ export const appRoutes: Routes = [
     },
     {
         path: 'activiti',
-        component: ActivitiAppsViewComponent,
+        component: ActivitiAppsView,
         canActivate: [AuthGuardBpm]
     },
     {
         path: 'activiti/apps',
-        component: ActivitiAppsViewComponent,
+        component: ActivitiAppsView,
         canActivate: [AuthGuardBpm]
     },
     {
@@ -107,13 +106,13 @@ export const appRoutes: Routes = [
     // TODO: check if needed
     {
         path: 'activiti/tasks/:id',
-        component: FormViewerComponent,
+        component: FormViewer,
         canActivate: [AuthGuardBpm]
     },
     // TODO: check if needed
     {
         path: 'activiti/tasksnode/:id',
-        component: FormNodeViewerComponent,
+        component: FormNodeViewer,
         canActivate: [AuthGuardBpm]
     },
     {
@@ -133,8 +132,7 @@ export const appRoutes: Routes = [
     },
     { path: 'about', component: AboutComponent },
     { path: 'settings', component: SettingsComponent },
-    { path: 'form', component: FormDemoComponent },
-    { path: 'form-list', component: FormListDemoComponent }
+    { path: 'form', component: FormDemoComponent }
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);

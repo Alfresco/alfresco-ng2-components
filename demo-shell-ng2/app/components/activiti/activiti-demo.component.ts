@@ -15,67 +15,74 @@
  * limitations under the License.
  */
 
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AnalyticsReportListComponent } from 'ng2-activiti-analytics';
-import { FormEvent, FormFieldEvent, FormRenderingService, FormService } from 'ng2-activiti-form';
+import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import {
-    FilterProcessRepresentationModel,
-    ProcessFiltersComponent,
-    ProcessInstance,
-    ProcessInstanceDetailsComponent,
-    ProcessInstanceListComponent,
-    StartProcessInstanceComponent
-} from 'ng2-activiti-processlist';
-import {
-    AppsListComponent,
+    ActivitiApps,
+    ActivitiFilters,
+    ActivitiTaskList,
+    ActivitiTaskDetails,
     FilterRepresentationModel,
-    TaskDetailsComponent,
     TaskDetailsEvent,
-    TaskFiltersComponent,
-    TaskListComponent
+    TaskAttachmentListComponent
 } from 'ng2-activiti-tasklist';
-import { AlfrescoApiService } from 'ng2-alfresco-core';
 import {
-    DataSorting,
-    ObjectDataRow,
-    ObjectDataTableAdapter
-} from 'ng2-alfresco-datatable';
+    ActivitiProcessFilters,
+    ActivitiProcessInstanceDetails,
+    ActivitiProcessInstanceListComponent,
+    ActivitiStartProcessInstance,
+    FilterProcessRepresentationModel,
+    ProcessInstance,
+    ActivitiProcessAttachmentListComponent
+} from 'ng2-activiti-processlist';
+import { AnalyticsReportListComponent } from 'ng2-activiti-analytics';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
+import {
+    ObjectDataTableAdapter,
+    ObjectDataRow,
+    DataSorting
+} from 'ng2-alfresco-datatable';
+import { AlfrescoApiService } from 'ng2-alfresco-core';
+import { FormService, FormRenderingService, FormEvent, FormFieldEvent } from 'ng2-activiti-form';
 import { /*CustomEditorComponent*/ CustomStencil01 } from './custom-editor/custom-editor.component';
 
 declare var componentHandler;
 
 const currentProcessIdNew = '__NEW__';
-const currentTaskIdNew = '__NEW__';
 
 @Component({
     selector: 'activiti-demo',
     templateUrl: './activiti-demo.component.html',
     styleUrls: ['./activiti-demo.component.css']
 })
-export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
+export class ActivitiDemoComponent implements AfterViewInit {
 
-    @ViewChild(TaskFiltersComponent)
-    activitifilter: TaskFiltersComponent;
+    @ViewChild(ActivitiFilters)
+    activitifilter: ActivitiFilters;
 
-    @ViewChild(TaskListComponent)
-    taskList: TaskListComponent;
+    @ViewChild(ActivitiTaskList)
+    taskList: ActivitiTaskList;
 
-    @ViewChild(ProcessFiltersComponent)
-    activitiprocessfilter: ProcessFiltersComponent;
+    @ViewChild(TaskAttachmentListComponent)
+    taskAttachList: TaskAttachmentListComponent;
 
-    @ViewChild(ProcessInstanceListComponent)
-    processList: ProcessInstanceListComponent;
+    @ViewChild(ActivitiProcessFilters)
+    activitiprocessfilter: ActivitiProcessFilters;
 
-    @ViewChild(ProcessInstanceDetailsComponent)
-    activitiprocessdetails: ProcessInstanceDetailsComponent;
+    @ViewChild(ActivitiProcessInstanceListComponent)
+    processList: ActivitiProcessInstanceListComponent;
 
-    @ViewChild(TaskDetailsComponent)
-    activitidetails: TaskDetailsComponent;
+    @ViewChild(ActivitiProcessInstanceDetails)
+    activitiprocessdetails: ActivitiProcessInstanceDetails;
 
-    @ViewChild(StartProcessInstanceComponent)
-    activitiStartProcess: StartProcessInstanceComponent;
+    @ViewChild(ActivitiTaskDetails)
+    activitidetails: ActivitiTaskDetails;
+
+    @ViewChild(ActivitiProcessAttachmentListComponent)
+    processAttachList: ActivitiProcessAttachmentListComponent;
+
+    @ViewChild(ActivitiStartProcessInstance)
+    activitiStartProcess: ActivitiStartProcessInstance;
 
     @ViewChild(AnalyticsReportListComponent)
     analyticsreportlist: AnalyticsReportListComponent;
@@ -105,6 +112,8 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     sub: Subscription;
     blobFile: any;
     flag: boolean = true;
+    createTaskAttach: boolean = false;
+    createProcessAttach: boolean = false;
 
     dataTasks: ObjectDataTableAdapter;
     dataProcesses: ObjectDataTableAdapter;
@@ -160,8 +169,7 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
             this.processFilter = null;
             this.currentProcessInstanceId = null;
         });
-        this.layoutType = AppsListComponent.LAYOUT_GRID;
-
+        this.layoutType = ActivitiApps.LAYOUT_GRID;
     }
 
     ngOnDestroy() {
@@ -190,11 +198,6 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     onStartTaskSuccess(event: any): void {
         this.activitifilter.selectFilterWithTask(event.id);
         this.currentTaskId = event.id;
-    }
-
-    onCancelStartTask() {
-        this.currentTaskId = null;
-        this.reloadTaskFilters();
     }
 
     onSuccessTaskList(event: FilterRepresentationModel) {
@@ -241,29 +244,14 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
         this.currentProcessInstanceId = currentProcessIdNew;
     }
 
-    navigateStartTask(): void {
-        this.resetTaskFilters();
-        this.reloadTaskFilters();
-        this.currentTaskId = currentTaskIdNew;
-    }
-
     onStartProcessInstance(instance: ProcessInstance): void {
         this.currentProcessInstanceId = instance.id;
         this.activitiStartProcess.reset();
         this.resetProcessFilters();
     }
 
-    onCancelProcessInstance() {
-        this.currentProcessInstanceId = null;
-        this.reloadProcessFilters();
-    }
-
     isStartProcessMode(): boolean {
         return this.currentProcessInstanceId === currentProcessIdNew;
-    }
-
-    isStartTaskMode(): boolean {
-        return this.currentTaskId === currentTaskIdNew;
     }
 
     processCancelled(data: any): void {
@@ -281,6 +269,12 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     }
 
     onFormContentClick(content: any): void {
+        this.fileShowed = true;
+        this.content = content.contentBlob;
+        this.contentName = content.name;
+    }
+
+    onAttachmentClick(content: any): void {
         this.fileShowed = true;
         this.content = content.contentBlob;
         this.contentName = content.name;
@@ -339,16 +333,8 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
         this.processFilter = null;
     }
 
-    private resetTaskFilters(): void {
-        this.taskFilter = null;
-    }
-
     private reloadProcessFilters(): void {
-        this.activitiprocessfilter.selectFilter(this.activitiprocessfilter.getCurrentFilter());
-    }
-
-    private reloadTaskFilters(): void {
-        this.activitifilter.selectFilter(this.activitifilter.getCurrentFilter());
+        this.activitiprocessfilter.selectFilter(null);
     }
 
     onRowClick(event): void {
@@ -357,6 +343,32 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
 
     onRowDblClick(event): void {
         console.log(event);
+    }
+
+    onCreateTaskSuccess(): void {
+        this.taskAttachList.reload();
+        this.toggleCreateTakAttach();
+    }
+
+    onContentCreated() {
+        this.processAttachList.reload();
+        this.toggleCreateProcessAttach();
+    }
+
+    toggleCreateTakAttach(): void {
+        this.createTaskAttach = !this.createTaskAttach;
+    }
+
+    isCreateTaskAttachVisible(): boolean {
+        return this.createTaskAttach;
+    }
+
+    toggleCreateProcessAttach(): void {
+        this.createProcessAttach = !this.createProcessAttach;
+    }
+
+    isCreateProcessAttachVisible(): boolean {
+        return this.createProcessAttach;
     }
 
     isTaskCompleted(): boolean {

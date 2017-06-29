@@ -39,6 +39,6 @@ import { Component } from '@angular/core';
         `
     ]
 })
-export class CreateFolderDialogComponent {
+export class CreateFolderDialog {
     value: string = '';
 }

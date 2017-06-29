@@ -16,7 +16,7 @@
  */
 
 import { NgModule } from '@angular/core';
-import { MdDialogModule, MdInputModule, MdSelectModule, MdSlideToggleModule } from '@angular/material';
+import { MdSlideToggleModule, MdInputModule, MdSelectModule, MdDialogModule } from '@angular/material';
 
 const MATERIAL_MODULES = [
     MdSlideToggleModule,

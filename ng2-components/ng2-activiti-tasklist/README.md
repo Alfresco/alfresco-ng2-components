@@ -39,12 +39,6 @@
 - [Task People Component](#task-people-component)
   * [Properties](#properties-8)
     + [Events](#events-7)
-- [ADF Comments Component](#adf-comments-component)
-  * [Properties](#properties-9)
-    + [Events](#events-8)
-- [Start Task Component](#start-task-component)
-  * [Properties](#properties-10)
-    + [Events](#events-9)
 - [Build from sources](#build-from-sources)
 - [NPM scripts](#npm-scripts)
 - [Demo](#demo)
@@ -75,22 +69,22 @@ npm install ng2-activiti-tasklist
 This component renders a list containing all the tasks matched by the parameters specified.
 
 ```html
-<adf-tasklist 
+<activiti-tasklist 
     [appId]="'1'" 
     [state]="'open'" 
     [assignment]="'assignee'">
-</adf-tasklist>
+</activiti-tasklist>
 ```
 
 You can also use HTML-based schema declaration like shown below:
 
 ```html
-<adf-tasklist ...>
+<activiti-tasklist ...>
     <data-columns>
         <data-column key="name" title="NAME" class="full-width name-column"></data-column>
         <data-column key="created" title="Created" class="hidden"></data-column>
     </data-columns>
-</adf-tasklist>
+</activiti-tasklist>
 ```
 
 ### DataColumn Properties
@@ -144,9 +138,9 @@ Example:
 The component shows the details of the task id passed in input
 
 ```html
-<adf-task-details 
+<activiti-task-details 
     [taskId]="taskId">
-</adf-task-details>
+</activiti-task-details>
 ```
 
 ### Properties
@@ -182,33 +176,33 @@ The component shows the details of the task id passed in input
 
 By default the Activiti Task Details provides the following message for the empty task details:
 
-```html
+```
 No Tasks
 ```
 
 This can be changed by adding the following custom html template:
 
 ```html
-<adf-task-details [taskId]="taskId">
+<activiti-task-details [taskId]="taskId">
     <no-task-details-template>
         <template>
              <h1>Sorry, no tasks here</h1>
              <img src="example.jpg">
         </template>
     </no-task-details-template>
-</adf-task-details>    
+</activiti-task-details>    
 ```
 
-Note that can put any HTML content as part of the template, including other Angular components.
+Note that can put any HTML content as part of the template, includuing other Angualr components.
 
 ## Activiti Apps Component
 
 The component shows all the available apps.
 
 ```html
-<adf-apps 
+<activiti-apps 
     [layoutType]="'GRID'">
-</adf-apps>
+</activiti-apps>
 ```
 
 ### Properties
@@ -226,15 +220,15 @@ The component shows all the available apps.
 
 ### How filter the activiti apps 
 
-If you want to show some specific apps you can specify them through the filtersAppId parameters
+If you want show some specific apps you can specify them through the filtersAppId parameters
 
 ```html
-<adf-apps 
+<activiti-apps 
     [filtersAppId]="'[
         {defaultAppId: 'tasks'}, 
         {deploymentId: '15037'}, 
         {name : 'my app name'}]'">
-</adf-apps>
+</activiti-apps>
 ```
 
 In this specific case only the Tasks app, the app with deploymentId 15037 and the app with "my app name" will be showed
@@ -253,12 +247,13 @@ You can use inside the filter one of the following property
 }
 ```
 
+
 ## Activiti Filter
 
 The component shows all the available filters.
 
 ```html
-<adf-filters></adf-filters>
+<activiti-filters></activiti-filters>
 ```
 
 ### Properties
@@ -276,19 +271,17 @@ If both `appId` and `appName` are specified then `appName` will take precedence 
 
 | Name | Description |
 | --- | --- |
-| filterClick | Raised when the filter in the list is clicked  |
+| filterClick | Raised when the filter in the  list is clicked  |
 | onSuccess | Raised when the list is loaded  |
 | onError | Raised if there is an error during the loading  |
 
 ### How filter the activiti task filters
 
  ```html
-<adf-filters 
+<activiti-filters 
     [filterParam]="{name:'My tasks'}">
-</adf-filters>
-
+</activiti-filters>
 ```
-
 
 You can use inside the filterParam one of the following property.
 
@@ -316,13 +309,13 @@ The AccordionComponent is exposed by the alfresco-core.
 ```html
 <adf-accordion>
     <adf-accordion-group [heading]="'Tasks'" [isSelected]="true" [headingIcon]="'assignment'">
-        <adf-filters
+        <activiti-filters
             [appId]="appId"
             [hasIcon]="false"
             (filterClick)="onTaskFilterClick($event)"
             (onSuccess)="onSuccessTaskFilterList($event)"
             #activitifilter>
-        </adf-filters>
+        </activiti-filters>
     </adf-accordion-group>
 </adf-accordion>
 ```
@@ -334,11 +327,11 @@ The AccordionComponent is exposed by the alfresco-core.
 The component shows the checklist task functionality.
 
 ```html
-<adf-checklist 
+<activiti-checklist 
     [readOnly]="false" 
     [taskId]="taskId" 
     [assignee]="taskAssignee.id" 
-</adf-checklist>
+</activiti-checklist>
 ```
 
 ### Properties
@@ -399,18 +392,18 @@ This component displays Upload Component(Drag and Click) to upload the attachmen
 
 | Name | Description |
 | --- | --- |
-| error | Raised when the error occurred while creating/uploading the attachment by the user from within the component |
-| success | Raised when the attachment created/uploaded successfully from within the component |
+| error | Raised when the error occured while creating/uploading the attachment by the user from within the component |
+| success | Raised when the attachement created/uploaded successfully from within the component |
 
 ## Activiti Task Header
 
 The component shows all the information related to a task. 
-The purpose of the component is to populate the local variable called `properties` (array of CardViewModel), with all the information that we want to display.
+The purpose of the component is populate the local variable called `properties` (array of CardViewModel), with all the information that we want display.
 
 ```html
-<adf-task-header
+<activiti-task-header
     [taskDetails]="taskDetails">
-</adf-task-header>
+</activiti-task-header>
 ```
 
 ### Properties
@@ -429,7 +422,6 @@ The purpose of the component is to populate the local variable called `propertie
 | claim | Raised when the task is claimed. |
 
 ## TaskDetailsModel
-
 ```json
 { 
     "id": "string", 
@@ -439,17 +431,16 @@ The purpose of the component is to populate the local variable called `propertie
     "description": "string"
 }
 ```
-
 ## Task People Component
 
 This component displays involved users to a specified task
 
 ```html
-<adf-people 
+<activiti-people 
     [people]="YOUR_INVOLVED_PEOPLE_LIST" 
     [taskId]="YOUR_TASK_ID"
     [readOnly]="YOUR_READ_ONLY_FLAG">
-</adf-people>
+</activiti-people>
 ```
 
 ![activiti-people](docs/assets/activiti_people.png)
@@ -466,64 +457,12 @@ This component displays involved users to a specified task
 
 No Events
 
-## ADF Comments Component
-
-This component displays comments entered by involved users to a specified task. It also allows an involved user to add his/her comment to the task.
-
-```html
-<adf-comments
-    [taskId]="YOUR_TASK_ID"
-    [readOnly]="YOUR_READ_ONLY_FLAG">
-</adf-comments>
-```
-
-![adf-comments](docs/assets/adf-comments.png)
-
-### Properties
-
-| Name | Type | Description |
-| --- | --- | --- |
-| taskId | string | The numeric ID of the task |
-| readOnly | boolean | The boolean flag |
-
-#### Events
-
-| Name | Description |
-| --- | --- |
-| error | Raised when an error occurs while displaying/adding a comment |
-
-## Start Task Component
-
-This component Creates/Starts new task for the specified app
-
-```html
-<adf-start-task
-    [appId]="YOUR_APP_ID">
-</adf-start-task>
-```
-
-![adf-start-task](docs/assets/adf-start-task.png)
-
-### Properties
-
-| Name | Type | Description |
-| --- | --- | --- |
-| appId | string | (**required**): The id of the app. |
-
-#### Events
-
-| Name | Description |
-| --- | --- |
-| success | Raised when the task is successfully created |
-| cancel | Raised when the cancel button is pressed by the user |
-| error | Raised if there is an error during task creation |
-
 ## Build from sources
 
 You can build component from sources with the following commands:
+
 ```sh
 npm install
-
 npm run build
 ```
 

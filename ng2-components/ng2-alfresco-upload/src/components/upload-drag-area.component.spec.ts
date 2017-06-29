@@ -16,13 +16,49 @@
  */
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { EventEmitter, DebugElement } from '@angular/core';
-import { AlfrescoTranslationService, CoreModule, LogService, LogServiceMock, NotificationService } from 'ng2-alfresco-core';
+import { DebugElement } from '@angular/core';
+import { AlfrescoTranslationService, CoreModule, LogService, LogServiceMock } from 'ng2-alfresco-core';
 
 import { UploadDragAreaComponent } from './upload-drag-area.component';
+import { FileDraggableDirective } from '../directives/file-draggable.directive';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { UploadService } from '../services/upload.service';
 import { FileModel } from '../models/file.model';
+
+let fakeShareDataRow = {
+    obj: {
+        entry: {
+            createdAt: '2017-06-04T04:32:15.597Z',
+            path: {
+                name: '/Company Home/User Homes/Test',
+                isComplete: true,
+                elements: [
+                    {
+                        id: '94acfc73-7014-4475-9bd9-93a2162f0f8c',
+                        name: 'Company Home'
+                    },
+                    {
+                        id: '55052317-7e59-4058-8e07-769f41e615e1',
+                        name: 'User Homes'
+                    },
+                    {
+                        id: '70e1cc6a-6918-468a-b84a-1048093b06fd',
+                        name: 'Test'
+                    }
+                ]
+            },
+            isFolder: true,
+            name: 'pippo',
+            id: '7462d28e-bd43-4b91-9e7b-0d71598680ac',
+            nodeType: 'cm:folder',
+            allowableOperations: [
+                'delete',
+                'update',
+                'create'
+            ]
+        }
+    }
+};
 
 describe('UploadDragAreaComponent', () => {
 
@@ -39,11 +75,11 @@ describe('UploadDragAreaComponent', () => {
                 CoreModule.forRoot()
             ],
             declarations: [
+                FileDraggableDirective,
                 UploadDragAreaComponent
             ],
             providers: [
                 UploadService,
-                NotificationService,
                 { provide: AlfrescoTranslationService, useClass: TranslationMock },
                 { provide: LogService, useClass: LogServiceMock }
             ]
@@ -66,21 +102,22 @@ describe('UploadDragAreaComponent', () => {
         TestBed.resetTestingModule();
     });
 
-    it('should upload the list of files dropped', () => {
+    it('should upload the list of files dropped', (done) => {
         component.currentFolderPath = '/root-fake-/sites-fake/folder-fake';
         component.onSuccess = null;
         component.showNotificationBar = false;
-        uploadService.addToQueue = jasmine.createSpy('addToQueue');
         uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
 
         fixture.detectChanges();
         const file = <File> {name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json'};
-        let fileFake = new FileModel(file);
-        let filesList = [fileFake];
+        let filesList = [file];
+
+        spyOn(uploadService, 'addToQueue').and.callFake((f: FileModel) => {
+            expect(f.file).toBe(file);
+            done();
+        });
 
         component.onFilesDropped(filesList);
-        expect(uploadService.addToQueue).toHaveBeenCalledWith(fileFake);
-        expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith('-root-', '/root-fake-/sites-fake/folder-fake', null);
     });
 
     it('should show the loading messages in the notification bar when the files are dropped', () => {
@@ -91,11 +128,11 @@ describe('UploadDragAreaComponent', () => {
         component.showUndoNotificationBar = jasmine.createSpy('_showUndoNotificationBar');
 
         fixture.detectChanges();
-        let fileFake = new FileModel(<File> {name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json'});
+        let fileFake = <File> {name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json'};
         let filesList = [fileFake];
 
         component.onFilesDropped(filesList);
-        expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith('-root-', '/root-fake-/sites-fake/folder-fake', null);
+        expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith(null);
         expect(component.showUndoNotificationBar).toHaveBeenCalled();
     });
 
@@ -118,8 +155,7 @@ describe('UploadDragAreaComponent', () => {
         };
 
         component.onFilesEntityDropped(itemEntity);
-        expect(uploadService.uploadFilesInTheQueue)
-            .toHaveBeenCalledWith('-root-', '/root-fake-/sites-fake/document-library-fake/folder-fake/', null);
+        expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith(null);
     });
 
     it('should upload a file with a custom root folder ID when dropped', () => {
@@ -142,50 +178,15 @@ describe('UploadDragAreaComponent', () => {
         };
 
         component.onFilesEntityDropped(itemEntity);
-        expect(uploadService.uploadFilesInTheQueue)
-            .toHaveBeenCalledWith('-my-', '/root-fake-/sites-fake/document-library-fake/folder-fake/', null);
+        expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith(null);
     });
 
-    xit('should throws an exception and show it in the notification bar when the folder already exist', done => {
-        component.currentFolderPath = '/root-fake-/sites-fake/folder-fake';
-        component.showNotificationBar = true;
-
-        fixture.detectChanges();
-        let fakeRest = {
-            response: {
-                body: {
-                    error: {
-                        statusCode: 409
-                    }
-                }
-            }
-        };
-        let fakePromise = new Promise(function (resolve, reject) {
-            reject(fakeRest);
-        });
-        spyOn(uploadService, 'callApiCreateFolder').and.returnValue(fakePromise);
-        spyOn(component, 'showErrorNotificationBar').and.callFake( () => {
-            expect(component.showErrorNotificationBar).toHaveBeenCalledWith('FILE_UPLOAD.MESSAGES.FOLDER_ALREADY_EXIST');
-            done();
-        });
-
-        let folderEntry = {
-            fullPath: '/folder-duplicate-fake',
-            isDirectory: true,
-            isFile: false,
-            name: 'folder-duplicate-fake'
-        };
-
-        component.onFolderEntityDropped(folderEntry);
-    });
-
-    it('should create a folder and call onFilesEntityDropped with the file inside the folder', done => {
+    it('should upload a file when user has create permission on target folder', async(() => {
         component.currentFolderPath = '/root-fake-/sites-fake/document-library-fake';
-        component.onSuccess = new EventEmitter();
+        component.rootFolderId = '-my-';
+        component.enabled = false;
 
-        fixture.detectChanges();
-
-        let itemEntity = {
+        let fakeItem = {
             fullPath: '/folder-fake/file-fake.png',
             isDirectory: false,
             isFile: true,
@@ -196,41 +197,20 @@ describe('UploadDragAreaComponent', () => {
             }
         };
 
-        let fakeRest = {
-            entry: {
-                isFile: false,
-                isFolder: true,
-                name: 'folder-fake'
+        fixture.detectChanges();
+        spyOn(uploadService, 'uploadFilesInTheQueue').and.returnValue(Promise.resolve(fakeItem));
+        component.onSuccess.subscribe((val) => {
+            expect(val).not.toBeNull();
+        });
+
+        let fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
+            detail: {
+                data: fakeShareDataRow,
+                files: [fakeItem]
             }
-        };
-        let fakePromise = new Promise(function (resolve, reject) {
-            resolve(fakeRest);
-        });
-        spyOn(uploadService, 'callApiCreateFolder').and.returnValue(fakePromise);
-        spyOn(component, 'onFilesEntityDropped').and.callFake( () => {
-            expect(component.onFilesEntityDropped).toHaveBeenCalledWith(itemEntity);
         });
 
-        spyOn(component, 'showUndoNotificationBar').and.callFake( () => {
-            expect(component.showUndoNotificationBar).toHaveBeenCalled();
-            done();
-        });
+        component.onUploadFiles(fakeCustomEvent);
+    }));
 
-        let folderEntry = {
-            fullPath: '/folder-fake',
-            isDirectory: true,
-            isFile: false,
-            name: 'folder-fake',
-            createReader: () => {
-                return {
-                    readEntries: (callback) => {
-                        let entries = [itemEntity, itemEntity];
-                        callback(entries);
-                    }
-                };
-            }
-        };
-
-        component.onFolderEntityDropped(folderEntry);
-    });
 });

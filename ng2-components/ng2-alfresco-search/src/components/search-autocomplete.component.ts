@@ -15,19 +15,20 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, OnChanges, Output, ViewChild } from '@angular/core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
-import { AlfrescoTranslationService, SearchOptions, SearchService } from 'ng2-alfresco-core';
-import { ThumbnailService } from 'ng2-alfresco-core';
+import { AlfrescoSearchService, SearchOptions } from './../services/alfresco-search.service';
+import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
 
 declare var require: any;
 
 @Component({
-    selector: 'adf-search-autocomplete, alfresco-search-autocomplete',
-    templateUrl: './search-autocomplete.component.html',
-    styleUrls: ['./search-autocomplete.component.css']
+    selector: 'alfresco-search-autocomplete',
+    templateUrl: './alfresco-search-autocomplete.component.html',
+    styleUrls: ['./alfresco-search-autocomplete.component.css']
 })
-export class SearchAutocompleteComponent implements OnInit, OnChanges {
+export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
 
     @Input()
     searchTerm: string = '';
@@ -51,9 +52,6 @@ export class SearchAutocompleteComponent implements OnInit, OnChanges {
     @Input()
     resultType: string = null;
 
-    @Input()
-    highlight: boolean = false;
-
     @Output()
     fileSelect: EventEmitter<any> = new EventEmitter();
 
@@ -71,9 +69,9 @@ export class SearchAutocompleteComponent implements OnInit, OnChanges {
 
     @ViewChild('resultsTableBody', {}) resultsTableBody: ElementRef;
 
-    constructor(private searchService: SearchService,
+    constructor(private searchService: AlfrescoSearchService,
                 private translateService: AlfrescoTranslationService,
-                private thumbnailService: ThumbnailService) {
+                private thumbnailService: AlfrescoThumbnailService) {
     }
 
     ngOnInit(): void {
@@ -103,7 +101,6 @@ export class SearchAutocompleteComponent implements OnInit, OnChanges {
             orderBy: this.resultSort
         };
         if (searchTerm !== null && searchTerm !== '') {
-            searchTerm = searchTerm + '*';
             this.searchService
                 .getNodeQueryResults(searchTerm, searchOpts)
                 .subscribe(
@@ -114,7 +111,7 @@ export class SearchAutocompleteComponent implements OnInit, OnChanges {
                     },
                     error => {
                         this.results = null;
-                        this.errorMessage = <any> error;
+                        this.errorMessage = <any>error;
                         this.resultsLoad.error(error);
                     }
                 );
@@ -127,16 +124,30 @@ export class SearchAutocompleteComponent implements OnInit, OnChanges {
      * @returns {string} URL address.
      */
     getMimeTypeIcon(node: MinimalNodeEntity): string {
-        let mimeType;
-
         if (node.entry.content && node.entry.content.mimeType) {
-            mimeType = node.entry.content.mimeType;
+            let icon = this.thumbnailService.getMimeTypeIcon(node.entry.content.mimeType);
+            return this.resolveIconPath(icon);
         }
         if (node.entry.isFolder) {
-            mimeType = 'folder';
+            return require('../assets/images/ft_ic_folder.svg');
         }
+    }
 
-        return this.thumbnailService.getMimeTypeIcon(mimeType);
+    resolveIconPath(icon: string): string {
+        return require('../assets/images/' + icon);
+    }
+
+    /**
+     * Gets thumbnail message key for the given document node, which can be used to look up alt text
+     * @param node Node to get URL for.
+     * @returns {string} URL address.
+     */
+    getMimeTypeKey(node: MinimalNodeEntity): string {
+        if (node.entry.content && node.entry.content.mimeType) {
+            return 'SEARCH.ICONS.' + this.thumbnailService.getMimeTypeKey(node.entry.content.mimeType);
+        } else {
+            return '';
+        }
     }
 
     focusResult(): void {

@@ -15,28 +15,26 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdInputModule } from '@angular/material';
-import { CoreModule } from 'ng2-alfresco-core';
-import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
-import { EcmModelService } from './../../../services/ecm-model.service';
-import { FormService } from './../../../services/form.service';
+import { AmountWidget } from './amount.widget';
 import { FormFieldModel } from './../core/form-field.model';
-import { AmountWidgetComponent } from './amount.widget';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { CoreModule } from 'ng2-alfresco-core';
+import { FormService } from './../../../services/form.service';
+import { EcmModelService } from './../../../services/ecm-model.service';
+import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 
-describe('AmountWidgetComponent', () => {
+describe('AmountWidget', () => {
 
-    let widget: AmountWidgetComponent;
-    let fixture: ComponentFixture<AmountWidgetComponent>;
+    let widget: AmountWidget;
+    let fixture: ComponentFixture<AmountWidget>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
-                MdInputModule
+                CoreModule.forRoot()
             ],
             declarations: [
-                AmountWidgetComponent
+                AmountWidget
             ],
             providers: [
                 FormService,
@@ -47,7 +45,7 @@ describe('AmountWidgetComponent', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(AmountWidgetComponent);
+        fixture = TestBed.createComponent(AmountWidget);
 
         widget = fixture.componentInstance;
     });
@@ -65,7 +63,7 @@ describe('AmountWidgetComponent', () => {
     it('should setup default currency', () => {
         widget.field = null;
         widget.ngOnInit();
-        expect(widget.currency).toBe(AmountWidgetComponent.DEFAULT_CURRENCY);
+        expect(widget.currency).toBe(AmountWidget.DEFAULT_CURRENCY);
     });
 
 });

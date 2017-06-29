@@ -15,36 +15,35 @@
  * limitations under the License.
  */
 
-import { DebugElement } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdButtonModule, MdIconModule, MdProgressSpinnerModule } from '@angular/material';
-import { By } from '@angular/platform-browser';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { NotSupportedFormat } from './notSupportedFormat.component';
+import { PdfViewerComponent } from './pdfViewer.component';
+import { DebugElement }    from '@angular/core';
+import { MdIconModule, MdButtonModule, MdProgressSpinnerModule } from '@angular/material';
+import { Subject } from 'rxjs';
 import {
-    AlfrescoApiService,
     AlfrescoAuthenticationService,
     AlfrescoSettingsService,
-    ContentService,
     CoreModule,
+    ContentService,
+    AlfrescoApiService,
     LogService,
     RenditionsService
 } from 'ng2-alfresco-core';
-import { Subject } from 'rxjs/Subject';
-import { NotSupportedFormatComponent } from './notSupportedFormat.component';
-import { PdfViewerComponent } from './pdfViewer.component';
 
-interface RenditionResponse {
+type RenditionResponse = {
     entry: {
         status: string
-    };
-}
+    }
+};
 
-describe('NotSupportedFormatComponent', () => {
+describe('Test ng2-alfresco-viewer Not Supported Format View component', () => {
 
     const nodeId = 'not-supported-node-id';
 
-    let component: NotSupportedFormatComponent;
+    let component: NotSupportedFormat;
     let service: ContentService;
-    let fixture: ComponentFixture<NotSupportedFormatComponent>;
+    let fixture: ComponentFixture<NotSupportedFormat>;
     let debug: DebugElement;
     let element: HTMLElement;
     let renditionsService: RenditionsService;
@@ -61,7 +60,7 @@ describe('NotSupportedFormatComponent', () => {
                 MdProgressSpinnerModule
             ],
             declarations: [
-                NotSupportedFormatComponent,
+                NotSupportedFormat,
                 PdfViewerComponent
             ],
             providers: [
@@ -76,7 +75,7 @@ describe('NotSupportedFormatComponent', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(NotSupportedFormatComponent);
+        fixture = TestBed.createComponent(NotSupportedFormat);
         service = fixture.debugElement.injector.get(ContentService);
         debug = fixture.debugElement;
         element = fixture.nativeElement;
@@ -158,60 +157,6 @@ describe('NotSupportedFormatComponent', () => {
                 expect(element.querySelector('#viewer-convert-button')).toBeNull();
             });
         }));
-
-        it('should start the conversion when clicking on the "Convert to PDF" button', () => {
-            component.convertible = true;
-            fixture.detectChanges();
-
-            const convertButton = debug.query(By.css('[data-automation-id="viewer-convert-button"]'));
-            convertButton.triggerEventHandler('click', null);
-            fixture.detectChanges();
-
-            const conversionSpinner = debug.query(By.css('[data-automation-id="viewer-conversion-spinner"]'));
-            expect(renditionsService.convert).toHaveBeenCalled();
-            expect(conversionSpinner).not.toBeNull();
-        });
-
-        it('should remove the spinner if an error happens during conversion', () => {
-            component.convertToPdf();
-
-            conversionSubject.error('whatever');
-            fixture.detectChanges();
-
-            const conversionSpinner = debug.query(By.css('[data-automation-id="viewer-conversion-spinner"]'));
-            expect(conversionSpinner).toBeNull();
-        });
-
-        it('should remove the spinner and show the pdf if conversion has finished', () => {
-            component.convertToPdf();
-
-            conversionSubject.complete();
-            fixture.detectChanges();
-
-            const conversionSpinner = debug.query(By.css('[data-automation-id="viewer-conversion-spinner"]'));
-            const pdfRenditionViewer = debug.query(By.css('[data-automation-id="pdf-rendition-viewer"]'));
-            expect(conversionSpinner).toBeNull();
-            expect(pdfRenditionViewer).not.toBeNull();
-        });
-
-        it('should unsubscribe from the conversion subscription on ngOnDestroy', () => {
-            component.convertToPdf();
-
-            component.ngOnDestroy();
-            conversionSubject.complete();
-            fixture.detectChanges();
-
-            const pdfRenditionViewer = debug.query(By.css('[data-automation-id="pdf-rendition-viewer"]'));
-            expect(pdfRenditionViewer).toBeNull();
-        });
-
-        it('should not throw error on ngOnDestroy if the conversion hasn\'t started at all' , () => {
-            const callNgOnDestroy = () => {
-                component.ngOnDestroy();
-            };
-
-            expect(callNgOnDestroy).not.toThrowError();
-        });
     });
 
     describe('User Interaction', () => {

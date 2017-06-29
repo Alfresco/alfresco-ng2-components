@@ -15,23 +15,23 @@
  * limitations under the License.
  */
 
-import { DebugElement } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { PdfViewerComponent } from './pdfViewer.component';
+import { TxtViewerComponent } from './txtViewer.component';
+import { NotSupportedFormat } from './notSupportedFormat.component';
+import { MediaPlayerComponent } from './mediaPlayer.component';
+import { ImgViewerComponent } from './imgViewer.component';
+import { RenderingQueueServices } from '../services/rendering-queue.services';
+import { ViewerComponent } from './viewer.component';
+import { EventMock } from '../assets/event.mock';
+import { DebugElement }    from '@angular/core';
 import {
-    AlfrescoApiService,
     AlfrescoAuthenticationService,
     AlfrescoSettingsService,
+    AlfrescoApiService,
     CoreModule,
     RenditionsService
 } from 'ng2-alfresco-core';
-import { EventMock } from '../assets/event.mock';
-import { RenderingQueueServices } from '../services/rendering-queue.services';
-import { ImgViewerComponent } from './imgViewer.component';
-import { MediaPlayerComponent } from './mediaPlayer.component';
-import { NotSupportedFormatComponent } from './notSupportedFormat.component';
-import { PdfViewerComponent } from './pdfViewer.component';
-import { TxtViewerComponent } from './txtViewer.component';
-import { ViewerComponent } from './viewer.component';
 
 declare let jasmine: any;
 
@@ -51,7 +51,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
                 ViewerComponent,
                 PdfViewerComponent,
                 TxtViewerComponent,
-                NotSupportedFormatComponent,
+                NotSupportedFormat,
                 MediaPlayerComponent,
                 ImgViewerComponent
             ],

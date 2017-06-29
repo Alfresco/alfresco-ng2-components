@@ -1,7 +1,43 @@
-<div class="upload-list">
-    <ng-template
-        ngFor
-        [ngForOf]="files"
-        [ngForTemplate]="template">
-    </ng-template>
+<div class="body-dialog-header" *ngIf="!isUploadCompleted()">
+    <div class="body-dialog-action"></div>
+    <div class="body-dialog-cancel">
+        <a data-automation-id="cancel_upload_all" href="#" (click)="cancelAllFiles($event)">{{'FILE_UPLOAD.BUTTON.CANCEL_ALL' | translate}}</a>
+    </div>
 </div>
+<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+    <tr>
+        <th class="mdl-data-table__cell--non-numeric full-width">{{'ADF_FILE_UPLOAD.FILE_LIST.NAME' | translate}}</th>
+        <th class="mdl-data-table__cell center">{{'ADF_FILE_UPLOAD.FILE_LIST.PROGRESS' | translate}}</th>
+        <th class="mdl-data-table__cell mdl-cell--hide-phone size-column center">{{'ADF_FILE_UPLOAD.FILE_LIST.SIZE' | translate}}</th>
+        <th class="mdl-data-table__cell center">{{'ADF_FILE_UPLOAD.FILE_LIST.ACTION' | translate}}</th>
+    </tr>
+    <tr *ngFor="let file of files" tabindex="0">
+        <td class="mdl-data-table__cell--non-numeric full-width ellipsis-cell" attr.data-automation-id="dialog_{{file.name}}">
+            <div class="cell-container">
+                <div class="cell-value" [title]="file.name">{{file.name}}</div>
+            </div>
+        </td>
+        <td class="mdl-data-table__cell center">
+            <md-icon *ngIf="file.status === FileUploadStatus.Error || file.status === FileUploadStatus.Aborted">error_outline</md-icon>
+            <md-icon *ngIf="file.status === FileUploadStatus.Cancelled">block</md-icon>
+            <ng-container *ngIf="file.status === FileUploadStatus.Progress">
+                <md-progress-spinner
+                    class="file-progress-spinner"
+                    [mode]="'determinate'"
+                    [value]="file.progress.percent">
+                </md-progress-spinner>
+            </ng-container>
+        </td>
+        <td class="mdl-data-table__cell mdl-cell--hide-phone size-column center" attr.data-automation-id="{{file.name}}_filesize">
+            {{ file.size | adfFileSize }}
+        </td>
+        <td class="mdl-data-table__cell center">
+            <span *ngIf="file.status === FileUploadStatus.Complete">
+                <md-icon>done</md-icon>
+            </span>
+            <span *ngIf="file.status === FileUploadStatus.Progress" (click)="cancelFileUpload(file)" tabindex="0" class="cancel-upload-button">
+                <md-icon>remove_circle_outline</md-icon>
+            </span>
+        </td>
+    </tr>
+</table>

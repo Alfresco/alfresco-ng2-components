@@ -15,11 +15,9 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
-import { FormService } from './../../services/form.service';
+import { Component, Input, AfterViewInit, Output, EventEmitter, ElementRef } from '@angular/core';
 import { FormFieldModel } from './core/index';
+import { FormService } from './../../services/form.service';
 
 declare let componentHandler: any;
 

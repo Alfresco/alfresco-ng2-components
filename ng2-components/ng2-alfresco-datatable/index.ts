@@ -15,46 +15,47 @@
  * limitations under the License.
  */
 
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
+import { MdCheckboxModule, MdMenuModule, MdIconModule, MdButtonModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
-import { MaterialModule } from './src/material.module';
 
 export * from './src/data/index';
+export * from './src/components/index';
+export * from './src/components/pagination/index';
+export * from './src/components/datatable/data-cell.event';
+export * from './src/components/datatable/data-row-action.event';
 
-export { DataTableCellComponent } from './src/components/datatable/datatable-cell.component';
-export { DataTableComponent } from './src/components/datatable/datatable.component';
-export { EmptyListComponent } from './src/components/datatable/empty-list.component';
-export { PaginationComponent } from './src/components/pagination/pagination.component';
-export { DataCellEvent, DataCellEventModel } from './src/components/datatable/data-cell.event';
-export { DataRowActionEvent, DataRowActionModel } from './src/components/datatable/data-row-action.event';
-
-import { DataTableCellComponent } from './src/components/datatable/datatable-cell.component';
 import { DataTableComponent } from './src/components/datatable/datatable.component';
-import { EmptyListComponent } from './src/components/datatable/empty-list.component';
+import { NoContentTemplateComponent } from './src/directives/no-content-template.component';
+import { LoadingContentTemplateComponent } from './src/directives/loading-template.component';
 import { PaginationComponent } from './src/components/pagination/pagination.component';
-import { LoadingContentTemplateDirective } from './src/directives/loading-template.directive';
-import { NoContentTemplateDirective } from './src/directives/no-content-template.directive';
+import { DataTableCellComponent } from './src/components/datatable/datatable-cell.component';
 
-export function directives() {
-    return [
-        DataTableComponent,
-        EmptyListComponent,
-        DataTableCellComponent,
-        NoContentTemplateDirective,
-        LoadingContentTemplateDirective,
-        PaginationComponent
-    ];
-}
+export const ALFRESCO_DATATABLE_DIRECTIVES: [any] = [
+    DataTableComponent,
+    DataTableCellComponent,
+    NoContentTemplateComponent,
+    LoadingContentTemplateComponent,
+    PaginationComponent
+];
 
 @NgModule({
     imports: [
         CoreModule,
-        MaterialModule
+        MdCheckboxModule,
+        MdMenuModule,
+        MdIconModule,
+        MdButtonModule
     ],
-    declarations: directives(),
+    declarations: [
+        ...ALFRESCO_DATATABLE_DIRECTIVES
+    ],
     exports: [
-        ...directives(),
-        MaterialModule
+        ...ALFRESCO_DATATABLE_DIRECTIVES,
+        MdCheckboxModule,
+        MdMenuModule,
+        MdIconModule,
+        MdButtonModule
     ]
 })
 export class DataTableModule {

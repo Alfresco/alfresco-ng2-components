@@ -5,7 +5,6 @@ const commonConfig = require('./webpack.common.js');
 const helpers = require('./helpers');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 var HappyPack = require('happypack');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
 
@@ -55,8 +54,6 @@ module.exports = webpackMerge(commonConfig, {
     },
 
     plugins: [
-        new ForkTsCheckerWebpackPlugin(),
-
         new HappyPack({
             id: 'ts',
             threads: 4,

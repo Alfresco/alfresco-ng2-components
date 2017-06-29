@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
-import { Response, ResponseOptions } from '@angular/http';
-import { AlfrescoApiService, CoreModule, LogService } from 'ng2-alfresco-core';
+import { TestBed, async } from '@angular/core/testing';
+import { CoreModule, AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
-import { FormDefinitionModel } from '../models/form-definition.model';
-import { EcmModelService } from './ecm-model.service';
 import { FormService } from './form.service';
+import { Response, ResponseOptions } from '@angular/http';
+import { EcmModelService } from './ecm-model.service';
+import { FormDefinitionModel } from '../models/form-definition.model';
 
 declare let jasmine: any;
 
@@ -355,19 +355,14 @@ describe('Form service', () => {
         it('should get all the forms with modelType=2', (done) => {
             service.getForms().subscribe(result => {
                 expect(jasmine.Ajax.requests.mostRecent().url.endsWith('models?modelType=2')).toBeTruthy();
-                expect(result.length).toEqual(2);
+                expect(result).toEqual({});
                 done();
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 'status': 200,
                 contentType: 'application/json',
-                responseText: JSON.stringify({
-                    data: [
-                        { name: 'FakeName-1', lastUpdatedByFullName: 'FakeUser-1', lastUpdated: '2017-01-02' },
-                        { name: 'FakeName-2', lastUpdatedByFullName: 'FakeUser-2', lastUpdated: '2017-01-03' }
-                    ]
-                })
+                responseText: JSON.stringify({})
             });
         });
 
@@ -531,7 +526,7 @@ describe('Form service', () => {
 
             function stubCreateForm() {
                 jasmine.Ajax.stubRequest(
-                    'http://localhost:9876/bpm/activiti-app/api/enterprise/models'
+                    'http://localhost:3000/bpm/activiti-app/api/enterprise/models'
                 ).andReturn({
                     status: 200,
                     statusText: 'HTTP/1.1 200 OK',
@@ -542,7 +537,7 @@ describe('Form service', () => {
 
             function stubGetEcmModel() {
                 jasmine.Ajax.stubRequest(
-                    'http://localhost:9876/ecm/alfresco/api/-default-/private/alfresco/versions/1/cmm/activitiFormsModel/types'
+                    'http://localhost:3000/ecm/alfresco/api/-default-/private/alfresco/versions/1/cmm/activitiFormsModel/types'
                 ).andReturn({
                     status: 200,
                     statusText: 'HTTP/1.1 200 OK',
@@ -563,7 +558,7 @@ describe('Form service', () => {
 
             function stubAddFieldsToAForm() {
                 jasmine.Ajax.stubRequest(
-                    'http://localhost:9876/bpm/activiti-app/api/enterprise/editor/form-models/' + formId
+                    'http://localhost:3000/bpm/activiti-app/api/enterprise/editor/form-models/' + formId
                 ).andReturn({
                     status: 200,
                     statusText: 'HTTP/1.1 200 OK',
