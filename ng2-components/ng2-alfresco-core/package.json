@@ -1,7 +1,7 @@
 {
   "name": "ng2-alfresco-core",
   "description": "Alfresco Angular 2 Components core",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "clean": "rimraf dist node_modules typings bundles coverage .npmrc",
