@@ -48,6 +48,8 @@ while [[ $1 == -* ]]; do
     esac
 done
 
+npm install rimraf -g
+
 for PACKAGE in "$@"
 do
     SELECTED_UNITS="$SELECTED_UNITS \"$PACKAGE\""
@@ -64,15 +66,24 @@ for PACKAGE in ${projects[@]}
         echo "====== $PACKAGE ====="
         DESTDIR="$DIR/../ng2-components/$PACKAGE"
         cd $DESTDIR
-        
-        npm install rimraf
+
         npm run clean-lock
         npm run clean
         npm install
-        
+
         if $RUN_TEST == true; then
             test_project $PACKAGE
         fi
     done
 
+cd "$DIR/../demo-shell-ng2"
+npm run clean-lock
+npm run clean
+npm install
 
+cd "$DIR/../ng2-components"
+npm run clean-lock
+npm run clean
+npm install
+
+cd ${DIR}
