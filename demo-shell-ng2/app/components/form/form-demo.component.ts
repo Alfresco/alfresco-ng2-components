@@ -106,7 +106,7 @@ export class FormDemoComponent implements OnInit, AfterViewInit {
                 id => {
                     this.formService.getFormDefinitionById(id).subscribe(
                         form => {
-                            this.form = this.formService.parseForm((form);
+                            this.form = this.formService.parseForm(form);
                         },
                         (error) => {
                             this.showError = true;
