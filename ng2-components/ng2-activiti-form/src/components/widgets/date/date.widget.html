@@ -18,6 +18,8 @@
     </div>
     <div class="mdl-cell mdl-cell--1-col">
         <button
+            [attr.id]="field.id+'-button'"
+            [disabled]="field.readOnly"
             class="mdl-button mdl-js-button mdl-button--icon"
             (click)="datePicker.toggle()">
             <i class="material-icons">date_range</i>
