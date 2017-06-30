@@ -6,6 +6,7 @@ const helpers = require('./helpers');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 var HappyPack = require('happypack');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const alfrescoLibs = [
     'ng2-activiti-analytics',
@@ -74,6 +75,8 @@ module.exports = webpackMerge(commonConfig, {
     },
 
     plugins: [
+        new ForkTsCheckerWebpackPlugin({tsconfig: "tsconfig.dev.json"}),
+
         new HappyPack({
             id: 'ts',
             threads: 8,

@@ -4,7 +4,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const helpers = require('./helpers');
 const path = require('path');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -26,7 +25,7 @@ module.exports = {
                 test: /\.js$/,
                 include: [helpers.root('app'), helpers.root('../ng2-components')],
                 loader: 'source-map-loader',
-                exclude: [ /node_modules/, /public/, /resources/, /dist/]
+                exclude: [/node_modules/, /public/, /resources/, /dist/]
             },
             {
                 enforce: 'pre',
@@ -36,18 +35,18 @@ module.exports = {
                 options: {
                     emitErrors: true
                 },
-                exclude: [ /node_modules/, /public/, /resources/, /dist/]
+                exclude: [/node_modules/, /public/, /resources/, /dist/]
             },
             {
                 enforce: 'pre',
                 test: /\.ts$/,
                 use: 'source-map-loader',
-                exclude: [ /public/, /resources/, /dist/]
+                exclude: [/public/, /resources/, /dist/]
             },
             {
                 test: /\.html$/,
                 loader: 'html-loader',
-                exclude: [ /node_modules/, /public/, /resources/, /dist/]
+                exclude: [/node_modules/, /public/, /resources/, /dist/]
             },
             {
                 test: /\.css$/,
@@ -71,7 +70,7 @@ module.exports = {
                 }, {
                     loader: "sass-loader",
                     options: {
-                        includePaths: [ path.resolve(__dirname, '../../ng2-components/ng2-alfresco-core/styles')]
+                        includePaths: [path.resolve(__dirname, '../../ng2-components/ng2-alfresco-core/styles')]
                     }
                 }]
             },
@@ -94,8 +93,6 @@ module.exports = {
     },
 
     plugins: [
-        new ForkTsCheckerWebpackPlugin(),
-        // Workaround for angular/angular#11580
         new webpack.ContextReplacementPlugin(
             // The (\\|\/) piece accounts for path separators in *nix and Windows
             /angular(\\|\/)core(\\|\/)@angular/,
