@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { DataTableAdapter, DataColumn, DataRow } from '../../data/index';
+import { DataTableAdapter, DataColumn, DataRow } from '../../data/datatable-adapter';
 
 @Component({
     selector: 'alfresco-datatable-cell',
