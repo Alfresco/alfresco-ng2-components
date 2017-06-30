@@ -15,8 +15,13 @@
  * limitations under the License.
  */
 
+<<<<<<< HEAD
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { DataColumn, DataRow, DataTableAdapter } from '../../data/datatable-adapter';
+=======
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { DataTableAdapter, DataColumn, DataRow } from '../../data/datatable-adapter';
+>>>>>>> AOT compatibility enhancements (#2015)
 
 @Component({
     selector: 'adf-datatable-cell, alfresco-datatable-cell',

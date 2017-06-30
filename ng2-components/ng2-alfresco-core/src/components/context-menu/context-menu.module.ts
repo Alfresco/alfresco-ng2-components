@@ -15,8 +15,13 @@
  * limitations under the License.
  */
 
+<<<<<<< HEAD:ng2-components/ng2-alfresco-core/src/components/context-menu/context-menu.module.ts
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+=======
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+>>>>>>> AOT compatibility enhancements (#2015):ng2-components/ng2-alfresco-core/src/components/context-menu/context-menu.module.ts
 
 import { ContextMenuHolderComponent } from './context-menu-holder.component';
 import { ContextMenuDirective } from './context-menu.directive';
