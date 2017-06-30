@@ -52,7 +52,7 @@
         "to-string-loader": "^1.1.4",
         "tslint": "^4.4.2",
         "tslint-loader": "^3.3.0",
-        "typescript": "^2.1.6",
+        "typescript": "^2.3.4",
         "copy-webpack-plugin": "^4.0.1",
         "extract-text-webpack-plugin": "^2.0.0-rc.3",
         "html-webpack-plugin": "^2.28.0",
