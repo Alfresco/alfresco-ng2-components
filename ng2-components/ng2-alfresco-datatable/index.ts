@@ -16,14 +16,16 @@
  */
 
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { MdCheckboxModule, MdMenuModule, MdIconModule, MdButtonModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
+import { MaterialModule } from './src/material.module';
 
 export * from './src/data/index';
-export * from './src/components/index';
-export * from './src/components/pagination/index';
-export * from './src/components/datatable/data-cell.event';
-export * from './src/components/datatable/data-row-action.event';
+
+export { DataTableCellComponent } from './src/components/datatable/datatable-cell.component';
+export { DataTableComponent } from './src/components/datatable/datatable.component';
+export { PaginationComponent } from './src/components/pagination/pagination.component';
+export { DataCellEvent, DataCellEventModel } from './src/components/datatable/data-cell.event';
+export { DataRowActionEvent, DataRowActionModel } from './src/components/datatable/data-row-action.event';
 
 import { DataTableComponent } from './src/components/datatable/datatable.component';
 import { NoContentTemplateComponent } from './src/directives/no-content-template.component';
@@ -31,31 +33,25 @@ import { LoadingContentTemplateComponent } from './src/directives/loading-templa
 import { PaginationComponent } from './src/components/pagination/pagination.component';
 import { DataTableCellComponent } from './src/components/datatable/datatable-cell.component';
 
-export const ALFRESCO_DATATABLE_DIRECTIVES: [any] = [
-    DataTableComponent,
-    DataTableCellComponent,
-    NoContentTemplateComponent,
-    LoadingContentTemplateComponent,
-    PaginationComponent
-];
+export function directives() {
+    return [
+        DataTableComponent,
+        DataTableCellComponent,
+        NoContentTemplateComponent,
+        LoadingContentTemplateComponent,
+        PaginationComponent
+    ];
+}
 
 @NgModule({
     imports: [
         CoreModule,
-        MdCheckboxModule,
-        MdMenuModule,
-        MdIconModule,
-        MdButtonModule
+        MaterialModule
     ],
-    declarations: [
-        ...ALFRESCO_DATATABLE_DIRECTIVES
-    ],
+    declarations: directives(),
     exports: [
-        ...ALFRESCO_DATATABLE_DIRECTIVES,
-        MdCheckboxModule,
-        MdMenuModule,
-        MdIconModule,
-        MdButtonModule
+        ...directives(),
+        MaterialModule
     ]
 })
 export class DataTableModule {

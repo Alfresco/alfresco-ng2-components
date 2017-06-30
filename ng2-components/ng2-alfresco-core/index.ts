@@ -21,9 +21,13 @@ import { HttpModule, Http } from '@angular/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+
 import { MaterialModule } from './src/material.module';
-import { AppConfigModule } from './src/services/app-config.service';
+import { ContextMenuModule } from './src/components/context-menu/context-menu.module';
+import { CardViewModule } from './src/components/view/card-view.module';
+import { CollapsableModule } from './src/components/collapsable/collapsable.module';
 import { AdfToolbarComponent } from './src/components/toolbar/toolbar.component';
+import { AppConfigModule } from './src/services/app-config.service';
 
 import {
     AlfrescoAuthenticationService,
@@ -49,17 +53,18 @@ import { FileSizePipe } from './src/pipes/file-size.pipe';
 import { UploadDirective } from './src/directives/upload.directive';
 import { DataColumnComponent } from './src/components/data-column/data-column.component';
 import { DataColumnListComponent } from './src/components/data-column/data-column-list.component';
-import { MATERIAL_DESIGN_DIRECTIVES } from './src/components/material/index';
-import { CONTEXT_MENU_PROVIDERS, CONTEXT_MENU_DIRECTIVES } from './src/components/context-menu/index';
-import { COLLAPSABLE_DIRECTIVES } from './src/components/collapsable/index';
-import { VIEW_DIRECTIVES } from './src/components/view/index';
 
+import { MDL } from './src/components/material/mdl-upgrade-element.directive';
+import { AlfrescoMdlButtonDirective } from './src/components/material/mdl-button.directive';
+import { AlfrescoMdlMenuDirective } from './src/components/material/mdl-menu.directive';
+import { AlfrescoMdlTextFieldDirective } from './src/components/material/mdl-textfield.directive';
+
+export { ContextMenuModule } from './src/components/context-menu/context-menu.module';
+export { CardViewModule } from './src/components/view/card-view.module';
+export { CollapsableModule } from './src/components/collapsable/collapsable.module';
 export * from './src/services/index';
-export * from './src/components/index';
 export * from './src/components/data-column/data-column.component';
 export * from './src/components/data-column/data-column-list.component';
-export * from './src/components/collapsable/index';
-export * from './src/components/view/index';
 export * from './src/directives/upload.directive';
 export * from './src/utils/index';
 export * from './src/events/base.event';
@@ -108,22 +113,20 @@ export function createTranslateLoader(http: Http, logService: LogService) {
             }
         }),
         MaterialModule,
-        AppConfigModule
+        AppConfigModule,
+        ContextMenuModule,
+        CardViewModule,
+        CollapsableModule
     ],
     declarations: [
-        ...MATERIAL_DESIGN_DIRECTIVES,
-        ...CONTEXT_MENU_DIRECTIVES,
-        ...COLLAPSABLE_DIRECTIVES,
-        ...VIEW_DIRECTIVES,
+        ...obsoleteMdlDirectives(),
         UploadDirective,
         DataColumnComponent,
         DataColumnListComponent,
         FileSizePipe,
         AdfToolbarComponent
     ],
-    providers: [
-        ...ALFRESCO_CORE_PROVIDERS
-    ],
+    providers: providers(),
     exports: [
         BrowserAnimationsModule,
         CommonModule,
@@ -132,10 +135,10 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         HttpModule,
         TranslateModule,
         MaterialModule,
-        ...MATERIAL_DESIGN_DIRECTIVES,
-        ...CONTEXT_MENU_DIRECTIVES,
-        ...COLLAPSABLE_DIRECTIVES,
-        ...VIEW_DIRECTIVES,
+        ContextMenuModule,
+        CardViewModule,
+        CollapsableModule,
+        ...obsoleteMdlDirectives(),
         UploadDirective,
         DataColumnComponent,
         DataColumnListComponent,
@@ -151,7 +154,7 @@ export class CoreModule {
         return {
             ngModule: CoreModule,
             providers: [
-                ...ALFRESCO_CORE_PROVIDERS,
+                ...providers(),
                 AppConfigService,
                 InitAppConfigServiceProvider(appConfigFile)
             ]
