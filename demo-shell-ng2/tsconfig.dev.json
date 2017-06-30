@@ -1,0 +1,56 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "target": "es5",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "skipLibCheck": true,
+        "noLib": false,
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "noImplicitAny": false,
+        "noImplicitReturns": false,
+        "noImplicitUseStrict": false,
+        "noFallthroughCasesInSwitch": true,
+        "removeComments": true,
+        "declaration": true,
+        "outDir": "./dist",
+        "lib": [
+            "es2015",
+            "dom"
+        ],
+        "paths": {
+            "ng2-alfresco-core": ["../ng2-components/ng2-alfresco-core/"],
+            "ng2-alfresco-datatable": ["../ng2-components/ng2-alfresco-datatable/"],
+            "ng2-activiti-diagrams": ["../ng2-components/ng2-activiti-diagrams/"],
+            "ng2-activiti-analytics":["../ng2-components/ng2-activiti-analytics/"],
+            "ng2-activiti-form":["../ng2-components/ng2-activiti-form/"],
+            "ng2-activiti-tasklist": ["../ng2-components/ng2-activiti-tasklist/"],
+            "ng2-activiti-processlist": ["../ng2-components/ng2-activiti-processlist/"],
+            "ng2-alfresco-documentlist": ["../ng2-components/ng2-alfresco-documentlist/"],
+            "ng2-alfresco-login": ["../ng2-components/ng2-alfresco-login/"],
+            "ng2-alfresco-search": ["../ng2-components/ng2-alfresco-search/"],
+            "ng2-alfresco-social": ["../ng2-components/ng2-alfresco-social/"],
+            "ng2-alfresco-tag": ["../ng2-components/ng2-alfresco-tag/"],
+            "ng2-alfresco-upload": ["../ng2-components/ng2-alfresco-upload/"],
+            "ng2-alfresco-viewer": ["../ng2-components/ng2-alfresco-viewer/"],
+            "ng2-alfresco-webscript": ["../ng2-components/ng2-alfresco-webscript/"],
+            "ng2-alfresco-userinfo": ["../ng2-components/ng2-alfresco-userinfo/"],
+            "@angular/*": ["node_modules/@angular/*"],
+            "rxjs/*": ["node_modules/rxjs/*"]
+        },
+        "suppressImplicitAnyIndexErrors": true
+    },
+    "exclude": [
+        "demo",
+        "node_modules",
+        "dist"
+    ],
+    "angularCompilerOptions": {
+        "strictMetadataEmit": false,
+        "skipTemplateCodegen": true
+    }
+}
