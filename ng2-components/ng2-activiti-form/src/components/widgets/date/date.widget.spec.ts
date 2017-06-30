@@ -274,5 +274,19 @@ describe('DateWidget', () => {
             });
             widget.checkVisibility(widget.field);
         }));
+
+        it('should disable date button when is readonly', async(() => {
+            widget.field.readOnly = false;
+            fixture.detectChanges();
+
+            let dateButton = <HTMLButtonElement> element.querySelector('#date-field-id-button');
+            expect(dateButton.disabled).toBeFalsy();
+
+            widget.field.readOnly = true;
+            fixture.detectChanges();
+
+            dateButton = <HTMLButtonElement> element.querySelector('#date-field-id-button');
+            expect(dateButton.disabled).toBeTruthy();
+        }));
     });
 });
