@@ -15,4 +15,19 @@
  * limitations under the License.
  */
 
-export * from './pagination.component';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { CardView } from './adf-card-view.component';
+
+@NgModule({
+    imports: [
+        CommonModule
+    ],
+    declarations: [
+        CardView
+    ],
+    exports: [
+        CardView
+    ]
+})
+export class CardViewModule {}

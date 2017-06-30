@@ -18,14 +18,16 @@
 import { NgModule } from '@angular/core';
 import { MdSnackBarModule, MdToolbarModule, MdButtonModule } from '@angular/material';
 
-const MATERIAL_MODULES = [
-    MdSnackBarModule,
-    MdToolbarModule,
-    MdButtonModule
-];
+export function modules() {
+    return [
+        MdSnackBarModule,
+        MdToolbarModule,
+        MdButtonModule
+    ];
+}
 
 @NgModule({
-    imports: MATERIAL_MODULES,
-    exports: MATERIAL_MODULES
+    imports: modules(),
+    exports: modules()
 })
 export class MaterialModule {}
