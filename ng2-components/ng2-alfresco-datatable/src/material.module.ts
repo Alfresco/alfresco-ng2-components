@@ -16,21 +16,14 @@
  */
 
 import { NgModule } from '@angular/core';
-import {
-    MdButtonModule,
-    MdCheckboxModule,
-    MdIconModule,
-    MdMenuModule,
-    MdTooltipModule
-} from '@angular/material';
+import { MdCheckboxModule, MdMenuModule, MdIconModule, MdButtonModule } from '@angular/material';
 
 export function modules() {
     return [
         MdCheckboxModule,
         MdMenuModule,
         MdIconModule,
-        MdButtonModule,
-        MdTooltipModule
+        MdButtonModule
     ];
 }
 

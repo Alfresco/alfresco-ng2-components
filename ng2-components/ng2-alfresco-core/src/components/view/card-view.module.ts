@@ -15,42 +15,19 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { MdButtonModule, MdDatepickerModule, MdIconModule, MdInputModule, MdNativeDateModule } from '@angular/material';
-import { CardViewContentProxyDirective } from './card-view-content-proxy.directive';
-import { CardViewDateItemComponent } from './card-view-dateitem.component';
-import { CardViewItemDispatcherComponent } from './card-view-item-dispatcher.component';
-import { CardViewMapItemComponent } from './card-view-mapitem.component';
-import { CardViewTextItemComponent } from './card-view-textitem.component';
-import { CardViewComponent } from './card-view.component';
+import { CommonModule } from '@angular/common';
+import { CardView } from './adf-card-view.component';
 
 @NgModule({
     imports: [
-        CommonModule,
-        MdDatepickerModule,
-        MdNativeDateModule,
-        MdInputModule,
-        MdIconModule,
-        MdButtonModule,
-        FormsModule
+        CommonModule
     ],
     declarations: [
-        CardViewComponent,
-        CardViewItemDispatcherComponent,
-        CardViewContentProxyDirective,
-        CardViewTextItemComponent,
-        CardViewMapItemComponent,
-        CardViewDateItemComponent
-    ],
-    entryComponents: [
-        CardViewTextItemComponent,
-        CardViewMapItemComponent,
-        CardViewDateItemComponent
+        CardView
     ],
     exports: [
-        CardViewComponent
+        CardView
     ]
 })
 export class CardViewModule {}
