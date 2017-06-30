@@ -15,5 +15,20 @@
  * limitations under the License.
  */
 
-export * from './datatable/index';
-export * from './pagination/index';
+import { NgModule } from '@angular/core';
+import { MdCheckboxModule, MdMenuModule, MdIconModule, MdButtonModule } from '@angular/material';
+
+export function modules() {
+    return [
+        MdCheckboxModule,
+        MdMenuModule,
+        MdIconModule,
+        MdButtonModule
+    ];
+}
+
+@NgModule({
+    imports: modules(),
+    exports: modules()
+})
+export class MaterialModule {}

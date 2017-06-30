@@ -16,12 +16,14 @@
  */
 
 import { Component, OnChanges, SimpleChange, SimpleChanges, Input, Output, EventEmitter, ElementRef, TemplateRef, AfterContentInit, ContentChild, Optional } from '@angular/core';
-import { DataTableAdapter, DataRow, DataColumn, DataSorting, DataRowEvent, ObjectDataTableAdapter, ObjectDataRow } from '../../data/index';
-import { DataCellEvent } from './data-cell.event';
-import { DataRowActionEvent } from './data-row-action.event';
-import { DataColumnListComponent } from 'ng2-alfresco-core';
 import { MdCheckboxChange } from '@angular/material';
 import { Observable, Observer } from 'rxjs/Rx';
+import { DataColumnListComponent } from 'ng2-alfresco-core';
+
+import { DataTableAdapter, DataRow, DataColumn, DataSorting, DataRowEvent } from '../../data/datatable-adapter';
+import { ObjectDataTableAdapter, ObjectDataRow } from '../../data/object-datatable-adapter';
+import { DataCellEvent } from './data-cell.event';
+import { DataRowActionEvent } from './data-row-action.event';
 
 declare var componentHandler;
 

@@ -15,5 +15,27 @@
  * limitations under the License.
  */
 
-export * from './datatable.component';
-export * from './datatable-cell.component';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { ContextMenuHolderComponent } from './context-menu-holder.component';
+import { ContextMenuDirective } from './context-menu.directive';
+import { ContextMenuService } from './context-menu.service';
+
+@NgModule({
+    imports: [
+        CommonModule
+    ],
+    declarations: [
+        ContextMenuHolderComponent,
+        ContextMenuDirective
+    ],
+    exports: [
+        ContextMenuHolderComponent,
+        ContextMenuDirective
+    ],
+    providers: [
+        ContextMenuService
+    ]
+})
+export class ContextMenuModule {}
