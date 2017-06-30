@@ -3,7 +3,7 @@
     <div>
         <label>{{field.name}} <span *ngIf="isRequired()">*</span></label>
     </div>
-    <md-input-container floatPlaceholder="never" color="" class="amount-widget__input">
+    <md-input-container floatPlaceholder="never" class="amount-widget__input">
         <span mdPrefix class="adf-amount-widget__prefix-spacing"> {{currency }}</span>
         <input mdInput
                 class="adf-amount-widget"
@@ -14,8 +14,8 @@
                 [(ngModel)]="field.value"
                 (ngModelChange)="checkVisibility(field)"
                 [disabled]="field.readOnly"
-                placeholder="{{field.placeholder}}"
-                hideRequiredMarker="true">
-    <span *ngIf="field.validationSummary" class="mdl-textfield__error cutomize-spacing">{{field.validationSummary}}</span>
+                placeholder="{{field.placeholder}}">
+        <span *ngIf="field.validationSummary" class="amount-widget__error_message">{{field.validationSummary}}</span>
     </md-input-container>
 </div>
+
