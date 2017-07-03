@@ -188,8 +188,6 @@ export class UploadService {
             const event = new FileUploadEvent(file, FileUploadStatus.Progress);
             this.fileUpload.next(event);
             this.fileUploadProgress.next(event);
-
-            this.queueChanged.next(this.queue);
         }
     }
 
@@ -221,8 +219,6 @@ export class UploadService {
             const event = new FileUploadCompleteEvent(file, this.totalComplete, data, this.totalAborted);
             this.fileUpload.next(event);
             this.fileUploadComplete.next(event);
-
-            this.queueChanged.next(this.queue);
         }
     }
 
