@@ -114,8 +114,8 @@ describe('FileUploadingDialogComponent', () => {
     it('should show the close button when the file upload is completed', async(() => {
         component.isDialogActive = true;
         uploadService.addToQueue(new FileModel(<File> { name: 'file' }));
-        fixture.detectChanges();
         fixture.whenStable().then(() => {
+            fixture.detectChanges();
             let closeButton = element.querySelector('#button-close-upload-list');
             expect(closeButton).not.toBeNull();
         });
@@ -125,8 +125,8 @@ describe('FileUploadingDialogComponent', () => {
 
     it('should show the close button when the file upload is in error', async(() => {
         component.isDialogActive = true;
-        fixture.detectChanges();
         fixture.whenStable().then(() => {
+            fixture.detectChanges();
             let closeButton = element.querySelector('#button-close-upload-list');
             expect(closeButton).not.toBeNull();
         });
@@ -136,8 +136,8 @@ describe('FileUploadingDialogComponent', () => {
 
     it('should show the close button when the file upload is cancelled', async(() => {
         component.isDialogActive = true;
-        fixture.detectChanges();
         fixture.whenStable().then(() => {
+            fixture.detectChanges();
             let closeButton = element.querySelector('#button-close-upload-list');
             expect(closeButton).not.toBeNull();
         });
