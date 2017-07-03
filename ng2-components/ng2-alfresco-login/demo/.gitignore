@@ -1,7 +1,0 @@
-node_modules
-.idea
-coverage
-dist
-typings
-!systemjs.config.js
-!browser-sync-config.js
