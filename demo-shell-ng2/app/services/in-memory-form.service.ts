@@ -19,28 +19,62 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 import { FormService, EcmModelService, FormFieldOption } from 'ng2-activiti-form';
+import { AppConfigService } from 'ng2-alfresco-core';
+
+interface ActivitiData {
+    rest: {
+        fields: Array<{
+            processId?: string,
+            taskId?: string,
+            fieldId?: string,
+            values?: Array<{
+                id: string,
+                name: string
+            }>
+        }>
+    };
+}
 
 @Injectable()
 export class InMemoryFormService extends FormService {
 
-    restFieldValues: Map<string, Map<string, FormFieldOption[]>> = new Map();
+    private data: ActivitiData;
 
-    constructor(ecmModelService: EcmModelService,
+    constructor(appConfig: AppConfigService,
+                ecmModelService: EcmModelService,
                 apiService: AlfrescoApiService,
                 logService: LogService) {
         super(ecmModelService, apiService, logService);
+        this.data = appConfig.get<ActivitiData>('activiti');
     }
 
     /** @override */
-    getRestFieldValues(taskId: string, field: string): Observable<FormFieldOption[]> {
-        // return super.getRestFieldValues(taskId, field);
-        console.log(`getRestFieldValues: ${taskId} => ${field}`);
+    getRestFieldValues(taskId: string, fieldId: string): Observable<FormFieldOption[]> {
+        // Uncomment this to use original call
+        // return super.getRestFieldValues(taskId, fieldId);
+
+        console.log(`getRestFieldValues: ${taskId} => ${fieldId}`);
         return new Observable<FormFieldOption[]>(observer => {
-            let values: FormFieldOption[] = [];
-            const fields = this.restFieldValues.get(taskId);
-            if (fields) {
-                values = fields.get(field) || [];
-            }
+            let field = this.data.rest.fields.find(
+                f => f.taskId === taskId && f.fieldId === fieldId
+            );
+            let values: FormFieldOption[] = field.values || [];
+            console.log(values);
+            observer.next(values);
+        });
+    }
+
+    /** @override */
+    getRestFieldValuesByProcessId(processDefinitionId: string, fieldId: string): Observable<any> {
+        // Uncomment this to use original call
+        // return super.getRestFieldValuesByProcessId(processDefinitionId, fieldId);
+
+        console.log(`getRestFieldValuesByProcessId: ${processDefinitionId} => ${fieldId}`);
+        return new Observable<FormFieldOption[]>(observer => {
+            let field = this.data.rest.fields.find(
+                f => f.processId === processDefinitionId && f.fieldId === fieldId
+            );
+            let values: FormFieldOption[] = field.values || [];
             console.log(values);
             observer.next(values);
         });
