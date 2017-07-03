@@ -22,6 +22,7 @@ import { CoreModule } from 'ng2-alfresco-core';
 import { FormService } from './../../../services/form.service';
 import { EcmModelService } from './../../../services/ecm-model.service';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
+import { MdInputModule } from '@angular/material';
 
 describe('AmountWidget', () => {
 
@@ -31,7 +32,8 @@ describe('AmountWidget', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule.forRoot(),
+                MdInputModule
             ],
             declarations: [
                 AmountWidget

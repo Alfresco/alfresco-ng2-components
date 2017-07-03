@@ -15,31 +15,32 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreModule } from 'ng2-alfresco-core';
-import { fakeFormJson } from '../../../services/assets/widget-visibility.service.mock';
-import { MaterialModule } from '../../material.module';
-import { FormFieldModel } from '../core/form-field.model';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { FormModel } from '../core/form.model';
+import { FormFieldModel } from '../core/form-field.model';
+import { fakeFormJson } from '../../../services/assets/widget-visibility.service.mock';
+import { TabsWidget } from './tabs.widget';
 import { TabModel } from '../core/tab.model';
 import { WIDGET_DIRECTIVES } from '../index';
 import { MASK_DIRECTIVE } from '../index';
 import { FormFieldComponent } from './../../form-field/form-field.component';
-<<<<<<< HEAD
-import { ContentWidgetComponent } from './../content/content.widget';
-import { TabsWidgetComponent } from './tabs.widget';
-=======
 import { ActivitiContent } from './../../activiti-content.component';
 import { CoreModule } from 'ng2-alfresco-core';
-import { MdTabsModule } from '@angular/material';
->>>>>>> Source Mapping is not working on test debugging (#1931)
+import { MdTabsModule, MdInputModule } from '@angular/material';
 
-describe('TabsWidgetComponent', () => {
+describe('TabsWidget', () => {
 
-    let widget: TabsWidgetComponent;
+    let componentHandler;
+    let widget: TabsWidget;
 
     beforeEach(() => {
-        widget = new TabsWidgetComponent();
+        widget = new TabsWidget();
+
+        componentHandler = jasmine.createSpyObj('componentHandler', [
+            'upgradeAllRegistered'
+        ]);
+
+        window['componentHandler'] = componentHandler;
     });
 
     it('should check tabs', () => {
@@ -51,6 +52,18 @@ describe('TabsWidgetComponent', () => {
 
         widget.tabs = [new TabModel(null)];
         expect(widget.hasTabs()).toBeTruthy();
+    });
+
+    it('should upgrade MDL content on view init', () => {
+        widget.ngAfterViewInit();
+        expect(componentHandler.upgradeAllRegistered).toHaveBeenCalled();
+    });
+
+    it('should setup MDL content only if component handler available', () => {
+        expect(widget.setupMaterialComponents()).toBeTruthy();
+
+        window['componentHandler'] = null;
+        expect(widget.setupMaterialComponents()).toBeFalsy();
     });
 
     it('should emit tab changed event', (done) => {
@@ -84,29 +97,27 @@ describe('TabsWidgetComponent', () => {
     });
 
     describe('when template is ready', () => {
-        let tabWidgetComponent: TabsWidgetComponent;
-        let fixture: ComponentFixture<TabsWidgetComponent>;
+        let tabWidgetComponent: TabsWidget;
+        let fixture: ComponentFixture<TabsWidget>;
         let element: HTMLElement;
         let fakeTabVisible: TabModel;
         let fakeTabInvisible: TabModel;
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-<<<<<<< HEAD
-                imports: [CoreModule, MaterialModule ],
-                declarations: [FormFieldComponent, ContentWidgetComponent, WIDGET_DIRECTIVES, MASK_DIRECTIVE]
-=======
-                imports: [CoreModule, MdTabsModule],
+                imports: [CoreModule, MdTabsModule, MdInputModule],
                 declarations: [FormFieldComponent, ActivitiContent, WIDGET_DIRECTIVES, MASK_DIRECTIVE]
->>>>>>> Source Mapping is not working on test debugging (#1931)
             }).compileComponents().then(() => {
-                fixture = TestBed.createComponent(TabsWidgetComponent);
+                fixture = TestBed.createComponent(TabsWidget);
                 tabWidgetComponent = fixture.componentInstance;
                 element = fixture.nativeElement;
             });
         }));
 
         beforeEach(() => {
+            componentHandler = jasmine.createSpyObj('componentHandler',
+                ['upgradeAllRegistered', 'upgradeElement', 'downgradeElements']);
+            window['componentHandler'] = componentHandler;
             fakeTabVisible = new TabModel(new FormModel(fakeFormJson), {
                 id: 'tab-id-visible',
                 title: 'tab-title-visible'

@@ -25,7 +25,7 @@ import { MASK_DIRECTIVE } from '../index';
 import { FormFieldComponent } from './../../form-field/form-field.component';
 import { ActivitiContent } from './../../activiti-content.component';
 import { fakeFormJson } from '../../../services/assets/widget-visibility.service.mock';
-import { MdTabsModule } from '@angular/material';
+import { MdTabsModule, MdInputModule } from '@angular/material';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
 import { FormService } from './../../../services/form.service';
@@ -45,7 +45,8 @@ describe('ContainerWidget', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                MdTabsModule
+                MdTabsModule,
+                MdInputModule
             ],
             declarations: [FormFieldComponent, ActivitiContent, WIDGET_DIRECTIVES, MASK_DIRECTIVE],
             providers: [

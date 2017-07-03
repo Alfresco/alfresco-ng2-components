@@ -16,12 +16,8 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
-<<<<<<< HEAD:ng2-components/ng2-activiti-form/src/components/start-form.component.spec.ts
-import { TranslationMock } from './../assets/translation.service.mock';
-=======
 import { MdTabsModule } from '@angular/material';
 
 import { ActivitiStartForm } from './activiti-start-form.component';
@@ -30,22 +26,18 @@ import { ActivitiContent } from './activiti-content.component';
 import { WIDGET_DIRECTIVES } from './widgets/index';
 import { MASK_DIRECTIVE } from './widgets/index';
 import { FormService } from './../services/form.service';
->>>>>>> Source Mapping is not working on test debugging (#1931):ng2-components/ng2-activiti-form/src/components/activiti-start-form.component.spec.ts
 import { EcmModelService } from './../services/ecm-model.service';
-import { FormService } from './../services/form.service';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
-import { FormFieldComponent } from './form-field/form-field.component';
-import { MaterialModule } from './material.module';
-import { StartFormComponent } from './start-form.component';
-import { ContentWidgetComponent } from './widgets/content/content.widget';
-import { MASK_DIRECTIVE } from './widgets/index';
-import { WIDGET_DIRECTIVES } from './widgets/index';
+import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { TranslationMock } from './../assets/translation.service.mock';
+import { MdInputModule } from '@angular/material';
 
 describe('ActivitiStartForm', () => {
 
+    let componentHandler: any;
     let formService: FormService;
-    let component: StartFormComponent;
-    let fixture: ComponentFixture<StartFormComponent>;
+    let component: ActivitiStartForm;
+    let fixture: ComponentFixture<ActivitiStartForm>;
     let getStartFormSpy: jasmine.Spy;
 
     const exampleId1 = 'my:process1';
@@ -54,16 +46,13 @@ describe('ActivitiStartForm', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-<<<<<<< HEAD:ng2-components/ng2-activiti-form/src/components/start-form.component.spec.ts
-                MaterialModule,
-=======
                 MdTabsModule,
->>>>>>> Source Mapping is not working on test debugging (#1931):ng2-components/ng2-activiti-form/src/components/activiti-start-form.component.spec.ts
+                MdInputModule,
                 CoreModule.forRoot()],
             declarations: [
-                StartFormComponent,
+                ActivitiStartForm,
                 FormFieldComponent,
-                ContentWidgetComponent,
+                ActivitiContent,
                 ...WIDGET_DIRECTIVES,
                 ...MASK_DIRECTIVE
             ],
@@ -78,7 +67,7 @@ describe('ActivitiStartForm', () => {
 
     beforeEach(() => {
 
-        fixture = TestBed.createComponent(StartFormComponent);
+        fixture = TestBed.createComponent(ActivitiStartForm);
         component = fixture.componentInstance;
         formService = fixture.debugElement.injector.get(FormService);
 
@@ -86,6 +75,11 @@ describe('ActivitiStartForm', () => {
             processDefinitionName: 'my:process'
         }));
 
+        componentHandler = jasmine.createSpyObj('componentHandler', [
+            'upgradeAllRegistered',
+            'upgradeElement'
+        ]);
+        window['componentHandler'] = componentHandler;
     });
 
     it('should load start form on change if processDefinitionId defined', () => {
