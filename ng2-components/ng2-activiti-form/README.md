@@ -17,6 +17,8 @@
 - [Activiti Content Component](#activiti-content-component)
   * [Properties](#properties-1)
   * [Events](#events-1)
+- [ADF Form List Component](#adf-form-list-component)
+  * [Properties](#properties-2)
 - [FormService Service](#formservice-service)
   * [Events](#events-2)
   * [Methods](#methods)
@@ -278,6 +280,24 @@ The recommended set of properties can be found in the following table:
 | Name | Description |
 | --- | --- |
 | contentClick | Invoked when the content is clicked. |
+
+## ADF Form List Component
+
+The component shows the activiti forms as a list.
+
+```html
+<adf-form-list
+[forms]="[{ name: 'My Name', lastUpdatedByFullName: 'My User Name', lastUpdated: '2017-06-01'}]">
+</adf-form-list>
+```
+
+### Properties
+
+The recommended set of properties can be found in the following table:
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| forms | any |  | The array that contains the information to show inside the list. |
 
 ## FormService Service
 
