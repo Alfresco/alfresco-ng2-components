@@ -42,7 +42,6 @@ export class AppConfigService {
             map.set('port', location.port);
             result = this.formatString(result, map);
         }
-        console.log(result);
         return <T> result;
     }
 
@@ -67,7 +66,6 @@ export class AppConfigService {
         let result = str;
 
         map.forEach((value, key) => {
-            console.log(`${key}:${value}`);
             const expr = new RegExp('{' + key + '}', 'gm');
             result = result.replace(expr, value);
         });

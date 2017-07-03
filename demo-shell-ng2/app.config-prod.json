@@ -1,6 +1,6 @@
 {
-    "ecmHost": "http://{hostname}:{port}/ecm",
-    "bpmHost": "http://{hostname}:{port}/bpm",
+    "ecmHost": "http://{hostname}",
+    "bpmHost": "http://{hostname}",
     "application": {
         "name": "Alfresco"
     }
