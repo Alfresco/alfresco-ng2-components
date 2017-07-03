@@ -15,15 +15,17 @@
  * limitations under the License.
  */
 
-import { Component, OnChanges, SimpleChange, SimpleChanges, Input, Output, EventEmitter, ElementRef, TemplateRef, AfterContentInit, ContentChild, Optional } from '@angular/core';
-import { MdCheckboxChange } from '@angular/material';
-import { Observable, Observer } from 'rxjs/Rx';
-import { DataColumnListComponent } from 'ng2-alfresco-core';
-
+import {
+    Component, OnChanges, DoCheck, IterableDiffers, SimpleChange, SimpleChanges, Input,
+    Output, EventEmitter, ElementRef, TemplateRef, AfterContentInit, ContentChild, Optional
+} from '@angular/core';
 import { DataTableAdapter, DataRow, DataColumn, DataSorting, DataRowEvent } from '../../data/datatable-adapter';
 import { ObjectDataTableAdapter, ObjectDataRow } from '../../data/object-datatable-adapter';
 import { DataCellEvent } from './data-cell.event';
 import { DataRowActionEvent } from './data-row-action.event';
+import { DataColumnListComponent } from 'ng2-alfresco-core';
+import { MdCheckboxChange } from '@angular/material';
+import { Observable, Observer } from 'rxjs/Rx';
 
 declare var componentHandler;
 
@@ -32,7 +34,7 @@ declare var componentHandler;
     styleUrls: ['./datatable.component.css'],
     templateUrl: './datatable.component.html'
 })
-export class DataTableComponent implements AfterContentInit, OnChanges {
+export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck {
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
@@ -95,7 +97,16 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
     private clickObserver: Observer<DataRowEvent>;
     private click$: Observable<DataRowEvent>;
 
-    constructor(@Optional() private el: ElementRef) {
+    private schema: DataColumn[] = [];
+
+    private differ: any;
+
+    constructor(
+        @Optional() private el: ElementRef,
+        private differs: IterableDiffers) {
+        if (differs) {
+            this.differ = differs.find([]).create(null);
+        }
         this.click$ = new Observable<DataRowEvent>(observer => this.clickObserver = observer).share();
     }
 
@@ -137,6 +148,13 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
 
         if (changes.selectionMode && !changes.selectionMode.isFirstChange()) {
             this.resetSelection();
+        }
+    }
+
+    ngDoCheck() {
+        let changes = this.differ.diff(this.rows);
+        if (changes) {
+            this.setTableRows(this.rows);
         }
     }
 
@@ -189,7 +207,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
     }
 
     private initTable() {
-        this.data = new ObjectDataTableAdapter(this.rows, []);
+        this.data = new ObjectDataTableAdapter(this.rows, this.schema);
     }
 
     isTableEmpty() {
@@ -203,14 +221,12 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
     }
 
     private setTableSchema() {
-        let schema: DataColumn[] = [];
-
         if (this.columnList && this.columnList.columns) {
-            schema = this.columnList.columns.map(c => <DataColumn> c);
+            this.schema = this.columnList.columns.map(c => <DataColumn> c);
         }
 
-        if (this.data && schema && schema.length > 0) {
-            this.data.setColumns(schema);
+        if (this.data && this.schema && this.schema.length > 0) {
+            this.data.setColumns(this.schema);
         }
     }
 
@@ -354,4 +370,5 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
     isMultiSelectionMode(): boolean {
         return this.selectionMode && this.selectionMode.toLowerCase() === 'multiple';
     }
+
 }
