@@ -15,24 +15,22 @@
  * limitations under the License.
  */
 
-import { AfterViewInit, Directive, ElementRef } from '@angular/core';
+import { Directive, ElementRef, AfterViewInit } from '@angular/core';
 
 declare var componentHandler;
 
 @Directive({
-    selector: '[adf-mdl-button] ,[alfresco-mdl-button]'
+    selector: '[alfresco-mdl-tooltip]'
 })
-export class AlfrescoMdlButtonDirective implements AfterViewInit {
+export class AlfrescoMdlTooltipDirective implements AfterViewInit {
 
     constructor(private element: ElementRef) {}
 
     ngAfterViewInit() {
         if (componentHandler) {
             let el = this.element.nativeElement;
-            el.classList.add('mdl-button');
-            el.classList.add('mdl-js-button');
-            el.classList.add('mdl-js-ripple-effect');
-            componentHandler.upgradeElement(el, 'MaterialButton');
+            el.classList.add('mdl-tooltip');
+            componentHandler.upgradeElement(el, 'MaterialTooltip');
         }
     }
 }
