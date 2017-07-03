@@ -87,7 +87,7 @@ describe('Test ng2-alfresco-webscript', () => {
 
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
-                expect(jasmine.Ajax.requests.mostRecent().url).toBe('http://localhost:3000/ecm/alfresco/service/sample/folder/Company%20Home');
+                expect(jasmine.Ajax.requests.mostRecent().url).toBe('http://localhost:9876/ecm/alfresco/service/sample/folder/Company%20Home');
                 done();
             });
 
