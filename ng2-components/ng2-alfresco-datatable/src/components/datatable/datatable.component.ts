@@ -99,9 +99,6 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
 
     private schema: DataColumn[] = [];
 
-    private multiClickSub: Subscription;
-    private singleClickSub: Subscription;
-
     private differ: any;
 
     constructor(
@@ -175,7 +172,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
             .map(list => list)
             .filter(x => x.length === 1);
 
-        this.singleClickSub = singleClickStream.subscribe((obj: DataRowEvent[]) => {
+        singleClickStream.subscribe((obj: DataRowEvent[]) => {
             let event: DataRowEvent = obj[0];
             let el = obj[0].sender.el;
             this.rowClick.emit(event);
@@ -194,7 +191,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
             .map(list => list)
             .filter(x => x.length >= 2);
 
-        this.multiClickSub = multiClickStream.subscribe((obj: DataRowEvent[]) => {
+        multiClickStream.subscribe((obj: DataRowEvent[]) => {
             let event: DataRowEvent = obj[0];
             let el = obj[0].sender.el;
             this.rowDblClick.emit(event);
