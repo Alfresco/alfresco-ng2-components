@@ -26,7 +26,7 @@ import { MASK_DIRECTIVE } from '../index';
 import { FormFieldComponent } from './../../form-field/form-field.component';
 import { ActivitiContent } from './../../activiti-content.component';
 import { CoreModule } from 'ng2-alfresco-core';
-import { MdTabsModule } from '@angular/material';
+import { MdTabsModule, MdInputModule } from '@angular/material';
 
 describe('TabsWidget', () => {
 
@@ -105,7 +105,7 @@ describe('TabsWidget', () => {
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-                imports: [CoreModule, MdTabsModule],
+                imports: [CoreModule, MdTabsModule, MdInputModule],
                 declarations: [FormFieldComponent, ActivitiContent, WIDGET_DIRECTIVES, MASK_DIRECTIVE]
             }).compileComponents().then(() => {
                 fixture = TestBed.createComponent(TabsWidget);
