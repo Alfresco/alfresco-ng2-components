@@ -78,12 +78,20 @@ describe('ActivitiStartProcessInstance', () => {
 
     describe('process definitions list', () => {
 
-        it('should call service to fetch process definitions', () => {
+        it('should call service to fetch process definitions with appId', () => {
             let change = new SimpleChange(null, '123', true);
             component.ngOnChanges({'appId': change});
             fixture.detectChanges();
 
-            expect(getDefinitionsSpy).toHaveBeenCalled();
+            expect(getDefinitionsSpy).toHaveBeenCalledWith('123');
+        });
+
+        it('should call service to fetch process definitions without appId', () => {
+            let change = new SimpleChange(null, null, true);
+            component.ngOnChanges({'appId': change});
+            fixture.detectChanges();
+
+            expect(getDefinitionsSpy).toHaveBeenCalledWith(null);
         });
 
         it('should call service to fetch process definitions with appId when provided', () => {
@@ -165,11 +173,6 @@ describe('ActivitiStartProcessInstance', () => {
         it('should reload processes when appId input changed to null', () => {
             component.ngOnChanges({appId: nullChange});
             expect(getDefinitionsSpy).toHaveBeenCalledWith(null);
-        });
-
-        it('should not reload processes when changes do not include appId input', () => {
-            component.ngOnChanges({});
-            expect(getDefinitionsSpy).not.toHaveBeenCalled();
         });
 
     });
