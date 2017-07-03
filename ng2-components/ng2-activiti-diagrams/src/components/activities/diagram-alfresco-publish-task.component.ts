@@ -18,7 +18,7 @@
 import { Component, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-    selector: 'diagram-alfresco-publish-task',
+    selector: 'adf-diagram-publish-task, diagram-alfresco-publish-task',
     templateUrl: './diagram-alfresco-publish-task.component.html'
 })
 export class DiagramAlfrescoPublishTaskComponent {

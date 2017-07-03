@@ -54,9 +54,9 @@ npm install ng2-alfresco-datatable
 **app.component.html**
 
 ```html
-<alfresco-datatable 
+<adf-datatable 
     [data]="data">
-</alfresco-datatable>
+</adf-datatable>
 ```
 **app.component.ts**
 
@@ -100,7 +100,7 @@ export class DataTableDemo {
 You can also use HTML-based schema declaration like shown below:
 
 ```html
-<alfresco-datatable [data]="data">
+<adf-datatable [data]="data">
     <data-columns>
         <data-column key="icon" type="image" [sortable]="false"></data-column>
         <data-column key="id" title="Id"></data-column>
@@ -108,7 +108,7 @@ You can also use HTML-based schema declaration like shown below:
         <data-column key="name" title="Name" class="full-width name-column"></data-column>
         <data-column key="createdBy.name" title="Created By"></data-column>
     </data-columns>
-</alfresco-datatable>
+</adf-datatable>
 ```
 
 ```ts
@@ -198,7 +198,7 @@ These events are bubbled up the element tree and can be subscribed to from withi
 ```html
 <root-component (row-click)="onRowClick($event)">
     <child-component>
-        <alfresco-datatable></alfresco-datatable>
+        <adf-datatable></adf-datatable>
     </child-component>
 </root-component>
 ```
@@ -216,7 +216,7 @@ onRowClick(event) {
 You can add a template that will be showed when there are no result in your datatable:
 
 ```html
-<alfresco-datatable
+<adf-datatable
     [data]="data"
     [actions]="contentActions"
     [multiselect]="multiselect"
@@ -234,7 +234,7 @@ You can add a template that will be showed when there are no result in your data
             </ng-template>
         </no-content-template>
         
-</alfresco-datatable>
+</adf-datatable>
 ```
 
 ### Loading content template
@@ -242,7 +242,7 @@ You can add a template that will be showed when there are no result in your data
 You can add a template that will be showed during the loading of your data:
 
 ```html
-<alfresco-datatable
+<adf-datatable
     [data]="data"
     [actions]="contentActions"
     [multiselect]="multiselect"
@@ -264,7 +264,7 @@ You can add a template that will be showed during the loading of your data:
             </ng-template>
         </loading-content-template>
         
-</alfresco-datatable>
+</adf-datatable>
 ```
 
 ```js
@@ -280,7 +280,7 @@ Note: the `<loading-content-template>` and `<no-content-template>` can be used t
 It is possible assigning a custom column template like the following:
 
 ```html
-<alfresco-datatable ...>
+<adf-datatable ...>
     <data-columns>
         <data-column title="Version" key="properties.cm:versionLabel">
             <template let-value="value">
@@ -288,7 +288,7 @@ It is possible assigning a custom column template like the following:
             </template>
         </data-column>
     </data-columns>
-</alfresco-datatable>
+</adf-datatable>
 ```
 
 Example above shows access to the underlying cell value by binding `value` property to the underlying context `value`:
@@ -432,13 +432,13 @@ then `executeRowAction` will be automatically executed when user clicks
 corresponding menu item.
 
 ```html
-<alfresco-datatable
+<adf-datatable
     [data]="data"
     [multiselect]="multiselect"
     [actions]="true"
     (showRowActionsMenu)="onShowRowActionsMenu($event)"
     (executeRowAction)="onExecuteRowAction($event)">
-</alfresco-datatable>
+</adf-datatable>
 ```
 
 ```ts

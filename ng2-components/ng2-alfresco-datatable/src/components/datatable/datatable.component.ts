@@ -28,7 +28,7 @@ import { DataRowActionEvent } from './data-row-action.event';
 declare var componentHandler;
 
 @Component({
-    selector: 'alfresco-datatable',
+    selector: 'adf-datatable, alfresco-datatable',
     styleUrls: ['./datatable.component.css'],
     templateUrl: './datatable.component.html'
 })

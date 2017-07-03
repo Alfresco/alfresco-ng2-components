@@ -45,9 +45,9 @@ In this component are present three different tags:
 ## alfresco-tag-node-actions-list
 
 ```html
-<alfresco-tag-node-actions-list 
+<adf-tag-node-actions-list 
     [nodeId]="nodeId">
-</alfresco-tag-node-actions-list>
+</adf-tag-node-actions-list>
 ```  
 
 ### Properties
@@ -61,9 +61,9 @@ In this component are present three different tags:
 ## alfresco-tag-node-list
 
 ```html
-<alfresco-tag-node-list 
+<adf-tag-node-list 
     [nodeId]="nodeId">
-</alfresco-tag-node-list>
+</adf-tag-node-list>
 ``` 
 
 ### Properties

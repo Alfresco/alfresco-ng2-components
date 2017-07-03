@@ -24,7 +24,7 @@ import { FileModel } from '../models/file.model';
 import { PermissionModel } from '../models/permissions.model';
 
 @Component({
-    selector: 'alfresco-upload-button',
+    selector: 'adf-upload-button, alfresco-upload-button',
     templateUrl: './upload-button.component.html',
     styleUrls: ['./upload-button.component.css']
 })

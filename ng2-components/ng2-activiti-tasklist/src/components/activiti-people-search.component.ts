@@ -25,7 +25,7 @@ declare let componentHandler: any;
 declare var require: any;
 
 @Component({
-    selector: 'activiti-people-search',
+    selector: 'adf-people-search, activiti-people-search',
     templateUrl: './activiti-people-search.component.html',
     styleUrls: ['./activiti-people-search.component.css']
 })

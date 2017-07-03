@@ -22,7 +22,7 @@ import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { NodePaging, Pagination } from 'alfresco-js-api';
 
 @Component({
-    selector: 'alfresco-search',
+    selector: 'adf-search, alfresco-search',
     styleUrls: ['./alfresco-search.component.css'],
     templateUrl: './alfresco-search.component.html'
 })

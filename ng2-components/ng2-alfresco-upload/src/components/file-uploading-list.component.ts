@@ -20,7 +20,7 @@ import { FileModel, FileUploadStatus } from '../models/file.model';
 import { UploadService } from '../services/upload.service';
 
 @Component({
-    selector: 'alfresco-file-uploading-list',
+    selector: 'adf-file-uploading-list, alfresco-file-uploading-list',
     templateUrl: './file-uploading-list.component.html',
     styleUrls: ['./file-uploading-list.component.css']
 })

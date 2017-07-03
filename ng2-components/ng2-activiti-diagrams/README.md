@@ -36,17 +36,17 @@ npm install ng2-activiti-diagrams
 This component shows the diagram of a process.
 
 ```html
-<activiti-diagram 
+<adf-diagram 
     [processDefinitionId]="processDefinitionId">
-</activiti-diagram>
+</adf-diagram>
 ```
 
 Or below component shows the diagram of a running process instance with the activities highlighted according to their state (Active/Completed/Pending).
 
 ```html
-<activiti-diagram 
+<adf-diagram 
     [processInstanceId]="processInstanceId">
-</activiti-diagram>
+</adf-diagram>
 ```
 
 ### Properties

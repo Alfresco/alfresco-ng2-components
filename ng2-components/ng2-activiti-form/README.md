@@ -69,17 +69,17 @@ npm install ng2-activiti-form
 The component shows a Form from Activiti
 
 ```html
-<activiti-form 
+<adf-form 
     [taskId]="taskId">
-</activiti-form>
+</adf-form>
 ```
 
 **Display form instance by task id:**
 
 ```html
-<activiti-form 
+<adf-form 
     [taskId]="selectedTask?.id">
-</activiti-form>
+</adf-form>
 ```
 
 For an existing Task both form and values will be fetched and displayed.
@@ -87,10 +87,10 @@ For an existing Task both form and values will be fetched and displayed.
 **Display form definition by form id:**
 
 ```html
-<activiti-form 
+<adf-form 
     [formId]="selectedFormDefinition?.id"
     [data]="customData">
-</activiti-form>
+</adf-form>
 ```
 
 Only form definition will be fetched.
@@ -98,10 +98,10 @@ Only form definition will be fetched.
 **Display form definition by form name:**
 
 ```html
-<activiti-form 
+<adf-form 
     [formName]="selectedFormDefinition?.name"
     [data]="customData">
-</activiti-form>
+</adf-form>
 ```
 
 **Display form definition by ECM nodeId:**
@@ -111,9 +111,9 @@ If there is no form definied in activiti for the type of the node,
 a new form will be automaticaly created in Activiti.
 
 ```html
-<activiti-form 
+<adf-form 
     [nodeId]="'e280be3a-6584-45a1-8bb5-89bfe070262e'">
-</activiti-form>
+</adf-form>
 ```
 
 **Display form definition by form name, and store the form field as metadata:**
@@ -121,12 +121,12 @@ a new form will be automaticaly created in Activiti.
 The param nameNode is optional.
 
 ```html
-<activiti-form 
+<adf-form 
     [formName]="'activitiForms:patientFolder'"
     [saveMetadata]="true"
     [path]="'/Sites/swsdp/documentLibrary'"
     [nameNode]="'test'">
-</activiti-form>
+</adf-form>
 ```
 
 **Display form definition by ECM nodeId:**
@@ -135,12 +135,12 @@ In this case the metadata of the node are showed in an activiti Form,
 and store the form field as metadata. The param nameNode is optional.
 
 ```html
-<activiti-form 
+<adf-form 
     [nodeId]="'e280be3a-6584-45a1-8bb5-89bfe070262e'"
     [saveMetadata]="true"
     [path]="'/Sites/swsdp/documentLibrary'"
     [nameNode]="'test'">
-</activiti-form>
+</adf-form>
 ```
 
 ### Properties
@@ -189,10 +189,10 @@ All `form*` events receive an instance of the `FormModel` as event argument for 
 **MyView.component.html**
 
 ```html
-<activiti-form 
+<adf-form 
     [taskId]="selectedTask?.id"
     (formSaved)="onFormSaved($event)">
-</activiti-form>
+</adf-form>
 ```
 
 **MyView.component.ts**
@@ -216,10 +216,10 @@ Alternatively you may want just running additional code on outcome execution wit
 **MyView.component.html**
 
 ```html
-<activiti-form 
+<adf-form 
     [taskId]="selectedTask?.id"
     executeOutcome="validateForm($event)">
-</activiti-form>
+</adf-form>
 ```
 
 **MyView.component.ts**
@@ -260,9 +260,9 @@ will also be executed after your custom code.**
 The component shows the content preview.
 
 ```html
-<activiti-content 
+<adf-content 
     [contentId]="'1001'">
-</activiti-content>
+</adf-content>
 ```
 
 ### Properties

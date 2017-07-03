@@ -30,7 +30,7 @@ enum LoginSteps {
 }
 
 @Component({
-    selector: 'alfresco-login',
+    selector: 'adf-login, alfresco-login',
     templateUrl: './alfresco-login.component.html',
     styleUrls: ['./alfresco-login.component.css'],
     host: {'(blur)': 'onBlur($event)'}

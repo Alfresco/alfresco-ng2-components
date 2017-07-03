@@ -21,20 +21,19 @@
 ### Components
 
 <!-- CORE START-->
-- [adf-card-view](ng2-alfresco-core/README.md)
 - [adf-accordion-group](ng2-alfresco-core/README.md)
 - [adf-accordion](ng2-alfresco-core/README.md)
+- [adf-card-view](ng2-alfresco-core/README.md)
 - [adf-toolbar](ng2-alfresco-core/README.md)<!-- CORE END-->
 <!-- CORE END-->
 
 ### Directives
 
 <!-- CORE DIRECTIVE START-->
-- [context-menu](ng2-alfresco-core/README.md)
-- [alfresco-mdl-textfield](ng2-alfresco-core/README.md)
-- [alfresco-mdl-menu](ng2-alfresco-core/README.md)
-- [alfresco-mdl-button](ng2-alfresco-core/README.md)
-- [mdl](ng2-alfresco-core/README.md)
+- [adf-context-menu](ng2-alfresco-core/README.md)
+- [adf-mdl-menu](ng2-alfresco-core/README.md)
+- [adf-mdl-textfield](ng2-alfresco-core/README.md)
+- [adf-mdl-button](ng2-alfresco-core/README.md)
 - [adf-upload](ng2-alfresco-core/README.md)<!-- CORE DIRECTIVE END-->
 
 ## Content service 
@@ -42,27 +41,27 @@
 ### Components
 
 <!-- CONTENT START-->
-- [alfresco-viewer](ng2-alfresco-viewer/README.md)
-- [ng2-alfresco-userinfo](ng2-alfresco-userinfo/README.md)
-- [alfresco-file-uploading-list](ng2-alfresco-upload/README.md)
-- [alfresco-upload-button](ng2-alfresco-upload/README.md)
-- [alfresco-upload-drag-area](ng2-alfresco-upload/README.md)
-- [alfresco-tag-node-list](ng2-alfresco-tag/README.md)
-- [alfresco-tag-list](ng2-alfresco-tag/README.md)
-- [alfresco-tag-node-actions-list](ng2-alfresco-tag/README.md)
+- [adf-userinfo](ng2-alfresco-userinfo/README.md)
+- [adf-viewer](ng2-alfresco-viewer/README.md)
+- [adf-file-uploading-list](ng2-alfresco-upload/README.md)
+- [adf-upload-button](ng2-alfresco-upload/README.md)
+- [adf-upload-drag-area](ng2-alfresco-upload/README.md)
+- [adf-tag-node-list](ng2-alfresco-tag/README.md)
+- [adf-tag-list](ng2-alfresco-tag/README.md)
+- [adf-tag-node-actions-list](ng2-alfresco-tag/README.md)
+- [adf-login](ng2-alfresco-login/README.md)
+- [adf-search-autocomplete](ng2-alfresco-search/README.md)
+- [adf-search-control](ng2-alfresco-search/README.md)
+- [adf-search](ng2-alfresco-search/README.md)
 - [adf-like](ng2-alfresco-social/README.md)
 - [adf-rating](ng2-alfresco-social/README.md)
-- [alfresco-search-autocomplete](ng2-alfresco-search/README.md)
-- [alfresco-search-control](ng2-alfresco-search/README.md)
-- [alfresco-search](ng2-alfresco-search/README.md)
-- [alfresco-login](ng2-alfresco-login/README.md)
-- [adf-breadcrumb, alfresco-document-list-breadcrumb](ng2-alfresco-documentlist/README.md)
-- [alfresco-document-menu-action](ng2-alfresco-documentlist/README.md)
-- [alfresco-document-list](ng2-alfresco-documentlist/README.md)
-- [alfresco-datatable-cell](ng2-alfresco-datatable/README.md)
-- [alfresco-datatable](ng2-alfresco-datatable/README.md)
-- [alfresco-pagination](ng2-alfresco-datatable/README.md)
-- [alfresco-webscript-get](ng2-alfresco-webscript/README.md)<!-- CONTENT END-->
+- [adf-webscript-get](ng2-alfresco-webscript/README.md)
+- [adf-breadcrumb](ng2-alfresco-documentlist/README.md)
+- [adf-document-menu-action](ng2-alfresco-documentlist/README.md)
+- [adf-document-list](ng2-alfresco-documentlist/README.md)
+- [adf-pagination](ng2-alfresco-datatable/README.md)
+- [adf-datatable](ng2-alfresco-datatable/README.md)
+- [adf-datatable-cell](ng2-alfresco-datatable/README.md)<!-- CONTENT END-->
 <!-- CONTENT END-->
 
 
@@ -73,37 +72,37 @@
 ### components
 
 <!-- BUSINESS START-->
-- [diagram-icon-alfresco-publish-task](ng2-activiti-diagrams/README.md)
-- [diagram-alfresco-publish-task](ng2-activiti-diagrams/README.md)
-- [activiti-process-instance-comments](ng2-activiti-processlist/README.md)
-- [activiti-process-instance-variables](ng2-activiti-processlist/README.md)
-- [activiti-process-instance-tasks](ng2-activiti-processlist/README.md)
-- [activiti-process-instance-header](ng2-activiti-processlist/README.md)
-- [adf-people-list](ng2-activiti-tasklist/README.md)
+- [adf-publish-task](ng2-activiti-diagrams/README.md)
+- [adf-publish-task](ng2-activiti-diagrams/README.md)
 - [adf-create-task-attachment](ng2-activiti-tasklist/README.md)
-- [activiti-people-search](ng2-activiti-tasklist/README.md)
-- [activiti-start-task](ng2-activiti-tasklist/README.md)
-- [activiti-task-details](ng2-activiti-tasklist/README.md)
-- [activiti-filters](ng2-activiti-tasklist/README.md)
-- [activiti-task-header](ng2-activiti-tasklist/README.md)
-- [activiti-people](ng2-activiti-tasklist/README.md)
+- [adf-people-list](ng2-activiti-tasklist/README.md)
 - [adf-task-attachment-list](ng2-activiti-tasklist/README.md)
-- [activiti-comments](ng2-activiti-tasklist/README.md)
-- [activiti-checklist](ng2-activiti-tasklist/README.md)
-- [activiti-tasklist](ng2-activiti-tasklist/README.md)
-- [activiti-apps](ng2-activiti-tasklist/README.md)
-- [activiti-diagram](ng2-activiti-diagrams/README.md)
+- [adf-people-search](ng2-activiti-tasklist/README.md)
+- [adf-start-task](ng2-activiti-tasklist/README.md)
+- [adf-task-details](ng2-activiti-tasklist/README.md)
+- [adf-filters](ng2-activiti-tasklist/README.md)
+- [adf-task-header](ng2-activiti-tasklist/README.md)
+- [adf-people](ng2-activiti-tasklist/README.md)
+- [adf-comments](ng2-activiti-tasklist/README.md)
+- [adf-checklist](ng2-activiti-tasklist/README.md)
+- [adf-tasklist](ng2-activiti-tasklist/README.md)
+- [adf-apps](ng2-activiti-tasklist/README.md)
+- [adf-process-instance-comments](ng2-activiti-processlist/README.md)
+- [adf-process-instance-variables](ng2-activiti-processlist/README.md)
+- [adf-process-instance-tasks](ng2-activiti-processlist/README.md)
+- [adf-process-instance-header](ng2-activiti-processlist/README.md)
+- [adf-diagram](ng2-activiti-diagrams/README.md)
 - [adf-create-process-attachment](ng2-activiti-processlist/README.md)
 - [adf-process-attachment-list](ng2-activiti-processlist/README.md)
-- [activiti-start-process](ng2-activiti-processlist/README.md)
-- [activiti-process-instance-details](ng2-activiti-processlist/README.md)
-- [activiti-process-instance-filters](ng2-activiti-processlist/README.md)
-- [activiti-process-instance-list](ng2-activiti-processlist/README.md)
-- [activiti-analytics-generator](ng2-activiti-analytics/README.md)
-- [activiti-analytics](ng2-activiti-analytics/README.md)
-- [activiti-start-form](ng2-activiti-form/README.md)
-- [activiti-content](ng2-activiti-form/README.md)
-- [activiti-form](ng2-activiti-form/README.md)<!-- BUSINESS END-->
+- [adf-start-process](ng2-activiti-processlist/README.md)
+- [adf-process-instance-details](ng2-activiti-processlist/README.md)
+- [adf-process-instance-list](ng2-activiti-processlist/README.md)
+- [adf-process-instance-filters](ng2-activiti-processlist/README.md)
+- [adf-start-form](ng2-activiti-form/README.md)
+- [adf-content](ng2-activiti-form/README.md)
+- [adf-form](ng2-activiti-form/README.md)
+- [adf-analytics-generator](ng2-activiti-analytics/README.md)
+- [adf-analytics](ng2-activiti-analytics/README.md)<!-- BUSINESS END-->
 <!-- BUSINESS END-->
 
 

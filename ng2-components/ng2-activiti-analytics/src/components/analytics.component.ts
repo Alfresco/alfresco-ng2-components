@@ -22,7 +22,7 @@ import { ReportQuery } from '../models/report.model';
 import { AnalyticsGeneratorComponent } from './analytics-generator.component';
 
 @Component({
-    selector: 'activiti-analytics',
+    selector: 'adf-analytics, activiti-analytics',
     templateUrl: './analytics.component.html',
     styleUrls: ['./analytics.component.css']
 })

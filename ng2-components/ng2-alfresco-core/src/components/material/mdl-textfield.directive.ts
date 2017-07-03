@@ -20,7 +20,7 @@ import { Directive, ElementRef, AfterViewInit } from '@angular/core';
 declare var componentHandler;
 
 @Directive({
-    selector: '[alfresco-mdl-textfield]'
+    selector: '[adf-mdl-textfield]], [alfresco-mdl-textfield]'
 })
 export class AlfrescoMdlTextFieldDirective implements AfterViewInit {
 

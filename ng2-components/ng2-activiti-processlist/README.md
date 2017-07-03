@@ -66,10 +66,10 @@ This component renders a list containing all the process instances matched by th
 **app.component.html**
 
 ```html
-<activiti-process-instance-list 
+<adf-process-instance-list 
     [appId]="'1'" 
     [state]="'open'">
-</activiti-process-instance-list>
+</adf-process-instance-list>
 ```
 
 ### Properties
@@ -109,9 +109,9 @@ The most common usage is in driving a process instance list in order to allow th
 process instances are displayed in the list.
 
 ```html
-<activiti-process-instance-filters
+<adf-process-instance-filters
     appId="1001">
-</activiti-process-instance-filters>
+</adf-process-instance-filters>
 ```
 
 ### Properties
@@ -136,9 +136,9 @@ If both `appId` and `appName` are specified then `appName` will take precedence 
 ### How filter the activiti process filters
 
  ```html
-<activiti-process-instance-filters 
+<adf-process-instance-filters 
     [filterParam]="{index: 0}">
-</activiti-filters>
+</adf-filters>
  ```
 
 You can use inside the filterParam one of the following property.
@@ -170,11 +170,11 @@ The AccordionComponent is exposed by the alfresco-core.
         [heading]="'Processes'" 
         [isSelected]="true" 
         [headingIcon]="'assessment'">
-        <activiti-process-instance-filters
+        <adf-process-instance-filters
             [appId]="appId"
             (filterClick)="onProcessFilterClick($event)"
             (onSuccess)="onSuccessProcessFilterList($event)">
-        </activiti-process-instance-filters>
+        </adf-process-instance-filters>
     </adf-accordion-group>
 </adf-accordion>
 ```
@@ -187,9 +187,9 @@ Displays a button which in turn displays a dialog when clicked, allowing the use
 to specify some basic details needed to start a new process instance.
 
 ```html
-<activiti-start-process 
+<adf-start-process 
     appId="YOUR_APP_ID" >
-</activiti-start-process>
+</adf-start-process>
 ```
 
 ### Properties
@@ -213,9 +213,9 @@ to specify some basic details needed to start a new process instance.
 This component displays detailed information on a specified process instance
 
 ```html
-<activiti-process-instance-details 
+<adf-process-instance-details 
     processInstanceId="YOUR_PROCESS_INSTANCE_ID">
-</activiti-process-instance-details>
+</adf-process-instance-details>
 ```
 
 ### Properties
@@ -237,9 +237,9 @@ This component displays detailed information on a specified process instance
 This is a sub-component of the process details component, which renders some general information about the selected process.
 
 ```html
-<activiti-process-instance-header   
+<adf-process-instance-header   
     processInstance="localProcessDetails">
-</activiti-process-instance-details>
+</adf-process-instance-details>
 ```
 
 ### Properties
@@ -260,10 +260,10 @@ This is a sub-component of the process details component, which renders some gen
 Lists both the active and completed tasks associated with a particular process instance
 
 ```html
-<activiti-process-instance-tasks 
+<adf-process-instance-tasks 
     processInstanceId="YOUR_PROCESS_INSTANCE_ID" 
     showRefreshButton="true">
-</activiti-process-instance-tasks>
+</adf-process-instance-tasks>
 ```
 
 ### Properties
@@ -284,9 +284,9 @@ Lists both the active and completed tasks associated with a particular process i
 Displays comments associated with a particular process instances and allows the user to add new comments
 
 ```html
-<activiti-process-instance-comments 
+<adf-process-instance-comments 
     processInstanceId="YOUR_PROCESS_INSTANCE_ID">
-</activiti-process-instance-comments>
+</adf-process-instance-comments>
 ```
 
 ### Properties
@@ -326,11 +326,11 @@ This component displays attached documents on a specified process instance
 This component displays Upload Component(Drag and Click) to upload the attachment to a specified process instance
 
 ```html
-<activiti-create-process-attachment 
+<adf-create-process-attachment 
     [processInstanceId]="YOUR_PROCESS_INSTANCE_ID"
     (error)="YOUR_CREATE_ATTACHMENT_ERROR_HANDLER"
     (success)="YOUR_CREATE_ATTACHMENT_SUCCESS_HANDLER">
-</activiti-create-process-attachment>
+</adf-create-process-attachment>
 ```
 
 ![process-create-attachment](docs/assets/process-create-attachment.png)
