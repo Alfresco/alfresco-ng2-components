@@ -193,4 +193,14 @@ describe('UploadService', () => {
         let file = service.getQueue();
         service.cancelUpload(...file);
     });
+
+    it('should remove from the queue all the files in the exluded list', () => {
+        const file1 = new FileModel(new File([''], '.git'));
+        const file2 = new FileModel(new File([''], '.DS_Store'));
+        const file3 = new FileModel(new File([''], 'desktop.ini'));
+        const file4 = new FileModel(new File([''], 'readme.md'));
+        const result = service.addToQueue(file1, file2, file3, file4);
+        expect(result.length).toBe(1);
+        expect(result[0]).toBe(file4);
+    });
 });

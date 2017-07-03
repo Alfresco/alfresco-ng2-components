@@ -17,7 +17,7 @@
 
 import { EventEmitter, Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Rx';
-import { AlfrescoApiService } from 'ng2-alfresco-core';
+import { AlfrescoApiService, AppConfigService } from 'ng2-alfresco-core';
 import { FileUploadEvent, FileUploadCompleteEvent } from '../events/file.event';
 import { FileModel, FileUploadProgress, FileUploadStatus } from '../models/file.model';
 
@@ -29,6 +29,7 @@ export class UploadService {
     private totalComplete: number = 0;
     private totalAborted: number = 0;
     private activeTask: Promise<any> = null;
+    private exludedFileList: String [] = [];
 
     queueChanged: Subject<FileModel[]> = new Subject<FileModel[]>();
     fileUpload: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
@@ -39,7 +40,8 @@ export class UploadService {
     fileUploadError: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
     fileUploadComplete: Subject<FileUploadCompleteEvent> = new Subject<FileUploadCompleteEvent>();
 
-    constructor(private apiService: AlfrescoApiService) {
+    constructor(private apiService: AlfrescoApiService, private appConfigService: AppConfigService) {
+        this.exludedFileList = <String[] > this.appConfigService.get('files.excluded');
     }
 
     /**
@@ -71,7 +73,7 @@ export class UploadService {
      *  addToQueue(...[file1, file2, file3]); // pass an array of files
      */
     addToQueue(...files: FileModel[]): FileModel[] {
-        const allowedFiles = files.filter(f => !f.name.startsWith('.'));
+        const allowedFiles = files.filter(f => this.exludedFileList.indexOf(f.name) === -1);
         this.queue = this.queue.concat(allowedFiles);
         this.queueChanged.next(this.queue);
         return allowedFiles;
@@ -133,8 +135,8 @@ export class UploadService {
 
     private beginUpload(file: FileModel, /* @deprecated */emitter: EventEmitter<any>): any {
         let opts: any = {
-                renditions: 'doclib'
-            };
+            renditions: 'doclib'
+        };
 
         if (file.options.newVersion === true) {
             opts.overwrite = true;
@@ -152,21 +154,21 @@ export class UploadService {
         promise.on('progress', (progress: FileUploadProgress) => {
             this.onUploadProgress(file, progress);
         })
-        .on('abort', () => {
-            this.onUploadAborted(file);
-            emitter.emit({ value: 'File aborted' });
-        })
-        .on('error', err => {
-            this.onUploadError(file, err);
-            emitter.emit({ value: 'Error file uploaded' });
-        })
-        .on('success', data => {
-            this.onUploadComplete(file, data);
-            emitter.emit({ value: data });
-        })
-        .catch(err => {
-            this.onUploadError(file, err);
-        });
+            .on('abort', () => {
+                this.onUploadAborted(file);
+                emitter.emit({ value: 'File aborted' });
+            })
+            .on('error', err => {
+                this.onUploadError(file, err);
+                emitter.emit({ value: 'Error file uploaded' });
+            })
+            .on('success', data => {
+                this.onUploadComplete(file, data);
+                emitter.emit({ value: data });
+            })
+            .catch(err => {
+                this.onUploadError(file, err);
+            });
 
         return promise;
     }

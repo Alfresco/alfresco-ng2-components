@@ -24,7 +24,10 @@ export class AppConfigService {
 
     private config: any = {
         'ecmHost': 'http://{hostname}:{port}/ecm',
-        'bpmHost': 'http://{hostname}:{port}/bpm'
+        'bpmHost': 'http://{hostname}:{port}/bpm',
+        'files': {
+            'excluded': ['.DS_Store', 'desktop.ini', '.git']
+        }
     };
 
     configFile: string = null;
