@@ -65,14 +65,12 @@ export class ActivitiStartProcessInstance implements OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        let appId = changes['appId'];
-        if (appId && (appId.currentValue || appId.currentValue === null)) {
-            this.load(appId.currentValue);
-            return;
-        }
+        let appIdChange = changes['appId'];
+        let appId = appIdChange ? appIdChange.currentValue : null;
+        this.load(appId);
     }
 
-    public load(appId: string) {
+    public load(appId?: string) {
         this.resetSelectedProcessDefinition();
         this.resetErrorMessage();
         this.activitiProcess.getProcessDefinitions(appId).subscribe(
