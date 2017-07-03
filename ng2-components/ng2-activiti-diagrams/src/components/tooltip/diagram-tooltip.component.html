@@ -1,13 +1,6 @@
-<div #tooltipContent class="{{adf}}-diagram-tooltip">
-    <div class="{{adf}}-diagram-tooltip-header">{{ data.type }} {{ data.name || data.id }}</div>
-    <div class="{{adf}}-diagram-tooltip-body">
-        <div *ngIf="data.name" class="{{adf}}-diagram-name-property">
-            <span class="{{adf}}-diagram-propertyName">Name:</span>
-            <span class="{{adf}}-diagram-propertyValue">{{ data.name }}</span>
-        </div>
-        <div *ngFor="let property of data.properties" class="{{adf}}-diagram-general-property">
-            <span class="{{adf}}-diagram-propertyName">{{ property.name }}:</span>
-            <span class="{{adf}}-diagram-propertyValue">{{ property.value }}</span>
-        </div>
+<div alfresco-mdl-tooltip class="mdl-tooltip--large mdl-tooltip-diagram" [attr.for]="data.id">
+    <div>
+        <div class="mdl-tooltip-header__message"><span>{{getTooltipHeader(data)}}</span></div>
+        <span class="mdl-tooltip-body__message">{{getTooltipMessage(data)}}</span>
     </div>
 </div>
