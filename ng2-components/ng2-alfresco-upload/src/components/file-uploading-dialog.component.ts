@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, ChangeDetectorRef, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { FileModel, FileUploadStatus } from '../models/file.model';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { UploadService } from '../services/upload.service';
@@ -23,14 +23,13 @@ import { FileUploadCompleteEvent } from '../events/file.event';
 
 @Component({
     selector: 'file-uploading-dialog',
-    changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './file-uploading-dialog.component.html',
     styleUrls: ['./file-uploading-dialog.component.css']
 })
 export class FileUploadingDialogComponent implements OnInit, OnDestroy {
 
     @Input()
-    filesUploadingList: FileModel [];
+    filesUploadingList: FileModel[];
 
     isDialogActive: boolean = false;
     totalCompleted: number = 0;
@@ -41,13 +40,10 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     private counterSubscription: any;
     private showCloseButton: boolean = false;
 
-    constructor(private cd: ChangeDetectorRef,
-                translateService: AlfrescoTranslationService,
-                private uploadService: UploadService) {
+    constructor(translateService: AlfrescoTranslationService, private uploadService: UploadService) {
         if (translateService) {
             translateService.addTranslationFolder('ng2-alfresco-upload', 'assets/ng2-alfresco-upload');
         }
-        cd.detach();
     }
 
     ngOnInit() {
@@ -55,7 +51,6 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
             this.filesUploadingList = fileList;
             if (this.filesUploadingList.length > 0) {
                 this.isDialogActive = true;
-                this.cd.detectChanges();
             }
             this.showCloseButton = false;
         });
@@ -65,14 +60,12 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
             if (this.totalCompleted > 1) {
                 this.totalCompletedMsg = 'FILE_UPLOAD.MESSAGES.COMPLETED';
             }
-            this.cd.detectChanges();
         });
 
         this.uploadService.fileUpload.subscribe((event: FileUploadCompleteEvent) => {
             if (event.status !== FileUploadStatus.Progress) {
                 this.isUploadProcessCompleted(event);
             }
-            this.cd.detectChanges();
         });
     }
 
@@ -82,7 +75,6 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     toggleVisible(): void {
         this.isDialogActive = !this.isDialogActive;
         this.uploadService.clearQueue();
-        this.cd.detectChanges();
     }
 
     /**
@@ -90,10 +82,10 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
      */
     toggleMinimized(): void {
         this.isDialogMinimized = !this.isDialogMinimized;
-        this.cd.detectChanges();
     }
 
     ngOnDestroy() {
+        this.uploadService.clearQueue();
         this.listSubscription.unsubscribe();
         this.counterSubscription.unsubscribe();
     }
