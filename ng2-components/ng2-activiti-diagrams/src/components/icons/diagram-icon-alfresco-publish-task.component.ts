@@ -20,7 +20,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
-    selector: 'diagram-icon-alfresco-publish-task',
+    selector: 'adf-diagram-icon-publish-task, diagram-icon-alfresco-publish-task',
     templateUrl: './diagram-icon-alfresco-publish-task.component.html'
 })
 export class DiagramIconAlfrescoPublishTaskComponent implements OnInit {

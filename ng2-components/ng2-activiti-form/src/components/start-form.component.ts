@@ -51,7 +51,7 @@ import { ContentLinkModel } from './widgets/core/content-link.model';
  * @returns {ActivitiForm} .
  */
 @Component({
-    selector: 'activiti-start-form',
+    selector: 'adf-start-form, activiti-start-form',
     templateUrl: './activiti-start-form.component.html',
     styleUrls: ['./activiti-form.component.css']
 })

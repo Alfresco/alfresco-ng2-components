@@ -1,0 +1,12 @@
+<div *ngIf="!requestNode">{{ 'FILTERS.MESSAGES.NONE' | translate }}</div>
+<div *ngIf="requestNode">
+    <div *ngIf="!isListEmpty()">
+        <adf-datatable
+            [data]="data"
+            (rowClick)="onRowClick($event)">
+        </adf-datatable>
+    </div>
+    <div *ngIf="isListEmpty()">
+        {{ 'PROCESSLIST.NONE' | translate }}
+    </div>
+</div>

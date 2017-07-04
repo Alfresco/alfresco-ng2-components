@@ -26,7 +26,7 @@ declare let componentHandler: any;
 declare let dialogPolyfill: any;
 
 @Component({
-    selector: 'activiti-process-instance-variables',
+    selector: 'adf-process-instance-variables, activiti-process-instance-variables',
     templateUrl: './activiti-process-instance-variables.component.html',
     styleUrls: [],
     providers: [ActivitiProcessService]

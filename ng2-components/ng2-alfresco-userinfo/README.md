@@ -33,7 +33,7 @@ npm install ng2-alfresco-userinfo
 ## Basic usage
 
 ```html
-<ng2-alfresco-userinfo></ng2-alfresco-userinfo>
+<adf-userinfo></adf-userinfo>
 ```
 
 ### Properties

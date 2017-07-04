@@ -67,13 +67,13 @@ npm install ng2-alfresco-documentlist
 ## Document List
 
 ```html
-<alfresco-document-list
+<adf-document-list
     #documentList
     [currentFolderId]="'-my-'"
     [contextMenuActions]="true"
     [contentActions]="true"
     [creationMenuActions]="true">
-</alfresco-document-list>
+</adf-document-list>
 ```
 
 ### Properties
@@ -143,11 +143,11 @@ Here's a basic example on handling DOM events in the parent elements:
 <div (node-click)="onNodeClicked($event)" 
      (node-dblclick)="onNodeDblClicked($event)">
     <div>
-        <alfresco-upload-drag-area ...>
-             <alfresco-document-list ...>
+        <adf-upload-drag-area ...>
+             <adf-document-list ...>
                 ...
-             </alfresco-document-list>
-        </alfresco-upload-drag-area>
+             </adf-document-list>
+        </adf-upload-drag-area>
     </div>
 </div>
 ```
@@ -205,9 +205,9 @@ It helps examining other valuable information you can have access to if needed:
 Typically you will be binding DocumentList properties to your application/component class properties:
 
 ```html
-<alfresco-document-list 
+<adf-document-list 
     [currentFolderId]="myStartFolder">
-</alfresco-document-list>
+</adf-document-list>
 ```
 
 with the underlying class being implemented similar to the following one:
@@ -229,10 +229,10 @@ section of the official docs.
 Here's an example of getting reference:
 
 ```html
-<alfresco-document-list 
+<adf-document-list 
     #documentList
     [currentFolderId]="myStartFolder">
-</alfresco-document-list>
+</adf-document-list>
 ```
 
 Note the `#documentList` ID we've just added to be able referencing this component later on.
@@ -282,7 +282,7 @@ DocumentList provides simple breadcrumb element to indicate the current position
 </adf-breadcrumb>
 ```
 
-***Note:*** the `<alfresco-document-list-breadcrumb>` and `<adf-breadcrumb>` are the same component you can still use the old tag name
+***Note:*** the `<adf-document-list-breadcrumb>` and `<adf-breadcrumb>` are the same component you can still use the old tag name
 
 
 ![Breadcrumb](docs/assets/breadcrumb.png)
@@ -306,9 +306,9 @@ DocumentList provides simple breadcrumb element to indicate the current position
 DocumentList provides simple creation menu actions that provide the action to create a new folder.
 
 ```html
-<alfresco-document-menu-action 
+<adf-document-menu-action 
     [folderId]="folderId">
-</alfresco-document-menu-action>
+</adf-document-menu-action>
 ```
 
 ![Creation Menu Action](docs/assets/document-list-creation-menu-actions-1.png)
@@ -326,7 +326,7 @@ By default special `$thumbnail` and `displayName` columns are rendered.
 A custom set of columns can look like the following:
 
 ```html
-<alfresco-document-list ...>
+<adf-document-list ...>
     <content-columns>
         <content-column key="$thumbnail" type="image"></content-column>
         <content-column 
@@ -350,7 +350,7 @@ A custom set of columns can look like the following:
             class="desktop-only">
         </content-column>
     </content-columns>
-</alfresco-document-list>
+</adf-document-list>
 ```
 
 ![Custom columns](docs/assets/custom-columns.png)
@@ -358,7 +358,7 @@ A custom set of columns can look like the following:
 You can also use HTML-based schema declaration used by DataTable, TaskList and other components:
 
 ```html
-<alfresco-datatable [data]="data" ...>
+<adf-datatable [data]="data" ...>
     <data-columns>
         <data-column type="image" key="icon" [sortable]="false"></data-column>
         <data-column key="id" title="Id"></data-column>
@@ -366,7 +366,7 @@ You can also use HTML-based schema declaration used by DataTable, TaskList and o
         <data-column key="name" title="Name" class="full-width name-column"></data-column>
         <data-column key="createdBy.name" title="Created By"></data-column>
     </data-columns>
-</alfresco-datatable>
+</adf-datatable>
 ```
 
 ### DataColumn Properties
@@ -415,7 +415,7 @@ createdByUser.displayName
 Here's a short example:
 
 ```html
-<alfresco-document-list ...>
+<adf-document-list ...>
     <content-columns>
         <content-column key="$thumbnail" type="image"></content-column>
         <content-column title="Name" key="name" class="full-width ellipsis-cell"></content-column>
@@ -424,7 +424,7 @@ Here's a short example:
             key="createdByUser.displayName">
         </content-column>
     </content-columns>
-</alfresco-document-list>
+</adf-document-list>
 ```
 
 ## Column definition
@@ -513,7 +513,7 @@ In the Example below will add the [ng2-alfresco-tag](https://www.npmjs.com/packa
     sortable="true"
     class="full-width ellipsis-cell">
     <template let-entry="$implicit">
-        <alfresco-tag-node-list  [nodeId]="entry.data.getValue(entry.row, entry.col)"></alfresco-tag-node-list>
+        <adf-tag-node-list  [nodeId]="entry.data.getValue(entry.row, entry.col)"></adf-tag-node-list>
     </template>
 </content-column>
 ```
@@ -529,7 +529,7 @@ You can define both folder and document actions at the same time.
 #### Menu actions
 
 ```html
-<alfresco-document-list ...>
+<adf-document-list ...>
     <content-actions>
 
         <content-action
@@ -545,7 +545,7 @@ You can define both folder and document actions at the same time.
         </content-action>
 
     </content-actions>
-</alfresco-document-list>
+</adf-document-list>
 ```
 
 ```ts
@@ -581,7 +581,7 @@ The ContentActionComponent provides the event permissionEvent that is raised whe
 You can subscribe to this event from your component and use the NotificationService to show a message.
 
 ```html
-<alfresco-document-list ...>
+<adf-document-list ...>
     <content-actions>
 
         <content-action
@@ -593,7 +593,7 @@ You can subscribe to this event from your component and use the NotificationServ
         </content-action>
 
     </content-actions>
-</alfresco-document-list>
+</adf-document-list>
 ```
 
 ```ts
@@ -615,7 +615,7 @@ The ContentActionComponent provides the property permission that must contain th
  you want see the button disabled.
 
 ```html
-<alfresco-document-list ...>
+<adf-document-list ...>
     <content-actions>
 
         <content-action
@@ -627,7 +627,7 @@ The ContentActionComponent provides the property permission that must contain th
         </content-action>
 
     </content-actions>
-</alfresco-document-list>
+</adf-document-list>
 ```
 
 ![Delete disable action button](docs/assets/content-action-disable-delete-button.png)
@@ -637,7 +637,7 @@ The ContentActionComponent provides the property permission that must contain th
 Initiates download of the corresponding document file.
 
 ```html
-<alfresco-document-list ...>
+<adf-document-list ...>
     <content-actions>
 
         <content-action
@@ -647,7 +647,7 @@ Initiates download of the corresponding document file.
         </content-action>
 
     </content-actions>
-</alfresco-document-list>
+</adf-document-list>
 ```
 
 ![Download document action](docs/assets/document-action-download.png)
@@ -657,7 +657,7 @@ Initiates download of the corresponding document file.
 Folder actions have the same declaration as document actions except ```taget="folder"``` attribute value.
 
 ```html
-<alfresco-document-list ...>
+<adf-document-list ...>
     <content-actions>
 
         <content-action
@@ -673,7 +673,7 @@ Folder actions have the same declaration as document actions except ```taget="fo
         </content-action>
 
     </content-actions>
-</alfresco-document-list>
+</adf-document-list>
 ```
 
 ```ts
@@ -705,7 +705,7 @@ Enabling context menu is very simple:
 @Component({
     selector: 'my-view',
     template: `
-        <alfresco-document-list>...</alfresco-document-list>
+        <adf-document-list>...</adf-document-list>
         <context-menu-holder></context-menu-holder>
     `
 })
@@ -730,9 +730,9 @@ The following navigation modes are supported:
 The following example switches navigation to single clicks:
 
 ```html
-<alfresco-document-list 
+<adf-document-list 
     [navigationMode]="'click'">
-</alfresco-document-list>
+</adf-document-list>
 ```
 
 ### Events
@@ -766,9 +766,9 @@ _Note that for the sake of simplicity the example code below was reduced to the 
 **View1.component.html**
 
 ```html
-<alfresco-document-list 
+<adf-document-list 
     [rowFilter]="folderFilter">
-</alfresco-document-list>
+</adf-document-list>
 ```
 
 **View1.component.ts**
@@ -818,7 +818,7 @@ _Note that for the sake of simplicity the example code below was reduced to the 
 
 **View1.component.html**
 ```html
-<alfresco-document-list 
+<adf-document-list 
     [imageResolver]="folderImageResolver">
     
     <content-columns>
@@ -826,7 +826,7 @@ _Note that for the sake of simplicity the example code below was reduced to the 
     </content-columns>
     
     
-</alfresco-document-list>
+</adf-document-list>
 ```
 
 **View1.component.ts**
@@ -882,7 +882,7 @@ You can hide columns on small screens by means of custom CSS rules:
 Now you can declare columns and assign `desktop-only` class where needed:
 
 ```html
-<alfresco-document-list ...>
+<adf-document-list ...>
     <content-columns>
         
         <!-- always visible columns -->
@@ -909,7 +909,7 @@ Now you can declare columns and assign `desktop-only` class where needed:
                 class="desktop-only">
         </content-column>
     </content-columns>
-</alfresco-document-list>
+</adf-document-list>
 ```
 
 **Desktop View**
@@ -929,13 +929,13 @@ By default DocumentList provides the following content for the empty folder:
 This can be changed by means of the custom html template:
 
 ```html
-<alfresco-document-list ...>
+<adf-document-list ...>
     <empty-folder-content>
         <template>
             <h1>Sorry, no content here</h1>
         </template>
     </empty-folder-content>
-</alfresco-document-list>
+</adf-document-list>
 ```
 
 That will give the following output:
@@ -954,7 +954,7 @@ Example below demonstrates how a new action handler can be registered with the
 `DocumentActionsService`.
 
 ```html
-<alfresco-document-list ...>
+<adf-document-list ...>
     <content-actions>
 
         <content-action
@@ -964,7 +964,7 @@ Example below demonstrates how a new action handler can be registered with the
         </content-action>
 
     </content-actions>
-</alfresco-document-list>
+</adf-document-list>
 ```
 
 You register custom handler called `my-handler` that will be executing `myDocumentActionHandler`

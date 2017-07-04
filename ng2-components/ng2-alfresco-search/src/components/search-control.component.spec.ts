@@ -165,13 +165,13 @@ describe('AlfrescoSearchControlComponent', () => {
 
         it('should display a find-as-you-type control by default', () => {
             fixture.detectChanges();
-            let autocomplete: Element = element.querySelector('alfresco-search-autocomplete');
+            let autocomplete: Element = element.querySelector('adf-search-autocomplete');
             expect(autocomplete).not.toBeNull();
         });
 
         it('should make find-as-you-type control hidden initially', () => {
             fixture.detectChanges();
-            let autocomplete: Element = element.querySelector('alfresco-search-autocomplete');
+            let autocomplete: Element = element.querySelector('adf-search-autocomplete');
             expect(autocomplete.classList.contains('active')).toBe(false);
         });
 
@@ -180,7 +180,7 @@ describe('AlfrescoSearchControlComponent', () => {
             inputEl.dispatchEvent(new FocusEvent('focus'));
             window.setTimeout(() => { // wait for debounce() to complete
                 fixture.detectChanges();
-                let autocomplete: Element = element.querySelector('alfresco-search-autocomplete');
+                let autocomplete: Element = element.querySelector('adf-search-autocomplete');
                 expect(autocomplete.classList.contains('active')).toBe(true);
                 done();
             }, 100);
@@ -192,7 +192,7 @@ describe('AlfrescoSearchControlComponent', () => {
             inputEl.dispatchEvent(new FocusEvent('blur'));
             window.setTimeout(() => {
                 fixture.detectChanges();
-                let autocomplete: Element = element.querySelector('alfresco-search-autocomplete');
+                let autocomplete: Element = element.querySelector('adf-search-autocomplete');
                 expect(autocomplete.classList.contains('active')).toBe(false);
                 done();
             }, 100);
@@ -210,7 +210,7 @@ describe('AlfrescoSearchControlComponent', () => {
             component.onAutoCompleteFocus(new FocusEvent('focus'));
             window.setTimeout(() => { // wait for debounce() to complete
                 fixture.detectChanges();
-                let autocomplete: Element = element.querySelector('alfresco-search-autocomplete');
+                let autocomplete: Element = element.querySelector('adf-search-autocomplete');
                 expect(autocomplete.classList.contains('active')).toBe(true);
                 done();
             }, 100);
@@ -223,7 +223,7 @@ describe('AlfrescoSearchControlComponent', () => {
                 key: 'Escape'
             }));
             fixture.detectChanges();
-            let autocomplete: Element = element.querySelector('alfresco-search-autocomplete');
+            let autocomplete: Element = element.querySelector('adf-search-autocomplete');
             expect(autocomplete.classList.contains('active')).toBe(false);
         });
 
@@ -237,7 +237,7 @@ describe('AlfrescoSearchControlComponent', () => {
                 key: 'ArrowDown'
             }));
             fixture.detectChanges();
-            let autocomplete: Element = element.querySelector('alfresco-search-autocomplete');
+            let autocomplete: Element = element.querySelector('adf-search-autocomplete');
             expect(autocomplete.classList.contains('active')).toBe(true);
         });
 
@@ -280,7 +280,7 @@ describe('AlfrescoSearchControlComponent', () => {
         it('should NOT display a find-as-you-type control when configured not to', () => {
             fixture.componentInstance.liveSearchEnabled = false;
             fixture.detectChanges();
-            let autocomplete: Element = element.querySelector('alfresco-search-autocomplete');
+            let autocomplete: Element = element.querySelector('adf-search-autocomplete');
             expect(autocomplete).toBeNull();
         });
 

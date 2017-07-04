@@ -37,7 +37,7 @@ npm install ng2-alfresco-webscript
 ## Basic usage
 
 ```html
-<alfresco-webscript-get 
+<adf-webscript-get 
     [scriptPath]="string"
     [scriptArgs]="Object"
     [contextRoot]="string"
@@ -45,7 +45,7 @@ npm install ng2-alfresco-webscript
     [showData]="boolean"
     [contentType]="JSON | HTML | DATATABLE | TEXT"
     (onSuccess)= "logData($event)">
- </alfresco-webscript-get>
+ </adf-webscript-get>
 ```
 
 Another example:
@@ -53,13 +53,13 @@ Another example:
 **app.component.html**
 
 ```html
-<alfresco-webscript-get 
+<adf-webscript-get 
     [scriptPath]="scriptPath"
     [scriptArgs]="scriptArgs"
     [contextRoot]="contextRoot"
     [servicePath]="servicePath" 
     [contentType]="'HTML'">
-</alfresco-webscript-get>
+</adf-webscript-get>
 ```
 
 **app.component.ts**
@@ -97,13 +97,13 @@ This sample Web Scripts  reside in your Alfresco Server AND  you can access the 
 http://localhost:8080/alfresco/service/sample/folder/Company%20Home 
 
 ```html
-<alfresco-webscript-get 
+<adf-webscript-get 
     [scriptPath]="scriptPath"
     [contextRoot]="'alfresco'"
     [servicePath]="'service'";
     [scriptPath]="'Sample/folder/Company%20Home'"
     [contentType]="'HTML'">
-</alfresco-webscript-get>
+</adf-webscript-get>
 ```                          
 
 ![Custom columns](docs/assets/HTML.png)                         
@@ -115,13 +115,13 @@ This sample demonstrates how to implement a Webscript component that renders the
 http://localhost:8080/alfresco/service/sample/folder/DATATABLE
 
 ```html
-<alfresco-webscript-get 
+<adf-webscript-get 
     [scriptPath]="scriptPath"
     [contextRoot]="'alfresco'"
     [servicePath]="'service'";
     [scriptPath]="'Sample/folder/DATATABLE'"
     [contentType]="'DATATABLE'">
-</alfresco-webscript-get>
+</adf-webscript-get>
 ```  
 
 If you want show the result from a webscript inside a ng2-alfresco-datatable you have to return from the GET of the webscript the datatructure below:
@@ -173,7 +173,7 @@ This sample Web Scripts  reside in your Alfresco Server AND  you can access the 
 http://localhost:8080/alfresco/service/sample/folder/JSON%EXAMPLE 
 
 ```html
-<alfresco-webscript-get 
+<adf-webscript-get 
     [scriptPath]="scriptPath"
     [contextRoot]="'alfresco'"
     [servicePath]="'service'";
@@ -181,7 +181,7 @@ http://localhost:8080/alfresco/service/sample/folder/JSON%EXAMPLE
     [contentType]="'HTML'"
     [showData]="false"
     (onSuccess)="logDataExample($event)">
-</alfresco-webscript-get>
+</adf-webscript-get>
 ``` 
 
 You can get the plain data from the webscript through the **onSuccess** event parameter and use it as you need in your application

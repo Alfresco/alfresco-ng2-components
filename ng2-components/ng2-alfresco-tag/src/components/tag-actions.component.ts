@@ -27,7 +27,7 @@ import { AlfrescoTranslationService } from 'ng2-alfresco-core';
  */
 
 @Component({
-    selector: 'alfresco-tag-node-actions-list',
+    selector: 'adf-tag-node-actions-list, alfresco-tag-node-actions-list',
     templateUrl: './tag-actions.component.html',
     styleUrls: ['./tag-actions.component.css']
 })

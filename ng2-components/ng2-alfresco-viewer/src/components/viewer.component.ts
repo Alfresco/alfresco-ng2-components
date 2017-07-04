@@ -21,7 +21,7 @@ import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 
 @Component({
-    selector: 'alfresco-viewer',
+    selector: 'adf-viewer, alfresco-viewer',
     templateUrl: './viewer.component.html',
     styleUrls: ['./viewer.component.css']
 })

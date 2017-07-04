@@ -29,7 +29,7 @@ import { WidgetVisibilityService }  from './../services/widget-visibility.servic
 declare var componentHandler: any;
 
 @Component({
-    selector: 'activiti-form',
+    selector: 'adf-form, activiti-form',
     templateUrl: './activiti-form.component.html',
     styleUrls: ['./activiti-form.component.css']
 })
