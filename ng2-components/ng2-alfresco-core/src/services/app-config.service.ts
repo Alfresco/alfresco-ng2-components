@@ -23,8 +23,8 @@ import { ObjectUtils } from '../utils/object-utils';
 export class AppConfigService {
 
     private config: any = {
-        'ecmHost': 'http://localhost:3000/ecm',
-        'bpmHost': 'http://localhost:3000/bpm',
+        'ecmHost': 'http://{hostname}:{port}/ecm',
+        'bpmHost': 'http://{hostname}:{port}/bpm',
         'application': {
             'name': 'Alfresco'
         }
@@ -35,7 +35,14 @@ export class AppConfigService {
     constructor(private http: Http) {}
 
     get<T>(key: string): T {
-        return <T> ObjectUtils.getValue(this.config, key);
+        let result: any = ObjectUtils.getValue(this.config, key);
+        if (typeof result === 'string') {
+            const map = new Map<string, string>();
+            map.set('hostname', location.hostname);
+            map.set('port', location.port);
+            result = this.formatString(result, map);
+        }
+        return <T> result;
     }
 
     load(resource: string = 'app.config.json'): Promise<any> {
@@ -53,6 +60,17 @@ export class AppConfigService {
                 }
             );
         });
+    }
+
+    private formatString(str: string, map: Map<string, string>): string {
+        let result = str;
+
+        map.forEach((value, key) => {
+            const expr = new RegExp('{' + key + '}', 'gm');
+            result = result.replace(expr, value);
+        });
+
+        return result;
     }
 }
 
