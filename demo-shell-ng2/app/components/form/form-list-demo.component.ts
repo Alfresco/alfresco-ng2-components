@@ -19,6 +19,8 @@ import { Component, ViewChild } from '@angular/core';
 import { FormModel, FormService } from 'ng2-activiti-form';
 import { ActivitiForm } from 'ng2-activiti-form';
 
+declare var componentHandler;
+
 @Component({
     selector: 'form-list-demo',
     template: `
@@ -28,8 +30,8 @@ import { ActivitiForm } from 'ng2-activiti-form';
             <activiti-form [form]="form" [data]="restoredData">
             </activiti-form>
         </div>
-        <button md-button (click)="store()" color="primary">{{'FORM-LIST.STORE' | translate }}</button>
-        <button md-button (click)="restore()" color="primary">{{'FORM-LIST.RESTORE' | translate }}</button>
+        <button class="mdl-button mdl-js-button" (click)="store()">STORE</button>
+        <button class="mdl-button mdl-js-button" (click)="restore()">RESTORE</button>
     `,
     styles: [`
         .form-container {
@@ -44,7 +46,7 @@ import { ActivitiForm } from 'ng2-activiti-form';
 })
 export class FormListDemoComponent {
 
-    @ViewChild(ActivitiForm)
+     @ViewChild(ActivitiForm)
     activitiForm: ActivitiForm;
 
     formList: any [] = [];
@@ -61,6 +63,13 @@ export class FormListDemoComponent {
             e.preventDefault();
             console.log(e.outcome);
         });
+    }
+
+    ngAfterViewInit() {
+        // workaround for MDL issues with dynamic components
+        if (componentHandler) {
+            componentHandler.upgradeAllRegistered();
+        }
     }
 
     onRowDblClick(event: CustomEvent) {
