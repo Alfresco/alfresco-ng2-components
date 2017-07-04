@@ -354,6 +354,27 @@ if (process.env.ENV === 'production') {
 })
 ```
 
+### Variable substitution in configuration strings
+
+The `AppConfigService` also supports a limited set of variable substitutions to greatly simplify certain scenarios. 
+
+```json
+{
+    "ecmHost": "http://{hostname}:{port}/ecm",
+    "bpmHost": "http://{hostname}:{port}/bpm",
+    "application": {
+        "name": "Alfresco"
+    }
+}
+```
+
+The supported variables are:
+
+| Variable name | Runtime value |
+| --- | --- |
+| hostname | `location.hostname` |
+| port | `location.port` |
+
 ## Notification Service
 
 The Notification Service is implemented on top of the Angular 2 Material Design snackbar.

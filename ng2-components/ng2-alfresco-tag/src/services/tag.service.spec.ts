@@ -54,7 +54,7 @@ describe('Tag service', () => {
             service.removeTag('fake-node-id', 'fake-tag').subscribe(() => {
                 expect(jasmine.Ajax.requests.mostRecent().method).toBe('DELETE');
                 expect(jasmine.Ajax.requests.mostRecent().url)
-                    .toBe('http://localhost:3000/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags/fake-tag');
+                    .toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags/fake-tag');
                 done();
             });
 
@@ -67,7 +67,7 @@ describe('Tag service', () => {
             service.addTag('fake-node-id', 'fake-tag').subscribe(() => {
                 expect(jasmine.Ajax.requests.mostRecent().method).toBe('POST');
                 expect(jasmine.Ajax.requests.mostRecent().url)
-                    .toBe('http://localhost:3000/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags');
+                    .toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags');
                 done();
             });
 
@@ -80,7 +80,7 @@ describe('Tag service', () => {
             service.getAllTheTags().subscribe(() => {
                 expect(jasmine.Ajax.requests.mostRecent().method).toBe('GET');
                 expect(jasmine.Ajax.requests.mostRecent().url)
-                    .toBe('http://localhost:3000/ecm/alfresco/api/-default-/public/alfresco/versions/1/tags');
+                    .toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/tags');
                 done();
             });
 
@@ -93,7 +93,7 @@ describe('Tag service', () => {
             service.getTagsByNodeId('fake-node-id').subscribe(() => {
                 expect(jasmine.Ajax.requests.mostRecent().method).toBe('GET');
                 expect(jasmine.Ajax.requests.mostRecent().url)
-                    .toBe('http://localhost:3000/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags');
+                    .toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags');
                 done();
             });
 

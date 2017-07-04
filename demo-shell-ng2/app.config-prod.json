@@ -1,6 +1,6 @@
 {
-    "ecmHost": "http://localhost:3000/ecm",
-    "bpmHost": "http://localhost:3000/bpm",
+    "ecmHost": "http://{hostname}",
+    "bpmHost": "http://{hostname}",
     "application": {
         "name": "Alfresco"
     }
