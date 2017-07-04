@@ -3,5 +3,8 @@
     "bpmHost": "http://{hostname}:{port}/bpm",
     "application": {
         "name": "Alfresco"
+    },
+    "pagination": {
+        "size": 25
     }
 }

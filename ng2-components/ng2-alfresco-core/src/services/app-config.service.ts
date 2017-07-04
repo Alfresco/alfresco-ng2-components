@@ -24,23 +24,23 @@ export class AppConfigService {
 
     private config: any = {
         'ecmHost': 'http://{hostname}:{port}/ecm',
-        'bpmHost': 'http://{hostname}:{port}/bpm',
-        'application': {
-            'name': 'Alfresco'
-        }
+        'bpmHost': 'http://{hostname}:{port}/bpm'
     };
 
     configFile: string = null;
 
     constructor(private http: Http) {}
 
-    get<T>(key: string): T {
+    get<T>(key: string, defaultValue?: T): T {
         let result: any = ObjectUtils.getValue(this.config, key);
         if (typeof result === 'string') {
             const map = new Map<string, string>();
             map.set('hostname', location.hostname);
             map.set('port', location.port);
             result = this.formatString(result, map);
+        }
+        if (result === undefined) {
+            return defaultValue;
         }
         return <T> result;
     }
