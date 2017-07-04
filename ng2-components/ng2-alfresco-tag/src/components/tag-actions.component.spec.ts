@@ -18,13 +18,13 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { TagActionsComponent } from '../components/tag-actions.component';
 import { DebugElement }    from '@angular/core';
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule, AppConfigModule } from 'ng2-alfresco-core';
 import { TagService } from '../services/tag.service';
 import { MdInputModule } from '@angular/material';
 
 declare let jasmine: any;
 
-describe('Test ng2-alfresco-tag Tag actions list', () => {
+describe('TagActionsComponent', () => {
 
     let component: any;
     let fixture: ComponentFixture<TagActionsComponent>;
@@ -35,7 +35,10 @@ describe('Test ng2-alfresco-tag Tag actions list', () => {
         TestBed.configureTestingModule({
             imports: [
                 MdInputModule,
-                CoreModule.forRoot()
+                CoreModule.forRoot(),
+                AppConfigModule.forRoot('app.config.json', {
+                    ecmHost: 'http://localhost:9876/ecm'
+                })
             ],
             declarations: [
                 TagActionsComponent

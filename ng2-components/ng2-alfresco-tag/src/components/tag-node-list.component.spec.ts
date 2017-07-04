@@ -18,13 +18,13 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { TagNodeList } from '../components/tag-node-list.component';
 import { DebugElement } from '@angular/core';
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule, AppConfigModule } from 'ng2-alfresco-core';
 import { TagService } from '../services/tag.service';
 import { MdInputModule } from '@angular/material';
 
 declare let jasmine: any;
 
-describe('Test ng2-alfresco-tag Tag relative node list', () => {
+describe('TagNodeList', () => {
 
     let dataTag = {
         'list': {
@@ -51,7 +51,10 @@ describe('Test ng2-alfresco-tag Tag relative node list', () => {
         TestBed.configureTestingModule({
             imports: [
                 MdInputModule,
-                CoreModule.forRoot()
+                CoreModule.forRoot(),
+                AppConfigModule.forRoot('app.config.json', {
+                    ecmHost: 'http://localhost:9876/ecm'
+                })
             ],
             declarations: [
                 TagNodeList
