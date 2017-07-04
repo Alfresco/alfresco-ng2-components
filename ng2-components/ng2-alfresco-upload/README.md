@@ -64,14 +64,14 @@ npm install ng2-alfresco-upload
 ## UploadButtonComponent
 
 ```html
-<alfresco-upload-button 
+<adf-upload-button 
     [rootFolderId]="-my-"
     [uploadFolders]="true"
     [multipleFiles]="false"
     [acceptedFilesType]=".jpg,.gif,.png,.svg"
     [versioning]="false"
     (onSuccess)="customMethod($event)">
-</alfresco-upload-button>
+</adf-upload-button>
 <file-uploading-dialog></file-uploading-dialog>
 ```
 
@@ -105,10 +105,10 @@ The UploadButtonComponent provides the event permissionEvent that is raised when
 You can subscribe to this event from your component and use the NotificationService to show a message.
 
 ```html
-<alfresco-upload-button
+<adf-upload-button
     [rootFolderId]="currentFolderId"
     (permissionEvent)="onUploadPermissionFailed($event)">
-</alfresco-upload-button>
+</adf-upload-button>
 ```
 
 ```ts
@@ -131,10 +131,10 @@ You can easily disable the button when the user doesn't own the permission to pe
 The UploadButtonComponent provides the property disableWithNoPermission that can be true. In this way the button should be disabled if the delete permission is missing for the node.
 
 ```html
-<alfresco-upload-button
+<adf-upload-button
     [rootFolderId]="currentFolderId"
     [disableWithNoPermission]="true">
-</alfresco-upload-button>
+</adf-upload-button>
 ```
 
 ![Upload disable button](docs/assets/upload-disable-button.png)
@@ -144,11 +144,11 @@ The UploadButtonComponent provides the property disableWithNoPermission that can
 This component, provide a drag and drop are to upload files to alfresco.
 
 ```html
-<alfresco-upload-drag-area (onSuccess)="customMethod($event)">
+<adf-upload-drag-area (onSuccess)="customMethod($event)">
     <div style="width: 200px; height: 100px; border: 1px solid #888888">
         DRAG HERE
     </div>
-</alfresco-upload-drag-area>
+</adf-upload-drag-area>
 <file-uploading-dialog></file-uploading-dialog>
 ```
 

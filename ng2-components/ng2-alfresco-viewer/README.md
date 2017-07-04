@@ -41,20 +41,20 @@ npm install ng2-alfresco-viewer
 Using with node id:
 
 ```html
-<alfresco-viewer 
+<adf-viewer 
     [showViewer]="true" 
     [overlayMode]="true" 
     [fileNodeId]="'d367023a-7ebe-4f3a-a7d0-4f27c43f1045'">
-</alfresco-viewer>
+</adf-viewer>
 ```
 
 Using with file url:
 
 ```html
-<alfresco-viewer 
+<adf-viewer 
     [overlayMode]="true" 
     [urlFile]="'filename.pdf'">
-</alfresco-viewer>
+</adf-viewer>
 ```
 
 ## Properties
@@ -91,7 +91,7 @@ If you want handle other file formats that are not yet supported by the ng2-alfr
 Below you can find an example where with the use of `extension-viewer` if you can handle 3d files
 
 ```html
-<alfresco-viewer 
+<adf-viewer 
     [(showViewer)]="fileShowed"
     [fileNodeId]="fileNodeId"
     [overlayMode]="true">
@@ -105,7 +105,7 @@ Below you can find an example where with the use of `extension-viewer` if you ca
         </template>
     </extension-viewer>
 
-</alfresco-viewer> 
+</adf-viewer> 
 ```
 
 Note: you need adding `ng2-3d-editor` dependency to your `package.json` file to make example above work.
@@ -113,7 +113,7 @@ Note: you need adding `ng2-3d-editor` dependency to your `package.json` file to 
 It is possible to define multiple `extension-viewer` templates:
 
 ```html
-<alfresco-viewer 
+<adf-viewer 
     [(showViewer)]="fileShowed"
     [fileNodeId]="fileNodeId"
     [overlayMode]="true">
@@ -133,7 +133,7 @@ It is possible to define multiple `extension-viewer` templates:
             </my-custom-txt-component>
         </template>
     </extension-viewer>
-</alfresco-viewer> 
+</adf-viewer> 
 ```
 
 ## Build from sources

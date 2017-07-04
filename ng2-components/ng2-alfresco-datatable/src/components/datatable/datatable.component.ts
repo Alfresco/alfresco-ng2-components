@@ -30,7 +30,7 @@ import { Observable, Observer } from 'rxjs/Rx';
 declare var componentHandler;
 
 @Component({
-    selector: 'alfresco-datatable',
+    selector: 'adf-datatable, alfresco-datatable',
     styleUrls: ['./datatable.component.css'],
     templateUrl: './datatable.component.html'
 })

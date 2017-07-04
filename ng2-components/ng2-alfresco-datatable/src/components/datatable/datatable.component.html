@@ -81,11 +81,11 @@
                         </div>
                         <div *ngSwitchCase="'date'" class="cell-value"
                              [attr.data-automation-id]="'date_' + data.getValue(row, col)">
-                            <alfresco-datatable-cell [data]="data" [column]="col" [row]="row"></alfresco-datatable-cell>
+                            <adf-datatable-cell [data]="data" [column]="col" [row]="row"></adf-datatable-cell>
                         </div>
                         <div *ngSwitchCase="'text'" class="cell-value"
                              [attr.data-automation-id]="'text_' + data.getValue(row, col)">
-                            <alfresco-datatable-cell [data]="data" [column]="col" [row]="row"></alfresco-datatable-cell>
+                            <adf-datatable-cell [data]="data" [column]="col" [row]="row"></adf-datatable-cell>
                         </div>
                     <span *ngSwitchDefault class="cell-value">
                     <!-- empty cell for unknown column type -->

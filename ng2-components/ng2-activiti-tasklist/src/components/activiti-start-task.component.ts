@@ -24,7 +24,7 @@ import { Form } from '../models/form.model';
 declare let dialogPolyfill: any;
 
 @Component({
-    selector: 'activiti-start-task',
+    selector: 'adf-start-task, activiti-start-task',
     templateUrl: './activiti-start-task.component.html',
     styleUrls: ['./activiti-start-task.component.css']
 })
