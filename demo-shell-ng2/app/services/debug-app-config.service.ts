@@ -32,6 +32,6 @@ export class DebugAppConfigService extends AppConfigService {
             return <T>(<any>this.storage.getItem(key) || super.get<T>(key));
         }
         return super.get<T>(key);
-    };
+    }
 
 }
