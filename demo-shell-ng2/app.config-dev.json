@@ -3,5 +3,21 @@
     "bpmHost": "http://{hostname}:{port}/bpm",
     "application": {
         "name": "Alfresco"
+    },
+    "activiti": {
+        "rest": {
+            "fields": [
+                {
+                    "processId": "0",
+                    "taskId": "7501",
+                    "fieldId": "label10",
+                    "values": [
+                        { "id": "f1", "name": "Field 1" },
+                        { "id": "f2", "name": "Field 2" },
+                        { "id": "f3", "name": "Field 3" }
+                    ]
+                }
+            ]
+        }
     }
 }

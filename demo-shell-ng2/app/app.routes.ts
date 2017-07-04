@@ -39,6 +39,7 @@ import {
 } from './components/index';
 
 import { UploadButtonComponent } from 'ng2-alfresco-upload';
+import { FormListDemoComponent } from './components/form/form-list-demo.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginDemoComponent },
@@ -132,7 +133,8 @@ export const appRoutes: Routes = [
     },
     { path: 'about', component: AboutComponent },
     { path: 'settings', component: SettingsComponent },
-    { path: 'form', component: FormDemoComponent }
+    { path: 'form', component: FormDemoComponent },
+    { path: 'form-list', component: FormListDemoComponent }
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);
