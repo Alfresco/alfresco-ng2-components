@@ -17,6 +17,8 @@
 
 import { Component, Input } from '@angular/core';
 import { ObjectDataTableAdapter, DataSorting, ObjectDataRow, ObjectDataColumn, DataCellEvent, DataRowActionEvent } from 'ng2-alfresco-datatable';
+import { AlfrescoApiService } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Rx';
 
 @Component({
     selector: 'datatable-demo',
@@ -43,53 +45,52 @@ export class DataTableDemoComponent {
         email: 'denys.vuika@alfresco.com'
     };
 
-    constructor() {
+    constructor(private apiService: AlfrescoApiService) {
         this.reset();
     }
 
     reset() {
-        setTimeout(() => {
-            this.data = new ObjectDataTableAdapter(
-                [
-                    {
-                        id: 1,
-                        name: 'Name 1',
-                        createdOn: new Date(2016, 6, 2, 15, 8, 1),
-                        createdBy: this._createdBy,
-                        icon: 'material-icons://folder_open'
-                    },
-                    {
-                        id: 2,
-                        name: 'Name 2',
-                        createdOn: new Date(2016, 6, 2, 15, 8, 2),
-                        createdBy: this._createdBy,
-                        icon: 'material-icons://accessibility'
-                    },
-                    {
-                        id: 3,
-                        name: 'Name 3',
-                        createdOn: new Date(2016, 6, 2, 15, 8, 3),
-                        createdBy: this._createdBy,
-                        icon: 'material-icons://alarm'
-                    },
-                    {
-                        id: 4,
-                        name: 'Image 1',
-                        createdOn: new Date(2016, 6, 2, 15, 8, 4),
-                        createdBy: this._createdBy,
-                        icon: this._imageUrl
-                    }
-                ],
-                [
-                    { type: 'image', key: 'icon', title: '', srTitle: 'Thumbnail' },
-                    { type: 'text', key: 'id', title: 'Id', sortable: true },
-                    { type: 'text', key: 'createdOn', title: 'Created On', sortable: true },
-                    { type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true },
-                    { type: 'text', key: 'createdBy.name', title: 'Created By', sortable: true }
-                ]
-            );
-            this.data.setSorting(new DataSorting('id', 'asc'));
-        }, 4000);
+        this.data = new ObjectDataTableAdapter(
+            [
+                {
+                    id: 1,
+                    name: 'Name 1',
+                    createdOn: new Date(2016, 6, 2, 15, 8, 1),
+                    createdBy: this._createdBy,
+                    icon: 'material-icons://folder_open'
+                },
+                {
+                    id: 2,
+                    name: 'Name 2',
+                    createdOn: new Date(2016, 6, 2, 15, 8, 2),
+                    createdBy: this._createdBy,
+                    icon: 'material-icons://accessibility'
+                },
+                {
+                    id: 3,
+                    name: 'Name 3',
+                    createdOn: new Date(2016, 6, 2, 15, 8, 3),
+                    createdBy: this._createdBy,
+                    icon: 'material-icons://alarm'
+                },
+                {
+                    id: 4,
+                    name: 'Image 1',
+                    createdOn: new Date(2016, 6, 2, 15, 8, 4),
+                    createdBy: this._createdBy,
+                    icon: this._imageUrl
+                }
+            ],
+            [
+                { type: 'image', key: 'icon', title: '', srTitle: 'Thumbnail' },
+                { type: 'text', key: 'id', title: 'Id', sortable: true },
+                { type: 'text', key: 'createdOn', title: 'Created On', sortable: true },
+                { type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true },
+                { type: 'text', key: 'createdBy.name', title: 'Created By', sortable: true }
+            ]
+        );
+
+        this.data.setSorting(new DataSorting('id', 'asc'));
     }
 
     addRow() {
@@ -172,5 +173,34 @@ export class DataTableDemoComponent {
 
     onRowDblClick(event) {
         console.log(event);
+    }
+
+    getRowForNode() {
+        let opts: any = {
+            includeSource: true,
+            include: ['path', 'properties', 'allowableOperations']
+        };
+
+        Observable.fromPromise(this.apiService.getInstance().nodes
+            .getNodeInfo('-my-', opts)).subscribe((data) => {
+                console.log('FUnNy');
+                console.log(data);
+                let objects = new ObjectDataTableAdapter([
+                    {
+                        id: data.id,
+                        name: data.name,
+                        createdBy: data.createdByUser.displayName,
+                        createdOn: new Date(data.createdAt),
+                        icon: 'material-icons://face'
+                    }],
+                    [
+                        { type: 'image', key: 'icon', title: '', srTitle: 'Thumbnail' },
+                        { type: 'text', key: 'id', title: 'Id', sortable: true },
+                        { type: 'text', key: 'createdOn', title: 'Created On', sortable: true },
+                        { type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true },
+                        { type: 'text', key: 'createdBy.name', title: 'Created By', sortable: true }
+                    ]);
+                this.data = objects;
+            });
     }
 }
