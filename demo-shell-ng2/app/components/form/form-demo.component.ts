@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewChild, AfterViewInit, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { FormModel, FormService } from 'ng2-activiti-form';
 import { InMemoryFormService } from '../../services/in-memory-form.service';
 import { DemoForm } from './demo-form';
