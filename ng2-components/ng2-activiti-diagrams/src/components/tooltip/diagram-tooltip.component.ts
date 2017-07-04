@@ -39,15 +39,9 @@ export class DiagramTooltip implements AfterViewInit, OnDestroy {
     @Input()
     position: string = 'bottom';
 
-    private getTooltipHeader(data: any) {
-        let headerValue = data.name || data.id;
-        return data.type + ' ' + headerValue;
-    }
-
-    private getTooltipMessage(data: any) {
-        return (data.value !== undefined && data.value !== null ) ? data.value + ' ' + data.dataType : '';
-    }
-
+    /**
+     * Set up event listeners for the target element (defined in the data.id)
+     */
     public ngAfterViewInit() {
         this.tooltipElement = this.tooltipContent.nativeElement;
 
@@ -70,22 +64,33 @@ export class DiagramTooltip implements AfterViewInit, OnDestroy {
         }
     }
 
+    /**
+     * Clear all bound eventlisteners
+     */
     ngOnDestroy() {
-        this.targetElement.removeEventListener('mouseenter', this.boundMouseEnterHandler, false);
-        this.targetElement.removeEventListener('touchend', this.boundMouseEnterHandler, false);
-        this.targetElement.removeEventListener('mouseleave', this.boundMouseLeaveAndScrollHandler, false);
         window.removeEventListener('scroll', this.boundMouseLeaveAndScrollHandler, true);
         window.removeEventListener('touchstart', this.boundMouseLeaveAndScrollHandler);
     }
 
+    /**
+     * Hides the tooltip
+     */
     private hideTooltip(): void {
         this.tooltipElement.classList.remove(IS_ACTIVE_CLASS);
     }
 
+    /**
+     * Shows the tooltip
+     */
     private showTooltip(): void {
         this.tooltipElement.classList.add(IS_ACTIVE_CLASS);
     }
 
+    /**
+     * Calculates the tooltip's position and displays it
+     *
+     * @param event mouseenter/touchend event
+     */
     private handleMouseEnter(event): void {
         const props = event.target.getBoundingClientRect(),
             top = props.top + (props.height / 2),

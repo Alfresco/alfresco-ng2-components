@@ -1,6 +1,25 @@
 @font-face {
-    font-family: Muli;
+    font-family: "Muli";
+    src: url(../fonts/Muli-Light.ttf);
+}
+
+@font-face {
+    font-family: "Muli";
+    src: url(../fonts/Muli-LightItalic.ttf);
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Muli";
     src: url(../fonts/Muli-Regular.ttf);
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: "Muli";
+    src: url(../fonts/Muli-Italic.ttf);
+    font-weight: bold;
+    font-style: italic;
 }
 
 html, body {

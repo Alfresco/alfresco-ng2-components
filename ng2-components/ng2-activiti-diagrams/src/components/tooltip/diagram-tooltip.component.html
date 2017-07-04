@@ -1,4 +1,13 @@
 <div #tooltipContent class="diagram-tooltip">
-    <div class="diagram-tooltip-header">{{getTooltipHeader(data)}}</div>
-    <div class="diagram-tooltip-body">{{getTooltipMessage(data)}}</div>
+    <div class="diagram-tooltip-header">{{ data.type }} {{ data.name || data.id }}</div>
+    <div class="diagram-tooltip-body">
+        <div *ngIf="data.name">
+            <span class="propertyName">Name:</span>
+            <span class="propertyValue">{{ data.name }}</span>
+        </div>
+        <div *ngFor="let property of data.properties">
+            <span class="propertyName">{{ property.name }}:</span>
+            <span class="propertyValue">{{ property.value }}</span>
+        </div>
+    </div>
 </div>

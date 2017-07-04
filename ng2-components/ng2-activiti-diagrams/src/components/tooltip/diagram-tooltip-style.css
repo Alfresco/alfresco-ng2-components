@@ -25,12 +25,33 @@
     padding: 8px;
     font-weight: bold;
     min-width: 200px;
+    line-height: 20px;
 }
 
 .diagram-tooltip-body {
     color: #4a4a4a;
     background-color: rgba(255, 255, 255, 0.9);
-    padding: 8px;
+}
+
+.diagram-tooltip-body > div {
+    padding: 4px 8px;
+}
+
+.diagram-tooltip-body > div:first-child {
+    padding-top: 8px;
+}
+
+.diagram-tooltip-body > div:last-child {
+    padding-bottom: 8px;
+}
+
+.propertyName {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.propertyValue {
+    font-style: italic;
 }
 
 @keyframes tooltipAnimation {
