@@ -15,34 +15,25 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormModel, FormService } from 'ng2-activiti-form';
+import { InMemoryFormService } from '../../services/in-memory-form.service';
 import { DemoForm } from './demo-form';
-import { ActivitiForm } from 'ng2-activiti-form';
-
-declare var componentHandler;
 
 @Component({
     selector: 'form-demo',
     templateUrl: 'form-demo.component.html',
-    styleUrls: [
-        'form-demo.component.css'
+    styleUrls: [ 'form-demo.component.css' ],
+    providers: [
+        { provide: FormService, useClass: InMemoryFormService }
     ]
 })
 export class FormDemoComponent implements OnInit {
 
-    @ViewChild(ActivitiForm)
-    activitiForm: ActivitiForm;
-
-    formList: any [] = [];
-
     form: FormModel;
-    formId: string;
 
-    storedData: any = {};
-    restoredData: any = {};
-
-    constructor(private formService: FormService) {
+    constructor(@Inject(FormService) private formService: InMemoryFormService) {
+        // Prevent default outcome actions
         formService.executeOutcome.subscribe(e => {
             e.preventDefault();
             console.log(e.outcome);
@@ -50,56 +41,8 @@ export class FormDemoComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.formList.push({ name: 'Demo Form Definition', lastUpdatedByFullName: 'Demo Name User', lastUpdated: '2017-06-23T13:20:30.754+0000', isFake: true });
-    }
-
-    ngAfterViewInit() {
-        // workaround for MDL issues with dynamic components
-        if (componentHandler) {
-            componentHandler.upgradeAllRegistered();
-        }
-    }
-
-    onRowDblClick(event: CustomEvent) {
-        let rowForm = event.detail.value.obj;
-
-        if (rowForm.isFake) {
-            let formDefinitionJSON: any = DemoForm.getDefinition();
-            let form = this.formService.parseForm(formDefinitionJSON);
-            this.form = form;
-        } else {
-            this.formService.getFormDefinitionById(rowForm.id).subscribe((definition) => {
-                let form = this.formService.parseForm(definition);
-                this.form = form;
-            });
-        }
-        console.log(rowForm);
-    }
-
-    isEmptyForm() {
-        return this.form === null || this.form === undefined;
-    }
-
-    store() {
-        this.clone(this.activitiForm.form.values, this.storedData);
-        console.log('DATA SAVED');
-        console.log(this.storedData);
-        console.log('DATA SAVED');
-        this.restoredData = null;
-    }
-
-    clone(objToCopyFrom, objToCopyTo) {
-        for (let attribute in objToCopyFrom) {
-            if (objToCopyFrom.hasOwnProperty(attribute)) {
-                objToCopyTo[attribute] = objToCopyFrom[attribute];
-            }
-        }
-        return objToCopyTo;
-    }
-
-    restore() {
-        this.restoredData = this.storedData;
-        this.storedData = {};
+        let formDefinitionJSON: any = DemoForm.getDefinition();
+        this.form = this.formService.parseForm(formDefinitionJSON);
     }
 
 }
