@@ -1,6 +1,0 @@
-node_modules
-.idea
-coverage
-dist
-typings
-!systemjs.config.js

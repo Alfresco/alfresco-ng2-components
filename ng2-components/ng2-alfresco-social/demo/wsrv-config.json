@@ -1,5 +1,0 @@
-{
-    "watch": [
-        "node_modules/ng2-alfresco-social/dist/**/*.{html,htm,css,js}"
-    ]
-}
