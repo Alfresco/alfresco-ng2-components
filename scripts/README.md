@@ -239,14 +239,13 @@ For development environment configuration please refer to [project docs](../demo
 
 # npm-clean.sh
 
-***npm-clean.sh*** clean all the projects folder : ng2-components, ng2-components/*.*/demo and  demo-shell-ng2.
+***npm-clean.sh*** clean all the projects folder : ng2-components and  demo-shell-ng2.
 
 ## Options
 
 | Option | Description |
 | --- | --- |
 | -h or --help    | show the help  |
-| -sd or --skipDemo   | skip the demo folder clean |
 
 # npm-check-bundles.sh
 
@@ -270,8 +269,6 @@ Add a package across all the pacakge json in the project
 | -h or --help    | show the help  |
 | --save   | save it in dependencies |
 | --save-dev   | save it in dev dependencies |
-| -sd   | skip the demo projects |
-
 
 * Add a package in the project
 

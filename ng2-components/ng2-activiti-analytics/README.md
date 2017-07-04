@@ -68,10 +68,10 @@ The component shows the list of all the available reports
 The component shows the charts related to the reportId passed as input
 
 ```html
-<activiti-analytics 
+<adf-analytics 
     [appId]="1001" 
     [reportId]="2006">
-</activiti-analytics>
+</adf-analytics>
 ```
 
 ### Properties
@@ -86,11 +86,11 @@ The component shows the charts related to the reportId passed as input
 You can also hide chart parameters UI by setting the `hideParameters` to `true`:
 
 ```html
-<activiti-analytics 
+<adf-analytics 
     [appId]="appId" 
     [reportId]="reportId" 
     [hideParameters]="true">
-</activiti-analytics>
+</adf-analytics>
 ```
 
 ![Analytics-without-parameters](docs/assets/analytics-without-parameters.png)
@@ -109,10 +109,10 @@ You can also hide chart parameters UI by setting the `hideParameters` to `true`:
 The component generate and show the charts
 
 ```html
-<activiti-analytics-generator 
+<adf-analytics-generator 
     [reportId]="reportId" 
     [reportParamQuery]="reportParamQuery">
-</activiti-analytics>
+</adf-analytics>
 ```
 
 ### Properties

@@ -16,24 +16,23 @@
  */
 
 import { DebugElement, SimpleChange } from '@angular/core';
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { MdProgressSpinnerModule } from '@angular/material';
+import { ComponentFixture, TestBed, async, fakeAsync, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
-import { DataTableModule, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
+import { DataTableModule, ObjectDataTableAdapter, ObjectDataRow } from 'ng2-alfresco-datatable';
 
+import { ActivitiProcessInstanceVariables } from './activiti-process-instance-variables.component';
+import { ActivitiProcessService } from './../services/activiti-process.service';
 import { TranslationMock } from './../assets/translation.service.mock';
-import { ProcessService } from './../services/process.service';
-import { ProcessInstanceVariablesComponent } from './process-instance-variables.component';
 
-describe('ProcessInstanceVariablesComponent', () => {
+describe('ActivitiProcessInstanceVariables', () => {
 
     let componentHandler: any;
-    let service: ProcessService;
-    let component: ProcessInstanceVariablesComponent;
-    let fixture: ComponentFixture<ProcessInstanceVariablesComponent>;
+    let service: ActivitiProcessService;
+    let component: ActivitiProcessInstanceVariables;
+    let fixture: ComponentFixture<ActivitiProcessInstanceVariables>;
     let getVariablesSpy: jasmine.Spy;
     let createOrUpdateProcessInstanceVariablesSpy: jasmine.Spy;
     let deleteProcessInstanceVariableSpy: jasmine.Spy;
@@ -42,24 +41,23 @@ describe('ProcessInstanceVariablesComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                DataTableModule.forRoot(),
-                MdProgressSpinnerModule
+                DataTableModule.forRoot()
             ],
             declarations: [
-                ProcessInstanceVariablesComponent
+                ActivitiProcessInstanceVariables
             ],
             providers: [
                 { provide: AlfrescoTranslationService, useClass: TranslationMock },
-                ProcessService
+                ActivitiProcessService
             ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
 
-        fixture = TestBed.createComponent(ProcessInstanceVariablesComponent);
+        fixture = TestBed.createComponent(ActivitiProcessInstanceVariables);
         component = fixture.componentInstance;
-        service = fixture.debugElement.injector.get(ProcessService);
+        service = fixture.debugElement.injector.get(ActivitiProcessService);
 
         getVariablesSpy = spyOn(service, 'getProcessInstanceVariables').and.returnValue(Observable.of([{
             name: 'var1',
@@ -99,6 +97,14 @@ describe('ProcessInstanceVariablesComponent', () => {
         fixture.detectChanges();
         expect(getVariablesSpy).not.toHaveBeenCalled();
     });
+
+    it('should not display list when no processInstanceId is specified', fakeAsync(() => {
+        fixture.detectChanges();
+        fixture.whenStable();
+        tick();
+        let datatable: DebugElement = fixture.debugElement.query(By.css('adf-datatable'));
+        expect(datatable).toBeNull();
+    }));
 
     it('should use the default schemaColumn as default', () => {
         fixture.detectChanges();
@@ -167,10 +173,8 @@ describe('ProcessInstanceVariablesComponent', () => {
 
         it('should set a placeholder message when processInstanceId changed to null', () => {
             component.ngOnChanges({ 'processInstanceId': nullChange });
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(fixture.nativeElement.querySelector('adf-empty-list .empty-list__this-space-is-empty').innerHTML).toEqual('This list is empty');
-            });
+            fixture.detectChanges();
+            expect(fixture.debugElement.query(By.css('[data-automation-id="variables-none"]'))).not.toBeNull();
         });
     });
 

@@ -26,7 +26,7 @@ import { Observable } from 'rxjs/Observable';
 declare let componentHandler: any;
 
 @Component({
-    selector: 'activiti-apps',
+    selector: 'adf-apps, activiti-apps',
     templateUrl: 'activiti-apps.component.html',
     styleUrls: ['./activiti-apps.component.css', './activiti-apps-grid.component.css'],
     providers: [ActivitiTaskListService]

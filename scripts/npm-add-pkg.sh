@@ -2,7 +2,6 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-eval EXEC_DEMO=true
 eval NAME_PKG=''
 eval SAVE_OPT=false
 eval SAVE_DEV_OPT=false
@@ -11,7 +10,6 @@ show_help() {
     echo "Usage: npm-clean.sh"
     echo "--save"
     echo "--save-dev"
-    echo "-sd or -skipDemo skip the clean of the demo folder of any components"
 }
 
 eval projects=( "ng2-activiti-diagrams"
@@ -32,10 +30,6 @@ eval projects=( "ng2-activiti-diagrams"
       "ng2-alfresco-webscript"
       "ng2-alfresco-userinfo" )
 
-clea_demo() {
-    EXEC_DEMO=false
-}
-
 save(){
     NAME_PKG=$1
     SAVE_OPT=true
@@ -51,7 +45,6 @@ while [[ $1  == -* ]]; do
       -h|--help|-\?) show_help; exit 0;;
       --save)  save $2; shift 2;;
       --save-dev)  save_dev $2; shift 2;;
-      -sd|--skipDemo) clea_demo; shift;;
       -*) echo "invalid option: $1" 1>&2; show_help; exit 0;;
     esac
 done

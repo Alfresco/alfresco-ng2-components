@@ -24,7 +24,7 @@ import { FilterRepresentationModel, FilterParamsModel } from '../models/filter.m
 declare let componentHandler: any;
 
 @Component({
-    selector: 'activiti-filters',
+    selector: 'adf-filters, activiti-filters',
     templateUrl: './activiti-filters.component.html',
     styleUrls: ['activiti-filters.component.css'],
     providers: [ActivitiTaskListService]

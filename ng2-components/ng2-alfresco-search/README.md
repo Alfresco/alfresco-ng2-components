@@ -37,13 +37,13 @@ npm install ng2-alfresco-search
 ## Basic usage
 
 ```html
-<alfresco-search-control 
+<adf-search-control 
     [searchTerm]="searchTerm"
     inputType="search"
     (searchChange)="onSearchChange($event);"
     (searchSubmit)="onSearchSubmit($event);"
     (fileSelect)="onSearchResultSelect($event);">
-</alfresco-search-control>
+</adf-search-control>
 ```
 
 Example of an component that uses the search control. In this example the search term is simply logged to the console
@@ -76,9 +76,9 @@ results component embedded inside the same component.
 ## Basic usage Search results
 
 ```html
-<alfresco-search 
+<adf-search 
     [searchTerm]="searchTerm">
-</alfresco-search>
+</adf-search>
 ```
 
 Example of an component that displays search results, using the Angular2 router to supply a 'q' parameter containing the
