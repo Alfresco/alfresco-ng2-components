@@ -1,9 +1,4 @@
-<adf-form-list [forms]="formList"
-    (row-dblclick)="onRowDblClick($event)">
-</adf-form-list>
-<div class="form-container" *ngIf="!isEmptyForm()">
+<div class="form-container">
     <activiti-form [form]="form" [data]="restoredData">
     </activiti-form>
 </div>
-<button class="mdl-button mdl-js-button" (click)="store()">STORE</button>
-<button class="mdl-button mdl-js-button" (click)="restore()">RESTORE</button>

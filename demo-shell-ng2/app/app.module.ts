@@ -44,6 +44,8 @@ import { ChartsModule } from 'ng2-charts';
 import { CreateFolderDialog } from './dialogs/create-folder.dialog';
 import { DebugAppConfigService } from './services/debug-app-config.service';
 
+import { FormListDemoComponent } from './components/form/form-list-demo.component';
+
 import {
     HomeComponent,
     DataTableDemoComponent,
@@ -115,7 +117,8 @@ if (process.env.ENV === 'production') {
         FormNodeViewer,
         CreateFolderDialog,
         SettingsComponent,
-        FormDemoComponent
+        FormDemoComponent,
+        FormListDemoComponent
     ],
     providers: [
         { provide: AppConfigService, useClass: DebugAppConfigService }
