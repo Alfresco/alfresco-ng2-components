@@ -199,7 +199,8 @@ describe('UploadService', () => {
         const file2 = new FileModel(new File([''], '.DS_Store'));
         const file3 = new FileModel(new File([''], 'desktop.ini'));
         const file4 = new FileModel(new File([''], 'readme.md'));
-        const result = service.addToQueue(file1, file2, file3, file4);
+        const file5 = new FileModel(new File([''], 'test.git'));
+        const result = service.addToQueue(file1, file2, file3, file4, file5);
         expect(result.length).toBe(1);
         expect(result[0]).toBe(file4);
     });

@@ -276,6 +276,10 @@ The service is already pre-configured to look for the "app.config.json" file in 
 
 That allows deploying ADF-based web applications to multiple servers together with different settings files, for example having development, staging or production environments.
 
+There is also the possibility to point out file name or file extension to be excluded from upload process.
+This will make easy avoiding the upload of system files like : '.DS_Store'.
+By default the file already filtered are : '.git', '.DS_Store' and 'desktop.ini'.
+
 Example of the default settings file content:
 
 **app.config.json**
@@ -286,6 +290,9 @@ Example of the default settings file content:
     "bpmHost": "http://localhost:3000/bpm",
     "application": {
         "name": "Alfresco"
+    },
+    "files": {
+          "excluded": [".DS_Store", "desktop.ini", ".git"]
     }
 }
 ```

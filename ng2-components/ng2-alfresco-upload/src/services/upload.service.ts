@@ -29,7 +29,7 @@ export class UploadService {
     private totalComplete: number = 0;
     private totalAborted: number = 0;
     private activeTask: Promise<any> = null;
-    private exludedFileList: String [] = [];
+    private excludedFileList: String[] = [];
 
     queueChanged: Subject<FileModel[]> = new Subject<FileModel[]>();
     fileUpload: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
@@ -41,7 +41,7 @@ export class UploadService {
     fileUploadComplete: Subject<FileUploadCompleteEvent> = new Subject<FileUploadCompleteEvent>();
 
     constructor(private apiService: AlfrescoApiService, private appConfigService: AppConfigService) {
-        this.exludedFileList = <String[] > this.appConfigService.get('files.excluded');
+        this.excludedFileList = <String[]>this.appConfigService.get('files.excluded');
     }
 
     /**
@@ -73,10 +73,24 @@ export class UploadService {
      *  addToQueue(...[file1, file2, file3]); // pass an array of files
      */
     addToQueue(...files: FileModel[]): FileModel[] {
-        const allowedFiles = files.filter(f => this.exludedFileList.indexOf(f.name) === -1);
+        const allowedFiles = files.filter(f => this.filterElement(f));
         this.queue = this.queue.concat(allowedFiles);
         this.queueChanged.next(this.queue);
         return allowedFiles;
+    }
+
+    private filterElement(file: FileModel) {
+        let isAllowed = true;
+        let fileExtension = this.getFileNameExtension(file.name);
+        if (this.excludedFileList) {
+            isAllowed = this.excludedFileList.indexOf(fileExtension) === -1 &&
+                this.excludedFileList.indexOf(file.name) === -1;
+        }
+        return isAllowed;
+    }
+
+    private getFileNameExtension(fileName: string): string {
+        return fileName.slice((fileName.lastIndexOf('.') - 2 >>> 0) + 2);
     }
 
     /**
