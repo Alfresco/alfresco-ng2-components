@@ -37,7 +37,7 @@ declare var require: any;
 declare let dialogPolyfill: any;
 
 @Component({
-    selector: 'activiti-task-details',
+    selector: 'adf-task-details, activiti-task-details',
     templateUrl: './activiti-task-details.component.html',
     styleUrls: ['./activiti-task-details.component.css']
 })

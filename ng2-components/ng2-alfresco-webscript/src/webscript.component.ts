@@ -20,13 +20,13 @@ import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 
 /**
- * <alfresco-webscript-get [scriptPath]="string"
+ * <adf-webscript-get [scriptPath]="string"
  *                         [scriptArgs]="Object"
  *                         [contextRoot]="string"
  *                         [servicePath]="string"
  *                         [contentType]="JSON|HTML|DATATABLE"
  *                         (onSuccess)="customMethod($event)>
- * </alfresco-webscript-get>
+ * </adf-webscript-get>
  *
  * This component, provide a get webscript viewer
  *
@@ -41,7 +41,7 @@ import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
  * @returns {WebscriptComponent} .
  */
 @Component({
-    selector: 'alfresco-webscript-get',
+    selector: 'adf-webscript-get, alfresco-webscript-get',
     template: `
         <div *ngIf="showData">
             <div *ngIf="contentType === 'JSON'" id="webscript-data-JSON">{{data | json}}</div>

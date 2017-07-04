@@ -24,7 +24,7 @@ import { Observer, Observable } from 'rxjs/Rx';
 declare let dialogPolyfill: any;
 
 @Component({
-    selector: 'activiti-comments',
+    selector: 'adf-comments, activiti-comments',
     templateUrl: './activiti-comments.component.html',
     styleUrls: ['./activiti-comments.component.css'],
     providers: [ActivitiTaskListService]

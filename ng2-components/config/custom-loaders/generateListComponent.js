@@ -47,17 +47,18 @@ function generateListComponent(currentFileContent, webpackInstance) {
         var componentSection = componentReg.exec(currentFileContent);
 
         if (componentSection) {
-            var selectorReg = /(selector)(\s?):(\s?)('|")((.|)*)('|")/gm;
+
+            var selectorReg = /(adf)([a-zA-Z]|-)+((?!,)|(?! ))/g;
             var selector = selectorReg.exec(componentSection[0]);
 
-
-            if (selector) {
-                if (selector[0].indexOf('alfresco') > 0 || selector[0].indexOf('activiti') > 0 || selector[0].indexOf('adf') > 0) {
-                    var selector = selector[0].replace("selector: '[", "").replace("']", '').replace("]", '').replace("selector: '", "").replace("'", '');
+                if (selector) {
                     var removeRoot = webpackInstance.resourcePath.substr(webpackInstance.resourcePath.indexOf('/ng2-components') + 16, webpackInstance.resourcePath.length);
                     var url = removeRoot.substr(0, removeRoot.indexOf('src')) + 'README.md';
 
-                    var link = '- [' + selector + '](' + url + ')';
+
+                    var link = '- [' + selector[0] + '](' + url + ')';
+
+                  //  console.log(link);
 
                     if (webpackInstance.resourcePath.match('ng2-alfresco-core')) {
                         readmeContent = readmeContent.replace('<!-- CORE START-->', '<!-- CORE START-->\n' + link);
@@ -68,14 +69,14 @@ function generateListComponent(currentFileContent, webpackInstance) {
                     }
                 }
             }
-        }
+
 
 
         var directiveReg = /(@Directive)(\s?)\((\s?){(\s?)((.|\n)*)}(\s?)\)/gm;
         var directiveSection = directiveReg.exec(currentFileContent);
 
         if (directiveSection) {
-            var selectorReg = /(selector)(\s?):(\s?)('|")((.|)*)('|")/gm;
+            var selectorReg = /(adf)([a-zA-Z]|-)+((?!,)|(?! ))/g;
             var selector = selectorReg.exec(directiveSection[0]);
 
             if (selector) {

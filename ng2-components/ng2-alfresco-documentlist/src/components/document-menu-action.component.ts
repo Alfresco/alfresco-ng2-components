@@ -28,7 +28,7 @@ declare let dialogPolyfill: any;
 const ERROR_FOLDER_ALREADY_EXIST = 409;
 
 @Component({
-    selector: 'alfresco-document-menu-action',
+    selector: 'adf-document-menu-action, alfresco-document-menu-action',
     styleUrls: ['./document-menu-action.component.css'],
     templateUrl: './document-menu-action.component.html'
 })

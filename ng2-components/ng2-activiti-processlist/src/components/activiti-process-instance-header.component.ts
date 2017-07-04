@@ -23,7 +23,7 @@ import { DatePipe } from '@angular/common';
 declare let componentHandler: any;
 
 @Component({
-    selector: 'activiti-process-instance-header',
+    selector: 'adf-process-instance-header, activiti-process-instance-header',
     templateUrl: './activiti-process-instance-header.component.html',
     styleUrls: ['./activiti-process-instance-header.component.css']
 })

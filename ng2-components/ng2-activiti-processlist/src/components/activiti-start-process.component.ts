@@ -27,7 +27,7 @@ declare let componentHandler: any;
 declare let dialogPolyfill: any;
 
 @Component({
-    selector: 'activiti-start-process',
+    selector: 'adf-start-process, activiti-start-process',
     templateUrl: './activiti-start-process.component.html',
     styleUrls: ['./activiti-start-process.component.css']
 })

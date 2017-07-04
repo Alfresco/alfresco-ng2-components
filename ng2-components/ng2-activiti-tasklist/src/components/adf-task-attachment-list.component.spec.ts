@@ -152,7 +152,7 @@ describe('TaskAttachmentList', () => {
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(fixture.debugElement.queryAll(By.css('alfresco-datatable tbody tr')).length).toBe(2);
+            expect(fixture.debugElement.queryAll(By.css('adf-datatable tbody tr')).length).toBe(2);
         });
     }));
 
@@ -167,7 +167,7 @@ describe('TaskAttachmentList', () => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(fixture.debugElement.queryAll(By.css('alfresco-datatable tbody tr')).length).toBe(0);
+            expect(fixture.debugElement.queryAll(By.css('adf-datatable tbody tr')).length).toBe(0);
         });
     }));
 

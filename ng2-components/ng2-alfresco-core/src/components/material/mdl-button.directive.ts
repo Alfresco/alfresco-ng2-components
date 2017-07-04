@@ -20,7 +20,7 @@ import { Directive, ElementRef, AfterViewInit } from '@angular/core';
 declare var componentHandler;
 
 @Directive({
-    selector: '[alfresco-mdl-button]'
+    selector: '[adf-mdl-button] ,[alfresco-mdl-button]'
 })
 export class AlfrescoMdlButtonDirective implements AfterViewInit {
 

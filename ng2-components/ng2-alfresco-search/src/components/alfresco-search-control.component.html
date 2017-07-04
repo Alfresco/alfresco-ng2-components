@@ -22,7 +22,7 @@
         </div>
     </div>
 </form>
-<alfresco-search-autocomplete #autocomplete *ngIf="liveSearchEnabled"
+<adf-search-autocomplete #autocomplete *ngIf="liveSearchEnabled"
                               [searchTerm]="liveSearchTerm"
                               [rootNodeId]="liveSearchRoot"
                               [resultType]="liveSearchResultType"
@@ -32,4 +32,4 @@
                               (fileSelect)="onFileClicked($event)"
                               (searchFocus)="onAutoCompleteFocus($event)"
                               (scrollBack)="onAutoCompleteReturn($event)"
-                              (cancel)="onAutoCompleteCancel($event)"></alfresco-search-autocomplete>
+                              (cancel)="onAutoCompleteCancel($event)"></adf-search-autocomplete>

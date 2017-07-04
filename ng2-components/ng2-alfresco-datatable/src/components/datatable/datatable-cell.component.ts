@@ -19,7 +19,7 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { DataTableAdapter, DataColumn, DataRow } from '../../data/datatable-adapter';
 
 @Component({
-    selector: 'alfresco-datatable-cell',
+    selector: 'adf-datatable-cell, alfresco-datatable-cell',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: '<ng-container>{{value}}</ng-container>'
 })
