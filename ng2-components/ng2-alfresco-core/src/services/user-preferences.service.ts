@@ -37,7 +37,7 @@ export class UserPreferencesService {
     }
 
     constructor(
-        private appConfig: AppConfigService,
+        appConfig: AppConfigService,
         private storage: StorageService) {
         this.defaults.paginationSize = appConfig.get('pagination.size', 25);
     }
@@ -51,22 +51,13 @@ export class UserPreferencesService {
 
         this.storage.setItem(
             this.getPropertyKey(property),
-            JSON.stringify(value)
+            value
         );
     }
 
-    get(property: string): any {
+    get(property: string): string {
         const key = this.getPropertyKey(property);
-        let value = this.storage.getItem(key);
-
-        try {
-            value = JSON.parse(value);
-        } catch (e) {
-            // Nothing to do if parse fails,
-            // just return the string value
-        }
-
-        return value;
+        return this.storage.getItem(key);
     }
 
     set paginationSize(value: number) {
