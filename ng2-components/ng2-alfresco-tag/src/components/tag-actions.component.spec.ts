@@ -131,10 +131,14 @@ describe('TagActionsComponent', () => {
 
                 expect(jasmine.Ajax.requests.at(1).url)
 <<<<<<< HEAD
+<<<<<<< HEAD
                     .toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags/0ee933fa-57fc-4587-8a77-b787e814f1d2');
 =======
                     .toBe('http://localhost:3000/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags/0ee933fa-57fc-4587-8a77-b787e814f1d2');
 >>>>>>> [ADF-847] upgrade to use application configuration service (#1986)
+=======
+                    .toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags/0ee933fa-57fc-4587-8a77-b787e814f1d2');
+>>>>>>> [ADF-967] evaluate "hostname" and "port" for string settings (#2040)
                 expect(jasmine.Ajax.requests.at(1).method).toBe('DELETE');
 
                 jasmine.Ajax.requests.mostRecent().respondWith({

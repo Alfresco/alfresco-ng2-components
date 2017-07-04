@@ -540,10 +540,14 @@ describe('Form service', () => {
             function stubCreateForm() {
                 jasmine.Ajax.stubRequest(
 <<<<<<< HEAD
+<<<<<<< HEAD
                     'http://localhost:9876/bpm/activiti-app/api/enterprise/models'
 =======
                     'http://localhost:3000/bpm/activiti-app/api/enterprise/models'
 >>>>>>> [ADF-847] upgrade to use application configuration service (#1986)
+=======
+                    'http://localhost:9876/bpm/activiti-app/api/enterprise/models'
+>>>>>>> [ADF-967] evaluate "hostname" and "port" for string settings (#2040)
                 ).andReturn({
                     status: 200,
                     statusText: 'HTTP/1.1 200 OK',
@@ -555,10 +559,14 @@ describe('Form service', () => {
             function stubGetEcmModel() {
                 jasmine.Ajax.stubRequest(
 <<<<<<< HEAD
+<<<<<<< HEAD
                     'http://localhost:9876/ecm/alfresco/api/-default-/private/alfresco/versions/1/cmm/activitiFormsModel/types'
 =======
                     'http://localhost:3000/ecm/alfresco/api/-default-/private/alfresco/versions/1/cmm/activitiFormsModel/types'
 >>>>>>> [ADF-847] upgrade to use application configuration service (#1986)
+=======
+                    'http://localhost:9876/ecm/alfresco/api/-default-/private/alfresco/versions/1/cmm/activitiFormsModel/types'
+>>>>>>> [ADF-967] evaluate "hostname" and "port" for string settings (#2040)
                 ).andReturn({
                     status: 200,
                     statusText: 'HTTP/1.1 200 OK',
@@ -580,10 +588,14 @@ describe('Form service', () => {
             function stubAddFieldsToAForm() {
                 jasmine.Ajax.stubRequest(
 <<<<<<< HEAD
+<<<<<<< HEAD
                     'http://localhost:9876/bpm/activiti-app/api/enterprise/editor/form-models/' + formId
 =======
                     'http://localhost:3000/bpm/activiti-app/api/enterprise/editor/form-models/' + formId
 >>>>>>> [ADF-847] upgrade to use application configuration service (#1986)
+=======
+                    'http://localhost:9876/bpm/activiti-app/api/enterprise/editor/form-models/' + formId
+>>>>>>> [ADF-967] evaluate "hostname" and "port" for string settings (#2040)
                 ).andReturn({
                     status: 200,
                     statusText: 'HTTP/1.1 200 OK',

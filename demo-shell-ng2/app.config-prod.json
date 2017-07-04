@@ -1,5 +1,6 @@
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "ecmHost": "http://{hostname}",
     "bpmHost": "http://{hostname}",
     "application": {
@@ -29,6 +30,10 @@
 =======
     "ecmHost": "http://localhost:3000/ecm",
     "bpmHost": "http://localhost:3000/bpm",
+=======
+    "ecmHost": "http://{hostname}",
+    "bpmHost": "http://{hostname}",
+>>>>>>> [ADF-967] evaluate "hostname" and "port" for string settings (#2040)
     "application": {
         "name": "Alfresco"
 >>>>>>> [ADF-847] upgrade to use application configuration service (#1986)

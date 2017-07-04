@@ -91,10 +91,14 @@ describe('WebscriptComponent', () => {
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
 <<<<<<< HEAD
+<<<<<<< HEAD
                 expect(jasmine.Ajax.requests.mostRecent().url).toBe('http://localhost:9876/ecm/alfresco/service/sample/folder/Company%20Home');
 =======
                 expect(jasmine.Ajax.requests.mostRecent().url).toBe('http://localhost:3000/ecm/alfresco/service/sample/folder/Company%20Home');
 >>>>>>> [ADF-847] upgrade to use application configuration service (#1986)
+=======
+                expect(jasmine.Ajax.requests.mostRecent().url).toBe('http://localhost:9876/ecm/alfresco/service/sample/folder/Company%20Home');
+>>>>>>> [ADF-967] evaluate "hostname" and "port" for string settings (#2040)
                 done();
             });
 
