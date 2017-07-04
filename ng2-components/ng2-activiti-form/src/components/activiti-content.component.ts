@@ -22,7 +22,7 @@ import { ContentLinkModel } from './widgets/core/content-link.model';
 import { Observable } from 'rxjs/Rx';
 
 @Component({
-    selector: 'activiti-content',
+    selector: 'adf-content, activiti-content',
     templateUrl: './activiti-content.component.html',
     styleUrls: ['./activiti-content.component.css']
 })

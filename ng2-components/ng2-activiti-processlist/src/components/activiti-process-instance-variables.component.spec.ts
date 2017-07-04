@@ -102,7 +102,7 @@ describe('ActivitiProcessInstanceVariables', () => {
         fixture.detectChanges();
         fixture.whenStable();
         tick();
-        let datatable: DebugElement = fixture.debugElement.query(By.css('alfresco-datatable'));
+        let datatable: DebugElement = fixture.debugElement.query(By.css('adf-datatable'));
         expect(datatable).toBeNull();
     }));
 
@@ -130,7 +130,7 @@ describe('ActivitiProcessInstanceVariables', () => {
         fixture.detectChanges();
         fixture.whenStable();
         tick();
-        let datatable: DebugElement = fixture.debugElement.query(By.css('alfresco-datatable'));
+        let datatable: DebugElement = fixture.debugElement.query(By.css('adf-datatable'));
         expect(datatable).not.toBeNull();
     }));
 

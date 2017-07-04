@@ -24,7 +24,7 @@ import { ProcessInstance } from '../models/process-instance.model';
 import { ActivitiProcessService } from '../services/activiti-process.service';
 
 @Component({
-    selector: 'activiti-process-instance-list',
+    selector: 'adf-process-instance-list, activiti-process-instance-list',
     styleUrls: ['./activiti-processlist.component.css'],
     templateUrl: './activiti-processlist.component.html'
 })

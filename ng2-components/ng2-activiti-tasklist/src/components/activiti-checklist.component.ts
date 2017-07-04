@@ -24,7 +24,7 @@ import { Observer, Observable } from 'rxjs/Rx';
 declare let dialogPolyfill: any;
 
 @Component({
-    selector: 'activiti-checklist',
+    selector: 'adf-checklist, activiti-checklist',
     templateUrl: './activiti-checklist.component.html',
     styleUrls: ['./activiti-checklist.component.css'],
     providers: [ActivitiTaskListService]

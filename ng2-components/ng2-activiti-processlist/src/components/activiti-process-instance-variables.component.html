@@ -5,8 +5,8 @@
 
 
 <div *ngIf="!isListEmpty()">
-    <alfresco-datatable [data]="data" [actions]="true" (showRowActionsMenu)="onShowRowActionsMenu($event)"
-                        (executeRowAction)="onExecuteRowAction($event)"></alfresco-datatable>
+    <adf-datatable [data]="data" [actions]="true" (showRowActionsMenu)="onShowRowActionsMenu($event)"
+                        (executeRowAction)="onExecuteRowAction($event)"></adf-datatable>
 </div>
 <div *ngIf="isListEmpty()" data-automation-id="variables-none">
     {{ 'DETAILS.VARIABLES.NONE' | translate }}

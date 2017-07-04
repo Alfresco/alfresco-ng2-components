@@ -24,7 +24,7 @@ import { ActivitiProcessService } from './../services/activiti-process.service';
 declare let componentHandler: any;
 
 @Component({
-    selector: 'activiti-process-instance-filters',
+    selector: 'adf-process-instance-filters, activiti-process-instance-filters',
     templateUrl: './activiti-filters.component.html',
     styleUrls: ['activiti-filters.component.css']
 })

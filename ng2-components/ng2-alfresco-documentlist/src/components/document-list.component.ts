@@ -39,7 +39,7 @@ import { NodeEntityEvent, NodeEntryEvent } from './node.event';
 declare var require: any;
 
 @Component({
-    selector: 'alfresco-document-list',
+    selector: 'adf-document-list, alfresco-document-list',
     styleUrls: ['./document-list.component.css'],
     templateUrl: './document-list.component.html'
 })
