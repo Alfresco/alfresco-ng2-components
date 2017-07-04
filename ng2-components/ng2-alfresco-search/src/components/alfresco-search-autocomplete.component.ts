@@ -24,7 +24,7 @@ import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.servi
 declare var require: any;
 
 @Component({
-    selector: 'alfresco-search-autocomplete',
+    selector: 'adf-search-autocomplete, alfresco-search-autocomplete',
     templateUrl: './alfresco-search-autocomplete.component.html',
     styleUrls: ['./alfresco-search-autocomplete.component.css']
 })

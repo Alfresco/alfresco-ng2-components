@@ -69,22 +69,22 @@ npm install ng2-activiti-tasklist
 This component renders a list containing all the tasks matched by the parameters specified.
 
 ```html
-<activiti-tasklist 
+<adf-tasklist 
     [appId]="'1'" 
     [state]="'open'" 
     [assignment]="'assignee'">
-</activiti-tasklist>
+</adf-tasklist>
 ```
 
 You can also use HTML-based schema declaration like shown below:
 
 ```html
-<activiti-tasklist ...>
+<adf-tasklist ...>
     <data-columns>
         <data-column key="name" title="NAME" class="full-width name-column"></data-column>
         <data-column key="created" title="Created" class="hidden"></data-column>
     </data-columns>
-</activiti-tasklist>
+</adf-tasklist>
 ```
 
 ### DataColumn Properties
@@ -138,9 +138,9 @@ Example:
 The component shows the details of the task id passed in input
 
 ```html
-<activiti-task-details 
+<adf-task-details 
     [taskId]="taskId">
-</activiti-task-details>
+</adf-task-details>
 ```
 
 ### Properties
@@ -183,14 +183,14 @@ No Tasks
 This can be changed by adding the following custom html template:
 
 ```html
-<activiti-task-details [taskId]="taskId">
+<adf-task-details [taskId]="taskId">
     <no-task-details-template>
         <template>
              <h1>Sorry, no tasks here</h1>
              <img src="example.jpg">
         </template>
     </no-task-details-template>
-</activiti-task-details>    
+</adf-task-details>    
 ```
 
 Note that can put any HTML content as part of the template, includuing other Angualr components.
@@ -200,9 +200,9 @@ Note that can put any HTML content as part of the template, includuing other Ang
 The component shows all the available apps.
 
 ```html
-<activiti-apps 
+<adf-apps 
     [layoutType]="'GRID'">
-</activiti-apps>
+</adf-apps>
 ```
 
 ### Properties
@@ -223,12 +223,12 @@ The component shows all the available apps.
 If you want show some specific apps you can specify them through the filtersAppId parameters
 
 ```html
-<activiti-apps 
+<adf-apps 
     [filtersAppId]="'[
         {defaultAppId: 'tasks'}, 
         {deploymentId: '15037'}, 
         {name : 'my app name'}]'">
-</activiti-apps>
+</adf-apps>
 ```
 
 In this specific case only the Tasks app, the app with deploymentId 15037 and the app with "my app name" will be showed
@@ -253,7 +253,7 @@ You can use inside the filter one of the following property
 The component shows all the available filters.
 
 ```html
-<activiti-filters></activiti-filters>
+<adf-filters></adf-filters>
 ```
 
 ### Properties
@@ -278,9 +278,9 @@ If both `appId` and `appName` are specified then `appName` will take precedence 
 ### How filter the activiti task filters
 
  ```html
-<activiti-filters 
+<adf-filters 
     [filterParam]="{name:'My tasks'}">
-</activiti-filters>
+</adf-filters>
 ```
 
 You can use inside the filterParam one of the following property.
@@ -309,13 +309,13 @@ The AccordionComponent is exposed by the alfresco-core.
 ```html
 <adf-accordion>
     <adf-accordion-group [heading]="'Tasks'" [isSelected]="true" [headingIcon]="'assignment'">
-        <activiti-filters
+        <adf-filters
             [appId]="appId"
             [hasIcon]="false"
             (filterClick)="onTaskFilterClick($event)"
             (onSuccess)="onSuccessTaskFilterList($event)"
             #activitifilter>
-        </activiti-filters>
+        </adf-filters>
     </adf-accordion-group>
 </adf-accordion>
 ```
@@ -327,11 +327,11 @@ The AccordionComponent is exposed by the alfresco-core.
 The component shows the checklist task functionality.
 
 ```html
-<activiti-checklist 
+<adf-checklist 
     [readOnly]="false" 
     [taskId]="taskId" 
     [assignee]="taskAssignee.id" 
-</activiti-checklist>
+</adf-checklist>
 ```
 
 ### Properties
@@ -401,9 +401,9 @@ The component shows all the information related to a task.
 The purpose of the component is populate the local variable called `properties` (array of CardViewModel), with all the information that we want display.
 
 ```html
-<activiti-task-header
+<adf-task-header
     [taskDetails]="taskDetails">
-</activiti-task-header>
+</adf-task-header>
 ```
 
 ### Properties
@@ -436,11 +436,11 @@ The purpose of the component is populate the local variable called `properties` 
 This component displays involved users to a specified task
 
 ```html
-<activiti-people 
+<adf-people 
     [people]="YOUR_INVOLVED_PEOPLE_LIST" 
     [taskId]="YOUR_TASK_ID"
     [readOnly]="YOUR_READ_ONLY_FLAG">
-</activiti-people>
+</adf-people>
 ```
 
 ![activiti-people](docs/assets/activiti_people.png)

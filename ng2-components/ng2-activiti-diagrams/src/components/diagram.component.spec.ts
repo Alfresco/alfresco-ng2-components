@@ -428,14 +428,14 @@ describe('Test ng2-activiti-diagrams ', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-alfresco-publish-task > diagram-task > raphael-rect');
+                    let task: any = element.querySelector('adf-diagram-publish-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-alfresco-publish-task > diagram-task > raphael-multiline-text');
+                    let taskText: any = element.querySelector('adf-diagram-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Alfresco Publish task');
 
-                    let iconTask: any = element.querySelector('diagram-alfresco-publish-task > diagram-icon-alfresco-publish-task >' +
+                    let iconTask: any = element.querySelector('adf-diagram-publish-task > diagram-icon-alfresco-publish-task >' +
                         ' raphael-icon-alfresco-publish');
                     expect(iconTask).not.toBeNull();
 
@@ -2369,14 +2369,14 @@ describe('Test ng2-activiti-diagrams ', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-alfresco-publish-task > diagram-task > raphael-rect');
+                    let task: any = element.querySelector('adf-diagram-publish-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-alfresco-publish-task > diagram-task > raphael-multiline-text');
+                    let taskText: any = element.querySelector('adf-diagram-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Alfresco Publish task');
 
-                    let iconTask: any = element.querySelector('diagram-alfresco-publish-task > diagram-icon-alfresco-publish-task >' +
+                    let iconTask: any = element.querySelector('adf-diagram-publish-task > diagram-icon-alfresco-publish-task >' +
                         ' raphael-icon-alfresco-publish');
                     expect(iconTask).not.toBeNull();
 
@@ -2399,14 +2399,14 @@ describe('Test ng2-activiti-diagrams ', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-alfresco-publish-task > diagram-task > raphael-rect[ng-reflect-stroke="#017501"]');
+                    let task: any = element.querySelector('adf-diagram-publish-task > diagram-task > raphael-rect[ng-reflect-stroke="#017501"]');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-alfresco-publish-task > diagram-task > raphael-multiline-text');
+                    let taskText: any = element.querySelector('adf-diagram-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Alfresco Publish task');
 
-                    let iconTask: any = element.querySelector('diagram-alfresco-publish-task > diagram-icon-alfresco-publish-task >' +
+                    let iconTask: any = element.querySelector('adf-diagram-publish-task > diagram-icon-alfresco-publish-task >' +
                         ' raphael-icon-alfresco-publish');
                     expect(iconTask).not.toBeNull();
 
@@ -2429,14 +2429,14 @@ describe('Test ng2-activiti-diagrams ', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let task: any = element.querySelector('diagram-alfresco-publish-task > diagram-task > raphael-rect[ng-reflect-stroke="#2632aa"]');
+                    let task: any = element.querySelector('adf-diagram-publish-task > diagram-task > raphael-rect[ng-reflect-stroke="#2632aa"]');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-alfresco-publish-task > diagram-task > raphael-multiline-text');
+                    let taskText: any = element.querySelector('adf-diagram-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Alfresco Publish task');
 
-                    let iconTask: any = element.querySelector('diagram-alfresco-publish-task > diagram-icon-alfresco-publish-task >' +
+                    let iconTask: any = element.querySelector('adf-diagram-publish-task > diagram-icon-alfresco-publish-task >' +
                         ' raphael-icon-alfresco-publish');
                     expect(iconTask).not.toBeNull();
 

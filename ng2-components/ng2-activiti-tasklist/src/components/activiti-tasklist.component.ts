@@ -37,7 +37,7 @@ import { ActivitiTaskListService } from './../services/activiti-tasklist.service
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 
 @Component({
-    selector: 'activiti-tasklist',
+    selector: 'adf-tasklist, activiti-tasklist',
     templateUrl: './activiti-tasklist.component.html',
     styleUrls: ['./activiti-tasklist.component.css']
 })

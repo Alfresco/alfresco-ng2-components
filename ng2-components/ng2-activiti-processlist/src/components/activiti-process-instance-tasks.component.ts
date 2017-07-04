@@ -27,7 +27,7 @@ declare let componentHandler: any;
 declare let dialogPolyfill: any;
 
 @Component({
-    selector: 'activiti-process-instance-tasks',
+    selector: 'adf-process-instance-tasks, activiti-process-instance-tasks',
     templateUrl: './activiti-process-instance-tasks.component.html',
     styleUrls: ['./activiti-process-instance-tasks.component.css']
 })

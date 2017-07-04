@@ -21,7 +21,7 @@ import { UploadService } from '../services/upload.service';
 import { FileModel } from '../models/file.model';
 
 @Component({
-    selector: 'alfresco-upload-drag-area',
+    selector: 'adf-upload-drag-area, alfresco-upload-drag-area',
     templateUrl: './upload-drag-area.component.html',
     styleUrls: ['./upload-drag-area.component.css']
 })

@@ -46,11 +46,11 @@ This component allow to authenticate to Alfresco One and Alfresco Activiti.
 **app.component.html**
 
 ```html
-<alfresco-login 
+<adf-login 
     [providers]="'ALL'"
     (onSuccess)="mySuccessMethod($event)"
     (onError)="myErrorMethod($event)">
-</alfresco-login>
+</adf-login>
 ```
 
 **app.component.ts**
@@ -97,9 +97,9 @@ export class AppComponent {
 You can replace the entire content in the footer of the login component with your custom content.
 
 ```html
-<alfresco-login ...>
+<adf-login ...>
     <login-footer><template>My custom HTML for the footer</template></login-footer>
-</alfresco-login>`
+</adf-login>`
 ```
 
 ## Change header content
@@ -109,9 +109,9 @@ You can replace the entire content in the footer of the login component with you
 You can replace the entire content in the header of the login component with your custom content.
 
 ```html
-<alfresco-login ...>
+<adf-login ...>
     <login-header><template>My custom HTML for the header</template></login-header>
-</alfresco-login>`
+</adf-login>`
 ```
 
 ## Extra content
@@ -120,11 +120,11 @@ You can put additional html content between `alfresco-login` tags to get it rend
 This becomes handy in case you need extending it with custom input fields handled by your application or parent component:
 
 ```html
-<alfresco-login ...>
+<adf-login ...>
     <div>
         <div>You extra content</div>
     </div>
-</alfresco-login>
+</adf-login>
 ```
 
 Here's an example of custom content:
@@ -136,10 +136,10 @@ Here's an example of custom content:
 It is possible changing logo and background images to custom values.
 
 ```html
-<alfresco-login 
+<adf-login 
     [backgroundImageUrl]="'http://images.freeimages.com/images/previews/638/wood-wall-for-background-1634466.jpg'"
     [logoImageUrl]="'http://images.freeimages.com/images/previews/eac/honeybee-with-a-house-1633609.jpg'">
-</alfresco-login>
+</adf-login>
 ```
 
 Should give you something like the following:
@@ -149,10 +149,10 @@ Should give you something like the following:
 Alternatively you can bind to your component properties and provide values dynamically if needed:
 
 ```html
-<alfresco-login
+<adf-login
     [backgroundImageUrl]="myCustomBackground"
     [logoImageUrl]="myCustomLogo">
-</alfresco-login>
+</adf-login>
 ```
 
 ## Customize Validation rules
@@ -163,10 +163,10 @@ form. You can add/modify the default rules of the login form.
 **MyCustomLogin.component.html**
 
 ```html
-<alfresco-login 
+<adf-login 
     [fieldsValidation]="customValidation"
     #alfrescologin>
-</alfresco-login>
+</adf-login>
 ```
 
 **MyCustomLogin.component.ts**
@@ -207,10 +207,10 @@ Alternatively you may want just running additional code without suppressing defa
 **MyCustomLogin.component.html**
 
 ```html
-<alfresco-login 
+<adf-login 
     (executeSubmit)="validateForm($event)" 
     #alfrescologin>
-</alfresco-login>
+</adf-login>
 ```
 
 **MyCustomLogin.component.ts**

@@ -11,12 +11,12 @@
         </div>
     </div>
     <div class="assignment-container" *ngIf="showAssignment">
-        <activiti-people-search
+        <adf-people-search
         (searchPeople)="searchUser($event)"
         (success)="involveUser($event)"
         (closeSearch)="onCloseSearch()"
         [results]="peopleSearch$">
-        </activiti-people-search>
+        </adf-people-search>
     </div>
     <div class="assignment-list-container" id="assignment-people-list" *ngIf="hasPeople()">
         <adf-people-list
