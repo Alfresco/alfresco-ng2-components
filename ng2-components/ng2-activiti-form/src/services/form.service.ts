@@ -100,15 +100,27 @@ export class FormService {
             stencilSet: 0
         };
 
-        return Observable.fromPromise(this.apiService.getInstance().activiti.modelsApi.createModel(dataModel));
+        return Observable.fromPromise(
+            this.apiService.getInstance().activiti.modelsApi.createModel(dataModel)
+        );
+    }
+
+    saveForm(formId: string, formModel: FormDefinitionModel): Observable<any> {
+        return Observable.fromPromise(
+            this.apiService.getInstance().activiti.editorApi.saveForm(formId, formModel)
+        );
     }
 
     /**
+     * @deprecated in 1.7.0, use saveForm API instead
      * Add Fileds to A form
      * @returns {Observable<any>}
      */
     addFieldsToAForm(formId: string, formModel: FormDefinitionModel): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.editorApi.saveForm(formId, formModel));
+        console.log('addFieldsToAForm is deprecated in 1.7.0, use saveForm API instead');
+        return Observable.fromPromise(
+            this.apiService.getInstance().activiti.editorApi.saveForm(formId, formModel)
+        );
     }
 
     /**
@@ -121,12 +133,12 @@ export class FormService {
         };
 
         return Observable.fromPromise(
-            this.apiService.getInstance().activiti.modelsApi.getModels(opts))
-            .map(function (forms: any) {
-                return forms.data.find(formdata => formdata.name === name);
-            })
-            .catch(err => this.handleError(err)
-            );
+            this.apiService.getInstance().activiti.modelsApi.getModels(opts)
+        )
+        .map(function (forms: any) {
+            return forms.data.find(formdata => formdata.name === name);
+        })
+        .catch(err => this.handleError(err));
     }
 
     /**
@@ -139,10 +151,8 @@ export class FormService {
         };
 
         return Observable.fromPromise(
-            this.apiService.getInstance().activiti.modelsApi.getModels(opts))
-            .map((response: any) => <any[]> response.data || [])
-            .catch(err => this.handleError(err));
-
+            this.apiService.getInstance().activiti.modelsApi.getModels(opts)
+        );
     }
 
     /**
