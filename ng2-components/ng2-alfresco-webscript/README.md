@@ -20,7 +20,6 @@
 
 <!-- markdown-toc end -->
 
-
 ## Prerequisites
 
 Before you start using this development framework, make sure you have installed all required software and done all the
@@ -85,7 +84,6 @@ export class AppComponent {
 | onSuccess | event | |  You can get the plain data from the webscript through the **onSuccess** event parameter and use it as you need in your application |
 | showData | booleann | true | render the webscript data |
 
-
 **contentType** {string}  
 ***data***      {string}  data contain the plain value get from the webscipt is an output parameter
 
@@ -94,7 +92,7 @@ export class AppComponent {
 This sample demonstrates how to implement a Webscript component that renders the HTML contents that come from a webscript
 This sample Web Scripts  reside in your Alfresco Server AND  you can access the folder webscript here:
 
-http://localhost:8080/alfresco/service/sample/folder/Company%20Home 
+```http://localhost:8080/alfresco/service/sample/folder/Company%20Home```
 
 ```html
 <adf-webscript-get 
@@ -112,7 +110,7 @@ http://localhost:8080/alfresco/service/sample/folder/Company%20Home
 
 This sample demonstrates how to implement a Webscript component that renders the JSON contents that come from a webscript
 
-http://localhost:8080/alfresco/service/sample/folder/DATATABLE
+```http://localhost:8080/alfresco/service/sample/folder/DATATABLE```
 
 ```html
 <adf-webscript-get 
@@ -170,7 +168,7 @@ that will render the follow table
 This sample demonstrates how to implement a Webscript component that renders the JSON contents that come from a webscript
 This sample Web Scripts  reside in your Alfresco Server AND  you can access the folder webscript here:
 
-http://localhost:8080/alfresco/service/sample/folder/JSON%EXAMPLE 
+```http://localhost:8080/alfresco/service/sample/folder/JSON%EXAMPLE```
 
 ```html
 <adf-webscript-get 

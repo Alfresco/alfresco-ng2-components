@@ -163,7 +163,7 @@ In this case you can use `alfresco-js-api` to get node details based on it's rel
 
 Let's try setting default folder to `/Sites/swsdp/documentLibrary` without knowing it's ID beforehand.
 For the sake of simplicity example below shows only main points you may need paying attention to:
- 
+
 ```ts
 import { ChangeDetectorRef } from '@angular/core';
 import { AlfrescoApiService } from 'ng2-alfresco-core';
@@ -284,7 +284,6 @@ DocumentList provides simple breadcrumb element to indicate the current position
 
 ***Note:*** the `<adf-document-list-breadcrumb>` and `<adf-breadcrumb>` are the same component you can still use the old tag name
 
-
 ![Breadcrumb](docs/assets/breadcrumb.png)
 
 ### Properties
@@ -316,7 +315,6 @@ DocumentList provides simple creation menu actions that provide the action to cr
 When the "New Folder" button is pressed the dialog appears.
 
 ![Creation Menu Action](docs/assets/document-list-creation-menu-actions-2.png)
-
 
 ## Custom columns
 
@@ -563,7 +561,6 @@ All document actions are rendered as a dropdown menu as on the picture below:
 
 ![Document Actions](docs/assets/document-actions.png)
 
-
 #### Default action handlers
 
 The following action handlers are provided out-of-box:
@@ -772,8 +769,8 @@ _Note that for the sake of simplicity the example code below was reduced to the 
 ```
 
 **View1.component.ts**
-```ts
 
+```ts
 import { RowFilter, ShareDataRow } from 'ng2-alfresco-documentlist';
 
 export class View1 {
@@ -817,6 +814,7 @@ Your function can return `null` or `false` values to fallback to default image r
 _Note that for the sake of simplicity the example code below was reduced to the main points of interest only._
 
 **View1.component.html**
+
 ```html
 <adf-document-list 
     [imageResolver]="folderImageResolver">
@@ -830,6 +828,7 @@ _Note that for the sake of simplicity the example code below was reduced to the 
 ```
 
 **View1.component.ts**
+
 ```ts
 import { DataColumn, DataRow } from 'ng2-alfresco-datatable';
 import { ImageResolver } from 'ng2-alfresco-documentlist';
