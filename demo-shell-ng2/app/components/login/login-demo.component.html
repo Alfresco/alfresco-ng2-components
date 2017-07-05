@@ -21,6 +21,12 @@
             <span class="mdl-switch__label">CSRF</span>
         </label>
     </p>
+    <p class="toggle">
+        <label for="switch4" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
+            <input type="checkbox" id="switch4" class="mdl-switch__input" [checked]="showFooter" (click)="showFooter = !showFooter">
+            <span class="mdl-switch__label">Login footer</span>
+        </label>
+    </p>
 </div>
 
 <!--SETTING BUTTON-->
@@ -34,6 +40,8 @@
                 [providers]="providers"
                 [fieldsValidation]="customValidation"
                 [disableCsrf]="disableCsrf"
+                [showLoginActions]="showFooter"
+                [showRememberMe]="showFooter"
                 (onSuccess)="onLogin($event)"
                 (onError)="onError($event)">
     <div class="mobile-settings">
@@ -55,6 +63,12 @@
             <label for="switch3-mobile" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
                 <input type="checkbox" id="switch3-mobile" class="mdl-switch__input" [checked]="!disableCsrf" (click)="toggleCSRF()">
                 <span class="mdl-switch__label">CSRF</span>
+            </label>
+        </p>
+        <p>
+            <label for="switch4-mobile" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
+                <input type="checkbox" id="switch4-mobile" class="mdl-switch__input" [checked]="showFooter" (click)="showFooter = !showFooter">
+                <span class="mdl-switch__label">Login footer</span>
             </label>
         </p>
     </div>
