@@ -36,6 +36,7 @@ export class LoginDemoComponent implements OnInit {
     disableCsrf: boolean = false;
     isECM: boolean = true;
     isBPM: boolean = false;
+    showFooter: boolean = true;
     customMinLenght: number = 2;
 
     constructor(private router: Router,
