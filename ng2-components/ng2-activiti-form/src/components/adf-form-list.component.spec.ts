@@ -70,7 +70,7 @@ describe('TaskAttachmentList', () => {
 
     }));
 
-    fit('should show the forms as a list', async(() => {
+    it('should show the forms as a list', async(() => {
         spyOn(service, 'getForms').and.returnValue(Observable.of([
             { name: 'FakeName-1', lastUpdatedByFullName: 'FakeUser-1', lastUpdated: '2017-01-02' },
             { name: 'FakeName-2', lastUpdatedByFullName: 'FakeUser-2', lastUpdated: '2017-01-03' }
