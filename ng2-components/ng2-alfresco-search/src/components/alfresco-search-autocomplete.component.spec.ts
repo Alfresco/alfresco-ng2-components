@@ -133,14 +133,11 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
             let thumbnailService = fixture.debugElement.injector.get(ThumbnailService);
             spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue('fake-type-icon.svg');
 
-            let path = 'http://localhost/fake-type-icon.svg';
-            spyOn(component, 'resolveIconPath').and.returnValue(path);
-
             component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
                 let imgEl = <any> element.querySelector('#result_row_0 img');
                 expect(imgEl).not.toBeNull();
-                expect(imgEl.src).toBe(path);
+                expect(imgEl.src).toContain('fake-type-icon.svg');
                 done();
             });
 
@@ -231,8 +228,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
 
         it('should emit fileSelect event if when folder item clicked', (done) => {
 
-            spyOn(searchService, 'getQueryNodesPromise')
-                .and.returnValue(Promise.resolve(folderResult));
+            spyOn(searchService, 'getQueryNodesPromise').and.returnValue(Promise.resolve(folderResult));
 
             spyOn(component.fileSelect, 'emit');
             component.resultsLoad.subscribe(() => {

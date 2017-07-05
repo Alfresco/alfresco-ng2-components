@@ -124,7 +124,16 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
      * @returns {string} URL address.
      */
     getMimeTypeIcon(node: MinimalNodeEntity): string {
-        return this.thumbnailService.getMimeTypeIcon(node.entry.content.mimeType);
+        let mimeType;
+
+        if (node.entry.content && node.entry.content.mimeType) {
+            mimeType = node.entry.content.mimeType;
+        }
+        if (node.entry.isFolder) {
+            mimeType = 'folder';
+        }
+
+        return this.thumbnailService.getMimeTypeIcon(mimeType);
     }
 
     focusResult(): void {
