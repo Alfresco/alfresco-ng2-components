@@ -375,6 +375,80 @@ The supported variables are:
 | hostname | `location.hostname` |
 | port | `location.port` |
 
+### Unit testing
+
+You can also provide custom values for the entire service. 
+This might become handy when creating unit tests.
+
+```ts
+describe('MyTest', () => {
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule.forRoot(),
+                AppConfigModule.forRoot('app.config.json', {
+                    ecmHost: 'http://localhost:9876/ecm'
+                })
+            ]
+        });
+    });
+
+});
+```
+
+In the example above custom values are applied on the top of all the values the `AppConfigService` has previously loaded.
+If there is an 'app.config.json' file loaded at unit test run time then your custom values will overwrite exiting values with the same keys if present. 
+
+## User Preferences Service
+
+The `UserPreferencesService` allows you to store preferences for the components.
+The preferences are bound to a particular `prefix` so the application can switch between different profiles on demand.
+
+For example upon login you can set the `prefix` as current username:
+
+```ts
+import { UserPreferencesService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+
+@Component({...})
+class AppComponent {
+    constructor(private userPreferences: UserPreferencesService,
+                private authService: AlfrescoAuthenticationService) {
+    }
+
+    onLoggedIn() {
+        this.userPreferences.setStoragePrefix(
+            this.authService.getEcmUsername()
+        );
+    }
+}
+```
+
+As soon as you assign the storage prefix all settings that you get or set via the `UserPreferencesService` will be saved to dedicated profile.
+
+You can import the service in your controller an use its APIs like below:
+
+```ts
+@Component({...})
+class AppComponent {
+    constructor(userPreferences: UserPreferencesService) {
+
+        userPreferences.set('myProperty1', 'value1');
+        userPreferences.set('myProperty2', 'value2');
+
+        console.log(
+            userPreferences.get('myProperty1')
+        );
+    }
+}
+```
+
+The service also provides quick access to a set of the "known" properties used across ADF components.
+
+Known properties:
+
+- paginationSize (number) - gets or sets the preferred pagination size
+
 ## Notification Service
 
 The Notification Service is implemented on top of the Angular 2 Material Design snackbar.
