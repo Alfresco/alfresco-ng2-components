@@ -24,17 +24,14 @@ export class AppConfigService {
 
     private config: any = {
         'ecmHost': 'http://{hostname}:{port}/ecm',
-        'bpmHost': 'http://{hostname}:{port}/bpm',
-        'application': {
-            'name': 'Alfresco'
-        }
+        'bpmHost': 'http://{hostname}:{port}/bpm'
     };
 
     configFile: string = null;
 
     constructor(private http: Http) {}
 
-    get<T>(key: string): T {
+    get<T>(key: string, defaultValue?: T): T {
         let result: any = ObjectUtils.getValue(this.config, key);
         if (typeof result === 'string') {
             const map = new Map<string, string>();
@@ -42,18 +39,22 @@ export class AppConfigService {
             map.set('port', location.port);
             result = this.formatString(result, map);
         }
+        if (result === undefined) {
+            return defaultValue;
+        }
         return <T> result;
     }
 
-    load(resource: string = 'app.config.json'): Promise<any> {
+    load(resource: string = 'app.config.json', values?: {}): Promise<any> {
         this.configFile = resource;
-        return new Promise((resolve, reject) => {
+        return new Promise(resolve => {
+            this.config = Object.assign({}, values || {});
             this.http.get(resource).subscribe(
                 data => {
                     this.config = Object.assign({}, this.config, data.json() || {});
                     resolve(this.config);
                 },
-                (err) => {
+                () => {
                     const errorMessage = `Error loading ${resource}`;
                     console.log(errorMessage);
                     resolve(this.config);
@@ -74,11 +75,11 @@ export class AppConfigService {
     }
 }
 
-export function InitAppConfigServiceProvider(resource: string): any {
+export function InitAppConfigServiceProvider(resource: string, values?: {}): any {
     return {
         provide: APP_INITIALIZER,
         useFactory: (configService: AppConfigService) => {
-            return () => configService.load(resource);
+            return () => configService.load(resource, values);
         },
         deps: [
             AppConfigService
@@ -96,12 +97,12 @@ export function InitAppConfigServiceProvider(resource: string): any {
     ]
 })
 export class AppConfigModule {
-    static forRoot(resource: string): ModuleWithProviders {
+    static forRoot(resource: string, values?: {}): ModuleWithProviders {
         return {
             ngModule: AppConfigModule,
             providers: [
                 AppConfigService,
-                InitAppConfigServiceProvider(resource)
+                InitAppConfigServiceProvider(resource, values)
             ]
         };
     }

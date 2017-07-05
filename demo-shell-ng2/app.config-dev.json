@@ -4,6 +4,9 @@
     "application": {
         "name": "Alfresco"
     },
+    "pagination": {
+        "size": 25
+    },
     "activiti": {
         "rest": {
             "fields": [

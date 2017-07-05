@@ -16,7 +16,6 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService } from './alfresco-api.service';
 import { AppConfigService } from './app-config.service';
 import { StorageService } from './storage.service';
 
@@ -27,19 +26,19 @@ export class UserPreferencesService {
         paginationSize: 25
     };
 
+    private _storagePrefix: string = 'GUEST';
+
     getStoragePrefix(): string {
-        return this.storage.getItem('USER_PROFILE') || 'GUEST';
+        return this._storagePrefix;
     }
 
     setStoragePrefix(value: string) {
-        this.storage.setItem('USER_PROFILE', value || 'GUEST');
+        this._storagePrefix = value || 'GUEST';
     }
 
     constructor(
         appConfig: AppConfigService,
-        private storage: StorageService,
-        private apiService: AlfrescoApiService
-    ) {
+        private storage: StorageService) {
         this.defaults.paginationSize = appConfig.get('pagination.size', 25);
     }
 
@@ -56,31 +55,9 @@ export class UserPreferencesService {
         );
     }
 
-    get(property: string, defaultValue?: string): string {
+    get(property: string): string {
         const key = this.getPropertyKey(property);
-        const value = this.storage.getItem(key);
-        if (value === undefined) {
-            return defaultValue;
-        }
-        return value;
-    }
-
-    set authType(value: string) {
-        this.storage.setItem('AUTH_TYPE', value);
-        this.apiService.reset();
-    }
-
-    get authType(): string {
-        return this.storage.getItem('AUTH_TYPE') || 'ALL';
-    }
-
-    set disableCSRF(value: boolean) {
-        this.set('DISABLE_CSRF', value);
-        this.apiService.reset();
-    }
-
-    get disableCSRF(): boolean {
-        return this.get('DISABLE_CSRF') === 'true';
+        return this.storage.getItem(key);
     }
 
     set paginationSize(value: number) {
