@@ -16,19 +16,22 @@
  */
 
 import { TestBed, async } from '@angular/core/testing';
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule, AppConfigModule } from 'ng2-alfresco-core';
 import { TagService } from '../services/tag.service';
 
 declare let jasmine: any;
 
-describe('Tag service', () => {
+describe('TagService', () => {
 
     let service: TagService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule.forRoot(),
+                AppConfigModule.forRoot('app.config.json', {
+                    ecmHost: 'http://localhost:9876/ecm'
+                })
             ],
             providers: [
                 TagService
