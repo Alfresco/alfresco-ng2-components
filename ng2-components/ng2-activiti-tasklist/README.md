@@ -176,7 +176,7 @@ The component shows the details of the task id passed in input
 
 By default the Activiti Task Details provides the following message for the empty task details:
 
-```
+```html
 No Tasks
 ```
 
@@ -247,7 +247,6 @@ You can use inside the filter one of the following property
 }
 ```
 
-
 ## Activiti Filter
 
 The component shows all the available filters.
@@ -281,7 +280,9 @@ If both `appId` and `appName` are specified then `appName` will take precedence 
 <adf-filters 
     [filterParam]="{name:'My tasks'}">
 </adf-filters>
+
 ```
+
 
 You can use inside the filterParam one of the following property.
 
@@ -422,6 +423,7 @@ The purpose of the component is populate the local variable called `properties` 
 | claim | Raised when the task is claimed. |
 
 ## TaskDetailsModel
+
 ```json
 { 
     "id": "string", 
@@ -431,6 +433,7 @@ The purpose of the component is populate the local variable called `properties` 
     "description": "string"
 }
 ```
+
 ## Task People Component
 
 This component displays involved users to a specified task
