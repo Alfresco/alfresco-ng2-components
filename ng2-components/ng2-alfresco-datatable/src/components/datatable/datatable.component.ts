@@ -133,6 +133,8 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
         if (this.isPropertyChanged(changes['data'])) {
             if (this.isTableEmpty()) {
                 this.initTable();
+            }else {
+                this.data = changes['data'].currentValue;
             }
             return;
         }
