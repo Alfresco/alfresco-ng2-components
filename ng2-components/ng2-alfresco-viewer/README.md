@@ -1,6 +1,5 @@
 # Alfresco File Viewer Component
 
-
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
 
 <!-- toc -->
@@ -82,7 +81,6 @@ Using with file url:
 ![Rendition](docs/assets/renditions.png)                         
 
 Note for unsupported extension the viewer will offer the possibility to convert it in PDF is that kind of extension is supported by the [content service renditions service](https://community.alfresco.com/docs/DOC-5879-rendition-service)
-
 
 ## Custom extension handler
 
