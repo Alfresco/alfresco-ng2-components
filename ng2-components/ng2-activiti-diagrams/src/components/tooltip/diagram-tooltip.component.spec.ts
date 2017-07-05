@@ -16,9 +16,9 @@
  */
 
 import { Component } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { DiagramTooltip } from './diagram-tooltip.component';
 import { By } from '@angular/platform-browser';
-import { DiagramTooltipComponent } from './diagram-tooltip.component';
 
 @Component({
     template: `
@@ -31,23 +31,23 @@ class TestHostComponent {
     };
 }
 
-describe('DiagramTooltipComponent', () => {
+describe('DiagramTooltip', () => {
 
     describe('Template', () => {
 
-        let fixture: ComponentFixture<DiagramTooltipComponent>;
-        let component: DiagramTooltipComponent;
+        let fixture: ComponentFixture<DiagramTooltip>;
+        let component: DiagramTooltip;
         let data;
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-                declarations: [ DiagramTooltipComponent ],
+                declarations: [ DiagramTooltip ],
                 providers: []
             }).compileComponents();
         }));
 
         beforeEach(() => {
-            fixture = TestBed.createComponent(DiagramTooltipComponent);
+            fixture = TestBed.createComponent(DiagramTooltip);
             component = fixture.componentInstance;
             data = {
                 type: 'awesome-diagram-element',
@@ -117,7 +117,7 @@ describe('DiagramTooltipComponent', () => {
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-                declarations: [ DiagramTooltipComponent, TestHostComponent ]
+                declarations: [ DiagramTooltip, TestHostComponent ]
             }).compileComponents();
         }));
 
