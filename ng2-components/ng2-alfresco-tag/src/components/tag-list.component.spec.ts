@@ -17,14 +17,14 @@
 
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule, AppConfigModule } from 'ng2-alfresco-core';
 import { TagList } from './../components/tag-list.component';
 import { TagService } from '../services/tag.service';
 import { MdInputModule } from '@angular/material';
 
 declare let jasmine: any;
 
-describe('Test ng2-alfresco-tag Tag list All ECM', () => {
+describe('TagList', () => {
 
     let dataTag = {
         'list': {
@@ -51,7 +51,10 @@ describe('Test ng2-alfresco-tag Tag list All ECM', () => {
         TestBed.configureTestingModule({
             imports: [
                 MdInputModule,
-                CoreModule.forRoot()
+                CoreModule.forRoot(),
+                AppConfigModule.forRoot('app.config.json', {
+                    ecmHost: 'http://localhost:9876/ecm'
+                })
             ],
             declarations: [
                 TagList
