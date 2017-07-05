@@ -16,7 +16,6 @@
         text-align: left;
         will-change: unset;
         border: 1px solid #c5c5c5;
-        word-wrap: break-word;
     }
 
     &-diagram-tooltip.is-active {
@@ -24,7 +23,7 @@
     }
 
     &-diagram-tooltip-header {
-        background-color: rgba(43, 65, 79, 0.95);
+        background-color: rgba(43, 65, 79, 0.9);
         color: #FFF;
         padding: 8px;
         font-weight: bold;
@@ -34,7 +33,7 @@
 
     &-diagram-tooltip-body {
         color: #4a4a4a;
-        background-color: rgba(255, 255, 255, 0.95);
+        background-color: rgba(255, 255, 255, 0.9);
     }
 
     &-diagram-tooltip-body > div {
@@ -49,12 +48,12 @@
         padding-bottom: 8px;
     }
 
-    &-diagram-propertyName {
+    &-propertyName {
         font-weight: bold;
         margin-right: 5px;
     }
 
-    &-diagram-propertyValue {
+    &-propertyValue {
         font-style: italic;
     }
 }
