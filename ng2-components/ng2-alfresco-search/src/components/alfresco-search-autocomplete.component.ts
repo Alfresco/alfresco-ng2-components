@@ -19,7 +19,7 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, OnChanges, Output, 
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
 import { AlfrescoSearchService, SearchOptions } from './../services/alfresco-search.service';
-import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
+import { ThumbnailService } from 'ng2-alfresco-core';
 
 declare var require: any;
 
@@ -71,7 +71,7 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
 
     constructor(private searchService: AlfrescoSearchService,
                 private translateService: AlfrescoTranslationService,
-                private thumbnailService: AlfrescoThumbnailService) {
+                private thumbnailService: ThumbnailService) {
     }
 
     ngOnInit(): void {
@@ -124,30 +124,7 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
      * @returns {string} URL address.
      */
     getMimeTypeIcon(node: MinimalNodeEntity): string {
-        if (node.entry.content && node.entry.content.mimeType) {
-            let icon = this.thumbnailService.getMimeTypeIcon(node.entry.content.mimeType);
-            return this.resolveIconPath(icon);
-        }
-        if (node.entry.isFolder) {
-            return require('../assets/images/ft_ic_folder.svg');
-        }
-    }
-
-    resolveIconPath(icon: string): string {
-        return require('../assets/images/' + icon);
-    }
-
-    /**
-     * Gets thumbnail message key for the given document node, which can be used to look up alt text
-     * @param node Node to get URL for.
-     * @returns {string} URL address.
-     */
-    getMimeTypeKey(node: MinimalNodeEntity): string {
-        if (node.entry.content && node.entry.content.mimeType) {
-            return 'SEARCH.ICONS.' + this.thumbnailService.getMimeTypeKey(node.entry.content.mimeType);
-        } else {
-            return '';
-        }
+        return this.thumbnailService.getMimeTypeIcon(node.entry.content.mimeType);
     }
 
     focusResult(): void {

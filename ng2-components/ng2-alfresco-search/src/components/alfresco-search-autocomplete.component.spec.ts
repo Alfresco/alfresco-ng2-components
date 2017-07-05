@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { AlfrescoSearchAutocompleteComponent } from './alfresco-search-autocomplete.component';
-import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
+import { ThumbnailService } from 'ng2-alfresco-core';
 import { TranslationMock } from './../assets/translation.service.mock';
 import { result, results, folderResult, noResult, errorJson } from './../assets/alfresco-search.component.mock';
 import { AlfrescoSearchService } from '../services/alfresco-search.service';
@@ -49,7 +49,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
             declarations: [ AlfrescoSearchAutocompleteComponent ], // declare the test component
             providers: [
                 {provide: AlfrescoTranslationService, useClass: TranslationMock},
-                AlfrescoThumbnailService,
+                ThumbnailService,
                 AlfrescoSettingsService,
                 AlfrescoApiService,
                 AlfrescoAuthenticationService,
@@ -130,9 +130,8 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
             spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(result));
 
-            let thumbnailService = fixture.debugElement.injector.get(AlfrescoThumbnailService);
+            let thumbnailService = fixture.debugElement.injector.get(ThumbnailService);
             spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue('fake-type-icon.svg');
-            spyOn(thumbnailService, 'getMimeTypeKey').and.returnValue('FAKE_TYPE');
 
             let path = 'http://localhost/fake-type-icon.svg';
             spyOn(component, 'resolveIconPath').and.returnValue(path);
@@ -142,7 +141,6 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
                 let imgEl = <any> element.querySelector('#result_row_0 img');
                 expect(imgEl).not.toBeNull();
                 expect(imgEl.src).toBe(path);
-                expect(imgEl.alt).toBe('SEARCH.ICONS.FAKE_TYPE');
                 done();
             });
 

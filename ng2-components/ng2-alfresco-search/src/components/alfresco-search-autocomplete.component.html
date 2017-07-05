@@ -9,7 +9,7 @@
             (keyup.arrowup)="onRowArrowUp($event)"
             (keyup.escape)="onRowEscape($event)"
             attr.data-automation-id="autocomplete_result_for_{{result.entry.name}}">
-        <td class="img-td"><img src="{{getMimeTypeIcon(result)}}" alt="{{getMimeTypeKey(result)|translate}}"/></td>
+        <td class="img-td"><img src="{{getMimeTypeIcon(result)}}" alt="{{result.entry.name}}"/></td>
         <td>
             <div id="result_name_{{idx}}"  class="truncate"><b>{{result.entry.name}}</b></div>
             <div id="result_user_{{idx}}"  class="truncate">{{result.entry.createdByUser.displayName}}</div>
