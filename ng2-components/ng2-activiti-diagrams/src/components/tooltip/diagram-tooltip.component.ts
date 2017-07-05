@@ -22,7 +22,7 @@ const IS_ACTIVE_CLASS = 'is-active';
 @Component({
     selector: 'diagram-tooltip',
     templateUrl: './diagram-tooltip.component.html',
-    styleUrls: ['./diagram-tooltip-style.css']
+    styleUrls: ['./diagram-tooltip.component.scss']
 })
 export class DiagramTooltip implements AfterViewInit, OnDestroy {
 
@@ -30,6 +30,7 @@ export class DiagramTooltip implements AfterViewInit, OnDestroy {
     private targetElement: any;
     private boundMouseEnterHandler: EventListenerObject;
     private boundMouseLeaveAndScrollHandler: EventListenerObject;
+    private adf: string = 'adf';
 
     @ViewChild('tooltipContent') tooltipContent: ElementRef;
 

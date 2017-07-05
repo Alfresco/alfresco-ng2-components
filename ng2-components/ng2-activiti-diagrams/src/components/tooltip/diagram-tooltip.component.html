@@ -1,13 +1,13 @@
-<div #tooltipContent class="diagram-tooltip">
-    <div class="diagram-tooltip-header">{{ data.type }} {{ data.name || data.id }}</div>
-    <div class="diagram-tooltip-body">
+<div #tooltipContent class="{{adf}}-diagram-tooltip">
+    <div class="{{adf}}-diagram-tooltip-header">{{ data.type }} {{ data.name || data.id }}</div>
+    <div class="{{adf}}-diagram-tooltip-body">
         <div *ngIf="data.name">
-            <span class="propertyName">Name:</span>
-            <span class="propertyValue">{{ data.name }}</span>
+            <span class="{{adf}}-propertyName">Name:</span>
+            <span class="{{adf}}-propertyValue">{{ data.name }}</span>
         </div>
         <div *ngFor="let property of data.properties">
-            <span class="propertyName">{{ property.name }}:</span>
-            <span class="propertyValue">{{ property.value }}</span>
+            <span class="{{adf}}-propertyName">{{ property.name }}:</span>
+            <span class="{{adf}}-propertyValue">{{ property.value }}</span>
         </div>
     </div>
 </div>
