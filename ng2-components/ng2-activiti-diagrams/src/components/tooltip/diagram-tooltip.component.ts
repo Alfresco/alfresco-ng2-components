@@ -30,7 +30,7 @@ export class DiagramTooltip implements AfterViewInit, OnDestroy {
     private targetElement: any;
     private boundMouseEnterHandler: EventListenerObject;
     private boundMouseLeaveAndScrollHandler: EventListenerObject;
-    private adf: string = 'adf';
+    public adf: string = 'adf';
 
     @ViewChild('tooltipContent') tooltipContent: ElementRef;
 
