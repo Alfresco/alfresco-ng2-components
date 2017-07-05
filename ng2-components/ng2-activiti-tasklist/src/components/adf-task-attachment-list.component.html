@@ -4,12 +4,7 @@
     (rowDblClick)="openContent($event)"
     (showRowActionsMenu)="onShowRowActionsMenu($event)"
     (executeRowAction)="onExecuteRowAction($event)">
-    <adf-empty-list
-        [emptyListImageUrl]="'my-background-image.svg'"
-        [emptyMsg]="'My custom msg'"
-        [dragDropMsg]="'My drag and drom msg'"
-        [additionalMsg]="'My additional msg'">
-    </adf-empty-list>
+    <adf-empty-list></adf-empty-list>
     <data-columns>
         <data-column key="icon" type="icon" srTitle="Thumbnail" [sortable]="false"></data-column>
         <data-column key="name" type="text" title="Name" class="full-width ellipsis-cell" [sortable]="true"></data-column>
