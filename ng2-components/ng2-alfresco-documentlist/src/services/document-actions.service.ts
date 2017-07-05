@@ -89,7 +89,7 @@ export class DocumentActionsService {
     }
 
     private deleteNode(obj: any, target?: any, permission?: string): Observable<any> {
-        let handlerObservale: Observable<any>;
+        let handlerObservale;
 
         if (this.canExecuteAction(obj)) {
             if (this.hasPermission(obj.entry, permission)) {
