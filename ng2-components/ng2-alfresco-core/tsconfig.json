@@ -43,9 +43,7 @@
             "es2015",
             "dom"
         ],
-        "suppressImplicitAnyIndexErrors": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true
+        "suppressImplicitAnyIndexErrors": true
     },
     "exclude": [
         "demo",
