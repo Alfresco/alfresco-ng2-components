@@ -66,6 +66,31 @@ describe('DataTable', () => {
         };
     });
 
+    it('should change the rows on changing of the data', () => {
+        let newData = new ObjectDataTableAdapter(
+            [
+                { name: 'TEST' },
+                { name: 'FAKE' }
+            ],
+            [new ObjectDataColumn({ key: 'name' })]
+        );
+        dataTable.data = new ObjectDataTableAdapter(
+            [
+                { name: '1' },
+                { name: '2' }
+            ],
+            [new ObjectDataColumn({ key: 'name' })]
+        );
+
+        dataTable.ngOnChanges({
+            data: new SimpleChange(null, newData, false)
+        });
+        fixture.detectChanges();
+
+        expect(element.querySelector('[data-automation-id="text_TEST"]')).not.toBeNull();
+        expect(element.querySelector('[data-automation-id="text_FAKE"]')).not.toBeNull();
+    });
+
     it('should reset selection on mode change', () => {
         spyOn(dataTable, 'resetSelection').and.callThrough();
 
