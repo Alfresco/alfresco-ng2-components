@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
-import { AlfrescoApiService } from './alfresco-api.service';
+import { TestBed, async } from '@angular/core/testing';
 import { AppConfigModule } from './app-config.service';
 import { StorageService } from './storage.service';
 import { UserPreferencesService } from './user-preferences.service';
@@ -37,7 +36,6 @@ describe('UserPreferencesService', () => {
                 })
             ],
             providers: [
-                AlfrescoApiService,
                 StorageService,
                 UserPreferencesService
             ]
@@ -63,7 +61,6 @@ describe('UserPreferencesService', () => {
     });
 
     it('should format property key for default prefix', () => {
-        preferences.setStoragePrefix(null);
         expect(preferences.getPropertyKey('propertyA')).toBe('GUEST__propertyA');
     });
 

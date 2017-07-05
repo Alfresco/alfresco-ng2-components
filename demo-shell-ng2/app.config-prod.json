@@ -1,6 +1,4 @@
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
     "ecmHost": "http://{hostname}",
     "bpmHost": "http://{hostname}",
     "application": {
@@ -8,9 +6,6 @@
     },
     "pagination": {
         "size": 25
-    },
-    "files": {
-            "excluded": [".DS_Store", "desktop.ini", ".git"]
     },
     "activiti": {
         "rest": {
@@ -27,15 +22,5 @@
                 }
             ]
         }
-=======
-    "ecmHost": "http://localhost:3000/ecm",
-    "bpmHost": "http://localhost:3000/bpm",
-=======
-    "ecmHost": "http://{hostname}",
-    "bpmHost": "http://{hostname}",
->>>>>>> [ADF-967] evaluate "hostname" and "port" for string settings (#2040)
-    "application": {
-        "name": "Alfresco"
->>>>>>> [ADF-847] upgrade to use application configuration service (#1986)
     }
 }

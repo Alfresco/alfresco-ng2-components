@@ -16,15 +16,11 @@
  */
 
 import { DebugElement } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigModule, CoreModule } from 'ng2-alfresco-core';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { CoreModule, AppConfigModule } from 'ng2-alfresco-core';
+import { TagList } from './../components/tag-list.component';
 import { TagService } from '../services/tag.service';
-<<<<<<< HEAD
-import { TagListComponent } from './../components/tag-list.component';
-import { MaterialModule } from './material.module';
-=======
 import { MdInputModule } from '@angular/material';
->>>>>>> Source Mapping is not working on test debugging (#1931)
 
 declare let jasmine: any;
 
@@ -42,32 +38,26 @@ describe('TagList', () => {
             'entries': [{
                 'entry': {'tag': 'test1', 'id': '0ee933fa-57fc-4587-8a77-b787e814f1d2'}
             }, {'entry': {'tag': 'test2', 'id': 'fcb92659-1f10-41b4-9b17-851b72a3b597'}}, {
-                'entry': {'tag': 'test3', 'id': 'fb4213c0-729d-466c-9a6c-ee2e937273bf'}
-            }]
+                'entry': {'tag': 'test3', 'id': 'fb4213c0-729d-466c-9a6c-ee2e937273bf'}}]
         }
     };
 
     let component: any;
-    let fixture: ComponentFixture<TagListComponent>;
+    let fixture: ComponentFixture<TagList>;
     let debug: DebugElement;
     let element: HTMLElement;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-<<<<<<< HEAD
-                MaterialModule,
+                MdInputModule,
                 CoreModule.forRoot(),
                 AppConfigModule.forRoot('app.config.json', {
                     ecmHost: 'http://localhost:9876/ecm'
                 })
-=======
-                MdInputModule,
-                CoreModule.forRoot()
->>>>>>> Source Mapping is not working on test debugging (#1931)
             ],
             declarations: [
-                TagListComponent
+                TagList
             ],
             providers: [
                 TagService
@@ -76,7 +66,7 @@ describe('TagList', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TagListComponent);
+        fixture = TestBed.createComponent(TagList);
 
         debug = fixture.debugElement;
         element = fixture.nativeElement;

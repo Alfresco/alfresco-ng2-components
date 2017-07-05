@@ -15,16 +15,12 @@
  * limitations under the License.
  */
 
-import { DebugElement } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigModule, CoreModule } from 'ng2-alfresco-core';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { TagActionsComponent } from '../components/tag-actions.component';
+import { DebugElement }    from '@angular/core';
+import { CoreModule, AppConfigModule } from 'ng2-alfresco-core';
 import { TagService } from '../services/tag.service';
-<<<<<<< HEAD
-import { MaterialModule } from './material.module';
-=======
 import { MdInputModule } from '@angular/material';
->>>>>>> Source Mapping is not working on test debugging (#1931)
 
 declare let jasmine: any;
 
@@ -38,16 +34,11 @@ describe('TagActionsComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-<<<<<<< HEAD
-                MaterialModule,
+                MdInputModule,
                 CoreModule.forRoot(),
                 AppConfigModule.forRoot('app.config.json', {
                     ecmHost: 'http://localhost:9876/ecm'
                 })
-=======
-                MdInputModule,
-                CoreModule.forRoot()
->>>>>>> Source Mapping is not working on test debugging (#1931)
             ],
             declarations: [
                 TagActionsComponent
@@ -100,9 +91,9 @@ describe('TagActionsComponent', () => {
             component.result.subscribe(() => {
                 fixture.detectChanges();
 
-                expect(element.querySelector('#tag_name_0').innerHTML.trim()).toBe('test1');
-                expect(element.querySelector('#tag_name_1').innerHTML.trim()).toBe('test2');
-                expect(element.querySelector('#tag_name_2').innerHTML.trim()).toBe('test3');
+                expect(element.querySelector('#tag_name_0').innerHTML).toBe('test1');
+                expect(element.querySelector('#tag_name_1').innerHTML).toBe('test2');
+                expect(element.querySelector('#tag_name_2').innerHTML).toBe('test3');
 
                 expect(element.querySelector('#tag_delete_0')).not.toBe(null);
                 expect(element.querySelector('#tag_delete_1')).not.toBe(null);
@@ -130,15 +121,7 @@ describe('TagActionsComponent', () => {
                 deleteButton.click();
 
                 expect(jasmine.Ajax.requests.at(1).url)
-<<<<<<< HEAD
-<<<<<<< HEAD
                     .toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags/0ee933fa-57fc-4587-8a77-b787e814f1d2');
-=======
-                    .toBe('http://localhost:3000/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags/0ee933fa-57fc-4587-8a77-b787e814f1d2');
->>>>>>> [ADF-847] upgrade to use application configuration service (#1986)
-=======
-                    .toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags/0ee933fa-57fc-4587-8a77-b787e814f1d2');
->>>>>>> [ADF-967] evaluate "hostname" and "port" for string settings (#2040)
                 expect(jasmine.Ajax.requests.at(1).method).toBe('DELETE');
 
                 jasmine.Ajax.requests.mostRecent().respondWith({

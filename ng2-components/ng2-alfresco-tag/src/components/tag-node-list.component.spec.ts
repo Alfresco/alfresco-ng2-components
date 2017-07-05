@@ -15,16 +15,12 @@
  * limitations under the License.
  */
 
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { TagNodeList } from '../components/tag-node-list.component';
 import { DebugElement } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigModule, CoreModule } from 'ng2-alfresco-core';
-import { TagNodeListComponent } from '../components/tag-node-list.component';
+import { CoreModule, AppConfigModule } from 'ng2-alfresco-core';
 import { TagService } from '../services/tag.service';
-<<<<<<< HEAD
-import { MaterialModule } from './material.module';
-=======
 import { MdInputModule } from '@angular/material';
->>>>>>> Source Mapping is not working on test debugging (#1931)
 
 declare let jasmine: any;
 
@@ -42,32 +38,26 @@ describe('TagNodeList', () => {
             'entries': [{
                 'entry': {'tag': 'test1', 'id': '0ee933fa-57fc-4587-8a77-b787e814f1d2'}
             }, {'entry': {'tag': 'test2', 'id': 'fcb92659-1f10-41b4-9b17-851b72a3b597'}}, {
-                'entry': {'tag': 'test3', 'id': 'fb4213c0-729d-466c-9a6c-ee2e937273bf'}
-            }]
+                'entry': {'tag': 'test3', 'id': 'fb4213c0-729d-466c-9a6c-ee2e937273bf'}}]
         }
     };
 
     let component: any;
-    let fixture: ComponentFixture<TagNodeListComponent>;
+    let fixture: ComponentFixture<TagNodeList>;
     let debug: DebugElement;
     let element: HTMLElement;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-<<<<<<< HEAD
-                MaterialModule,
+                MdInputModule,
                 CoreModule.forRoot(),
                 AppConfigModule.forRoot('app.config.json', {
                     ecmHost: 'http://localhost:9876/ecm'
                 })
-=======
-                MdInputModule,
-                CoreModule.forRoot()
->>>>>>> Source Mapping is not working on test debugging (#1931)
             ],
             declarations: [
-                TagNodeListComponent
+                TagNodeList
             ],
             providers: [
                 TagService
@@ -76,7 +66,7 @@ describe('TagNodeList', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TagNodeListComponent);
+        fixture = TestBed.createComponent(TagNodeList);
 
         debug = fixture.debugElement;
         element = fixture.nativeElement;
@@ -130,15 +120,7 @@ describe('TagNodeList', () => {
                 deleteButton.click();
 
                 expect(jasmine.Ajax.requests.mostRecent().url).
-<<<<<<< HEAD
-<<<<<<< HEAD
-                toContain('0ee933fa-57fc-4587-8a77-b787e814f1d2');
-=======
-                toBe('http://localhost:3000/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags/0ee933fa-57fc-4587-8a77-b787e814f1d2');
->>>>>>> [ADF-847] upgrade to use application configuration service (#1986)
-=======
                 toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags/0ee933fa-57fc-4587-8a77-b787e814f1d2');
->>>>>>> [ADF-967] evaluate "hostname" and "port" for string settings (#2040)
                 expect(jasmine.Ajax.requests.mostRecent().method).toBe('DELETE');
 
                 jasmine.Ajax.requests.mostRecent().respondWith({

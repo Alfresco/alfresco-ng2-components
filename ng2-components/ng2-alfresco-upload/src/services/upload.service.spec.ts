@@ -17,7 +17,7 @@
 
 import { EventEmitter } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule, AppConfigModule } from 'ng2-alfresco-core';
 import { UploadService } from './upload.service';
 import { FileModel, FileUploadOptions } from '../models/file.model';
 
@@ -29,7 +29,10 @@ describe('UploadService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule.forRoot(),
+                AppConfigModule.forRoot('app.config.json', {
+                    ecmHost: 'http://localhost:9876/ecm'
+                })
             ],
             providers: [
                 UploadService
