@@ -60,12 +60,6 @@ describe('ActivitiForm', () => {
         expect(formComponent.setupMaterialComponents()).toBeFalsy();
     });
 
-    it('should start loading form on init', () => {
-        spyOn(formComponent, 'loadForm').and.stub();
-        formComponent.ngOnInit();
-        expect(formComponent.loadForm).toHaveBeenCalled();
-    });
-
     it('should check form', () => {
         expect(formComponent.hasForm()).toBeFalsy();
         formComponent.form = new FormModel();
@@ -732,8 +726,8 @@ describe('ActivitiForm', () => {
         spyOn(formComponent, 'loadFormFromActiviti').and.stub();
 
         const nodeId = '<id>';
-        formComponent.nodeId = nodeId;
-        formComponent.ngOnInit();
+        let change = new SimpleChange(null, nodeId, false);
+        formComponent.ngOnChanges({'nodeId' : change});
 
         expect(nodeService.getNodeMetadata).toHaveBeenCalledWith(nodeId);
         expect(formComponent.loadFormFromActiviti).toHaveBeenCalled();
