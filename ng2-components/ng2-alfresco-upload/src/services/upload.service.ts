@@ -20,6 +20,7 @@ import { Subject } from 'rxjs/Rx';
 import { AlfrescoApiService, AppConfigService } from 'ng2-alfresco-core';
 import { FileUploadEvent, FileUploadCompleteEvent } from '../events/file.event';
 import { FileModel, FileUploadProgress, FileUploadStatus } from '../models/file.model';
+import * as minimatch from 'minimatch';
 
 @Injectable()
 export class UploadService {
@@ -81,16 +82,10 @@ export class UploadService {
 
     private filterElement(file: FileModel) {
         let isAllowed = true;
-        let fileExtension = this.getFileNameExtension(file.name);
         if (this.excludedFileList) {
-            isAllowed = this.excludedFileList.indexOf(fileExtension) === -1 &&
-                this.excludedFileList.indexOf(file.name) === -1;
+            isAllowed = this.excludedFileList.filter(expr => minimatch(file.name, expr)).length === 0;
         }
         return isAllowed;
-    }
-
-    private getFileNameExtension(fileName: string): string {
-        return fileName.slice((fileName.lastIndexOf('.') - 2 >>> 0) + 2);
     }
 
     /**
@@ -168,21 +163,21 @@ export class UploadService {
         promise.on('progress', (progress: FileUploadProgress) => {
             this.onUploadProgress(file, progress);
         })
-        .on('abort', () => {
-            this.onUploadAborted(file);
-            emitter.emit({ value: 'File aborted' });
-        })
-        .on('error', err => {
-            this.onUploadError(file, err);
-            emitter.emit({ value: 'Error file uploaded' });
-        })
-        .on('success', data => {
-            this.onUploadComplete(file, data);
-            emitter.emit({ value: data });
-        })
-        .catch(err => {
-            this.onUploadError(file, err);
-        });
+            .on('abort', () => {
+                this.onUploadAborted(file);
+                emitter.emit({ value: 'File aborted' });
+            })
+            .on('error', err => {
+                this.onUploadError(file, err);
+                emitter.emit({ value: 'Error file uploaded' });
+            })
+            .on('success', data => {
+                this.onUploadComplete(file, data);
+                emitter.emit({ value: data });
+            })
+            .catch(err => {
+                this.onUploadError(file, err);
+            });
 
         return promise;
     }

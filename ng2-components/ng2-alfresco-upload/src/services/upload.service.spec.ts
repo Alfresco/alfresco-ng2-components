@@ -31,7 +31,10 @@ describe('UploadService', () => {
             imports: [
                 CoreModule.forRoot(),
                 AppConfigModule.forRoot('app.config.json', {
-                    ecmHost: 'http://localhost:9876/ecm'
+                    ecmHost: 'http://localhost:9876/ecm',
+                    files: {
+                        excluded: ['.DS_Store', 'desktop.ini', '.git', '*.git']
+                    }
                 })
             ],
             providers: [
@@ -82,7 +85,7 @@ describe('UploadService', () => {
         });
         let fileFake = new FileModel(
             <File>{ name: 'fake-name', size: 10 },
-            <FileUploadOptions> { parentId: '-root-', path: 'fake-dir' }
+            <FileUploadOptions>{ parentId: '-root-', path: 'fake-dir' }
         );
         service.addToQueue(fileFake);
         service.uploadFilesInTheQueue(emitter);
@@ -107,7 +110,7 @@ describe('UploadService', () => {
         });
         let fileFake = new FileModel(
             <File>{ name: 'fake-name', size: 10 },
-            <FileUploadOptions> { parentId: '-root-' }
+            <FileUploadOptions>{ parentId: '-root-' }
         );
         service.addToQueue(fileFake);
         service.uploadFilesInTheQueue(emitter);
@@ -156,7 +159,7 @@ describe('UploadService', () => {
         });
         let filesFake = new FileModel(
             <File>{ name: 'fake-name', size: 10 },
-            <FileUploadOptions> { parentId: '123', path: 'fake-dir' }
+            <FileUploadOptions>{ parentId: '123', path: 'fake-dir' }
         );
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue(emitter);
