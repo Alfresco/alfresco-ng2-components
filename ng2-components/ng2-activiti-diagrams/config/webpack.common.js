@@ -58,7 +58,7 @@ module.exports = {
                 test: /\.css$/,
                 loader: ['to-string-loader', 'css-loader'],
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
-            }
+            },
             {
                 test: /\.scss$/,
                 use: [{
