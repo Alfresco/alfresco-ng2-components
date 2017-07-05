@@ -604,6 +604,7 @@ All system handler names are case-insensitive, `handler="download"` and `handler
 will trigger the same `download` action.
 
 ##### Delete - System handler combined with custom handler
+
 If you specify both of the **handler="delete"** and your custom **(execute)="myCustomActionAfterDelete($event)"**, your callback will be invoked after a successful delete happened. A successful delete operation happens if there is neither permission error, neither other network related error for the delete operation request. For handling permission errors see the section below.
 
 ##### Delete - Show notification message with no permission
