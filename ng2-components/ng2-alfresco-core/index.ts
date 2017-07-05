@@ -28,6 +28,7 @@ import { CardViewModule } from './src/components/view/card-view.module';
 import { CollapsableModule } from './src/components/collapsable/collapsable.module';
 import { AdfToolbarComponent } from './src/components/toolbar/toolbar.component';
 import { AppConfigModule } from './src/services/app-config.service';
+import { UserPreferencesService } from './src/services/user-preferences.service';
 
 import {
     AlfrescoAuthenticationService,
@@ -72,6 +73,7 @@ export * from './src/events/base.event';
 export * from './src/events/base-ui.event';
 export * from './src/events/folder-created.event';
 export * from './src/models/index';
+export { UserPreferencesService } from './src/services/user-preferences.service';
 
 export * from './src/models/index';
 

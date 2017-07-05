@@ -44,7 +44,8 @@
             "dom"
         ],
         "suppressImplicitAnyIndexErrors": true,
-        "noUnusedLocals": true
+        "noUnusedLocals": true,
+        "noUnusedParameters": true
     },
     "exclude": [
         "demo",
