@@ -163,22 +163,21 @@ export class UploadService {
         promise.on('progress', (progress: FileUploadProgress) => {
             this.onUploadProgress(file, progress);
         })
-            .on('abort', () => {
-                this.onUploadAborted(file);
-                emitter.emit({ value: 'File aborted' });
-            })
-            .on('error', err => {
-                this.onUploadError(file, err);
-                emitter.emit({ value: 'Error file uploaded' });
-            })
-            .on('success', data => {
-                this.onUploadComplete(file, data);
-                emitter.emit({ value: data });
-            })
-            .catch(err => {
-                this.onUploadError(file, err);
-            });
-
+        .on('abort', () => {
+            this.onUploadAborted(file);
+            emitter.emit({ value: 'File aborted' });
+        })
+        .on('error', err => {
+            this.onUploadError(file, err);
+            emitter.emit({ value: 'Error file uploaded' });
+        })
+        .on('success', data => {
+            this.onUploadComplete(file, data);
+            emitter.emit({ value: data });
+        })
+        .catch(err => {
+            this.onUploadError(file, err);
+        });
         return promise;
     }
 

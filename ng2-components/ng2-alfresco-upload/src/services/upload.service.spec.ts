@@ -159,7 +159,7 @@ describe('UploadService', () => {
         });
         let filesFake = new FileModel(
             <File>{ name: 'fake-name', size: 10 },
-            <FileUploadOptions>{ parentId: '123', path: 'fake-dir' }
+            <FileUploadOptions> { parentId: '123', path: 'fake-dir' }
         );
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue(emitter);
