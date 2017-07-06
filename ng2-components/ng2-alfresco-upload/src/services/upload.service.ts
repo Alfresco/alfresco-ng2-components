@@ -16,7 +16,7 @@
  */
 
 import { EventEmitter, Injectable } from '@angular/core';
-import { AlfrescoApiService, BaseUploadService, FileModel } from 'ng2-alfresco-core';
+import { AlfrescoApiService, AppConfigService, BaseUploadService, FileModel } from 'ng2-alfresco-core';
 import { Subject } from 'rxjs/Rx';
 
 @Injectable()
@@ -24,8 +24,8 @@ export class UploadService extends BaseUploadService {
 
     instanceApi: AlfrescoApiService;
 
-    constructor(apiService: AlfrescoApiService) {
-        super(apiService);
+    constructor(apiService: AlfrescoApiService, appConfigService: AppConfigService) {
+        super(apiService, appConfigService);
         this.instanceApi = apiService;
     }
 

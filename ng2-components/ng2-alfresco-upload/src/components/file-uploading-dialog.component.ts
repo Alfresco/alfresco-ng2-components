@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { AlfrescoTranslationService, FileUploadCompleteEvent, FileUploadStatus } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, FileModel, FileUploadCompleteEvent, FileUploadStatus } from 'ng2-alfresco-core';
 import { UploadService } from '../services/upload.service';
 
 @Component({
