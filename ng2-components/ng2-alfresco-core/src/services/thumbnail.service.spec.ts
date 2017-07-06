@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+<<<<<<< HEAD
 import { async, TestBed } from '@angular/core/testing';
 import { HttpModule } from '@angular/http';
 import { CookieServiceMock } from './../assets/cookie.service.mock';
@@ -28,6 +29,20 @@ import { LogService } from './log.service';
 import { StorageService } from './storage.service';
 import { ThumbnailService } from './thumbnail.service';
 import { UserPreferencesService } from './user-preferences.service';
+=======
+import { TestBed, async } from '@angular/core/testing';
+import { HttpModule } from '@angular/http';
+import { ThumbnailService } from './thumbnail.service';
+import { AlfrescoContentService } from './alfresco-content.service';
+import { AlfrescoAuthenticationService } from './alfresco-authentication.service';
+import { AlfrescoSettingsService } from './alfresco-settings.service';
+import { AppConfigService } from './app-config.service';
+import { LogService } from './log.service';
+import { AlfrescoApiService } from './alfresco-api.service';
+import { StorageService } from './storage.service';
+import { CookieService } from './cookie.service';
+import { CookieServiceMock } from './../assets/cookie.service.mock';
+>>>>>>> [ADF-506] Unify thumbnail service (#2014)
 
 describe('ThumbnailService', () => {
 
@@ -39,8 +54,12 @@ describe('ThumbnailService', () => {
                 HttpModule
             ],
             providers: [
+<<<<<<< HEAD
                 UserPreferencesService,
                 AuthenticationService,
+=======
+                AlfrescoAuthenticationService,
+>>>>>>> [ADF-506] Unify thumbnail service (#2014)
                 AlfrescoContentService,
                 AlfrescoSettingsService,
                 AppConfigService,

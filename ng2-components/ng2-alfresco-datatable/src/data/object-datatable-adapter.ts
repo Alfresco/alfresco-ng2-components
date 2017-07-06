@@ -122,6 +122,7 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
         return value;
     }
 
+<<<<<<< HEAD
     formatDate(col: DataColumn, value: any): string {
         if (col.type === 'date') {
             const format = col.format || 'medium';
@@ -137,6 +138,8 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
         return value;
     }
 
+=======
+>>>>>>> [ADF-506] Unify thumbnail service (#2014)
     getSorting(): DataSorting {
         return this._sorting;
     }

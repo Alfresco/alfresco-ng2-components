@@ -20,13 +20,22 @@ import { Response } from '@angular/http';
 import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
 import { AlfrescoApiService, AlfrescoAuthenticationService, AlfrescoContentService, LogService, PermissionsEnum, ThumbnailService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
+<<<<<<< HEAD
+=======
+import { NodePaging, MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { AlfrescoAuthenticationService, AlfrescoContentService, AlfrescoApiService, LogService, ThumbnailService } from 'ng2-alfresco-core';
+>>>>>>> [ADF-506] Unify thumbnail service (#2014)
 
 @Injectable()
 export class DocumentListService {
 
     static ROOT_ID = '-root-';
 
+<<<<<<< HEAD
     constructor(authService: AlfrescoAuthenticationService,
+=======
+    constructor(private authService: AlfrescoAuthenticationService,
+>>>>>>> [ADF-506] Unify thumbnail service (#2014)
                 private contentService: AlfrescoContentService,
                 private apiService: AlfrescoApiService,
                 private logService: LogService,
@@ -135,10 +144,13 @@ export class DocumentListService {
 
     getDefaultMimeTypeIcon(): string {
         return this.thumbnailService.getDefaultMimeTypeIcon();
+<<<<<<< HEAD
     }
 
     hasPermission(node: any, permission: PermissionsEnum|string): boolean {
         return this.contentService.hasPermission(node, permission);
+=======
+>>>>>>> [ADF-506] Unify thumbnail service (#2014)
     }
 
     private handleError(error: Response) {
