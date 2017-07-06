@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { CardViewComponent } from './adf-card-view.component';
-import { CardViewModel } from '../../models/card-view.model';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { CardViewModel } from '../../models/card-view.model';
+import { CardViewComponent } from './adf-card-view.component';
 
 describe('AdfCardView', () => {
 

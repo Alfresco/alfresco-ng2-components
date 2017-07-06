@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
 import { AdfEmptyListComponent } from './adf-empty-list.component';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 
 describe('AdfEmptyListComponentComponent', () => {
     let component: AdfEmptyListComponent;

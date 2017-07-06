@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { TestBed, async } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 import { DataColumnListComponent } from './data-column-list.component';
 
 describe('DataColumnListComponent', () => {

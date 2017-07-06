@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { LoadingContentTemplateDirective } from './loading-template.directive';
 import { Injector } from '@angular/core';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { DataTableComponent } from '../components/datatable/datatable.component';
+import { LoadingContentTemplateDirective } from './loading-template.directive';
 
 describe('LoadingContentTemplateDirective', () => {
     let injector: Injector;
-    let LoadingContentTemplateDirective: LoadingContentTemplateDirective;
+    let loadingContentTemplateDirective: LoadingContentTemplateDirective;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -32,10 +32,10 @@ describe('LoadingContentTemplateDirective', () => {
             ]
         });
         injector = getTestBed();
-        LoadingContentTemplateDirective = injector.get(LoadingContentTemplateDirective);
+        loadingContentTemplateDirective = injector.get(LoadingContentTemplateDirective);
     });
 
     it('is defined', () => {
-        expect(LoadingContentTemplateDirective).toBeDefined();
+        expect(loadingContentTemplateDirective).toBeDefined();
     });
 });

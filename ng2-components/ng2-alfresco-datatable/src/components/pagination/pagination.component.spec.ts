@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { PaginationComponent } from '../pagination/pagination.component';
-import { PaginationData } from '../../models/pagination.data';
 import { Injector, SimpleChange } from '@angular/core';
 import { getTestBed, TestBed } from '@angular/core/testing';
+import { PaginationData } from '../../models/pagination.data';
+import { PaginationComponent } from '../pagination/pagination.component';
 
 describe('PaginationComponent', () => {
     let injector: Injector;

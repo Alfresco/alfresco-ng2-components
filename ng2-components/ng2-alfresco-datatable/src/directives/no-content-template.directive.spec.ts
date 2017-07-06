@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { NoContentTemplateDirective } from './no-content-template.directive';
 import { Injector } from '@angular/core';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { DataTableComponent } from '../components/datatable/datatable.component';
+import { NoContentTemplateDirective } from './no-content-template.directive';
 
 describe('NoContentTemplateDirective', () => {
     let injector: Injector;
-    let NoContentTemplateDirective: NoContentTemplateDirective;
+    let noContentTemplateDirective: NoContentTemplateDirective;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -32,10 +32,10 @@ describe('NoContentTemplateDirective', () => {
             ]
         });
         injector = getTestBed();
-        NoContentTemplateDirective = injector.get(NoContentTemplateDirective);
+        noContentTemplateDirective = injector.get(NoContentTemplateDirective);
     });
 
     it('is defined', () => {
-        expect(NoContentTemplateDirective).toBeDefined();
+        expect(noContentTemplateDirective).toBeDefined();
     });
 });
