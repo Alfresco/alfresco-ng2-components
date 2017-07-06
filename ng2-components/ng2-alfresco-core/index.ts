@@ -47,7 +47,9 @@ import {
     LogServiceMock,
     NotificationService,
     ContentService,
-    AppConfigService, InitAppConfigServiceProvider
+    AppConfigService,
+    InitAppConfigServiceProvider,
+    ThumbnailService
 } from './src/services/index';
 
 import { FileSizePipe } from './src/pipes/file-size.pipe';
