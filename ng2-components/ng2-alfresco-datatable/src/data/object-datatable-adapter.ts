@@ -17,9 +17,8 @@
 
 import { TemplateRef } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { TemplateRef } from '@angular/core';
 import { ObjectUtils } from 'ng2-alfresco-core';
-import { DataColumn, DataRow, DataSorting, DataTableAdapter } from './datatable-adapter';
+import { DataTableAdapter, DataRow, DataColumn, DataSorting } from './datatable-adapter';
 
 declare var require: any;
 
