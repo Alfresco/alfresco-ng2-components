@@ -28,6 +28,9 @@ describe('AppConfigService', () => {
         'bpmHost': 'http://localhost:4000/ecm',
         'application': {
             'name': 'Custom Name'
+        },
+        'files': {
+            'excluded': ['exluded']
         }
     };
 
@@ -86,6 +89,15 @@ describe('AppConfigService', () => {
         const name = 'custom.config.json';
         appConfigService.load(name).then(() => {
             expect(appConfigService.configFile).toBe(name);
+        });
+    });
+
+    it('should take excluded file list', () => {
+        expect(appConfigService.configFile).toBeNull();
+
+        const name = 'custom.config.json';
+        appConfigService.load(name).then(() => {
+            expect(appConfigService.get('files.excluded')[0]).toBe('exluded');
         });
     });
 });
