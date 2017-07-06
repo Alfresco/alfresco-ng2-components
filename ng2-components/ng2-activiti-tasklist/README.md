@@ -460,6 +460,32 @@ This component displays involved users to a specified task
 
 No Events
 
+## ADF Comments Component
+
+This component displays comments entered by involved users to a specified task. It also allows an involved user to add his/her comment to the task.
+
+```html
+<adf-comments
+    [taskId]="YOUR_TASK_ID"
+    [readOnly]="YOUR_READ_ONLY_FLAG">
+</adf-comments>
+```
+
+![adf-comments](docs/assets/adf-comments.png)
+
+### Properties
+
+| Name | Type | Description |
+| --- | --- | --- |
+| taskId | string | The numeric ID of the task |
+| readOnly | boolean | The boolean flag |
+
+#### Events
+
+| Name | Description |
+| --- | --- |
+| error | Raised when an error occurs while displaying/adding a comment |
+
 ## Build from sources
 
 You can build component from sources with the following commands:
