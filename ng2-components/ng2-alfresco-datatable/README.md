@@ -11,7 +11,8 @@
   * [DataColumn Properties](#datacolumn-properties)
   * [DataTable Events](#datatable-events)
   * [DataTable DOM Events](#datatable-dom-events)
-  * [Empty content template](#empty-content-template)
+  * [Default Empty content template](#default-empty-content-template)
+  * [Custom Empty content template](#custom-empty-content-template)
   * [Loading content template](#loading-content-template)
   * [Column Templates](#column-templates)
   * [Events](#events)
@@ -212,7 +213,7 @@ onRowClick(event) {
 
 ![](docs/assets/datatable-dom-events.png)
 
-### Empty content template
+### Custom Empty content template
 
 You can add a template that will be showed when there are no result in your datatable:
 
@@ -237,6 +238,40 @@ You can add a template that will be showed when there are no result in your data
         
 </adf-datatable>
 ```
+
+### Default Empty content template
+
+You can use the empty list component if you want show the default ADF empty template:
+
+```html
+<adf-datatable
+    [data]="data"
+    [actions]="contentActions"
+    [multiselect]="multiselect"
+    (showRowContextMenu)="onShowRowContextMenu($event)"
+    (showRowActionsMenu)="onShowRowActionsMenu($event)"
+    (executeRowAction)="onExecuteRowAction($event)"
+    (rowClick)="onRowClick($event)"
+    (rowDblClick)="onRowDblClick($event)">
+        
+        <adf-empty-list 
+            [emptyListImageUrl]="'my-background-image.svg'"
+            [emptyMsg]="'My custom msg'"
+            [dragDropMsg]="'My drag and drom msg'"
+            [additionalMsg]="'My additional msg'">
+        </adf-empty-list>
+        
+</adf-datatable>
+```
+
+| Name | Type | Default | Description
+| --- | --- | --- | --- |
+| emptyListImageUrl | String | empty_doc_lib.svg | The default image used as background |
+| emptyMsg | String | This list is empty | The default title message |
+| dragDropMsg | String | Drag and drop | The default drag and drop message |
+| additionalMsg | String | Drag and drop | The default additional message |
+
+![](docs/assets/adf-empty-list.png)
 
 ### Loading content template
 
