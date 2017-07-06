@@ -213,4 +213,28 @@ describe('UploadDragAreaComponent', () => {
         component.onUploadFiles(fakeCustomEvent);
     }));
 
+    it('should show notification bar when a file is dropped', () => {
+        component.currentFolderPath = '/root-fake-/sites-fake/document-library-fake';
+        component.rootFolderId = '-my-';
+        component.onSuccess = null;
+
+        fixture.detectChanges();
+        spyOn(uploadService, 'uploadFilesInTheQueue');
+
+        let itemEntity = {
+            fullPath: '/folder-fake/file-fake.png',
+            isDirectory: false,
+            isFile: true,
+            name: 'file-fake.png',
+            file: (callbackFile) => {
+                let fileFake = new File(['fakefake'], 'file-fake.png', {type: 'image/png'});
+                callbackFile(fileFake);
+            }
+        };
+
+        component.onFilesEntityDropped(itemEntity);
+        fixture.detectChanges();
+        expect(document.querySelector('snack-bar-container > simple-snack-bar')).not.toBeNull();
+    });
+
 });
