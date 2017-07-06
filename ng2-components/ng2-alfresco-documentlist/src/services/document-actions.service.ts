@@ -16,15 +16,12 @@
  */
 
 import { Injectable } from '@angular/core';
-import { MinimalNodeEntity } from 'alfresco-js-api';
-import { AlfrescoContentService, AlfrescoTranslationService, NotificationService } from 'ng2-alfresco-core';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Rx';
-import { ContentNodeSelectorComponent } from '../components/content-node-selector/content-node-selector.component';
+import { Observable } from 'rxjs';
 import { ContentActionHandler } from '../models/content-action.model';
-import { PermissionModel } from '../models/permissions.model';
 import { DocumentListService } from './document-list.service';
-import { NodeActionsService } from './node-actions.service';
+import { AlfrescoContentService } from 'ng2-alfresco-core';
+import { PermissionModel } from '../models/permissions.model';
+import { Subject } from 'rxjs/Rx';
 
 @Injectable()
 export class DocumentActionsService {
@@ -33,15 +30,9 @@ export class DocumentActionsService {
 
     private handlers: { [id: string]: ContentActionHandler; } = {};
 
-    constructor(private translateService: AlfrescoTranslationService,
-                private notificationService: NotificationService,
-                private nodeActionsService: NodeActionsService,
-                private documentListService?: DocumentListService,
+    constructor(private documentListService?: DocumentListService,
                 private contentService?: AlfrescoContentService) {
         this.setupActionHandlers();
-        if (translateService) {
-            translateService.addTranslationFolder('ng2-alfresco-documentlist', 'assets/ng2-alfresco-documentlist');
-        }
     }
 
     getHandler(key: string): ContentActionHandler {
@@ -67,9 +58,21 @@ export class DocumentActionsService {
 
     private setupActionHandlers() {
         this.handlers['download'] = this.download.bind(this);
-        this.handlers['copy'] = this.copyNode.bind(this);
-        this.handlers['move'] = this.moveNode.bind(this);
         this.handlers['delete'] = this.deleteNode.bind(this);
+
+        // TODO: for demo purposes only, will be removed during future revisions
+        this.handlers['system1'] = this.handleStandardAction1.bind(this);
+        this.handlers['system2'] = this.handleStandardAction2.bind(this);
+    }
+
+    // TODO: for demo purposes only, will be removed during future revisions
+    private handleStandardAction1(obj: any) {
+        window.alert('standard document action 1');
+    }
+
+    // TODO: for demo purposes only, will be removed during future revisions
+    private handleStandardAction2(obj: any) {
+        window.alert('standard document action 2');
     }
 
     private download(obj: any): Observable<boolean> {
@@ -85,59 +88,33 @@ export class DocumentActionsService {
         return Observable.of(false);
     }
 
-    private copyNode(obj: MinimalNodeEntity, target?: any, permission?: string) {
-        const actionObservable = this.nodeActionsService.copyContent(obj.entry, permission);
-        this.prepareHandlers(actionObservable, 'content', 'copy', target, permission);
-        return actionObservable;
-    }
-
-    private moveNode(obj: MinimalNodeEntity, target?: any, permission?: string) {
-        const actionObservable = this.nodeActionsService.moveContent(obj.entry, permission);
-        this.prepareHandlers(actionObservable, 'content', 'move', target, permission);
-        return actionObservable;
-    }
-
-    private prepareHandlers(actionObservable, type: string, action: string, target?: any, permission?: string): void {
-        actionObservable.subscribe(
-            (fileOperationMessage) => {
-                this.notificationService.openSnackMessage(fileOperationMessage, 3000);
-                if (target && typeof target.reload === 'function') {
-                    target.reload();
-                }
-            },
-            (errorStatusCode) => {
-                switch (errorStatusCode) {
-                    case 403:
-                        this.permissionEvent.next(new PermissionModel({type, action, permission}));
-                        break;
-                    case 409:
-                        let conflictError: any = this.translateService.get('OPERATION.ERROR.CONFLICT');
-                        this.notificationService.openSnackMessage(conflictError.value, 3000);
-                        break;
-                    default:
-                        let unknownError: any = this.translateService.get('OPERATION.ERROR.UNKNOWN');
-                        this.notificationService.openSnackMessage(unknownError.value, 3000);
-                }
-            }
-        );
-    }
-
     private deleteNode(obj: any, target?: any, permission?: string): Observable<any> {
-        let handlerObservable;
+        let handlerObservale;
 
         if (this.canExecuteAction(obj)) {
-            if (this.contentService.hasPermission(obj.entry, permission)) {
-                handlerObservable = this.documentListService.deleteNode(obj.entry.id);
-                handlerObservable.subscribe(() => {
+            if (this.hasPermission(obj.entry, permission)) {
+                handlerObservale = this.documentListService.deleteNode(obj.entry.id);
+                handlerObservale.subscribe(() => {
                     if (target && typeof target.reload === 'function') {
                         target.reload();
                     }
                 });
-                return handlerObservable;
+                return handlerObservale;
             } else {
                 this.permissionEvent.next(new PermissionModel({type: 'content', action: 'delete', permission: permission}));
                 return Observable.throw(new Error('No permission to delete'));
             }
         }
+    }
+
+    private hasPermission(node: any, permission: string): boolean {
+        if (this.hasPermissions(node)) {
+            return node.allowableOperations.find(permision => permision === permission) ? true : false;
+        }
+        return false;
+    }
+
+    private hasPermissions(node: any): boolean {
+        return node && node.allowableOperations ? true : false;
     }
 }

@@ -15,15 +15,13 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
-
-import { ContentActionHandler } from '../../models/content-action.model';
+import { ContentActionListComponent } from './content-action-list.component';
+import { ContentActionModel } from './../../models/content-action.model';
 import { DocumentActionsService } from '../../services/document-actions.service';
 import { FolderActionsService } from '../../services/folder-actions.service';
-import { ContentActionModel } from './../../models/content-action.model';
-import { ContentActionListComponent } from './content-action-list.component';
+import { ContentActionHandler } from '../../models/content-action.model';
 
 @Component({
     selector: 'content-action',

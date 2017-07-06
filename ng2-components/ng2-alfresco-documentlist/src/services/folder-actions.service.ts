@@ -16,13 +16,10 @@
  */
 
 import { Injectable } from '@angular/core';
-import { MinimalNodeEntity } from 'alfresco-js-api';
-import { AlfrescoContentService, AlfrescoTranslationService, NotificationService } from 'ng2-alfresco-core';
-import { Observable, Subject } from 'rxjs/Rx';
 import { ContentActionHandler } from '../models/content-action.model';
 import { PermissionModel } from '../models/permissions.model';
 import { DocumentListService } from './document-list.service';
-import { NodeActionsService } from './node-actions.service';
+import { Subject, Observable } from 'rxjs/Rx';
 
 @Injectable()
 export class FolderActionsService {
@@ -31,11 +28,7 @@ export class FolderActionsService {
 
     private handlers: { [id: string]: ContentActionHandler; } = {};
 
-    constructor(private translateService: AlfrescoTranslationService,
-                private notificationService: NotificationService,
-                private nodeActionsService: NodeActionsService,
-                private documentListService: DocumentListService,
-                private contentService: AlfrescoContentService) {
+    constructor(private documentListService?: DocumentListService) {
         this.setupActionHandlers();
     }
 
@@ -61,64 +54,50 @@ export class FolderActionsService {
     }
 
     private setupActionHandlers() {
-        this.handlers['copy'] = this.copyNode.bind(this);
-        this.handlers['move'] = this.moveNode.bind(this);
         this.handlers['delete'] = this.deleteNode.bind(this);
+
+        // TODO: for demo purposes only, will be removed during future revisions
+        this.handlers['system1'] = this.handleStandardAction1.bind(this);
+        this.handlers['system2'] = this.handleStandardAction2.bind(this);
     }
 
-    private copyNode(obj: MinimalNodeEntity, target?: any, permission?: string) {
-        const actionObservable = this.nodeActionsService.copyFolder(obj.entry, permission);
-        this.prepareHandlers(actionObservable, 'folder', 'copy', target, permission);
-        return actionObservable;
+    // TODO: for demo purposes only, will be removed during future revisions
+    private handleStandardAction1(document: any) {
+        window.alert('standard folder action 1');
     }
 
-    private moveNode(obj: MinimalNodeEntity, target?: any, permission?: string) {
-        const actionObservable = this.nodeActionsService.moveFolder(obj.entry, permission);
-        this.prepareHandlers(actionObservable, 'folder', 'move', target, permission);
-        return actionObservable;
-    }
-
-    private prepareHandlers(actionObservable, type: string, action: string, target?: any, permission?: string): void {
-        actionObservable.subscribe(
-            (fileOperationMessage) => {
-                this.notificationService.openSnackMessage(fileOperationMessage, 3000);
-                if (target && typeof target.reload === 'function') {
-                    target.reload();
-                }
-            },
-            (errorStatusCode) => {
-                switch (errorStatusCode) {
-                    case 403:
-                        this.permissionEvent.next(new PermissionModel({type, action, permission}));
-                        break;
-                    case 409:
-                        let conflictError: any = this.translateService.get('OPERATION.ERROR.CONFLICT');
-                        this.notificationService.openSnackMessage(conflictError.value, 3000);
-                        break;
-                    default:
-                        let unknownError: any = this.translateService.get('OPERATION.ERROR.UNKNOWN');
-                        this.notificationService.openSnackMessage(unknownError.value, 3000);
-                }
-            }
-        );
+    // TODO: for demo purposes only, will be removed during future revisions
+    private handleStandardAction2(document: any) {
+        window.alert('standard folder action 2');
     }
 
     private deleteNode(obj: any, target?: any, permission?: string): Observable<any> {
-        let handlerObservable: Observable<any>;
+        let handlerObservale: Observable<any>;
 
         if (this.canExecuteAction(obj)) {
-            if (this.contentService.hasPermission(obj.entry, permission)) {
-                handlerObservable = this.documentListService.deleteNode(obj.entry.id);
-                handlerObservable.subscribe(() => {
+            if (this.hasPermission(obj.entry, permission)) {
+                handlerObservale = this.documentListService.deleteNode(obj.entry.id);
+                handlerObservale.subscribe(() => {
                     if (target && typeof target.reload === 'function') {
                         target.reload();
                     }
                 });
-                return handlerObservable;
+                return handlerObservale;
             } else {
                 this.permissionEvent.next(new PermissionModel({type: 'folder', action: 'delete', permission: permission}));
                 return Observable.throw(new Error('No permission to delete'));
             }
         }
+    }
+
+    private hasPermission(node: any, permissionToCheck: string): boolean {
+        if (this.hasPermissions(node)) {
+            return node.allowableOperations.find(permision => permision === permissionToCheck) ? true : false;
+        }
+        return false;
+    }
+
+    private hasPermissions(node: any): boolean {
+        return node && node.allowableOperations ? true : false;
     }
 }
