@@ -1,12 +1,10 @@
-<div class="no-attachment-message" *ngIf="isEmpty()">
-    No Attachments Found
-</div>
-<adf-datatable *ngIf="!isEmpty()"
+<adf-datatable
     [rows]="attachments"
     [actions]="true"
     (rowDblClick)="openContent($event)"
     (showRowActionsMenu)="onShowRowActionsMenu($event)"
     (executeRowAction)="onExecuteRowAction($event)">
+    <adf-empty-list></adf-empty-list>
     <data-columns>
         <data-column key="icon" type="icon" srTitle="Thumbnail" [sortable]="false"></data-column>
         <data-column key="name" type="text" title="Name" class="full-width ellipsis-cell" [sortable]="true"></data-column>
