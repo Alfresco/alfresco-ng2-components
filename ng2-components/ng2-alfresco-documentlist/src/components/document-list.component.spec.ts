@@ -27,7 +27,7 @@ import { NodeMinimalEntry, NodeMinimal, NodePaging } from '../models/document-li
 import { ShareDataRow, RowFilter, ImageResolver } from './../data/share-datatable-adapter';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { DocumentMenuActionComponent } from './document-menu-action.component';
-import { Observable } from 'rxjs/Rx';
+import { Observable, Subject } from 'rxjs/Rx';
 import {
     fakeNodeAnswerWithNOEntries,
     fakeNodeAnswerWithEntries,
@@ -125,12 +125,10 @@ describe('DocumentList', () => {
         expect(columns[2]).toBe(column);
     });
 
-    it('should execute action with node', () => {
+    it('should call action\'s handler with node', () => {
         let node = new FileNode();
         let action = new ContentActionModel();
-        action.handler = function () {
-            console.log('mock handler');
-        };
+        action.handler = () => {};
 
         spyOn(action, 'handler').and.stub();
 
@@ -139,19 +137,42 @@ describe('DocumentList', () => {
 
     });
 
-    it('should execute action with node and permission', () => {
+    it('should call action\'s handler with node and permission', () => {
         let node = new FileNode();
         let action = new ContentActionModel();
-        action.handler = function () {
-            console.log('mock handler');
-        };
+        action.handler = () => {};
         action.permission = 'fake-permission';
-
         spyOn(action, 'handler').and.stub();
 
         documentList.executeContentAction(node, action);
-        expect(action.handler).toHaveBeenCalledWith(node, documentList, 'fake-permission');
 
+        expect(action.handler).toHaveBeenCalledWith(node, documentList, 'fake-permission');
+    });
+
+    it('should call action\'s execute with node if it is defined', () => {
+        let node = new FileNode();
+        let action = new ContentActionModel();
+        action.execute = () => {};
+        spyOn(action, 'execute').and.stub();
+
+        documentList.executeContentAction(node, action);
+
+        expect(action.execute).toHaveBeenCalledWith(node);
+    });
+
+    it('should call action\'s execute only after the handler has been executed', () => {
+        const deleteObservable: Subject<any> = new Subject<any>();
+        let node = new FileNode();
+        let action = new ContentActionModel();
+        action.handler = () => deleteObservable;
+        action.execute = () => {};
+        spyOn(action, 'execute').and.stub();
+
+        documentList.executeContentAction(node, action);
+
+        expect(action.execute).not.toHaveBeenCalled();
+        deleteObservable.next();
+        expect(action.execute).toHaveBeenCalledWith(node);
     });
 
     it('should show the loading state during the loading of new elements', (done) => {

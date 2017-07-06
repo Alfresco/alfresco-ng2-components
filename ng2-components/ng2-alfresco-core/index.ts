@@ -28,6 +28,7 @@ import { CardViewModule } from './src/components/view/card-view.module';
 import { CollapsableModule } from './src/components/collapsable/collapsable.module';
 import { AdfToolbarComponent } from './src/components/toolbar/toolbar.component';
 import { AppConfigModule } from './src/services/app-config.service';
+import { UserPreferencesService } from './src/services/user-preferences.service';
 
 import {
     AlfrescoAuthenticationService,
@@ -46,7 +47,9 @@ import {
     LogServiceMock,
     NotificationService,
     ContentService,
-    AppConfigService, InitAppConfigServiceProvider
+    AppConfigService,
+    InitAppConfigServiceProvider,
+    ThumbnailService
 } from './src/services/index';
 
 import { FileSizePipe } from './src/pipes/file-size.pipe';
@@ -72,9 +75,11 @@ export * from './src/events/base.event';
 export * from './src/events/base-ui.event';
 export * from './src/events/folder-created.event';
 export * from './src/models/index';
+export { UserPreferencesService } from './src/services/user-preferences.service';
 
 export function providers() {
     return [
+        UserPreferencesService,
         NotificationService,
         LogService,
         LogServiceMock,
@@ -90,7 +95,8 @@ export function providers() {
         ContentService,
         AuthGuard,
         AuthGuardEcm,
-        AuthGuardBpm
+        AuthGuardBpm,
+        ThumbnailService
     ];
 }
 

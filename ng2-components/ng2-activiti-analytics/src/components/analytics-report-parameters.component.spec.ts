@@ -20,7 +20,7 @@ import { DebugElement, SimpleChange } from '@angular/core';
 import { MdTooltipModule, MdButtonModule, OVERLAY_PROVIDERS } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
 import * as moment from 'moment';
-import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoTranslationService, AppConfigModule } from 'ng2-alfresco-core';
 
 import { AnalyticsReportParametersComponent } from '../components/analytics-report-parameters.component';
 import { WIDGET_DIRECTIVES } from '../components/widgets/index';
@@ -44,6 +44,9 @@ describe('AnalyticsReportParametersComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
+                AppConfigModule.forRoot('app.config.json', {
+                    bpmHost: 'http://localhost:9876/bpm'
+                }),
                 MdTooltipModule,
                 MdButtonModule
             ],

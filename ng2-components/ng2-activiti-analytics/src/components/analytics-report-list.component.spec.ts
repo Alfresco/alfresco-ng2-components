@@ -18,7 +18,7 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
-import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoTranslationService, AppConfigModule } from 'ng2-alfresco-core';
 import { AnalyticsReportListComponent } from '../components/analytics-report-list.component';
 import { AnalyticsService } from '../services/analytics.service';
 import { ReportParametersModel } from '../models/report.model';
@@ -45,7 +45,10 @@ describe('AnalyticsReportListComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule.forRoot(),
+                AppConfigModule.forRoot('app.config.json', {
+                    bpmHost: 'http://localhost:9876/bpm'
+                })
             ],
             declarations: [
                 AnalyticsReportListComponent

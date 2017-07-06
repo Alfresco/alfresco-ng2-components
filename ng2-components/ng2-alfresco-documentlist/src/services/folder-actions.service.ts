@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import { ContentActionHandler } from '../models/content-action.model';
 import { PermissionModel } from '../models/permissions.model';
 import { DocumentListService } from './document-list.service';
-import { Subject } from 'rxjs/Rx';
+import { Subject, Observable } from 'rxjs/Rx';
 
 @Injectable()
 export class FolderActionsService {
@@ -71,16 +71,21 @@ export class FolderActionsService {
         window.alert('standard folder action 2');
     }
 
-    private deleteNode(obj: any, target?: any, permission?: string) {
+    private deleteNode(obj: any, target?: any, permission?: string): Observable<any> {
+        let handlerObservale: Observable<any>;
+
         if (this.canExecuteAction(obj)) {
             if (this.hasPermission(obj.entry, permission)) {
-                this.documentListService.deleteNode(obj.entry.id).subscribe(() => {
+                handlerObservale = this.documentListService.deleteNode(obj.entry.id);
+                handlerObservale.subscribe(() => {
                     if (target && typeof target.reload === 'function') {
                         target.reload();
                     }
                 });
+                return handlerObservale;
             } else {
                 this.permissionEvent.next(new PermissionModel({type: 'folder', action: 'delete', permission: permission}));
+                return Observable.throw(new Error('No permission to delete'));
             }
         }
     }

@@ -16,7 +16,7 @@
  */
 
 import { Component, OnChanges, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService, ContentService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, ContentService, ThumbnailService } from 'ng2-alfresco-core';
 import { ActivitiContentService } from 'ng2-activiti-form';
 
 @Component({
@@ -42,7 +42,8 @@ export class TaskAttachmentListComponent implements OnChanges {
 
     constructor(private translateService: AlfrescoTranslationService,
                 private activitiContentService: ActivitiContentService,
-                private contentService: ContentService) {
+                private contentService: ContentService,
+                private thumbnailService: ThumbnailService) {
 
         if (translateService) {
             translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
@@ -74,14 +75,15 @@ export class TaskAttachmentListComponent implements OnChanges {
                             name: content.name,
                             created: content.created,
                             createdBy: content.createdBy.firstName + ' ' + content.createdBy.lastName,
-                            icon: this.activitiContentService.getMimeTypeIcon(content.mimeType)
+                            icon: this.thumbnailService.getMimeTypeIcon(content.mimeType)
                         });
                     });
                     this.success.emit(this.attachments);
                 },
                 (err) => {
                     this.error.emit(err);
-                });        }
+                });
+        }
     }
 
     private deleteAttachmentById(contentId: string) {

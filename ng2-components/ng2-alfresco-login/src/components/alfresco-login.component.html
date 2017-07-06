@@ -85,7 +85,7 @@
                     <md-checkbox class="rememberme-cb" [checked]="rememberMe" (change)="rememberMe = !rememberMe">{{ 'LOGIN.LABEL.REMEMBER' | translate }}</md-checkbox>
                 </div>
             </div>
-            <div class="mdl-card__actions mdl-card--border mdl-card__link">
+            <div *ngIf="footerTemplate || showLoginActions" class="mdl-card__actions mdl-card--border mdl-card__link">
 
                 <!--FOOTER TEMPLATE-->
                 <ng-template *ngIf="footerTemplate"

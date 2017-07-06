@@ -4,32 +4,32 @@
 
 <!-- toc -->
 
-  * [Prerequisites](#prerequisites)
-  * [Install](#install)
-  * [Basic usage](#basic-usage)
-    + [DataTable Properties](#datatable-properties)
-    + [DataColumn Properties](#datacolumn-properties)
-    + [DataTable Events](#datatable-events)
-    + [DataTable DOM Events](#datatable-dom-events)
-    + [Default Empty content template](#default-empty-content-template)
-    + [Custom Empty content template](#custom-empty-content-template)
-    + [Loading content template](#loading-content-template)
-    + [Column Templates](#column-templates)
-    + [Events](#events)
-      - [rowClick event](#rowclick-event)
-      - [rowDblClick event](#rowdblclick-event)
-      - [showRowContextMenu event](#showrowcontextmenu-event)
-      - [showRowActionsMenu event](#showrowactionsmenu-event)
-      - [executeRowAction event](#executerowaction-event)
-  * [Data sources](#data-sources)
-  * [Generate schema](#generate-schema)
+- [Prerequisites](#prerequisites)
+- [Install](#install)
+- [Basic usage](#basic-usage)
+  * [DataTable Properties](#datatable-properties)
+  * [DataColumn Properties](#datacolumn-properties)
+  * [DataTable Events](#datatable-events)
+  * [DataTable DOM Events](#datatable-dom-events)
+  * [Default Empty content template](#default-empty-content-template)
+  * [Custom Empty content template](#custom-empty-content-template)
+  * [Loading content template](#loading-content-template)
+  * [Column Templates](#column-templates)
+  * [Events](#events)
+    + [rowClick event](#rowclick-event)
+    + [rowDblClick event](#rowdblclick-event)
+    + [showRowContextMenu event](#showrowcontextmenu-event)
+    + [showRowActionsMenu event](#showrowactionsmenu-event)
+    + [executeRowAction event](#executerowaction-event)
+- [Data sources](#data-sources)
+- [Generate schema](#generate-schema)
 - [Pagination Component](#pagination-component)
-    + [Properties](#properties)
-    + [Events](#events-1)
-  * [Build from sources](#build-from-sources)
-  * [NPM scripts](#npm-scripts)
-  * [Demo](#demo)
-  * [License](#license)
+  * [Properties](#properties)
+  * [Events](#events-1)
+- [Build from sources](#build-from-sources)
+- [NPM scripts](#npm-scripts)
+- [Demo](#demo)
+- [License](#license)
 
 <!-- tocstop -->
 
@@ -59,6 +59,7 @@ npm install ng2-alfresco-datatable
     [data]="data">
 </adf-datatable>
 ```
+
 **app.component.ts**
 
 ```ts
@@ -605,12 +606,11 @@ let schema = ObjectDataTableAdapter.generateSchema(data);
 
 ```
 
-# Pagination Component
+## Pagination Component
 
 The pagination object is a generic component to paginate component. The Alfresco API are paginated and returns a Pagination object. You can use the pagination object to feed the pagination component and then listen to the event which return the current pagination and query again the API with the options choose by the user.
 
 ![DataTable demo](docs/assets/pagination-demo.png)
-
 
 ### Properties
 

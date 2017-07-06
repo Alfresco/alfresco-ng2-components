@@ -17,13 +17,13 @@
 
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule, AppConfigModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { WebscriptComponent } from '../src/webscript.component';
 
 declare let jasmine: any;
 
-describe('Test ng2-alfresco-webscript', () => {
+describe('WebscriptComponent', () => {
 
     let component: WebscriptComponent;
     let fixture: ComponentFixture<WebscriptComponent>;
@@ -34,6 +34,9 @@ describe('Test ng2-alfresco-webscript', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
+                AppConfigModule.forRoot('app.config.json', {
+                    ecmHost: 'http://localhost:9876/ecm'
+                }),
                 DataTableModule
             ],
             declarations: [

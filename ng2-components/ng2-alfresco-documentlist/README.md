@@ -25,6 +25,7 @@
   * [Actions](#actions)
     + [Menu actions](#menu-actions)
     + [Default action handlers](#default-action-handlers)
+      - [Delete - System handler combined with custom handler](#delete---system-handler-combined-with-custom-handler)
       - [Delete - Show notification message with no permission](#delete---show-notification-message-with-no-permission)
       - [Delete - Disable button checking the permission](#delete---disable-button-checking-the-permission)
       - [Download](#download)
@@ -91,7 +92,6 @@ The properties currentFolderId, folderNode and node are the entry initialization
 | navigate | boolean | true | Toggles navigation to folder content or file preview |
 | navigationMode | string (click,dblclick) | dblclick | User interaction for folder navigation or file preview |
 | thumbnails | boolean | false | Show document thumbnails rather than icons |
-| fallbackThumbnail | string |  | Path to fallback image to use if the row thumbnail is missing |
 | multiselect | boolean | false | Toggles multiselect mode |
 | contentActions | boolean | false | Toggles content actions for each row |
 | contentActionsPosition | string (left\|right) | right | Position of the content actions dropdown menu. |
@@ -163,7 +163,7 @@ In this case you can use `alfresco-js-api` to get node details based on it's rel
 
 Let's try setting default folder to `/Sites/swsdp/documentLibrary` without knowing it's ID beforehand.
 For the sake of simplicity example below shows only main points you may need paying attention to:
- 
+
 ```ts
 import { ChangeDetectorRef } from '@angular/core';
 import { AlfrescoApiService } from 'ng2-alfresco-core';
@@ -284,7 +284,6 @@ DocumentList provides simple breadcrumb element to indicate the current position
 
 ***Note:*** the `<adf-document-list-breadcrumb>` and `<adf-breadcrumb>` are the same component you can still use the old tag name
 
-
 ![Breadcrumb](docs/assets/breadcrumb.png)
 
 ### Properties
@@ -316,7 +315,6 @@ DocumentList provides simple creation menu actions that provide the action to cr
 When the "New Folder" button is pressed the dialog appears.
 
 ![Creation Menu Action](docs/assets/document-list-creation-menu-actions-2.png)
-
 
 ## Custom columns
 
@@ -522,8 +520,24 @@ In the Example below will add the [ng2-alfresco-tag](https://www.npmjs.com/packa
 
 ### Actions
 
+Properties:
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `target` | string | | "document" or "folder" |
+| `title` | string | | The title of the action as shown in the menu |
+| `handler` | string | | System type actions. Can be "delete" or "download" |
+| `permission` | string | | Then name of the permission |
+
+Events:
+
+| Name | Description |
+| --- | --- |
+| `execute` | Emitted when user clicks on the action. For combined handlers see below |
+| `permissionEvent` | Emitted when a permission error happens |
+
 DocumentList supports declarative actions for Documents and Folders.
-Each action can be bound to either default out-of-box handler or a custom behavior.
+Each action can be bound to either default out-of-box handler, to a custom behavior or to both of them.
 You can define both folder and document actions at the same time.
 
 #### Menu actions
@@ -532,16 +546,26 @@ You can define both folder and document actions at the same time.
 <adf-document-list ...>
     <content-actions>
 
+        <!-- system handler -->
         <content-action
-            target="document"
-            title="System action"
-            handler="system2">
+            target="folder"
+            title="Delete"
+            handler="delete">
         </content-action>
 
+        <!-- custom handler -->
         <content-action
             target="document"
             title="Custom action"
             (execute)="myCustomAction1($event)">
+        </content-action>
+
+        <!-- combined handler -->
+        <content-action
+            target="document"
+            title="Delete with additional custom callback"
+            handler="delete"
+            (execute)="myCustomActionAfterDelete($event)">
         </content-action>
 
     </content-actions>
@@ -556,13 +580,17 @@ export class MyView {
         let entry = event.value.entry;
         alert(`Custom document action for ${entry.name}`);
     }
+
+    myCustomActionAfterDelete(event) {
+        let entry = event.value.entry;
+        alert(`Custom callback after delete system action for ${entry.name}`);
+    }
 }
 ```
 
 All document actions are rendered as a dropdown menu as on the picture below:
 
 ![Document Actions](docs/assets/document-actions.png)
-
 
 #### Default action handlers
 
@@ -573,6 +601,10 @@ The following action handlers are provided out-of-box:
 
 All system handler names are case-insensitive, `handler="download"` and `handler="DOWNLOAD"`
 will trigger the same `download` action.
+
+##### Delete - System handler combined with custom handler
+
+If you specify both of the **handler="delete"** and your custom **(execute)="myCustomActionAfterDelete($event)"**, your callback will be invoked after a successful delete happened. A successful delete operation happens if there is neither permission error, neither other network related error for the delete operation request. For handling permission errors see the section below.
 
 ##### Delete - Show notification message with no permission
 
@@ -654,22 +686,32 @@ Initiates download of the corresponding document file.
 
 #### Folder actions
 
-Folder actions have the same declaration as document actions except ```taget="folder"``` attribute value.
+Folder actions have the same declaration as document actions except ```taget="folder"``` attribute value. You can define system, custom or combined handlers as well just as with the document actions.
 
 ```html
 <adf-document-list ...>
     <content-actions>
 
+        <!-- system handler -->
         <content-action
             target="folder"
             title="Default folder action 1"
             handler="system1">
         </content-action>
 
+        <!-- custom handler -->
         <content-action
             target="folder"
             title="Custom folder action"
             (execute)="myFolderAction1($event)">
+        </content-action>
+
+        <!-- combined handler -->
+        <content-action
+            target="folder"
+            title="Delete with additional custom callback"
+            handler="delete"
+            (execute)="myCustomActionAfterDelete($event)">
         </content-action>
 
     </content-actions>
@@ -683,6 +725,11 @@ export class MyView {
     myFolderAction1(event) {
         let entry = event.value.entry;
         alert(`Custom folder action for ${entry.name}`);
+    }
+
+    myCustomActionAfterDelete(event) {
+        let entry = event.value.entry;
+        alert(`Custom callback after delete system action for ${entry.name}`);
     }
 }
 ```
@@ -772,8 +819,8 @@ _Note that for the sake of simplicity the example code below was reduced to the 
 ```
 
 **View1.component.ts**
-```ts
 
+```ts
 import { RowFilter, ShareDataRow } from 'ng2-alfresco-documentlist';
 
 export class View1 {
@@ -817,6 +864,7 @@ Your function can return `null` or `false` values to fallback to default image r
 _Note that for the sake of simplicity the example code below was reduced to the main points of interest only._
 
 **View1.component.html**
+
 ```html
 <adf-document-list 
     [imageResolver]="folderImageResolver">
@@ -830,6 +878,7 @@ _Note that for the sake of simplicity the example code below was reduced to the 
 ```
 
 **View1.component.ts**
+
 ```ts
 import { DataColumn, DataRow } from 'ng2-alfresco-datatable';
 import { ImageResolver } from 'ng2-alfresco-documentlist';
