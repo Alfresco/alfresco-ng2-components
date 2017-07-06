@@ -62,12 +62,27 @@ export class FolderActionsService {
     }
 
     // TODO: for demo purposes only, will be removed during future revisions
-    private handleStandardAction1(document: any) {
+    /**
+     * @deprecated in 1.7.0
+     *
+     * @private
+     * @param {*} document
+     * @memberof FolderActionsService
+     */
+    private handleStandardAction1(/*document: any*/) {
+        console.log('handleStandardAction1 is deprecated in 1.7.0 and will be removed in future versions');
         window.alert('standard folder action 1');
     }
 
     // TODO: for demo purposes only, will be removed during future revisions
-    private handleStandardAction2(document: any) {
+    /**
+     * @deprecated in 1.7.0
+     *
+     * @private
+     * @memberof FolderActionsService
+     */
+    private handleStandardAction2(/*document: any*/) {
+        console.log('handleStandardAction1 is deprecated in 1.7.0 and will be removed in future versions');
         window.alert('standard folder action 2');
     }
 

@@ -22,8 +22,6 @@ import { DataTableAdapter, DataRow, DataColumn, DataSorting } from 'ng2-alfresco
 import { DocumentListService } from './../services/document-list.service';
 import { NodePaging, MinimalNodeEntity } from 'alfresco-js-api';
 
-declare var require: any;
-
 export class ShareDataTableAdapter implements DataTableAdapter {
 
     ERR_ROW_NOT_FOUND: string = 'Row not found';

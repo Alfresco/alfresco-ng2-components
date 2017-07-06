@@ -66,12 +66,26 @@ export class DocumentActionsService {
     }
 
     // TODO: for demo purposes only, will be removed during future revisions
-    private handleStandardAction1(obj: any) {
+    /**
+     * @deprecated in 1.7.0
+     *
+     * @private
+     * @memberof DocumentActionsService
+     */
+    private handleStandardAction1(/*obj: any*/) {
+        console.log('handleStandardAction1 is deprecated in 1.7.0 and will be removed in future versions');
         window.alert('standard document action 1');
     }
 
     // TODO: for demo purposes only, will be removed during future revisions
-    private handleStandardAction2(obj: any) {
+    /**
+     * @deprecated in 1.7.0
+     *
+     * @private
+     * @memberof DocumentActionsService
+     */
+    private handleStandardAction2(/*obj: any*/) {
+        console.log('handleStandardAction2 is deprecated in 1.7.0 and will be removed in future versions');
         window.alert('standard document action 2');
     }
 

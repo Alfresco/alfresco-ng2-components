@@ -167,7 +167,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     constructor(private documentListService: DocumentListService,
                 private ngZone: NgZone,
-                private translateService: AlfrescoTranslationService,
+                translateService: AlfrescoTranslationService,
                 private el: ElementRef) {
 
         if (translateService) {
@@ -263,7 +263,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     isEmpty() {
-        return this.data.getRows().length === 0;
+        return !this.data || this.data.getRows().length === 0;
     }
 
     isPaginationEnabled() {
