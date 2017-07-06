@@ -16,12 +16,12 @@
  */
 
 import { CoreModule } from 'ng2-alfresco-core';
-import { AdfEmptyList } from './adf-empty-list.component';
+import { AdfEmptyListComponent } from './adf-empty-list.component';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 
-describe('AdfEmptyListComponent', () => {
-    let component: AdfEmptyList;
-    let fixture: ComponentFixture<AdfEmptyList>;
+describe('AdfEmptyListComponentComponent', () => {
+    let component: AdfEmptyListComponent;
+    let fixture: ComponentFixture<AdfEmptyListComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -29,11 +29,11 @@ describe('AdfEmptyListComponent', () => {
                 CoreModule.forRoot()
             ],
             declarations: [
-                AdfEmptyList
+                AdfEmptyListComponent
             ]
         }).compileComponents();
 
-        fixture = TestBed.createComponent(AdfEmptyList);
+        fixture = TestBed.createComponent(AdfEmptyListComponent);
         component = fixture.componentInstance;
     }));
 

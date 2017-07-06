@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { Directive, ContentChild, TemplateRef, AfterContentInit } from '@angular/core';
+import { AfterContentInit, ContentChild, Directive, TemplateRef } from '@angular/core';
 import { DataTableComponent } from '../components/datatable/datatable.component';
 
 @Directive({
     selector: 'no-content-template'
 })
-export class NoContentTemplateComponent implements AfterContentInit {
+export class NoContentTemplateDirective implements AfterContentInit {
 
     @ContentChild(TemplateRef)
     template: any;

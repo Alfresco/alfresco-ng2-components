@@ -17,11 +17,11 @@
 
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs/Rx';
+import { AlfrescoApiService } from './alfresco-api.service';
 import { AlfrescoSettingsService } from './alfresco-settings.service';
-import { StorageService } from './storage.service';
 import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
-import { AlfrescoApiService } from './alfresco-api.service';
+import { StorageService } from './storage.service';
 
 const REMEMBER_ME_COOKIE_KEY = 'ALFRESCO_REMEMBER_ME';
 const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30 ;

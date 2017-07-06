@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, Input, ContentChild, TemplateRef } from '@angular/core';
+import { Component, ContentChild, Input, OnInit, TemplateRef } from '@angular/core';
 
 @Component({
     selector: 'data-column',
     template: ''
 })
-export class DataColumnComponent {
+export class DataColumnComponent implements OnInit {
 
     @Input()
     key: string;

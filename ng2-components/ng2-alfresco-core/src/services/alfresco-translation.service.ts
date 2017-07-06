@@ -16,8 +16,8 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
 import { TranslateService } from '@ngx-translate/core';
+import { Observable } from 'rxjs/Rx';
 import { AlfrescoTranslateLoader } from './alfresco-translate-loader.service';
 
 @Injectable()

@@ -15,27 +15,27 @@
  * limitations under the License.
  */
 
-import { LoadingContentTemplateComponent } from './loading-template.component';
+import { NoContentTemplateDirective } from './no-content-template.directive';
 import { Injector } from '@angular/core';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { DataTableComponent } from '../components/datatable/datatable.component';
 
-describe('LoadingContentTemplateComponent', () => {
+describe('NoContentTemplateDirective', () => {
     let injector: Injector;
-    let loadingContentTemplateComponent: LoadingContentTemplateComponent;
+    let NoContentTemplateDirective: NoContentTemplateDirective;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             providers: [
-                LoadingContentTemplateComponent,
+                NoContentTemplateDirective,
                 DataTableComponent
             ]
         });
         injector = getTestBed();
-        loadingContentTemplateComponent = injector.get(LoadingContentTemplateComponent);
+        NoContentTemplateDirective = injector.get(NoContentTemplateDirective);
     });
 
     it('is defined', () => {
-        expect(loadingContentTemplateComponent).toBeDefined();
+        expect(NoContentTemplateDirective).toBeDefined();
     });
 });

@@ -16,19 +16,19 @@
  */
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { CardView } from './adf-card-view.component';
+import { CardViewComponent } from './adf-card-view.component';
 import { CardViewModel } from '../../models/card-view.model';
 import { By } from '@angular/platform-browser';
 
 describe('AdfCardView', () => {
 
-    let fixture: ComponentFixture<CardView>;
-    let component: CardView;
+    let fixture: ComponentFixture<CardViewComponent>;
+    let component: CardViewComponent;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                CardView
+                CardViewComponent
             ],
             providers: [
             ]
@@ -36,7 +36,7 @@ describe('AdfCardView', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(CardView);
+        fixture = TestBed.createComponent(CardViewComponent);
         component = fixture.componentInstance;
     });
 
