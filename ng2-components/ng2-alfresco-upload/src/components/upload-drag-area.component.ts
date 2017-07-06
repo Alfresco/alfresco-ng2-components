@@ -60,7 +60,7 @@ export class UploadDragAreaComponent {
     rootFolderId: string = '-root-';
 
     @Input()
-    parentId: string = '-root-';
+    parentId: string;
 
     @Output()
     onSuccess = new EventEmitter();

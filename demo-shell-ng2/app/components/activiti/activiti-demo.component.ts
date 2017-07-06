@@ -177,7 +177,7 @@ export class ActivitiDemoComponent implements AfterViewInit {
         });
         this.layoutType = ActivitiApps.LAYOUT_GRID;
 
-        this.uploadService.fileUploadComplete.subscribe(value => this.onFileUploadComplete(value));
+        this.uploadService.fileUploadComplete.subscribe(value => this.onFileUploadComplete(value.data));
 
     }
 
@@ -283,8 +283,8 @@ export class ActivitiDemoComponent implements AfterViewInit {
         this.contentName = content.name;
     }
 
-    onFileUploadComplete(event: FileUploadCompleteEvent) {
-        this.taskAttachList.reload();
+    onFileUploadComplete(content: FileUploadCompleteEvent) {
+        this.taskAttachList.add(content);
     }
 
     onAttachmentClick(content: any): void {

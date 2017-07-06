@@ -57,22 +57,30 @@ export class TaskAttachmentListComponent implements OnChanges {
     }
 
     reset(): void {
-        while (this.attachments.length) {
-            this.attachments.pop();
-        }
+        this.attachments = [];
     }
 
     reload(): void {
         this.loadAttachmentsByTaskId(this.taskId);
     }
 
+    add(content: any): void {
+        this.attachments.push({
+            id: content.id,
+            name: content.name,
+            created: content.created,
+            createdBy: content.createdBy.firstName + ' ' + content.createdBy.lastName,
+            icon: this.thumbnailService.getMimeTypeIcon(content.mimeType)
+        });
+    }
+
     private loadAttachmentsByTaskId(taskId: string) {
         if (taskId) {
-            this.reset();
             this.activitiContentService.getTaskRelatedContent(taskId).subscribe(
                 (res: any) => {
+                    let attachList = [];
                     res.data.forEach(content => {
-                        this.attachments.push({
+                        attachList.push({
                             id: content.id,
                             name: content.name,
                             created: content.created,
@@ -80,6 +88,7 @@ export class TaskAttachmentListComponent implements OnChanges {
                             icon: this.thumbnailService.getMimeTypeIcon(content.mimeType)
                         });
                     });
+                    this.attachments = attachList;
                     this.success.emit(this.attachments);
                 },
                 (err) => {
