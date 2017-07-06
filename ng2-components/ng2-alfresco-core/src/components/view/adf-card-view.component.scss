@@ -1,0 +1,23 @@
+@import 'theming';
+
+.#{$ADF} {
+    &-property-list {
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+
+    &-header__label {
+        min-width: 100px;
+        padding-right: 30px;
+        word-wrap: break-word;
+        color: rgb(186, 186, 186);
+        vertical-align: top;
+        padding-bottom: 20px;
+    }
+
+    &-header__value {
+        color: rgb(101, 101, 101);
+        vertical-align: top;
+        padding-bottom: 20px;
+    }
+}

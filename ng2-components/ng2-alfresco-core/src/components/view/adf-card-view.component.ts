@@ -22,7 +22,7 @@ import { CardViewModel } from '../../models/card-view.model';
 @Component({
     selector: 'adf-card-view',
     templateUrl: './adf-card-view.component.html',
-    styleUrls: ['./adf-card-view.component.css']
+    styleUrls: ['./adf-card-view.component.scss']
 })
 export class CardViewComponent {
 
