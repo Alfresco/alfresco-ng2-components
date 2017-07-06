@@ -51,8 +51,17 @@ export class UploadDragAreaComponent {
     @Input()
     currentFolderPath: string = '/';
 
+    /**
+     * @deprecated Deprecated in 1.6.2, this property is not used for couple of releases already. Use parentId instead.
+     *
+     * @type {string}
+     * @memberof UploadDragAreaComponent
+     */
     @Input()
     rootFolderId: string = '-root-';
+
+    @Input()
+    parentId: string = '-root-';
 
     @Output()
     onSuccess = new EventEmitter();
@@ -76,9 +85,9 @@ export class UploadDragAreaComponent {
         if (isAllowed) {
             let files: FileInfo[] = event.detail.files;
             if (files && files.length > 0) {
-                let parentId = this.rootFolderId;
+                let parentId = this.parentId || this.rootFolderId;
                 if (event.detail.data && event.detail.data.obj.entry.isFolder) {
-                    parentId = event.detail.data.obj.entry.id || this.rootFolderId;
+                    parentId = event.detail.data.obj.entry.id || this.parentId || this.rootFolderId;
                 }
                 const fileModels = files.map(fileInfo => new FileModel(fileInfo.file, {
                     newVersion: this.versioning,
@@ -100,7 +109,7 @@ export class UploadDragAreaComponent {
             const fileModels = files.map(file => new FileModel(file, {
                 newVersion: this.versioning,
                 path: '/',
-                parentId: this.rootFolderId
+                parentId: this.parentId || this.rootFolderId
             }));
             this.uploadService.addToQueue(...fileModels);
             this.uploadService.uploadFilesInTheQueue(this.onSuccess);
@@ -120,7 +129,7 @@ export class UploadDragAreaComponent {
             item.file((file: File) => {
                 const fileModel = new FileModel(file, {
                     newVersion: this.versioning,
-                    parentId: this.rootFolderId,
+                    parentId: this.parentId || this.rootFolderId,
                     path: item.fullPath.replace(item.name, '')
                 });
                 this.uploadService.addToQueue(fileModel);
@@ -142,7 +151,7 @@ export class UploadDragAreaComponent {
                 let files = entries.map(entry => {
                     return new FileModel(entry.file, {
                         newVersion: this.versioning,
-                        parentId: this.rootFolderId,
+                        parentId: this.parentId || this.rootFolderId,
                         path: entry.relativeFolder
                     });
                 });

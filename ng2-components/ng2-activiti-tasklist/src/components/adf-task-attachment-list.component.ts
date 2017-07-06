@@ -57,7 +57,9 @@ export class TaskAttachmentListComponent implements OnChanges {
     }
 
     reset(): void {
-        this.attachments = [];
+        while (this.attachments.length) {
+            this.attachments.pop();
+        }
     }
 
     reload(): void {

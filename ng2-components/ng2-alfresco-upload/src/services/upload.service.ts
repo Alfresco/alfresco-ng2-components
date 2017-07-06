@@ -142,7 +142,7 @@ export class UploadService {
         this.totalAborted = 0;
     }
 
-    private beginUpload(file: FileModel, /* @deprecated */emitter: EventEmitter<any>): any {
+    getUploadPromise(file: FileModel) {
         let opts: any = {
             renditions: 'doclib'
         };
@@ -153,13 +153,20 @@ export class UploadService {
         } else {
             opts.autoRename = true;
         }
-        let promise = this.apiService.getInstance().upload.uploadFile(
+
+        return this.apiService.getInstance().upload.uploadFile(
             file.file,
             file.options.path,
             file.options.parentId,
             null,
             opts
         );
+    }
+
+    private beginUpload(file: FileModel, /* @deprecated */emitter: EventEmitter<any>): any {
+
+        let promise = this.getUploadPromise(file);
+
         promise.on('progress', (progress: FileUploadProgress) => {
             this.onUploadProgress(file, progress);
         })
