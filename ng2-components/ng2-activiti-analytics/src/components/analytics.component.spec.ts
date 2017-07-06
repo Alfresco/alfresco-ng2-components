@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
-import { ChartsModule } from 'ng2-charts';
-import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DiagramsModule } from 'ng2-activiti-diagrams';
+import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { ChartsModule } from 'ng2-charts';
+import { Observable } from 'rxjs/Rx';
 
-import { AnalyticsReportListComponent } from '../components/analytics-report-list.component';
-import { AnalyticsComponent } from '../components/analytics.component';
 import { AnalyticsGeneratorComponent } from '../components/analytics-generator.component';
-import { AnalyticsReportParametersComponent } from '../components/analytics-report-parameters.component';
 import { AnalyticsReportHeatMapComponent } from '../components/analytics-report-heat-map.component';
+import { AnalyticsReportListComponent } from '../components/analytics-report-list.component';
+import { AnalyticsReportParametersComponent } from '../components/analytics-report-parameters.component';
+import { AnalyticsComponent } from '../components/analytics.component';
 import { WIDGET_DIRECTIVES } from '../components/widgets/index';
 import { AnalyticsService } from '../services/analytics.service';
 

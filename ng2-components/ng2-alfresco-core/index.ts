@@ -47,7 +47,9 @@ import {
     LogService,
     LogServiceMock,
     NotificationService,
-    RenditionsService, StorageService
+    RenditionsService,
+    StorageService,
+    ThumbnailService
 } from './src/services/index';
 
 import { DataColumnListComponent } from './src/components/data-column/data-column-list.component';
@@ -93,7 +95,8 @@ export function providers() {
         ContentService,
         AuthGuard,
         AuthGuardEcm,
-        AuthGuardBpm
+        AuthGuardBpm,
+        ThumbnailService
     ];
 }
 
