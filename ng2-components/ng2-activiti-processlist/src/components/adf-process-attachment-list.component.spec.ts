@@ -161,18 +161,18 @@ describe('Activiti Process Instance Attachment List', () => {
         });
     }));
 
-    it('should not display attachments when the process has no attachments', async(() => {
+    it('should show the empty list component when the attachments list is empty', async(() => {
         component.processInstanceId = '123';
         getProcessRelatedContentSpy.and.returnValue(Observable.of({
-                'size': 0,
-                'total': 0,
-                'start': 0,
-                'data': []
-            }));
+            'size': 0,
+            'total': 0,
+            'start': 0,
+            'data': []
+        }));
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(fixture.debugElement.queryAll(By.css('adf-datatable tbody tr')).length).toBe(0);
+            expect(fixture.nativeElement.querySelector('adf-empty-list .empty-list__this-space-is-empty').innerHTML).toEqual('This list is empty');
         });
     }));
 

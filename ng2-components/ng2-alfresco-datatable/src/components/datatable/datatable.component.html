@@ -125,6 +125,7 @@
                              ngFor [ngForOf]="[data]"
                              [ngForTemplate]="noContentTemplate">
                 </ng-template>
+                <ng-content select="adf-empty-list"></ng-content>
             </td>
         </tr>
     </ng-container>
