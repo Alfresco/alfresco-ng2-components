@@ -15,15 +15,13 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
-
-import { ContentActionHandler } from '../../models/content-action.model';
+import { ContentActionListComponent } from './content-action-list.component';
+import { ContentActionModel } from './../../models/content-action.model';
 import { DocumentActionsService } from '../../services/document-actions.service';
 import { FolderActionsService } from '../../services/folder-actions.service';
-import { ContentActionModel } from './../../models/content-action.model';
-import { ContentActionListComponent } from './content-action-list.component';
+import { ContentActionHandler } from '../../models/content-action.model';
 
 @Component({
     selector: 'content-action',
@@ -57,12 +55,6 @@ export class ContentActionComponent implements OnInit, OnChanges {
 
     @Output()
     permissionEvent = new EventEmitter();
-
-    @Output()
-    error = new EventEmitter();
-
-    @Output()
-    success = new EventEmitter();
 
     model: ContentActionModel;
 
@@ -117,15 +109,6 @@ export class ContentActionComponent implements OnInit, OnChanges {
                     this.documentActions.permissionEvent.subscribe((permision) => {
                         this.permissionEvent.emit(permision);
                     });
-
-                    this.documentActions.error.subscribe((errors) => {
-                        this.error.emit(errors);
-                    });
-
-                    this.documentActions.success.subscribe((message) => {
-                        this.success.emit(message);
-                    });
-
                     return this.documentActions.getHandler(name);
                 }
                 return null;
@@ -136,15 +119,6 @@ export class ContentActionComponent implements OnInit, OnChanges {
                     this.folderActions.permissionEvent.subscribe((permision) => {
                         this.permissionEvent.emit(permision);
                     });
-
-                    this.folderActions.error.subscribe((errors) => {
-                        this.error.emit(errors);
-                    });
-
-                    this.folderActions.success.subscribe((message) => {
-                        this.success.emit(message);
-                    });
-
                     return this.folderActions.getHandler(name);
                 }
                 return null;
