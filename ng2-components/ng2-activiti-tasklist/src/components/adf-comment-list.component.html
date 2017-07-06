@@ -1,0 +1,30 @@
+<adf-datatable
+    [rows]="comments"
+    (rowClick)="selectComment($event)" *ngIf="hasComments()">
+
+    <data-columns>
+        <data-column key="createdBy">
+            <ng-template let-entry="$implicit">
+                <div id="comment-user-icon" class="img-container">
+                    <div class="user-icon">{{getUserShortName(entry.row.obj.createdBy)}}</div>
+                </div>
+            </ng-template>
+        </data-column>
+        <data-column key="message">
+            <ng-template let-entry="$implicit">
+                <div class="comment-contents">
+                    <div id="comment-user" class="user-name">
+                        {{entry.row.obj.createdBy?.firstName}} {{entry.row.obj.createdBy?.lastName}}
+                    </div>
+                    <div id="comment-message" class="message">
+                        {{entry.row.obj.message}}
+                    </div>
+                    <div id="comment-time" class="message-time">
+                        {{transformDate(entry.row.obj.created)}}
+                    </div>
+                </div>
+            </ng-template>
+        </data-column>
+    </data-columns>
+
+</adf-datatable>

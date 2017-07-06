@@ -16,8 +16,9 @@
  */
 
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { MdButtonModule, MdIconModule } from '@angular/material';
+import { MdButtonModule, MdIconModule, MdInputModule } from '@angular/material';
 import { ActivitiFormModule } from 'ng2-activiti-form';
+import { DatePipe } from '@angular/common';
 import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { ActivitiPeopleService } from './src/services/activiti-people.service';
@@ -37,7 +38,8 @@ import {
     ActivitiTaskList,
     NoTaskDetailsTemplateComponent,
     PeopleList,
-    TaskAttachmentListComponent
+    TaskAttachmentListComponent,
+    AdfCommentList
 } from './src/components/index';
 
 export * from './src/components/index';
@@ -59,7 +61,8 @@ export const ACTIVITI_TASKLIST_DIRECTIVES: any[] = [
     ActivitiPeopleSearch,
     TaskAttachmentListComponent,
     ActivitiCreateTaskAttachmentComponent,
-    PeopleList
+    PeopleList,
+    AdfCommentList
 ];
 
 export const ACTIVITI_TASKLIST_PROVIDERS: any[] = [
@@ -73,13 +76,15 @@ export const ACTIVITI_TASKLIST_PROVIDERS: any[] = [
         DataTableModule,
         ActivitiFormModule,
         MdIconModule,
-        MdButtonModule
+        MdButtonModule,
+        MdInputModule
     ],
     declarations: [
         ...ACTIVITI_TASKLIST_DIRECTIVES
     ],
     providers: [
-        ...ACTIVITI_TASKLIST_PROVIDERS
+        ...ACTIVITI_TASKLIST_PROVIDERS,
+        DatePipe
     ],
     exports: [
         ...ACTIVITI_TASKLIST_DIRECTIVES,

@@ -1,32 +1,31 @@
-:host {
+.main-container {
+    height: 100%;
     width: 100%;
-}
-
-.activiti-label {
-    font-weight: bolder;
-}
-
-.material-icons:hover {
-    color: rgb(255, 152, 0);
-}
-
-.mdl-tooltip {
-    will-change: unset;
-}
-
-.material-icons {
-    cursor: pointer;
-}
-
-.list-wrap {
-    word-wrap: break-word;
-    word-break: break-all;
-    -moz-hyphens:auto;
-    -webkit-hyphens:auto;
-    -o-hyphens:auto;
-    hyphens:auto;
-}
-
-.hide-long-names {
     overflow: auto;
+}
+
+.comments-header {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-family: Muli;
+    font-weight: 600;
+    border-bottom: 1px solid #e1e1e1;
+    color: #a1a1a1;
+}
+
+.comments-input-container {
+    padding: 0 15px;
+    width: calc(100% - 30px);
+    padding-top: 8px;
+    border-bottom: 1px solid #e1e1e1;
+}
+
+
+.comment-contents {
+    float: left;
+    width: calc(100% - 60px);
+}
+
+.full-width {
+    width: 100%;
 }

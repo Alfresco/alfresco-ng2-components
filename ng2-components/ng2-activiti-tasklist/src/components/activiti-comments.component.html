@@ -1,32 +1,13 @@
-<span class="activiti-label mdl-badge"
-      [attr.data-badge]="comments?.length">{{ 'TASK_DETAILS.LABELS.COMMENTS' |translate }}</span>
-<div *ngIf="!readOnly" id="addComment" (click)="showDialog()" class="icon material-icons">add</div>
-<div *ngIf="!readOnly" class="mdl-tooltip" for="addComment">
-    {{ 'TASK_DETAILS.COMMENTS.ADD' | translate }}
-</div>
-
-<div class="menu-container" *ngIf="comments?.length > 0">
-    <ul class='mdl-list'>
-        <li class="mdl-list__item list-wrap" *ngFor="let comment of comments">
-            <span class="mdl-list__item-primary-content hide-long-names"><i class="material-icons mdl-list__item-icon">comment</i>{{comment.message}}</span>
-        </li>
-    </ul>
-</div>
-<div *ngIf="comments?.length === 0" data-automation-id="comments-none">
-    {{ 'TASK_DETAILS.COMMENTS.NONE' | translate }}
-</div>
-
-
-<dialog class="mdl-dialog" #dialog>
-    <h4 class="mdl-dialog__title">{{ 'TASK_DETAILS.COMMENTS.DIALOG.TITLE' | translate }}</h4>
-    <div class="mdl-dialog__content">
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <textarea class="mdl-textfield__input" type="text" [(ngModel)]="message" rows="1" id="commentText"></textarea>
-            <label class="mdl-textfield__label" for="commentText">{{ 'TASK_DETAILS.COMMENTS.DIALOG.LABELS.MESSAGE' | translate }}</label>
-        </div>
+<div class="main-container">
+    <div id="comment-header" class="comments-header">
+        {{'TASK_DETAILS.COMMENTS.HEADER' | translate}}({{comments?.length}})
     </div>
-    <div class="mdl-dialog__actions">
-        <button type="button" (click)="add()" class="mdl-button">{{ 'TASK_DETAILS.COMMENTS.DIALOG.BUTTON.ADD' | translate }}</button>
-        <button type="button" (click)="cancel()" class="mdl-button close">{{ 'TASK_DETAILS.COMMENTS.DIALOG.BUTTON.CANCEL' | translate }}</button>
+    <div class="comments-input-container" *ngIf="!isReadOnly()">
+            <md-input-container class="full-width">
+                <input mdInput id="comment-input" placeholder="{{'TASK_DETAILS.COMMENTS.ADD' | translate}}" [(ngModel)]="message" (keyup.enter)="add()" (keyup.esc)="clear()">
+            </md-input-container>
     </div>
-</dialog>
+
+    <adf-comment-list [comments]="comments">
+    </adf-comment-list>
+</div>
