@@ -161,7 +161,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     contextActionHandler: Subject<any> = new Subject();
     data: ShareDataTableAdapter;
 
+    @Input()
     loading: boolean = false;
+
     private currentNodeAllowableOperations: string[] = [];
     private CREATE_PERMISSION = 'create';
 
