@@ -135,6 +135,9 @@ export class UploadDragAreaComponent {
                 this.uploadService.addToQueue(fileModel);
                 this.uploadService.uploadFilesInTheQueue(this.onSuccess);
             });
+            if (this.showNotificationBar) {
+                this.showUndoNotificationBar(item);
+            }
         }
     }
 
