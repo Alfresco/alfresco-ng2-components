@@ -85,6 +85,21 @@ describe('ActivitiTaskHeaderComponent', () => {
         expect(valueEl.nativeElement.innerText).toBe('No assignee');
     });
 
+    it('should display created-by', () => {
+        component.ngOnChanges({});
+        fixture.detectChanges();
+        let formNameEl = fixture.debugElement.query(By.css('[data-automation-id="header-created-by"] .adf-header__value'));
+        expect(formNameEl.nativeElement.innerText).toBe('Wilbur Adams');
+    });
+
+    it('should display placeholder if no created-by', () => {
+        component.taskDetails.assignee = null;
+        component.ngOnChanges({});
+        fixture.detectChanges();
+        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-created-by"] .adf-header__value'));
+        expect(valueEl.nativeElement.innerText).toBe('No assignee');
+    });
+
     it('should display the claim button if no assignee', () => {
         component.taskDetails.assignee = null;
         component.ngOnChanges({});

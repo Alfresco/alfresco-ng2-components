@@ -54,6 +54,7 @@ export class ActivitiTaskHeaderComponent implements OnChanges {
         if (this.taskDetails) {
 
             this.properties = [
+                new CardViewModel({label: 'Assignee:', value: this.taskDetails.getFullName(), key: 'assignee', default: 'No assignee'} ),
                 new CardViewModel({label: 'Status:', value: this.getTaskStatus(), key: 'status'}),
                 new CardViewModel({label: 'Due Date:', value: this.taskDetails.dueDate, format: 'MMM DD YYYY', key: 'dueDate', default: 'No date'}),
                 new CardViewModel({label: 'Category:', value: this.taskDetails.category, key: 'category', default: 'No category'}),
@@ -61,7 +62,7 @@ export class ActivitiTaskHeaderComponent implements OnChanges {
                     {
                         label: 'Created By:',
                         value: this.taskDetails.getFullName(),
-                        key: 'assignee',
+                        key: 'created-by',
                         default: 'No assignee'
                     }),
                 new CardViewModel({label: 'Created:', value: this.taskDetails.created, format: 'MMM DD YYYY', key: 'created'}),
