@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { Observable } from 'rxjs/Rx';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
-import { FormService } from '../../../services/form.service';
-import { DropdownWidget } from './dropdown.widget';
-import { FormModel } from './../core/form.model';
-import { FormFieldModel } from './../core/form-field.model';
-import { FormFieldOption } from './../core/form-field-option';
+import { Observable } from 'rxjs/Rx';
 import { EcmModelService } from '../../../services/ecm-model.service';
+import { FormService } from '../../../services/form.service';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
+import { FormFieldOption } from './../core/form-field-option';
+import { FormFieldModel } from './../core/form-field.model';
+import { FormModel } from './../core/form.model';
+import { DropdownWidget } from './dropdown.widget';
 
 describe('DropdownWidget', () => {
 

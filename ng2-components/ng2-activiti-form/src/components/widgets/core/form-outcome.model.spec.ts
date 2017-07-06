@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { FormModel } from './form.model';
 import { FormOutcomeModel } from './form-outcome.model';
+import { FormModel } from './form.model';
 
 describe('FormOutcomeModel', () => {
 

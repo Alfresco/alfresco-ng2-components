@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-import { TextWidget } from './text.widget';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { InputMaskDirective } from './text-mask.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormFieldTypes } from '../core/form-field-types';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
-import { FormFieldTypes } from '../core/form-field-types';
+import { InputMaskDirective } from './text-mask.component';
+import { TextWidget } from './text.widget';
 
 import { CoreModule } from 'ng2-alfresco-core';
-import { FormService } from './../../../services/form.service';
-import { EcmModelService } from './../../../services/ecm-model.service';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
+import { EcmModelService } from './../../../services/ecm-model.service';
+import { FormService } from './../../../services/form.service';
 
 describe('TextWidget', () => {
 

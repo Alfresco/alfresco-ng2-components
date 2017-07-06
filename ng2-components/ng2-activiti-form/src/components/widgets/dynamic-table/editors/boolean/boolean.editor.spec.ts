@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
+import { DynamicTableColumn, DynamicTableRow } from './../../dynamic-table.widget.model';
 import { BooleanEditorComponent } from './boolean.editor';
-import { DynamicTableRow, DynamicTableColumn } from './../../dynamic-table.widget.model';
 
 describe('BooleanEditorComponent', () => {
 

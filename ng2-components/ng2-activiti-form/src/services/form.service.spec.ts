@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { TestBed, async } from '@angular/core/testing';
-import { CoreModule, AlfrescoApiService, LogService } from 'ng2-alfresco-core';
-import { Observable } from 'rxjs/Rx';
-import { FormService } from './form.service';
+import { async, TestBed } from '@angular/core/testing';
 import { Response, ResponseOptions } from '@angular/http';
-import { EcmModelService } from './ecm-model.service';
+import { AlfrescoApiService, CoreModule, LogService } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Rx';
 import { FormDefinitionModel } from '../models/form-definition.model';
+import { EcmModelService } from './ecm-model.service';
+import { FormService } from './form.service';
 
 declare let jasmine: any;
 
