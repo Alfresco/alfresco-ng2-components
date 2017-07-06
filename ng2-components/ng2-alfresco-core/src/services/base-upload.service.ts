@@ -18,8 +18,10 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Rx';
 import { AlfrescoApiService } from './alfresco-api.service';
+import { AppConfigService } from './app-config.service';
 import { FileUploadEvent, FileUploadCompleteEvent } from '../events/file.event';
 import { FileModel, FileUploadProgress, FileUploadStatus } from '../models/file.model';
+import * as minimatch from 'minimatch';
 
 @Injectable()
 export class BaseUploadService {
@@ -29,6 +31,7 @@ export class BaseUploadService {
     private totalComplete: number = 0;
     private totalAborted: number = 0;
     private activeTask: Promise<any> = null;
+    private excludedFileList: String[] = [];
 
     queueChanged: Subject<FileModel[]> = new Subject<FileModel[]>();
     fileUpload: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
@@ -39,7 +42,8 @@ export class BaseUploadService {
     fileUploadError: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
     fileUploadComplete: Subject<FileUploadCompleteEvent> = new Subject<FileUploadCompleteEvent>();
 
-    constructor(private apiService: AlfrescoApiService) {
+    constructor(private apiService: AlfrescoApiService, private appConfigService: AppConfigService) {
+        this.excludedFileList = <String[]>this.appConfigService.get('files.excluded');
     }
 
     /**
@@ -71,10 +75,18 @@ export class BaseUploadService {
      *  addToQueue(...[file1, file2, file3]); // pass an array of files
      */
     addToQueue(...files: FileModel[]): FileModel[] {
-        const allowedFiles = files.filter(f => !f.name.startsWith('.'));
+        const allowedFiles = files.filter(f => this.filterElement(f));
         this.queue = this.queue.concat(allowedFiles);
         this.queueChanged.next(this.queue);
         return allowedFiles;
+    }
+
+    private filterElement(file: FileModel) {
+        let isAllowed = true;
+        if (this.excludedFileList) {
+            isAllowed = this.excludedFileList.filter(expr => minimatch(file.name, expr)).length === 0;
+        }
+        return isAllowed;
     }
 
     /**
