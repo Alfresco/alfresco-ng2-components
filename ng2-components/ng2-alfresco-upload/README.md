@@ -191,6 +191,29 @@ This component should be used in combination with upload button or drag & drop a
 
 Provides access to various APIs related to file upload features.
 
+### Configuration 
+
+There is the possibility to point out file name or file extension to be excluded from upload process into the app.config.json file, see [here](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-alfresco-core#appconfigservice) for more details.
+This will make easy avoiding uploading of system files like : '.DS_Store'.
+By default the file already filtered are : '.git', '.DS_Store' and 'desktop.ini'.
+It is possible to add any expression for filtering file like '*.txt'.The file name check is done via 
+[minimatch library](https://www.npmjs.com/package/minimatch) so in file excluded list is possible to add any expression accepted by this library.
+
+**app.config.json**
+
+```json
+{
+    "ecmHost": "http://localhost:3000/ecm",
+    "bpmHost": "http://localhost:3000/bpm",
+    "application": {
+        "name": "Alfresco"
+    },
+    "files": {
+          "excluded": [".DS_Store", "desktop.ini", ".git"]
+    }
+}
+```
+
 ### Events
 
 | Name | Type | Description |
