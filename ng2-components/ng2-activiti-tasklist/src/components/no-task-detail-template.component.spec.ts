@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { NoTaskDetailsTemplateComponent } from './no-task-detail-template.component';
 import { ActivitiTaskDetails } from './activiti-task-details.component';
+import { NoTaskDetailsTemplateComponent } from './no-task-detail-template.component';
 
 describe('NoTaskDetailsTemplateComponent', () => {
 

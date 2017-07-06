@@ -16,8 +16,8 @@
  */
 
 import {
-    FilterRepresentationModel,
-    AppDefinitionRepresentationModel
+    AppDefinitionRepresentationModel,
+    FilterRepresentationModel
 } from '../models/filter.model';
 
 export let fakeFilters = {

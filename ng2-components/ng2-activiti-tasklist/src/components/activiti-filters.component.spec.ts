@@ -17,11 +17,11 @@
 
 import { SimpleChange } from '@angular/core';
 import { async } from '@angular/core/testing';
-import { Observable } from 'rxjs/Rx';
 import { LogServiceMock } from 'ng2-alfresco-core';
-import { ActivitiFilters } from './activiti-filters.component';
+import { Observable } from 'rxjs/Rx';
+import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
 import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
-import { FilterRepresentationModel, FilterParamsModel } from '../models/filter.model';
+import { ActivitiFilters } from './activiti-filters.component';
 
 describe('ActivitiFilters', () => {
 

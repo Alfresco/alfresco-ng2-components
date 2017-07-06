@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
-import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
 
-import { ActivitiTaskHeader } from './activiti-task-header.component';
-import { taskDetailsMock } from './../assets/task-details.mock';
 import { TaskDetailsModel } from '../models/task-details.model';
+import { taskDetailsMock } from './../assets/task-details.mock';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
+import { ActivitiTaskHeader } from './activiti-task-header.component';
 
 describe('ActivitiTaskHeader', () => {
 

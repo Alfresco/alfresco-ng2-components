@@ -16,13 +16,13 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
-import { DataTableModule } from 'ng2-alfresco-datatable';
-import { ActivitiContentService } from 'ng2-activiti-form';
-import { TaskAttachmentListComponent } from './adf-task-attachment-list.component';
-import { Observable } from 'rxjs/Rx';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { ActivitiContentService } from 'ng2-activiti-form';
+import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { DataTableModule } from 'ng2-alfresco-datatable';
+import { Observable } from 'rxjs/Rx';
+import { TaskAttachmentListComponent } from './adf-task-attachment-list.component';
 
 declare let jasmine: any;
 
