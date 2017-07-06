@@ -87,7 +87,7 @@ module.exports = {
                     emitErrors: true,
                     licenseFile: path.resolve(__dirname, '../assets/license_header.txt')
                 },
-                exclude: [/node_modules/, /bundles/, /dist/, /demo/],
+                exclude: [/node_modules/, /bundles/, /dist/, /demo/]
             }
         ]
     },

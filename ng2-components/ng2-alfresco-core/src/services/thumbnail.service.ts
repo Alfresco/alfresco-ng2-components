@@ -18,8 +18,6 @@
 import { Injectable } from '@angular/core';
 import { AlfrescoContentService } from './alfresco-content.service';
 
-declare var require: any;
-
 @Injectable()
 export class ThumbnailService {
 
@@ -52,8 +50,7 @@ export class ThumbnailService {
         'application/vnd.apple.keynote': require('../assets/images/ft_ic_presentation.svg'),
         'application/vnd.apple.pages': require('../assets/images/ft_ic_document.svg'),
         'application/vnd.apple.numbers': require('../assets/images/ft_ic_spreadsheet.svg'),
-        'folder': require('../assets/images/ft_ic_folder.svg'),
-        'disable/folder': require('../assets/images/ft_ic_folder_disable.svg')
+        'folder': require('../assets/images/ft_ic_folder.svg')
     };
 
     constructor(public contentService: AlfrescoContentService) {

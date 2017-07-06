@@ -16,7 +16,7 @@
  */
 
 import { Component, OnChanges, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
-import { AlfrescoTranslationService, ContentService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, ContentService, ThumbnailService } from 'ng2-alfresco-core';
 import { ActivitiContentService } from 'ng2-activiti-form';
 
 @Component({
@@ -42,7 +42,8 @@ export class ActivitiProcessAttachmentListComponent implements OnChanges {
 
     constructor(private translateService: AlfrescoTranslationService,
                 private activitiContentService: ActivitiContentService,
-                private contentService: ContentService) {
+                private contentService: ContentService,
+                private thumbnailService: ThumbnailService) {
 
         if (translateService) {
             translateService.addTranslationFolder('ng2-activiti-processlist', 'assets/ng2-activiti-processlist');
@@ -55,7 +56,7 @@ export class ActivitiProcessAttachmentListComponent implements OnChanges {
         }
     }
 
-    reset () {
+    reset() {
         this.attachments = [];
     }
 
@@ -74,7 +75,7 @@ export class ActivitiProcessAttachmentListComponent implements OnChanges {
                             name: content.name,
                             created: content.created,
                             createdBy: content.createdBy.firstName + ' ' + content.createdBy.lastName,
-                            icon: this.activitiContentService.getMimeTypeIcon(content.mimeType)
+                            icon: this.thumbnailService.getMimeTypeIcon(content.mimeType)
                         });
                     });
                     this.success.emit(this.attachments);

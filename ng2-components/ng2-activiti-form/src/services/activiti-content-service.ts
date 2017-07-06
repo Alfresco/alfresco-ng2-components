@@ -16,8 +16,8 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
+import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 
 @Injectable()
 export class ActivitiContentService {
@@ -97,11 +97,6 @@ export class ActivitiContentService {
         }
         this.logService.error(errMsg);
         return Observable.throw(errMsg);
-    }
-
-    createTaskRelatedContent(taskId: string, file: any, opts?: any) {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.contentApi.createRelatedContentOnTask(taskId, file, opts))
-            .catch(err => this.handleError(err));
     }
 
     createTaskRelatedContent(taskId: string, file: any, opts?: any) {

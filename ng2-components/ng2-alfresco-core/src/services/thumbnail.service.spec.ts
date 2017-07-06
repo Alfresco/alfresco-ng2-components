@@ -15,19 +15,18 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed, async } from '@angular/core/testing';
 import { HttpModule } from '@angular/http';
-import { CookieServiceMock } from './../assets/cookie.service.mock';
-import { AlfrescoApiService } from './alfresco-api.service';
+import { ThumbnailService } from './thumbnail.service';
 import { AlfrescoContentService } from './alfresco-content.service';
+import { AlfrescoAuthenticationService } from './alfresco-authentication.service';
 import { AlfrescoSettingsService } from './alfresco-settings.service';
 import { AppConfigService } from './app-config.service';
-import { AuthenticationService } from './authentication.service';
-import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
+import { AlfrescoApiService } from './alfresco-api.service';
 import { StorageService } from './storage.service';
-import { ThumbnailService } from './thumbnail.service';
-import { UserPreferencesService } from './user-preferences.service';
+import { CookieService } from './cookie.service';
+import { CookieServiceMock } from './../assets/cookie.service.mock';
 
 describe('ThumbnailService', () => {
 
@@ -39,8 +38,7 @@ describe('ThumbnailService', () => {
                 HttpModule
             ],
             providers: [
-                UserPreferencesService,
-                AuthenticationService,
+                AlfrescoAuthenticationService,
                 AlfrescoContentService,
                 AlfrescoSettingsService,
                 AppConfigService,

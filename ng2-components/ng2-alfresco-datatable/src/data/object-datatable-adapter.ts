@@ -17,10 +17,8 @@
 
 import { TemplateRef } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { TemplateRef } from '@angular/core';
-
-import { ObjectUtils, TimeAgoPipe } from 'ng2-alfresco-core';
-import { DataColumn, DataRow, DataSorting, DataTableAdapter } from './datatable-adapter';
+import { ObjectUtils } from 'ng2-alfresco-core';
+import { DataTableAdapter, DataRow, DataColumn, DataSorting } from './datatable-adapter';
 
 declare var require: any;
 
@@ -107,31 +105,18 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
         let value = row.getValue(col.key);
 
         if (col.type === 'date') {
+            let datePipe = new DatePipe('en-US');
+            let format = col.format || 'medium';
             try {
-                return this.formatDate(col, value);
+                return datePipe.transform(value, format);
             } catch (err) {
-                console.error(`Error parsing date ${value} to format ${col.format}`);
+                console.error(`DocumentList: error parsing date ${value} to format ${format}`);
             }
         }
 
         if (col.type === 'icon') {
             const icon = row.getValue(col.key);
             return icon;
-        }
-
-        return value;
-    }
-
-    formatDate(col: DataColumn, value: any): string {
-        if (col.type === 'date') {
-            const format = col.format || 'medium';
-            if (format === 'timeAgo') {
-                const timeAgoPipe = new TimeAgoPipe();
-                return timeAgoPipe.transform(value);
-            } else {
-                const datePipe = new DatePipe('en-US');
-                return datePipe.transform(value, format);
-            }
         }
 
         return value;
@@ -201,7 +186,6 @@ export class ObjectDataColumn implements DataColumn {
 
     key: string;
     type: string; // text|image
-    format: string;
     sortable: boolean;
     title: string;
     srTitle: string;
@@ -211,7 +195,6 @@ export class ObjectDataColumn implements DataColumn {
     constructor(obj: any) {
         this.key = obj.key;
         this.type = obj.type || 'text';
-        this.format = obj.format;
         this.sortable = obj.sortable;
         this.title = obj.title;
         this.srTitle = obj.srTitle;
