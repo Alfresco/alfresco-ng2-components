@@ -22,7 +22,6 @@ import {
     LogService,
     LogServiceMock
 } from 'ng2-alfresco-core';
-import { FileNode } from '../assets/document-library.model.mock';
 import { CookieServiceMock } from '../../../ng2-alfresco-core/src/assets/cookie.service.mock';
 import { DocumentListService } from './document-list.service';
 
@@ -113,26 +112,6 @@ describe('DocumentListService', () => {
 
     afterEach(() => {
         jasmine.Ajax.uninstall();
-    });
-
-    it('should require node to get thumbnail url', () => {
-        expect(service.getDocumentThumbnailUrl(null)).toBeNull();
-    });
-
-    it('should require content service to get thumbnail url', () => {
-        let file = new FileNode();
-        expect(service.getDocumentThumbnailUrl(file)).not.toBeNull();
-    });
-
-    it('should resolve fallback icon for mime type', () => {
-        let icon = service.getMimeTypeIcon('image/png');
-        expect(icon).toBe(service.mimeTypeIcons['image/png']);
-    });
-
-    it('should resolve default icon for mime type', () => {
-        expect(service.getMimeTypeIcon(null)).toBe(DocumentListService.DEFAULT_MIME_TYPE_ICON);
-        expect(service.getMimeTypeIcon('')).toBe(DocumentListService.DEFAULT_MIME_TYPE_ICON);
-        expect(service.getMimeTypeIcon('missing/type')).toBe(DocumentListService.DEFAULT_MIME_TYPE_ICON);
     });
 
     it('should create a folder in the path', () => {

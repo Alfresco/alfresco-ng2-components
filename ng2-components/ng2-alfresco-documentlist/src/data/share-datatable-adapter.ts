@@ -106,30 +106,23 @@ export class ShareDataTableAdapter implements DataTableAdapter {
                 let node = (<ShareDataRow> row).node;
 
                 if (node.entry.isFolder) {
-                    return this.getImagePath('ft_ic_folder.svg');
+                    return this.documentListService.getMimeTypeIcon('folder');
                 }
 
                 if (node.entry.isFile) {
-
                     if (this.thumbnails) {
-                        if (this.documentListService) {
-                            return this.documentListService.getDocumentThumbnailUrl(node);
-                        }
-                        return null;
+                        return this.documentListService.getDocumentThumbnailUrl(node);
                     }
 
                     if (node.entry.content) {
                         let mimeType = node.entry.content.mimeType;
                         if (mimeType) {
-                            let icon = this.documentListService.getMimeTypeIcon(mimeType);
-                            if (icon) {
-                                return this.getImagePath(icon);
-                            }
+                            return this.documentListService.getMimeTypeIcon(mimeType);
                         }
                     }
                 }
 
-                return this.getImagePath('ft_ic_miscellaneous.svg');
+                return this.documentListService.getDefaultMimeTypeIcon();
             }
 
         }
@@ -225,9 +218,6 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         this.rows = rows;
     }
 
-    getImagePath(id: string): any {
-        return require('../assets/images/' + id);
-    }
 }
 
 export class ShareDataRow implements DataRow {

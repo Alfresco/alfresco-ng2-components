@@ -19,7 +19,6 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 import { CoreModule } from 'ng2-alfresco-core';
 import { AlfrescoSearchService } from './src/services/alfresco-search.service';
-import { AlfrescoThumbnailService } from './src/services/alfresco-thumbnail.service';
 import { AlfrescoSearchComponent } from './src/components/alfresco-search.component';
 import { AlfrescoSearchControlComponent } from './src/components/alfresco-search-control.component';
 import { AlfrescoSearchAutocompleteComponent } from './src/components/alfresco-search-autocomplete.component';
@@ -27,7 +26,6 @@ import { DocumentListModule } from 'ng2-alfresco-documentlist';
 
 // services
 export * from './src/services/alfresco-search.service';
-export * from './src/services/alfresco-thumbnail.service';
 export * from './src/components/alfresco-search.component';
 export * from './src/components/alfresco-search-control.component';
 export * from './src/components/alfresco-search-autocomplete.component';
@@ -39,8 +37,7 @@ export const ALFRESCO_SEARCH_DIRECTIVES: [any] = [
 ];
 
 export const ALFRESCO_SEARCH_PROVIDERS: [any] = [
-    AlfrescoSearchService,
-    AlfrescoThumbnailService
+    AlfrescoSearchService
 ];
 
 @NgModule({
