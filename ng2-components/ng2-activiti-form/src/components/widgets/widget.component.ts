@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, Input, AfterViewInit, Output, EventEmitter, ElementRef } from '@angular/core';
-import { FormFieldModel } from './core/index';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
 import { FormService } from './../../services/form.service';
+import { FormFieldModel } from './core/index';
 
 declare let componentHandler: any;
 

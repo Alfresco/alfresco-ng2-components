@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, ContentChild, TemplateRef, AfterContentInit } from '@angular/core';
+import { AfterContentInit, ContentChild, Directive, TemplateRef } from '@angular/core';
 import { DocumentListComponent } from './../document-list.component';
 
 @Directive({

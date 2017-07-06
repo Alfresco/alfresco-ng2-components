@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { MinimalNodeEntryEntity, PathElementEntity } from 'alfresco-js-api';
 import { DocumentListComponent } from '../document-list.component';
 

@@ -1,4 +1,7 @@
 {
+    "rulesDirectory": [
+        "node_modules/codelyzer"
+    ],
     "rules": {
         "align": [
             true,
@@ -59,7 +62,7 @@
         "no-unused-variable": true,
         "no-use-before-declare": true,
         "no-var-keyword": true,
-        "no-var-requires": false,
+        "no-var-requires": true,
         "object-literal-sort-keys": false,
         "one-line": [
             true,
@@ -113,6 +116,7 @@
             "check-type",
             "check-module",
             "check-decl"
-        ]
+        ],
+        "ordered-imports": true
     }
 }

@@ -42,7 +42,7 @@ export class RenditionsService {
                 }
                 observer.next(isAvailable);
                 observer.complete();
-            }, () => {
+            },                                            () => {
                 observer.next(false);
                 observer.complete();
             });
@@ -54,7 +54,7 @@ export class RenditionsService {
             this.getRendition(nodeId, encoding).subscribe(() => {
                 observer.next(true);
                 observer.complete();
-            }, () => {
+            },                                            () => {
                 observer.next(false);
                 observer.complete();
             });

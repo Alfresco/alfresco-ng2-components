@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewChild, OnChanges, SimpleChanges, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
-import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
+import { Observable, Observer } from 'rxjs/Rx';
 import { TaskDetailsModel } from '../models/task-details.model';
-import { Observer, Observable } from 'rxjs/Rx';
+import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 
 declare let dialogPolyfill: any;
 

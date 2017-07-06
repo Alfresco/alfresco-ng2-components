@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { FormWidgetModel } from './../core/form-widget.model';
-import { FormFieldModel } from './../core/form-field.model';
 import * as moment from 'moment';
+import { FormFieldModel } from './../core/form-field.model';
+import { FormWidgetModel } from './../core/form-widget.model';
 
 export class DynamicTableModel extends FormWidgetModel {
 

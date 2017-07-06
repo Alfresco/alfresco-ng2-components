@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { Observable, Subject } from 'rxjs/Rx';
-import { AlfrescoApiService, AlfrescoContentService, AlfrescoTranslationService, LogService, NotificationService, FileUtils } from 'ng2-alfresco-core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { UploadService } from '../services/upload.service';
+import { AlfrescoApiService, AlfrescoContentService, AlfrescoTranslationService, FileUtils, LogService, NotificationService } from 'ng2-alfresco-core';
+import { Observable, Subject } from 'rxjs/Rx';
 import { FileModel } from '../models/file.model';
 import { PermissionModel } from '../models/permissions.model';
+import { UploadService } from '../services/upload.service';
 
 @Component({
     selector: 'adf-upload-button, alfresco-upload-button',

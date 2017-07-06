@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CoreModule } from 'ng2-alfresco-core';
 
-import { RatingComponent } from './src/components/rating.component';
 import { LikeComponent } from './src/components/like.component';
+import { RatingComponent } from './src/components/rating.component';
 import { RatingService } from './src/services/rating.service';
 
 export * from './src/components/rating.component';

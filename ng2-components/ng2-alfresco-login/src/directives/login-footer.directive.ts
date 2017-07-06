@@ -16,10 +16,10 @@
  */
 
 import {
-    Directive,
+    AfterContentInit,
     ContentChild,
-    TemplateRef,
-    AfterContentInit
+    Directive,
+    TemplateRef
 } from '@angular/core';
 import { AlfrescoLoginComponent } from '../components/alfresco-login.component';
 

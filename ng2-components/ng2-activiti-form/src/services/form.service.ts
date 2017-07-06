@@ -16,15 +16,15 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs/Rx';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
-import { FormModel, FormValues, FormOutcomeEvent, FormOutcomeModel } from './../components/widgets/core/index';
+import { Observable, Subject } from 'rxjs/Rx';
 import { FormDefinitionModel } from '../models/form-definition.model';
-import { EcmModelService } from './ecm-model.service';
-import { GroupModel } from './../components/widgets/core/group.model';
-import { GroupUserModel } from './../components/widgets/core/group-user.model';
-import { FormEvent, FormErrorEvent, FormFieldEvent } from './../events/index';
 import { ContentLinkModel } from './../components/widgets/core/content-link.model';
+import { GroupUserModel } from './../components/widgets/core/group-user.model';
+import { GroupModel } from './../components/widgets/core/group.model';
+import { FormModel, FormOutcomeEvent, FormOutcomeModel, FormValues } from './../components/widgets/core/index';
+import { FormErrorEvent, FormEvent, FormFieldEvent } from './../events/index';
+import { EcmModelService } from './ecm-model.service';
 
 @Injectable()
 export class FormService {

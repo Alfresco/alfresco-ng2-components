@@ -16,25 +16,25 @@
  */
 
 import {
-    Component,
-    OnInit, OnDestroy,
-    ViewChild,
-    ViewContainerRef,
-    Input,
-    ComponentRef,
-    ComponentFactoryResolver,
-    ComponentFactory,
     Compiler,
+    Component, ComponentFactory,
+    ComponentFactoryResolver,
+    ComponentRef,
+    Input,
+    ModuleWithComponentFactories,
     NgModule,
-    ModuleWithComponentFactories
+    OnDestroy,
+    OnInit,
+    ViewChild,
+    ViewContainerRef
 } from '@angular/core';
 
 import { CoreModule } from 'ng2-alfresco-core';
 
-import { WidgetVisibilityService } from './../../services/widget-visibility.service';
 import { FormRenderingService } from './../../services/form-rendering.service';
-import { WidgetComponent } from './../widgets/widget.component';
+import { WidgetVisibilityService } from './../../services/widget-visibility.service';
 import { FormFieldModel } from './../widgets/core/index';
+import { WidgetComponent } from './../widgets/widget.component';
 
 declare var adf: any;
 

@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Directive, OnInit, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Polyline } from './polyline';
 import { RaphaelBase } from './raphael-base';
 import { RaphaelService } from './raphael.service';
-import { Polyline } from './polyline';
 
 declare let Raphael: any;
 

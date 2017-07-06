@@ -16,8 +16,8 @@
  */
 
 import { Component, ElementRef, Input } from '@angular/core';
-import { WidgetComponent } from './../widget.component';
 import { FormGroup } from '@angular/forms';
+import { WidgetComponent } from './../widget.component';
 
 @Component({
     selector: 'checkbox-widget',

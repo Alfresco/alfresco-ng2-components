@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Input, ContentChild, TemplateRef, AfterContentInit } from '@angular/core';
+import { AfterContentInit, Component, ContentChild, Input, OnInit, TemplateRef } from '@angular/core';
 import { DataColumn } from 'ng2-alfresco-datatable';
 
 import { ContentColumnListComponent } from './content-column-list.component';

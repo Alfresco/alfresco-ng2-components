@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
     selector: 'diagram-mule-task',

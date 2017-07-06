@@ -17,8 +17,8 @@
 
 import { Component, OnInit } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
-import { WidgetComponent , baseHost } from './../widget.component';
 import { FormService } from '../../../services/form.service';
+import { baseHost , WidgetComponent } from './../widget.component';
 
 @Component({
     selector: 'upload-widget',

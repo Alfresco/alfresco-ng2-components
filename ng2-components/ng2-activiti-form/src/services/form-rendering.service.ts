@@ -18,26 +18,26 @@
 import { Injectable, Type } from '@angular/core';
 
 import {
+    AmountWidget,
+    AttachWidget,
+    CheckboxWidget,
+    ContainerWidget,
+    DateWidget,
+    DisplayTextWidget,
+    DisplayValueWidget,
+    DropdownWidget,
+    DynamicTableWidget,
     FormFieldModel,
-    UnknownWidget,
-    TextWidget,
+    FunctionalGroupWidget,
+    HyperlinkWidget,
     MultilineTextWidget,
     NumberWidget,
-    CheckboxWidget,
-    DropdownWidget,
-    DateWidget,
-    AmountWidget,
-    RadioButtonsWidget,
-    HyperlinkWidget,
-    DisplayValueWidget,
-    DisplayTextWidget,
-    TypeaheadWidget,
     PeopleWidget,
-    FunctionalGroupWidget,
-    DynamicTableWidget,
-    AttachWidget,
-    UploadWidget,
-    ContainerWidget
+    RadioButtonsWidget,
+    TextWidget,
+    TypeaheadWidget,
+    UnknownWidget,
+    UploadWidget
 } from './../components/widgets/index';
 
 @Injectable()

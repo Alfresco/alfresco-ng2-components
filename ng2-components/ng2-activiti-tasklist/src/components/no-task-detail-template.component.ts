@@ -16,10 +16,10 @@
  */
 
 import {
-    Directive,
+    AfterContentInit,
     ContentChild,
-    TemplateRef,
-    AfterContentInit
+    Directive,
+    TemplateRef
 } from '@angular/core';
 import { ActivitiTaskDetails } from './activiti-task-details.component';
 

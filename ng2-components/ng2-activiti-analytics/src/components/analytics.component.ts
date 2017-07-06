@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, OnChanges, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
-import { AnalyticsService } from '../services/analytics.service';
 import { ReportQuery } from '../models/report.model';
+import { AnalyticsService } from '../services/analytics.service';
 import { AnalyticsGeneratorComponent } from './analytics-generator.component';
 
 @Component({

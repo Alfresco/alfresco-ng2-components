@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, OnChanges, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService, ContentService, ThumbnailService } from 'ng2-alfresco-core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ActivitiContentService } from 'ng2-activiti-form';
+import { AlfrescoTranslationService, ContentService, ThumbnailService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'adf-task-attachment-list',
