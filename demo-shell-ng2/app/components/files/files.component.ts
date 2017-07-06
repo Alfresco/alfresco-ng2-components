@@ -18,9 +18,9 @@
 import { Component, Input, OnInit, Optional, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { MdDialog } from '@angular/material';
-import { AlfrescoContentService, FolderCreatedEvent, NotificationService } from 'ng2-alfresco-core';
+import { AlfrescoContentService, FolderCreatedEvent, NotificationService, FileUploadCompleteEvent } from 'ng2-alfresco-core';
 import { DocumentListComponent } from 'ng2-alfresco-documentlist';
-import { UploadService, FileUploadCompleteEvent } from 'ng2-alfresco-upload';
+import { UploadService } from 'ng2-alfresco-upload';
 
 import { CreateFolderDialog } from '../../dialogs/create-folder.dialog';
 

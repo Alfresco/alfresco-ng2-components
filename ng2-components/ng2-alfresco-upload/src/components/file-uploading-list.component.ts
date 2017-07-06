@@ -16,7 +16,7 @@
  */
 
 import { Component, Input } from '@angular/core';
-import { FileModel, FileUploadStatus } from '../models/file.model';
+import { FileModel, FileUploadStatus } from 'ng2-alfresco-core';
 import { UploadService } from '../services/upload.service';
 
 @Component({

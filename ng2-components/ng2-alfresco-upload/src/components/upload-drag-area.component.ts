@@ -16,8 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AlfrescoTranslationService, FileInfo, FileUtils, NotificationService } from 'ng2-alfresco-core';
-import { FileModel } from '../models/file.model';
+import { AlfrescoTranslationService, FileInfo, FileModel, FileUtils, NotificationService } from 'ng2-alfresco-core';
 import { UploadService } from '../services/upload.service';
 
 @Component({

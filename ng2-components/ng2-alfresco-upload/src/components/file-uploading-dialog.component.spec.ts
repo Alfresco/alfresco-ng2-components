@@ -22,8 +22,8 @@ import { CoreModule } from 'ng2-alfresco-core';
 import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
 import { FileUploadingListComponent } from './file-uploading-list.component';
 import { UploadService } from '../services/upload.service';
-import { FileModel, FileUploadStatus } from '../models/file.model';
-import { FileUploadCompleteEvent, FileUploadEvent } from '../events/file.event';
+import { FileModel, FileUploadStatus } from 'ng2-alfresco-core';
+import { FileUploadCompleteEvent, FileUploadEvent } from 'ng2-alfresco-core';
 
 describe('FileUploadingDialogComponent', () => {
 

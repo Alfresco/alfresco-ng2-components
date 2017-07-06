@@ -41,6 +41,7 @@ import {
     AuthGuard,
     AuthGuardBpm,
     AuthGuardEcm,
+    BaseUploadService,
     ContentService,
     CookieService,
     InitAppConfigServiceProvider,
@@ -75,6 +76,7 @@ export * from './src/utils/index';
 export * from './src/events/base.event';
 export * from './src/events/base-ui.event';
 export * from './src/events/folder-created.event';
+export * from './src/events/file.event';
 export * from './src/models/index';
 
 export function providers() {
@@ -96,7 +98,8 @@ export function providers() {
         AuthGuard,
         AuthGuardEcm,
         AuthGuardBpm,
-        ThumbnailService
+        ThumbnailService,
+        BaseUploadService
     ];
 }
 
