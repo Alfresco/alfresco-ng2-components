@@ -18,7 +18,7 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { AlfrescoSearchControlComponent } from './alfresco-search-control.component';
 import { AlfrescoSearchAutocompleteComponent } from './alfresco-search-autocomplete.component';
-import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
+import { ThumbnailService } from 'ng2-alfresco-core';
 import { TranslationMock } from './../assets/translation.service.mock';
 import { result } from './../assets/alfresco-search.component.mock';
 import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
@@ -43,7 +43,7 @@ describe('AlfrescoSearchControlComponent', () => {
             ],
             providers: [
                 {provide: AlfrescoTranslationService, useClass: TranslationMock},
-                AlfrescoThumbnailService,
+                ThumbnailService,
                 AlfrescoSearchService
             ]
         }).compileComponents().then(() => {

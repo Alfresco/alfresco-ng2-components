@@ -52,9 +52,6 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
     @Input()
-    fallbackThumbnail: string = require('../assets/images/ft_ic_miscellaneous.svg');
-
-    @Input()
     navigate: boolean = true;
 
     @Input()
