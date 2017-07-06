@@ -42,5 +42,8 @@
                 }
             }
         }
+    },
+    "PERMISSON": {
+        "LACKOF": "You don't have the {{permission}} permission to {{action}} the {{type}}"
     }
 }
