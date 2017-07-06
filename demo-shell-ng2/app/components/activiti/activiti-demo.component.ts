@@ -42,11 +42,10 @@ import {
     ObjectDataRow,
     DataSorting
 } from 'ng2-alfresco-datatable';
-import { AlfrescoApiService, FileUploadCompleteEvent } from 'ng2-alfresco-core';
-import { FormService, FormRenderingService, FormEvent, FormFieldEvent } from 'ng2-activiti-form';
+import { AlfrescoApiService } from 'ng2-alfresco-core';
+import { FormService, FormRenderingService, FormEvent, FormFieldEvent, ProcessUploadService } from 'ng2-activiti-form';
 import { /*CustomEditorComponent*/ CustomStencil01 } from './custom-editor/custom-editor.component';
 import { UploadService } from 'ng2-alfresco-upload';
-import { ProcessUploadService } from '../../services/process-upload.service';
 
 declare var componentHandler;
 
@@ -283,7 +282,7 @@ export class ActivitiDemoComponent implements AfterViewInit {
         this.contentName = content.name;
     }
 
-    onFileUploadComplete(content: FileUploadCompleteEvent) {
+    onFileUploadComplete(content: any) {
         this.taskAttachList.add(content);
     }
 

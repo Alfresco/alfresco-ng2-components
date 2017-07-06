@@ -16,12 +16,10 @@
  */
 
 import { Injectable } from '@angular/core';
-
-import { UploadService } from 'ng2-alfresco-upload';
-import { AlfrescoApiService } from 'ng2-alfresco-core';
+import { AlfrescoApiService, BaseUploadService } from 'ng2-alfresco-core';
 
 @Injectable()
-export class ProcessUploadService extends UploadService {
+export class ProcessUploadService extends BaseUploadService {
 
     instanceApi: AlfrescoApiService;
 
