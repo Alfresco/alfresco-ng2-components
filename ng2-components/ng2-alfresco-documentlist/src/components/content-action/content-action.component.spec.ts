@@ -160,7 +160,7 @@ describe('ContentAction', () => {
         expect(documentList.actions.length).toBe(1);
 
         let model = documentList.actions[0];
-        model.handler('<obj>');
+        model.execute('<obj>');
     });
 
     it('should sync localizable fields with model', () => {
@@ -226,7 +226,7 @@ describe('ContentAction', () => {
         action.execute = handler;
 
         action.ngOnInit();
-        action.model.handler(file);
+        action.model.execute(file);
     });
 
     it('should allow registering model without handler', () => {

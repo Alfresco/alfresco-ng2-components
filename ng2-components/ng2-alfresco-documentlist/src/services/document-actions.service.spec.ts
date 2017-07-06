@@ -116,6 +116,20 @@ describe('DocumentActionsService', () => {
 
     });
 
+    it('should call the error on the returned Observable if there are no permissions', (done) => {
+        spyOn(documentListService, 'deleteNode').and.callThrough();
+
+        let file = new FileNode();
+        const deleteObservable = service.getHandler('delete')(file);
+
+        deleteObservable.subscribe({
+            error: (error) => {
+                expect(error.message).toEqual('No permission to delete');
+                done();
+            }
+        });
+    });
+
     it('should delete the file node if there is the delete permission', () => {
         spyOn(documentListService, 'deleteNode').and.callThrough();
 
@@ -190,19 +204,26 @@ describe('DocumentActionsService', () => {
         let actionService = new DocumentActionsService(null, contentService);
         let file = new FileNode();
         let result = actionService.getHandler('download')(file);
-        expect(result).toBeFalsy();
+        result.subscribe((value) => {
+            expect(value).toBeFalsy();
+        });
     });
 
     it('should require content service for download action', () => {
         let actionService = new DocumentActionsService(documentListService, null);
         let file = new FileNode();
         let result = actionService.getHandler('download')(file);
-        expect(result).toBeFalsy();
+        result.subscribe((value) => {
+            expect(value).toBeFalsy();
+        });
     });
 
     it('should require file node for download action', () => {
         let folder = new FolderNode();
-        expect(service.getHandler('download')(folder)).toBeFalsy();
+        let result = service.getHandler('download')(folder);
+        result.subscribe((value) => {
+            expect(value).toBeFalsy();
+        });
     });
 
     it('should delete file node', () => {
@@ -212,9 +233,10 @@ describe('DocumentActionsService', () => {
         let file = new FileNode();
         let fileWithPermission: any = file;
         fileWithPermission.entry.allowableOperations = [permission];
-        service.getHandler('delete')(fileWithPermission, null, permission);
+        const deleteObservale = service.getHandler('delete')(fileWithPermission, null, permission);
 
         expect(documentListService.deleteNode).toHaveBeenCalledWith(file.entry.id);
+        expect(deleteObservale.subscribe).toBeDefined;
     });
 
     it('should support deletion only file node', () => {
