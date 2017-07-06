@@ -19,6 +19,7 @@ export class ContentActionModel {
     icon: string;
     title: string;
     handler: ContentActionHandler;
+    execute: Function;
     target: string;
     permission: string;
     disableWithNoPermission: boolean = false;
@@ -29,6 +30,7 @@ export class ContentActionModel {
             this.icon = obj.icon;
             this.title = obj.title;
             this.handler = obj.handler;
+            this.execute = obj.execute;
             this.target = obj.target;
             this.permission = obj.permission;
             this.disableWithNoPermission = obj.disableWithNoPermission;

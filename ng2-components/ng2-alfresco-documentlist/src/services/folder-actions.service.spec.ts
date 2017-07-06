@@ -119,9 +119,10 @@ describe('FolderActionsService', () => {
         let folder = new FolderNode();
         let folderWithPermission: any = folder;
         folderWithPermission.entry.allowableOperations = [ permission ];
-        service.getHandler('delete')(folderWithPermission, null, permission);
+        const deleteObservale = service.getHandler('delete')(folderWithPermission, null, permission);
 
         expect(documentListService.deleteNode).toHaveBeenCalledWith(folder.entry.id);
+        expect(deleteObservale.subscribe).toBeDefined;
     });
 
     it('should not delete the folder node if there is no delete permission', (done) => {
@@ -138,6 +139,23 @@ describe('FolderActionsService', () => {
         let folderWithPermission: any = folder;
         folderWithPermission.entry.allowableOperations = ['create', 'update'];
         service.getHandler('delete')(folderWithPermission);
+    });
+
+    it('should call the error on the returned Observable if there is no delete permission', (done) => {
+        spyOn(documentListService, 'deleteNode').and.callThrough();
+
+        let folder = new FolderNode();
+        let folderWithPermission: any = folder;
+        folderWithPermission.entry.allowableOperations = ['create', 'update'];
+        const deleteObservable = service.getHandler('delete')(folderWithPermission);
+
+        deleteObservable.subscribe({
+            error: (error) => {
+                expect(error.message).toEqual('No permission to delete');
+                done();
+            }
+        });
+
     });
 
     it('should delete the folder node if there is the delete and others permission ', () => {
