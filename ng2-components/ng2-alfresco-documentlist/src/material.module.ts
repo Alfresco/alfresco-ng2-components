@@ -16,18 +16,14 @@
  */
 
 import { NgModule } from '@angular/core';
-import { MdButtonModule, MdDialogModule, MdIconModule, MdInputModule, MdMenuModule, MdProgressSpinnerModule, MdRippleModule, MdSelectModule } from '@angular/material';
+import { MdButtonModule, MdIconModule, MdMenuModule, MdProgressSpinnerModule } from '@angular/material';
 
 export function modules() {
     return [
         MdMenuModule,
-        MdDialogModule,
         MdButtonModule,
         MdIconModule,
-        MdInputModule,
-        MdProgressSpinnerModule,
-        MdSelectModule,
-        MdRippleModule
+        MdProgressSpinnerModule
     ];
 }
 
