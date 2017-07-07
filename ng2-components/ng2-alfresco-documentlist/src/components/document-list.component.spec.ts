@@ -16,25 +16,25 @@
  */
 
 import { NgZone, SimpleChange, TemplateRef } from '@angular/core';
-import { DataTableComponent, DataColumn, DataRowEvent } from 'ng2-alfresco-datatable';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
-import { DocumentListComponent } from './document-list.component';
-import { DocumentListService } from './../services/document-list.service';
-import { ContentActionModel } from '../models/content-action.model';
-import { FileNode, FolderNode } from '../assets/document-library.model.mock';
-import { NodeMinimalEntry, NodeMinimal, NodePaging } from '../models/document-library.model';
-import { ShareDataRow, RowFilter, ImageResolver } from './../data/share-datatable-adapter';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
-import { DocumentMenuActionComponent } from './document-menu-action.component';
+import { DataColumn, DataRowEvent, DataTableComponent } from 'ng2-alfresco-datatable';
 import { Observable, Subject } from 'rxjs/Rx';
+import { FileNode, FolderNode } from '../assets/document-library.model.mock';
 import {
-    fakeNodeAnswerWithNOEntries,
     fakeNodeAnswerWithEntries,
+    fakeNodeAnswerWithNOEntries,
     fakeNodeWithCreatePermission,
     fakeNodeWithNoPermission
 } from '../assets/document-list.component.mock';
-import { MdProgressSpinnerModule } from '@angular/material';
+import { MaterialModule } from '../material.module';
+import { ContentActionModel } from '../models/content-action.model';
+import { NodeMinimal, NodeMinimalEntry, NodePaging } from '../models/document-library.model';
+import { ImageResolver, RowFilter, ShareDataRow } from './../data/share-datatable-adapter';
+import { DocumentListService } from './../services/document-list.service';
+import { DocumentListComponent } from './document-list.component';
+import { DocumentMenuActionComponent } from './document-menu-action.component';
 
 declare let jasmine: any;
 
@@ -54,7 +54,7 @@ describe('DocumentList', () => {
             imports: [
                 CoreModule.forRoot(),
                 DataTableModule.forRoot(),
-                MdProgressSpinnerModule
+                MaterialModule
             ],
             declarations: [
                 DocumentListComponent,
