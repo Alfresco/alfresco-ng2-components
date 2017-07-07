@@ -16,12 +16,12 @@
  */
 
 import { EventEmitter, Injectable } from '@angular/core';
+import * as minimatch from 'minimatch';
 import { Subject } from 'rxjs/Rx';
+import { FileUploadCompleteEvent, FileUploadEvent } from '../events/file.event';
+import { FileModel, FileUploadProgress, FileUploadStatus } from '../models/file.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AppConfigService } from './app-config.service';
-import { FileUploadEvent, FileUploadCompleteEvent } from '../events/file.event';
-import { FileModel, FileUploadProgress, FileUploadStatus } from '../models/file.model';
-import * as minimatch from 'minimatch';
 
 @Injectable()
 export class UploadService {
@@ -144,8 +144,23 @@ export class UploadService {
     }
 
     getUploadPromise(file: FileModel) {
-        // your custom API call
-        return null;
+        let opts: any = {
+                renditions: 'doclib'
+            };
+
+        if (file.options.newVersion === true) {
+            opts.overwrite = true;
+            opts.majorVersion = true;
+        } else {
+            opts.autoRename = true;
+        }
+        return this.apiService.getInstance().upload.uploadFile(
+            file.file,
+            file.options.path,
+            file.options.parentId,
+            null,
+            opts
+        );
     }
 
     private beginUpload(file: FileModel, /* @deprecated */emitter: EventEmitter<any>): any {
