@@ -38,26 +38,27 @@
 
 .assignment-list-container {
     padding: 0px;
+    width: 100%;
 }
 
-adf-people-list >>> alfresco-datatable >>> thead {
+adf-people-list >>> adf-datatable >>> thead {
     display: none;
 }
 
-adf-people-list >>> alfresco-datatable >>> .people-full-name {
+adf-people-list >>> adf-datatable >>> .people-full-name {
     font-family: 'Muli';
 }
 
-adf-people-list >>> alfresco-datatable >>> .people-email {
+adf-people-list >>> adf-datatable >>> .people-email {
     font-family: 'Muli';
     opacity: 0.54;
 }
 
-adf-people-list >>> alfresco-datatable >>> .people-edit-label {
+adf-people-list >>> adf-datatable >>> .people-edit-label {
     font-family: 'Muli';
 }
 
-adf-people-list >>> alfresco-datatable >>> .people-pic {
+adf-people-list >>> adf-datatable >>> .people-pic {
     background: #ffc800;
     padding: 12px 10px;
     border-radius: 100px;
@@ -69,6 +70,6 @@ adf-people-list >>> alfresco-datatable >>> .people-pic {
     text-transform: uppercase
 }
 
-adf-people-list >>> alfresco-datatable >>> td.mdl-data-table__cell--non-numeric.non-selectable.data-cell{
+adf-people-list >>> adf-datatable >>> td.mdl-data-table__cell--non-numeric.non-selectable.data-cell{
     padding: 10px;
 }
