@@ -32,8 +32,7 @@ describe('FolderActionsService', () => {
     });
 
     it('should register custom action handler', () => {
-        let handler: ContentActionHandler = function (obj: any) {
-        };
+        let handler: ContentActionHandler = function () {};
         service.setHandler('<key>', handler);
         expect(service.getHandler('<key>')).toBe(handler);
     });
@@ -43,8 +42,7 @@ describe('FolderActionsService', () => {
     });
 
     it('should be case insensitive for keys', () => {
-        let handler: ContentActionHandler = function (obj: any) {
-        };
+        let handler: ContentActionHandler = function () {};
         service.setHandler('<key>', handler);
         expect(service.getHandler('<KEY>')).toBe(handler);
     });
@@ -69,8 +67,7 @@ describe('FolderActionsService', () => {
     });
 
     it('should set new handler only by key', () => {
-        let handler: ContentActionHandler = function (obj: any) {
-        };
+        let handler: ContentActionHandler = function () {};
         expect(service.setHandler(null, handler)).toBeFalsy();
         expect(service.setHandler('', handler)).toBeFalsy();
         expect(service.setHandler('my-handler', handler)).toBeTruthy();
@@ -122,7 +119,7 @@ describe('FolderActionsService', () => {
         const deleteObservale = service.getHandler('delete')(folderWithPermission, null, permission);
 
         expect(documentListService.deleteNode).toHaveBeenCalledWith(folder.entry.id);
-        expect(deleteObservale.subscribe).toBeDefined;
+        expect(deleteObservale.subscribe).toBeDefined();
     });
 
     it('should not delete the folder node if there is no delete permission', (done) => {
