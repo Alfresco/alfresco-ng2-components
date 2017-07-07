@@ -17,14 +17,14 @@
 
 import { EventEmitter } from '@angular/core';
 
-import { DocumentListComponent } from './../document-list.component';
+import { FileNode } from './../../assets/document-library.model.mock';
 import { DocumentListServiceMock } from './../../assets/document-list.service.mock';
-import { ContentActionListComponent } from './content-action-list.component';
-import { ContentActionComponent } from './content-action.component';
+import { ContentActionHandler } from './../../models/content-action.model';
 import { DocumentActionsService } from './../../services/document-actions.service';
 import { FolderActionsService } from './../../services/folder-actions.service';
-import { ContentActionHandler } from './../../models/content-action.model';
-import { FileNode } from './../../assets/document-library.model.mock';
+import { DocumentListComponent } from './../document-list.component';
+import { ContentActionListComponent } from './content-action-list.component';
+import { ContentActionComponent } from './content-action.component';
 
 describe('ContentAction', () => {
 

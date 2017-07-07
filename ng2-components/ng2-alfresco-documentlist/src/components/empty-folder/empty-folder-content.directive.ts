@@ -21,7 +21,7 @@ import { DocumentListComponent } from './../document-list.component';
 @Directive({
     selector: 'empty-folder-content'
 })
-export class EmptyFolderContentComponent implements AfterContentInit {
+export class EmptyFolderContentDirective implements AfterContentInit {
 
     @ContentChild(TemplateRef)
     template: any;

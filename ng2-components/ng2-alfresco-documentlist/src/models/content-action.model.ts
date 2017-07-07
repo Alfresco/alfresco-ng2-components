@@ -39,9 +39,7 @@ export class ContentActionModel {
     }
 }
 
-export interface ContentActionHandler {
-    (obj: any, target?: any, permission?: string): any;
-}
+export type ContentActionHandler = (obj: any, target?: any, permission?: string) => any;
 
 export class DocumentActionModel extends ContentActionModel {
     constructor(json?: any)  {

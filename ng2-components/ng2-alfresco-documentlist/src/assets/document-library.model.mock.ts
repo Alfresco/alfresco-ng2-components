@@ -16,12 +16,12 @@
  */
 
 import {
-    NodePaging,
-    NodeMinimalEntry,
-    NodeMinimal,
-    PathInfoEntity,
     ContentInfo,
-    NodePagingList
+    NodeMinimal,
+    NodeMinimalEntry,
+    NodePaging,
+    NodePagingList,
+    PathInfoEntity
 } from '../models/document-library.model';
 
 export class PageNode extends NodePaging {
