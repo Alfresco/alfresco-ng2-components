@@ -99,6 +99,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     @Input()
     rowStyleClass: string;
 
+    @Input()
+    loading: boolean = false;
+
     skipCount: number = 0;
 
     pagination: Pagination;
@@ -160,9 +163,6 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     emptyFolderTemplate: TemplateRef<any>;
     contextActionHandler: Subject<any> = new Subject();
     data: ShareDataTableAdapter;
-
-    @Input()
-    loading: boolean = false;
 
     private currentNodeAllowableOperations: string[] = [];
     private CREATE_PERMISSION = 'create';
