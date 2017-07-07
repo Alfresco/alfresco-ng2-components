@@ -16,11 +16,11 @@
  */
 
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { CoreModule, AppConfigModule } from 'ng2-alfresco-core';
-import { TagList } from './../components/tag-list.component';
-import { TagService } from '../services/tag.service';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MdInputModule } from '@angular/material';
+import { AppConfigModule, CoreModule } from 'ng2-alfresco-core';
+import { TagService } from '../services/tag.service';
+import { TagList } from './../components/tag-list.component';
 
 declare let jasmine: any;
 

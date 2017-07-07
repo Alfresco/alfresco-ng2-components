@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { TagActionsComponent } from '../components/tag-actions.component';
 import { DebugElement }    from '@angular/core';
-import { CoreModule, AppConfigModule } from 'ng2-alfresco-core';
-import { TagService } from '../services/tag.service';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MdInputModule } from '@angular/material';
+import { AppConfigModule, CoreModule } from 'ng2-alfresco-core';
+import { TagActionsComponent } from '../components/tag-actions.component';
+import { TagService } from '../services/tag.service';
 
 declare let jasmine: any;
 

@@ -1,4 +1,7 @@
 {
+    "rulesDirectory": [
+        "node_modules/codelyzer"
+    ],
     "rules": {
         "align": [
             true,
@@ -113,6 +116,7 @@
             "check-type",
             "check-module",
             "check-decl"
-        ]
+        ],
+        "ordered-imports": true
     }
 }

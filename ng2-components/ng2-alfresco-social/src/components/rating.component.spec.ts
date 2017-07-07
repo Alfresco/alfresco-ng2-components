@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { RatingComponent } from '../components/rating.component';
 import { DebugElement }    from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
+import { RatingComponent } from '../components/rating.component';
 import { RatingService } from '../services/rating.service';
 
 declare let jasmine: any;
