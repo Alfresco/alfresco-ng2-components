@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
-import { WidgetComponent , baseHost } from './../widget.component';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 import { ExternalContent } from '../core/external-content';
 import { ExternalContentLink } from '../core/external-content-link';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormService } from './../../../services/form.service';
+import { baseHost , WidgetComponent } from './../widget.component';
 
 declare let dialogPolyfill: any;
 

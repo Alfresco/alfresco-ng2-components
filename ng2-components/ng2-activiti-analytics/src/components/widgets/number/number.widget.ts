@@ -15,20 +15,16 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-/* tslint:disable::no-access-missing-member */
-import { Component, ElementRef, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, Input } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { WidgetComponent } from './../widget.component';
 
 @Component({
     selector: 'number-widget',
     templateUrl: './number.widget.html',
-    styleUrls: ['./number.widget.scss'],
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./number.widget.css']
 })
-export class NumberWidgetComponent extends WidgetComponent implements OnInit {
+export class NumberWidget extends WidgetComponent {
 
     @Input()
     field: any;

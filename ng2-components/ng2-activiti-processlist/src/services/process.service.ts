@@ -16,14 +16,14 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 import { RestVariable } from 'alfresco-js-api';
-import { ProcessInstance, ProcessDefinitionRepresentation } from '../models/index';
+import { AppDefinitionRepresentationModel, Comment, TaskDetailsModel, User } from 'ng2-activiti-tasklist';
+import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Observable';
+import { FilterProcessRepresentationModel } from '../models/filter-process.model';
+import { ProcessDefinitionRepresentation, ProcessInstance } from '../models/index';
 import { ProcessFilterRequestRepresentation } from '../models/process-instance-filter.model';
 import { ProcessInstanceVariable } from './../models/process-instance-variable.model';
-import { AppDefinitionRepresentationModel, Comment, TaskDetailsModel, User } from 'ng2-activiti-tasklist';
-import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 
 declare let moment: any;
 

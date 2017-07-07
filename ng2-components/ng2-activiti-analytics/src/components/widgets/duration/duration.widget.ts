@@ -15,21 +15,17 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-/* tslint:disable::no-access-missing-member */
-import { Component, ElementRef, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ParameterValueModel, ReportParameterDetailsModel } from 'ng2-activiti-diagrams';
-import { NumberWidgetComponent } from './../number/number.widget';
+import { ParameterValueModel, ReportParameterDetailsModel } from './../../../models/report.model';
+import { NumberWidget } from './../number/number.widget';
 
 @Component({
     selector: 'duration-widget',
     templateUrl: './duration.widget.html',
-    styleUrls: ['./duration.widget.scss'],
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./duration.widget.css']
 })
-export class DurationWidgetComponent extends NumberWidgetComponent implements OnInit {
+export class DurationWidget extends NumberWidget implements OnInit {
 
     @Input()
     field: any;

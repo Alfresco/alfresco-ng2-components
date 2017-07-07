@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { DebugElement, SimpleChange } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { ActivitiFormModule, FormService } from 'ng2-activiti-form';
+import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Rx';
 
-import { TranslationMock } from './../assets/translation.service.mock';
-import { newProcess, fakeProcessDefs, fakeProcessDefWithForm, taskFormMock } from './../assets/activiti-start-process.component.mock';
-import { ActivitiStartProcessInstance } from './activiti-start-process.component';
-import { ActivitiProcessService } from '../services/activiti-process.service';
 import { RestVariable } from 'alfresco-js-api';
+import { ActivitiProcessService } from '../services/activiti-process.service';
+import { fakeProcessDefs, fakeProcessDefWithForm, newProcess, taskFormMock } from './../assets/activiti-start-process.component.mock';
+import { TranslationMock } from './../assets/translation.service.mock';
+import { ActivitiStartProcessInstance } from './activiti-start-process.component';
 
 describe('ActivitiStartProcessInstance', () => {
 

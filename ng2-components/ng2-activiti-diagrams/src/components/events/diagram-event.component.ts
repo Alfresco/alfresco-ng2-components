@@ -15,15 +15,14 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { DiagramColorService } from '../../services/diagram-color.service';
 
 @Component({
     selector: 'diagram-event',
     templateUrl: './diagram-event.component.html'
 })
-export class DiagramEventComponent implements OnInit {
+export class DiagramEventComponent {
     @Input()
     data: any;
 
@@ -38,7 +37,8 @@ export class DiagramEventComponent implements OnInit {
 
     center: any = {};
 
-    constructor(public elementRef: ElementRef) {}
+    constructor(public elementRef: ElementRef,
+                private diagramColorService: DiagramColorService) {}
 
     ngOnInit() {
 

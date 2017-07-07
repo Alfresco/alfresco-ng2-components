@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Directive, Input, HostListener, ElementRef, Renderer, OnInit, NgZone, OnDestroy } from '@angular/core';
-import { FileUtils, FileInfo } from '../utils/file-utils';
+import { Directive, ElementRef, HostListener, Input, NgZone, OnDestroy, OnInit, Renderer } from '@angular/core';
+import { FileInfo, FileUtils } from '../utils/file-utils';
 
 @Directive({
     selector: '[adf-upload]'

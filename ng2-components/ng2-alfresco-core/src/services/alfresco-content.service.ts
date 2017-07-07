@@ -17,10 +17,10 @@
 
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs/Rx';
-import { AlfrescoAuthenticationService } from './alfresco-authentication.service';
-import { AlfrescoApiService } from './alfresco-api.service';
-import { LogService } from './log.service';
 import { FolderCreatedEvent } from '../events/folder-created.event';
+import { AlfrescoApiService } from './alfresco-api.service';
+import { AlfrescoAuthenticationService } from './alfresco-authentication.service';
+import { LogService } from './log.service';
 
 @Injectable()
 export class AlfrescoContentService {

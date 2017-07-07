@@ -16,7 +16,7 @@
  */
 
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
+import { CoreModule } from 'ng2-alfresco-core';
 
 import { DIAGRAM_DIRECTIVES, DIAGRAM_PROVIDERS } from './src/components/index';
 
@@ -26,7 +26,6 @@ import { RAPHAEL_PROVIDERS } from './src/components/raphael/index';
 // primitives
 export * from './src/components/index';
 export * from './src/components/raphael/index';
-export * from './src/models/index';
 
 @NgModule({
     imports: [
@@ -38,15 +37,7 @@ export * from './src/models/index';
     ],
     providers: [
         ...DIAGRAM_PROVIDERS,
-        ...RAPHAEL_PROVIDERS,
-        {
-            provide: TRANSLATION_PROVIDER,
-            multi: true,
-            useValue: {
-                name: 'ng2-activiti-diagrams',
-                source: 'assets/ng2-activiti-diagrams'
-            }
-        }
+        ...RAPHAEL_PROVIDERS
     ],
     exports: [
         ...DIAGRAM_DIRECTIVES

@@ -16,14 +16,14 @@
  */
 
 import {DatePipe} from '@angular/common';
-import {Component, Input, ViewChild, Output, EventEmitter, OnChanges, SimpleChanges} from '@angular/core';
-import {AlfrescoTranslationService, LogService} from 'ng2-alfresco-core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {TaskDetailsEvent} from 'ng2-activiti-tasklist';
+import {AlfrescoTranslationService, LogService} from 'ng2-alfresco-core';
 
+import {ProcessInstance} from '../models/process-instance.model';
 import {ActivitiProcessService} from './../services/activiti-process.service';
 import {ActivitiProcessInstanceHeader} from './activiti-process-instance-header.component';
 import {ActivitiProcessInstanceTasks} from './activiti-process-instance-tasks.component';
-import {ProcessInstance} from '../models/process-instance.model';
 
 @Component({
     selector: 'adf-process-instance-details, activiti-process-instance-details',

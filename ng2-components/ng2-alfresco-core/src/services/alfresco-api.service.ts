@@ -16,8 +16,8 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApi } from  'alfresco-js-api';
-import * as alfrescoApi from  'alfresco-js-api';
+import { AlfrescoApi } from 'alfresco-js-api';
+import * as alfrescoApi from 'alfresco-js-api';
 import { AlfrescoSettingsService } from './alfresco-settings.service';
 import { AppConfigService } from './app-config.service';
 import { StorageService } from './storage.service';

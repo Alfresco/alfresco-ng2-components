@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
 import { DiagramEndEventComponent } from './diagram-end-event.component';
 import { DiagramEventComponent } from './diagram-event.component';
 import { DiagramStartEventComponent } from './diagram-start-event.component';

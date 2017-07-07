@@ -15,17 +15,16 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RatingService } from './../services/rating.service';
 
 @Component({
     selector: 'adf-rating',
-    styleUrls: ['./rating.component.scss'],
+    styleUrls: ['./rating.component.css'],
     templateUrl: './rating.component.html',
-    providers: [RatingService],
-    encapsulation: ViewEncapsulation.None
+    providers: [RatingService]
 })
-export class RatingComponent implements OnChanges {
+export class RatingComponent {
 
     @Input()
     nodeId: string;

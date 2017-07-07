@@ -16,17 +16,17 @@
  */
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
-import { DisplayValueWidget } from './display-value.widget';
+import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { ActivitiContent } from '../../activiti-content.component';
-import { FormFieldModel } from './../core/form-field.model';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormModel } from '../core/form.model';
-import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { CoreModule } from 'ng2-alfresco-core';
-import { FormService } from './../../../services/form.service';
 import { EcmModelService } from './../../../services/ecm-model.service';
+import { FormService } from './../../../services/form.service';
+import { FormFieldModel } from './../core/form-field.model';
+import { DisplayValueWidget } from './display-value.widget';
 
 describe('DisplayValueWidget', () => {
 

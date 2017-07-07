@@ -17,17 +17,16 @@
 
 import { Injectable } from '@angular/core';
 import { NodePaging } from 'alfresco-js-api';
+import { AlfrescoApiService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
-import { AlfrescoApiService } from './alfresco-api.service';
-import { AuthenticationService } from './authentication.service';
 
 /**
  * Internal service used by Document List component.
  */
 @Injectable()
-export class SearchService {
+export class AlfrescoSearchService {
 
-    constructor(public authService: AuthenticationService,
+    constructor(public authService: AlfrescoAuthenticationService,
                 private apiService: AlfrescoApiService) {
     }
 

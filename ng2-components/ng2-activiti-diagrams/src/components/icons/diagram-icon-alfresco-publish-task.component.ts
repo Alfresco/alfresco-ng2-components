@@ -15,15 +15,14 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { DiagramColorService } from '../../services/diagram-color.service';
 
 @Component({
     selector: 'adf-diagram-icon-publish-task, diagram-icon-alfresco-publish-task',
     templateUrl: './diagram-icon-alfresco-publish-task.component.html'
 })
-export class DiagramIconAlfrescoPublishTaskComponent implements OnInit {
+export class DiagramIconAlfrescoPublishTaskComponent {
     @Input()
     data: any;
 
@@ -34,7 +33,8 @@ export class DiagramIconAlfrescoPublishTaskComponent implements OnInit {
 
     options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: ''};
 
-    constructor(public elementRef: ElementRef) {}
+    constructor(public elementRef: ElementRef,
+                private diagramColorService: DiagramColorService) {}
 
     ngOnInit() {
         this.position = {x: this.data.x + 4, y: this.data.y + 4};

@@ -15,15 +15,14 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { DiagramColorService } from '../../services/diagram-color.service';
 
 @Component({
     selector: 'diagram-icon-signal',
     templateUrl: './diagram-icon-signal.component.html'
 })
-export class DiagramIconSignalComponent implements OnInit {
+export class DiagramIconSignalComponent {
     @Input()
     data: any;
 
@@ -37,7 +36,8 @@ export class DiagramIconSignalComponent implements OnInit {
 
     options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: ''};
 
-    constructor(public elementRef: ElementRef) {}
+    constructor(public elementRef: ElementRef,
+                private diagramColorService: DiagramColorService) {}
 
     ngOnInit() {
         this.position = {x: this.data.x - 1, y: this.data.y - 1};

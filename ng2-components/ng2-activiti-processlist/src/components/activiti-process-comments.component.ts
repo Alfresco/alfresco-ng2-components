@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, Output, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
-import { ActivitiProcessService } from './../services/activiti-process.service';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { Comment } from 'ng2-activiti-tasklist';
-import { Observer } from 'rxjs/Observer';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Observable';
+import { Observer } from 'rxjs/Observer';
+import { ActivitiProcessService } from './../services/activiti-process.service';
 
 declare let componentHandler: any;
 declare let dialogPolyfill: any;

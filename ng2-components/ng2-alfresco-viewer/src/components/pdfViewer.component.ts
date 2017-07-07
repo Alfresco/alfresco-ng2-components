@@ -15,24 +15,19 @@
  * limitations under the License.
  */
 
-import { Component, HostListener, Input, OnChanges, ViewEncapsulation } from '@angular/core';
+import { Component, HostListener, Input } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 
 declare let PDFJS: any;
 
 @Component({
-    selector: 'adf-pdf-viewer',
+    selector: 'pdf-viewer',
     templateUrl: './pdfViewer.component.html',
-    styleUrls: [
-        './pdfViewer.component.scss',
-        './pdfViewerHost.component.scss'
-    ],
-    providers: [ RenderingQueueServices ],
-    host: { 'class': 'adf-pdf-viewer' },
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./pdfViewer.component.css', './pdfViewerHost.component.css'],
+    providers: [RenderingQueueServices]
 })
-export class PdfViewerComponent implements OnChanges {
+export class PdfViewerComponent {
 
     @Input()
     urlFile: string;
@@ -50,7 +45,7 @@ export class PdfViewerComponent implements OnChanges {
     page: number;
     displayPage: number;
     totalPages: number;
-    loadingPercent: number;
+    laodingPercent: number;
     pdfViewer: any;
     currentScaleMode: string = 'auto';
     currentScale: number;
@@ -89,7 +84,7 @@ export class PdfViewerComponent implements OnChanges {
 
         loadingTask.onProgress = (progressData) => {
             let level = progressData.loaded / progressData.total;
-            this.loadingPercent = Math.round(level * 100);
+            this.laodingPercent = Math.round(level * 100);
         };
 
         loadingTask.then((pdfDocument) => {
@@ -102,11 +97,11 @@ export class PdfViewerComponent implements OnChanges {
             this.currentPdfDocument.getPage(1).then(() => {
                 this.scalePage('auto');
                 resolve();
-            }, (error) => {
+            },                                      (error) => {
                 reject(error);
             });
 
-        }, (error) => {
+        },               (error) => {
             reject(error);
         });
     }
@@ -129,7 +124,7 @@ export class PdfViewerComponent implements OnChanges {
 
         window.document.addEventListener('scroll', (event) => {
             this.watchScroll(event.target);
-        }, true);
+        },                               true);
 
         this.pdfViewer = new PDFJS.PDFViewer({
             container: documentContainer,
@@ -381,7 +376,7 @@ export class PdfViewerComponent implements OnChanges {
         bounds.top = page.div.offsetTop;
         bounds.bottom = bounds.top + page.viewport.height;
         return ((bounds.top <= viewport.bottom) && (bounds.bottom >= viewport.top));
-    }
+    };
 
     /**
      * Litener Keyboard Event

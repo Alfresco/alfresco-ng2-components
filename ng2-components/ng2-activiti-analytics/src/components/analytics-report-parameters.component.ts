@@ -16,28 +16,28 @@
  */
 
 import {
+    AfterContentChecked,
+    AfterViewChecked,
     Component,
     EventEmitter,
-    OnInit,
-    OnChanges,
     Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
     Output,
     SimpleChanges,
-    OnDestroy,
-    AfterViewChecked,
-    AfterContentChecked,
     ViewChild
 } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
-import { AlfrescoTranslationService, LogService, ContentService } from 'ng2-alfresco-core';
-import { AnalyticsService } from '../services/analytics.service';
+import { AlfrescoTranslationService, ContentService, LogService } from 'ng2-alfresco-core';
 import {
-    ReportParametersModel,
-    ReportQuery,
     ParameterValueModel,
-    ReportParameterDetailsModel
+    ReportParameterDetailsModel,
+    ReportParametersModel,
+    ReportQuery
 } from '../models/report.model';
+import { AnalyticsService } from '../services/analytics.service';
 
 declare var componentHandler;
 declare let dialogPolyfill: any;
@@ -156,37 +156,37 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                 case 'processDefinition':
                     formBuilderGroup.processDefGroup = new FormGroup({
                         processDefinitionId: new FormControl(null, Validators.required, null)
-                    }, Validators.required);
+                    },                                               Validators.required);
                     break;
                 case 'duration':
                     formBuilderGroup.durationGroup = new FormGroup({
                         duration: new FormControl(null, Validators.required, null)
-                    }, Validators.required);
+                    },                                             Validators.required);
                     break;
                 case 'dateInterval':
                     formBuilderGroup.dateIntervalGroup = new FormGroup({
                         dateRangeInterval: new FormControl(null, Validators.required, null)
-                    }, Validators.required);
+                    },                                                 Validators.required);
                     break;
                 case 'boolean':
                     formBuilderGroup.typeFilteringGroup = new FormGroup({
                         typeFiltering: new FormControl(null, Validators.required, null)
-                    }, Validators.required);
+                    },                                                  Validators.required);
                     break;
                 case 'task':
                     formBuilderGroup.taskGroup = new FormGroup({
                         taskName: new FormControl(null, Validators.required, null)
-                    }, Validators.required);
+                    },                                         Validators.required);
                     break;
                 case 'integer':
                     formBuilderGroup.processInstanceGroup = new FormGroup({
                         slowProcessInstanceInteger: new FormControl(null, Validators.required, null)
-                    }, Validators.required);
+                    },                                                    Validators.required);
                     break;
                 case 'status':
                     formBuilderGroup.statusGroup = new FormGroup({
                         status: new FormControl(null, Validators.required, null)
-                    }, Validators.required);
+                    },                                           Validators.required);
                     break;
                 default:
                     return;
@@ -379,7 +379,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     deleteReport(reportId: string) {
         this.analyticsService.deleteReport(reportId).subscribe(() => {
             this.deleteReportSuccess.emit(reportId);
-        }, error => this.logService.error(error));
+        },                                                     error => this.logService.error(error));
     }
 
     ngAfterViewChecked() {

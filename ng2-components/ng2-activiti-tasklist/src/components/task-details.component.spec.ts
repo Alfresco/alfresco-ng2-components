@@ -17,65 +17,46 @@
 
 import { NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdButtonModule, MdInputModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
 import { ActivitiFormModule, FormModel, FormOutcomeEvent, FormOutcomeModel, FormService } from 'ng2-activiti-form';
-import { AlfrescoTranslationService, CoreModule, LogService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 
 import { TaskDetailsModel } from '../models/task-details.model';
-import { User } from '../models/user.model';
 import { noDataMock, taskDetailsMock, taskFormMock, tasksMock } from './../assets/task-details.mock';
-import { PeopleService } from './../services/people.service';
-import { TaskListService } from './../services/tasklist.service';
-import { PeopleSearchComponent } from './people-search.component';
-import { TaskDetailsComponent } from './task-details.component';
+import { ActivitiPeopleService } from './../services/activiti-people.service';
+import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
+import { ActivitiTaskDetails } from './activiti-task-details.component';
 
-declare let jasmine: any;
-
-const fakeUser: User = new User({
-    id: 'fake-id',
-    firstName: 'fake-name',
-    lastName: 'fake-last',
-    email: 'fake@mail.com'
-});
-
-describe('TaskDetailsComponent', () => {
+describe('ActivitiTaskDetails', () => {
 
     let componentHandler: any;
-    let service: TaskListService;
+    let service: ActivitiTaskListService;
     let formService: FormService;
-    let component: TaskDetailsComponent;
-    let fixture: ComponentFixture<TaskDetailsComponent>;
+    let component: ActivitiTaskDetails;
+    let fixture: ComponentFixture<ActivitiTaskDetails>;
     let getTaskDetailsSpy: jasmine.Spy;
     let getFormSpy: jasmine.Spy;
     let getTasksSpy: jasmine.Spy;
-    let assignTaskSpy: jasmine.Spy;
-    let getFormTaskSpy: jasmine.Spy;
     let completeTaskSpy: jasmine.Spy;
-    let logService: LogService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                ActivitiFormModule.forRoot(),
-                MdButtonModule,
-                MdInputModule
+                ActivitiFormModule.forRoot()
             ],
             declarations: [
-                TaskDetailsComponent,
-                PeopleSearchComponent
+                ActivitiTaskDetails
             ],
             providers: [
-                TaskListService,
-                PeopleService
+                ActivitiTaskListService,
+                ActivitiPeopleService
             ],
             schemas: [ NO_ERRORS_SCHEMA ]
         }).compileComponents();
 
-        logService = TestBed.get(LogService);
         let translateService = TestBed.get(AlfrescoTranslationService);
         spyOn(translateService, 'addTranslationFolder').and.stub();
         spyOn(translateService.translate, 'get').and.callFake((key) => { return Observable.of(key); });
@@ -83,20 +64,16 @@ describe('TaskDetailsComponent', () => {
 
     beforeEach(() => {
 
-        fixture = TestBed.createComponent(TaskDetailsComponent);
+        fixture = TestBed.createComponent(ActivitiTaskDetails);
         component = fixture.componentInstance;
-        service = fixture.debugElement.injector.get(TaskListService);
+        service = fixture.debugElement.injector.get(ActivitiTaskListService);
         formService = fixture.debugElement.injector.get(FormService);
 
         getTaskDetailsSpy = spyOn(service, 'getTaskDetails').and.returnValue(Observable.of(taskDetailsMock));
         getFormSpy = spyOn(formService, 'getTaskForm').and.returnValue(Observable.of(taskFormMock));
-        taskDetailsMock.processDefinitionId = null;
-        getFormTaskSpy = spyOn(formService, 'getTask').and.returnValue(Observable.of(taskDetailsMock));
-
         getTasksSpy = spyOn(service, 'getTasks').and.returnValue(Observable.of(tasksMock));
-        assignTaskSpy = spyOn(service, 'assignTask').and.returnValue(Observable.of(fakeUser));
         completeTaskSpy = spyOn(service, 'completeTask').and.returnValue(Observable.of({}));
-        spyOn(service, 'getComments').and.returnValue(Observable.of(noDataMock));
+        spyOn(service, 'getTaskComments').and.returnValue(Observable.of(noDataMock));
         spyOn(service, 'getTaskChecklist').and.returnValue(Observable.of(noDataMock));
 
         componentHandler = jasmine.createSpyObj('componentHandler', [
@@ -122,12 +99,12 @@ describe('TaskDetailsComponent', () => {
         expect(fixture.nativeElement.innerText).toBe('TASK_DETAILS.MESSAGES.NONE');
     });
 
-    it('shoud display a form when the task has an associated form', () => {
+    it('should display a form when the task has an associated form', () => {
         component.taskId = '123';
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(fixture.debugElement.query(By.css('adf-form'))).not.toBeNull();
+            expect(fixture.debugElement.query(By.css('activiti-form'))).not.toBeNull();
         });
     });
 
@@ -137,7 +114,7 @@ describe('TaskDetailsComponent', () => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(fixture.debugElement.query(By.css('adf-form'))).toBeNull();
+            expect(fixture.debugElement.query(By.css('activiti-form'))).toBeNull();
         });
     }));
 
@@ -277,79 +254,6 @@ describe('TaskDetailsComponent', () => {
             expect(emitSpy).toHaveBeenCalled();
         });
 
-    });
-
-    describe('assign task to user', () => {
-
-        beforeEach(() => {
-            component.taskId = '123';
-            fixture.detectChanges();
-        });
-
-        beforeEach(() => {
-            jasmine.Ajax.install();
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
-
-        it('should return an observable with user search results', (done) => {
-            component.peopleSearch$.subscribe((users) => {
-                expect(users.length).toBe(2);
-                expect(users[0].firstName).toBe('fake-test-1');
-                expect(users[0].lastName).toBe('fake-last-1');
-                expect(users[0].email).toBe('fake-test-1@test.com');
-                expect(users[0].id).toBe(1);
-                done();
-            });
-            component.searchUser('fake-search-word');
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: {
-                    data: [{
-                        id: 1,
-                        firstName: 'fake-test-1',
-                        lastName: 'fake-last-1',
-                        email: 'fake-test-1@test.com'
-                    }, {
-                        id: 2,
-                        firstName: 'fake-test-2',
-                        lastName: 'fake-last-2',
-                        email: 'fake-test-2@test.com'
-                    }]
-                }
-            });
-        });
-
-        it('should return an empty list for not valid search', (done) => {
-            component.peopleSearch$.subscribe((users) => {
-                expect(users.length).toBe(0);
-                done();
-            });
-            component.searchUser('fake-search-word');
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: {}
-            });
-        });
-
-        it('should log error message when search fails', async(() => {
-            component.peopleSearch$.subscribe(() => {
-                expect(logService.error).toHaveBeenCalledWith('Could not load users');
-            });
-            component.searchUser('fake-search');
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 403
-            });
-        }));
-
-        it('should assign task to user', () => {
-            component.assignTaskToUser(fakeUser);
-            expect(assignTaskSpy).toHaveBeenCalled();
-        });
     });
 
 });

@@ -15,24 +15,24 @@
  * limitations under the License.
  */
 
-import { NgModule, ModuleWithProviders } from '@angular/core';
-import { MdCheckboxModule, MdTabsModule, MdCardModule, MdButtonModule, MdIconModule, MdSlideToggleModule, MdInputModule } from '@angular/material';
+import { ModuleWithProviders, NgModule } from '@angular/core';
+import { HttpModule } from '@angular/http';
+import { MdButtonModule, MdCardModule, MdCheckboxModule, MdIconModule, MdInputModule, MdSlideToggleModule, MdTabsModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
-import { ActivitiForm } from './src/components/activiti-form.component';
-import { ADFFormList } from './src/components/adf-form-list.component';
 import { ActivitiContent } from './src/components/activiti-content.component';
-import { FormFieldComponent } from './src/components/form-field/form-field.component';
+import { ActivitiForm } from './src/components/activiti-form.component';
 import { ActivitiStartForm } from './src/components/activiti-start-form.component';
-import { FormService } from './src/services/form.service';
+import { ADFFormList } from './src/components/adf-form-list.component';
+import { FormFieldComponent } from './src/components/form-field/form-field.component';
+import { MASK_DIRECTIVE, WIDGET_DIRECTIVES } from './src/components/widgets/index';
+import { ActivitiAlfrescoContentService } from './src/services/activiti-alfresco.service';
 import { ActivitiContentService } from './src/services/activiti-content-service';
 import { EcmModelService } from './src/services/ecm-model.service';
+import { FormRenderingService } from './src/services/form-rendering.service';
+import { FormService } from './src/services/form.service';
 import { NodeService } from './src/services/node.service';
 import { WidgetVisibilityService } from './src/services/widget-visibility.service';
-import { ActivitiAlfrescoContentService } from './src/services/activiti-alfresco.service';
-import { FormRenderingService } from './src/services/form-rendering.service';
-import { HttpModule } from '@angular/http';
-import { WIDGET_DIRECTIVES, MASK_DIRECTIVE } from './src/components/widgets/index';
 
 export * from './src/components/activiti-form.component';
 export * from './src/components/adf-form-list.component';

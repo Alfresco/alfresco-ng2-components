@@ -17,9 +17,9 @@
 
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
+import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
+import { AlfrescoApiService, AlfrescoAuthenticationService, AlfrescoContentService, LogService, ThumbnailService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
-import { NodePaging, MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { AlfrescoAuthenticationService, AlfrescoContentService, AlfrescoApiService, LogService, ThumbnailService } from 'ng2-alfresco-core';
 
 @Injectable()
 export class DocumentListService {

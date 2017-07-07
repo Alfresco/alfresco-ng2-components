@@ -15,15 +15,13 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
     selector: 'diagram-google-drive-publish-task',
     templateUrl: './diagram-google-drive-publish-task.component.html'
 })
-export class DiagramGoogleDrivePublishTaskComponent implements OnInit {
+export class DiagramGoogleDrivePublishTaskComponent {
     @Input()
     data: any;
 

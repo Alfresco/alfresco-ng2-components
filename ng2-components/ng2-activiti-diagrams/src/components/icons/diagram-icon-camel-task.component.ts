@@ -15,15 +15,14 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { DiagramColorService } from '../../services/diagram-color.service';
 
 @Component({
     selector: 'diagram-icon-camel-task',
     templateUrl: './diagram-icon-camel-task.component.html'
 })
-export class DiagramIconCamelTaskComponent implements OnInit {
+export class DiagramIconCamelTaskComponent {
     @Input()
     data: any;
 
@@ -34,7 +33,8 @@ export class DiagramIconCamelTaskComponent implements OnInit {
 
     options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: ''};
 
-    constructor(public elementRef: ElementRef) {}
+    constructor(public elementRef: ElementRef,
+                private diagramColorService: DiagramColorService) {}
 
     ngOnInit() {
         this.position = {x: this.data.x + 8, y: this.data.y + 6};

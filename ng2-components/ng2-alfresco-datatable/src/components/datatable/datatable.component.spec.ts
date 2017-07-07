@@ -16,18 +16,18 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MdCheckboxChange, MdCheckboxModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
-import { MdCheckboxModule, MdCheckboxChange } from '@angular/material';
-import { DataTableComponent } from './datatable.component';
-import { DataTableCellComponent } from './datatable-cell.component';
 import {
-    DataRow,
     DataColumn,
+    DataRow,
     DataSorting,
-    ObjectDataTableAdapter,
-    ObjectDataColumn
+    ObjectDataColumn,
+    ObjectDataTableAdapter
 } from './../../data/index';
+import { DataTableCellComponent } from './datatable-cell.component';
+import { DataTableComponent } from './datatable.component';
 
 describe('DataTable', () => {
 

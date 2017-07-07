@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 import { CoreModule } from 'ng2-alfresco-core';
-import { AlfrescoSearchService } from './src/services/alfresco-search.service';
-import { AlfrescoSearchComponent } from './src/components/alfresco-search.component';
-import { AlfrescoSearchControlComponent } from './src/components/alfresco-search-control.component';
-import { AlfrescoSearchAutocompleteComponent } from './src/components/alfresco-search-autocomplete.component';
 import { DocumentListModule } from 'ng2-alfresco-documentlist';
+import { AlfrescoSearchAutocompleteComponent } from './src/components/alfresco-search-autocomplete.component';
+import { AlfrescoSearchControlComponent } from './src/components/alfresco-search-control.component';
+import { AlfrescoSearchComponent } from './src/components/alfresco-search.component';
+import { AlfrescoSearchService } from './src/services/alfresco-search.service';
 
 // services
 export * from './src/services/alfresco-search.service';

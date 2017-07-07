@@ -16,9 +16,9 @@
  */
 
 import { Component } from '@angular/core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { DiagramTooltip } from './diagram-tooltip.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { DiagramTooltip } from './diagram-tooltip.component';
 
 @Component({
     template: `

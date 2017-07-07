@@ -17,15 +17,14 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdProgressSpinnerModule } from '@angular/material';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { DataRowEvent, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 import { Observable } from 'rxjs/Rx';
-import { TaskListService } from '../services/tasklist.service';
-import { TaskListComponent } from './tasklist.component';
+import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
+import { ActivitiTaskList } from './activiti-tasklist.component';
 
-describe('TaskListComponent', () => {
+describe('ActivitiTaskList', () => {
 
     let fakeGlobalTask = [
         {
@@ -66,10 +65,7 @@ describe('TaskListComponent', () => {
             id: 2, name: '', description: 'descriptionFake2', category: null,
             assignee: {
                 id: 1, firstName: 'fistNameFake2', lastName: 'Administrator2', email: 'admin'
-            },
-            created: '2017-03-01T12:25:17.189+0000',
-            dueDate: '2017-04-02T12:25:17.189+0000',
-            endDate: null
+            }
         }
     ];
 
@@ -83,22 +79,21 @@ describe('TaskListComponent', () => {
     };
 
     let componentHandler: any;
-    let component: TaskListComponent;
-    let fixture: ComponentFixture<TaskListComponent>;
-    let taskListService: TaskListService;
+    let component: ActivitiTaskList;
+    let fixture: ComponentFixture<ActivitiTaskList>;
+    let taskListService: ActivitiTaskListService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                DataTableModule,
-                MdProgressSpinnerModule
+                DataTableModule
             ],
             declarations: [
-                TaskListComponent
+                ActivitiTaskList
             ],
             providers: [
-                TaskListService
+                ActivitiTaskListService
             ]
         }).compileComponents();
 
@@ -109,10 +104,10 @@ describe('TaskListComponent', () => {
 
     beforeEach(() => {
 
-        fixture = TestBed.createComponent(TaskListComponent);
+        fixture = TestBed.createComponent(ActivitiTaskList);
         component = fixture.componentInstance;
 
-        taskListService = TestBed.get(TaskListService);
+        taskListService = TestBed.get(ActivitiTaskListService);
 
         componentHandler = jasmine.createSpyObj('componentHandler', [
             'upgradeAllRegistered',
@@ -206,54 +201,6 @@ describe('TaskListComponent', () => {
 
         component.ngAfterContentInit();
         component.ngOnChanges({'state': state, 'processDefinitionKey': processDefinitionKey, 'assignment': assignment});
-        fixture.detectChanges();
-    });
-
-    it('should return the filtered task list by processInstanceId', (done) => {
-        spyOn(taskListService, 'getTotalTasks').and.returnValue(Observable.of(fakeGlobalTotalTasks));
-        spyOn(taskListService, 'getTasks').and.returnValue(Observable.of(fakeGlobalTask));
-
-        let state = new SimpleChange(null, 'open', true);
-        let processInstanceId = new SimpleChange(null, 'fakeprocessId', true);
-        let assignment = new SimpleChange(null, 'fake-assignee', true);
-
-        component.onSuccess.subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(component.data).toBeDefined();
-            expect(component.isListEmpty()).not.toBeTruthy();
-            expect(component.data.getRows().length).toEqual(2);
-            expect(component.data.getRows()[0].getValue('name')).toEqual('nameFake1');
-            expect(component.data.getRows()[0].getValue('processInstanceId')).toEqual(2511);
-            done();
-        });
-
-        component.ngAfterContentInit();
-        component.ngOnChanges({'state': state, 'processInstanceId': processInstanceId, 'assignment': assignment});
-        fixture.detectChanges();
-    });
-
-    it('should return the filtered task list for all state', (done) => {
-        spyOn(taskListService, 'getTotalTasks').and.returnValue(Observable.of(fakeGlobalTotalTasks));
-        spyOn(taskListService, 'getTasks').and.returnValue(Observable.of(fakeGlobalTask));
-
-        let state = new SimpleChange(null, 'all', true);
-        let processInstanceId = new SimpleChange(null, 'fakeprocessId', true);
-
-        component.onSuccess.subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(component.data).toBeDefined();
-            expect(component.isListEmpty()).not.toBeTruthy();
-            expect(component.data.getRows().length).toEqual(2);
-            expect(component.data.getRows()[0].getValue('name')).toEqual('nameFake1');
-            expect(component.data.getRows()[0].getValue('processInstanceId')).toEqual(2511);
-            expect(component.data.getRows()[0].getValue('endDate')).toBeDefined();
-            expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
-            expect(component.data.getRows()[1].getValue('endDate')).toBeNull();
-            done();
-        });
-
-        component.ngAfterContentInit();
-        component.ngOnChanges({'state': state, 'processInstanceId': processInstanceId});
         fixture.detectChanges();
     });
 

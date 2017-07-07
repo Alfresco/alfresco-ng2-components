@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
 import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { DiagramColorService } from '../../services/diagram-color.service';
 
 @Component({
     selector: 'diagram-container-icon-event',
@@ -36,5 +35,9 @@ export class DiagramContainerIconEventTaskComponent {
     @Output()
     onError = new EventEmitter();
 
-    constructor(public elementRef: ElementRef) {}
+    constructor(public elementRef: ElementRef,
+                private diagramColorService: DiagramColorService) {}
+
+    ngOnInit() {
+    }
 }

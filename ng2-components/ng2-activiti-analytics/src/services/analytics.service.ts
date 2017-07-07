@@ -17,7 +17,8 @@
 
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
-import { ParameterValueModel, ReportParametersModel } from 'ng2-activiti-diagrams';
+import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Rx';
 import {
     BarChart,
     Chart,
@@ -26,9 +27,8 @@ import {
     MultiBarChart,
     PieChart,
     TableChart
-} from 'ng2-activiti-diagrams';
-import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
-import { Observable } from 'rxjs/Rx';
+} from '../models/chart.model';
+import { ParameterValueModel, ReportParametersModel } from '../models/report.model';
 
 @Injectable()
 export class AnalyticsService {

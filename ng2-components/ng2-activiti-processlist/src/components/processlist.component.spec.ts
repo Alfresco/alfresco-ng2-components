@@ -17,41 +17,39 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { MdProgressSpinnerModule } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
-import { ProcessInstanceListComponent } from './processlist.component';
+import { ActivitiProcessInstanceListComponent } from './activiti-processlist.component';
 
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { DataRowEvent, DataSorting, DataTableModule, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 
-import { fakeProcessInstances, fakeProcessInstancesWithNoName } from '../assets/process-instances-list.mock';
-import { ProcessService } from '../services/process.service';
+import { fakeProcessInstances, fakeProcessInstancesWithNoName } from '../assets/activiti-process-instances-list.mock';
+import { ActivitiProcessService } from '../services/activiti-process.service';
 import { TranslationMock } from './../assets/translation.service.mock';
 
-describe('ProcessInstanceListComponent', () => {
+describe('ActivitiProcessInstanceListComponent', () => {
 
     let componentHandler: any;
-    let fixture: ComponentFixture<ProcessInstanceListComponent>;
-    let component: ProcessInstanceListComponent;
-    let service: ProcessService;
+    let fixture: ComponentFixture<ActivitiProcessInstanceListComponent>;
+    let component: ActivitiProcessInstanceListComponent;
+    let service: ActivitiProcessService;
     let getProcessInstancesSpy: jasmine.Spy;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                DataTableModule.forRoot(),
-                MdProgressSpinnerModule
+                DataTableModule.forRoot()
             ],
-            declarations: [ ProcessInstanceListComponent ],
+            declarations: [ ActivitiProcessInstanceListComponent ],
             providers: [
-                ProcessService,
+                ActivitiProcessService,
                 {provide: AlfrescoTranslationService, useClass: TranslationMock}
             ]
         }).compileComponents().then(() => {
-            fixture = TestBed.createComponent(ProcessInstanceListComponent);
+            fixture = TestBed.createComponent(ActivitiProcessInstanceListComponent);
             component = fixture.componentInstance;
-            service = fixture.debugElement.injector.get(ProcessService);
+            service = fixture.debugElement.injector.get(ActivitiProcessService);
 
             getProcessInstancesSpy = spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeProcessInstances));
 

@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { Observable } from 'rxjs/Rx';
 import { SimpleChange } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
-import { ActivitiForm } from './activiti-form.component';
-import { FormModel, FormOutcomeModel, FormFieldModel, FormOutcomeEvent, FormFieldTypes } from './widgets/index';
-import { FormService } from './../services/form.service';
-import { WidgetVisibilityService } from './../services/widget-visibility.service';
-import { NodeService } from './../services/node.service';
+import { Observable } from 'rxjs/Rx';
 import { fakeForm } from '../assets/activiti-form.component.mock';
+import { FormService } from './../services/form.service';
+import { NodeService } from './../services/node.service';
+import { WidgetVisibilityService } from './../services/widget-visibility.service';
+import { ActivitiForm } from './activiti-form.component';
+import { FormFieldModel, FormFieldTypes, FormModel, FormOutcomeEvent, FormOutcomeModel } from './widgets/index';
 
 describe('ActivitiForm', () => {
 

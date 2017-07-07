@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApi } from 'alfresco-js-api';
+import { AlfrescoApi } from  'alfresco-js-api';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { ExternalContent } from '../components/widgets/core/external-content';

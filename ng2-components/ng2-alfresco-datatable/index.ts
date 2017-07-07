@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CoreModule } from 'ng2-alfresco-core';
 import { MaterialModule } from './src/material.module';
 
@@ -23,25 +23,25 @@ export * from './src/data/index';
 
 export { DataTableCellComponent } from './src/components/datatable/datatable-cell.component';
 export { DataTableComponent } from './src/components/datatable/datatable.component';
-export { AdfEmptyList } from './src/components/datatable/adf-empty-list.component';
+export { AdfEmptyListComponent } from './src/components/datatable/adf-empty-list.component';
 export { PaginationComponent } from './src/components/pagination/pagination.component';
 export { DataCellEvent, DataCellEventModel } from './src/components/datatable/data-cell.event';
 export { DataRowActionEvent, DataRowActionModel } from './src/components/datatable/data-row-action.event';
 
-import { DataTableComponent } from './src/components/datatable/datatable.component';
-import { AdfEmptyList } from './src/components/datatable/adf-empty-list.component';
-import { NoContentTemplateComponent } from './src/directives/no-content-template.component';
-import { LoadingContentTemplateComponent } from './src/directives/loading-template.component';
-import { PaginationComponent } from './src/components/pagination/pagination.component';
+import { AdfEmptyListComponent } from './src/components/datatable/adf-empty-list.component';
 import { DataTableCellComponent } from './src/components/datatable/datatable-cell.component';
+import { DataTableComponent } from './src/components/datatable/datatable.component';
+import { PaginationComponent } from './src/components/pagination/pagination.component';
+import { LoadingContentTemplateDirective } from './src/directives/loading-template.directive';
+import { NoContentTemplateDirective } from './src/directives/no-content-template.directive';
 
 export function directives() {
     return [
         DataTableComponent,
-        AdfEmptyList,
+        AdfEmptyListComponent,
         DataTableCellComponent,
-        NoContentTemplateComponent,
-        LoadingContentTemplateComponent,
+        NoContentTemplateDirective,
+        LoadingContentTemplateDirective,
         PaginationComponent
     ];
 }

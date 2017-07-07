@@ -40,7 +40,7 @@
             <!-- Actions (left) -->
             <td *ngIf="actions && actionsPosition === 'left'" class="alfresco-datatable__actions-cell">
                 <button [id]="'action_menu_' + idx" alfresco-mdl-button class="mdl-button--icon"
-                        [attr.data-automation-id]="actions_menu">
+                        [attr.data-automation-id]="'action_menu_' + idx">
                     <i class="material-icons">more_vert</i>
                 </button>
                 <ul alfresco-mdl-menu class="mdl-menu--bottom-left"
@@ -103,7 +103,7 @@
             <!-- Actions (right) -->
             <td *ngIf="actions && actionsPosition === 'right'" class="alfresco-datatable__actions-cell">
                 <button [id]="'action_menu_' + idx" alfresco-mdl-button class="mdl-button--icon"
-                        [attr.data-automation-id]="actions_menu">
+                        [attr.data-automation-id]="'action_menu_' + idx">
                     <i class="material-icons">more_vert</i>
                 </button>
                 <ul alfresco-mdl-menu class="mdl-menu--bottom-right"

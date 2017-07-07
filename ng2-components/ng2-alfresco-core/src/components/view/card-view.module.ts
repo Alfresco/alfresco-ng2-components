@@ -15,19 +15,19 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CardView } from './adf-card-view.component';
+import { NgModule } from '@angular/core';
+import { CardViewComponent } from './adf-card-view.component';
 
 @NgModule({
     imports: [
         CommonModule
     ],
     declarations: [
-        CardView
+        CardViewComponent
     ],
     exports: [
-        CardView
+        CardViewComponent
     ]
 })
 export class CardViewModule {}
