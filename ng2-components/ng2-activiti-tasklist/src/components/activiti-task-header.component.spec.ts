@@ -67,57 +67,6 @@ describe('ActivitiTaskHeaderComponent', () => {
         window['componentHandler'] = componentHandler;
     });
 
-    describe('Editable mode', () => {
-
-        beforeEach(() => {
-            component.ngOnChanges({});
-            fixture.detectChanges();
-        });
-
-        it('should switch the component to editable mode when clicking on the "Edit" button', () => {
-            let editButton = fixture.debugElement.query(By.css('[data-automation-id="switch-to-edit-mode"]'));
-            expect(editButton).not.toBeNull();
-
-            editButton.triggerEventHandler('click', null);
-            fixture.detectChanges();
-
-            editButton = debugElement.query(By.css('[data-automation-id="switch-to-edit-mode"]'));
-            const saveButton = debugElement.query(By.css('[data-automation-id="save-edit-mode"]'));
-            const cancelButton = debugElement.query(By.css('[data-automation-id="cancel-edit-mode"]'));
-            expect(editButton).toBeNull('Edit button should disappear');
-            expect(saveButton).not.toBeNull('Save button should be shown');
-            expect(cancelButton).not.toBeNull('Cancel button should be shown');
-        });
-
-        it('should switch the component to readonly mode when clicking on the "Cancel" button', () => {
-            component.inEdit = true;
-            fixture.detectChanges();
-            let cancelButton = debugElement.query(By.css('[data-automation-id="cancel-edit-mode"]'));
-
-            cancelButton.triggerEventHandler('click', null);
-            fixture.detectChanges();
-
-            let editButton = debugElement.query(By.css('[data-automation-id="switch-to-edit-mode"]'));
-            cancelButton = debugElement.query(By.css('[data-automation-id="cancel-edit-mode"]'));
-            expect(editButton).not.toBeNull('Edit button should be shown');
-            expect(cancelButton).toBeNull('Cancel button should disappear');
-        });
-
-        it('should switch the component to readonly mode when clicking on the "Save" button', () => {
-            component.inEdit = true;
-            fixture.detectChanges();
-            let saveButton = debugElement.query(By.css('[data-automation-id="save-edit-mode"]'));
-
-            saveButton.triggerEventHandler('click', null);
-            fixture.detectChanges();
-
-            let editButton = debugElement.query(By.css('[data-automation-id="switch-to-edit-mode"]'));
-            saveButton = debugElement.query(By.css('[data-automation-id="save-edit-mode"]'));
-            expect(editButton).not.toBeNull('Edit button should be shown');
-            expect(saveButton).toBeNull('Save button should disappear');
-        });
-    });
-
     it('should render empty component if no task details provided', () => {
         component.taskDetails = undefined;
         fixture.detectChanges();

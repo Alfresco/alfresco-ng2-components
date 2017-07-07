@@ -93,8 +93,4 @@ export class ActivitiTaskHeaderComponent implements OnChanges {
                 this.claim.emit(taskId);
             });
     }
-
-    canEdit(): boolean {
-        return true;
-    }
 }
