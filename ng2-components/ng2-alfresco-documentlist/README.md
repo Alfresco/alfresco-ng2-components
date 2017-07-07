@@ -90,6 +90,7 @@ The properties currentFolderId, folderNode and node are the entry initialization
 | folderNode | [MinimalNodeEntryEntity](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md) | null | Currently displayed folder node | 
 | node | `NodePaging` | null | Document list will show all the node contained in the NodePaging entity  | 
 | navigate | boolean | true | Toggles navigation to folder content or file preview |
+| loading | boolean | false | Toggles the loading state and animated spinners for the component. Used in combination with `navigate=false` to perform custom navigation and loading state indication. |
 | navigationMode | string (click,dblclick) | dblclick | User interaction for folder navigation or file preview |
 | thumbnails | boolean | false | Show document thumbnails rather than icons |
 | multiselect | boolean | false | Toggles multiselect mode |
