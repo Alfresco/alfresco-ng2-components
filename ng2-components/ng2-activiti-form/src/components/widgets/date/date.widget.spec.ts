@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import { DateWidget } from './date.widget';
-import { FormFieldModel } from './../core/form-field.model';
-import { FormModel } from './../core/form.model';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ElementRef } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import * as moment from 'moment';
 import { CoreModule } from 'ng2-alfresco-core';
-import { FormService } from './../../../services/form.service';
-import { EcmModelService } from './../../../services/ecm-model.service';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
-import { ElementRef } from '@angular/core';
+import { EcmModelService } from './../../../services/ecm-model.service';
+import { FormService } from './../../../services/form.service';
+import { FormFieldModel } from './../core/form-field.model';
+import { FormModel } from './../core/form.model';
+import { DateWidget } from './date.widget';
 
 describe('DateWidget', () => {
 

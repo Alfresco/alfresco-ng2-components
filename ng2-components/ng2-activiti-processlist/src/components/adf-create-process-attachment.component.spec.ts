@@ -16,9 +16,9 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivitiContentService } from 'ng2-activiti-form';
+import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { ActivitiCreateProcessAttachmentComponent } from './adf-create-process-attachment.component';
 
 declare let jasmine: any;

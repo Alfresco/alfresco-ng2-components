@@ -15,10 +15,7 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-/* tslint:disable::no-access-missing-member */
-import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { WidgetComponent } from './../widget.component';
@@ -37,7 +34,7 @@ declare let mdDateTimePicker: any;
     templateUrl: './date-range.widget.html',
     styleUrls: ['./date-range.widget.css']
 })
-export class DateRangeWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
+export class DateRangeWidget extends WidgetComponent {
 
     public static FORMAT_DATE_ACTIVITI: string =  'YYYY-MM-DD';
 
@@ -100,7 +97,7 @@ export class DateRangeWidgetComponent extends WidgetComponent implements OnInit,
             future: moment().add(100, 'years')
         };
 
-        settings.init = moment(date, DateRangeWidgetComponent.FORMAT_DATE_ACTIVITI);
+        settings.init = moment(date, DateRangeWidget.FORMAT_DATE_ACTIVITI);
 
         this.dialogStart = new mdDateTimePicker.default(settings);
         this.dialogStart.trigger = this.startElement.nativeElement;
@@ -148,7 +145,7 @@ export class DateRangeWidgetComponent extends WidgetComponent implements OnInit,
             future: moment().add(100, 'years')
         };
 
-        settings.init = moment(date, DateRangeWidgetComponent.FORMAT_DATE_ACTIVITI);
+        settings.init = moment(date, DateRangeWidget.FORMAT_DATE_ACTIVITI);
 
         this.dialogEnd = new mdDateTimePicker.default(settings);
         this.dialogEnd.trigger = this.endElement.nativeElement;
@@ -160,7 +157,7 @@ export class DateRangeWidgetComponent extends WidgetComponent implements OnInit,
     }
 
     onOkStart(inputEl: HTMLInputElement) {
-        let date = this.dialogStart.time.format(DateRangeWidgetComponent.FORMAT_DATE_ACTIVITI);
+        let date = this.dialogStart.time.format(DateRangeWidget.FORMAT_DATE_ACTIVITI);
         this.dateRange.patchValue({
             startDate: date
         });
@@ -171,7 +168,7 @@ export class DateRangeWidgetComponent extends WidgetComponent implements OnInit,
     }
 
     onOkEnd(inputEl: HTMLInputElement) {
-        let date = this.dialogEnd.time.format(DateRangeWidgetComponent.FORMAT_DATE_ACTIVITI);
+        let date = this.dialogEnd.time.format(DateRangeWidget.FORMAT_DATE_ACTIVITI);
         this.dateRange.patchValue({
             endDate: date
         });
@@ -191,14 +188,14 @@ export class DateRangeWidgetComponent extends WidgetComponent implements OnInit,
     }
 
     public convertToMomentDateWithTime(date: string) {
-        return moment(date, DateRangeWidgetComponent.FORMAT_DATE_ACTIVITI, true).format(DateRangeWidgetComponent.FORMAT_DATE_ACTIVITI) + 'T00:00:00.000Z';
+        return moment(date, DateRangeWidget.FORMAT_DATE_ACTIVITI, true).format(DateRangeWidget.FORMAT_DATE_ACTIVITI) + 'T00:00:00.000Z';
     }
 
     private convertToMomentDate(date: string) {
         if (date) {
-            return moment(date).format(DateRangeWidgetComponent.FORMAT_DATE_ACTIVITI);
+            return moment(date).format(DateRangeWidget.FORMAT_DATE_ACTIVITI);
         } else {
-            return moment().format(DateRangeWidgetComponent.FORMAT_DATE_ACTIVITI);
+            return moment().format(DateRangeWidget.FORMAT_DATE_ACTIVITI);
         }
     }
 

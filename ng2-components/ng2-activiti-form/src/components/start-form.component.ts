@@ -16,22 +16,22 @@
  */
 
 import {
-    Component,
     AfterViewChecked,
-    OnChanges,
-    SimpleChanges,
-    Input,
-    ViewChild,
+    Component,
     ElementRef,
+    EventEmitter,
+    Input,
+    OnChanges,
     Output,
-    EventEmitter
+    SimpleChanges,
+    ViewChild
 } from '@angular/core';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
-import { ActivitiForm } from './activiti-form.component';
 import { FormService } from './../services/form.service';
 import { WidgetVisibilityService }  from './../services/widget-visibility.service';
-import { FormOutcomeModel } from './widgets/core/index';
+import { ActivitiForm } from './activiti-form.component';
 import { ContentLinkModel } from './widgets/core/content-link.model';
+import { FormOutcomeModel } from './widgets/core/index';
 
 /**
  * Displays the start form for a named process definition, which can be used to retrieve values to start a new process.

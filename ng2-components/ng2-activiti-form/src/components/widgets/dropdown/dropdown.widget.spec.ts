@@ -24,18 +24,18 @@ import { WidgetVisibilityService } from '../../../services/widget-visibility.ser
 import { FormFieldOption } from './../core/form-field-option';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
-import { DropdownWidgetComponent } from './dropdown.widget';
+import { DropdownWidget } from './dropdown.widget';
 
-describe('DropdownWidgetComponent', () => {
+describe('DropdownWidget', () => {
 
     let formService: FormService;
-    let widget: DropdownWidgetComponent;
+    let widget: DropdownWidget;
     let visibilityService: WidgetVisibilityService;
 
     beforeEach(() => {
         formService = new FormService(null, null, null);
         visibilityService = new WidgetVisibilityService(null, null);
-        widget = new DropdownWidgetComponent(formService, visibilityService, null);
+        widget = new DropdownWidget(formService, visibilityService, null);
         widget.field = new FormFieldModel(new FormModel());
     });
 
@@ -100,8 +100,8 @@ describe('DropdownWidgetComponent', () => {
     });
 
     describe('when template is ready', () => {
-        let dropdownWidgetComponent: DropdownWidgetComponent;
-        let fixture: ComponentFixture<DropdownWidgetComponent>;
+        let dropDownWidget: DropdownWidget;
+        let fixture: ComponentFixture<DropdownWidget>;
         let element: HTMLElement;
         let componentHandler;
         let stubFormService;
@@ -118,11 +118,11 @@ describe('DropdownWidgetComponent', () => {
             window['componentHandler'] = componentHandler;
             TestBed.configureTestingModule({
                 imports: [CoreModule],
-                declarations: [DropdownWidgetComponent],
+                declarations: [DropdownWidget],
                 providers: [FormService, EcmModelService, WidgetVisibilityService]
             }).compileComponents().then(() => {
-                fixture = TestBed.createComponent(DropdownWidgetComponent);
-                dropdownWidgetComponent = fixture.componentInstance;
+                fixture = TestBed.createComponent(DropdownWidget);
+                dropDownWidget = fixture.componentInstance;
                 element = fixture.nativeElement;
             });
         }));
@@ -134,15 +134,15 @@ describe('DropdownWidgetComponent', () => {
                 visibilityService = fixture.debugElement.injector.get(WidgetVisibilityService);
                 spyOn(visibilityService, 'refreshVisibility').and.stub();
                 spyOn(stubFormService, 'getRestFieldValues').and.returnValue(Observable.of(fakeOptionList));
-                dropdownWidgetComponent.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                dropDownWidget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'dropdown-id',
                     name: 'date-name',
                     type: 'dropdown',
                     readOnly: 'false',
                     restUrl: 'fake-rest-url'
                 });
-                dropdownWidgetComponent.field.emptyOption = { id: 'empty', name: 'Choose one...' };
-                dropdownWidgetComponent.field.isVisible = true;
+                dropDownWidget.field.emptyOption = { id: 'empty', name: 'Choose one...' };
+                dropDownWidget.field.isVisible = true;
                 fixture.detectChanges();
             }));
 
@@ -155,7 +155,7 @@ describe('DropdownWidgetComponent', () => {
             }));
 
             it('should select the default value when an option is chosen as default', async(() => {
-                dropdownWidgetComponent.field.value = 'option_2';
+                dropDownWidget.field.value = 'option_2';
                 fixture.detectChanges();
                 fixture.whenStable()
                     .then(() => {
@@ -168,7 +168,7 @@ describe('DropdownWidgetComponent', () => {
             }));
 
             it('should select the empty value when no default is chosen', async(() => {
-                dropdownWidgetComponent.field.value = 'empty';
+                dropDownWidget.field.value = 'empty';
                 fixture.detectChanges();
                 fixture.whenStable()
                     .then(() => {
@@ -180,7 +180,7 @@ describe('DropdownWidgetComponent', () => {
             }));
 
             it('should be not visibile when isVisible is false', async(() => {
-                dropdownWidgetComponent.field.isVisible = false;
+                dropDownWidget.field.isVisible = false;
                 fixture.detectChanges();
                 fixture.whenStable()
                     .then(() => {
@@ -190,10 +190,10 @@ describe('DropdownWidgetComponent', () => {
             }));
 
             it('should became visibile when isVisible is true', async(() => {
-                dropdownWidgetComponent.field.isVisible = false;
+                dropDownWidget.field.isVisible = false;
                 fixture.detectChanges();
                 expect(element.querySelector('#dropdown-id')).toBeNull();
-                dropdownWidgetComponent.field.isVisible = true;
+                dropDownWidget.field.isVisible = true;
                 fixture.detectChanges();
                 fixture.whenStable()
                     .then(() => {
@@ -209,15 +209,15 @@ describe('DropdownWidgetComponent', () => {
                 visibilityService = fixture.debugElement.injector.get(WidgetVisibilityService);
                 spyOn(visibilityService, 'refreshVisibility').and.stub();
                 spyOn(stubFormService, 'getRestFieldValuesByProcessId').and.returnValue(Observable.of(fakeOptionList));
-                dropdownWidgetComponent.field = new FormFieldModel(new FormModel({ processDefinitionId: 'fake-process-id' }), {
+                dropDownWidget.field = new FormFieldModel(new FormModel({ processDefinitionId: 'fake-process-id' }), {
                     id: 'dropdown-id',
                     name: 'date-name',
                     type: 'dropdown',
                     readOnly: 'false',
                     restUrl: 'fake-rest-url'
                 });
-                dropdownWidgetComponent.field.emptyOption = { id: 'empty', name: 'Choose one...' };
-                dropdownWidgetComponent.field.isVisible = true;
+                dropDownWidget.field.emptyOption = { id: 'empty', name: 'Choose one...' };
+                dropDownWidget.field.isVisible = true;
                 fixture.detectChanges();
             }));
 
@@ -230,7 +230,7 @@ describe('DropdownWidgetComponent', () => {
             }));
 
             it('should select the default value when an option is chosen as default', async(() => {
-                dropdownWidgetComponent.field.value = 'option_2';
+                dropDownWidget.field.value = 'option_2';
                 fixture.detectChanges();
                 fixture.whenStable()
                     .then(() => {
@@ -243,7 +243,7 @@ describe('DropdownWidgetComponent', () => {
             }));
 
             it('should select the empty value when no default is chosen', async(() => {
-                dropdownWidgetComponent.field.value = 'empty';
+                dropDownWidget.field.value = 'empty';
                 fixture.detectChanges();
                 fixture.whenStable()
                     .then(() => {
@@ -251,24 +251,6 @@ describe('DropdownWidgetComponent', () => {
                         expect(dropDownElement).not.toBeNull();
                         expect(dropDownElement.value).toBe('empty');
                         expect(dropDownElement.selectedOptions[0].textContent).toBe('Choose one...');
-                    });
-            }));
-
-            it('should be disabled when the field is readonly', async(() => {
-                dropdownWidgetComponent.field = new FormFieldModel(new FormModel({ processDefinitionId: 'fake-process-id' }), {
-                    id: 'dropdown-id',
-                    name: 'date-name',
-                    type: 'dropdown',
-                    readOnly: 'true',
-                    restUrl: 'fake-rest-url'
-                });
-
-                fixture.detectChanges();
-                fixture.whenStable()
-                    .then(() => {
-                        let dropDownElement: HTMLSelectElement = <HTMLSelectElement> element.querySelector('#dropdown-id');
-                        expect(dropDownElement).not.toBeNull();
-                        expect(dropDownElement.disabled).toBeTruthy();
                     });
             }));
 

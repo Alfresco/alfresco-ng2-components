@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
 import { AfterContentChecked, AfterViewInit, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormFieldModel, TabModel } from './../core/index';
 
@@ -26,7 +24,7 @@ declare var componentHandler: any;
     selector: 'tabs-widget',
     templateUrl: './tabs.widget.html'
 })
-export class TabsWidgetComponent implements AfterContentChecked, AfterViewInit {
+export class TabsWidget implements AfterContentChecked, AfterViewInit {
 
     @Input()
     tabs: TabModel[] = [];

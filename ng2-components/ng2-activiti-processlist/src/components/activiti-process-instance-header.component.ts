@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { ProcessInstance } from '../models/process-instance.model';
-import { DatePipe } from '@angular/common';
 
 declare let componentHandler: any;
 

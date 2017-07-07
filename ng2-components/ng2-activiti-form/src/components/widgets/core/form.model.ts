@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
 import { FormFieldEvent } from './../../../events/index';
 import { FormService } from './../../../services/form.service';
 import { ContainerModel } from './container.model';

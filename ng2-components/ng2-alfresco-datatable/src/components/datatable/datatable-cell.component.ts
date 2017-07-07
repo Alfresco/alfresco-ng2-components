@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { DataTableAdapter, DataColumn, DataRow } from '../../data/datatable-adapter';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { DataColumn, DataRow, DataTableAdapter } from '../../data/datatable-adapter';
 
 @Component({
     selector: 'adf-datatable-cell, alfresco-datatable-cell',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: '<ng-container>{{value}}</ng-container>'
 })
-export class DataTableCellComponent {
+export class DataTableCellComponent implements OnInit {
 
     @Input()
     data: DataTableAdapter;

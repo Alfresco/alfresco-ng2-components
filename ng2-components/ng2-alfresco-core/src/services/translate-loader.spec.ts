@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { Injector } from '@angular/core';
-import { ResponseOptions, Response, XHRBackend, HttpModule } from '@angular/http';
-import { MockBackend, MockConnection } from '@angular/http/testing';
 import {getTestBed, TestBed} from '@angular/core/testing';
+import { HttpModule, Response, ResponseOptions, XHRBackend } from '@angular/http';
+import { MockBackend, MockConnection } from '@angular/http/testing';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { AlfrescoTranslateLoader } from './alfresco-translate-loader.service';
 import { AlfrescoTranslationService } from './alfresco-translation.service';

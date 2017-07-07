@@ -15,9 +15,6 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-/* tslint:disable:no-access-missing-member */
 import { Component, ElementRef, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { WidgetComponent } from './../widget.component';
@@ -26,7 +23,7 @@ import { WidgetComponent } from './../widget.component';
     selector: 'checkbox-widget',
     templateUrl: './checkbox.widget.html'
 })
-export class CheckboxWidgetComponent extends WidgetComponent {
+export class CheckboxWidget extends WidgetComponent {
 
     @Input()
     field: any;

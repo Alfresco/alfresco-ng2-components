@@ -20,8 +20,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { TaskDetailsModel } from '../models/task-details.model';
-import { TaskListService } from '../services/tasklist.service';
-import { ChecklistComponent } from './checklist.component';
+import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
+import { ActivitiChecklist } from './activiti-checklist.component';
 
 declare let jasmine: any;
 
@@ -30,10 +30,10 @@ const fakeTaskDetail = new TaskDetailsModel({
     name: 'fake-check-name'
 });
 
-describe('ChecklistComponent', () => {
+describe('ActivitiChecklist', () => {
 
-    let checklistComponent: ChecklistComponent;
-    let fixture: ComponentFixture<ChecklistComponent>;
+    let checklistComponent: ActivitiChecklist;
+    let fixture: ComponentFixture<ActivitiChecklist>;
     let element: HTMLElement;
     let showChecklistDialog, closeCheckDialogButton;
 
@@ -43,10 +43,10 @@ describe('ChecklistComponent', () => {
                 CoreModule.forRoot()
             ],
             declarations: [
-                ChecklistComponent
+                ActivitiChecklist
             ],
             providers: [
-                TaskListService
+                ActivitiTaskListService
             ]
         }).compileComponents().then(() => {
             let translateService = TestBed.get(AlfrescoTranslationService);
@@ -55,7 +55,7 @@ describe('ChecklistComponent', () => {
                 return Observable.of(key);
             });
 
-            fixture = TestBed.createComponent(ChecklistComponent);
+            fixture = TestBed.createComponent(ActivitiChecklist);
             checklistComponent = fixture.componentInstance;
             element = fixture.nativeElement;
 

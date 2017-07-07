@@ -16,7 +16,7 @@
  */
 
 import { NgModule } from '@angular/core';
-import { MdCheckboxModule, MdMenuModule, MdIconModule, MdButtonModule } from '@angular/material';
+import { MdButtonModule, MdCheckboxModule, MdIconModule, MdMenuModule } from '@angular/material';
 
 export function modules() {
     return [

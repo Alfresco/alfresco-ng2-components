@@ -21,14 +21,14 @@ import { FormService } from '../../../services/form.service';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { GroupModel } from '../core/group.model';
-import { FunctionalGroupWidgetComponent } from './functional-group.widget';
+import { FunctionalGroupWidget } from './functional-group.widget';
 
-describe('FunctionalGroupWidgetComponent', () => {
+describe('FunctionalGroupWidget', () => {
 
     let componentHandler;
     let formService: FormService;
     let elementRef: ElementRef;
-    let widget: FunctionalGroupWidgetComponent;
+    let widget: FunctionalGroupWidget;
 
     beforeEach(() => {
         componentHandler =  jasmine.createSpyObj('componentHandler', [
@@ -38,7 +38,7 @@ describe('FunctionalGroupWidgetComponent', () => {
 
         formService = new FormService(null, null, null);
         elementRef = new ElementRef(null);
-        widget = new FunctionalGroupWidgetComponent(formService, elementRef);
+        widget = new FunctionalGroupWidget(formService, elementRef);
         widget.field = new FormFieldModel(new FormModel());
     });
 
@@ -245,11 +245,11 @@ describe('FunctionalGroupWidgetComponent', () => {
     });
 
     it('should require element reference to setup textfield', () => {
-        let w = new FunctionalGroupWidgetComponent(formService, null);
+        let w = new FunctionalGroupWidget(formService, null);
         w.value = '<value>';
         expect(w.setupMaterialComponents(componentHandler)).toBeFalsy();
 
-        w = new FunctionalGroupWidgetComponent(formService, elementRef);
+        w = new FunctionalGroupWidget(formService, elementRef);
         w.value = '<value>';
         expect(w.setupMaterialComponents(componentHandler)).toBeTruthy();
     });

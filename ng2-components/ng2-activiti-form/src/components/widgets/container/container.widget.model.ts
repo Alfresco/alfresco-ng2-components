@@ -15,14 +15,12 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
 import { ContainerColumnModel } from './../core/container-column.model';
 import { ContainerModel } from './../core/container.model';
 import { FormFieldTypes } from './../core/form-field-types';
 import { FormFieldModel } from './../core/form-field.model';
 
-export class ContainerWidgetComponentModel extends ContainerModel {
+export class ContainerWidgetModel extends ContainerModel {
 
     columns: ContainerColumnModel[] = [];
     isExpanded: boolean = true;

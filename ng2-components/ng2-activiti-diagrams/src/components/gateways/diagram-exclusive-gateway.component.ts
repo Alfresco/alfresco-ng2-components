@@ -15,16 +15,14 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
 import { DiagramColorService } from '../../services/diagram-color.service';
 
 @Component({
     selector: 'diagram-exclusive-gateway',
     templateUrl: './diagram-exclusive-gateway.component.html'
 })
-export class DiagramExclusiveGatewayComponent implements OnInit {
+export class DiagramExclusiveGatewayComponent {
     @Input()
     data: any;
 

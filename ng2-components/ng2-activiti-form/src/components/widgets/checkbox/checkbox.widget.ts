@@ -16,9 +16,9 @@
  */
 
 import { Component } from '@angular/core';
-import { WidgetComponent , baseHost} from './../widget.component';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { FormService } from './../../../services/form.service';
+import { baseHost , WidgetComponent} from './../widget.component';
 
 @Component({
     selector: 'checkbox-widget',

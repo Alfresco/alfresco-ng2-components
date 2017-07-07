@@ -27,12 +27,12 @@ import { FormFieldTypes } from '../core/form-field-types';
 import { FormFieldOption } from './../core/form-field-option';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
-import { RadioButtonsWidgetComponent } from './radio-buttons.widget';
+import { RadioButtonsWidget } from './radio-buttons.widget';
 
-describe('RadioButtonsWidgetComponent', () => {
+describe('RadioButtonsWidget', () => {
 
     let formService: FormService;
-    let widget: RadioButtonsWidgetComponent;
+    let widget: RadioButtonsWidget;
     let visibilityService: WidgetVisibilityService;
     let logService: LogServiceMock;
 
@@ -40,7 +40,7 @@ describe('RadioButtonsWidgetComponent', () => {
         logService = new LogServiceMock();
         formService = new FormService(null, null, logService);
         visibilityService = new WidgetVisibilityService(null, logService);
-        widget = new RadioButtonsWidgetComponent(formService, visibilityService, logService);
+        widget = new RadioButtonsWidget(formService, visibilityService, logService);
         widget.field = new FormFieldModel(new FormModel(), { restUrl: '<url>' });
     });
 
@@ -134,8 +134,8 @@ describe('RadioButtonsWidgetComponent', () => {
     });
 
     describe('when template is ready', () => {
-        let radioButtonWidget: RadioButtonsWidgetComponent;
-        let fixture: ComponentFixture<RadioButtonsWidgetComponent>;
+        let radioButtonWidget: RadioButtonsWidget;
+        let fixture: ComponentFixture<RadioButtonsWidget>;
         let element: HTMLElement;
         let componentHandler;
         let stubFormService: FormService;
@@ -150,10 +150,10 @@ describe('RadioButtonsWidgetComponent', () => {
             window['componentHandler'] = componentHandler;
             TestBed.configureTestingModule({
                 imports: [CoreModule],
-                declarations: [RadioButtonsWidgetComponent],
+                declarations: [RadioButtonsWidget],
                 providers: [FormService, EcmModelService, WidgetVisibilityService]
             }).compileComponents().then(() => {
-                fixture = TestBed.createComponent(RadioButtonsWidgetComponent);
+                fixture = TestBed.createComponent(RadioButtonsWidget);
                 radioButtonWidget = fixture.componentInstance;
                 element = fixture.nativeElement;
             });

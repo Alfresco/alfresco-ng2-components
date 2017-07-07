@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-import { TaskDetailsComponent } from './task-details.component';
-import { NoTaskDetailsTemplateDirective } from './no-task-detail-template.directive';
+import { ActivitiTaskDetails } from './activiti-task-details.component';
+import { NoTaskDetailsTemplateComponent } from './no-task-detail-template.component';
 
-describe('NoTaskDetailsTemplateDirective', () => {
+describe('NoTaskDetailsTemplateComponent', () => {
 
-    let component: NoTaskDetailsTemplateDirective;
-    let detailsComponent: TaskDetailsComponent;
+    let component: NoTaskDetailsTemplateComponent;
+    let detailsComponent: ActivitiTaskDetails;
 
     beforeEach(() => {
-        detailsComponent = new TaskDetailsComponent(null, null, null, null, null, null);
-        component = new NoTaskDetailsTemplateDirective(detailsComponent);
+        detailsComponent = new ActivitiTaskDetails(null, null, null, null);
+        component = new NoTaskDetailsTemplateComponent(detailsComponent);
     });
 
     it('should set "no task details" template on task details component', () => {

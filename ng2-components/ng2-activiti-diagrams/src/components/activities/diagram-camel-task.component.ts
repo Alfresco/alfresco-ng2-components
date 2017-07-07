@@ -15,15 +15,13 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
     selector: 'diagram-camel-task',
     templateUrl: './diagram-camel-task.component.html'
 })
-export class DiagramCamelTaskComponent implements OnInit {
+export class DiagramCamelTaskComponent {
     @Input()
     data: any;
 

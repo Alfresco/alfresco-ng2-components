@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 
-import { ContentActionListComponent } from './content-action-list.component';
-import { ContentActionModel } from './../../models/content-action.model';
+import { ContentActionHandler } from '../../models/content-action.model';
 import { DocumentActionsService } from '../../services/document-actions.service';
 import { FolderActionsService } from '../../services/folder-actions.service';
-import { ContentActionHandler } from '../../models/content-action.model';
+import { ContentActionModel } from './../../models/content-action.model';
+import { ContentActionListComponent } from './content-action-list.component';
 
 @Component({
     selector: 'content-action',

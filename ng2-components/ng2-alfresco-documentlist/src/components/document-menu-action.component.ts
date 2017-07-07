@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
+import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 
-import { DocumentListService } from './../services/document-list.service';
-import { ContentActionModel } from './../models/content-action.model';
 import { PermissionModel } from '../models/permissions.model';
+import { ContentActionModel } from './../models/content-action.model';
+import { DocumentListService } from './../services/document-list.service';
 
 declare let dialogPolyfill: any;
 

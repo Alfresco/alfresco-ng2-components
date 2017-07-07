@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import * as moment from 'moment';
-import { WidgetComponent , baseHost } from './../widget.component';
-import { FormFieldTypes } from '../core/form-field-types';
 import { FormService } from '../../../services/form.service';
-import { FormFieldOption } from './../core/form-field-option';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
+import { FormFieldTypes } from '../core/form-field-types';
 import { NumberFieldValidator } from '../core/form-field-validator';
+import { FormFieldOption } from './../core/form-field-option';
+import { baseHost , WidgetComponent } from './../widget.component';
 
 @Component({
     selector: 'display-value-widget',

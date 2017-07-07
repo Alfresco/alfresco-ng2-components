@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { NgModule, ModuleWithProviders } from '@angular/core';
-import { MdIconModule, MdProgressSpinnerModule, MdButtonModule } from '@angular/material';
+import { ModuleWithProviders, NgModule } from '@angular/core';
+import { MdButtonModule, MdIconModule, MdProgressSpinnerModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
 
-import { UploadDragAreaComponent } from './src/components/upload-drag-area.component';
-import { FileDraggableDirective } from './src/directives/file-draggable.directive';
-import { UploadButtonComponent } from './src/components/upload-button.component';
 import { FileUploadingDialogComponent } from './src/components/file-uploading-dialog.component';
 import { FileUploadingListComponent } from './src/components/file-uploading-list.component';
+import { UploadButtonComponent } from './src/components/upload-button.component';
+import { UploadDragAreaComponent } from './src/components/upload-drag-area.component';
+import { FileDraggableDirective } from './src/directives/file-draggable.directive';
 import { UploadService } from './src/services/upload.service';
 
 export * from './src/components/upload-button.component';

@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
 import { Component, ContentChild, Input, OnInit, TemplateRef } from '@angular/core';
 
 @Component({

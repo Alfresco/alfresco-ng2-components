@@ -19,7 +19,7 @@ import { TestBed } from '@angular/core/testing';
 import { async } from '@angular/core/testing';
 import { AlfrescoApi } from 'alfresco-js-api';
 import { AlfrescoApiService, CoreModule } from 'ng2-alfresco-core';
-import { exampleProcess } from '../assets/process.model.mock';
+import { exampleProcess } from '../assets/activiti-process.model.mock';
 import {
     fakeApp1,
     fakeApp2,
@@ -28,16 +28,16 @@ import {
     fakeFilters,
     fakeProcessDef,
     fakeTaskList
-} from '../assets/process.service.mock';
+} from '../assets/activiti-process.service.mock';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterRequestRepresentation } from '../models/process-instance-filter.model';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
-import { ProcessService } from './process.service';
+import { ActivitiProcessService } from './activiti-process.service';
 
 declare let jasmine: any;
-describe('ProcessService', () => {
+describe('ActivitiProcessService', () => {
 
-    let service: ProcessService;
+    let service: ActivitiProcessService;
     let apiService: AlfrescoApiService;
     let alfrescoApi: AlfrescoApi;
 
@@ -47,10 +47,10 @@ describe('ProcessService', () => {
                 CoreModule.forRoot()
             ],
             providers: [
-                ProcessService
+                ActivitiProcessService
             ]
         });
-        service = TestBed.get(ProcessService);
+        service = TestBed.get(ActivitiProcessService);
         apiService = TestBed.get(AlfrescoApiService);
         alfrescoApi = apiService.getInstance();
     });
@@ -430,13 +430,13 @@ describe('ProcessService', () => {
             });
 
             it('should return the correct number of comments', async(() => {
-                service.getComments(processId).subscribe((tasks) => {
+                service.getProcessInstanceComments(processId).subscribe((tasks) => {
                     expect(tasks.length).toBe(2);
                 });
             }));
 
             it('should return the correct comment data', async(() => {
-                service.getComments(processId).subscribe((comments) => {
+                service.getProcessInstanceComments(processId).subscribe((comments) => {
                     let comment = comments[0];
                     expect(comment.id).toBe(fakeComment.id);
                     expect(comment.created).toBe(fakeComment.created);
@@ -446,13 +446,13 @@ describe('ProcessService', () => {
             }));
 
             it('should call service to fetch process instance comments', () => {
-                service.getComments(processId);
+                service.getProcessInstanceComments(processId);
                 expect(getProcessInstanceComments).toHaveBeenCalledWith(processId);
             });
 
             it('should pass on any error that is returned by the API', async(() => {
                 getProcessInstanceComments = getProcessInstanceComments.and.returnValue(Promise.reject(fakeError));
-                service.getComments(processId).subscribe(
+                service.getProcessInstanceComments(processId).subscribe(
                     () => {},
                     (res) => {
                         expect(res).toBe(fakeError);
@@ -462,7 +462,7 @@ describe('ProcessService', () => {
 
             it('should return a default error if no data is returned by the API', async(() => {
                 getProcessInstanceComments = getProcessInstanceComments.and.returnValue(Promise.reject(null));
-                service.getComments(processId).subscribe(
+                service.getProcessInstanceComments(processId).subscribe(
                     () => {},
                     (res) => {
                         expect(res).toBe('Server error');
@@ -484,14 +484,14 @@ describe('ProcessService', () => {
             });
 
             it('should call service to add comment', () => {
-                service.addComment(processId, message);
+                service.addProcessInstanceComment(processId, message);
                 expect(addProcessInstanceComment).toHaveBeenCalledWith({
                     message: message
                 }, processId);
             });
 
             it('should return the created comment', async(() => {
-                service.addComment(processId, message).subscribe((comment) => {
+                service.addProcessInstanceComment(processId, message).subscribe((comment) => {
                     expect(comment.id).toBe(fakeComment.id);
                     expect(comment.created).toBe(fakeComment.created);
                     expect(comment.message).toBe(fakeComment.message);
@@ -501,7 +501,7 @@ describe('ProcessService', () => {
 
             it('should pass on any error that is returned by the API', async(() => {
                 addProcessInstanceComment = addProcessInstanceComment.and.returnValue(Promise.reject(fakeError));
-                service.addComment(processId, message).subscribe(
+                service.addProcessInstanceComment(processId, message).subscribe(
                     () => {},
                     (res) => {
                         expect(res).toBe(fakeError);
@@ -511,7 +511,7 @@ describe('ProcessService', () => {
 
             it('should return a default error if no data is returned by the API', async(() => {
                 addProcessInstanceComment = addProcessInstanceComment.and.returnValue(Promise.reject(null));
-                service.addComment(processId, message).subscribe(
+                service.addProcessInstanceComment(processId, message).subscribe(
                     () => {},
                     (res) => {
                         expect(res).toBe('Server error');
@@ -668,12 +668,12 @@ describe('ProcessService', () => {
             let filter = fakeFilters.data[0];
 
             it('should call the API to create the filter', () => {
-                service.addProcessFilter(filter);
+                service.addFilter(filter);
                 expect(createFilter).toHaveBeenCalledWith(filter);
             });
 
             it('should return the created filter', async(() => {
-                service.addProcessFilter(filter).subscribe((createdFilter: FilterProcessRepresentationModel) => {
+                service.addFilter(filter).subscribe((createdFilter: FilterProcessRepresentationModel) => {
                     expect(createdFilter).toBe(filter);
                 });
             }));
@@ -681,7 +681,7 @@ describe('ProcessService', () => {
             it('should pass on any error that is returned by the API', async(() => {
                 createFilter = createFilter.and.returnValue(Promise.reject(fakeError));
 
-                service.addProcessFilter(filter).subscribe(
+                service.addFilter(filter).subscribe(
                     () => {},
                     (res) => {
                         expect(res).toBe(fakeError);
@@ -691,7 +691,7 @@ describe('ProcessService', () => {
 
             it('should return a default error if no data is returned by the API', async(() => {
                 createFilter = createFilter.and.returnValue(Promise.reject(null));
-                service.addProcessFilter(filter).subscribe(
+                service.addFilter(filter).subscribe(
                     () => {},
                     (res) => {
                         expect(res).toBe('Server error');

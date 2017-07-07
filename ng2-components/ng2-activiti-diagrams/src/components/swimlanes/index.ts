@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
 import { DiagramPoolComponent } from './diagram-pool.component';
 import { DiagramPoolsComponent } from './diagram-pools.component';
 

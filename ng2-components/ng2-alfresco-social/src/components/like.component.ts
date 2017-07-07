@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RatingService } from './../services/rating.service';
 
 @Component({
@@ -24,7 +24,7 @@ import { RatingService } from './../services/rating.service';
     templateUrl: './like.component.html',
     providers: [RatingService]
 })
-export class LikeComponent implements OnChanges {
+export class LikeComponent {
 
     @Input()
     nodeId: string;
@@ -81,7 +81,7 @@ export class LikeComponent implements OnChanges {
     }
 
     clean() {
-        this.isLike = false;
-        this.likesCounter = 0;
+     this.isLike = false;
+     this.likesCounter = 0;
     }
 }

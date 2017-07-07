@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { Component, Input, Output, OnInit, OnDestroy, ElementRef, EventEmitter, ViewChild } from '@angular/core';
-import { Observable, Subject } from 'rxjs/Rx';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
-import { AlfrescoSearchAutocompleteComponent } from './alfresco-search-autocomplete.component';
+import { Observable, Subject } from 'rxjs/Rx';
 import { SearchTermValidator } from './../forms/search-term-validator';
+import { AlfrescoSearchAutocompleteComponent } from './alfresco-search-autocomplete.component';
 
 @Component({
     selector: 'adf-search-control, alfresco-search-control',

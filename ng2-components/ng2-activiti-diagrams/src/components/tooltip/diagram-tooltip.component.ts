@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, ElementRef, AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild } from '@angular/core';
 const POSITION = { BOTTOM: 'bottom', LEFT: 'left', RIGHT: 'right', TOP: 'top'};
 const IS_ACTIVE_CLASS = 'is-active';
 

@@ -15,16 +15,14 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
 import { DiagramColorService } from '../../services/diagram-color.service';
 
 @Component({
     selector: 'diagram-start-event',
     templateUrl: './diagram-start-event.component.html'
 })
-export class DiagramStartEventComponent implements OnInit {
+export class DiagramStartEventComponent {
     @Input()
     data: any;
 

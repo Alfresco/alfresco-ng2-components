@@ -15,15 +15,13 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
     selector: 'diagram-rest-call-task',
     templateUrl: './diagram-rest-call-task.component.html'
 })
-export class DiagramRestCallTaskComponent implements OnInit {
+export class DiagramRestCallTaskComponent {
     @Input()
     data: any;
 

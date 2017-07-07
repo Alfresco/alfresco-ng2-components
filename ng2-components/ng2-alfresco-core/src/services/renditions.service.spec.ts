@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { TestBed, async } from '@angular/core/testing';
-import { AlfrescoApiService } from './alfresco-api.service';
-import { RenditionsService } from './renditions.service';
-import { AlfrescoSettingsService } from './alfresco-settings.service';
-import { StorageService } from './storage.service';
-import { LogService } from './log.service';
+import { async, TestBed } from '@angular/core/testing';
 import { fakeRedition, fakeReditionCreated, fakeReditionsList } from '../assets/renditionsService.mock';
+import { AlfrescoApiService } from './alfresco-api.service';
+import { AlfrescoSettingsService } from './alfresco-settings.service';
 import { AppConfigModule } from './app-config.service';
+import { LogService } from './log.service';
+import { RenditionsService } from './renditions.service';
+import { StorageService } from './storage.service';
 
 declare let jasmine: any;
 

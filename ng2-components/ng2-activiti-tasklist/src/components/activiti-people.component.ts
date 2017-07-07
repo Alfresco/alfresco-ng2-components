@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, Input, AfterViewInit } from '@angular/core';
-import { Observer, Observable } from 'rxjs/Rx';
+import { AfterViewInit, Component, Input } from '@angular/core';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
+import { Observable, Observer } from 'rxjs/Rx';
 import { User, UserEventModel } from '../models/index';
 import { ActivitiPeopleService } from '../services/activiti-people.service';
 
@@ -80,7 +80,7 @@ export class ActivitiPeople implements AfterViewInit {
         this.peopleService.getWorkflowUsers(this.taskId, searchedWord)
             .subscribe((users) => {
                 this.peopleSearchObserver.next(users);
-            }, error => this.logService.error('Could not load users'));
+            },         error => this.logService.error('Could not load users'));
     }
 
     involveUser(user: User) {
@@ -88,7 +88,7 @@ export class ActivitiPeople implements AfterViewInit {
         this.peopleService.involveUserWithTask(this.taskId, user.id.toString())
             .subscribe(() => {
                 this.people = [...this.people, user];
-            }, error => this.logService.error('Impossible to involve user with task'));
+            },         error => this.logService.error('Impossible to involve user with task'));
     }
 
     removeInvolvedUser(user: User) {
@@ -97,7 +97,7 @@ export class ActivitiPeople implements AfterViewInit {
                 this.people = this.people.filter((involvedUser) => {
                     return involvedUser.id !== user.id;
                 });
-            }, error => this.logService.error('Impossible to remove involved user from task'));
+            },         error => this.logService.error('Impossible to remove involved user from task'));
     }
 
     getDisplayUser(firstName: string, lastName: string, delimiter: string = '-'): string {

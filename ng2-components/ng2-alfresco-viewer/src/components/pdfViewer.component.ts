@@ -15,9 +15,7 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector  */
-
-import { Component, HostListener, Input, OnChanges } from '@angular/core';
+import { Component, HostListener, Input } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 
@@ -29,7 +27,7 @@ declare let PDFJS: any;
     styleUrls: ['./pdfViewer.component.css', './pdfViewerHost.component.css'],
     providers: [RenderingQueueServices]
 })
-export class PdfViewerComponent implements OnChanges {
+export class PdfViewerComponent {
 
     @Input()
     urlFile: string;
@@ -99,11 +97,11 @@ export class PdfViewerComponent implements OnChanges {
             this.currentPdfDocument.getPage(1).then(() => {
                 this.scalePage('auto');
                 resolve();
-            }, (error) => {
+            },                                      (error) => {
                 reject(error);
             });
 
-        }, (error) => {
+        },               (error) => {
             reject(error);
         });
     }
@@ -126,7 +124,7 @@ export class PdfViewerComponent implements OnChanges {
 
         window.document.addEventListener('scroll', (event) => {
             this.watchScroll(event.target);
-        }, true);
+        },                               true);
 
         this.pdfViewer = new PDFJS.PDFViewer({
             container: documentContainer,
@@ -378,7 +376,7 @@ export class PdfViewerComponent implements OnChanges {
         bounds.top = page.div.offsetTop;
         bounds.bottom = bounds.top + page.viewport.height;
         return ((bounds.top <= viewport.bottom) && (bounds.bottom >= viewport.top));
-    }
+    };
 
     /**
      * Litener Keyboard Event

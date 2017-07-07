@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, Output, EventEmitter, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
-import { Observer, Observable } from 'rxjs/Rx';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
+import { Observable, Observer } from 'rxjs/Rx';
+import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
-import { FilterRepresentationModel, FilterParamsModel } from '../models/filter.model';
 
 declare let componentHandler: any;
 

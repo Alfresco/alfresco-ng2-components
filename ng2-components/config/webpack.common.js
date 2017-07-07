@@ -81,8 +81,10 @@ module.exports = {
                 test: /\.ts$/,
                 loader: 'tslint-loader',
                 options: {
+                    configFile : helpers.root('tslint.json'),
                     emitErrors: true,
-                    failOnHint: true
+                    failOnHint: true,
+                    fix: true
                 },
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
             },

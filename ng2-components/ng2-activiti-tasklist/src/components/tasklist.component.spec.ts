@@ -17,15 +17,14 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdProgressSpinnerModule } from '@angular/material';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { DataRowEvent, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 import { Observable } from 'rxjs/Rx';
-import { TaskListService } from '../services/tasklist.service';
-import { TaskListComponent } from './tasklist.component';
+import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
+import { ActivitiTaskList } from './activiti-tasklist.component';
 
-describe('TaskListComponent', () => {
+describe('ActivitiTaskList', () => {
 
     let fakeGlobalTask = [
         {
@@ -80,22 +79,21 @@ describe('TaskListComponent', () => {
     };
 
     let componentHandler: any;
-    let component: TaskListComponent;
-    let fixture: ComponentFixture<TaskListComponent>;
-    let taskListService: TaskListService;
+    let component: ActivitiTaskList;
+    let fixture: ComponentFixture<ActivitiTaskList>;
+    let taskListService: ActivitiTaskListService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                DataTableModule,
-                MdProgressSpinnerModule
+                DataTableModule
             ],
             declarations: [
-                TaskListComponent
+                ActivitiTaskList
             ],
             providers: [
-                TaskListService
+                ActivitiTaskListService
             ]
         }).compileComponents();
 
@@ -106,10 +104,10 @@ describe('TaskListComponent', () => {
 
     beforeEach(() => {
 
-        fixture = TestBed.createComponent(TaskListComponent);
+        fixture = TestBed.createComponent(ActivitiTaskList);
         component = fixture.componentInstance;
 
-        taskListService = TestBed.get(TaskListService);
+        taskListService = TestBed.get(ActivitiTaskListService);
 
         componentHandler = jasmine.createSpyObj('componentHandler', [
             'upgradeAllRegistered',

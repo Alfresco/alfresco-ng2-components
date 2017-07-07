@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { TestBed, inject } from '@angular/core/testing';
-import { HttpModule, XHRBackend, Response, ResponseOptions } from '@angular/http';
+import { inject, TestBed } from '@angular/core/testing';
+import { HttpModule, Response, ResponseOptions, XHRBackend } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { AppConfigModule, AppConfigService } from './app-config.service';
 

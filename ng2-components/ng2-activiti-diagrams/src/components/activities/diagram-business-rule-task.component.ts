@@ -15,16 +15,14 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
 import { DiagramColorService } from '../../services/diagram-color.service';
 
 @Component({
     selector: 'diagram-business-rule-task',
     templateUrl: './diagram-business-rule-task.component.html'
 })
-export class DiagramBusinessRuleTaskComponent implements OnInit {
+export class DiagramBusinessRuleTaskComponent {
     @Input()
     data: any;
 

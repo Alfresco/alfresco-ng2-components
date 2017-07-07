@@ -25,17 +25,17 @@ import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 
 import { TaskDetailsModel } from '../models/task-details.model';
 import { noDataMock, taskDetailsMock, taskFormMock, tasksMock } from './../assets/task-details.mock';
-import { PeopleService } from './../services/people.service';
-import { TaskListService } from './../services/tasklist.service';
-import { TaskDetailsComponent } from './task-details.component';
+import { ActivitiPeopleService } from './../services/activiti-people.service';
+import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
+import { ActivitiTaskDetails } from './activiti-task-details.component';
 
-describe('TaskDetailsComponent', () => {
+describe('ActivitiTaskDetails', () => {
 
     let componentHandler: any;
-    let service: TaskListService;
+    let service: ActivitiTaskListService;
     let formService: FormService;
-    let component: TaskDetailsComponent;
-    let fixture: ComponentFixture<TaskDetailsComponent>;
+    let component: ActivitiTaskDetails;
+    let fixture: ComponentFixture<ActivitiTaskDetails>;
     let getTaskDetailsSpy: jasmine.Spy;
     let getFormSpy: jasmine.Spy;
     let getTasksSpy: jasmine.Spy;
@@ -48,11 +48,11 @@ describe('TaskDetailsComponent', () => {
                 ActivitiFormModule.forRoot()
             ],
             declarations: [
-                TaskDetailsComponent
+                ActivitiTaskDetails
             ],
             providers: [
-                TaskListService,
-                PeopleService
+                ActivitiTaskListService,
+                ActivitiPeopleService
             ],
             schemas: [ NO_ERRORS_SCHEMA ]
         }).compileComponents();
@@ -64,16 +64,16 @@ describe('TaskDetailsComponent', () => {
 
     beforeEach(() => {
 
-        fixture = TestBed.createComponent(TaskDetailsComponent);
+        fixture = TestBed.createComponent(ActivitiTaskDetails);
         component = fixture.componentInstance;
-        service = fixture.debugElement.injector.get(TaskListService);
+        service = fixture.debugElement.injector.get(ActivitiTaskListService);
         formService = fixture.debugElement.injector.get(FormService);
 
         getTaskDetailsSpy = spyOn(service, 'getTaskDetails').and.returnValue(Observable.of(taskDetailsMock));
         getFormSpy = spyOn(formService, 'getTaskForm').and.returnValue(Observable.of(taskFormMock));
         getTasksSpy = spyOn(service, 'getTasks').and.returnValue(Observable.of(tasksMock));
         completeTaskSpy = spyOn(service, 'completeTask').and.returnValue(Observable.of({}));
-        spyOn(service, 'getComments').and.returnValue(Observable.of(noDataMock));
+        spyOn(service, 'getTaskComments').and.returnValue(Observable.of(noDataMock));
         spyOn(service, 'getTaskChecklist').and.returnValue(Observable.of(noDataMock));
 
         componentHandler = jasmine.createSpyObj('componentHandler', [

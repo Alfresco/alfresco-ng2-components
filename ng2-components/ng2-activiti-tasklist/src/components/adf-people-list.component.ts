@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter, ViewChild, ContentChild } from '@angular/core';
-import { User, UserEventModel } from '../models/index';
+import { Component, ContentChild, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { DataColumnListComponent } from 'ng2-alfresco-core';
 import { DataTableComponent } from 'ng2-alfresco-datatable';
+import { User, UserEventModel } from '../models/index';
 
 declare let componentHandler: any;
 
