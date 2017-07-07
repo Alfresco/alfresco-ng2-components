@@ -27,6 +27,7 @@ import { DocumentListComponent } from './../document-list.component';
 export class ContentColumnListComponent {
 
     constructor(private documentList: DocumentListComponent) {
+        console.log('ContentColumnListComponent is deprecated starting with 1.7.0 and may be removed in future versions. Use DataColumnListComponent instead.');
     }
 
     /**
