@@ -17,7 +17,7 @@
 
 import { DatePipe } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { MdButtonModule, MdIconModule, MdInputModule, MdProgressSpinnerModule } from '@angular/material';
+import { MdButtonModule, MdIconModule, MdInputModule, MdProgressSpinnerModule, MdDatepickerModule, MdGridListModule, MdAutocompleteModule, MdNativeDateModule, MdSelectModule } from '@angular/material';
 import { ActivitiFormModule } from 'ng2-activiti-form';
 import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
@@ -27,20 +27,20 @@ import { ProcessUploadService } from './src/services/process-upload.service';
 
 import {
     ActivitiApps,
+    ActivitiTaskList,
+    ActivitiTaskDetails,
+    ActivitiFilters,
+    NoTaskDetailsTemplateComponent,
     ActivitiChecklist,
     ActivitiComments,
-    ActivitiCreateTaskAttachmentComponent,
-    ActivitiFilters,
     ActivitiPeople,
-    ActivitiPeopleSearch,
-    ActivitiStartTaskButton,
-    ActivitiTaskDetails,
     ActivitiTaskHeader,
-    ActivitiTaskList,
     AdfCommentListComponent,
-    NoTaskDetailsTemplateComponent,
-    PeopleList,
-    TaskAttachmentListComponent
+    TaskAttachmentListComponent,
+    ActivitiStartTaskComponent,
+    ActivitiPeopleSearch,
+    ActivitiCreateTaskAttachmentComponent,
+    PeopleList
 } from './src/components/index';
 
 export * from './src/components/index';
@@ -59,7 +59,7 @@ export const ACTIVITI_TASKLIST_DIRECTIVES: any[] = [
     ActivitiComments,
     ActivitiPeople,
     ActivitiTaskHeader,
-    ActivitiStartTaskButton,
+    ActivitiStartTaskComponent,
     ActivitiPeopleSearch,
     TaskAttachmentListComponent,
     ActivitiCreateTaskAttachmentComponent,
@@ -81,7 +81,12 @@ export const ACTIVITI_TASKLIST_PROVIDERS: any[] = [
         MdIconModule,
         MdButtonModule,
         MdInputModule,
-        MdProgressSpinnerModule
+        MdProgressSpinnerModule,
+        MdDatepickerModule,
+        MdNativeDateModule,
+        MdSelectModule,
+        MdAutocompleteModule,
+        MdGridListModule
     ],
     declarations: [
         ...ACTIVITI_TASKLIST_DIRECTIVES

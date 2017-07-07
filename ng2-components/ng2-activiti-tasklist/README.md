@@ -489,12 +489,38 @@ This component displays comments entered by involved users to a specified task. 
 | --- | --- |
 | error | Raised when an error occurs while displaying/adding a comment |
 
+## Start Task Component
+
+This component Creates/Starts new task for the specified app
+
+```html
+<activiti-start-task 
+    [appId]="YOUR_APP_ID">
+</activiti-start-task>
+```
+
+![activiti-start-task](docs/assets/adf-start-task.png)
+
+### Properties
+
+| Name | Type | Description |
+| --- | --- | --- |
+| appId | string | (**required**): The id of the app. |
+
+#### Events
+
+| Name | Description |
+| --- | --- |
+| onSuccess | Raised when the task is successfully created |
+| cancel | Raised when the cancel button is pressed by the user |
+| error | Raised if there is an error during task creation |
+
 ## Build from sources
 
 You can build component from sources with the following commands:
-
 ```sh
 npm install
+
 npm run build
 ```
 

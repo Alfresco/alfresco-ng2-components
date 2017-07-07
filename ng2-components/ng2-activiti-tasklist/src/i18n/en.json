@@ -71,13 +71,15 @@
     },
     "START_TASK": {
         "BUTTON": "CREATE TASK",
-        "DIALOG": {
+        "FORM": {
             "TITLE": "Start Task",
             "LABEL": {
                 "NONE": "None",
                 "NAME": "Name",
                 "DESCRIPTION": "Description",
-                "ATTACHFORM" : "Attach a Form"
+                "ATTACHFORM" : "Attach a Form",
+                "ASSIGNEE"   : "Assignee",
+                "FORM"       :  "Form"
             },
             "ACTION": {
                 "START": "Start",

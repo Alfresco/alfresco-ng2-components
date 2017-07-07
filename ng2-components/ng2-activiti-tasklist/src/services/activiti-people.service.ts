@@ -28,7 +28,7 @@ export class ActivitiPeopleService {
                 private logService: LogService) {
     }
 
-    getWorkflowUsers(taskId: string, searchWord: string): Observable<User[]> {
+    getWorkflowUsers(taskId?: string, searchWord?: string): Observable<User[]> {
         let option = {excludeTaskId: taskId, filter: searchWord};
         return Observable.fromPromise(this.getWorkflowUserApi(option))
             .map((response: any) => <User[]> response.data || [])

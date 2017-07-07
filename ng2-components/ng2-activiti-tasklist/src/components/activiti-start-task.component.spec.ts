@@ -20,6 +20,8 @@ import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
 import { ActivitiStartTaskButton } from './activiti-start-task.component';
+import { ActivitiPeopleService } from '../services/activiti-people.service';
+import { MdIconModule, MdButtonModule, MdDatepickerModule, MdGridListModule, MdNativeDateModule, MdSelectModule, MdInputModule } from '@angular/material';
 
 declare let jasmine: any;
 
@@ -28,19 +30,30 @@ describe('ActivitiStartTaskButton', () => {
     let activitiStartTaskButton: ActivitiStartTaskButton;
     let fixture: ComponentFixture<ActivitiStartTaskButton>;
     let service: ActivitiTaskListService;
+    let peopleService: ActivitiPeopleService;
     let element: HTMLElement;
-    let startTaskButton: HTMLElement;
+    let getformlistSpy: jasmine.Spy;
+    let getWorkflowUsersSpy: jasmine.Spy;
+    let getcreateNewTaskSpy: jasmine.Spy;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule.forRoot(),
+                MdInputModule,
+                MdIconModule,
+                MdButtonModule,
+                MdDatepickerModule,
+                MdGridListModule,
+                MdNativeDateModule,
+                MdSelectModule
             ],
             declarations: [
                 ActivitiStartTaskButton
             ],
             providers: [
-                ActivitiTaskListService
+                ActivitiTaskListService,
+                ActivitiPeopleService
             ]
         }).compileComponents().then(() => {
             let translateService = TestBed.get(AlfrescoTranslationService);
@@ -51,59 +64,105 @@ describe('ActivitiStartTaskButton', () => {
             activitiStartTaskButton = fixture.componentInstance;
             element = fixture.nativeElement;
             fixture.detectChanges();
-            startTaskButton = <HTMLElement> element.querySelector('#start-task-button');
         });
     }));
 
     beforeEach(() => {
-        jasmine.Ajax.install();
         service = fixture.debugElement.injector.get(ActivitiTaskListService);
+        peopleService = fixture.debugElement.injector.get(ActivitiPeopleService);
+        getformlistSpy = spyOn(service, 'getFormList').and.returnValue(Observable.of([{id: 123, name: 'fakeFormName'}, {id: 1111, name: 'fakeFormName'}]));
+        getWorkflowUsersSpy = spyOn(peopleService, 'getWorkflowUsers').and.returnValue(Observable.of([
+        {
+            id: 1,
+            firstName: 'fakeName',
+            lastName: 'fakeName',
+            email: 'fake@app.activiti.com',
+            company: 'Alfresco.com',
+            pictureId: 3003
+        },
+        {
+            id: 1001,
+            firstName: 'fake-name',
+            lastName: 'fake-name',
+            email: 'fake-@app.com',
+            company: 'app'
+        }]));
     });
 
-    afterEach(() => {
-        jasmine.Ajax.uninstall();
+    it('should create instance of ActivitiStartTaskButton', () => {
+        expect(fixture.componentInstance instanceof ActivitiStartTaskButton).toBe(true, 'should create ActivitiStartTaskButton');
     });
 
-    it('should show start task button', () => {
-        expect(element.querySelector('#start-task-button')).toBeDefined();
-        expect(element.querySelector('#start-task-button')).not.toBeNull();
-        expect(element.querySelector('#start-task-button').textContent).toContain('START_TASK.BUTTON');
+    it('should fetch fakeform on ngonint', () => {
+        let loadForms = [{id: 123, name: 'fakeFormName'}, {id: 1111, name: 'fakeFormName'}];
+        activitiStartTaskButton.ngOnInit();
+        expect(activitiStartTaskButton.forms).toEqual(loadForms);
+        expect(activitiStartTaskButton.forms[0].name).toEqual('fakeFormName');
+        expect(activitiStartTaskButton.forms[1].id).toEqual(1111);
+        expect(getformlistSpy).toHaveBeenCalled();
     });
 
-    it('should show start dialog on press button', () => {
-        startTaskButton.click();
-        expect(element.querySelector('#start-task-dialog')).not.toBeNull();
-        expect(element.querySelector('#start-task-dialog').getAttribute('open')).not.toBeNull();
-        expect(element.querySelector('#start-task-dialog-title')).not.toBeNull();
-        expect(element.querySelector('#start-task-dialog-title').textContent).toContain('START_TASK.DIALOG.TITLE');
-    });
+    describe('create task', () => {
 
-    it('should close start dialog on cancel button', () => {
-        startTaskButton.click();
-        expect(element.querySelector('#start-task-dialog')).not.toBeNull();
-        expect(element.querySelector('#start-task-dialog').getAttribute('open')).not.toBeNull();
-        let cancelButton = <HTMLElement> element.querySelector('#button-cancel');
-        cancelButton.click();
-        expect(element.querySelector('#start-task-dialog').getAttribute('open')).toBeNull();
-    });
+        beforeEach(() => {
+            getcreateNewTaskSpy = spyOn(service, 'createNewTask').and.returnValue
+            (Observable.of({ id: 91, name: 'fakeName', formKey: '4', assignee: {id: 1001, firstName: 'fakeName', email: 'fake@app.activiti.com'}}));
+        });
 
-    it('should attach a task when a form id slected', () => {
-        let attachFormToATask = spyOn(service, 'attachFormToATask').and.returnValue(Observable.of());
-        spyOn(service, 'createNewTask').and.callFake(
-            function() {
-                return Observable.create(observer => {
-                    observer.next({ id: 'task-id'});
-                    observer.complete();
-                });
+        it('should create new task when start is clicked', async(() => {
+            activitiStartTaskButton.onSuccess.subscribe((res) => {
+                expect(res).toBeDefined();
             });
+            activitiStartTaskButton.appId = 'fakeAppId';
+            activitiStartTaskButton.name = 'fake-name';
+            activitiStartTaskButton.assignee = {id: 1111, firstName: 'fakeName', email: 'fake@app.com'};
+            activitiStartTaskButton.formDetails = {id: 4, forname: 'Expence Summary'};
+            activitiStartTaskButton.selectedDate = '2016-11-03T15:25:42.749+0000';
+            activitiStartTaskButton.description = 'fakeDescription';
+            activitiStartTaskButton.start();
+            expect(getcreateNewTaskSpy).toHaveBeenCalled();
+        }));
 
-        let createTaskButton = <HTMLElement> element.querySelector('#button-start');
+        it('should send on success event when the task is started', async(() => {
+            activitiStartTaskButton.onSuccess.subscribe((res) => {
+                expect(res).toBeDefined();
+                expect(res.id).toBe(91);
+                expect(res.name).toBe('fakeName');
+                expect(res.formKey).toBe('4');
+                expect(res.assignee.id).toBe(1001);
+            });
+            activitiStartTaskButton.appId = 'fakeAppId';
+            activitiStartTaskButton.name = 'fake-name';
+            activitiStartTaskButton.assignee = {id: 1111, firstName: 'fakeName', email: 'fake@app.com'};
+            activitiStartTaskButton.formDetails = {id: 4, forname: 'Expence Summary'};
+            activitiStartTaskButton.selectedDate = '2016-11-03T15:25:42.749+0000';
+            activitiStartTaskButton.description = 'fakeDescription';
+            activitiStartTaskButton.start();
+            expect(getcreateNewTaskSpy).toHaveBeenCalled();
+        }));
 
-        activitiStartTaskButton.name = 'fake-name';
-        activitiStartTaskButton.formId = '123';
-        startTaskButton.click();
-        createTaskButton.click();
-        expect(attachFormToATask).toHaveBeenCalled();
+        it('should not emit success event when data not present', async(() => {
+            let onSuccessSpy: jasmine.Spy = spyOn(activitiStartTaskButton.onSuccess, 'emit');
+            activitiStartTaskButton.start();
+            fixture.detectChanges();
+            expect(getcreateNewTaskSpy).not.toHaveBeenCalled();
+            expect(onSuccessSpy).not.toHaveBeenCalled();
+        }));
+
+        it('should attach a task when a form id selected', async(() => {
+            activitiStartTaskButton.onSuccess.subscribe((res) => {
+                expect(res).toBeDefined();
+                expect(res.formKey).toBe('4');
+            });
+            activitiStartTaskButton.appId = 'fakeAppId';
+            activitiStartTaskButton.name = 'fake-name';
+            activitiStartTaskButton.assignee = {id: 1111, firstName: 'fakeName', email: 'fake@app.com'};
+            activitiStartTaskButton.formDetails = {id: 4, forname: 'Expence Summary'};
+            activitiStartTaskButton.selectedDate = '2016-11-03T15:25:42.749+0000';
+            activitiStartTaskButton.description = 'fakeDescription';
+            activitiStartTaskButton.start();
+            expect(getcreateNewTaskSpy).toHaveBeenCalled();
+        }));
     });
 
     it('should not attach a task when a form id is not slected', () => {
@@ -111,64 +170,51 @@ describe('ActivitiStartTaskButton', () => {
         spyOn(service, 'createNewTask').and.callFake(
             function() {
                 return Observable.create(observer => {
-                    observer.next({ id: 'task-id'});
-                    observer.complete();
+                        observer.next({ id: 'task-id'});
+                        observer.complete();
                 });
             });
-
         let createTaskButton = <HTMLElement> element.querySelector('#button-start');
-
         activitiStartTaskButton.name = 'fake-name';
-        startTaskButton.click();
         createTaskButton.click();
+        expect(activitiStartTaskButton.formDetails).not.toBeDefined();
         expect(attachFormToATask).not.toHaveBeenCalled();
+        });
+    it('should show start task button', () => {
+        expect(element.querySelector('#button-start')).toBeDefined();
+        expect(element.querySelector('#button-start')).not.toBeNull();
+        expect(element.querySelector('#button-start').textContent).toContain('START_TASK.FORM.ACTION.START');
     });
 
-    it('should load form when dialogs open', () => {
-        let loadForms = spyOn(service, 'getFormList').and.returnValue(Observable.of());
-        startTaskButton.click();
-        expect(loadForms).toHaveBeenCalled();
+    it('should fetch all users on ngonint', async(() => {
+        activitiStartTaskButton.ngOnInit();
+        expect(activitiStartTaskButton.people).toBeDefined();
+        expect(activitiStartTaskButton.people[0].firstName).toEqual('fakeName');
+        expect(activitiStartTaskButton.people[1].firstName).toEqual('fake-name');
+        expect(activitiStartTaskButton.people[0].id).toEqual(1);
+        expect(activitiStartTaskButton.people[1].id).toEqual(1001);
+        expect(getWorkflowUsersSpy).toHaveBeenCalled();
+    }));
+
+    it('should not emit TaskDetails OnCancle', () => {
+        let emitSpy = spyOn(activitiStartTaskButton.onCancel, 'emit');
+        activitiStartTaskButton.cancel();
+        expect(emitSpy).not.toBeNull();
+        expect(emitSpy).toHaveBeenCalled();
     });
 
-    it('should create new task when start is clicked', () => {
-        activitiStartTaskButton.onSuccess.subscribe(() => {
-            expect(element.querySelector('#start-task-dialog').getAttribute('open')).toBeNull();
-        });
-        let createTaskButton = <HTMLElement> element.querySelector('#button-start');
-        startTaskButton.click();
-        activitiStartTaskButton.name = 'fake-name';
-        createTaskButton.click();
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200
-        });
+    it('should start button disable if name is empty', () => {
+        let createTaskButton =  fixture.nativeElement.querySelector('#button-start');
+        activitiStartTaskButton.name = '';
+        fixture.detectChanges();
+        expect(createTaskButton.disabled).toBeTruthy();
     });
 
-    it('alert message is showed on start error', () => {
-        spyOn(window, 'alert');
-        activitiStartTaskButton.onSuccess.subscribe(() => {
-            expect(window.alert).toHaveBeenCalledWith('An error occurred while trying to add the task');
-        });
-        let createTaskButton = <HTMLElement> element.querySelector('#button-start');
-        startTaskButton.click();
-        activitiStartTaskButton.name = 'fake-name';
-        createTaskButton.click();
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 403
-        });
+    it('should enable button if name is not empty', () => {
+        let createTaskButton = fixture.nativeElement.querySelector('#button-start');
+        activitiStartTaskButton.name = 'fakeName';
+        fixture.detectChanges();
+        expect(createTaskButton.enable).toBeFalsy();
     });
 
-    it('should send on success event when the task is started', () => {
-        activitiStartTaskButton.onSuccess.subscribe((res) => {
-            expect(res).toBeDefined();
-        });
-        let createTaskButton = <HTMLElement> element.querySelector('#button-start');
-        startTaskButton.click();
-        activitiStartTaskButton.name = 'fake-name';
-        createTaskButton.click();
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
-            contentType: 'json',
-            responseText: {}
-        });
-    });
 });

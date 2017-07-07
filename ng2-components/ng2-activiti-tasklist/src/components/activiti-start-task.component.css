@@ -1,7 +1,47 @@
-:host {
-    width: 100%;
+.heading {
+    padding: 12px 20px;
+    font-family: Muli;
+    font-weight: bold;
+    border-bottom: 1px solid #eee;
+    font-size: 18px;
+    float: left;
+    text-align: left;
+    width: calc(100% - 40px);
 }
 
-.activiti-label {
-    font-weight: bolder;
+.md-layout-card {
+  width: 66.6667%;
+  margin-right:calc(33.3333%/2 - 24px);
+  margin-left: calc(33.3333%/2 - 24px);
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 0px
+}
+
+.footer {
+    padding: 4px;
+    font-family: Muli;
+    font-size: 18px;
+    border-top: 1px solid #eee;
+    float: left;
+    width: calc(100% - 40px);
+    text-align: right;
+}
+
+.mat-button .md-colors{
+    opacity: 0.54;
+    color: #000;
+    font-weight: bold;
+}
+
+.mat-button.md-colors {
+    color: rgb(255,152,0);
+}
+
+.md-full-width {
+  width: 80%;
+}
+
+.text-full-width {
+  width: 90%;
 }
