@@ -16,7 +16,6 @@
  */
 
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { MdButtonModule, MdIconModule, MdMenuModule, MdProgressSpinnerModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 
@@ -28,6 +27,7 @@ import { ContentColumnComponent } from './src/components/content-column/content-
 import { DocumentListComponent } from './src/components/document-list.component';
 import { DocumentMenuActionComponent } from './src/components/document-menu-action.component';
 import { EmptyFolderContentComponent } from './src/components/empty-folder/empty-folder-content.component';
+import { MaterialModule } from './src/material.module';
 
 import { DocumentActionsService } from './src/services/document-actions.service';
 import { DocumentListService } from './src/services/document-list.service';
@@ -77,10 +77,7 @@ export const DOCUMENT_LIST_PROVIDERS: any[] = [
     imports: [
         CoreModule,
         DataTableModule,
-        MdMenuModule,
-        MdButtonModule,
-        MdIconModule,
-        MdProgressSpinnerModule
+        MaterialModule
     ],
     declarations: [
         ...DOCUMENT_LIST_DIRECTIVES
@@ -91,9 +88,7 @@ export const DOCUMENT_LIST_PROVIDERS: any[] = [
     exports: [
         DataTableModule,
         ...DOCUMENT_LIST_DIRECTIVES,
-        MdMenuModule,
-        MdButtonModule,
-        MdIconModule
+        MaterialModule
     ]
 })
 export class DocumentListModule {
