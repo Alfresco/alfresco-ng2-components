@@ -17,10 +17,9 @@
 
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { AlfrescoApiService, AlfrescoContentService, AlfrescoTranslationService, FileModel, FileUtils, LogService, NotificationService } from 'ng2-alfresco-core';
+import { AlfrescoApiService, AlfrescoContentService, AlfrescoTranslationService, FileModel, FileUtils, LogService, NotificationService, UploadService } from 'ng2-alfresco-core';
 import { Observable, Subject } from 'rxjs/Rx';
 import { PermissionModel } from '../models/permissions.model';
-import { UploadService } from '../services/upload.service';
 
 @Component({
     selector: 'adf-upload-button, alfresco-upload-button',

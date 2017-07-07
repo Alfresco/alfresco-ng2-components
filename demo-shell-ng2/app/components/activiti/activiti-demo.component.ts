@@ -42,10 +42,9 @@ import {
     ObjectDataRow,
     DataSorting
 } from 'ng2-alfresco-datatable';
-import { AlfrescoApiService } from 'ng2-alfresco-core';
+import { AlfrescoApiService, UploadService } from 'ng2-alfresco-core';
 import { FormService, FormRenderingService, FormEvent, FormFieldEvent, ProcessUploadService } from 'ng2-activiti-form';
 import { /*CustomEditorComponent*/ CustomStencil01 } from './custom-editor/custom-editor.component';
-import { UploadService } from 'ng2-alfresco-upload';
 
 declare var componentHandler;
 

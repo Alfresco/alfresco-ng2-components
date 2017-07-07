@@ -21,9 +21,8 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
 import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
 import { FileUploadingListComponent } from './file-uploading-list.component';
-import { UploadService } from '../services/upload.service';
 import { FileModel, FileUploadStatus } from 'ng2-alfresco-core';
-import { FileUploadCompleteEvent, FileUploadEvent } from 'ng2-alfresco-core';
+import { FileUploadCompleteEvent, FileUploadEvent, UploadService } from 'ng2-alfresco-core';
 
 describe('FileUploadingDialogComponent', () => {
 

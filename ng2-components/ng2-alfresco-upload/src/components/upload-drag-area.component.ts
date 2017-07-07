@@ -16,8 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AlfrescoTranslationService, FileInfo, FileModel, FileUtils, NotificationService } from 'ng2-alfresco-core';
-import { UploadService } from '../services/upload.service';
+import { AlfrescoTranslationService, FileInfo, FileModel, FileUtils, NotificationService, UploadService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'adf-upload-drag-area, alfresco-upload-drag-area',
