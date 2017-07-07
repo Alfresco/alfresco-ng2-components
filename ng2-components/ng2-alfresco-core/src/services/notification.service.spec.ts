@@ -22,7 +22,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NotificationService } from './notification.service';
 
 describe('NotificationService', () => {
-    let fixture: ComponentFixture<ComponentThatProvidesNotificationService>;
+    let fixture: ComponentFixture<ProvidesNotificationServiceComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -31,7 +31,7 @@ describe('NotificationService', () => {
                 OverlayModule,
                 MdSnackBarModule
             ],
-            declarations: [ComponentThatProvidesNotificationService],
+            declarations: [ProvidesNotificationServiceComponent],
             providers: [
                 NotificationService,
                 MdSnackBar,
@@ -44,7 +44,7 @@ describe('NotificationService', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ComponentThatProvidesNotificationService);
+        fixture = TestBed.createComponent(ProvidesNotificationServiceComponent);
         fixture.detectChanges();
     });
 
@@ -76,7 +76,7 @@ describe('NotificationService', () => {
     template: '',
     providers: [NotificationService]
 })
-class ComponentThatProvidesNotificationService {
+class ProvidesNotificationServiceComponent {
     constructor(public notificationService: NotificationService) {
 
     }
