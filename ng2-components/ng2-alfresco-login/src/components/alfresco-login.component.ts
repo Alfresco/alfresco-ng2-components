@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter, OnInit, TemplateRef } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoSettingsService, LogService } from 'ng2-alfresco-core';
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { FormSubmitEvent } from '../models/form-submit-event.model';
 
 declare let componentHandler: any;

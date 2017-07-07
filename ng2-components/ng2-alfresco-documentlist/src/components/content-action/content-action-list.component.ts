@@ -17,8 +17,8 @@
 
 import { Component } from '@angular/core';
 
-import { DocumentListComponent } from './../document-list.component';
 import { ContentActionModel } from './../../models/content-action.model';
+import { DocumentListComponent } from './../document-list.component';
 
 @Component({
     selector: 'content-actions',

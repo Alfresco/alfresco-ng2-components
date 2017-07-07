@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
-import { ActivitiProcessInstanceHeader } from './activiti-process-instance-header.component';
-import { TranslationMock } from './../assets/translation.service.mock';
 import { exampleProcess, processEnded } from './../assets/activiti-process.model.mock';
+import { TranslationMock } from './../assets/translation.service.mock';
 import { ProcessInstance } from './../models/process-instance.model';
-import { ActivitiProcessComments } from './activiti-process-comments.component';
 import { ActivitiProcessService } from './../services/activiti-process.service';
+import { ActivitiProcessComments } from './activiti-process-comments.component';
+import { ActivitiProcessInstanceHeader } from './activiti-process-instance-header.component';
 
 describe('ActivitiProcessInstanceHeader', () => {
 

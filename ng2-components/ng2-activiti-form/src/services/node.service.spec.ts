@@ -17,9 +17,9 @@
 
 import { TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
-import { NodeService } from './node.service';
 import { NodeMetadata } from '../models/node-metadata.model';
 import { EcmModelService } from './ecm-model.service';
+import { NodeService } from './node.service';
 
 declare let jasmine: any;
 

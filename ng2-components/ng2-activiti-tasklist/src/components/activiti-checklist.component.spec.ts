@@ -16,12 +16,12 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
-import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { TaskDetailsModel } from '../models/task-details.model';
 import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
 import { ActivitiChecklist } from './activiti-checklist.component';
-import { TaskDetailsModel } from '../models/task-details.model';
 
 declare let jasmine: any;
 

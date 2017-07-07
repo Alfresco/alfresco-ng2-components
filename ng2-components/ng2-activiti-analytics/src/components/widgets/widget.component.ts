@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Input, AfterViewInit, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
+import { AfterViewInit, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 
 let componentHandler: any;
 

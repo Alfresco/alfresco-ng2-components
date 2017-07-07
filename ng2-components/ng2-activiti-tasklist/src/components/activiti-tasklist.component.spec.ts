@@ -16,13 +16,13 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
-import { ActivitiTaskList } from './activiti-tasklist.component';
+import { DataRowEvent, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 import { Observable } from 'rxjs/Rx';
-import { ObjectDataRow, DataRowEvent, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
+import { ActivitiTaskList } from './activiti-tasklist.component';
 
 describe('ActivitiTaskList', () => {
 

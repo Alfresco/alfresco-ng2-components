@@ -16,8 +16,8 @@
  */
 
 import { ContainerColumnModel } from './../core/container-column.model';
-import { FormModel } from './../core/form.model';
 import { FormFieldModel } from './../core/form-field.model';
+import { FormModel } from './../core/form.model';
 
 describe('ContainerColumnModel', () => {
 

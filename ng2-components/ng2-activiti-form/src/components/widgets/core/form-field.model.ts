@@ -15,27 +15,27 @@
  * limitations under the License.
  */
 
-import { FormWidgetModel } from './form-widget.model';
+import * as moment from 'moment';
+import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
+import { ContainerColumnModel } from './container-column.model';
+import { FormFieldMetadata } from './form-field-metadata';
 import { FormFieldOption } from './form-field-option';
 import { FormFieldTypes } from './form-field-types';
-import { FormFieldMetadata } from './form-field-metadata';
-import { FormModel } from './form.model';
-import { ContainerColumnModel } from './container-column.model';
-import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 import {
-    FormFieldValidator,
-    RequiredFieldValidator,
-    NumberFieldValidator,
-    MinLengthFieldValidator,
-    MaxLengthFieldValidator,
-    MinValueFieldValidator,
-    MaxValueFieldValidator,
-    RegExFieldValidator,
     DateFieldValidator,
+    FormFieldValidator,
+    MaxDateFieldValidator,
+    MaxLengthFieldValidator,
+    MaxValueFieldValidator,
     MinDateFieldValidator,
-    MaxDateFieldValidator
+    MinLengthFieldValidator,
+    MinValueFieldValidator,
+    NumberFieldValidator,
+    RegExFieldValidator,
+    RequiredFieldValidator
 } from './form-field-validator';
-import * as moment from 'moment';
+import { FormWidgetModel } from './form-widget.model';
+import { FormModel } from './form.model';
 
 // Maps to FormFieldRepresentation
 export class FormFieldModel extends FormWidgetModel {

@@ -16,11 +16,11 @@
  */
 
 import {
-    Directive,
-    ContentChild,
-    TemplateRef,
     AfterContentInit,
-    Input
+    ContentChild,
+    Directive,
+    Input,
+    TemplateRef
 } from '@angular/core';
 import { ViewerComponent } from '../components/viewer.component';
 

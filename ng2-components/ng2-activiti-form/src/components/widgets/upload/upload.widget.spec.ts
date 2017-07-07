@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { UploadWidget } from './upload.widget';
-import { FormFieldModel } from './../core/form-field.model';
-import { FormFieldTypes } from '../core/form-field-types';
-import { FormService } from '../../../services/form.service';
-import { EcmModelService } from '../../../services/ecm-model.service';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
+import { EcmModelService } from '../../../services/ecm-model.service';
+import { FormService } from '../../../services/form.service';
+import { FormFieldTypes } from '../core/form-field-types';
 import { FormModel } from '../core/form.model';
+import { FormFieldModel } from './../core/form-field.model';
+import { UploadWidget } from './upload.widget';
 
 describe('UploadWidget', () => {
 

@@ -17,11 +17,11 @@
 
 import { ElementRef } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import { PeopleWidget } from './people.widget';
 import { FormService } from '../../../services/form.service';
-import { FormModel } from '../core/form.model';
 import { FormFieldModel } from '../core/form-field.model';
+import { FormModel } from '../core/form.model';
 import { GroupUserModel } from '../core/group-user.model';
+import { PeopleWidget } from './people.widget';
 
 describe('PeopleWidget', () => {
 

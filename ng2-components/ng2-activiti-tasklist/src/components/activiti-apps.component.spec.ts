@@ -16,14 +16,14 @@
  */
 
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
-import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
 
-import { ActivitiApps } from './activiti-apps.component';
-import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { defaultApp, deployedApps, nonDeployedApps } from './../assets/activiti-apps.mock';
+import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
+import { ActivitiApps } from './activiti-apps.component';
 
 describe('ActivitiApps', () => {
 

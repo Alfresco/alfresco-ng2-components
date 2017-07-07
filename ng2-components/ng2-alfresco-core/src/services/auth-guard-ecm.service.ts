@@ -17,8 +17,8 @@
 
 import { Injectable } from '@angular/core';
 import {
-  CanActivate, Router, CanActivateChild,
-  ActivatedRouteSnapshot,
+  ActivatedRouteSnapshot, CanActivate, CanActivateChild,
+  Router,
   RouterStateSnapshot
 } from '@angular/router';
 

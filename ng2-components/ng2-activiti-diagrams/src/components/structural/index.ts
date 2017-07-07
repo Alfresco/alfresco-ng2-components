@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { DiagramSubprocessComponent } from './diagram-subprocess.component';
 import { DiagramEventSubprocessComponent } from './diagram-event-subprocess.component';
+import { DiagramSubprocessComponent } from './diagram-subprocess.component';
 
 // primitives
 export * from './diagram-subprocess.component';

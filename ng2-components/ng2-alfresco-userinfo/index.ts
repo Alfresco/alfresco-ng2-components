@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CoreModule } from 'ng2-alfresco-core';
 
 import { UserInfoComponent } from './src/components/user-info.component';
-import { EcmUserService } from './src/services/ecm-user.service';
 import { BpmUserService } from './src/services/bpm-user.service';
+import { EcmUserService } from './src/services/ecm-user.service';
 
 export * from './src/components/user-info.component';
 export * from './src/services/bpm-user.service';

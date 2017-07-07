@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, OnInit, AfterViewChecked } from '@angular/core';
-import { WidgetComponent , baseHost } from './../widget.component';
+import { AfterViewChecked, Component, ElementRef, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { FormService } from './../../../services/form.service';
+import { baseHost , WidgetComponent } from './../widget.component';
 
 declare let mdDateTimePicker: any;
 declare var componentHandler: any;

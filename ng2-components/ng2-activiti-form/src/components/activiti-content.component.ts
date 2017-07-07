@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, OnChanges, SimpleChanges, Input, Output, EventEmitter } from '@angular/core';
-import { AlfrescoTranslationService, LogService, ContentService } from 'ng2-alfresco-core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { AlfrescoTranslationService, ContentService, LogService } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Rx';
 import { FormService } from './../services/form.service';
 import { ContentLinkModel } from './widgets/core/content-link.model';
-import { Observable } from 'rxjs/Rx';
 
 @Component({
     selector: 'adf-content, activiti-content',

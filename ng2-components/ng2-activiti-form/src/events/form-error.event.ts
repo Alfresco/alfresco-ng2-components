@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { FormEvent } from './form.event';
 import { FormModel } from './../components/widgets/core/index';
+import { FormEvent } from './form.event';
 
 export class FormErrorEvent extends FormEvent {
 

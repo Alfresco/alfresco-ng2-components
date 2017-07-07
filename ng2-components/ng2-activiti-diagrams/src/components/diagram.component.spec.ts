@@ -15,23 +15,23 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 
-import { DIAGRAM_DIRECTIVES, DIAGRAM_PROVIDERS } from './index';
-import { RAPHAEL_DIRECTIVES, RAPHAEL_PROVIDERS } from './raphael/index';
-import { DiagramComponent } from './index';
 import { DebugElement } from '@angular/core';
-import { TranslationMock } from '../assets/translation.service.mock';
-import * as diagramsEventsMock from '../assets/diagramEvents.mock';
 import * as diagramsActivitiesMock from '../assets/diagramActivities.mock';
+import * as boundaryEventMock from '../assets/diagramBoundary.mock';
+import * as diagramsEventsMock from '../assets/diagramEvents.mock';
+import * as flowsMock from '../assets/diagramFlows.mock';
 import * as diagramsGatewaysMock from '../assets/diagramGateways.mock';
 import * as intermediateCatchingMock from '../assets/diagramIntermediate.mock';
-import * as boundaryEventMock from '../assets/diagramBoundary.mock';
-import * as throwEventMock from '../assets/diagramThrow.mock';
 import * as structuralMock from '../assets/diagramStructural.mock';
 import * as swimLanesMock from '../assets/diagramSwimlanes.mock';
-import * as flowsMock from '../assets/diagramFlows.mock';
+import * as throwEventMock from '../assets/diagramThrow.mock';
+import { TranslationMock } from '../assets/translation.service.mock';
+import { DiagramComponent } from './index';
+import { DIAGRAM_DIRECTIVES, DIAGRAM_PROVIDERS } from './index';
+import { RAPHAEL_DIRECTIVES, RAPHAEL_PROVIDERS } from './raphael/index';
 
 declare let jasmine: any;
 

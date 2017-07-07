@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Injectable, Output, EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Rx';
 
 /**
  * @returns {TagService}
@@ -51,7 +51,7 @@ export class TagService {
 
         promiseAdd.subscribe((data) => {
             this.refresh.emit(data);
-        }, (err) => {
+        },                   (err) => {
             this.handleError(err);
         });
 
@@ -63,7 +63,7 @@ export class TagService {
 
         promiseRemove.subscribe((data) => {
             this.refresh.emit(data);
-        }, (err) => {
+        },                      (err) => {
             this.handleError(err);
         });
 

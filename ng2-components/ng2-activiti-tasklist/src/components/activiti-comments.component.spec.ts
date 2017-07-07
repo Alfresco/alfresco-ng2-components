@@ -16,15 +16,15 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
-import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiFormModule } from 'ng2-activiti-form';
+import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 
-import { ActivitiComments } from './activiti-comments.component';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
+import { ActivitiComments } from './activiti-comments.component';
 
 describe('ActivitiComments', () => {
 

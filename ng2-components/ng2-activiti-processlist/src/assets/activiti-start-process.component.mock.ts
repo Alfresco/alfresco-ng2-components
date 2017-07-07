@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { ProcessInstance } from './../models/process-instance.model';
 import { ProcessDefinitionRepresentation } from './../models/process-definition.model';
+import { ProcessInstance } from './../models/process-instance.model';
 
 export let newProcess = new ProcessInstance({
     id: '32323',

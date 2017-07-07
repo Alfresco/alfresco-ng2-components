@@ -15,21 +15,21 @@
  * limitations under the License.
  */
 
-import { DiagramContainerServiceTaskComponent } from './diagram-container-service-task.component';
-import { DiagramTaskComponent } from './diagram-task.component';
-import { DiagramServiceTaskComponent } from './diagram-service-task.component';
-import { DiagramSendTaskComponent } from './diagram-send-task.component';
-import { DiagramUserTaskComponent } from './diagram-user-task.component';
-import { DiagramManualTaskComponent } from './diagram-manual-task.component';
-import { DiagramCamelTaskComponent } from './diagram-camel-task.component';
-import { DiagramMuleTaskComponent } from './diagram-mule-task.component';
 import { DiagramAlfrescoPublishTaskComponent } from './diagram-alfresco-publish-task.component';
-import { DiagramRestCallTaskComponent } from './diagram-rest-call-task.component';
-import { DiagramGoogleDrivePublishTaskComponent } from './diagram-google-drive-publish-task.component';
 import { DiagramBoxPublishTaskComponent } from './diagram-box-publish-task.component';
-import { DiagramReceiveTaskComponent } from './diagram-receive-task.component';
-import { DiagramScriptTaskComponent } from './diagram-script-task.component';
 import { DiagramBusinessRuleTaskComponent } from './diagram-business-rule-task.component';
+import { DiagramCamelTaskComponent } from './diagram-camel-task.component';
+import { DiagramContainerServiceTaskComponent } from './diagram-container-service-task.component';
+import { DiagramGoogleDrivePublishTaskComponent } from './diagram-google-drive-publish-task.component';
+import { DiagramManualTaskComponent } from './diagram-manual-task.component';
+import { DiagramMuleTaskComponent } from './diagram-mule-task.component';
+import { DiagramReceiveTaskComponent } from './diagram-receive-task.component';
+import { DiagramRestCallTaskComponent } from './diagram-rest-call-task.component';
+import { DiagramScriptTaskComponent } from './diagram-script-task.component';
+import { DiagramSendTaskComponent } from './diagram-send-task.component';
+import { DiagramServiceTaskComponent } from './diagram-service-task.component';
+import { DiagramTaskComponent } from './diagram-task.component';
+import { DiagramUserTaskComponent } from './diagram-user-task.component';
 
 // primitives
 export * from './diagram-container-service-task.component';

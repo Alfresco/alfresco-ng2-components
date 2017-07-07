@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { FormFieldComponent } from './form-field.component';
 import { FormRenderingService } from './../../services/form-rendering.service';
-import { FormModel, FormFieldModel, FormFieldTypes } from './../widgets/core/index';
-import { TextWidget } from './../widgets/text/text.widget';
-import { InputMaskDirective } from './../widgets/text/text-mask.component';
-import { CheckboxWidget } from './../widgets/checkbox/checkbox.widget';
 import { WidgetVisibilityService } from './../../services/widget-visibility.service';
+import { CheckboxWidget } from './../widgets/checkbox/checkbox.widget';
+import { FormFieldModel, FormFieldTypes, FormModel } from './../widgets/core/index';
+import { InputMaskDirective } from './../widgets/text/text-mask.component';
+import { TextWidget } from './../widgets/text/text.widget';
+import { FormFieldComponent } from './form-field.component';
 
 describe('FormFieldComponent', () => {
 

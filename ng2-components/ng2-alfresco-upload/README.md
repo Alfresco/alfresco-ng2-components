@@ -21,6 +21,7 @@
   * [Events](#events-1)
 - [FileUploadingDialogComponent](#fileuploadingdialogcomponent)
 - [UploadService](#uploadservice)
+  * [Configuration](#configuration)
   * [Events](#events-2)
 - [Build from sources](#build-from-sources)
 - [NPM scripts](#npm-scripts)

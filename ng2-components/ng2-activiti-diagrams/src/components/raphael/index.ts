@@ -16,14 +16,14 @@
  */
 
 import { RaphaelCircleDirective } from './raphael-circle.component';
-import { RaphaelRectDirective } from './raphael-rect.component';
-import { RaphaelTextDirective } from './raphael-text.component';
-import { RaphaelMultilineTextDirective } from './raphael-multiline-text.component';
-import { RaphaelFlowArrowDirective } from './raphael-flow-arrow.component';
 import { RaphaelCrossDirective } from './raphael-cross.component';
-import { RaphaelPlusDirective } from './raphael-plus.component';
-import { RaphaelRhombusDirective } from './raphael-rhombus.component';
+import { RaphaelFlowArrowDirective } from './raphael-flow-arrow.component';
+import { RaphaelMultilineTextDirective } from './raphael-multiline-text.component';
 import { RaphaelPentagonDirective } from './raphael-pentagon.component';
+import { RaphaelPlusDirective } from './raphael-plus.component';
+import { RaphaelRectDirective } from './raphael-rect.component';
+import { RaphaelRhombusDirective } from './raphael-rhombus.component';
+import { RaphaelTextDirective } from './raphael-text.component';
 
 // services
 import { RaphaelService } from './raphael.service';

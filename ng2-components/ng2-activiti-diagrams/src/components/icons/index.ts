@@ -15,24 +15,24 @@
  * limitations under the License.
  */
 
-import { DiagramIconServiceTaskComponent } from './diagram-icon-service-task.component';
-import { DiagramIconSendTaskComponent } from './diagram-icon-send-task.component';
-import { DiagramIconUserTaskComponent } from './diagram-icon-user-task.component';
-import { DiagramIconManualTaskComponent } from './diagram-icon-manual-task.component';
-import { DiagramIconCamelTaskComponent } from './diagram-icon-camel-task.component';
-import { DiagramIconMuleTaskComponent } from './diagram-icon-mule-task.component';
-import { DiagramIconAlfrescoPublishTaskComponent } from './diagram-icon-alfresco-publish-task.component';
-import { DiagramIconRestCallTaskComponent } from './diagram-icon-rest-call-task.component';
-import { DiagramIconGoogleDrivePublishTaskComponent } from './diagram-icon-google-drive-publish-task.component';
-import { DiagramIconBoxPublishTaskComponent } from './diagram-icon-box-publish-task.component';
-import { DiagramIconReceiveTaskComponent } from './diagram-icon-receive-task.component';
-import { DiagramIconScriptTaskComponent } from './diagram-icon-script-task.component';
-import { DiagramIconBusinessRuleTaskComponent } from './diagram-icon-business-rule-task.component';
 import { DiagramContainerIconEventTaskComponent } from './diagram-container-icon-event.component';
-import { DiagramIconTimerComponent } from './diagram-icon-timer.component';
+import { DiagramIconAlfrescoPublishTaskComponent } from './diagram-icon-alfresco-publish-task.component';
+import { DiagramIconBoxPublishTaskComponent } from './diagram-icon-box-publish-task.component';
+import { DiagramIconBusinessRuleTaskComponent } from './diagram-icon-business-rule-task.component';
+import { DiagramIconCamelTaskComponent } from './diagram-icon-camel-task.component';
 import { DiagramIconErrorComponent } from './diagram-icon-error.component';
-import { DiagramIconSignalComponent } from './diagram-icon-signal.component';
+import { DiagramIconGoogleDrivePublishTaskComponent } from './diagram-icon-google-drive-publish-task.component';
+import { DiagramIconManualTaskComponent } from './diagram-icon-manual-task.component';
 import { DiagramIconMessageComponent } from './diagram-icon-message.component';
+import { DiagramIconMuleTaskComponent } from './diagram-icon-mule-task.component';
+import { DiagramIconReceiveTaskComponent } from './diagram-icon-receive-task.component';
+import { DiagramIconRestCallTaskComponent } from './diagram-icon-rest-call-task.component';
+import { DiagramIconScriptTaskComponent } from './diagram-icon-script-task.component';
+import { DiagramIconSendTaskComponent } from './diagram-icon-send-task.component';
+import { DiagramIconServiceTaskComponent } from './diagram-icon-service-task.component';
+import { DiagramIconSignalComponent } from './diagram-icon-signal.component';
+import { DiagramIconTimerComponent } from './diagram-icon-timer.component';
+import { DiagramIconUserTaskComponent } from './diagram-icon-user-task.component';
 
 // primitives
 export * from './diagram-icon-service-task.component';

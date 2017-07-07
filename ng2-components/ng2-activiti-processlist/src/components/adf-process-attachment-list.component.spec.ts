@@ -16,16 +16,16 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { ActivitiContentService } from 'ng2-activiti-form';
+import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 
-import { ActivitiProcessAttachmentListComponent } from './adf-process-attachment-list.component';
 import { TranslationMock } from './../assets/translation.service.mock';
+import { ActivitiProcessAttachmentListComponent } from './adf-process-attachment-list.component';
 
 describe('Activiti Process Instance Attachment List', () => {
 

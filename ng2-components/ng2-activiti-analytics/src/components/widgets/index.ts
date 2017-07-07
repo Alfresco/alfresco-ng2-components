@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { DropdownWidget } from './dropdown/dropdown.widget';
-import { NumberWidget } from './number/number.widget';
-import { DurationWidget } from './duration/duration.widget';
 import { CheckboxWidget } from './checkbox/checkbox.widget';
 import { DateRangeWidget } from './date-range/date-range.widget';
+import { DropdownWidget } from './dropdown/dropdown.widget';
+import { DurationWidget } from './duration/duration.widget';
+import { NumberWidget } from './number/number.widget';
 
 // primitives
 export * from './dropdown/dropdown.widget';

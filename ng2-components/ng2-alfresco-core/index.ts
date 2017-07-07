@@ -15,57 +15,58 @@
  * limitations under the License.
  */
 
-import { NgModule, ModuleWithProviders } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpModule, Http } from '@angular/http';
 import { CommonModule } from '@angular/common';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { Http, HttpModule } from '@angular/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
-import { MaterialModule } from './src/material.module';
-import { ContextMenuModule } from './src/components/context-menu/context-menu.module';
-import { CardViewModule } from './src/components/view/card-view.module';
 import { CollapsableModule } from './src/components/collapsable/collapsable.module';
+import { ContextMenuModule } from './src/components/context-menu/context-menu.module';
 import { AdfToolbarComponent } from './src/components/toolbar/toolbar.component';
+import { CardViewModule } from './src/components/view/card-view.module';
+import { MaterialModule } from './src/material.module';
 import { AppConfigModule } from './src/services/app-config.service';
 import { UserPreferencesService } from './src/services/user-preferences.service';
 
 import {
+    AlfrescoApiService,
     AlfrescoAuthenticationService,
     AlfrescoContentService,
     AlfrescoSettingsService,
-    StorageService,
-    CookieService,
-    AlfrescoApiService,
     AlfrescoTranslateLoader,
     AlfrescoTranslationService,
-    RenditionsService,
+    AppConfigService,
     AuthGuard,
-    AuthGuardEcm,
     AuthGuardBpm,
+    AuthGuardEcm,
+    ContentService,
+    CookieService,
+    InitAppConfigServiceProvider,
     LogService,
     LogServiceMock,
     NotificationService,
-    ContentService,
-    AppConfigService,
-    InitAppConfigServiceProvider,
+    RenditionsService,
+    StorageService,
     ThumbnailService
 } from './src/services/index';
 
-import { FileSizePipe } from './src/pipes/file-size.pipe';
-import { UploadDirective } from './src/directives/upload.directive';
-import { DataColumnComponent } from './src/components/data-column/data-column.component';
 import { DataColumnListComponent } from './src/components/data-column/data-column-list.component';
+import { DataColumnComponent } from './src/components/data-column/data-column.component';
+import { UploadDirective } from './src/directives/upload.directive';
+import { FileSizePipe } from './src/pipes/file-size.pipe';
 
-import { MDL } from './src/components/material/mdl-upgrade-element.directive';
 import { AlfrescoMdlButtonDirective } from './src/components/material/mdl-button.directive';
 import { AlfrescoMdlMenuDirective } from './src/components/material/mdl-menu.directive';
 import { AlfrescoMdlTextFieldDirective } from './src/components/material/mdl-textfield.directive';
 import { AlfrescoMdlTooltipDirective } from './src/components/material/mdl-tooltip.directive';
+import { MDLDirective } from './src/components/material/mdl-upgrade-element.directive';
 
 export { ContextMenuModule } from './src/components/context-menu/context-menu.module';
 export { CardViewModule } from './src/components/view/card-view.module';
 export { CollapsableModule } from './src/components/collapsable/collapsable.module';
+export { UserPreferencesService } from './src/services/user-preferences.service';
 export * from './src/services/index';
 export * from './src/components/data-column/data-column.component';
 export * from './src/components/data-column/data-column-list.component';
@@ -75,7 +76,6 @@ export * from './src/events/base.event';
 export * from './src/events/base-ui.event';
 export * from './src/events/folder-created.event';
 export * from './src/models/index';
-export { UserPreferencesService } from './src/services/user-preferences.service';
 
 export function providers() {
     return [
@@ -102,7 +102,7 @@ export function providers() {
 
 export function obsoleteMdlDirectives() {
     return [
-        MDL,
+        MDLDirective,
         AlfrescoMdlButtonDirective,
         AlfrescoMdlMenuDirective,
         AlfrescoMdlTextFieldDirective,

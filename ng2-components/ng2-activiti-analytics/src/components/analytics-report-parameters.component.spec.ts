@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { DebugElement, SimpleChange } from '@angular/core';
-import { MdTooltipModule, MdButtonModule, OVERLAY_PROVIDERS } from '@angular/material';
-import { Observable } from 'rxjs/Rx';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MdButtonModule, MdTooltipModule, OVERLAY_PROVIDERS } from '@angular/material';
 import * as moment from 'moment';
-import { CoreModule, AlfrescoTranslationService, AppConfigModule } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, AppConfigModule, CoreModule } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Rx';
 
+import * as analyticParamsMock from '../assets/analyticsParamsReportComponent.mock';
 import { AnalyticsReportParametersComponent } from '../components/analytics-report-parameters.component';
 import { WIDGET_DIRECTIVES } from '../components/widgets/index';
-import { AnalyticsService } from '../services/analytics.service';
 import { ReportParametersModel } from '../models/report.model';
-import * as analyticParamsMock from '../assets/analyticsParamsReportComponent.mock';
+import { AnalyticsService } from '../services/analytics.service';
 
 declare let jasmine: any;
 declare let mdDateTimePicker: any;

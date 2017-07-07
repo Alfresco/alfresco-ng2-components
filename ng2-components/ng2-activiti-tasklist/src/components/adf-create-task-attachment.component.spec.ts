@@ -16,11 +16,11 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
 
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { ActivitiContentService } from 'ng2-activiti-form';
+import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 
 import { ActivitiCreateTaskAttachmentComponent } from './adf-create-task-attachment.component';
 

@@ -1,7 +1,7 @@
 <div class="mdl-paging">
     <span class="mdl-paging__per-page">
         <span class="mdl-paging__per-page-label">Rows per page:</span>
-        <span class="mdl-paging__per-page-value" [attr.data-automation-id]="'rows_per_page_' + pageSize">{{pagination.maxItems}}</span>
+        <span class="mdl-paging__per-page-value" >{{pagination.maxItems}}</span>
 
         <md-menu #appMenu="mdMenu" for="pageSizePicker">
             <div *ngFor="let size of supportedPageSizes"
@@ -16,12 +16,12 @@
     <span class="mdl-paging__count">{{summary}}</span>
     <button (click)="showPrevPage()"
             [disabled]="!prevPageAvail()"
-            alfresco-mdl-button class="mdl-button--icon mdl-paging__prev" [attr.data-automation-id]="prev_page">
+            alfresco-mdl-button class="mdl-button--icon mdl-paging__prev">
         <i class="material-icons">keyboard_arrow_left</i>
     </button>
     <button (click)="showNextPage()"
             [disabled]="!nextPageAvail()"
-            alfresco-mdl-button class="mdl-button--icon mdl-paging__next" [attr.data-automation-id]="next_page">
+            alfresco-mdl-button class="mdl-button--icon mdl-paging__next">
         <i class="material-icons">keyboard_arrow_right</i>
     </button>
 </div>
