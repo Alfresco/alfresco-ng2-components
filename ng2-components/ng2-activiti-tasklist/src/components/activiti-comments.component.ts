@@ -19,8 +19,8 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { Observable, Observer } from 'rxjs/Rx';
 
-import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
 import { Comment } from '../models/comment.model';
+import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
 
 @Component({
     selector: 'adf-comments, activiti-comments',

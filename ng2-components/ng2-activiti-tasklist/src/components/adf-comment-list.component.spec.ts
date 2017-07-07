@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { CoreModule } from 'ng2-alfresco-core';
-import { AdfCommentListComponent } from './adf-comment-list.component';
-import { User, Comment } from '../models/index';
-import { DataTableModule, ObjectDataRow, DataRowEvent } from 'ng2-alfresco-datatable';
 import { DatePipe } from '@angular/common';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { CoreModule } from 'ng2-alfresco-core';
+import { DataRowEvent, DataTableModule, ObjectDataRow } from 'ng2-alfresco-datatable';
+import { Comment, User } from '../models/index';
+import { AdfCommentListComponent } from './adf-comment-list.component';
 
 declare let jasmine: any;
 

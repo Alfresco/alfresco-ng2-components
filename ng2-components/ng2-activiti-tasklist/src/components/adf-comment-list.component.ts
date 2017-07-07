@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Comment, User } from '../models/index';
 import { DatePipe } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Comment, User } from '../models/index';
 
 @Component({
     selector: 'adf-comment-list',

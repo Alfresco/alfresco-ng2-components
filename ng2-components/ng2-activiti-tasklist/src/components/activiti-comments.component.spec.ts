@@ -17,18 +17,17 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
 import { ActivitiFormModule } from 'ng2-activiti-form';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 
+import { DatePipe } from '@angular/common';
+import { MdInputModule } from '@angular/material';
+import { DataTableModule } from 'ng2-alfresco-datatable';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { ActivitiComments } from './activiti-comments.component';
 import { AdfCommentListComponent } from './adf-comment-list.component';
-import { MdInputModule } from '@angular/material';
-import { DataTableModule } from 'ng2-alfresco-datatable';
-import { DatePipe } from '@angular/common';
 
 describe('ActivitiComments', () => {
 

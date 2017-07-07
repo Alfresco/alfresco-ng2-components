@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
+import { DatePipe } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { MdButtonModule, MdIconModule, MdInputModule } from '@angular/material';
 import { ActivitiFormModule } from 'ng2-activiti-form';
-import { DatePipe } from '@angular/common';
 import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { ActivitiPeopleService } from './src/services/activiti-people.service';
@@ -36,10 +36,10 @@ import {
     ActivitiTaskDetails,
     ActivitiTaskHeader,
     ActivitiTaskList,
+    AdfCommentListComponent,
     NoTaskDetailsTemplateComponent,
     PeopleList,
-    TaskAttachmentListComponent,
-    AdfCommentListComponent
+    TaskAttachmentListComponent
 } from './src/components/index';
 
 export * from './src/components/index';
