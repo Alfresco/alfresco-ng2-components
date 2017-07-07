@@ -41,7 +41,6 @@ import {
     AuthGuard,
     AuthGuardBpm,
     AuthGuardEcm,
-    BaseUploadService,
     ContentService,
     CookieService,
     InitAppConfigServiceProvider,
@@ -50,7 +49,8 @@ import {
     NotificationService,
     RenditionsService,
     StorageService,
-    ThumbnailService
+    ThumbnailService,
+    UploadService
 } from './src/services/index';
 
 import { DataColumnListComponent } from './src/components/data-column/data-column-list.component';
@@ -99,7 +99,7 @@ export function providers() {
         AuthGuardEcm,
         AuthGuardBpm,
         ThumbnailService,
-        BaseUploadService
+        UploadService
     ];
 }
 

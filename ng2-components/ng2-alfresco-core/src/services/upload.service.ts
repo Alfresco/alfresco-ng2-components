@@ -24,7 +24,7 @@ import { FileModel, FileUploadProgress, FileUploadStatus } from '../models/file.
 import * as minimatch from 'minimatch';
 
 @Injectable()
-export class BaseUploadService {
+export class UploadService {
 
     private queue: FileModel[] = [];
     private cache: { [key: string]: any } = {};
