@@ -17,8 +17,8 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdCheckboxChange, MdCheckboxModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
+import { MaterialModule } from '../../material.module';
 import {
     DataColumn,
     DataRow,
@@ -40,7 +40,7 @@ describe('DataTable', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                MdCheckboxModule
+                MaterialModule
             ],
             declarations: [
                 DataTableCellComponent,
