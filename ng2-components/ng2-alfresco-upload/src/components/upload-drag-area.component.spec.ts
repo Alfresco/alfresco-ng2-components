@@ -17,13 +17,12 @@
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
-import { AlfrescoTranslationService, CoreModule, LogService, LogServiceMock } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, CoreModule, FileModel, LogService, LogServiceMock } from 'ng2-alfresco-core';
 
 import { UploadDragAreaComponent } from './upload-drag-area.component';
 import { FileDraggableDirective } from '../directives/file-draggable.directive';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { UploadService } from '../services/upload.service';
-import { FileModel } from '../models/file.model';
 
 let fakeShareDataRow = {
     obj: {
