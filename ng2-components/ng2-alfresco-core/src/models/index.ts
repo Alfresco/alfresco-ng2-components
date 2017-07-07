@@ -16,3 +16,4 @@
  */
 
 export * from './card-view.model';
+export * from './file.model';

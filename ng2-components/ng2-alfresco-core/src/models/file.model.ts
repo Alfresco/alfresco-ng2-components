@@ -34,8 +34,7 @@ export enum FileUploadStatus {
     Progress = 3,
     Cancelled = 4,
     Aborted = 5,
-    Error = 6,
-    Deleted = 7
+    Error = 6
 }
 
 export class FileModel {
@@ -47,7 +46,6 @@ export class FileModel {
     status: FileUploadStatus = FileUploadStatus.Pending;
     progress: FileUploadProgress;
     options: FileUploadOptions;
-    data: any;
 
     constructor(file: File, options?: FileUploadOptions) {
         this.file = file;
@@ -55,7 +53,6 @@ export class FileModel {
         this.id = this.generateId();
         this.name = file.name;
         this.size = file.size;
-        this.data = null;
 
         this.progress = {
             loaded: 0,
@@ -73,9 +70,5 @@ export class FileModel {
             let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
             return v.toString(16);
         });
-    }
-
-    get extension(): string {
-        return this.name.slice((Math.max(0, this.name.lastIndexOf('.')) || Infinity) + 1);
     }
 }
