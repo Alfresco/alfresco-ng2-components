@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { FormFieldModel } from './form-field.model';
 import { FormFieldTypes } from './form-field-types';
+import { FormFieldModel } from './form-field.model';
 import { FormModel } from './form.model';
 
 describe('FormFieldModel', () => {

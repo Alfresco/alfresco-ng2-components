@@ -16,19 +16,19 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
 import { Response } from '@angular/http';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
-import { ReportParametersModel, ParameterValueModel } from '../models/report.model';
+import { Observable } from 'rxjs/Rx';
 import {
-    Chart,
-    PieChart,
-    TableChart,
     BarChart,
+    Chart,
+    DetailsTableChart,
     HeatMapChart,
     MultiBarChart,
-    DetailsTableChart
+    PieChart,
+    TableChart
 } from '../models/chart.model';
+import { ParameterValueModel, ReportParametersModel } from '../models/report.model';
 
 @Injectable()
 export class AnalyticsService {

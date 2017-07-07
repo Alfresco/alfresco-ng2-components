@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, OnInit, ViewChild, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { Observable, Observer } from 'rxjs/Rx';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { TaskDetailsEvent, TaskDetailsModel } from 'ng2-activiti-tasklist';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
-import { ActivitiProcessService } from './../services/activiti-process.service';
-import { TaskDetailsModel, TaskDetailsEvent } from 'ng2-activiti-tasklist';
+import { Observable, Observer } from 'rxjs/Rx';
 import { ProcessInstance } from '../models/process-instance.model';
+import { ActivitiProcessService } from './../services/activiti-process.service';
 
 declare let componentHandler: any;
 declare let dialogPolyfill: any;

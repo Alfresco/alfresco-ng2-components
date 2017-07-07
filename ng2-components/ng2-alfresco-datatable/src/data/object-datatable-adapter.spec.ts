@@ -16,7 +16,7 @@
  */
 
 import { DataColumn, DataRow, DataSorting } from './datatable-adapter';
-import { ObjectDataTableAdapter, ObjectDataRow, ObjectDataColumn } from './object-datatable-adapter';
+import { ObjectDataColumn, ObjectDataRow, ObjectDataTableAdapter } from './object-datatable-adapter';
 
 describe('ObjectDataTableAdapter', () => {
 

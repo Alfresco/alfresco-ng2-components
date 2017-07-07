@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { DynamicTableModel, DynamicTableRow, DynamicTableColumn, DynamicRowValidationSummary } from './../dynamic-table.widget.model';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { DynamicRowValidationSummary, DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './../dynamic-table.widget.model';
 
 @Component({
     selector: 'row-editor',

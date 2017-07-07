@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AnalyticsService } from '../services/analytics.service';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 
 @Component({
     selector: 'analytics-report-heat-map',

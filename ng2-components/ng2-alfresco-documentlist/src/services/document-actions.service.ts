@@ -16,12 +16,12 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ContentActionHandler } from '../models/content-action.model';
-import { DocumentListService } from './document-list.service';
 import { AlfrescoContentService } from 'ng2-alfresco-core';
-import { PermissionModel } from '../models/permissions.model';
+import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Rx';
+import { ContentActionHandler } from '../models/content-action.model';
+import { PermissionModel } from '../models/permissions.model';
+import { DocumentListService } from './document-list.service';
 
 @Injectable()
 export class DocumentActionsService {

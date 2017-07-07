@@ -17,20 +17,20 @@
 
 import { TestBed } from '@angular/core/testing';
 import { async } from '@angular/core/testing';
-import { CoreModule, AlfrescoApiService } from 'ng2-alfresco-core';
 import { AlfrescoApi } from 'alfresco-js-api';
+import { AlfrescoApiService, CoreModule } from 'ng2-alfresco-core';
+import { exampleProcess } from '../assets/activiti-process.model.mock';
 import {
-    fakeFilters,
-    fakeError,
     fakeApp1,
     fakeApp2,
-    fakeTaskList,
     fakeComment,
-    fakeProcessDef
+    fakeError,
+    fakeFilters,
+    fakeProcessDef,
+    fakeTaskList
 } from '../assets/activiti-process.service.mock';
-import { exampleProcess } from '../assets/activiti-process.model.mock';
-import { ProcessFilterRequestRepresentation } from '../models/process-instance-filter.model';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
+import { ProcessFilterRequestRepresentation } from '../models/process-instance-filter.model';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ActivitiProcessService } from './activiti-process.service';
 

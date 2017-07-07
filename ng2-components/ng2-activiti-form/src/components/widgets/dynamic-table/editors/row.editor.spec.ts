@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { RowEditorComponent } from './row.editor';
-import { DynamicTableModel, DynamicTableRow, DynamicTableColumn, DynamicRowValidationSummary } from './../dynamic-table.widget.model';
 import { FormFieldModel, FormModel } from '../../index';
+import { DynamicRowValidationSummary, DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './../dynamic-table.widget.model';
+import { RowEditorComponent } from './row.editor';
 
 describe('RowEditorComponent', () => {
 

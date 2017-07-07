@@ -42,7 +42,8 @@ module.exports = {
                 loader: 'tslint-loader',
                 options: {
                     emitErrors: true,
-                    failOnHint: true
+                    failOnHint: true,
+                    fix: true
                 },
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
             },
@@ -74,7 +75,7 @@ module.exports = {
                     emitErrors: true,
                     licenseFile: path.resolve(__dirname, './assets/license_header.txt')
                 },
-                exclude: [/node_modules/, /bundles/, /dist/, /demo/, /rendering-queue.services.ts/ ],
+                exclude: [/node_modules/, /bundles/, /dist/, /demo/, /rendering-queue.services.ts/],
             },
             {
                 test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
@@ -132,9 +133,9 @@ module.exports = {
             }
         }),
         new webpack.LoaderOptionsPlugin({
-                htmlLoader: {
-                    minimize: false // workaround for ng2
-                }
+            htmlLoader: {
+                minimize: false // workaround for ng2
+            }
         })
     ],
 

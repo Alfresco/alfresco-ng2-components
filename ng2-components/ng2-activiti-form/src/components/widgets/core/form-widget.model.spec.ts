@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { FormModel } from './form.model';
 import { FormWidgetModel } from './form-widget.model';
+import { FormModel } from './form.model';
 
 describe('FormWidgetModel', () => {
 

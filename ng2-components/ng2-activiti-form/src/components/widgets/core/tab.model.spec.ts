@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
+import { ContainerModel } from './container.model';
 import { FormModel } from './form.model';
 import { TabModel } from './tab.model';
-import { ContainerModel } from './container.model';
 
 describe('TabModel', () => {
 

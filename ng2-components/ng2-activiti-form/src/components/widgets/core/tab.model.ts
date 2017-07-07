@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
+import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 import { FormWidgetModel } from './form-widget.model';
 import { FormModel } from './form.model';
-import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 
 export class TabModel extends FormWidgetModel {
 

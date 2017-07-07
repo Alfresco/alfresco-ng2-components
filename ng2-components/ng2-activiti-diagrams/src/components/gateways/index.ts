@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { DiagramGatewayComponent } from './diagram-gateway.component';
+import { DiagramEventGatewayComponent } from './diagram-event-gateway.component';
 import { DiagramExclusiveGatewayComponent } from './diagram-exclusive-gateway.component';
+import { DiagramGatewayComponent } from './diagram-gateway.component';
 import { DiagramInclusiveGatewayComponent } from './diagram-inclusive-gateway.component';
 import { DiagramParallelGatewayComponent } from './diagram-parallel-gateway.component';
-import { DiagramEventGatewayComponent } from './diagram-event-gateway.component';
 
 // primitives
 export * from './diagram-gateway.component';

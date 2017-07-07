@@ -16,16 +16,16 @@
  */
 
 import { DebugElement, SimpleChange } from '@angular/core';
-import { ComponentFixture, TestBed, async, fakeAsync, tick } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
-import { DataTableModule, ObjectDataTableAdapter, ObjectDataRow } from 'ng2-alfresco-datatable';
+import { DataTableModule, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 
-import { ActivitiProcessInstanceVariables } from './activiti-process-instance-variables.component';
-import { ActivitiProcessService } from './../services/activiti-process.service';
 import { TranslationMock } from './../assets/translation.service.mock';
+import { ActivitiProcessService } from './../services/activiti-process.service';
+import { ActivitiProcessInstanceVariables } from './activiti-process-instance-variables.component';
 
 describe('ActivitiProcessInstanceVariables', () => {
 

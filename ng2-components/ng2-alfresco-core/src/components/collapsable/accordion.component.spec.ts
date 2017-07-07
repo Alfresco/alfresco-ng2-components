@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { AccordionComponent } from './accordion.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AccordionGroupComponent } from './accordion-group.component';
+import { AccordionComponent } from './accordion.component';
 
 describe('AccordionComponent', () => {
 

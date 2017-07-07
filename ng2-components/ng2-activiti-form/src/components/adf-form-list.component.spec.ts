@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
-import { DataTableModule } from 'ng2-alfresco-datatable';
-import { FormService } from '../services/form.service';
-import { EcmModelService } from '../services/ecm-model.service';
-import { ADFFormList } from './adf-form-list.component';
-import { Observable } from 'rxjs/Rx';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { DataTableModule } from 'ng2-alfresco-datatable';
+import { Observable } from 'rxjs/Rx';
+import { EcmModelService } from '../services/ecm-model.service';
+import { FormService } from '../services/form.service';
+import { ADFFormList } from './adf-form-list.component';
 
 declare let jasmine: any;
 

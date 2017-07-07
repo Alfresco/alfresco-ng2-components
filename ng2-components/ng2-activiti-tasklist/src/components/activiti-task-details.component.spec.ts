@@ -16,18 +16,18 @@
  */
 
 import { NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
-import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiFormModule, FormModel, FormOutcomeEvent, FormOutcomeModel, FormService } from 'ng2-activiti-form';
+import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 
-import { ActivitiTaskDetails } from './activiti-task-details.component';
-import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
-import { ActivitiPeopleService } from './../services/activiti-people.service';
-import { taskDetailsMock, taskFormMock, tasksMock, noDataMock } from './../assets/task-details.mock';
 import { TaskDetailsModel } from '../models/task-details.model';
+import { noDataMock, taskDetailsMock, taskFormMock, tasksMock } from './../assets/task-details.mock';
+import { ActivitiPeopleService } from './../services/activiti-people.service';
+import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
+import { ActivitiTaskDetails } from './activiti-task-details.component';
 
 describe('ActivitiTaskDetails', () => {
 

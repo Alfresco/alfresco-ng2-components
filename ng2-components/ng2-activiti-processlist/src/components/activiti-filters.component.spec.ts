@@ -16,11 +16,11 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
 import { LogServiceMock } from 'ng2-alfresco-core';
-import { ActivitiProcessFilters } from './activiti-filters.component';
-import { ActivitiProcessService } from '../services/activiti-process.service';
+import { Observable } from 'rxjs/Rx';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
+import { ActivitiProcessService } from '../services/activiti-process.service';
+import { ActivitiProcessFilters } from './activiti-filters.component';
 
 describe('ActivitiFilters', () => {
 

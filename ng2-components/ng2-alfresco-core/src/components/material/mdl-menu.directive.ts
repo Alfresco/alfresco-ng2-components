@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, ElementRef, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef } from '@angular/core';
 
 declare var componentHandler;
 

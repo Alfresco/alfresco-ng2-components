@@ -16,10 +16,10 @@
  */
 
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { Observable } from 'rxjs/Rx';
-import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DiagramsModule } from 'ng2-activiti-diagrams';
+import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Rx';
 import { AnalyticsReportHeatMapComponent } from '../components/analytics-report-heat-map.component';
 import { WIDGET_DIRECTIVES } from '../components/widgets/index';
 import { AnalyticsService } from '../services/analytics.service';

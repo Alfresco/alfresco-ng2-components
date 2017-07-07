@@ -16,9 +16,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
-import { AlfrescoAuthenticationService, AlfrescoApiService } from 'ng2-alfresco-core';
 import { NodePaging } from 'alfresco-js-api';
+import { AlfrescoApiService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Rx';
 
 /**
  * Internal service used by Document List component.

@@ -17,8 +17,8 @@
 
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
+import { AlfrescoApiService, AlfrescoContentService, LogService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
-import { AlfrescoContentService, AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 import { EcmUserModel } from '../models/ecm-user.model';
 /**
  *

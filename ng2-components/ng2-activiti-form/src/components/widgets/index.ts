@@ -15,33 +15,33 @@
  * limitations under the License.
  */
 
-import { UnknownWidget } from './unknown/unknown.widget';
-import { TabsWidget } from './tabs/tabs.widget';
 import { ContainerWidget } from './container/container.widget';
+import { TabsWidget } from './tabs/tabs.widget';
+import { UnknownWidget } from './unknown/unknown.widget';
 
-import { TextWidget } from './text/text.widget';
-import { NumberWidget } from './number/number.widget';
-import { CheckboxWidget } from './checkbox/checkbox.widget';
-import { MultilineTextWidget } from './multiline-text/multiline-text.widget';
-import { DropdownWidget } from './dropdown/dropdown.widget';
-import { HyperlinkWidget } from './hyperlink/hyperlink.widget';
-import { RadioButtonsWidget } from './radio-buttons/radio-buttons.widget';
-import { DisplayValueWidget } from './display-value/display-value.widget';
-import { DisplayTextWidget } from './display-text/display-text.widget';
-import { UploadWidget } from './upload/upload.widget';
-import { AttachWidget } from './attach/attach.widget';
-import { TypeaheadWidget } from './typeahead/typeahead.widget';
-import { FunctionalGroupWidget } from './functional-group/functional-group.widget';
-import { PeopleWidget } from './people/people.widget';
-import { DateWidget } from './date/date.widget';
 import { AmountWidget } from './amount/amount.widget';
+import { AttachWidget } from './attach/attach.widget';
+import { CheckboxWidget } from './checkbox/checkbox.widget';
+import { DateWidget } from './date/date.widget';
+import { DisplayTextWidget } from './display-text/display-text.widget';
+import { DisplayValueWidget } from './display-value/display-value.widget';
+import { DropdownWidget } from './dropdown/dropdown.widget';
 import { DynamicTableWidget } from './dynamic-table/dynamic-table.widget';
+import { BooleanEditorComponent } from './dynamic-table/editors/boolean/boolean.editor';
 import { DateEditorComponent } from './dynamic-table/editors/date/date.editor';
 import { DropdownEditorComponent } from './dynamic-table/editors/dropdown/dropdown.editor';
-import { BooleanEditorComponent } from './dynamic-table/editors/boolean/boolean.editor';
-import { TextEditorComponent } from './dynamic-table/editors/text/text.editor';
 import { RowEditorComponent } from './dynamic-table/editors/row.editor';
+import { TextEditorComponent } from './dynamic-table/editors/text/text.editor';
+import { FunctionalGroupWidget } from './functional-group/functional-group.widget';
+import { HyperlinkWidget } from './hyperlink/hyperlink.widget';
+import { MultilineTextWidget } from './multiline-text/multiline-text.widget';
+import { NumberWidget } from './number/number.widget';
+import { PeopleWidget } from './people/people.widget';
+import { RadioButtonsWidget } from './radio-buttons/radio-buttons.widget';
 import { InputMaskDirective } from './text/text-mask.component';
+import { TextWidget } from './text/text.widget';
+import { TypeaheadWidget } from './typeahead/typeahead.widget';
+import { UploadWidget } from './upload/upload.widget';
 
 // core
 export * from './widget.component';

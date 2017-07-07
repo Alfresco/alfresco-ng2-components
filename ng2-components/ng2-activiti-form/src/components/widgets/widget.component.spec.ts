@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { ElementRef } from '@angular/core';
-import { WidgetComponent } from './widget.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { CoreModule } from 'ng2-alfresco-core';
+import { ActivitiAlfrescoContentService } from '../../services/activiti-alfresco.service';
+import { EcmModelService } from './../../services/ecm-model.service';
+import { FormService } from './../../services/form.service';
 import { FormFieldModel } from './core/form-field.model';
 import { FormModel } from './core/form.model';
-import { FormService } from './../../services/form.service';
-import { CoreModule } from 'ng2-alfresco-core';
-import { EcmModelService } from './../../services/ecm-model.service';
-import { ActivitiAlfrescoContentService } from '../../services/activiti-alfresco.service';
+import { WidgetComponent } from './widget.component';
 
 describe('WidgetComponent', () => {
 

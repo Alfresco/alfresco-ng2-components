@@ -16,9 +16,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
-import { Response, Http, Headers, RequestOptions } from '@angular/http';
+import { Headers, Http, RequestOptions, Response } from '@angular/http';
 import { AlfrescoAuthenticationService, AlfrescoSettingsService, LogService } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Rx';
 
 @Injectable()
 export class DiagramsService {

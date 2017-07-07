@@ -16,10 +16,10 @@
  */
 
 import { ElementRef } from '@angular/core';
-import { DateEditorComponent } from './date.editor';
-import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './../../dynamic-table.widget.model';
 import * as moment from 'moment';
 import { FormFieldModel, FormModel } from '../../../index';
+import { DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './../../dynamic-table.widget.model';
+import { DateEditorComponent } from './date.editor';
 
 describe('DateEditorComponent', () => {
 

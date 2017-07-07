@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, Output, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
-import { ActivitiStartForm } from 'ng2-activiti-form';
-import { ProcessInstance } from './../models/process-instance.model';
-import { ProcessDefinitionRepresentation } from './../models/process-definition.model';
-import { ActivitiProcessService } from './../services/activiti-process.service';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { RestVariable } from 'alfresco-js-api';
+import { ActivitiStartForm } from 'ng2-activiti-form';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { ProcessDefinitionRepresentation } from './../models/process-definition.model';
+import { ProcessInstance } from './../models/process-instance.model';
+import { ActivitiProcessService } from './../services/activiti-process.service';
 
 declare let componentHandler: any;
 declare let dialogPolyfill: any;

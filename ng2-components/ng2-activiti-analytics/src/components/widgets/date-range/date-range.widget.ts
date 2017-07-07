@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
-import { AbstractControl, FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { WidgetComponent } from './../widget.component';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
+import { WidgetComponent } from './../widget.component';
 
 function dateCheck(c: AbstractControl) {
     let startDate = moment(c.get('startDate').value);

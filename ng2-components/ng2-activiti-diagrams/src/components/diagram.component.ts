@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
-import { DiagramsService } from '../services/diagrams.service';
+import { DiagramElementModel, DiagramModel } from '../models/diagram.model';
 import { DiagramColorService } from '../services/diagram-color.service';
+import { DiagramsService } from '../services/diagrams.service';
 import { RaphaelService } from './raphael/raphael.service';
-import { DiagramModel, DiagramElementModel } from '../models/diagram.model';
 
 @Component({
     selector: 'adf-diagram, activiti-diagram',

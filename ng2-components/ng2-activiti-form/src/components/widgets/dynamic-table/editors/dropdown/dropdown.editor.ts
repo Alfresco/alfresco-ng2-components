@@ -17,8 +17,8 @@
 
 import { Component, Input, OnInit } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
-import { DynamicTableModel, DynamicTableRow, DynamicTableColumn, DynamicTableColumnOption } from './../../dynamic-table.widget.model';
 import { FormService } from './../../../../../services/form.service';
+import { DynamicTableColumn, DynamicTableColumnOption, DynamicTableModel, DynamicTableRow } from './../../dynamic-table.widget.model';
 
 @Component({
     selector: 'alf-dropdown-editor',

@@ -16,25 +16,25 @@
  */
 
 import {
-    Component,
-    Input,
-    Output,
-    ContentChild,
     AfterContentInit,
+    Component,
+    ContentChild,
     EventEmitter,
+    Input,
     OnChanges,
+    Output,
     SimpleChanges
 } from '@angular/core';
-import { AlfrescoTranslationService, LogService, DataColumnListComponent } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, DataColumnListComponent, LogService } from 'ng2-alfresco-core';
 import {
-    ObjectDataTableAdapter,
-    DataTableAdapter,
+    DataColumn,
     DataRowEvent,
+    DataTableAdapter,
     ObjectDataRow,
-    DataColumn
+    ObjectDataTableAdapter
 } from 'ng2-alfresco-datatable';
-import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
+import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 
 @Component({
     selector: 'adf-tasklist, activiti-tasklist',

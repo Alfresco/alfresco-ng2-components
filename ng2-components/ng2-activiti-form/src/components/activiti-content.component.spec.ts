@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { DebugElement, SimpleChange } from '@angular/core';
-import { By } from '@angular/platform-browser';
-import { Observable } from 'rxjs/Rx';
-import { CoreModule, AlfrescoTranslationService, ContentService } from 'ng2-alfresco-core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MdTabsModule } from '@angular/material';
+import { By } from '@angular/platform-browser';
+import { AlfrescoTranslationService, ContentService, CoreModule } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Rx';
 
-import { ActivitiContent } from './activiti-content.component';
 import { FormService } from '../services/form.service';
 import { EcmModelService } from './../services/ecm-model.service';
+import { ActivitiContent } from './activiti-content.component';
 import { ContentLinkModel } from './widgets/index';
 
 declare let jasmine: any;

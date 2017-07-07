@@ -16,7 +16,7 @@
  */
 
 import { Component, Input } from '@angular/core';
-import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './../../dynamic-table.widget.model';
+import { DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './../../dynamic-table.widget.model';
 
 @Component({
     selector: 'alf-boolean-editor',

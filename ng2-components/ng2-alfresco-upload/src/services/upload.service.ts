@@ -16,11 +16,11 @@
  */
 
 import { EventEmitter, Injectable } from '@angular/core';
-import { Subject } from 'rxjs/Rx';
-import { AlfrescoApiService, AppConfigService } from 'ng2-alfresco-core';
-import { FileUploadEvent, FileUploadCompleteEvent } from '../events/file.event';
-import { FileModel, FileUploadProgress, FileUploadStatus } from '../models/file.model';
 import * as minimatch from 'minimatch';
+import { AlfrescoApiService, AppConfigService } from 'ng2-alfresco-core';
+import { Subject } from 'rxjs/Rx';
+import { FileUploadCompleteEvent, FileUploadEvent } from '../events/file.event';
+import { FileModel, FileUploadProgress, FileUploadStatus } from '../models/file.model';
 
 @Injectable()
 export class UploadService {

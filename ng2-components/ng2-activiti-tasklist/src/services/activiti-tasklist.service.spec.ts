@@ -15,31 +15,31 @@
  * limitations under the License.
  */
 
-import { TestBed, async } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
-import { ActivitiTaskListService } from './activiti-tasklist.service';
-import { TaskDetailsModel } from '../models/task-details.model';
-import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
-import { Comment } from '../models/comment.model';
 import {
-    fakeFilters,
-    fakeAppPromise,
     fakeAppFilter,
-    fakeFilter,
-    fakeTaskList,
-    fakeErrorTaskList,
-    fakeTasksComment,
-    fakeTasksChecklist,
-    fakeTaskDetails,
-    fakeUser,
+    fakeAppPromise,
     fakeApps,
-    fakeRepresentationFilter1,
-    secondFakeTaskList,
-    fakeRepresentationFilter2,
+    fakeErrorTaskList,
+    fakeFilter,
+    fakeFilters,
+    fakeFilterWithProcessDefinitionKey,
     fakeFormList,
+    fakeRepresentationFilter1,
+    fakeRepresentationFilter2,
+    fakeTaskDetails,
+    fakeTaskList,
     fakeTaskListDifferentProcessDefinitionKey,
-    fakeFilterWithProcessDefinitionKey
+    fakeTasksChecklist,
+    fakeTasksComment,
+    fakeUser,
+    secondFakeTaskList
 } from '../assets/tasklist-service.mock';
+import { Comment } from '../models/comment.model';
+import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
+import { TaskDetailsModel } from '../models/task-details.model';
+import { ActivitiTaskListService } from './activiti-tasklist.service';
 
 declare let jasmine: any;
 

@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { AlfrescoTranslationService, NotificationService, FileUtils, FileInfo } from 'ng2-alfresco-core';
-import { UploadService } from '../services/upload.service';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { AlfrescoTranslationService, FileInfo, FileUtils, NotificationService } from 'ng2-alfresco-core';
 import { FileModel } from '../models/file.model';
+import { UploadService } from '../services/upload.service';
 
 @Component({
     selector: 'adf-upload-drag-area, alfresco-upload-drag-area',

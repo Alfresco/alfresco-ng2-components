@@ -16,9 +16,9 @@
  */
 
 import { Injectable } from '@angular/core';
+import { Response } from '@angular/http';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
-import { Response } from '@angular/http';
 import { User } from '../models/user.model';
 
 @Injectable()

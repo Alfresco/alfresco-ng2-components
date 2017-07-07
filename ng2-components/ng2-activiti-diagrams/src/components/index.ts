@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { DiagramComponent } from './diagram.component';
-import { DiagramSequenceFlowComponent } from './diagram-sequence-flow.component';
 import { DIAGRAM_ACTIVITIES_DIRECTIVES } from './activities/index';
+import { DIAGRAM_BOUNDARY_EVENTS_DIRECTIVES } from './boundary-events/index';
+import { DiagramSequenceFlowComponent } from './diagram-sequence-flow.component';
+import { DiagramComponent } from './diagram.component';
 import { DIAGRAM_EVENTS_DIRECTIVES } from './events/index';
 import { DIAGRAM_GATEWAY_DIRECTIVES } from './gateways/index';
 import { DIAGRAM_ICONS_DIRECTIVES } from './icons/index';
-import { DIAGRAM_BOUNDARY_EVENTS_DIRECTIVES } from './boundary-events/index';
 import { DIAGRAM_INTERMEDIATE_EVENTS_DIRECTIVES } from './intermediate-catching-events/index';
 import { DIAGRAM_STRUCTURAL_DIRECTIVES } from './structural/index';
 import { DIAGRAM_SWIMLANES_DIRECTIVES } from './swimlanes/index';

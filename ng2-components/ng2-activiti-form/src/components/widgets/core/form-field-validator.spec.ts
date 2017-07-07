@@ -15,19 +15,19 @@
  * limitations under the License.
  */
 
-import { FormModel } from './form.model';
-import { FormFieldModel } from './form-field.model';
 import { FormFieldOption } from './form-field-option';
 import { FormFieldTypes } from './form-field-types';
 import {
-    RequiredFieldValidator,
-    NumberFieldValidator,
-    MinLengthFieldValidator,
     MaxLengthFieldValidator,
-    MinValueFieldValidator,
     MaxValueFieldValidator,
-    RegExFieldValidator
+    MinLengthFieldValidator,
+    MinValueFieldValidator,
+    NumberFieldValidator,
+    RegExFieldValidator,
+    RequiredFieldValidator
 } from './form-field-validator';
+import { FormFieldModel } from './form-field.model';
+import { FormModel } from './form.model';
 
 describe('FormFieldValidator', () => {
 

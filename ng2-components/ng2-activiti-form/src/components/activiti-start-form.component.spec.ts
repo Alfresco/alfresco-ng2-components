@@ -16,21 +16,21 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { Observable } from 'rxjs/Rx';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MdTabsModule } from '@angular/material';
+import { Observable } from 'rxjs/Rx';
 
-import { ActivitiStartForm } from './activiti-start-form.component';
-import { FormFieldComponent } from './form-field/form-field.component';
-import { ActivitiContent } from './activiti-content.component';
-import { WIDGET_DIRECTIVES } from './widgets/index';
-import { MASK_DIRECTIVE } from './widgets/index';
-import { FormService } from './../services/form.service';
-import { EcmModelService } from './../services/ecm-model.service';
-import { WidgetVisibilityService } from './../services/widget-visibility.service';
+import { MdInputModule } from '@angular/material';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { TranslationMock } from './../assets/translation.service.mock';
-import { MdInputModule } from '@angular/material';
+import { EcmModelService } from './../services/ecm-model.service';
+import { FormService } from './../services/form.service';
+import { WidgetVisibilityService } from './../services/widget-visibility.service';
+import { ActivitiContent } from './activiti-content.component';
+import { ActivitiStartForm } from './activiti-start-form.component';
+import { FormFieldComponent } from './form-field/form-field.component';
+import { MASK_DIRECTIVE } from './widgets/index';
+import { WIDGET_DIRECTIVES } from './widgets/index';
 
 describe('ActivitiStartForm', () => {
 

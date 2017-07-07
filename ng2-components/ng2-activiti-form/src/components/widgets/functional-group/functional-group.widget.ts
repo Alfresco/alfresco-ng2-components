@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ElementRef } from '@angular/core';
-import { WidgetComponent , baseHost } from './../widget.component';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { FormService } from '../../../services/form.service';
 import { GroupModel } from './../core/group.model';
+import { baseHost , WidgetComponent } from './../widget.component';
 
 @Component({
     selector: 'functional-group-widget',

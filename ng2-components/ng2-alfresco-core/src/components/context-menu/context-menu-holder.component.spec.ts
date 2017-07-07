@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { ContextMenuService } from './context-menu.service';
 import { ContextMenuHolderComponent } from './context-menu-holder.component';
+import { ContextMenuService } from './context-menu.service';
 
 describe('ContextMenuHolderComponent', () => {
 
