@@ -120,19 +120,44 @@ describe('UploadWidget', () => {
                 type: FormFieldTypes.UPLOAD,
                 readOnly: false
             });
-
-            fixture.detectChanges();
-            inputElement = <HTMLInputElement>element.querySelector('#upload-id');
         });
 
         it('should be disabled on readonly forms', async(() => {
             uploadWidget.field.form.readOnly = true;
+            fixture.detectChanges();
+            inputElement = <HTMLInputElement>element.querySelector('#upload-id');
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 expect(inputElement).toBeDefined();
                 expect(inputElement).not.toBeNull();
                 expect(inputElement.disabled).toBeTruthy();
+            });
+        }));
+
+        it('should have the multiple attribute when is selected in parameters', async(() => {
+            uploadWidget.field.params.multiple = true;
+            fixture.detectChanges();
+            inputElement = <HTMLInputElement>element.querySelector('#upload-id');
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(inputElement).toBeDefined();
+                expect(inputElement).not.toBeNull();
+                expect(inputElement.getAttributeNode('multiple')).toBeTruthy();
+            });
+        }));
+
+        it('should not have the multiple attribute if multiple is false', async(() => {
+            uploadWidget.field.params.multiple = false;
+            fixture.detectChanges();
+            inputElement = <HTMLInputElement>element.querySelector('#upload-id');
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(inputElement).toBeDefined();
+                expect(inputElement).not.toBeNull();
+                expect(inputElement.getAttributeNode('multiple')).toBeFalsy();
             });
         }));
 
