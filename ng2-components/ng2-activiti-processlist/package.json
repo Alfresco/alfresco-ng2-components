@@ -65,6 +65,7 @@
     "@types/node": "6.0.45",
     "angular2-template-loader": "0.6.2",
     "autoprefixer": "6.5.4",
+    "codelyzer": "3.1.2",
     "copy-webpack-plugin": "4.0.1",
     "css-loader": "0.23.1",
     "css-to-string-loader": "0.1.2",
