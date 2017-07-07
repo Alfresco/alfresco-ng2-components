@@ -95,6 +95,16 @@ export class ActivitiContentService {
             .catch(err => this.handleError(err));
     }
 
+    /**
+     * Return all the related content of the process instance
+     * @param processInstanceId
+     * @returns {any}
+     */
+    createProcessRelatedContent(processInstanceId: string, content: any, opts?: any): Observable<any> {
+        return Observable.fromPromise(this.apiService.getInstance().activiti.contentApi.createRelatedContentOnProcessInstance(processInstanceId, content, opts))
+            .catch(err => this.handleError(err));
+    }
+
     toJson(res: any) {
         if (res) {
             return res || {};
@@ -122,5 +132,10 @@ export class ActivitiContentService {
     getMimeTypeIcon(mimeType: string): string {
         let icon = this.mimeTypeIcons[mimeType];
         return icon || ActivitiContentService.DEFAULT_MIME_TYPE_ICON;
+    }
+
+    createTaskRelatedContent(taskId: string, file: any, opts?: any) {
+        return Observable.fromPromise(this.apiService.getInstance().activiti.contentApi.createRelatedContentOnTask(taskId, file, opts))
+            .catch(err => this.handleError(err));
     }
 }

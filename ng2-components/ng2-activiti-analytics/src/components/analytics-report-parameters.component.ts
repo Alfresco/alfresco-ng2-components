@@ -110,7 +110,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                 private logService: LogService,
                 private contentService: ContentService) {
         if (translateService) {
-            translateService.addTranslationFolder('ng2-activiti-analytics', 'node_modules/ng2-activiti-analytics/src');
+            translateService.addTranslationFolder('ng2-activiti-analytics', 'assets/ng2-activiti-analytics');
         }
     }
 
@@ -372,7 +372,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
 
     doSave(paramQuery: ReportQuery) {
         this.analyticsService.saveReport(this.reportId, paramQuery).subscribe(() => {
-            this.saveReportSuccess.emit();
+            this.saveReportSuccess.emit(this.reportId);
         });
     }
 

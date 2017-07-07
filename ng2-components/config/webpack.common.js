@@ -2,6 +2,30 @@ const webpack = require('webpack');
 const helpers = require('./helpers');
 const fs = require('fs');
 const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+var HappyPack = require('happypack');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+
+const alfrescoLibs = [
+    'ng2-activiti-analytics',
+    'ng2-activiti-diagrams',
+    'ng2-activiti-form',
+    'ng2-activiti-processlist',
+    'ng2-activiti-tasklist',
+    'ng2-alfresco-core',
+    'ng2-alfresco-datatable',
+    'ng2-alfresco-documentlist',
+    'ng2-alfresco-login',
+    'ng2-alfresco-search',
+    'ng2-alfresco-social',
+    'ng2-alfresco-tag',
+    'ng2-alfresco-upload',
+    'ng2-alfresco-userinfo',
+    'ng2-alfresco-viewer',
+    'ng2-alfresco-webscript'
+];
+
+const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
 
 module.exports = {
 
@@ -10,26 +34,33 @@ module.exports = {
     resolveLoader: {
         alias: {
             "file-multi-loader": path.resolve(__dirname, "./custom-loaders/file-loader-multi"),
-            "license-check": path.resolve(__dirname, "./custom-loaders/license-check")
+            "license-check": path.resolve(__dirname, "./custom-loaders/license-check"),
+            "generate-list-component-loader": path.resolve(__dirname, "./custom-loaders/generateListComponent")
         }
     },
 
-    // require those dependencies but don't bundle them
-    externals: [
-        /^\@angular\//,
-        /^rxjs\//,
-        'moment',
-        'raphael',
-        'ng2-charts',
-        'alfresco-js-api',
-        'ng2-alfresco-core',
-        'ng2-alfresco-datatable',
-        'ng2-activiti-analytics',
-        'ng2-activiti-diagrams',
-        'ng2-activiti-form',
-        "ng2-activiti-tasklist",
-        'ng2-alfresco-documentlist'
-    ],
+    resolve: {
+        alias: {
+            "ng2-alfresco-core": path.resolve(__dirname, '../ng2-alfresco-core/index.ts'),
+            "ng2-alfresco-datatable": path.resolve(__dirname, '../ng2-alfresco-datatable/index.ts'),
+            "ng2-activiti-diagrams": path.resolve(__dirname, '../ng2-activiti-diagrams/index.ts'),
+            "ng2-activiti-analytics": path.resolve(__dirname, '../ng2-activiti-analytics/index.ts'),
+            "ng2-activiti-form": path.resolve(__dirname, '../ng2-activiti-form/index.ts'),
+            "ng2-activiti-tasklist": path.resolve(__dirname, '../ng2-activiti-tasklist/index.ts'),
+            "ng2-activiti-processlist": path.resolve(__dirname, '../ng2-activiti-processlist/index.ts'),
+            "ng2-alfresco-documentlist": path.resolve(__dirname, '../ng2-alfresco-documentlist/index.ts'),
+            "ng2-alfresco-login": path.resolve(__dirname, '../ng2-alfresco-login/index.ts'),
+            "ng2-alfresco-search": path.resolve(__dirname, '../ng2-alfresco-search/index.ts'),
+            "ng2-alfresco-social": path.resolve(__dirname, '../ng2-alfresco-social/index.ts'),
+            "ng2-alfresco-tag": path.resolve(__dirname, '../ng2-alfresco-tag/index.ts'),
+            "ng2-alfresco-upload": path.resolve(__dirname, '../ng2-alfresco-upload/index.ts'),
+            "ng2-alfresco-viewer": path.resolve(__dirname, '../ng2-alfresco-viewer/index.ts'),
+            "ng2-alfresco-webscript": path.resolve(__dirname, '../ng2-alfresco-webscript/index.ts'),
+            "ng2-alfresco-userinfo": path.resolve(__dirname, '../ng2-alfresco-userinfo/index.ts')
+        },
+        extensions: ['.ts', '.js'],
+        modules: [helpers.root('node_modules')]
+    },
 
     module: {
         rules: [
@@ -51,18 +82,13 @@ module.exports = {
                 loader: 'tslint-loader',
                 options: {
                     emitErrors: true,
-                    configFile: path.resolve(__dirname, './assets/tslint.json')
+                    failOnHint: true
                 },
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
             },
             {
                 test: /\.ts$/,
-                use: ['ts-loader?' + JSON.stringify({
-                    "compilerOptions": {
-                        "typeRoots": [
-                            "../node_modules/@types"
-                        ]}
-                }), 'angular2-template-loader'],
+                loader: ['happypack/loader?id=ts', 'angular2-template-loader'],
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
             },
             {
@@ -72,9 +98,23 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loader: ['to-string-loader', 'css-loader'],
+                loader: ['happypack/loader?id=css'],
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
-            }, {
+            },
+            {
+                test: /\.component.scss$/,
+                use: [{
+                    loader: "to-string-loader"
+                }, {
+                    loader: "raw-loader"
+                }, {
+                    loader: "sass-loader",
+                    options: {
+                        includePaths: [ path.resolve(__dirname, '../../ng2-components/ng2-alfresco-core/styles')]
+                    }
+                }]
+            },
+            {
                 enforce: 'pre',
                 test: /\.ts$/,
                 loader: 'license-check',
@@ -82,7 +122,7 @@ module.exports = {
                     emitErrors: true,
                     licenseFile: path.resolve(__dirname, './assets/license_header.txt')
                 },
-                exclude: [/node_modules/, /bundles/, /dist/, /demo/, /rendering-queue.services.ts/],
+                exclude: [/node_modules/, /bundles/, /dist/, /demo/, /rendering-queue.services.ts/]
             },
             {
                 test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
@@ -102,30 +142,40 @@ module.exports = {
         ]
     },
 
-    resolve: {
-        alias: {
-            "ng2-alfresco-core": path.resolve(__dirname, '../ng2-alfresco-core/index.ts'),
-            "ng2-alfresco-datatable": path.resolve(__dirname, '../ng2-alfresco-datatable/index.ts'),
-            "ng2-activiti-diagrams": path.resolve(__dirname, '../ng2-activiti-diagrams/index.ts'),
-            "ng2-activiti-analytics":path.resolve(__dirname, '../ng2-activiti-analytics/index.ts'),
-            "ng2-activiti-form":path.resolve(__dirname, '../ng2-activiti-form/index.ts'),
-            "ng2-activiti-tasklist": path.resolve(__dirname, '../ng2-activiti-tasklist/index.ts'),
-            "ng2-activiti-processlist": path.resolve(__dirname, '../ng2-activiti-processlist/index.ts'),
-            "ng2-alfresco-documentlist": path.resolve(__dirname, '../ng2-alfresco-documentlist/index.ts'),
-            "ng2-alfresco-login": path.resolve(__dirname, '../ng2-alfresco-login/index.ts'),
-            "ng2-alfresco-search": path.resolve(__dirname, '../ng2-alfresco-search/index.ts'),
-            "ng2-alfresco-social": path.resolve(__dirname, '../ng2-alfresco-social/index.ts'),
-            "ng2-alfresco-tag": path.resolve(__dirname, '../ng2-alfresco-tag/index.ts'),
-            "ng2-alfresco-upload": path.resolve(__dirname, '../ng2-alfresco-upload/index.ts'),
-            "ng2-alfresco-viewer": path.resolve(__dirname, '../ng2-alfresco-viewer/index.ts'),
-            "ng2-alfresco-webscript": path.resolve(__dirname, '../ng2-alfresco-webscript/index.ts'),
-            "ng2-alfresco-userinfo": path.resolve(__dirname, '../ng2-alfresco-userinfo/index.ts')
-        },
-        extensions: ['.ts', '.js'],
-            modules: [helpers.root('node_modules')]
-    },
-
     plugins: [
+        new ForkTsCheckerWebpackPlugin(),
+        new HappyPack({
+            id: 'ts',
+            threads: 2,
+            loaders: [
+                {
+                    path: 'ts-loader',
+                    query: {
+                        happyPackMode: true,
+                        "compilerOptions": {
+                            "paths": {
+                            }
+                        }
+                    }
+                }
+            ]
+        }),
+
+        new HappyPack({
+            id: 'css',
+            threads: 2,
+            loaders: ['to-string-loader', 'css-loader' ]
+        }),
+
+        new CopyWebpackPlugin([
+            ... alfrescoLibs.map(lib => {
+                return {
+                    from: `${lib}/src/i18n/`,
+                    to: `${lib}/bundles/assets/${lib}/i18n/`
+                }
+            })
+        ]),
+
         new webpack.NoEmitOnErrorsPlugin(),
 
         new webpack.BannerPlugin(fs.readFileSync(path.resolve(__dirname, './assets/license_header_add.txt'), 'utf8')),
@@ -134,7 +184,17 @@ module.exports = {
             /angular(\\|\/)core(\\|\/)@angular/,
             helpers.root('./src'),
             {}
-        )
+        ),
+        new webpack.DefinePlugin({
+            'process.env': {
+                'ENV': JSON.stringify(ENV)
+            }
+        }),
+        new webpack.LoaderOptionsPlugin({
+            htmlLoader: {
+                minimize: false // workaround for ng2
+            }
+        })
     ],
 
     node: {

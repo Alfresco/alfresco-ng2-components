@@ -22,6 +22,7 @@ import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AlfrescoLoginComponent } from './alfresco-login.component';
 import { AuthenticationMock } from './../assets/authentication.service.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
+import { MdInputModule, MdCheckboxModule } from '@angular/material';
 
 describe('AlfrescoLogin', () => {
     let component: AlfrescoLoginComponent;
@@ -31,9 +32,14 @@ describe('AlfrescoLogin', () => {
 
     let usernameInput, passwordInput;
 
+    const getLoginErrorElement = () => element.querySelector('#login-error');
+    const getLoginErrorMessage = () => element.querySelector('#login-error .login-error-message').innerText;
+
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+                MdInputModule,
+                MdCheckboxModule,
                 CoreModule.forRoot()
             ],
             declarations: [AlfrescoLoginComponent],
@@ -59,6 +65,81 @@ describe('AlfrescoLogin', () => {
         fixture.detectChanges();
     });
 
+    function loginWithCredentials(username, password) {
+        component.providers = 'ECM';
+        usernameInput.value = username;
+        passwordInput.value = password;
+
+        usernameInput.dispatchEvent(new Event('input'));
+        passwordInput.dispatchEvent(new Event('input'));
+        fixture.detectChanges();
+
+        element.querySelector('button').click();
+        fixture.detectChanges();
+    }
+
+    describe('Login button', () => {
+
+        const getLoginButton = () => element.querySelector('#login-button');
+        const getLoginButtonText = () => element.querySelector('#login-button span.login-button-label').innerText;
+
+        it('should be rendered with the proper key by default', () => {
+            expect(getLoginButton()).not.toBeNull();
+            expect(getLoginButtonText()).toEqual('LOGIN.BUTTON.LOGIN');
+        });
+
+        it('should be changed to the "checking key" after a login attempt', () => {
+            const authService = TestBed.get(AlfrescoAuthenticationService);
+            spyOn(authService, 'login').and.returnValue({ subscribe: () => { } });
+
+            loginWithCredentials('fake-username', 'fake-password');
+
+            expect(element.querySelector('#checking-spinner')).not.toBeNull();
+            expect(getLoginButtonText()).toEqual('LOGIN.BUTTON.CHECKING');
+        });
+
+        it('should be changed back to the default after a failed login attempt', () => {
+            loginWithCredentials('fake-wrong-username', 'fake-wrong-password');
+
+            expect(getLoginButtonText()).toEqual('LOGIN.BUTTON.LOGIN');
+        });
+
+        it('should be changed to the "welcome key" after a successful login attempt', () => {
+            loginWithCredentials('fake-username', 'fake-password');
+
+            expect(getLoginButtonText()).toEqual('LOGIN.BUTTON.WELCOME');
+        });
+    });
+
+    describe('Remember me', () => {
+
+        it('should be checked by default', () => {
+            expect(element.querySelector('.rememberme-cb input[type="checkbox"]').checked).toBe(true);
+        });
+
+        it('should set the component\'s rememberMe property properly', () => {
+            element.querySelector('.rememberme-cb').dispatchEvent(new Event('change'));
+            fixture.detectChanges();
+
+            expect(component.rememberMe).toBe(false);
+
+            element.querySelector('.rememberme-cb').dispatchEvent(new Event('change'));
+            fixture.detectChanges();
+
+            expect(component.rememberMe).toBe(true);
+        });
+
+        it('should be taken into consideration during login attempt', () => {
+            const authService = TestBed.get(AlfrescoAuthenticationService);
+            spyOn(authService, 'login').and.returnValue({ subscribe: () => { } });
+            component.rememberMe = false;
+
+            loginWithCredentials('fake-username', 'fake-password');
+
+            expect(authService.login).toHaveBeenCalledWith('fake-username', 'fake-password', false);
+        });
+    });
+
     it('should render Login form with all the keys to be translated', () => {
         expect(element.querySelector('[for="username"]')).toBeDefined();
         expect(element.querySelector('[for="username"]').innerText).toEqual('LOGIN.LABEL.USERNAME');
@@ -68,9 +149,6 @@ describe('AlfrescoLogin', () => {
 
         expect(element.querySelector('[for="password"]')).toBeDefined();
         expect(element.querySelector('[for="password"]').innerText).toEqual('LOGIN.LABEL.PASSWORD');
-
-        expect(element.querySelector('#login-button')).toBeDefined();
-        expect(element.querySelector('#login-button').innerText).toEqual('LOGIN.BUTTON.LOGIN');
 
         expect(element.querySelector('#login-action-help')).toBeDefined();
         expect(element.querySelector('#login-action-help').innerText).toEqual('LOGIN.ACTION.HELP');
@@ -243,8 +321,8 @@ describe('AlfrescoLogin', () => {
 
         expect(component.error).toBe(true);
         expect(component.success).toBe(false);
-        expect(element.querySelector('#login-error')).toBeDefined();
-        expect(element.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+        expect(getLoginErrorElement()).toBeDefined();
+        expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
     });
 
     it('should return error with a wrong password', () => {
@@ -266,8 +344,8 @@ describe('AlfrescoLogin', () => {
 
         expect(component.error).toBe(true);
         expect(component.success).toBe(false);
-        expect(element.querySelector('#login-error')).toBeDefined();
-        expect(element.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+        expect(getLoginErrorElement()).toBeDefined();
+        expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
     });
 
     it('should return error with a wrong username and password', () => {
@@ -289,8 +367,8 @@ describe('AlfrescoLogin', () => {
 
         expect(component.error).toBe(true);
         expect(component.success).toBe(false);
-        expect(element.querySelector('#login-error')).toBeDefined();
-        expect(element.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+        expect(getLoginErrorElement()).toBeDefined();
+        expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
     });
 
     it('should return CORS error when server CORS error occurs', () => {
@@ -312,8 +390,8 @@ describe('AlfrescoLogin', () => {
 
         expect(component.error).toBe(true);
         expect(component.success).toBe(false);
-        expect(element.querySelector('#login-error')).toBeDefined();
-        expect(element.querySelector('#login-error').innerText).toEqual('ERROR: the network is offline, Origin is not allowed by Access-Control-Allow-Origin');
+        expect(getLoginErrorElement()).toBeDefined();
+        expect(getLoginErrorMessage()).toEqual('ERROR: the network is offline, Origin is not allowed by Access-Control-Allow-Origin');
     });
 
     it('should return CSRF error when server CSRF error occurs', () => {
@@ -335,8 +413,8 @@ describe('AlfrescoLogin', () => {
 
         expect(component.error).toBe(true);
         expect(component.success).toBe(false);
-        expect(element.querySelector('#login-error')).toBeDefined();
-        expect(element.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CSRF');
+        expect(getLoginErrorElement()).toBeDefined();
+        expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CSRF');
     });
 
     it('should return ECOM read-oly error when error occurs', () => {
@@ -358,8 +436,8 @@ describe('AlfrescoLogin', () => {
 
         expect(component.error).toBe(true);
         expect(component.success).toBe(false);
-        expect(element.querySelector('#login-error')).toBeDefined();
-        expect(element.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ECM-LICENSE');
+        expect(getLoginErrorElement()).toBeDefined();
+        expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ECM-LICENSE');
     });
 
     it('should emit onSuccess event after the login has succeeded', () => {
@@ -413,8 +491,8 @@ describe('AlfrescoLogin', () => {
 
         expect(component.error).toBe(true);
         expect(component.success).toBe(false);
-        expect(element.querySelector('#login-error')).toBeDefined();
-        expect(element.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+        expect(getLoginErrorElement()).toBeDefined();
+        expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
         expect(component.onError.emit).toHaveBeenCalledWith('Fake server error');
     });
 
@@ -458,8 +536,8 @@ describe('AlfrescoLogin', () => {
 
         expect(component.error).toBe(true);
         expect(component.success).toBe(false);
-        expect(element.querySelector('#login-error')).toBeDefined();
-        expect(element.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-PROVIDERS');
+        expect(getLoginErrorElement()).toBeDefined();
+        expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-PROVIDERS');
         expect(component.onError.emit).toHaveBeenCalledWith('LOGIN.MESSAGES.LOGIN-ERROR-PROVIDERS');
     });
 });

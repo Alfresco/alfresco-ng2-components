@@ -85,7 +85,8 @@ describe('User info component', () => {
             }
         };
         userInfoComp.onImageLoadingError(event);
-        expect(event.target.src).toContain('assets/images/anonymous.gif');
+        expect(event.target.src).toContain('assets/images/anonymous');
+        expect(event.target.src).toContain('.gif');
     });
 
     describe('when user is logged on ecm', () => {
@@ -282,7 +283,7 @@ describe('User info component', () => {
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
-                fixture.detectChanges()
+                fixture.detectChanges();
                 expect(element.querySelector('#tab-bar-env').getAttribute('hidden')).not.toBeNull();
             });
         });

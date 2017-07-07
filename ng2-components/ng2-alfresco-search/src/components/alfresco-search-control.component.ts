@@ -102,7 +102,7 @@ export class AlfrescoSearchControlComponent implements OnInit, OnDestroy {
 
         this.setupFocusEventHandlers();
 
-        this.translateService.addTranslationFolder('ng2-alfresco-search', 'node_modules/ng2-alfresco-search/src');
+        this.translateService.addTranslationFolder('ng2-alfresco-search', 'assets/ng2-alfresco-search');
     }
 
     ngOnDestroy(): void {
@@ -112,7 +112,7 @@ export class AlfrescoSearchControlComponent implements OnInit, OnDestroy {
     private onSearchTermChange(value: string): void {
         this.searchValid = this.searchControl.valid;
         this.liveSearchTerm = this.searchValid ? value : '';
-        this.searchControl.setValue(value, true);
+        this.searchControl.setValue(value);
         this.searchChange.emit({
             value: value,
             valid: this.searchValid
@@ -151,7 +151,7 @@ export class AlfrescoSearchControlComponent implements OnInit, OnDestroy {
      * @param event Submit event that was fired
      */
     onSearch(event): void {
-        this.searchControl.setValue(this.searchTerm, true);
+        this.searchControl.setValue(this.searchTerm);
         if (this.searchControl.valid) {
             this.searchSubmit.emit({
                 value: this.searchTerm

@@ -5,41 +5,11 @@
     <title>Alfresco Angular 2 Search - Demo</title>
     <base href="./">
 
-    <!-- Google Material Design Lite -->
-    <link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
-    <script src="node_modules/material-design-lite/material.min.js"></script>
-    <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
-
-    <!-- Polyfill(s) for Safari (pre-10.x) -->
-    <script src="node_modules/intl/dist/Intl.min.js"></script>
-    <script src="node_modules/intl/locale-data/jsonp/en.js"></script>
-
-    <!-- Polyfill(s) for older browsers -->
-    <script src="node_modules/core-js/client/shim.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/dom4/1.8.3/dom4.js"></script>
-    <script src="node_modules/element.scrollintoviewifneeded-polyfill/index.js"></script>
-
-    <!-- Polyfill(s) for dialogs -->
-    <script src="node_modules/dialog-polyfill/dialog-polyfill.js"></script>
-    <link rel="stylesheet" type="text/css" href="node_modules/dialog-polyfill/dialog-polyfill.css" />
-    <style>._dialog_overlay { position: static !important; } </style>
-
-    <!-- Modules  -->
-    <script src="node_modules/zone.js/dist/zone.js"></script>
-    <script src="node_modules/reflect-metadata/Reflect.js"></script>
-    <script src="node_modules/systemjs/dist/system.src.js"></script>
-
-    <script src="systemjs.config.js"></script>
-    <script>
-        System.import('app').catch(function(err){ console.error(err); });
-    </script>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 
-<div mdl class="mdl-layout mdl-js-layout">
-    <alfresco-app-demo></alfresco-app-demo>
-</div>
+<alfresco-app-demo></alfresco-app-demo>
 
 </body>
 </html>

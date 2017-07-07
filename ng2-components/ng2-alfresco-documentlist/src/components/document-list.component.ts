@@ -36,7 +36,7 @@ import { ContentActionModel } from './../models/content-action.model';
 import { ShareDataTableAdapter, ShareDataRow, RowFilter, ImageResolver } from './../data/share-datatable-adapter';
 import { NodeEntityEvent, NodeEntryEvent } from './node.event';
 
-declare var module: any;
+declare var require: any;
 
 @Component({
     selector: 'alfresco-document-list',
@@ -62,6 +62,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     @Input()
     thumbnails: boolean = false;
+
+    @Input()
+    selectionMode: string = 'single'; // null|single|multiple
 
     @Input()
     multiselect: boolean = false;
@@ -93,6 +96,12 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     @Input()
     sorting: string[];
 
+    @Input()
+    rowStyle: string;
+
+    @Input()
+    rowStyleClass: string;
+
     skipCount: number = 0;
 
     pagination: Pagination;
@@ -103,7 +112,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             this.data.setFilter(value);
             this.loadFolderNodesByFolderNodeId(this.currentFolderId, this.pageSize, this.skipCount);
         }
-    };
+    }
 
     @Input()
     set imageResolver(value: ImageResolver) {
@@ -138,6 +147,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     success: EventEmitter<any> = new EventEmitter();
 
     @Output()
+    ready: EventEmitter<any> = new EventEmitter();
+
+    @Output()
     error: EventEmitter<any> = new EventEmitter();
 
     @Output()
@@ -152,13 +164,17 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     contextActionHandler: Subject<any> = new Subject();
     data: ShareDataTableAdapter;
 
+    loading: boolean = false;
+    private currentNodeAllowableOperations: string[] = [];
+    private CREATE_PERMISSION = 'create';
+
     constructor(private documentListService: DocumentListService,
                 private ngZone: NgZone,
                 private translateService: AlfrescoTranslationService,
                 private el: ElementRef) {
 
         if (translateService) {
-            translateService.addTranslationFolder('ng2-alfresco-documentlist', 'node_modules/ng2-alfresco-documentlist/src');
+            translateService.addTranslationFolder('ng2-alfresco-documentlist', 'assets/ng2-alfresco-documentlist');
         }
     }
 
@@ -214,17 +230,12 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     ngOnChanges(changes: SimpleChanges) {
         if (changes['folderNode'] && changes['folderNode'].currentValue) {
             this.loadFolder();
-            return;
-        }
-
-        if (changes['currentFolderId'] && changes['currentFolderId'].currentValue) {
+        } else if (changes['currentFolderId'] && changes['currentFolderId'].currentValue) {
             this.loadFolderByNodeId(changes['currentFolderId'].currentValue);
-            return;
-        }
-
-        if (changes['node'] && changes['node'].currentValue) {
-            this.data.loadPage(changes['node'].currentValue);
-            return;
+        } else if (changes['node'] && changes['node'].currentValue) {
+            if (this.data) {
+                this.data.loadPage(changes['node'].currentValue);
+            }
         }
     }
 
@@ -232,17 +243,11 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         this.ngZone.run(() => {
             if (this.folderNode) {
                 this.loadFolder();
-                return;
-            }
-
-            if (this.currentFolderId) {
+            } else if (this.currentFolderId) {
                 this.loadFolderByNodeId(this.currentFolderId);
-                return;
-            }
-
-            if (this.node) {
+            } else if (this.node) {
                 this.data.loadPage(this.node);
-                return;
+                this.ready.emit();
             }
         });
     }
@@ -326,6 +331,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             this.currentFolderId = node.entry.id;
             this.folderNode = node.entry;
             this.skipCount = 0;
+            this.currentNodeAllowableOperations = node.entry['allowableOperations'] ? node.entry['allowableOperations'] : [];
             this.loadFolder();
             this.folderChange.emit(new NodeEntryEvent(node.entry));
             return true;
@@ -345,6 +351,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     loadFolder() {
+        this.loading = true;
         let nodeId = this.folderNode ? this.folderNode.id : this.currentFolderId;
         if (nodeId) {
             this.loadFolderNodesByFolderNodeId(nodeId, this.pageSize, this.skipCount).catch(err => this.error.emit(err));
@@ -353,38 +360,59 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     // gets folder node and its content
     loadFolderByNodeId(nodeId: string) {
+        this.loading = true;
         this.documentListService.getFolderNode(nodeId).then(node => {
             this.folderNode = node;
             this.currentFolderId = node.id;
             this.skipCount = 0;
+            this.currentNodeAllowableOperations = node['allowableOperations'] ? node['allowableOperations'] : [];
             this.loadFolderNodesByFolderNodeId(node.id, this.pageSize, this.skipCount).catch(err => this.error.emit(err));
         })
-        .catch(err => this.error.emit(err));
+            .catch(err => this.error.emit(err));
     }
 
     loadFolderNodesByFolderNodeId(id: string, maxItems: number, skipCount: number): Promise<any> {
         return new Promise((resolve, reject) => {
-            if (id && this.documentListService) {
-                this.documentListService
-                    .getFolder(null, {
-                        maxItems: maxItems,
-                        skipCount: skipCount,
-                        rootFolderId: id
-                    })
-                    .subscribe(
-                        val => {
+            this.documentListService
+                .getFolder(null, {
+                    maxItems: maxItems,
+                    skipCount: skipCount,
+                    rootFolderId: id
+                })
+                .subscribe(
+                    val => {
+                        if (this.isCurrentPageEmpty(val, skipCount)) {
+                            this.updateSkipCount(skipCount - maxItems);
+                            this.loadFolderNodesByFolderNodeId(id, maxItems, skipCount - maxItems).then(() => {
+                                resolve(true);
+                            }, (error) => {
+                                reject(error);
+                            });
+                        } else {
                             this.data.loadPage(<NodePaging>val);
                             this.pagination = val.list.pagination;
+                            this.loading = false;
+                            this.ready.emit();
                             resolve(true);
-                        },
-                        error => {
-                            reject(error);
-                        });
-            } else {
-                resolve(false);
-            }
+                        }
+                    },
+                    error => {
+                        reject(error);
+                    });
         });
 
+    }
+
+    private isCurrentPageEmpty(node, skipCount): boolean {
+        return !this.hasNodeEntries(node) && this.hasPages(skipCount);
+    }
+
+    private hasPages(skipCount): boolean {
+        return skipCount > 0 && this.isPaginationEnabled();
+    }
+
+    private hasNodeEntries(node): boolean {
+        return node && node.list && node.list.entries && node.list.entries.length > 0;
     }
 
     /**
@@ -547,9 +575,27 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     private getDefaultSorting(): DataSorting {
         let defaultSorting: DataSorting;
         if (this.sorting) {
-            const [ key, direction ] = this.sorting;
+            const [key, direction] = this.sorting;
             defaultSorting = new DataSorting(key, direction);
         }
         return defaultSorting;
     }
+
+    updateSkipCount(newSkipCount) {
+        this.skipCount = newSkipCount;
+    }
+
+    hasCurrentNodePermission(permission: string): boolean {
+        let hasPermission: boolean = false;
+        if (this.currentNodeAllowableOperations.length > 0) {
+            let permFound = this.currentNodeAllowableOperations.find(element => element === permission);
+            hasPermission = permFound ? true : false;
+        }
+        return hasPermission;
+    }
+
+    hasCreatePermission() {
+        return this.hasCurrentNodePermission(this.CREATE_PERMISSION);
+    }
+
 }

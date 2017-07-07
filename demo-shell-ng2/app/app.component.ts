@@ -17,7 +17,13 @@
 
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoSettingsService, StorageService, LogService } from 'ng2-alfresco-core';
+import {
+    AlfrescoTranslationService,
+    AlfrescoAuthenticationService,
+    AlfrescoSettingsService,
+    StorageService,
+    LogService
+} from 'ng2-alfresco-core';
 
 declare var document: any;
 
@@ -29,17 +35,12 @@ declare var document: any;
 export class AppComponent {
     searchTerm: string = '';
 
-    ecmHost: string = 'http://' + window.location.hostname + ':8080';
-    bpmHost: string = 'http://' + window.location.hostname + ':9999';
-
     constructor(private authService: AlfrescoAuthenticationService,
                 private router: Router,
                 private settingsService: AlfrescoSettingsService,
                 private translateService: AlfrescoTranslationService,
                 private storage: StorageService,
                 private logService: LogService) {
-        this.setEcmHost();
-        this.setBpmHost();
         this.setProvider();
 
         if (translateService) {
@@ -94,27 +95,14 @@ export class AppComponent {
         document.querySelector('.mdl-layout').MaterialLayout.toggleDrawer();
     }
 
-    private setEcmHost() {
-        if (this.storage.hasItem(`ecmHost`)) {
-            this.settingsService.ecmHost = this.storage.getItem(`ecmHost`);
-            this.ecmHost = this.storage.getItem(`ecmHost`);
-        } else {
-            this.settingsService.ecmHost = this.ecmHost;
-        }
-    }
-
-    private setBpmHost() {
-        if (this.storage.hasItem(`bpmHost`)) {
-            this.settingsService.bpmHost = this.storage.getItem(`bpmHost`);
-            this.bpmHost = this.storage.getItem(`bpmHost`);
-        } else {
-            this.settingsService.bpmHost = this.bpmHost;
-        }
-    }
-
     private setProvider() {
         if (this.storage.hasItem(`providers`)) {
             this.settingsService.setProviders(this.storage.getItem(`providers`));
         }
+    }
+
+    onDragOverMainPage(event: any): boolean {
+        event.preventDefault();
+        return false;
     }
 }

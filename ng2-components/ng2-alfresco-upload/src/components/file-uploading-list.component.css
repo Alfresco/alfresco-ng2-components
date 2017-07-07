@@ -3,8 +3,8 @@
     border: 0px;
 }
 
-.cursor {
-    cursor: pointer;
+.center {
+    text-align: center;
 }
 
 .body-dialog-header {
@@ -42,62 +42,40 @@
     width: 100%;
 }
 
-:host .truncate {
-    margin-left: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.cancel-upload-button {
+    cursor: pointer;
 }
 
-:host .mdl-progress {
-    width: 150px;
-}
-
-@media (max-device-width: 360px) {
-    .truncate {
-        max-width: 50px;
-        margin-left: 0px;
-    }
-}
-
-@media (max-device-width: 568px) {
-    .truncate {
-        width: 60px;
-    }
-
-    .mdl-progress {
-        width: 60px;
-    }
-}
-
-@media (max-width: 740px) {
-    .truncate {
-        max-width: 80px;
-    }
-
-    .mdl-progress {
-        max-width: 70px;
-    }
-
-    .size-column {
-        display: none;
-    }
-}
-
-@media (min-width: 740px) {
-    .truncate {
-        width: 249px;
-    }
-
-    .size-column {
-        display: table-cell;
-    }
+.file-progress-spinner {
+    height: 24px;
+    width: 100%;
+    text-align: center;
 }
 
 .full-width {
     width: 100%;
 }
 
-.no-width {
-    width: 0%;
+.ellipsis-cell .cell-container {
+    height: 1em;
+}
+
+/* visible content */
+.ellipsis-cell .cell-value {
+    display: block;
+    position: absolute;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1em;		/* for vertical align of text */
+}
+
+
+/* cell stretching content */
+.ellipsis-cell > div:after {
+    content: attr(title);
+    overflow: hidden;
+    height: 0;
+    display: block;
 }

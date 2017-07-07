@@ -6,6 +6,7 @@ demo/localTestFile.pdf
 
 coverage/
 demo/
+dist/
 node_modules
 typings/
 fonts/
@@ -17,5 +18,6 @@ fonts/
 /karma.conf.js
 /gulpfile.ts
 /.npmignore
+/.happypack
 
 *.tgz

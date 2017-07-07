@@ -6,3 +6,12 @@ alfresco-datatable >>> .column-header {
 alfresco-datatable >>> .data-cell {
     cursor: pointer !important;
 }
+
+.no-attachment-message {
+    border: 1px solid rgb(224, 224, 224);
+    background: #fff;
+    text-align: left;
+    border-top: none;
+    padding: 10px;
+    text-align: center;
+}

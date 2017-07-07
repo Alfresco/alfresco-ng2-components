@@ -15,25 +15,29 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, AfterViewInit, Optional, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { AlfrescoAuthenticationService, LogService, NotificationService } from 'ng2-alfresco-core';
-import { DocumentActionsService, DocumentListComponent, ContentActionHandler, DocumentActionModel, FolderActionModel } from 'ng2-alfresco-documentlist';
-import { FormService } from 'ng2-activiti-form';
-import { UploadButtonComponent, UploadDragAreaComponent } from 'ng2-alfresco-upload';
+import { Component, Input, OnInit, Optional, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+import { MdDialog } from '@angular/material';
+import { AlfrescoContentService, FolderCreatedEvent, NotificationService } from 'ng2-alfresco-core';
+import { DocumentListComponent } from 'ng2-alfresco-documentlist';
+import { UploadService, FileUploadCompleteEvent } from 'ng2-alfresco-upload';
+
+import { CreateFolderDialog } from '../../dialogs/create-folder.dialog';
 
 @Component({
     selector: 'files-component',
     templateUrl: './files.component.html',
     styleUrls: ['./files.component.css']
 })
-export class FilesComponent implements OnInit, AfterViewInit {
+export class FilesComponent implements OnInit {
     // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
     currentFolderId: string = '-my-';
 
     errorMessage: string = null;
     fileNodeId: any;
     fileShowed: boolean = false;
+
+    useCustomToolbar = true;
 
     @Input()
     multipleFileUpload: boolean = false;
@@ -59,33 +63,12 @@ export class FilesComponent implements OnInit, AfterViewInit {
     @ViewChild(DocumentListComponent)
     documentList: DocumentListComponent;
 
-    @ViewChild(UploadButtonComponent)
-    uploadButton: UploadButtonComponent;
-
-    @ViewChild(UploadDragAreaComponent)
-    uploadDragArea: UploadDragAreaComponent;
-
-    constructor(private documentActions: DocumentActionsService,
-                private authService: AlfrescoAuthenticationService,
-                private formService: FormService,
-                private logService: LogService,
-                private changeDetector: ChangeDetectorRef,
-                private router: Router,
+    constructor(private changeDetector: ChangeDetectorRef,
                 private notificationService: NotificationService,
+                private uploadService: UploadService,
+                private contentService: AlfrescoContentService,
+                private dialog: MdDialog,
                 @Optional() private route: ActivatedRoute) {
-        documentActions.setHandler('my-handler', this.myDocumentActionHandler.bind(this));
-    }
-
-    myDocumentActionHandler(obj: any) {
-        window.alert('my custom action handler');
-    }
-
-    myCustomAction1(event) {
-        alert('Custom document action for ' + event.value.entry.name);
-    }
-
-    myFolderAction1(event) {
-        alert('Custom folder action for ' + event.value.entry.name);
     }
 
     showFile(event) {
@@ -112,32 +95,9 @@ export class FilesComponent implements OnInit, AfterViewInit {
                 }
             });
         }
-        if (this.authService.isBpmLoggedIn()) {
-            this.formService.getProcessDefinitions().subscribe(
-                defs => this.setupBpmActions(defs || []),
-                err => this.logService.error(err)
-            );
-        } else {
-            this.logService.warn('You are not logged in to BPM');
-        }
-    }
 
-    ngAfterViewInit() {
-        this.uploadButton.onSuccess
-            .debounceTime(100)
-            .subscribe((event) => {
-                this.reload(event);
-            });
-
-        this.uploadDragArea.onSuccess
-            .debounceTime(100)
-            .subscribe((event) => {
-                this.reload(event);
-            });
-    }
-
-    viewActivitiForm(event?: any) {
-        this.router.navigate(['/activiti/tasksnode', event.value.entry.id]);
+        this.uploadService.fileUploadComplete.debounceTime(300).subscribe(value => this.onFileUploadComplete(value));
+        this.contentService.folderCreated.subscribe(value => this.onFolderCreated(value));
     }
 
     onNavigationError(err: any) {
@@ -150,39 +110,36 @@ export class FilesComponent implements OnInit, AfterViewInit {
         this.errorMessage = null;
     }
 
-    private setupBpmActions(actions: any[]) {
-        actions.map(def => {
-            let documentAction = new DocumentActionModel();
-            documentAction.title = 'Activiti: ' + (def.name || 'Unknown process');
-            documentAction.handler = this.getBpmActionHandler(def);
-            this.documentList.actions.push(documentAction);
-
-            let folderAction = new FolderActionModel();
-            folderAction.title = 'Activiti: ' + (def.name || 'Unknown process');
-            folderAction.handler = this.getBpmActionHandler(def);
-            this.documentList.actions.push(folderAction);
-        });
-    }
-
-    private getBpmActionHandler(processDefinition: any): ContentActionHandler {
-        return function (obj: any, target?: any) {
-            window.alert(`Starting BPM process: ${processDefinition.id}`);
-        }.bind(this);
-    }
-
-    onPermissionsFailed(event: any) {
-        this.notificationService.openSnackMessage(`you don't have the ${event.permission} permission to ${event.action} the ${event.type} `, 4000);
-    }
-
-    onUploadPermissionFailed(event: any) {
-        this.notificationService.openSnackMessage(`you don't have the ${event.permission} permission to ${event.action} the ${event.type} `, 4000);
-    }
-
-    reload(event: any) {
-        if (event && event.value && event.value.entry && event.value.entry.parentId) {
-            if (this.documentList.currentFolderId === event.value.entry.parentId) {
-                this.documentList.reload();
-            }
+    onFileUploadComplete(event: FileUploadCompleteEvent) {
+        if (event && event.file.options.parentId === this.documentList.currentFolderId) {
+            this.documentList.reload();
         }
+    }
+
+    onFolderCreated(event: FolderCreatedEvent) {
+        console.log('FOLDER CREATED');
+        console.log(event);
+        if (event && event.parentId === this.documentList.currentFolderId) {
+            this.documentList.reload();
+        }
+    }
+
+    handlePermissionError(event: any) {
+        this.notificationService.openSnackMessage(
+            `You don't have the ${event.permission} permission to ${event.action} the ${event.type} `,
+            4000
+        );
+    }
+
+    onCreateFolderClicked(event: Event) {
+        let dialogRef = this.dialog.open(CreateFolderDialog);
+        dialogRef.afterClosed().subscribe(folderName => {
+            if (folderName) {
+                this.contentService.createFolder('', folderName, this.documentList.currentFolderId).subscribe(
+                    node => console.log(node),
+                    err => console.log(err)
+                );
+            }
+        });
     }
 }

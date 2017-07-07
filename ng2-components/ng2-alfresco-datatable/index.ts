@@ -16,6 +16,7 @@
  */
 
 import { NgModule, ModuleWithProviders } from '@angular/core';
+import { MdCheckboxModule, MdMenuModule, MdIconModule, MdButtonModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
 
 export * from './src/data/index';
@@ -25,7 +26,8 @@ export * from './src/components/datatable/data-cell.event';
 export * from './src/components/datatable/data-row-action.event';
 
 import { DataTableComponent } from './src/components/datatable/datatable.component';
-import { NoContentTemplateComponent } from './src/components/datatable/no-content-template.component';
+import { NoContentTemplateComponent } from './src/directives/no-content-template.component';
+import { LoadingContentTemplateComponent } from './src/directives/loading-template.component';
 import { PaginationComponent } from './src/components/pagination/pagination.component';
 import { DataTableCellComponent } from './src/components/datatable/datatable-cell.component';
 
@@ -33,18 +35,27 @@ export const ALFRESCO_DATATABLE_DIRECTIVES: [any] = [
     DataTableComponent,
     DataTableCellComponent,
     NoContentTemplateComponent,
+    LoadingContentTemplateComponent,
     PaginationComponent
 ];
 
 @NgModule({
     imports: [
-        CoreModule
+        CoreModule,
+        MdCheckboxModule,
+        MdMenuModule,
+        MdIconModule,
+        MdButtonModule
     ],
     declarations: [
         ...ALFRESCO_DATATABLE_DIRECTIVES
     ],
     exports: [
-        ...ALFRESCO_DATATABLE_DIRECTIVES
+        ...ALFRESCO_DATATABLE_DIRECTIVES,
+        MdCheckboxModule,
+        MdMenuModule,
+        MdIconModule,
+        MdButtonModule
     ]
 })
 export class DataTableModule {

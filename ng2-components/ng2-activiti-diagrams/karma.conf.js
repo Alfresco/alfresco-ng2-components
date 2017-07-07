@@ -8,17 +8,16 @@ module.exports = function (config) {
 
     files: [
       './node_modules/hammerjs/hammer.js',
+      {pattern: './node_modules/@angular/material/prebuilt-themes/indigo-pink.css', included: true, watched: false},
 
       //diagrams
       './node_modules/chart.js/dist/Chart.js',
       './node_modules/alfresco-js-api/dist/alfresco-js-api.js',
       './node_modules/raphael/raphael.js',
       './node_modules/moment/min/moment.min.js',
-      './node_modules/md-date-time-picker/dist/js/mdDateTimePicker.js',
 
       {pattern: './node_modules/ng2-translate/**/*.js', included: false, watched: false},
       {pattern: './node_modules/ng2-charts/**/*.js', included: false, served: true, watched: false},
-      {pattern: './node_modules/md-date-time-picker/**/*.js', included: false, served: true, watched: false},
       {pattern: './node_modules/moment/**/*.js', included: false, served: true, watched: false},
 
       {pattern: 'karma-test-shim.js', watched: false},
@@ -27,7 +26,7 @@ module.exports = function (config) {
       {pattern: './src/**/*.ts', included: false, served: true, watched: false}
     ],
 
-    webpack: webpackConfig,
+    webpack: (config.mode === 'coverage') ? require('./webpack.coverage') : require('./webpack.test'),
 
     webpackMiddleware: {
       stats: 'errors-only'

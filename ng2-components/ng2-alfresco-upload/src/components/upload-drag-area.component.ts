@@ -16,23 +16,10 @@
  */
 
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { AlfrescoTranslationService, LogService, NotificationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, NotificationService, FileUtils, FileInfo } from 'ng2-alfresco-core';
 import { UploadService } from '../services/upload.service';
 import { FileModel } from '../models/file.model';
 
-declare let componentHandler: any;
-
-const ERROR_FOLDER_ALREADY_EXIST = 409;
-
-/**
- * <alfresco-upload-drag-area (onSuccess)="customMethod($event)></alfresco-upload-drag-area>
- *
- * This component, provide a drag and drop are to upload files to alfresco.
- *
- * @Output - onSuccess - The event is emitted when the file is uploaded
- *
- * @returns {UploadDragAreaComponent} .
- */
 @Component({
     selector: 'alfresco-upload-drag-area',
     templateUrl: './upload-drag-area.component.html',
@@ -40,52 +27,65 @@ const ERROR_FOLDER_ALREADY_EXIST = 409;
 })
 export class UploadDragAreaComponent {
 
-    private static DEFAULT_ROOT_ID: string = '-root-';
+    @Input()
+    enabled: boolean = true;
 
+    /**
+     * @deprecated Deprecated in 1.6.0, you can use UploadService events and NotificationService api instead.
+     *
+     * @type {boolean}
+     * @memberof UploadButtonComponent
+     */
     @Input()
     showNotificationBar: boolean = true;
 
     @Input()
     versioning: boolean = false;
 
+    /**
+     * @deprecated Deprecated in 1.6.0, this property is not used for couple of releases already. Use rootFolderId instead.
+     *
+     * @type {string}
+     * @memberof UploadDragAreaComponent
+     */
     @Input()
     currentFolderPath: string = '/';
 
     @Input()
-    rootFolderId: string = UploadDragAreaComponent.DEFAULT_ROOT_ID;
+    rootFolderId: string = '-root-';
 
     @Output()
     onSuccess = new EventEmitter();
 
     constructor(private uploadService: UploadService,
                 private translateService: AlfrescoTranslationService,
-                private logService: LogService,
                 private notificationService: NotificationService) {
         if (translateService) {
-            translateService.addTranslationFolder('ng2-alfresco-upload', 'node_modules/ng2-alfresco-upload/src');
+            translateService.addTranslationFolder('ng2-alfresco-upload', 'assets/ng2-alfresco-upload');
         }
-    }
-
-    ngOnChanges(changes) {
-        let formFields = this.createFormFields();
-        this.uploadService.setOptions(formFields, this.versioning);
     }
 
     /**
      * Handles 'upload-files' events raised by child components.
-     * @param e DOM event
+     * @param event DOM event
      */
-    onUploadFiles(e: CustomEvent) {
-        e.stopPropagation();
-        e.preventDefault();
-
-        let files = e.detail.files;
-        if (files && files.length > 0) {
-            if (e.detail.data.obj.entry.isFolder) {
-                let id = e.detail.data.obj.entry.id;
-                this.onFilesDropped(files, id, '/');
-            } else {
-                this.onFilesDropped(files);
+    onUploadFiles(event: CustomEvent) {
+        event.stopPropagation();
+        event.preventDefault();
+        let isAllowed: boolean = this.isAllowed(event.detail.data.obj.entry);
+        if (isAllowed) {
+            let files: FileInfo[] = event.detail.files;
+            if (files && files.length > 0) {
+                let parentId = this.rootFolderId;
+                if (event.detail.data && event.detail.data.obj.entry.isFolder) {
+                    parentId = event.detail.data.obj.entry.id || this.rootFolderId;
+                }
+                const fileModels = files.map(fileInfo => new FileModel(fileInfo.file, {
+                    newVersion: this.versioning,
+                    path: fileInfo.relativeFolder,
+                    parentId: parentId
+                }));
+                this.uploadFiles(fileModels, isAllowed);
             }
         }
     }
@@ -95,10 +95,15 @@ export class UploadDragAreaComponent {
      *
      * @param {File[]} files - files dropped in the drag area.
      */
-    onFilesDropped(files: File[], rootId?: string, directory?: string): void {
-        if (files.length) {
-            this.uploadService.addToQueue(files);
-            this.uploadService.uploadFilesInTheQueue(rootId || this.rootFolderId, directory || this.currentFolderPath, this.onSuccess);
+    onFilesDropped(files: File[]): void {
+        if (this.enabled && files.length) {
+            const fileModels = files.map(file => new FileModel(file, {
+                newVersion: this.versioning,
+                path: '/',
+                parentId: this.rootFolderId
+            }));
+            this.uploadService.addToQueue(...fileModels);
+            this.uploadService.uploadFilesInTheQueue(this.onSuccess);
             let latestFilesAdded = this.uploadService.getQueue();
             if (this.showNotificationBar) {
                 this.showUndoNotificationBar(latestFilesAdded);
@@ -111,12 +116,17 @@ export class UploadDragAreaComponent {
      * @param item - FileEntity
      */
     onFilesEntityDropped(item: any): void {
-        item.file((file: any) => {
-            this.uploadService.addToQueue([file]);
-            let path = item.fullPath.replace(item.name, '');
-            let filePath = this.currentFolderPath + path;
-            this.uploadService.uploadFilesInTheQueue(this.rootFolderId, filePath, this.onSuccess);
-        });
+        if (this.enabled) {
+            item.file((file: File) => {
+                const fileModel = new FileModel(file, {
+                    newVersion: this.versioning,
+                    parentId: this.rootFolderId,
+                    path: item.fullPath.replace(item.name, '')
+                });
+                this.uploadService.addToQueue(fileModel);
+                this.uploadService.uploadFilesInTheQueue(this.onSuccess);
+            });
+        }
     }
 
     /**
@@ -124,53 +134,23 @@ export class UploadDragAreaComponent {
      * @param folder - name of the dropped folder
      */
     onFolderEntityDropped(folder: any): void {
-        if (folder.isDirectory) {
-            let relativePath = folder.fullPath.replace(folder.name, '');
-            relativePath = this.currentFolderPath + relativePath;
-
-            this.uploadService.createFolder(relativePath, folder.name, this.rootFolderId)
-                .subscribe(
-                    message => {
-                        this.onSuccess.emit({
-                            value: 'Created folder'
-                        });
-                        let dirReader = folder.createReader();
-                        dirReader.readEntries((entries: any) => {
-                            for (let i = 0; i < entries.length; i++) {
-                                this._traverseFileTree(entries[i]);
-                            }
-                            if (this.showNotificationBar) {
-                                let latestFilesAdded = this.uploadService.getQueue();
-                                this.showUndoNotificationBar(latestFilesAdded);
-                            }
-                        });
-                    },
-                    error => {
-                        let errorMessagePlaceholder = this.getErrorMessage(error.response);
-                        let errorMessage = this.formatString(errorMessagePlaceholder, [folder.name]);
-                        if (this.showNotificationBar) {
-                            this.showErrorNotificationBar(errorMessage);
-                        } else {
-                            this.logService.error(errorMessage);
-                        }
-
-                    }
-                );
-        }
-    }
-
-    /**
-     * Travers all the files and folders, and create it on the alfresco.
-     *
-     * @param {Object} item - can contains files or folders.
-     */
-    private _traverseFileTree(item: any): void {
-        if (item.isFile) {
-            this.onFilesEntityDropped(item);
-        } else {
-            if (item.isDirectory) {
-                this.onFolderEntityDropped(item);
-            }
+        if (this.enabled && folder.isDirectory) {
+            FileUtils.flattern(folder).then(entries => {
+                let files = entries.map(entry => {
+                    return new FileModel(entry.file, {
+                        newVersion: this.versioning,
+                        parentId: this.rootFolderId,
+                        path: entry.relativeFolder
+                    });
+                });
+                this.uploadService.addToQueue(...files);
+                /* @deprecated in 1.6.0 */
+                if (this.showNotificationBar) {
+                    let latestFilesAdded = this.uploadService.getQueue();
+                    this.showUndoNotificationBar(latestFilesAdded);
+                }
+                this.uploadService.uploadFilesInTheQueue(this.onSuccess);
+            });
         }
     }
 
@@ -184,10 +164,8 @@ export class UploadDragAreaComponent {
         messageTranslate = this.translateService.get('FILE_UPLOAD.MESSAGES.PROGRESS');
         actionTranslate = this.translateService.get('FILE_UPLOAD.ACTION.UNDO');
 
-        this.notificationService.openSnackMessageAction(messageTranslate.value, actionTranslate.value, 3000).afterDismissed().subscribe(() => {
-            latestFilesAdded.forEach((uploadingFileModel: FileModel) => {
-                uploadingFileModel.emitAbort();
-            });
+        this.notificationService.openSnackMessageAction(messageTranslate.value, actionTranslate.value, 3000).onAction().subscribe(() => {
+            this.uploadService.cancelUpload(...latestFilesAdded);
         });
     }
 
@@ -200,40 +178,27 @@ export class UploadDragAreaComponent {
         this.notificationService.openSnackMessage(errorMessage, 3000);
     }
 
-    /**
-     * Retrive the error message using the error status code
-     * @param response - object that contain the HTTP response
-     * @returns {string}
-     */
-    private getErrorMessage(response: any): string {
-        if (response.body.error.statusCode === ERROR_FOLDER_ALREADY_EXIST) {
-            let errorMessage: any;
-            errorMessage = this.translateService.get('FILE_UPLOAD.MESSAGES.FOLDER_ALREADY_EXIST');
-            return errorMessage.value;
+    private uploadFiles(files: FileModel[], isAllowed: boolean): void {
+        if (isAllowed && files.length) {
+            this.uploadService.addToQueue(...files);
+            this.uploadService.uploadFilesInTheQueue(this.onSuccess);
+            let latestFilesAdded = this.uploadService.getQueue();
+            if (this.showNotificationBar) {
+                this.showUndoNotificationBar(latestFilesAdded);
+            }
         }
     }
 
-    /**
-     * Replace a placeholder {0} in a message with the input keys
-     * @param message - the message that conains the placeholder
-     * @param keys - array of value
-     * @returns {string} - The message without placeholder
-     */
-    private formatString(message: string, keys: any []) {
-        if (message) {
-            let i = keys.length;
-            while (i--) {
-                message = message.replace(new RegExp('\\{' + i + '\\}', 'gm'), keys[i]);
-            }
+    private hasCreatePermission(node: any): boolean {
+        let isPermitted = false;
+        if (node && node['allowableOperations']) {
+            let permFound = node['allowableOperations'].find(element => element === 'create');
+            isPermitted = permFound ? true : false;
         }
-        return message;
+        return isPermitted;
     }
 
-    private createFormFields(): any {
-        return {
-            formFields: {
-                overwrite: true
-            }
-        };
+    private isAllowed(node: any) {
+        return this.enabled || this.hasCreatePermission(node);
     }
 }

@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { ReflectiveInjector } from '@angular/core';
+import { TestBed, async } from '@angular/core/testing';
 import { AlfrescoSearchService } from './alfresco-search.service';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService, StorageService, LogService } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoApiService } from 'ng2-alfresco-core';
 import { fakeApi, fakeSearch, fakeError } from '../assets/alfresco-search.service.mock';
 
 declare let jasmine: any;
@@ -26,19 +26,21 @@ describe('AlfrescoSearchService', () => {
 
     let service: AlfrescoSearchService;
     let apiService: AlfrescoApiService;
-    let injector: ReflectiveInjector;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule
+            ],
+            providers: [
+                AlfrescoSearchService
+            ]
+        }).compileComponents();
+    }));
 
     beforeEach(() => {
-        injector = ReflectiveInjector.resolveAndCreate([
-            AlfrescoSearchService,
-            AlfrescoSettingsService,
-            AlfrescoApiService,
-            AlfrescoAuthenticationService,
-            StorageService,
-            LogService
-        ]);
-        service = injector.get(AlfrescoSearchService);
-        apiService = injector.get(AlfrescoApiService);
+        service = TestBed.get(AlfrescoSearchService);
+        apiService = TestBed.get(AlfrescoApiService);
         spyOn(apiService, 'getInstance').and.returnValue(fakeApi);
     });
 

@@ -21,27 +21,19 @@
             <span class="mdl-switch__label">CSRF</span>
         </label>
     </p>
-    <p class="banned">
-        <label for="blacklistusername">Banned username</label><br>
-        <input id="blacklistusername" type="text" placeholder="banned username" [(ngModel)]="blackListUsername"/>
-    </p>
 </div>
 
 <!--SETTING BUTTON-->
-
 <a class="mdl-navigation__link setting-button" data-automation-id="settings" href="" routerLink="/settings">
     <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored">
         <i class="material-icons">settings</i>
     </button>
 </a>
 
-<!--LOGIN-->
-
 <alfresco-login #alfrescologin
                 [providers]="providers"
                 [fieldsValidation]="customValidation"
                 [disableCsrf]="disableCsrf"
-                (executeSubmit)="validateForm($event)"
                 (onSuccess)="onLogin($event)"
                 (onError)="onError($event)">
     <div class="mobile-settings">
@@ -65,9 +57,5 @@
                 <span class="mdl-switch__label">CSRF</span>
             </label>
         </p>
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input" type="text" [(ngModel)]="blackListUsername" id="blacklistusername"/>
-            <label class="mdl-textfield__label" for="blacklistusername">Banned username</label>
-        </div>
     </div>
 </alfresco-login>

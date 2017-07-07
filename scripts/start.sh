@@ -176,12 +176,12 @@ fi
 
 if $EXEC_GIT_NPM_INSTALL_JSAPI == true; then
   echo "====== Use the alfresco JS-API  '$GIT_ISH'====="
-  npm install $GIT_ISH
+  npm install $GIT_ISH --no-save
   cd "$DIR/../demo-shell-ng2/node_modules/alfresco-js-api"
   npm install
   if $EXEC_DEVELOP == true; then
    cd "$DIR/../ng2-components/"
-   npm install $GIT_ISH
+   npm install $GIT_ISH --no-save
    cd "$DIR/../ng2-components/node_modules/alfresco-js-api"
    npm install
   fi
@@ -190,11 +190,11 @@ fi
 
 if $EXEC_VERSION_JSAPI == true; then
   echo "====== Use the alfresco JS-API '$JSAPI_VERSION'====="
-  npm install alfresco-js-api@${JSAPI_VERSION}
+  npm install alfresco-js-api@${JSAPI_VERSION} --no-save
   if $EXEC_DEVELOP == true; then
    echo "====== Install node_modules ng2-components ====="
    cd "$DIR/../ng2-components/"
-   npm install alfresco-js-api@${JSAPI_VERSION}
+   npm install alfresco-js-api@${JSAPI_VERSION} --no-save
   fi
   cd "$DIR/../demo-shell-ng2"
 fi

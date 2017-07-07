@@ -29,8 +29,14 @@ describe('ActivitiFilters', () => {
     let logService: LogServiceMock;
 
     let fakeGlobalFilter = [];
-    fakeGlobalFilter.push(new FilterProcessRepresentationModel({name: 'FakeInvolvedTasks', filter: { state: 'open', assignment: 'fake-involved'}}));
-    fakeGlobalFilter.push(new FilterProcessRepresentationModel({name: 'FakeMyTasks', filter: { state: 'open', assignment: 'fake-assignee'}}));
+    fakeGlobalFilter.push(new FilterProcessRepresentationModel({
+        name: 'FakeInvolvedTasks',
+        filter: { state: 'open', assignment: 'fake-involved' }
+    }));
+    fakeGlobalFilter.push(new FilterProcessRepresentationModel({
+        name: 'FakeMyTasks',
+        filter: { state: 'open', assignment: 'fake-assignee' }
+    }));
 
     let fakeGlobalFilterPromise = new Promise(function (resolve, reject) {
         resolve(fakeGlobalFilter);
@@ -71,7 +77,7 @@ describe('ActivitiFilters', () => {
     it('should return the filter task list, filtered By Name', (done) => {
 
         let fakeDeployedApplicationsPromise = new Promise(function (resolve, reject) {
-            resolve({});
+            resolve({  id: 1 });
         });
 
         spyOn(activitiService, 'getDeployedApplications').and.returnValue(Observable.fromPromise(fakeDeployedApplicationsPromise));
@@ -121,7 +127,12 @@ describe('ActivitiFilters', () => {
     });
 
     it('should emit an event when a filter is selected', (done) => {
-        let currentFilter = new FilterProcessRepresentationModel({filter: { state: 'open', assignment:  'fake-involved'}});
+        let currentFilter = new FilterProcessRepresentationModel({
+            filter: {
+                state: 'open',
+                assignment: 'fake-involved'
+            }
+        });
 
         filterList.filterClick.subscribe((filter: FilterProcessRepresentationModel) => {
             expect(filter).toBeDefined();
@@ -164,7 +175,10 @@ describe('ActivitiFilters', () => {
     });
 
     it('should return the current filter after one is selected', () => {
-        let filter = new FilterProcessRepresentationModel({name: 'FakeMyTasks', filter: { state: 'open', assignment: 'fake-assignee'}});
+        let filter = new FilterProcessRepresentationModel({
+            name: 'FakeMyTasks',
+            filter: { state: 'open', assignment: 'fake-assignee' }
+        });
         expect(filterList.currentFilter).toBeUndefined();
         filterList.selectFilter(filter);
         expect(filterList.getCurrentFilter()).toBe(filter);

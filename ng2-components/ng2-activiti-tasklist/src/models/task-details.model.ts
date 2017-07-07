@@ -90,4 +90,16 @@ export class TaskDetailsModel {
         this.processInstanceStartUserId = obj && obj.processInstanceStartUserId || null;
         this.taskDefinitionKey = obj && obj.taskDefinitionKey || null;
     }
+
+    getFullName(): string {
+        let fullName: string = '';
+
+        if (this.assignee) {
+            let firstName: string = this.assignee.firstName ? this.assignee.firstName : '';
+            let lastName: string = this.assignee.lastName ? this.assignee.lastName : '';
+            fullName = `${firstName} ${lastName}`;
+        }
+
+        return fullName.trim();
+    }
 }

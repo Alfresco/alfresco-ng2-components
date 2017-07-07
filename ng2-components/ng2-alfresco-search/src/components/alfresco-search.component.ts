@@ -58,7 +58,6 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
     @Output()
     preview: EventEmitter<any> = new EventEmitter<any>();
 
-    results: any = null;
     pagination: Pagination;
     errorMessage;
     queryParamName = 'q';
@@ -72,7 +71,7 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
 
     ngOnInit() {
         if (this.translateService !== null) {
-            this.translateService.addTranslationFolder('ng2-alfresco-search', 'node_modules/ng2-alfresco-search/src');
+            this.translateService.addTranslationFolder('ng2-alfresco-search', 'assets/ng2-alfresco-search');
         }
 
         if (this.route) {
@@ -120,14 +119,12 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
                 .subscribe(
                     results => {
                         this.nodeResults = results;
-                        this.results = results.list.entries;
                         this.pagination = results.list.pagination;
-                        this.resultsLoad.emit(this.results);
+                        this.resultsLoad.emit(results.list.entries);
                         this.errorMessage = null;
                     },
                     error => {
                         if (error.status !== 400) {
-                            this.results = null;
                             this.errorMessage = <any>error;
                             this.resultsLoad.error(error);
                         }

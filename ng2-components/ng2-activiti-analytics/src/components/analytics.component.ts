@@ -59,7 +59,7 @@ export class AnalyticsComponent implements OnChanges {
                 private logService: LogService) {
         logService.info('AnalyticsComponent');
         if (translateService) {
-            translateService.addTranslationFolder('ng2-activiti-analytics', 'node_modules/ng2-activiti-analytics/src');
+            translateService.addTranslationFolder('ng2-activiti-analytics', 'assets/ng2-activiti-analytics');
         }
     }
 
@@ -79,8 +79,8 @@ export class AnalyticsComponent implements OnChanges {
         this.editReport.emit(name);
     }
 
-    public onSaveReportSuccess() {
-        this.reportSaved.emit();
+    public onSaveReportSuccess(reportId) {
+        this.reportSaved.emit(reportId);
     }
 
     public onDeleteReportSuccess() {

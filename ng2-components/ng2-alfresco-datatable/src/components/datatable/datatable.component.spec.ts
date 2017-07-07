@@ -18,7 +18,7 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
-import { MdCheckboxChange } from '@angular/material';
+import { MdCheckboxModule, MdCheckboxChange } from '@angular/material';
 import { DataTableComponent } from './datatable.component';
 import { DataTableCellComponent } from './datatable-cell.component';
 import {
@@ -39,7 +39,8 @@ describe('DataTable', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule.forRoot(),
+                MdCheckboxModule
             ],
             declarations: [
                 DataTableCellComponent,
@@ -52,7 +53,6 @@ describe('DataTable', () => {
         fixture = TestBed.createComponent(DataTableComponent);
         dataTable = fixture.componentInstance;
         element = fixture.debugElement.nativeElement;
-        //fixture.detectChanges();
     });
 
     beforeEach(() => {
@@ -64,6 +64,95 @@ describe('DataTable', () => {
             preventDefault: function () {
             }
         };
+    });
+
+    it('should reset selection on mode change', () => {
+        spyOn(dataTable, 'resetSelection').and.callThrough();
+
+        dataTable.data = new ObjectDataTableAdapter(
+            [
+                { name: '1' },
+                { name: '2' }
+            ],
+            [ new ObjectDataColumn({ key: 'name'}) ]
+        );
+        const rows = dataTable.data.getRows();
+        rows[0].isSelected = true;
+        rows[1].isSelected = true;
+
+        expect(rows[0].isSelected).toBeTruthy();
+        expect(rows[1].isSelected).toBeTruthy();
+
+        dataTable.ngOnChanges({
+            selectionMode: new SimpleChange(null, 'multiple', false)
+        });
+
+        expect(dataTable.resetSelection).toHaveBeenCalled();
+    });
+
+    it('should select only one row with [single] selection mode', () => {
+        dataTable.selectionMode = 'single';
+        dataTable.data = new ObjectDataTableAdapter(
+            [
+                { name: '1' },
+                { name: '2' }
+            ],
+            [ new ObjectDataColumn({ key: 'name'}) ]
+        );
+        const rows = dataTable.data.getRows();
+
+        dataTable.ngOnChanges({});
+        dataTable.onRowClick(rows[0], null);
+        expect(rows[0].isSelected).toBeTruthy();
+        expect(rows[1].isSelected).toBeFalsy();
+
+        dataTable.onRowClick(rows[1], null);
+        expect(rows[0].isSelected).toBeFalsy();
+        expect(rows[1].isSelected).toBeTruthy();
+    });
+
+    it('should unselect the row with [single] selection mode', () => {
+        dataTable.selectionMode = 'single';
+        dataTable.data = new ObjectDataTableAdapter(
+            [
+                { name: '1' },
+                { name: '2' }
+            ],
+            [ new ObjectDataColumn({ key: 'name'}) ]
+        );
+        const rows = dataTable.data.getRows();
+
+        dataTable.ngOnChanges({});
+        dataTable.onRowClick(rows[0], null);
+        expect(rows[0].isSelected).toBeTruthy();
+        expect(rows[1].isSelected).toBeFalsy();
+
+        dataTable.onRowClick(rows[0], null);
+        expect(rows[0].isSelected).toBeFalsy();
+        expect(rows[1].isSelected).toBeFalsy();
+    });
+
+    it('should select multiple rows with [multiple] selection mode', () => {
+        dataTable.selectionMode = 'multiple';
+        dataTable.data = new ObjectDataTableAdapter(
+            [
+                { name: '1' },
+                { name: '2' }
+            ],
+            [ new ObjectDataColumn({ key: 'name'}) ]
+        );
+        const rows = dataTable.data.getRows();
+
+        const event = new MouseEvent('click', {
+            metaKey: true
+        });
+
+        dataTable.ngOnChanges({});
+        dataTable.onRowClick(rows[0], event);
+        dataTable.onRowClick(rows[1], event);
+
+        expect(rows[0].isSelected).toBeTruthy();
+        expect(rows[1].isSelected).toBeTruthy();
     });
 
     it('should put actions menu to the right by default', () => {
@@ -98,7 +187,7 @@ describe('DataTable', () => {
     it('should initialize default adapter', () => {
         let table = new DataTableComponent(null);
         expect(table.data).toBeUndefined();
-        table.ngAfterContentInit();
+        table.ngOnChanges({'data': new SimpleChange('123', {}, true)});
         expect(table.data).toEqual(jasmine.any(ObjectDataTableAdapter));
     });
 
@@ -126,18 +215,65 @@ describe('DataTable', () => {
             done();
         });
 
+        dataTable.ngOnChanges({});
         dataTable.onRowClick(row, null);
     });
 
-    it('should emit row double-click event', done => {
-        let row = <DataRow> {};
+    it('should emit double click if there are two single click in 250ms', (done) => {
 
-        dataTable.rowDblClick.subscribe(e => {
-            expect(e.value).toBe(row);
+        let row = <DataRow> {};
+        dataTable.ngOnChanges({});
+
+        dataTable.rowDblClick.subscribe( () => {
             done();
         });
 
-        dataTable.onRowDblClick(row, null);
+        dataTable.onRowClick(row, null);
+        setTimeout(() => {
+                dataTable.onRowClick(row, null);
+            }
+            , 240);
+
+    });
+
+    it('should emit double click if there are more than two single click in 250ms', (done) => {
+
+        let row = <DataRow> {};
+        dataTable.ngOnChanges({});
+
+        dataTable.rowDblClick.subscribe( () => {
+            done();
+        });
+
+        dataTable.onRowClick(row, null);
+        setTimeout(() => {
+
+                dataTable.onRowClick(row, null);
+                dataTable.onRowClick(row, null);
+            }
+            , 240);
+
+    });
+
+    it('should emit single click if there are two single click in more than 250ms', (done) => {
+
+        let row = <DataRow> {};
+        let clickCount = 0;
+
+        dataTable.ngOnChanges({});
+
+        dataTable.rowClick.subscribe( () => {
+            clickCount += 1;
+            if (clickCount === 2) {
+                done();
+            }
+        });
+
+        dataTable.onRowClick(row, null);
+        setTimeout(() => {
+                dataTable.onRowClick(row, null);
+            }
+            , 260);
     });
 
     it('should emit row-click dom event', (done) => {
@@ -148,6 +284,7 @@ describe('DataTable', () => {
             done();
         });
 
+        dataTable.ngOnChanges({});
         dataTable.onRowClick(row, null);
     });
 
@@ -158,8 +295,9 @@ describe('DataTable', () => {
             expect(e.detail.value).toBe(row);
             done();
         });
-
-        dataTable.onRowDblClick(row, null);
+        dataTable.ngOnChanges({});
+        dataTable.onRowClick(row, null);
+        dataTable.onRowClick(row, null);
     });
 
     it('should prevent default behaviour on row click event', () => {
@@ -171,13 +309,14 @@ describe('DataTable', () => {
 
     it('should prevent default behaviour on row double-click event', () => {
         let e = jasmine.createSpyObj('event', ['preventDefault']);
+        dataTable.ngOnChanges({});
         dataTable.ngAfterContentInit();
         dataTable.onRowDblClick(null, e);
         expect(e.preventDefault).toHaveBeenCalled();
     });
 
     it('should not sort if column is missing', () => {
-        dataTable.ngAfterContentInit();
+        dataTable.ngOnChanges({'data': new SimpleChange('123', {}, true)});
         let adapter = dataTable.data;
         spyOn(adapter, 'setSorting').and.callThrough();
         dataTable.onColumnHeaderClick(null);
@@ -185,7 +324,7 @@ describe('DataTable', () => {
     });
 
     it('should not sort upon clicking non-sortable column header', () => {
-        dataTable.ngAfterContentInit();
+        dataTable.ngOnChanges({'data': new SimpleChange('123', {}, true)});
         let adapter = dataTable.data;
         spyOn(adapter, 'setSorting').and.callThrough();
 
@@ -198,7 +337,7 @@ describe('DataTable', () => {
     });
 
     it('should set sorting upon column header clicked', () => {
-        dataTable.ngAfterContentInit();
+        dataTable.ngOnChanges({'data': new SimpleChange('123', {}, true)});
         let adapter = dataTable.data;
         spyOn(adapter, 'setSorting').and.callThrough();
 
@@ -217,7 +356,7 @@ describe('DataTable', () => {
     });
 
     it('should invert sorting upon column header clicked', () => {
-        dataTable.ngAfterContentInit();
+        dataTable.ngOnChanges({'data': new SimpleChange('123', {}, true)});
 
         let adapter = dataTable.data;
         let sorting = new DataSorting('column_1', 'asc');
@@ -294,7 +433,7 @@ describe('DataTable', () => {
 
     it('should allow "select all" calls with no rows', () => {
         dataTable.multiselect = true;
-        dataTable.ngAfterContentInit();
+        dataTable.ngOnChanges({'data': new SimpleChange('123', {}, true)});
 
         dataTable.onSelectAllClick(<MdCheckboxChange> { checked: true });
         expect(dataTable.isSelectAllChecked).toBe(true);
@@ -382,13 +521,13 @@ describe('DataTable', () => {
     });
 
     it('should require adapter sorting to evaluate sorting state', () => {
-        dataTable.ngAfterContentInit();
+        dataTable.ngOnChanges({'data': new SimpleChange('123', {}, true)});
         spyOn(dataTable.data, 'getSorting').and.returnValue(null);
         expect(dataTable.isColumnSorted(<DataColumn> {}, 'asc')).toBeFalsy();
     });
 
     it('should evaluate column sorting state', () => {
-        dataTable.ngAfterContentInit();
+        dataTable.ngOnChanges({'data': new SimpleChange('123', {}, true)});
         spyOn(dataTable.data, 'getSorting').and.returnValue(new DataSorting('column_1', 'asc'));
         expect(dataTable.isColumnSorted(<DataColumn> {key: 'column_1'}, 'asc')).toBeTruthy();
         expect(dataTable.isColumnSorted(<DataColumn> {key: 'column_2'}, 'desc')).toBeFalsy();

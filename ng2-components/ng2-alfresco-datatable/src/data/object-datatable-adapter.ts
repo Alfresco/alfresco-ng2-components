@@ -15,9 +15,12 @@
  * limitations under the License.
  */
 
+import { TemplateRef } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { ObjectUtils } from 'ng2-alfresco-core';
 import { DataTableAdapter, DataRow, DataColumn, DataSorting } from './datatable-adapter';
+
+declare var require: any;
 
 // Simple implementation of the DataTableAdapter interface.
 export class ObjectDataTableAdapter implements DataTableAdapter {
@@ -196,12 +199,11 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
 // Simple implementation of the DataRow interface.
 export class ObjectDataRow implements DataRow {
 
-    isSelected: boolean = false;
-
-    constructor(private obj: any) {
+    constructor(private obj: any, public isSelected: boolean = false) {
         if (!obj) {
             throw new Error('Object source not found');
         }
+
     }
 
     getValue(key: string): any {
@@ -209,7 +211,7 @@ export class ObjectDataRow implements DataRow {
     }
 
     hasValue(key: string): boolean {
-        return this.getValue(key) ? true : false;
+        return this.getValue(key) !== undefined;
     }
 }
 
@@ -222,6 +224,7 @@ export class ObjectDataColumn implements DataColumn {
     title: string;
     srTitle: string;
     cssClass: string;
+    template?: TemplateRef<any>;
 
     constructor(obj: any) {
         this.key = obj.key;
@@ -230,5 +233,6 @@ export class ObjectDataColumn implements DataColumn {
         this.title = obj.title;
         this.srTitle = obj.srTitle;
         this.cssClass = obj.cssClass;
+        this.template = obj.template;
     }
 }

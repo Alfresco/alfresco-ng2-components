@@ -57,27 +57,6 @@ done
 
 cd "$DIR/../ng2-components/"
 
-if $EXEC_INSTALL == true; then
-    echo "====== Regenerate global ng2-components package.json ====="
-    npm install package-json-merge
-    npm run pkg-build
-    echo "====== Install ng2-components dependencies ====="
-    npm install
-
-    if $EXEC_GIT_NPM_INSTALL_JSAPI == true; then
-      echo "====== Use the alfresco JS-API  '$GIT_ISH'====="
-      npm install $GIT_ISH
-      cd "$DIR/../ng2-components/node_modules/alfresco-js-api"
-      npm install
-      cd "$DIR/../ng2-components/"
-    fi
-fi
-
-if $EXEC_BUILD == true; then
-    echo "====== Build ng2-components ====="
-    npm run build || exit 1
-fi
-
 for PACKAGE in ${projects[@]}
 do
   DESTDIR="$DIR/../ng2-components/$PACKAGE/demo"
@@ -89,8 +68,7 @@ do
       npm install
   fi
   cd $DESTDIR
+  npm run buil:dev
 
-  npm link
-  npm run travis
 done
 

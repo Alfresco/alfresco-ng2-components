@@ -20,6 +20,7 @@ import { TagActionsComponent } from '../components/tag-actions.component';
 import { DebugElement }    from '@angular/core';
 import { CoreModule } from 'ng2-alfresco-core';
 import { TagService } from '../services/tag.service';
+import { MdInputModule } from '@angular/material';
 
 declare let jasmine: any;
 
@@ -33,6 +34,7 @@ describe('Test ng2-alfresco-tag Tag actions list', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+                MdInputModule,
                 CoreModule.forRoot()
             ],
             declarations: [
@@ -116,7 +118,7 @@ describe('Test ng2-alfresco-tag Tag actions list', () => {
                 deleteButton.click();
 
                 expect(jasmine.Ajax.requests.at(1).url)
-                    .toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags/0ee933fa-57fc-4587-8a77-b787e814f1d2');
+                    .toBe('http://localhost:3000/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags/0ee933fa-57fc-4587-8a77-b787e814f1d2');
                 expect(jasmine.Ajax.requests.at(1).method).toBe('DELETE');
 
                 jasmine.Ajax.requests.mostRecent().respondWith({

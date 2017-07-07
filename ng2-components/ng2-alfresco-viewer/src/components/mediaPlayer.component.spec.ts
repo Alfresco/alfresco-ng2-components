@@ -64,28 +64,28 @@ describe('Test ng2-alfresco-viewer Media player component ', () => {
         fixture.detectChanges();
     });
 
-    it('If no url or no blob are passed should thrown an error', () => {
+    it('should thrown an error If no url or no blob are passed', () => {
         let change = new SimpleChange(null, null, true);
         expect(() => {
             component.ngOnChanges({ 'blobFile': change });
         }).toThrow(new Error('Attribute urlFile or blobFile is required'));
     });
 
-    it('If  url is passed should not thrown an error', () => {
+    it('should not thrown an error If url is passed', () => {
         component.urlFile = 'fake-url';
         expect(() => {
             component.ngOnChanges(null);
         }).not.toThrow(new Error('Attribute urlFile or blobFile is required'));
     });
 
-    it('If  url is passed should not thrown an error', () => {
+    it('should not thrown an error If url is passed', () => {
         component.urlFile = 'fake-url';
         expect(() => {
             component.ngOnChanges(null);
         }).not.toThrow(new Error('Attribute urlFile or blobFile is required'));
     });
 
-    it('If  blob is passed should not thrown an error', () => {
+    it('should not thrown an error If blob is passed', () => {
         let blob = createFakeBlob();
 
         spyOn(service, 'createTrustedUrl').and.returnValue('fake-blob-url');

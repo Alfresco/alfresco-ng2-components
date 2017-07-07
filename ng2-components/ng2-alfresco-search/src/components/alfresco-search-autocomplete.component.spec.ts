@@ -67,7 +67,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
         let translationService = fixture.debugElement.injector.get(AlfrescoTranslationService);
         spyOn(translationService, 'addTranslationFolder');
         fixture.detectChanges();
-        expect(translationService.addTranslationFolder).toHaveBeenCalledWith('ng2-alfresco-search', 'node_modules/ng2-alfresco-search/src');
+        expect(translationService.addTranslationFolder).toHaveBeenCalledWith('ng2-alfresco-search', 'assets/ng2-alfresco-search');
     });
 
     describe('search results', () => {

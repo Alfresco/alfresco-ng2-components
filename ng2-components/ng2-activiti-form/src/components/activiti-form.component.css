@@ -21,12 +21,14 @@
     font-weight: bold;
 }
 
-.activiti-form-hide-button {
-    display: none;
+.activiti-form-reload-button {
+    position: absolute;
+    right: 0;
+    top: 0;
 }
 
-.activiti-debug-button {
-    float: right;
+.activiti-form-hide-button {
+    display: none;
 }
 
 .activiti-task-title {

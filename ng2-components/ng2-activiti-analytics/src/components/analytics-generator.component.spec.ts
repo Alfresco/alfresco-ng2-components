@@ -17,6 +17,7 @@
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
+import { MdTooltipModule, MdButtonModule, MdIconModule } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
 import { ChartsModule } from 'ng2-charts';
 import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
@@ -59,7 +60,11 @@ describe('AnalyticsGeneratorComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
+                MdTooltipModule,
+                MdButtonModule,
+                MdIconModule,
                 ChartsModule,
+
                 DiagramsModule.forRoot()
             ],
             declarations: [

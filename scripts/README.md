@@ -200,6 +200,43 @@ The default behaviour of the ***npm-build-all.sh*** install node_modules and bui
 For development environment configuration please refer to [project docs](../demo-shell-ng2/README.md).
 
 
+# npm-relock-pkgs.sh
+
+***npm-relock-pkgs.sh*** Deletes and regenerates package-lock.json files for each|passed components, depending on the component's actual package.json
+
+## Options
+
+| Option | Description |
+| --- | --- |
+| -h or --help    | show the help  |
+| -t or --test    | If you want run the test suites after "npm install" of each component
+
+## Examples
+
+* Regenerate package-lock.json files for every package 
+
+```sh
+./npm-relock-pkgs.sh
+```
+
+* Regenerate package-lock.json files for ng2-alfresco-core and ng2-alfresco-search components
+
+```sh
+./npm-relock-pkgs.sh ng2-alfresco-core ng2-alfresco-search
+```
+
+* Regenerate package-lock.json files for every package and run test suite for them
+
+```sh
+./npm-relock-pkgs.sh -t
+```
+
+* Regenerate package-lock.json files for for ng2-alfresco-core and ng2-alfresco-search components and run test suite for them
+
+```sh
+./npm-relock-pkgs.sh -t ng2-alfresco-core ng2-alfresco-search
+```
+
 # npm-clean.sh
 
 ***npm-clean.sh*** clean all the projects folder : ng2-components, ng2-components/*.*/demo and  demo-shell-ng2.
@@ -222,3 +259,22 @@ For development environment configuration please refer to [project docs](../demo
 | -h or --help    | show the help  |
 | -r or --registry   | against which register you want do this check |
 | -v or --version    | the version of the components to check |
+
+
+***npm-add-pkg.sh*** check the bundles in the package npm are present
+
+Add a package across all the pacakge json in the project
+
+| Option | Description |
+| --- | --- |
+| -h or --help    | show the help  |
+| --save   | save it in dependencies |
+| --save-dev   | save it in dev dependencies |
+| -sd   | skip the demo projects |
+
+
+* Add a package in the project
+
+```sh
+./npm-add-pkg.sh --save-dev NPM_NAME
+```

@@ -12,13 +12,17 @@
             "ASSIGNEE": "Assignee",
             "DUE": "Due",
             "FORM": "Form",
-            "PEOPLE": "People",
+            "PEOPLE": "People this task is shared with",
             "COMMENTS": "Comments",
-            "CHECKLIST": "Checklist"
+            "CHECKLIST": "Checklist",
+            "INVOLVED_PEOPLE": "Involved people",
+            "ADD_PEOPLE": "Add people & groups"
         },
         "BUTTON": {
             "COMPLETE": "Complete",
-            "CLAIM": "Claim"
+            "CLAIM": "Claim",
+            "DRAG-ATTACHMENT": "Drop Files Here...",
+            "UPLOAD-ATTACHMENT": "Upload Attachment"
         },
         "MESSAGES": {
             "NONE": "No task details found.",
@@ -82,6 +86,7 @@
     },
     "PEOPLE": {
         "DIALOG_CLOSE": "CLOSE",
+        "ADD_USER": "ADD",
         "SEARCH": {
             "NO_USERS": "No user found to involve"
         }

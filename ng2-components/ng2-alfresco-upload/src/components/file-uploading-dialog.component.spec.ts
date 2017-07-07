@@ -16,12 +16,14 @@
  */
 
 import { DebugElement } from '@angular/core';
+import { MdProgressSpinnerModule } from '@angular/material';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
 import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
 import { FileUploadingListComponent } from './file-uploading-list.component';
 import { UploadService } from '../services/upload.service';
-import { FileModel } from '../models/file.model';
+import { FileModel, FileUploadStatus } from '../models/file.model';
+import { FileUploadCompleteEvent, FileUploadEvent } from '../events/file.event';
 
 describe('FileUploadingDialogComponent', () => {
 
@@ -35,7 +37,8 @@ describe('FileUploadingDialogComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule.forRoot(),
+                MdProgressSpinnerModule
             ],
             declarations: [
                 FileUploadingDialogComponent,
@@ -48,12 +51,7 @@ describe('FileUploadingDialogComponent', () => {
     }));
 
     beforeEach(() => {
-        window['componentHandler'] = null;
-
-        let fileFake = {
-            id: 'fake-id',
-            name: 'fake-name'
-        };
+        const fileFake = new File([''], 'fake-name');
         file = new FileModel(fileFake);
 
         fixture = TestBed.createComponent(FileUploadingDialogComponent);
@@ -73,14 +71,14 @@ describe('FileUploadingDialogComponent', () => {
     });
 
     it('should render completed upload 1 when an element is added to Observer', () => {
-        uploadService.updateFileCounterStream(1);
+        uploadService.fileUploadComplete.next(new FileUploadCompleteEvent(null, 1));
         fixture.detectChanges();
 
         expect(element.querySelector('#total-upload-completed').innerText).toEqual('1');
     });
 
     it('should render dialog box with css class show when an element is added to Observer', () => {
-        uploadService.addToQueue([<File> { name: 'file' }]);
+        uploadService.addToQueue(new FileModel(<File> { name: 'file' }));
         component.filesUploadingList = [file];
 
         fixture.detectChanges();
@@ -112,4 +110,38 @@ describe('FileUploadingDialogComponent', () => {
 
         expect(element.querySelector('.minimize-button').getAttribute('class')).toEqual('minimize-button active');
     });
+
+    it('should show the close button when the file upload is completed', async(() => {
+        component.isDialogActive = true;
+        uploadService.addToQueue(new FileModel(<File> { name: 'file' }));
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            let closeButton = element.querySelector('#button-close-upload-list');
+            expect(closeButton).not.toBeNull();
+        });
+
+        uploadService.fileUpload.next(new FileUploadCompleteEvent(file, 1, { status: FileUploadStatus.Complete }, 0));
+    }));
+
+    it('should show the close button when the file upload is in error', async(() => {
+        component.isDialogActive = true;
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            let closeButton = element.querySelector('#button-close-upload-list');
+            expect(closeButton).not.toBeNull();
+        });
+
+        uploadService.fileUpload.next(new FileUploadEvent(file, FileUploadStatus.Error));
+    }));
+
+    it('should show the close button when the file upload is cancelled', async(() => {
+        component.isDialogActive = true;
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            let closeButton = element.querySelector('#button-close-upload-list');
+            expect(closeButton).not.toBeNull();
+        });
+
+        uploadService.fileUpload.next(new FileUploadEvent(file, FileUploadStatus.Cancelled));
+    }));
 });

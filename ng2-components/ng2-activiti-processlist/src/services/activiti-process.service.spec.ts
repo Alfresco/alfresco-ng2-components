@@ -595,12 +595,12 @@ describe('ActivitiProcessService', () => {
 
             it('should call the API without an appId defined by default', () => {
                 service.getProcessFilters(null);
-                expect(getFilters).toHaveBeenCalledWith({});
+                expect(getFilters).toHaveBeenCalled();
             });
 
             it('should call the API with the correct appId when specified', () => {
-                service.getProcessFilters(226);
-                expect(getFilters).toHaveBeenCalledWith({appId: 226});
+                service.getProcessFilters('226');
+                expect(getFilters).toHaveBeenCalledWith({appId: '226'});
             });
 
             it('should return the task filter by id', (done) => {
@@ -638,7 +638,7 @@ describe('ActivitiProcessService', () => {
             }));
 
             it('should return the default filters', (done) => {
-                service.createDefaultFilters(1234).subscribe(
+                service.createDefaultFilters('1234').subscribe(
                     (res: FilterProcessRepresentationModel []) => {
                         expect(res).toBeDefined();
                         expect(res.length).toEqual(3);

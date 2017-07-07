@@ -16,17 +16,23 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { WidgetComponent } from './../widget.component';
+import { WidgetComponent , baseHost } from './../widget.component';
+import { FormService } from './../../../services/form.service';
 
 @Component({
     selector: 'hyperlink-widget',
     templateUrl: './hyperlink.widget.html',
-    styleUrls: ['./hyperlink.widget.css']
+    styleUrls: ['./hyperlink.widget.css'],
+    host: baseHost
 })
 export class HyperlinkWidget extends WidgetComponent implements OnInit {
 
     linkUrl: string = WidgetComponent.DEFAULT_HYPERLINK_URL;
     linkText: string = null;
+
+    constructor(public formService: FormService) {
+         super(formService);
+    }
 
     ngOnInit() {
         if (this.field) {

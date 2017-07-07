@@ -51,14 +51,26 @@
                             <media-player [urlFile]="urlFileContent" [mimeType]="mimeType" [blobFile]="blobFile"
                                           [nameFile]="displayName"></media-player>
                         </div>
+                        <div class="center-element" *ngIf="isText()">
+                            <txt-viewer [urlFile]="urlFileContent" [blobFile]="blobFile" ></txt-viewer>
+                        </div>
 
                          <span *ngFor="let extensionTemplate of extensionTemplates">
-                            <template [ngTemplateOutlet]="extensionTemplate.template"  *ngIf="extensionTemplate.isVisible"
-                                      [ngOutletContext]="{ urlFileContent: urlFileContent, extension:extension }"></template>
+                            <ng-template
+                                *ngIf="extensionTemplate.isVisible"
+                                [ngTemplateOutlet]="extensionTemplate.template"
+                                [ngOutletContext]="{ urlFileContent: urlFileContent, extension:extension }">
+                            </ng-template>
                          </span>
 
                         <div *ngIf="!supportedExtension()">
-                            <not-supported-format  *ngIf="!extensionTemplate" [urlFile]="urlFileContent" [nameFile]="displayName"></not-supported-format>
+                            <not-supported-format  *ngIf="!extensionTemplate"
+                                                   [urlFile]="urlFileContent"
+                                                   [blobFile]="blobFile"
+                                                   [nameFile]="displayName"
+                                                   [showToolbar]="showToolbar"
+                                                   [nodeId]="fileNodeId">
+                            </not-supported-format>
                         </div>
                         <!-- End View Switch -->
 

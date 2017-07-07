@@ -18,7 +18,7 @@
 import { NgZone, SimpleChange, TemplateRef } from '@angular/core';
 import { DataTableComponent, DataColumn, DataRowEvent } from 'ng2-alfresco-datatable';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { DocumentListComponent } from './document-list.component';
 import { DocumentListService } from './../services/document-list.service';
 import { ContentActionModel } from '../models/content-action.model';
@@ -27,22 +27,34 @@ import { NodeMinimalEntry, NodeMinimal, NodePaging } from '../models/document-li
 import { ShareDataRow, RowFilter, ImageResolver } from './../data/share-datatable-adapter';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { DocumentMenuActionComponent } from './document-menu-action.component';
+import { Observable } from 'rxjs/Rx';
+import {
+    fakeNodeAnswerWithNOEntries,
+    fakeNodeAnswerWithEntries,
+    fakeNodeWithCreatePermission,
+    fakeNodeWithNoPermission
+} from '../assets/document-list.component.mock';
+import { MdProgressSpinnerModule } from '@angular/material';
+
+declare let jasmine: any;
 
 describe('DocumentList', () => {
 
     let documentList: DocumentListComponent;
+    let documentListService: DocumentListService;
     let fixture: ComponentFixture<DocumentListComponent>;
     let element: HTMLElement;
     let eventMock: any;
     let componentHandler;
 
     beforeEach(async(() => {
-        let zone = new NgZone(false);
+        let zone = new NgZone({enableLongStackTrace: false});
 
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                DataTableModule.forRoot()
+                DataTableModule.forRoot(),
+                MdProgressSpinnerModule
             ],
             declarations: [
                 DocumentListComponent,
@@ -63,15 +75,30 @@ describe('DocumentList', () => {
         };
 
         componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered'
+            'upgradeAllRegistered', 'upgradeElement'
         ]);
         window['componentHandler'] = componentHandler;
 
         fixture = TestBed.createComponent(DocumentListComponent);
 
+        let translateService = TestBed.get(AlfrescoTranslationService);
+        spyOn(translateService, 'addTranslationFolder').and.stub();
+        spyOn(translateService, 'get').and.callFake((key) => {
+            return Observable.of(key);
+        });
+
         element = fixture.nativeElement;
         documentList = fixture.componentInstance;
+        documentListService = TestBed.get(DocumentListService);
         fixture.detectChanges();
+    });
+
+    beforeEach(() => {
+        jasmine.Ajax.install();
+    });
+
+    afterEach(() => {
+        jasmine.Ajax.uninstall();
     });
 
     it('should setup default columns', () => {
@@ -125,6 +152,40 @@ describe('DocumentList', () => {
         documentList.executeContentAction(node, action);
         expect(action.handler).toHaveBeenCalledWith(node, documentList, 'fake-permission');
 
+    });
+
+    it('should show the loading state during the loading of new elements', (done) => {
+        documentList.ngAfterContentInit();
+        documentList.node = new NodePaging();
+
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(element.querySelector('#adf-document-list-loading')).toBeDefined();
+            done();
+        });
+    });
+
+    it('should empty template be present when no element are present', (done) => {
+        documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
+        documentList.folderNode = new NodeMinimal();
+        documentList.folderNode.id = '1d26e465-dea3-42f3-b415-faa8364b9692';
+        documentList.reload();
+
+        fixture.detectChanges();
+
+        documentList.ready.subscribe(() => {
+            fixture.detectChanges();
+            expect(element.querySelector('#adf-document-list-empty')).toBeDefined();
+            done();
+        });
+
+        jasmine.Ajax.requests.at(0).respondWith({
+            status: 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeNodeAnswerWithNOEntries)
+        });
     });
 
     it('should not execute action without node provided', () => {
@@ -714,5 +775,77 @@ describe('DocumentList', () => {
         spyOn(documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.resolve());
         documentList.ngOnChanges({folderNode: new SimpleChange(null, documentList.currentFolderId, true)});
         expect(documentList.loadFolderNodesByFolderNodeId).toHaveBeenCalled();
+    });
+
+    xit('should load previous page if there are no other elements in multi page table', (done) => {
+        documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
+        documentList.folderNode = new NodeMinimal();
+        documentList.folderNode.id = '1d26e465-dea3-42f3-b415-faa8364b9692';
+        documentList.skipCount = 5;
+        documentList.pageSize = 5;
+        spyOn(documentList, 'isPaginationEnabled').and.returnValue(true);
+        documentList.reload();
+
+        fixture.detectChanges();
+
+        documentList.ready.subscribe(() => {
+            fixture.detectChanges();
+            let rowElement = element.querySelector('[data-automation-id="b_txt_file.rtf"]');
+            expect(rowElement).toBeDefined();
+            expect(rowElement).not.toBeNull();
+            done();
+        });
+
+        jasmine.Ajax.requests.at(0).respondWith({
+            status: 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeNodeAnswerWithNOEntries)
+        });
+
+        jasmine.Ajax.requests.at(1).respondWith({
+            status: 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeNodeAnswerWithEntries)
+        });
+    });
+
+    it('should return true if current folder node has create permission', (done) => {
+        documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
+        documentList.folderNode = new NodeMinimal();
+        documentList.folderNode.id = '1d26e465-dea3-42f3-b415-faa8364b9692';
+        documentList.skipCount = 5;
+        documentList.pageSize = 5;
+        spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.resolve(fakeNodeWithCreatePermission));
+        spyOn(documentListService, 'getFolder').and.returnValue(Promise.resolve(fakeNodeAnswerWithNOEntries));
+
+        let change = new SimpleChange(null, '1d26e465-dea3-42f3-b415-faa8364b9692', true);
+        documentList.ngOnChanges({'currentFolderId': change});
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(documentList.hasCreatePermission()).toBeTruthy();
+            done();
+        });
+    });
+
+    it('should return false if navigate to a folder with no create permission', (done) => {
+        documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
+        documentList.folderNode = new NodeMinimal();
+        documentList.folderNode.id = '1d26e465-dea3-42f3-b415-faa8364b9692';
+        documentList.skipCount = 5;
+        documentList.pageSize = 5;
+        spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.resolve(fakeNodeWithNoPermission));
+        spyOn(documentListService, 'getFolder').and.returnValue(Promise.resolve(fakeNodeAnswerWithNOEntries));
+
+        documentList.loadFolder();
+        let clickedFolderNode = new FolderNode('fake-folder-node');
+        documentList.onNodeDblClick(clickedFolderNode);
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            expect(documentList.hasCreatePermission()).toBeFalsy();
+            done();
+        });
     });
 });

@@ -242,7 +242,6 @@ export let endErrorEvent = {
     properties: [{}]
 };
 
-
 export let endErrorEventActive = {
     completed: false,
     current: true,
