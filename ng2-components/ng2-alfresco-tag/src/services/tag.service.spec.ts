@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { TestBed, async } from '@angular/core/testing';
-import { CoreModule, AppConfigModule } from 'ng2-alfresco-core';
+import { async, TestBed } from '@angular/core/testing';
+import { AppConfigModule, CoreModule } from 'ng2-alfresco-core';
 import { TagService } from '../services/tag.service';
 
 declare let jasmine: any;
