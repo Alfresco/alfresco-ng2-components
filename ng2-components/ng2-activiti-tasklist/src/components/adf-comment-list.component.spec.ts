@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
-import { AdfCommentList } from './adf-comment-list.component';
+import { AdfCommentListComponent } from './adf-comment-list.component';
 import { User, Comment } from '../models/index';
 import { DataTableModule, ObjectDataRow, DataRowEvent } from 'ng2-alfresco-datatable';
 import { DatePipe } from '@angular/common';
@@ -33,10 +33,10 @@ const testUser: User = new User({
 const testDate = new Date();
 const testComment: Comment = new Comment(1, 'Test Comment', testDate.toDateString(), testUser);
 
-describe('AdfCommentList', () => {
+describe('AdfCommentListComponent', () => {
 
-    let commentList: AdfCommentList;
-    let fixture: ComponentFixture<AdfCommentList>;
+    let commentList: AdfCommentListComponent;
+    let fixture: ComponentFixture<AdfCommentListComponent>;
     let element: HTMLElement;
     let componentHandler;
 
@@ -47,14 +47,14 @@ describe('AdfCommentList', () => {
                 DataTableModule
             ],
             declarations: [
-                AdfCommentList
+                AdfCommentListComponent
             ],
             providers: [
                 DatePipe
             ]
         }).compileComponents().then(() => {
 
-            fixture = TestBed.createComponent(AdfCommentList);
+            fixture = TestBed.createComponent(AdfCommentListComponent);
             commentList = fixture.componentInstance;
             element = fixture.nativeElement;
             componentHandler = jasmine.createSpyObj('componentHandler', [

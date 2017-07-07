@@ -25,7 +25,7 @@ import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { ActivitiComments } from './activiti-comments.component';
-import { AdfCommentList } from './adf-comment-list.component';
+import { AdfCommentListComponent } from './adf-comment-list.component';
 import { MdInputModule } from '@angular/material';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { DatePipe } from '@angular/common';
@@ -49,7 +49,7 @@ describe('ActivitiComments', () => {
             ],
             declarations: [
                 ActivitiComments,
-                AdfCommentList
+                AdfCommentListComponent
             ],
             providers: [
                 ActivitiTaskListService,

@@ -1,10 +1,10 @@
-.main-container {
+.adf-comments-container {
     height: 100%;
     width: 100%;
     overflow: auto;
 }
 
-.comments-header {
+.adf-comments-header {
     padding: 10px 20px;
     font-size: 14px;
     font-family: Muli;
@@ -13,19 +13,13 @@
     color: #a1a1a1;
 }
 
-.comments-input-container {
+.adf-comments-input-container {
     padding: 0 15px;
     width: calc(100% - 30px);
     padding-top: 8px;
     border-bottom: 1px solid #e1e1e1;
 }
 
-
-.comment-contents {
-    float: left;
-    width: calc(100% - 60px);
-}
-
-.full-width {
+.adf-full-width {
     width: 100%;
 }

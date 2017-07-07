@@ -82,9 +82,9 @@ export class ActivitiComments implements OnChanges {
         if (taskId) {
             this.activitiTaskList.getTaskComments(taskId).subscribe(
                 (res: Comment[]) => {
-                    res = res.sort((a: Comment, b: Comment) => {
-                        let date1 = new Date(a.created);
-                        let date2 = new Date(b.created);
+                    res = res.sort((comment1: Comment, comment2: Comment) => {
+                        let date1 = new Date(comment1.created);
+                        let date2 = new Date(comment2.created);
                         return date1 > date2 ? -1 : date1 < date2 ? 1 : 0;
                     });
 

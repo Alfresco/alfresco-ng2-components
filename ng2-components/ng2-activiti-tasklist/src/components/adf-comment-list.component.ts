@@ -25,7 +25,7 @@ import { DatePipe } from '@angular/common';
     styleUrls: ['./adf-comment-list.component.css']
 })
 
-export class AdfCommentList {
+export class AdfCommentListComponent {
 
     @Input()
     comments: Comment[];
