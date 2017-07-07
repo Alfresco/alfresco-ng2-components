@@ -57,21 +57,6 @@
                         title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
                         key="name"
                         class="full-width ellipsis-cell">
-
-                    <!-- Example #1: using custom template with implicit access to data context -->
-                    <!--
-                    <ng-template let-entry="$implicit">
-                        <span>Hi! {{entry.data.getValue(entry.row, entry.col)}}</span>
-                    </ng-template>
-                    -->
-
-                    <!-- Example #2: using custom template with value access -->
-                    <!--
-                    <ng-template let-value="value">
-                        <span>Hi! {{value}}</span>
-                    </ng-template>
-                    -->
-
                 </data-column>
                 <!-- Notes: has performance overhead due to multiple files/folders causing separate HTTP calls to get tags -->
                 <!--
@@ -85,42 +70,45 @@
                 </data-column>
                 -->
                 <data-column
-                        title="{{'DOCUMENT_LIST.COLUMNS.CREATED_BY' | translate}}"
-                        key="createdByUser.displayName"
-                        class="desktop-only">
+                    title="{{'DOCUMENT_LIST.COLUMNS.CREATED_BY' | translate}}"
+                    key="createdByUser.displayName"
+                    class="desktop-only">
                 </data-column>
                 <data-column
-                        title="{{'DOCUMENT_LIST.COLUMNS.CREATED_ON' | translate}}"
-                        key="createdAt"
-                        type="date"
-                        format="medium"
-                        class="desktop-only">
+                    title="{{'DOCUMENT_LIST.COLUMNS.CREATED_ON' | translate}}"
+                    key="createdAt"
+                    type="date"
+                    format="medium"
+                    class="desktop-only">
                 </data-column>
             </data-columns>
 
             <content-actions>
                 <!-- folder actions -->
                 <content-action
-                        target="folder"
-                        permission="delete"
-                        [disableWithNoPermission]="true"
-                        title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.DELETE' | translate}}"
-                        (permissionEvent)="handlePermissionError($event)"
-                        handler="delete">
+                    icon="delete"
+                    target="folder"
+                    permission="delete"
+                    [disableWithNoPermission]="true"
+                    title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.DELETE' | translate}}"
+                    (permissionEvent)="handlePermissionError($event)"
+                    handler="delete">
                 </content-action>
                 <!-- document actions -->
                 <content-action
-                        target="document"
-                        title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DOWNLOAD' | translate}}"
-                        handler="download">
+                    icon="file_download"
+                    target="document"
+                    title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DOWNLOAD' | translate}}"
+                    handler="download">
                 </content-action>
                 <content-action
-                        target="document"
-                        permission="delete"
-                        [disableWithNoPermission]="true"
-                        (permissionEvent)="handlePermissionError($event)"
-                        title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DELETE' | translate}}"
-                        handler="delete">
+                    icon="delete"
+                    target="document"
+                    permission="delete"
+                    [disableWithNoPermission]="true"
+                    (permissionEvent)="handlePermissionError($event)"
+                    title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DELETE' | translate}}"
+                    handler="delete">
                 </content-action>
             </content-actions>
         </alfresco-document-list>
