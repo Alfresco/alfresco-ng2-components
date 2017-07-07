@@ -1,4 +1,4 @@
-.heading {
+.adf-new-task-heading {
     padding: 12px 20px;
     font-family: Muli;
     font-weight: bold;
@@ -9,7 +9,7 @@
     width: calc(100% - 40px);
 }
 
-.md-layout-card {
+.adf-new-task-layout-card {
   width: 66.6667%;
   margin-right:calc(33.3333%/2 - 24px);
   margin-left: calc(33.3333%/2 - 24px);
@@ -18,7 +18,7 @@
   padding: 0px
 }
 
-.footer {
+.adf-new-task-footer {
     padding: 4px;
     font-family: Muli;
     font-size: 18px;
@@ -28,20 +28,10 @@
     text-align: right;
 }
 
-.mat-button .md-colors{
-    opacity: 0.54;
-    color: #000;
-    font-weight: bold;
-}
-
-.mat-button.md-colors {
-    color: rgb(255,152,0);
-}
-
-.md-full-width {
+.adf-start-task-input-container {
   width: 80%;
 }
 
-.text-full-width {
+.adf-new-task-text-width {
   width: 90%;
 }

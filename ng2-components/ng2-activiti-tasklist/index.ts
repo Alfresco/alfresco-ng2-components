@@ -27,20 +27,20 @@ import { ProcessUploadService } from './src/services/process-upload.service';
 
 import {
     ActivitiApps,
-    ActivitiTaskList,
-    ActivitiTaskDetails,
-    ActivitiFilters,
-    NoTaskDetailsTemplateComponent,
     ActivitiChecklist,
     ActivitiComments,
+    ActivitiCreateTaskAttachmentComponent,
+    ActivitiFilters,
     ActivitiPeople,
     ActivitiTaskHeader,
     AdfCommentListComponent,
-    TaskAttachmentListComponent,
-    ActivitiStartTaskComponent,
     ActivitiPeopleSearch,
-    ActivitiCreateTaskAttachmentComponent,
-    PeopleList
+    ActivitiStartTaskComponent,
+    ActivitiTaskDetails,
+    ActivitiTaskList,
+    NoTaskDetailsTemplateComponent,
+    PeopleList,
+    TaskAttachmentListComponent
 } from './src/components/index';
 
 export * from './src/components/index';

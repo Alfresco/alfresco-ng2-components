@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
-import { TaskDetailsModel } from '../models/task-details.model';
-import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
-import { ActivitiPeopleService } from '../services/activiti-people.service';
-import { User } from '../models/index';
 import { Form } from '../models/form.model';
+import { User } from '../models/index';
+import { TaskDetailsModel } from '../models/task-details.model';
+import { ActivitiPeopleService } from '../services/activiti-people.service';
+import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 
 @Component({
-    selector: 'adf-start-task',
+    selector: 'adf-start-task, activiti-start-task',
     templateUrl: './activiti-start-task.component.html',
     styleUrls: ['./activiti-start-task.component.css']
 })
@@ -34,7 +34,7 @@ export class ActivitiStartTaskComponent implements OnInit {
     appId: string;
 
     @Output()
-    success: EventEmitter<any> = new EventEmitter<any>();
+    onSuccess: EventEmitter<any> = new EventEmitter<any>();
 
     @Output()
     cancel: EventEmitter<void> = new EventEmitter<void>();
@@ -87,7 +87,7 @@ export class ActivitiStartTaskComponent implements OnInit {
                 category: this.appId ? '' + this.appId : null
             })).subscribe(
                 (res: any) => {
-                    this.success.emit(res);
+                    this.onSuccess.emit(res);
                     this.resetForm();
                     this.attachForm(res.id);
                 },

@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MdButtonModule, MdDatepickerModule, MdGridListModule, MdIconModule, MdInputModule, MdNativeDateModule, MdSelectModule } from '@angular/material';
+import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
-import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { ActivitiPeopleService } from '../services/activiti-people.service';
 import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
 import { ActivitiStartTaskComponent } from './activiti-start-task.component';
-import { ActivitiPeopleService } from '../services/activiti-people.service';
-import { MdIconModule, MdButtonModule, MdDatepickerModule, MdGridListModule, MdNativeDateModule, MdSelectModule, MdInputModule } from '@angular/material';
 
 declare let jasmine: any;
 
@@ -89,7 +89,7 @@ describe('ActivitiStartTaskComponent', () => {
         }]));
     });
 
-    it('should create instance of ActivitiStartTaskButton', () => {
+    it('should create instance of ActivitiStartTaskComponent', () => {
         expect(fixture.componentInstance instanceof ActivitiStartTaskComponent).toBe(true, 'should create ActivitiStartTaskComponent');
     });
 
@@ -110,7 +110,7 @@ describe('ActivitiStartTaskComponent', () => {
         });
 
         it('should create new task when start is clicked', async(() => {
-            activitiStartTaskComponent.success.subscribe((res) => {
+            activitiStartTaskComponent.onSuccess.subscribe((res) => {
                 expect(res).toBeDefined();
             });
             activitiStartTaskComponent.appId = 'fakeAppId';
@@ -123,8 +123,8 @@ describe('ActivitiStartTaskComponent', () => {
             expect(getcreateNewTaskSpy).toHaveBeenCalled();
         }));
 
-        it('should send on success event when the task is started', async(() => {
-            activitiStartTaskComponent.success.subscribe((res) => {
+        it('should send on onSuccess event when the task is started', async(() => {
+            activitiStartTaskComponent.onSuccess.subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(res.id).toBe(91);
                 expect(res.name).toBe('fakeName');
@@ -141,8 +141,8 @@ describe('ActivitiStartTaskComponent', () => {
             expect(getcreateNewTaskSpy).toHaveBeenCalled();
         }));
 
-        it('should not emit success event when data not present', async(() => {
-            let onSuccessSpy: jasmine.Spy = spyOn(activitiStartTaskComponent.success, 'emit');
+        it('should not emit onSuccess event when data not present', async(() => {
+            let onSuccessSpy: jasmine.Spy = spyOn(activitiStartTaskComponent.onSuccess, 'emit');
             activitiStartTaskComponent.start();
             fixture.detectChanges();
             expect(getcreateNewTaskSpy).not.toHaveBeenCalled();
@@ -150,7 +150,7 @@ describe('ActivitiStartTaskComponent', () => {
         }));
 
         it('should attach a task when a form id selected', async(() => {
-            activitiStartTaskComponent.success.subscribe((res) => {
+            activitiStartTaskComponent.onSuccess.subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(res.formKey).toBe('4');
             });
@@ -170,8 +170,8 @@ describe('ActivitiStartTaskComponent', () => {
         spyOn(service, 'createNewTask').and.callFake(
             function() {
                 return Observable.create(observer => {
-                        observer.next({ id: 'task-id'});
-                        observer.complete();
+                    observer.next({ id: 'task-id'});
+                    observer.complete();
                 });
             });
         let createTaskButton = <HTMLElement> element.querySelector('#button-start');

@@ -40,6 +40,7 @@
   * [Properties](#properties-8)
     + [Events](#events-7)
 - [ADF Comments Component](#adf-comments-component)
+- [Start Task Component](#start-task-component)
   * [Properties](#properties-9)
     + [Events](#events-8)
 - [Build from sources](#build-from-sources)

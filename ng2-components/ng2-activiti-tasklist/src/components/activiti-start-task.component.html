@@ -1,41 +1,41 @@
-<md-card class="md-layout-card">
+<md-card class="adf-new-task-layout-card">
 	<md-grid-list cols="1" rowHeight="60px">
 		<md-grid-tile>
-			<div class="heading">{{'START_TASK.FORM.TITLE'|translate}}</div>
+			<div class="adf-new-task-heading">{{'START_TASK.FORM.TITLE'|translate}}</div>
 		</md-grid-tile>
 	</md-grid-list>
 	<md-card-content>
 		<md-grid-list cols="1" rowHeight="80px">
 			<md-grid-tile>
-				<md-input-container class="text-full-width">
+				<md-input-container class="adf-new-task-text-width">
 					<input mdInput placeholder="{{'START_TASK.FORM.LABEL.NAME'|translate}}" [(ngModel)]="name" required id="name_id">
 				</md-input-container>
 			</md-grid-tile>
 		</md-grid-list>
 		<md-grid-list cols="1" rowHeight="80px">
 			<md-grid-tile>
-				<md-input-container class="text-full-width">
+				<md-input-container class="adf-new-task-text-width">
 					<textarea mdInput placeholder="{{'START_TASK.FORM.LABEL.DESCRIPTION'|translate}}" [(ngModel)]="description" id="description_id"></textarea>
 				</md-input-container>
 			</md-grid-tile>
 		</md-grid-list>
 		<md-grid-list cols="2" rowHeight="80px">
 			<md-grid-tile>
-				<md-input-container class="md-full-width">
+				<md-input-container class="adf-start-task-input-container">
 					<input mdInput [mdDatepicker]="date" [value]="date" placeholder="{{'START_TASK.FORM.LABEL.DATE'|translate}}" [(ngModel)]="selectedDate" id="selectedDate_id">
 					<button mdSuffix [mdDatepickerToggle]="date"></button>
 				</md-input-container>
 				<md-datepicker #date></md-datepicker>
 			</md-grid-tile>
 			<md-grid-tile>
-				<md-select placeholder="{{'START_TASK.FORM.LABEL.ASSIGNEE'|translate}}" id="assignee_id" class="md-full-width" [(ngModel)]="assignee">
+				<md-select placeholder="{{'START_TASK.FORM.LABEL.ASSIGNEE'|translate}}" id="assignee_id" class="adf-start-task-input-container" [(ngModel)]="assignee">
 					<md-option *ngFor="let user of people" [value]="user">{{ user.firstName +' '+ user.lastName }}</md-option>
 				</md-select>
 			</md-grid-tile>
 		</md-grid-list>
 		<md-grid-list cols="2" rowHeight="80px">
 			<md-grid-tile>
-				<md-select placeholder="{{'START_TASK.FORM.LABEL.FORM'|translate}}" id="form_id" [(ngModel)]="formDetails" class="md-full-width">
+				<md-select placeholder="{{'START_TASK.FORM.LABEL.FORM'|translate}}" id="form_id" [(ngModel)]="formDetails" class="adf-start-task-input-container">
 					<md-option>None</md-option>
 					<md-option *ngFor="let form of forms" [value]="form">{{ form.name }}</md-option>
 				</md-select>
@@ -46,9 +46,9 @@
 	<md-card-actions>
 		<md-grid-list cols="1" rowHeight="60px">
 			<md-grid-tile>
-				<div class="footer">
-					<button md-button (click)="onCancel()" id="button-cancle" class="mat-button">{{'START_TASK.FORM.ACTION.CANCEL'|translate}}</button>
-					<button md-button [disabled]="!name" (click)="start()" id="button-start" class="mat-button md-colors">{{'START_TASK.FORM.ACTION.START'|translate}}</button>
+				<div class="adf-new-task-footer">
+					<button md-button (click)="onCancel()" id="button-cancle">{{'START_TASK.FORM.ACTION.CANCEL'|translate}}</button>
+					<button md-button [disabled]="!name" (click)="start()" id="button-start">{{'START_TASK.FORM.ACTION.START'|translate}}</button>
 				</div>
 			</md-grid-tile>
 		</md-grid-list>
