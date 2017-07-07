@@ -58,7 +58,7 @@ adf-datatable >>> table {
     border: none;
 }
 
-adf-datatable >>> table tbody td{ 
+adf-datatable >>> table tbody td {
     padding: 0px!important;
     border-top: none;
 }
