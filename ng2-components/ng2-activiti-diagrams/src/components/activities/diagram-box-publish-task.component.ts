@@ -15,15 +15,13 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
     selector: 'diagram-box-publish-task',
     templateUrl: './diagram-box-publish-task.component.html'
 })
-export class DiagramBoxPublishTaskComponent implements OnInit {
+export class DiagramBoxPublishTaskComponent {
     @Input()
     data: any;
 

@@ -15,15 +15,14 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { DiagramColorService } from '../../services/diagram-color.service';
 
 @Component({
     selector: 'diagram-lane',
     templateUrl: './diagram-lane.component.html'
 })
-export class DiagramLaneComponent implements OnInit {
+export class DiagramLaneComponent {
     @Input()
     lane: any;
 
@@ -39,7 +38,8 @@ export class DiagramLaneComponent implements OnInit {
     textTransform: string;
     options: any = {stroke: '#000000', fillColors: 'none', fillOpacity: '', strokeWidth: '1', radius: 0};
 
-    constructor(public elementRef: ElementRef) {}
+    constructor(public elementRef: ElementRef,
+                private diagramColorService: DiagramColorService) {}
 
     ngOnInit() {
         this.rectLeftCorner = {x: this.lane.x, y: this.lane.y};

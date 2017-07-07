@@ -22,11 +22,6 @@ declare var componentHandler;
     selector: '[mdl]'
 })
 export class MDLDirective implements AfterViewInit {
-
-    constructor() {
-        console.log('MDLDirective is deprecated and should not be used.');
-    }
-
     ngAfterViewInit() {
         componentHandler.upgradeAllRegistered();
     }

@@ -17,9 +17,9 @@
 
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
-import { AlfrescoApiService } from 'ng2-alfresco-core';
 import { RatingBody } from 'alfresco-js-api';
+import { AlfrescoApiService } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Rx';
 
 @Injectable()
 export class RatingService {

@@ -15,23 +15,23 @@
  * limitations under the License.
  */
 
-import { NgModule, ModuleWithProviders } from '@angular/core';
-import { MdMenuModule, MdButtonModule, MdIconModule, MdProgressSpinnerModule } from '@angular/material';
+import { ModuleWithProviders, NgModule } from '@angular/core';
+import { MdButtonModule, MdIconModule, MdMenuModule, MdProgressSpinnerModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 
+import { BreadcrumbComponent } from './src/components/breadcrumb/breadcrumb.component';
+import { ContentActionListComponent } from './src/components/content-action/content-action-list.component';
+import { ContentActionComponent } from './src/components/content-action/content-action.component';
+import { ContentColumnListComponent } from './src/components/content-column/content-column-list.component';
+import { ContentColumnComponent } from './src/components/content-column/content-column.component';
 import { DocumentListComponent } from './src/components/document-list.component';
 import { DocumentMenuActionComponent } from './src/components/document-menu-action.component';
-import { ContentColumnComponent } from './src/components/content-column/content-column.component';
-import { ContentColumnListComponent } from './src/components/content-column/content-column-list.component';
-import { ContentActionComponent } from './src/components/content-action/content-action.component';
-import { ContentActionListComponent } from './src/components/content-action/content-action-list.component';
 import { EmptyFolderContentComponent } from './src/components/empty-folder/empty-folder-content.component';
-import { BreadcrumbComponent } from './src/components/breadcrumb/breadcrumb.component';
 
-import { FolderActionsService } from './src/services/folder-actions.service';
 import { DocumentActionsService } from './src/services/document-actions.service';
 import { DocumentListService } from './src/services/document-list.service';
+import { FolderActionsService } from './src/services/folder-actions.service';
 
 // components
 export * from './src/components/document-list.component';

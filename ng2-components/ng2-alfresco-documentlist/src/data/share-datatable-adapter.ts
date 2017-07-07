@@ -17,10 +17,10 @@
 
 import { DatePipe } from '@angular/common';
 import { ObjectUtils } from 'ng2-alfresco-core';
-import { DataTableAdapter, DataRow, DataColumn, DataSorting } from 'ng2-alfresco-datatable';
+import { DataColumn, DataRow, DataSorting, DataTableAdapter } from 'ng2-alfresco-datatable';
 
+import { MinimalNodeEntity, NodePaging } from 'alfresco-js-api';
 import { DocumentListService } from './../services/document-list.service';
-import { NodePaging, MinimalNodeEntity } from 'alfresco-js-api';
 
 declare var require: any;
 

@@ -17,12 +17,11 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
-import { AppConfigServiceMock } from '../assets/app-config.service.mock';
-import { TranslationMock } from '../assets/translation.service.mock';
+import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Rx';
 import { TaskDetailsModel } from '../models/task-details.model';
-import { TaskListService } from '../services/tasklist.service';
-import { ChecklistComponent } from './checklist.component';
+import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
+import { ActivitiChecklist } from './activiti-checklist.component';
 
 declare let jasmine: any;
 
@@ -31,10 +30,10 @@ const fakeTaskDetail = new TaskDetailsModel({
     name: 'fake-check-name'
 });
 
-describe('ChecklistComponent', () => {
+describe('ActivitiChecklist', () => {
 
-    let checklistComponent: ChecklistComponent;
-    let fixture: ComponentFixture<ChecklistComponent>;
+    let checklistComponent: ActivitiChecklist;
+    let fixture: ComponentFixture<ActivitiChecklist>;
     let element: HTMLElement;
     let showChecklistDialog, closeCheckDialogButton;
 
@@ -44,15 +43,19 @@ describe('ChecklistComponent', () => {
                 CoreModule.forRoot()
             ],
             declarations: [
-                ChecklistComponent
+                ActivitiChecklist
             ],
             providers: [
-                TaskListService,
-                { provide: AppConfigService, useClass: AppConfigServiceMock },
-                { provide: TranslationService, useClass: TranslationMock }
+                ActivitiTaskListService
             ]
         }).compileComponents().then(() => {
-            fixture = TestBed.createComponent(ChecklistComponent);
+            let translateService = TestBed.get(AlfrescoTranslationService);
+            spyOn(translateService, 'addTranslationFolder').and.stub();
+            spyOn(translateService.translate, 'get').and.callFake((key) => {
+                return Observable.of(key);
+            });
+
+            fixture = TestBed.createComponent(ActivitiChecklist);
             checklistComponent = fixture.componentInstance;
             element = fixture.nativeElement;
 

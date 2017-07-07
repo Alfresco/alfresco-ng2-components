@@ -21,28 +21,25 @@ import { MdTabsModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { AlfrescoTranslationService, ContentService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
-<<<<<<< HEAD:ng2-components/ng2-activiti-form/src/components/widgets/content/content.widget.spec.ts
-=======
-import { CoreModule, AlfrescoTranslationService, ContentService } from 'ng2-alfresco-core';
-import { MdTabsModule } from '@angular/material';
->>>>>>> Source Mapping is not working on test debugging (#1931):ng2-components/ng2-activiti-form/src/components/activiti-content.component.spec.ts
 
-import { EcmModelService } from '../../../services/ecm-model.service';
-import { FormService } from '../../../services/form.service';
-import { ContentLinkModel } from '../index';
-import { ContentWidgetComponent } from './content.widget';
+import { FormService } from '../services/form.service';
+import { EcmModelService } from './../services/ecm-model.service';
+import { ActivitiContent } from './activiti-content.component';
+import { ContentLinkModel } from './widgets/index';
 
 declare let jasmine: any;
 
-describe('ContentWidgetComponent', () => {
+describe('ActivitiContent', () => {
 
-    let component: ContentWidgetComponent;
-    let fixture: ComponentFixture<ContentWidgetComponent>;
+    let component: ActivitiContent;
+    let fixture: ComponentFixture<ActivitiContent>;
     let debug: DebugElement;
     let element: HTMLElement;
 
     let serviceForm: FormService;
     let serviceContent: ContentService;
+
+    let componentHandler: any;
 
     function createFakeImageBlob() {
         let data = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
@@ -74,7 +71,7 @@ describe('ContentWidgetComponent', () => {
                 CoreModule.forRoot()
             ],
             declarations: [
-                ContentWidgetComponent
+                ActivitiContent
             ],
             providers: [
                 FormService,
@@ -91,10 +88,15 @@ describe('ContentWidgetComponent', () => {
         spyOn(translateService, 'get').and.callFake((key) => {
             return Observable.of(key);
         });
+
+        componentHandler = jasmine.createSpyObj('componentHandler', [
+            'upgradeAllRegistered'
+        ]);
+        window['componentHandler'] = componentHandler;
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ContentWidgetComponent);
+        fixture = TestBed.createComponent(ActivitiContent);
         component = fixture.componentInstance;
         debug = fixture.debugElement;
         element = fixture.nativeElement;

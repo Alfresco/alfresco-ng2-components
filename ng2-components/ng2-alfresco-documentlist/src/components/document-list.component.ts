@@ -16,24 +16,24 @@
  */
 
 import {
-    Component, OnInit, Input, OnChanges, Output, SimpleChanges, EventEmitter, ElementRef,
-    AfterContentInit, TemplateRef, NgZone, ViewChild, HostListener, ContentChild
+    AfterContentInit, Component, ContentChild, ElementRef, EventEmitter, HostListener, Input, NgZone,
+    OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild
 } from '@angular/core';
-import { Subject, Observable } from 'rxjs/Rx';
 import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, Pagination } from 'alfresco-js-api';
 import { AlfrescoTranslationService, DataColumnListComponent } from 'ng2-alfresco-core';
 import {
-    DataRowEvent,
-    DataTableComponent,
-    ObjectDataColumn,
     DataCellEvent,
-    DataRowActionEvent,
     DataColumn,
-    DataSorting
+    DataRowActionEvent,
+    DataRowEvent,
+    DataSorting,
+    DataTableComponent,
+    ObjectDataColumn
 } from 'ng2-alfresco-datatable';
-import { DocumentListService } from './../services/document-list.service';
+import { Observable, Subject } from 'rxjs/Rx';
+import { ImageResolver, RowFilter, ShareDataRow, ShareDataTableAdapter } from './../data/share-datatable-adapter';
 import { ContentActionModel } from './../models/content-action.model';
-import { ShareDataTableAdapter, ShareDataRow, RowFilter, ImageResolver } from './../data/share-datatable-adapter';
+import { DocumentListService } from './../services/document-list.service';
 import { NodeEntityEvent, NodeEntryEvent } from './node.event';
 
 declare var require: any;
@@ -392,7 +392,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                             this.updateSkipCount(skipCount - maxItems);
                             this.loadFolderNodesByFolderNodeId(id, maxItems, skipCount - maxItems).then(() => {
                                 resolve(true);
-                            }, (error) => {
+                            },                                                                          (error) => {
                                 reject(error);
                             });
                         } else {

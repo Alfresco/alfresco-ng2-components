@@ -15,23 +15,9 @@
  * limitations under the License.
  */
 
-<<<<<<< HEAD:ng2-components/ng2-activiti-tasklist/src/services/tasklist.service.spec.ts
 import { async, TestBed } from '@angular/core/testing';
-import { AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
-import { Observable } from 'rxjs/Rx';
-import { AppConfigServiceMock } from '../assets/app-config.service.mock';
-import {
-=======
-import { TestBed, async } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
-import { ActivitiTaskListService } from './activiti-tasklist.service';
-import { TaskDetailsModel } from '../models/task-details.model';
-import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
-import { Comment } from '../models/comment.model';
 import {
-    fakeFilters,
-    fakeAppPromise,
->>>>>>> [ADF-847] upgrade to use application configuration service (#1986):ng2-components/ng2-activiti-tasklist/src/services/activiti-tasklist.service.spec.ts
     fakeAppFilter,
     fakeAppPromise,
     fakeApps,
@@ -47,40 +33,18 @@ import {
     fakeTaskListDifferentProcessDefinitionKey,
     fakeTasksChecklist,
     fakeTasksComment,
-    fakeUser1,
-    fakeUser2,
+    fakeUser,
     secondFakeTaskList
 } from '../assets/tasklist-service.mock';
-import { TranslationMock } from '../assets/translation.service.mock';
 import { Comment } from '../models/comment.model';
 import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
-import { User } from '../models/user.model';
-import { TaskListService } from './tasklist.service';
+import { ActivitiTaskListService } from './activiti-tasklist.service';
 
 declare let jasmine: any;
 
 describe('Activiti TaskList Service', () => {
 
-<<<<<<< HEAD:ng2-components/ng2-activiti-tasklist/src/services/tasklist.service.spec.ts
-    let service: TaskListService;
-
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                CoreModule.forRoot()
-            ],
-            providers: [
-                TaskListService,
-                { provide: AppConfigService, useClass: AppConfigServiceMock },
-                { provide: TranslationService, useClass: TranslationMock }
-            ]
-        }).compileComponents();
-    }));
-
-    beforeEach(() => {
-        service = TestBed.get(TaskListService);
-=======
     let service: ActivitiTaskListService;
 
     beforeEach(async(() => {
@@ -96,7 +60,6 @@ describe('Activiti TaskList Service', () => {
 
     beforeEach(() => {
         service = TestBed.get(ActivitiTaskListService);
->>>>>>> [ADF-847] upgrade to use application configuration service (#1986):ng2-components/ng2-activiti-tasklist/src/services/activiti-tasklist.service.spec.ts
     });
 
     beforeEach(() => {
@@ -198,17 +161,14 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should return the task list filtered', (done) => {
-            service.getTasks(<TaskQueryRequestRepresentationModel> fakeFilter).subscribe(
+            service.getTasks(<TaskQueryRequestRepresentationModel>fakeFilter).subscribe(
                 res => {
                     expect(res).toBeDefined();
-                    expect(res.size).toEqual(1);
-                    expect(res.start).toEqual(0);
-                    expect(res.data).toBeDefined();
-                    expect(res.data.length).toEqual(1);
-                    expect(res.data[0].name).toEqual('FakeNameTask');
-                    expect(res.data[0].assignee.email).toEqual('fake-email@dom.com');
-                    expect(res.data[0].assignee.firstName).toEqual('firstName');
-                    expect(res.data[0].assignee.lastName).toEqual('lastName');
+                    expect(res.length).toEqual(1);
+                    expect(res[0].name).toEqual('FakeNameTask');
+                    expect(res[0].assignee.email).toEqual('fake-email@dom.com');
+                    expect(res[0].assignee.firstName).toEqual('firstName');
+                    expect(res[0].assignee.lastName).toEqual('lastName');
                     done();
                 }
             );
@@ -221,18 +181,15 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should return the task list filtered by processDefinitionKey', (done) => {
-            service.getTasks(<TaskQueryRequestRepresentationModel> fakeFilterWithProcessDefinitionKey).subscribe(
+            service.getTasks(<TaskQueryRequestRepresentationModel>fakeFilterWithProcessDefinitionKey).subscribe(
                 res => {
                     expect(res).toBeDefined();
-                    expect(res.size).toEqual(2);
-                    expect(res.start).toEqual(0);
-                    expect(res.data).toBeDefined();
-                    expect(res.data.length).toEqual(2);
-                    expect(res.data[0].name).toEqual('FakeNameTask');
-                    expect(res.data[0].assignee.email).toEqual('fake-email@dom.com');
-                    expect(res.data[0].assignee.firstName).toEqual('firstName');
-                    expect(res.data[0].assignee.lastName).toEqual('lastName');
-                    expect(res.data[0].processDefinitionKey).toEqual('1');
+                    expect(res.length).toEqual(1);
+                    expect(res[0].name).toEqual('FakeNameTask');
+                    expect(res[0].assignee.email).toEqual('fake-email@dom.com');
+                    expect(res[0].assignee.firstName).toEqual('firstName');
+                    expect(res[0].assignee.lastName).toEqual('lastName');
+                    expect(res[0].processDefinitionKey).toEqual('1');
                     done();
                 }
             );
@@ -245,7 +202,7 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should throw an exception when the response is wrong', () => {
-            service.getTasks(<TaskQueryRequestRepresentationModel> fakeFilter).subscribe(
+            service.getTasks(<TaskQueryRequestRepresentationModel>fakeFilter).subscribe(
                 (res) => {
                 },
                 (err: any) => {
@@ -258,115 +215,6 @@ describe('Activiti TaskList Service', () => {
                 contentType: 'application/json',
                 responseText: JSON.stringify(fakeErrorTaskList)
             });
-        });
-
-        it('should return the task list with all tasks filtered by state', (done) => {
-            spyOn(service, 'getTasks').and.returnValue(Observable.of(fakeTaskList));
-            spyOn(service, 'getTotalTasks').and.returnValue(Observable.of(fakeTaskList));
-
-            service.findAllTaskByState(<TaskQueryRequestRepresentationModel> fakeFilter, 'open').subscribe(
-                res => {
-
-                    expect(res).toBeDefined();
-                    expect(res.size).toEqual(1);
-                    expect(res.start).toEqual(0);
-                    expect(res.data).toBeDefined();
-                    expect(res.data.length).toEqual(1);
-                    expect(res.data[0].name).toEqual('FakeNameTask');
-                    expect(res.data[0].assignee.email).toEqual('fake-email@dom.com');
-                    expect(res.data[0].assignee.firstName).toEqual('firstName');
-                    expect(res.data[0].assignee.lastName).toEqual('lastName');
-                    done();
-                }
-            );
-        });
-
-        it('should return the task list with all tasks filtered', (done) => {
-            spyOn(service, 'getTasks').and.returnValue(Observable.of(fakeTaskList));
-            spyOn(service, 'getTotalTasks').and.returnValue(Observable.of(fakeTaskList));
-
-            service.findAllTaskByState(<TaskQueryRequestRepresentationModel> fakeFilter).subscribe(
-                res => {
-                    expect(res).toBeDefined();
-                    expect(res.size).toEqual(1);
-                    expect(res.start).toEqual(0);
-                    expect(res.data).toBeDefined();
-                    expect(res.data.length).toEqual(1);
-                    expect(res.data[0].name).toEqual('FakeNameTask');
-                    expect(res.data[0].assignee.email).toEqual('fake-email@dom.com');
-                    expect(res.data[0].assignee.firstName).toEqual('firstName');
-                    expect(res.data[0].assignee.lastName).toEqual('lastName');
-                    done();
-                }
-            );
-        });
-
-        it('should return the task list filtered by state', (done) => {
-            service.findTasksByState(<TaskQueryRequestRepresentationModel> fakeFilter, 'open').subscribe(
-                res => {
-                    expect(res).toBeDefined();
-                    expect(res.size).toEqual(1);
-                    expect(res.start).toEqual(0);
-                    expect(res.data).toBeDefined();
-                    expect(res.data.length).toEqual(1);
-                    expect(res.data[0].name).toEqual('FakeNameTask');
-                    expect(res.data[0].assignee.email).toEqual('fake-email@dom.com');
-                    expect(res.data[0].assignee.firstName).toEqual('firstName');
-                    expect(res.data[0].assignee.lastName).toEqual('lastName');
-                    done();
-                }
-            );
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeTaskList)
-            });
-        });
-
-        it('should return the task list filtered', (done) => {
-            service.findTasksByState(<TaskQueryRequestRepresentationModel> fakeFilter).subscribe(
-                res => {
-                    expect(res.size).toEqual(1);
-                    expect(res.start).toEqual(0);
-                    expect(res.data).toBeDefined();
-                    expect(res.data.length).toEqual(1);
-                    expect(res.data[0].name).toEqual('FakeNameTask');
-                    expect(res.data[0].assignee.email).toEqual('fake-email@dom.com');
-                    expect(res.data[0].assignee.firstName).toEqual('firstName');
-                    expect(res.data[0].assignee.lastName).toEqual('lastName');
-                    done();
-                }
-            );
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeTaskList)
-            });
-        });
-
-        it('should return the task list with all tasks filtered without state', (done) => {
-            spyOn(service, 'getTasks').and.returnValue(Observable.of(fakeTaskList));
-            spyOn(service, 'getTotalTasks').and.returnValue(Observable.of(fakeTaskList));
-
-            service.findAllTasksWhitoutState(<TaskQueryRequestRepresentationModel> fakeFilter).subscribe(
-                res => {
-                    expect(res).toBeDefined();
-                    expect(res.data).toBeDefined();
-                    expect(res.data.length).toEqual(2);
-                    expect(res.data[0].name).toEqual('FakeNameTask');
-                    expect(res.data[0].assignee.email).toEqual('fake-email@dom.com');
-                    expect(res.data[0].assignee.firstName).toEqual('firstName');
-                    expect(res.data[0].assignee.lastName).toEqual('lastName');
-
-                    expect(res.data[1].name).toEqual('FakeNameTask');
-                    expect(res.data[1].assignee.email).toEqual('fake-email@dom.com');
-                    expect(res.data[1].assignee.firstName).toEqual('firstName');
-                    expect(res.data[1].assignee.lastName).toEqual('lastName');
-                    done();
-                }
-            );
         });
 
         it('should return the task details ', (done) => {
@@ -392,7 +240,7 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should return the tasks comments ', (done) => {
-            service.getComments('999').subscribe(
+            service.getTaskComments('999').subscribe(
                 (res: Comment[]) => {
                     expect(res).toBeDefined();
                     expect(res.length).toEqual(2);
@@ -440,7 +288,7 @@ describe('Activiti TaskList Service', () => {
                 name: 'FakeNameTask',
                 description: null,
                 category: null,
-                assignee: fakeUser1,
+                assignee: fakeUser,
                 created: ''
             });
 
@@ -459,7 +307,7 @@ describe('Activiti TaskList Service', () => {
                 contentType: 'application/json',
                 responseText: JSON.stringify({
                     id: '777', name: 'FakeNameTask', description: null, category: null,
-                    assignee: fakeUser1,
+                    assignee: fakeUser,
                     created: '2016-07-15T11:19:17.440+0000'
                 })
             });
@@ -479,7 +327,7 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should add a comment task ', (done) => {
-            service.addComment('999', 'fake-comment-message').subscribe(
+            service.addTaskComment('999', 'fake-comment-message').subscribe(
                 (res: Comment) => {
                     expect(res).toBeDefined();
                     expect(res.id).not.toEqual('');
@@ -497,7 +345,7 @@ describe('Activiti TaskList Service', () => {
                 contentType: 'application/json',
                 responseText: JSON.stringify({
                     id: '111', message: 'fake-comment-message',
-                    createdBy: fakeUser1,
+                    createdBy: fakeUser,
                     created: '2016-07-15T11:19:17.440+0000'
                 })
             });
@@ -519,7 +367,7 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should return the total number of tasks', (done) => {
-            service.getTotalTasks(<TaskQueryRequestRepresentationModel> fakeFilter).subscribe(
+            service.getTotalTasks(<TaskQueryRequestRepresentationModel>fakeFilter).subscribe(
                 res => {
                     expect(res).toBeDefined();
                     expect(res.size).toEqual(1);
@@ -692,73 +540,7 @@ describe('Activiti TaskList Service', () => {
                     name: 'FakeNameTask',
                     description: 'FakeDescription',
                     category: '3',
-                    assignee: fakeUser1,
-                    created: '2016-07-15T11:19:17.440+0000'
-                })
-            });
-        });
-
-        it('should assign task to a user', (done) => {
-            let testTaskId = '8888';
-            service.assignTask(testTaskId, fakeUser2).subscribe(
-                (res: TaskDetailsModel) => {
-                    expect(res).toBeDefined();
-                    expect(res.id).toEqual(testTaskId);
-                    expect(res.name).toEqual('FakeNameTask');
-                    expect(res.description).toEqual('FakeDescription');
-                    expect(res.category).toEqual('3');
-                    expect(res.created).not.toEqual('');
-                    expect(res.adhocTaskCanBeReassigned).toBe(true);
-                    expect(res.assignee).toEqual(new User(fakeUser2));
-                    expect(res.involvedPeople).toEqual([fakeUser1]);
-                    done();
-                }
-            );
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify({
-                    id: testTaskId,
-                    name: 'FakeNameTask',
-                    description: 'FakeDescription',
-                    adhocTaskCanBeReassigned: true,
-                    category: '3',
-                    assignee: fakeUser2,
-                    involvedPeople: [fakeUser1],
-                    created: '2016-07-15T11:19:17.440+0000'
-                })
-            });
-        });
-
-        it('should assign task to a userId', (done) => {
-            let testTaskId = '8888';
-            service.assignTaskByUserId(testTaskId, fakeUser2.id).subscribe(
-                (res: TaskDetailsModel) => {
-                    expect(res).toBeDefined();
-                    expect(res.id).toEqual(testTaskId);
-                    expect(res.name).toEqual('FakeNameTask');
-                    expect(res.description).toEqual('FakeDescription');
-                    expect(res.category).toEqual('3');
-                    expect(res.created).not.toEqual('');
-                    expect(res.adhocTaskCanBeReassigned).toBe(true);
-                    expect(res.assignee).toEqual(new User(fakeUser2));
-                    expect(res.involvedPeople).toEqual([fakeUser1]);
-                    done();
-                }
-            );
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify({
-                    id: testTaskId,
-                    name: 'FakeNameTask',
-                    description: 'FakeDescription',
-                    adhocTaskCanBeReassigned: true,
-                    category: '3',
-                    assignee: fakeUser2,
-                    involvedPeople: [fakeUser1],
+                    assignee: fakeUser,
                     created: '2016-07-15T11:19:17.440+0000'
                 })
             });
@@ -768,22 +550,6 @@ describe('Activiti TaskList Service', () => {
             let taskId = '111';
 
             service.claimTask(taskId).subscribe(
-                (res: any) => {
-                    done();
-                }
-            );
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify({})
-            });
-        });
-
-        it('should update a task', (done) => {
-            let taskId = '111';
-
-            service.updateTask(taskId, {property: 'value'}).subscribe(
                 (res: any) => {
                     done();
                 }

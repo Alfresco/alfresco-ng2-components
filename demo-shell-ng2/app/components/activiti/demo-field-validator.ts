@@ -15,22 +15,24 @@
  * limitations under the License.
  */
 
-import { FormFieldModel, FormFieldTypes, FormFieldValidator } from 'ng2-activiti-form';
+import { AfterViewInit, Directive, ElementRef } from '@angular/core';
 
-export class DemoFieldValidator implements FormFieldValidator {
+declare var componentHandler;
 
-    isSupported(field: FormFieldModel): boolean {
-        return field && field.type === FormFieldTypes.TEXT;
-    }
+@Directive({
+    selector: '[adf-mdl-button] ,[alfresco-mdl-button]'
+})
+export class AlfrescoMdlButtonDirective implements AfterViewInit {
 
-    validate(field: FormFieldModel): boolean {
-        if (this.isSupported(field)) {
-            if (field.value && field.value.toLowerCase() === 'admin') {
-                field.validationSummary = 'Sorry, the value cannot be "admin".';
-                return false;
-            }
+    constructor(private element: ElementRef) {}
+
+    ngAfterViewInit() {
+        if (componentHandler) {
+            let el = this.element.nativeElement;
+            el.classList.add('mdl-button');
+            el.classList.add('mdl-js-button');
+            el.classList.add('mdl-js-ripple-effect');
+            componentHandler.upgradeElement(el, 'MaterialButton');
         }
-        return true;
     }
-
 }

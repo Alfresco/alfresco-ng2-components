@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Injectable, APP_INITIALIZER, NgModule, ModuleWithProviders } from '@angular/core';
-import { HttpModule, Http } from '@angular/http';
+import { APP_INITIALIZER, Injectable, ModuleWithProviders, NgModule } from '@angular/core';
+import { Http, HttpModule } from '@angular/http';
 import { ObjectUtils } from '../utils/object-utils';
 
 @Injectable()

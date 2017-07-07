@@ -16,55 +16,28 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { EcmModelService } from '../../../services/ecm-model.service';
 import { FormService } from '../../../services/form.service';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
-import { MaterialModule } from '../../material.module';
-import { ErrorWidgetComponent } from '../error/error.component';
 import { FormFieldOption } from './../core/form-field-option';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
-import { DropdownWidgetComponent } from './dropdown.widget';
+import { DropdownWidget } from './dropdown.widget';
 
-describe('DropdownWidgetComponent', () => {
-
-    function openSelect() {
-        const dropdown = fixture.debugElement.query(By.css('[class="mat-select-trigger"]'));
-        dropdown.triggerEventHandler('click', null);
-        fixture.detectChanges();
-    }
+describe('DropdownWidget', () => {
 
     let formService: FormService;
-    let widget: DropdownWidgetComponent;
+    let widget: DropdownWidget;
     let visibilityService: WidgetVisibilityService;
-    let fixture: ComponentFixture<DropdownWidgetComponent>;
-    let element: HTMLElement;
 
-    let fakeOptionList: FormFieldOption[] = [
-        {id: 'opt_1', name: 'option_1'},
-        {id: 'opt_2', name: 'option_2'},
-        {id: 'opt_3', name: 'option_3'}];
-
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                CoreModule,
-                MaterialModule
-            ],
-            declarations: [DropdownWidgetComponent, ErrorWidgetComponent],
-            providers: [FormService, EcmModelService, WidgetVisibilityService]
-        }).compileComponents().then(() => {
-            fixture = TestBed.createComponent(DropdownWidgetComponent);
-            widget = fixture.componentInstance;
-            element = fixture.nativeElement;
-            formService = TestBed.get(FormService);
-            visibilityService = TestBed.get(WidgetVisibilityService);
-            widget.field = new FormFieldModel(new FormModel());
-        });
-    }));
+    beforeEach(() => {
+        formService = new FormService(null, null, null);
+        visibilityService = new WidgetVisibilityService(null, null);
+        widget = new DropdownWidget(formService, visibilityService, null);
+        widget.field = new FormFieldModel(new FormModel());
+    });
 
     it('should require field with restUrl', () => {
         spyOn(formService, 'getRestFieldValues').and.stub();
@@ -73,7 +46,7 @@ describe('DropdownWidgetComponent', () => {
         widget.ngOnInit();
         expect(formService.getRestFieldValues).not.toHaveBeenCalled();
 
-        widget.field = new FormFieldModel(null, {restUrl: null});
+        widget.field = new FormFieldModel(null, { restUrl: null });
         widget.ngOnInit();
         expect(formService.getRestFieldValues).not.toHaveBeenCalled();
     });
@@ -102,16 +75,16 @@ describe('DropdownWidgetComponent', () => {
     });
 
     it('should preserve empty option when loading fields', () => {
-        let restFieldValue: FormFieldOption = <FormFieldOption> {id: '1', name: 'Option1'};
-        spyOn(formService, 'getRestFieldValues').and.callFake(() => {
-            return Observable.create(observer => {
+        let restFieldValue: FormFieldOption = <FormFieldOption> { id: '1', name: 'Option1' };
+        spyOn(formService, 'getRestFieldValues').and.returnValue(
+            Observable.create(observer => {
                 observer.next([restFieldValue]);
                 observer.complete();
-            });
-        });
+            })
+        );
 
-        let form = new FormModel({taskId: '<id>'});
-        let emptyOption: FormFieldOption = <FormFieldOption> {id: 'empty', name: 'Empty'};
+        let form = new FormModel({ taskId: '<id>' });
+        let emptyOption: FormFieldOption = <FormFieldOption> { id: 'empty', name: 'Empty' };
         widget.field = new FormFieldModel(form, {
             id: '<id>',
             restUrl: '/some/url/address',
@@ -127,69 +100,87 @@ describe('DropdownWidgetComponent', () => {
     });
 
     describe('when template is ready', () => {
+        let dropDownWidget: DropdownWidget;
+        let fixture: ComponentFixture<DropdownWidget>;
+        let element: HTMLElement;
+        let componentHandler;
+        let stubFormService;
+        let fakeOptionList: FormFieldOption[] = [{
+            id: 'opt_1',
+            name: 'option_1'
+        }, {
+            id: 'opt_2',
+            name: 'option_2'
+        }, { id: 'opt_3', name: 'option_3' }];
+
+        beforeEach(async(() => {
+            componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
+            window['componentHandler'] = componentHandler;
+            TestBed.configureTestingModule({
+                imports: [CoreModule],
+                declarations: [DropdownWidget],
+                providers: [FormService, EcmModelService, WidgetVisibilityService]
+            }).compileComponents().then(() => {
+                fixture = TestBed.createComponent(DropdownWidget);
+                dropDownWidget = fixture.componentInstance;
+                element = fixture.nativeElement;
+            });
+        }));
 
         describe('and dropdown is populated via taskId', () => {
 
             beforeEach(async(() => {
+                stubFormService = fixture.debugElement.injector.get(FormService);
+                visibilityService = fixture.debugElement.injector.get(WidgetVisibilityService);
                 spyOn(visibilityService, 'refreshVisibility').and.stub();
-                spyOn(formService, 'getRestFieldValues').and.callFake(() => {
-                    return Observable.of(fakeOptionList);
-                });
-                widget.field = new FormFieldModel(new FormModel({taskId: 'fake-task-id'}), {
+                spyOn(stubFormService, 'getRestFieldValues').and.returnValue(Observable.of(fakeOptionList));
+                dropDownWidget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'dropdown-id',
                     name: 'date-name',
                     type: 'dropdown',
                     readOnly: 'false',
                     restUrl: 'fake-rest-url'
                 });
-                widget.field.emptyOption = {id: 'empty', name: 'Choose one...'};
-                widget.field.isVisible = true;
+                dropDownWidget.field.emptyOption = { id: 'empty', name: 'Choose one...' };
+                dropDownWidget.field.isVisible = true;
                 fixture.detectChanges();
             }));
 
             it('should show visible dropdown widget', async(() => {
                 expect(element.querySelector('#dropdown-id')).toBeDefined();
                 expect(element.querySelector('#dropdown-id')).not.toBeNull();
-
-                openSelect();
-
-                const optOne = fixture.debugElement.queryAll(By.css('[id="md-option-1"]'));
-                const optTwo = fixture.debugElement.queryAll(By.css('[id="md-option-2"]'));
-                const optThree = fixture.debugElement.queryAll(By.css('[id="md-option-3"]'));
-
-                expect(optOne).not.toBeNull();
-                expect(optTwo).not.toBeNull();
-                expect(optThree).not.toBeNull();
+                expect(element.querySelector('#opt_1')).not.toBeNull();
+                expect(element.querySelector('#opt_2')).not.toBeNull();
+                expect(element.querySelector('#opt_3')).not.toBeNull();
             }));
 
             it('should select the default value when an option is chosen as default', async(() => {
-                widget.field.value = 'option_2';
-                widget.ngOnInit();
+                dropDownWidget.field.value = 'option_2';
                 fixture.detectChanges();
                 fixture.whenStable()
                     .then(() => {
-                        let dropDownElement: any = element.querySelector('#dropdown-id');
-                        expect(dropDownElement.attributes['ng-reflect-model'].value).toBe('option_2');
-                        expect(dropDownElement.attributes['ng-reflect-model'].textContent).toBe('option_2');
+                        let dropDownElement: HTMLSelectElement = <HTMLSelectElement> element.querySelector('#dropdown-id');
+                        expect(dropDownElement).not.toBeNull();
+                        expect(element.querySelector('#opt_2')).not.toBeNull();
+                        expect(dropDownElement.value).toBe('option_2');
+                        expect(dropDownElement.selectedOptions[0].textContent).toBe('option_2');
                     });
             }));
 
             it('should select the empty value when no default is chosen', async(() => {
-                widget.field.value = 'empty';
-                widget.ngOnInit();
+                dropDownWidget.field.value = 'empty';
                 fixture.detectChanges();
-
-                openSelect();
-
                 fixture.whenStable()
                     .then(() => {
-                        let dropDownElement: any = element.querySelector('#dropdown-id');
-                        expect(dropDownElement.attributes['ng-reflect-model'].value).toBe('empty');
+                        let dropDownElement: HTMLSelectElement = <HTMLSelectElement> element.querySelector('#dropdown-id');
+                        expect(dropDownElement).not.toBeNull();
+                        expect(dropDownElement.value).toBe('empty');
+                        expect(dropDownElement.selectedOptions[0].textContent).toBe('Choose one...');
                     });
             }));
 
-            it('should be not visible when isVisible is false', async(() => {
-                widget.field.isVisible = false;
+            it('should be not visibile when isVisible is false', async(() => {
+                dropDownWidget.field.isVisible = false;
                 fixture.detectChanges();
                 fixture.whenStable()
                     .then(() => {
@@ -198,11 +189,11 @@ describe('DropdownWidgetComponent', () => {
                     });
             }));
 
-            it('should became visible when isVisible is true', async(() => {
-                widget.field.isVisible = false;
+            it('should became visibile when isVisible is true', async(() => {
+                dropDownWidget.field.isVisible = false;
                 fixture.detectChanges();
                 expect(element.querySelector('#dropdown-id')).toBeNull();
-                widget.field.isVisible = true;
+                dropDownWidget.field.isVisible = true;
                 fixture.detectChanges();
                 fixture.whenStable()
                     .then(() => {
@@ -214,78 +205,52 @@ describe('DropdownWidgetComponent', () => {
         describe('and dropdown is populated via processDefinitionId', () => {
 
             beforeEach(async(() => {
+                stubFormService = fixture.debugElement.injector.get(FormService);
+                visibilityService = fixture.debugElement.injector.get(WidgetVisibilityService);
                 spyOn(visibilityService, 'refreshVisibility').and.stub();
-                spyOn(formService, 'getRestFieldValuesByProcessId').and.callFake(() => {
-                    return Observable.of(fakeOptionList);
-                });
-                widget.field = new FormFieldModel(new FormModel({processDefinitionId: 'fake-process-id'}), {
+                spyOn(stubFormService, 'getRestFieldValuesByProcessId').and.returnValue(Observable.of(fakeOptionList));
+                dropDownWidget.field = new FormFieldModel(new FormModel({ processDefinitionId: 'fake-process-id' }), {
                     id: 'dropdown-id',
                     name: 'date-name',
                     type: 'dropdown',
                     readOnly: 'false',
                     restUrl: 'fake-rest-url'
                 });
-                widget.field.emptyOption = {id: 'empty', name: 'Choose one...'};
-                widget.field.isVisible = true;
+                dropDownWidget.field.emptyOption = { id: 'empty', name: 'Choose one...' };
+                dropDownWidget.field.isVisible = true;
                 fixture.detectChanges();
             }));
 
             it('should show visible dropdown widget', async(() => {
                 expect(element.querySelector('#dropdown-id')).toBeDefined();
                 expect(element.querySelector('#dropdown-id')).not.toBeNull();
-
-                openSelect();
-
-                const optOne = fixture.debugElement.queryAll(By.css('[id="md-option-1"]'));
-                const optTwo = fixture.debugElement.queryAll(By.css('[id="md-option-2"]'));
-                const optThree = fixture.debugElement.queryAll(By.css('[id="md-option-3"]'));
-
-                expect(optOne).not.toBeNull();
-                expect(optTwo).not.toBeNull();
-                expect(optThree).not.toBeNull();
+                expect(element.querySelector('#opt_1')).not.toBeNull();
+                expect(element.querySelector('#opt_2')).not.toBeNull();
+                expect(element.querySelector('#opt_3')).not.toBeNull();
             }));
 
             it('should select the default value when an option is chosen as default', async(() => {
-                widget.field.value = 'option_2';
-                widget.ngOnInit();
-                fixture.detectChanges();
-                fixture.whenStable()
-                    .then(() => {
-                        let dropDownElement: any = element.querySelector('#dropdown-id');
-                        expect(dropDownElement.attributes['ng-reflect-model'].value).toBe('option_2');
-                        expect(dropDownElement.attributes['ng-reflect-model'].textContent).toBe('option_2');
-                    });
-            }));
-
-            it('should select the empty value when no default is chosen', async(() => {
-                widget.field.value = 'empty';
-                widget.ngOnInit();
-                fixture.detectChanges();
-
-                openSelect();
-
-                fixture.whenStable()
-                    .then(() => {
-                        let dropDownElement: any = element.querySelector('#dropdown-id');
-                        expect(dropDownElement.attributes['ng-reflect-model'].value).toBe('empty');
-                    });
-            }));
-
-            it('should be disabled when the field is readonly', async(() => {
-                widget.field = new FormFieldModel(new FormModel({processDefinitionId: 'fake-process-id'}), {
-                    id: 'dropdown-id',
-                    name: 'date-name',
-                    type: 'dropdown',
-                    readOnly: 'true',
-                    restUrl: 'fake-rest-url'
-                });
-
+                dropDownWidget.field.value = 'option_2';
                 fixture.detectChanges();
                 fixture.whenStable()
                     .then(() => {
                         let dropDownElement: HTMLSelectElement = <HTMLSelectElement> element.querySelector('#dropdown-id');
                         expect(dropDownElement).not.toBeNull();
-                        expect(dropDownElement.getAttribute('aria-disabled')).toBe('true');
+                        expect(element.querySelector('#opt_2')).not.toBeNull();
+                        expect(dropDownElement.value).toBe('option_2');
+                        expect(dropDownElement.selectedOptions[0].textContent).toBe('option_2');
+                    });
+            }));
+
+            it('should select the empty value when no default is chosen', async(() => {
+                dropDownWidget.field.value = 'empty';
+                fixture.detectChanges();
+                fixture.whenStable()
+                    .then(() => {
+                        let dropDownElement: HTMLSelectElement = <HTMLSelectElement> element.querySelector('#dropdown-id');
+                        expect(dropDownElement).not.toBeNull();
+                        expect(dropDownElement.value).toBe('empty');
+                        expect(dropDownElement.selectedOptions[0].textContent).toBe('Choose one...');
                     });
             }));
 

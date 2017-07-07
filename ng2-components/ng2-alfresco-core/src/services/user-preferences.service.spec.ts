@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { TestBed, async } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 import { AppConfigModule } from './app-config.service';
 import { StorageService } from './storage.service';
 import { UserPreferencesService } from './user-preferences.service';

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, Input, Output, HostListener, EventEmitter, Inject, TemplateRef } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Inject, Input, Output, TemplateRef } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
@@ -101,7 +101,7 @@ export class ViewerComponent {
                         this.extensionChange.emit(this.extension);
                         this.loaded = true;
                         resolve();
-                    }, function (error) {
+                    },                                                                    function (error) {
                         reject(error);
                         this.logService.error('This node does not exist');
                     });

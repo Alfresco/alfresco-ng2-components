@@ -15,65 +15,28 @@
  * limitations under the License.
  */
 
-<<<<<<< HEAD
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CoreModule, SearchService, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
-=======
-import { NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 import { CoreModule } from 'ng2-alfresco-core';
-import { AlfrescoSearchService } from './src/services/alfresco-search.service';
-import { AlfrescoSearchComponent } from './src/components/alfresco-search.component';
-import { AlfrescoSearchControlComponent } from './src/components/alfresco-search-control.component';
-import { AlfrescoSearchAutocompleteComponent } from './src/components/alfresco-search-autocomplete.component';
->>>>>>> [ADF-506] Unify thumbnail service (#2014)
 import { DocumentListModule } from 'ng2-alfresco-documentlist';
-import { SearchAutocompleteComponent } from './src/components/search-autocomplete.component';
-import { SearchControlComponent } from './src/components/search-control.component';
-import { SearchComponent } from './src/components/search.component';
+import { AlfrescoSearchAutocompleteComponent } from './src/components/alfresco-search-autocomplete.component';
+import { AlfrescoSearchControlComponent } from './src/components/alfresco-search-control.component';
+import { AlfrescoSearchComponent } from './src/components/alfresco-search.component';
+import { AlfrescoSearchService } from './src/services/alfresco-search.service';
 
 // services
-<<<<<<< HEAD
-export { SearchOptions, SearchService } from 'ng2-alfresco-core';
-export * from './src/components/search.component';
-export * from './src/components/search-control.component';
-export * from './src/components/search-autocomplete.component';
-
-// Old Deprecated export
-import { SearchService as AlfrescoSearchService } from 'ng2-alfresco-core';
-import { SearchAutocompleteComponent as AlfrescoSearchAutocompleteComponent } from './src/components/search-autocomplete.component';
-import { SearchControlComponent as AlfrescoSearchControlComponent } from './src/components/search-control.component';
-import { SearchComponent as AlfrescoSearchComponent } from './src/components/search.component';
-export { SearchService as AlfrescoSearchService } from 'ng2-alfresco-core';
-export { SearchComponent as AlfrescoSearchComponent } from './src/components/search.component';
-export { SearchControlComponent as AlfrescoSearchControlComponent } from './src/components/search-control.component';
-export { SearchAutocompleteComponent as AlfrescoSearchAutocompleteComponent } from './src/components/search-autocomplete.component';
-=======
 export * from './src/services/alfresco-search.service';
 export * from './src/components/alfresco-search.component';
 export * from './src/components/alfresco-search-control.component';
 export * from './src/components/alfresco-search-autocomplete.component';
->>>>>>> [ADF-506] Unify thumbnail service (#2014)
 
 export const ALFRESCO_SEARCH_DIRECTIVES: [any] = [
-    SearchComponent,
-    SearchControlComponent,
-    SearchAutocompleteComponent,
-
-    // Old Deprecated export
     AlfrescoSearchComponent,
     AlfrescoSearchControlComponent,
     AlfrescoSearchAutocompleteComponent
 ];
 
 export const ALFRESCO_SEARCH_PROVIDERS: [any] = [
-<<<<<<< HEAD
-    SearchService,
-
-    // Old Deprecated export
-=======
->>>>>>> [ADF-506] Unify thumbnail service (#2014)
     AlfrescoSearchService
 ];
 
@@ -88,15 +51,7 @@ export const ALFRESCO_SEARCH_PROVIDERS: [any] = [
         ...ALFRESCO_SEARCH_DIRECTIVES
     ],
     providers: [
-        ...ALFRESCO_SEARCH_PROVIDERS,
-        {
-            provide: TRANSLATION_PROVIDER,
-            multi: true,
-            useValue: {
-                name: 'ng2-alfresco-search',
-                source: 'assets/ng2-alfresco-search'
-            }
-        }
+        ...ALFRESCO_SEARCH_PROVIDERS
     ],
     exports: [
         ...ALFRESCO_SEARCH_DIRECTIVES

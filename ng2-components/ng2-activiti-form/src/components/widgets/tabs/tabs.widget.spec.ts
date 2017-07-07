@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { FormModel } from '../core/form.model';
-import { FormFieldModel } from '../core/form-field.model';
-import { fakeFormJson } from '../../../services/assets/widget-visibility.service.mock';
-import { TabsWidget } from './tabs.widget';
-import { TabModel } from '../core/tab.model';
-import { WIDGET_DIRECTIVES } from '../index';
-import { MASK_DIRECTIVE } from '../index';
-import { FormFieldComponent } from './../../form-field/form-field.component';
-import { ActivitiContent } from './../../activiti-content.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MdInputModule, MdTabsModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
-import { MdTabsModule, MdInputModule } from '@angular/material';
+import { fakeFormJson } from '../../../services/assets/widget-visibility.service.mock';
+import { FormFieldModel } from '../core/form-field.model';
+import { FormModel } from '../core/form.model';
+import { TabModel } from '../core/tab.model';
+import { MASK_DIRECTIVE } from '../index';
+import { WIDGET_DIRECTIVES } from '../index';
+import { ActivitiContent } from './../../activiti-content.component';
+import { FormFieldComponent } from './../../form-field/form-field.component';
+import { TabsWidget } from './tabs.widget';
 
 describe('TabsWidget', () => {
 

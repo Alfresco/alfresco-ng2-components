@@ -15,33 +15,33 @@
  * limitations under the License.
  */
 
-import { ContainerWidgetComponent } from './container/container.widget';
-import { TabsWidgetComponent } from './tabs/tabs.widget';
-import { UnknownWidgetComponent } from './unknown/unknown.widget';
+import { ContainerWidget } from './container/container.widget';
+import { TabsWidget } from './tabs/tabs.widget';
+import { UnknownWidget } from './unknown/unknown.widget';
 
-import { AmountWidgetComponent } from './amount/amount.widget';
-import { AttachWidgetComponent } from './attach/attach.widget';
-import { CheckboxWidgetComponent } from './checkbox/checkbox.widget';
-import { DateWidgetComponent } from './date/date.widget';
-import { DisplayTextWidgetComponentComponent } from './display-text/display-text.widget';
-import { DropdownWidgetComponent } from './dropdown/dropdown.widget';
-import { DynamicTableWidgetComponent } from './dynamic-table/dynamic-table.widget';
+import { AmountWidget } from './amount/amount.widget';
+import { AttachWidget } from './attach/attach.widget';
+import { CheckboxWidget } from './checkbox/checkbox.widget';
+import { DateWidget } from './date/date.widget';
+import { DisplayTextWidget } from './display-text/display-text.widget';
+import { DisplayValueWidget } from './display-value/display-value.widget';
+import { DropdownWidget } from './dropdown/dropdown.widget';
+import { DynamicTableWidget } from './dynamic-table/dynamic-table.widget';
 import { BooleanEditorComponent } from './dynamic-table/editors/boolean/boolean.editor';
 import { DateEditorComponent } from './dynamic-table/editors/date/date.editor';
 import { DropdownEditorComponent } from './dynamic-table/editors/dropdown/dropdown.editor';
 import { RowEditorComponent } from './dynamic-table/editors/row.editor';
 import { TextEditorComponent } from './dynamic-table/editors/text/text.editor';
-import { ErrorWidgetComponent } from './error/error.component';
-import { FunctionalGroupWidgetComponent } from './functional-group/functional-group.widget';
-import { HyperlinkWidgetComponent } from './hyperlink/hyperlink.widget';
-import { MultilineTextWidgetComponentComponent } from './multiline-text/multiline-text.widget';
-import { NumberWidgetComponent } from './number/number.widget';
-import { PeopleWidgetComponent } from './people/people.widget';
-import { RadioButtonsWidgetComponent } from './radio-buttons/radio-buttons.widget';
+import { FunctionalGroupWidget } from './functional-group/functional-group.widget';
+import { HyperlinkWidget } from './hyperlink/hyperlink.widget';
+import { MultilineTextWidget } from './multiline-text/multiline-text.widget';
+import { NumberWidget } from './number/number.widget';
+import { PeopleWidget } from './people/people.widget';
+import { RadioButtonsWidget } from './radio-buttons/radio-buttons.widget';
 import { InputMaskDirective } from './text/text-mask.component';
-import { TextWidgetComponent } from './text/text.widget';
-import { TypeaheadWidgetComponent } from './typeahead/typeahead.widget';
-import { UploadWidgetComponent } from './upload/upload.widget';
+import { TextWidget } from './text/text.widget';
+import { TypeaheadWidget } from './typeahead/typeahead.widget';
+import { UploadWidget } from './upload/upload.widget';
 
 // core
 export * from './widget.component';
@@ -60,6 +60,7 @@ export * from './multiline-text/multiline-text.widget';
 export * from './dropdown/dropdown.widget';
 export * from './hyperlink/hyperlink.widget';
 export * from './radio-buttons/radio-buttons.widget';
+export * from './display-value/display-value.widget';
 export * from './display-text/display-text.widget';
 export * from './upload/upload.widget';
 export * from './attach/attach.widget';
@@ -69,7 +70,6 @@ export * from './people/people.widget';
 export * from './date/date.widget';
 export * from './amount/amount.widget';
 export * from './dynamic-table/dynamic-table.widget';
-export * from './error/error.component';
 
 // editors (dynamic table)
 export * from './dynamic-table/editors/row.editor';
@@ -80,31 +80,32 @@ export * from './dynamic-table/editors/text/text.editor';
 export * from './text/text-mask.component';
 
 export const WIDGET_DIRECTIVES: any[] = [
-    UnknownWidgetComponent,
-    TabsWidgetComponent,
-    ContainerWidgetComponent,
-    TextWidgetComponent,
-    NumberWidgetComponent,
-    CheckboxWidgetComponent,
-    MultilineTextWidgetComponentComponent,
-    DropdownWidgetComponent,
-    HyperlinkWidgetComponent,
-    RadioButtonsWidgetComponent,
-    DisplayTextWidgetComponentComponent,
-    UploadWidgetComponent,
-    AttachWidgetComponent,
-    TypeaheadWidgetComponent,
-    FunctionalGroupWidgetComponent,
-    PeopleWidgetComponent,
-    DateWidgetComponent,
-    AmountWidgetComponent,
-    DynamicTableWidgetComponent,
+    UnknownWidget,
+    TabsWidget,
+    ContainerWidget,
+    TextWidget,
+    NumberWidget,
+    CheckboxWidget,
+    MultilineTextWidget,
+    DropdownWidget,
+    HyperlinkWidget,
+    RadioButtonsWidget,
+    DisplayValueWidget,
+    DisplayTextWidget,
+    UploadWidget,
+    AttachWidget,
+    TypeaheadWidget,
+    FunctionalGroupWidget,
+    PeopleWidget,
+    DateWidget,
+    AmountWidget,
+
+    DynamicTableWidget,
     DateEditorComponent,
     DropdownEditorComponent,
     BooleanEditorComponent,
     TextEditorComponent,
-    RowEditorComponent,
-    ErrorWidgetComponent
+    RowEditorComponent
 ];
 
 export const MASK_DIRECTIVE: any[] = [

@@ -18,21 +18,20 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { CoreModule, TranslationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 
-import { TranslationMock } from '../assets/translation.service.mock';
-import { defaultApp, deployedApps, nonDeployedApps } from './../assets/apps-list.mock';
-import { TaskListService } from './../services/tasklist.service';
-import { AppsListComponent } from './apps-list.component';
+import { defaultApp, deployedApps, nonDeployedApps } from './../assets/activiti-apps.mock';
+import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
+import { ActivitiApps } from './activiti-apps.component';
 
-describe('AppsListComponent', () => {
+describe('ActivitiApps', () => {
 
     let componentHandler: any;
-    let component: AppsListComponent;
-    let fixture: ComponentFixture<AppsListComponent>;
+    let component: ActivitiApps;
+    let fixture: ComponentFixture<ActivitiApps>;
     let debugElement: DebugElement;
-    let service: TaskListService;
+    let service: ActivitiTaskListService;
     let getAppsSpy: jasmine.Spy;
 
     beforeEach(async(() => {
@@ -41,23 +40,25 @@ describe('AppsListComponent', () => {
                 CoreModule
             ],
             declarations: [
-                AppsListComponent
+                ActivitiApps
             ],
             providers: [
-                TaskListService,
-                { provide: TranslationService, useClass: TranslationMock }
+                ActivitiTaskListService
             ]
         }).compileComponents();
 
+        let translateService = TestBed.get(AlfrescoTranslationService);
+        spyOn(translateService, 'addTranslationFolder').and.stub();
+        spyOn(translateService, 'get').and.callFake((key) => { return Observable.of(key); });
     }));
 
     beforeEach(() => {
 
-        fixture = TestBed.createComponent(AppsListComponent);
+        fixture = TestBed.createComponent(ActivitiApps);
         component = fixture.componentInstance;
         debugElement = fixture.debugElement;
 
-        service = fixture.debugElement.injector.get(TaskListService);
+        service = fixture.debugElement.injector.get(ActivitiTaskListService);
         getAppsSpy = spyOn(service, 'getDeployedApplications').and.returnValue(Observable.of(deployedApps));
 
         componentHandler = jasmine.createSpyObj('componentHandler', [
@@ -78,7 +79,7 @@ describe('AppsListComponent', () => {
         expect(getAppsSpy).toHaveBeenCalled();
     });
 
-    it('should show the apps filtered by defaultAppId', () => {
+    it('should show the apps filterd by defaultAppId', () => {
         component.filtersAppId = [{defaultAppId: 'fake-app-1'}];
         fixture.detectChanges();
         expect(component.isEmpty()).toBe(false);
@@ -86,7 +87,7 @@ describe('AppsListComponent', () => {
         expect(component.appList.length).toEqual(1);
     });
 
-    it('should show the apps filtered by deploymentId', () => {
+    it('should show the apps filterd by deploymentId', () => {
         component.filtersAppId = [{deploymentId: '4'}];
         fixture.detectChanges();
         expect(component.isEmpty()).toBe(false);
@@ -95,7 +96,7 @@ describe('AppsListComponent', () => {
         expect(component.appList[0].deploymentId).toEqual('4');
     });
 
-    it('should show the apps filtered by name', () => {
+    it('should show the apps filterd by name', () => {
         component.filtersAppId = [{name: 'App5'}];
         fixture.detectChanges();
         expect(component.isEmpty()).toBe(false);
@@ -104,7 +105,7 @@ describe('AppsListComponent', () => {
         expect(component.appList[0].name).toEqual('App5');
     });
 
-    it('should show the apps filtered by id', () => {
+    it('should show the apps filterd by id', () => {
         component.filtersAppId = [{id: 6}];
         fixture.detectChanges();
         expect(component.isEmpty()).toBe(false);
@@ -113,7 +114,7 @@ describe('AppsListComponent', () => {
         expect(component.appList[0].id).toEqual(6);
     });
 
-    it('should show the apps filtered by modelId', () => {
+    it('should show the apps filterd by modelId', () => {
         component.filtersAppId = [{modelId: 66}];
         fixture.detectChanges();
         expect(component.isEmpty()).toBe(false);
@@ -122,7 +123,7 @@ describe('AppsListComponent', () => {
         expect(component.appList[0].modelId).toEqual(66);
     });
 
-    it('should show the apps filtered by tenandId', () => {
+    it('should show the apps filterd by tenandId', () => {
         component.filtersAppId = [{tenantId: 9}];
         fixture.detectChanges();
         expect(component.isEmpty()).toBe(false);
@@ -147,14 +148,14 @@ describe('AppsListComponent', () => {
         });
 
         it('should display a grid when configured to', () => {
-            component.layoutType = AppsListComponent.LAYOUT_GRID;
+            component.layoutType = ActivitiApps.LAYOUT_GRID;
             fixture.detectChanges();
             expect(component.isGrid()).toBe(true);
             expect(component.isList()).toBe(false);
         });
 
         it('should display a list when configured to', () => {
-            component.layoutType = AppsListComponent.LAYOUT_LIST;
+            component.layoutType = ActivitiApps.LAYOUT_LIST;
             fixture.detectChanges();
             expect(component.isGrid()).toBe(false);
             expect(component.isList()).toBe(true);

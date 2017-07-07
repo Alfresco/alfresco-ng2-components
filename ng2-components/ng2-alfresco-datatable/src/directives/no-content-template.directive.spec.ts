@@ -15,46 +15,27 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { CoreModule } from 'ng2-alfresco-core';
-import { DataTableCellComponent } from '../components/datatable/datatable-cell.component';
+import { Injector } from '@angular/core';
+import { getTestBed, TestBed } from '@angular/core/testing';
 import { DataTableComponent } from '../components/datatable/datatable.component';
-import { LocationCellComponent } from '../components/datatable/location-cell.component';
-import { MaterialModule } from '../material.module';
 import { NoContentTemplateDirective } from './no-content-template.directive';
 
 describe('NoContentTemplateDirective', () => {
-
-    let dataTable: DataTableComponent;
-    let directive: NoContentTemplateDirective;
-
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                RouterTestingModule,
-                MaterialModule,
-                CoreModule
-            ],
-            declarations: [
-                DataTableComponent,
-                DataTableCellComponent,
-                NoContentTemplateDirective,
-                LocationCellComponent
-            ]
-        }).compileComponents();
-    }));
+    let injector: Injector;
+    let noContentTemplateDirective: NoContentTemplateDirective;
 
     beforeEach(() => {
-        let fixture = TestBed.createComponent(DataTableComponent);
-        dataTable = fixture.componentInstance;
-        directive = new NoContentTemplateDirective(dataTable);
+        TestBed.configureTestingModule({
+            providers: [
+                NoContentTemplateDirective,
+                DataTableComponent
+            ]
+        });
+        injector = getTestBed();
+        noContentTemplateDirective = injector.get(NoContentTemplateDirective);
     });
 
-    it('applies template to the datatable', () => {
-        const template = {};
-        directive.template = template;
-        directive.ngAfterContentInit();
-        expect(dataTable.noContentTemplate).toBe(template);
+    it('is defined', () => {
+        expect(noContentTemplateDirective).toBeDefined();
     });
 });

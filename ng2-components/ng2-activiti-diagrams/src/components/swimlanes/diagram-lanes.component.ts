@@ -15,15 +15,13 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
     selector: 'diagram-lanes',
     templateUrl: './diagram-lanes.component.html'
 })
-export class DiagramLanesComponent implements OnInit {
+export class DiagramLanesComponent {
     @Input()
     lanes: any [];
 

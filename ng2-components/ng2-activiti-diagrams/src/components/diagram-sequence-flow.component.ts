@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-    selector: 'adf-diagram-sequence-flow, diagram-sequence-flow',
+    selector: 'diagram-sequence-flow',
     templateUrl: './diagram-sequence-flow.component.html'
 })
-export class DiagramSequenceFlowComponent implements OnInit {
+export class DiagramSequenceFlowComponent {
     @Input()
     flow: any;
 

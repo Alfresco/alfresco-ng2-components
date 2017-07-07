@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
 import { Component, ContentChild, Input, OnInit, TemplateRef } from '@angular/core';
 
 @Component({
@@ -43,9 +41,6 @@ export class DataColumnComponent implements OnInit {
     @ContentChild(TemplateRef)
     template: any;
 
-    @Input()
-    formatTooltip: Function;
-
     /**
      * Title to be used for screen readers.
      */
@@ -60,4 +55,5 @@ export class DataColumnComponent implements OnInit {
             this.srTitle = 'Thumbnail';
         }
     }
+
 }

@@ -18,24 +18,15 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
-import { AlfrescoApiService, AlfrescoAuthenticationService, AlfrescoContentService, LogService, PermissionsEnum, ThumbnailService } from 'ng2-alfresco-core';
+import { AlfrescoApiService, AlfrescoAuthenticationService, AlfrescoContentService, LogService, ThumbnailService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
-<<<<<<< HEAD
-=======
-import { NodePaging, MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { AlfrescoAuthenticationService, AlfrescoContentService, AlfrescoApiService, LogService, ThumbnailService } from 'ng2-alfresco-core';
->>>>>>> [ADF-506] Unify thumbnail service (#2014)
 
 @Injectable()
 export class DocumentListService {
 
     static ROOT_ID = '-root-';
 
-<<<<<<< HEAD
-    constructor(authService: AlfrescoAuthenticationService,
-=======
     constructor(private authService: AlfrescoAuthenticationService,
->>>>>>> [ADF-506] Unify thumbnail service (#2014)
                 private contentService: AlfrescoContentService,
                 private apiService: AlfrescoApiService,
                 private logService: LogService,
@@ -72,28 +63,6 @@ export class DocumentListService {
 
     deleteNode(nodeId: string): Observable<any> {
         return Observable.fromPromise(this.apiService.getInstance().nodes.deleteNode(nodeId));
-    }
-
-    /**
-     * Copy a node to destination node
-     *
-     * @param nodeId The id of the node to be copied
-     * @param targetParentId The id of the folder-node where the node have to be copied to
-     */
-    copyNode(nodeId: string, targetParentId: string) {
-        return Observable.fromPromise(this.apiService.getInstance().nodes.copyNode(nodeId, { targetParentId }))
-            .catch(err => this.handleError(err));
-    }
-
-    /**
-     * Move a node to destination node
-     *
-     * @param nodeId The id of the node to be moved
-     * @param targetParentId The id of the folder-node where the node have to be moved to
-     */
-    moveNode(nodeId: string, targetParentId: string) {
-        return Observable.fromPromise(this.apiService.getInstance().nodes.moveNode(nodeId, { targetParentId }))
-            .catch(err => this.handleError(err));
     }
 
     /**
@@ -144,13 +113,6 @@ export class DocumentListService {
 
     getDefaultMimeTypeIcon(): string {
         return this.thumbnailService.getDefaultMimeTypeIcon();
-<<<<<<< HEAD
-    }
-
-    hasPermission(node: any, permission: PermissionsEnum|string): boolean {
-        return this.contentService.hasPermission(node, permission);
-=======
->>>>>>> [ADF-506] Unify thumbnail service (#2014)
     }
 
     private handleError(error: Response) {

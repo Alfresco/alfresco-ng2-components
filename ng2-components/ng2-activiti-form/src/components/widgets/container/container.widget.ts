@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, AfterViewInit, OnInit } from '@angular/core';
-import { ContainerWidgetModel } from './container.widget.model';
-import { WidgetComponent , baseHost } from './../widget.component';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormService } from './../../../services/form.service';
+import { baseHost , WidgetComponent } from './../widget.component';
+import { ContainerWidgetModel } from './container.widget.model';
 
 declare var componentHandler: any;
 

@@ -15,15 +15,13 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
     selector: 'diagram-pools',
     templateUrl: './diagram-pools.component.html'
 })
-export class DiagramPoolsComponent implements OnInit {
+export class DiagramPoolsComponent {
     @Input()
     pools: any [];
 

@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
-import { Observable, Subject } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 import { Comment } from '../models/comment.model';
 import {
     FilterRepresentationModel,
@@ -25,14 +25,10 @@ import {
 } from '../models/filter.model';
 import { Form } from '../models/form.model';
 import { TaskDetailsModel } from '../models/task-details.model';
-import { TaskListModel } from '../models/task-list.model';
 import { User } from '../models/user.model';
 
 @Injectable()
-export class TaskListService {
-    private tasksListSubject = new Subject<TaskListModel>();
-
-    public tasksList$: Observable<TaskListModel> = this.tasksListSubject.asObservable();
+export class ActivitiTaskListService {
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
@@ -153,58 +149,15 @@ export class TaskListService {
      * @param filter - TaskFilterRepresentationModel
      * @returns {any}
      */
-    getTasks(requestNode: TaskQueryRequestRepresentationModel): Observable<TaskListModel> {
+    getTasks(requestNode: TaskQueryRequestRepresentationModel): Observable<TaskDetailsModel[]> {
         return Observable.fromPromise(this.callApiTasksFiltered(requestNode))
             .map((res: any) => {
-                this.tasksListSubject.next(res);
-                return res;
-            }).catch(err => this.handleTasksError(err));
-    }
-
-    /**
-     * Retrieve tasks filtered by filterModel and state
-     * @param filter - TaskFilterRepresentationModel
-     * @returns {any}
-     */
-    findTasksByState(requestNode: TaskQueryRequestRepresentationModel, state?: string): Observable<TaskListModel> {
-        if (state) {
-            requestNode.state = state;
-        }
-        return this.getTasks(requestNode);
-    }
-
-    /**
-     * Retrieve all tasks filtered by filterModel and state
-     * @param filter - TaskFilterRepresentationModel
-     * @returns {any}
-     */
-    findAllTaskByState(requestNode: TaskQueryRequestRepresentationModel, state?: string): Observable<TaskListModel> {
-        if (state) {
-            requestNode.state = state;
-        }
-        return this.getTotalTasks(requestNode).
-        switchMap((res: any) => {
-            requestNode.size = res.total;
-            return this.getTasks(requestNode);
-        });
-    }
-
-    /**
-     * Retrieve all tasks filtered by filterModel irrespective of state
-     * @param filter - TaskFilterRepresentationModel
-     * @returns {any}
-     */
-    findAllTasksWhitoutState(requestNode: TaskQueryRequestRepresentationModel): Observable<TaskListModel> {
-        return Observable.forkJoin(
-                this.findTasksByState(requestNode, 'open'),
-                this.findAllTaskByState(requestNode, 'completed'),
-                (activeTasks: TaskListModel, completedTasks: TaskListModel) => {
-                    const tasks = Object.assign({}, activeTasks);
-                    tasks.total += completedTasks.total;
-                    tasks.data = tasks.data.concat(completedTasks.data);
-                    return tasks;
+                if (requestNode.processDefinitionKey) {
+                    return res.data.filter(p => p.processDefinitionKey === requestNode.processDefinitionKey);
+                } else {
+                    return res.data;
                 }
-            );
+            }).catch(err => this.handleError(err));
     }
 
     /**
@@ -225,7 +178,7 @@ export class TaskListService {
      * @param id - taskId
      * @returns {<Comment[]>}
      */
-    getComments(id: string): Observable<Comment[]> {
+    getTaskComments(id: string): Observable<Comment[]> {
         return Observable.fromPromise(this.callApiTaskComments(id))
             .map(res => res)
             .map((response: any) => {
@@ -368,7 +321,7 @@ export class TaskListService {
      * @param message - content of the comment
      * @returns {Comment}
      */
-    addComment(id: string, message: string): Observable<Comment> {
+    addTaskComment(id: string, message: string): Observable<Comment> {
         return Observable.fromPromise(this.callApiAddTaskComment(id, message))
             .map(res => res)
             .map((response: Comment) => {
@@ -414,62 +367,11 @@ export class TaskListService {
     }
 
     /**
-     * Assign task to user/group
-     * @param taskId - string
-     * @param requestNode - any
-     * @returns {TaskDetailsModel}
-     */
-    assignTask(taskId: string, requestNode: any): Observable<TaskDetailsModel> {
-        let assignee = {assignee: requestNode.id} ;
-        return Observable.fromPromise(this.callApiAssignTask(taskId, assignee))
-            .map(res => res)
-            .map((response: TaskDetailsModel) => {
-                return new TaskDetailsModel(response);
-            }).catch(err => this.handleError(err));
-    }
-
-    assignTaskByUserId(taskId: string, userId: number): Observable<TaskDetailsModel> {
-        let assignee = {assignee: userId} ;
-        return Observable.fromPromise(this.callApiAssignTask(taskId, assignee))
-            .map(res => res)
-            .map((response: TaskDetailsModel) => {
-                return new TaskDetailsModel(response);
-            }).catch(err => this.handleError(err));
-    }
-
-    /**
      * Claim a task
      * @param id - taskId
      */
     claimTask(taskId: string): Observable<TaskDetailsModel> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.claimTask(taskId))
-            .catch(err => this.handleError(err));
-    }
-
-    /**
-     * Update due date
-     * @param dueDate - the new due date
-     */
-    updateTask(taskId: any, updated): Observable<TaskDetailsModel> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.updateTask(taskId, updated))
-            .catch(err => this.handleError(err));
-    }
-
-    /**
-     * fetch the Task Audit information as a pdf
-     * @param taskId - the task id
-     */
-    fetchTaskAuditPdfById(taskId: string): Observable<Blob> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.getTaskAuditPdf(taskId))
-            .catch(err => this.handleError(err));
-    }
-
-    /**
-     * fetch the Task Audit information in a json format
-     * @param taskId - the task id
-     */
-    fetchTaskAuditJsonById(taskId: string): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.getTaskAuditJson(taskId))
             .catch(err => this.handleError(err));
     }
 
@@ -523,13 +425,7 @@ export class TaskListService {
 
     private handleError(error: any) {
         this.logService.error(error);
-        this.tasksListSubject.error(error);
         return Observable.throw(error || 'Server error');
-    }
-
-    private handleTasksError(error: any) {
-        this.tasksListSubject.error(error.response.body);
-        return this.handleError(error);
     }
 
     /**
@@ -590,9 +486,5 @@ export class TaskListService {
             'icon': 'glyphicon-ok-sign',
             'filter': { 'sort': 'created-desc', 'name': '', 'state': 'completed', 'assignment': 'involved' }
         });
-    }
-
-    private callApiAssignTask(taskId: string, requestNode: any) {
-        return this.apiService.getInstance().activiti.taskApi.assignTask(taskId, requestNode);
     }
 }

@@ -17,9 +17,9 @@
 
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
+import { Form } from '../models/form.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
-import { Form } from '../models/form.model';
 
 declare let dialogPolyfill: any;
 
@@ -111,7 +111,7 @@ export class ActivitiStartTaskButton {
         this.taskService.getFormList().subscribe((res: Form[]) => {
                 this.forms = res;
             },
-            (err) => {
+                                                 (err) => {
                 this.error.emit(err);
                 this.logService.error('An error occurred while trying to get the forms');
             });

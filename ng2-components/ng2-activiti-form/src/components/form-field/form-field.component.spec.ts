@@ -16,36 +16,28 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdInputModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
-import { ErrorWidgetComponent } from '../widgets/error/error.component';
 import { FormRenderingService } from './../../services/form-rendering.service';
 import { WidgetVisibilityService } from './../../services/widget-visibility.service';
-import { CheckboxWidgetComponent } from './../widgets/checkbox/checkbox.widget';
+import { CheckboxWidget } from './../widgets/checkbox/checkbox.widget';
 import { FormFieldModel, FormFieldTypes, FormModel } from './../widgets/core/index';
 import { InputMaskDirective } from './../widgets/text/text-mask.component';
-import { TextWidgetComponent } from './../widgets/text/text.widget';
+import { TextWidget } from './../widgets/text/text.widget';
 import { FormFieldComponent } from './form-field.component';
 
 describe('FormFieldComponent', () => {
 
     let fixture: ComponentFixture<FormFieldComponent>;
     let component: FormFieldComponent;
+    let componentHandler: any;
     let form: FormModel;
 
     let formRenderingService: FormRenderingService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-                imports: [CoreModule,
-                    MdInputModule
-                ],
-                declarations: [
-                    FormFieldComponent,
-                    TextWidgetComponent,
-                    CheckboxWidgetComponent,
-                    InputMaskDirective,
-                    ErrorWidgetComponent],
+                imports: [CoreModule],
+                declarations: [FormFieldComponent, TextWidget, CheckboxWidget, InputMaskDirective],
                 providers: [
                     FormRenderingService,
                     WidgetVisibilityService
@@ -55,6 +47,12 @@ describe('FormFieldComponent', () => {
     }));
 
     beforeEach(() => {
+        componentHandler = jasmine.createSpyObj('componentHandler', [
+            'upgradeAllRegistered',
+            'upgradeElement'
+        ]);
+        window['componentHandler'] = componentHandler;
+
         fixture = TestBed.createComponent(FormFieldComponent);
         component = fixture.componentInstance;
         formRenderingService = fixture.debugElement.injector.get(FormRenderingService);
@@ -70,7 +68,7 @@ describe('FormFieldComponent', () => {
         fixture.detectChanges();
 
         expect(component.componentRef).toBeDefined();
-        expect(component.componentRef.componentType).toBe(TextWidgetComponent);
+        expect(component.componentRef.componentType).toBe(TextWidget);
     });
 
     xit('should create custom component instance', () => {
@@ -78,12 +76,19 @@ describe('FormFieldComponent', () => {
             type: FormFieldTypes.TEXT
         });
 
-        formRenderingService.setComponentTypeResolver(FormFieldTypes.TEXT, () => CheckboxWidgetComponent, true);
+        formRenderingService.setComponentTypeResolver(FormFieldTypes.TEXT, () => CheckboxWidget, true);
         component.field = field;
         fixture.detectChanges();
 
         expect(component.componentRef).toBeDefined();
-        expect(component.componentRef.componentType).toBe(CheckboxWidgetComponent);
+        expect(component.componentRef.componentType).toBe(CheckboxWidget);
+    });
+
+    it('should require field to create component', () => {
+        component.field = null;
+        fixture.detectChanges();
+
+        expect(component.componentRef).toBeUndefined();
     });
 
     it('should require component type to be resolved', () => {

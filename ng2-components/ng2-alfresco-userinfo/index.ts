@@ -16,8 +16,7 @@
  */
 
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
-import { MaterialModule } from './src/material.module';
+import { CoreModule } from 'ng2-alfresco-core';
 
 import { UserInfoComponent } from './src/components/user-info.component';
 import { BpmUserService } from './src/services/bpm-user.service';
@@ -38,22 +37,13 @@ export const USER_INFO_PROVIDERS: any[] = [
 
 @NgModule({
     imports: [
-        CoreModule,
-        MaterialModule
+        CoreModule
     ],
     declarations: [
         ...USER_INFO_DIRECTIVES
     ],
     providers: [
-        ...USER_INFO_PROVIDERS,
-        {
-            provide: TRANSLATION_PROVIDER,
-            multi: true,
-            useValue: {
-                name: 'ng2-alfresco-userinfo',
-                source: 'assets/ng2-alfresco-userinfo'
-            }
-        }
+        ...USER_INFO_PROVIDERS
     ],
     exports: [
         ...USER_INFO_DIRECTIVES

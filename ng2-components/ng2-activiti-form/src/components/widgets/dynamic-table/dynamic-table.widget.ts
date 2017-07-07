@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, OnInit, Input, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Input, OnInit } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
-import { WidgetComponent , baseHost } from './../widget.component';
-import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './dynamic-table.widget.model';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormService } from './../../../services/form.service';
+import { baseHost , WidgetComponent } from './../widget.component';
+import { DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './dynamic-table.widget.model';
 
 @Component({
     selector: 'dynamic-table-widget',

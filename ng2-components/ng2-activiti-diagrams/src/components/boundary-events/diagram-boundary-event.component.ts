@@ -15,16 +15,14 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
 import { DiagramColorService } from '../../services/diagram-color.service';
 
 @Component({
     selector: 'diagram-boundary-event',
     templateUrl: './diagram-boundary-event.component.html'
 })
-export class DiagramBoundaryEventComponent implements OnInit {
+export class DiagramBoundaryEventComponent {
     @Input()
     data: any;
 

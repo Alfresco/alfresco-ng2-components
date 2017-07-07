@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 
@@ -52,7 +52,7 @@ import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
         </div>
     `
 })
-export class WebscriptComponent implements OnChanges {
+export class WebscriptComponent {
 
     @Input()
     scriptPath: string;
@@ -101,7 +101,7 @@ export class WebscriptComponent implements OnChanges {
                 this.onSuccess.emit(this.data);
 
                 resolve();
-            }, (error) => {
+            },                                                                                                                                         (error) => {
                 this.logService.log('Error' + error);
                 reject();
             });

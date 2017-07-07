@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
 import { DiagramEventSubprocessComponent } from './diagram-event-subprocess.component';
 import { DiagramSubprocessComponent } from './diagram-subprocess.component';
 

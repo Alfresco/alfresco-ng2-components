@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
+import { MdCheckboxModule, MdIconModule, MdInputModule, MdProgressSpinnerModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
-import { MdInputModule, MdIconModule, MdCheckboxModule, MdProgressSpinnerModule } from '@angular/material';
 
-import { LoginHeaderDirective } from './src/directives/login-header.directive';
 import { LoginFooterDirective } from './src/directives/login-footer.directive';
+import { LoginHeaderDirective } from './src/directives/login-header.directive';
 
 import { AlfrescoLoginComponent } from './src/components/alfresco-login.component';
 

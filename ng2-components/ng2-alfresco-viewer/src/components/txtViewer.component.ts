@@ -17,7 +17,7 @@
 
 import { Component, Input } from '@angular/core';
 import { SimpleChanges }    from '@angular/core';
-import { Http, Response, RequestOptions, ResponseContentType }  from '@angular/http';
+import { Http, RequestOptions, Response, ResponseContentType }  from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 @Component({

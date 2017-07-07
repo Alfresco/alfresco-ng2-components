@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { SimpleChanges, OnChanges, EventEmitter, Output, Component, Input, OnInit } from '@angular/core';
-import { PaginationData } from '../../models/pagination.data';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Pagination } from 'alfresco-js-api';
+import { PaginationData } from '../../models/pagination.data';
 
 @Component({
     selector: 'adf-pagination, alfresco-pagination',
@@ -28,7 +28,7 @@ export class PaginationComponent implements OnInit, OnChanges {
 
     static DEFAULT_PAGE_SIZE: number = 20;
 
-    private summary: string = '';
+    summary: string = '';
 
     @Input()
     supportedPageSizes: number[] = [5, 10, 20, 50, 100];

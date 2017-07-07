@@ -15,20 +15,16 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-/* tslint:disable::no-access-missing-member */
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { WidgetComponent } from './../widget.component';
 
 @Component({
     selector: 'dropdown-widget',
     templateUrl: './dropdown.widget.html',
-    styleUrls: ['./dropdown.widget.scss'],
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./dropdown.widget.css']
 })
-export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
+export class DropdownWidget extends WidgetComponent {
 
     @Input()
     field: any;

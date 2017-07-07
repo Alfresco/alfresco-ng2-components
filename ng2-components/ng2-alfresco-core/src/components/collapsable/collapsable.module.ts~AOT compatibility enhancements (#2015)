@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 
-import { AccordionComponent } from './accordion.component';
 import { AccordionGroupComponent } from './accordion-group.component';
+import { AccordionComponent } from './accordion.component';
 
 @NgModule({
     imports: [

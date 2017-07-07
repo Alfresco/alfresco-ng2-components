@@ -21,8 +21,7 @@ import {
     TaskDetailsModel,
     User
 } from 'ng2-activiti-tasklist';
-import { FilterProcessRepresentationModel } from '../models/filter-process.model';
-import { ProcessDefinitionRepresentation } from '../models/process-definition.model';
+import { FilterProcessRepresentationModel, ProcessDefinitionRepresentation } from '../models/index';
 
 export let fakeFilters = {
     size: 1, total: 1, start: 0,
@@ -67,7 +66,7 @@ export let fakeApp2 = new AppDefinitionRepresentationModel({
 });
 
 export let fakeTaskList = {
-    data: [new TaskDetailsModel({
+    data: [ new TaskDetailsModel({
         id: 1,
         name: 'Task 1',
         processInstanceId: 1000,

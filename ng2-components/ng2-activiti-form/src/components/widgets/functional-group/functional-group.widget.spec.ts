@@ -21,17 +21,24 @@ import { FormService } from '../../../services/form.service';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { GroupModel } from '../core/group.model';
-import { FunctionalGroupWidgetComponent } from './functional-group.widget';
+import { FunctionalGroupWidget } from './functional-group.widget';
 
-describe('FunctionalGroupWidgetComponent', () => {
+describe('FunctionalGroupWidget', () => {
+
+    let componentHandler;
     let formService: FormService;
     let elementRef: ElementRef;
-    let widget: FunctionalGroupWidgetComponent;
+    let widget: FunctionalGroupWidget;
 
     beforeEach(() => {
+        componentHandler =  jasmine.createSpyObj('componentHandler', [
+            'upgradeAllRegistered'
+        ]);
+        window['componentHandler'] = componentHandler;
+
         formService = new FormService(null, null, null);
         elementRef = new ElementRef(null);
-        widget = new FunctionalGroupWidgetComponent(formService, elementRef);
+        widget = new FunctionalGroupWidget(formService, elementRef);
         widget.field = new FormFieldModel(new FormModel());
     });
 
@@ -220,5 +227,38 @@ describe('FunctionalGroupWidgetComponent', () => {
 
         expect(formService.getWorkflowGroups).not.toHaveBeenCalled();
         expect(widget.popupVisible).toBeFalsy();
+    });
+
+    it('should setup mdl textfield on view init', () => {
+        spyOn(widget, 'setupMaterialComponents').and.callThrough();
+        spyOn(widget, 'setupMaterialTextField').and.callThrough();
+
+        widget.value = '<value>';
+        widget.ngAfterViewInit();
+
+        expect(widget.setupMaterialComponents).toHaveBeenCalledWith(componentHandler);
+        expect(widget.setupMaterialTextField).toHaveBeenCalled();
+    });
+
+    it('should require component handler to setup textfield', () => {
+        expect(widget.setupMaterialComponents(null)).toBeFalsy();
+    });
+
+    it('should require element reference to setup textfield', () => {
+        let w = new FunctionalGroupWidget(formService, null);
+        w.value = '<value>';
+        expect(w.setupMaterialComponents(componentHandler)).toBeFalsy();
+
+        w = new FunctionalGroupWidget(formService, elementRef);
+        w.value = '<value>';
+        expect(w.setupMaterialComponents(componentHandler)).toBeTruthy();
+    });
+
+    it('should require value to setup textfield', () => {
+        widget.value = '<value>';
+        expect(widget.setupMaterialComponents(componentHandler)).toBeTruthy();
+
+        widget.value = null;
+        expect(widget.setupMaterialComponents(componentHandler)).toBeFalsy();
     });
 });
