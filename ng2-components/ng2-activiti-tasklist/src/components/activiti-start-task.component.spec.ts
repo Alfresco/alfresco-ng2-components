@@ -141,6 +141,20 @@ describe('ActivitiStartTaskComponent', () => {
             expect(getcreateNewTaskSpy).toHaveBeenCalled();
         }));
 
+        it('should send on onSuccess event when only name is given', async(() => {
+            activitiStartTaskComponent.onSuccess.subscribe((res) => {
+                expect(res).toBeDefined();
+                expect(res.id).toBe(91);
+                expect(res.name).toBe('fakeName');
+                expect(res.formKey).toBe('4');
+                expect(res.assignee.id).toBe(1001);
+            });
+            activitiStartTaskComponent.appId = 'fakeAppId';
+            activitiStartTaskComponent.name = 'fake-name';
+            activitiStartTaskComponent.start();
+            expect(getcreateNewTaskSpy).toHaveBeenCalled();
+        }));
+
         it('should not emit onSuccess event when data not present', async(() => {
             let onSuccessSpy: jasmine.Spy = spyOn(activitiStartTaskComponent.onSuccess, 'emit');
             activitiStartTaskComponent.start();

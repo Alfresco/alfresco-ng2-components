@@ -80,10 +80,10 @@ export class ActivitiStartTaskComponent implements OnInit {
                 name: this.name,
                 description: this.description,
                 assignee: {
-                    id: this.assignee.id
+                    id: this.assignee ? this.assignee.id : null
                 },
                 dueDate: this.selectedDate,
-                formKey: this.formDetails.id,
+                formKey: this.formDetails ? this.formDetails.id : null,
                 category: this.appId ? '' + this.appId : null
             })).subscribe(
                 (res: any) => {
