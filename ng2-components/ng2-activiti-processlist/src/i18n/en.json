@@ -103,5 +103,8 @@
           "LOAD_PROCESS_DEFS": "Could not load process definitions, please check you have access.",
           "START": "Could not start new process instance, please check you have permission."
         }
+    },
+    "ATTACHMENTLIST": {
+        "NONE": "No Attachments Found"
     }
 }
