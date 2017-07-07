@@ -17,10 +17,11 @@
 
 import { EventEmitter, Injectable } from '@angular/core';
 import * as minimatch from 'minimatch';
-import { AlfrescoApiService, AppConfigService } from 'ng2-alfresco-core';
 import { Subject } from 'rxjs/Rx';
 import { FileUploadCompleteEvent, FileUploadEvent } from '../events/file.event';
 import { FileModel, FileUploadProgress, FileUploadStatus } from '../models/file.model';
+import { AlfrescoApiService } from './alfresco-api.service';
+import { AppConfigService } from './app-config.service';
 
 @Injectable()
 export class UploadService {
@@ -142,10 +143,10 @@ export class UploadService {
         this.totalAborted = 0;
     }
 
-    private beginUpload(file: FileModel, /* @deprecated */emitter: EventEmitter<any>): any {
+    getUploadPromise(file: FileModel) {
         let opts: any = {
-            renditions: 'doclib'
-        };
+                renditions: 'doclib'
+            };
 
         if (file.options.newVersion === true) {
             opts.overwrite = true;
@@ -153,13 +154,19 @@ export class UploadService {
         } else {
             opts.autoRename = true;
         }
-        let promise = this.apiService.getInstance().upload.uploadFile(
+        return this.apiService.getInstance().upload.uploadFile(
             file.file,
             file.options.path,
             file.options.parentId,
             null,
             opts
         );
+    }
+
+    private beginUpload(file: FileModel, /* @deprecated */emitter: EventEmitter<any>): any {
+
+        let promise = this.getUploadPromise(file);
+
         promise.on('progress', (progress: FileUploadProgress) => {
             this.onUploadProgress(file, progress);
         })
@@ -178,6 +185,7 @@ export class UploadService {
         .catch(err => {
             this.onUploadError(file, err);
         });
+
         return promise;
     }
 

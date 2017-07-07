@@ -18,9 +18,8 @@
 import { DebugElement, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { UploadButtonComponent } from './upload-button.component';
-import { CoreModule, AlfrescoTranslationService, AlfrescoContentService} from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoTranslationService, AlfrescoContentService, UploadService } from 'ng2-alfresco-core';
 import { TranslationMock } from '../assets/translation.service.mock';
-import { UploadService } from '../services/upload.service';
 import { Observable } from 'rxjs/Rx';
 
 describe('UploadButtonComponent', () => {

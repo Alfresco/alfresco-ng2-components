@@ -21,7 +21,7 @@ import {
 } from '@angular/core';
 import { MdCheckboxChange } from '@angular/material';
 import { DataColumnListComponent } from 'ng2-alfresco-core';
-import { Observable, Observer } from 'rxjs/Rx';
+import { Observable, Observer, Subscription } from 'rxjs/Rx';
 import { DataColumn, DataRow, DataRowEvent, DataSorting, DataTableAdapter } from '../../data/datatable-adapter';
 import { ObjectDataRow, ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 import { DataCellEvent } from './data-cell.event';
@@ -101,6 +101,9 @@ export class DataTableComponent implements AfterContentInit, AfterViewInit, OnCh
 
     private differ: any;
 
+    private singleClickStreamSub: Subscription;
+    private multiClickStreamSub: Subscription;
+
     constructor(
         @Optional() private el: ElementRef,
         private differs: IterableDiffers) {
@@ -169,12 +172,13 @@ export class DataTableComponent implements AfterContentInit, AfterViewInit, OnCh
     }
 
     private initAndSubscribeClickStream() {
+        this.unsubscribeClickStream();
         let singleClickStream = this.click$
             .buffer(this.click$.debounceTime(250))
             .map(list => list)
             .filter(x => x.length === 1);
 
-        singleClickStream.subscribe((obj: DataRowEvent[]) => {
+        this.singleClickStreamSub = singleClickStream.subscribe((obj: DataRowEvent[]) => {
             let event: DataRowEvent = obj[0];
             let el = obj[0].sender.el;
             this.rowClick.emit(event);
@@ -193,7 +197,7 @@ export class DataTableComponent implements AfterContentInit, AfterViewInit, OnCh
             .map(list => list)
             .filter(x => x.length >= 2);
 
-        multiClickStream.subscribe((obj: DataRowEvent[]) => {
+        this.multiClickStreamSub = multiClickStream.subscribe((obj: DataRowEvent[]) => {
             let event: DataRowEvent = obj[0];
             let el = obj[0].sender.el;
             this.rowDblClick.emit(event);
@@ -206,6 +210,15 @@ export class DataTableComponent implements AfterContentInit, AfterViewInit, OnCh
                 );
             }
         });
+    }
+
+    private unsubscribeClickStream() {
+        if(this.singleClickStreamSub) {
+            this.singleClickStreamSub.unsubscribe();
+        }
+        if (this.multiClickStreamSub) {
+            this.multiClickStreamSub.unsubscribe();
+        }
     }
 
     private initTable() {

@@ -73,7 +73,7 @@ export const ACTIVITI_TASKLIST_PROVIDERS: any[] = [
         DataTableModule,
         ActivitiFormModule,
         MdIconModule,
-        MdButtonModule
+        MdButtonModule,
     ],
     declarations: [
         ...ACTIVITI_TASKLIST_DIRECTIVES
