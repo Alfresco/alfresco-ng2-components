@@ -17,12 +17,7 @@
 
 import { EventEmitter } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { FileModel, FileUploadOptions } from '../models/file.model';
-import { AlfrescoApiService } from './alfresco-api.service';
-import { AlfrescoSettingsService } from './alfresco-settings.service';
-import { AppConfigModule } from './app-config.service';
-import { AuthenticationService } from './authentication.service';
-import { StorageService } from './storage.service';
+import { AppConfigModule, CoreModule, FileModel, FileUploadOptions } from 'ng2-alfresco-core';
 import { UploadService } from './upload.service';
 
 declare let jasmine: any;
@@ -33,6 +28,7 @@ describe('UploadService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
+                CoreModule.forRoot(),
                 AppConfigModule.forRoot('app.config.json', {
                     ecmHost: 'http://localhost:9876/ecm',
                     files: {
@@ -41,11 +37,7 @@ describe('UploadService', () => {
                 })
             ],
             providers: [
-                UploadService,
-                AlfrescoApiService,
-                AlfrescoSettingsService,
-                AuthenticationService,
-                StorageService
+                UploadService
             ]
         });
         service = TestBed.get(UploadService);
@@ -61,15 +53,15 @@ describe('UploadService', () => {
     });
 
     it('should add an element in the queue and returns it', () => {
-        let filesFake = new FileModel(<File> { name: 'fake-name', size: 10 });
+        let filesFake = new FileModel(<File>{ name: 'fake-name', size: 10 });
         service.addToQueue(filesFake);
         expect(service.getQueue().length).toEqual(1);
     });
 
     it('should add two elements in the queue and returns them', () => {
         let filesFake = [
-            new FileModel(<File> { name: 'fake-name', size: 10 }),
-            new FileModel(<File> { name: 'fake-name2', size: 20 })
+            new FileModel(<File>{ name: 'fake-name', size: 10 }),
+            new FileModel(<File>{ name: 'fake-name2', size: 20 })
         ];
         service.addToQueue(...filesFake);
         expect(service.getQueue().length).toEqual(2);
@@ -91,8 +83,8 @@ describe('UploadService', () => {
             done();
         });
         let fileFake = new FileModel(
-            <File> { name: 'fake-name', size: 10 },
-            <FileUploadOptions> { parentId: '-root-', path: 'fake-dir' }
+            <File>{ name: 'fake-name', size: 10 },
+            <FileUploadOptions>{ parentId: '-root-', path: 'fake-dir' }
         );
         service.addToQueue(fileFake);
         service.uploadFilesInTheQueue(emitter);
@@ -116,8 +108,8 @@ describe('UploadService', () => {
             done();
         });
         let fileFake = new FileModel(
-            <File> { name: 'fake-name', size: 10 },
-            <FileUploadOptions> { parentId: '-root-' }
+            <File>{ name: 'fake-name', size: 10 },
+            <FileUploadOptions>{ parentId: '-root-' }
         );
         service.addToQueue(fileFake);
         service.uploadFilesInTheQueue(emitter);
@@ -138,7 +130,7 @@ describe('UploadService', () => {
             expect(e.value).toEqual('File aborted');
             done();
         });
-        let fileFake = new FileModel(<File> { name: 'fake-name', size: 10 });
+        let fileFake = new FileModel(<File>{ name: 'fake-name', size: 10 });
         service.addToQueue(fileFake);
         service.uploadFilesInTheQueue(emitter);
 
@@ -149,7 +141,7 @@ describe('UploadService', () => {
     it('If versioning is true autoRename should not be present and majorVersion should be a param', () => {
         let emitter = new EventEmitter();
 
-        const filesFake = new FileModel(<File> { name: 'fake-name', size: 10 }, { newVersion: true });
+        const filesFake = new FileModel(<File>{ name: 'fake-name', size: 10 }, { newVersion: true });
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue(emitter);
 
@@ -165,7 +157,7 @@ describe('UploadService', () => {
             done();
         });
         let filesFake = new FileModel(
-            <File> { name: 'fake-name', size: 10 },
+            <File>{ name: 'fake-name', size: 10 },
             <FileUploadOptions> { parentId: '123', path: 'fake-dir' }
         );
         service.addToQueue(filesFake);
@@ -194,8 +186,8 @@ describe('UploadService', () => {
             done();
         });
 
-        let fileFake1 = new FileModel(<File> { name: 'fake-name1', size: 10 });
-        let fileFake2 = new FileModel(<File> { name: 'fake-name2', size: 10 });
+        let fileFake1 = new FileModel(<File>{ name: 'fake-name1', size: 10 });
+        let fileFake2 = new FileModel(<File>{ name: 'fake-name2', size: 10 });
         let filelist = [fileFake1, fileFake2];
         service.addToQueue(...filelist);
         service.uploadFilesInTheQueue(emitter);

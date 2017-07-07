@@ -43,7 +43,7 @@ export class UploadService {
     fileUploadComplete: Subject<FileUploadCompleteEvent> = new Subject<FileUploadCompleteEvent>();
 
     constructor(private apiService: AlfrescoApiService, private appConfigService: AppConfigService) {
-        this.excludedFileList = <String[]> this.appConfigService.get('files.excluded');
+        this.excludedFileList = <String[]>this.appConfigService.get('files.excluded');
     }
 
     /**
@@ -227,7 +227,6 @@ export class UploadService {
     private onUploadComplete(file: FileModel, data: any): void {
         if (file) {
             file.status = FileUploadStatus.Complete;
-            file.data = data;
             this.totalComplete++;
 
             const promise = this.cache[file.id];
