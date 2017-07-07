@@ -17,9 +17,8 @@
 
 import { EventEmitter } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { CoreModule, AppConfigModule } from 'ng2-alfresco-core';
+import { AppConfigModule, CoreModule, FileModel, FileUploadOptions } from 'ng2-alfresco-core';
 import { UploadService } from './upload.service';
-import { FileModel, FileUploadOptions } from '../models/file.model';
 
 declare let jasmine: any;
 
