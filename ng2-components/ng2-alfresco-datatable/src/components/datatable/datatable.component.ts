@@ -21,9 +21,9 @@ import {
 } from '@angular/core';
 import { MdCheckboxChange } from '@angular/material';
 import { DataColumnListComponent } from 'ng2-alfresco-core';
-import { Observable, Observer } from 'rxjs/Rx';
+import { Observable, Observer, Subscription } from 'rxjs/Rx';
 import { DataColumn, DataRow, DataRowEvent, DataSorting, DataTableAdapter } from '../../data/datatable-adapter';
-import { ObjectDataRow, ObjectDataTableAdapter, Subscription } from '../../data/object-datatable-adapter';
+import { ObjectDataRow, ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 import { DataCellEvent } from './data-cell.event';
 import { DataRowActionEvent } from './data-row-action.event';
 
