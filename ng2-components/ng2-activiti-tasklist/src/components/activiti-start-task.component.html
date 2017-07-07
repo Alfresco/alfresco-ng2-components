@@ -22,7 +22,7 @@
 		<md-grid-list cols="2" rowHeight="80px">
 			<md-grid-tile>
 				<md-input-container class="md-full-width">
-					<input mdInput [mdDatepicker]="date" [value]="date" placeholder="Choose a Date" [(ngModel)]="selectedDate" id="selectedDate_id">
+					<input mdInput [mdDatepicker]="date" [value]="date" placeholder="{{'START_TASK.FORM.LABEL.DATE'|translate}}" [(ngModel)]="selectedDate" id="selectedDate_id">
 					<button mdSuffix [mdDatepickerToggle]="date"></button>
 				</md-input-container>
 				<md-datepicker #date></md-datepicker>
@@ -47,7 +47,7 @@
 		<md-grid-list cols="1" rowHeight="60px">
 			<md-grid-tile>
 				<div class="footer">
-					<button md-button (click)="cancel()" id="button-cancle" class="mat-button">{{'START_TASK.FORM.ACTION.CANCEL'|translate}}</button>
+					<button md-button (click)="onCancel()" id="button-cancle" class="mat-button">{{'START_TASK.FORM.ACTION.CANCEL'|translate}}</button>
 					<button md-button [disabled]="!name" (click)="start()" id="button-start" class="mat-button md-colors">{{'START_TASK.FORM.ACTION.START'|translate}}</button>
 				</div>
 			</md-grid-tile>

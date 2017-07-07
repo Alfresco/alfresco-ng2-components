@@ -494,12 +494,12 @@ This component displays comments entered by involved users to a specified task. 
 This component Creates/Starts new task for the specified app
 
 ```html
-<activiti-start-task 
+<adf-start-task 
     [appId]="YOUR_APP_ID">
-</activiti-start-task>
+</adf-start-task>
 ```
 
-![activiti-start-task](docs/assets/adf-start-task.png)
+![adf-start-task](docs/assets/adf-start-task.png)
 
 ### Properties
 

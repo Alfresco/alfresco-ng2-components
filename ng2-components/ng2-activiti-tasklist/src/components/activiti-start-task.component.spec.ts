@@ -15,20 +15,20 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
+import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
-import { ActivitiStartTaskButton } from './activiti-start-task.component';
+import { ActivitiStartTaskComponent } from './activiti-start-task.component';
 import { ActivitiPeopleService } from '../services/activiti-people.service';
 import { MdIconModule, MdButtonModule, MdDatepickerModule, MdGridListModule, MdNativeDateModule, MdSelectModule, MdInputModule } from '@angular/material';
 
 declare let jasmine: any;
 
-describe('ActivitiStartTaskButton', () => {
+describe('ActivitiStartTaskComponent', () => {
 
-    let activitiStartTaskButton: ActivitiStartTaskButton;
-    let fixture: ComponentFixture<ActivitiStartTaskButton>;
+    let activitiStartTaskComponent: ActivitiStartTaskComponent;
+    let fixture: ComponentFixture<ActivitiStartTaskComponent>;
     let service: ActivitiTaskListService;
     let peopleService: ActivitiPeopleService;
     let element: HTMLElement;
@@ -49,7 +49,7 @@ describe('ActivitiStartTaskButton', () => {
                 MdSelectModule
             ],
             declarations: [
-                ActivitiStartTaskButton
+                ActivitiStartTaskComponent
             ],
             providers: [
                 ActivitiTaskListService,
@@ -60,8 +60,8 @@ describe('ActivitiStartTaskButton', () => {
             spyOn(translateService, 'addTranslationFolder').and.stub();
             spyOn(translateService.translate, 'get').and.callFake((key) => { return Observable.of(key); });
 
-            fixture = TestBed.createComponent(ActivitiStartTaskButton);
-            activitiStartTaskButton = fixture.componentInstance;
+            fixture = TestBed.createComponent(ActivitiStartTaskComponent);
+            activitiStartTaskComponent = fixture.componentInstance;
             element = fixture.nativeElement;
             fixture.detectChanges();
         });
@@ -90,15 +90,15 @@ describe('ActivitiStartTaskButton', () => {
     });
 
     it('should create instance of ActivitiStartTaskButton', () => {
-        expect(fixture.componentInstance instanceof ActivitiStartTaskButton).toBe(true, 'should create ActivitiStartTaskButton');
+        expect(fixture.componentInstance instanceof ActivitiStartTaskComponent).toBe(true, 'should create ActivitiStartTaskComponent');
     });
 
     it('should fetch fakeform on ngonint', () => {
         let loadForms = [{id: 123, name: 'fakeFormName'}, {id: 1111, name: 'fakeFormName'}];
-        activitiStartTaskButton.ngOnInit();
-        expect(activitiStartTaskButton.forms).toEqual(loadForms);
-        expect(activitiStartTaskButton.forms[0].name).toEqual('fakeFormName');
-        expect(activitiStartTaskButton.forms[1].id).toEqual(1111);
+        activitiStartTaskComponent.ngOnInit();
+        expect(activitiStartTaskComponent.forms).toEqual(loadForms);
+        expect(activitiStartTaskComponent.forms[0].name).toEqual('fakeFormName');
+        expect(activitiStartTaskComponent.forms[1].id).toEqual(1111);
         expect(getformlistSpy).toHaveBeenCalled();
     });
 
@@ -110,57 +110,57 @@ describe('ActivitiStartTaskButton', () => {
         });
 
         it('should create new task when start is clicked', async(() => {
-            activitiStartTaskButton.onSuccess.subscribe((res) => {
+            activitiStartTaskComponent.success.subscribe((res) => {
                 expect(res).toBeDefined();
             });
-            activitiStartTaskButton.appId = 'fakeAppId';
-            activitiStartTaskButton.name = 'fake-name';
-            activitiStartTaskButton.assignee = {id: 1111, firstName: 'fakeName', email: 'fake@app.com'};
-            activitiStartTaskButton.formDetails = {id: 4, forname: 'Expence Summary'};
-            activitiStartTaskButton.selectedDate = '2016-11-03T15:25:42.749+0000';
-            activitiStartTaskButton.description = 'fakeDescription';
-            activitiStartTaskButton.start();
+            activitiStartTaskComponent.appId = 'fakeAppId';
+            activitiStartTaskComponent.name = 'fake-name';
+            activitiStartTaskComponent.assignee = {id: 1111, firstName: 'fakeName', email: 'fake@app.com'};
+            activitiStartTaskComponent.formDetails = {id: 4, forname: 'Expence Summary'};
+            activitiStartTaskComponent.selectedDate = '2016-11-03T15:25:42.749+0000';
+            activitiStartTaskComponent.description = 'fakeDescription';
+            activitiStartTaskComponent.start();
             expect(getcreateNewTaskSpy).toHaveBeenCalled();
         }));
 
         it('should send on success event when the task is started', async(() => {
-            activitiStartTaskButton.onSuccess.subscribe((res) => {
+            activitiStartTaskComponent.success.subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(res.id).toBe(91);
                 expect(res.name).toBe('fakeName');
                 expect(res.formKey).toBe('4');
                 expect(res.assignee.id).toBe(1001);
             });
-            activitiStartTaskButton.appId = 'fakeAppId';
-            activitiStartTaskButton.name = 'fake-name';
-            activitiStartTaskButton.assignee = {id: 1111, firstName: 'fakeName', email: 'fake@app.com'};
-            activitiStartTaskButton.formDetails = {id: 4, forname: 'Expence Summary'};
-            activitiStartTaskButton.selectedDate = '2016-11-03T15:25:42.749+0000';
-            activitiStartTaskButton.description = 'fakeDescription';
-            activitiStartTaskButton.start();
+            activitiStartTaskComponent.appId = 'fakeAppId';
+            activitiStartTaskComponent.name = 'fake-name';
+            activitiStartTaskComponent.assignee = {id: 1111, firstName: 'fakeName', email: 'fake@app.com'};
+            activitiStartTaskComponent.formDetails = {id: 4, forname: 'Expence Summary'};
+            activitiStartTaskComponent.selectedDate = '2016-11-03T15:25:42.749+0000';
+            activitiStartTaskComponent.description = 'fakeDescription';
+            activitiStartTaskComponent.start();
             expect(getcreateNewTaskSpy).toHaveBeenCalled();
         }));
 
         it('should not emit success event when data not present', async(() => {
-            let onSuccessSpy: jasmine.Spy = spyOn(activitiStartTaskButton.onSuccess, 'emit');
-            activitiStartTaskButton.start();
+            let onSuccessSpy: jasmine.Spy = spyOn(activitiStartTaskComponent.success, 'emit');
+            activitiStartTaskComponent.start();
             fixture.detectChanges();
             expect(getcreateNewTaskSpy).not.toHaveBeenCalled();
             expect(onSuccessSpy).not.toHaveBeenCalled();
         }));
 
         it('should attach a task when a form id selected', async(() => {
-            activitiStartTaskButton.onSuccess.subscribe((res) => {
+            activitiStartTaskComponent.success.subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(res.formKey).toBe('4');
             });
-            activitiStartTaskButton.appId = 'fakeAppId';
-            activitiStartTaskButton.name = 'fake-name';
-            activitiStartTaskButton.assignee = {id: 1111, firstName: 'fakeName', email: 'fake@app.com'};
-            activitiStartTaskButton.formDetails = {id: 4, forname: 'Expence Summary'};
-            activitiStartTaskButton.selectedDate = '2016-11-03T15:25:42.749+0000';
-            activitiStartTaskButton.description = 'fakeDescription';
-            activitiStartTaskButton.start();
+            activitiStartTaskComponent.appId = 'fakeAppId';
+            activitiStartTaskComponent.name = 'fake-name';
+            activitiStartTaskComponent.assignee = {id: 1111, firstName: 'fakeName', email: 'fake@app.com'};
+            activitiStartTaskComponent.formDetails = {id: 4, forname: 'Expence Summary'};
+            activitiStartTaskComponent.selectedDate = '2016-11-03T15:25:42.749+0000';
+            activitiStartTaskComponent.description = 'fakeDescription';
+            activitiStartTaskComponent.start();
             expect(getcreateNewTaskSpy).toHaveBeenCalled();
         }));
     });
@@ -175,9 +175,9 @@ describe('ActivitiStartTaskButton', () => {
                 });
             });
         let createTaskButton = <HTMLElement> element.querySelector('#button-start');
-        activitiStartTaskButton.name = 'fake-name';
+        activitiStartTaskComponent.name = 'fake-name';
         createTaskButton.click();
-        expect(activitiStartTaskButton.formDetails).not.toBeDefined();
+        expect(activitiStartTaskComponent.formDetails).not.toBeDefined();
         expect(attachFormToATask).not.toHaveBeenCalled();
         });
     it('should show start task button', () => {
@@ -187,34 +187,33 @@ describe('ActivitiStartTaskButton', () => {
     });
 
     it('should fetch all users on ngonint', async(() => {
-        activitiStartTaskButton.ngOnInit();
-        expect(activitiStartTaskButton.people).toBeDefined();
-        expect(activitiStartTaskButton.people[0].firstName).toEqual('fakeName');
-        expect(activitiStartTaskButton.people[1].firstName).toEqual('fake-name');
-        expect(activitiStartTaskButton.people[0].id).toEqual(1);
-        expect(activitiStartTaskButton.people[1].id).toEqual(1001);
+        activitiStartTaskComponent.ngOnInit();
+        expect(activitiStartTaskComponent.people).toBeDefined();
+        expect(activitiStartTaskComponent.people[0].firstName).toEqual('fakeName');
+        expect(activitiStartTaskComponent.people[1].firstName).toEqual('fake-name');
+        expect(activitiStartTaskComponent.people[0].id).toEqual(1);
+        expect(activitiStartTaskComponent.people[1].id).toEqual(1001);
         expect(getWorkflowUsersSpy).toHaveBeenCalled();
     }));
 
     it('should not emit TaskDetails OnCancle', () => {
-        let emitSpy = spyOn(activitiStartTaskButton.onCancel, 'emit');
-        activitiStartTaskButton.cancel();
+        let emitSpy = spyOn(activitiStartTaskComponent.cancel, 'emit');
+        activitiStartTaskComponent.onCancel();
         expect(emitSpy).not.toBeNull();
         expect(emitSpy).toHaveBeenCalled();
     });
 
     it('should start button disable if name is empty', () => {
         let createTaskButton =  fixture.nativeElement.querySelector('#button-start');
-        activitiStartTaskButton.name = '';
+        activitiStartTaskComponent.name = '';
         fixture.detectChanges();
         expect(createTaskButton.disabled).toBeTruthy();
     });
 
     it('should enable button if name is not empty', () => {
         let createTaskButton = fixture.nativeElement.querySelector('#button-start');
-        activitiStartTaskButton.name = 'fakeName';
+        activitiStartTaskComponent.name = 'fakeName';
         fixture.detectChanges();
         expect(createTaskButton.enable).toBeFalsy();
     });
-
 });

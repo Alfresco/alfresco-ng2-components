@@ -24,7 +24,7 @@ import { User } from '../models/index';
 import { Form } from '../models/form.model';
 
 @Component({
-    selector: 'activiti-start-task',
+    selector: 'adf-start-task',
     templateUrl: './activiti-start-task.component.html',
     styleUrls: ['./activiti-start-task.component.css']
 })

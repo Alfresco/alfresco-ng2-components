@@ -79,7 +79,8 @@
                 "DESCRIPTION": "Description",
                 "ATTACHFORM" : "Attach a Form",
                 "ASSIGNEE"   : "Assignee",
-                "FORM"       :  "Form"
+                "FORM"       :  "Form",
+                "DATE"       : "Choose a Date"
             },
             "ACTION": {
                 "START": "Start",
