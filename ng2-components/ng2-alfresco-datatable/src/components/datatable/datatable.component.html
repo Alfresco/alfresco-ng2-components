@@ -39,19 +39,19 @@
 
             <!-- Actions (left) -->
             <td *ngIf="actions && actionsPosition === 'left'" class="alfresco-datatable__actions-cell">
-                <button [id]="'action_menu_' + idx" alfresco-mdl-button class="mdl-button--icon"
-                        [attr.data-automation-id]="'action_menu_' + idx">
-                    <i class="material-icons">more_vert</i>
+                <button md-icon-button [mdMenuTriggerFor]="menu"
+                    [attr.data-automation-id]="'action_menu_' + idx">
+                    <md-icon>more_vert</md-icon>
                 </button>
-                <ul alfresco-mdl-menu class="mdl-menu--bottom-left"
-                    [attr.for]="'action_menu_' + idx">
-                    <li class="mdl-menu__item" [attr.disabled]="action.disabled"
+                <md-menu #menu="mdMenu">
+                    <button md-menu-item *ngFor="let action of getRowActions(row)"
                         [attr.data-automation-id]="action.title"
-                        *ngFor="let action of getRowActions(row)"
+                        [disabled]="action.disabled"
                         (click)="onExecuteRowAction(row, action)">
-                        {{action.title}}
-                    </li>
-                </ul>
+                        <md-icon *ngIf="action.icon">{{ action.icon }}</md-icon>
+                        <span>{{ action.title }}</span>
+                    </button>
+                </md-menu>
             </td>
 
             <td *ngIf="multiselect">
@@ -102,19 +102,19 @@
 
             <!-- Actions (right) -->
             <td *ngIf="actions && actionsPosition === 'right'" class="alfresco-datatable__actions-cell">
-                <button [id]="'action_menu_' + idx" alfresco-mdl-button class="mdl-button--icon"
-                        [attr.data-automation-id]="'action_menu_' + idx">
-                    <i class="material-icons">more_vert</i>
+                <button md-icon-button [mdMenuTriggerFor]="menu"
+                    [attr.data-automation-id]="'action_menu_' + idx">
+                    <md-icon>more_vert</md-icon>
                 </button>
-                <ul alfresco-mdl-menu class="mdl-menu--bottom-right"
-                    [attr.for]="'action_menu_' + idx">
-                    <li class="mdl-menu__item" [attr.disabled]="action.disabled || undefined"
+                <md-menu #menu="mdMenu">
+                    <button md-menu-item *ngFor="let action of getRowActions(row)"
                         [attr.data-automation-id]="action.title"
-                        *ngFor="let action of getRowActions(row)"
+                        [disabled]="action.disabled"
                         (click)="onExecuteRowAction(row, action)">
-                        {{action.title}}
-                    </li>
-                </ul>
+                        <md-icon *ngIf="action.icon">{{ action.icon }}</md-icon>
+                        <span>{{ action.title }}</span>
+                    </button>
+                </md-menu>
             </td>
 
         </tr>
