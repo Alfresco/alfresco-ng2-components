@@ -24,17 +24,13 @@ import { FileUploadingListComponent } from './src/components/file-uploading-list
 import { UploadButtonComponent } from './src/components/upload-button.component';
 import { UploadDragAreaComponent } from './src/components/upload-drag-area.component';
 import { FileDraggableDirective } from './src/directives/file-draggable.directive';
-import { UploadService } from './src/services/upload.service';
 
 export * from './src/components/upload-button.component';
 export * from './src/components/file-uploading-dialog.component';
 export * from './src/components/upload-drag-area.component';
-export * from './src/services/upload.service';
 export * from './src/directives/file-draggable.directive';
 export * from './src/components/file-uploading-list.component';
-export * from './src/models/file.model';
 export * from './src/models/permissions.model';
-export * from './src/events/file.event';
 
 export const UPLOAD_DIRECTIVES: any[] = [
     FileDraggableDirective,
@@ -45,7 +41,7 @@ export const UPLOAD_DIRECTIVES: any[] = [
 ];
 
 export const UPLOAD_PROVIDERS: any[] = [
-    UploadService
+
 ];
 
 @NgModule({

@@ -42,8 +42,8 @@ import {
     ObjectDataRow,
     DataSorting
 } from 'ng2-alfresco-datatable';
-import { AlfrescoApiService } from 'ng2-alfresco-core';
-import { FormService, FormRenderingService, FormEvent, FormFieldEvent } from 'ng2-activiti-form';
+import { AlfrescoApiService, UploadService } from 'ng2-alfresco-core';
+import { FormService, FormRenderingService, FormEvent, FormFieldEvent, ProcessUploadService } from 'ng2-activiti-form';
 import { /*CustomEditorComponent*/ CustomStencil01 } from './custom-editor/custom-editor.component';
 
 declare var componentHandler;
@@ -53,7 +53,10 @@ const currentProcessIdNew = '__NEW__';
 @Component({
     selector: 'activiti-demo',
     templateUrl: './activiti-demo.component.html',
-    styleUrls: ['./activiti-demo.component.css']
+    styleUrls: ['./activiti-demo.component.css'],
+    providers: [
+        { provide: UploadService, useClass: ProcessUploadService }
+    ]
 })
 export class ActivitiDemoComponent implements AfterViewInit {
 
@@ -122,6 +125,7 @@ export class ActivitiDemoComponent implements AfterViewInit {
                 private route: ActivatedRoute,
                 private router: Router,
                 private apiService: AlfrescoApiService,
+                private uploadService: UploadService,
                 private formRenderingService: FormRenderingService,
                 private formService: FormService) {
         this.dataTasks = new ObjectDataTableAdapter();
@@ -170,6 +174,9 @@ export class ActivitiDemoComponent implements AfterViewInit {
             this.currentProcessInstanceId = null;
         });
         this.layoutType = ActivitiApps.LAYOUT_GRID;
+
+        this.uploadService.fileUploadComplete.subscribe(value => this.onFileUploadComplete(value.data));
+
     }
 
     ngOnDestroy() {
@@ -272,6 +279,10 @@ export class ActivitiDemoComponent implements AfterViewInit {
         this.fileShowed = true;
         this.content = content.contentBlob;
         this.contentName = content.name;
+    }
+
+    onFileUploadComplete(content: any) {
+        this.taskAttachList.add(content);
     }
 
     onAttachmentClick(content: any): void {

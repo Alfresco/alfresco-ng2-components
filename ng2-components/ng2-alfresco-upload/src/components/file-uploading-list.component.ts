@@ -16,8 +16,7 @@
  */
 
 import { Component, Input } from '@angular/core';
-import { FileModel, FileUploadStatus } from '../models/file.model';
-import { UploadService } from '../services/upload.service';
+import { FileModel, FileUploadStatus, UploadService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'adf-file-uploading-list, alfresco-file-uploading-list',
