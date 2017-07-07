@@ -17,16 +17,16 @@
 
 import { TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
-import {
-    formTest,
-    fakeTaskProcessVariableModels,
-    formValues,
-    fakeFormJson
-} from './assets/widget-visibility.service.mock';
-import { WidgetVisibilityService } from './widget-visibility.service';
+import { ContainerModel, FormFieldModel, FormFieldTypes, FormModel, TabModel } from './../components/widgets/core/index';
 import { TaskProcessVariableModel } from './../models/task-process-variable.model';
 import { WidgetVisibilityModel } from './../models/widget-visibility.model';
-import { FormModel, FormFieldModel, TabModel, ContainerModel, FormFieldTypes } from './../components/widgets/core/index';
+import {
+    fakeFormJson,
+    fakeTaskProcessVariableModels,
+    formTest,
+    formValues
+} from './assets/widget-visibility.service.mock';
+import { WidgetVisibilityService } from './widget-visibility.service';
 
 declare let jasmine: any;
 

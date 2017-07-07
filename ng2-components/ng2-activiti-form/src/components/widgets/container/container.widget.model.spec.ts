@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { ContainerWidgetModel } from './container.widget.model';
-import { FormModel } from './../core/form.model';
-import { FormFieldModel } from './../core/form-field.model';
 import { FormFieldTypes } from './../core/form-field-types';
+import { FormFieldModel } from './../core/form-field.model';
+import { FormModel } from './../core/form.model';
+import { ContainerWidgetModel } from './container.widget.model';
 
 describe('ContainerWidgetModel', () => {
 

@@ -16,8 +16,8 @@
  */
 
 import { ContainerModel } from './container.model';
-import { FormModel } from './form.model';
 import { FormFieldModel } from './form-field.model';
+import { FormModel } from './form.model';
 
 describe('ContainerModel', () => {
 

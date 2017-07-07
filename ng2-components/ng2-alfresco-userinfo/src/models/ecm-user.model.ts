@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { EcmCompanyModel } from './ecm-company.model';
 import { Person } from 'alfresco-js-api';
+import { EcmCompanyModel } from './ecm-company.model';
 
 export class EcmUserModel implements Person {
     id: string;

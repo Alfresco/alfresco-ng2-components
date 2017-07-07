@@ -15,22 +15,22 @@
  * limitations under the License.
  */
 
-import { ContainerWidget } from './container.widget';
-import { ContainerWidgetModel } from './container.widget.model';
-import { FormModel } from './../core/form.model';
-import { FormFieldTypes } from './../core/form-field-types';
-import { FormFieldModel } from './../core/form-field.model';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MdInputModule, MdTabsModule } from '@angular/material';
+import { CoreModule } from 'ng2-alfresco-core';
+import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
+import { fakeFormJson } from '../../../services/assets/widget-visibility.service.mock';
 import { WIDGET_DIRECTIVES } from '../index';
 import { MASK_DIRECTIVE } from '../index';
-import { FormFieldComponent } from './../../form-field/form-field.component';
-import { ActivitiContent } from './../../activiti-content.component';
-import { fakeFormJson } from '../../../services/assets/widget-visibility.service.mock';
-import { MdTabsModule, MdInputModule } from '@angular/material';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { CoreModule } from 'ng2-alfresco-core';
-import { FormService } from './../../../services/form.service';
 import { EcmModelService } from './../../../services/ecm-model.service';
-import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
+import { FormService } from './../../../services/form.service';
+import { ActivitiContent } from './../../activiti-content.component';
+import { FormFieldComponent } from './../../form-field/form-field.component';
+import { FormFieldTypes } from './../core/form-field-types';
+import { FormFieldModel } from './../core/form-field.model';
+import { FormModel } from './../core/form.model';
+import { ContainerWidget } from './container.widget';
+import { ContainerWidgetModel } from './container.widget.model';
 
 describe('ContainerWidget', () => {
 

@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { TagService } from './../services/tag.service';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { TagService } from './../services/tag.service';
 
 /**
  *
@@ -75,7 +75,7 @@ export class TagActionsComponent {
             this.tagsEntries = data.list.entries;
             this.disableAddTag = false;
             this.result.emit(this.tagsEntries);
-        }, () => {
+        },                                                     () => {
             this.tagsEntries = null;
             this.disableAddTag = true;
             this.result.emit(this.tagsEntries);

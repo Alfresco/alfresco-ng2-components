@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, Output, Optional, OnChanges, SimpleChanges, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Optional, Output, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { AlfrescoSearchService, SearchOptions } from './../services/alfresco-search.service';
+import { NodePaging, Pagination } from 'alfresco-js-api';
 import { AlfrescoTranslationService, NotificationService } from 'ng2-alfresco-core';
 import { PermissionModel } from 'ng2-alfresco-documentlist';
-import { NodePaging, Pagination } from 'alfresco-js-api';
+import { AlfrescoSearchService, SearchOptions } from './../services/alfresco-search.service';
 
 @Component({
     selector: 'adf-search, alfresco-search',

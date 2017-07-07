@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { NgModule, ModuleWithProviders } from '@angular/core';
-import { MdInputModule, MdButtonModule } from '@angular/material';
+import { ModuleWithProviders, NgModule } from '@angular/core';
+import { MdButtonModule, MdInputModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
 
 import { TagActionsComponent } from './src/components/tag-actions.component';

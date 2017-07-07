@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, Input, OnInit, OnChanges, Output, ViewChild } from '@angular/core';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
-import { AlfrescoSearchService, SearchOptions } from './../services/alfresco-search.service';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ThumbnailService } from 'ng2-alfresco-core';
+import { AlfrescoSearchService, SearchOptions } from './../services/alfresco-search.service';
 
 declare var require: any;
 

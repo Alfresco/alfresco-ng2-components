@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, HostListener } from '@angular/core';
+import { Component, HostListener, Input } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 
@@ -97,11 +97,11 @@ export class PdfViewerComponent {
             this.currentPdfDocument.getPage(1).then(() => {
                 this.scalePage('auto');
                 resolve();
-            }, (error) => {
+            },                                      (error) => {
                 reject(error);
             });
 
-        }, (error) => {
+        },               (error) => {
             reject(error);
         });
     }
@@ -124,7 +124,7 @@ export class PdfViewerComponent {
 
         window.document.addEventListener('scroll', (event) => {
             this.watchScroll(event.target);
-        }, true);
+        },                               true);
 
         this.pdfViewer = new PDFJS.PDFViewer({
             container: documentContainer,

@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
+import { DiagramEndEventComponent } from './diagram-end-event.component';
 import { DiagramEventComponent } from './diagram-event.component';
 import { DiagramStartEventComponent } from './diagram-start-event.component';
-import { DiagramEndEventComponent } from './diagram-end-event.component';
 
 // primitives
 export * from './diagram-event.component';

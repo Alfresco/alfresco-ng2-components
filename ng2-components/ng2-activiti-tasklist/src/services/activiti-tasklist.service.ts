@@ -16,16 +16,16 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Rx';
+import { Comment } from '../models/comment.model';
 import {
     FilterRepresentationModel,
     TaskQueryRequestRepresentationModel
 } from '../models/filter.model';
-import { Comment } from '../models/comment.model';
-import { User } from '../models/user.model';
-import { TaskDetailsModel } from '../models/task-details.model';
 import { Form } from '../models/form.model';
+import { TaskDetailsModel } from '../models/task-details.model';
+import { User } from '../models/user.model';
 
 @Injectable()
 export class ActivitiTaskListService {

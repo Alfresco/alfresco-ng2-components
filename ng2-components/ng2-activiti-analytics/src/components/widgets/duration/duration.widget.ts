@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, OnInit, Input } from '@angular/core';
-import { NumberWidget } from './../number/number.widget';
-import { ReportParameterDetailsModel, ParameterValueModel } from './../../../models/report.model';
+import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ParameterValueModel, ReportParameterDetailsModel } from './../../../models/report.model';
+import { NumberWidget } from './../number/number.widget';
 
 @Component({
     selector: 'duration-widget',

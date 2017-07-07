@@ -15,23 +15,23 @@
  * limitations under the License.
  */
 
-import { NgModule, ModuleWithProviders } from '@angular/core';
-import { CoreModule } from 'ng2-alfresco-core';
-import { DataTableModule } from 'ng2-alfresco-datatable';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { ActivitiFormModule } from 'ng2-activiti-form';
 import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
+import { CoreModule } from 'ng2-alfresco-core';
+import { DataTableModule } from 'ng2-alfresco-datatable';
 
 import {
-    ActivitiProcessInstanceListComponent,
+    ActivitiCreateProcessAttachmentComponent,
+    ActivitiProcessAttachmentListComponent,
+    ActivitiProcessComments,
     ActivitiProcessFilters,
+    ActivitiProcessInstanceDetails,
     ActivitiProcessInstanceHeader,
+    ActivitiProcessInstanceListComponent,
     ActivitiProcessInstanceTasks,
     ActivitiProcessInstanceVariables,
-    ActivitiProcessComments,
-    ActivitiProcessInstanceDetails,
-    ActivitiStartProcessInstance,
-    ActivitiProcessAttachmentListComponent,
-    ActivitiCreateProcessAttachmentComponent
+    ActivitiStartProcessInstance
 } from './src/components/index';
 
 import { ActivitiProcessService } from './src/services/activiti-process.service';

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CoreModule } from 'ng2-alfresco-core';
 
 import { DIAGRAM_DIRECTIVES, DIAGRAM_PROVIDERS } from './src/components/index';

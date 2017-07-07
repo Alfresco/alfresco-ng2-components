@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { HyperlinkWidget } from './hyperlink.widget';
-import { FormModel } from './../core/form.model';
 import { FormFieldModel } from './../core/form-field.model';
+import { FormModel } from './../core/form.model';
 import { WidgetComponent } from './../widget.component';
+import { HyperlinkWidget } from './hyperlink.widget';
 
 describe('HyperlinkWidget', () => {
 

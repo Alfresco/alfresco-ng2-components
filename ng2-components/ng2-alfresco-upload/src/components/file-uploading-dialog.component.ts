@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { FileModel, FileUploadStatus } from '../models/file.model';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
-import { UploadService } from '../services/upload.service';
 import { FileUploadCompleteEvent } from '../events/file.event';
+import { FileModel, FileUploadStatus } from '../models/file.model';
+import { UploadService } from '../services/upload.service';
 
 @Component({
     selector: 'file-uploading-dialog',

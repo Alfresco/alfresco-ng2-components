@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { ContainerModel } from './../core/container.model';
 import { ContainerColumnModel } from './../core/container-column.model';
+import { ContainerModel } from './../core/container.model';
 import { FormFieldTypes } from './../core/form-field-types';
 import { FormFieldModel } from './../core/form-field.model';
 

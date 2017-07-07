@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnDestroy, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
 import { AccordionComponent } from './accordion.component';
 
 @Component({

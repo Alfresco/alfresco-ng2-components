@@ -15,19 +15,19 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { Observable } from 'rxjs/Rx';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule, LogServiceMock } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Rx';
 
-import { FormService } from '../../../services/form.service';
-import { RadioButtonsWidget } from './radio-buttons.widget';
-import { FormModel } from './../core/form.model';
-import { FormFieldModel } from './../core/form-field.model';
 import { EcmModelService } from '../../../services/ecm-model.service';
+import { FormService } from '../../../services/form.service';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
+import { ContainerModel } from '../core/container.model';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormFieldOption } from './../core/form-field-option';
-import { ContainerModel } from '../core/container.model';
+import { FormFieldModel } from './../core/form-field.model';
+import { FormModel } from './../core/form.model';
+import { RadioButtonsWidget } from './radio-buttons.widget';
 
 describe('RadioButtonsWidget', () => {
 

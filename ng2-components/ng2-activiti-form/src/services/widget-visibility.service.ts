@@ -16,12 +16,12 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
 import * as moment from 'moment';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
-import { FormModel, FormFieldModel, TabModel, ContainerModel, ContainerColumnModel } from '../components/widgets/core/index';
-import { WidgetVisibilityModel } from '../models/widget-visibility.model';
+import { Observable } from 'rxjs/Rx';
+import { ContainerColumnModel, ContainerModel, FormFieldModel, FormModel, TabModel } from '../components/widgets/core/index';
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
+import { WidgetVisibilityModel } from '../models/widget-visibility.model';
 
 @Injectable()
 export class WidgetVisibilityService {

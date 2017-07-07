@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { Observable } from 'rxjs/Rx';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule, LogServiceMock } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Rx';
 
-import { TypeaheadWidget } from './typeahead.widget';
-import { FormService } from '../../../services/form.service';
-import { FormModel } from '../core/form.model';
-import { FormFieldModel } from '../core/form-field.model';
-import { FormFieldOption } from '../core/form-field-option';
 import { EcmModelService } from '../../../services/ecm-model.service';
+import { FormService } from '../../../services/form.service';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
+import { FormFieldOption } from '../core/form-field-option';
 import { FormFieldTypes } from '../core/form-field-types';
+import { FormFieldModel } from '../core/form-field.model';
+import { FormModel } from '../core/form.model';
+import { TypeaheadWidget } from './typeahead.widget';
 
 describe('TypeaheadWidget', () => {
 

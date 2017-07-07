@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { TestBed, async } from '@angular/core/testing';
-import { AppConfigModule } from './app-config.service';
+import { async, TestBed } from '@angular/core/testing';
 import { AlfrescoSettingsService } from './alfresco-settings.service';
+import { AppConfigModule } from './app-config.service';
 
 describe('AlfrescoSettingsService', () => {
 

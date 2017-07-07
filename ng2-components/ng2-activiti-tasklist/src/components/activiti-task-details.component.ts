@@ -16,22 +16,22 @@
  */
 
 import { Component,
-    Input,
-    OnInit,
-    ViewChild,
-    Output,
+    DebugElement,
     EventEmitter,
-    TemplateRef,
+    Input,
     OnChanges,
+    OnInit,
+    Output,
     SimpleChanges,
-    DebugElement
+    TemplateRef,
+    ViewChild
 } from '@angular/core';
+import { ContentLinkModel, FormModel, FormOutcomeEvent, FormService } from 'ng2-activiti-form';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
-import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
+import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { User } from '../models/user.model';
-import { FormService, FormModel, FormOutcomeEvent, ContentLinkModel } from 'ng2-activiti-form';
-import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
+import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 
 declare var require: any;
 declare let dialogPolyfill: any;

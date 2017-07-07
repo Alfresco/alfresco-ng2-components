@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, DebugElement, EventEmitter, Input, Output, OnInit, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, DebugElement, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
-import { ObjectDataTableAdapter, DataTableAdapter, ObjectDataRow, DataCellEvent } from 'ng2-alfresco-datatable';
+import { DataCellEvent, DataTableAdapter, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 import { ProcessInstanceVariable } from './../models/process-instance-variable.model';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 
@@ -247,7 +247,7 @@ export class ActivitiProcessInstanceVariables implements OnInit, OnChanges {
         this.activitiProcess.deleteProcessInstanceVariable(this.processInstanceId, row.getValue('name')).subscribe(() => {
             this.getProcessInstanceVariables(this.processInstanceId);
         },
-        (err) => {
+                                                                                                                   (err) => {
             this.showErrorDialog();
             this.error.emit(err);
         });

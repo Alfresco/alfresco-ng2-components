@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Input } from '@angular/core';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
-import { EcmUserModel } from './../models/ecm-user.model';
+import { Component, Input, OnInit } from '@angular/core';
+import { AlfrescoAuthenticationService, AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { BpmUserModel } from './../models/bpm-user.model';
-import { EcmUserService } from './../services/ecm-user.service';
+import { EcmUserModel } from './../models/ecm-user.model';
 import { BpmUserService } from './../services/bpm-user.service';
+import { EcmUserService } from './../services/ecm-user.service';
 
 declare let componentHandler: any;
 declare var require: any;

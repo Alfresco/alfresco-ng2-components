@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, Input, AfterViewInit, AfterContentChecked, EventEmitter, Output } from '@angular/core';
-import { TabModel, FormFieldModel } from './../core/index';
+import { AfterContentChecked, AfterViewInit, Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormFieldModel, TabModel } from './../core/index';
 
 declare var componentHandler: any;
 

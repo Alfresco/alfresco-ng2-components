@@ -16,16 +16,16 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { ActivitiFormModule } from 'ng2-activiti-form';
+import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 
-import { ActivitiProcessComments } from './activiti-process-comments.component';
-import { ActivitiProcessService } from './../services/activiti-process.service';
 import { TranslationMock } from './../assets/translation.service.mock';
+import { ActivitiProcessService } from './../services/activiti-process.service';
+import { ActivitiProcessComments } from './activiti-process-comments.component';
 
 describe('ActivitiProcessInstanceComments', () => {
 

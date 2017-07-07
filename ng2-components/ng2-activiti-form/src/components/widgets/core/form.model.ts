@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import { FormWidgetModel, FormWidgetModelCache } from './form-widget.model';
-import { FormValues } from './form-values';
-import { ContainerModel } from './container.model';
-import { TabModel } from './tab.model';
-import { FormOutcomeModel } from './form-outcome.model';
-import { FormFieldModel } from './form-field.model';
-import { FormFieldTypes } from './form-field-types';
-import { FormFieldTemplates } from './form-field-templates';
-import { FormService } from './../../../services/form.service';
 import { FormFieldEvent } from './../../../events/index';
+import { FormService } from './../../../services/form.service';
+import { ContainerModel } from './container.model';
+import { FormFieldTemplates } from './form-field-templates';
+import { FormFieldTypes } from './form-field-types';
+import { FormFieldModel } from './form-field.model';
+import { FormOutcomeModel } from './form-outcome.model';
+import { FormValues } from './form-values';
+import { FormWidgetModel, FormWidgetModelCache } from './form-widget.model';
+import { TabModel } from './tab.model';
 
 export class FormModel {
 

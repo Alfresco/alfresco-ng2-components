@@ -22,7 +22,7 @@ import { Component, Input } from '@angular/core';
     styleUrls: ['./adf-empty-list.component.css'],
     templateUrl: './adf-empty-list.component.html'
 })
-export class AdfEmptyList {
+export class AdfEmptyListComponent {
 
     @Input()
     emptyListImageUrl: string = require('../../assets/images/empty_doc_lib.svg');

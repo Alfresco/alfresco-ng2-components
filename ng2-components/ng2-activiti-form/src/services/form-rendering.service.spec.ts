@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { FormRenderingService, DefaultTypeResolver } from './form-rendering.service';
 import {
+    AttachWidget,
     FormFieldModel,
     FormFieldTypes,
     UnknownWidget,
-    AttachWidget,
     UploadWidget
 } from './../components/widgets/index';
+import { DefaultTypeResolver, FormRenderingService } from './form-rendering.service';
 
 describe('FormRenderingService', () => {
 

@@ -16,10 +16,10 @@
  */
 
 import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs/Rx';
 import { ContentActionHandler } from '../models/content-action.model';
 import { PermissionModel } from '../models/permissions.model';
 import { DocumentListService } from './document-list.service';
-import { Subject, Observable } from 'rxjs/Rx';
 
 @Injectable()
 export class FolderActionsService {

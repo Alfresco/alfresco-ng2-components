@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, AfterViewChecked, OnChanges, SimpleChanges, Input, Output, EventEmitter } from '@angular/core';
+import { AfterViewChecked, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
+import { FormErrorEvent, FormEvent } from './../events/index';
 import { EcmModelService } from './../services/ecm-model.service';
 import { FormService } from './../services/form.service';
 import { NodeService } from './../services/node.service';
-import { FormModel, FormOutcomeModel, FormValues, FormFieldModel, FormOutcomeEvent } from './widgets/core/index';
 import { ContentLinkModel } from './widgets/core/content-link.model';
-import { FormEvent, FormErrorEvent } from './../events/index';
+import { FormFieldModel, FormModel, FormOutcomeEvent, FormOutcomeModel, FormValues } from './widgets/core/index';
 
 import { WidgetVisibilityService }  from './../services/widget-visibility.service';
 

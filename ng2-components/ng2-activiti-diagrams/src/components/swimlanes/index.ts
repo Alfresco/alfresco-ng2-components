@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { DiagramPoolsComponent } from './diagram-pools.component';
 import { DiagramPoolComponent } from './diagram-pool.component';
+import { DiagramPoolsComponent } from './diagram-pools.component';
 
-import { DiagramLanesComponent } from './diagram-lanes.component';
 import { DiagramLaneComponent } from './diagram-lane.component';
+import { DiagramLanesComponent } from './diagram-lanes.component';
 
 // primitives
 export * from './diagram-pools.component';

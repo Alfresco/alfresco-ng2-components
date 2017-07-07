@@ -16,16 +16,16 @@
  */
 
 import {
-    Component, OnChanges, DoCheck, IterableDiffers, SimpleChange, SimpleChanges, Input,
-    Output, EventEmitter, ElementRef, TemplateRef, AfterContentInit, ContentChild, Optional
+    AfterContentInit, AfterViewInit, Component, ContentChild, DoCheck, ElementRef, EventEmitter, Input,
+    IterableDiffers, OnChanges, Optional, Output, SimpleChange, SimpleChanges, TemplateRef
 } from '@angular/core';
-import { DataTableAdapter, DataRow, DataColumn, DataSorting, DataRowEvent } from '../../data/datatable-adapter';
-import { ObjectDataTableAdapter, ObjectDataRow } from '../../data/object-datatable-adapter';
+import { MdCheckboxChange } from '@angular/material';
+import { DataColumnListComponent } from 'ng2-alfresco-core';
+import { Observable, Observer } from 'rxjs/Rx';
+import { DataColumn, DataRow, DataRowEvent, DataSorting, DataTableAdapter } from '../../data/datatable-adapter';
+import { ObjectDataRow, ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 import { DataCellEvent } from './data-cell.event';
 import { DataRowActionEvent } from './data-row-action.event';
-import { DataColumnListComponent } from 'ng2-alfresco-core';
-import { MdCheckboxChange } from '@angular/material';
-import { Observable, Observer } from 'rxjs/Rx';
 
 declare var componentHandler;
 
@@ -34,7 +34,7 @@ declare var componentHandler;
     styleUrls: ['./datatable.component.css'],
     templateUrl: './datatable.component.html'
 })
-export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck {
+export class DataTableComponent implements AfterContentInit, AfterViewInit, OnChanges, DoCheck {
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
