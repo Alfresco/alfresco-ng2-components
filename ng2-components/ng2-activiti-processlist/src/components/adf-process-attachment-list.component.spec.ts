@@ -17,6 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MdProgressSpinnerModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivitiContentService } from 'ng2-activiti-form';
@@ -42,7 +43,8 @@ describe('ActivitiProcessAttachmentListComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                DataTableModule.forRoot()
+                DataTableModule.forRoot(),
+                MdProgressSpinnerModule
             ],
             declarations: [
                 ActivitiProcessAttachmentListComponent

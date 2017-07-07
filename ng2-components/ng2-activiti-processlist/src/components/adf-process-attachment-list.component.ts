@@ -39,6 +39,7 @@ export class ActivitiProcessAttachmentListComponent implements OnChanges {
     error: EventEmitter<any> = new EventEmitter<any>();
 
     attachments: any[] = [];
+    loadingFlag: boolean = true;
 
     constructor(private translateService: AlfrescoTranslationService,
                 private activitiContentService: ActivitiContentService,
@@ -77,6 +78,7 @@ export class ActivitiProcessAttachmentListComponent implements OnChanges {
     private loadAttachmentsByProcessInstanceId(processInstanceId: string) {
         if (processInstanceId) {
             this.reset();
+            this.loadingFlag = true;
             this.activitiContentService.getProcessRelatedContent(processInstanceId).subscribe(
                 (res: any) => {
                     res.data.forEach(content => {
@@ -89,9 +91,11 @@ export class ActivitiProcessAttachmentListComponent implements OnChanges {
                         });
                     });
                     this.success.emit(this.attachments);
+                    this.loadingFlag = false;
                 },
                 (err) => {
                     this.error.emit(err);
+                    this.loadingFlag = false;
                 });
         }
     }
@@ -173,5 +177,9 @@ export class ActivitiProcessAttachmentListComponent implements OnChanges {
                 this.error.emit(err);
             }
         );
+    }
+
+    isLoading() {
+        return this.loadingFlag;
     }
 }
