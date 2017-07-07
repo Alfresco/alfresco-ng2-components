@@ -91,10 +91,5 @@
         "SEARCH": {
             "NO_USERS": "No user found to involve"
         }
-    },
-    "ATTACHMENT_LIST": {
-        "MESSAGES": {
-            "NONE": "No Attachments Found"
-        }
     }
 }
