@@ -16,8 +16,8 @@
  */
 
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { CoreModule, AppConfigModule } from 'ng2-alfresco-core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { AppConfigModule, CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { WebscriptComponent } from '../src/webscript.component';
 

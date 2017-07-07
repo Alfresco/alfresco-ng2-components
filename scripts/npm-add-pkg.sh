@@ -9,6 +9,7 @@ eval SAVE_DEV_OPT=false
 show_help() {
     echo "Usage: npm-add-pkg.sh"
     echo ""
+    echo "--package or -p name of the package"
     echo "--save"
     echo "--save-dev"
     echo "--save-exact"
@@ -33,26 +34,28 @@ eval projects=( "ng2-activiti-diagrams"
       "ng2-alfresco-userinfo" )
 
 save(){
-    NAME_PKG=$1
     SAVE_OPT=true
 }
 
 save_dev(){
-    NAME_PKG=$1
     SAVE_DEV_OPT=true
 }
 
-save_dev(){
-    NAME_PKG=$1
+save_exact(){
     SAVE_EXACT=true
+}
+
+name_package(){
+    NAME_PKG=$1
 }
 
 while [[ $1  == -* ]]; do
     case "$1" in
       -h|--help|-\?) show_help; exit 0;;
-      --save)  save $2; shift 2;;
-      --save-dev)  save_dev $2; shift 2;;
-      --save-exact)  save_exact $2; shift 2;;
+      --save)  save; shift;;
+      --save-dev)  save_dev; shift;;
+      --save-exact)  save_exact; shift;;
+      --package|-p)  name_package $2; shift 2;;
       -*) echo "invalid option: $1" 1>&2; show_help; exit 0;;
     esac
 done
