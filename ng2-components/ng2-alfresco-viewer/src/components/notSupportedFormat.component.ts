@@ -26,7 +26,7 @@ const DEFAULT_CONVERSION_ENCODING = 'pdf';
     templateUrl: './notSupportedFormat.component.html',
     styleUrls: ['./notSupportedFormat.component.css']
 })
-export class NotSupportedFormat implements OnInit {
+export class NotSupportedFormatComponent implements OnInit {
 
     @Input()
     nameFile: string;

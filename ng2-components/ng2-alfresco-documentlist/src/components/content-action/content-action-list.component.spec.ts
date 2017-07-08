@@ -15,12 +15,7 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, TestBed } from '@angular/core/testing';
-import { CoreModule } from 'ng2-alfresco-core';
-import { DataTableModule } from 'ng2-alfresco-datatable';
-import { MaterialModule } from '../../material.module';
-import { DocumentListService } from '../../services/document-list.service';
+import { DocumentListServiceMock } from './../../assets/document-list.service.mock';
 import { ContentActionModel } from './../../models/content-action.model';
 import { DocumentListComponent } from './../document-list.component';
 import { ContentActionListComponent } from './content-action-list.component';
@@ -30,27 +25,9 @@ describe('ContentColumnList', () => {
     let documentList: DocumentListComponent;
     let actionList: ContentActionListComponent;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                CoreModule,
-                DataTableModule,
-                MaterialModule
-            ],
-            declarations: [
-                DocumentListComponent
-            ],
-            providers: [
-                DocumentListService
-            ],
-            schemas: [
-                CUSTOM_ELEMENTS_SCHEMA
-            ]
-        }).compileComponents();
-    }));
-
     beforeEach(() => {
-        documentList = TestBed.createComponent(DocumentListComponent).componentInstance;
+        let documentListService = new DocumentListServiceMock();
+        documentList = new DocumentListComponent(documentListService, null, null, null);
         actionList = new ContentActionListComponent(documentList);
     });
 

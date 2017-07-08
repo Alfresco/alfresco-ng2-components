@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core';
-import { SimpleChanges }    from '@angular/core';
-import { Http, RequestOptions, Response, ResponseContentType }  from '@angular/http';
+import { Component, Input, OnChanges } from '@angular/core';
+import { SimpleChanges } from '@angular/core';
+import { Http, RequestOptions, Response, ResponseContentType } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 @Component({
@@ -25,7 +25,7 @@ import 'rxjs/add/operator/toPromise';
     templateUrl: './txtViewer.component.html',
     styleUrls: ['./txtViewer.component.css']
 })
-export class TxtViewerComponent {
+export class TxtViewerComponent implements OnChanges {
 
     @Input()
     urlFile: any;

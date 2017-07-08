@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { AlfrescoContentService } from 'ng2-alfresco-core';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Rx';
 import { ContentActionHandler } from '../models/content-action.model';
 import { PermissionModel } from '../models/permissions.model';
