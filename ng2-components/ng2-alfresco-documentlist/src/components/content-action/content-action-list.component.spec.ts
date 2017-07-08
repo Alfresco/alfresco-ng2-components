@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { DocumentListComponent } from './../document-list.component';
 import { DocumentListServiceMock } from './../../assets/document-list.service.mock';
 import { ContentActionModel } from './../../models/content-action.model';
+import { DocumentListComponent } from './../document-list.component';
 import { ContentActionListComponent } from './content-action-list.component';
 
 describe('ContentColumnList', () => {

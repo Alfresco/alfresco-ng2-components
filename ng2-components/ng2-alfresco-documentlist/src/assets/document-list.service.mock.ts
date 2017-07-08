@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-import { Observable } from 'rxjs/Rx';
-import { NodePaging } from './../models/document-library.model';
-import { PageNode } from './document-library.model.mock';
-import { DocumentListService } from './../services/document-list.service';
 import {
-    AlfrescoSettingsService,
+    AlfrescoApiService,
     AlfrescoAuthenticationService,
     AlfrescoContentService,
-    AlfrescoApiService,
+    AlfrescoSettingsService,
     LogService
     ThumbnailService
 } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Rx';
+import { NodePaging } from './../models/document-library.model';
+import { DocumentListService } from './../services/document-list.service';
+import { PageNode } from './document-library.model.mock';
 
 export class DocumentListServiceMock extends DocumentListService {
 

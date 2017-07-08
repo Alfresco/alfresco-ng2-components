@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { MediaPlayerComponent } from './mediaPlayer.component';
-import { DebugElement, SimpleChange }    from '@angular/core';
+import { DebugElement, SimpleChange } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentService } from 'ng2-alfresco-core';
+import { MediaPlayerComponent } from './mediaPlayer.component';
 
 import {
+    AlfrescoApiService,
     AlfrescoAuthenticationService,
     AlfrescoSettingsService,
-    AlfrescoApiService,
     CoreModule
 } from 'ng2-alfresco-core';
 

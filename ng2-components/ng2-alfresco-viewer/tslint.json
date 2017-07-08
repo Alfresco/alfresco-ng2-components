@@ -1,4 +1,7 @@
 {
+    "rulesDirectory": [
+        "node_modules/codelyzer"
+    ],
     "rules": {
         "align": [
             true,
@@ -105,14 +108,50 @@
             "allow-leading-underscore",
             "ban-keywords"
         ],
+        "callable-types": true,
+        "import-blacklist": [
+            true,
+            "rxjs"
+        ],
+        "import-spacing": true,
+        "interface-over-type-literal": true,
+        "member-access": false,
+        "no-empty-interface": true,
+        "no-string-literal": false,
+        "no-string-throw": true,
+        "prefer-const": false,
+        "typeof-compare": true,
+        "unified-signatures": true,
         "whitespace": [
             true,
             "check-branch",
+            "check-decl",
             "check-operator",
             "check-separator",
-            "check-type",
-            "check-module",
-            "check-decl"
-        ]
+            "check-type"
+        ],
+        "directive-selector": [
+            true,
+            "attribute",
+            "app",
+            "camelCase"
+        ],
+        "component-selector": [
+            true,
+            "element",
+            "app",
+            "kebab-case"
+        ],
+        "ordered-imports": true,
+        "use-input-property-decorator": true,
+        "use-output-property-decorator": true,
+        "use-host-property-decorator": true,
+        "use-life-cycle-interface": true,
+        "use-pipe-transform-interface": true,
+        "component-class-suffix": true,
+        "directive-class-suffix": true,
+        "no-access-missing-member": true,
+        "templates-use-public": true,
+        "invoke-injectable": true
     }
 }
