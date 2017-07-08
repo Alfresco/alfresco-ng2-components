@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { LoginHeaderDirective } from './login-header.directive';
 import { Injector } from '@angular/core';
 import { getTestBed, TestBed } from '@angular/core/testing';
-import { AlfrescoLoginComponent } from '../components/alfresco-login.component';
 import { CoreModule } from 'ng2-alfresco-core';
+import { AlfrescoLoginComponent } from '../components/alfresco-login.component';
+import { LoginHeaderDirective } from './login-header.directive';
 
 describe('LoginHeaderDirective', () => {
     let injector: Injector;

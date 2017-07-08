@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, HostListener, Inject, Input, Output, TemplateRef } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Inject, Input, OnChanges, OnDestroy, Output, TemplateRef } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
@@ -25,7 +25,7 @@ import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
     templateUrl: './viewer.component.html',
     styleUrls: ['./viewer.component.css']
 })
-export class ViewerComponent {
+export class ViewerComponent implements OnDestroy, OnChanges {
 
     @Input()
     urlFile: string = '';
@@ -169,7 +169,7 @@ export class ViewerComponent {
      *
      * @returns {boolean}
      */
-    private isImage(): boolean {
+    public isImage(): boolean {
         return this.isImageExtension() || this.isImageMimeType();
     }
 
@@ -178,7 +178,7 @@ export class ViewerComponent {
      *
      * @returns {boolean}
      */
-    private isMedia(): boolean {
+    public isMedia(): boolean {
         return this.isMediaExtension(this.extension) || this.isMediaMimeType();
     }
 
@@ -229,7 +229,7 @@ export class ViewerComponent {
      *
      * @returns {boolean}
      */
-    private isPdf(): boolean {
+    public isPdf(): boolean {
         return this.extension === 'pdf' || this.mimeType === 'application/pdf';
     }
 
@@ -238,7 +238,7 @@ export class ViewerComponent {
      *
      * @returns {boolean}
      */
-    private isText(): boolean {
+    public isText(): boolean {
         return this.extension === 'txt' || this.mimeType === 'text/txt' || this.mimeType === 'text/plain';
     }
 

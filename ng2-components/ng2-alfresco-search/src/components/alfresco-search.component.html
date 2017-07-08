@@ -9,8 +9,6 @@
             [contentActions]="true"
             [navigationMode]="navigationMode"
             [enablePagination]="false"
-            (error)="onNavigationError($event)"
-            (success)="resetError()"
             (preview)="onPreviewFile($event)">
             <empty-folder-content>
                 <ng-template>

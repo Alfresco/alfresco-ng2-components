@@ -213,7 +213,7 @@ export class DataTableComponent implements AfterContentInit, AfterViewInit, OnCh
     }
 
     private unsubscribeClickStream() {
-        if(this.singleClickStreamSub) {
+        if  (this.singleClickStreamSub) {
             this.singleClickStreamSub.unsubscribe();
         }
         if (this.multiClickStreamSub) {

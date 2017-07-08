@@ -17,8 +17,8 @@
 
 import { DataColumn } from 'ng2-alfresco-datatable';
 
-import { DocumentListComponent } from './../document-list.component';
 import { DocumentListServiceMock } from './../../assets/document-list.service.mock';
+import { DocumentListComponent } from './../document-list.component';
 import { ContentColumnListComponent } from './content-column-list.component';
 
 describe('ContentColumnList', () => {

@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { DocumentListComponent } from './../document-list.component';
-import { ContentColumnComponent } from './content-column.component';
 import { DocumentListServiceMock } from './../../assets/document-list.service.mock';
+import { DocumentListComponent } from './../document-list.component';
 import { ContentColumnListComponent } from './content-column-list.component';
+import { ContentColumnComponent } from './content-column.component';
 
 describe('ContentColumn', () => {
 

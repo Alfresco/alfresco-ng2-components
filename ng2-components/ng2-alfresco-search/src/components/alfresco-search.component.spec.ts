@@ -16,15 +16,15 @@
  */
 
 import { DebugElement, ReflectiveInjector, SimpleChange } from '@angular/core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Rx';
-import { AlfrescoSearchComponent } from './alfresco-search.component';
-import { TranslationMock } from './../assets/translation.service.mock';
-import { AlfrescoSearchService } from '../services/alfresco-search.service';
 import { AlfrescoTranslationService, CoreModule, NotificationService } from 'ng2-alfresco-core';
 import { DocumentListModule } from 'ng2-alfresco-documentlist';
 import { PermissionModel } from 'ng2-alfresco-documentlist';
+import { Observable } from 'rxjs/Rx';
+import { AlfrescoSearchService } from '../services/alfresco-search.service';
+import { TranslationMock } from './../assets/translation.service.mock';
+import { AlfrescoSearchComponent } from './alfresco-search.component';
 
 describe('AlfrescoSearchComponent', () => {
 

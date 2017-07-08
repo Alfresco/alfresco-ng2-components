@@ -17,7 +17,6 @@
 
 import { NgZone, SimpleChange, TemplateRef } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { DataColumn, DataRowEvent, DataTableComponent } from 'ng2-alfresco-datatable';
 import { Observable, Subject } from 'rxjs/Rx';
@@ -35,6 +34,7 @@ import { ImageResolver, RowFilter, ShareDataRow } from './../data/share-datatabl
 import { DocumentListService } from './../services/document-list.service';
 import { DocumentListComponent } from './document-list.component';
 import { DocumentMenuActionComponent } from './document-menu-action.component';
+import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
 
 declare let jasmine: any;
 

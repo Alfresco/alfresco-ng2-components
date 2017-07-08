@@ -280,10 +280,6 @@ export class ShareDataRow implements DataRow {
     }
 }
 
-export interface RowFilter {
-    (value: ShareDataRow, index: number, array: ShareDataRow[]): any;
-}
+export type RowFilter = (value: ShareDataRow, index: number, array: ShareDataRow[]) => any;
 
-export interface ImageResolver {
-    (row: DataRow, column: DataColumn): string;
-}
+export type ImageResolver = (row: DataRow, column: DataColumn) => string;

@@ -32,8 +32,8 @@ import { EcmModelService } from './src/services/ecm-model.service';
 import { FormRenderingService } from './src/services/form-rendering.service';
 import { FormService } from './src/services/form.service';
 import { NodeService } from './src/services/node.service';
-import { WidgetVisibilityService } from './src/services/widget-visibility.service';
 import { ProcessUploadService } from './src/services/process-upload.service';
+import { WidgetVisibilityService } from './src/services/widget-visibility.service';
 
 export * from './src/components/activiti-form.component';
 export * from './src/components/adf-form-list.component';

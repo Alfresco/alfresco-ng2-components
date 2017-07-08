@@ -26,7 +26,7 @@ import { ContentColumnListComponent } from './src/components/content-column/cont
 import { ContentColumnComponent } from './src/components/content-column/content-column.component';
 import { DocumentListComponent } from './src/components/document-list.component';
 import { DocumentMenuActionComponent } from './src/components/document-menu-action.component';
-import { EmptyFolderContentComponent } from './src/components/empty-folder/empty-folder-content.component';
+import { EmptyFolderContentDirective } from './src/components/empty-folder/empty-folder-content.directive';
 import { MaterialModule } from './src/material.module';
 
 import { DocumentActionsService } from './src/services/document-actions.service';
@@ -40,7 +40,7 @@ export * from './src/components/content-column/content-column.component';
 export * from './src/components/content-column/content-column-list.component';
 export * from './src/components/content-action/content-action.component';
 export * from './src/components/content-action/content-action-list.component';
-export * from './src/components/empty-folder/empty-folder-content.component';
+export * from './src/components/empty-folder/empty-folder-content.directive';
 export * from './src/components/breadcrumb/breadcrumb.component';
 
 // data
@@ -63,7 +63,7 @@ export const DOCUMENT_LIST_DIRECTIVES: any[] = [
     ContentColumnListComponent,
     ContentActionComponent,
     ContentActionListComponent,
-    EmptyFolderContentComponent,
+    EmptyFolderContentDirective,
     BreadcrumbComponent
 ];
 

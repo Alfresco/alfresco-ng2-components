@@ -15,20 +15,20 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { AlfrescoSearchAutocompleteComponent } from './alfresco-search-autocomplete.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ThumbnailService } from 'ng2-alfresco-core';
-import { TranslationMock } from './../assets/translation.service.mock';
-import { result, results, folderResult, noResult, errorJson } from './../assets/alfresco-search.component.mock';
-import { AlfrescoSearchService } from '../services/alfresco-search.service';
 import {
     AlfrescoApiService,
-    AlfrescoSettingsService,
     AlfrescoAuthenticationService,
     AlfrescoContentService,
+    AlfrescoSettingsService,
     AlfrescoTranslationService,
     CoreModule
 } from 'ng2-alfresco-core';
+import { AlfrescoSearchService } from '../services/alfresco-search.service';
+import { errorJson, folderResult, noResult, result, results } from './../assets/alfresco-search.component.mock';
+import { TranslationMock } from './../assets/translation.service.mock';
+import { AlfrescoSearchAutocompleteComponent } from './alfresco-search-autocomplete.component';
 
 describe('AlfrescoSearchAutocompleteComponent', () => {
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { TagService } from '../services/tag.service';
 
 /**
@@ -30,7 +30,7 @@ import { TagService } from '../services/tag.service';
     templateUrl: './tag-node-list.component.html',
     styleUrls: ['./tag-node-list.component.css']
 })
-export class TagNodeList {
+export class TagNodeListComponent implements OnChanges {
 
     @Input()
     nodeId: string;

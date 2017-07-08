@@ -16,11 +16,11 @@
  */
 
 import { AlfrescoContentService } from 'ng2-alfresco-core';
+import { FileNode, FolderNode } from '../assets/document-library.model.mock';
+import { DocumentListServiceMock } from '../assets/document-list.service.mock';
 import { ContentActionHandler } from '../models/content-action.model';
 import { DocumentActionsService } from './document-actions.service';
-import { DocumentListServiceMock } from '../assets/document-list.service.mock';
 import { DocumentListService } from './document-list.service';
-import { FileNode, FolderNode } from '../assets/document-library.model.mock';
 
 describe('DocumentActionsService', () => {
 
