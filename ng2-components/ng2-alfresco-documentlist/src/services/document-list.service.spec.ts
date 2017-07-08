@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { TestBed, async } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 import {
-    CoreModule,
     CookieService,
+    CoreModule,
     LogService,
     LogServiceMock
 } from 'ng2-alfresco-core';

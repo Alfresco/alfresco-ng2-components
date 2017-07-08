@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { FolderActionsService } from './folder-actions.service';
-import { ContentActionHandler } from '../models/content-action.model';
 import { FileNode, FolderNode } from '../assets/document-library.model.mock';
-import { DocumentListService } from './document-list.service';
 import { DocumentListServiceMock } from '../assets/document-list.service.mock';
+import { ContentActionHandler } from '../models/content-action.model';
+import { DocumentListService } from './document-list.service';
+import { FolderActionsService } from './folder-actions.service';
 
 describe('FolderActionsService', () => {
 

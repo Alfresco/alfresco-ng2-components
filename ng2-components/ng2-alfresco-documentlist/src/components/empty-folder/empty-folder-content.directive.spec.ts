@@ -17,20 +17,20 @@
 
 import { DataTableComponent } from 'ng2-alfresco-datatable';
 
-import { EmptyFolderContentComponent } from './empty-folder-content.component';
-import { DocumentListComponent } from './../document-list.component';
 import { DocumentListServiceMock } from './../../assets/document-list.service.mock';
+import { DocumentListComponent } from './../document-list.component';
+import { EmptyFolderContentDirective } from './empty-folder-content.directive';
 
 describe('EmptyFolderContent', () => {
 
-    let emptyFolderContent: EmptyFolderContentComponent;
+    let emptyFolderContent: EmptyFolderContentDirective;
     let documentList: DocumentListComponent;
 
     beforeEach(() => {
         let documentListService = new DocumentListServiceMock();
         documentList = new DocumentListComponent(documentListService, null, null, null);
         documentList.dataTable = new DataTableComponent(null, null);
-        emptyFolderContent = new EmptyFolderContentComponent(documentList);
+        emptyFolderContent = new EmptyFolderContentDirective(documentList);
     });
 
     it('is defined', () => {

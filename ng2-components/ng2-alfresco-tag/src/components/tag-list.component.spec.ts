@@ -20,7 +20,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MdInputModule } from '@angular/material';
 import { AppConfigModule, CoreModule } from 'ng2-alfresco-core';
 import { TagService } from '../services/tag.service';
-import { TagList } from './../components/tag-list.component';
+import { TagListComponent } from './../components/tag-list.component';
 
 declare let jasmine: any;
 
@@ -38,12 +38,13 @@ describe('TagList', () => {
             'entries': [{
                 'entry': {'tag': 'test1', 'id': '0ee933fa-57fc-4587-8a77-b787e814f1d2'}
             }, {'entry': {'tag': 'test2', 'id': 'fcb92659-1f10-41b4-9b17-851b72a3b597'}}, {
-                'entry': {'tag': 'test3', 'id': 'fb4213c0-729d-466c-9a6c-ee2e937273bf'}}]
+                'entry': {'tag': 'test3', 'id': 'fb4213c0-729d-466c-9a6c-ee2e937273bf'}
+            }]
         }
     };
 
     let component: any;
-    let fixture: ComponentFixture<TagList>;
+    let fixture: ComponentFixture<TagListComponent>;
     let debug: DebugElement;
     let element: HTMLElement;
 
@@ -57,7 +58,7 @@ describe('TagList', () => {
                 })
             ],
             declarations: [
-                TagList
+                TagListComponent
             ],
             providers: [
                 TagService
@@ -66,7 +67,7 @@ describe('TagList', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TagList);
+        fixture = TestBed.createComponent(TagListComponent);
 
         debug = fixture.debugElement;
         element = fixture.nativeElement;

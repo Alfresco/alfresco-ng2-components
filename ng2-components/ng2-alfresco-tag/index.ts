@@ -20,8 +20,8 @@ import { MdButtonModule, MdInputModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
 
 import { TagActionsComponent } from './src/components/tag-actions.component';
-import { TagList } from './src/components/tag-list.component';
-import { TagNodeList } from './src/components/tag-node-list.component';
+import { TagListComponent } from './src/components/tag-list.component';
+import { TagNodeListComponent } from './src/components/tag-node-list.component';
 import { TagService } from './src/services/tag.service';
 
 export * from './src/components/tag-actions.component';
@@ -31,8 +31,8 @@ export * from './src/services/tag.service';
 
 export const TAG_DIRECTIVES: any[] = [
     TagActionsComponent,
-    TagList,
-    TagNodeList
+    TagListComponent,
+    TagNodeListComponent
 ];
 
 export const TAG_PROVIDERS: any[] = [

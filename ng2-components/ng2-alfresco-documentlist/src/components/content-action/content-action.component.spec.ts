@@ -16,14 +16,12 @@
  */
 
 import { EventEmitter } from '@angular/core';
-import { async, TestBed } from '@angular/core/testing';
-import { AlfrescoContentService, AlfrescoTranslationService, CoreModule, NotificationService } from 'ng2-alfresco-core';
+
 import { FileNode } from './../../assets/document-library.model.mock';
 import { DocumentListServiceMock } from './../../assets/document-list.service.mock';
 import { ContentActionHandler } from './../../models/content-action.model';
 import { DocumentActionsService } from './../../services/document-actions.service';
 import { FolderActionsService } from './../../services/folder-actions.service';
-import { NodeActionsService } from './../../services/node-actions.service';
 import { DocumentListComponent } from './../document-list.component';
 import { ContentActionListComponent } from './content-action-list.component';
 import { ContentActionComponent } from './content-action.component';
@@ -35,30 +33,10 @@ describe('ContentAction', () => {
     let documentActions: DocumentActionsService;
     let folderActions: FolderActionsService;
 
-    let contentService: AlfrescoContentService;
-    let translateService: AlfrescoTranslationService;
-    let notificationService: NotificationService;
-    let nodeActionsService: NodeActionsService;
-
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                CoreModule.forRoot()
-            ],
-            providers: [
-                AlfrescoContentService
-            ]
-        }).compileComponents();
-    }));
-
     beforeEach(() => {
-        contentService = TestBed.get(AlfrescoContentService);
-        translateService = <AlfrescoTranslationService> { addTranslationFolder: () => {}};
-        nodeActionsService = new NodeActionsService(null, translateService, null, null);
-        notificationService = new NotificationService(null);
         let documentServiceMock = new DocumentListServiceMock();
-        documentActions = new DocumentActionsService(translateService, notificationService, nodeActionsService);
-        folderActions = new FolderActionsService(translateService, notificationService, nodeActionsService, null, contentService);
+        documentActions = new DocumentActionsService(null, null);
+        folderActions = new FolderActionsService(null);
 
         documentList = new DocumentListComponent(documentServiceMock, null, null, null);
         actionList = new ContentActionListComponent(documentList);
@@ -92,8 +70,7 @@ describe('ContentAction', () => {
 
     it('should get action handler from document actions service', () => {
 
-        let handler = function () {
-        };
+        let handler = function() {};
         spyOn(documentActions, 'getHandler').and.returnValue(handler);
 
         let action = new ContentActionComponent(actionList, documentActions, null);
@@ -109,8 +86,7 @@ describe('ContentAction', () => {
     });
 
     it('should get action handler from folder actions service', () => {
-        let handler = function () {
-        };
+        let handler = function() {};
         spyOn(folderActions, 'getHandler').and.returnValue(handler);
 
         let action = new ContentActionComponent(actionList, null, folderActions);
@@ -212,16 +188,14 @@ describe('ContentAction', () => {
     });
 
     it('should find document action handler via service', () => {
-        let handler = <ContentActionHandler> function (obj: any, target?: any) {
-        };
+        let handler = <ContentActionHandler> function (obj: any, target?: any) {};
         let action = new ContentActionComponent(actionList, documentActions, null);
         spyOn(documentActions, 'getHandler').and.returnValue(handler);
         expect(action.getSystemHandler('document', 'name')).toBe(handler);
     });
 
     it('should find folder action handler via service', () => {
-        let handler = <ContentActionHandler> function (obj: any, target?: any) {
-        };
+        let handler = <ContentActionHandler> function (obj: any, target?: any) {};
         let action = new ContentActionComponent(actionList, null, folderActions);
         spyOn(folderActions, 'getHandler').and.returnValue(handler);
         expect(action.getSystemHandler('folder', 'name')).toBe(handler);
