@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MdCheckboxModule, MdInputModule } from '@angular/material';
 import { AlfrescoAuthenticationService, CoreModule } from 'ng2-alfresco-core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
-import { AlfrescoLoginComponent } from './alfresco-login.component';
 import { AuthenticationMock } from './../assets/authentication.service.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
-import { MdInputModule, MdCheckboxModule } from '@angular/material';
+import { AlfrescoLoginComponent } from './alfresco-login.component';
 
 describe('AlfrescoLogin', () => {
     let component: AlfrescoLoginComponent;

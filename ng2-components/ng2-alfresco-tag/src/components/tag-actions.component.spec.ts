@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DebugElement }    from '@angular/core';
+import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MdInputModule } from '@angular/material';
 import { AppConfigModule, CoreModule } from 'ng2-alfresco-core';

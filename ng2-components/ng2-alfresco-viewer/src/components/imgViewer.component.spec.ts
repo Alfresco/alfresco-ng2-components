@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { ImgViewerComponent } from './imgViewer.component';
-import { DebugElement, SimpleChange }    from '@angular/core';
+import { DebugElement, SimpleChange } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import {
+    AlfrescoApiService,
     AlfrescoAuthenticationService,
     AlfrescoSettingsService,
-    AlfrescoApiService,
-    CoreModule,
-    ContentService
+    ContentService,
+    CoreModule
 } from 'ng2-alfresco-core';
+import { ImgViewerComponent } from './imgViewer.component';
 
 describe('Test ng2-alfresco-viewer Img viewer component ', () => {
 

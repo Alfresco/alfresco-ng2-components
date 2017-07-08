@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { TestBed, async } from '@angular/core/testing';
-import { DataColumn, DataRow, DataSorting } from 'ng2-alfresco-datatable';
-import { DocumentListService } from './../services/document-list.service';
-import { ShareDataTableAdapter, ShareDataRow } from './share-datatable-adapter';
-import { FileNode, FolderNode } from './../assets/document-library.model.mock';
+import { async, TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
+import { DataColumn, DataRow, DataSorting } from 'ng2-alfresco-datatable';
+import { FileNode, FolderNode } from './../assets/document-library.model.mock';
+import { DocumentListService } from './../services/document-list.service';
+import { ShareDataRow, ShareDataTableAdapter } from './share-datatable-adapter';
 
 describe('ShareDataTableAdapter', () => {
 

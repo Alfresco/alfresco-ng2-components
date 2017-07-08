@@ -15,20 +15,20 @@
  * limitations under the License.
  */
 
-import { UserInfoComponent } from './user-info.component';
-import { EcmUserService } from '../services/ecm-user.service';
-import { BpmUserService } from '../services/bpm-user.service';
-import { fakeBpmUser } from '../assets/fake-bpm-user.service.mock';
-import { TranslationMock } from '../assets/translation.service.mock';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import {
-    CoreModule,
     AlfrescoAuthenticationService,
     AlfrescoContentService,
-    AlfrescoTranslationService
+    AlfrescoTranslationService,
+    CoreModule
 } from 'ng2-alfresco-core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { fakeBpmUser } from '../assets/fake-bpm-user.service.mock';
+import { fakeEcmEditedUser, fakeEcmUser, fakeEcmUserNoImage } from '../assets/fake-ecm-user.service.mock';
+import { TranslationMock } from '../assets/translation.service.mock';
+import { BpmUserService } from '../services/bpm-user.service';
+import { EcmUserService } from '../services/ecm-user.service';
 import { BpmUserModel } from './../models/bpm-user.model';
-import { fakeEcmUser, fakeEcmEditedUser, fakeEcmUserNoImage } from '../assets/fake-ecm-user.service.mock';
+import { UserInfoComponent } from './user-info.component';
 
 declare let jasmine: any;
 

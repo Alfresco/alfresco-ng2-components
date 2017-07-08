@@ -16,7 +16,7 @@
  */
 
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from 'ng2-alfresco-core';
 import { DocumentListModule } from 'ng2-alfresco-documentlist';
 import { AlfrescoSearchAutocompleteComponent } from './src/components/alfresco-search-autocomplete.component';

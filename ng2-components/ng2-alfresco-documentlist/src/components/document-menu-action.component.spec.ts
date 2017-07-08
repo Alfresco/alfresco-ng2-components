@@ -15,19 +15,19 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SimpleChange } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MdButtonModule, MdIconModule, MdMenuModule } from '@angular/material';
 import {
+    AlfrescoApiService,
     AlfrescoAuthenticationService,
     AlfrescoSettingsService,
     AlfrescoTranslationService,
-    AlfrescoApiService,
     CoreModule,
     LogService
 } from 'ng2-alfresco-core';
 import { DocumentListService } from './../services/document-list.service';
 import { DocumentMenuActionComponent } from './document-menu-action.component';
-import { MdMenuModule, MdButtonModule, MdIconModule } from '@angular/material';
 
 declare let jasmine: any;
 

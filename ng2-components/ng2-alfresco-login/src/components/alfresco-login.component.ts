@@ -86,6 +86,7 @@ export class AlfrescoLoginComponent implements OnInit {
     minLength: number = 2;
     footerTemplate: TemplateRef<any>;
     headerTemplate: TemplateRef<any>;
+    data: any;
 
     private _message: { [id: string]: { [id: string]: string } };
 
