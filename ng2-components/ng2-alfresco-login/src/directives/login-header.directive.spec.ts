@@ -18,7 +18,7 @@
 import { Injector } from '@angular/core';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
-import { LoginComponent } from '../components/login.component';
+import { AlfrescoLoginComponent } from '../components/alfresco-login.component';
 import { LoginHeaderDirective } from './login-header.directive';
 
 describe('LoginHeaderDirective', () => {
@@ -30,7 +30,7 @@ describe('LoginHeaderDirective', () => {
             imports: [CoreModule.forRoot()],
             providers: [
                 LoginHeaderDirective,
-                LoginComponent
+                AlfrescoLoginComponent
             ]
         });
         injector = getTestBed();

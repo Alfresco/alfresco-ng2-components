@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { TestBed, async } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
-import { BpmUserService } from '../services/bpm-user.service';
 import { BpmUserModel } from '../models/bpm-user.model';
+import { BpmUserService } from '../services/bpm-user.service';
 
 declare let jasmine: any;
 

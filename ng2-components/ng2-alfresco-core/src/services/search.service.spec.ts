@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { TestBed, async } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
+import { AlfrescoApiService, CoreModule } from 'ng2-alfresco-core';
+import { fakeApi, fakeError, fakeSearch } from '../assets/alfresco-search.service.mock';
 import { AlfrescoSearchService } from './alfresco-search.service';
-import { CoreModule, AlfrescoApiService } from 'ng2-alfresco-core';
-import { fakeApi, fakeSearch, fakeError } from '../assets/alfresco-search.service.mock';
 
 declare let jasmine: any;
 
