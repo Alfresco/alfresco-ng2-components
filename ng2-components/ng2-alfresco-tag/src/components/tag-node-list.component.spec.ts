@@ -19,7 +19,7 @@ import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MdInputModule } from '@angular/material';
 import { AppConfigModule, CoreModule } from 'ng2-alfresco-core';
-import { TagNodeList } from '../components/tag-node-list.component';
+import { TagNodeListComponent } from '../components/tag-node-list.component';
 import { TagService } from '../services/tag.service';
 
 declare let jasmine: any;
@@ -38,12 +38,13 @@ describe('TagNodeList', () => {
             'entries': [{
                 'entry': {'tag': 'test1', 'id': '0ee933fa-57fc-4587-8a77-b787e814f1d2'}
             }, {'entry': {'tag': 'test2', 'id': 'fcb92659-1f10-41b4-9b17-851b72a3b597'}}, {
-                'entry': {'tag': 'test3', 'id': 'fb4213c0-729d-466c-9a6c-ee2e937273bf'}}]
+                'entry': {'tag': 'test3', 'id': 'fb4213c0-729d-466c-9a6c-ee2e937273bf'}
+            }]
         }
     };
 
     let component: any;
-    let fixture: ComponentFixture<TagNodeList>;
+    let fixture: ComponentFixture<TagNodeListComponent>;
     let debug: DebugElement;
     let element: HTMLElement;
 
@@ -57,7 +58,7 @@ describe('TagNodeList', () => {
                 })
             ],
             declarations: [
-                TagNodeList
+                TagNodeListComponent
             ],
             providers: [
                 TagService
@@ -66,7 +67,7 @@ describe('TagNodeList', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TagNodeList);
+        fixture = TestBed.createComponent(TagNodeListComponent);
 
         debug = fixture.debugElement;
         element = fixture.nativeElement;
@@ -119,8 +120,7 @@ describe('TagNodeList', () => {
                 let deleteButton: any = element.querySelector('#tag_delete_0');
                 deleteButton.click();
 
-                expect(jasmine.Ajax.requests.mostRecent().url).
-                toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags/0ee933fa-57fc-4587-8a77-b787e814f1d2');
+                expect(jasmine.Ajax.requests.mostRecent().url).toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags/0ee933fa-57fc-4587-8a77-b787e814f1d2');
                 expect(jasmine.Ajax.requests.mostRecent().method).toBe('DELETE');
 
                 jasmine.Ajax.requests.mostRecent().respondWith({

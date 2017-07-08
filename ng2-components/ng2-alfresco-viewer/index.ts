@@ -30,7 +30,7 @@ import { CoreModule } from 'ng2-alfresco-core';
 import { MdButtonModule, MdIconModule, MdProgressSpinnerModule } from '@angular/material';
 import { ImgViewerComponent } from './src/components/imgViewer.component';
 import { MediaPlayerComponent } from './src/components/mediaPlayer.component';
-import { NotSupportedFormat } from './src/components/notSupportedFormat.component';
+import { NotSupportedFormatComponent } from './src/components/notSupportedFormat.component';
 import { PdfViewerComponent } from './src/components/pdfViewer.component';
 import { TxtViewerComponent } from './src/components/txtViewer.component';
 import { ViewerComponent } from './src/components/viewer.component';
@@ -50,7 +50,7 @@ export const VIEWER_DIRECTIVES: any[] = [
     ImgViewerComponent,
     TxtViewerComponent,
     MediaPlayerComponent,
-    NotSupportedFormat,
+    NotSupportedFormatComponent,
     PdfViewerComponent,
     ExtensionViewerDirective
 ];

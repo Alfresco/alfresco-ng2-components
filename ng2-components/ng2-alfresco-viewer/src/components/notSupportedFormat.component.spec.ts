@@ -15,35 +15,35 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { NotSupportedFormat } from './notSupportedFormat.component';
-import { PdfViewerComponent } from './pdfViewer.component';
-import { DebugElement }    from '@angular/core';
-import { MdIconModule, MdButtonModule, MdProgressSpinnerModule } from '@angular/material';
-import { Subject } from 'rxjs';
+import { DebugElement } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MdButtonModule, MdIconModule, MdProgressSpinnerModule } from '@angular/material';
 import {
+    AlfrescoApiService,
     AlfrescoAuthenticationService,
     AlfrescoSettingsService,
-    CoreModule,
     ContentService,
-    AlfrescoApiService,
+    CoreModule,
     LogService,
     RenditionsService
 } from 'ng2-alfresco-core';
+import { Subject } from 'rxjs/Subject';
+import { NotSupportedFormatComponent } from './notSupportedFormat.component';
+import { PdfViewerComponent } from './pdfViewer.component';
 
-type RenditionResponse = {
+interface RenditionResponse {
     entry: {
         status: string
-    }
+    };
 };
 
 describe('Test ng2-alfresco-viewer Not Supported Format View component', () => {
 
     const nodeId = 'not-supported-node-id';
 
-    let component: NotSupportedFormat;
+    let component: NotSupportedFormatComponent;
     let service: ContentService;
-    let fixture: ComponentFixture<NotSupportedFormat>;
+    let fixture: ComponentFixture<NotSupportedFormatComponent>;
     let debug: DebugElement;
     let element: HTMLElement;
     let renditionsService: RenditionsService;
@@ -60,7 +60,7 @@ describe('Test ng2-alfresco-viewer Not Supported Format View component', () => {
                 MdProgressSpinnerModule
             ],
             declarations: [
-                NotSupportedFormat,
+                NotSupportedFormatComponent,
                 PdfViewerComponent
             ],
             providers: [
@@ -75,7 +75,7 @@ describe('Test ng2-alfresco-viewer Not Supported Format View component', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(NotSupportedFormat);
+        fixture = TestBed.createComponent(NotSupportedFormatComponent);
         service = fixture.debugElement.injector.get(ContentService);
         debug = fixture.debugElement;
         element = fixture.nativeElement;

@@ -17,8 +17,6 @@
 
 import { NgZone, SimpleChange, TemplateRef } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdProgressSpinnerModule } from '@angular/material';
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { DataColumn, DataRowEvent, DataTableComponent } from 'ng2-alfresco-datatable';
 import { Observable, Subject } from 'rxjs/Rx';

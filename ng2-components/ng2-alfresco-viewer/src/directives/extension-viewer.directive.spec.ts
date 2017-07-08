@@ -16,11 +16,11 @@
  */
 
 import { ElementRef } from '@angular/core';
-import { CoreModule } from 'ng2-alfresco-core';
-import { ExtensionViewerDirective } from './extension-viewer.directive';
-import { ViewerComponent } from '../components/viewer.component';
-import { getTestBed, TestBed, async } from '@angular/core/testing';
 import { Injector } from '@angular/core';
+import { async, getTestBed, TestBed } from '@angular/core/testing';
+import { CoreModule } from 'ng2-alfresco-core';
+import { ViewerComponent } from '../components/viewer.component';
+import { ExtensionViewerDirective } from './extension-viewer.directive';
 
 export class MockElementRef extends ElementRef {
     constructor() {
