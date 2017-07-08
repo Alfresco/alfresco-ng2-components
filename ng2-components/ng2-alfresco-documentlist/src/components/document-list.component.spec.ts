@@ -34,6 +34,7 @@ import { ImageResolver, RowFilter, ShareDataRow } from './../data/share-datatabl
 import { DocumentListService } from './../services/document-list.service';
 import { DocumentListComponent } from './document-list.component';
 import { DocumentMenuActionComponent } from './document-menu-action.component';
+import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
 
 declare let jasmine: any;
 
