@@ -15,23 +15,14 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { CardViewDateItemComponent } from './adf-card-view-dateitem.component';
-import { CardViewTextItemComponent } from './adf-card-view-textitem.component';
-import { CardViewComponent } from './adf-card-view.component';
+import { Component, Input } from '@angular/core';
+import { CardViewItem } from '../../interface/card-view-item.interface';
 
-@NgModule({
-    imports: [
-        CommonModule
-    ],
-    declarations: [
-        CardViewComponent,
-        CardViewTextItemComponent,
-        CardViewDateItemComponent
-    ],
-    exports: [
-        CardViewComponent
-    ]
+@Component({
+    selector: 'adf-card-view-textitem',
+    templateUrl: './adf-card-view-textitem.component.html'
 })
-export class CardViewModule {}
+export class CardViewTextItemComponent {
+    @Input()
+    property: CardViewItem;
+}

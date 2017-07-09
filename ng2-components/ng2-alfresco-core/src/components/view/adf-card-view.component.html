@@ -1,8 +1,8 @@
-<table class="adf-property-list">
-    <ng-template ngFor let-property [ngForOf]="properties" let-idx="index">
-        <tr [attr.data-automation-id]="'header-' + property.key">
-            <td class="adf-header__label">{{ property.label }}</td>
-            <td class="adf-header__value">{{ getPropertyValue(property) }}</td>
-        </tr>
-    </ng-template>
-</table>
+<div class="adf-property-list">
+    <ng-container *ngFor="let property of properties">
+        <ng-container [ngSwitch]="property.type">
+            <adf-card-view-dateitem *ngSwitchCase="'date'" [property]="property" [attr.data-automation-id]="'header-' + property.key" class="adf-property"></adf-card-view-dateitem>
+            <adf-card-view-textitem *ngSwitchDefault [property]="property" [attr.data-automation-id]="'header-' + property.key" class="adf-property"></adf-card-view-textitem>
+        </ng-container>
+    </ng-container>
+</div>

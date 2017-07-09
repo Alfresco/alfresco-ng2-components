@@ -68,6 +68,7 @@ export { ContextMenuModule } from './src/components/context-menu/context-menu.mo
 export { CardViewModule } from './src/components/view/card-view.module';
 export { CollapsableModule } from './src/components/collapsable/collapsable.module';
 export { UserPreferencesService } from './src/services/user-preferences.service';
+export { CardViewItem } from './src/interface/card-view-item.interface';
 export * from './src/services/index';
 export * from './src/components/data-column/data-column.component';
 export * from './src/components/data-column/data-column-list.component';

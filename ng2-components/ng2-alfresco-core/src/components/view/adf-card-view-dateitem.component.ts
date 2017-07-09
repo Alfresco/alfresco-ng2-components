@@ -15,26 +15,14 @@
  * limitations under the License.
  */
 
-/**
- *
- * This object represent the basic structure of a card view.
- *
- *
- * @returns {CardViewModel} .
- */
+import { Component, Input } from '@angular/core';
+import { CardViewItem } from '../../interface/card-view-item.interface';
 
-export class CardViewModel {
-    label: string;
-    value: any;
-    key: any;
-    format: string;
-    default: string;
-
-    constructor(obj?: any) {
-        this.label = obj.label || '';
-        this.value = obj.value;
-        this.key = obj.key;
-        this.format = obj.format;
-        this.default = obj.default;
-    }
+@Component({
+    selector: 'adf-card-view-dateitem',
+    templateUrl: './adf-card-view-dateitem.component.html'
+})
+export class CardViewDateItemComponent {
+    @Input()
+    property: CardViewItem;
 }

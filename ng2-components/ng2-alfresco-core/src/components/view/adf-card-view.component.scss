@@ -2,11 +2,17 @@
 
 .#{$ADF} {
     &-property-list {
+        display: table;
         border-collapse: collapse;
         border-spacing: 0;
     }
 
-    &-header__label {
+    &-property {
+        display: table-row;
+    }
+
+    &-property /deep/ &-property-label {
+        display: table-cell;
         min-width: 100px;
         padding-right: 30px;
         word-wrap: break-word;
@@ -15,7 +21,8 @@
         padding-bottom: 20px;
     }
 
-    &-header__value {
+    &-property /deep/ &-property-value {
+        display: table-cell;
         color: rgb(101, 101, 101);
         vertical-align: top;
         padding-bottom: 20px;

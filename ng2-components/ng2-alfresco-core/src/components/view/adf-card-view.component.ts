@@ -16,8 +16,7 @@
  */
 
 import { Component, Input } from '@angular/core';
-import * as moment from 'moment';
-import { CardViewModel } from '../../models/card-view.model';
+import { CardViewItem } from '../../interface/card-view-item.interface';
 
 @Component({
     selector: 'adf-card-view',
@@ -25,17 +24,6 @@ import { CardViewModel } from '../../models/card-view.model';
     styleUrls: ['./adf-card-view.component.scss']
 })
 export class CardViewComponent {
-
     @Input()
-    properties: CardViewModel [];
-
-    getPropertyValue(property: CardViewModel): string {
-        if (!property.value) {
-            return property.default;
-        } else if (property.format) {
-            return moment(property.value).format(property.format);
-        }
-        return property.value;
-    }
-
+    properties: CardViewItem [];
 }
