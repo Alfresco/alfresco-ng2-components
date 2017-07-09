@@ -17,7 +17,10 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { CardViewModel } from '../../models/card-view.model';
+import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
+import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
+import { CardViewDateItemComponent } from './adf-card-view-dateitem.component';
+import { CardViewTextItemComponent } from './adf-card-view-textitem.component';
 import { CardViewComponent } from './adf-card-view.component';
 
 describe('AdfCardView', () => {
@@ -28,7 +31,9 @@ describe('AdfCardView', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                CardViewComponent
+                CardViewComponent,
+                CardViewTextItemComponent,
+                CardViewDateItemComponent
             ],
             providers: [
             ]
@@ -41,16 +46,16 @@ describe('AdfCardView', () => {
     });
 
     it('should render the label and value', async(() => {
-        component.properties = [new CardViewModel({label: 'My label', value: 'My value'})];
+        component.properties = [new CardViewTextItemModel({label: 'My label', value: 'My value', key: 'some key'})];
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
 
-            let labelValue = fixture.debugElement.query(By.css('.adf-header__label'));
+            let labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
             expect(labelValue).not.toBeNull();
             expect(labelValue.nativeElement.innerText).toBe('My label');
 
-            let value = fixture.debugElement.query(By.css('.adf-header__value'));
+            let value = fixture.debugElement.query(By.css('.adf-property-value'));
             expect(value).not.toBeNull();
             expect(value.nativeElement.innerText).toBe('My value');
         });
@@ -58,19 +63,19 @@ describe('AdfCardView', () => {
     }));
 
     it('should render the date in the correct format', async(() => {
-        component.properties = [new CardViewModel({
-            label: 'My date label', value: '2017-06-14',
+        component.properties = [new CardViewDateItemModel({
+            label: 'My date label', value: '2017-06-14', key: 'some key',
             format: 'MMM DD YYYY'
         })];
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
 
-            let labelValue = fixture.debugElement.query(By.css('.adf-header__label'));
+            let labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
             expect(labelValue).not.toBeNull();
             expect(labelValue.nativeElement.innerText).toBe('My date label');
 
-            let value = fixture.debugElement.query(By.css('.adf-header__value'));
+            let value = fixture.debugElement.query(By.css('.adf-property-value'));
             expect(value).not.toBeNull();
             expect(value.nativeElement.innerText).toBe('Jun 14 2017');
         });
@@ -78,19 +83,20 @@ describe('AdfCardView', () => {
     }));
 
     it('should render the default value if the value is empty', async(() => {
-        component.properties = [new CardViewModel({
+        component.properties = [new CardViewTextItemModel({
             label: 'My default label',
-            default: 'default value'
+            default: 'default value',
+            key: 'some key'
         })];
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
 
-            let labelValue = fixture.debugElement.query(By.css('.adf-header__label'));
+            let labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
             expect(labelValue).not.toBeNull();
             expect(labelValue.nativeElement.innerText).toBe('My default label');
 
-            let value = fixture.debugElement.query(By.css('.adf-header__value'));
+            let value = fixture.debugElement.query(By.css('.adf-property-value'));
             expect(value).not.toBeNull();
             expect(value.nativeElement.innerText).toBe('default value');
         });

@@ -25,7 +25,7 @@
 
 export interface CardViewItemProperties {
     label: string;
-    value: any;
+    value?: any;
     key: any;
     default?: string;
 }
