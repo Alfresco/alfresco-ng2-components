@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
+import { DatePipe } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { MdButtonModule, MdIconModule } from '@angular/material';
+import { MdButtonModule, MdIconModule, MdInputModule } from '@angular/material';
 import { ActivitiFormModule } from 'ng2-activiti-form';
 import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
@@ -35,6 +36,7 @@ import {
     ActivitiTaskDetails,
     ActivitiTaskHeader,
     ActivitiTaskList,
+    AdfCommentListComponent,
     NoTaskDetailsTemplateComponent,
     PeopleList,
     TaskAttachmentListComponent
@@ -59,7 +61,8 @@ export const ACTIVITI_TASKLIST_DIRECTIVES: any[] = [
     ActivitiPeopleSearch,
     TaskAttachmentListComponent,
     ActivitiCreateTaskAttachmentComponent,
-    PeopleList
+    PeopleList,
+    AdfCommentListComponent
 ];
 
 export const ACTIVITI_TASKLIST_PROVIDERS: any[] = [
@@ -73,13 +76,15 @@ export const ACTIVITI_TASKLIST_PROVIDERS: any[] = [
         DataTableModule,
         ActivitiFormModule,
         MdIconModule,
-        MdButtonModule
+        MdButtonModule,
+        MdInputModule
     ],
     declarations: [
         ...ACTIVITI_TASKLIST_DIRECTIVES
     ],
     providers: [
-        ...ACTIVITI_TASKLIST_PROVIDERS
+        ...ACTIVITI_TASKLIST_PROVIDERS,
+        DatePipe
     ],
     exports: [
         ...ACTIVITI_TASKLIST_DIRECTIVES,

@@ -43,6 +43,7 @@
         "COMMENTS": {
             "NONE": "No comments.",
             "ADD": "Add a comment",
+            "HEADER": "Comments",
             "DIALOG": {
                 "TITLE": "New comment",
                 "LABELS": {
