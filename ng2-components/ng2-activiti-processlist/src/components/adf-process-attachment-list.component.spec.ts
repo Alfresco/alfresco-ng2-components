@@ -18,16 +18,16 @@
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Observable } from 'rxjs/Rx';
-
+import { TranslateService } from '@ngx-translate/core';
 import { ActivitiContentService } from 'ng2-activiti-form';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
+import { Observable } from 'rxjs/Rx';
 
 import { TranslationMock } from './../assets/translation.service.mock';
 import { ActivitiProcessAttachmentListComponent } from './adf-process-attachment-list.component';
 
-describe('Activiti Process Instance Attachment List', () => {
+describe('ActivitiProcessAttachmentListComponent', () => {
 
     let componentHandler: any;
     let service: ActivitiContentService;
@@ -59,6 +59,11 @@ describe('Activiti Process Instance Attachment List', () => {
         fixture = TestBed.createComponent(ActivitiProcessAttachmentListComponent);
         component = fixture.componentInstance;
         service = fixture.debugElement.injector.get(ActivitiContentService);
+
+        const translateService: TranslateService = TestBed.get(TranslateService);
+        spyOn(translateService, 'get').and.callFake((key) => {
+            return Observable.of(key);
+        });
 
         mockAttachment = {
             'size': 2,
@@ -172,7 +177,7 @@ describe('Activiti Process Instance Attachment List', () => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('adf-empty-list .empty-list__this-space-is-empty').innerHTML).toEqual('This list is empty');
+            expect(fixture.nativeElement.querySelector('adf-empty-list .empty-list__this-space-is-empty').innerHTML).toEqual('ADF-DATATABLE.EMPTY.HEADER');
         });
     }));
 
