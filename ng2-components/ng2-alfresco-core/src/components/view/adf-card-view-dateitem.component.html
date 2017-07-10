@@ -1,2 +1,23 @@
 <div class="adf-property-label">{{ property.label }}</div>
-<div class="adf-property-value">{{ property.displayValue }}</div>
+<div class="adf-property-value">
+    <span *ngIf="!property.editable">
+        <span [attr.data-automation-id]="'datepicker-label-toggle-'+property.key">{{ property.displayValue }}</span>
+    </span>
+    <span *ngIf="property.editable">
+        <input class="adf-invisible-date-input" [mdDatepicker]="picker" value="{{property.value}}"><!--
+     --><span
+            class="adf-datepicker-toggle"
+            [attr.data-automation-id]="'datepicker-label-toggle-'+property.key"
+            (click)="showDatePicker($event)">{{ property.displayValue }}
+        </span>
+        <button
+            [attr.data-automation-id]="'datepickertoggle-'+property.key"
+            [mdDatepickerToggle]="picker">
+        </button>
+        <md-datepicker #picker
+            [attr.data-automation-id]="'datepicker-'+property.key"
+            (selectedChanged)="dateChanged($event)"
+            [startAt]="property.value">
+        </md-datepicker>
+    </span>
+</div>

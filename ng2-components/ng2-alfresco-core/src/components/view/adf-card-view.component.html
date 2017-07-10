@@ -1,8 +1,15 @@
 <div class="adf-property-list">
     <ng-container *ngFor="let property of properties">
         <ng-container [ngSwitch]="property.type">
-            <adf-card-view-dateitem *ngSwitchCase="'date'" [property]="property" [attr.data-automation-id]="'header-' + property.key" class="adf-property"></adf-card-view-dateitem>
-            <adf-card-view-textitem *ngSwitchDefault [property]="property" [attr.data-automation-id]="'header-' + property.key" class="adf-property"></adf-card-view-textitem>
+
+            <ng-container *ngSwitchCase="'date'">
+                <adf-card-view-dateitem [property]="property" [attr.data-automation-id]="'header-'+property.key" class="adf-property"></adf-card-view-dateitem>
+            </ng-container>
+
+            <ng-container *ngSwitchDefault>
+                <adf-card-view-textitem [property]="property" [attr.data-automation-id]="'header-' + property.key" class="adf-property"></adf-card-view-textitem>
+            </ng-container>
+
         </ng-container>
     </ng-container>
 </div>

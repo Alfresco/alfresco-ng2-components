@@ -18,7 +18,7 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, CardViewUpdateService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 
 import { TaskDetailsModel } from '../models/task-details.model';
@@ -43,7 +43,8 @@ describe('ActivitiTaskHeaderComponent', () => {
                 ActivitiTaskHeaderComponent
             ],
             providers: [
-                ActivitiTaskListService
+                ActivitiTaskListService,
+                CardViewUpdateService
             ]
         }).compileComponents();
 
@@ -116,7 +117,7 @@ describe('ActivitiTaskHeaderComponent', () => {
         component.ngOnChanges({});
         fixture.detectChanges();
         let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value'));
-        expect(valueEl.nativeElement.innerText).toBe('Nov 03 2016');
+        expect(valueEl.nativeElement.innerText.trim()).toBe('Nov 03 2016');
     });
 
     it('should display placeholder if no due date', () => {
@@ -124,7 +125,7 @@ describe('ActivitiTaskHeaderComponent', () => {
         component.ngOnChanges({});
         fixture.detectChanges();
         let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value'));
-        expect(valueEl.nativeElement.innerText).toBe('No date');
+        expect(valueEl.nativeElement.innerText.trim()).toBe('No date');
     });
 
     it('should display form name', () => {

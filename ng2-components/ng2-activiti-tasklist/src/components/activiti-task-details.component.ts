@@ -27,7 +27,7 @@ import { Component,
     ViewChild
 } from '@angular/core';
 import { ContentLinkModel, FormModel, FormOutcomeEvent, FormService } from 'ng2-activiti-form';
-import { AlfrescoAuthenticationService, AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoTranslationService, CardViewUpdateService, LogService } from 'ng2-alfresco-core';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { User } from '../models/user.model';
@@ -39,7 +39,10 @@ declare let dialogPolyfill: any;
 @Component({
     selector: 'adf-task-details, activiti-task-details',
     templateUrl: './activiti-task-details.component.html',
-    styleUrls: ['./activiti-task-details.component.css']
+    styleUrls: ['./activiti-task-details.component.css'],
+    providers: [
+        CardViewUpdateService
+    ]
 })
 export class ActivitiTaskDetailsComponent implements OnInit, OnChanges {
 

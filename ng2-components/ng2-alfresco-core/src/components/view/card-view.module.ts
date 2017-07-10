@@ -17,13 +17,17 @@
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { MdDatepickerModule, MdInputModule, MdNativeDateModule } from '@angular/material';
 import { CardViewDateItemComponent } from './adf-card-view-dateitem.component';
 import { CardViewTextItemComponent } from './adf-card-view-textitem.component';
 import { CardViewComponent } from './adf-card-view.component';
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule,
+        MdDatepickerModule,
+        MdNativeDateModule,
+        MdInputModule
     ],
     declarations: [
         CardViewComponent,

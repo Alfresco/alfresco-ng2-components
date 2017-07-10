@@ -15,34 +15,28 @@
  * limitations under the License.
  */
 
-/**
- *
- * This object represent the basic structure of a card view.
- *
- *
- * @returns {CardViewBaseItemModel} .
- */
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs/Subject';
+import { CardViewBaseItemModel } from '../models/card-view-baseitem.model';
 
-export interface CardViewItemProperties {
-    label: string;
-    value?: any;
-    key: any;
-    default?: string;
-    editable?: boolean;
+interface UpdateNotification {
+    target: any;
+    changed: any;
 }
 
-export abstract class CardViewBaseItemModel {
-    label: string;
-    value: any;
-    key: any;
-    default: string;
-    editable: boolean;
+@Injectable()
+export class CardViewUpdateService {
 
-    constructor(obj: CardViewItemProperties) {
-        this.label = obj.label || '';
-        this.value = obj.value;
-        this.key = obj.key;
-        this.default = obj.default;
-        this.editable = obj.editable || false;
+    // Observable sources
+    private itemUpdatedSource = new Subject<UpdateNotification>();
+
+    // Observable streams
+    public itemUpdated$ = this.itemUpdatedSource.asObservable();
+
+    update(property: CardViewBaseItemModel, changed: any) {
+        this.itemUpdatedSource.next({
+            target: property,
+            changed
+        });
     }
 }

@@ -15,14 +15,30 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core';
-import { CardViewItem } from '../../interface/card-view-item.interface';
+import { Component, Input, ViewChild } from '@angular/core';
+import { MdDatepicker } from '@angular/material';
+import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
+import { CardViewUpdateService } from '../../services/adf-card-view-update.service';
 
 @Component({
     selector: 'adf-card-view-dateitem',
-    templateUrl: './adf-card-view-dateitem.component.html'
+    templateUrl: './adf-card-view-dateitem.component.html',
+    styleUrls: ['./adf-card-view-dateitem.component.scss']
 })
 export class CardViewDateItemComponent {
     @Input()
-    property: CardViewItem;
+    property: CardViewDateItemModel;
+
+    @ViewChild(MdDatepicker)
+    public datepicker: MdDatepicker<any>;
+
+    constructor(private cardViewUpdateService: CardViewUpdateService) {}
+
+    showDatePicker() {
+        this.datepicker.open();
+    }
+
+    dateChanged(changed) {
+        this.cardViewUpdateService.update(this.property, changed);
+    }
 }

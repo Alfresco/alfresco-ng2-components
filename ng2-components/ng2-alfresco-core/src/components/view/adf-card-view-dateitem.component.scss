@@ -1,0 +1,17 @@
+@import 'theming';
+
+.#{$ADF} {
+    &-invisible-date-input {
+        height: 24px;
+        width: 0;
+        overflow: hidden;
+        opacity: 0;
+        border: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    &-datepicker-toggle {
+        cursor: pointer;
+    }
+}
