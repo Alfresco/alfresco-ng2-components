@@ -24,7 +24,9 @@
     <div *ngIf="!isEmptyTemplateDefined()">
         <no-content-template>
             <ng-template>
-                <adf-empty-list [emptyMsg]="'This folder is empty'"></adf-empty-list>
+                <adf-empty-list
+                    emptyMsg="ADF-DOCUMENT-LIST.EMPTY.HEADER">
+                </adf-empty-list>
             </ng-template>
         </no-content-template>
     </div>
