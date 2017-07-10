@@ -11,30 +11,5 @@
         "EMPTY": {
             "HEADER": "This folder is empty"
         }
-    },
-    "DROPDOWN": {
-        "PLACEHOLDER_LABEL": "Site List",
-        "DEFAULT_OPTION": "Default"
-    },
-    "NODE_SELECTOR": {
-        "CANCEL": "Cancel",
-        "CHOOSE": "Choose",
-        "NO_RESULTS": "No results found"
-    },
-    "OPERATION": {
-        "SUCCES": {
-            "CONTENT": {
-                "COPY": "Content was copied successfully.",
-                "MOVE": "Content was moved successfully."
-            },
-            "FOLDER": {
-                "COPY": "Folder was copied successfully.",
-                "MOVE": "Folder was moved successfully."
-            }
-        },
-        "ERROR": {
-            "CONFLICT": "Name already exists in target location.",
-            "UNKNOWN": "Unknown error happened."
-        }
     }
 }

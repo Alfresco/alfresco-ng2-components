@@ -45,9 +45,9 @@ describe('AdfEmptyListComponentComponent', () => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('.empty-list__this-space-is-empty').innerHTML).toEqual('This list is empty');
-            expect(fixture.nativeElement.querySelector('.empty-list__drag-drop').innerHTML).toEqual('Drag and drop');
-            expect(fixture.nativeElement.querySelector('.empty-list__any-files-here-to-add').innerHTML).toEqual('any files here to add');
+            expect(fixture.nativeElement.querySelector('.empty-list__this-space-is-empty').innerHTML).toEqual('ADF-DATATABLE.EMPTY.HEADER');
+            expect(fixture.nativeElement.querySelector('.empty-list__drag-drop').innerHTML).toEqual('ADF-DATATABLE.EMPTY.DRAG-AND-DROP.TITLE');
+            expect(fixture.nativeElement.querySelector('.empty-list__any-files-here-to-add').innerHTML).toEqual('ADF-DATATABLE.EMPTY.DRAG-AND-DROP.SUBTITLE');
             expect(fixture.nativeElement.querySelector('.empty-list__empty_doc_lib').src).toContain('empty_doc_lib');
         });
     }));

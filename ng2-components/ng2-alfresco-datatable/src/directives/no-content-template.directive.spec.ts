@@ -17,6 +17,7 @@
 
 import { Injector } from '@angular/core';
 import { getTestBed, TestBed } from '@angular/core/testing';
+import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableComponent } from '../components/datatable/datatable.component';
 import { NoContentTemplateDirective } from './no-content-template.directive';
 
@@ -26,6 +27,9 @@ describe('NoContentTemplateDirective', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
+            imports: [
+                CoreModule.forRoot()
+            ],
             providers: [
                 NoContentTemplateDirective,
                 DataTableComponent
