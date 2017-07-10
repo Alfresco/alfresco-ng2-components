@@ -18,6 +18,7 @@
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { TranslateService } from '@ngx-translate/core';
 import { ActivitiContentService } from 'ng2-activiti-form';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
@@ -41,7 +42,7 @@ describe('TaskAttachmentList', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                DataTableModule
+                DataTableModule.forRoot()
             ],
             declarations: [
                 TaskAttachmentListComponent
@@ -51,9 +52,14 @@ describe('TaskAttachmentList', () => {
             ]
         }).compileComponents();
 
-        let translateService = TestBed.get(AlfrescoTranslationService);
+        let translateService: AlfrescoTranslationService = TestBed.get(AlfrescoTranslationService);
         spyOn(translateService, 'addTranslationFolder').and.stub();
         spyOn(translateService, 'get').and.callFake((key) => {
+            return Observable.of(key);
+        });
+
+        let nativeTranslateService: TranslateService = TestBed.get(TranslateService);
+        spyOn(nativeTranslateService, 'get').and.callFake((key) => {
             return Observable.of(key);
         });
     }));
@@ -167,7 +173,7 @@ describe('TaskAttachmentList', () => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('adf-empty-list .empty-list__this-space-is-empty').innerHTML).toEqual('This list is empty');
+            expect(fixture.nativeElement.querySelector('adf-empty-list .empty-list__this-space-is-empty').innerHTML).toEqual('ADF-DATATABLE.EMPTY.HEADER');
         });
     }));
 
