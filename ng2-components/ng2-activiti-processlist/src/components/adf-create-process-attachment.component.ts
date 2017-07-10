@@ -30,10 +30,10 @@ export class ActivitiCreateProcessAttachmentComponent implements OnChanges {
     processInstanceId: string;
 
     @Output()
-    creationError: EventEmitter<any> = new EventEmitter<any>();
+    error: EventEmitter<any> = new EventEmitter<any>();
 
     @Output()
-    contentCreated: EventEmitter<any> = new EventEmitter<any>();
+    success: EventEmitter<any> = new EventEmitter<any>();
 
     constructor(private translateService: AlfrescoTranslationService,
                 private activitiContentService: ActivitiContentService) {
@@ -59,10 +59,10 @@ export class ActivitiCreateProcessAttachmentComponent implements OnChanges {
             };
             this.activitiContentService.createProcessRelatedContent(this.processInstanceId, file, opts).subscribe(
                 (res) => {
-                    this.contentCreated.emit(res);
+                    this.success.emit(res);
                 },
                 (err) => {
-                    this.creationError.emit(err);
+                    this.error.emit(err);
                 });
         }
     }
