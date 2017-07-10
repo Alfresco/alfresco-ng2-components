@@ -193,7 +193,8 @@ describe('ActivitiStartTaskComponent', () => {
         createTaskButton.click();
         expect(activitiStartTaskComponent.formDetails).not.toBeDefined();
         expect(attachFormToATask).not.toHaveBeenCalled();
-        });
+    });
+
     it('should show start task button', () => {
         expect(element.querySelector('#button-start')).toBeDefined();
         expect(element.querySelector('#button-start')).not.toBeNull();
@@ -222,6 +223,16 @@ describe('ActivitiStartTaskComponent', () => {
         activitiStartTaskComponent.name = '';
         fixture.detectChanges();
         expect(createTaskButton.disabled).toBeTruthy();
+    });
+
+    it('should cancle start task on cancle button clicked', () => {
+        let emitSpy = spyOn(activitiStartTaskComponent.cancel, 'emit');
+        let cancleTaskButton =  fixture.nativeElement.querySelector('#button-cancle');
+        activitiStartTaskComponent.name = '';
+        fixture.detectChanges();
+        cancleTaskButton.click();
+        expect(emitSpy).not.toBeNull();
+        expect(emitSpy).toHaveBeenCalled();
     });
 
     it('should enable button if name is not empty', () => {

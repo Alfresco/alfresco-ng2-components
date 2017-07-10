@@ -495,7 +495,7 @@ This component displays comments entered by involved users to a specified task. 
 This component Creates/Starts new task for the specified app
 
 ```html
-<adf-start-task 
+<adf-start-task
     [appId]="YOUR_APP_ID">
 </adf-start-task>
 ```

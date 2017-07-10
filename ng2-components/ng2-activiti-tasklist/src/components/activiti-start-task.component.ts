@@ -129,7 +129,7 @@ export class ActivitiStartTaskComponent implements OnInit {
     }
 
     private searchUser() {
-        this.peopleService.getWorkflowUsers('', '').subscribe((users) => {
+        this.peopleService.getWorkflowUsers().subscribe((users) => {
                 this.people = users;
             }, (err) => {
                 this.error.emit(err);
