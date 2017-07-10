@@ -17,14 +17,17 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
 import { ActivitiFormModule } from 'ng2-activiti-form';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 
+import { DatePipe } from '@angular/common';
+import { MdInputModule } from '@angular/material';
+import { DataTableModule } from 'ng2-alfresco-datatable';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { ActivitiComments } from './activiti-comments.component';
+import { AdfCommentListComponent } from './adf-comment-list.component';
 
 describe('ActivitiComments', () => {
 
@@ -39,13 +42,17 @@ describe('ActivitiComments', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                ActivitiFormModule.forRoot()
+                ActivitiFormModule.forRoot(),
+                DataTableModule,
+                MdInputModule
             ],
             declarations: [
-                ActivitiComments
+                ActivitiComments,
+                AdfCommentListComponent
             ],
             providers: [
-                ActivitiTaskListService
+                ActivitiTaskListService,
+                DatePipe
             ]
         }).compileComponents();
 
@@ -60,11 +67,11 @@ describe('ActivitiComments', () => {
         service = fixture.debugElement.injector.get(ActivitiTaskListService);
 
         getCommentsSpy = spyOn(service, 'getTaskComments').and.returnValue(Observable.of([
-            { message: 'Test1' },
-            { message: 'Test2' },
-            { message: 'Test3'}
+            { message: 'Test1', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'} },
+            { message: 'Test2', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'} },
+            { message: 'Test3', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'} }
         ]));
-        addCommentSpy = spyOn(service, 'addTaskComment').and.returnValue(Observable.of({id: 123, message: 'Test'}));
+        addCommentSpy = spyOn(service, 'addTaskComment').and.returnValue(Observable.of({id: 123, message: 'Test Comment'}));
 
         componentHandler = jasmine.createSpyObj('componentHandler', [
             'upgradeAllRegistered',
@@ -90,7 +97,7 @@ describe('ActivitiComments', () => {
         expect(emitSpy).toHaveBeenCalled();
     });
 
-    it('should not comments when no taskId is specified', () => {
+    it('should not load comments when no taskId is specified', () => {
         fixture.detectChanges();
         expect(getCommentsSpy).not.toHaveBeenCalled();
     });
@@ -101,17 +108,45 @@ describe('ActivitiComments', () => {
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(fixture.debugElement.queryAll(By.css('ul.mdl-list li')).length).toBe(3);
+            expect(fixture.nativeElement.querySelectorAll('#comment-message').length).toBe(3);
+            expect(fixture.nativeElement.querySelector('#comment-message:empty')).toBeNull();
         });
     }));
+
+    it('should display comments count when the task has comments', () => {
+        let change = new SimpleChange(null, '123', true);
+        component.ngOnChanges({ 'taskId': change });
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            let element = fixture.nativeElement.querySelector('#comment-header');
+            expect(element.innerText).toContain('(3)');
+        });
+    });
 
     it('should not display comments when the task has no comments', async(() => {
         component.taskId = '123';
         getCommentsSpy.and.returnValue(Observable.of([]));
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(fixture.nativeElement.querySelector('#comment-container')).toBeNull();
+        });
+    }));
+
+    it('should display comments input by default', async(() => {
+        let change = new SimpleChange(null, '123', true);
+        component.ngOnChanges({ 'taskId': change });
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(fixture.nativeElement.querySelector('#comment-input')).not.toBeNull();
+        });
+    }));
+
+    it('should not display comments input when the task is readonly', async(() => {
+        component.readOnly = true;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(fixture.debugElement.queryAll(By.css('ul.mdl-list li')).length).toBe(0);
+            expect(fixture.nativeElement.querySelector('#comment-input')).toBeNull();
         });
     }));
 
@@ -133,20 +168,14 @@ describe('ActivitiComments', () => {
             expect(getCommentsSpy).toHaveBeenCalledWith('456');
         });
 
-        it('should NOT fetch new comments when empty changeset made', () => {
+        it('should not fetch new comments when empty changeset made', () => {
             component.ngOnChanges({});
             expect(getCommentsSpy).not.toHaveBeenCalled();
         });
 
-        it('should NOT fetch new comments when taskId changed to null', () => {
+        it('should not fetch new comments when taskId changed to null', () => {
             component.ngOnChanges({ 'taskId': nullChange });
             expect(getCommentsSpy).not.toHaveBeenCalled();
-        });
-
-        it('should set a placeholder message when taskId changed to null', () => {
-            component.ngOnChanges({ 'taskId': nullChange });
-            fixture.detectChanges();
-            expect(fixture.debugElement.query(By.css('[data-automation-id="comments-none"]'))).not.toBeNull();
         });
     });
 
@@ -158,35 +187,52 @@ describe('ActivitiComments', () => {
             fixture.whenStable();
         }));
 
-        it('should display a dialog to the user when the Add button clicked', () => {
-            let dialogEl = fixture.debugElement.query(By.css('.mdl-dialog')).nativeElement;
-            let showSpy: jasmine.Spy = spyOn(dialogEl, 'showModal');
-            component.showDialog();
-            expect(showSpy).toHaveBeenCalled();
-        });
+        it('should call service to add a comment when enter key is pressed', async(() => {
+            let event = new KeyboardEvent('keyup', {'key': 'Enter'});
+            let element = fixture.nativeElement.querySelector('#comment-input');
+            component.message = 'Test Comment';
+            element.dispatchEvent(event);
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(addCommentSpy).toHaveBeenCalled();
+                let elements = fixture.nativeElement.querySelectorAll('#comment-message');
+                expect(elements.length).toBe(1);
+                expect(elements[0].innerText).toBe('Test Comment');
+            });
+        }));
 
-        it('should call service to add a comment', () => {
-            component.showDialog();
+        it('should not call service to add a comment when comment is empty', async(() => {
+            let event = new KeyboardEvent('keyup', {'key': 'Enter'});
+            let element = fixture.nativeElement.querySelector('#comment-input');
+            component.message = '';
+            element.dispatchEvent(event);
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(addCommentSpy).not.toHaveBeenCalled();
+            });
+        }));
+
+        it('should clear comment when escape key is pressed', async(() => {
+            let event = new KeyboardEvent('keyup', {'key': 'Escape'});
+            let element = fixture.nativeElement.querySelector('#comment-input');
             component.message = 'Test comment';
-            component.add();
-            expect(addCommentSpy).toHaveBeenCalledWith('123', 'Test comment');
-        });
+            element.dispatchEvent(event);
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                element = fixture.nativeElement.querySelector('#comment-input');
+                expect(element.value).toBe('');
+            });
+        }));
 
         it('should emit an error when an error occurs adding the comment', () => {
             let emitSpy = spyOn(component.error, 'emit');
             addCommentSpy.and.returnValue(Observable.throw({}));
-            component.showDialog();
             component.message = 'Test comment';
             component.add();
             expect(emitSpy).toHaveBeenCalled();
-        });
-
-        it('should close add dialog when close button clicked', () => {
-            let dialogEl = fixture.debugElement.query(By.css('.mdl-dialog')).nativeElement;
-            let closeSpy: jasmine.Spy = spyOn(dialogEl, 'close');
-            component.showDialog();
-            component.cancel();
-            expect(closeSpy).toHaveBeenCalled();
         });
 
     });
