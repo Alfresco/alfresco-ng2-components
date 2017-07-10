@@ -1,3 +1,11 @@
 {
-
+    "ADF-DATATABLE": {
+        "EMPTY": {
+            "HEADER": "This list is empty",
+            "DRAG-AND-DROP": {
+                "TITLE": "Drag and drop",
+                "SUBTITLE": "any files here to add"
+            }
+        }
+    }
 }
