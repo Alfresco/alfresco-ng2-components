@@ -17,8 +17,9 @@
 
 import { NgZone, SimpleChange, TemplateRef } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { DataTableModule } from 'ng2-alfresco-datatable';
+import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { DataColumn, DataRowEvent, DataTableComponent } from 'ng2-alfresco-datatable';
+import { DataTableModule } from 'ng2-alfresco-datatable';
 import { Observable, Subject } from 'rxjs/Rx';
 import { FileNode, FolderNode } from '../assets/document-library.model.mock';
 import {
@@ -34,7 +35,6 @@ import { ImageResolver, RowFilter, ShareDataRow } from './../data/share-datatabl
 import { DocumentListService } from './../services/document-list.service';
 import { DocumentListComponent } from './document-list.component';
 import { DocumentMenuActionComponent } from './document-menu-action.component';
-import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
 
 declare let jasmine: any;
 
@@ -712,7 +712,7 @@ describe('DocumentList', () => {
 
     it('should check [empty folder] template ', () => {
         documentList.emptyFolderTemplate = <TemplateRef<any>> {};
-        documentList.dataTable = new DataTableComponent(null, null);
+        documentList.dataTable = new DataTableComponent(null, null, null);
         expect(documentList.dataTable).toBeDefined();
         expect(documentList.isEmptyTemplateDefined()).toBeTruthy();
 
@@ -722,7 +722,7 @@ describe('DocumentList', () => {
 
     it('should empty folder NOT show the pagination', () => {
         documentList.emptyFolderTemplate = <TemplateRef<any>> {};
-        documentList.dataTable = new DataTableComponent(null, null);
+        documentList.dataTable = new DataTableComponent(null, null, null);
 
         expect(documentList.isEmpty()).toBeTruthy();
         expect(element.querySelector('alfresco-pagination')).toBe(null);

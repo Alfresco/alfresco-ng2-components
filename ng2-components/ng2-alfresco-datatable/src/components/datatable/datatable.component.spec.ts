@@ -59,7 +59,6 @@ describe('DataTable', () => {
     beforeEach(() => {
         // reset MDL handler
         window['componentHandler'] = null;
-        // dataTable = new DataTableComponent();
 
         eventMock = {
             preventDefault: function () {
@@ -211,14 +210,14 @@ describe('DataTable', () => {
     });
 
     it('should initialize default adapter', () => {
-        let table = new DataTableComponent(null, null);
+        let table = new DataTableComponent(null, null, null);
         expect(table.data).toBeUndefined();
         table.ngOnChanges({'data': new SimpleChange('123', {}, true)});
         expect(table.data).toEqual(jasmine.any(ObjectDataTableAdapter));
     });
 
     it('should load data table on onChange', () => {
-        let table = new DataTableComponent(null, null);
+        let table = new DataTableComponent(null, null, null);
         let data = new ObjectDataTableAdapter([], []);
 
         expect(table.data).toBeUndefined();
