@@ -6,5 +6,10 @@
             "CREATE": "Create",
             "CANCEL": "Cancel"
         }
+    },
+    "ADF-DOCUMENT-LIST": {
+        "EMPTY": {
+            "HEADER": "This folder is empty"
+        }
     }
 }
