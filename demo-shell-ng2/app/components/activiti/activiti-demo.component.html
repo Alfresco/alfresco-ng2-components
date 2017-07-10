@@ -81,13 +81,9 @@
                                         <i class="material-icons">add</i>
                                     </button>
                                 </div>
-                                <adf-upload-drag-area [parentId]="currentTaskId">
-                                    <adf-task-attachment-list #taskAttach
-                                                            *ngIf="currentTaskId"
-                                                            [taskId]="currentTaskId"
-                                                            (attachmentClick)="onAttachmentClick($event)">
-                                    </adf-task-attachment-list>
-                                </adf-upload-drag-area>
+                                <activiti-task-attachments
+                                    [taskId]="currentTaskId">
+                                </activiti-task-attachments>
                                 <div *ngIf="isCreateTaskAttachVisible()">
                                     <adf-create-task-attachment *ngIf="currentTaskId"
                                                                 [taskId]="currentTaskId"
@@ -166,10 +162,9 @@
                                         <i class="material-icons">add</i>
                                     </button>
                                 </div>
-                                <adf-process-attachment-list *ngIf="currentProcessInstanceId"
-                                                          [processInstanceId]="currentProcessInstanceId"
-                                                          (attachmentClick)="onAttachmentClick($event)">
-                                </adf-process-attachment-list>
+                                <activiti-process-attachments
+                                    [processId]="currentProcessInstanceId">
+                                </activiti-process-attachments>
                                 <div *ngIf="isCreateProcessAttachVisible()">
                                     <adf-create-process-attachment *ngIf="currentProcessInstanceId"
                                                                 [processInstanceId]="currentProcessInstanceId"
