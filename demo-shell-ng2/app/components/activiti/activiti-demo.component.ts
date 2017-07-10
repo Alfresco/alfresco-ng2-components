@@ -104,8 +104,6 @@ export class ActivitiDemoComponent implements AfterViewInit {
     sub: Subscription;
     blobFile: any;
     flag: boolean = true;
-    createTaskAttach: boolean = false;
-    createProcessAttach: boolean = false;
 
     dataTasks: ObjectDataTableAdapter;
     dataProcesses: ObjectDataTableAdapter;
@@ -330,14 +328,6 @@ export class ActivitiDemoComponent implements AfterViewInit {
 
     onRowDblClick(event): void {
         console.log(event);
-    }
-
-    isCreateTaskAttachVisible(): boolean {
-        return this.createTaskAttach;
-    }
-
-    isCreateProcessAttachVisible(): boolean {
-        return this.createProcessAttach;
     }
 
     isTaskCompleted(): boolean {
