@@ -28,16 +28,12 @@ export class AdfEmptyListComponent {
     emptyListImageUrl: string = require('../../assets/images/empty_doc_lib.svg');
 
     @Input()
-    emptyMsg: string = 'This list is empty';
+    emptyMsg: string = 'ADF-DATATABLE.EMPTY.HEADER';
 
     @Input()
-    dragDropMsg: string = 'Drag and drop';
+    dragDropMsg: string = 'ADF-DATATABLE.EMPTY.DRAG-AND-DROP.TITLE';
 
     @Input()
-    additionalMsg: string = 'any files here to add';
-
-    constructor() {
-
-    }
+    additionalMsg: string = 'ADF-DATATABLE.EMPTY.DRAG-AND-DROP.SUBTITLE';
 
 }
