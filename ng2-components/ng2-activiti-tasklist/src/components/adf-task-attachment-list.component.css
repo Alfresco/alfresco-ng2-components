@@ -1,17 +1,13 @@
-alfresco-datatable >>> .column-header {
+adf-datatable >>> .column-header {
     color: #232323;
     font-size: 15px;
 }
 
-alfresco-datatable >>> .data-cell {
+adf-datatable >>> .data-cell {
     cursor: pointer !important;
 }
 
-.no-attachment-message {
-    border: 1px solid rgb(224, 224, 224);
-    background: #fff;
-    text-align: left;
-    border-top: none;
-    padding: 10px;
-    text-align: center;
+.adf-attachment-list-loading-margin {
+    margin-left: calc((100% - 100px) / 2);
+    margin-right: calc((100% - 100px) / 2);
 }
