@@ -141,7 +141,7 @@ describe('CardViewDateItemComponent', () => {
         cardViewUpdateService.itemUpdated$.subscribe(
             (updateNotification) => {
                 expect(updateNotification.target).toBe(component.property);
-                expect(updateNotification.changed).toEqual({ value: expectedDate });
+                expect(updateNotification.changed).toEqual({ datekey: expectedDate });
                 done();
             }
         );

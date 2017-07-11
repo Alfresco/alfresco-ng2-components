@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { CardViewBaseItemModel } from '../models/card-view-baseitem.model';
 
-interface UpdateNotification {
+export interface UpdateNotification {
     target: any;
     changed: any;
 }

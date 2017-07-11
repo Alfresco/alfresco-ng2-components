@@ -40,6 +40,6 @@ export class CardViewDateItemComponent {
     }
 
     dateChanged(changed) {
-        this.cardViewUpdateService.update(this.property, { value: changed });
+        this.cardViewUpdateService.update(this.property, { [this.property.key]: changed });
     }
 }
