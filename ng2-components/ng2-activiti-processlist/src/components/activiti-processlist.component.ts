@@ -62,7 +62,7 @@ export class ActivitiProcessInstanceListComponent implements OnChanges, AfterCon
     onError: EventEmitter<any> = new EventEmitter<any>();
 
     currentInstanceId: string;
-    loadingFlag: boolean = true;
+    isLoading: boolean = true;
 
     private defaultSchema: DataColumn[] = [
         { type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true },
@@ -141,7 +141,7 @@ export class ActivitiProcessInstanceListComponent implements OnChanges, AfterCon
     }
 
     private load(requestNode: ProcessFilterRequestRepresentation) {
-        this.loadingFlag = true;
+        this.isLoading = true;
         this.processService.getProcessInstances(requestNode)
             .subscribe(
                 (response) => {
@@ -149,11 +149,11 @@ export class ActivitiProcessInstanceListComponent implements OnChanges, AfterCon
                     this.renderInstances(instancesRow);
                     this.selectFirst();
                     this.onSuccess.emit(response);
-                    this.loadingFlag = false;
+                    this.isLoading = false;
                 },
                 error => {
                     this.onError.emit(error);
-                    this.loadingFlag = false;
+                    this.isLoading = false;
                 });
     }
 
@@ -278,9 +278,5 @@ export class ActivitiProcessInstanceListComponent implements OnChanges, AfterCon
             sort: this.sort
         };
         return new ProcessFilterRequestRepresentation(requestNode);
-    }
-
-    isLoading() {
-        return this.loadingFlag;
     }
 }
