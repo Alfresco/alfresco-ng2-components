@@ -16,8 +16,8 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { MdProgressSpinnerModule } from '@angular/material';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MdProgressSpinnerModule } from '@angular/material';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { DataRowEvent, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
