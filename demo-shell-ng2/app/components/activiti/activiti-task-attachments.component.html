@@ -1,0 +1,29 @@
+<div id="attachment-task-list" *ngIf="taskId">
+    <h5>Attachments</h5>
+    <div class="adf-no-form-container">
+        <adf-upload-drag-area
+            [parentId]="taskId"
+            [showNotificationBar]="false">
+            <adf-task-attachment-list #taskAttachList
+                *ngIf="taskId"
+                [taskId]="taskId"
+                (attachmentClick)="onAttachmentClick($event)">
+            </adf-task-attachment-list>
+        </adf-upload-drag-area>
+
+        <adf-create-task-attachment
+            [taskId]="taskId"
+            (success)="onFileUploadComplete($event)">
+        </adf-create-task-attachment>
+
+    </div>
+</div>
+
+<div *ngIf="fileShowed">
+    <alfresco-viewer
+        [(showViewer)]="fileShowed"
+        [blobFile]="content"
+        [displayName]="contentName"
+        [overlayMode]="true">
+    </alfresco-viewer>
+</div>
