@@ -82,7 +82,7 @@ export class ActivitiTaskList implements OnChanges, AfterContentInit {
 
     currentInstanceId: string;
 
-    loadingFlag: boolean = true;
+    isLoading: boolean = true;
 
     /**
      * Toggles custom data source mode.
@@ -182,7 +182,7 @@ export class ActivitiTaskList implements OnChanges, AfterContentInit {
     }
 
     private load(requestNode: TaskQueryRequestRepresentationModel) {
-        this.loadingFlag = true;
+        this.isLoading = true;
         this.taskListService.getTotalTasks(requestNode).subscribe(
             (res) => {
                 requestNode.size = res.total;
@@ -192,14 +192,14 @@ export class ActivitiTaskList implements OnChanges, AfterContentInit {
                         this.renderInstances(instancesRow);
                         this.selectTask(requestNode.landingTaskId);
                         this.onSuccess.emit(response);
-                        this.loadingFlag = false;
+                        this.isLoading = false;
                     }, (error) => {
                         this.onError.emit(error);
-                        this.loadingFlag = false;
+                        this.isLoading = false;
                     });
             }, (err) => {
                 this.onError.emit(err);
-                this.loadingFlag = false;
+                this.isLoading = false;
             });
     }
 
@@ -305,9 +305,5 @@ export class ActivitiTaskList implements OnChanges, AfterContentInit {
             landingTaskId: this.landingTaskId
         };
         return new TaskQueryRequestRepresentationModel(requestNode);
-    }
-
-    isLoading() {
-        return this.loadingFlag;
     }
 }
