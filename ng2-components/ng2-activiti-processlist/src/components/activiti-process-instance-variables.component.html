@@ -4,14 +4,33 @@
 </div>
 
 
-<div *ngIf="!isListEmpty()">
-    <adf-datatable [data]="data" [actions]="true" (showRowActionsMenu)="onShowRowActionsMenu($event)"
-                        (executeRowAction)="onExecuteRowAction($event)"></adf-datatable>
+<div>
+    <adf-datatable 
+    [data]="data" 
+    [actions]="true"
+    [loading]="isLoading()"
+    (showRowActionsMenu)="onShowRowActionsMenu($event)"
+    (executeRowAction)="onExecuteRowAction($event)">
+        <loading-content-template>
+            <ng-template>
+                <!--Add your custom loading template here-->
+                <md-progress-spinner
+                    class="adf-variable-list-loading-margin"
+                    [color]="'primary'"
+                    [mode]="'indeterminate'">
+                </md-progress-spinner>
+            </ng-template>
+        </loading-content-template>
+        <no-content-template>
+            <!--Add your custom empty template here-->
+            <ng-template>
+                <div class="no-content-message">
+                    {{ 'DETAILS.VARIABLES.NONE' | translate }}
+                </div>
+            </ng-template>
+        </no-content-template>
+    </adf-datatable>
 </div>
-<div *ngIf="isListEmpty()" data-automation-id="variables-none">
-    {{ 'DETAILS.VARIABLES.NONE' | translate }}
-</div>
-
 
 <dialog class="mdl-dialog add-dialog" #addDialog>
     <h4 class="mdl-dialog__title">{{ 'DETAILS.VARIABLES.ADD_DIALOG.TITLE' |translate }}</h4>

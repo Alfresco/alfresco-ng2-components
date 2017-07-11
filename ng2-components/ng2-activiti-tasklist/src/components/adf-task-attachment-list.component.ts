@@ -39,6 +39,7 @@ export class TaskAttachmentListComponent implements OnChanges {
     error: EventEmitter<any> = new EventEmitter<any>();
 
     attachments: any[] = [];
+    loadingFlag: boolean = true;
 
     constructor(private translateService: AlfrescoTranslationService,
                 private activitiContentService: ActivitiContentService,
@@ -76,6 +77,8 @@ export class TaskAttachmentListComponent implements OnChanges {
 
     private loadAttachmentsByTaskId(taskId: string) {
         if (taskId) {
+            this.loadingFlag = true;
+            this.reset();
             this.activitiContentService.getTaskRelatedContent(taskId).subscribe(
                 (res: any) => {
                     let attachList = [];
@@ -90,9 +93,11 @@ export class TaskAttachmentListComponent implements OnChanges {
                     });
                     this.attachments = attachList;
                     this.success.emit(this.attachments);
+                    this.loadingFlag = false;
                 },
                 (err) => {
                     this.error.emit(err);
+                    this.loadingFlag = false;
                 });
         }
     }
@@ -174,5 +179,9 @@ export class TaskAttachmentListComponent implements OnChanges {
                 this.error.emit(err);
             }
         );
+    }
+
+    isLoading() {
+        return this.loadingFlag;
     }
 }
