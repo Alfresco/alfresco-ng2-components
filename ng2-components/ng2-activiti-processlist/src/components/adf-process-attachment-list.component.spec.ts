@@ -169,14 +169,14 @@ describe('ActivitiProcessAttachmentListComponent', () => {
     }));
 
     it('should show the empty list component when the attachments list is empty', async(() => {
-        component.processInstanceId = '123';
         getProcessRelatedContentSpy.and.returnValue(Observable.of({
             'size': 0,
             'total': 0,
             'start': 0,
             'data': []
         }));
-        fixture.detectChanges();
+        let change = new SimpleChange(null, '123', true);
+        component.ngOnChanges({'processInstanceId': change});
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(fixture.nativeElement.querySelector('adf-empty-list .empty-list__this-space-is-empty').innerHTML).toEqual('ADF-DATATABLE.EMPTY.HEADER');
@@ -190,7 +190,6 @@ describe('ActivitiProcessAttachmentListComponent', () => {
 
         beforeEach(async(() => {
             component.processInstanceId = '123';
-            fixture.detectChanges();
             fixture.whenStable().then(() => {
                 getProcessRelatedContentSpy.calls.reset();
             });
@@ -216,7 +215,6 @@ describe('ActivitiProcessAttachmentListComponent', () => {
 
         beforeEach(async(() => {
             component.processInstanceId = '123';
-            fixture.detectChanges();
             fixture.whenStable();
         }));
 
