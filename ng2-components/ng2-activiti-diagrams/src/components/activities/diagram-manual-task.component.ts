@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DiagramColorService } from '../../services/diagram-color.service';
 
 @Component({
     selector: 'diagram-manual-task',
     templateUrl: './diagram-manual-task.component.html'
 })
-export class DiagramManualTaskComponent {
+export class DiagramManualTaskComponent implements OnInit {
     @Input()
     data: any;
 
@@ -30,7 +30,8 @@ export class DiagramManualTaskComponent {
     onError = new EventEmitter();
 
     constructor(public elementRef: ElementRef,
-                private diagramColorService: DiagramColorService) {}
+                private diagramColorService: DiagramColorService) {
+    }
 
     ngOnInit() {
 

@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AlfrescoTranslationService, CoreModule, FileModel, LogService, LogServiceMock, UploadService } from 'ng2-alfresco-core';
 
-import { UploadDragAreaComponent } from './upload-drag-area.component';
-import { FileDraggableDirective } from '../directives/file-draggable.directive';
 import { TranslationMock } from '../assets/translation.service.mock';
+import { FileDraggableDirective } from '../directives/file-draggable.directive';
+import { UploadDragAreaComponent } from './upload-drag-area.component';
 
 let fakeShareDataRow = {
     obj: {

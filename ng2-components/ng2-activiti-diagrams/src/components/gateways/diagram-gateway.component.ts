@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DiagramColorService } from '../../services/diagram-color.service';
 
 @Component({
     selector: 'diagram-gateway',
     templateUrl: './diagram-gateway.component.html'
 })
-export class DiagramGatewayComponent {
+export class DiagramGatewayComponent implements OnInit {
     @Input()
     data: any;
 

@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
     selector: 'diagram-container-service-task',
     templateUrl: './diagram-container-service-task.component.html'
 })
-export class DiagramContainerServiceTaskComponent {
+export class DiagramContainerServiceTaskComponent implements OnInit {
     @Input()
     data: any;
 
