@@ -25,7 +25,7 @@ import { DIAGRAM_ICONS_DIRECTIVES } from './icons/index';
 import { DIAGRAM_INTERMEDIATE_EVENTS_DIRECTIVES } from './intermediate-catching-events/index';
 import { DIAGRAM_STRUCTURAL_DIRECTIVES } from './structural/index';
 import { DIAGRAM_SWIMLANES_DIRECTIVES } from './swimlanes/index';
-import { DiagramTooltip } from './tooltip/index';
+import { DiagramTooltipComponent } from './tooltip/index';
 
 import { DiagramColorService } from '../services/diagram-color.service';
 import { DiagramsService } from '../services/diagrams.service';
@@ -52,7 +52,7 @@ export const DIAGRAM_DIRECTIVES: any[] = [
     DIAGRAM_INTERMEDIATE_EVENTS_DIRECTIVES,
     DIAGRAM_STRUCTURAL_DIRECTIVES,
     DIAGRAM_SWIMLANES_DIRECTIVES,
-    DiagramTooltip
+    DiagramTooltipComponent
 ];
 
 export const DIAGRAM_PROVIDERS: any[] = [

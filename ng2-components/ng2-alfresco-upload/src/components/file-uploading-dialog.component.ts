@@ -32,10 +32,10 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     totalCompleted: number = 0;
     totalCompletedMsg: string = 'FILE_UPLOAD.MESSAGES.SINGLE_COMPLETED';
     isDialogMinimized: boolean = false;
+    showCloseButton: boolean = false;
 
     private listSubscription: any;
     private counterSubscription: any;
-    private showCloseButton: boolean = false;
 
     constructor(translateService: AlfrescoTranslationService, private uploadService: UploadService) {
         if (translateService) {

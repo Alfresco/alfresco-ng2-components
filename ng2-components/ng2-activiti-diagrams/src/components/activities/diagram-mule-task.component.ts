@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
     selector: 'diagram-mule-task',
     templateUrl: './diagram-mule-task.component.html'
 })
-export class DiagramMuleTaskComponent {
+export class DiagramMuleTaskComponent implements OnInit {
     @Input()
     data: any;
 

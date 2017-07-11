@@ -16,11 +16,11 @@
  */
 
 import { DebugElement, SimpleChange } from '@angular/core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { UploadButtonComponent } from './upload-button.component';
-import { CoreModule, AlfrescoTranslationService, AlfrescoContentService, UploadService } from 'ng2-alfresco-core';
-import { TranslationMock } from '../assets/translation.service.mock';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { AlfrescoContentService, AlfrescoTranslationService, CoreModule, UploadService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
+import { TranslationMock } from '../assets/translation.service.mock';
+import { UploadButtonComponent } from './upload-button.component';
 
 describe('UploadButtonComponent', () => {
 
