@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable , OnDestroy } from '@angular/core';
+import { Injectable , OnDestroy} from '@angular/core';
 
 declare let Raphael: any;
 

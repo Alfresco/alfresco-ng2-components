@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DiagramColorService } from '../../services/diagram-color.service';
 
 @Component({
     selector: 'diagram-subprocess',
     templateUrl: './diagram-subprocess.component.html'
 })
-export class DiagramSubprocessComponent {
+export class DiagramSubprocessComponent implements OnInit {
     @Input()
     data: any;
 

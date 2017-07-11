@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DiagramColorService } from '../../services/diagram-color.service';
 
 @Component({
     selector: 'diagram-throw-event',
     templateUrl: './diagram-throw-event.component.html'
 })
-export class DiagramThrowEventComponent {
+export class DiagramThrowEventComponent implements OnInit {
     @Input()
     data: any;
 
@@ -38,7 +38,8 @@ export class DiagramThrowEventComponent {
     circleRadiusOuter: number;
 
     constructor(public elementRef: ElementRef,
-                private diagramColorService: DiagramColorService) {}
+                private diagramColorService: DiagramColorService) {
+    }
 
     ngOnInit() {
         this.center.x = this.data.x + (this.data.width / 2);

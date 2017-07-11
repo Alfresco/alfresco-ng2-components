@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
     selector: 'diagram-rest-call-task',
     templateUrl: './diagram-rest-call-task.component.html'
 })
-export class DiagramRestCallTaskComponent {
+export class DiagramRestCallTaskComponent implements OnInit {
     @Input()
     data: any;
 
