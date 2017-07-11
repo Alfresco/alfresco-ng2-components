@@ -98,7 +98,7 @@ describe('Activiti Process Create Attachment', () => {
     });
 
     it('should emit content created event when the file is uploaded', async(() => {
-        component.contentCreated.subscribe((res) => {
+        component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
             expect(res.id).toBe(9999);
@@ -113,34 +113,12 @@ describe('Activiti Process Create Attachment', () => {
         });
     }));
 
-    it('should allow user to drag&drop files', async(() => {
-        let dragArea: HTMLElement = <HTMLElement> element.querySelector('#add_new_process_content_area');
-        expect(dragArea).toBeDefined();
-        expect(dragArea).not.toBeNull();
-
-        component.contentCreated.subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(res).not.toBeNull();
-            expect(res.id).toBe(9999);
-        });
-
-        let dropEvent = new CustomEvent('upload-files', customEvent);
-        dragArea.dispatchEvent(dropEvent);
-        fixture.detectChanges();
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fakeUploadResponse)
-        });
-    }));
-
     it('should allow user to upload files via button', async(() => {
         let buttonUpload: HTMLElement = <HTMLElement> element.querySelector('#add_new_process_content_button');
         expect(buttonUpload).toBeDefined();
         expect(buttonUpload).not.toBeNull();
 
-        component.contentCreated.subscribe((res) => {
+        component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
             expect(res.id).toBe(9999);
