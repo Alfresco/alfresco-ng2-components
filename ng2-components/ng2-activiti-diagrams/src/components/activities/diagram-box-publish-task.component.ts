@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
     selector: 'diagram-box-publish-task',
     templateUrl: './diagram-box-publish-task.component.html'
 })
-export class DiagramBoxPublishTaskComponent {
+export class DiagramBoxPublishTaskComponent implements OnInit {
     @Input()
     data: any;
 

@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, Input } from '@angular/core';
+/* tslint:disable::no-access-missing-member */
+import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { WidgetComponent } from './../widget.component';
 
@@ -24,7 +25,7 @@ import { WidgetComponent } from './../widget.component';
     templateUrl: './number.widget.html',
     styleUrls: ['./number.widget.css']
 })
-export class NumberWidget extends WidgetComponent {
+export class NumberWidgetComponent extends WidgetComponent implements OnInit {
 
     @Input()
     field: any;
