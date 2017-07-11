@@ -1,15 +1,11 @@
-<div class="upload-attachment-container">
-    <div class="drag-area"
-    (upload-files)="onFileUpload($event)"
-    mode="['click', 'drop']"
-    [adf-upload]="true">
-        {{ 'TASK_DETAILS.BUTTON.DRAG-ATTACHMENT' | translate }}
-    </div>
-    <button class="mdl-button mdl-js-button mdl-button--raised"
+<button
+    md-button
+    md-raised-button
+    md-icon-button
+    class="adf-create-attachment"
     [adf-upload]="true"
     mode="['click']"
     [multiple]="true"
     (upload-files)="onFileUpload($event)">
-        {{ 'TASK_DETAILS.BUTTON.UPLOAD-ATTACHMENT' | translate }}
-    </button>
-</div>
+    <md-icon>add</md-icon>
+</button>
