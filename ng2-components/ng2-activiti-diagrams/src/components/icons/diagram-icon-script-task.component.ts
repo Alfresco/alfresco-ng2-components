@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DiagramColorService } from '../../services/diagram-color.service';
 
 @Component({
     selector: 'diagram-icon-script-task',
     templateUrl: './diagram-icon-script-task.component.html'
 })
-export class DiagramIconScriptTaskComponent {
+export class DiagramIconScriptTaskComponent implements OnInit {
     @Input()
     data: any;
 

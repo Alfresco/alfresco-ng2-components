@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { CheckboxWidget } from './checkbox/checkbox.widget';
-import { DateRangeWidget } from './date-range/date-range.widget';
-import { DropdownWidget } from './dropdown/dropdown.widget';
-import { DurationWidget } from './duration/duration.widget';
-import { NumberWidget } from './number/number.widget';
+import { CheckboxWidgetComponent } from './checkbox/checkbox.widget';
+import { DateRangeWidgetComponent } from './date-range/date-range.widget';
+import { DropdownWidgetComponent } from './dropdown/dropdown.widget';
+import { DurationWidgetComponent } from './duration/duration.widget';
+import { NumberWidgetComponent } from './number/number.widget';
 
 // primitives
 export * from './dropdown/dropdown.widget';
@@ -29,9 +29,9 @@ export * from './checkbox/checkbox.widget';
 export * from './date-range/date-range.widget';
 
 export const WIDGET_DIRECTIVES: any[] = [
-    DropdownWidget,
-    NumberWidget,
-    DurationWidget,
-    CheckboxWidget,
-    DateRangeWidget
+    DropdownWidgetComponent,
+    NumberWidgetComponent,
+    DurationWidgetComponent,
+    CheckboxWidgetComponent,
+    DateRangeWidgetComponent
 ];

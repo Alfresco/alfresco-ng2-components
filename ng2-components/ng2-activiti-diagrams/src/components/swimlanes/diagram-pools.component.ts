@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
     selector: 'diagram-pools',
     templateUrl: './diagram-pools.component.html'
 })
-export class DiagramPoolsComponent {
+export class DiagramPoolsComponent implements OnInit {
     @Input()
     pools: any [];
 

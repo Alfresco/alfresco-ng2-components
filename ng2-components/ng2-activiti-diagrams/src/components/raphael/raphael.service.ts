@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable , OnDestroy} from '@angular/core';
 
 declare let Raphael: any;
 
 @Injectable()
-export class RaphaelService {
+export class RaphaelService implements OnDestroy {
 
     paper: any;
     width: number = 300;
@@ -53,7 +53,7 @@ export class RaphaelService {
         return paper;
     }
 
-    private ngOnDestroy(): any {
+    public ngOnDestroy(): any {
         if (this.paper) {
             this.paper.clear();
             this.paper = void 0;

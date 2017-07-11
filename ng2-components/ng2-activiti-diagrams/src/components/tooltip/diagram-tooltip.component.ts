@@ -24,7 +24,7 @@ const IS_ACTIVE_CLASS = 'is-active';
     templateUrl: './diagram-tooltip.component.html',
     styleUrls: ['./diagram-tooltip.component.scss']
 })
-export class DiagramTooltip implements AfterViewInit, OnDestroy {
+export class DiagramTooltipComponent implements AfterViewInit, OnDestroy {
 
     private tooltipElement: any;
     private targetElement: any;

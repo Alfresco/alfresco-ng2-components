@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Observable } from 'rxjs/Rx';
 import { EventEmitter } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
 
 export interface LangChangeEvent {
     lang: string;
