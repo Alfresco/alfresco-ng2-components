@@ -64,6 +64,16 @@ export class ActivitiProcessAttachmentListComponent implements OnChanges {
         this.loadAttachmentsByProcessInstanceId(this.processInstanceId);
     }
 
+    add(content: any): void {
+        this.attachments.push({
+            id: content.id,
+            name: content.name,
+            created: content.created,
+            createdBy: content.createdBy.firstName + ' ' + content.createdBy.lastName,
+            icon: this.thumbnailService.getMimeTypeIcon(content.mimeType)
+        });
+    }
+
     private loadAttachmentsByProcessInstanceId(processInstanceId: string) {
         if (processInstanceId) {
             this.reset();

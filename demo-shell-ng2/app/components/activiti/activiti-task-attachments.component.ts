@@ -15,20 +15,19 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { ProcessUploadService, TaskAttachmentListComponent } from 'ng2-activiti-tasklist';
+import { Component, ViewChild, Input } from '@angular/core';
+import { TaskAttachmentListComponent, ProcessUploadService } from 'ng2-activiti-tasklist';
 import { UploadService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'activiti-task-attachments',
     templateUrl: './activiti-task-attachments.component.html',
-    styleUrls: ['./activiti-task-attachments.component.css'],
     providers: [
         { provide: UploadService, useClass: ProcessUploadService }
     ]
 })
 
-export class ActivitiTaskAttachmentsComponent implements OnInit {
+export class ActivitiTaskAttachmentsComponent {
 
     @Input()
     taskId: string;

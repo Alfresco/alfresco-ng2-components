@@ -15,26 +15,25 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { ProcessAttachmentListComponent, ProcessUploadService } from 'ng2-activiti-processlist';
+import { Component, ViewChild, Input } from '@angular/core';
+import { ActivitiProcessAttachmentListComponent, ProcessUploadService } from 'ng2-activiti-processlist';
 import { UploadService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'activiti-process-attachments',
     templateUrl: './activiti-process-attachments.component.html',
-    styleUrls: ['./activiti-process-attachments.component.css'],
     providers: [
         { provide: UploadService, useClass: ProcessUploadService }
     ]
 })
 
-export class ActivitiProcessAttachmentsComponent implements OnInit {
+export class ActivitiProcessAttachmentsComponent {
 
     @Input()
     processId: string;
 
-    @ViewChild(ProcessAttachmentListComponent)
-    processAttachList: ProcessAttachmentListComponent;
+    @ViewChild(ActivitiProcessAttachmentListComponent)
+    processAttachList: ActivitiProcessAttachmentListComponent;
 
     fileShowed: boolean = false;
     content: Blob;
