@@ -61,7 +61,7 @@ export class ActivitiProcessInstanceVariables implements OnInit, OnChanges {
     variableValue: string;
     variableScope: string;
 
-    loadingFlag: boolean = true;
+    isLoading: boolean = true;
 
     /**
      * Constructor
@@ -146,16 +146,16 @@ export class ActivitiProcessInstanceVariables implements OnInit, OnChanges {
 
     private getProcessInstanceVariables(processInstanceId: string) {
         if (processInstanceId) {
-            this.loadingFlag = true;
+            this.isLoading = true;
             this.activitiProcess.getProcessInstanceVariables(processInstanceId).subscribe(
                 (res: ProcessInstanceVariable[]) => {
                     let instancesRow = this.createDataRow(res);
                     this.renderInstances(instancesRow);
-                    this.loadingFlag = false;
+                    this.isLoading = false;
                 },
                 (err) => {
                     this.error.emit(err);
-                    this.loadingFlag = false;
+                    this.isLoading = false;
                 }
             );
         } else {
@@ -274,9 +274,5 @@ export class ActivitiProcessInstanceVariables implements OnInit, OnChanges {
             { id: 'delete', title: 'Delete' },
             { id: 'edit', title: 'Edit' }
         ];
-    }
-
-    isLoading() {
-        return this.loadingFlag;
     }
 }
