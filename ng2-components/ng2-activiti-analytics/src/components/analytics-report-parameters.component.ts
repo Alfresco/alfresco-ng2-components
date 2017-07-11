@@ -94,13 +94,16 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
 
     reportForm: FormGroup;
 
+    action: string;
+
+    isEditable: boolean = false;
+
+    reportName: string;
+
     private dropDownSub;
     private reportParamsSub;
     private paramOpts;
-    private isEditable: boolean = false;
-    private action: string;
     private reportParamQuery: ReportQuery;
-    private reportName: string;
     private hideParameters: boolean = true;
     private formValidState: boolean = false;
 

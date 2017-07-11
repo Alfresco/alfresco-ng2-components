@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
     selector: 'diagram-google-drive-publish-task',
     templateUrl: './diagram-google-drive-publish-task.component.html'
 })
-export class DiagramGoogleDrivePublishTaskComponent {
+export class DiagramGoogleDrivePublishTaskComponent implements OnInit {
     @Input()
     data: any;
 
