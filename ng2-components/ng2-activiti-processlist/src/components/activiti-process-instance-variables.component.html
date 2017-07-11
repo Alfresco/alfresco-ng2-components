@@ -5,10 +5,10 @@
 
 
 <div>
-    <adf-datatable 
-    [data]="data" 
+    <adf-datatable
+    [data]="data"
     [actions]="true"
-    [loading]="isLoading()"
+    [loading]="isLoading"
     (showRowActionsMenu)="onShowRowActionsMenu($event)"
     (executeRowAction)="onExecuteRowAction($event)">
         <loading-content-template>
