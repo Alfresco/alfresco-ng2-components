@@ -39,7 +39,7 @@
             </div>
         </div>
     </div>
-    <div *ngIf="isAssignedToSomeone()">
+    <div *ngIf="isAssigned()">
         <adf-form *ngIf="hasFormKey()" #activitiForm
             [showDebugButton]="debugMode"
             [taskId]="taskDetails.id"
@@ -57,7 +57,7 @@
             (executeOutcome)='onFormExecuteOutcome($event)'>
         </adf-form>
     </div>
-    <div *ngIf="!isAssignedToSomeone()">
+    <div *ngIf="!isAssigned()">
         {{ 'TASK_DETAILS.MESSAGES.CLAIM' | translate }}
     </div>
     <button md-raised-button class="activiti-task-details__action-button" *ngIf="!hasFormKey() && isTaskActive()" (click)="onComplete()">

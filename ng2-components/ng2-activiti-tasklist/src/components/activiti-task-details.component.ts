@@ -27,7 +27,7 @@ import { Component,
     ViewChild
 } from '@angular/core';
 import { ContentLinkModel, FormModel, FormOutcomeEvent, FormService } from 'ng2-activiti-form';
-import { AlfrescoTranslationService, LogService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { User } from '../models/user.model';
@@ -210,7 +210,7 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
         }
     }
 
-    isAssignedToSomeone(): boolean {
+    isAssigned(): boolean {
         return this.taskDetails.assignee ? true : false;
     }
 
