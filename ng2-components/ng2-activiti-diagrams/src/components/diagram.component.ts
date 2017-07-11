@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { DiagramElementModel, DiagramModel } from '../models/diagram.model';
 import { DiagramColorService } from '../services/diagram-color.service';
@@ -27,7 +27,7 @@ import { RaphaelService } from './raphael/raphael.service';
     styleUrls: ['./diagram.component.css'],
     templateUrl: './diagram.component.html'
 })
-export class DiagramComponent {
+export class DiagramComponent implements OnChanges {
     @Input()
     processDefinitionId: any;
 
@@ -58,7 +58,7 @@ export class DiagramComponent {
     PADDING_WIDTH: number = 60;
     PADDING_HEIGHT: number = 60;
 
-    private diagram: DiagramModel;
+    diagram: DiagramModel;
 
     constructor(private elementRef: ElementRef,
                 private translateService: AlfrescoTranslationService,
