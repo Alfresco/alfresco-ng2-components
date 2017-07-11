@@ -32,7 +32,6 @@ import { EcmModelService } from './src/services/ecm-model.service';
 import { FormRenderingService } from './src/services/form-rendering.service';
 import { FormService } from './src/services/form.service';
 import { NodeService } from './src/services/node.service';
-import { ProcessUploadService } from './src/services/process-upload.service';
 import { WidgetVisibilityService } from './src/services/widget-visibility.service';
 
 export * from './src/components/activiti-form.component';
@@ -40,7 +39,6 @@ export * from './src/components/adf-form-list.component';
 export * from './src/components/activiti-content.component';
 export * from './src/components/activiti-start-form.component';
 export * from './src/services/form.service';
-export * from './src/services/process-upload.service';
 export * from './src/services/activiti-content-service';
 export * from './src/components/widgets/index';
 export * from './src/services/ecm-model.service';
@@ -59,7 +57,6 @@ export const ACTIVITI_FORM_DIRECTIVES: any[] = [
 
 export const ACTIVITI_FORM_PROVIDERS: any[] = [
     FormService,
-    ProcessUploadService,
     ActivitiContentService,
     EcmModelService,
     NodeService,
