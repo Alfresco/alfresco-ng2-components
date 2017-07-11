@@ -1,7 +1,7 @@
 <md-card *ngIf="taskDetails">
 
     <md-card-content>
-        <adf-card-view [properties]="properties"></adf-card-view>
+        <adf-card-view [properties]="properties" [editable]="!isCompleted()"></adf-card-view>
     </md-card-content>
 
     <md-card-actions class="adf-controls">

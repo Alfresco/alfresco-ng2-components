@@ -48,6 +48,7 @@ export class ActivitiTaskHeaderComponent implements OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
+        console.log('change van:', changes, this.taskDetails);
         this.refreshData();
     }
 
@@ -77,7 +78,7 @@ export class ActivitiTaskHeaderComponent implements OnChanges {
     }
 
     getTaskStatus(): string {
-        return this.taskDetails.endDate ? 'Completed' : 'Running';
+        return this.isCompleted() ? 'Completed' : 'Running';
     }
 
     claimTask(taskId: string) {
@@ -86,5 +87,9 @@ export class ActivitiTaskHeaderComponent implements OnChanges {
                 this.logService.info('Task claimed');
                 this.claim.emit(taskId);
             });
+    }
+
+    isCompleted() {
+        return !!this.taskDetails.endDate;
     }
 }

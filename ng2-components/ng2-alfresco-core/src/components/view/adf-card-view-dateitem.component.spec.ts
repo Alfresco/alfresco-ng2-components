@@ -78,6 +78,7 @@ describe('CardViewDateItemComponent', () => {
     });
 
     it('should render value when editable:true', () => {
+        component.editable = true;
         component.property.editable = true;
         fixture.detectChanges();
 
@@ -87,6 +88,7 @@ describe('CardViewDateItemComponent', () => {
     });
 
     it('should render the picker and toggle in case of editable:true', () => {
+        component.editable = true;
         component.property.editable = true;
         fixture.detectChanges();
 
@@ -106,7 +108,19 @@ describe('CardViewDateItemComponent', () => {
         expect(datePickerToggle).toBeNull('Datepicker toggle should NOT be shown');
     });
 
+    it('should NOT render the picker and toggle in case of editable:true but (general) editable:false', () => {
+        component.editable = false;
+        component.property.editable = true;
+        fixture.detectChanges();
+
+        let datePicker = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-${component.property.key}"]`));
+        let datePickerToggle = fixture.debugElement.query(By.css(`[data-automation-id="datepickertoggle-${component.property.key}"]`));
+        expect(datePicker).toBeNull('Datepicker should NOT be in DOM');
+        expect(datePickerToggle).toBeNull('Datepicker toggle should NOT be shown');
+    });
+
     it('should open the datetimepicker when clicking on the label', () => {
+        component.editable = true;
         component.property.editable = true;
         fixture.detectChanges();
         spyOn(component.datepicker, 'open');
@@ -118,19 +132,20 @@ describe('CardViewDateItemComponent', () => {
     });
 
     it('should trigger an update event on the CardViewUpdateService', (done) => {
+        component.editable = true;
         component.property.editable = true;
         const cardViewUpdateService = TestBed.get(CardViewUpdateService);
-        const expectedChange = { value: new Date('11/11/2017') };
+        const expectedDate = new Date('11/11/2017');
         fixture.detectChanges();
 
         cardViewUpdateService.itemUpdated$.subscribe(
             (updateNotification) => {
                 expect(updateNotification.target).toBe(component.property);
-                expect(updateNotification.changed).toEqual(expectedChange);
+                expect(updateNotification.changed).toEqual({ value: expectedDate });
                 done();
             }
         );
 
-        component.datepicker.selectedChanged.next(expectedChange);
+        component.datepicker.selectedChanged.next(expectedDate);
     });
 });

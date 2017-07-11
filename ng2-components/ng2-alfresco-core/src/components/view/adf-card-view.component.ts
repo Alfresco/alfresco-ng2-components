@@ -26,4 +26,7 @@ import { CardViewItem } from '../../interface/card-view-item.interface';
 export class CardViewComponent {
     @Input()
     properties: CardViewItem [];
+
+    @Input()
+    editable: boolean;
 }

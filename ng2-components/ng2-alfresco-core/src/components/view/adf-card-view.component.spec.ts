@@ -67,8 +67,22 @@ describe('AdfCardView', () => {
             expect(value).not.toBeNull();
             expect(value.nativeElement.innerText).toBe('My value');
         });
-
     }));
+
+    it('should pass through editable property to the items', () => {
+        component.editable = true;
+        component.properties = [new CardViewDateItemModel({
+            label: 'My date label',
+            value: '2017-06-14',
+            key: 'some-key',
+            editable: true
+        })];
+
+        fixture.detectChanges();
+
+        let datePicker = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-some-key"]`));
+        expect(datePicker).not.toBeNull('Datepicker should be in DOM');
+    });
 
     it('should render the date in the correct format', async(() => {
         component.properties = [new CardViewDateItemModel({
@@ -87,7 +101,6 @@ describe('AdfCardView', () => {
             expect(value).not.toBeNull();
             expect(value.nativeElement.innerText).toBe('Jun 14 2017');
         });
-
     }));
 
     it('should render the default value if the value is empty', async(() => {
@@ -108,6 +121,5 @@ describe('AdfCardView', () => {
             expect(value).not.toBeNull();
             expect(value.nativeElement.innerText).toBe('default value');
         });
-
     }));
 });

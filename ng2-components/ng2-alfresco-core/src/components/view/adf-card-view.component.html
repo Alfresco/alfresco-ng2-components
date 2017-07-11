@@ -3,11 +3,21 @@
         <ng-container [ngSwitch]="property.type">
 
             <ng-container *ngSwitchCase="'date'">
-                <adf-card-view-dateitem [property]="property" [attr.data-automation-id]="'header-'+property.key" class="adf-property"></adf-card-view-dateitem>
+                <adf-card-view-dateitem
+                    [property]="property"
+                    [editable]="editable"
+                    [attr.data-automation-id]="'header-'+property.key"
+                    class="adf-property">
+                </adf-card-view-dateitem>
             </ng-container>
 
             <ng-container *ngSwitchDefault>
-                <adf-card-view-textitem [property]="property" [attr.data-automation-id]="'header-' + property.key" class="adf-property"></adf-card-view-textitem>
+                <adf-card-view-textitem
+                    [property]="property"
+                    [editable]="editable"
+                    [attr.data-automation-id]="'header-' + property.key"
+                    class="adf-property">
+                </adf-card-view-textitem>
             </ng-container>
 
         </ng-container>

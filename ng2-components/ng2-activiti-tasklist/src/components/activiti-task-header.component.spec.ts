@@ -104,6 +104,24 @@ describe('ActivitiTaskHeaderComponent', () => {
         expect(valueEl.nativeElement.innerText).toBe('No assignee');
     });
 
+    it('should set editable to false if the task has already completed', () => {
+        component.taskDetails.endDate = '05/05/2002';
+        component.ngOnChanges({});
+        fixture.detectChanges();
+
+        let datePicker = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-dueDate"]`));
+        expect(datePicker).toBeNull('Datepicker should NOT be in DOM');
+    });
+
+    it('should set editable to true if the task has not completed yet', () => {
+        component.taskDetails.endDate = undefined;
+        component.ngOnChanges({});
+        fixture.detectChanges();
+
+        let datePicker = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-dueDate"]`));
+        expect(datePicker).not.toBeNull('Datepicker should be in DOM');
+    });
+
     it('should display the claim button if no assignee', () => {
         component.taskDetails.assignee = null;
         component.ngOnChanges({});
