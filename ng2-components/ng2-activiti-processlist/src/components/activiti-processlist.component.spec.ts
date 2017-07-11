@@ -17,6 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { MdProgressSpinnerModule } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
 import { ActivitiProcessInstanceListComponent } from './activiti-processlist.component';
 
@@ -39,7 +40,8 @@ describe('ActivitiProcessInstanceListComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                DataTableModule.forRoot()
+                DataTableModule.forRoot(),
+                MdProgressSpinnerModule
             ],
             declarations: [ ActivitiProcessInstanceListComponent ],
             providers: [
