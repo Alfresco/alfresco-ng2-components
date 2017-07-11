@@ -23,7 +23,7 @@
     </p>
     <p class="toggle">
         <label for="switch4" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
-            <input type="checkbox" id="switch4" class="mdl-switch__input" [checked]="showFooter" (click)="showFooter = !showFooter">
+            <input type="checkbox" id="switch4" class="mdl-switch__input" [checked]="showFooter" (click)="toggleFooter()">
             <span class="mdl-switch__label">Login footer</span>
         </label>
     </p>
@@ -67,7 +67,7 @@
         </p>
         <p>
             <label for="switch4-mobile" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
-                <input type="checkbox" id="switch4-mobile" class="mdl-switch__input" [checked]="showFooter" (click)="showFooter = !showFooter">
+                <input type="checkbox" id="switch4-mobile" class="mdl-switch__input" [checked]="showFooter" (click)="toggleFooter()">
                 <span class="mdl-switch__label">Login footer</span>
             </label>
         </p>
