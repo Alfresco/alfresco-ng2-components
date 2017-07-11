@@ -30,7 +30,9 @@ export class CardViewDateItemComponent {
     property: CardViewDateItemModel;
 
     @Input()
-    editable: boolean;  @ViewChild(MdDatepicker)
+    editable: boolean;
+
+    @ViewChild(MdDatepicker)
     public datepicker: MdDatepicker<any>;
 
     constructor(private cardViewUpdateService: CardViewUpdateService) {}

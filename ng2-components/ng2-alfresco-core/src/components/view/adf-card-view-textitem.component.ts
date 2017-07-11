@@ -15,17 +15,47 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core';
-import { CardViewItem } from '../../interface/card-view-item.interface';
+import { Component, Input, OnChanges, ViewChild } from '@angular/core';
+import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
+import { CardViewUpdateService } from '../../services/adf-card-view-update.service';
 
 @Component({
     selector: 'adf-card-view-textitem',
-    templateUrl: './adf-card-view-textitem.component.html'
+    templateUrl: './adf-card-view-textitem.component.html',
+    styleUrls: ['./adf-card-view-textitem.component.scss']
 })
-export class CardViewTextItemComponent {
+export class CardViewTextItemComponent implements OnChanges {
     @Input()
-    property: CardViewItem;
+    property: CardViewTextItemModel;
 
     @Input()
     editable: boolean;
+
+    @ViewChild('editorInput')
+    private editorInput: any;
+
+    inEdit: boolean = false;
+    editedValue: string;
+
+    constructor(private cardViewUpdateService: CardViewUpdateService) {}
+
+    ngOnChanges() {
+        this.editedValue = this.property.value;
+    }
+
+    setEditMode(editStatus: boolean): void {
+        this.inEdit = editStatus;
+        setTimeout(() => {
+            this.editorInput.nativeElement.click();
+        }, 0);
+    }
+
+    reset(): void {
+        this.editedValue = this.property.value;
+        this.setEditMode(false);
+    }
+
+    update(): void {
+        this.cardViewUpdateService.update(this.property, { [this.property.key]: this.editedValue });
+    }
 }

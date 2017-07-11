@@ -3,6 +3,7 @@
 .#{$ADF} {
     &-property-list {
         display: table;
+        width: 100%;
         border-collapse: collapse;
         border-spacing: 0;
     }
@@ -22,6 +23,7 @@
     }
 
     &-property /deep/ &-property-value {
+        width: 100%;
         display: table-cell;
         color: rgb(101, 101, 101);
         vertical-align: top;

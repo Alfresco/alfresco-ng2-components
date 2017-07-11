@@ -17,7 +17,8 @@
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MdDatepickerModule, MdInputModule, MdNativeDateModule } from '@angular/material';
+import { FormsModule } from '@angular/forms';
+import { MdDatepickerModule, MdInputModule, MdNativeDateModule, MdIconModule, MdButtonModule } from '@angular/material';
 import { CardViewDateItemComponent } from './adf-card-view-dateitem.component';
 import { CardViewTextItemComponent } from './adf-card-view-textitem.component';
 import { CardViewComponent } from './adf-card-view.component';
@@ -27,7 +28,10 @@ import { CardViewComponent } from './adf-card-view.component';
         CommonModule,
         MdDatepickerModule,
         MdNativeDateModule,
-        MdInputModule
+        MdInputModule,
+        MdIconModule,
+        MdButtonModule,
+        FormsModule
     ],
     declarations: [
         CardViewComponent,

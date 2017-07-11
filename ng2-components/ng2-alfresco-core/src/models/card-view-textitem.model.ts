@@ -24,10 +24,19 @@
  */
 
 import { CardViewItem } from '../interface/card-view-item.interface';
-import { CardViewBaseItemModel } from './card-view-baseitem.model';
+import { CardViewBaseItemModel, CardViewItemProperties } from './card-view-baseitem.model';
 
+export interface CardViewTextItemProperties extends CardViewItemProperties {
+    multiline?: boolean;
+}
 export class CardViewTextItemModel extends CardViewBaseItemModel implements CardViewItem {
     type: string = 'text';
+    multiline: boolean;
+
+    constructor(obj: CardViewTextItemProperties) {
+        super(obj);
+        this.multiline = obj.multiline || false;
+    }
 
     get displayValue() {
         return this.value || this.default;

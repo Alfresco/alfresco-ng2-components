@@ -1,2 +1,31 @@
 <div class="adf-property-label">{{ property.label }}</div>
-<div class="adf-property-value">{{ property.displayValue }}</div>
+<div class="adf-property-value">
+    <span *ngIf="!(editable && property.editable)">
+        <span [attr.data-automation-id]="'card-textitem-' + property.key">{{ property.displayValue }}</span>
+    </span>
+    <span *ngIf="editable && property.editable">
+        <div *ngIf="!inEdit" (click)="setEditMode(true)" class="adf-textitem-readonly">
+            <span [attr.data-automation-id]="'card-textitem-edit-tiggle-' + property.key">{{ property.displayValue }}</span>
+            <md-icon class="adf-textitem-icon">create</md-icon>
+        </div>
+        <div *ngIf="inEdit" class="adf-textitem-editable">
+            <md-input-container floatPlaceholder="never" class="adf-input-container">
+                <input *ngIf="!property.multiline" #editorInput
+                    mdInput
+                    class="adf-input"
+                    [placeholder]="property.default"
+                    [(ngModel)]="editedValue">
+                <textarea *ngIf="property.multiline" #editorInput
+                    mdInput
+                    mdTextareaAutosize
+                    mdAutosizeMaxRows="1"
+                    mdAutosizeMaxRows="5"
+                    class="adf-textarea"
+                    [placeholder]="property.default"
+                    [(ngModel)]="editedValue"></textarea>
+            </md-input-container>
+            <md-icon class="adf-textitem-icon adf-update-icon" (click)="update()">done</md-icon>
+            <md-icon class="adf-textitem-icon adf-reset-icon" (click)="reset()">clear</md-icon>
+        </div>
+    </span>
+</div>
