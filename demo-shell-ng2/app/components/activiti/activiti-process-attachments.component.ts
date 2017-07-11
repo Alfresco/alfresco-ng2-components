@@ -22,6 +22,7 @@ import { UploadService } from 'ng2-alfresco-core';
 @Component({
     selector: 'activiti-process-attachments',
     templateUrl: './activiti-process-attachments.component.html',
+    styleUrls: ['./activiti-process-attachments.component.css'],
     providers: [
         { provide: UploadService, useClass: ProcessUploadService }
     ]
