@@ -22,8 +22,7 @@ import {
     ActivitiTaskList,
     ActivitiTaskDetails,
     FilterRepresentationModel,
-    TaskDetailsEvent,
-    TaskAttachmentListComponent
+    TaskDetailsEvent
 } from 'ng2-activiti-tasklist';
 import {
     ActivitiProcessFilters,
@@ -31,8 +30,7 @@ import {
     ActivitiProcessInstanceListComponent,
     ActivitiStartProcessInstance,
     FilterProcessRepresentationModel,
-    ProcessInstance,
-    ActivitiProcessAttachmentListComponent
+    ProcessInstance
 } from 'ng2-activiti-processlist';
 import { AnalyticsReportListComponent } from 'ng2-activiti-analytics';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -42,8 +40,8 @@ import {
     ObjectDataRow,
     DataSorting
 } from 'ng2-alfresco-datatable';
-import { AlfrescoApiService, UploadService } from 'ng2-alfresco-core';
-import { FormService, FormRenderingService, FormEvent, FormFieldEvent, ProcessUploadService } from 'ng2-activiti-form';
+import { AlfrescoApiService } from 'ng2-alfresco-core';
+import { FormService, FormRenderingService, FormEvent, FormFieldEvent } from 'ng2-activiti-form';
 import { /*CustomEditorComponent*/ CustomStencil01 } from './custom-editor/custom-editor.component';
 
 declare var componentHandler;
@@ -53,10 +51,7 @@ const currentProcessIdNew = '__NEW__';
 @Component({
     selector: 'activiti-demo',
     templateUrl: './activiti-demo.component.html',
-    styleUrls: ['./activiti-demo.component.css'],
-    providers: [
-        { provide: UploadService, useClass: ProcessUploadService }
-    ]
+    styleUrls: ['./activiti-demo.component.css']
 })
 export class ActivitiDemoComponent implements AfterViewInit {
 
@@ -65,9 +60,6 @@ export class ActivitiDemoComponent implements AfterViewInit {
 
     @ViewChild(ActivitiTaskList)
     taskList: ActivitiTaskList;
-
-    @ViewChild(TaskAttachmentListComponent)
-    taskAttachList: TaskAttachmentListComponent;
 
     @ViewChild(ActivitiProcessFilters)
     activitiprocessfilter: ActivitiProcessFilters;
@@ -80,9 +72,6 @@ export class ActivitiDemoComponent implements AfterViewInit {
 
     @ViewChild(ActivitiTaskDetails)
     activitidetails: ActivitiTaskDetails;
-
-    @ViewChild(ActivitiProcessAttachmentListComponent)
-    processAttachList: ActivitiProcessAttachmentListComponent;
 
     @ViewChild(ActivitiStartProcessInstance)
     activitiStartProcess: ActivitiStartProcessInstance;
@@ -115,8 +104,6 @@ export class ActivitiDemoComponent implements AfterViewInit {
     sub: Subscription;
     blobFile: any;
     flag: boolean = true;
-    createTaskAttach: boolean = false;
-    createProcessAttach: boolean = false;
 
     dataTasks: ObjectDataTableAdapter;
     dataProcesses: ObjectDataTableAdapter;
@@ -125,7 +112,6 @@ export class ActivitiDemoComponent implements AfterViewInit {
                 private route: ActivatedRoute,
                 private router: Router,
                 private apiService: AlfrescoApiService,
-                private uploadService: UploadService,
                 private formRenderingService: FormRenderingService,
                 private formService: FormService) {
         this.dataTasks = new ObjectDataTableAdapter();
@@ -174,8 +160,6 @@ export class ActivitiDemoComponent implements AfterViewInit {
             this.currentProcessInstanceId = null;
         });
         this.layoutType = ActivitiApps.LAYOUT_GRID;
-
-        this.uploadService.fileUploadComplete.subscribe(value => this.onFileUploadComplete(value.data));
 
     }
 
@@ -281,16 +265,6 @@ export class ActivitiDemoComponent implements AfterViewInit {
         this.contentName = content.name;
     }
 
-    onFileUploadComplete(content: any) {
-        this.taskAttachList.add(content);
-    }
-
-    onAttachmentClick(content: any): void {
-        this.fileShowed = true;
-        this.content = content.contentBlob;
-        this.contentName = content.name;
-    }
-
     onTaskCreated(data: any): void {
         this.currentTaskId = data.parentTaskId;
         this.taskList.reload();
@@ -354,32 +328,6 @@ export class ActivitiDemoComponent implements AfterViewInit {
 
     onRowDblClick(event): void {
         console.log(event);
-    }
-
-    onCreateTaskSuccess(): void {
-        this.taskAttachList.reload();
-        this.toggleCreateTakAttach();
-    }
-
-    onContentCreated() {
-        this.processAttachList.reload();
-        this.toggleCreateProcessAttach();
-    }
-
-    toggleCreateTakAttach(): void {
-        this.createTaskAttach = !this.createTaskAttach;
-    }
-
-    isCreateTaskAttachVisible(): boolean {
-        return this.createTaskAttach;
-    }
-
-    toggleCreateProcessAttach(): void {
-        this.createProcessAttach = !this.createProcessAttach;
-    }
-
-    isCreateProcessAttachVisible(): boolean {
-        return this.createProcessAttach;
     }
 
     isTaskCompleted(): boolean {

@@ -35,6 +35,7 @@ import {
 } from './src/components/index';
 
 import { ActivitiProcessService } from './src/services/activiti-process.service';
+import { ProcessUploadService } from './src/services/process-upload.service';
 
 // components
 export * from './src/components/activiti-processlist.component';
@@ -43,6 +44,7 @@ export * from './src/components/activiti-process-instance-details.component';
 export * from './src/components/activiti-start-process.component';
 export * from './src/components/adf-process-attachment-list.component';
 export * from './src/components/adf-create-process-attachment.component';
+export * from './src/services/process-upload.service';
 
 // models
 export * from './src/models/index';
@@ -64,7 +66,8 @@ export const ACTIVITI_PROCESSLIST_DIRECTIVES: [any] = [
 ];
 
 export const ACTIVITI_PROCESSLIST_PROVIDERS: [any] = [
-    ActivitiProcessService
+    ActivitiProcessService,
+    ProcessUploadService
 ];
 
 @NgModule({

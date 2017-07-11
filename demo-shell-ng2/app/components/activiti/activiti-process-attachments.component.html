@@ -1,0 +1,29 @@
+<div id="attachment-process-list" *ngIf="processId">
+    <h5>Attachments</h5>
+    <div class="adf-no-form-container">
+        <adf-upload-drag-area
+            [parentId]="processId"
+            [showNotificationBar]="false">
+            <adf-process-attachment-list #processAttachList
+                *ngIf="processId"
+                [processInstanceId]="processId"
+                (attachmentClick)="onAttachmentClick($event)">
+            </adf-process-attachment-list>
+        </adf-upload-drag-area>
+
+        <adf-create-process-attachment
+            [processInstanceId]="processId"
+            (contentCreated)="onFileUploadComplete($event)">
+        </adf-create-process-attachment>
+
+    </div>
+</div>
+
+<div *ngIf="fileShowed">
+    <alfresco-viewer
+        [(showViewer)]="fileShowed"
+        [blobFile]="content"
+        [displayName]="contentName"
+        [overlayMode]="true">
+    </alfresco-viewer>
+</div>
