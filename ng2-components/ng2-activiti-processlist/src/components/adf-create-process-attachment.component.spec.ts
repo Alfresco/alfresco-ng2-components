@@ -98,7 +98,7 @@ describe('Activiti Process Create Attachment', () => {
     });
 
     it('should emit content created event when the file is uploaded', async(() => {
-        component.contentCreated.subscribe((res) => {
+        component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
             expect(res.id).toBe(9999);
@@ -118,7 +118,7 @@ describe('Activiti Process Create Attachment', () => {
         expect(dragArea).toBeDefined();
         expect(dragArea).not.toBeNull();
 
-        component.contentCreated.subscribe((res) => {
+        component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
             expect(res.id).toBe(9999);
@@ -140,7 +140,7 @@ describe('Activiti Process Create Attachment', () => {
         expect(buttonUpload).toBeDefined();
         expect(buttonUpload).not.toBeNull();
 
-        component.contentCreated.subscribe((res) => {
+        component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
             expect(res.id).toBe(9999);
