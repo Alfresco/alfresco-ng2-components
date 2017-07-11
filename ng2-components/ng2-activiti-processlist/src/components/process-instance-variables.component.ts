@@ -28,7 +28,7 @@ declare let dialogPolyfill: any;
 @Component({
     selector: 'adf-process-instance-variables, activiti-process-instance-variables',
     templateUrl: './activiti-process-instance-variables.component.html',
-    styleUrls: [],
+    styleUrls: ['./activiti-process-instance-variables.component.css'],
     providers: [ActivitiProcessService]
 })
 export class ActivitiProcessInstanceVariables implements OnInit, OnChanges {
@@ -60,6 +60,8 @@ export class ActivitiProcessInstanceVariables implements OnInit, OnChanges {
     variableName: string;
     variableValue: string;
     variableScope: string;
+
+    loadingFlag: boolean = true;
 
     /**
      * Constructor
@@ -144,13 +146,16 @@ export class ActivitiProcessInstanceVariables implements OnInit, OnChanges {
 
     private getProcessInstanceVariables(processInstanceId: string) {
         if (processInstanceId) {
+            this.loadingFlag = true;
             this.activitiProcess.getProcessInstanceVariables(processInstanceId).subscribe(
                 (res: ProcessInstanceVariable[]) => {
                     let instancesRow = this.createDataRow(res);
                     this.renderInstances(instancesRow);
+                    this.loadingFlag = false;
                 },
                 (err) => {
                     this.error.emit(err);
+                    this.loadingFlag = false;
                 }
             );
         } else {
@@ -269,5 +274,9 @@ export class ActivitiProcessInstanceVariables implements OnInit, OnChanges {
             { id: 'delete', title: 'Delete' },
             { id: 'edit', title: 'Edit' }
         ];
+    }
+
+    isLoading() {
+        return this.loadingFlag;
     }
 }

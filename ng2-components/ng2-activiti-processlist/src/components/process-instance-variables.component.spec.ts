@@ -17,6 +17,7 @@
 
 import { DebugElement, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { MdProgressSpinnerModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
@@ -41,7 +42,8 @@ describe('ActivitiProcessInstanceVariables', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                DataTableModule.forRoot()
+                DataTableModule.forRoot(),
+                MdProgressSpinnerModule
             ],
             declarations: [
                 ActivitiProcessInstanceVariables
@@ -97,14 +99,6 @@ describe('ActivitiProcessInstanceVariables', () => {
         fixture.detectChanges();
         expect(getVariablesSpy).not.toHaveBeenCalled();
     });
-
-    it('should not display list when no processInstanceId is specified', fakeAsync(() => {
-        fixture.detectChanges();
-        fixture.whenStable();
-        tick();
-        let datatable: DebugElement = fixture.debugElement.query(By.css('adf-datatable'));
-        expect(datatable).toBeNull();
-    }));
 
     it('should use the default schemaColumn as default', () => {
         fixture.detectChanges();
@@ -173,8 +167,10 @@ describe('ActivitiProcessInstanceVariables', () => {
 
         it('should set a placeholder message when processInstanceId changed to null', () => {
             component.ngOnChanges({ 'processInstanceId': nullChange });
-            fixture.detectChanges();
-            expect(fixture.debugElement.query(By.css('[data-automation-id="variables-none"]'))).not.toBeNull();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(fixture.nativeElement.querySelector('adf-empty-list .empty-list__this-space-is-empty').innerHTML).toEqual('This list is empty');
+            });
         });
     });
 

@@ -1,6 +1,7 @@
 <adf-datatable
     [rows]="attachments"
     [actions]="true"
+    [loading]="isLoading()"
     (rowDblClick)="openContent($event)"
     (showRowActionsMenu)="onShowRowActionsMenu($event)"
     (executeRowAction)="onExecuteRowAction($event)">
@@ -10,4 +11,14 @@
         <data-column key="name" type="text" title="Name" class="full-width ellipsis-cell" [sortable]="true"></data-column>
         <data-column key="created" type="date" format="shortDate" title="Created On"></data-column>
     </data-columns>
+    <loading-content-template>
+        <ng-template>
+            <!--Add your custom loading template here-->
+            <md-progress-spinner
+                class="adf-attachment-list-loading-margin"
+                [color]="'primary'"
+                [mode]="'indeterminate'">
+            </md-progress-spinner>
+        </ng-template>
+        </loading-content-template>
 </adf-datatable>
