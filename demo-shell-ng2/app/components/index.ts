@@ -21,6 +21,8 @@ export { SearchComponent } from './search/search.component';
 export { SearchBarComponent } from './search/search-bar.component';
 export { LoginDemoComponent } from './login/login-demo.component';
 export { ActivitiDemoComponent } from './activiti/activiti-demo.component';
+export { ActivitiTaskAttachmentsComponent } from './activiti/activiti-task-attachments.component';
+export { ActivitiProcessAttachmentsComponent } from './activiti/activiti-process-attachments.component';
 export { ActivitiShowDiagramComponent } from './activiti/activiti-show-diagram.component';
 export { FormViewer } from './activiti/form-viewer.component';
 export { WebscriptComponent } from './webscript/webscript.component';

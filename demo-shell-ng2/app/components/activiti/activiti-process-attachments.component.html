@@ -13,7 +13,7 @@
 
         <adf-create-process-attachment
             [processInstanceId]="processId"
-            (success)="onFileUploadComplete($event)">
+            (contentCreated)="onFileUploadComplete($event)">
         </adf-create-process-attachment>
 
     </div>
