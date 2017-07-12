@@ -16,12 +16,16 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdDatepickerModule, MdInputModule, MdNativeDateModule } from '@angular/material';
+import { FormsModule } from '@angular/forms';
+import { MdDatepickerModule, MdIconModule, MdInputModule, MdNativeDateModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { CardViewUpdateService } from '../../services/adf-card-view-update.service';
+import { AdfCardViewContentProxyDirective } from './adf-card-view-content-proxy.directive';
 import { CardViewDateItemComponent } from './adf-card-view-dateitem.component';
+import { CardViewItemDispatcherComponent } from './adf-card-view-item-dispatcher.component';
 import { CardViewTextItemComponent } from './adf-card-view-textitem.component';
 import { CardViewComponent } from './adf-card-view.component';
 
@@ -34,18 +38,30 @@ describe('AdfCardView', () => {
         TestBed.configureTestingModule({
             imports: [
                 MdDatepickerModule,
+                MdIconModule,
                 MdInputModule,
-                MdNativeDateModule
+                MdNativeDateModule,
+                FormsModule
             ],
             declarations: [
                 CardViewComponent,
+                CardViewItemDispatcherComponent,
+                AdfCardViewContentProxyDirective,
                 CardViewTextItemComponent,
                 CardViewDateItemComponent
             ],
             providers: [
                 CardViewUpdateService
             ]
-        }).compileComponents();
+        });
+
+        // entryComponents are not supported yet on TestBed, that is why this ugly workaround:
+        // https://github.com/angular/angular/issues/10760
+        TestBed.overrideModule(BrowserDynamicTestingModule, {
+            set: { entryComponents: [ CardViewTextItemComponent, CardViewDateItemComponent ] }
+        });
+
+        TestBed.compileComponents();
     }));
 
     beforeEach(() => {
