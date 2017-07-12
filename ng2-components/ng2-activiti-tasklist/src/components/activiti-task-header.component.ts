@@ -63,7 +63,14 @@ export class ActivitiTaskHeaderComponent implements OnChanges {
                 new CardViewTextItemModel({ label: 'Created By', value: this.taskDetails.getFullName(), key: 'created-by', default: 'No assignee' }),
                 new CardViewDateItemModel({ label: 'Created', value: this.taskDetails.created, key: 'created' }),
                 new CardViewTextItemModel({ label: 'Id', value: this.taskDetails.id, key: 'id' }),
-                new CardViewTextItemModel({ label: 'Description', value: this.taskDetails.description, key: 'description', default: 'No description', multiline: true, editable: true }),
+                new CardViewTextItemModel({
+                    label: 'Description',
+                    value: this.taskDetails.description,
+                    key: 'description',
+                    default: 'No description',
+                    multiline: true,
+                    editable: true
+                }),
                 new CardViewTextItemModel({ label: 'Form name', value: this.formName, key: 'formName', default: 'No form' })
             ];
         }
