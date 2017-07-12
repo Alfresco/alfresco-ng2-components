@@ -18,9 +18,9 @@
 export let startTaskMock = {
     'name': 'fakeName',
     'description': 'fakeDescription',
-    'assignee': null,
+    'assignee': {'id': 2001, 'firstName': 'Jhon', 'lastName': 'Adams', 'email': 'jhon@app.activiti.com'},
     'dueDate': '2017-11-03T15:25:42.749+0000',
-    'formKey': null,
+    'formKey': '11201',
     'category': 'fakeAppId'
 };
 

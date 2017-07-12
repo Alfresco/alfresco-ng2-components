@@ -22,35 +22,17 @@ import { Observable } from 'rxjs/Rx';
 import { User } from '../models/user.model';
 
 @Injectable()
-export class PeopleService {
+export class ActivitiPeopleService {
 
     constructor(private alfrescoJsApi: AlfrescoApiService,
                 private logService: LogService) {
     }
 
     getWorkflowUsers(taskId?: string, searchWord?: string): Observable<User[]> {
-        let option = { excludeTaskId: taskId, filter: searchWord };
+        let option = {excludeTaskId: taskId, filter: searchWord};
         return Observable.fromPromise(this.getWorkflowUserApi(option))
             .map((response: any) => <User[]> response.data || [])
             .catch(err => this.handleError(err));
-    }
-
-    getWorkflowUsersWithImages(taskId?: string, searchWord?: string): Observable<User[]> {
-        let option = { excludeTaskId: taskId, filter: searchWord };
-        return Observable.fromPromise(this.getWorkflowUserApi(option))
-            .switchMap((response: any) => <User[]> response.data || [])
-            .map((user: User) => this.addImageToUser(user))
-            .combineAll()
-            .catch(err => this.handleError(err));
-    }
-
-    getUserImage(user: User): string {
-        return this.getUserProfileImageApi(user.id + '');
-    }
-
-    addImageToUser(user: User): Observable<User> {
-        user.userImage = this.getUserImage(user);
-        return Observable.of(user);
     }
 
     involveUserWithTask(taskId: string, idToInvolve: string): Observable<User[]> {
@@ -75,10 +57,6 @@ export class PeopleService {
 
     private removeInvolvedUserFromTaskApi(taskId: string, node: any) {
         return this.alfrescoJsApi.getInstance().activiti.taskActionsApi.removeInvolvedUser(taskId, node);
-    }
-
-    private getUserProfileImageApi(userId: string) {
-        return this.alfrescoJsApi.getInstance().activiti.userApi.getUserProfilePictureUrl(userId);
     }
 
     /**
