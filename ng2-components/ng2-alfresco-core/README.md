@@ -29,7 +29,7 @@
   * [Events](#events-1)
 - [ADF Card View](#adf-card-view)
   * [Properties](#properties-2)
-  * [CardViewModel](#cardviewmodel)
+  * [CardViewItem](#cardviewitem)
 - [AlfrescoTranslationService](#alfrescotranslationservice)
 - [Renditions Service](#renditions-service)
 - [Build from sources](#build-from-sources)
@@ -593,11 +593,12 @@ export class AppComponent {
 
 ## ADF Card View
 
-The component shows the [CardViewModel](#cardviewmodel)} object.
+The CardViewComponent is a configurable property list renderer. You define the property list, the CardViewComponent does the rest. Each property represents a card view item (a row) in the card view component. At the time of writing two different kind of card view item (property type) is supported out of the box ("text" item and "date" item) but you can define your own custom types as well.
 
 ```html
 <adf-card-view
-    [properties]="[{label: 'My Label', value: 'My value'}]">
+    [properties]="[{label: 'My Label', value: 'My value'}]"
+    [editable]="false">
 </adf-card-view>
 
 ```
@@ -606,25 +607,40 @@ The component shows the [CardViewModel](#cardviewmodel)} object.
 
 | Name | Type | Description |
 | --- | --- | --- |
-| properties | {array[CardViewModel](#cardviewmodel)} | (**required**) The custom view to render |
+| properties | [CardViewItem](#cardviewitem)[] | (**required**) The custom view to render |
+| editable | boolean | If the component editable or not |
+### CardViewItem
 
-### CardViewModel
-
-```json
-{
-    "label": "string",
-    "value": "any",
-    "format": "string",
-    "default": "string"
+```js
+export interface CardViewItem {
+    label: string;
+    value: any;
+    key: string;
+    default?: any;
+    type: string;
+    displayValue?: string;
+    editable?: boolean;
 }
 ```
 
 | Name | Type | Description |
 | --- | --- | --- |
 | label | string | The label to render |
-| value | string | The value to render |
-| format | string | The format to use in case the value is a date |
-| default | string | The default value to render in case the value is empty |
+| value | any | The original value |
+| key | string | the key of the property. Have an important role when editing the property. |
+| default | any | The default value to render in case the value is empty |
+| type | string | The item type. This it the value by which the proper component is loaded |
+| displayValue | string | The value to render |
+| editable | boolean | Whether the property editable or not |
+
+### Card Text Item
+
+
+### Card Date Item
+
+
+### Defining your custom Card Item
+
 
 ![adf-custom-view](docs/assets/adf-custom-view.png)
 

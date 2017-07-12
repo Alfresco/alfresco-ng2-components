@@ -18,9 +18,9 @@
 export interface CardViewItem {
     label: string;
     value: any;
-    key: any;
-    default: string;
+    key: string;
+    default?: any;
     type: string;
-    displayValue: string;
-    editable: boolean;
+    displayValue?: string;
+    editable?: boolean;
 }
