@@ -16,6 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
+import { AlfrescoApiService } from './alfresco-api.service';
 import { AppConfigService } from './app-config.service';
 import { StorageService } from './storage.service';
 
@@ -36,7 +37,9 @@ export class UserPreferencesService {
 
     constructor(
         appConfig: AppConfigService,
-        private storage: StorageService) {
+        private storage: StorageService,
+        private apiService: AlfrescoApiService
+    ) {
         this.defaults.paginationSize = appConfig.get('pagination.size', 25);
     }
 
@@ -53,9 +56,31 @@ export class UserPreferencesService {
         );
     }
 
-    get(property: string): string {
+    get(property: string, defaultValue?: string): string {
         const key = this.getPropertyKey(property);
-        return this.storage.getItem(key);
+        const value = this.storage.getItem(key);
+        if (value === undefined) {
+            return defaultValue;
+        }
+        return value;
+    }
+
+    set authType(value: string) {
+        this.set('AUTH_TYPE', value);
+        this.apiService.reset();
+    }
+
+    get authType(): string {
+        return this.get('AUTH_TYPE', 'ALL');
+    }
+
+    set disableCSRF(value: boolean) {
+        this.set('DISABLE_CSRF', value);
+        this.apiService.reset();
+    }
+
+    get disableCSRF(): boolean {
+        return this.get('DISABLE_CSRF') === 'true';
     }
 
     set paginationSize(value: number) {
