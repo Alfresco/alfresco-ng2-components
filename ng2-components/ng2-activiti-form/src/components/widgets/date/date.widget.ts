@@ -29,7 +29,7 @@ declare var componentHandler: any;
     styleUrls: ['./date.widget.css'],
     host: baseHost
 })
-export class DateWidget extends WidgetComponent implements OnInit, AfterViewChecked {
+export class DateWidgetComponent extends WidgetComponent implements OnInit, AfterViewChecked {
 
     datePicker: any;
 

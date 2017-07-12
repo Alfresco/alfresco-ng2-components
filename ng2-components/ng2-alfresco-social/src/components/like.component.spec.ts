@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DebugElement }    from '@angular/core';
+import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
 import { LikeComponent } from '../components/like.component';

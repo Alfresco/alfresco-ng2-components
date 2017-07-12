@@ -26,14 +26,14 @@ import { DataTableModule, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfr
 
 import { TranslationMock } from './../assets/translation.service.mock';
 import { ActivitiProcessService } from './../services/activiti-process.service';
-import { ActivitiProcessInstanceVariables } from './activiti-process-instance-variables.component';
+import { ActivitiProcessInstanceVariablesComponent } from './activiti-process-instance-variables.component';
 
-describe('ActivitiProcessInstanceVariables', () => {
+describe('ActivitiProcessInstanceVariablesComponent', () => {
 
     let componentHandler: any;
     let service: ActivitiProcessService;
-    let component: ActivitiProcessInstanceVariables;
-    let fixture: ComponentFixture<ActivitiProcessInstanceVariables>;
+    let component: ActivitiProcessInstanceVariablesComponent;
+    let fixture: ComponentFixture<ActivitiProcessInstanceVariablesComponent>;
     let getVariablesSpy: jasmine.Spy;
     let createOrUpdateProcessInstanceVariablesSpy: jasmine.Spy;
     let deleteProcessInstanceVariableSpy: jasmine.Spy;
@@ -46,7 +46,7 @@ describe('ActivitiProcessInstanceVariables', () => {
                 MdProgressSpinnerModule
             ],
             declarations: [
-                ActivitiProcessInstanceVariables
+                ActivitiProcessInstanceVariablesComponent
             ],
             providers: [
                 { provide: AlfrescoTranslationService, useClass: TranslationMock },
@@ -57,7 +57,7 @@ describe('ActivitiProcessInstanceVariables', () => {
 
     beforeEach(() => {
 
-        fixture = TestBed.createComponent(ActivitiProcessInstanceVariables);
+        fixture = TestBed.createComponent(ActivitiProcessInstanceVariablesComponent);
         component = fixture.componentInstance;
         service = fixture.debugElement.injector.get(ActivitiProcessService);
 

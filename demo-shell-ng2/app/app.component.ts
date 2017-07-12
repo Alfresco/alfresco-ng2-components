@@ -18,11 +18,11 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import {
-    AlfrescoTranslationService,
     AlfrescoAuthenticationService,
     AlfrescoSettingsService,
-    StorageService,
-    LogService
+    AlfrescoTranslationService,
+    LogService,
+    StorageService
 } from 'ng2-alfresco-core';
 
 declare var document: any;

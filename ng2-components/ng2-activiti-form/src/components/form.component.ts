@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+/* tslint:disable */
 import { AfterViewChecked, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
 import { FormErrorEvent, FormEvent } from './../events/index';

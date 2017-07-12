@@ -28,7 +28,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
     styleUrls: ['./typeahead.widget.css'],
     host: baseHost
 })
-export class TypeaheadWidget extends WidgetComponent implements OnInit {
+export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit {
 
     popupVisible: boolean = false;
     minTermLength: number = 1;

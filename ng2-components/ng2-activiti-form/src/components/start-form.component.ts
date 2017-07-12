@@ -15,20 +15,10 @@
  * limitations under the License.
  */
 
-import {
-    AfterViewChecked,
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnChanges,
-    Output,
-    SimpleChanges,
-    ViewChild
-} from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { FormService } from './../services/form.service';
-import { WidgetVisibilityService }  from './../services/widget-visibility.service';
+import { WidgetVisibilityService } from './../services/widget-visibility.service';
 import { ActivitiForm } from './activiti-form.component';
 import { ContentLinkModel } from './widgets/core/content-link.model';
 import { FormOutcomeModel } from './widgets/core/index';
@@ -55,7 +45,7 @@ import { FormOutcomeModel } from './widgets/core/index';
     templateUrl: './activiti-start-form.component.html',
     styleUrls: ['./activiti-form.component.css']
 })
-export class ActivitiStartForm extends ActivitiForm implements AfterViewChecked, OnChanges {
+export class ActivitiStartFormComponent extends ActivitiForm implements OnChanges, OnInit {
 
     @Input()
     processDefinitionId: string;

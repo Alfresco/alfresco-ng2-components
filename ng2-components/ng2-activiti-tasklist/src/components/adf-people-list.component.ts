@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ContentChild, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, ContentChild, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { DataColumnListComponent } from 'ng2-alfresco-core';
 import { DataTableComponent } from 'ng2-alfresco-datatable';
 import { User, UserEventModel } from '../models/index';
@@ -28,7 +28,7 @@ declare let componentHandler: any;
     styleUrls: ['./adf-people-list.component.css']
 })
 
-export class PeopleList {
+export class PeopleListComponent implements AfterViewInit, AfterContentInit {
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 

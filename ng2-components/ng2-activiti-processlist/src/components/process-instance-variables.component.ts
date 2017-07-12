@@ -31,7 +31,7 @@ declare let dialogPolyfill: any;
     styleUrls: ['./activiti-process-instance-variables.component.css'],
     providers: [ActivitiProcessService]
 })
-export class ActivitiProcessInstanceVariables implements OnInit, OnChanges {
+export class ActivitiProcessInstanceVariablesComponent implements OnInit, OnChanges {
 
     @Input()
     processInstanceId: string;

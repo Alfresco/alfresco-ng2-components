@@ -29,7 +29,7 @@ declare let componentHandler: any;
     styleUrls: ['activiti-filters.component.css'],
     providers: [ActivitiTaskListService]
 })
-export class ActivitiFilters implements OnInit, OnChanges {
+export class ActivitiFiltersComponent implements OnInit, OnChanges {
 
     @Input()
     filterParam: FilterParamsModel;

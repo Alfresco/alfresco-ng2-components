@@ -29,7 +29,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
     `,
     host: baseHost
 })
-export class UnknownWidget extends WidgetComponent {
+export class UnknownWidgetComponent extends WidgetComponent {
 
     constructor(public formService: FormService) {
          super(formService);

@@ -25,12 +25,12 @@ import { FormFieldTypes } from '../core/form-field-types';
 import { EcmModelService } from './../../../services/ecm-model.service';
 import { FormService } from './../../../services/form.service';
 import { FormFieldModel } from './../core/form-field.model';
-import { AttachWidget } from './attach.widget';
+import { AttachWidgetComponent } from './attach.widget';
 
-describe('AttachWidget', () => {
+describe('AttachWidgetComponent', () => {
 
-    let widget: AttachWidget;
-    let fixture: ComponentFixture<AttachWidget>;
+    let widget: AttachWidgetComponent;
+    let fixture: ComponentFixture<AttachWidgetComponent>;
     let element: HTMLElement;
     let contentService: ActivitiAlfrescoContentService;
     let dialogPolyfill: any;
@@ -41,7 +41,7 @@ describe('AttachWidget', () => {
                 CoreModule.forRoot()
             ],
             declarations: [
-                AttachWidget
+                AttachWidgetComponent
             ],
             providers: [
                 FormService,
@@ -52,7 +52,7 @@ describe('AttachWidget', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(AttachWidget);
+        fixture = TestBed.createComponent(AttachWidgetComponent);
         contentService = TestBed.get(ActivitiAlfrescoContentService);
 
         element = fixture.nativeElement;

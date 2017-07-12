@@ -22,14 +22,14 @@ import { exampleProcess, processEnded } from './../assets/activiti-process.model
 import { TranslationMock } from './../assets/translation.service.mock';
 import { ProcessInstance } from './../models/process-instance.model';
 import { ActivitiProcessService } from './../services/activiti-process.service';
-import { ActivitiProcessComments } from './activiti-process-comments.component';
-import { ActivitiProcessInstanceHeader } from './activiti-process-instance-header.component';
+import { ActivitiProcessCommentsComponent } from './activiti-process-comments.component';
+import { ActivitiProcessInstanceHeaderComponent } from './activiti-process-instance-header.component';
 
-describe('ActivitiProcessInstanceHeader', () => {
+describe('ActivitiProcessInstanceHeaderComponent', () => {
 
     let componentHandler: any;
-    let component: ActivitiProcessInstanceHeader;
-    let fixture: ComponentFixture<ActivitiProcessInstanceHeader>;
+    let component: ActivitiProcessInstanceHeaderComponent;
+    let fixture: ComponentFixture<ActivitiProcessInstanceHeaderComponent>;
     let element: HTMLElement;
 
     beforeEach(async(() => {
@@ -38,8 +38,8 @@ describe('ActivitiProcessInstanceHeader', () => {
                 CoreModule.forRoot()
             ],
             declarations: [
-                ActivitiProcessInstanceHeader,
-                ActivitiProcessComments
+                ActivitiProcessInstanceHeaderComponent,
+                ActivitiProcessCommentsComponent
             ],
             providers: [
                 ActivitiProcessService,
@@ -50,7 +50,7 @@ describe('ActivitiProcessInstanceHeader', () => {
 
     beforeEach(() => {
 
-        fixture = TestBed.createComponent(ActivitiProcessInstanceHeader);
+        fixture = TestBed.createComponent(ActivitiProcessInstanceHeaderComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
 

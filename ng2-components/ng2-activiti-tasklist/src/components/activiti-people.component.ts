@@ -29,7 +29,7 @@ declare var require: any;
     templateUrl: './activiti-people.component.html',
     styleUrls: ['./activiti-people.component.css']
 })
-export class ActivitiPeople implements AfterViewInit {
+export class ActivitiPeopleComponent implements AfterViewInit {
 
     @Input()
     iconImageUrl: string = require('../assets/images/user.jpg');

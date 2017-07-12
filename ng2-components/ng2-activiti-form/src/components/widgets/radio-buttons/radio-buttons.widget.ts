@@ -28,7 +28,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
     styleUrls: ['./radio-buttons.widget.css'],
     host: baseHost
 })
-export class RadioButtonsWidget extends WidgetComponent implements OnInit {
+export class RadioButtonsWidgetComponent extends WidgetComponent implements OnInit {
 
     constructor(public formService: FormService,
                 private visibilityService: WidgetVisibilityService,

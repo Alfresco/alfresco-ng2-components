@@ -21,7 +21,7 @@ import {
     Directive,
     TemplateRef
 } from '@angular/core';
-import { TaskDetailsComponent } from './task-details.component';
+import { ActivitiTaskDetailsComponent } from './activiti-task-details.component';
 
 @Directive({
     selector: 'no-task-details-template'
@@ -32,7 +32,7 @@ export class NoTaskDetailsTemplateDirective implements AfterContentInit {
     template: any;
 
     constructor(
-        private activitiTaskDetails: TaskDetailsComponent) {
+        private activitiTaskDetails: ActivitiTaskDetailsComponent) {
     }
 
     ngAfterContentInit() {
