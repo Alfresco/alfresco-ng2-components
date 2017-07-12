@@ -17,13 +17,13 @@
 
 import { TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
-import { ActivitiContentComponentService } from './activiti-content-service';
+import { ActivitiContentService } from './activiti-content-service';
 
 declare let jasmine: any;
 
-describe('ActivitiContentComponentService', () => {
+describe('ActivitiContentService', () => {
 
-    let service: ActivitiContentComponentService;
+    let service: ActivitiContentService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -31,10 +31,10 @@ describe('ActivitiContentComponentService', () => {
                 CoreModule.forRoot()
             ],
             providers: [
-                ActivitiContentComponentService
+                ActivitiContentService
             ]
         });
-        service = TestBed.get(ActivitiContentComponentService);
+        service = TestBed.get(ActivitiContentService);
     });
 
     beforeEach(() => {

@@ -27,7 +27,7 @@ import { ADFFormListComponent } from './src/components/adf-form-list.component';
 import { FormFieldComponent } from './src/components/form-field/form-field.component';
 import { MASK_DIRECTIVE, WIDGET_DIRECTIVES } from './src/components/widgets/index';
 import { ActivitiAlfrescoContentService } from './src/services/activiti-alfresco.service';
-import { ActivitiContentComponentService } from './src/services/activiti-content-service';
+import { ActivitiContentService } from './src/services/activiti-content-service';
 import { EcmModelService } from './src/services/ecm-model.service';
 import { FormRenderingService } from './src/services/form-rendering.service';
 import { FormService } from './src/services/form.service';
@@ -57,7 +57,7 @@ export const ACTIVITI_FORM_DIRECTIVES: any[] = [
 
 export const ACTIVITI_FORM_PROVIDERS: any[] = [
     FormService,
-    ActivitiContentComponentService,
+    ActivitiContentService,
     EcmModelService,
     NodeService,
     WidgetVisibilityService,
