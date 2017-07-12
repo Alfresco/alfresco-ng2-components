@@ -15,20 +15,20 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { Form } from '../models/form.model';
+import { StartTaskModel, User } from '../models/index';
 import { TaskDetailsModel } from '../models/task-details.model';
+import { ActivitiPeopleService } from '../services/activiti-people.service';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
-
-declare let dialogPolyfill: any;
 
 @Component({
     selector: 'adf-start-task, activiti-start-task',
     templateUrl: './activiti-start-task.component.html',
     styleUrls: ['./activiti-start-task.component.css']
 })
-export class ActivitiStartTaskButton {
+export class ActivitiStartTaskComponent implements OnInit {
 
     @Input()
     appId: string;
@@ -37,17 +37,16 @@ export class ActivitiStartTaskButton {
     onSuccess: EventEmitter<any> = new EventEmitter<any>();
 
     @Output()
+    cancel: EventEmitter<void> = new EventEmitter<void>();
+
+    @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    @ViewChild('dialog')
-    dialog: any;
+    people: User [] = [];
+
+    startTaskmodel: StartTaskModel = new StartTaskModel();
 
     forms: Form [];
-
-    formId: string = null;
-
-    name: string;
-    description: string;
 
     /**
      * Constructor
@@ -57,6 +56,7 @@ export class ActivitiStartTaskButton {
      */
     constructor(private translateService: AlfrescoTranslationService,
                 private taskService: ActivitiTaskListService,
+                private peopleService: ActivitiPeopleService,
                 private logService: LogService) {
 
         if (translateService) {
@@ -64,20 +64,22 @@ export class ActivitiStartTaskButton {
         }
     }
 
+    ngOnInit() {
+        this.loadFormsTask();
+        this.getUsers();
+    }
+
     public start() {
-        if (this.name) {
-            this.taskService.createNewTask(new TaskDetailsModel({
-                name: this.name,
-                description: this.description,
-                category: this.appId ? '' + this.appId : null
-            })).subscribe(
+        if (this.startTaskmodel.name) {
+            this.startTaskmodel.category = this.appId;
+            this.taskService.createNewTask(new TaskDetailsModel(this.startTaskmodel)).subscribe(
                 (res: any) => {
                     this.onSuccess.emit(res);
-                    this.closeDialog();
-                    this.resetForm();
                     this.attachForm(res.id);
+                    this.resetForm();
                 },
                 (err) => {
+                    this.error.emit(err);
                     this.logService.error('An error occurred while trying to add the task');
                 }
             );
@@ -85,46 +87,35 @@ export class ActivitiStartTaskButton {
     }
 
     private attachForm(taskId: string) {
-        if (this.formId && taskId) {
-            this.taskService.attachFormToATask(taskId, Number(this.formId));
-            this.formId = null;
+        if (this.startTaskmodel.formKey && taskId) {
+            this.taskService.attachFormToATask(taskId, Number(this.startTaskmodel.formKey));
         }
     }
 
-    public cancel() {
-        this.closeDialog();
-    }
-
-    public showDialog() {
-        if (!this.dialog.nativeElement.showModal) {
-            dialogPolyfill.registerDialog(this.dialog.nativeElement);
-        }
-
-        this.loadFormsTask();
-
-        if (this.dialog) {
-            this.dialog.nativeElement.showModal();
-        }
+    public onCancel() {
+        this.cancel.emit();
     }
 
     private loadFormsTask() {
         this.taskService.getFormList().subscribe((res: Form[]) => {
                 this.forms = res;
             },
-                                                 (err) => {
+            (err) => {
                 this.error.emit(err);
                 this.logService.error('An error occurred while trying to get the forms');
             });
     }
 
-    private closeDialog() {
-        if (this.dialog) {
-            this.dialog.nativeElement.close();
-        }
+    private resetForm() {
+        this.startTaskmodel = null;
     }
 
-    private resetForm() {
-        this.name = '';
-        this.description = '';
+    private getUsers() {
+        this.peopleService.getWorkflowUsers().subscribe((users) => {
+            this.people = users;
+        }, (err) => {
+            this.error.emit(err);
+            this.logService.error('Could not load users');
+        });
     }
 }
