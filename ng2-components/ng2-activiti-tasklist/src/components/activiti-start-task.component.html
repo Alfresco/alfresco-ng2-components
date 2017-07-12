@@ -22,10 +22,16 @@
 		<md-grid-list cols="2" rowHeight="80px">
 			<md-grid-tile>
 				<md-input-container class="adf-start-task-input-container">
-					<input mdInput [mdDatepicker]="taskDatePicker" [value]="taskDatePicker" placeholder="{{'START_TASK.FORM.LABEL.DATE'|translate}}" [(ngModel)]="startTaskmodel.date" id="date_id">
+					<input mdInput 
+					[mdDatepicker]="taskDatePicker" 
+					[value]="taskDatePicker" 
+					(click)="taskDatePicker.open()" 
+					(keydown)="true"
+					placeholder="{{'START_TASK.FORM.LABEL.DATE'|translate}}" 
+					[(ngModel)]="startTaskmodel.date" id="date_id">
 					<button mdSuffix [mdDatepickerToggle]="taskDatePicker"></button>
 				</md-input-container>
-				<md-datepicker #taskDatePicker></md-datepicker>
+				<md-datepicker #taskDatePicker [touchUi]="true"></md-datepicker>
 			</md-grid-tile>
 			<md-grid-tile>
 				<md-select placeholder="{{'START_TASK.FORM.LABEL.ASSIGNEE'|translate}}" id="assignee_id" class="adf-start-task-input-container" [(ngModel)]="startTaskmodel.assignee">

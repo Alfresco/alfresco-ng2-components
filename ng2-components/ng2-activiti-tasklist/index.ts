@@ -17,7 +17,17 @@
 
 import { DatePipe } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { MdButtonModule, MdIconModule, MdInputModule, MdProgressSpinnerModule, MdDatepickerModule, MdGridListModule, MdAutocompleteModule, MdNativeDateModule, MdSelectModule } from '@angular/material';
+import { 
+    MdButtonModule, 
+    MdIconModule, 
+    MdInputModule, 
+    MdProgressSpinnerModule, 
+    MdDatepickerModule, 
+    MdGridListModule, 
+    MdAutocompleteModule, 
+    MdNativeDateModule, 
+    MdSelectModule 
+} from '@angular/material';
 import { ActivitiFormModule } from 'ng2-activiti-form';
 import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
