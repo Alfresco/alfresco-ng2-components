@@ -17,7 +17,7 @@
 
 import { EventEmitter } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { FileModel, FileUploadOptions } from 'ng2-alfresco-core';
+import { FileModel, FileUploadOptions } from '../models/file.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AlfrescoAuthenticationService } from './alfresco-authentication.service';
 import { AlfrescoSettingsService } from './alfresco-settings.service';
