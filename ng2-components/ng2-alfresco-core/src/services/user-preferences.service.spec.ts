@@ -61,6 +61,7 @@ describe('UserPreferencesService', () => {
     });
 
     it('should format property key for default prefix', () => {
+        preferences.setStoragePrefix(null);
         expect(preferences.getPropertyKey('propertyA')).toBe('GUEST__propertyA');
     });
 

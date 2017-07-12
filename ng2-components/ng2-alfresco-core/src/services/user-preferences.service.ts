@@ -26,14 +26,12 @@ export class UserPreferencesService {
         paginationSize: 25
     };
 
-    private _storagePrefix: string = 'GUEST';
-
     getStoragePrefix(): string {
-        return this._storagePrefix;
+        return this.storage.getItem('USER_PROFILE') || 'GUEST';
     }
 
     setStoragePrefix(value: string) {
-        this._storagePrefix = value || 'GUEST';
+        this.storage.setItem('USER_PROFILE', value || 'GUEST');
     }
 
     constructor(
