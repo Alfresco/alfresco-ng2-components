@@ -246,36 +246,11 @@ This is a sub-component of the process details component, which renders some gen
 
 | Name | Type| Description |
 | --- | --- | --- |
-| processInstance | string | (**required**): Full details of the process instance to display information about |
+| processInstance | [ProcessInstanceModel](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-activiti-processlist/src/models/process-instance.model.ts) | (**required**): Full details of the process instance to display information about |
 
 ### Events
 
 No events
-
-## ProcessInstanceModel
-
-```json
-{ 
-    "businessKey": "string",
-    "ended": "any",
-    "graphicalNotationDefined": "boolean",
-    "id": "string",
-    "name": "string",
-    "processDefinitionCategory": "string",
-    "processDefinitionDeploymentId": "string",
-    "processDefinitionDescription": "string",
-    "processDefinitionId": "string",
-    "processDefinitionKey": "string",
-    "processDefinitionName": "string",
-    "processDefinitionVersion": "number",
-    "startFormDefined": "boolean",
-    "started": "string",
-    "startedBy": "any",
-    "suspended": "boolean",
-    "tenantId": "string",
-    "variables": "any"
-}
-```
 
 ## Process Instance Tasks component
 
