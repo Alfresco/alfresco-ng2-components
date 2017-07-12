@@ -1,9 +1,9 @@
 <div class="adf-property-label">{{ property.label }}</div>
 <div class="adf-property-value">
-    <span *ngIf="!(editable && property.editable)">
+    <span *ngIf="!isEditble()">
         <span [attr.data-automation-id]="'card-dateitem-' + property.key">{{ property.displayValue }}</span>
     </span>
-    <span *ngIf="editable && property.editable" class="adf-dateitem-editable">
+    <span *ngIf="isEditble()" class="adf-dateitem-editable">
         <input class="adf-invisible-date-input" [mdDatepicker]="picker" value="{{property.value}}"><!--
      --><span
             class="adf-datepicker-toggle"

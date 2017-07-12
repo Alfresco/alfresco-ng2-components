@@ -37,6 +37,10 @@ export class CardViewDateItemComponent {
 
     constructor(private cardViewUpdateService: CardViewUpdateService) {}
 
+    isEditble() {
+        return this.editable && this.property.editable;
+    }
+
     showDatePicker() {
         this.datepicker.open();
     }

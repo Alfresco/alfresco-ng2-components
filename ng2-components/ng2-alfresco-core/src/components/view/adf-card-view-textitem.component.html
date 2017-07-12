@@ -1,9 +1,9 @@
 <div class="adf-property-label">{{ property.label }}</div>
 <div class="adf-property-value">
-    <span *ngIf="!(editable && property.editable)">
+    <span *ngIf="!isEditble()">
         <span [attr.data-automation-id]="'card-textitem-' + property.key">{{ property.displayValue }}</span>
     </span>
-    <span *ngIf="editable && property.editable">
+    <span *ngIf="isEditble()">
         <div *ngIf="!inEdit" (click)="setEditMode(true)" class="adf-textitem-readonly">
             <span [attr.data-automation-id]="'card-textitem-edit-tiggle-' + property.key">{{ property.displayValue }}</span>
             <md-icon class="adf-textitem-icon">create</md-icon>
