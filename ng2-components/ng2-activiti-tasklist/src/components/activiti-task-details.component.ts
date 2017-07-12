@@ -55,6 +55,9 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
     @ViewChild('dialogPeople')
     peopleDialog: any;
 
+    @ViewChild('dialogComments')
+    commentsDialog: any;
+
     @Input()
     debugMode: boolean = false;
 
@@ -300,6 +303,19 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
     public closePeopleDialog(): void {
         if (this.peopleDialog) {
             this.peopleDialog.nativeElement.close();
+        }
+    }
+
+    public showCommentsDialog(): void {
+        if (!this.commentsDialog.nativeElement.showModal) {
+            dialogPolyfill.registerDialog(this.commentsDialog.nativeElement);
+        }
+        this.commentsDialog.nativeElement.showModal();
+    }
+
+    public closeCommentsDialog(): void {
+        if (this.commentsDialog) {
+            this.commentsDialog.nativeElement.close();
         }
     }
 
