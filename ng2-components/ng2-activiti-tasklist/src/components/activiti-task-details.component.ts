@@ -27,7 +27,7 @@ import { Component,
     ViewChild
 } from '@angular/core';
 import { ContentLinkModel, FormModel, FormOutcomeEvent, FormService } from 'ng2-activiti-form';
-import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { User } from '../models/user.model';
@@ -141,7 +141,8 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
     constructor(private translateService: AlfrescoTranslationService,
                 private activitiForm: FormService,
                 private activitiTaskList: ActivitiTaskListService,
-                private logService: LogService) {
+                private logService: LogService,
+                private authService: AlfrescoAuthenticationService) {
 
         if (translateService) {
             translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
@@ -212,8 +213,12 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
         }
     }
 
-    isAssignedToMe(): boolean {
+    isAssigned(): boolean {
         return this.taskDetails.assignee ? true : false;
+    }
+
+    isAssignedToMe(): boolean {
+        return this.taskDetails.assignee.email === this.authService.getBpmUsername() ? true : false;
     }
 
     /**
