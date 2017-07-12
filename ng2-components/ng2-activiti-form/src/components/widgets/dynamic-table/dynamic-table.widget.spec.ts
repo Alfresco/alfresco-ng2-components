@@ -23,7 +23,7 @@ import { WidgetVisibilityService } from '../../../services/widget-visibility.ser
 import { EcmModelService } from './../../../services/ecm-model.service';
 import { FormService } from './../../../services/form.service';
 import { FormFieldModel, FormFieldTypes, FormModel } from './../core/index';
-import { DynamicTableWidget } from './dynamic-table.widget';
+import { DynamicTableWidgetComponent } from './dynamic-table.widget';
 import { DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './dynamic-table.widget.model';
 import { BooleanEditorComponent } from './editors/boolean/boolean.editor';
 import { DateEditorComponent } from './editors/date/date.editor';
@@ -72,10 +72,10 @@ let fakeFormField = {
     ]
 };
 
-describe('DynamicTableWidget', () => {
+describe('DynamicTableWidgetComponent', () => {
 
-    let widget: DynamicTableWidget;
-    let fixture: ComponentFixture<DynamicTableWidget>;
+    let widget: DynamicTableWidgetComponent;
+    let fixture: ComponentFixture<DynamicTableWidgetComponent>;
     let element: HTMLElement;
     let table: DynamicTableModel;
     let logService: LogService;
@@ -86,7 +86,7 @@ describe('DynamicTableWidget', () => {
             imports: [
                 CoreModule.forRoot()
             ],
-            declarations: [DynamicTableWidget, RowEditorComponent,
+            declarations: [DynamicTableWidgetComponent, RowEditorComponent,
                 DropdownEditorComponent, DateEditorComponent, BooleanEditorComponent, TextEditorComponent],
             providers: [
                 FormService,
@@ -108,7 +108,7 @@ describe('DynamicTableWidget', () => {
         let elementRefSpy = jasmine.createSpyObj('elementRef', ['']);
         elementRefSpy.nativeElement = nativeElementSpy;
 
-        fixture = TestBed.createComponent(DynamicTableWidget);
+        fixture = TestBed.createComponent(DynamicTableWidgetComponent);
         element = fixture.nativeElement;
         widget = fixture.componentInstance;
         widget.content = table;

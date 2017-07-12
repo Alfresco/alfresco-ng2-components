@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
-import { Subscription } from 'rxjs/Rx';
+import { Location } from '@angular/common';
+import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {Location} from '@angular/common';
+import { Subscription } from 'rxjs/Rx';
 
 @Component({
     selector: 'activiti-show-diagram',
     templateUrl: './activiti-show-diagram.component.html',
     styleUrls: ['./activiti-show-diagram.component.css']
 })
-export class ActivitiShowDiagramComponent {
+export class ActivitiShowDiagramComponent implements OnDestroy {
 
     sub: Subscription;
     processDefinitionId: string;

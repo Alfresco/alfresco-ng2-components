@@ -25,7 +25,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
     styleUrls: ['./multiline-text.widget.css'],
     host: baseHost
 })
-export class MultilineTextWidget extends WidgetComponent {
+export class MultilineTextWidgetComponentComponent extends WidgetComponent {
 
     constructor(public formService: FormService) {
          super(formService);

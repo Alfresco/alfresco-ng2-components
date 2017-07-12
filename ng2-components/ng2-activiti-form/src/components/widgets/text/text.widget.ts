@@ -25,13 +25,13 @@ import { baseHost , WidgetComponent } from './../widget.component';
     styleUrls: ['./text.widget.css'],
     host: baseHost
 })
-export class TextWidget extends WidgetComponent implements OnInit {
+export class TextWidgetComponent extends WidgetComponent implements OnInit {
 
-    private mask;
-    private isMaskReversed;
+    mask;
+    isMaskReversed;
 
     constructor(public formService: FormService) {
-         super(formService);
+        super(formService);
     }
 
     ngOnInit() {

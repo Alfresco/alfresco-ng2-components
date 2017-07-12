@@ -25,7 +25,7 @@ import { baseHost , WidgetComponent} from './../widget.component';
     templateUrl: './checkbox.widget.html',
     host: baseHost
 })
-export class CheckboxWidget extends WidgetComponent {
+export class CheckboxWidgetComponent extends WidgetComponent {
 
     constructor(private visibilityService: WidgetVisibilityService, public formService: FormService) {
          super(formService);

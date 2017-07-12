@@ -20,7 +20,7 @@ import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { DataRowActionEvent, DataRowEvent, DataTableModule, ObjectDataRow } from 'ng2-alfresco-datatable';
 import { Observable } from 'rxjs/Observable';
 import { User, UserEventModel } from '../models/index';
-import { PeopleList } from './adf-people-list.component';
+import { PeopleListComponent } from './adf-people-list.component';
 
 declare let jasmine: any;
 
@@ -31,10 +31,10 @@ const fakeUser: User = new User({
     email: 'fake@mail.com'
 });
 
-describe('PeopleList', () => {
+describe('PeopleListComponent', () => {
 
-    let peopleListComponent: PeopleList;
-    let fixture: ComponentFixture<PeopleList>;
+    let peopleListComponent: PeopleListComponent;
+    let fixture: ComponentFixture<PeopleListComponent>;
     let element: HTMLElement;
     let componentHandler;
 
@@ -45,7 +45,7 @@ describe('PeopleList', () => {
                 DataTableModule
             ],
             declarations: [
-                PeopleList
+                PeopleListComponent
             ]
         }).compileComponents().then(() => {
 
@@ -53,7 +53,7 @@ describe('PeopleList', () => {
             spyOn(translateService, 'addTranslationFolder').and.stub();
             spyOn(translateService.translate, 'get').and.callFake((key) => { return Observable.of(key); });
 
-            fixture = TestBed.createComponent(PeopleList);
+            fixture = TestBed.createComponent(PeopleListComponent);
             peopleListComponent = fixture.componentInstance;
             element = fixture.nativeElement;
             componentHandler = jasmine.createSpyObj('componentHandler', [

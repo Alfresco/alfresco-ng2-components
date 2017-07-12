@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, Optional, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ChangeDetectorRef, Component, Input, OnInit, Optional, ViewChild } from '@angular/core';
 import { MdDialog } from '@angular/material';
-import { AlfrescoContentService, FolderCreatedEvent, NotificationService, FileUploadCompleteEvent, UploadService } from 'ng2-alfresco-core';
+import { ActivatedRoute, Params } from '@angular/router';
+import { AlfrescoContentService, FileUploadCompleteEvent, FolderCreatedEvent, NotificationService, UploadService } from 'ng2-alfresco-core';
 import { DocumentListComponent } from 'ng2-alfresco-documentlist';
 
-import { CreateFolderDialog } from '../../dialogs/create-folder.dialog';
+import { CreateFolderDialogComponent } from '../../dialogs/create-folder.dialog';
 
 @Component({
     selector: 'files-component',
@@ -131,7 +131,7 @@ export class FilesComponent implements OnInit {
     }
 
     onCreateFolderClicked(event: Event) {
-        let dialogRef = this.dialog.open(CreateFolderDialog);
+        let dialogRef = this.dialog.open(CreateFolderDialogComponent);
         dialogRef.afterClosed().subscribe(folderName => {
             if (folderName) {
                 this.contentService.createFolder('', folderName, this.documentList.currentFolderId).subscribe(

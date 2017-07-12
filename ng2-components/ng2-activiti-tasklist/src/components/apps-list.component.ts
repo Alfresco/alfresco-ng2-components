@@ -31,7 +31,7 @@ declare let componentHandler: any;
     styleUrls: ['./activiti-apps.component.css', './activiti-apps-grid.component.css'],
     providers: [ActivitiTaskListService]
 })
-export class ActivitiApps implements OnInit {
+export class ActivitiAppsComponent implements OnInit {
 
     public static LAYOUT_LIST: string = 'LIST';
     public static LAYOUT_GRID: string = 'GRID';
@@ -42,7 +42,7 @@ export class ActivitiApps implements OnInit {
     public static DEFAULT_TASKS_APP_MATERIAL_ICON: string = 'favorite_border';
 
     @Input()
-    layoutType: string = ActivitiApps.LAYOUT_GRID;
+    layoutType: string = ActivitiAppsComponent.LAYOUT_GRID;
 
     @Input()
     filtersAppId: any[];
@@ -94,10 +94,10 @@ export class ActivitiApps implements OnInit {
             (res) => {
                 res = this.filterApps(res);
                 res.forEach((app: AppDefinitionRepresentationModel) => {
-                    if (app.defaultAppId === ActivitiApps.DEFAULT_TASKS_APP) {
-                        app.name = ActivitiApps.DEFAULT_TASKS_APP_NAME;
-                        app.theme = ActivitiApps.DEFAULT_TASKS_APP_THEME;
-                        app.icon = ActivitiApps.DEFAULT_TASKS_APP_ICON;
+                    if (app.defaultAppId === ActivitiAppsComponent.DEFAULT_TASKS_APP) {
+                        app.name = ActivitiAppsComponent.DEFAULT_TASKS_APP_NAME;
+                        app.theme = ActivitiAppsComponent.DEFAULT_TASKS_APP_THEME;
+                        app.icon = ActivitiAppsComponent.DEFAULT_TASKS_APP_ICON;
                         this.appsObserver.next(app);
                     } else if (app.deploymentId) {
                         this.appsObserver.next(app);
@@ -154,7 +154,7 @@ export class ActivitiApps implements OnInit {
      * @returns {boolean}
      */
     isValidType(): boolean {
-        if (this.layoutType && (this.layoutType === ActivitiApps.LAYOUT_LIST || this.layoutType === ActivitiApps.LAYOUT_GRID)) {
+        if (this.layoutType && (this.layoutType === ActivitiAppsComponent.LAYOUT_LIST || this.layoutType === ActivitiAppsComponent.LAYOUT_GRID)) {
             return true;
         }
         return false;
@@ -164,7 +164,7 @@ export class ActivitiApps implements OnInit {
      * Assign the default value to LayoutType
      */
     setDefaultLayoutType(): void {
-        this.layoutType = ActivitiApps.LAYOUT_GRID;
+        this.layoutType = ActivitiAppsComponent.LAYOUT_GRID;
     }
 
     /**
@@ -172,7 +172,7 @@ export class ActivitiApps implements OnInit {
      * @returns {boolean}
      */
     isList(): boolean {
-        return this.layoutType === ActivitiApps.LAYOUT_LIST;
+        return this.layoutType === ActivitiAppsComponent.LAYOUT_LIST;
     }
 
     /**
@@ -180,7 +180,7 @@ export class ActivitiApps implements OnInit {
      * @returns {boolean}
      */
     isGrid(): boolean {
-        return this.layoutType === ActivitiApps.LAYOUT_GRID;
+        return this.layoutType === ActivitiAppsComponent.LAYOUT_GRID;
     }
 
     isEmpty(): boolean {

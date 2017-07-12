@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { MultilineTextWidget } from './multiline-text.widget';
+import { MultilineTextWidgetComponentComponent } from './multiline-text.widget';
 
-describe('MultilineTextWidget', () => {
+describe('MultilineTextWidgetComponentComponent', () => {
 
-    let widget: MultilineTextWidget;
+    let widget: MultilineTextWidgetComponentComponent;
 
     beforeEach(() => {
-        widget = new MultilineTextWidget(null);
+        widget = new MultilineTextWidgetComponentComponent(null);
     });
 
     it('should exist', () => {

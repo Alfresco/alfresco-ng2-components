@@ -18,49 +18,49 @@
 import { Injectable, Type } from '@angular/core';
 
 import {
-    AmountWidget,
-    AttachWidget,
-    CheckboxWidget,
-    ContainerWidget,
-    DateWidget,
-    DisplayTextWidget,
-    DisplayValueWidget,
-    DropdownWidget,
-    DynamicTableWidget,
+    AmountWidgetComponent,
+    AttachWidgetComponent,
+    CheckboxWidgetComponent,
+    ContainerWidgetComponent,
+    DateWidgetComponent,
+    DisplayTextWidgetComponentComponent,
+    DisplayValueWidgetComponent,
+    DropdownWidgetComponent,
+    DynamicTableWidgetComponent,
     FormFieldModel,
-    FunctionalGroupWidget,
-    HyperlinkWidget,
-    MultilineTextWidget,
-    NumberWidget,
-    PeopleWidget,
-    RadioButtonsWidget,
-    TextWidget,
-    TypeaheadWidget,
-    UnknownWidget,
-    UploadWidget
+    FunctionalGroupWidgetComponent,
+    HyperlinkWidgetComponent,
+    MultilineTextWidgetComponentComponent,
+    NumberWidgetComponent,
+    PeopleWidgetComponent,
+    RadioButtonsWidgetComponent,
+    TextWidgetComponent,
+    TypeaheadWidgetComponent,
+    UnknownWidgetComponent,
+    UploadWidgetComponent
 } from './../components/widgets/index';
 
 @Injectable()
 export class FormRenderingService {
 
     private types: { [key: string]: ComponentTypeResolver } = {
-        'text': DefaultTypeResolver.fromType(TextWidget),
-        'integer': DefaultTypeResolver.fromType(NumberWidget),
-        'multi-line-text': DefaultTypeResolver.fromType(MultilineTextWidget),
-        'boolean': DefaultTypeResolver.fromType(CheckboxWidget),
-        'dropdown': DefaultTypeResolver.fromType(DropdownWidget),
-        'date': DefaultTypeResolver.fromType(DateWidget),
-        'amount': DefaultTypeResolver.fromType(AmountWidget),
-        'radio-buttons': DefaultTypeResolver.fromType(RadioButtonsWidget),
-        'hyperlink': DefaultTypeResolver.fromType(HyperlinkWidget),
-        'readonly': DefaultTypeResolver.fromType(DisplayValueWidget),
-        'readonly-text': DefaultTypeResolver.fromType(DisplayTextWidget),
-        'typeahead': DefaultTypeResolver.fromType(TypeaheadWidget),
-        'people': DefaultTypeResolver.fromType(PeopleWidget),
-        'functional-group': DefaultTypeResolver.fromType(FunctionalGroupWidget),
-        'dynamic-table': DefaultTypeResolver.fromType(DynamicTableWidget),
-        'container': DefaultTypeResolver.fromType(ContainerWidget),
-        'group': DefaultTypeResolver.fromType(ContainerWidget)
+        'text': DefaultTypeResolver.fromType(TextWidgetComponent),
+        'integer': DefaultTypeResolver.fromType(NumberWidgetComponent),
+        'multi-line-text': DefaultTypeResolver.fromType(MultilineTextWidgetComponentComponent),
+        'boolean': DefaultTypeResolver.fromType(CheckboxWidgetComponent),
+        'dropdown': DefaultTypeResolver.fromType(DropdownWidgetComponent),
+        'date': DefaultTypeResolver.fromType(DateWidgetComponent),
+        'amount': DefaultTypeResolver.fromType(AmountWidgetComponent),
+        'radio-buttons': DefaultTypeResolver.fromType(RadioButtonsWidgetComponent),
+        'hyperlink': DefaultTypeResolver.fromType(HyperlinkWidgetComponent),
+        'readonly': DefaultTypeResolver.fromType(DisplayValueWidgetComponent),
+        'readonly-text': DefaultTypeResolver.fromType(DisplayTextWidgetComponentComponent),
+        'typeahead': DefaultTypeResolver.fromType(TypeaheadWidgetComponent),
+        'people': DefaultTypeResolver.fromType(PeopleWidgetComponent),
+        'functional-group': DefaultTypeResolver.fromType(FunctionalGroupWidgetComponent),
+        'dynamic-table': DefaultTypeResolver.fromType(DynamicTableWidgetComponent),
+        'container': DefaultTypeResolver.fromType(ContainerWidgetComponent),
+        'group': DefaultTypeResolver.fromType(ContainerWidgetComponent)
     };
 
     constructor() {
@@ -68,15 +68,15 @@ export class FormRenderingService {
             if (field) {
                 let params = field.params;
                 if (params && params.link) {
-                    return AttachWidget;
+                    return AttachWidgetComponent;
                 }
-                return UploadWidget;
+                return UploadWidgetComponent;
             }
-            return UnknownWidget;
+            return UnknownWidgetComponent;
         };
     }
 
-    getComponentTypeResolver(fieldType: string, defaultValue: Type<{}> = UnknownWidget): ComponentTypeResolver {
+    getComponentTypeResolver(fieldType: string, defaultValue: Type<{}> = UnknownWidgetComponent): ComponentTypeResolver {
         if (fieldType) {
             return this.types[fieldType] || DefaultTypeResolver.fromType(defaultValue);
         }
@@ -100,7 +100,7 @@ export class FormRenderingService {
         this.types[fieldType] = resolver;
     }
 
-    resolveComponentType(field: FormFieldModel, defaultValue: Type<{}> = UnknownWidget): Type<{}> {
+    resolveComponentType(field: FormFieldModel, defaultValue: Type<{}> = UnknownWidgetComponent): Type<{}> {
         if (field) {
             let resolver = this.getComponentTypeResolver(field.type, defaultValue);
             return resolver(field);
@@ -110,9 +110,7 @@ export class FormRenderingService {
 
 }
 
-export interface ComponentTypeResolver {
-    (field: FormFieldModel): Type<{}>;
-}
+export type ComponentTypeResolver = (field: FormFieldModel) => Type<{}>;
 
 export class DefaultTypeResolver {
     static fromType(type: Type<{}>): ComponentTypeResolver {

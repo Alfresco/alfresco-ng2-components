@@ -18,7 +18,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormService } from './../../../services/form.service';
 import { baseHost , WidgetComponent } from './../widget.component';
-import { ContainerWidgetModel } from './container.widget.model';
+import { ContainerWidgetComponentModel } from './container.widget.model';
 
 declare var componentHandler: any;
 
@@ -28,9 +28,9 @@ declare var componentHandler: any;
     styleUrls: ['./container.widget.css'],
     host: baseHost
 })
-export class ContainerWidget extends WidgetComponent implements OnInit, AfterViewInit {
+export class ContainerWidgetComponent extends WidgetComponent implements OnInit, AfterViewInit {
 
-    content: ContainerWidgetModel;
+    content: ContainerWidgetComponentModel;
 
     constructor(public formService: FormService) {
          super(formService);
@@ -44,7 +44,7 @@ export class ContainerWidget extends WidgetComponent implements OnInit, AfterVie
 
     ngOnInit() {
         if (this.field) {
-            this.content = new ContainerWidgetModel(this.field);
+            this.content = new ContainerWidgetComponentModel(this.field);
         }
     }
 

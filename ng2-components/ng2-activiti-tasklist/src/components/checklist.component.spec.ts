@@ -21,7 +21,7 @@ import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
-import { ActivitiChecklist } from './activiti-checklist.component';
+import { ActivitiChecklistComponent } from './activiti-checklist.component';
 
 declare let jasmine: any;
 
@@ -30,10 +30,10 @@ const fakeTaskDetail = new TaskDetailsModel({
     name: 'fake-check-name'
 });
 
-describe('ActivitiChecklist', () => {
+describe('ActivitiChecklistComponent', () => {
 
-    let checklistComponent: ActivitiChecklist;
-    let fixture: ComponentFixture<ActivitiChecklist>;
+    let checklistComponent: ActivitiChecklistComponent;
+    let fixture: ComponentFixture<ActivitiChecklistComponent>;
     let element: HTMLElement;
     let showChecklistDialog, closeCheckDialogButton;
 
@@ -43,7 +43,7 @@ describe('ActivitiChecklist', () => {
                 CoreModule.forRoot()
             ],
             declarations: [
-                ActivitiChecklist
+                ActivitiChecklistComponent
             ],
             providers: [
                 ActivitiTaskListService
@@ -55,7 +55,7 @@ describe('ActivitiChecklist', () => {
                 return Observable.of(key);
             });
 
-            fixture = TestBed.createComponent(ActivitiChecklist);
+            fixture = TestBed.createComponent(ActivitiChecklistComponent);
             checklistComponent = fixture.componentInstance;
             element = fixture.nativeElement;
 

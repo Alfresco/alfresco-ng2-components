@@ -31,7 +31,7 @@ declare let dialogPolyfill: any;
     styleUrls: ['./activiti-process-comments.component.css'],
     providers: [ActivitiProcessService]
 })
-export class ActivitiProcessComments implements OnChanges {
+export class ActivitiProcessCommentsComponent implements OnChanges {
 
     @Input()
     processInstanceId: string;

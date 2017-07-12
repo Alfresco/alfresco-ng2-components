@@ -22,12 +22,12 @@ import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfre
 import { EcmModelService } from './../../../services/ecm-model.service';
 import { FormService } from './../../../services/form.service';
 import { FormFieldModel } from './../core/form-field.model';
-import { AmountWidget } from './amount.widget';
+import { AmountWidgetComponent } from './amount.widget';
 
-describe('AmountWidget', () => {
+describe('AmountWidgetComponent', () => {
 
-    let widget: AmountWidget;
-    let fixture: ComponentFixture<AmountWidget>;
+    let widget: AmountWidgetComponent;
+    let fixture: ComponentFixture<AmountWidgetComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -36,7 +36,7 @@ describe('AmountWidget', () => {
                 MdInputModule
             ],
             declarations: [
-                AmountWidget
+                AmountWidgetComponent
             ],
             providers: [
                 FormService,
@@ -47,7 +47,7 @@ describe('AmountWidget', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(AmountWidget);
+        fixture = TestBed.createComponent(AmountWidgetComponent);
 
         widget = fixture.componentInstance;
     });
@@ -65,7 +65,7 @@ describe('AmountWidget', () => {
     it('should setup default currency', () => {
         widget.field = null;
         widget.ngOnInit();
-        expect(widget.currency).toBe(AmountWidget.DEFAULT_CURRENCY);
+        expect(widget.currency).toBe(AmountWidgetComponent.DEFAULT_CURRENCY);
     });
 
 });
