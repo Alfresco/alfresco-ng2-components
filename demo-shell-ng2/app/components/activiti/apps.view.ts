@@ -16,7 +16,7 @@
  */
 
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppDefinitionRepresentationModel } from 'ng2-activiti-tasklist';
 
 @Component({
@@ -25,7 +25,7 @@ import { AppDefinitionRepresentationModel } from 'ng2-activiti-tasklist';
         <activiti-apps (appClick)="onAppClicked($event)"></activiti-apps>
     `
 })
-export class ActivitiAppsView {
+export class ActivitiAppsViewComponent {
 
     constructor(private router: Router, private route: ActivatedRoute) {
     }

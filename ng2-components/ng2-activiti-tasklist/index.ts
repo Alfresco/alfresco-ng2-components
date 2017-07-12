@@ -17,16 +17,16 @@
 
 import { DatePipe } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { 
-    MdButtonModule, 
-    MdIconModule, 
-    MdInputModule, 
-    MdProgressSpinnerModule, 
-    MdDatepickerModule, 
-    MdGridListModule, 
-    MdAutocompleteModule, 
-    MdNativeDateModule, 
-    MdSelectModule 
+import {
+    MdAutocompleteModule,
+    MdButtonModule,
+    MdDatepickerModule,
+    MdGridListModule,
+    MdIconModule,
+    MdInputModule,
+    MdNativeDateModule,
+    MdProgressSpinnerModule,
+    MdSelectModule
 } from '@angular/material';
 import { ActivitiFormModule } from 'ng2-activiti-form';
 import { CoreModule } from 'ng2-alfresco-core';
@@ -36,20 +36,20 @@ import { ActivitiTaskListService } from './src/services/activiti-tasklist.servic
 import { ProcessUploadService } from './src/services/process-upload.service';
 
 import {
-    ActivitiApps,
-    ActivitiChecklist,
-    ActivitiComments,
+    ActivitiAppsComponent,
+    ActivitiChecklistComponent,
+    ActivitiCommentsComponent,
     ActivitiCreateTaskAttachmentComponent,
-    ActivitiFilters,
-    ActivitiPeople,
-    ActivitiTaskHeader,
-    AdfCommentListComponent,
-    ActivitiPeopleSearch,
+    ActivitiFiltersComponent,
+    ActivitiPeopleComponent,
+    ActivitiPeopleSearchComponent,
     ActivitiStartTaskComponent,
-    ActivitiTaskDetails,
-    ActivitiTaskList,
-    NoTaskDetailsTemplateComponent,
-    PeopleList,
+    ActivitiTaskDetailsComponent,
+    ActivitiTaskHeaderComponent,
+    ActivitiTaskListComponent,
+    AdfCommentListComponent,
+    NoTaskDetailsTemplateDirective,
+    PeopleListComponent,
     TaskAttachmentListComponent
 } from './src/components/index';
 
@@ -60,20 +60,20 @@ export * from './src/services/process-upload.service';
 export * from  './src/models/index';
 
 export const ACTIVITI_TASKLIST_DIRECTIVES: any[] = [
-    NoTaskDetailsTemplateComponent,
-    ActivitiApps,
-    ActivitiFilters,
-    ActivitiTaskList,
-    ActivitiTaskDetails,
-    ActivitiChecklist,
-    ActivitiComments,
-    ActivitiPeople,
-    ActivitiTaskHeader,
+    NoTaskDetailsTemplateDirective,
+    ActivitiAppsComponent,
+    ActivitiFiltersComponent,
+    ActivitiTaskListComponent,
+    ActivitiTaskDetailsComponent,
+    ActivitiChecklistComponent,
+    ActivitiCommentsComponent,
+    ActivitiPeopleComponent,
+    ActivitiTaskHeaderComponent,
     ActivitiStartTaskComponent,
-    ActivitiPeopleSearch,
+    ActivitiPeopleSearchComponent,
     TaskAttachmentListComponent,
     ActivitiCreateTaskAttachmentComponent,
-    PeopleList,
+    PeopleListComponent,
     AdfCommentListComponent
 ];
 

@@ -18,14 +18,14 @@
 import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
 import { WidgetComponent } from './../widget.component';
-import { HyperlinkWidget } from './hyperlink.widget';
+import { HyperlinkWidgetComponent } from './hyperlink.widget';
 
-describe('HyperlinkWidget', () => {
+describe('HyperlinkWidgetComponent', () => {
 
-    let widget: HyperlinkWidget;
+    let widget: HyperlinkWidgetComponent;
 
     beforeEach(() => {
-        widget = new HyperlinkWidget(null);
+        widget = new HyperlinkWidgetComponent(null);
     });
 
     it('should get link text from field display text', () => {

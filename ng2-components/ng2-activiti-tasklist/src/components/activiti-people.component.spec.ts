@@ -21,9 +21,9 @@ import { DataTableModule } from 'ng2-alfresco-datatable';
 import { Observable } from 'rxjs/Observable';
 import { User } from '../models/user.model';
 import { ActivitiPeopleService } from '../services/activiti-people.service';
-import { ActivitiPeopleSearch } from './activiti-people-search.component';
-import { ActivitiPeople } from './activiti-people.component';
-import { PeopleList } from './adf-people-list.component';
+import { ActivitiPeopleSearchComponent } from './activiti-people-search.component';
+import { ActivitiPeopleComponent } from './activiti-people.component';
+import { PeopleListComponent } from './adf-people-list.component';
 
 declare let jasmine: any;
 
@@ -41,10 +41,10 @@ const fakeSecondUser: User = new User({
     email: 'fake-involve@mail.com'
 });
 
-describe('ActivitiPeople', () => {
+describe('ActivitiPeopleComponent', () => {
 
-    let activitiPeopleComponent: ActivitiPeople;
-    let fixture: ComponentFixture<ActivitiPeople>;
+    let activitiPeopleComponent: ActivitiPeopleComponent;
+    let fixture: ComponentFixture<ActivitiPeopleComponent>;
     let element: HTMLElement;
     let componentHandler;
     let userArray = [fakeUser, fakeSecondUser];
@@ -57,9 +57,9 @@ describe('ActivitiPeople', () => {
                 DataTableModule
             ],
             declarations: [
-                ActivitiPeopleSearch,
-                PeopleList,
-                ActivitiPeople
+                ActivitiPeopleSearchComponent,
+                PeopleListComponent,
+                ActivitiPeopleComponent
             ],
             providers: [
                 ActivitiPeopleService
@@ -72,7 +72,7 @@ describe('ActivitiPeople', () => {
             spyOn(translateService, 'addTranslationFolder').and.stub();
             spyOn(translateService.translate, 'get').and.callFake((key) => { return Observable.of(key); });
 
-            fixture = TestBed.createComponent(ActivitiPeople);
+            fixture = TestBed.createComponent(ActivitiPeopleComponent);
             activitiPeopleComponent = fixture.componentInstance;
             element = fixture.nativeElement;
             componentHandler = jasmine.createSpyObj('componentHandler', [

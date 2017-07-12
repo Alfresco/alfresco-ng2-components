@@ -16,8 +16,8 @@
  */
 
 import { Component, Input } from '@angular/core';
-import { ObjectDataTableAdapter, DataSorting, ObjectDataRow, ObjectDataColumn, DataCellEvent, DataRowActionEvent } from 'ng2-alfresco-datatable';
 import { AlfrescoApiService } from 'ng2-alfresco-core';
+import { DataCellEvent, DataRowActionEvent, DataSorting, ObjectDataColumn, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 import { Observable } from 'rxjs/Rx';
 
 @Component({

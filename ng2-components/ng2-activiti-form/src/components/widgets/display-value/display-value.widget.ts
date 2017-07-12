@@ -30,7 +30,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
     styleUrls: ['./display-value.widget.css'],
     host: baseHost
 })
-export class DisplayValueWidget extends WidgetComponent implements OnInit {
+export class DisplayValueWidgetComponent extends WidgetComponent implements OnInit {
 
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();

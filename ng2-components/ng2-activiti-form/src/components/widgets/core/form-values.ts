@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+/* tslint:disable */
 import { FormFieldMetadata } from './form-field-metadata';
 
 export interface FormValues extends FormFieldMetadata {

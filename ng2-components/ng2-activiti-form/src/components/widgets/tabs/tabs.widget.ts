@@ -24,7 +24,7 @@ declare var componentHandler: any;
     selector: 'tabs-widget',
     templateUrl: './tabs.widget.html'
 })
-export class TabsWidget implements AfterContentChecked, AfterViewInit {
+export class TabsWidgetComponent implements AfterContentChecked, AfterViewInit {
 
     @Input()
     tabs: TabModel[] = [];

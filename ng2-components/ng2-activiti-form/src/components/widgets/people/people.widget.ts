@@ -27,7 +27,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
     styleUrls: ['./people.widget.css'],
     host: baseHost
 })
-export class PeopleWidget extends WidgetComponent implements OnInit {
+export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
 
     popupVisible: boolean = false;
     minTermLength: number = 1;

@@ -17,7 +17,7 @@
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { RestVariable } from 'alfresco-js-api';
-import { ActivitiStartForm } from 'ng2-activiti-form';
+import { ActivitiStartFormComponent } from 'ng2-activiti-form';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ProcessDefinitionRepresentation } from './../models/process-definition.model';
 import { ProcessInstance } from './../models/process-instance.model';
@@ -31,7 +31,7 @@ declare let dialogPolyfill: any;
     templateUrl: './activiti-start-process.component.html',
     styleUrls: ['./activiti-start-process.component.css']
 })
-export class ActivitiStartProcessInstance implements OnChanges {
+export class ActivitiStartProcessInstanceComponent implements OnChanges {
 
     @Input()
     appId: string;
@@ -45,8 +45,8 @@ export class ActivitiStartProcessInstance implements OnChanges {
     @Output()
     error: EventEmitter<ProcessInstance> = new EventEmitter<ProcessInstance>();
 
-    @ViewChild(ActivitiStartForm)
-    startForm: ActivitiStartForm;
+    @ViewChild(ActivitiStartFormComponent)
+    startForm: ActivitiStartFormComponent;
 
     processDefinitions: ProcessDefinitionRepresentation[] = [];
 

@@ -27,7 +27,7 @@ declare let componentHandler: any;
     templateUrl: './activiti-process-instance-header.component.html',
     styleUrls: ['./activiti-process-instance-header.component.css']
 })
-export class ActivitiProcessInstanceHeader {
+export class ActivitiProcessInstanceHeaderComponent {
 
     @Input()
     showDiagram: boolean = true;

@@ -19,10 +19,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
 import { FormRenderingService } from './../../services/form-rendering.service';
 import { WidgetVisibilityService } from './../../services/widget-visibility.service';
-import { CheckboxWidget } from './../widgets/checkbox/checkbox.widget';
+import { CheckboxWidgetComponent } from './../widgets/checkbox/checkbox.widget';
 import { FormFieldModel, FormFieldTypes, FormModel } from './../widgets/core/index';
 import { InputMaskDirective } from './../widgets/text/text-mask.component';
-import { TextWidget } from './../widgets/text/text.widget';
+import { TextWidgetComponent } from './../widgets/text/text.widget';
 import { FormFieldComponent } from './form-field.component';
 
 describe('FormFieldComponent', () => {
@@ -37,7 +37,7 @@ describe('FormFieldComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
                 imports: [CoreModule],
-                declarations: [FormFieldComponent, TextWidget, CheckboxWidget, InputMaskDirective],
+                declarations: [FormFieldComponent, TextWidgetComponent, CheckboxWidgetComponent, InputMaskDirective],
                 providers: [
                     FormRenderingService,
                     WidgetVisibilityService
@@ -68,7 +68,7 @@ describe('FormFieldComponent', () => {
         fixture.detectChanges();
 
         expect(component.componentRef).toBeDefined();
-        expect(component.componentRef.componentType).toBe(TextWidget);
+        expect(component.componentRef.componentType).toBe(TextWidgetComponent);
     });
 
     xit('should create custom component instance', () => {
@@ -76,12 +76,12 @@ describe('FormFieldComponent', () => {
             type: FormFieldTypes.TEXT
         });
 
-        formRenderingService.setComponentTypeResolver(FormFieldTypes.TEXT, () => CheckboxWidget, true);
+        formRenderingService.setComponentTypeResolver(FormFieldTypes.TEXT, () => CheckboxWidgetComponent, true);
         component.field = field;
         fixture.detectChanges();
 
         expect(component.componentRef).toBeDefined();
-        expect(component.componentRef.componentType).toBe(CheckboxWidget);
+        expect(component.componentRef.componentType).toBe(CheckboxWidgetComponent);
     });
 
     it('should require field to create component', () => {
