@@ -29,7 +29,7 @@ export class StartTaskModel {
     name: string;
     description: string;
     assignee: User;
-    date: any;
+    dueDate: any;
     formKey: any;
     category: string;
 
@@ -37,7 +37,7 @@ export class StartTaskModel {
         this.name = obj && obj.name || null;
         this.description = obj && obj.description || null;
         this.assignee = obj && obj.assignee ? new User(obj.assignee) : null;
-        this.date = obj && obj.date || null;
+        this.dueDate = obj && obj.dueDate || null;
         this.formKey = obj && obj.formKey || null;
         this.category = obj && obj.category || null;
     }

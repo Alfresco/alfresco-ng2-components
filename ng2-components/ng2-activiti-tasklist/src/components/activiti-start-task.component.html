@@ -28,7 +28,7 @@
 					(click)="taskDatePicker.open()" 
 					(keydown)="true"
 					placeholder="{{'START_TASK.FORM.LABEL.DATE'|translate}}" 
-					[(ngModel)]="startTaskmodel.date" id="date_id">
+					[(ngModel)]="startTaskmodel.dueDate" id="date_id">
 					<button mdSuffix [mdDatepickerToggle]="taskDatePicker"></button>
 				</md-input-container>
 				<md-datepicker #taskDatePicker [touchUi]="true"></md-datepicker>

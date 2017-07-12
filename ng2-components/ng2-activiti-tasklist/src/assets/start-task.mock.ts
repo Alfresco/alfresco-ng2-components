@@ -19,7 +19,7 @@ export let startTaskMock = {
     'name': 'fakeName',
     'description': 'fakeDescription',
     'assignee': {'id': 2001, 'firstName': 'Jhon', 'lastName': 'Adams', 'email': 'jhon@app.activiti.com'},
-    'date': '2017-11-03T15:25:42.749+0000',
+    'dueDate': '2017-11-03T15:25:42.749+0000',
     'formKey': '11201',
     'category': 'fakeAppId'
 };
@@ -28,7 +28,7 @@ export let noDataMock = {
     'name': '',
     'description': '',
     'assignee': {},
-    'date': '',
+    'dueDate': '',
     'formKey': '',
     'category': ';'
 };
