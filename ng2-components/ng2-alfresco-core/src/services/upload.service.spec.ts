@@ -17,7 +17,12 @@
 
 import { EventEmitter } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { AppConfigModule, CoreModule, FileModel, FileUploadOptions } from 'ng2-alfresco-core';
+import { FileModel, FileUploadOptions } from 'ng2-alfresco-core';
+import { AlfrescoApiService } from './alfresco-api.service';
+import { AlfrescoAuthenticationService } from './alfresco-authentication.service';
+import { AlfrescoSettingsService } from './alfresco-settings.service';
+import { AppConfigModule } from './app-config.service';
+import { StorageService } from './storage.service';
 import { UploadService } from './upload.service';
 
 declare let jasmine: any;
@@ -28,7 +33,6 @@ describe('UploadService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
                 AppConfigModule.forRoot('app.config.json', {
                     ecmHost: 'http://localhost:9876/ecm',
                     files: {
@@ -37,7 +41,11 @@ describe('UploadService', () => {
                 })
             ],
             providers: [
-                UploadService
+                UploadService,
+                AlfrescoApiService,
+                AlfrescoSettingsService,
+                AlfrescoAuthenticationService,
+                StorageService
             ]
         });
         service = TestBed.get(UploadService);
