@@ -16,8 +16,11 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
+import { AlfrescoApiService } from './alfresco-api.service';
 import { AlfrescoSettingsService } from './alfresco-settings.service';
 import { AppConfigModule } from './app-config.service';
+import { StorageService } from './storage.service';
+import { UserPreferencesService } from './user-preferences.service';
 
 describe('AlfrescoSettingsService', () => {
 
@@ -28,10 +31,11 @@ describe('AlfrescoSettingsService', () => {
             imports: [
                 AppConfigModule
             ],
-            declarations: [
-            ],
             providers: [
-                AlfrescoSettingsService
+                AlfrescoApiService,
+                AlfrescoSettingsService,
+                UserPreferencesService,
+                StorageService
             ]
         }).compileComponents();
     }));
