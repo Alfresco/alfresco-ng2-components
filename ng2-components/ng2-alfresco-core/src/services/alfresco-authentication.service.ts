@@ -34,7 +34,7 @@ export class AlfrescoAuthenticationService {
 
     constructor(
         private preferences: UserPreferencesService,
-        public alfrescoApi: AlfrescoApiService,
+        private alfrescoApi: AlfrescoApiService,
         private storage: StorageService,
         private cookie: CookieService,
         private logService: LogService) {

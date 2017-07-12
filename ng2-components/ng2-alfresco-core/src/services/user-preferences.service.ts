@@ -66,12 +66,12 @@ export class UserPreferencesService {
     }
 
     set authType(value: string) {
-        this.set('AUTH_TYPE', value);
+        this.storage.setItem('AUTH_TYPE', value);
         this.apiService.reset();
     }
 
     get authType(): string {
-        return this.get('AUTH_TYPE', 'ALL');
+        return this.storage.getItem('AUTH_TYPE') || 'ALL';
     }
 
     set disableCSRF(value: boolean) {
