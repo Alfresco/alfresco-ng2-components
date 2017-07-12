@@ -28,7 +28,7 @@
 
 .adf-comment-message {
     float: left;
-    width: calc(100% - 20px);
+    width: calc(100% - 10px);
     padding: 2px 10px;
     font-family: Muli;
     font-style: italic;
@@ -47,7 +47,7 @@
 
 .adf-comment-contents {
     float: left;
-    width: calc(100% - 60px);
+    width: calc(100% - 10px);
 }
 
 adf-datatable >>> table thead {
