@@ -795,7 +795,7 @@ describe('ActivitiForm', () => {
         expect(formComponent.isOutcomeButtonEnabled(outcome)).toBeFalsy();
     });
 
-    it('should disable complete oucome button when disableCompleteButton is true', () => {
+    it('should disable complete outcome button when disableCompleteButton is true', () => {
         let formModel = new FormModel();
         formComponent.form = formModel;
         formComponent.disableCompleteButton = true;
