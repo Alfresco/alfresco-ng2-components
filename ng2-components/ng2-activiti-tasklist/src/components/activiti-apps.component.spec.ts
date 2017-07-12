@@ -23,13 +23,13 @@ import { Observable } from 'rxjs/Rx';
 
 import { defaultApp, deployedApps, nonDeployedApps } from './../assets/activiti-apps.mock';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
-import { ActivitiApps } from './activiti-apps.component';
+import { ActivitiAppsComponent } from './activiti-apps.component';
 
-describe('ActivitiApps', () => {
+describe('ActivitiAppsComponent', () => {
 
     let componentHandler: any;
-    let component: ActivitiApps;
-    let fixture: ComponentFixture<ActivitiApps>;
+    let component: ActivitiAppsComponent;
+    let fixture: ComponentFixture<ActivitiAppsComponent>;
     let debugElement: DebugElement;
     let service: ActivitiTaskListService;
     let getAppsSpy: jasmine.Spy;
@@ -40,7 +40,7 @@ describe('ActivitiApps', () => {
                 CoreModule
             ],
             declarations: [
-                ActivitiApps
+                ActivitiAppsComponent
             ],
             providers: [
                 ActivitiTaskListService
@@ -54,7 +54,7 @@ describe('ActivitiApps', () => {
 
     beforeEach(() => {
 
-        fixture = TestBed.createComponent(ActivitiApps);
+        fixture = TestBed.createComponent(ActivitiAppsComponent);
         component = fixture.componentInstance;
         debugElement = fixture.debugElement;
 
@@ -148,14 +148,14 @@ describe('ActivitiApps', () => {
         });
 
         it('should display a grid when configured to', () => {
-            component.layoutType = ActivitiApps.LAYOUT_GRID;
+            component.layoutType = ActivitiAppsComponent.LAYOUT_GRID;
             fixture.detectChanges();
             expect(component.isGrid()).toBe(true);
             expect(component.isList()).toBe(false);
         });
 
         it('should display a list when configured to', () => {
-            component.layoutType = ActivitiApps.LAYOUT_LIST;
+            component.layoutType = ActivitiAppsComponent.LAYOUT_LIST;
             fixture.detectChanges();
             expect(component.isGrid()).toBe(false);
             expect(component.isList()).toBe(true);

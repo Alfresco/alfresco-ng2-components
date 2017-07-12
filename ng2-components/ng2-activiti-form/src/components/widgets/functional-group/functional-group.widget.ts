@@ -26,7 +26,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
     styleUrls: ['./functional-group.widget.css'],
     host: baseHost
 })
-export class FunctionalGroupWidget extends WidgetComponent implements OnInit {
+export class FunctionalGroupWidgetComponent extends WidgetComponent implements OnInit {
 
     value: string;
     popupVisible: boolean = false;

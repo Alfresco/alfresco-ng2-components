@@ -26,12 +26,12 @@ import { FormFieldOption } from '../core/form-field-option';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
-import { TypeaheadWidget } from './typeahead.widget';
+import { TypeaheadWidgetComponent } from './typeahead.widget';
 
-describe('TypeaheadWidget', () => {
+describe('TypeaheadWidgetComponent', () => {
 
     let formService: FormService;
-    let widget: TypeaheadWidget;
+    let widget: TypeaheadWidgetComponent;
     let visibilityService: WidgetVisibilityService;
     let logService: LogServiceMock;
 
@@ -39,7 +39,7 @@ describe('TypeaheadWidget', () => {
         logService = new LogServiceMock();
         formService = new FormService(null, null, logService);
         visibilityService = new WidgetVisibilityService(null, logService);
-        widget = new TypeaheadWidget(formService, visibilityService, logService);
+        widget = new TypeaheadWidgetComponent(formService, visibilityService, logService);
         widget.field = new FormFieldModel(new FormModel({ taskId: 'task-id' }));
     });
 
@@ -373,8 +373,8 @@ describe('TypeaheadWidget', () => {
     });
 
     describe('when template is ready', () => {
-        let typeaheadWidget: TypeaheadWidget;
-        let fixture: ComponentFixture<TypeaheadWidget>;
+        let typeaheadWidgetComponent: TypeaheadWidgetComponent;
+        let fixture: ComponentFixture<TypeaheadWidgetComponent>;
         let element: HTMLElement;
         let componentHandler;
         let stubFormService;
@@ -391,11 +391,11 @@ describe('TypeaheadWidget', () => {
             window['componentHandler'] = componentHandler;
             TestBed.configureTestingModule({
                 imports: [CoreModule],
-                declarations: [TypeaheadWidget],
+                declarations: [TypeaheadWidgetComponent],
                 providers: [FormService, EcmModelService, WidgetVisibilityService]
             }).compileComponents().then(() => {
-                fixture = TestBed.createComponent(TypeaheadWidget);
-                typeaheadWidget = fixture.componentInstance;
+                fixture = TestBed.createComponent(TypeaheadWidgetComponent);
+                typeaheadWidgetComponent = fixture.componentInstance;
                 element = fixture.nativeElement;
             });
         }));
@@ -412,13 +412,13 @@ describe('TypeaheadWidget', () => {
                 visibilityService = fixture.debugElement.injector.get(WidgetVisibilityService);
                 spyOn(visibilityService, 'refreshVisibility').and.stub();
                 spyOn(stubFormService, 'getRestFieldValues').and.returnValue(Observable.of(fakeOptionList));
-                typeaheadWidget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                typeaheadWidgetComponent.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'typeahead-id',
                     name: 'typeahead-name',
                     type: FormFieldTypes.TYPEAHEAD,
                     readOnly: false
                 });
-                typeaheadWidget.field.isVisible = true;
+                typeaheadWidgetComponent.field.isVisible = true;
                 fixture.detectChanges();
             }));
 
@@ -428,8 +428,8 @@ describe('TypeaheadWidget', () => {
             }));
 
             it('should show typeahead options', async(() => {
-                typeaheadWidget.value = 'F';
-                typeaheadWidget.onKeyUp(null);
+                typeaheadWidgetComponent.value = 'F';
+                typeaheadWidgetComponent.onKeyUp(null);
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(element.querySelector('#typeahead-id-1')).toBeDefined();
@@ -442,7 +442,7 @@ describe('TypeaheadWidget', () => {
             }));
 
             it('should hide not visibile typeahead', async(() => {
-                typeaheadWidget.field.isVisible = false;
+                typeaheadWidgetComponent.field.isVisible = false;
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(element.querySelector('#typeahead-id')).toBeNull();
@@ -458,14 +458,14 @@ describe('TypeaheadWidget', () => {
                 visibilityService = fixture.debugElement.injector.get(WidgetVisibilityService);
                 spyOn(visibilityService, 'refreshVisibility').and.stub();
                 spyOn(stubFormService, 'getRestFieldValuesByProcessId').and.returnValue(Observable.of(fakeOptionList));
-                typeaheadWidget.field = new FormFieldModel(new FormModel({ processDefinitionId: 'fake-process-id' }), {
+                typeaheadWidgetComponent.field = new FormFieldModel(new FormModel({ processDefinitionId: 'fake-process-id' }), {
                     id: 'typeahead-id',
                     name: 'typeahead-name',
                     type: FormFieldTypes.TYPEAHEAD,
                     readOnly: 'false'
                 });
-                typeaheadWidget.field.emptyOption = { id: 'empty', name: 'Choose one...' };
-                typeaheadWidget.field.isVisible = true;
+                typeaheadWidgetComponent.field.emptyOption = { id: 'empty', name: 'Choose one...' };
+                typeaheadWidgetComponent.field.isVisible = true;
                 fixture.detectChanges();
             }));
 
@@ -475,8 +475,8 @@ describe('TypeaheadWidget', () => {
             }));
 
             it('should show typeahead options', async(() => {
-                typeaheadWidget.value = 'F';
-                typeaheadWidget.onKeyUp(null);
+                typeaheadWidgetComponent.value = 'F';
+                typeaheadWidgetComponent.onKeyUp(null);
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(element.querySelector('#typeahead-id-1')).toBeDefined();

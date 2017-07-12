@@ -20,18 +20,18 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
-import { ActivitiContent } from '../../activiti-content.component';
+import { ActivitiContentComponent } from '../../activiti-content.component';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormModel } from '../core/form.model';
 import { EcmModelService } from './../../../services/ecm-model.service';
 import { FormService } from './../../../services/form.service';
 import { FormFieldModel } from './../core/form-field.model';
-import { DisplayValueWidget } from './display-value.widget';
+import { DisplayValueWidgetComponent } from './display-value.widget';
 
-describe('DisplayValueWidget', () => {
+describe('DisplayValueWidgetComponent', () => {
 
-    let widget: DisplayValueWidget;
-    let fixture: ComponentFixture<DisplayValueWidget>;
+    let widget: DisplayValueWidgetComponent;
+    let fixture: ComponentFixture<DisplayValueWidgetComponent>;
     let element: HTMLElement;
     let formService: FormService;
 
@@ -41,8 +41,8 @@ describe('DisplayValueWidget', () => {
                 CoreModule.forRoot()
             ],
             declarations: [
-                DisplayValueWidget,
-                ActivitiContent
+                DisplayValueWidgetComponent,
+                ActivitiContentComponent
             ],
             providers: [
                 FormService,
@@ -54,7 +54,7 @@ describe('DisplayValueWidget', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(DisplayValueWidget);
+        fixture = TestBed.createComponent(DisplayValueWidgetComponent);
         formService = TestBed.get(FormService);
 
         element = fixture.nativeElement;

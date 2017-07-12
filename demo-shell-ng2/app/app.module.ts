@@ -18,54 +18,54 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { CoreModule, AppConfigService } from 'ng2-alfresco-core';
-import { SearchModule } from 'ng2-alfresco-search';
-import { LoginModule } from 'ng2-alfresco-login';
-import { DataTableModule } from 'ng2-alfresco-datatable';
-import { DocumentListModule } from 'ng2-alfresco-documentlist';
-import { UploadModule } from 'ng2-alfresco-upload';
-import { TagModule } from 'ng2-alfresco-tag';
-import { SocialModule } from 'ng2-alfresco-social';
-import { WebScriptModule } from 'ng2-alfresco-webscript';
-import { ViewerModule } from 'ng2-alfresco-viewer';
-import { ActivitiFormModule } from 'ng2-activiti-form';
-import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
-import { ActivitiProcessListModule } from 'ng2-activiti-processlist';
-import { UserInfoComponentModule } from 'ng2-alfresco-userinfo';
 import { AnalyticsModule } from 'ng2-activiti-analytics';
 import { DiagramsModule } from 'ng2-activiti-diagrams';
+import { ActivitiFormModule } from 'ng2-activiti-form';
+import { ActivitiProcessListModule } from 'ng2-activiti-processlist';
+import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
+import { AppConfigService, CoreModule } from 'ng2-alfresco-core';
+import { DataTableModule } from 'ng2-alfresco-datatable';
+import { DocumentListModule } from 'ng2-alfresco-documentlist';
+import { LoginModule } from 'ng2-alfresco-login';
+import { SearchModule } from 'ng2-alfresco-search';
+import { SocialModule } from 'ng2-alfresco-social';
+import { TagModule } from 'ng2-alfresco-tag';
+import { UploadModule } from 'ng2-alfresco-upload';
+import { UserInfoComponentModule } from 'ng2-alfresco-userinfo';
+import { ViewerModule } from 'ng2-alfresco-viewer';
+import { WebScriptModule } from 'ng2-alfresco-webscript';
 
-import { MaterialModule } from './material.module';
+import { Editor3DModule } from 'ng2-3d-editor';
+import { ChartsModule } from 'ng2-charts';
 import { AppComponent } from './app.component';
 import { routing } from './app.routes';
 import { CustomEditorsModule } from './components/activiti/custom-editor/custom-editor.component';
-import { Editor3DModule } from 'ng2-3d-editor';
-import { ChartsModule } from 'ng2-charts';
-import { CreateFolderDialog } from './dialogs/create-folder.dialog';
+import { CreateFolderDialogComponent } from './dialogs/create-folder.dialog';
+import { MaterialModule } from './material.module';
 import { DebugAppConfigService } from './services/debug-app-config.service';
 
 import { FormListDemoComponent } from './components/form/form-list-demo.component';
 
 import {
-    HomeComponent,
-    DataTableDemoComponent,
-    SearchComponent,
-    SearchBarComponent,
-    LoginDemoComponent,
+    AboutComponent,
+    ActivitiAppsViewComponent,
     ActivitiDemoComponent,
-    ActivitiTaskAttachmentsComponent,
     ActivitiProcessAttachmentsComponent,
     ActivitiShowDiagramComponent,
-    ActivitiAppsView,
-    FormViewer,
-    WebscriptComponent,
-    TagComponent,
-    SocialComponent,
-    AboutComponent,
+    ActivitiTaskAttachmentsComponent,
+    DataTableDemoComponent,
     FilesComponent,
-    FormNodeViewer,
+    FormDemoComponent,
+    FormNodeViewerComponent,
+    FormViewerComponent,
+    HomeComponent,
+    LoginDemoComponent,
+    SearchBarComponent,
+    SearchComponent,
     SettingsComponent,
-    FormDemoComponent
+    SocialComponent,
+    TagComponent,
+    WebscriptComponent
 } from './components/index';
 
 let appConfigFile = 'app.config-dev.json';
@@ -111,15 +111,15 @@ if (process.env.ENV === 'production') {
         ActivitiTaskAttachmentsComponent,
         ActivitiProcessAttachmentsComponent,
         ActivitiShowDiagramComponent,
-        ActivitiAppsView,
-        FormViewer,
+        ActivitiAppsViewComponent,
+        FormViewerComponent,
         WebscriptComponent,
         TagComponent,
         SocialComponent,
         AboutComponent,
         FilesComponent,
-        FormNodeViewer,
-        CreateFolderDialog,
+        FormNodeViewerComponent,
+        CreateFolderDialogComponent,
         SettingsComponent,
         FormDemoComponent,
         FormListDemoComponent
@@ -129,7 +129,7 @@ if (process.env.ENV === 'production') {
     ],
     bootstrap: [ AppComponent ],
     entryComponents: [
-        CreateFolderDialog
+        CreateFolderDialogComponent
     ]
 })
 export class AppModule { }

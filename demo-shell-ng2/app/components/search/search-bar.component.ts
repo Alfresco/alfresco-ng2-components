@@ -17,8 +17,8 @@
 
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
+import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'search-bar',

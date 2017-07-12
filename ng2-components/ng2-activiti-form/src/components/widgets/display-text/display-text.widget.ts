@@ -25,7 +25,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
     styleUrls: ['./display-text.widget.css'],
     host: baseHost
 })
-export class DisplayTextWidget extends WidgetComponent {
+export class DisplayTextWidgetComponentComponent extends WidgetComponent {
 
     constructor(public formService: FormService) {
          super(formService);

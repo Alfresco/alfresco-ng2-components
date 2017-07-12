@@ -28,15 +28,15 @@ import { ProcessInstance } from '../models/process-instance.model';
 import { exampleProcess, exampleProcessNoName } from './../assets/activiti-process.model.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
 import { ActivitiProcessService } from './../services/activiti-process.service';
-import { ActivitiProcessInstanceDetails } from './activiti-process-instance-details.component';
+import { ActivitiProcessInstanceDetailsComponent } from './activiti-process-instance-details.component';
 
-describe('ActivitiProcessInstanceDetails', () => {
+describe('ActivitiProcessInstanceDetailsComponent', () => {
 
     let componentHandler: any;
     let service: ActivitiProcessService;
     let formService: FormService;
-    let component: ActivitiProcessInstanceDetails;
-    let fixture: ComponentFixture<ActivitiProcessInstanceDetails>;
+    let component: ActivitiProcessInstanceDetailsComponent;
+    let fixture: ComponentFixture<ActivitiProcessInstanceDetailsComponent>;
     let getProcessSpy: jasmine.Spy;
 
     beforeEach(async(() => {
@@ -47,7 +47,7 @@ describe('ActivitiProcessInstanceDetails', () => {
                 ActivitiTaskListModule
             ],
             declarations: [
-                ActivitiProcessInstanceDetails
+                ActivitiProcessInstanceDetailsComponent
             ],
             providers: [
                 { provide: AlfrescoTranslationService, useClass: TranslationMock },
@@ -59,7 +59,7 @@ describe('ActivitiProcessInstanceDetails', () => {
 
     beforeEach(() => {
 
-        fixture = TestBed.createComponent(ActivitiProcessInstanceDetails);
+        fixture = TestBed.createComponent(ActivitiProcessInstanceDetailsComponent);
         component = fixture.componentInstance;
         service = fixture.debugElement.injector.get(ActivitiProcessService);
         formService = fixture.debugElement.injector.get(FormService);

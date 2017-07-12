@@ -24,7 +24,7 @@ import { FormService } from './../services/form.service';
     templateUrl: './adf-form-list.component.html',
     styleUrls: ['./adf-form-list.component.css']
 })
-export class ADFFormList implements OnChanges {
+export class ADFFormListComponent implements OnChanges {
 
     @Input()
     forms: any [] = [];

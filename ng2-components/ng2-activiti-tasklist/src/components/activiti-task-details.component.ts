@@ -41,7 +41,7 @@ declare let dialogPolyfill: any;
     templateUrl: './activiti-task-details.component.html',
     styleUrls: ['./activiti-task-details.component.css']
 })
-export class ActivitiTaskDetails implements OnInit, OnChanges {
+export class ActivitiTaskDetailsComponent implements OnInit, OnChanges {
 
     @ViewChild('activiticomments')
     activiticomments: any;

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { RatingService } from './../services/rating.service';
 
 @Component({
@@ -24,7 +24,7 @@ import { RatingService } from './../services/rating.service';
     templateUrl: './rating.component.html',
     providers: [RatingService]
 })
-export class RatingComponent {
+export class RatingComponent implements OnChanges {
 
     @Input()
     nodeId: string;

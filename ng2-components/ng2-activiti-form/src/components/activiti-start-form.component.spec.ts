@@ -26,8 +26,8 @@ import { TranslationMock } from './../assets/translation.service.mock';
 import { EcmModelService } from './../services/ecm-model.service';
 import { FormService } from './../services/form.service';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
-import { ActivitiContent } from './activiti-content.component';
-import { ActivitiStartForm } from './activiti-start-form.component';
+import { ActivitiContentComponent } from './activiti-content.component';
+import { ActivitiStartFormComponent } from './activiti-start-form.component';
 import { FormFieldComponent } from './form-field/form-field.component';
 import { MASK_DIRECTIVE } from './widgets/index';
 import { WIDGET_DIRECTIVES } from './widgets/index';
@@ -36,8 +36,8 @@ describe('ActivitiStartForm', () => {
 
     let componentHandler: any;
     let formService: FormService;
-    let component: ActivitiStartForm;
-    let fixture: ComponentFixture<ActivitiStartForm>;
+    let component: ActivitiStartFormComponent;
+    let fixture: ComponentFixture<ActivitiStartFormComponent>;
     let getStartFormSpy: jasmine.Spy;
 
     const exampleId1 = 'my:process1';
@@ -50,9 +50,9 @@ describe('ActivitiStartForm', () => {
                 MdInputModule,
                 CoreModule.forRoot()],
             declarations: [
-                ActivitiStartForm,
+                ActivitiStartFormComponent,
                 FormFieldComponent,
-                ActivitiContent,
+                ActivitiContentComponent,
                 ...WIDGET_DIRECTIVES,
                 ...MASK_DIRECTIVE
             ],
@@ -67,7 +67,7 @@ describe('ActivitiStartForm', () => {
 
     beforeEach(() => {
 
-        fixture = TestBed.createComponent(ActivitiStartForm);
+        fixture = TestBed.createComponent(ActivitiStartFormComponent);
         component = fixture.componentInstance;
         formService = fixture.debugElement.injector.get(FormService);
 

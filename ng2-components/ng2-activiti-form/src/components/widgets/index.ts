@@ -15,33 +15,33 @@
  * limitations under the License.
  */
 
-import { ContainerWidget } from './container/container.widget';
-import { TabsWidget } from './tabs/tabs.widget';
-import { UnknownWidget } from './unknown/unknown.widget';
+import { ContainerWidgetComponent } from './container/container.widget';
+import { TabsWidgetComponent } from './tabs/tabs.widget';
+import { UnknownWidgetComponent } from './unknown/unknown.widget';
 
-import { AmountWidget } from './amount/amount.widget';
-import { AttachWidget } from './attach/attach.widget';
-import { CheckboxWidget } from './checkbox/checkbox.widget';
-import { DateWidget } from './date/date.widget';
-import { DisplayTextWidget } from './display-text/display-text.widget';
-import { DisplayValueWidget } from './display-value/display-value.widget';
-import { DropdownWidget } from './dropdown/dropdown.widget';
-import { DynamicTableWidget } from './dynamic-table/dynamic-table.widget';
+import { AmountWidgetComponent } from './amount/amount.widget';
+import { AttachWidgetComponent } from './attach/attach.widget';
+import { CheckboxWidgetComponent } from './checkbox/checkbox.widget';
+import { DateWidgetComponent } from './date/date.widget';
+import { DisplayTextWidgetComponentComponent } from './display-text/display-text.widget';
+import { DisplayValueWidgetComponent } from './display-value/display-value.widget';
+import { DropdownWidgetComponent } from './dropdown/dropdown.widget';
+import { DynamicTableWidgetComponent } from './dynamic-table/dynamic-table.widget';
 import { BooleanEditorComponent } from './dynamic-table/editors/boolean/boolean.editor';
 import { DateEditorComponent } from './dynamic-table/editors/date/date.editor';
 import { DropdownEditorComponent } from './dynamic-table/editors/dropdown/dropdown.editor';
 import { RowEditorComponent } from './dynamic-table/editors/row.editor';
 import { TextEditorComponent } from './dynamic-table/editors/text/text.editor';
-import { FunctionalGroupWidget } from './functional-group/functional-group.widget';
-import { HyperlinkWidget } from './hyperlink/hyperlink.widget';
-import { MultilineTextWidget } from './multiline-text/multiline-text.widget';
-import { NumberWidget } from './number/number.widget';
-import { PeopleWidget } from './people/people.widget';
-import { RadioButtonsWidget } from './radio-buttons/radio-buttons.widget';
+import { FunctionalGroupWidgetComponent } from './functional-group/functional-group.widget';
+import { HyperlinkWidgetComponent } from './hyperlink/hyperlink.widget';
+import { MultilineTextWidgetComponentComponent } from './multiline-text/multiline-text.widget';
+import { NumberWidgetComponent } from './number/number.widget';
+import { PeopleWidgetComponent } from './people/people.widget';
+import { RadioButtonsWidgetComponent } from './radio-buttons/radio-buttons.widget';
 import { InputMaskDirective } from './text/text-mask.component';
-import { TextWidget } from './text/text.widget';
-import { TypeaheadWidget } from './typeahead/typeahead.widget';
-import { UploadWidget } from './upload/upload.widget';
+import { TextWidgetComponent } from './text/text.widget';
+import { TypeaheadWidgetComponent } from './typeahead/typeahead.widget';
+import { UploadWidgetComponent } from './upload/upload.widget';
 
 // core
 export * from './widget.component';
@@ -80,27 +80,27 @@ export * from './dynamic-table/editors/text/text.editor';
 export * from './text/text-mask.component';
 
 export const WIDGET_DIRECTIVES: any[] = [
-    UnknownWidget,
-    TabsWidget,
-    ContainerWidget,
-    TextWidget,
-    NumberWidget,
-    CheckboxWidget,
-    MultilineTextWidget,
-    DropdownWidget,
-    HyperlinkWidget,
-    RadioButtonsWidget,
-    DisplayValueWidget,
-    DisplayTextWidget,
-    UploadWidget,
-    AttachWidget,
-    TypeaheadWidget,
-    FunctionalGroupWidget,
-    PeopleWidget,
-    DateWidget,
-    AmountWidget,
+    UnknownWidgetComponent,
+    TabsWidgetComponent,
+    ContainerWidgetComponent,
+    TextWidgetComponent,
+    NumberWidgetComponent,
+    CheckboxWidgetComponent,
+    MultilineTextWidgetComponentComponent,
+    DropdownWidgetComponent,
+    HyperlinkWidgetComponent,
+    RadioButtonsWidgetComponent,
+    DisplayValueWidgetComponent,
+    DisplayTextWidgetComponentComponent,
+    UploadWidgetComponent,
+    AttachWidgetComponent,
+    TypeaheadWidgetComponent,
+    FunctionalGroupWidgetComponent,
+    PeopleWidgetComponent,
+    DateWidgetComponent,
+    AmountWidgetComponent,
 
-    DynamicTableWidget,
+    DynamicTableWidgetComponent,
     DateEditorComponent,
     DropdownEditorComponent,
     BooleanEditorComponent,

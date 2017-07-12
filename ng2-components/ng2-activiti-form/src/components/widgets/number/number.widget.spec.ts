@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { NumberWidget } from './number.widget';
+import { NumberWidgetComponent } from './number.widget';
 
-describe('NumberWidget', () => {
+describe('NumberWidgetComponent', () => {
 
-    let widget: NumberWidget;
+    let widget: NumberWidgetComponent;
 
     beforeEach(() => {
-        widget = new NumberWidget(null);
+        widget = new NumberWidgetComponent(null);
     });
 
     it('should exist', () => {

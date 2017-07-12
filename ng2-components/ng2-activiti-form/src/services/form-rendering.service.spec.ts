@@ -16,11 +16,11 @@
  */
 
 import {
-    AttachWidget,
+    AttachWidgetComponent,
     FormFieldModel,
     FormFieldTypes,
-    UnknownWidget,
-    UploadWidget
+    UnknownWidgetComponent,
+    UploadWidgetComponent
 } from './../components/widgets/index';
 import { DefaultTypeResolver, FormRenderingService } from './form-rendering.service';
 
@@ -40,7 +40,7 @@ describe('FormRenderingService', () => {
             }
         });
         let type = service.resolveComponentType(field);
-        expect(type).toBe(AttachWidget);
+        expect(type).toBe(AttachWidgetComponent);
     });
 
     it('should resolve Upload field as Upload widget', () => {
@@ -51,44 +51,44 @@ describe('FormRenderingService', () => {
             }
         });
         let type = service.resolveComponentType(field);
-        expect(type).toBe(UploadWidget);
+        expect(type).toBe(UploadWidgetComponent);
     });
 
     it('should resolve Unknown widget for Upload field', () => {
         let resolver = service.getComponentTypeResolver(FormFieldTypes.UPLOAD);
         let type = resolver(null);
-        expect(type).toBe(UnknownWidget);
+        expect(type).toBe(UnknownWidgetComponent);
     });
 
     it('should resolve Uknown widget for unknown field type', () => {
         let resolver = service.getComponentTypeResolver('missing-type');
         let type = resolver(null);
-        expect(type).toBe(UnknownWidget);
+        expect(type).toBe(UnknownWidgetComponent);
     });
 
     it('shoulld resolve custom value for unknown field type', () => {
-        let resolver = service.getComponentTypeResolver('missing-type', AttachWidget);
+        let resolver = service.getComponentTypeResolver('missing-type', AttachWidgetComponent);
         let type = resolver(null);
-        expect(type).toBe(AttachWidget);
+        expect(type).toBe(AttachWidgetComponent);
     });
 
     it('should fallback to default resolver when field type missing', () => {
         let resolver = service.getComponentTypeResolver(null);
         let type = resolver(null);
-        expect(type).toBe(UnknownWidget);
+        expect(type).toBe(UnknownWidgetComponent);
     });
 
     it('should fallback to custom resolver when field type missing', () => {
-        let resolver = service.getComponentTypeResolver(null, UploadWidget);
+        let resolver = service.getComponentTypeResolver(null, UploadWidgetComponent);
         let type = resolver(null);
-        expect(type).toBe(UploadWidget);
+        expect(type).toBe(UploadWidgetComponent);
     });
 
     it('should require field type to set resolver for type', () => {
         expect(
             () => service.setComponentTypeResolver(
                 null,
-                DefaultTypeResolver.fromType(UnknownWidget)
+                DefaultTypeResolver.fromType(UnknownWidgetComponent)
             )
         ).toThrowError('fieldType is null or not defined');
     });
@@ -106,23 +106,23 @@ describe('FormRenderingService', () => {
         expect(
             () => service.setComponentTypeResolver(
                 FormFieldTypes.TEXT,
-                DefaultTypeResolver.fromType(UnknownWidget)
+                DefaultTypeResolver.fromType(UnknownWidgetComponent)
             )
         ).toThrowError('already mapped, use override option if you intend replacing existing mapping.');
     });
 
     it('should override existing resolver with explicit flag', () => {
-        let customResolver = DefaultTypeResolver.fromType(UnknownWidget);
+        let customResolver = DefaultTypeResolver.fromType(UnknownWidgetComponent);
         service.setComponentTypeResolver(FormFieldTypes.TEXT, customResolver, true);
         expect(service.getComponentTypeResolver(FormFieldTypes.TEXT)).toBe(customResolver);
     });
 
     it('should return default value when resolving with no field', () => {
-        expect(service.resolveComponentType(null)).toBe(UnknownWidget);
+        expect(service.resolveComponentType(null)).toBe(UnknownWidgetComponent);
     });
 
     it('should return custom value when resolving with no field', () => {
-        expect(service.resolveComponentType(null, AttachWidget)).toBe(AttachWidget);
+        expect(service.resolveComponentType(null, AttachWidgetComponent)).toBe(AttachWidgetComponent);
     });
 
 });

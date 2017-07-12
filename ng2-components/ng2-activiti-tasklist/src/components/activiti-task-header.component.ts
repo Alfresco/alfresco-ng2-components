@@ -25,7 +25,7 @@ import { ActivitiTaskListService } from './../services/activiti-tasklist.service
     templateUrl: './activiti-task-header.component.html',
     styleUrls: ['./activiti-task-header.component.css']
 })
-export class ActivitiTaskHeader implements OnChanges {
+export class ActivitiTaskHeaderComponent implements OnChanges {
 
     @Input()
     formName: string = null;

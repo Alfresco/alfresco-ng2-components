@@ -26,7 +26,7 @@ import { baseHost, WidgetComponent } from './../widget.component';
     styleUrls: ['./upload.widget.css'],
     host: baseHost
 })
-export class UploadWidget extends WidgetComponent implements OnInit {
+export class UploadWidgetComponent extends WidgetComponent implements OnInit {
 
     hasFile: boolean;
     fileName: string;

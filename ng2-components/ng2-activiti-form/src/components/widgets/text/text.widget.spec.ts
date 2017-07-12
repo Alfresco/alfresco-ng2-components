@@ -20,17 +20,17 @@ import { FormFieldTypes } from '../core/form-field-types';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { InputMaskDirective } from './text-mask.component';
-import { TextWidget } from './text.widget';
+import { TextWidgetComponent } from './text.widget';
 
 import { CoreModule } from 'ng2-alfresco-core';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 import { EcmModelService } from './../../../services/ecm-model.service';
 import { FormService } from './../../../services/form.service';
 
-describe('TextWidget', () => {
+describe('TextWidgetComponent', () => {
 
-    let widget: TextWidget;
-    let fixture: ComponentFixture<TextWidget>;
+    let widget: TextWidgetComponent;
+    let fixture: ComponentFixture<TextWidgetComponent>;
     let componentHandler;
     let element: HTMLElement;
 
@@ -40,7 +40,7 @@ describe('TextWidget', () => {
                 CoreModule.forRoot()
             ],
             declarations: [
-                TextWidget,
+                TextWidgetComponent,
                 InputMaskDirective
             ],
             providers: [
@@ -52,7 +52,7 @@ describe('TextWidget', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TextWidget);
+        fixture = TestBed.createComponent(TextWidgetComponent);
 
         widget = fixture.componentInstance;
         element = fixture.nativeElement;

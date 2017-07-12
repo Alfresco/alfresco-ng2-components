@@ -15,27 +15,27 @@
  * limitations under the License.
  */
 
-import { ModuleWithProviders }  from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard, AuthGuardEcm, AuthGuardBpm } from 'ng2-alfresco-core';
+import { ModuleWithProviders } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard, AuthGuardBpm, AuthGuardEcm } from 'ng2-alfresco-core';
 
 import {
-    HomeComponent,
-    FilesComponent,
-    DataTableDemoComponent,
-    SearchComponent,
-    LoginDemoComponent,
+    AboutComponent,
+    ActivitiAppsViewComponent,
     ActivitiDemoComponent,
     ActivitiShowDiagramComponent,
-    ActivitiAppsView,
-    WebscriptComponent,
-    TagComponent,
-    SocialComponent,
-    AboutComponent,
-    FormViewer,
-    FormNodeViewer,
+    DataTableDemoComponent,
+    FilesComponent,
+    FormDemoComponent,
+    FormNodeViewerComponent,
+    FormViewerComponent,
+    HomeComponent,
+    LoginDemoComponent,
+    SearchComponent,
     SettingsComponent,
-    FormDemoComponent
+    SocialComponent,
+    TagComponent,
+    WebscriptComponent
 } from './components/index';
 
 import { UploadButtonComponent } from 'ng2-alfresco-upload';
@@ -80,12 +80,12 @@ export const appRoutes: Routes = [
     },
     {
         path: 'activiti',
-        component: ActivitiAppsView,
+        component: ActivitiAppsViewComponent,
         canActivate: [AuthGuardBpm]
     },
     {
         path: 'activiti/apps',
-        component: ActivitiAppsView,
+        component: ActivitiAppsViewComponent,
         canActivate: [AuthGuardBpm]
     },
     {
@@ -107,13 +107,13 @@ export const appRoutes: Routes = [
     // TODO: check if needed
     {
         path: 'activiti/tasks/:id',
-        component: FormViewer,
+        component: FormViewerComponent,
         canActivate: [AuthGuardBpm]
     },
     // TODO: check if needed
     {
         path: 'activiti/tasksnode/:id',
-        component: FormNodeViewer,
+        component: FormNodeViewerComponent,
         canActivate: [AuthGuardBpm]
     },
     {

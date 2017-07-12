@@ -28,7 +28,7 @@ import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
     styleUrls: ['./activiti-comments.component.css'],
     providers: [ActivitiTaskListService]
 })
-export class ActivitiComments implements OnChanges {
+export class ActivitiCommentsComponent implements OnChanges {
 
     @Input()
     taskId: string;
