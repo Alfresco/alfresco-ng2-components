@@ -15,33 +15,33 @@
  * limitations under the License.
  */
 
-import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AnalyticsReportListComponent } from 'ng2-activiti-analytics';
+import { FormEvent, FormFieldEvent, FormRenderingService, FormService } from 'ng2-activiti-form';
 import {
-    ActivitiApps,
-    ActivitiFilters,
-    ActivitiTaskList,
-    ActivitiTaskDetails,
-    FilterRepresentationModel,
-    TaskDetailsEvent
-} from 'ng2-activiti-tasklist';
-import {
-    ActivitiProcessFilters,
-    ActivitiProcessInstanceDetails,
+    ActivitiProcessFiltersComponent,
+    ActivitiProcessInstanceDetailsComponent,
     ActivitiProcessInstanceListComponent,
-    ActivitiStartProcessInstance,
+    ActivitiStartProcessInstanceComponent,
     FilterProcessRepresentationModel,
     ProcessInstance
 } from 'ng2-activiti-processlist';
-import { AnalyticsReportListComponent } from 'ng2-activiti-analytics';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
 import {
-    ObjectDataTableAdapter,
-    ObjectDataRow,
-    DataSorting
-} from 'ng2-alfresco-datatable';
+    ActivitiAppsComponent,
+    ActivitiFiltersComponent,
+    ActivitiTaskDetailsComponent,
+    ActivitiTaskListComponent,
+    FilterRepresentationModel,
+    TaskDetailsEvent
+} from 'ng2-activiti-tasklist';
 import { AlfrescoApiService } from 'ng2-alfresco-core';
-import { FormService, FormRenderingService, FormEvent, FormFieldEvent } from 'ng2-activiti-form';
+import {
+    DataSorting,
+    ObjectDataRow,
+    ObjectDataTableAdapter
+} from 'ng2-alfresco-datatable';
+import { Subscription } from 'rxjs/Rx';
 import { /*CustomEditorComponent*/ CustomStencil01 } from './custom-editor/custom-editor.component';
 
 declare var componentHandler;
@@ -53,28 +53,28 @@ const currentProcessIdNew = '__NEW__';
     templateUrl: './activiti-demo.component.html',
     styleUrls: ['./activiti-demo.component.css']
 })
-export class ActivitiDemoComponent implements AfterViewInit {
+export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
 
-    @ViewChild(ActivitiFilters)
-    activitifilter: ActivitiFilters;
+    @ViewChild(ActivitiFiltersComponent)
+    activitifilter: ActivitiFiltersComponent;
 
-    @ViewChild(ActivitiTaskList)
-    taskList: ActivitiTaskList;
+    @ViewChild(ActivitiTaskListComponent)
+    taskList: ActivitiTaskListComponent;
 
-    @ViewChild(ActivitiProcessFilters)
-    activitiprocessfilter: ActivitiProcessFilters;
+    @ViewChild(ActivitiProcessFiltersComponent)
+    activitiprocessfilter: ActivitiProcessFiltersComponent;
 
     @ViewChild(ActivitiProcessInstanceListComponent)
     processList: ActivitiProcessInstanceListComponent;
 
-    @ViewChild(ActivitiProcessInstanceDetails)
-    activitiprocessdetails: ActivitiProcessInstanceDetails;
+    @ViewChild(ActivitiProcessInstanceDetailsComponent)
+    activitiprocessdetails: ActivitiProcessInstanceDetailsComponent;
 
-    @ViewChild(ActivitiTaskDetails)
-    activitidetails: ActivitiTaskDetails;
+    @ViewChild(ActivitiTaskDetailsComponent)
+    activitidetails: ActivitiTaskDetailsComponent;
 
-    @ViewChild(ActivitiStartProcessInstance)
-    activitiStartProcess: ActivitiStartProcessInstance;
+    @ViewChild(ActivitiStartProcessInstanceComponent)
+    activitiStartProcess: ActivitiStartProcessInstanceComponent;
 
     @ViewChild(AnalyticsReportListComponent)
     analyticsreportlist: AnalyticsReportListComponent;
@@ -159,7 +159,7 @@ export class ActivitiDemoComponent implements AfterViewInit {
             this.processFilter = null;
             this.currentProcessInstanceId = null;
         });
-        this.layoutType = ActivitiApps.LAYOUT_GRID;
+        this.layoutType = ActivitiAppsComponent.LAYOUT_GRID;
 
     }
 

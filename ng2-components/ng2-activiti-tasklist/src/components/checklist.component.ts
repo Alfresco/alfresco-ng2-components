@@ -29,7 +29,7 @@ declare let dialogPolyfill: any;
     styleUrls: ['./activiti-checklist.component.css'],
     providers: [ActivitiTaskListService]
 })
-export class ActivitiChecklist implements OnInit, OnChanges {
+export class ActivitiChecklistComponent implements OnInit, OnChanges {
 
     @Input()
     taskId: string;

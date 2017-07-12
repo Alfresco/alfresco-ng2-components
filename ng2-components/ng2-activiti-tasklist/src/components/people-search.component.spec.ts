@@ -20,8 +20,8 @@ import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { Observable } from 'rxjs/Observable';
 import { User } from '../models/user.model';
-import { ActivitiPeopleSearch } from './activiti-people-search.component';
-import { PeopleList } from './adf-people-list.component';
+import { ActivitiPeopleSearchComponent } from './activiti-people-search.component';
+import { PeopleListComponent } from './adf-people-list.component';
 
 declare let jasmine: any;
 
@@ -39,10 +39,10 @@ const fakeSecondUser: User = new User({
     email: 'fake-involve@mail.com'
 });
 
-describe('ActivitiPeopleSearch', () => {
+describe('ActivitiPeopleSearchComponent', () => {
 
-    let activitiPeopleSearchComponent: ActivitiPeopleSearch;
-    let fixture: ComponentFixture<ActivitiPeopleSearch>;
+    let activitiPeopleSearchComponent: ActivitiPeopleSearchComponent;
+    let fixture: ComponentFixture<ActivitiPeopleSearchComponent>;
     let element: HTMLElement;
     let componentHandler;
     let userArray = [fakeUser, fakeSecondUser];
@@ -55,8 +55,8 @@ describe('ActivitiPeopleSearch', () => {
                 DataTableModule
             ],
             declarations: [
-                ActivitiPeopleSearch,
-                PeopleList
+                ActivitiPeopleSearchComponent,
+                PeopleListComponent
             ]
         }).compileComponents().then(() => {
 
@@ -64,7 +64,7 @@ describe('ActivitiPeopleSearch', () => {
             spyOn(translateService, 'addTranslationFolder').and.stub();
             spyOn(translateService.translate, 'get').and.callFake((key) => { return Observable.of(key); });
 
-            fixture = TestBed.createComponent(ActivitiPeopleSearch);
+            fixture = TestBed.createComponent(ActivitiPeopleSearchComponent);
             activitiPeopleSearchComponent = fixture.componentInstance;
             element = fixture.nativeElement;
             componentHandler = jasmine.createSpyObj('componentHandler', [

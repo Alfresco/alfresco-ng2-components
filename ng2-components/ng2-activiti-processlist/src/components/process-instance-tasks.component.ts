@@ -31,7 +31,7 @@ declare let dialogPolyfill: any;
     templateUrl: './activiti-process-instance-tasks.component.html',
     styleUrls: ['./activiti-process-instance-tasks.component.css']
 })
-export class ActivitiProcessInstanceTasks implements OnInit, OnChanges {
+export class ActivitiProcessInstanceTasksComponent implements OnInit, OnChanges {
 
     @Input()
     processInstanceDetails: ProcessInstance;

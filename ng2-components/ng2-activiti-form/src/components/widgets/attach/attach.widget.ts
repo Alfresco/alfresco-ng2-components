@@ -31,7 +31,7 @@ declare let dialogPolyfill: any;
     templateUrl: './attach.widget.html',
     styleUrls: ['./attach.widget.css'], host: baseHost
 })
-export class AttachWidget extends WidgetComponent implements OnInit {
+export class AttachWidgetComponent extends WidgetComponent implements OnInit {
 
     selectedFolderPathId: string;
     selectedFolderSiteId: string;

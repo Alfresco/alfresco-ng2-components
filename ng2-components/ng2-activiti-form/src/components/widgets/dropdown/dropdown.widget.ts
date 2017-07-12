@@ -28,7 +28,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
     styleUrls: ['./dropdown.widget.css'],
     host: baseHost
 })
-export class DropdownWidget extends WidgetComponent implements OnInit {
+export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
 
     constructor(public formService: FormService,
                 private visibilityService: WidgetVisibilityService,

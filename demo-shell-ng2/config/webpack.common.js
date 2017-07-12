@@ -33,7 +33,8 @@ module.exports = {
                 loader: 'tslint-loader',
                 include: [helpers.root('app')],
                 options: {
-                    emitErrors: true
+                    emitErrors: true,
+                    fix: true
                 },
                 exclude: [/node_modules/, /public/, /resources/, /dist/]
             },

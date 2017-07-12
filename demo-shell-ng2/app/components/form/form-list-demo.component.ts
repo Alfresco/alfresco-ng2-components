@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { FormModel, FormService } from 'ng2-activiti-form';
 import { ActivitiForm } from 'ng2-activiti-form';
 
@@ -44,7 +44,7 @@ declare var componentHandler;
         }
     `]
 })
-export class FormListDemoComponent {
+export class FormListDemoComponent implements AfterViewInit {
 
      @ViewChild(ActivitiForm)
     activitiForm: ActivitiForm;

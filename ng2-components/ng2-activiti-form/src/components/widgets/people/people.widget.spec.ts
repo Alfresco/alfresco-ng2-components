@@ -21,14 +21,14 @@ import { FormService } from '../../../services/form.service';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { GroupUserModel } from '../core/group-user.model';
-import { PeopleWidget } from './people.widget';
+import { PeopleWidgetComponent } from './people.widget';
 
-describe('PeopleWidget', () => {
+describe('PeopleWidgetComponent', () => {
 
     let componentHandler;
     let elementRef: ElementRef;
     let formService: FormService;
-    let widget: PeopleWidget;
+    let widget: PeopleWidgetComponent;
 
     beforeEach(() => {
         componentHandler =  jasmine.createSpyObj('componentHandler', [
@@ -38,7 +38,7 @@ describe('PeopleWidget', () => {
 
         formService = new FormService(null, null, null);
         elementRef = new ElementRef(null);
-        widget = new PeopleWidget(formService, elementRef);
+        widget = new PeopleWidgetComponent(formService, elementRef);
         widget.field = new FormFieldModel(new FormModel());
     });
 
@@ -253,11 +253,11 @@ describe('PeopleWidget', () => {
     });
 
     it('should require element reference to setup textfield', () => {
-        let w = new PeopleWidget(formService, null);
+        let w = new PeopleWidgetComponent(formService, null);
         w.value = '<value>';
         expect(w.setupMaterialComponents(componentHandler)).toBeFalsy();
 
-        w = new PeopleWidget(formService, elementRef);
+        w = new PeopleWidgetComponent(formService, elementRef);
         w.value = '<value>';
         expect(w.setupMaterialComponents(componentHandler)).toBeTruthy();
     });
