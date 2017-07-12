@@ -40,6 +40,7 @@
   * [Properties](#properties-8)
     + [Events](#events-7)
 - [ADF Comments Component](#adf-comments-component)
+- [Start Task Component](#start-task-component)
   * [Properties](#properties-9)
     + [Events](#events-8)
 - [Build from sources](#build-from-sources)
@@ -489,12 +490,38 @@ This component displays comments entered by involved users to a specified task. 
 | --- | --- |
 | error | Raised when an error occurs while displaying/adding a comment |
 
+## Start Task Component
+
+This component Creates/Starts new task for the specified app
+
+```html
+<adf-start-task
+    [appId]="YOUR_APP_ID">
+</adf-start-task>
+```
+
+![adf-start-task](docs/assets/adf-start-task.png)
+
+### Properties
+
+| Name | Type | Description |
+| --- | --- | --- |
+| appId | string | (**required**): The id of the app. |
+
+#### Events
+
+| Name | Description |
+| --- | --- |
+| onSuccess | Raised when the task is successfully created |
+| cancel | Raised when the cancel button is pressed by the user |
+| error | Raised if there is an error during task creation |
+
 ## Build from sources
 
 You can build component from sources with the following commands:
-
 ```sh
 npm install
+
 npm run build
 ```
 
