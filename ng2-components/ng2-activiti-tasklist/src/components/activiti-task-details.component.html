@@ -23,10 +23,7 @@
                 <button type="button" md-button md-raised-button (click)="showPeopleDialog()">{{'TASK_DETAILS.LABELS.INVOLVED_PEOPLE'|translate}}</button>
             </div>
             <div *ngIf="showComments" class="mdl-cell mdl-cell--4-col">
-                <adf-comments #activiticomments
-                    [readOnly]="readOnlyForm"
-                    [taskId]="taskDetails.id">
-                </adf-comments>
+                <button type="button" md-button md-raised-button (click)="showCommentsDialog()">{{'TASK_DETAILS.LABELS.COMMENTS'|translate}}</button>
             </div>
             <div *ngIf="showChecklist" class="mdl-cell mdl-cell--4-col">
                 <adf-checklist #activitichecklist
@@ -79,6 +76,16 @@
             </adf-people>
             <br><br>
             <button type="button" md-button md-raised-button (click)="closePeopleDialog()">{{'TASK_DETAILS.ERROR.CLOSE'|translate}}</button>
+        </div>
+    </dialog>
+    <dialog class="mdl-dialog comments-dialog" #dialogComments>
+        <div class="mdl-dialog__content">
+            <adf-comments #activiticomments
+                [readOnly]="readOnlyForm"
+                [taskId]="taskDetails.id">
+            </adf-comments>
+            <br><br>
+            <button type="button" md-button md-raised-button (click)="closeCommentsDialog()">{{'TASK_DETAILS.ERROR.CLOSE'|translate}}</button>
         </div>
     </dialog>
 </div>
