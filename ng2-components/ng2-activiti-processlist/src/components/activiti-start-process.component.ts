@@ -17,7 +17,7 @@
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { RestVariable } from 'alfresco-js-api';
-import { ActivitiStartForm } from 'ng2-activiti-form';
+import { ActivitiStartFormComponent } from 'ng2-activiti-form';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ProcessDefinitionRepresentation } from './../models/process-definition.model';
 import { ProcessInstance } from './../models/process-instance.model';
@@ -45,8 +45,8 @@ export class ActivitiStartProcessInstance implements OnChanges {
     @Output()
     error: EventEmitter<ProcessInstance> = new EventEmitter<ProcessInstance>();
 
-    @ViewChild(ActivitiStartForm)
-    startForm: ActivitiStartForm;
+    @ViewChild(ActivitiStartFormComponent)
+    startForm: ActivitiStartFormComponent;
 
     processDefinitions: ProcessDefinitionRepresentation[] = [];
 
