@@ -17,8 +17,8 @@
 
 import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
+import { AppConfigService, LogService } from 'ng2-alfresco-core';
 import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
-import { LogService, AppConfigService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'about-page',

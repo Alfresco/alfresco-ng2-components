@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewChild, Input } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivitiProcessAttachmentListComponent, ProcessUploadService } from 'ng2-activiti-processlist';
 import { UploadService } from 'ng2-alfresco-core';
 
@@ -28,7 +28,7 @@ import { UploadService } from 'ng2-alfresco-core';
     ]
 })
 
-export class ActivitiProcessAttachmentsComponent {
+export class ActivitiProcessAttachmentsComponent implements OnInit {
 
     @Input()
     processId: string;

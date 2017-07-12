@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, OnDestroy, AfterViewChecked } from '@angular/core';
+import { AfterViewChecked, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
@@ -26,7 +26,7 @@ declare var componentHandler;
     templateUrl: './form-viewer.component.html',
     styleUrls: ['./form-viewer.component.css']
 })
-export class FormViewer implements OnInit, OnDestroy, AfterViewChecked {
+export class FormViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     taskId: string;
 

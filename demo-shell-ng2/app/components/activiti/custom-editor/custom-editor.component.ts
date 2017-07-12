@@ -15,7 +15,9 @@
  * limitations under the License.
  */
 
-import { NgModule, Component } from '@angular/core';
+/* tslint:disable */
+
+import { Component, NgModule } from '@angular/core';
 import { WidgetComponent } from 'ng2-activiti-form';
 
 @Component({
