@@ -157,6 +157,7 @@ The recommended set of properties can be found in the following table:
 | data | FormValues | | Custom form values map to be used with the rendered form. |
 | showTitle | boolean | true | Toggle rendering of the form title. |
 | showCompleteButton | boolean | true | Toggle rendering of the `Complete` outcome button. |
+| disableCompleteButton | boolean | false | The `Complete` outcome button is showed but it will be disabled. |
 | showSaveButton | boolean | true | Toggle rendering of the `Save` outcome button. |
 | readOnly | boolean | false | Toggle readonly state of the form. Enforces all form widgets render readonly if enabled. |
 | showRefreshButton | boolean | true | Toggle rendering of the `Refresh` button. |

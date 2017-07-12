@@ -795,6 +795,17 @@ describe('ActivitiForm', () => {
         expect(formComponent.isOutcomeButtonEnabled(outcome)).toBeFalsy();
     });
 
+    it('should disable complete outcome button when disableCompleteButton is true', () => {
+        let formModel = new FormModel();
+        formComponent.form = formModel;
+        formComponent.disableCompleteButton = true;
+
+        expect(formModel.isValid).toBeTruthy();
+        let completeOutcome = formComponent.form.outcomes.find(outcome => outcome.name === FormOutcomeModel.COMPLETE_ACTION);
+
+        expect(formComponent.isOutcomeButtonEnabled(completeOutcome)).toBeFalsy();
+    });
+
     it('should raise [executeOutcome] event for formService', (done) => {
         formService.executeOutcome.subscribe(() => {
             done();
@@ -834,5 +845,4 @@ describe('ActivitiForm', () => {
         expect(labelField.value).toBe('option_1');
         expect(radioField.value).toBe('option_1');
     });
-
 });
