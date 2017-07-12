@@ -19,8 +19,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MdButtonModule, MdDatepickerModule, MdGridListModule, MdIconModule, MdInputModule, MdNativeDateModule, MdSelectModule } from '@angular/material';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
+import { StartTaskModel } from '../models/index';
 import { ActivitiPeopleService } from '../services/activiti-people.service';
 import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
+import { startTaskMock } from './../assets/start-task.mock';
 import { ActivitiStartTaskComponent } from './activiti-start-task.component';
 
 declare let jasmine: any;
@@ -35,7 +37,16 @@ describe('ActivitiStartTaskComponent', () => {
     let getformlistSpy: jasmine.Spy;
     let getWorkflowUsersSpy: jasmine.Spy;
     let getcreateNewTaskSpy: jasmine.Spy;
-
+    let fakeForms =    [
+        {
+            id: 123,
+           name: 'Display Data'
+        },
+       {
+            id: 1111,
+           name: 'Employee Info'
+        }
+    ];
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
@@ -70,23 +81,24 @@ describe('ActivitiStartTaskComponent', () => {
     beforeEach(() => {
         service = fixture.debugElement.injector.get(ActivitiTaskListService);
         peopleService = fixture.debugElement.injector.get(ActivitiPeopleService);
-        getformlistSpy = spyOn(service, 'getFormList').and.returnValue(Observable.of([{id: 123, name: 'fakeFormName'}, {id: 1111, name: 'fakeFormName'}]));
+        getformlistSpy = spyOn(service, 'getFormList').and.returnValue(Observable.of(fakeForms));
         getWorkflowUsersSpy = spyOn(peopleService, 'getWorkflowUsers').and.returnValue(Observable.of([
-        {
-            id: 1,
-            firstName: 'fakeName',
-            lastName: 'fakeName',
-            email: 'fake@app.activiti.com',
-            company: 'Alfresco.com',
-            pictureId: 3003
-        },
-        {
-            id: 1001,
-            firstName: 'fake-name',
-            lastName: 'fake-name',
-            email: 'fake-@app.com',
-            company: 'app'
-        }]));
+            {
+                id: 1,
+                firstName: 'fakeName',
+                lastName: 'fakeName',
+                email: 'fake@app.activiti.com',
+                company: 'Alfresco.com',
+                pictureId: 3003
+            },
+            {
+                id: 1001,
+                firstName: 'fake-name',
+                lastName: 'fake-name',
+                email: 'fake-@app.com',
+                company: 'app'
+            }
+        ]));
     });
 
     it('should create instance of ActivitiStartTaskComponent', () => {
@@ -94,10 +106,10 @@ describe('ActivitiStartTaskComponent', () => {
     });
 
     it('should fetch fakeform on ngonint', () => {
-        let loadForms = [{id: 123, name: 'fakeFormName'}, {id: 1111, name: 'fakeFormName'}];
         activitiStartTaskComponent.ngOnInit();
-        expect(activitiStartTaskComponent.forms).toEqual(loadForms);
-        expect(activitiStartTaskComponent.forms[0].name).toEqual('fakeFormName');
+        expect(activitiStartTaskComponent.forms).toEqual(fakeForms);
+        expect(activitiStartTaskComponent.forms[0].name).toEqual('Display Data');
+        expect(activitiStartTaskComponent.forms[1].name).toEqual('Employee Info');
         expect(activitiStartTaskComponent.forms[1].id).toEqual(1111);
         expect(getformlistSpy).toHaveBeenCalled();
     });
@@ -105,8 +117,19 @@ describe('ActivitiStartTaskComponent', () => {
     describe('create task', () => {
 
         beforeEach(() => {
-            getcreateNewTaskSpy = spyOn(service, 'createNewTask').and.returnValue
-            (Observable.of({ id: 91, name: 'fakeName', formKey: '4', assignee: {id: 1001, firstName: 'fakeName', email: 'fake@app.activiti.com'}}));
+            jasmine.Ajax.install();
+            getcreateNewTaskSpy = spyOn(service, 'createNewTask').and.returnValue(Observable.of(
+                {
+                    id: 91,
+                    name: 'fakeName',
+                    formKey: '4',
+                    assignee: {id: 1001, firstName: 'fakeName', email: 'fake@app.activiti.com'}
+                }
+            ));
+        });
+
+        afterEach(() => {
+            jasmine.Ajax.uninstall();
         });
 
         it('should create new task when start is clicked', async(() => {
@@ -114,13 +137,11 @@ describe('ActivitiStartTaskComponent', () => {
                 expect(res).toBeDefined();
             });
             activitiStartTaskComponent.appId = 'fakeAppId';
-            activitiStartTaskComponent.name = 'fake-name';
-            activitiStartTaskComponent.assignee = {id: 1111, firstName: 'fakeName', email: 'fake@app.com'};
-            activitiStartTaskComponent.formDetails = {id: 4, forname: 'Expence Summary'};
-            activitiStartTaskComponent.selectedDate = '2016-11-03T15:25:42.749+0000';
-            activitiStartTaskComponent.description = 'fakeDescription';
+            activitiStartTaskComponent.startTaskmodel = new StartTaskModel(startTaskMock);
             activitiStartTaskComponent.start();
-            expect(getcreateNewTaskSpy).toHaveBeenCalled();
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 200
+            });
         }));
 
         it('should send on onSuccess event when the task is started', async(() => {
@@ -132,50 +153,61 @@ describe('ActivitiStartTaskComponent', () => {
                 expect(res.assignee.id).toBe(1001);
             });
             activitiStartTaskComponent.appId = 'fakeAppId';
-            activitiStartTaskComponent.name = 'fake-name';
-            activitiStartTaskComponent.assignee = {id: 1111, firstName: 'fakeName', email: 'fake@app.com'};
-            activitiStartTaskComponent.formDetails = {id: 4, forname: 'Expence Summary'};
-            activitiStartTaskComponent.selectedDate = '2016-11-03T15:25:42.749+0000';
-            activitiStartTaskComponent.description = 'fakeDescription';
+            activitiStartTaskComponent.startTaskmodel = new StartTaskModel(startTaskMock);
             activitiStartTaskComponent.start();
-            expect(getcreateNewTaskSpy).toHaveBeenCalled();
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 200,
+                contentType: 'json',
+                responseText:
+                {
+                    id: '91',
+                    name: 'fakeName',
+                    description: 'fakeDescription',
+                    formKey: '4',
+                    assignee: {id: 1001, firstName: 'fakeName', email: 'fake@app.activiti.com'},
+                    dueDate: null,
+                    endDate: null,
+                    duration: null,
+                    priority: 50,
+                    parentTaskId: null,
+                    parentTaskName: null
+                }
+            });
         }));
 
         it('should send on onSuccess event when only name is given', async(() => {
             activitiStartTaskComponent.onSuccess.subscribe((res) => {
                 expect(res).toBeDefined();
-                expect(res.id).toBe(91);
-                expect(res.name).toBe('fakeName');
-                expect(res.formKey).toBe('4');
-                expect(res.assignee.id).toBe(1001);
             });
             activitiStartTaskComponent.appId = 'fakeAppId';
-            activitiStartTaskComponent.name = 'fake-name';
+            activitiStartTaskComponent.startTaskmodel.name = 'fakeName';
+            activitiStartTaskComponent.startTaskmodel = new StartTaskModel(startTaskMock);
             activitiStartTaskComponent.start();
-            expect(getcreateNewTaskSpy).toHaveBeenCalled();
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 200,
+                contentType: 'json',
+                responseText: {}
+            });
         }));
 
-        it('should not emit onSuccess event when data not present', async(() => {
-            let onSuccessSpy: jasmine.Spy = spyOn(activitiStartTaskComponent.onSuccess, 'emit');
-            activitiStartTaskComponent.start();
-            fixture.detectChanges();
-            expect(getcreateNewTaskSpy).not.toHaveBeenCalled();
-            expect(onSuccessSpy).not.toHaveBeenCalled();
-        }));
-
-        it('should attach a task when a form id selected', async(() => {
+        it('should attach a task when a form id selected', () => {
             activitiStartTaskComponent.onSuccess.subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(res.formKey).toBe('4');
             });
             activitiStartTaskComponent.appId = 'fakeAppId';
-            activitiStartTaskComponent.name = 'fake-name';
-            activitiStartTaskComponent.assignee = {id: 1111, firstName: 'fakeName', email: 'fake@app.com'};
-            activitiStartTaskComponent.formDetails = {id: 4, forname: 'Expence Summary'};
-            activitiStartTaskComponent.selectedDate = '2016-11-03T15:25:42.749+0000';
-            activitiStartTaskComponent.description = 'fakeDescription';
+            activitiStartTaskComponent.startTaskmodel = new StartTaskModel(startTaskMock);
             activitiStartTaskComponent.start();
             expect(getcreateNewTaskSpy).toHaveBeenCalled();
+        });
+
+        it('should not emit onSuccess event when data not present', async(() => {
+            let onSuccessSpy: jasmine.Spy = spyOn(activitiStartTaskComponent.onSuccess, 'emit');
+            activitiStartTaskComponent.startTaskmodel = new StartTaskModel(null);
+            activitiStartTaskComponent.start();
+            fixture.detectChanges();
+            expect(getcreateNewTaskSpy).not.toHaveBeenCalled();
+            expect(onSuccessSpy).not.toHaveBeenCalled();
         }));
     });
 
@@ -189,9 +221,8 @@ describe('ActivitiStartTaskComponent', () => {
                 });
             });
         let createTaskButton = <HTMLElement> element.querySelector('#button-start');
-        activitiStartTaskComponent.name = 'fake-name';
+        activitiStartTaskComponent.startTaskmodel.name = 'fake-name';
         createTaskButton.click();
-        expect(activitiStartTaskComponent.formDetails).not.toBeDefined();
         expect(attachFormToATask).not.toHaveBeenCalled();
     });
 
@@ -220,7 +251,7 @@ describe('ActivitiStartTaskComponent', () => {
 
     it('should start button disable if name is empty', () => {
         let createTaskButton =  fixture.nativeElement.querySelector('#button-start');
-        activitiStartTaskComponent.name = '';
+        activitiStartTaskComponent.startTaskmodel.name = '';
         fixture.detectChanges();
         expect(createTaskButton.disabled).toBeTruthy();
     });
@@ -228,7 +259,7 @@ describe('ActivitiStartTaskComponent', () => {
     it('should cancle start task on cancle button clicked', () => {
         let emitSpy = spyOn(activitiStartTaskComponent.cancel, 'emit');
         let cancleTaskButton =  fixture.nativeElement.querySelector('#button-cancle');
-        activitiStartTaskComponent.name = '';
+        activitiStartTaskComponent.startTaskmodel.name = '';
         fixture.detectChanges();
         cancleTaskButton.click();
         expect(emitSpy).not.toBeNull();
@@ -237,7 +268,7 @@ describe('ActivitiStartTaskComponent', () => {
 
     it('should enable button if name is not empty', () => {
         let createTaskButton = fixture.nativeElement.querySelector('#button-start');
-        activitiStartTaskComponent.name = 'fakeName';
+        activitiStartTaskComponent.startTaskmodel.name = 'fakeName';
         fixture.detectChanges();
         expect(createTaskButton.enable).toBeFalsy();
     });

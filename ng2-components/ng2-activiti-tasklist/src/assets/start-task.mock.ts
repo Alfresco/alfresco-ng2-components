@@ -15,11 +15,20 @@
  * limitations under the License.
  */
 
-export * from './comment.model';
-export * from './filter.model';
-export * from './icon.model';
-export * from './user.model';
-export * from './task-details.model';
-export * from './task-details.event';
-export * from './user-event.model';
-export * from './start-task.model';
+export let startTaskMock = {
+    'name': 'fakeName',
+    'description': 'fakeDescription',
+    'assignee': {'id': 2001, 'firstName': 'Jhon', 'lastName': 'Adams', 'email': 'jhon@app.activiti.com'},
+    'date': '2017-11-03T15:25:42.749+0000',
+    'formKey': '11201',
+    'category': 'fakeAppId'
+};
+
+export let noDataMock = {
+    'name': '',
+    'description': '',
+    'assignee': {},
+    'date': '',
+    'formKey': '',
+    'category': ';'
+};

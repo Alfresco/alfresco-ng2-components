@@ -18,7 +18,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { Form } from '../models/form.model';
-import { User } from '../models/index';
+import { StartTaskModel, User } from '../models/index';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { ActivitiPeopleService } from '../services/activiti-people.service';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
@@ -42,16 +42,11 @@ export class ActivitiStartTaskComponent implements OnInit {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    @Input()
     people: User [] = [];
 
-    name: string;
+    startTaskmodel: StartTaskModel = new StartTaskModel();
+
     forms: Form [];
-    formDetails: any;
-    selectedDate: any;
-    description: string;
-    date: string;
-    assignee: any;
 
     /**
      * Constructor
@@ -71,25 +66,17 @@ export class ActivitiStartTaskComponent implements OnInit {
 
     ngOnInit() {
         this.loadFormsTask();
-        this.searchUser();
+        this.getUsers();
     }
 
     public start() {
-        if (this.name) {
-            this.taskService.createNewTask(new TaskDetailsModel({
-                name: this.name,
-                description: this.description,
-                assignee: {
-                    id: this.assignee ? this.assignee.id : null
-                },
-                dueDate: this.selectedDate,
-                formKey: this.formDetails ? this.formDetails.id : null,
-                category: this.appId ? '' + this.appId : null
-            })).subscribe(
+        if (this.startTaskmodel.name) {
+            this.startTaskmodel.category = this.appId;
+            this.taskService.createNewTask(new TaskDetailsModel(this.startTaskmodel)).subscribe(
                 (res: any) => {
                     this.onSuccess.emit(res);
-                    this.resetForm();
                     this.attachForm(res.id);
+                    this.resetForm();
                 },
                 (err) => {
                     this.error.emit(err);
@@ -100,9 +87,8 @@ export class ActivitiStartTaskComponent implements OnInit {
     }
 
     private attachForm(taskId: string) {
-        if (this.formDetails && taskId) {
-            this.taskService.attachFormToATask(taskId, Number(this.formDetails.id));
-            this.formDetails = null;
+        if (this.startTaskmodel.formKey && taskId) {
+            this.taskService.attachFormToATask(taskId, Number(this.startTaskmodel.formKey));
         }
     }
 
@@ -121,19 +107,15 @@ export class ActivitiStartTaskComponent implements OnInit {
     }
 
     private resetForm() {
-        this.name = '';
-        this.description = '';
-        this.selectedDate = '';
-        this.assignee = '';
-        this.formDetails = '';
+        this.startTaskmodel = null;
     }
 
-    private searchUser() {
+    private getUsers() {
         this.peopleService.getWorkflowUsers().subscribe((users) => {
-                this.people = users;
-            }, (err) => {
-                this.error.emit(err);
-                this.logService.error('Could not load users');
-            });
+            this.people = users;
+        }, (err) => {
+            this.error.emit(err);
+            this.logService.error('Could not load users');
+        });
     }
 }
