@@ -22,17 +22,17 @@ import { FormService } from '../../../services/form.service';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormModel } from '../core/form.model';
 import { FormFieldModel } from './../core/form-field.model';
-import { UploadWidget } from './upload.widget';
+import { UploadWidgetComponent } from './upload.widget';
 
-describe('UploadWidget', () => {
+describe('UploadWidgetComponent', () => {
 
     let componentHandler;
-    let widget: UploadWidget;
+    let widget: UploadWidgetComponent;
     let formService: FormService;
 
     beforeEach(() => {
         formService = new FormService(null, null, null);
-        widget = new UploadWidget(formService, null);
+        widget = new UploadWidgetComponent(formService, null);
     });
 
     it('should setup with field data', () => {
@@ -85,8 +85,8 @@ describe('UploadWidget', () => {
     });
 
     describe('when template is ready', () => {
-        let uploadWidget: UploadWidget;
-        let fixture: ComponentFixture<UploadWidget>;
+        let uploadWidgetComponent: UploadWidgetComponent;
+        let fixture: ComponentFixture<UploadWidgetComponent>;
         let element: HTMLInputElement;
         let inputElement: HTMLInputElement;
 
@@ -98,11 +98,11 @@ describe('UploadWidget', () => {
         beforeEach(async(() => {
             TestBed.configureTestingModule({
                 imports: [CoreModule],
-                declarations: [UploadWidget],
+                declarations: [UploadWidgetComponent],
                 providers: [FormService, EcmModelService]
             }).compileComponents().then(() => {
-                fixture = TestBed.createComponent(UploadWidget);
-                uploadWidget = fixture.componentInstance;
+                fixture = TestBed.createComponent(UploadWidgetComponent);
+                uploadWidgetComponent = fixture.componentInstance;
                 element = fixture.nativeElement;
             });
         }));
@@ -113,7 +113,7 @@ describe('UploadWidget', () => {
         });
 
         beforeEach(() => {
-            uploadWidget.field = new FormFieldModel(new FormModel({ taskId: 'fake-upload-id' }), {
+            uploadWidgetComponent.field = new FormFieldModel(new FormModel({ taskId: 'fake-upload-id' }), {
                 id: 'upload-id',
                 name: 'upload-name',
                 value: '',
@@ -123,7 +123,7 @@ describe('UploadWidget', () => {
         });
 
         it('should be disabled on readonly forms', async(() => {
-            uploadWidget.field.form.readOnly = true;
+            uploadWidgetComponent.field.form.readOnly = true;
             fixture.detectChanges();
             inputElement = <HTMLInputElement>element.querySelector('#upload-id');
 
@@ -136,7 +136,7 @@ describe('UploadWidget', () => {
         }));
 
         it('should have the multiple attribute when is selected in parameters', async(() => {
-            uploadWidget.field.params.multiple = true;
+            uploadWidgetComponent.field.params.multiple = true;
             fixture.detectChanges();
             inputElement = <HTMLInputElement>element.querySelector('#upload-id');
 
@@ -149,7 +149,7 @@ describe('UploadWidget', () => {
         }));
 
         it('should not have the multiple attribute if multiple is false', async(() => {
-            uploadWidget.field.params.multiple = false;
+            uploadWidgetComponent.field.params.multiple = false;
             fixture.detectChanges();
             inputElement = <HTMLInputElement>element.querySelector('#upload-id');
 

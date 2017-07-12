@@ -29,7 +29,7 @@ import { DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './dynami
     styleUrls: ['./dynamic-table.widget.css'],
     host: baseHost
 })
-export class DynamicTableWidget extends WidgetComponent implements OnInit {
+export class DynamicTableWidgetComponent extends WidgetComponent implements OnInit {
 
     ERROR_MODEL_NOT_FOUND = 'Table model not found';
 

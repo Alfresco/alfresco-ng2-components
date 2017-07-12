@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, ViewChild, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { StorageService, LogService } from 'ng2-alfresco-core';
+import { Router } from '@angular/router';
+import { LogService, StorageService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'login-demo',

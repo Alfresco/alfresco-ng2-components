@@ -27,15 +27,15 @@ import { TaskDetailsModel } from '../models/task-details.model';
 import { noDataMock, taskDetailsMock, taskFormMock, tasksMock } from './../assets/task-details.mock';
 import { ActivitiPeopleService } from './../services/activiti-people.service';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
-import { ActivitiTaskDetails } from './activiti-task-details.component';
+import { ActivitiTaskDetailsComponent } from './activiti-task-details.component';
 
-describe('ActivitiTaskDetails', () => {
+describe('ActivitiTaskDetailsComponent', () => {
 
     let componentHandler: any;
     let service: ActivitiTaskListService;
     let formService: FormService;
-    let component: ActivitiTaskDetails;
-    let fixture: ComponentFixture<ActivitiTaskDetails>;
+    let component: ActivitiTaskDetailsComponent;
+    let fixture: ComponentFixture<ActivitiTaskDetailsComponent>;
     let getTaskDetailsSpy: jasmine.Spy;
     let getFormSpy: jasmine.Spy;
     let getTasksSpy: jasmine.Spy;
@@ -48,7 +48,7 @@ describe('ActivitiTaskDetails', () => {
                 ActivitiFormModule.forRoot()
             ],
             declarations: [
-                ActivitiTaskDetails
+                ActivitiTaskDetailsComponent
             ],
             providers: [
                 ActivitiTaskListService,
@@ -64,7 +64,7 @@ describe('ActivitiTaskDetails', () => {
 
     beforeEach(() => {
 
-        fixture = TestBed.createComponent(ActivitiTaskDetails);
+        fixture = TestBed.createComponent(ActivitiTaskDetailsComponent);
         component = fixture.componentInstance;
         service = fixture.debugElement.injector.get(ActivitiTaskListService);
         formService = fixture.debugElement.injector.get(FormService);

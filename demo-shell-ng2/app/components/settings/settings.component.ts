@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, AfterViewChecked } from '@angular/core';
-import { AlfrescoSettingsService, StorageService, LogService } from 'ng2-alfresco-core';
+import { AfterViewChecked, Component } from '@angular/core';
+import { AlfrescoSettingsService, LogService, StorageService } from 'ng2-alfresco-core';
 
 declare var componentHandler: any;
 

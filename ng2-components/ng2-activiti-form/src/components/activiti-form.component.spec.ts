@@ -653,7 +653,7 @@ describe('ActivitiForm', () => {
     /*
      it('should update the visibility when the container raise the change event', (valueChanged) => {
      spyOn(formComponent, 'checkVisibility').and.callThrough();
-     let widget = new ContainerWidget();
+     let widget = new ContainerWidgetComponent();
      let fakeForm = new FormModel();
      let fakeField = new FormFieldModel(fakeForm, {id: 'fakeField', value: 'fakeValue'});
      widget.formValueChanged.subscribe(field => { valueChanged(); });

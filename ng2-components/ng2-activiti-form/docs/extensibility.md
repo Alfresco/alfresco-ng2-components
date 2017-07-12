@@ -57,7 +57,7 @@ let customResolver: ComponentTypeResolver = (field: FormFieldModel): Type<{}> =>
     if (field) {
         let params = field.params;
     }
-    return UnknownWidget;
+    return UnknownWidgetComponent;
 };
 formRenderingService.setComponentTypeResolver('text', customResolver, true);
 ```
@@ -66,25 +66,25 @@ formRenderingService.setComponentTypeResolver('text', customResolver, true);
 
 Stencil Name | Field Type | Component Type |
 | --- | --- | --- |
-| Text | text | TextWidget |
-| Number | integer | NumberWidget |
-| Multi-line text | multi-line-text | MultilineTextWidget |
-| Checkbox | boolean | CheckboxWidget |
-| Dropdown | dropdown | DropdownWidget |
-| Date | date | DateWidget |
-| Amount | amount | AmountWidget |
-| Radio buttons | radio-buttons | RadioButtonsWidget |
-| Hyperlink | hyperlink | HyperlinkWidget |
-| Display value | readonly | DisplayValueWidget |
-| Display text | readonly-text | DisplayTextWidget |
-| Typeahead | typeahead | TypeaheadWidget |
-| People | people | PeopleWidget |
-| Group of people | functional-group | FunctionalGroupWidget |
-| Dynamic table | dynamic-table | DynamicTableWidget |
-| N/A | container | ContainerWidget (layout component) |
-| Header | group | ContainerWidget |
-| Attach | upload | AttachWidget or UploadWidget (based on metadata) |
-| N/A | N/A | UnknownWidget |
+| Text | text | TextWidgetComponent |
+| Number | integer | NumberWidgetComponent |
+| Multi-line text | multi-line-text | MultilineTextWidgetComponentComponent |
+| Checkbox | boolean | CheckboxWidgetComponent |
+| Dropdown | dropdown | DropdownWidgetComponent |
+| Date | date | DateWidgetComponent |
+| Amount | amount | AmountWidgetComponent |
+| Radio buttons | radio-buttons | RadioButtonsWidgetComponent |
+| Hyperlink | hyperlink | HyperlinkWidgetComponent |
+| Display value | readonly | DisplayValueWidgetComponent |
+| Display text | readonly-text | DisplayTextWidgetComponentComponent |
+| Typeahead | typeahead | TypeaheadWidgetComponent |
+| People | people | PeopleWidgetComponent |
+| Group of people | functional-group | FunctionalGroupWidgetComponent |
+| Dynamic table | dynamic-table | DynamicTableWidgetComponent |
+| N/A | container | ContainerWidgetComponent (layout component) |
+| Header | group | ContainerWidgetComponent |
+| Attach | upload | AttachWidgetComponent or UploadWidgetComponent (based on metadata) |
+| N/A | N/A | UnknownWidgetComponent |
 
 
 

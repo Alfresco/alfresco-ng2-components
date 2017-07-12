@@ -24,15 +24,15 @@ import { Observable } from 'rxjs/Rx';
 
 import { FormService } from '../services/form.service';
 import { EcmModelService } from './../services/ecm-model.service';
-import { ActivitiContent } from './activiti-content.component';
+import { ActivitiContentComponent } from './activiti-content.component';
 import { ContentLinkModel } from './widgets/index';
 
 declare let jasmine: any;
 
-describe('ActivitiContent', () => {
+describe('ActivitiContentComponent', () => {
 
-    let component: ActivitiContent;
-    let fixture: ComponentFixture<ActivitiContent>;
+    let component: ActivitiContentComponent;
+    let fixture: ComponentFixture<ActivitiContentComponent>;
     let debug: DebugElement;
     let element: HTMLElement;
 
@@ -71,7 +71,7 @@ describe('ActivitiContent', () => {
                 CoreModule.forRoot()
             ],
             declarations: [
-                ActivitiContent
+                ActivitiContentComponent
             ],
             providers: [
                 FormService,
@@ -96,7 +96,7 @@ describe('ActivitiContent', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ActivitiContent);
+        fixture = TestBed.createComponent(ActivitiContentComponent);
         component = fixture.componentInstance;
         debug = fixture.debugElement;
         element = fixture.nativeElement;

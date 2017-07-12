@@ -24,12 +24,12 @@ import { EcmModelService } from './../../../services/ecm-model.service';
 import { FormService } from './../../../services/form.service';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
-import { DateWidget } from './date.widget';
+import { DateWidgetComponent } from './date.widget';
 
-describe('DateWidget', () => {
+describe('DateWidgetComponent', () => {
 
-    let widget: DateWidget;
-    let fixture: ComponentFixture<DateWidget>;
+    let widget: DateWidgetComponent;
+    let fixture: ComponentFixture<DateWidgetComponent>;
     let componentHandler;
     let nativeElement: any;
     let element: HTMLElement;
@@ -40,7 +40,7 @@ describe('DateWidget', () => {
                 CoreModule.forRoot()
             ],
             declarations: [
-                DateWidget
+                DateWidgetComponent
             ],
             providers: [
                 FormService,
@@ -57,7 +57,7 @@ describe('DateWidget', () => {
             }
         };
 
-        fixture = TestBed.createComponent(DateWidget);
+        fixture = TestBed.createComponent(DateWidgetComponent);
 
         element = fixture.nativeElement;
         widget = fixture.componentInstance;

@@ -26,7 +26,7 @@ import { ContentLinkModel } from './widgets/core/content-link.model';
     templateUrl: './activiti-content.component.html',
     styleUrls: ['./activiti-content.component.css']
 })
-export class ActivitiContent implements OnChanges {
+export class ActivitiContentComponent implements OnChanges {
 
     @Input()
     id: string;

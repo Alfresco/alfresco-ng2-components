@@ -22,14 +22,14 @@ import { DataTableModule } from 'ng2-alfresco-datatable';
 import { Observable } from 'rxjs/Rx';
 import { EcmModelService } from '../services/ecm-model.service';
 import { FormService } from '../services/form.service';
-import { ADFFormList } from './adf-form-list.component';
+import { ADFFormListComponent } from './adf-form-list.component';
 
 declare let jasmine: any;
 
 describe('TaskAttachmentList', () => {
 
-    let component: ADFFormList;
-    let fixture: ComponentFixture<ADFFormList>;
+    let component: ADFFormListComponent;
+    let fixture: ComponentFixture<ADFFormListComponent>;
     let service: FormService;
     let componentHandler: any;
 
@@ -40,7 +40,7 @@ describe('TaskAttachmentList', () => {
                 DataTableModule
             ],
             declarations: [
-                ADFFormList
+                ADFFormListComponent
             ],
             providers: [
                 FormService,
@@ -63,7 +63,7 @@ describe('TaskAttachmentList', () => {
 
     beforeEach(async(() => {
 
-        fixture = TestBed.createComponent(ADFFormList);
+        fixture = TestBed.createComponent(ADFFormListComponent);
         component = fixture.componentInstance;
 
         service = TestBed.get(FormService);

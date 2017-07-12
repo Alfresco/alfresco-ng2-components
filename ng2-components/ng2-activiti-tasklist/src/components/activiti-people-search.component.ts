@@ -30,7 +30,7 @@ declare var require: any;
     styleUrls: ['./activiti-people-search.component.css']
 })
 
-export class ActivitiPeopleSearch implements OnInit, AfterViewInit {
+export class ActivitiPeopleSearchComponent implements OnInit, AfterViewInit {
 
     @Input()
     results: Observable<User[]>;
