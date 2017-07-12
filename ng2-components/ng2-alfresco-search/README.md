@@ -59,10 +59,10 @@ results component embedded inside the same component.
 | expandable | boolean |  true  | Whether to use an expanding search control, if false then a regular input is used. |
 | autocomplete | boolean | true  | Whether the browser should offer field auto-completion for the input field to the   user. |
 | liveSearchEnabled | boolean | true  | Whether find-as-you-type suggestions should be offered for matching  content  items. Set to false to disable. |
-| liveSearchRoot | boolean | "-root-" | NodeRef or node name where the search should start. |
-| liveSearchResultType | boolean | |  Node type to filter live search results by, e.g. 'cm:content'. |
-| liveSearchMaxResults | boolean | 5 |  Maximum number of results to show in the live search. |
-| liveSearchResultSort | boolean | |  Criteria to sort live search results by, must be one of "name" ,  "modifiedAt" or "createdAt" |
+| liveSearchRoot | string | "-root-" | NodeRef or node name where the search should start. |
+| liveSearchResultType | string | |  Node type to filter live search results by, e.g. 'cm:content'. |
+| liveSearchMaxResults | number | 5 |  Maximum number of results to show in the live search. |
+| liveSearchResultSort | string | |  Criteria to sort live search results by, must be one of "name" ,  "modifiedAt" or "createdAt" |
 
 ## Events
 
@@ -90,10 +90,10 @@ results page will be shown.
 | Name | Type | Optional | Default | Description |
 | --- | --- | --- | --- | --- |
 | searchTerm | string | | Search term to use when executing the search. Updating this value will run a new  search and update the results  |
-| rootNodeId | boolean | "-root-" | NodeRef or node name where the search should start. |
-| resultType | boolean | | Node type to filter search results by, e.g. 'cm:content'. |
-| maxResults | boolean  | 20  | Maximum number of results to show in the search. |
-| resultSort | boolean  | | Criteria to sort search results by, must be one of "name" , "modifiedAt" or   "createdAt" |
+| rootNodeId | string | "-root-" | NodeRef or node name where the search should start. |
+| resultType | string | | Node type to filter search results by, e.g. 'cm:content'. |
+| maxResults | number  | 20  | Maximum number of results to show in the search. |
+| resultSort | string  | | Criteria to sort search results by, must be one of "name" , "modifiedAt" or   "createdAt" |
 | navigationMode | string  | "dblclick" | Event used to initiate a navigation action to a specific result, one of "click" or "dblclick" |
 
 ### Events
