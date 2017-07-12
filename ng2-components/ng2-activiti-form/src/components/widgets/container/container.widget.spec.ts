@@ -24,18 +24,18 @@ import { WIDGET_DIRECTIVES } from '../index';
 import { MASK_DIRECTIVE } from '../index';
 import { EcmModelService } from './../../../services/ecm-model.service';
 import { FormService } from './../../../services/form.service';
-import { ActivitiContent } from './../../activiti-content.component';
+import { ActivitiContentComponent } from './../../activiti-content.component';
 import { FormFieldComponent } from './../../form-field/form-field.component';
 import { FormFieldTypes } from './../core/form-field-types';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
-import { ContainerWidget } from './container.widget';
-import { ContainerWidgetModel } from './container.widget.model';
+import { ContainerWidgetComponent } from './container.widget';
+import { ContainerWidgetComponentModel } from './container.widget.model';
 
-describe('ContainerWidget', () => {
+describe('ContainerWidgetComponent', () => {
 
-    let widget: ContainerWidget;
-    let fixture: ComponentFixture<ContainerWidget>;
+    let widget: ContainerWidgetComponent;
+    let fixture: ComponentFixture<ContainerWidgetComponent>;
     let element: HTMLElement;
     let contentService: ActivitiAlfrescoContentService;
     let componentHandler;
@@ -48,7 +48,7 @@ describe('ContainerWidget', () => {
                 MdTabsModule,
                 MdInputModule
             ],
-            declarations: [FormFieldComponent, ActivitiContent, WIDGET_DIRECTIVES, MASK_DIRECTIVE],
+            declarations: [FormFieldComponent, ActivitiContentComponent, WIDGET_DIRECTIVES, MASK_DIRECTIVE],
             providers: [
                 FormService,
                 EcmModelService,
@@ -58,7 +58,7 @@ describe('ContainerWidget', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ContainerWidget);
+        fixture = TestBed.createComponent(ContainerWidgetComponent);
         contentService = TestBed.get(ActivitiAlfrescoContentService);
 
         element = fixture.nativeElement;
@@ -98,7 +98,7 @@ describe('ContainerWidget', () => {
     });
 
     it('should toggle underlying group container', () => {
-        let container = new ContainerWidgetModel(new FormFieldModel(new FormModel(), {
+        let container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.GROUP,
             params: {
                 allowCollapse: true
@@ -115,7 +115,7 @@ describe('ContainerWidget', () => {
     });
 
     it('should toggle only collapsible container', () => {
-        let container = new ContainerWidgetModel(new FormFieldModel(new FormModel(), {
+        let container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.GROUP
         }));
 
@@ -128,7 +128,7 @@ describe('ContainerWidget', () => {
 
     it('should toggle only group container', () => {
 
-        let container = new ContainerWidgetModel(new FormFieldModel(new FormModel(), {
+        let container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.CONTAINER,
             params: {
                 allowCollapse: true
@@ -162,13 +162,13 @@ describe('ContainerWidget', () => {
         beforeEach(() => {
             componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
             window['componentHandler'] = componentHandler;
-            fakeContainerVisible = new ContainerWidgetModel(new FormFieldModel(new FormModel(fakeFormJson), {
+            fakeContainerVisible = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(fakeFormJson), {
                 fieldType: FormFieldTypes.GROUP,
                 id: 'fake-cont-id-1',
                 name: 'fake-cont-1-name',
                 type: FormFieldTypes.GROUP
             }));
-            fakeContainerInvisible = new ContainerWidgetModel(new FormFieldModel(new FormModel(fakeFormJson), {
+            fakeContainerInvisible = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(fakeFormJson), {
                 fieldType: FormFieldTypes.GROUP,
                 id: 'fake-cont-id-2',
                 name: 'fake-cont-2-name',

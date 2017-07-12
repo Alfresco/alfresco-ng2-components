@@ -24,17 +24,17 @@ import { FormModel } from '../core/form.model';
 import { TabModel } from '../core/tab.model';
 import { MASK_DIRECTIVE } from '../index';
 import { WIDGET_DIRECTIVES } from '../index';
-import { ActivitiContent } from './../../activiti-content.component';
+import { ActivitiContentComponent } from './../../activiti-content.component';
 import { FormFieldComponent } from './../../form-field/form-field.component';
-import { TabsWidget } from './tabs.widget';
+import { TabsWidgetComponent } from './tabs.widget';
 
-describe('TabsWidget', () => {
+describe('TabsWidgetComponent', () => {
 
     let componentHandler;
-    let widget: TabsWidget;
+    let widget: TabsWidgetComponent;
 
     beforeEach(() => {
-        widget = new TabsWidget();
+        widget = new TabsWidgetComponent();
 
         componentHandler = jasmine.createSpyObj('componentHandler', [
             'upgradeAllRegistered'
@@ -97,8 +97,8 @@ describe('TabsWidget', () => {
     });
 
     describe('when template is ready', () => {
-        let tabWidgetComponent: TabsWidget;
-        let fixture: ComponentFixture<TabsWidget>;
+        let tabWidgetComponent: TabsWidgetComponent;
+        let fixture: ComponentFixture<TabsWidgetComponent>;
         let element: HTMLElement;
         let fakeTabVisible: TabModel;
         let fakeTabInvisible: TabModel;
@@ -106,9 +106,9 @@ describe('TabsWidget', () => {
         beforeEach(async(() => {
             TestBed.configureTestingModule({
                 imports: [CoreModule, MdTabsModule, MdInputModule],
-                declarations: [FormFieldComponent, ActivitiContent, WIDGET_DIRECTIVES, MASK_DIRECTIVE]
+                declarations: [FormFieldComponent, ActivitiContentComponent, WIDGET_DIRECTIVES, MASK_DIRECTIVE]
             }).compileComponents().then(() => {
-                fixture = TestBed.createComponent(TabsWidget);
+                fixture = TestBed.createComponent(TabsWidgetComponent);
                 tabWidgetComponent = fixture.componentInstance;
                 element = fixture.nativeElement;
             });

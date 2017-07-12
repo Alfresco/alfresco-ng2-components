@@ -20,7 +20,7 @@ import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 
 @Injectable()
-export class ActivitiContentService {
+export class ActivitiContentComponentService {
 
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
@@ -90,10 +90,10 @@ export class ActivitiContentService {
     }
 
     handleError(error: any): Observable<any> {
-        let errMsg = ActivitiContentService.UNKNOWN_ERROR_MESSAGE;
+        let errMsg = ActivitiContentComponentService.UNKNOWN_ERROR_MESSAGE;
         if (error) {
             errMsg = (error.message) ? error.message :
-                error.status ? `${error.status} - ${error.statusText}` : ActivitiContentService.GENERIC_ERROR_MESSAGE;
+                error.status ? `${error.status} - ${error.statusText}` : ActivitiContentComponentService.GENERIC_ERROR_MESSAGE;
         }
         this.logService.error(errMsg);
         return Observable.throw(errMsg);

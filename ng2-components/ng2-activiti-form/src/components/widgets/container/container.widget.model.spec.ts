@@ -18,19 +18,19 @@
 import { FormFieldTypes } from './../core/form-field-types';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
-import { ContainerWidgetModel } from './container.widget.model';
+import { ContainerWidgetComponentModel } from './container.widget.model';
 
-describe('ContainerWidgetModel', () => {
+describe('ContainerWidgetComponentModel', () => {
 
     it('should store the form reference', () => {
         let form = new FormModel();
         let field = new FormFieldModel(form);
-        let model = new ContainerWidgetModel(field);
+        let model = new ContainerWidgetComponentModel(field);
         expect(model.form).toBe(form);
     });
 
     it('should be expanded by default', () => {
-        let container = new ContainerWidgetModel(null);
+        let container = new ContainerWidgetComponentModel(null);
         expect(container.isExpanded).toBeTruthy();
     });
 
@@ -60,7 +60,7 @@ describe('ContainerWidgetModel', () => {
 
         let field = new FormFieldModel(form, json);
 
-        let container = new ContainerWidgetModel(field);
+        let container = new ContainerWidgetComponentModel(field);
         expect(container.columns.length).toBe(3);
 
         let col1 = container.columns[0];
@@ -77,7 +77,7 @@ describe('ContainerWidgetModel', () => {
     });
 
     it('should allow collapsing only when of a group type', () => {
-        let container = new ContainerWidgetModel(new FormFieldModel(new FormModel(), {
+        let container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(), {
             type:  FormFieldTypes.CONTAINER,
             params: {
                 allowCollapse: true
@@ -85,7 +85,7 @@ describe('ContainerWidgetModel', () => {
         }));
 
         expect(container.isCollapsible()).toBeFalsy();
-        container = new ContainerWidgetModel(new FormFieldModel(new FormModel(), {
+        container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(), {
             type:  FormFieldTypes.GROUP,
             params: {
                 allowCollapse: true
@@ -95,13 +95,13 @@ describe('ContainerWidgetModel', () => {
     });
 
     it('should allow collapsing only when explicitly defined in params', () => {
-        let container = new ContainerWidgetModel(new FormFieldModel(new FormModel(), {
+        let container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(), {
             type:  FormFieldTypes.GROUP,
             params: {}
         }));
         expect(container.isCollapsible()).toBeFalsy();
 
-        container = new ContainerWidgetModel(new FormFieldModel(new FormModel(), {
+        container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(), {
             type:  FormFieldTypes.GROUP,
             params: {
                 allowCollapse: true
@@ -111,7 +111,7 @@ describe('ContainerWidgetModel', () => {
     });
 
     it('should be collapsed by default', () => {
-        let container = new ContainerWidgetModel(new FormFieldModel(new FormModel(), {
+        let container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(), {
             type:  FormFieldTypes.GROUP,
             params: {
                 allowCollapse: true,

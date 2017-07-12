@@ -25,7 +25,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
     styleUrls: ['./hyperlink.widget.css'],
     host: baseHost
 })
-export class HyperlinkWidget extends WidgetComponent implements OnInit {
+export class HyperlinkWidgetComponent extends WidgetComponent implements OnInit {
 
     linkUrl: string = WidgetComponent.DEFAULT_HYPERLINK_URL;
     linkText: string = null;

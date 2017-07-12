@@ -25,11 +25,11 @@ import { baseHost , WidgetComponent } from './../widget.component';
     styleUrls: ['./amount.widget.css'],
     host: baseHost
 })
-export class AmountWidget extends WidgetComponent implements OnInit {
+export class AmountWidgetComponent extends WidgetComponent implements OnInit {
 
     static DEFAULT_CURRENCY: string = '$';
 
-    currency: string = AmountWidget.DEFAULT_CURRENCY;
+    currency: string = AmountWidgetComponent.DEFAULT_CURRENCY;
 
     constructor(public formService: FormService) {
         super(formService);

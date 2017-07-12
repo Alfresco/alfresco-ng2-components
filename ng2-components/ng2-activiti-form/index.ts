@@ -20,14 +20,14 @@ import { HttpModule } from '@angular/http';
 import { MdButtonModule, MdCardModule, MdCheckboxModule, MdIconModule, MdInputModule, MdSlideToggleModule, MdTabsModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
-import { ActivitiContent } from './src/components/activiti-content.component';
-import { ActivitiForm } from './src/components/activiti-form.component';
-import { ActivitiStartForm } from './src/components/activiti-start-form.component';
-import { ADFFormList } from './src/components/adf-form-list.component';
+import { ActivitiContentComponent } from './src/components/activiti-content.component';
+import { ActivitiFormComponent } from './src/components/activiti-form.component';
+import { ActivitiStartFormComponent } from './src/components/activiti-start-form.component';
+import { ADFFormListComponent } from './src/components/adf-form-list.component';
 import { FormFieldComponent } from './src/components/form-field/form-field.component';
 import { MASK_DIRECTIVE, WIDGET_DIRECTIVES } from './src/components/widgets/index';
 import { ActivitiAlfrescoContentService } from './src/services/activiti-alfresco.service';
-import { ActivitiContentService } from './src/services/activiti-content-service';
+import { ActivitiContentComponentService } from './src/services/activiti-content-service';
 import { EcmModelService } from './src/services/ecm-model.service';
 import { FormRenderingService } from './src/services/form-rendering.service';
 import { FormService } from './src/services/form.service';
@@ -47,17 +47,17 @@ export * from './src/services/form-rendering.service';
 export * from './src/events/index';
 
 export const ACTIVITI_FORM_DIRECTIVES: any[] = [
-    ActivitiForm,
-    ADFFormList,
-    ActivitiContent,
-    ActivitiStartForm,
+    ActivitiFormComponent,
+    ADFFormListComponent,
+    ActivitiContentComponent,
+    ActivitiStartFormComponent,
     FormFieldComponent,
     ...WIDGET_DIRECTIVES
 ];
 
 export const ACTIVITI_FORM_PROVIDERS: any[] = [
     FormService,
-    ActivitiContentService,
+    ActivitiContentComponentService,
     EcmModelService,
     NodeService,
     WidgetVisibilityService,
