@@ -26,13 +26,13 @@ import { RestVariable } from 'alfresco-js-api';
 import { ActivitiProcessService } from '../services/activiti-process.service';
 import { fakeProcessDefs, fakeProcessDefWithForm, newProcess, taskFormMock } from './../assets/activiti-start-process.component.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
-import { ActivitiStartProcessInstance } from './activiti-start-process.component';
+import { ActivitiStartProcessInstanceComponent } from './activiti-start-process.component';
 
-describe('ActivitiStartProcessInstance', () => {
+describe('ActivitiStartProcessInstanceComponent', () => {
 
     let componentHandler: any;
-    let component: ActivitiStartProcessInstance;
-    let fixture: ComponentFixture<ActivitiStartProcessInstance>;
+    let component: ActivitiStartProcessInstanceComponent;
+    let fixture: ComponentFixture<ActivitiStartProcessInstanceComponent>;
     let processService: ActivitiProcessService;
     let formService: FormService;
     let getDefinitionsSpy: jasmine.Spy;
@@ -47,7 +47,7 @@ describe('ActivitiStartProcessInstance', () => {
                 ActivitiFormModule.forRoot()
             ],
             declarations: [
-                ActivitiStartProcessInstance
+                ActivitiStartProcessInstanceComponent
             ],
             providers: [
                 {provide: AlfrescoTranslationService, useClass: TranslationMock},
@@ -59,7 +59,7 @@ describe('ActivitiStartProcessInstance', () => {
 
     beforeEach(() => {
 
-        fixture = TestBed.createComponent(ActivitiStartProcessInstance);
+        fixture = TestBed.createComponent(ActivitiStartProcessInstanceComponent);
         component = fixture.componentInstance;
         debugElement = fixture.debugElement;
         processService = fixture.debugElement.injector.get(ActivitiProcessService);

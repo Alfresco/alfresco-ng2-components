@@ -28,7 +28,7 @@ declare let componentHandler: any;
     templateUrl: './activiti-filters.component.html',
     styleUrls: ['activiti-filters.component.css']
 })
-export class ActivitiProcessFilters implements OnInit, OnChanges {
+export class ActivitiProcessFiltersComponent implements OnInit, OnChanges {
 
     @Input()
     filterParam: FilterParamsModel;

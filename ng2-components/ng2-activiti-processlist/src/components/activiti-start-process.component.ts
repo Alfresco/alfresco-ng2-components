@@ -31,7 +31,7 @@ declare let dialogPolyfill: any;
     templateUrl: './activiti-start-process.component.html',
     styleUrls: ['./activiti-start-process.component.css']
 })
-export class ActivitiStartProcessInstance implements OnChanges {
+export class ActivitiStartProcessInstanceComponent implements OnChanges {
 
     @Input()
     appId: string;

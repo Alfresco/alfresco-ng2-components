@@ -25,14 +25,14 @@ import { DataTableModule } from 'ng2-alfresco-datatable';
 import {
     ActivitiCreateProcessAttachmentComponent,
     ActivitiProcessAttachmentListComponent,
-    ActivitiProcessComments,
-    ActivitiProcessFilters,
-    ActivitiProcessInstanceDetails,
-    ActivitiProcessInstanceHeader,
+    ActivitiProcessCommentsComponent,
+    ActivitiProcessFiltersComponent,
+    ActivitiProcessInstanceDetailsComponent,
+    ActivitiProcessInstanceHeaderComponent,
     ActivitiProcessInstanceListComponent,
-    ActivitiProcessInstanceTasks,
-    ActivitiProcessInstanceVariables,
-    ActivitiStartProcessInstance
+    ActivitiProcessInstanceTasksComponent,
+    ActivitiProcessInstanceVariablesComponent,
+    ActivitiStartProcessInstanceComponent
 } from './src/components/index';
 
 import { ActivitiProcessService } from './src/services/activiti-process.service';
@@ -55,13 +55,13 @@ export * from './src/services/activiti-process.service';
 
 export const ACTIVITI_PROCESSLIST_DIRECTIVES: [any] = [
     ActivitiProcessInstanceListComponent,
-    ActivitiProcessFilters,
-    ActivitiProcessInstanceDetails,
-    ActivitiProcessInstanceHeader,
-    ActivitiProcessInstanceTasks,
-    ActivitiProcessInstanceVariables,
-    ActivitiProcessComments,
-    ActivitiStartProcessInstance,
+    ActivitiProcessFiltersComponent,
+    ActivitiProcessInstanceDetailsComponent,
+    ActivitiProcessInstanceHeaderComponent,
+    ActivitiProcessInstanceTasksComponent,
+    ActivitiProcessInstanceVariablesComponent,
+    ActivitiProcessCommentsComponent,
+    ActivitiStartProcessInstanceComponent,
     ActivitiProcessAttachmentListComponent,
     ActivitiCreateProcessAttachmentComponent
 ];
