@@ -16,11 +16,11 @@
  */
 
 import { ModuleWithProviders, NgModule } from '@angular/core';
+import { MdProgressSpinnerModule } from '@angular/material';
 import { ActivitiFormModule } from 'ng2-activiti-form';
 import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
 import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
-import { MdProgressSpinnerModule } from '@angular/material';
 
 import {
     ActivitiCreateProcessAttachmentComponent,

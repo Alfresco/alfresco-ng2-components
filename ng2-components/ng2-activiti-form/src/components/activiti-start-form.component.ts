@@ -19,7 +19,7 @@ import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, 
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { FormService } from './../services/form.service';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
-import { ActivitiFormComponent } from './activiti-form.component';
+import { ActivitiForm } from './activiti-form.component';
 import { ContentLinkModel } from './widgets/core/content-link.model';
 import { FormOutcomeModel } from './widgets/core/index';
 
@@ -45,7 +45,7 @@ import { FormOutcomeModel } from './widgets/core/index';
     templateUrl: './activiti-start-form.component.html',
     styleUrls: ['./activiti-form.component.css']
 })
-export class ActivitiStartFormComponent extends ActivitiFormComponent implements OnChanges, OnInit {
+export class ActivitiStartFormComponent extends ActivitiForm implements OnChanges, OnInit {
 
     @Input()
     processDefinitionId: string;

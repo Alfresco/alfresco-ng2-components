@@ -22,14 +22,14 @@ import { fakeForm } from '../assets/activiti-form.component.mock';
 import { FormService } from './../services/form.service';
 import { NodeService } from './../services/node.service';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
-import { ActivitiFormComponent } from './activiti-form.component';
+import { ActivitiForm } from './activiti-form.component';
 import { FormFieldModel, FormFieldTypes, FormModel, FormOutcomeEvent, FormOutcomeModel } from './widgets/index';
 
 describe('ActivitiForm', () => {
 
     let componentHandler: any;
     let formService: FormService;
-    let formComponent: ActivitiFormComponent;
+    let formComponent: ActivitiForm;
     let visibilityService: WidgetVisibilityService;
     let nodeService: NodeService;
     let logService: LogService;
@@ -45,7 +45,7 @@ describe('ActivitiForm', () => {
         spyOn(visibilityService, 'refreshVisibility').and.stub();
         formService = new FormService(null, null, logService);
         nodeService = new NodeService(null);
-        formComponent = new ActivitiFormComponent(formService, visibilityService, null, nodeService, logService);
+        formComponent = new ActivitiForm(formService, visibilityService, null, nodeService, logService);
     });
 
     it('should upgrade MDL content on view checked', () => {
@@ -325,7 +325,7 @@ describe('ActivitiForm', () => {
     it('should save form on [save] outcome click', () => {
         let formModel = new FormModel();
         let outcome = new FormOutcomeModel(formModel, {
-            id: ActivitiFormComponent.SAVE_OUTCOME_ID,
+            id: ActivitiForm.SAVE_OUTCOME_ID,
             name: 'Save',
             isSystem: true
         });
@@ -341,7 +341,7 @@ describe('ActivitiForm', () => {
     it('should complete form on [complete] outcome click', () => {
         let formModel = new FormModel();
         let outcome = new FormOutcomeModel(formModel, {
-            id: ActivitiFormComponent.COMPLETE_OUTCOME_ID,
+            id: ActivitiForm.COMPLETE_OUTCOME_ID,
             name: 'Complete',
             isSystem: true
         });
@@ -357,7 +357,7 @@ describe('ActivitiForm', () => {
     it('should emit form saved event on custom outcome click', () => {
         let formModel = new FormModel();
         let outcome = new FormOutcomeModel(formModel, {
-            id: ActivitiFormComponent.CUSTOM_OUTCOME_ID,
+            id: ActivitiForm.CUSTOM_OUTCOME_ID,
             name: 'Custom',
             isSystem: true
         });
@@ -666,7 +666,7 @@ describe('ActivitiForm', () => {
     it('should prevent default outcome execution', () => {
 
         let outcome = new FormOutcomeModel(new FormModel(), {
-            id: ActivitiFormComponent.CUSTOM_OUTCOME_ID,
+            id: ActivitiForm.CUSTOM_OUTCOME_ID,
             name: 'Custom'
         });
 
@@ -683,7 +683,7 @@ describe('ActivitiForm', () => {
 
     it('should not prevent default outcome execution', () => {
         let outcome = new FormOutcomeModel(new FormModel(), {
-            id: ActivitiFormComponent.CUSTOM_OUTCOME_ID,
+            id: ActivitiForm.CUSTOM_OUTCOME_ID,
             name: 'Custom'
         });
 
@@ -740,7 +740,7 @@ describe('ActivitiForm', () => {
         formComponent.form = formModel;
 
         let outcome = new FormOutcomeModel(new FormModel(), {
-            id: ActivitiFormComponent.CUSTOM_OUTCOME_ID,
+            id: ActivitiForm.CUSTOM_OUTCOME_ID,
             name: 'Custom'
         });
 
@@ -766,7 +766,7 @@ describe('ActivitiForm', () => {
         expect(formModel.isValid).toBeFalsy();
 
         let outcome = new FormOutcomeModel(new FormModel(), {
-            id: ActivitiFormComponent.SAVE_OUTCOME_ID,
+            id: ActivitiForm.SAVE_OUTCOME_ID,
             name: FormOutcomeModel.SAVE_ACTION
         });
 
@@ -788,7 +788,7 @@ describe('ActivitiForm', () => {
         expect(formModel.isValid).toBeFalsy();
 
         let outcome = new FormOutcomeModel(new FormModel(), {
-            id: ActivitiFormComponent.CUSTOM_OUTCOME_ID,
+            id: ActivitiForm.CUSTOM_OUTCOME_ID,
             name: 'Custom'
         });
 
@@ -812,7 +812,7 @@ describe('ActivitiForm', () => {
         });
 
         let outcome = new FormOutcomeModel(new FormModel(), {
-            id: ActivitiFormComponent.CUSTOM_OUTCOME_ID,
+            id: ActivitiForm.CUSTOM_OUTCOME_ID,
             name: 'Custom'
         });
 

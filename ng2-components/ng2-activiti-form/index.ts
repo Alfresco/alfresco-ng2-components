@@ -21,7 +21,7 @@ import { MdButtonModule, MdCardModule, MdCheckboxModule, MdIconModule, MdInputMo
 import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { ActivitiContentComponent } from './src/components/activiti-content.component';
-import { ActivitiFormComponent } from './src/components/activiti-form.component';
+import { ActivitiForm } from './src/components/activiti-form.component';
 import { ActivitiStartFormComponent } from './src/components/activiti-start-form.component';
 import { ADFFormListComponent } from './src/components/adf-form-list.component';
 import { FormFieldComponent } from './src/components/form-field/form-field.component';
@@ -47,7 +47,7 @@ export * from './src/services/form-rendering.service';
 export * from './src/events/index';
 
 export const ACTIVITI_FORM_DIRECTIVES: any[] = [
-    ActivitiFormComponent,
+    ActivitiForm,
     ADFFormListComponent,
     ActivitiContentComponent,
     ActivitiStartFormComponent,

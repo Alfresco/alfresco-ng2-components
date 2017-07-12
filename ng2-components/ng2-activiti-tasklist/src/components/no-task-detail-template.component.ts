@@ -21,18 +21,18 @@ import {
     Directive,
     TemplateRef
 } from '@angular/core';
-import { ActivitiTaskDetails } from './activiti-task-details.component';
+import { ActivitiTaskDetailsComponent } from './activiti-task-details.component';
 
 @Directive({
     selector: 'no-task-details-template'
 })
-export class NoTaskDetailsTemplateComponent implements AfterContentInit {
+export class NoTaskDetailsTemplateDirective implements AfterContentInit {
 
     @ContentChild(TemplateRef)
     template: any;
 
     constructor(
-        private activitiTaskDetails: ActivitiTaskDetails) {
+        private activitiTaskDetails: ActivitiTaskDetailsComponent) {
     }
 
     ngAfterContentInit() {

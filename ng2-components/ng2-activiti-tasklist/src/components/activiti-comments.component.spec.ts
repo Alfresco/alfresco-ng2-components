@@ -26,15 +26,15 @@ import { DatePipe } from '@angular/common';
 import { MdInputModule } from '@angular/material';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
-import { ActivitiComments } from './activiti-comments.component';
+import { ActivitiCommentsComponent } from './activiti-comments.component';
 import { AdfCommentListComponent } from './adf-comment-list.component';
 
-describe('ActivitiComments', () => {
+describe('ActivitiCommentsComponent', () => {
 
     let componentHandler: any;
     let service: ActivitiTaskListService;
-    let component: ActivitiComments;
-    let fixture: ComponentFixture<ActivitiComments>;
+    let component: ActivitiCommentsComponent;
+    let fixture: ComponentFixture<ActivitiCommentsComponent>;
     let getCommentsSpy: jasmine.Spy;
     let addCommentSpy: jasmine.Spy;
 
@@ -47,7 +47,7 @@ describe('ActivitiComments', () => {
                 MdInputModule
             ],
             declarations: [
-                ActivitiComments,
+                ActivitiCommentsComponent,
                 AdfCommentListComponent
             ],
             providers: [
@@ -62,7 +62,7 @@ describe('ActivitiComments', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ActivitiComments);
+        fixture = TestBed.createComponent(ActivitiCommentsComponent);
         component = fixture.componentInstance;
         service = fixture.debugElement.injector.get(ActivitiTaskListService);
 

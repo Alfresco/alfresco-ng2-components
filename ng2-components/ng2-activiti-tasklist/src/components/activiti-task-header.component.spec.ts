@@ -23,14 +23,14 @@ import { Observable } from 'rxjs/Rx';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { taskDetailsMock } from './../assets/task-details.mock';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
-import { ActivitiTaskHeader } from './activiti-task-header.component';
+import { ActivitiTaskHeaderComponent } from './activiti-task-header.component';
 
-describe('ActivitiTaskHeader', () => {
+describe('ActivitiTaskHeaderComponent', () => {
 
     let service: ActivitiTaskListService;
     let componentHandler: any;
-    let component: ActivitiTaskHeader;
-    let fixture: ComponentFixture<ActivitiTaskHeader>;
+    let component: ActivitiTaskHeaderComponent;
+    let fixture: ComponentFixture<ActivitiTaskHeaderComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -38,7 +38,7 @@ describe('ActivitiTaskHeader', () => {
                 CoreModule.forRoot()
             ],
             declarations: [
-                ActivitiTaskHeader
+                ActivitiTaskHeaderComponent
             ],
             providers: [
                 ActivitiTaskListService
@@ -51,7 +51,7 @@ describe('ActivitiTaskHeader', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ActivitiTaskHeader);
+        fixture = TestBed.createComponent(ActivitiTaskHeaderComponent);
         component = fixture.componentInstance;
         service = TestBed.get(ActivitiTaskListService);
 

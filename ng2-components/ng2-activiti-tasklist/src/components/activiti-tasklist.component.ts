@@ -41,9 +41,9 @@ import { ActivitiTaskListService } from './../services/activiti-tasklist.service
     templateUrl: './activiti-tasklist.component.html',
     styleUrls: ['./activiti-tasklist.component.css']
 })
-export class ActivitiTaskList implements OnChanges, AfterContentInit {
+export class ActivitiTaskListComponent implements OnChanges, AfterContentInit {
 
-    private requestNode: TaskQueryRequestRepresentationModel;
+    requestNode: TaskQueryRequestRepresentationModel;
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
@@ -90,7 +90,7 @@ export class ActivitiTaskList implements OnChanges, AfterContentInit {
      * This allows generating and displaying custom data sets (i.e. filtered out content).
      *
      * @type {boolean}
-     * @memberOf ActivitiTaskList
+     * @memberOf ActivitiTaskListComponent
      */
     hasCustomDataSource: boolean = false;
 

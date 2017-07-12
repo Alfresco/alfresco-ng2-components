@@ -23,9 +23,9 @@ import { DataTableModule } from 'ng2-alfresco-datatable';
 import { DataRowEvent, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 import { Observable } from 'rxjs/Rx';
 import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
-import { ActivitiTaskList } from './activiti-tasklist.component';
+import { ActivitiTaskListComponent } from './activiti-tasklist.component';
 
-describe('ActivitiTaskList', () => {
+describe('ActivitiTaskListComponent', () => {
 
     let fakeGlobalTask = [
         {
@@ -80,8 +80,8 @@ describe('ActivitiTaskList', () => {
     };
 
     let componentHandler: any;
-    let component: ActivitiTaskList;
-    let fixture: ComponentFixture<ActivitiTaskList>;
+    let component: ActivitiTaskListComponent;
+    let fixture: ComponentFixture<ActivitiTaskListComponent>;
     let taskListService: ActivitiTaskListService;
 
     beforeEach(async(() => {
@@ -92,7 +92,7 @@ describe('ActivitiTaskList', () => {
                 MdProgressSpinnerModule
             ],
             declarations: [
-                ActivitiTaskList
+                ActivitiTaskListComponent
             ],
             providers: [
                 ActivitiTaskListService
@@ -106,7 +106,7 @@ describe('ActivitiTaskList', () => {
 
     beforeEach(() => {
 
-        fixture = TestBed.createComponent(ActivitiTaskList);
+        fixture = TestBed.createComponent(ActivitiTaskListComponent);
         component = fixture.componentInstance;
 
         taskListService = TestBed.get(ActivitiTaskListService);

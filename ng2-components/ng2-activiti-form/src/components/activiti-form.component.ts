@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+/* tslint:disable */
 import { AfterViewChecked, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
 import { FormErrorEvent, FormEvent } from './../events/index';
@@ -33,7 +34,7 @@ declare var componentHandler: any;
     templateUrl: './activiti-form.component.html',
     styleUrls: ['./activiti-form.component.css']
 })
-export class ActivitiFormComponent implements OnInit, AfterViewChecked, OnChanges {
+export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
 
     static SAVE_OUTCOME_ID: string = '$save';
     static COMPLETE_OUTCOME_ID: string = '$complete';
@@ -226,22 +227,22 @@ export class ActivitiFormComponent implements OnInit, AfterViewChecked, OnChange
             }
 
             if (outcome.isSystem) {
-                if (outcome.id === ActivitiFormComponent.SAVE_OUTCOME_ID) {
+                if (outcome.id === ActivitiForm.SAVE_OUTCOME_ID) {
                     this.saveTaskForm();
                     return true;
                 }
 
-                if (outcome.id === ActivitiFormComponent.COMPLETE_OUTCOME_ID) {
+                if (outcome.id === ActivitiForm.COMPLETE_OUTCOME_ID) {
                     this.completeTaskForm();
                     return true;
                 }
 
-                if (outcome.id === ActivitiFormComponent.START_PROCESS_OUTCOME_ID) {
+                if (outcome.id === ActivitiForm.START_PROCESS_OUTCOME_ID) {
                     this.completeTaskForm();
                     return true;
                 }
 
-                if (outcome.id === ActivitiFormComponent.CUSTOM_OUTCOME_ID) {
+                if (outcome.id === ActivitiForm.CUSTOM_OUTCOME_ID) {
                     this.onTaskSaved(this.form);
                     this.storeFormAsMetadata();
                     return true;
