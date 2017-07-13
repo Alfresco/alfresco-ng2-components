@@ -101,6 +101,7 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
             orderBy: this.resultSort
         };
         if (searchTerm !== null && searchTerm !== '') {
+            searchTerm = searchTerm + '*';
             this.searchService
                 .getNodeQueryResults(searchTerm, searchOpts)
                 .subscribe(
