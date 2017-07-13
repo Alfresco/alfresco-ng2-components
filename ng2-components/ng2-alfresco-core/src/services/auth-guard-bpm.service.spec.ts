@@ -28,6 +28,7 @@ import { AuthGuardBpm } from './auth-guard-bpm.service';
 import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
 import { StorageService } from './storage.service';
+import { UserPreferencesService } from './user-preferences.service';
 
 describe('AuthGuardService BPM', () => {
 
@@ -45,6 +46,7 @@ describe('AuthGuardService BPM', () => {
                 AlfrescoApiService,
                 AlfrescoAuthenticationService,
                 StorageService,
+                UserPreferencesService,
                 { provide: CookieService, useClass: CookieServiceMock },
                 LogService
             ]
