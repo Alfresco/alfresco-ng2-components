@@ -17,14 +17,34 @@
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MdButtonModule, MdDatepickerModule, MdIconModule, MdInputModule, MdNativeDateModule } from '@angular/material';
+import { AdfCardViewContentProxyDirective } from './adf-card-view-content-proxy.directive';
+import { CardViewDateItemComponent } from './adf-card-view-dateitem.component';
+import { CardViewItemDispatcherComponent } from './adf-card-view-item-dispatcher.component';
+import { CardViewTextItemComponent } from './adf-card-view-textitem.component';
 import { CardViewComponent } from './adf-card-view.component';
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule,
+        MdDatepickerModule,
+        MdNativeDateModule,
+        MdInputModule,
+        MdIconModule,
+        MdButtonModule,
+        FormsModule
     ],
     declarations: [
-        CardViewComponent
+        CardViewComponent,
+        CardViewItemDispatcherComponent,
+        AdfCardViewContentProxyDirective,
+        CardViewTextItemComponent,
+        CardViewDateItemComponent
+    ],
+    entryComponents: [
+        CardViewTextItemComponent,
+        CardViewDateItemComponent
     ],
     exports: [
         CardViewComponent

@@ -13,7 +13,7 @@
     font-weight: 300;
     line-height: normal;
     overflow: hidden;
-    margin: 0;
+    margin: 0 0 8px 0;
     cursor: pointer;
     user-select: none;
     -moz-user-select: none;

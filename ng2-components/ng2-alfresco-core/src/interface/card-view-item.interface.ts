@@ -15,18 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core';
-import { CardViewItem } from '../../interface/card-view-item.interface';
-
-@Component({
-    selector: 'adf-card-view',
-    templateUrl: './adf-card-view.component.html',
-    styleUrls: ['./adf-card-view.component.scss']
-})
-export class CardViewComponent {
-    @Input()
-    properties: CardViewItem [];
-
-    @Input()
-    editable: boolean;
+export interface CardViewItem {
+    label: string;
+    value: any;
+    key: string;
+    default?: any;
+    type: string;
+    displayValue: string;
+    editable?: boolean;
 }
