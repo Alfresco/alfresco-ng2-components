@@ -57,6 +57,7 @@ import { DataColumnListComponent } from './src/components/data-column/data-colum
 import { DataColumnComponent } from './src/components/data-column/data-column.component';
 import { UploadDirective } from './src/directives/upload.directive';
 import { FileSizePipe } from './src/pipes/file-size.pipe';
+import { HighlightPipe } from './src/pipes/text-highlight.pipe';
 
 import { AlfrescoMdlButtonDirective } from './src/components/material/mdl-button.directive';
 import { AlfrescoMdlMenuDirective } from './src/components/material/mdl-menu.directive';
@@ -131,6 +132,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         DataColumnComponent,
         DataColumnListComponent,
         FileSizePipe,
+        HighlightPipe,
         AdfToolbarComponent
     ],
     providers: providers(),
@@ -150,6 +152,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         DataColumnComponent,
         DataColumnListComponent,
         FileSizePipe,
+        HighlightPipe,
         AdfToolbarComponent
     ]
 })

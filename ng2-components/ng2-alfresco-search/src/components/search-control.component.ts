@@ -41,6 +41,9 @@ export class AlfrescoSearchControlComponent implements OnInit, OnDestroy {
     @Input()
     expandable: boolean = true;
 
+    @Input()
+    highlight: boolean = false;
+
     @Output()
     searchChange = new EventEmitter();
 
