@@ -77,6 +77,7 @@ export class AppComponent {
 | needHelpLink | string | | It will change the url of the NEED HELP link in the footer  |
 | registerLink | string | | It will change the url of the REGISTER link in the footer |
 | logoImageUrl | string | Alfresco logo image | To change the logo image with a customised image |
+| copyrightText | string | © 2016 Alfresco Software, Inc. All Rights Reserved. | The copyright text below the login box |
 | backgroundImageUrl | string | Alfresco background image | To change the background image with a customised image |
 | fieldsValidation | { [key: string]: any; }, extra?: { [key: string]: any; } |  | Use it to customise the validation rules of the login form |
 | showRememberMe | boolean | false | Toggle `Remember me` checkbox visibility |

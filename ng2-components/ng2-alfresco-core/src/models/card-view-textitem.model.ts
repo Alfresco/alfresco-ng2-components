@@ -35,7 +35,7 @@ export class CardViewTextItemModel extends CardViewBaseItemModel implements Card
 
     constructor(obj: CardViewTextItemProperties) {
         super(obj);
-        this.multiline = !!obj.multiline ;
+        this.multiline = obj.multiline || false;
     }
 
     get displayValue() {

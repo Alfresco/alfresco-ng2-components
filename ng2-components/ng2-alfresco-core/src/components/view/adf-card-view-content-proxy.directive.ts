@@ -15,26 +15,11 @@
  * limitations under the License.
  */
 
-/**
- *
- * This object represent the basic structure of a card view.
- *
- *
- * @returns {CardViewModel} .
- */
+import { Directive, ViewContainerRef } from '@angular/core';
 
-export class CardViewModel {
-    label: string;
-    value: any;
-    key: any;
-    format: string;
-    default: string;
-
-    constructor(obj?: any) {
-        this.label = obj.label || '';
-        this.value = obj.value;
-        this.key = obj.key;
-        this.format = obj.format;
-        this.default = obj.default;
-    }
+@Directive({
+    selector: '[adf-card-view-content-proxy]'
+})
+export class AdfCardViewContentProxyDirective {
+    constructor(public viewContainerRef: ViewContainerRef) { }
 }
