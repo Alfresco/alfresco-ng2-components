@@ -20,6 +20,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import {
     MdAutocompleteModule,
     MdButtonModule,
+    MdCardModule,
     MdDatepickerModule,
     MdGridListModule,
     MdIconModule,
@@ -91,6 +92,7 @@ export const ACTIVITI_TASKLIST_PROVIDERS: any[] = [
         MdIconModule,
         MdButtonModule,
         MdInputModule,
+        MdCardModule,
         MdProgressSpinnerModule,
         MdDatepickerModule,
         MdNativeDateModule,

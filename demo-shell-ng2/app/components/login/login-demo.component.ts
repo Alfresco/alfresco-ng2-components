@@ -95,6 +95,10 @@ export class LoginDemoComponent implements OnInit {
         this.disableCsrf = !this.disableCsrf;
     }
 
+    toggleFooter() {
+        this.showFooter = !this.showFooter;
+    }
+
     updateProvider() {
         if (this.isBPM && this.isECM) {
             this.providers = 'ALL';
