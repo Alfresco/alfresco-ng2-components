@@ -28,7 +28,7 @@ import { TaskDetailsModel } from '../models/task-details.model';
 import { User } from '../models/user.model';
 
 @Injectable()
-export class TaskListService {
+export class ActivitiTaskListService {
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
@@ -178,7 +178,7 @@ export class TaskListService {
      * @param id - taskId
      * @returns {<Comment[]>}
      */
-    getComments(id: string): Observable<Comment[]> {
+    getTaskComments(id: string): Observable<Comment[]> {
         return Observable.fromPromise(this.callApiTaskComments(id))
             .map(res => res)
             .map((response: any) => {
@@ -321,7 +321,7 @@ export class TaskListService {
      * @param message - content of the comment
      * @returns {Comment}
      */
-    addComment(id: string, message: string): Observable<Comment> {
+    addTaskComment(id: string, message: string): Observable<Comment> {
         return Observable.fromPromise(this.callApiAddTaskComment(id, message))
             .map(res => res)
             .map((response: Comment) => {

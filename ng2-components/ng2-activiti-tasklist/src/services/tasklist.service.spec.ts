@@ -562,6 +562,22 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
+        it('should update a task', (done) => {
+            let taskId = '111';
+
+            service.updateTask(taskId, {property: 'value'}).subscribe(
+                (res: any) => {
+                    done();
+                }
+            );
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 200,
+                contentType: 'application/json',
+                responseText: JSON.stringify({})
+            });
+        });
+
         it('should return the filter if it contains task id', (done) => {
             let taskId = '1';
             let filterFake = new FilterRepresentationModel({

@@ -29,7 +29,16 @@
   * [Events](#events-1)
 - [ADF Card View](#adf-card-view)
   * [Properties](#properties-2)
-  * [CardViewModel](#cardviewmodel)
+  * [Editing](#editing)
+  * [Defining properties](#defining-properties)
+  * [Card Text Item](#card-text-item)
+    + [Options](#options)
+  * [Card Date Item](#card-date-item)
+    + [Options](#options-1)
+  * [Defining your custom card Item](#defining-your-custom-card-item)
+    + [1. Define the model for the custom type](#1-define-the-model-for-the-custom-type)
+    + [2. Define the component for the custom type](#2-define-the-component-for-the-custom-type)
+    + [3. Add you custom component to your module's entryComponents list](#3-add-you-custom-component-to-your-modules-entrycomponents-list)
 - [AlfrescoTranslationService](#alfrescotranslationservice)
 - [Renditions Service](#renditions-service)
 - [Build from sources](#build-from-sources)
@@ -593,40 +602,193 @@ export class AppComponent {
 
 ## ADF Card View
 
-The component shows the [CardViewModel](#cardviewmodel)} object.
+The CardViewComponent is a configurable property list renderer. You define the property list, the CardViewComponent does the rest. Each property represents a card view item (a row) in the card view component. At the time of writing two different kind of card view item (property type) is supported out of the box ([text](#card-text-item) item and [date](#card-date-item) item) but you can define your own custom types as well.
 
 ```html
 <adf-card-view
-    [properties]="[{label: 'My Label', value: 'My value'}]">
+    [properties]="[{label: 'My Label', value: 'My value'}]"
+    [editable]="false">
 </adf-card-view>
 
 ```
+
+![adf-custom-view](docs/assets/adf-custom-view.png)
 
 ### Properties
 
 | Name | Type | Description |
 | --- | --- | --- |
-| properties | {array[CardViewModel](#cardviewmodel)} | (**required**) The custom view to render |
+| properties | [CardViewItem](#cardviewitem)[] | (**required**) The custom view to render |
+| editable | boolean | If the component editable or not |
 
-### CardViewModel
+### Editing
 
-```json
-{
-    "label": "string",
-    "value": "any",
-    "format": "string",
-    "default": "string"
+The card view can optionally allow its properties to be edited. You can control the editing of the properties in two level.
+- **global level** - *via the editable paramter of the adf-card-view component*
+- **property level** -  *in each property via the editable attribute*
+
+If you set the global editable parameter to false, no properties can be edited regardless of what is set inside the property.
+
+### Defining properties
+
+Properties is an array of models which one by one implements the CardViewItem interface.
+
+```js
+export interface CardViewItem {
+    label: string;
+    value: any;
+    key: string;
+    default?: any;
+    type: string;
+    displayValue: string;
+    editable?: boolean;
 }
 ```
 
-| Name | Type | Description |
-| --- | --- | --- |
-| label | string | The label to render |
-| value | string | The value to render |
-| format | string | The format to use in case the value is a date |
-| default | string | The default value to render in case the value is empty |
+At the moment two models are defined out of the box:
 
-![adf-custom-view](docs/assets/adf-custom-view.png)
+- **[CardViewTextItemModel](#card-text-item)** - *for text items*
+- **[CardViewDateItemModel](#card-date-item)** - *for date items*
+
+Each of them are extending the abstract CardViewBaseItemModel class, and each of them are adding some custom functionality to the basic behaviour.
+
+```js
+ this.properties = [
+    new CardViewTextItemModel({
+        label: 'Name',
+        value: 'Spock',
+        key: 'name',
+        default: 'default bar' ,
+        multiline: false
+    }),
+    new CardViewDateItemModel({
+        label: 'Birth of date',
+        value: someDate,
+        key: 'birth-of-date',
+        default: new Date(),
+        format: '<any format that momentjs accepts>',
+        editable: true
+    }),
+    ...
+]
+```
+
+### Card Text Item
+
+CardViewTextItemModel is a property type for text properties.
+
+```js
+const textItemProperty = new CardViewTextItemModel(options);
+```
+
+#### Options
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| label* | string | --- | The label to render |
+| value* | any | --- | The original value |
+| key* | string | --- | the key of the property. Have an important role when editing the property. |
+| default | any | --- | The default value to render in case the value is empty |
+| displayValue* | string | --- | The value to render |
+| editable | boolean | false | Whether the property editable or not |
+| multiline | string | false | Single or multiline text |
+
+### Card Date Item
+
+CardViewDateItemModel is a property type for date properties.
+
+```js
+const dateItemProperty = new CardViewDateItemModel(options);
+```
+
+#### Options
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| label* | string | --- | The label to render |
+| value* | any | --- | The original value |
+| key* | string | --- | the key of the property. Have an important role when editing the property. |
+| default | any | --- | The default value to render in case the value is empty |
+| displayValue* | string | --- | The value to render |
+| editable | boolean | false | Whether the property editable or not |
+| format | boolean | "MMM DD YYYY" | any format that momentjs accepts |
+
+### Defining your custom card Item
+
+Card item components are loaded dynamically, which makes you able to define your own custom component for the custom card item type.
+
+Let's consider you want to have a **stardate** type to display Captain Picard's birthday (47457.1). For this, you need to do the following steps.
+
+#### 1. Define the model for the custom type
+
+Your model has to extend the CardViewBaseItemModel and implement the CardViewItem interface.
+*(You can check how the CardViewTextItemModel is implemented for further guidance.)*
+
+```js
+export class CardViewStarDateItemModel extends CardViewBaseItemModel implements CardViewItem {
+    type: string = 'star-date';
+
+    get displayValue() {
+        return this.convertToStarDate(this.value) || this.default;
+    }
+
+    private convertToStarDate(starTimeStamp: number): string {
+        // Do the magic
+    }
+}
+```
+
+The most important part of this model is the value of the **type** attribute. This is how the Card View component will be able to recognise which component is needed to render it dynamically.
+
+The type is a **hyphen-separated-lowercase-words** string (just like how I wrote it). This will be converted to a PascalCase (or UpperCamelCase) string to find the right component. In our case the Card View component will look for the CardView**StarDate**ItemComponent.
+
+#### 2. Define the component for the custom type
+
+As discussed in the previous step the only important thing here is the naming of your component class ( **CardViewStarDateItemComponent**). Since the selector is not used in this case, you can give any selector name to it, but it make sense to follow the angular standards.
+
+```js
+@Component({
+    selector: 'card-view-stardateitem' // For example
+    ...
+})
+export class CardViewStarDateItemComponent {
+    @Input()
+    property: CardViewStarDateItemModel;
+
+    @Input()
+    editable: boolean;
+
+    constructor(private cardViewUpdateService: CardViewUpdateService) {}
+
+    isEditble() {
+        return this.editable && this.property.editable;
+    }
+
+    showStarDatePicker() {
+        ...
+    }
+}
+
+```
+To make your component editable, you can have a look on either the CardViewTextItemComponent' or on the CardViewDateItemComponent's source.
+
+#### 3. Add you custom component to your module's entryComponents list
+
+For Angular to be able to load your custom component dynamically, you have to register your component in your modules entryComponents.
+
+```js
+@NgModule({
+    imports: [...],
+    declarations: [
+        CardViewStarDateItemComponent
+    ],
+    entryComponents: [
+        CardViewStarDateItemComponent
+    ],
+    exports: [...]
+})
+export class MyModule {}
+```
 
 ## AlfrescoTranslationService
 

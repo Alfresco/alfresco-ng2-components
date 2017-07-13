@@ -16,14 +16,14 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService, CardViewModel, LogService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, CardViewDateItemModel, CardViewItem, CardViewTextItemModel, LogService } from 'ng2-alfresco-core';
 import { TaskDetailsModel } from '../models/index';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 
 @Component({
     selector: 'adf-task-header, activiti-task-header',
     templateUrl: './activiti-task-header.component.html',
-    styleUrls: ['./activiti-task-header.component.css']
+    styleUrls: ['./activiti-task-header.component.scss']
 })
 export class ActivitiTaskHeaderComponent implements OnChanges {
 
@@ -36,7 +36,8 @@ export class ActivitiTaskHeaderComponent implements OnChanges {
     @Output()
     claim: EventEmitter<any> = new EventEmitter<any>();
 
-    properties: CardViewModel [];
+    properties: CardViewItem [];
+    inEdit: boolean = false;
 
     constructor(private translateService: AlfrescoTranslationService,
                 private activitiTaskService: ActivitiTaskListService,
@@ -47,6 +48,7 @@ export class ActivitiTaskHeaderComponent implements OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
+        console.log('change van:', changes, this.taskDetails);
         this.refreshData();
     }
 
@@ -54,20 +56,22 @@ export class ActivitiTaskHeaderComponent implements OnChanges {
         if (this.taskDetails) {
 
             this.properties = [
-                new CardViewModel({label: 'Status:', value: this.getTaskStatus(), key: 'status'}),
-                new CardViewModel({label: 'Due Date:', value: this.taskDetails.dueDate, format: 'MMM DD YYYY', key: 'dueDate', default: 'No date'}),
-                new CardViewModel({label: 'Category:', value: this.taskDetails.category, key: 'category', default: 'No category'}),
-                new CardViewModel(
-                    {
-                        label: 'Created By:',
-                        value: this.taskDetails.getFullName(),
-                        key: 'assignee',
-                        default: 'No assignee'
-                    }),
-                new CardViewModel({label: 'Created:', value: this.taskDetails.created, format: 'MMM DD YYYY', key: 'created'}),
-                new CardViewModel({label: 'Id:', value: this.taskDetails.id, key: 'id'}),
-                new CardViewModel({label: 'Description:', value: this.taskDetails.description, key: 'description', default: 'No description'}),
-                new CardViewModel({label: 'Form name:', value: this.formName, key: 'formName', default: 'No form'})
+                new CardViewTextItemModel({ label: 'Assignee', value: this.taskDetails.getFullName(), key: 'assignee', default: 'No assignee' } ),
+                new CardViewTextItemModel({ label: 'Status', value: this.getTaskStatus(), key: 'status' }),
+                new CardViewDateItemModel({ label: 'Due Date', value: this.taskDetails.dueDate, key: 'dueDate', default: 'No date', editable: true }),
+                new CardViewTextItemModel({ label: 'Category', value: this.taskDetails.category, key: 'category', default: 'No category' }),
+                new CardViewTextItemModel({ label: 'Created By', value: this.taskDetails.getFullName(), key: 'created-by', default: 'No assignee' }),
+                new CardViewDateItemModel({ label: 'Created', value: this.taskDetails.created, key: 'created' }),
+                new CardViewTextItemModel({ label: 'Id', value: this.taskDetails.id, key: 'id' }),
+                new CardViewTextItemModel({
+                    label: 'Description',
+                    value: this.taskDetails.description,
+                    key: 'description',
+                    default: 'No description',
+                    multiline: true,
+                    editable: true
+                }),
+                new CardViewTextItemModel({ label: 'Form name', value: this.formName, key: 'formName', default: 'No form' })
             ];
         }
     }
@@ -81,7 +85,7 @@ export class ActivitiTaskHeaderComponent implements OnChanges {
     }
 
     getTaskStatus(): string {
-        return this.taskDetails.endDate ? 'Completed' : 'Running';
+        return this.isCompleted() ? 'Completed' : 'Running';
     }
 
     claimTask(taskId: string) {
@@ -90,5 +94,9 @@ export class ActivitiTaskHeaderComponent implements OnChanges {
                 this.logService.info('Task claimed');
                 this.claim.emit(taskId);
             });
+    }
+
+    isCompleted() {
+        return !!this.taskDetails.endDate;
     }
 }
