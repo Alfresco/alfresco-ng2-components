@@ -691,7 +691,7 @@ const textItemProperty = new CardViewTextItemModel(options);
 | default | any | --- | The default value to render in case the value is empty |
 | displayValue* | string | --- | The value to render |
 | editable | boolean | false | Whether the property editable or not |
-| multiline | string | false | any format that momentjs accepts |
+| multiline | string | false | Single or multiline text |
 
 ### Card Date Item
 
@@ -711,7 +711,7 @@ const dateItemProperty = new CardViewDateItemModel(options);
 | default | any | --- | The default value to render in case the value is empty |
 | displayValue* | string | --- | The value to render |
 | editable | boolean | false | Whether the property editable or not |
-| format | boolean | "MMM DD YYYY" | Single or multiline text |
+| format | boolean | "MMM DD YYYY" | any format that momentjs accepts |
 
 ### Defining your custom card Item
 
