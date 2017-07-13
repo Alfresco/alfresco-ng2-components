@@ -28,6 +28,7 @@ import { AuthGuard } from './auth-guard.service';
 import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
 import { StorageService } from './storage.service';
+import { UserPreferencesService } from './user-preferences.service';
 
 describe('AuthGuardService', () => {
 
@@ -42,6 +43,7 @@ describe('AuthGuardService', () => {
                 AlfrescoSettingsService,
                 AlfrescoApiService,
                 AlfrescoAuthenticationService,
+                UserPreferencesService,
                 StorageService,
                 { provide: CookieService, useClass: CookieServiceMock },
                 LogService

@@ -25,6 +25,7 @@ import { AppConfigModule } from './app-config.service';
 import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
 import { StorageService } from './storage.service';
+import { UserPreferencesService } from './user-preferences.service';
 
 declare let jasmine: any;
 
@@ -51,6 +52,7 @@ describe('AlfrescoContentService', () => {
                 AlfrescoAuthenticationService,
                 AlfrescoSettingsService,
                 StorageService,
+                UserPreferencesService,
                 { provide: CookieService, useClass: CookieServiceMock },
                 LogService
             ]
