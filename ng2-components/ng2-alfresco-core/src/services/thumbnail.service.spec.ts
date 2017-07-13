@@ -27,6 +27,7 @@ import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
 import { StorageService } from './storage.service';
 import { ThumbnailService } from './thumbnail.service';
+import { UserPreferencesService } from './user-preferences.service';
 
 describe('ThumbnailService', () => {
 
@@ -38,6 +39,7 @@ describe('ThumbnailService', () => {
                 HttpModule
             ],
             providers: [
+                UserPreferencesService,
                 AlfrescoAuthenticationService,
                 AlfrescoContentService,
                 AlfrescoSettingsService,

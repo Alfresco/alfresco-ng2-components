@@ -18,7 +18,6 @@
 import { Injectable } from '@angular/core';
 import { AlfrescoApi } from 'alfresco-js-api';
 import * as alfrescoApi from 'alfresco-js-api';
-import { AlfrescoSettingsService } from './alfresco-settings.service';
 import { AppConfigService } from './app-config.service';
 import { StorageService } from './storage.service';
 
@@ -26,42 +25,26 @@ import { StorageService } from './storage.service';
 export class AlfrescoApiService {
 
     private alfrescoApi: AlfrescoApi;
-    private provider: string;
-    private disableCsrf: boolean;
 
     public getInstance(): AlfrescoApi {
         return this.alfrescoApi;
     }
 
     constructor(private appConfig: AppConfigService,
-                private settingsService: AlfrescoSettingsService,
                 private storage: StorageService) {
 
-        this.provider = this.settingsService.getProviders();
-        this.disableCsrf = false;
-
-        this.init();
-
-        settingsService.csrfSubject.subscribe((disableCsrf) => {
-            this.disableCsrf = disableCsrf;
-            this.init();
-        });
-
-        settingsService.providerSubject.subscribe((provider) => {
-            this.provider = provider;
-            this.init();
-        });
+        this.reset();
     }
 
-    private init() {
+    reset() {
         this.alfrescoApi = <AlfrescoApi>new alfrescoApi({
-            provider: this.provider,
+            provider: this.storage.getItem('AUTH_TYPE'),
             ticketEcm: this.storage.getItem('ticket-ECM'),
             ticketBpm: this.storage.getItem('ticket-BPM'),
             hostEcm: this.appConfig.get<string>('ecmHost'),
             hostBpm: this.appConfig.get<string>('bpmHost'),
             contextRoot: 'alfresco',
-            disableCsrf: this.disableCsrf
+            disableCsrf: this.storage.getItem('DISABLE_CSRF') === 'true'
         });
     }
 }
