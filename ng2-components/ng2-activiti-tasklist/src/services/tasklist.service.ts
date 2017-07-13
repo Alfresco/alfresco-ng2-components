@@ -375,6 +375,15 @@ export class ActivitiTaskListService {
             .catch(err => this.handleError(err));
     }
 
+    /**
+     * Update due date
+     * @param dueDate - the new due date
+     */
+    updateTask(taskId: any, updated): Observable<TaskDetailsModel> {
+        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.updateTask(taskId, updated))
+            .catch(err => this.handleError(err));
+    }
+
     private callApiTasksFiltered(requestNode: TaskQueryRequestRepresentationModel) {
         return this.apiService.getInstance().activiti.taskApi.listTasks(requestNode);
     }

@@ -24,7 +24,7 @@ describe('NoTaskDetailsTemplateDirective', () => {
     let detailsComponent: ActivitiTaskDetailsComponent;
 
     beforeEach(() => {
-        detailsComponent = new ActivitiTaskDetailsComponent(null, null, null, null, null);
+        detailsComponent = new ActivitiTaskDetailsComponent(null, null, null, null, null, null);
         component = new NoTaskDetailsTemplateDirective(detailsComponent);
     });
 

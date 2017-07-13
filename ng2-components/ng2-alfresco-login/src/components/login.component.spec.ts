@@ -157,6 +157,22 @@ describe('AlfrescoLogin', () => {
         expect(element.querySelector('#login-action-register').innerText).toEqual('LOGIN.ACTION.REGISTER');
     });
 
+    describe('Copyright text', () => {
+
+        it('should render the default copyright text', () => {
+            expect(element.querySelector('[data-automation-id="login-copyright"]')).toBeDefined();
+            expect(element.querySelector('[data-automation-id="login-copyright"]').innerText).toEqual('© 2016 Alfresco Software, Inc. All Rights Reserved.');
+        });
+
+        it('should render the customised copyright text', () => {
+            component.copyrightText = 'customised';
+            fixture.detectChanges();
+
+            expect(element.querySelector('[data-automation-id="login-copyright"]')).toBeDefined();
+            expect(element.querySelector('[data-automation-id="login-copyright"]').innerText).toEqual('customised');
+        });
+    });
+
     it('should render user and password input fields with default values', () => {
         expect(element.querySelector('form')).toBeDefined();
         expect(element.querySelector('input[type="password"]')).toBeDefined();
