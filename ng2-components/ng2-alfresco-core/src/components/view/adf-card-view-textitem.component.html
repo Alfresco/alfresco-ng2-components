@@ -1,12 +1,12 @@
 <div class="adf-property-label">{{ property.label }}</div>
 <div class="adf-property-value">
     <span *ngIf="!isEditble()">
-        <span [attr.data-automation-id]="'card-textitem-' + property.key">{{ property.displayValue }}</span>
+        <span [attr.data-automation-id]="'card-textitem-value-' + property.key">{{ property.displayValue }}</span>
     </span>
     <span *ngIf="isEditble()">
-        <div *ngIf="!inEdit" (click)="setEditMode(true)" class="adf-textitem-readonly">
-            <span [attr.data-automation-id]="'card-textitem-edit-tiggle-' + property.key">{{ property.displayValue }}</span>
-            <md-icon class="adf-textitem-icon">create</md-icon>
+        <div *ngIf="!inEdit" (click)="setEditMode(true)" class="adf-textitem-readonly" [attr.data-automation-id]="'card-textitem-edit-toggle-' + property.key">
+            <span [attr.data-automation-id]="'card-textitem-value-' + property.key">{{ property.displayValue }}</span>
+            <md-icon [attr.data-automation-id]="'card-textitem-edit-icon-' + property.key" class="adf-textitem-icon">create</md-icon>
         </div>
         <div *ngIf="inEdit" class="adf-textitem-editable">
             <md-input-container floatPlaceholder="never" class="adf-input-container">
@@ -14,7 +14,8 @@
                     mdInput
                     class="adf-input"
                     [placeholder]="property.default"
-                    [(ngModel)]="editedValue">
+                    [(ngModel)]="editedValue"
+                    [attr.data-automation-id]="'card-textitem-editinput-' + property.key">
                 <textarea *ngIf="property.multiline" #editorInput
                     mdInput
                     mdTextareaAutosize
@@ -22,10 +23,17 @@
                     mdAutosizeMaxRows="5"
                     class="adf-textarea"
                     [placeholder]="property.default"
-                    [(ngModel)]="editedValue"></textarea>
+                    [(ngModel)]="editedValue"
+                    [attr.data-automation-id]="'card-textitem-edittextarea-' + property.key"></textarea>
             </md-input-container>
-            <md-icon class="adf-textitem-icon adf-update-icon" (click)="update()">done</md-icon>
-            <md-icon class="adf-textitem-icon adf-reset-icon" (click)="reset()">clear</md-icon>
+            <md-icon
+                class="adf-textitem-icon adf-update-icon"
+                (click)="update()"
+                [attr.data-automation-id]="'card-textitem-update-' + property.key">done</md-icon>
+            <md-icon
+                class="adf-textitem-icon adf-reset-icon"
+                (click)="reset()"
+                [attr.data-automation-id]="'card-textitem-reset-' + property.key">clear</md-icon>
         </div>
     </span>
 </div>

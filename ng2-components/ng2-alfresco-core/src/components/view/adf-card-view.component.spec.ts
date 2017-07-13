@@ -122,6 +122,7 @@ describe('AdfCardView', () => {
     it('should render the default value if the value is empty', async(() => {
         component.properties = [new CardViewTextItemModel({
             label: 'My default label',
+            value: null,
             default: 'default value',
             key: 'some key'
         })];
