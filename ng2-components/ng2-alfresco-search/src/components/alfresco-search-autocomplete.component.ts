@@ -52,6 +52,9 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
     @Input()
     resultType: string = null;
 
+    @Input()
+    highlight: boolean = false;
+
     @Output()
     fileSelect: EventEmitter<any> = new EventEmitter();
 

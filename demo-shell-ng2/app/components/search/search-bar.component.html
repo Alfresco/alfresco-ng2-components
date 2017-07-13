@@ -1,6 +1,7 @@
 <alfresco-search-control *ngIf="isLoggedIn()"
                          [searchTerm]="searchTerm"
                          [autocomplete]="false"
+                         [highlight]="true"
                          (searchSubmit)="onSearchSubmit($event);"
                          (searchChange)="onSearchTermChange($event);"
                          (expand)="onExpandToggle($event);"
