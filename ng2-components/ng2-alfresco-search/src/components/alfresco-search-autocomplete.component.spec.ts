@@ -110,6 +110,25 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
             updateSearchTerm('searchTerm');
         });
 
+        it('should highlight the searched word', (done) => {
+            component.highlight = true;
+            spyOn(searchService, 'getQueryNodesPromise')
+                .and.returnValue(Promise.resolve(results));
+
+            component.resultsLoad.subscribe(() => {
+                fixture.detectChanges();
+                let el: any = element.querySelectorAll('table[data-automation-id="autocomplete_results"] tbody tr')[1].children[1].children[0];
+                expect(el.innerText).toEqual('MyDoc');
+                let spanHighlight = el.children[0];
+                expect(spanHighlight.classList[0]).toEqual('highlight');
+                expect(spanHighlight.innerText).toEqual('My');
+                done();
+            });
+
+            updateSearchTerm('My');
+
+        });
+
         it('should limit the number of returned search results to the configured maximum', (done) => {
 
             spyOn(searchService, 'getQueryNodesPromise')
