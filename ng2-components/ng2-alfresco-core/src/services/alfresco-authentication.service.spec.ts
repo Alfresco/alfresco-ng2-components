@@ -152,7 +152,7 @@ describe('AlfrescoAuthenticationService', () => {
             authService.login('fake-username', 'fake-password').subscribe(() => {
                 expect(authService.isLoggedIn()).toBe(true);
                 expect(authService.getTicketBpm()).toBeNull();
-                expect(authService.alfrescoApi.getInstance().bpmAuth.isLoggedIn()).toBeFalsy();
+                expect(apiService.getInstance().bpmAuth.isLoggedIn()).toBeFalsy();
                 done();
             });
 
@@ -277,7 +277,7 @@ describe('AlfrescoAuthenticationService', () => {
             authService.login('fake-username', 'fake-password').subscribe(() => {
                 expect(authService.isLoggedIn()).toBe(true);
                 expect(authService.getTicketEcm()).toBeNull();
-                expect(authService.alfrescoApi.getInstance().ecmAuth.isLoggedIn()).toBeFalsy();
+                expect(apiService.getInstance().ecmAuth.isLoggedIn()).toBeFalsy();
                 done();
             });
 
