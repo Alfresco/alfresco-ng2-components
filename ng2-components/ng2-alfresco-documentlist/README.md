@@ -201,6 +201,60 @@ It helps examining other valuable information you can have access to if needed:
 
 **Important note**: for this particular scenario you must also trigger `changeDetector.detectChanges()` as in the example above. 
 
+## Custom icons for selected rows
+
+You can use the "class" property of the "DataColumn" component to apply your custom css. 
+
+As an example, this feature can be used to change the look and feel of the icon for the selected rows.
+
+Let's start by assigning an "image-table-cell" class to the thumbnail column:
+
+```html
+<adf-document-list ...>
+    <data-columns>
+        
+        <data-column
+            key="$thumbnail"
+            type="image"
+            [sortable]="false"
+            class="image-table-cell">
+        </data-column>
+        
+        ...
+    </data-columns>
+</adf-document-list>
+```
+
+Now your application can define custom styles to change the content of the column based on some other conditions, like selection state:
+
+```css
+adf-document-list >>> adf-datatable .alfresco-datatable__row--selected .image-table-cell {
+    position: relative;
+}
+
+adf-document-list >>> adf-datatable .alfresco-datatable__row--selected .image-table-cell::before {
+    content: "\E876"; /* "done" */
+    font-family: "Material Icons";
+    font-size: 24px;
+    line-height: 32px;
+    text-align: center;
+    color: white;
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    top: 50%;
+    left: 50%;
+    margin-top: -16px;
+    margin-left: -14px;
+    border-radius: 100%;
+    background: #00bcd4;
+}
+```
+
+Once your application starts you should see the following icon for each selected row:
+
+![view-child](docs/assets/document-list-custom-icon.png)
+
 ## Calling DocumentList api directly
 
 Typically you will be binding DocumentList properties to your application/component class properties:

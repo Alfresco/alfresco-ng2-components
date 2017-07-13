@@ -40,7 +40,7 @@
                 </md-menu>
             </adf-toolbar>
         </ng-container>
-        <alfresco-document-list
+        <adf-document-list
                 #documentList
                 [creationMenuActions]="!useCustomToolbar"
                 [currentFolderId]="currentFolderId"
@@ -52,7 +52,12 @@
                 (preview)="showFile($event)"
                 (permissionError)="handlePermissionError($event)">
             <data-columns>
-                <data-column key="$thumbnail" type="image" [sortable]="false"></data-column>
+                <data-column
+                    key="$thumbnail"
+                    type="image"
+                    [sortable]="false"
+                    class="image-table-cell">
+                </data-column>
                 <data-column
                         title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
                         key="name"
@@ -111,7 +116,7 @@
                     handler="delete">
                 </content-action>
             </content-actions>
-        </alfresco-document-list>
+        </adf-document-list>
     </alfresco-upload-drag-area>
 </div>
 

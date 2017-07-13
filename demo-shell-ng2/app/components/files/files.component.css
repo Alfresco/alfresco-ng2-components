@@ -20,19 +20,11 @@
     height:900px;
 }
 
-adf-document-list >>> adf-datatable tr.is-selected .image-table-cell {
+adf-document-list >>> adf-datatable .alfresco-datatable__row--selected .image-table-cell {
     position: relative;
 }
 
-adf-document-list >>> adf-datatable tr.document-list__create {
-    background: green !important;
-}
-
-adf-document-list >>> adf-datatable tr.document-list__disable {
-    background: red !important;
-}
-
-adf-document-list >>> adf-datatable tr.is-selected .image-table-cell::before {
+adf-document-list >>> adf-datatable .alfresco-datatable__row--selected .image-table-cell::before {
     content: "\E876"; /* "done" */
     font-family: "Material Icons";
     font-size: 24px;
@@ -45,16 +37,7 @@ adf-document-list >>> adf-datatable tr.is-selected .image-table-cell::before {
     top: 50%;
     left: 50%;
     margin-top: -16px;
-    margin-left: -28px;
+    margin-left: -14px;
     border-radius: 100%;
     background: #00bcd4;
 }
-
-.adf-demo-site-container-style {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    width: 100%;
-    min-width: 200px;
-}
-
-
