@@ -135,19 +135,19 @@ export class ActivitiTaskDetailsComponent implements OnInit, OnChanges {
     noTaskDetailsTemplateComponent: TemplateRef<any>;
 
     /**
-     * 
-     * @param translateService 
-     * @param activitiForm 
-     * @param activitiTaskList 
-     * @param logService 
-     * @param authService 
+     *
+     * @param translateService
+     * @param activitiForm
+     * @param activitiTaskList
+     * @param logService
+     * @param authService
      */
     constructor(private translateService: AlfrescoTranslationService,
                 private activitiForm: FormService,
                 private activitiTaskList: ActivitiTaskListService,
                 private logService: LogService,
                 private authService: AlfrescoAuthenticationService,
-                private cardViewUpdateService: CardViewUpdateService,
+                private cardViewUpdateService: CardViewUpdateService
 ) {
 
         if (translateService) {
