@@ -105,8 +105,8 @@ describe('AlfrescoSearchComponent', () => {
             declarations: [AlfrescoSearchComponent], // declare the test component
             providers: [
                 AlfrescoSearchService,
-                { provide: AlfrescoTranslationService, useClass: TranslationMock },
-                { provide: NotificationService, useClass: NotificationService }
+                {provide: AlfrescoTranslationService, useClass: TranslationMock},
+                {provide: NotificationService, useClass: NotificationService}
             ]
         }).compileComponents().then(() => {
             fixture = TestBed.createComponent(AlfrescoSearchComponent);
@@ -155,8 +155,10 @@ describe('AlfrescoSearchComponent', () => {
 
     describe('Search results', () => {
 
-        it('should call search service with the correct parameters', (done) => {
-            let searchTerm = 'searchTerm63688', options = {
+        it('should add wildcard in the search parameters', (done) => {
+            let searchTerm = 'searchTerm6368';
+            let searchTermOut = 'searchTerm6368*';
+            let options = {
                 include: ['path', 'allowableOperations'],
                 skipCount: 0,
                 rootNodeId: '-my-',
@@ -164,6 +166,7 @@ describe('AlfrescoSearchComponent', () => {
                 maxItems: 20,
                 orderBy: null
             };
+
             component.searchTerm = searchTerm;
             component.rootNodeId = '-my-';
             component.resultType = 'my:type';
@@ -174,7 +177,7 @@ describe('AlfrescoSearchComponent', () => {
 
             component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
-                expect(searchService.getQueryNodesPromise).toHaveBeenCalledWith(searchTerm, options);
+                expect(searchService.getQueryNodesPromise).toHaveBeenCalledWith(searchTermOut, options);
                 done();
             });
         });
