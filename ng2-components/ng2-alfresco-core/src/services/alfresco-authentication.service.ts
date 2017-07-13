@@ -18,10 +18,10 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs/Rx';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { AlfrescoSettingsService } from './alfresco-settings.service';
 import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
 import { StorageService } from './storage.service';
+import { UserPreferencesService } from './user-preferences.service';
 
 const REMEMBER_ME_COOKIE_KEY = 'ALFRESCO_REMEMBER_ME';
 const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30 ;
@@ -33,8 +33,8 @@ export class AlfrescoAuthenticationService {
     onLogout: Subject<any> = new Subject<any>();
 
     constructor(
-        private settingsService: AlfrescoSettingsService,
-        public alfrescoApi: AlfrescoApiService,
+        private preferences: UserPreferencesService,
+        private alfrescoApi: AlfrescoApiService,
         private storage: StorageService,
         private cookie: CookieService,
         private logService: LogService) {
@@ -61,7 +61,10 @@ export class AlfrescoAuthenticationService {
                 this.saveRememberMeCookie(rememberMe);
                 this.saveTickets();
                 this.onLogin.next(response);
-                return { type: this.settingsService.getProviders(), ticket: response };
+                return {
+                    type: this.preferences.authType,
+                    ticket: response
+                };
             })
             .catch(err => this.handleError(err));
     }
