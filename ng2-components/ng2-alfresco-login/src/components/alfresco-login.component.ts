@@ -58,6 +58,9 @@ export class AlfrescoLoginComponent implements OnInit {
     backgroundImageUrl: string = require('../assets/images/background.svg');
 
     @Input()
+    copyrightText: string = '© 2016 Alfresco Software, Inc. All Rights Reserved.';
+
+    @Input()
     providers: string;
 
     @Input()

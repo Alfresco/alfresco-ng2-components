@@ -27,7 +27,7 @@ import { Component,
     ViewChild
 } from '@angular/core';
 import { ContentLinkModel, FormModel, FormOutcomeEvent, FormService } from 'ng2-activiti-form';
-import { AlfrescoAuthenticationService, AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoTranslationService, CardViewUpdateService, LogService, UpdateNotification } from 'ng2-alfresco-core';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { User } from '../models/user.model';
@@ -39,7 +39,10 @@ declare let dialogPolyfill: any;
 @Component({
     selector: 'adf-task-details, activiti-task-details',
     templateUrl: './activiti-task-details.component.html',
-    styleUrls: ['./activiti-task-details.component.css']
+    styleUrls: ['./activiti-task-details.component.css'],
+    providers: [
+        CardViewUpdateService
+    ]
 })
 export class ActivitiTaskDetailsComponent implements OnInit, OnChanges {
 
@@ -132,17 +135,20 @@ export class ActivitiTaskDetailsComponent implements OnInit, OnChanges {
     noTaskDetailsTemplateComponent: TemplateRef<any>;
 
     /**
-     * Constructor
-     * @param auth Authentication service
-     * @param translate Translation service
-     * @param activitiForm Form service
-     * @param activitiTaskList Task service
+     *
+     * @param translateService
+     * @param activitiForm
+     * @param activitiTaskList
+     * @param logService
+     * @param authService
      */
     constructor(private translateService: AlfrescoTranslationService,
                 private activitiForm: FormService,
                 private activitiTaskList: ActivitiTaskListService,
                 private logService: LogService,
-                private authService: AlfrescoAuthenticationService) {
+                private authService: AlfrescoAuthenticationService,
+                private cardViewUpdateService: CardViewUpdateService
+) {
 
         if (translateService) {
             translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
@@ -153,6 +159,8 @@ export class ActivitiTaskDetailsComponent implements OnInit, OnChanges {
         if (this.taskId) {
             this.loadDetails(this.taskId);
         }
+
+        this.cardViewUpdateService.itemUpdated$.subscribe(this.updateTaskDetails.bind(this));
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -184,6 +192,18 @@ export class ActivitiTaskDetailsComponent implements OnInit, OnChanges {
 
     isTaskActive() {
         return this.taskDetails && this.taskDetails.duration === null;
+    }
+
+    /**
+     * Save a task detail and update it after a successful response
+     *
+     * @param updateNotification
+     */
+    private updateTaskDetails(updateNotification: UpdateNotification) {
+        this.activitiTaskList.updateTask(this.taskId, updateNotification.changed)
+            .subscribe(
+                () => { this.loadDetails(this.taskId); }
+            );
     }
 
     /**

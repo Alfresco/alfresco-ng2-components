@@ -15,18 +15,34 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core';
-import { CardViewItem } from '../../interface/card-view-item.interface';
+/**
+ *
+ * This object represent the basic structure of a card view.
+ *
+ *
+ * @returns {CardViewBaseItemModel} .
+ */
 
-@Component({
-    selector: 'adf-card-view',
-    templateUrl: './adf-card-view.component.html',
-    styleUrls: ['./adf-card-view.component.scss']
-})
-export class CardViewComponent {
-    @Input()
-    properties: CardViewItem [];
+export interface CardViewItemProperties {
+    label: string;
+    value: any;
+    key: any;
+    default?: string;
+    editable?: boolean;
+}
 
-    @Input()
+export abstract class CardViewBaseItemModel {
+    label: string;
+    value: any;
+    key: any;
+    default: string;
     editable: boolean;
+
+    constructor(obj: CardViewItemProperties) {
+        this.label = obj.label || '';
+        this.value = obj.value;
+        this.key = obj.key;
+        this.default = obj.default;
+        this.editable = obj.editable || false;
+    }
 }
