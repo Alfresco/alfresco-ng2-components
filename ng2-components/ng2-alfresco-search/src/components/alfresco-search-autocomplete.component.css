@@ -37,6 +37,10 @@
     text-overflow: ellipsis;
 }
 
+:host /deep/ .highlight {
+    color: #33afdf;
+}
+
 @media screen and (max-width: 400px) {
     :host {
         right: 0;

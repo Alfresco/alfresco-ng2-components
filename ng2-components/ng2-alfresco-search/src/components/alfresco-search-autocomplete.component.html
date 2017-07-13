@@ -11,7 +11,10 @@
             attr.data-automation-id="autocomplete_result_for_{{result.entry.name}}">
         <td class="img-td"><img src="{{getMimeTypeIcon(result)}}" alt="{{result.entry.name}}"/></td>
         <td>
-            <div id="result_name_{{idx}}"  class="truncate"><b>{{result.entry.name}}</b></div>
+            <div id="result_name_{{idx}}" *ngIf="highlight; else elseBlock" class="truncate" [innerHtml]="result.entry.name | highlight: searchTerm"></div>
+            <ng-template #elseBlock>
+                <div id="result_name_{{idx}}" class="truncate" [innerHtml]="result.entry.name"></div>
+            </ng-template>
             <div id="result_user_{{idx}}"  class="truncate">{{result.entry.createdByUser.displayName}}</div>
         </td>
     </tr>
