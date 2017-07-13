@@ -28,6 +28,7 @@ import { AuthGuardEcm } from './auth-guard-ecm.service';
 import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
 import { StorageService } from './storage.service';
+import { UserPreferencesService } from './user-preferences.service';
 
 describe('AuthGuardService ECM', () => {
 
@@ -45,6 +46,7 @@ describe('AuthGuardService ECM', () => {
                 AlfrescoApiService,
                 AlfrescoAuthenticationService,
                 StorageService,
+                UserPreferencesService,
                 { provide: CookieService, useClass: CookieServiceMock },
                 LogService
             ]
