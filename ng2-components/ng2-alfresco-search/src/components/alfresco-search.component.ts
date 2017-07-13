@@ -108,6 +108,7 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
      */
     private displaySearchResults(searchTerm) {
         if (searchTerm && this.searchService) {
+            searchTerm = searchTerm + '*';
             let searchOpts: SearchOptions = {
                 include: ['path', 'allowableOperations'],
                 skipCount: this.skipCount,
