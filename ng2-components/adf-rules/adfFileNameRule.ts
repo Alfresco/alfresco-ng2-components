@@ -29,7 +29,8 @@ class AdfFileName extends Lint.RuleWalker {
         'alfresco-translation.service.ts', 'alfresco-translate-loader.service.ts', 'alfresco-translation.service.ts',
             'activiti-content.component.spec.ts', 'activiti-alfresco.service.spec.ts', 'activiti-content-service.spec.ts',
             'alfresco-api.service.spec.ts', 'alfresco-settings.service.spec.ts', 'alfresco-content.service.spec.ts', 'alfresco-authentication.service.spec.ts',
-            'alfresco-translation.service.spec.ts', 'alfresco-translate-loader.service.spec.ts', 'alfresco-translation.service.spec.ts', 'alfresco-translate-loader.spec.ts'];
+            'alfresco-translation.service.spec.ts', 'alfresco-translate-loader.service.spec.ts', 'alfresco-translation.service.spec.ts',
+            'alfresco-translate-loader.spec.ts', 'activiti-content.service.spec.ts'];
 
         var fileName = this.getFilename();
 

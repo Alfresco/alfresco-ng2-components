@@ -42,7 +42,7 @@ import {
     ChecklistComponent,
     CommentListComponent,
     CommentsComponent,
-    FiltersComponent,
+    TaskFiltersComponent,
     NoTaskDetailsTemplateDirective,
     PeopleComponent,
     PeopleListComponent,
@@ -63,7 +63,7 @@ export * from  './src/models/index';
 export const ACTIVITI_TASKLIST_DIRECTIVES: any[] = [
     NoTaskDetailsTemplateDirective,
     AppsListComponent,
-    FiltersComponent,
+    TaskFiltersComponent,
     TaskListComponent,
     TaskDetailsComponent,
     ChecklistComponent,

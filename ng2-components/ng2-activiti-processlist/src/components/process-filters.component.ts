@@ -18,59 +18,58 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { Observable, Observer } from 'rxjs/Rx';
-import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
-import { TaskListService } from './../services/tasklist.service';
+import { FilterParamsModel, FilterProcessRepresentationModel } from './../models/filter-process.model';
+import { ProcessService } from './../services/process.service';
 
 declare let componentHandler: any;
 
 @Component({
-    selector: 'adf-filters, activiti-filters',
-    templateUrl: './filters.component.html',
-    styleUrls: ['filters.component.css'],
-    providers: [TaskListService]
+    selector: 'adf-process-instance-filters, activiti-process-instance-filters',
+    templateUrl: './process-filters.component.html',
+    styleUrls: ['process-filters.component.css']
 })
-export class FiltersComponent implements OnInit, OnChanges {
+export class ProcessFiltersComponent implements OnInit, OnChanges {
 
     @Input()
     filterParam: FilterParamsModel;
 
     @Output()
-    filterClick: EventEmitter<FilterRepresentationModel> = new EventEmitter<FilterRepresentationModel>();
+    filterClick: EventEmitter<FilterProcessRepresentationModel> = new EventEmitter<FilterProcessRepresentationModel>();
 
     @Output()
-    onSuccess: EventEmitter<any> = new EventEmitter<any>();
+    onSuccess: EventEmitter<FilterProcessRepresentationModel[]> = new EventEmitter<FilterProcessRepresentationModel[]>();
 
     @Output()
     onError: EventEmitter<any> = new EventEmitter<any>();
 
     @Input()
-    appId: string;
+    appId: number;
 
     @Input()
     appName: string;
 
     @Input()
-    hasIcon: boolean = true;
+    showIcon: boolean = true;
 
-    private filterObserver: Observer<FilterRepresentationModel>;
-    filter$: Observable<FilterRepresentationModel>;
+    private filterObserver: Observer<FilterProcessRepresentationModel>;
+    filter$: Observable<FilterProcessRepresentationModel>;
 
-    currentFilter: FilterRepresentationModel;
+    currentFilter: FilterProcessRepresentationModel;
 
-    filters: FilterRepresentationModel [] = [];
+    filters: FilterProcessRepresentationModel [] = [];
 
-    constructor(private translateService: AlfrescoTranslationService,
-                private activiti: TaskListService,
+    constructor(private translate: AlfrescoTranslationService,
+                private activiti: ProcessService,
                 private logService: LogService) {
-        this.filter$ = new Observable<FilterRepresentationModel>(observer => this.filterObserver = observer).share();
+        this.filter$ = new Observable<FilterProcessRepresentationModel>(observer => this.filterObserver = observer).share();
 
-        if (translateService) {
-            translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
+        if (translate) {
+            translate.addTranslationFolder('ng2-activiti-processlist', 'assets/ng2-activiti-processlist');
         }
     }
 
     ngOnInit() {
-        this.filter$.subscribe((filter: FilterRepresentationModel) => {
+        this.filter$.subscribe((filter: FilterProcessRepresentationModel) => {
             this.filters.push(filter);
         });
     }
@@ -82,24 +81,9 @@ export class FiltersComponent implements OnInit, OnChanges {
             return;
         }
         let appName = changes['appName'];
-        if (appName && appName !== null && appName.currentValue) {
+        if (appName && appName.currentValue) {
             this.getFiltersByAppName(appName.currentValue);
             return;
-        }
-
-        this.getFiltersByAppId();
-    }
-
-    /**
-     * Return the task list filtered by appId or by appName
-     * @param appId
-     * @param appName
-     */
-    getFilters(appId?: string, appName?: string) {
-        if (appName) {
-            this.getFiltersByAppName(appName);
-        } else {
-            this.getFiltersByAppId(appId);
         }
     }
 
@@ -108,11 +92,11 @@ export class FiltersComponent implements OnInit, OnChanges {
      * @param appId - optional
      */
     getFiltersByAppId(appId?: string) {
-        this.activiti.getTaskListFilters(appId).subscribe(
-            (res: FilterRepresentationModel[]) => {
+        this.activiti.getProcessFilters(appId).subscribe(
+            (res: FilterProcessRepresentationModel[]) => {
                 if (res.length === 0 && this.isFilterListEmpty()) {
                     this.activiti.createDefaultFilters(appId).subscribe(
-                        (resDefault: FilterRepresentationModel[]) => {
+                        (resDefault: FilterProcessRepresentationModel[]) => {
                             this.resetFilter();
                             resDefault.forEach((filter) => {
                                 this.filterObserver.next(filter);
@@ -148,7 +132,7 @@ export class FiltersComponent implements OnInit, OnChanges {
     getFiltersByAppName(appName: string) {
         this.activiti.getDeployedApplications(appName).subscribe(
             application => {
-                this.getFiltersByAppId(application.id);
+                this.getFiltersByAppId(application.id.toString());
                 this.selectTaskFilter(this.filterParam);
             },
             (err) => {
@@ -160,27 +144,9 @@ export class FiltersComponent implements OnInit, OnChanges {
      * Pass the selected filter as next
      * @param filter
      */
-    public selectFilter(filter: FilterRepresentationModel) {
+    public selectFilter(filter: FilterProcessRepresentationModel) {
         this.currentFilter = filter;
         this.filterClick.emit(filter);
-    }
-
-    public selectFilterWithTask(taskId: string) {
-        let filteredFilterList: FilterRepresentationModel[] = [];
-        this.activiti.getFilterForTaskById(taskId, this.filters).subscribe(
-            (filter: FilterRepresentationModel) => {
-                filteredFilterList.push(filter);
-            },
-            (err) => {
-                this.onError.emit(err);
-            },
-            () => {
-                if (filteredFilterList.length > 0) {
-                    this.selectTaskFilter(new FilterParamsModel({name: 'My Tasks'}));
-                    this.currentFilter.landingTaskId = taskId;
-                    this.filterClick.emit(this.currentFilter);
-                }
-            });
     }
 
     /**
@@ -188,7 +154,7 @@ export class FiltersComponent implements OnInit, OnChanges {
      */
     public selectTaskFilter(filterParam: FilterParamsModel) {
         if (filterParam) {
-            this.filters.filter((taskFilter: FilterRepresentationModel, index) => {
+            this.filters.filter((taskFilter: FilterProcessRepresentationModel, index) => {
                 if (filterParam.name && filterParam.name.toLowerCase() === taskFilter.name.toLowerCase() ||
                     filterParam.id === taskFilter.id || filterParam.index === index) {
                     this.currentFilter = taskFilter;
@@ -211,9 +177,9 @@ export class FiltersComponent implements OnInit, OnChanges {
 
     /**
      * Return the current task
-     * @returns {FilterRepresentationModel}
+     * @returns {FilterProcessRepresentationModel}
      */
-    getCurrentFilter(): FilterRepresentationModel {
+    getCurrentFilter(): FilterProcessRepresentationModel {
         return this.currentFilter;
     }
 

@@ -20,11 +20,11 @@ import { LogServiceMock } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessService } from '../services/process.service';
-import { FiltersComponent } from './filters.component';
+import { ProcessFiltersComponent } from './process-filters.component';
 
 describe('ActivitiFilters', () => {
 
-    let filterList: FiltersComponent;
+    let filterList: ProcessFiltersComponent;
     let activitiService: ProcessService;
     let logService: LogServiceMock;
 
@@ -53,7 +53,7 @@ describe('ActivitiFilters', () => {
     beforeEach(() => {
         logService = new LogServiceMock();
         activitiService = new ProcessService(null, logService);
-        filterList = new FiltersComponent(null, activitiService, logService);
+        filterList = new ProcessFiltersComponent(null, activitiService, logService);
     });
 
     it('should return the filter task list', (done) => {

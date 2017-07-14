@@ -23,7 +23,7 @@ export * from './task-attachment-list.component';
 export * from './people.component';
 export * from './task-header.component';
 export * from './no-task-detail-template.component';
-export * from './filters.component';
+export * from './task-filters.component';
 export * from './task-details.component';
 export * from './start-task.component';
 export * from './people-search.component';

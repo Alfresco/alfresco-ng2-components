@@ -16,7 +16,7 @@
  */
 
 export * from './processlist.component';
-export * from './filters.component';
+export * from './process-filters.component';
 export * from './process-instance-header.component';
 export * from './process-instance-tasks.component';
 export * from './process-instance-variables.component';

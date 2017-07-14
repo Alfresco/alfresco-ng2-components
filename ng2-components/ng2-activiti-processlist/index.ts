@@ -24,7 +24,7 @@ import { DataTableModule } from 'ng2-alfresco-datatable';
 
 import {
     CreateProcessAttachmentComponent,
-    FiltersComponent,
+    ProcessFiltersComponent,
     ProcessAttachmentListComponent,
     ProcessCommentsComponent,
     ProcessInstanceDetailsComponent,
@@ -40,7 +40,7 @@ import { ProcessService } from './src/services/process.service';
 
 // components
 export * from './src/components/processlist.component';
-export * from './src/components/filters.component';
+export * from './src/components/process-filters.component';
 export * from './src/components/process-instance-details.component';
 export * from './src/components/start-process.component';
 export * from './src/components/process-attachment-list.component';
@@ -55,7 +55,7 @@ export * from './src/services/process.service';
 
 export const ACTIVITI_PROCESSLIST_DIRECTIVES: [any] = [
     ProcessInstanceListComponent,
-    FiltersComponent,
+    ProcessFiltersComponent,
     ProcessInstanceDetailsComponent,
     ProcessInstanceHeaderComponent,
     ProcessInstanceTasksComponent,
