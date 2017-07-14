@@ -22,14 +22,14 @@ import { CoreModule } from 'ng2-alfresco-core';
 import { LoginFooterDirective } from './src/directives/login-footer.directive';
 import { LoginHeaderDirective } from './src/directives/login-header.directive';
 
-import { AlfrescoLoginComponent } from './src/components/alfresco-login.component';
+import { LoginComponent } from './src/components/login.component';
 
 export * from './src/directives/login-header.directive';
 export * from './src/directives/login-footer.directive';
-export * from './src/components/alfresco-login.component';
+export * from './src/components/login.component';
 
 export const ALFRESCO_LOGIN_DIRECTIVES: any[] = [
-    AlfrescoLoginComponent,
+    LoginComponent,
     LoginFooterDirective,
     LoginHeaderDirective
 ];

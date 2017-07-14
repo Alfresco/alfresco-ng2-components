@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-export * from './activiti-apps.component';
-export * from './activiti-tasklist.component';
-export * from './activiti-checklist.component';
-export * from './activiti-comments.component';
-export * from './adf-task-attachment-list.component';
-export * from './activiti-people.component';
-export * from './activiti-task-header.component';
+export * from './apps-list.component';
+export * from './tasklist.component';
+export * from './checklist.component';
+export * from './comments.component';
+export * from './task-attachment-list.component';
+export * from './people.component';
+export * from './task-header.component';
 export * from './no-task-detail-template.component';
-export * from './activiti-filters.component';
-export * from './activiti-task-details.component';
-export * from './activiti-start-task.component';
-export * from './activiti-people-search.component';
-export * from './adf-create-task-attachment.component';
-export * from './adf-people-list.component';
-export * from './adf-comment-list.component';
+export * from './filters.component';
+export * from './task-details.component';
+export * from './start-task.component';
+export * from './people-search.component';
+export * from './create-task-attachment.component';
+export * from './people-list.component';
+export * from './comment-list.component';

@@ -624,7 +624,7 @@ The CardViewComponent is a configurable property list renderer. You define the p
 ### Editing
 
 The card view can optionally allow its properties to be edited. You can control the editing of the properties in two level.
-- **global level** - *via the editable paramter of the adf-card-view component*
+- **global level** - *via the editable paramter of the card-view.component*
 - **property level** -  *in each property via the editable attribute*
 
 If you set the global editable parameter to false, no properties can be edited regardless of what is set inside the property.

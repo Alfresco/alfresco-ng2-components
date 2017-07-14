@@ -24,7 +24,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { CollapsableModule } from './src/components/collapsable/collapsable.module';
 import { ContextMenuModule } from './src/components/context-menu/context-menu.module';
-import { AdfToolbarComponent } from './src/components/toolbar/toolbar.component';
+import { ToolbarComponent } from './src/components/toolbar/toolbar.component';
 import { CardViewModule } from './src/components/view/card-view.module';
 import { MaterialModule } from './src/material.module';
 import { AppConfigModule } from './src/services/app-config.service';
@@ -146,7 +146,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         DataColumnListComponent,
         FileSizePipe,
         HighlightPipe,
-        AdfToolbarComponent
+        ToolbarComponent
     ],
     providers: providers(),
     exports: [
@@ -166,7 +166,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         DataColumnListComponent,
         FileSizePipe,
         HighlightPipe,
-        AdfToolbarComponent
+        ToolbarComponent
     ]
 })
 export class CoreModule {

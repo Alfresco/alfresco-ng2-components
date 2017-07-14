@@ -18,7 +18,7 @@
 import { Injector } from '@angular/core';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
-import { AlfrescoLoginComponent } from '../components/alfresco-login.component';
+import { LoginComponent } from '../components/login.component';
 import { LoginFooterDirective } from './login-footer.directive';
 
 describe('LoginFooterDirective', () => {
@@ -30,7 +30,7 @@ describe('LoginFooterDirective', () => {
             imports: [CoreModule.forRoot()],
             providers: [
                 LoginFooterDirective,
-                AlfrescoLoginComponent
+                LoginComponent
             ]
         });
         injector = getTestBed();

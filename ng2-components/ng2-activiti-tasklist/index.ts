@@ -32,55 +32,55 @@ import {
 import { ActivitiFormModule } from 'ng2-activiti-form';
 import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
-import { ActivitiPeopleService } from './src/services/activiti-people.service';
-import { ActivitiTaskListService } from './src/services/activiti-tasklist.service';
+import { PeopleService } from './src/services/people.service';
 import { ProcessUploadService } from './src/services/process-upload.service';
+import { TaskListService } from './src/services/tasklist.service';
 
 import {
-    ActivitiAppsComponent,
-    ActivitiChecklistComponent,
-    ActivitiCommentsComponent,
-    ActivitiCreateTaskAttachmentComponent,
-    ActivitiFiltersComponent,
-    ActivitiPeopleComponent,
-    ActivitiPeopleSearchComponent,
-    ActivitiStartTaskComponent,
-    ActivitiTaskDetailsComponent,
-    ActivitiTaskHeaderComponent,
-    ActivitiTaskListComponent,
-    AdfCommentListComponent,
+    AppsListComponent,
+    AttachmentComponent,
+    ChecklistComponent,
+    CommentListComponent,
+    CommentsComponent,
+    FiltersComponent,
     NoTaskDetailsTemplateDirective,
+    PeopleComponent,
     PeopleListComponent,
-    TaskAttachmentListComponent
+    PeopleSearchComponent,
+    StartTaskComponent,
+    TaskAttachmentListComponent,
+    TaskDetailsComponent,
+    TaskHeaderComponent,
+    TaskListComponent
 } from './src/components/index';
 
 export * from './src/components/index';
-export * from './src/services/activiti-tasklist.service';
-export * from './src/services/activiti-people.service';
+export * from './src/services/tasklist.service';
+export * from './src/services/people.service';
 export * from './src/services/process-upload.service';
 export * from  './src/models/index';
 
 export const ACTIVITI_TASKLIST_DIRECTIVES: any[] = [
     NoTaskDetailsTemplateDirective,
-    ActivitiAppsComponent,
-    ActivitiFiltersComponent,
-    ActivitiTaskListComponent,
-    ActivitiTaskDetailsComponent,
-    ActivitiChecklistComponent,
-    ActivitiCommentsComponent,
-    ActivitiPeopleComponent,
-    ActivitiTaskHeaderComponent,
-    ActivitiStartTaskComponent,
-    ActivitiPeopleSearchComponent,
+    AppsListComponent,
+    FiltersComponent,
+    TaskListComponent,
+    TaskDetailsComponent,
+    ChecklistComponent,
+    CommentsComponent,
+    PeopleComponent,
+    TaskHeaderComponent,
+    StartTaskComponent,
+    PeopleSearchComponent,
     TaskAttachmentListComponent,
-    ActivitiCreateTaskAttachmentComponent,
+    AttachmentComponent,
     PeopleListComponent,
-    AdfCommentListComponent
+    CommentListComponent
 ];
 
 export const ACTIVITI_TASKLIST_PROVIDERS: any[] = [
-    ActivitiTaskListService,
-    ActivitiPeopleService,
+    TaskListService,
+    PeopleService,
     ProcessUploadService
 ];
 

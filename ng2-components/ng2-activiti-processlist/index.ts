@@ -23,51 +23,51 @@ import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 
 import {
-    ActivitiCreateProcessAttachmentComponent,
-    ActivitiProcessAttachmentListComponent,
-    ActivitiProcessCommentsComponent,
-    ActivitiProcessFiltersComponent,
-    ActivitiProcessInstanceDetailsComponent,
-    ActivitiProcessInstanceHeaderComponent,
-    ActivitiProcessInstanceListComponent,
-    ActivitiProcessInstanceTasksComponent,
-    ActivitiProcessInstanceVariablesComponent,
-    ActivitiStartProcessInstanceComponent
+    CreateProcessAttachmentComponent,
+    FiltersComponent,
+    ProcessAttachmentListComponent,
+    ProcessCommentsComponent,
+    ProcessInstanceDetailsComponent,
+    ProcessInstanceHeaderComponent,
+    ProcessInstanceListComponent,
+    ProcessInstanceTasksComponent,
+    ProcessInstanceVariablesComponent,
+    StartProcessInstanceComponent
 } from './src/components/index';
 
-import { ActivitiProcessService } from './src/services/activiti-process.service';
 import { ProcessUploadService } from './src/services/process-upload.service';
+import { ProcessService } from './src/services/process.service';
 
 // components
-export * from './src/components/activiti-processlist.component';
-export * from './src/components/activiti-filters.component';
-export * from './src/components/activiti-process-instance-details.component';
-export * from './src/components/activiti-start-process.component';
-export * from './src/components/adf-process-attachment-list.component';
-export * from './src/components/adf-create-process-attachment.component';
+export * from './src/components/processlist.component';
+export * from './src/components/filters.component';
+export * from './src/components/process-instance-details.component';
+export * from './src/components/start-process.component';
+export * from './src/components/process-attachment-list.component';
+export * from './src/components/create-process-attachment.component';
 export * from './src/services/process-upload.service';
 
 // models
 export * from './src/models/index';
 
 // services
-export * from './src/services/activiti-process.service';
+export * from './src/services/process.service';
 
 export const ACTIVITI_PROCESSLIST_DIRECTIVES: [any] = [
-    ActivitiProcessInstanceListComponent,
-    ActivitiProcessFiltersComponent,
-    ActivitiProcessInstanceDetailsComponent,
-    ActivitiProcessInstanceHeaderComponent,
-    ActivitiProcessInstanceTasksComponent,
-    ActivitiProcessInstanceVariablesComponent,
-    ActivitiProcessCommentsComponent,
-    ActivitiStartProcessInstanceComponent,
-    ActivitiProcessAttachmentListComponent,
-    ActivitiCreateProcessAttachmentComponent
+    ProcessInstanceListComponent,
+    FiltersComponent,
+    ProcessInstanceDetailsComponent,
+    ProcessInstanceHeaderComponent,
+    ProcessInstanceTasksComponent,
+    ProcessInstanceVariablesComponent,
+    ProcessCommentsComponent,
+    StartProcessInstanceComponent,
+    ProcessAttachmentListComponent,
+    CreateProcessAttachmentComponent
 ];
 
 export const ACTIVITI_PROCESSLIST_PROVIDERS: [any] = [
-    ActivitiProcessService,
+    ProcessService,
     ProcessUploadService
 ];
 
