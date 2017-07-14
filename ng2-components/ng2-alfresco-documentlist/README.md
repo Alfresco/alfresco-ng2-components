@@ -89,7 +89,8 @@ The properties currentFolderId, folderNode and node are the entry initialization
 | rowStyleClass | string | | The CSS class to apply to every row |
 | currentFolderId | string | null | Initial node ID of displayed folder. Can be `-root-`, `-shared-`, `-my-`, or a fixed node ID  |
 | folderNode | [MinimalNodeEntryEntity](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md) | null | Currently displayed folder node | 
-| node | `NodePaging` | null | Document list will show all the node contained in the NodePaging entity  | 
+| permissionsStyle | [PermissionStyleModel[]](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-documentlist/src/models/permissions-style.model.ts) | null | with this array you can define different styles depending from the permission of the user on that node. The PermissionStyleModel allow you to select also if you want apply the style only on the file or folder nodes. With PermissionStyleModel.permission accept the following values [Permissions](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-core/src/models/permissions.enum.ts)   [see more](#custom-row-permissions-style). | 
+| node | [NodePaging](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodePaging.md) | null | Document list will show all the node contained in the NodePaging entity  | 
 | navigate | boolean | true | Toggles navigation to folder content or file preview |
 | loading | boolean | false | Toggles the loading state and animated spinners for the component. Used in combination with `navigate=false` to perform custom navigation and loading state indication. |
 | navigationMode | string (click,dblclick) | dblclick | User interaction for folder navigation or file preview |
@@ -1024,6 +1025,64 @@ Now you can declare columns and assign `desktop-only` class where needed:
 **Mobile View**
 
 ![Responsive Mobile](docs/assets/responsive-mobile.png)
+
+### Custom row permissions style
+
+You can personalize the style of the row based on the permissions.
+The property to valorize is permissionsStyle[]:[PermissionStyleModel[]](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-documentlist/src/models/permissions-style.model.ts).
+The permissionsStyle array  can define different styles depending from the permission of the user on that node.
+
+[PermissionStyleModel](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-documentlist/src/models/permissions-style.model.ts)
+
+| Property | Description |
+| isFile/isFolder | allow you to select if you want apply the style to file/folder nodes |
+| permission | is an enum value [Permissions](https://github.com/Alfresco/alfresco-ng2-core/blob/master/ng2-components/ng2-alfresco-documentlist/src/models/permissions.enum.ts) | 
+| css| the name of the class to add | 
+
+#### Examples
+
+If you want to change the style on rows where the user can create content: 
+
+```ts
+let permissionsStyle: PermissionStyleModel[] = [];
+
+this.permissionsStyle.push(new PermissionStyleModel('document-list__create', PermissionsEnum.CREATE));        
+```
+
+```html
+<adf-document-list [permissionsStyle]="permissionsStyle">
+</adf-document-list>
+```
+
+```css
+
+adf-document-list >>> adf-datatable >>> tr.alfresco-datatable__row.document-list__create {
+    color: rgb(57, 239, 121);
+}
+```
+
+If you want to change the style on the folders where the user doesn't have the permission to update it: 
+
+```ts
+
+let permissionsStyle: PermissionStyleModel[] = [];
+
+this.permissionsStyle.push(new PermissionStyleModel('document-list__disable', PermissionsEnum.NOT_CREATE, false, true));
+
+```
+
+```html
+<adf-document-list [permissionsStyle]="permissionsStyle">
+</adf-document-list>
+```
+
+```css
+
+adf-document-list >>> adf-datatable >>> tr.alfresco-datatable__row.document-list__disable {
+    color: rgba(0, 0, 0, 0.28);
+
+}
+```
 
 ### Custom 'empty folder' template
 

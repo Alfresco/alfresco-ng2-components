@@ -19,7 +19,7 @@ import { ChangeDetectorRef, Component, Input, OnInit, Optional, ViewChild } from
 import { MdDialog } from '@angular/material';
 import { ActivatedRoute, Params } from '@angular/router';
 import { AlfrescoContentService, FileUploadCompleteEvent, FolderCreatedEvent, NotificationService, UploadService } from 'ng2-alfresco-core';
-import { DocumentListComponent } from 'ng2-alfresco-documentlist';
+import { DocumentListComponent, PermissionStyleModel } from 'ng2-alfresco-documentlist';
 
 import { CreateFolderDialogComponent } from '../../dialogs/create-folder.dialog';
 
@@ -61,6 +61,8 @@ export class FilesComponent implements OnInit {
 
     @ViewChild(DocumentListComponent)
     documentList: DocumentListComponent;
+
+    permissionsStyle: PermissionStyleModel[] = [];
 
     constructor(private changeDetector: ChangeDetectorRef,
                 private notificationService: NotificationService,

@@ -69,7 +69,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     rowStyle: string;
 
     @Input()
-    rowStyleClass: string;
+    rowStyleClass: string = '';
 
     @Input()
     showHeader: boolean = true;
@@ -107,10 +107,9 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     private singleClickStreamSub: Subscription;
     private multiClickStreamSub: Subscription;
 
-    constructor(
-        translateService: AlfrescoTranslationService,
-        @Optional() private el: ElementRef,
-        private differs: IterableDiffers) {
+    constructor(translateService: AlfrescoTranslationService,
+                @Optional() private el: ElementRef,
+                private differs: IterableDiffers) {
         if (differs) {
             this.differ = differs.find([]).create(null);
         }
@@ -130,7 +129,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
         if (this.isPropertyChanged(changes['data'])) {
             if (this.isTableEmpty()) {
                 this.initTable();
-            }else {
+            } else {
                 this.data = changes['data'].currentValue;
             }
             return;
@@ -207,7 +206,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     }
 
     private unsubscribeClickStream() {
-        if  (this.singleClickStreamSub) {
+        if (this.singleClickStreamSub) {
             this.singleClickStreamSub.unsubscribe();
         }
         if (this.multiClickStreamSub) {
@@ -378,6 +377,12 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
 
     isMultiSelectionMode(): boolean {
         return this.selectionMode && this.selectionMode.toLowerCase() === 'multiple';
+    }
+
+    getRowStyle(row: DataRow): string {
+        row.cssClass = row.cssClass ? row.cssClass : '';
+        this.rowStyleClass = this.rowStyleClass ? this.rowStyleClass : '';
+        return `${row.cssClass} ${this.rowStyleClass}`;
     }
 
 }

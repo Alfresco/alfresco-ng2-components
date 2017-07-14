@@ -21,6 +21,7 @@ import { FolderCreatedEvent } from '../events/folder-created.event';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AuthenticationService } from './authentication.service';
 import { LogService } from './log.service';
+import { PermissionsEnum } from '../models/permissions.enum'
 
 @Injectable()
 export class AlfrescoContentService {
@@ -71,6 +72,7 @@ export class AlfrescoContentService {
             return dataContent;
         })).catch(this.handleError);
     }
+
     /**
      * Create a folder
      * @param name - the folder name
@@ -86,6 +88,33 @@ export class AlfrescoContentService {
                 });
             })
             .catch(err => this.handleError(err));
+    }
+
+    /**
+     * Check if the user has permissions on that node
+     * @param MinimalNode -  node to check allowableOperations
+     * @param PermissionsEnum - create, delete, update
+     *
+     * @returns {boolean} has permission
+     */
+    hasPermission(node: any, permission: PermissionsEnum|string): boolean {
+        let hasPermission = false;
+
+        if (this.hasAllowableOperations(node)) {
+            hasPermission = node.allowableOperations.find(currentPermission => currentPermission === permission) ? true : false;
+        }
+
+        return hasPermission;
+    }
+
+    /**
+     * Check if the node has the properties allowableOperations
+     * @param MinimalNode -  node to check allowableOperations
+     *
+     * @returns {boolean} has AllowableOperations
+     */
+    hasAllowableOperations(node: any): boolean {
+        return node && node.allowableOperations ? true : false;
     }
 
     private handleError(error: any) {

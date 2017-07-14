@@ -130,7 +130,7 @@ describe('ShareDataTableAdapter', () => {
             format: 'medium' // Jul 15, 2015, 9:43:11 PM
         };
 
-        let row = new ShareDataRow(file);
+        let row = new ShareDataRow(file, documentListService, null);
         let adapter = new ShareDataTableAdapter(documentListService, null);
 
         let value = adapter.getValue(row, col);
@@ -150,7 +150,7 @@ describe('ShareDataTableAdapter', () => {
             format: null
         };
 
-        let row = new ShareDataRow(file);
+        let row = new ShareDataRow(file, documentListService, null);
         let adapter = new ShareDataTableAdapter(documentListService, null);
 
         let value = adapter.getValue(row, col);
@@ -168,7 +168,7 @@ describe('ShareDataTableAdapter', () => {
             type: 'string'
         };
 
-        let row = new ShareDataRow(file);
+        let row = new ShareDataRow(file, documentListService, null);
         let adapter = new ShareDataTableAdapter(documentListService, null);
 
         let value = adapter.getValue(row, col);
@@ -186,7 +186,7 @@ describe('ShareDataTableAdapter', () => {
             format: 'medium'
         };
 
-        let row = new ShareDataRow(file);
+        let row = new ShareDataRow(file, documentListService, null);
         let adapter = new ShareDataTableAdapter(documentListService, null);
         spyOn(console, 'error').and.stub();
 
@@ -201,7 +201,7 @@ describe('ShareDataTableAdapter', () => {
         let file = new FileNode();
         file.entry.content.mimeType = null;
 
-        let row = new ShareDataRow(file);
+        let row = new ShareDataRow(file, documentListService, null);
         let col = <DataColumn> {type: 'image', key: '$thumbnail'};
 
         let value = adapter.getValue(row, col);
@@ -215,7 +215,7 @@ describe('ShareDataTableAdapter', () => {
         let file = new FileNode();
         file.entry.content = null;
 
-        let row = new ShareDataRow(file);
+        let row = new ShareDataRow(file, documentListService, null);
         let col = <DataColumn> {type: 'image', key: '$thumbnail'};
 
         let value = adapter.getValue(row, col);
@@ -230,7 +230,7 @@ describe('ShareDataTableAdapter', () => {
         file.entry['icon'] = imageUrl;
 
         let adapter = new ShareDataTableAdapter(documentListService, null);
-        let row = new ShareDataRow(file);
+        let row = new ShareDataRow(file, documentListService, null);
         let col = <DataColumn> {type: 'image', key: 'icon'};
 
         let value = adapter.getValue(row, col);
@@ -240,7 +240,7 @@ describe('ShareDataTableAdapter', () => {
     it('should resolve folder icon', () => {
         let adapter = new ShareDataTableAdapter(documentListService, null);
 
-        let row = new ShareDataRow(new FolderNode());
+        let row = new ShareDataRow(new FolderNode(), documentListService, null);
         let col = <DataColumn> {type: 'image', key: '$thumbnail'};
 
         let value = adapter.getValue(row, col);
@@ -256,7 +256,7 @@ describe('ShareDataTableAdapter', () => {
         adapter.thumbnails = true;
 
         let file = new FileNode();
-        let row = new ShareDataRow(file);
+        let row = new ShareDataRow(file, documentListService, null);
         let col = <DataColumn> {type: 'image', key: '$thumbnail'};
 
         let value = adapter.getValue(row, col);
@@ -271,7 +271,7 @@ describe('ShareDataTableAdapter', () => {
         file.entry.isFile = false;
         file.entry.isFolder = false;
 
-        let row = new ShareDataRow(file);
+        let row = new ShareDataRow(file, documentListService, null);
         let col = <DataColumn> {type: 'image', key: '$thumbnail'};
 
         let value = adapter.getValue(row, col);
@@ -289,9 +289,9 @@ describe('ShareDataTableAdapter', () => {
         adapter.setSorting(new DataSorting('name', 'asc'));
 
         adapter.setRows([
-            new ShareDataRow(file2),
-            new ShareDataRow(file1),
-            new ShareDataRow(folder)
+            new ShareDataRow(file2, documentListService, null),
+            new ShareDataRow(file1, documentListService, null),
+            new ShareDataRow(folder, documentListService, null)
         ]);
 
         let sorted = adapter.getRows();
@@ -311,8 +311,8 @@ describe('ShareDataTableAdapter', () => {
         let adapter = new ShareDataTableAdapter(documentListService, [col]);
 
         adapter.setRows([
-            new ShareDataRow(file2),
-            new ShareDataRow(file1)
+            new ShareDataRow(file2, documentListService, null),
+            new ShareDataRow(file1, documentListService, null)
         ]);
 
         adapter.sort('dateProp', 'asc');
@@ -330,27 +330,44 @@ describe('ShareDataTableAdapter', () => {
 
 describe('ShareDataRow', () => {
 
+    let documentListService: DocumentListService;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule.forRoot()
+            ],
+            providers: [
+                DocumentListService
+            ]
+        }).compileComponents();
+    }));
+
+    beforeEach(() => {
+        documentListService = TestBed.get(DocumentListService);
+    });
+
     it('should wrap node', () => {
         let file = new FileNode();
-        let row = new ShareDataRow(file);
+        let row = new ShareDataRow(file, documentListService, null);
         expect(row.node).toBe(file);
     });
 
     it('should require object source', () => {
         expect(() => {
-            return new ShareDataRow(null);
+            return new ShareDataRow(null, documentListService, null);
         }).toThrowError(ShareDataRow.ERR_OBJECT_NOT_FOUND);
     });
 
     it('should resolve value from node entry', () => {
         let file = new FileNode('test');
-        let row = new ShareDataRow(file);
+        let row = new ShareDataRow(file, documentListService, null);
         expect(row.getValue('name')).toBe('test');
     });
 
     it('should check value', () => {
         let file = new FileNode('test');
-        let row = new ShareDataRow(file);
+        let row = new ShareDataRow(file, documentListService, null);
 
         expect(row.hasValue('name')).toBeTruthy();
         expect(row.hasValue('missing')).toBeFalsy();
@@ -359,21 +376,21 @@ describe('ShareDataRow', () => {
     it('should be set as drop target when user has permission for that node', () => {
         let file = new FolderNode('test');
         file.entry['allowableOperations'] = ['create'];
-        let row = new ShareDataRow(file);
+        let row = new ShareDataRow(file, documentListService, null);
 
         expect(row.isDropTarget).toBeTruthy();
     });
 
     it('should not be set as drop target when user has permission for that node', () => {
         let file = new FolderNode('test');
-        let row = new ShareDataRow(file);
+        let row = new ShareDataRow(file, documentListService, null);
 
         expect(row.isDropTarget).toBeFalsy();
     });
 
     it('should not be set as drop target when element is not a Folder', () => {
         let file = new FileNode('test');
-        let row = new ShareDataRow(file);
+        let row = new ShareDataRow(file, documentListService, null);
 
         expect(row.isDropTarget).toBeFalsy();
     });

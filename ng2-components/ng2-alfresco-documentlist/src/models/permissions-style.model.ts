@@ -15,6 +15,18 @@
  * limitations under the License.
  */
 
-export * from './card-view-textitem.model';
-export * from './card-view-dateitem.model';
-export * from './file.model';
+import { PermissionsEnum } from 'ng2-alfresco-core';
+
+export class PermissionStyleModel {
+    css: string;
+    permission: PermissionsEnum;
+    isFolder: boolean = true;
+    isFile: boolean = true;
+
+    constructor(css: string, permission: PermissionsEnum, isFile: boolean = true, isFolder: boolean = true) {
+        this.css = css;
+        this.permission = permission;
+        this.isFile = isFile;
+        this.isFolder = isFolder;
+    }
+}
