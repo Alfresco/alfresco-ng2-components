@@ -1,0 +1,9 @@
+<div class="demo-site-container-style" id="demo-container">
+    <span> Choose A Site from DropDown </span>
+    <p></p>
+    <adf-sites-dropdown (siteChanged)="getSiteContent($event)"></adf-sites-dropdown>
+</div>
+<div id="show_site_content" *ngIf="folderNodeId">
+    <alfresco-document-list [currentFolderId]="folderNodeId">
+    </alfresco-document-list>
+</div>

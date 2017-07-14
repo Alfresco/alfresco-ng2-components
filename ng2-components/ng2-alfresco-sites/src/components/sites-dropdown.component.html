@@ -1,0 +1,9 @@
+<div id="site-dropdown-container">
+    <md-select class="adf-site-list-element" id="site-dropdown"
+    placeholder="{{'DROPDOWN.PLACEHOLDER_LABEL' | translate}}"
+    [(ngModel)]="siteSelected" (ngModelChange)="selectedSite(siteSelected)">
+        <md-option *ngFor="let site of siteList" [value]="site" [id]="site.id">
+            {{ site.title }}
+        </md-option>
+    </md-select>
+</div>
