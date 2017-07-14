@@ -1,3 +1,4 @@
-@import './_variables-general';
-@import './_variables-color';
-@import './_variables-mdl-overrides';
+@import 'mixins';
+@import 'variables';
+@import 'colors';
+@import 'mdl-overrides';
