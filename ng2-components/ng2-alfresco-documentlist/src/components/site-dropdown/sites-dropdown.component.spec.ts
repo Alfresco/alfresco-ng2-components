@@ -65,7 +65,7 @@ let sitesList = {
 
 let scrolledSubject = new Subject();
 
-fdescribe('DropdownSitesComponent', () => {
+describe('DropdownSitesComponent', () => {
 
     let component: any;
     let fixture: ComponentFixture<DropdownSitesComponent>;

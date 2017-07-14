@@ -21,7 +21,7 @@ import { SitesService } from '../services/sites.service';
 
 declare let jasmine: any;
 
-fdescribe('Sites service', () => {
+describe('Sites service', () => {
 
     let service;
 
