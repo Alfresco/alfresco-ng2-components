@@ -17,6 +17,7 @@
 
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { SiteModel } from '../../models/site.model';
 import { SitesService } from '../../services/sites.service';
 
 @Component({
@@ -34,6 +35,8 @@ export class DropdownSitesComponent implements OnInit {
 
     siteList = [];
 
+    public siteSelected: SiteModel;
+
     constructor(translateService: AlfrescoTranslationService,
                 private sitesService: SitesService) {
         if (translateService) {
@@ -47,8 +50,8 @@ export class DropdownSitesComponent implements OnInit {
         });
     }
 
-    selectedSite(site: any) {
-        this.siteChanged.emit(site);
+    selectedSite() {
+        this.siteChanged.emit(this.siteSelected);
     }
 
 }

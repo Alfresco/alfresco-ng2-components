@@ -64,19 +64,19 @@ export class SiteContentsModel {
 export class SiteMembersModel {
     role: string;
     firstName: string;
-    emailNotificationsEnabled: boolean;
+    emailNotificationsEnabled: boolean = false;
     company: any;
     id: string;
-    enable: boolean;
+    enable: boolean = false;
     email: string;
 
     constructor(obj?: any) {
         this.role = obj && obj.role;
         this.firstName = obj && obj.firstName || null;
-        this.emailNotificationsEnabled = obj && obj.emailNotificationsEnabled || false;
+        this.emailNotificationsEnabled = obj && obj.emailNotificationsEnabled;
         this.company = obj && obj.company || null;
         this.id = obj && obj.id || null;
-        this.enable = obj && obj.enable || false;
+        this.enable = obj && obj.enable;
         this.email = obj && obj.email;
     }
 }

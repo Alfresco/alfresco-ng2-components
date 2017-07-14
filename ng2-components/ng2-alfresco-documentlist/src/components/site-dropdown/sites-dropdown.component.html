@@ -2,9 +2,9 @@
     <md-select class="adf-site-list-element" id="site-dropdown"
         placeholder="{{'DROPDOWN.PLACEHOLDER_LABEL' | translate}}"
         [(ngModel)]="siteSelected"
-        (ngModelChange)="selectedSite(siteSelected)">
+        (ngModelChange)="selectedSite()">
         <md-option *ngIf="showDefaultOption" id="default_site_option">{{'DROPDOWN.DEFAULT_OPTION' | translate}}</md-option>
-        <md-option *ngFor="let site of siteList" [value]="site" [id]="site.id">
+        <md-option *ngFor="let site of siteList" [value]="site.guid" [id]="site.id">
             {{ site.title }}
         </md-option>
     </md-select>

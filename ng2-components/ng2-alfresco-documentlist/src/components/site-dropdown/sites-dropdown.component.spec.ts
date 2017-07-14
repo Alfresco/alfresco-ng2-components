@@ -18,7 +18,7 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MdSelectModule, MdSliderModule, OVERLAY_PROVIDERS, OverlayModule, ScrollDispatcher } from '@angular/material';
+import { MdSelectModule, OverlayContainer, OverlayModule, ScrollDispatcher } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AppConfigModule, CoreModule } from 'ng2-alfresco-core';
 import { Subject } from 'rxjs/Subject';
@@ -42,10 +42,10 @@ let sitesList = {
                     'role': 'SiteManager',
                     'visibility': 'PUBLIC',
                     'guid': 'fe47a4d1-62c1-4338-b814-b410a43421d5',
-                    'description': 'giacomo',
-                    'id': 'giacomo',
+                    'description': 'fake-test-site',
+                    'id': 'fake-test-site',
                     'preset': 'site-dashboard',
-                    'title': 'giacomo'
+                    'title': 'fake-test-site'
                 }
             },
             {
@@ -65,12 +65,13 @@ let sitesList = {
 
 let scrolledSubject = new Subject();
 
-describe('DropdownSitesComponent', () => {
+fdescribe('DropdownSitesComponent', () => {
 
     let component: any;
     let fixture: ComponentFixture<DropdownSitesComponent>;
     let debug: DebugElement;
     let element: HTMLElement;
+    let overlayContainerElement: HTMLElement;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -81,7 +82,6 @@ describe('DropdownSitesComponent', () => {
                 FormsModule,
                 NoopAnimationsModule,
                 CoreModule,
-                MdSliderModule,
                 AppConfigModule.forRoot('app.config.json', {
                     ecmHost: 'http://localhost:9876/ecm'
                 })
@@ -90,7 +90,20 @@ describe('DropdownSitesComponent', () => {
                 DropdownSitesComponent
             ],
             providers: [
-                OVERLAY_PROVIDERS,
+                {
+                    provide: OverlayContainer, useFactory: () => {
+                        overlayContainerElement = document.createElement('div') as HTMLElement;
+                        overlayContainerElement.classList.add('cdk-overlay-container');
+
+                        document.body.appendChild(overlayContainerElement);
+
+                        // remove body padding to keep consistent cross-browser
+                        document.body.style.padding = '0';
+                        document.body.style.margin = '0';
+
+                        return { getContainerElement: () => overlayContainerElement };
+                    }
+                },
                 SitesService,
                 {
                     provide: ScrollDispatcher, useFactory: () => {
@@ -142,7 +155,7 @@ describe('DropdownSitesComponent', () => {
             });
         }));
 
-        it('should raise an event when a site is selected', async(() => {
+        it('should raise an event when a site is selected', (done) => {
             fixture.detectChanges();
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -151,12 +164,14 @@ describe('DropdownSitesComponent', () => {
             });
 
             fixture.whenStable().then(() => {
-                component.selectedSite(component.siteList[0]);
+                component.siteSelected = sitesList.list.entries[0].entry;
+                component.selectedSite();
             });
 
             component.siteChanged.subscribe((site) => {
-                expect(site.title).toBe('giacomo');
+                expect(site.title).toBe('fake-test-site');
+                done();
             });
-        }));
+        });
     });
 });

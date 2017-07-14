@@ -21,7 +21,7 @@ import { SitesService } from '../services/sites.service';
 
 declare let jasmine: any;
 
-describe('Sites service', () => {
+fdescribe('Sites service', () => {
 
     let service;
 
@@ -85,7 +85,7 @@ describe('Sites service', () => {
 
     it('Should get single sites via siteId', (done) => {
         service.getSite('fake-site-id').subscribe((data) => {
-            expect(data.entry.title).toBe('FAKE-SINGLE-TITLE');
+            expect(data.title).toBe('FAKE-SINGLE-TITLE');
             done();
         });
 
