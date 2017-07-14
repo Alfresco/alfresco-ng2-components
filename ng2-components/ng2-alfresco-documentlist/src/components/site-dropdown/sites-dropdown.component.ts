@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
-import { SitesService } from '../services/sites.service';
+import { SitesService } from '../../services/sites.service';
 
 @Component({
     selector: 'adf-sites-dropdown',
@@ -37,7 +37,7 @@ export class DropdownSitesComponent implements OnInit {
     constructor(translateService: AlfrescoTranslationService,
                 private sitesService: SitesService) {
         if (translateService) {
-            translateService.addTranslationFolder('ng2-alfresco-sites', 'assets/ng2-alfresco-sites');
+            translateService.addTranslationFolder('ng2-alfresco-documentlist', 'assets/ng2-alfresco-documentlist');
         }
     }
 

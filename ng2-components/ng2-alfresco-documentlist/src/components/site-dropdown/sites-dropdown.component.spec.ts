@@ -22,8 +22,8 @@ import { MdSelectModule, MdSliderModule, OVERLAY_PROVIDERS, OverlayModule, Scrol
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AppConfigModule, CoreModule } from 'ng2-alfresco-core';
 import { Subject } from 'rxjs/Subject';
-import { DropdownSitesComponent } from '../components/sites-dropdown.component';
-import { SitesService } from '../services/sites.service';
+import { SitesService } from '../../services/sites.service';
+import { DropdownSitesComponent } from './sites-dropdown.component';
 
 declare let jasmine: any;
 

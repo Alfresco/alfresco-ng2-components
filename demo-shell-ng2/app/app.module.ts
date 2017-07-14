@@ -28,7 +28,6 @@ import { DataTableModule } from 'ng2-alfresco-datatable';
 import { DocumentListModule } from 'ng2-alfresco-documentlist';
 import { LoginModule } from 'ng2-alfresco-login';
 import { SearchModule } from 'ng2-alfresco-search';
-import { SitesModule } from 'ng2-alfresco-sites';
 import { SocialModule } from 'ng2-alfresco-social';
 import { TagModule } from 'ng2-alfresco-tag';
 import { UploadModule } from 'ng2-alfresco-upload';
@@ -100,7 +99,6 @@ if (process.env.ENV === 'production') {
         DiagramsModule.forRoot(),
         CustomEditorsModule,
         Editor3DModule.forRoot(),
-        SitesModule.forRoot(),
         ChartsModule
     ],
     declarations: [

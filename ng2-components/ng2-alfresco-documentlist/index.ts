@@ -28,6 +28,7 @@ import { ContentColumnComponent } from './src/components/content-column/content-
 import { DocumentListComponent } from './src/components/document-list.component';
 import { DocumentMenuActionComponent } from './src/components/document-menu-action.component';
 import { EmptyFolderContentDirective } from './src/components/empty-folder/empty-folder-content.directive';
+import { DropdownSitesComponent } from './src/components/site-dropdown/sites-dropdown.component';
 import { MaterialModule } from './src/material.module';
 
 import { DocumentActionsService } from './src/services/document-actions.service';
@@ -67,6 +68,7 @@ export const DOCUMENT_LIST_DIRECTIVES: any[] = [
     ContentActionListComponent,
     EmptyFolderContentDirective,
     BreadcrumbComponent,
+    DropdownSitesComponent,
     DropdownBreadcrumbComponent
 ];
 

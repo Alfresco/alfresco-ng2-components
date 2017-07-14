@@ -16,7 +16,7 @@
  */
 
 import { Component } from '@angular/core';
-import { SitesService } from 'ng2-alfresco-sites';
+import { SitesService } from 'ng2-alfresco-documentlist';
 
 @Component({
     selector: 'sites-demo',

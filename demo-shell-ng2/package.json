@@ -90,7 +90,6 @@
     "ng2-alfresco-documentlist": "1.6.1",
     "ng2-alfresco-login": "1.6.1",
     "ng2-alfresco-search": "1.6.1",
-    "ng2-alfresco-sites": "file:../ng2-components/ng2-alfresco-sites",
     "ng2-alfresco-social": "1.6.1",
     "ng2-alfresco-tag": "1.6.1",
     "ng2-alfresco-upload": "1.6.1",
