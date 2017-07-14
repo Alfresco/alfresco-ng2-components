@@ -228,11 +228,11 @@ Let's start by assigning an "image-table-cell" class to the thumbnail column:
 Now your application can define custom styles to change the content of the column based on some other conditions, like selection state:
 
 ```css
-adf-document-list >>> adf-datatable .alfresco-datatable__row--selected .image-table-cell {
+adf-document-list >>> adf-datatable tr.is-selected .image-table-cell {
     position: relative;
 }
 
-adf-document-list >>> adf-datatable .alfresco-datatable__row--selected .image-table-cell::before {
+adf-document-list >>> adf-datatable tr.is-selected .image-table-cell::before {
     content: "\E876"; /* "done" */
     font-family: "Material Icons";
     font-size: 24px;
