@@ -20,11 +20,11 @@
     height:900px;
 }
 
-adf-document-list >>> adf-datatable .alfresco-datatable__row--selected .image-table-cell {
+adf-document-list >>> adf-datatable tr.is-selected .image-table-cell {
     position: relative;
 }
 
-adf-document-list >>> adf-datatable .alfresco-datatable__row--selected .image-table-cell::before {
+adf-document-list >>> adf-datatable tr.is-selected .image-table-cell::before {
     content: "\E876"; /* "done" */
     font-family: "Material Icons";
     font-size: 24px;

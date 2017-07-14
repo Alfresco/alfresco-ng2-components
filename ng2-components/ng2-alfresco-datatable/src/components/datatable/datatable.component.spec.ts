@@ -57,9 +57,6 @@ describe('DataTable', () => {
     });
 
     beforeEach(() => {
-        // reset MDL handler
-        window['componentHandler'] = null;
-
         eventMock = {
             preventDefault: function () {
             }
@@ -191,7 +188,7 @@ describe('DataTable', () => {
 
         let headers = element.querySelectorAll('th');
         expect(headers.length).toBe(4);
-        expect(headers[headers.length - 1].classList.contains('alfresco-datatable__actions-header')).toBeTruthy();
+        expect(headers[headers.length - 1].classList.contains('actions-column')).toBeTruthy();
     });
 
     it('should put actions menu to the left', () => {
@@ -206,7 +203,7 @@ describe('DataTable', () => {
 
         let headers = element.querySelectorAll('th');
         expect(headers.length).toBe(4);
-        expect(headers[0].classList.contains('alfresco-datatable__actions-header')).toBeTruthy();
+        expect(headers[0].classList.contains('actions-column')).toBeTruthy();
     });
 
     it('should initialize default adapter', () => {
@@ -412,19 +409,6 @@ describe('DataTable', () => {
             })
         );
 
-    });
-
-    it('should upgrade MDL components on view checked', () => {
-        let handler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered']);
-        window['componentHandler'] = handler;
-
-        dataTable.ngAfterContentInit();
-        expect(handler.upgradeAllRegistered).toHaveBeenCalled();
-    });
-
-    it('should upgrade MDL components only when component handler present', () => {
-        expect(window['componentHandler']).toBeNull();
-        dataTable.ngAfterContentInit();
     });
 
     it('should invert "select all" status', () => {
