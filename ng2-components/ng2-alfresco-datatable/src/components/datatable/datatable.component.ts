@@ -16,7 +16,7 @@
  */
 
 import {
-    AfterContentInit, AfterViewInit, Component, ContentChild, DoCheck, ElementRef, EventEmitter, Input,
+    AfterContentInit, Component, ContentChild, DoCheck, ElementRef, EventEmitter, Input,
     IterableDiffers, OnChanges, Optional, Output, SimpleChange, SimpleChanges, TemplateRef
 } from '@angular/core';
 import { MdCheckboxChange } from '@angular/material';
@@ -31,10 +31,10 @@ declare var componentHandler;
 
 @Component({
     selector: 'adf-datatable, alfresco-datatable',
-    styleUrls: ['./datatable.component.css'],
+    styleUrls: ['./datatable.component.scss'],
     templateUrl: './datatable.component.html'
 })
-export class DataTableComponent implements AfterContentInit, AfterViewInit, OnChanges, DoCheck {
+export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck {
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
@@ -120,20 +120,6 @@ export class DataTableComponent implements AfterContentInit, AfterViewInit, OnCh
 
     ngAfterContentInit() {
         this.setTableSchema();
-        this.setupMaterialComponents();
-    }
-
-    ngAfterViewInit() {
-        this.setupMaterialComponents();
-    }
-
-    private setupMaterialComponents(): boolean {
-        // workaround for MDL issues with dynamic components
-        if (componentHandler) {
-            componentHandler.upgradeAllRegistered();
-            return true;
-        }
-        return false;
     }
 
     ngOnChanges(changes: SimpleChanges) {
