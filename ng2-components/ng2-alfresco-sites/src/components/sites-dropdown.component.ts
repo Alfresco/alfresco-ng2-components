@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { SitesService } from '../services/sites.service';
 
@@ -25,6 +25,9 @@ import { SitesService } from '../services/sites.service';
     templateUrl: './sites-dropdown.component.html'
 })
 export class DropdownSitesComponent implements OnInit {
+
+    @Input()
+    showDefaultOption: boolean = false;
 
     @Output()
     siteChanged: EventEmitter<any> = new EventEmitter();

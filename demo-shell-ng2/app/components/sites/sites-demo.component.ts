@@ -25,14 +25,12 @@ import { SitesService } from 'ng2-alfresco-sites';
 })
 export class SitesDemoComponent {
 
-    folderNodeId: string;
+    public folderNodeId: string;
 
     constructor(private siteService: SitesService) { }
 
     getSiteContent(site) {
-        if (site) {
-            this.folderNodeId = site.guid;
-        }
+        this.folderNodeId = site ? site.guid : null;
     }
 
 }

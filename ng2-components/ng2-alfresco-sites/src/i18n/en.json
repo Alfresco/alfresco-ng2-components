@@ -1,6 +1,7 @@
 {
     "DROPDOWN": {
-        "PLACEHOLDER_LABEL": "Site List"
+        "PLACEHOLDER_LABEL": "Site List",
+        "DEFAULT_OPTION": "No Site Chosen"
     }
 
 }

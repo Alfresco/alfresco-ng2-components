@@ -32,6 +32,7 @@ import 'ng2-alfresco-upload';
 import 'ng2-alfresco-userinfo';
 import 'ng2-alfresco-viewer';
 import 'ng2-alfresco-webscript';
+import 'ng2-alfresco-sites';
 
 // Polyfill(s) for dialogs
 require('script-loader!dialog-polyfill/dialog-polyfill');
