@@ -1,6 +1,7 @@
 {
     "rulesDirectory": [
-        "node_modules/codelyzer"
+        "node_modules/codelyzer",
+        "adf-rules"
     ],
     "rules": {
         "align": [
@@ -152,6 +153,7 @@
         "directive-class-suffix": true,
         "no-access-missing-member": false,
         "templates-use-public": true,
-        "invoke-injectable": true
+        "invoke-injectable": true,
+        "adf-file-name": true
     }
 }
