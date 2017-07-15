@@ -14,7 +14,7 @@
             "LOGIN-ERROR-PROVIDERS": "Providers non può essere nullo",
             "LOGIN-SUCCESS": "Login effettuata con successo",
             "LOGIN-ERROR-CORS": "CORS exception, controlla le configurazioni del tuo server",
-            "LOGIN-ERROR-CSRF": "CSRF exception, set [disableCsrf]=\"true\" in alfresco-login component",
+            "LOGIN-ERROR-CSRF": "CSRF exception, set [disableCsrf]=\"true\" in login.component",
             "LOGIN-ECM-LICENSE": "l'Content Services e' in read-only mode"
         },
         "BUTTON": {

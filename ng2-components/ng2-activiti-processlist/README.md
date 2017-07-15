@@ -298,10 +298,10 @@ Displays comments associated with a particular process instances and allows the 
 This component displays attached documents on a specified process instance
 
 ```html
-<adf-process-attachment-list 
+<process-attachment-list 
     [processInstanceId]="YOUR_PROCESS_INSTANCE_ID"
     (attachmentClick="YOUR_ATTACHMENT_CLICK_EMITTER_HANDLER">
-</adf-process-attachment-list>
+</process-attachment-list>
 ```
 ![process-attachment-list-sample](docs/assets/process-attachment-list.png)
 

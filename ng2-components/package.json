@@ -127,8 +127,6 @@
     "karma-systemjs": "^0.16.0",
     "karma-webpack": "^2.0.2",
     "loader-utils": "^1.1.0",
-    "markdown-toc": "1.1.0",
-    "markdownlint-cli": "^0.3.1",
     "merge-stream": "1.0.1",
     "node-sass": "4.5.3",
     "null-loader": "^0.1.1",
@@ -152,7 +150,9 @@
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.3.0",
     "webpack-merge": "2.6.1",
-    "wsrv": "0.1.7"
+    "wsrv": "0.1.7",
+    "markdown-toc": "1.1.0",
+    "markdownlint-cli": "^0.3.1"
   },
   "license": "Apache-2.0",
   "module": "./index.js",
