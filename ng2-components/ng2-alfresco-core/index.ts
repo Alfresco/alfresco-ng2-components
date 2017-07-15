@@ -51,30 +51,13 @@ import { TranslationService } from './src/services/translation.service';
 import { UploadService } from './src/services/upload.service';
 import { UserPreferencesService } from './src/services/user-preferences.service';
 
-export { ContentService } from './src/services/content.service';
-export { StorageService } from './src/services/storage.service';
-export { CookieService } from './src/services/cookie.service';
-export { AlfrescoApiService } from './src/services/alfresco-api.service';
-export { AlfrescoSettingsService } from './src/services/alfresco-settings.service';
-export { AlfrescoContentService } from './src/services/alfresco-content.service';
-export { RenditionsService } from './src/services/renditions.service';
-export { AuthGuard } from './src/services/auth-guard.service';
-export { AuthGuardEcm } from './src/services/auth-guard-ecm.service';
-export { AuthGuardBpm } from './src/services/auth-guard-bpm.service';
-export { NotificationService } from './src/services/notification.service';
-export { LogService } from './src/services/log.service';
-export { LogServiceMock } from './src/services/log.service';
-export { AuthenticationService } from './src/services/authentication.service';
-export { TranslationService } from './src/services/translation.service';
-export { AlfrescoTranslateLoader } from './src/services/translate-loader.service';
-export { AppConfigService } from './src/services/app-config.service';
-export { InitAppConfigServiceProvider } from './src/services/app-config.service';
-export { ThumbnailService } from './src/services/thumbnail.service';
-export { UploadService } from './src/services/upload.service';
-export { CardViewUpdateService } from './src/services/card-view-update.service';
-export { UpdateNotification } from './src/services/card-view-update.service';
-export { AppConfigModule } from './src/services/app-config.service';
-export { UserPreferencesService } from './src/services/user-preferences.service';
+import { DeletedNodesApiService } from './src/services/deleted-nodes-api.service';
+import { FavoritesApiService } from './src/services/favorites-api.service';
+import { NodesApiService } from './src/services/nodes-api.service';
+import { PeopleApiService } from './src/services/people-api.service';
+import { SearchApiService } from './src/services/search-api.service';
+import { SharedLinksApiService } from './src/services/shared-links-api.service';
+import { SitesApiService } from './src/services/sites-api.service';
 
 import { DataColumnListComponent } from './src/components/data-column/data-column-list.component';
 import { DataColumnComponent } from './src/components/data-column/data-column.component';
@@ -92,6 +75,13 @@ export { ContextMenuModule } from './src/components/context-menu/context-menu.mo
 export { CardViewModule } from './src/components/view/card-view.module';
 export { CollapsableModule } from './src/components/collapsable/collapsable.module';
 export { CardViewItem } from './src/interface/card-view-item.interface';
+export { DeletedNodesApiService } from './src/services/deleted-nodes-api.service';
+export { FavoritesApiService } from './src/services/favorites-api.service';
+export { NodesApiService } from './src/services/nodes-api.service';
+export { PeopleApiService } from './src/services/people-api.service';
+export { SearchApiService } from './src/services/search-api.service';
+export { SharedLinksApiService } from './src/services/shared-links-api.service';
+export { SitesApiService } from './src/services/sites-api.service';
 
 export * from './src/components/data-column/data-column.component';
 export * from './src/components/data-column/data-column-list.component';
@@ -106,8 +96,6 @@ export * from './src/models/index';
 // Old deprecated import
 import { AuthenticationService as AlfrescoAuthenticationService } from './src/services/authentication.service';
 import { TranslationService as AlfrescoTranslationService } from './src/services/translation.service';
-export { AuthenticationService as AlfrescoAuthenticationService } from './src/services/authentication.service';
-export { TranslationService as AlfrescoTranslationService } from './src/services/translation.service';
 
 export function providers() {
     return [
@@ -130,10 +118,13 @@ export function providers() {
         AuthGuardBpm,
         ThumbnailService,
         UploadService,
-
-        // Old deprecated import
-        AlfrescoTranslationService,
-        AlfrescoAuthenticationService
+        DeletedNodesApiService,
+        FavoritesApiService,
+        NodesApiService,
+        PeopleApiService,
+        SearchApiService,
+        SharedLinksApiService,
+        SitesApiService
     ];
 }
 
