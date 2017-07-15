@@ -20,7 +20,7 @@ import { ActivitiContentService } from 'ng2-activiti-form';
 import { AlfrescoTranslationService, ContentService, ThumbnailService } from 'ng2-alfresco-core';
 
 @Component({
-    selector: 'process-attachment-list',
+    selector: 'adf-process-attachment-list',
     styleUrls: ['./process-attachment-list.component.css'],
     templateUrl: './process-attachment-list.component.html'
 })
