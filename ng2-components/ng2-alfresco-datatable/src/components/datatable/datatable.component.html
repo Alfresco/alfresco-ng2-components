@@ -1,7 +1,8 @@
 <table
     *ngIf="data"
     class="full-width adf-data-table">
-    <thead>
+
+    <thead *ngIf="showHeader">
     <tr>
         <!-- Actions (left) -->
         <th *ngIf="actions && actionsPosition === 'left'" class="actions-column">
@@ -27,8 +28,8 @@
         </th>
     </tr>
     </thead>
-    <tbody>
 
+    <tbody>
     <ng-container *ngIf="!loading">
         <tr *ngFor="let row of data.getRows(); let idx = index" tabindex="0"
             [class.is-selected]="row.isSelected"
