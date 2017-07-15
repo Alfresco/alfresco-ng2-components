@@ -21,7 +21,7 @@ import {
     Directive,
     TemplateRef
 } from '@angular/core';
-import { AlfrescoLoginComponent } from '../components/alfresco-login.component';
+import { LoginComponent } from '../components/login.component';
 
 @Directive({
     selector: 'login-header'
@@ -32,7 +32,7 @@ export class LoginHeaderDirective implements AfterContentInit {
     template: any;
 
     constructor(
-        private alfrescoLoginComponent: AlfrescoLoginComponent) {
+        private alfrescoLoginComponent: LoginComponent) {
     }
 
     ngAfterContentInit() {

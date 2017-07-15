@@ -13,6 +13,7 @@
   * [DOM Events](#dom-events)
   * [Handling DOM events](#handling-dom-events)
   * [Setting default folder](#setting-default-folder)
+- [Custom icons for selected rows](#custom-icons-for-selected-rows)
 - [Calling DocumentList api directly](#calling-documentlist-api-directly)
 - [Breadcrumb Component](#breadcrumb-component)
   * [Properties](#properties-1)

@@ -24,7 +24,7 @@ import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@a
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
-export class AdfToolbarComponent {
+export class ToolbarComponent {
 
     @Input()
     title: string = '';

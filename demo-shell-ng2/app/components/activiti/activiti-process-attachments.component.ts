@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { ActivitiProcessAttachmentListComponent, ProcessUploadService } from 'ng2-activiti-processlist';
+import { ProcessAttachmentListComponent, ProcessUploadService } from 'ng2-activiti-processlist';
 import { UploadService } from 'ng2-alfresco-core';
 
 @Component({
@@ -33,8 +33,8 @@ export class ActivitiProcessAttachmentsComponent implements OnInit {
     @Input()
     processId: string;
 
-    @ViewChild(ActivitiProcessAttachmentListComponent)
-    processAttachList: ActivitiProcessAttachmentListComponent;
+    @ViewChild(ProcessAttachmentListComponent)
+    processAttachList: ProcessAttachmentListComponent;
 
     fileShowed: boolean = false;
     content: Blob;
