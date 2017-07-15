@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs/Rx';
 import { FolderCreatedEvent } from '../events/folder-created.event';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { AlfrescoAuthenticationService } from './alfresco-authentication.service';
+import { AuthenticationService } from './authentication.service';
 import { LogService } from './log.service';
 
 @Injectable()
@@ -27,7 +27,7 @@ export class AlfrescoContentService {
 
     folderCreated: Subject<FolderCreatedEvent> = new Subject<FolderCreatedEvent>();
 
-    constructor(public authService: AlfrescoAuthenticationService,
+    constructor(public authService: AuthenticationService,
                 public apiService: AlfrescoApiService,
                 private logService: LogService) {
     }

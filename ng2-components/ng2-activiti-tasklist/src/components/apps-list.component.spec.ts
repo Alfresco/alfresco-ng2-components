@@ -21,17 +21,17 @@ import { By } from '@angular/platform-browser';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 
-import { defaultApp, deployedApps, nonDeployedApps } from './../assets/activiti-apps.mock';
-import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
-import { ActivitiAppsComponent } from './activiti-apps.component';
+import { defaultApp, deployedApps, nonDeployedApps } from './../assets/apps-list.mock';
+import { TaskListService } from './../services/tasklist.service';
+import { AppsListComponent } from './apps-list.component';
 
-describe('ActivitiAppsComponent', () => {
+describe('AppsListComponent', () => {
 
     let componentHandler: any;
-    let component: ActivitiAppsComponent;
-    let fixture: ComponentFixture<ActivitiAppsComponent>;
+    let component: AppsListComponent;
+    let fixture: ComponentFixture<AppsListComponent>;
     let debugElement: DebugElement;
-    let service: ActivitiTaskListService;
+    let service: TaskListService;
     let getAppsSpy: jasmine.Spy;
 
     beforeEach(async(() => {
@@ -40,10 +40,10 @@ describe('ActivitiAppsComponent', () => {
                 CoreModule
             ],
             declarations: [
-                ActivitiAppsComponent
+                AppsListComponent
             ],
             providers: [
-                ActivitiTaskListService
+                TaskListService
             ]
         }).compileComponents();
 
@@ -54,11 +54,11 @@ describe('ActivitiAppsComponent', () => {
 
     beforeEach(() => {
 
-        fixture = TestBed.createComponent(ActivitiAppsComponent);
+        fixture = TestBed.createComponent(AppsListComponent);
         component = fixture.componentInstance;
         debugElement = fixture.debugElement;
 
-        service = fixture.debugElement.injector.get(ActivitiTaskListService);
+        service = fixture.debugElement.injector.get(TaskListService);
         getAppsSpy = spyOn(service, 'getDeployedApplications').and.returnValue(Observable.of(deployedApps));
 
         componentHandler = jasmine.createSpyObj('componentHandler', [
@@ -148,14 +148,14 @@ describe('ActivitiAppsComponent', () => {
         });
 
         it('should display a grid when configured to', () => {
-            component.layoutType = ActivitiAppsComponent.LAYOUT_GRID;
+            component.layoutType = AppsListComponent.LAYOUT_GRID;
             fixture.detectChanges();
             expect(component.isGrid()).toBe(true);
             expect(component.isList()).toBe(false);
         });
 
         it('should display a list when configured to', () => {
-            component.layoutType = ActivitiAppsComponent.LAYOUT_LIST;
+            component.layoutType = AppsListComponent.LAYOUT_LIST;
             fixture.detectChanges();
             expect(component.isGrid()).toBe(false);
             expect(component.isList()).toBe(true);

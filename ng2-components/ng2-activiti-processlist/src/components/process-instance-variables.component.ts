@@ -20,18 +20,18 @@ import { Component, DebugElement, EventEmitter, Input, OnChanges, OnInit, Output
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { DataCellEvent, DataTableAdapter, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 import { ProcessInstanceVariable } from './../models/process-instance-variable.model';
-import { ActivitiProcessService } from './../services/activiti-process.service';
+import { ProcessService } from './../services/process.service';
 
 declare let componentHandler: any;
 declare let dialogPolyfill: any;
 
 @Component({
     selector: 'adf-process-instance-variables, activiti-process-instance-variables',
-    templateUrl: './activiti-process-instance-variables.component.html',
-    styleUrls: ['./activiti-process-instance-variables.component.css'],
-    providers: [ActivitiProcessService]
+    templateUrl: './process-instance-variables.component.html',
+    styleUrls: ['./process-instance-variables.component.css'],
+    providers: [ProcessService]
 })
-export class ActivitiProcessInstanceVariablesComponent implements OnInit, OnChanges {
+export class ProcessInstanceVariablesComponent implements OnInit, OnChanges {
 
     @Input()
     processInstanceId: string;
@@ -69,7 +69,7 @@ export class ActivitiProcessInstanceVariablesComponent implements OnInit, OnChan
      * @param activitiProcess Process service
      */
     constructor(private translate: AlfrescoTranslationService,
-                private activitiProcess: ActivitiProcessService) {
+                private activitiProcess: ProcessService) {
 
         if (translate) {
             translate.addTranslationFolder('ng2-activiti-processlist', 'assets/ng2-activiti-processlist');

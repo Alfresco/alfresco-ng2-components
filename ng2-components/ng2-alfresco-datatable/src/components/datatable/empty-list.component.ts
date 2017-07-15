@@ -17,8 +17,6 @@
 
 import { Component, Input } from '@angular/core';
 
-declare var require: any;
-
 @Component({
     selector: 'adf-empty-list',
     styleUrls: ['./empty-list.component.css'],

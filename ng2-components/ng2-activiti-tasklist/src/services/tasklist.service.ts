@@ -28,7 +28,7 @@ import { TaskDetailsModel } from '../models/task-details.model';
 import { User } from '../models/user.model';
 
 @Injectable()
-export class ActivitiTaskListService {
+export class TaskListService {
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {

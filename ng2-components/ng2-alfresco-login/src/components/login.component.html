@@ -24,7 +24,7 @@
 
                 <!--USERNAME FIELD-->
                 <div class="adf-login__field" [ngClass]="{'is-invalid': isErrorStyle(form.controls.username)}">
-                    <md-input-container class="adf-full-width" floatPlaceholder="never" color="primary">
+                    <md-input-container class="adf-full-width" floatPlaceholder="never" color="accent">
                         <input mdInput placeholder="{{'LOGIN.LABEL.USERNAME' | translate }}"
                                type="text"
                                class="adf-full-width"
@@ -43,7 +43,7 @@
 
                 <!--PASSWORD FIELD-->
                 <div class="adf-login__field alfresco-login__password">
-                    <md-input-container class="adf-full-width" floatPlaceholder="never" color="primary">
+                    <md-input-container class="adf-full-width" floatPlaceholder="never" color="accent">
                         <input mdInput placeholder="{{'LOGIN.LABEL.PASSWORD' | translate }}"
                                type="password"
                                [formControl]="form.controls['password']"
@@ -82,7 +82,7 @@
 
                 </button>
                 <div *ngIf="showRememberMe" class="adf-login__remember-me" id ="login-remember">
-                    <md-checkbox color="primary" class="rememberme-cb" [checked]="rememberMe" (change)="rememberMe = !rememberMe">{{ 'LOGIN.LABEL.REMEMBER' | translate }}</md-checkbox>
+                    <md-checkbox class="rememberme-cb" [checked]="rememberMe" (change)="rememberMe = !rememberMe">{{ 'LOGIN.LABEL.REMEMBER' | translate }}</md-checkbox>
                 </div>
             </div>
             <div *ngIf="footerTemplate || showLoginActions" class="mdl-card__actions mdl-card--border mdl-card__link">

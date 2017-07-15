@@ -19,7 +19,7 @@ import { async, TestBed } from '@angular/core/testing';
 import { HttpModule } from '@angular/http';
 import { CookieServiceMock } from './../assets/cookie.service.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { AlfrescoAuthenticationService } from './alfresco-authentication.service';
+import { AuthenticationService } from './authentication.service';
 import { AlfrescoContentService } from './alfresco-content.service';
 import { AlfrescoSettingsService } from './alfresco-settings.service';
 import { AppConfigService } from './app-config.service';
@@ -40,7 +40,7 @@ describe('ThumbnailService', () => {
             ],
             providers: [
                 UserPreferencesService,
-                AlfrescoAuthenticationService,
+                AuthenticationService,
                 AlfrescoContentService,
                 AlfrescoSettingsService,
                 AppConfigService,

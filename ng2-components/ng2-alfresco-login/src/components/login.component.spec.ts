@@ -22,11 +22,11 @@ import { AlfrescoAuthenticationService, CoreModule } from 'ng2-alfresco-core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AuthenticationMock } from './../assets/authentication.service.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
-import { AlfrescoLoginComponent } from './alfresco-login.component';
+import { LoginComponent } from './login.component';
 
 describe('AlfrescoLogin', () => {
-    let component: AlfrescoLoginComponent;
-    let fixture: ComponentFixture<AlfrescoLoginComponent>;
+    let component: LoginComponent;
+    let fixture: ComponentFixture<LoginComponent>;
     let debug: DebugElement;
     let element: any;
 
@@ -42,7 +42,7 @@ describe('AlfrescoLogin', () => {
                 MdCheckboxModule,
                 CoreModule.forRoot()
             ],
-            declarations: [AlfrescoLoginComponent],
+            declarations: [LoginComponent],
             providers: [
                 {provide: AlfrescoAuthenticationService, useClass: AuthenticationMock},
                 {provide: AlfrescoTranslationService, useClass: TranslationMock}
@@ -51,7 +51,7 @@ describe('AlfrescoLogin', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(AlfrescoLoginComponent);
+        fixture = TestBed.createComponent(LoginComponent);
 
         debug = fixture.debugElement;
         element = fixture.nativeElement;

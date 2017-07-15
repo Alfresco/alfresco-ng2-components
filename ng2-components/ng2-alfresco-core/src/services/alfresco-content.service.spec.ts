@@ -18,7 +18,7 @@
 import { async, TestBed } from '@angular/core/testing';
 import { CookieServiceMock } from './../assets/cookie.service.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { AlfrescoAuthenticationService } from './alfresco-authentication.service';
+import { AuthenticationService } from './authentication.service';
 import { AlfrescoContentService } from './alfresco-content.service';
 import { AlfrescoSettingsService } from './alfresco-settings.service';
 import { AppConfigModule } from './app-config.service';
@@ -32,7 +32,7 @@ declare let jasmine: any;
 describe('AlfrescoContentService', () => {
 
     let contentService: AlfrescoContentService;
-    let authService: AlfrescoAuthenticationService;
+    let authService: AuthenticationService;
     let settingsService: AlfrescoSettingsService;
     let storage: StorageService;
     let node: any;
@@ -49,7 +49,7 @@ describe('AlfrescoContentService', () => {
             providers: [
                 AlfrescoApiService,
                 AlfrescoContentService,
-                AlfrescoAuthenticationService,
+                AuthenticationService,
                 AlfrescoSettingsService,
                 StorageService,
                 UserPreferencesService,
@@ -60,7 +60,7 @@ describe('AlfrescoContentService', () => {
     }));
 
     beforeEach(() => {
-        authService = TestBed.get(AlfrescoAuthenticationService);
+        authService = TestBed.get(AuthenticationService);
         settingsService = TestBed.get(AlfrescoSettingsService);
         contentService = TestBed.get(AlfrescoContentService);
         storage = TestBed.get(StorageService);

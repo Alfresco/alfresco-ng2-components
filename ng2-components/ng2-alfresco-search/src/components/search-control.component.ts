@@ -20,14 +20,14 @@ import { FormControl, Validators } from '@angular/forms';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { Observable, Subject } from 'rxjs/Rx';
 import { SearchTermValidator } from './../forms/search-term-validator';
-import { AlfrescoSearchAutocompleteComponent } from './alfresco-search-autocomplete.component';
+import { SearchAutocompleteComponent } from './search-autocomplete.component';
 
 @Component({
-    selector: 'adf-search-control, alfresco-search-control',
-    templateUrl: './alfresco-search-control.component.html',
-    styleUrls: ['./alfresco-search-control.component.css']
+    selector: 'adf-search-control, search-control',
+    templateUrl: './search-control.component.html',
+    styleUrls: ['./search-control.component.css']
 })
-export class AlfrescoSearchControlComponent implements OnInit, OnDestroy {
+export class SearchControlComponent implements OnInit, OnDestroy {
 
     @Input()
     searchTerm = '';
@@ -61,8 +61,8 @@ export class AlfrescoSearchControlComponent implements OnInit, OnDestroy {
     @ViewChild('searchInput', {})
     searchInput: ElementRef;
 
-    @ViewChild(AlfrescoSearchAutocompleteComponent)
-    liveSearchComponent: AlfrescoSearchAutocompleteComponent;
+    @ViewChild(SearchAutocompleteComponent)
+    liveSearchComponent: SearchAutocompleteComponent;
 
     @Input()
     liveSearchEnabled: boolean = true;

@@ -19,17 +19,17 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { Observable, Observer } from 'rxjs/Rx';
 import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
-import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
+import { TaskListService } from './../services/tasklist.service';
 
 declare let componentHandler: any;
 
 @Component({
     selector: 'adf-filters, activiti-filters',
-    templateUrl: './activiti-filters.component.html',
-    styleUrls: ['activiti-filters.component.css'],
-    providers: [ActivitiTaskListService]
+    templateUrl: './task-filters.component.html',
+    styleUrls: ['task-filters.component.css'],
+    providers: [TaskListService]
 })
-export class ActivitiFiltersComponent implements OnInit, OnChanges {
+export class TaskFiltersComponent implements OnInit, OnChanges {
 
     @Input()
     filterParam: FilterParamsModel;
@@ -60,7 +60,7 @@ export class ActivitiFiltersComponent implements OnInit, OnChanges {
     filters: FilterRepresentationModel [] = [];
 
     constructor(private translateService: AlfrescoTranslationService,
-                private activiti: ActivitiTaskListService,
+                private activiti: TaskListService,
                 private logService: LogService) {
         this.filter$ = new Observable<FilterRepresentationModel>(observer => this.filterObserver = observer).share();
 

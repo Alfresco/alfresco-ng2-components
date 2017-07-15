@@ -66,12 +66,12 @@ describe('CommentsComponent', () => {
         component = fixture.componentInstance;
         service = fixture.debugElement.injector.get(TaskListService);
 
-        getCommentsSpy = spyOn(service, 'getComments').and.returnValue(Observable.of([
+        getCommentsSpy = spyOn(service, 'getTaskComments').and.returnValue(Observable.of([
             { message: 'Test1', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'} },
             { message: 'Test2', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'} },
             { message: 'Test3', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'} }
         ]));
-        addCommentSpy = spyOn(service, 'addComment').and.returnValue(Observable.of({id: 123, message: 'Test Comment'}));
+        addCommentSpy = spyOn(service, 'addTaskComment').and.returnValue(Observable.of({id: 123, message: 'Test Comment'}));
 
         componentHandler = jasmine.createSpyObj('componentHandler', [
             'upgradeAllRegistered',

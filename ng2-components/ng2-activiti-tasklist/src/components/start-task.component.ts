@@ -35,7 +35,7 @@ export class StartTaskComponent implements OnInit {
     appId: string;
 
     @Output()
-    success: EventEmitter<any> = new EventEmitter<any>();
+    onSuccess: EventEmitter<any> = new EventEmitter<any>();
 
     @Output()
     cancel: EventEmitter<void> = new EventEmitter<void>();
@@ -75,7 +75,7 @@ export class StartTaskComponent implements OnInit {
             this.startTaskmodel.category = this.appId;
             this.taskService.createNewTask(new TaskDetailsModel(this.startTaskmodel)).subscribe(
                 (res: any) => {
-                    this.success.emit(res);
+                    this.onSuccess.emit(res);
                     this.attachForm(res.id);
                     this.resetForm();
                 },
@@ -118,19 +118,5 @@ export class StartTaskComponent implements OnInit {
             this.error.emit(err);
             this.logService.error('Could not load users');
         });
-    }
-
-    isUserNameEmpty(user: any) {
-        return !user || (this.isEmpty(user.firstName) && this.isEmpty(user.lastName));
-    }
-
-    private isEmpty(data: string) {
-        return data === undefined || data === null || data.trim().length === 0;
-    }
-
-    getDisplayUser(firstName: string, lastName: string, delimiter: string = '-'): string {
-        firstName = (firstName !== null ? firstName : '');
-        lastName = (lastName !== null ? lastName : '');
-        return firstName + delimiter + lastName;
     }
 }

@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import { ActivitiTaskDetailsComponent } from './activiti-task-details.component';
-import { NoTaskDetailsTemplateDirective } from './no-task-detail-template.component';
+import { TaskDetailsComponent } from './task-details.component';
+import { NoTaskDetailsTemplateDirective } from './no-task-detail-template.directive';
 
 describe('NoTaskDetailsTemplateDirective', () => {
 
     let component: NoTaskDetailsTemplateDirective;
-    let detailsComponent: ActivitiTaskDetailsComponent;
+    let detailsComponent: TaskDetailsComponent;
 
     beforeEach(() => {
-        detailsComponent = new ActivitiTaskDetailsComponent(null, null, null, null, null, null);
+        detailsComponent = new TaskDetailsComponent(null, null, null, null, null, null);
         component = new NoTaskDetailsTemplateDirective(detailsComponent);
     });
 

@@ -31,20 +31,20 @@ import { AlfrescoAuthenticationService, AlfrescoTranslationService, CardViewUpda
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { User } from '../models/user.model';
-import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
+import { TaskListService } from './../services/tasklist.service';
 
 declare var require: any;
 declare let dialogPolyfill: any;
 
 @Component({
     selector: 'adf-task-details, activiti-task-details',
-    templateUrl: './activiti-task-details.component.html',
-    styleUrls: ['./activiti-task-details.component.css'],
+    templateUrl: './task-details.component.html',
+    styleUrls: ['./task-details.component.css'],
     providers: [
         CardViewUpdateService
     ]
 })
-export class ActivitiTaskDetailsComponent implements OnInit, OnChanges {
+export class TaskDetailsComponent implements OnInit, OnChanges {
 
     @ViewChild('activiticomments')
     activiticomments: any;
@@ -144,7 +144,7 @@ export class ActivitiTaskDetailsComponent implements OnInit, OnChanges {
      */
     constructor(private translateService: AlfrescoTranslationService,
                 private activitiForm: FormService,
-                private activitiTaskList: ActivitiTaskListService,
+                private activitiTaskList: TaskListService,
                 private logService: LogService,
                 private authService: AlfrescoAuthenticationService,
                 private cardViewUpdateService: CardViewUpdateService

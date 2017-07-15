@@ -23,10 +23,6 @@
         }
     }
 
-    &-textitem-clickable-value {
-        cursor: pointer;
-    }
-
     &-textitem-editable {
         display: flex;
 
@@ -54,18 +50,12 @@
         display: none;
     }
 
-    &-textitem-editable /deep/ .mat-input-infix {
-        padding: 0;
-        border-top: none;
-    }
-
     &-textitem-editable /deep/ .mat-input-placeholder-wrapper {
         padding-top: 2em;
-        position: static;
     }
 
     &-textitem-editable /deep/ .mat-input-placeholder {
-        top: 0;
+        top: 3px;
     }
 
     &-textitem-editable /deep/ .mat-input-element {
@@ -77,7 +67,7 @@
     &-textitem-editable /deep/ .mat-input-element:focus {
         padding: 5px;
         left: -6px;
-        top: -6px;
+        top: -3px;
     }
 
     &-textitem-editable /deep/ input.mat-input-element {
@@ -85,6 +75,6 @@
     }
 
     &-textitem-editable /deep/ input.mat-input-element:focus {
-        margin-bottom: -8px;
+        margin-bottom: -7px;
     }
 }

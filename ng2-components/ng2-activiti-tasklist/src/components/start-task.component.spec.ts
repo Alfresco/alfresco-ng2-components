@@ -133,7 +133,7 @@ describe('StartTaskComponent', () => {
         });
 
         it('should create new task when start is clicked', async(() => {
-            activitiStartTaskComponent.success.subscribe((res) => {
+            activitiStartTaskComponent.onSuccess.subscribe((res) => {
                 expect(res).toBeDefined();
             });
             activitiStartTaskComponent.appId = 'fakeAppId';
@@ -144,8 +144,8 @@ describe('StartTaskComponent', () => {
             });
         }));
 
-        it('should send on success event when the task is started', async(() => {
-            activitiStartTaskComponent.success.subscribe((res) => {
+        it('should send on onSuccess event when the task is started', async(() => {
+            activitiStartTaskComponent.onSuccess.subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(res.id).toBe(91);
                 expect(res.name).toBe('fakeName');
@@ -175,8 +175,8 @@ describe('StartTaskComponent', () => {
             });
         }));
 
-        it('should send on success event when only name is given', async(() => {
-            activitiStartTaskComponent.success.subscribe((res) => {
+        it('should send on onSuccess event when only name is given', async(() => {
+            activitiStartTaskComponent.onSuccess.subscribe((res) => {
                 expect(res).toBeDefined();
             });
             activitiStartTaskComponent.appId = 'fakeAppId';
@@ -191,7 +191,7 @@ describe('StartTaskComponent', () => {
         }));
 
         it('should attach a task when a form id selected', () => {
-            activitiStartTaskComponent.success.subscribe((res) => {
+            activitiStartTaskComponent.onSuccess.subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(res.formKey).toBe('4');
             });
@@ -201,13 +201,13 @@ describe('StartTaskComponent', () => {
             expect(getcreateNewTaskSpy).toHaveBeenCalled();
         });
 
-        it('should not emit success event when data not present', async(() => {
-            let successSpy: jasmine.Spy = spyOn(activitiStartTaskComponent.success, 'emit');
+        it('should not emit onSuccess event when data not present', async(() => {
+            let onSuccessSpy: jasmine.Spy = spyOn(activitiStartTaskComponent.onSuccess, 'emit');
             activitiStartTaskComponent.startTaskmodel = new StartTaskModel(null);
             activitiStartTaskComponent.start();
             fixture.detectChanges();
             expect(getcreateNewTaskSpy).not.toHaveBeenCalled();
-            expect(successSpy).not.toHaveBeenCalled();
+            expect(onSuccessSpy).not.toHaveBeenCalled();
         }));
     });
 
@@ -266,50 +266,10 @@ describe('StartTaskComponent', () => {
         expect(emitSpy).toHaveBeenCalled();
     });
 
-    it('should enable start button if name is filled out', () => {
+    it('should enable button if name is not empty', () => {
+        let createTaskButton = fixture.nativeElement.querySelector('#button-start');
         activitiStartTaskComponent.startTaskmodel.name = 'fakeName';
         fixture.detectChanges();
-        let createTaskButton = fixture.nativeElement.querySelector('#button-start');
         expect(createTaskButton.enable).toBeFalsy();
-    });
-
-    it('should defined the select option for Assignee', () => {
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            let selectElement = fixture.nativeElement.querySelector('#assignee_id');
-            expect(selectElement).not.toBeNull();
-            expect(selectElement).toBeDefined();
-            expect(selectElement.innerText.trim()).toBe('START_TASK.FORM.LABEL.ASSIGNEE');
-        });
-    });
-
-    it('should defined the select option for Forms', () => {
-        activitiStartTaskComponent.forms = fakeForms;
-        fixture.detectChanges();
-        let selectElement = fixture.nativeElement.querySelector('#form_id');
-        expect(selectElement.innerText.trim()).toBe('START_TASK.FORM.LABEL.FORM');
-    });
-
-    it('should get formatted fullname', () => {
-        let testUser1 = {'id': 1001, 'firstName': 'Wilbur', 'lastName': 'Adams', 'email': 'wilbur@app.activiti.com'};
-        let testUser2 = {'id': 1002, 'firstName': '', 'lastName': 'Adams', 'email': 'adams@app.activiti.com'};
-        let testUser3 = {'id': 1003, 'firstName': 'Wilbur', 'lastName': '', 'email': 'wilbur@app.activiti.com'};
-        let testUser4 = {'id': 1004, 'firstName': '', 'lastName': '', 'email': 'test@app.activiti.com'};
-
-        let testFullname1 = activitiStartTaskComponent.getDisplayUser(testUser1.firstName, testUser1.lastName, ' ');
-        let testFullname2 = activitiStartTaskComponent.getDisplayUser(testUser2.firstName, testUser2.lastName, ' ');
-        let testFullname3 = activitiStartTaskComponent.getDisplayUser(testUser3.firstName, testUser3.lastName, ' ');
-        let testFullname4 = activitiStartTaskComponent.getDisplayUser(testUser4.firstName, testUser4.lastName, ' ');
-
-        expect(testFullname1.trim()).toBe('Wilbur Adams');
-        expect(testFullname2.trim()).toBe('Adams');
-        expect(testFullname3.trim()).toBe('Wilbur');
-        expect(testFullname4.trim()).toBe('');
-    });
-
-    it('should not show the name if it is empty', () => {
-        let testUser2 = {'id': 1001, 'firstName': '', 'lastName': '', 'email': 'wilbur@app.activiti.com'};
-        let isUserNameEmpty2 = activitiStartTaskComponent.isUserNameEmpty(testUser2);
-        expect(isUserNameEmpty2).toBe(true);
     });
 });

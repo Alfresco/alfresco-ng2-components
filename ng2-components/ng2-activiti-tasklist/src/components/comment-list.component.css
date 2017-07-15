@@ -55,10 +55,10 @@ adf-datatable >>> table thead {
 }
 
 adf-datatable >>> table {
-    border: none !important;
+    border: none;
 }
 
 adf-datatable >>> table tbody td {
     padding: 0px!important;
-    border-top: none !important;
+    border-top: none;
 }

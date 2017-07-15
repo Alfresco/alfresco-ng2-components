@@ -25,15 +25,15 @@ import {
     AlfrescoTranslationService,
     CoreModule
 } from 'ng2-alfresco-core';
-import { AlfrescoSearchService } from '../services/alfresco-search.service';
-import { errorJson, folderResult, noResult, result, results } from './../assets/alfresco-search.component.mock';
+import { SearchService } from '../services/search.service';
+import { errorJson, folderResult, noResult, result, results } from './../assets/search.component.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
-import { AlfrescoSearchAutocompleteComponent } from './alfresco-search-autocomplete.component';
+import { SearchAutocompleteComponent } from './search-autocomplete.component';
 
-describe('AlfrescoSearchAutocompleteComponent', () => {
+describe('SearchAutocompleteComponent', () => {
 
-    let fixture: ComponentFixture<AlfrescoSearchAutocompleteComponent>, element: HTMLElement;
-    let component: AlfrescoSearchAutocompleteComponent;
+    let fixture: ComponentFixture<SearchAutocompleteComponent>, element: HTMLElement;
+    let component: SearchAutocompleteComponent;
 
     let updateSearchTerm = (newSearchTerm: string): void => {
         let oldSearchTerm = component.searchTerm;
@@ -46,7 +46,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
             imports: [
                 CoreModule
             ],
-            declarations: [ AlfrescoSearchAutocompleteComponent ], // declare the test component
+            declarations: [ SearchAutocompleteComponent ], // declare the test component
             providers: [
                 {provide: AlfrescoTranslationService, useClass: TranslationMock},
                 ThumbnailService,
@@ -54,10 +54,10 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
                 AlfrescoApiService,
                 AlfrescoAuthenticationService,
                 AlfrescoContentService,
-                AlfrescoSearchService
+                SearchService
             ]
         }).compileComponents().then(() => {
-            fixture = TestBed.createComponent(AlfrescoSearchAutocompleteComponent);
+            fixture = TestBed.createComponent(SearchAutocompleteComponent);
             component = fixture.componentInstance;
             element = fixture.nativeElement;
         });
@@ -75,7 +75,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
         let searchService;
 
         beforeEach(() => {
-            searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
+            searchService = fixture.debugElement.injector.get(SearchService);
         });
 
         it('should clear results straight away when a new search term is entered', async(() => {
@@ -184,7 +184,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
         let searchService;
 
         beforeEach(() => {
-            searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
+            searchService = fixture.debugElement.injector.get(SearchService);
             spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.reject(errorJson));
         });
@@ -225,7 +225,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
         let searchService;
 
         beforeEach(() => {
-            searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
+            searchService = fixture.debugElement.injector.get(SearchService);
         });
 
         it('should emit fileSelect event when file item clicked', (done) => {
@@ -267,7 +267,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
         let searchService;
 
         beforeEach(() => {
-            searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
+            searchService = fixture.debugElement.injector.get(SearchService);
             spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(results));
         });
@@ -379,7 +379,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
         let searchService;
 
         beforeEach(() => {
-            searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
+            searchService = fixture.debugElement.injector.get(SearchService);
             spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(result));
         });
