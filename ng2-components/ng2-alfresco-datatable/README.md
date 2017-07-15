@@ -160,6 +160,7 @@ export class DataTableDemo {
 | contextMenu | boolean | false | Toggles custom context menu for the component |
 | allowDropFiles | boolean | false | Toggle file drop support for rows (see **ng2-alfresco-core/UploadDirective** for more details) |
 | loading | boolean | false | Flag that indicate if the datable is in loading state and need to show the loading template. Read the documentation above to know how to configure a loading template  |
+| showHeader | boolean | true | Toggles header visibility |
 
 ### DataColumn Properties
 

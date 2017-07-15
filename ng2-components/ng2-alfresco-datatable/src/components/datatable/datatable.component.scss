@@ -23,6 +23,7 @@ $data-table-cell-top: $data-table-card-padding / 2;
 $data-table-drag-border: 1px dashed rgb(68,138,255);
 
 .adf-data-table {
+    width: 100%;
     position: relative;
     border: $data-table-dividers;
     border-collapse: collapse;
