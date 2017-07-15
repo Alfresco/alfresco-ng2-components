@@ -1,0 +1,50 @@
+@import 'theming';
+
+.#{$ADF} {
+    &-dropdown-breadcrumb {
+        display: flex;
+        justify-content: flex-start;
+        min-height: 35px;
+    }
+
+    &-dropdown-breadcumb-trigger {
+        cursor: pointer;
+        padding-right: 5px;
+    }
+
+    &-dropdown-breadcumb-trigger.isRoot {
+        cursor: not-allowed;
+    }
+
+    &-dropdown-breadcrumb-path {
+        width: 0;
+        height: 0;
+        overflow: hidden;
+        margin-top: 35px;
+        margin-left: -40px;
+    }
+
+    &-current-folder {
+        margin-left: 41px;
+        padding-top: 2px;
+    }
+
+    &-current-folder.isRoot {
+        margin-left: 0;
+    }
+
+    &-dropdown-breadcrumb-path-option.mat-option {
+        height: 28px;
+        line-height: 28px;
+        padding: 0 12px;
+        font-size: 13px;
+    }
+
+    &-dropdown-breadcrumb-path-option.mat-option:first-child {
+        padding-top: 4px;
+    }
+
+    &-dropdown-breadcrumb-path-option.mat-option:last-child {
+        padding-bottom: 4px;
+    }
+}
