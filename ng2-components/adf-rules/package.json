@@ -1,6 +1,6 @@
 {
-  "name": "ng2-alfresco-search",
-  "description": "Alfresco Angular2 Search Component",
+  "name": "adf-tlsint-rules",
+  "description": "Custom Rules for the ADF project",
   "version": "1.6.1",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
