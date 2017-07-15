@@ -24,7 +24,7 @@ import { ProcessInstanceListComponent } from './processlist.component';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { DataRowEvent, DataSorting, DataTableModule, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 
-import { fakeProcessInstances, fakeProcessInstancesWithNoName } from '../assets/activiti-process-instances-list.mock';
+import { fakeProcessInstances, fakeProcessInstancesWithNoName } from '../assets/process-instances-list.mock';
 import { ProcessService } from '../services/process.service';
 import { TranslationMock } from './../assets/translation.service.mock';
 

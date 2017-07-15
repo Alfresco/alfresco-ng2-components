@@ -25,7 +25,7 @@ import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 
 import { ProcessInstance } from '../models/process-instance.model';
-import { exampleProcess, exampleProcessNoName } from './../assets/activiti-process.model.mock';
+import { exampleProcess, exampleProcessNoName } from './../assets/process.model.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
 import { ProcessService } from './../services/process.service';
 import { ProcessInstanceDetailsComponent } from './process-instance-details.component';

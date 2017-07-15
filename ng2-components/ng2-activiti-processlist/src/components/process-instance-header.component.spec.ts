@@ -18,7 +18,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
-import { exampleProcess, processEnded } from './../assets/activiti-process.model.mock';
+import { exampleProcess, processEnded } from './../assets/process.model.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
 import { ProcessInstance } from './../models/process-instance.model';
 import { ProcessService } from './../services/process.service';

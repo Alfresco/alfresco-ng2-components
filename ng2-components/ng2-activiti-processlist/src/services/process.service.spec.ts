@@ -19,7 +19,7 @@ import { TestBed } from '@angular/core/testing';
 import { async } from '@angular/core/testing';
 import { AlfrescoApi } from 'alfresco-js-api';
 import { AlfrescoApiService, CoreModule } from 'ng2-alfresco-core';
-import { exampleProcess } from '../assets/activiti-process.model.mock';
+import { exampleProcess } from '../assets/process.model.mock';
 import {
     fakeApp1,
     fakeApp2,

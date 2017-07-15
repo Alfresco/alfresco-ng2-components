@@ -21,7 +21,7 @@ import { By } from '@angular/platform-browser';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 
-import { defaultApp, deployedApps, nonDeployedApps } from './../assets/activiti-apps.mock';
+import { defaultApp, deployedApps, nonDeployedApps } from './../assets/apps-list.mock';
 import { TaskListService } from './../services/tasklist.service';
 import { AppsListComponent } from './apps-list.component';
 
