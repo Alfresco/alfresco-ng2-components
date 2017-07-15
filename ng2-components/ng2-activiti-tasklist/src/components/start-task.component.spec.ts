@@ -19,7 +19,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MdButtonModule, MdDatepickerModule, MdGridListModule, MdIconModule, MdInputModule, MdNativeDateModule, MdSelectModule } from '@angular/material';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
-import { StartTaskModel } from '../models/index';
+import { StartTaskModel } from '../models/start-task.model';
 import { PeopleService } from '../services/people.service';
 import { TaskListService } from '../services/tasklist.service';
 import { startTaskMock } from './../assets/start-task.mock';

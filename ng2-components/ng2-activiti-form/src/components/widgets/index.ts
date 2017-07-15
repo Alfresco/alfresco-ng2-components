@@ -99,7 +99,6 @@ export const WIDGET_DIRECTIVES: any[] = [
     PeopleWidgetComponent,
     DateWidgetComponent,
     AmountWidgetComponent,
-
     DynamicTableWidgetComponent,
     DateEditorComponent,
     DropdownEditorComponent,

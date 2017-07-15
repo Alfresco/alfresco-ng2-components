@@ -18,8 +18,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { Form } from '../models/form.model';
-import { StartTaskModel, User } from '../models/index';
+import { StartTaskModel } from '../models/start-task.model';
 import { TaskDetailsModel } from '../models/task-details.model';
+import { User } from '../models/user.model';
 import { PeopleService } from '../services/people.service';
 import { TaskListService } from './../services/tasklist.service';
 

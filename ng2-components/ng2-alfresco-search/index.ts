@@ -30,14 +30,32 @@ export * from './src/components/search.component';
 export * from './src/components/search-control.component';
 export * from './src/components/search-autocomplete.component';
 
+// Old Deprecated export
+import { SearchAutocompleteComponent as AlfrescoSearchAutocompleteComponent } from './src/components/search-autocomplete.component';
+import { SearchControlComponent as AlfrescoSearchControlComponent } from './src/components/search-control.component';
+import { SearchComponent as AlfrescoSearchComponent } from './src/components/search.component';
+import { SearchService as AlfrescoSearchService } from './src/services/search.service';
+export { SearchService as AlfrescoSearchService } from './src/services/search.service';
+export { SearchComponent as AlfrescoSearchComponent } from './src/components/search.component';
+export { SearchControlComponent as AlfrescoSearchControlComponent } from './src/components/search-control.component';
+export { SearchAutocompleteComponent as AlfrescoSearchAutocompleteComponent } from './src/components/search-autocomplete.component';
+
 export const ALFRESCO_SEARCH_DIRECTIVES: [any] = [
     SearchComponent,
     SearchControlComponent,
-    SearchAutocompleteComponent
+    SearchAutocompleteComponent,
+
+    // Old Deprecated export
+    AlfrescoSearchComponent,
+    AlfrescoSearchControlComponent,
+    AlfrescoSearchAutocompleteComponent
 ];
 
 export const ALFRESCO_SEARCH_PROVIDERS: [any] = [
-    SearchService
+    SearchService,
+
+    // Old Deprecated export
+    AlfrescoSearchService
 ];
 
 @NgModule({

@@ -19,7 +19,7 @@ import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, 
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { FormService } from './../services/form.service';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
-import { ActivitiForm } from './form.component';
+import { FormComponent } from './form.component';
 import { ContentLinkModel } from './widgets/core/content-link.model';
 import { FormOutcomeModel } from './widgets/core/index';
 
@@ -38,14 +38,14 @@ import { FormOutcomeModel } from './widgets/core/index';
  *  {formSaved} EventEmitter - This event is fired when the form is saved, it pass all the value in the form.
  *  {formCompleted} EventEmitter - This event is fired when the form is completed, it pass all the value in the form.
  *
- * @returns {ActivitiForm} .
+ * @returns {FormComponent} .
  */
 @Component({
     selector: 'adf-start-form, activiti-start-form',
     templateUrl: './start-form.component.html',
     styleUrls: ['./form.component.css']
 })
-export class StartFormComponent extends ActivitiForm implements OnChanges, OnInit {
+export class StartFormComponent extends FormComponent implements OnChanges, OnInit {
 
     @Input()
     processDefinitionId: string;

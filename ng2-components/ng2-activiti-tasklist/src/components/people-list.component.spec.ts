@@ -19,7 +19,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { DataRowActionEvent, DataRowEvent, DataTableModule, ObjectDataRow } from 'ng2-alfresco-datatable';
 import { Observable } from 'rxjs/Observable';
-import { User, UserEventModel } from '../models/index';
+import { User } from '../models/user.model';
+import { UserEventModel } from '../models/user-event.model';
 import { PeopleListComponent } from './people-list.component';
 
 declare let jasmine: any;
@@ -51,7 +52,9 @@ describe('PeopleListComponent', () => {
 
             let translateService = TestBed.get(AlfrescoTranslationService);
             spyOn(translateService, 'addTranslationFolder').and.stub();
-            spyOn(translateService.translate, 'get').and.callFake((key) => { return Observable.of(key); });
+            spyOn(translateService.translate, 'get').and.callFake((key) => {
+                return Observable.of(key);
+            });
 
             fixture = TestBed.createComponent(PeopleListComponent);
             peopleListComponent = fixture.componentInstance;

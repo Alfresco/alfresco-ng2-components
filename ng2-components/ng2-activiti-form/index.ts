@@ -23,7 +23,7 @@ import { DataTableModule } from 'ng2-alfresco-datatable';
 import { ActivitiContentComponent } from './src/components/activiti-content.component';
 import { FormFieldComponent } from './src/components/form-field/form-field.component';
 import { FormListComponent } from './src/components/form-list.component';
-import { ActivitiForm } from './src/components/form.component';
+import { FormComponent } from './src/components/form.component';
 import { StartFormComponent } from './src/components/start-form.component';
 import { MASK_DIRECTIVE, WIDGET_DIRECTIVES } from './src/components/widgets/index';
 import { ActivitiAlfrescoContentService } from './src/services/activiti-alfresco.service';
@@ -45,14 +45,25 @@ export * from './src/services/ecm-model.service';
 export * from './src/services/node.service';
 export * from './src/services/form-rendering.service';
 export * from './src/events/index';
+import {ActivitiContentComponent as ActivitiContent} from './src/components/activiti-content.component';
+import {StartFormComponent as ActivitiStartForm} from './src/components/start-form.component';
+export {FormComponent as ActivitiForm} from './src/components/form.component';
+export {FormComponent as ActivitiForm} from './src/components/form.component';
+export {ActivitiContentComponent as ActivitiContent} from './src/components/activiti-content.component';
+export {StartFormComponent as ActivitiStartForm} from './src/components/start-form.component';
 
 export const ACTIVITI_FORM_DIRECTIVES: any[] = [
-    ActivitiForm,
+    FormComponent,
     FormListComponent,
     ActivitiContentComponent,
     StartFormComponent,
     FormFieldComponent,
-    ...WIDGET_DIRECTIVES
+    ...WIDGET_DIRECTIVES,
+
+    // Old Deprecated export
+    ActivitiForm,
+    ActivitiContent,
+    ActivitiStartForm
 ];
 
 export const ACTIVITI_FORM_PROVIDERS: any[] = [

@@ -17,18 +17,8 @@
 
 import { DatePipe } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import {
-    MdAutocompleteModule,
-    MdButtonModule,
-    MdCardModule,
-    MdDatepickerModule,
-    MdGridListModule,
-    MdIconModule,
-    MdInputModule,
-    MdNativeDateModule,
-    MdProgressSpinnerModule,
-    MdSelectModule
-} from '@angular/material';
+import { MdAutocompleteModule, MdButtonModule, MdCardModule, MdDatepickerModule, MdGridListModule,
+    MdIconModule, MdInputModule, MdNativeDateModule, MdProgressSpinnerModule, MdSelectModule } from '@angular/material';
 import { ActivitiFormModule } from 'ng2-activiti-form';
 import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
@@ -36,29 +26,82 @@ import { PeopleService } from './src/services/people.service';
 import { ProcessUploadService } from './src/services/process-upload.service';
 import { TaskListService } from './src/services/tasklist.service';
 
-import {
-    AppsListComponent,
-    AttachmentComponent,
-    ChecklistComponent,
-    CommentListComponent,
-    CommentsComponent,
-    TaskFiltersComponent,
-    NoTaskDetailsTemplateDirective,
-    PeopleComponent,
-    PeopleListComponent,
-    PeopleSearchComponent,
-    StartTaskComponent,
-    TaskAttachmentListComponent,
-    TaskDetailsComponent,
-    TaskHeaderComponent,
-    TaskListComponent
-} from './src/components/index';
+import {AppsListComponent } from './src/components/apps-list.component';
+import {ChecklistComponent } from './src/components/checklist.component';
+import {CommentListComponent } from './src/components/comment-list.component';
+import {CommentsComponent } from './src/components/comments.component';
+import {AttachmentComponent } from './src/components/create-task-attachment.component';
+import {NoTaskDetailsTemplateDirective } from './src/components/no-task-detail-template.directive';
+import {PeopleListComponent } from './src/components/people-list.component';
+import {PeopleSearchComponent } from './src/components/people-search.component';
+import {PeopleComponent } from './src/components/people.component';
+import {StartTaskComponent } from './src/components/start-task.component';
+import {TaskAttachmentListComponent} from './src/components/task-attachment-list.component';
+import {TaskDetailsComponent } from './src/components/task-details.component';
+import {TaskFiltersComponent } from './src/components/task-filters.component';
+import {TaskHeaderComponent } from './src/components/task-header.component';
+import {TaskListComponent } from './src/components/tasklist.component';
 
-export * from './src/components/index';
-export * from './src/services/tasklist.service';
-export * from './src/services/people.service';
-export * from './src/services/process-upload.service';
-export * from  './src/models/index';
+export {AppsListComponent } from './src/components/apps-list.component';
+export {TaskListComponent } from './src/components/tasklist.component';
+export {ChecklistComponent } from './src/components/checklist.component';
+export {CommentsComponent } from './src/components/comments.component';
+export {TaskAttachmentListComponent} from './src/components/task-attachment-list.component';
+export {PeopleComponent } from './src/components/people.component';
+export {TaskHeaderComponent } from './src/components/task-header.component';
+export {NoTaskDetailsTemplateDirective } from './src/components/no-task-detail-template.directive';
+export {TaskFiltersComponent } from './src/components/task-filters.component';
+export {TaskDetailsComponent } from './src/components/task-details.component';
+export {StartTaskComponent } from './src/components/start-task.component';
+export {PeopleSearchComponent } from './src/components/people-search.component';
+export {AttachmentComponent } from './src/components/create-task-attachment.component';
+export {PeopleListComponent } from './src/components/people-list.component';
+export {CommentListComponent } from './src/components/comment-list.component';
+
+export { TaskListService }  from './src/services/tasklist.service';
+export { PeopleService }  from './src/services/people.service';
+export { ProcessUploadService }  from './src/services/process-upload.service';
+
+// Old Deprecated export
+import {AppsListComponent as ActivitiApps} from './src/components/apps-list.component';
+import {ChecklistComponent as ActivitiChecklist} from './src/components/checklist.component';
+import {CommentsComponent as ActivitiComments} from './src/components/comments.component';
+import {AttachmentComponent as ActivitiCreateTaskAttachmentComponent } from './src/components/create-task-attachment.component';
+import {NoTaskDetailsTemplateDirective as NoTaskDetailsTemplateComponent } from './src/components/no-task-detail-template.directive';
+import {PeopleListComponent as PeopleList } from './src/components/people-list.component';
+import {PeopleSearchComponent as ActivitiPeopleSearch } from './src/components/people-search.component';
+import {PeopleComponent as ActivitiPeople} from './src/components/people.component';
+import {StartTaskComponent as ActivitiStartTaskButton } from './src/components/start-task.component';
+import {TaskDetailsComponent as ActivitiTaskDetails } from './src/components/task-details.component';
+import {TaskFiltersComponent as ActivitiFilters } from './src/components/task-filters.component';
+import {TaskHeaderComponent as ActivitiTaskHeader} from './src/components/task-header.component';
+import {TaskListComponent as ActivitiTaskList } from './src/components/tasklist.component';
+import {PeopleService as ActivitiPeopleService } from './src/services/people.service';
+import {TaskListService as ActivitiTaskListService } from './src/services/tasklist.service';
+export {AppsListComponent as ActivitiApps} from './src/components/apps-list.component';
+export {ChecklistComponent as ActivitiChecklist} from './src/components/checklist.component';
+export {CommentsComponent as ActivitiComments} from './src/components/comments.component';
+export {AttachmentComponent as ActivitiCreateTaskAttachmentComponent } from './src/components/create-task-attachment.component';
+export {NoTaskDetailsTemplateDirective as NoTaskDetailsTemplateComponent } from './src/components/no-task-detail-template.directive';
+export {PeopleListComponent as PeopleList } from './src/components/people-list.component';
+export {PeopleSearchComponent as ActivitiPeopleSearch } from './src/components/people-search.component';
+export {PeopleComponent as ActivitiPeople} from './src/components/people.component';
+export {StartTaskComponent as ActivitiStartTaskButton } from './src/components/start-task.component';
+export {TaskDetailsComponent as ActivitiTaskDetails } from './src/components/task-details.component';
+export {TaskFiltersComponent as ActivitiFilters } from './src/components/task-filters.component';
+export {TaskHeaderComponent as ActivitiTaskHeader} from './src/components/task-header.component';
+export {TaskListComponent as ActivitiTaskList } from './src/components/tasklist.component';
+export {PeopleService as ActivitiPeopleService } from './src/services/people.service';
+export {TaskListService as ActivitiTaskListService } from './src/services/tasklist.service';
+
+export * from './src/models/comment.model';
+export * from './src/models/filter.model';
+export * from './src/models/icon.model';
+export * from './src/models/user.model';
+export * from './src/models/task-details.model';
+export * from './src/models/task-details.event';
+export * from './src/models/user-event.model';
+export * from './src/models/start-task.model';
 
 export const ACTIVITI_TASKLIST_DIRECTIVES: any[] = [
     NoTaskDetailsTemplateDirective,
@@ -75,13 +118,32 @@ export const ACTIVITI_TASKLIST_DIRECTIVES: any[] = [
     TaskAttachmentListComponent,
     AttachmentComponent,
     PeopleListComponent,
-    CommentListComponent
+    CommentListComponent,
+
+// Old Deprecated export
+    ActivitiApps,
+    ActivitiTaskList,
+    ActivitiTaskDetails,
+    ActivitiFilters,
+    NoTaskDetailsTemplateComponent,
+    ActivitiChecklist,
+    ActivitiComments,
+    ActivitiPeople,
+    ActivitiTaskHeader,
+    ActivitiStartTaskButton,
+    ActivitiPeopleSearch,
+    ActivitiCreateTaskAttachmentComponent,
+    PeopleList
 ];
 
 export const ACTIVITI_TASKLIST_PROVIDERS: any[] = [
     TaskListService,
     PeopleService,
-    ProcessUploadService
+    ProcessUploadService,
+
+    // Old Deprecated export
+    ActivitiTaskListService,
+    ActivitiPeopleService
 ];
 
 @NgModule({

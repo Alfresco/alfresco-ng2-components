@@ -22,36 +22,61 @@ import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
 import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 
-import {
-    CreateProcessAttachmentComponent,
-    ProcessFiltersComponent,
-    ProcessAttachmentListComponent,
-    ProcessCommentsComponent,
-    ProcessInstanceDetailsComponent,
-    ProcessInstanceHeaderComponent,
-    ProcessInstanceListComponent,
-    ProcessInstanceTasksComponent,
-    ProcessInstanceVariablesComponent,
-    StartProcessInstanceComponent
-} from './src/components/index';
+import {CreateProcessAttachmentComponent} from './src/components/create-process-attachment.component';
+import {ProcessAttachmentListComponent} from './src/components/process-attachment-list.component';
+import {ProcessCommentsComponent} from './src/components/process-comments.component';
+import {ProcessFiltersComponent} from './src/components/process-filters.component';
+import {ProcessInstanceDetailsComponent} from './src/components/process-instance-details.component';
+import {ProcessInstanceHeaderComponent} from './src/components/process-instance-header.component';
+import {ProcessInstanceTasksComponent} from './src/components/process-instance-tasks.component';
+import {ProcessInstanceVariablesComponent} from './src/components/process-instance-variables.component';
+import {ProcessInstanceListComponent} from './src/components/processlist.component';
+import {StartProcessInstanceComponent} from './src/components/start-process.component';
+export {ProcessAttachmentListComponent} from './src/components/process-attachment-list.component';
+export {ProcessCommentsComponent} from './src/components/process-comments.component';
+export {ProcessFiltersComponent} from './src/components/process-filters.component';
+export {ProcessInstanceDetailsComponent} from './src/components/process-instance-details.component';
+export {ProcessInstanceHeaderComponent} from './src/components/process-instance-header.component';
+export {ProcessInstanceTasksComponent} from './src/components/process-instance-tasks.component';
+export {ProcessInstanceVariablesComponent} from './src/components/process-instance-variables.component';
+export {ProcessInstanceListComponent} from './src/components/processlist.component';
+export {StartProcessInstanceComponent} from './src/components/start-process.component';
 
 import { ProcessUploadService } from './src/services/process-upload.service';
 import { ProcessService } from './src/services/process.service';
-
-// components
-export * from './src/components/processlist.component';
-export * from './src/components/process-filters.component';
-export * from './src/components/process-instance-details.component';
-export * from './src/components/start-process.component';
-export * from './src/components/process-attachment-list.component';
-export * from './src/components/create-process-attachment.component';
-export * from './src/services/process-upload.service';
+export { ProcessService } from './src/services/process.service';
+export { ProcessUploadService } from './src/services/process-upload.service';
 
 // models
-export * from './src/models/index';
+export * from './src/models/filter-process.model';
+export * from './src/models/process-definition.model';
+export * from './src/models/process-instance.model';
+export * from './src/models/process-instance-filter.model';
+export * from './src/models/process-instance-variable.model';
 
-// services
-export * from './src/services/process.service';
+// Old derprecate export
+import {CreateProcessAttachmentComponent as ActivitiCreateProcessAttachmentComponent } from './src/components/create-process-attachment.component';
+import {ProcessAttachmentListComponent as ActivitiProcessAttachmentListComponent} from './src/components/process-attachment-list.component';
+import {ProcessCommentsComponent as ActivitiProcessComments } from './src/components/process-comments.component';
+import {ProcessFiltersComponent as ActivitiProcessFilters} from './src/components/process-filters.component';
+import {ProcessInstanceDetailsComponent as ActivitiProcessInstanceDetails} from './src/components/process-instance-details.component';
+import {ProcessInstanceHeaderComponent as ActivitiProcessInstanceHeader} from './src/components/process-instance-header.component';
+import {ProcessInstanceTasksComponent as ActivitiProcessInstanceTasks} from './src/components/process-instance-tasks.component';
+import {ProcessInstanceVariablesComponent as ActivitiProcessInstanceVariables} from './src/components/process-instance-variables.component';
+import {ProcessInstanceListComponent as ActivitiProcessInstanceListComponent} from './src/components/processlist.component';
+import {StartProcessInstanceComponent as ActivitiStartProcessInstance} from './src/components/start-process.component';
+import {ProcessService as ActivitiProcessService} from './src/services/process.service';
+export {CreateProcessAttachmentComponent as ActivitiCreateProcessAttachmentComponent } from './src/components/create-process-attachment.component';
+export {ProcessAttachmentListComponent as ActivitiProcessAttachmentListComponent} from './src/components/process-attachment-list.component';
+export {ProcessCommentsComponent as ActivitiProcessComments } from './src/components/process-comments.component';
+export {ProcessFiltersComponent as ActivitiProcessFilters} from './src/components/process-filters.component';
+export {ProcessInstanceDetailsComponent as ActivitiProcessInstanceDetails} from './src/components/process-instance-details.component';
+export {ProcessInstanceHeaderComponent as ActivitiProcessInstanceHeader} from './src/components/process-instance-header.component';
+export {ProcessInstanceTasksComponent as ActivitiProcessInstanceTasks} from './src/components/process-instance-tasks.component';
+export {ProcessInstanceVariablesComponent as ActivitiProcessInstanceVariables} from './src/components/process-instance-variables.component';
+export {ProcessInstanceListComponent as ActivitiProcessInstanceListComponent} from './src/components/processlist.component';
+export {StartProcessInstanceComponent as ActivitiStartProcessInstance} from './src/components/start-process.component';
+export {ProcessService as ActivitiProcessService} from './src/services/process.service';
 
 export const ACTIVITI_PROCESSLIST_DIRECTIVES: [any] = [
     ProcessInstanceListComponent,
@@ -63,12 +88,27 @@ export const ACTIVITI_PROCESSLIST_DIRECTIVES: [any] = [
     ProcessCommentsComponent,
     StartProcessInstanceComponent,
     ProcessAttachmentListComponent,
-    CreateProcessAttachmentComponent
+    CreateProcessAttachmentComponent,
+
+    // Old Deprecated export
+    ActivitiProcessInstanceListComponent,
+    ActivitiProcessFilters,
+    ActivitiProcessInstanceHeader,
+    ActivitiProcessInstanceTasks,
+    ActivitiProcessInstanceVariables,
+    ActivitiProcessComments,
+    ActivitiProcessInstanceDetails,
+    ActivitiStartProcessInstance,
+    ActivitiProcessAttachmentListComponent,
+    ActivitiCreateProcessAttachmentComponent
 ];
 
 export const ACTIVITI_PROCESSLIST_PROVIDERS: [any] = [
     ProcessService,
-    ProcessUploadService
+    ProcessUploadService,
+
+    // Old Deprecated import
+    ActivitiProcessService
 ];
 
 @NgModule({

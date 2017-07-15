@@ -18,7 +18,9 @@
 import { AfterViewInit, Component, Input } from '@angular/core';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { Observable, Observer } from 'rxjs/Rx';
-import { User, UserEventModel } from '../models/index';
+import { UserEventModel } from '../models/user-event.model';
+import { User } from '../models/user.model';
+
 import { PeopleService } from '../services/people.service';
 
 declare let componentHandler: any;

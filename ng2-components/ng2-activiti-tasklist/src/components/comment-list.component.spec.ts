@@ -19,7 +19,8 @@ import { DatePipe } from '@angular/common';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
 import { DataRowEvent, DataTableModule, ObjectDataRow } from 'ng2-alfresco-datatable';
-import { Comment, User } from '../models/index';
+import { Comment  } from '../models/comment.model';
+import { User  } from '../models/user.model';
 import { CommentListComponent } from './comment-list.component';
 
 declare let jasmine: any;

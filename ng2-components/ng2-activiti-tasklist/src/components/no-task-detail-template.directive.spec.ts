@@ -16,7 +16,7 @@
  */
 
 import { TaskDetailsComponent } from './task-details.component';
-import { NoTaskDetailsTemplateDirective } from './no-task-detail-template.component';
+import { NoTaskDetailsTemplateDirective } from './no-task-detail-template.directive';
 
 describe('NoTaskDetailsTemplateDirective', () => {
 

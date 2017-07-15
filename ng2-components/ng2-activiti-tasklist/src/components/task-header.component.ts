@@ -17,7 +17,7 @@
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService, CardViewDateItemModel, CardViewItem, CardViewTextItemModel, LogService } from 'ng2-alfresco-core';
-import { TaskDetailsModel } from '../models/index';
+import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 
 @Component({
