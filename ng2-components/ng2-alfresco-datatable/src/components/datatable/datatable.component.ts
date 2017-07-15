@@ -71,6 +71,9 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     @Input()
     rowStyleClass: string;
 
+    @Input()
+    showHeader: boolean = true;
+
     @Output()
     rowClick: EventEmitter<DataRowEvent> = new EventEmitter<DataRowEvent>();
 
