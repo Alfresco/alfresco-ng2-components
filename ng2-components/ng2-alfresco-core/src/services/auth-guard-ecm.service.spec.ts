@@ -21,7 +21,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { CookieServiceMock } from './../assets/cookie.service.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { AlfrescoAuthenticationService } from './alfresco-authentication.service';
+import { AuthenticationService } from './authentication.service';
 import { AlfrescoSettingsService } from './alfresco-settings.service';
 import { AppConfigModule } from './app-config.service';
 import { AuthGuardEcm } from './auth-guard-ecm.service';
@@ -44,7 +44,7 @@ describe('AuthGuardService ECM', () => {
                 AuthGuardEcm,
                 AlfrescoSettingsService,
                 AlfrescoApiService,
-                AlfrescoAuthenticationService,
+                AuthenticationService,
                 StorageService,
                 UserPreferencesService,
                 { provide: CookieService, useClass: CookieServiceMock },
@@ -54,7 +54,7 @@ describe('AuthGuardService ECM', () => {
     }));
 
     it('if the alfresco js api is logged in should canActivate be true',
-        async(inject([AuthGuardEcm, Router, AlfrescoSettingsService, StorageService, AlfrescoAuthenticationService], (auth, router, settingsService, storage, authService) => {
+        async(inject([AuthGuardEcm, Router, AlfrescoSettingsService, StorageService, AuthenticationService], (auth, router, settingsService, storage, authService) => {
             spyOn(router, 'navigate');
 
             authService.isEcmLoggedIn = () => {
@@ -67,7 +67,7 @@ describe('AuthGuardService ECM', () => {
     );
 
     it('if the alfresco js api is NOT logged in should canActivate be false',
-        async(inject([AuthGuardEcm, Router, AlfrescoSettingsService, StorageService, AlfrescoAuthenticationService], (auth, router, settingsService, storage, authService) => {
+        async(inject([AuthGuardEcm, Router, AlfrescoSettingsService, StorageService, AuthenticationService], (auth, router, settingsService, storage, authService) => {
 
             spyOn(router, 'navigate');
 
