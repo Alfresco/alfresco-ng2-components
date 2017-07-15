@@ -1,11 +1,9 @@
 @import 'theming';
 
-$breadcrumb-chevron-spacer: 10px;
+$breadcrumb-chevron-spacer: 2px;
 
 .adf-breadcrumb {
     display: flex;
-    flex: 1;
-    width: 0;
 
     &-container {
         margin: 0;
@@ -14,14 +12,14 @@ $breadcrumb-chevron-spacer: 10px;
         cursor: default;
         display: flex;
         overflow: hidden;
+        height: 25px;
     }
 
     &-item {
-        position: relative;
-        padding-right: 24px + $breadcrumb-chevron-spacer;
+        padding-right: $breadcrumb-chevron-spacer;
         color: $alfresco-secondary-text-color;
-        flex: 0 1 auto;
         overflow: hidden;
+        display: flex;
 
         &-anchor {
             color: inherit;
@@ -31,26 +29,19 @@ $breadcrumb-chevron-spacer: 10px;
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
+            padding-top: 2px;
         }
 
-        &-anchor:hover, &-last {
+        &-current {
+            padding-top: 2px;
+        }
+
+        &-anchor:hover, &.active {
             color: $alfresco-primary-text-color;
         }
 
-        &-chevron {
-            position: absolute;
-            right: $breadcrumb-chevron-spacer / 2;
-            top: 50%;
-            margin-top: -12px;
-        }
-
-        &-last {
-            font-weight: bold;
-            flex: 1 0 auto;
-
-            &-chevron {
-                display: none;
-            }
+        &.active {
+            display: block;
         }
     }
 }

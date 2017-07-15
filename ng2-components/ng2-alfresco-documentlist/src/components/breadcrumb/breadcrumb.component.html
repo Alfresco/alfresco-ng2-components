@@ -7,9 +7,9 @@
             {{item.name}}
         </a>
 
-        <strong *ngSwitchCase="true">
+        <div *ngSwitchCase="true" class="adf-breadcrumb-item-current">
             {{item.name}}
-        </strong>
+        </div>
 
         <i class="material-icons adf-breadcrumb-item-chevron" *ngIf="!last">
             chevron_right

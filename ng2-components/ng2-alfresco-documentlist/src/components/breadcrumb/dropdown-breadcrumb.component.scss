@@ -1,15 +1,16 @@
 @import 'theming';
 
+$dropdownHorizontalOffset: 30px;
+
 .#{$ADF} {
     &-dropdown-breadcrumb {
         display: flex;
         justify-content: flex-start;
-        min-height: 35px;
+        height: 25px;
     }
 
     &-dropdown-breadcumb-trigger {
         cursor: pointer;
-        padding-right: 5px;
     }
 
     &-dropdown-breadcumb-trigger.isRoot {
@@ -21,11 +22,11 @@
         height: 0;
         overflow: hidden;
         margin-top: 35px;
-        margin-left: -40px;
+        margin-left: -$dropdownHorizontalOffset;
     }
 
     &-current-folder {
-        margin-left: 41px;
+        margin-left: $dropdownHorizontalOffset;
         padding-top: 2px;
     }
 

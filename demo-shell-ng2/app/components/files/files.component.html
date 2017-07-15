@@ -13,10 +13,12 @@
             <adf-toolbar>
                 <adf-toolbar-title>
                     <adf-breadcrumb *ngIf="!useDropdownBreadcrumb"
+                        class="files-breadcrumb"
                         [target]="documentList"
                         [folderNode]="documentList.folderNode">
                     </adf-breadcrumb>
                     <adf-dropdown-breadcrumb  *ngIf="useDropdownBreadcrumb"
+                        class="files-breadcrumb"
                         [target]="documentList"
                         [folderNode]="documentList.folderNode">
                     </adf-dropdown-breadcrumb>
