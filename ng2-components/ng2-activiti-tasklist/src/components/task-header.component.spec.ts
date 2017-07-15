@@ -23,15 +23,15 @@ import { Observable } from 'rxjs/Rx';
 
 import { TaskDetailsModel } from '../models/task-details.model';
 import { taskDetailsMock } from './../assets/task-details.mock';
-import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
-import { ActivitiTaskHeaderComponent } from './activiti-task-header.component';
+import { TaskListService } from './../services/tasklist.service';
+import { TaskHeaderComponent } from './task-header.component';
 
-describe('ActivitiTaskHeaderComponent', () => {
+describe('TaskHeaderComponent', () => {
 
-    let service: ActivitiTaskListService;
+    let service: TaskListService;
     let componentHandler: any;
-    let component: ActivitiTaskHeaderComponent;
-    let fixture: ComponentFixture<ActivitiTaskHeaderComponent>;
+    let component: TaskHeaderComponent;
+    let fixture: ComponentFixture<TaskHeaderComponent>;
     let debugElement: DebugElement;
 
     beforeEach(async(() => {
@@ -40,10 +40,10 @@ describe('ActivitiTaskHeaderComponent', () => {
                 CoreModule.forRoot()
             ],
             declarations: [
-                ActivitiTaskHeaderComponent
+                TaskHeaderComponent
             ],
             providers: [
-                ActivitiTaskListService,
+                TaskListService,
                 CardViewUpdateService
             ]
         }).compileComponents();
@@ -54,9 +54,9 @@ describe('ActivitiTaskHeaderComponent', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ActivitiTaskHeaderComponent);
+        fixture = TestBed.createComponent(TaskHeaderComponent);
         component = fixture.componentInstance;
-        service = TestBed.get(ActivitiTaskListService);
+        service = TestBed.get(TaskListService);
         debugElement = fixture.debugElement;
 
         component.taskDetails = new TaskDetailsModel(taskDetailsMock);

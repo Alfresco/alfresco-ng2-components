@@ -20,13 +20,13 @@ import { async } from '@angular/core/testing';
 import { LogServiceMock } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
-import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
-import { ActivitiFiltersComponent } from './activiti-filters.component';
+import { TaskListService } from '../services/tasklist.service';
+import { TaskFiltersComponent } from './task-filters.component';
 
-describe('ActivitiFiltersComponent', () => {
+describe('TaskFiltersComponent', () => {
 
-    let filterList: ActivitiFiltersComponent;
-    let activitiService: ActivitiTaskListService;
+    let filterList: TaskFiltersComponent;
+    let activitiService: TaskListService;
     let logService: LogServiceMock;
 
     let fakeGlobalFilter = [];
@@ -65,8 +65,8 @@ describe('ActivitiFiltersComponent', () => {
 
     beforeEach(() => {
         logService = new LogServiceMock();
-        activitiService = new ActivitiTaskListService(null, logService);
-        filterList = new ActivitiFiltersComponent(null, activitiService, logService);
+        activitiService = new TaskListService(null, logService);
+        filterList = new TaskFiltersComponent(null, activitiService, logService);
     });
 
     it('should return the filter task list', (done) => {

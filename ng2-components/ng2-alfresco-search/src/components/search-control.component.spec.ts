@@ -18,16 +18,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ThumbnailService } from 'ng2-alfresco-core';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
-import { AlfrescoSearchService } from '../services/alfresco-search.service';
-import { result } from './../assets/alfresco-search.component.mock';
+import { SearchService } from '../services/search.service';
+import { result } from './../assets/search.component.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
-import { AlfrescoSearchAutocompleteComponent } from './alfresco-search-autocomplete.component';
-import { AlfrescoSearchControlComponent } from './alfresco-search-control.component';
+import { SearchAutocompleteComponent } from './search-autocomplete.component';
+import { SearchControlComponent } from './search-control.component';
 
-describe('AlfrescoSearchControlComponent', () => {
+describe('SearchControlComponent', () => {
 
-    let fixture: ComponentFixture<AlfrescoSearchControlComponent>;
-    let component: AlfrescoSearchControlComponent, element: HTMLElement;
+    let fixture: ComponentFixture<SearchControlComponent>;
+    let component: SearchControlComponent, element: HTMLElement;
     let componentHandler;
 
     beforeEach(async(() => {
@@ -38,16 +38,16 @@ describe('AlfrescoSearchControlComponent', () => {
                 CoreModule.forRoot()
             ],
             declarations: [
-                AlfrescoSearchControlComponent,
-                AlfrescoSearchAutocompleteComponent
+                SearchControlComponent,
+                SearchAutocompleteComponent
             ],
             providers: [
                 {provide: AlfrescoTranslationService, useClass: TranslationMock},
                 ThumbnailService,
-                AlfrescoSearchService
+                SearchService
             ]
         }).compileComponents().then(() => {
-            fixture = TestBed.createComponent(AlfrescoSearchControlComponent);
+            fixture = TestBed.createComponent(SearchControlComponent);
             component = fixture.componentInstance;
             element = fixture.nativeElement;
         });
@@ -199,7 +199,7 @@ describe('AlfrescoSearchControlComponent', () => {
         });
 
         it('should keep find-as-you-type control visible when user tabs into results', (done) => {
-            let searchService = TestBed.get(AlfrescoSearchService);
+            let searchService = TestBed.get(SearchService);
             spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(result));
 

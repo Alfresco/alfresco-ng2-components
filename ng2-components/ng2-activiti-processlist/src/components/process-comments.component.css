@@ -1,25 +1,35 @@
-.adf-comments-container {
-    height: 100%;
+:host {
     width: 100%;
+}
+
+.activiti-label {
+    font-weight: bolder;
+    vertical-align: top;
+}
+
+.activiti-label.mdl-badge[data-badge]:after {
+    right: -27px;
+    top: -2px;
+}
+
+.activiti-label + .icon {
+    position: relative;
+    top: -2px;
+}
+
+.material-icons {
+    cursor: pointer;
+}
+
+.list-wrap {
+    word-wrap: break-word;
+    word-break: break-all;
+    -moz-hyphens:auto;
+    -webkit-hyphens:auto;
+    -o-hyphens:auto;
+    hyphens:auto;
+}
+
+.hide-long-names {
     overflow: auto;
-}
-
-.adf-comments-header {
-    padding: 10px 20px;
-    font-size: 14px;
-    font-family: Muli;
-    font-weight: 600;
-    border-bottom: 1px solid #e1e1e1;
-    color: #a1a1a1;
-}
-
-.adf-comments-input-container {
-    padding: 0 15px;
-    width: calc(100% - 30px);
-    padding-top: 8px;
-    border-bottom: 1px solid #e1e1e1;
-}
-
-.adf-full-width {
-    width: 100%;
 }

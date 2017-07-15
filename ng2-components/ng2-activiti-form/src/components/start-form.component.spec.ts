@@ -27,7 +27,7 @@ import { EcmModelService } from './../services/ecm-model.service';
 import { FormService } from './../services/form.service';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
 import { ActivitiContentComponent } from './activiti-content.component';
-import { ActivitiStartFormComponent } from './activiti-start-form.component';
+import { StartFormComponent } from './start-form.component';
 import { FormFieldComponent } from './form-field/form-field.component';
 import { MASK_DIRECTIVE } from './widgets/index';
 import { WIDGET_DIRECTIVES } from './widgets/index';
@@ -36,8 +36,8 @@ describe('ActivitiStartForm', () => {
 
     let componentHandler: any;
     let formService: FormService;
-    let component: ActivitiStartFormComponent;
-    let fixture: ComponentFixture<ActivitiStartFormComponent>;
+    let component: StartFormComponent;
+    let fixture: ComponentFixture<StartFormComponent>;
     let getStartFormSpy: jasmine.Spy;
 
     const exampleId1 = 'my:process1';
@@ -50,7 +50,7 @@ describe('ActivitiStartForm', () => {
                 MdInputModule,
                 CoreModule.forRoot()],
             declarations: [
-                ActivitiStartFormComponent,
+                StartFormComponent,
                 FormFieldComponent,
                 ActivitiContentComponent,
                 ...WIDGET_DIRECTIVES,
@@ -67,7 +67,7 @@ describe('ActivitiStartForm', () => {
 
     beforeEach(() => {
 
-        fixture = TestBed.createComponent(ActivitiStartFormComponent);
+        fixture = TestBed.createComponent(StartFormComponent);
         component = fixture.componentInstance;
         formService = fixture.debugElement.injector.get(FormService);
 

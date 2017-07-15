@@ -18,7 +18,7 @@
 import { async, TestBed } from '@angular/core/testing';
 import { CookieServiceMock } from './../assets/cookie.service.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { AlfrescoAuthenticationService } from './alfresco-authentication.service';
+import { AuthenticationService } from './authentication.service';
 import { AlfrescoSettingsService } from './alfresco-settings.service';
 import { AppConfigModule } from './app-config.service';
 import { CookieService } from './cookie.service';
@@ -28,9 +28,9 @@ import { UserPreferencesService } from './user-preferences.service';
 
 declare let jasmine: any;
 
-describe('AlfrescoAuthenticationService', () => {
+describe('AuthenticationService', () => {
     let apiService: AlfrescoApiService;
-    let authService: AlfrescoAuthenticationService;
+    let authService: AuthenticationService;
     let settingsService: AlfrescoSettingsService;
     let preferences: UserPreferencesService;
     let storage: StorageService;
@@ -44,7 +44,7 @@ describe('AlfrescoAuthenticationService', () => {
             providers: [
                 AlfrescoSettingsService,
                 AlfrescoApiService,
-                AlfrescoAuthenticationService,
+                AuthenticationService,
                 StorageService,
                 UserPreferencesService,
                 { provide: CookieService, useClass: CookieServiceMock },
@@ -55,7 +55,7 @@ describe('AlfrescoAuthenticationService', () => {
 
     beforeEach(() => {
         apiService = TestBed.get(AlfrescoApiService);
-        authService = TestBed.get(AlfrescoAuthenticationService);
+        authService = TestBed.get(AuthenticationService);
         settingsService = TestBed.get(AlfrescoSettingsService);
         preferences = TestBed.get(UserPreferencesService);
         cookie = TestBed.get(CookieService);

@@ -21,25 +21,25 @@ import {TaskDetailsEvent} from 'ng2-activiti-tasklist';
 import {AlfrescoTranslationService, LogService} from 'ng2-alfresco-core';
 
 import {ProcessInstance} from '../models/process-instance.model';
-import {ActivitiProcessService} from './../services/activiti-process.service';
-import {ActivitiProcessInstanceHeaderComponent} from './activiti-process-instance-header.component';
-import {ActivitiProcessInstanceTasksComponent} from './activiti-process-instance-tasks.component';
+import {ProcessService} from './../services/process.service';
+import {ProcessInstanceHeaderComponent} from './process-instance-header.component';
+import {ProcessInstanceTasksComponent} from './process-instance-tasks.component';
 
 @Component({
     selector: 'adf-process-instance-details, activiti-process-instance-details',
-    templateUrl: './activiti-process-instance-details.component.html',
-    styleUrls: ['./activiti-process-instance-details.component.css']
+    templateUrl: './process-instance-details.component.html',
+    styleUrls: ['./process-instance-details.component.css']
 })
-export class ActivitiProcessInstanceDetailsComponent implements OnChanges {
+export class ProcessInstanceDetailsComponent implements OnChanges {
 
     @Input()
     processInstanceId: string;
 
-    @ViewChild(ActivitiProcessInstanceHeaderComponent)
-    processInstanceHeader: ActivitiProcessInstanceHeaderComponent;
+    @ViewChild(ProcessInstanceHeaderComponent)
+    processInstanceHeader: ProcessInstanceHeaderComponent;
 
-    @ViewChild(ActivitiProcessInstanceTasksComponent)
-    tasksList: ActivitiProcessInstanceTasksComponent;
+    @ViewChild(ProcessInstanceTasksComponent)
+    tasksList: ProcessInstanceTasksComponent;
 
     @Input()
     showTitle: boolean = true;
@@ -67,7 +67,7 @@ export class ActivitiProcessInstanceDetailsComponent implements OnChanges {
      * @param activitiProcess   Process service
      */
     constructor(private translate: AlfrescoTranslationService,
-                private activitiProcess: ActivitiProcessService,
+                private activitiProcess: ProcessService,
                 private logService: LogService) {
 
         if (translate) {

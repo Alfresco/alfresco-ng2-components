@@ -1,10 +1,13 @@
-<md-card *ngIf="taskDetails" class="adf-card-container">
+<md-card *ngIf="taskDetails">
+
     <md-card-content>
         <adf-card-view [properties]="properties" [editable]="!isCompleted()"></adf-card-view>
     </md-card-content>
 
-    <md-card-actions *ngIf="!isAssignedToMe()" class="adf-controls">
-        <button md-button data-automation-id="header-claim-button" id="claim-task" (click)="claimTask(taskDetails.id)" class="adf-claim-controls">{{ 'TASK_DETAILS.BUTTON.CLAIM' | translate }}
+    <md-card-actions class="adf-controls">
+        <button md-button *ngIf="!isAssignedToMe()" data-automation-id="header-claim-button" id="claim-task"
+                (click)="claimTask(taskDetails.id)" class="adf-claim-controls">{{ 'TASK_DETAILS.BUTTON.CLAIM' | translate }}
         </button>
     </md-card-actions>
+
 </md-card>

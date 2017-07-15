@@ -20,15 +20,15 @@ import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { Observable, Observer } from 'rxjs/Rx';
 
 import { Comment } from '../models/comment.model';
-import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
+import { TaskListService } from '../services/tasklist.service';
 
 @Component({
     selector: 'adf-comments, activiti-comments',
-    templateUrl: './activiti-comments.component.html',
-    styleUrls: ['./activiti-comments.component.css'],
-    providers: [ActivitiTaskListService]
+    templateUrl: './comments.component.html',
+    styleUrls: ['./comments.component.css'],
+    providers: [TaskListService]
 })
-export class ActivitiCommentsComponent implements OnChanges {
+export class CommentsComponent implements OnChanges {
 
     @Input()
     taskId: string;
@@ -54,7 +54,7 @@ export class ActivitiCommentsComponent implements OnChanges {
      * @param activitiTaskList Task service
      */
     constructor(private translateService: AlfrescoTranslationService,
-                private activitiTaskList: ActivitiTaskListService) {
+                private activitiTaskList: TaskListService) {
 
         if (translateService) {
             translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');

@@ -19,19 +19,25 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { MdCheckboxModule, MdIconModule, MdInputModule, MdProgressSpinnerModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
 
+import { LoginComponent } from './src/components/login.component';
 import { LoginFooterDirective } from './src/directives/login-footer.directive';
 import { LoginHeaderDirective } from './src/directives/login-header.directive';
 
-import { AlfrescoLoginComponent } from './src/components/alfresco-login.component';
+export { LoginHeaderDirective } from './src/directives/login-header.directive';
+export { LoginFooterDirective } from './src/directives/login-footer.directive';
+export { LoginComponent } from './src/components/login.component';
 
-export * from './src/directives/login-header.directive';
-export * from './src/directives/login-footer.directive';
-export * from './src/components/alfresco-login.component';
+// Old Deprecated export
+import { LoginComponent as AlfrescoLoginComponent } from './src/components/login.component';
+export { LoginComponent as AlfrescoLoginComponent } from './src/components/login.component';
 
 export const ALFRESCO_LOGIN_DIRECTIVES: any[] = [
-    AlfrescoLoginComponent,
+    LoginComponent,
     LoginFooterDirective,
-    LoginHeaderDirective
+    LoginHeaderDirective,
+
+    // Old Deprecated export
+    AlfrescoLoginComponent
 ];
 
 @NgModule({

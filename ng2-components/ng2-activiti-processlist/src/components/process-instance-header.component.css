@@ -2,6 +2,10 @@
     width: 100%;
 }
 
-.adf-card-container {
-    font-family: inherit;
+.activiti-label {
+    font-weight: bolder;
+}
+
+.activiti-process-header__value {
+    color: rgb(68, 138, 255);
 }

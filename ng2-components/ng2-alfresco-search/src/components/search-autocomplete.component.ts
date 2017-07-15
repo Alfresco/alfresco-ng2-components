@@ -19,16 +19,16 @@ import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, 
 import { MinimalNodeEntity } from 'alfresco-js-api';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ThumbnailService } from 'ng2-alfresco-core';
-import { AlfrescoSearchService, SearchOptions } from './../services/alfresco-search.service';
+import { SearchOptions, SearchService } from './../services/search.service';
 
 declare var require: any;
 
 @Component({
     selector: 'adf-search-autocomplete, alfresco-search-autocomplete',
-    templateUrl: './alfresco-search-autocomplete.component.html',
-    styleUrls: ['./alfresco-search-autocomplete.component.css']
+    templateUrl: './search-autocomplete.component.html',
+    styleUrls: ['./search-autocomplete.component.css']
 })
-export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
+export class SearchAutocompleteComponent implements OnInit, OnChanges {
 
     @Input()
     searchTerm: string = '';
@@ -72,7 +72,7 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
 
     @ViewChild('resultsTableBody', {}) resultsTableBody: ElementRef;
 
-    constructor(private searchService: AlfrescoSearchService,
+    constructor(private searchService: SearchService,
                 private translateService: AlfrescoTranslationService,
                 private thumbnailService: ThumbnailService) {
     }

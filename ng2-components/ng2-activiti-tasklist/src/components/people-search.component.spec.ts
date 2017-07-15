@@ -20,8 +20,8 @@ import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { Observable } from 'rxjs/Observable';
 import { User } from '../models/user.model';
-import { ActivitiPeopleSearchComponent } from './activiti-people-search.component';
-import { PeopleListComponent } from './adf-people-list.component';
+import { PeopleSearchComponent } from './people-search.component';
+import { PeopleListComponent } from './people-list.component';
 
 declare let jasmine: any;
 
@@ -39,10 +39,10 @@ const fakeSecondUser: User = new User({
     email: 'fake-involve@mail.com'
 });
 
-describe('ActivitiPeopleSearchComponent', () => {
+describe('PeopleSearchComponent', () => {
 
-    let activitiPeopleSearchComponent: ActivitiPeopleSearchComponent;
-    let fixture: ComponentFixture<ActivitiPeopleSearchComponent>;
+    let peopleSearchComponent: PeopleSearchComponent;
+    let fixture: ComponentFixture<PeopleSearchComponent>;
     let element: HTMLElement;
     let componentHandler;
     let userArray = [fakeUser, fakeSecondUser];
@@ -55,7 +55,7 @@ describe('ActivitiPeopleSearchComponent', () => {
                 DataTableModule
             ],
             declarations: [
-                ActivitiPeopleSearchComponent,
+                PeopleSearchComponent,
                 PeopleListComponent
             ]
         }).compileComponents().then(() => {
@@ -64,15 +64,15 @@ describe('ActivitiPeopleSearchComponent', () => {
             spyOn(translateService, 'addTranslationFolder').and.stub();
             spyOn(translateService.translate, 'get').and.callFake((key) => { return Observable.of(key); });
 
-            fixture = TestBed.createComponent(ActivitiPeopleSearchComponent);
-            activitiPeopleSearchComponent = fixture.componentInstance;
+            fixture = TestBed.createComponent(PeopleSearchComponent);
+            peopleSearchComponent = fixture.componentInstance;
             element = fixture.nativeElement;
             componentHandler = jasmine.createSpyObj('componentHandler', [
                 'upgradeAllRegistered'
             ]);
 
             window['componentHandler'] = componentHandler;
-            activitiPeopleSearchComponent.results = Observable.of([]);
+            peopleSearchComponent.results = Observable.of([]);
             fixture.detectChanges();
         });
     }));
@@ -92,9 +92,9 @@ describe('ActivitiPeopleSearchComponent', () => {
     });
 
     it('should show user which can be involved ', (done) => {
-        activitiPeopleSearchComponent.searchPeople.subscribe(() => {
-            activitiPeopleSearchComponent.results = Observable.of(userArray);
-            activitiPeopleSearchComponent.ngOnInit();
+        peopleSearchComponent.searchPeople.subscribe(() => {
+            peopleSearchComponent.results = Observable.of(userArray);
+            peopleSearchComponent.ngOnInit();
             fixture.detectChanges();
             fixture.whenStable()
                 .then(() => {
@@ -106,32 +106,32 @@ describe('ActivitiPeopleSearchComponent', () => {
         });
         searchInput = element.querySelector('#userSearchText');
         searchInput.value = 'fake-search';
-        activitiPeopleSearchComponent.searchUser.markAsDirty();
+        peopleSearchComponent.searchUser.markAsDirty();
         searchInput.dispatchEvent(new Event('input'));
     });
 
     it('should send an event when an user is clicked', (done) => {
-        activitiPeopleSearchComponent.success.subscribe((user) => {
+        peopleSearchComponent.success.subscribe((user) => {
             expect(user).toBeDefined();
             expect(user.firstName).toBe('fake-name');
             done();
         });
-        activitiPeopleSearchComponent.results = Observable.of(userArray);
-        activitiPeopleSearchComponent.ngOnInit();
+        peopleSearchComponent.results = Observable.of(userArray);
+        peopleSearchComponent.ngOnInit();
         fixture.detectChanges();
         fixture.whenStable()
             .then(() => {
-                activitiPeopleSearchComponent.onRowClick(fakeUser);
+                peopleSearchComponent.onRowClick(fakeUser);
                 let addUserButton = <HTMLElement> element.querySelector('#add-people');
                 addUserButton.click();
             });
     });
 
     it('should remove clicked user', (done) => {
-        activitiPeopleSearchComponent.results = Observable.of(userArray);
-        activitiPeopleSearchComponent.ngOnInit();
+        peopleSearchComponent.results = Observable.of(userArray);
+        peopleSearchComponent.ngOnInit();
         fixture.detectChanges();
-        activitiPeopleSearchComponent.onRowClick(fakeUser);
+        peopleSearchComponent.onRowClick(fakeUser);
         let addUserButton = <HTMLElement> element.querySelector('#add-people');
         addUserButton.click();
 

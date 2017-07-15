@@ -27,7 +27,7 @@ const REMEMBER_ME_COOKIE_KEY = 'ALFRESCO_REMEMBER_ME';
 const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30 ;
 
 @Injectable()
-export class AlfrescoAuthenticationService {
+export class AuthenticationService {
 
     onLogin: Subject<any> = new Subject<any>();
     onLogout: Subject<any> = new Subject<any>();
@@ -211,7 +211,7 @@ export class AlfrescoAuthenticationService {
      *
      * @returns {string} The username value
      *
-     * @memberof AlfrescoAuthenticationService
+     * @memberof AuthenticationService
      */
     getEcmUsername(): string {
         return this.alfrescoApi.getInstance().ecmAuth.username;
@@ -222,7 +222,7 @@ export class AlfrescoAuthenticationService {
      *
      * @returns {string} The username value
      *
-     * @memberof AlfrescoAuthenticationService
+     * @memberof AuthenticationService
      */
     getBpmUsername(): string {
         return this.alfrescoApi.getInstance().bpmAuth.username;

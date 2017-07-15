@@ -21,8 +21,8 @@ import { AlfrescoTranslationService, ContentService, ThumbnailService } from 'ng
 
 @Component({
     selector: 'adf-task-attachment-list',
-    styleUrls: ['./adf-task-attachment-list.component.css'],
-    templateUrl: './adf-task-attachment-list.component.html'
+    styleUrls: ['./task-attachment-list.component.css'],
+    templateUrl: './task-attachment-list.component.html'
 })
 export class TaskAttachmentListComponent implements OnChanges {
 

@@ -20,20 +20,20 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AnalyticsReportListComponent } from 'ng2-activiti-analytics';
 import { FormEvent, FormFieldEvent, FormRenderingService, FormService } from 'ng2-activiti-form';
 import {
-    ActivitiProcessFiltersComponent,
-    ActivitiProcessInstanceDetailsComponent,
-    ActivitiProcessInstanceListComponent,
-    ActivitiStartProcessInstanceComponent,
     FilterProcessRepresentationModel,
-    ProcessInstance
+    ProcessFiltersComponent,
+    ProcessInstance,
+    ProcessInstanceDetailsComponent,
+    ProcessInstanceListComponent,
+    StartProcessInstanceComponent
 } from 'ng2-activiti-processlist';
 import {
-    ActivitiAppsComponent,
-    ActivitiFiltersComponent,
-    ActivitiTaskDetailsComponent,
-    ActivitiTaskListComponent,
+    AppsListComponent,
     FilterRepresentationModel,
-    TaskDetailsEvent
+    TaskDetailsComponent,
+    TaskDetailsEvent,
+    TaskFiltersComponent,
+    TaskListComponent
 } from 'ng2-activiti-tasklist';
 import { AlfrescoApiService } from 'ng2-alfresco-core';
 import {
@@ -55,26 +55,26 @@ const currentProcessIdNew = '__NEW__';
 })
 export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
 
-    @ViewChild(ActivitiFiltersComponent)
-    activitifilter: ActivitiFiltersComponent;
+    @ViewChild(TaskFiltersComponent)
+    activitifilter: TaskFiltersComponent;
 
-    @ViewChild(ActivitiTaskListComponent)
-    taskList: ActivitiTaskListComponent;
+    @ViewChild(TaskListComponent)
+    taskList: TaskListComponent;
 
-    @ViewChild(ActivitiProcessFiltersComponent)
-    activitiprocessfilter: ActivitiProcessFiltersComponent;
+    @ViewChild(ProcessFiltersComponent)
+    activitiprocessfilter: ProcessFiltersComponent;
 
-    @ViewChild(ActivitiProcessInstanceListComponent)
-    processList: ActivitiProcessInstanceListComponent;
+    @ViewChild(ProcessInstanceListComponent)
+    processList: ProcessInstanceListComponent;
 
-    @ViewChild(ActivitiProcessInstanceDetailsComponent)
-    activitiprocessdetails: ActivitiProcessInstanceDetailsComponent;
+    @ViewChild(ProcessInstanceDetailsComponent)
+    activitiprocessdetails: ProcessInstanceDetailsComponent;
 
-    @ViewChild(ActivitiTaskDetailsComponent)
-    activitidetails: ActivitiTaskDetailsComponent;
+    @ViewChild(TaskDetailsComponent)
+    activitidetails: TaskDetailsComponent;
 
-    @ViewChild(ActivitiStartProcessInstanceComponent)
-    activitiStartProcess: ActivitiStartProcessInstanceComponent;
+    @ViewChild(StartProcessInstanceComponent)
+    activitiStartProcess: StartProcessInstanceComponent;
 
     @ViewChild(AnalyticsReportListComponent)
     analyticsreportlist: AnalyticsReportListComponent;
@@ -159,7 +159,7 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
             this.processFilter = null;
             this.currentProcessInstanceId = null;
         });
-        this.layoutType = ActivitiAppsComponent.LAYOUT_GRID;
+        this.layoutType = AppsListComponent.LAYOUT_GRID;
 
     }
 
