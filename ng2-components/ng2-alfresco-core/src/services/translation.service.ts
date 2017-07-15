@@ -18,10 +18,10 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs/Rx';
-import { AlfrescoTranslateLoader } from './alfresco-translate-loader.service';
+import { AlfrescoTranslateLoader } from './translate-loader.service';
 
 @Injectable()
-export class AlfrescoTranslationService {
+export class TranslationService {
     defaultLang: string = 'en';
     userLang: string = 'en';
     customLoader: AlfrescoTranslateLoader;

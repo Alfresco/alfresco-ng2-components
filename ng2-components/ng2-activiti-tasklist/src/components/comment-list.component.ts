@@ -17,7 +17,8 @@
 
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Comment, User } from '../models/index';
+import { Comment } from '../models/comment.model';
+import { User } from '../models/user.model';
 
 @Component({
     selector: 'adf-comment-list',
