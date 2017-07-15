@@ -1,9 +1,10 @@
-<div class="search-text-header">
-    <ng-content select="header-title"></ng-content>
+<div class="search-text-header">{{ 'TASK_DETAILS.LABELS.ADD_PEOPLE' | translate }}</div>
+<div class="search-text-container">
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="text" id="userSearchText" [value]="" [formControl]="searchUser"/>
+        <label class="mdl-textfield__label" for="userSearchText">Search user</label>
+    </div>
 </div>
-<md-input-container class="search-text-container">
-	<input mdInput placeholder="{{'PEOPLE.SEARCH_USER'|translate}}" type="text" id="userSearchText" [value]="" [formControl]="searchUser">
-</md-input-container>
 <div class="search-list-container" id="search-people-list" *ngIf="hasUsers()">
     <adf-people-list
     [users]="users"
@@ -11,13 +12,7 @@
         <data-columns>
             <data-column key="firstName">
                 <ng-template let-entry="$implicit">
-                        <div *ngIf="!entry.row.obj.userImage" class="people-pic">
-                            {{getInitialUserName(entry.row.obj.firstName, entry.row.obj.lastName)}}</div>
-                        <div>
-                            <img *ngIf="entry.row.obj.userImage" class="people-img"
-                                [src]="entry.row.obj.userImage"
-                                (error)="onErrorImageLoad(entry.row.obj)"/>
-                        </div>
+                    <div class="people-pic">{{getInitialUserName(entry.row.obj.firstName, entry.row.obj.lastName)}}</div>
                 </ng-template>
             </data-column>
             <data-column key="email" class="full-width">
@@ -29,10 +24,10 @@
     </adf-people-list>
 </div>
 <div class="search-list-action-container">
-    <button md-button type="button" id="close-people-search" (click)="closeSearchList()">
+    <button type="button" id="close-people-search" (click)="closeSearchList()" class="mdl-button close">
         {{'PEOPLE.DIALOG_CLOSE' | translate }}
     </button>
-    <button md-button type="button" id="add-people" (click)="involveUserAndClose()">
-        <ng-content select="action-button-label"></ng-content>
+    <button type="button" id="add-people" (click)="addInvolvedUser()" class="mdl-button close">
+        {{'PEOPLE.ADD_USER' | translate }}
     </button>
 </div>

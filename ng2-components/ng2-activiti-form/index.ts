@@ -21,10 +21,10 @@ import { MdButtonModule, MdCardModule, MdCheckboxModule, MdIconModule, MdInputMo
 import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { ActivitiContentComponent } from './src/components/activiti-content.component';
-import { ActivitiForm } from './src/components/activiti-form.component';
-import { ActivitiStartFormComponent } from './src/components/activiti-start-form.component';
-import { ADFFormListComponent } from './src/components/adf-form-list.component';
 import { FormFieldComponent } from './src/components/form-field/form-field.component';
+import { FormListComponent } from './src/components/form-list.component';
+import { FormComponent } from './src/components/form.component';
+import { StartFormComponent } from './src/components/start-form.component';
 import { MASK_DIRECTIVE, WIDGET_DIRECTIVES } from './src/components/widgets/index';
 import { ActivitiAlfrescoContentService } from './src/services/activiti-alfresco.service';
 import { ActivitiContentService } from './src/services/activiti-content-service';
@@ -34,10 +34,10 @@ import { FormService } from './src/services/form.service';
 import { NodeService } from './src/services/node.service';
 import { WidgetVisibilityService } from './src/services/widget-visibility.service';
 
-export * from './src/components/activiti-form.component';
-export * from './src/components/adf-form-list.component';
+export * from './src/components/form.component';
+export * from './src/components/form-list.component';
 export * from './src/components/activiti-content.component';
-export * from './src/components/activiti-start-form.component';
+export * from './src/components/start-form.component';
 export * from './src/services/form.service';
 export * from './src/services/activiti-content-service';
 export * from './src/components/widgets/index';
@@ -46,13 +46,26 @@ export * from './src/services/node.service';
 export * from './src/services/form-rendering.service';
 export * from './src/events/index';
 
+// Old deprecated import
+import {ActivitiContentComponent as ActivitiContent} from './src/components/activiti-content.component';
+import {FormComponent as ActivitiForm} from './src/components/form.component';
+import {StartFormComponent as ActivitiStartForm} from './src/components/start-form.component';
+export {FormComponent as ActivitiForm} from './src/components/form.component';
+export {ActivitiContentComponent as ActivitiContent} from './src/components/activiti-content.component';
+export {StartFormComponent as ActivitiStartForm} from './src/components/start-form.component';
+
 export const ACTIVITI_FORM_DIRECTIVES: any[] = [
-    ActivitiForm,
-    ADFFormListComponent,
+    FormComponent,
+    FormListComponent,
     ActivitiContentComponent,
-    ActivitiStartFormComponent,
+    StartFormComponent,
     FormFieldComponent,
-    ...WIDGET_DIRECTIVES
+    ...WIDGET_DIRECTIVES,
+
+    // Old Deprecated export
+    ActivitiForm,
+    ActivitiContent,
+    ActivitiStartForm
 ];
 
 export const ACTIVITI_FORM_PROVIDERS: any[] = [

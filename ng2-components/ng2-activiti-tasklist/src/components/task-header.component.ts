@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { CardViewDateItemModel, CardViewItem, CardViewMapItemModel, CardViewTextItemModel, LogService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, CardViewDateItemModel, CardViewItem, CardViewTextItemModel, LogService } from 'ng2-alfresco-core';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 
@@ -39,23 +39,27 @@ export class TaskHeaderComponent implements OnChanges {
     properties: CardViewItem [];
     inEdit: boolean = false;
 
-    constructor(private activitiTaskService: TaskListService,
+    constructor(private translateService: AlfrescoTranslationService,
+                private activitiTaskService: TaskListService,
                 private logService: LogService) {
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
+        }
     }
 
     ngOnChanges(changes: SimpleChanges) {
+        console.log('change van:', changes, this.taskDetails);
         this.refreshData();
     }
 
     refreshData() {
         if (this.taskDetails) {
-            let valueMap = new Map([[this.taskDetails.processInstanceId, this.taskDetails.processDefinitionName]]);
+
             this.properties = [
-                new CardViewTextItemModel({ label: 'Assignee', value: this.taskDetails.getFullName(), key: 'assignee', default: 'No assignee', clickable: !this.isCompleted() } ),
+                new CardViewTextItemModel({ label: 'Assignee', value: this.taskDetails.getFullName(), key: 'assignee', default: 'No assignee' } ),
                 new CardViewTextItemModel({ label: 'Status', value: this.getTaskStatus(), key: 'status' }),
                 new CardViewDateItemModel({ label: 'Due Date', value: this.taskDetails.dueDate, key: 'dueDate', default: 'No date', editable: true }),
                 new CardViewTextItemModel({ label: 'Category', value: this.taskDetails.category, key: 'category', default: 'No category' }),
-                new CardViewMapItemModel({ label: 'Parent name', value: valueMap, key: 'parentName', default: 'No parent name', clickable: true  }),
                 new CardViewTextItemModel({ label: 'Created By', value: this.taskDetails.getFullName(), key: 'created-by', default: 'No assignee' }),
                 new CardViewDateItemModel({ label: 'Created', value: this.taskDetails.created, key: 'created' }),
                 new CardViewTextItemModel({ label: 'Id', value: this.taskDetails.id, key: 'id' }),

@@ -5,9 +5,6 @@
         [processInstance]="processInstanceDetails"
         (showProcessDiagram)="onShowProcessDiagram($event)">
     </adf-process-instance-header>
-    <div class="mdl-cell mdl-cell--4-col">
-        <button id="show-diagram-button" type="button" md-button md-raised-button [disabled]="isDiagramDisabled()" (click)="onShowProcessDiagram(processInstanceId)">{{ 'DETAILS.BUTTON.SHOW_DIAGRAM' | translate }}</button>
-    </div>
     <div class="mdl-card mdl-shadow--2dp activiti-process-container">
         <div class="mdl-cell mdl-cell--12-col">
             <adf-process-instance-tasks
@@ -19,12 +16,4 @@
     <div class="mdl-cell mdl-cell--4-col" data-automation-id="header-status" *ngIf="isRunning()">
         <button type="button" (click)="cancelProcess()" class="mdl-button">{{ 'DETAILS.BUTTON.CANCEL' | translate }}</button>
     </div>
-    <md-card>
-        <md-card-content>
-            <adf-process-instance-comments #activiticomments
-                [readOnly]="!isRunning()"
-                [processInstanceId]="processInstanceDetails.id">
-            </adf-process-instance-comments>
-        </md-card-content>
-    </md-card>
 </div>

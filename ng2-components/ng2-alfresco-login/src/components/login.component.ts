@@ -31,11 +31,11 @@ enum LoginSteps {
 
 @Component({
     selector: 'adf-login, alfresco-login',
-    templateUrl: './alfresco-login.component.html',
-    styleUrls: ['./alfresco-login.component.css'],
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.css'],
     host: {'(blur)': 'onBlur($event)'}
 })
-export class AlfrescoLoginComponent implements OnInit {
+export class LoginComponent implements OnInit {
 
     isPasswordShow: boolean = false;
 

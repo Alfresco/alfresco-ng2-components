@@ -25,15 +25,15 @@ import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 
 import { TranslationMock } from './../assets/translation.service.mock';
-import { ActivitiProcessService } from './../services/activiti-process.service';
-import { ActivitiProcessInstanceVariablesComponent } from './activiti-process-instance-variables.component';
+import { ProcessService } from './../services/process.service';
+import { ProcessInstanceVariablesComponent } from './process-instance-variables.component';
 
-describe('ActivitiProcessInstanceVariablesComponent', () => {
+describe('ProcessInstanceVariablesComponent', () => {
 
     let componentHandler: any;
-    let service: ActivitiProcessService;
-    let component: ActivitiProcessInstanceVariablesComponent;
-    let fixture: ComponentFixture<ActivitiProcessInstanceVariablesComponent>;
+    let service: ProcessService;
+    let component: ProcessInstanceVariablesComponent;
+    let fixture: ComponentFixture<ProcessInstanceVariablesComponent>;
     let getVariablesSpy: jasmine.Spy;
     let createOrUpdateProcessInstanceVariablesSpy: jasmine.Spy;
     let deleteProcessInstanceVariableSpy: jasmine.Spy;
@@ -46,20 +46,20 @@ describe('ActivitiProcessInstanceVariablesComponent', () => {
                 MdProgressSpinnerModule
             ],
             declarations: [
-                ActivitiProcessInstanceVariablesComponent
+                ProcessInstanceVariablesComponent
             ],
             providers: [
                 { provide: AlfrescoTranslationService, useClass: TranslationMock },
-                ActivitiProcessService
+                ProcessService
             ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
 
-        fixture = TestBed.createComponent(ActivitiProcessInstanceVariablesComponent);
+        fixture = TestBed.createComponent(ProcessInstanceVariablesComponent);
         component = fixture.componentInstance;
-        service = fixture.debugElement.injector.get(ActivitiProcessService);
+        service = fixture.debugElement.injector.get(ProcessService);
 
         getVariablesSpy = spyOn(service, 'getProcessInstanceVariables').and.returnValue(Observable.of([{
             name: 'var1',

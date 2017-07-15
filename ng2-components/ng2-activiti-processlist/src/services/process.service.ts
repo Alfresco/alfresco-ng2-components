@@ -21,14 +21,15 @@ import { AppDefinitionRepresentationModel, Comment, TaskDetailsModel, User } fro
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Observable';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
-import { ProcessDefinitionRepresentation, ProcessInstance } from '../models/index';
+import { ProcessDefinitionRepresentation } from '../models/process-definition.model';
 import { ProcessFilterRequestRepresentation } from '../models/process-instance-filter.model';
+import { ProcessInstance } from '../models/process-instance.model';
 import { ProcessInstanceVariable } from './../models/process-instance-variable.model';
 
 declare let moment: any;
 
 @Injectable()
-export class ActivitiProcessService {
+export class ProcessService {
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {

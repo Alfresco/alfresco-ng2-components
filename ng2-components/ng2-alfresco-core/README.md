@@ -39,7 +39,7 @@
     + [1. Define the model for the custom type](#1-define-the-model-for-the-custom-type)
     + [2. Define the component for the custom type](#2-define-the-component-for-the-custom-type)
     + [3. Add you custom component to your module's entryComponents list](#3-add-you-custom-component-to-your-modules-entrycomponents-list)
-- [AlfrescoTranslationService](#alfrescotranslationservice)
+- [TranslationService](#translationservice)
 - [Renditions Service](#renditions-service)
 - [Build from sources](#build-from-sources)
 - [NPM scripts](#npm-scripts)
@@ -419,12 +419,12 @@ The preferences are bound to a particular `prefix` so the application can switch
 For example upon login you can set the `prefix` as current username:
 
 ```ts
-import { UserPreferencesService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { UserPreferencesService, AuthenticationService } from 'ng2-alfresco-core';
 
 @Component({...})
 class AppComponent {
     constructor(private userPreferences: UserPreferencesService,
-                private authService: AlfrescoAuthenticationService) {
+                private authService: AuthenticationService) {
     }
 
     onLoggedIn() {
@@ -583,12 +583,12 @@ The authentication service is used inside the [login component](../ng2-alfresco-
 **app.component.ts**
 
 ```ts
-import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { AuthenticationService } from 'ng2-alfresco-core';
 
 @Component({...})
 export class AppComponent {
-    constructor(authService: AlfrescoAuthenticationService) {
-        this.alfrescoAuthenticationService.login('admin', 'admin').subscribe(
+    constructor(authService: AuthenticationService) {
+        this.AuthenticationService.login('admin', 'admin').subscribe(
             token => {
                 console.log(token);
             },
@@ -624,7 +624,7 @@ The CardViewComponent is a configurable property list renderer. You define the p
 ### Editing
 
 The card view can optionally allow its properties to be edited. You can control the editing of the properties in two level.
-- **global level** - *via the editable paramter of the adf-card-view component*
+- **global level** - *via the editable paramter of the card-view.component*
 - **property level** -  *in each property via the editable attribute*
 
 If you set the global editable parameter to false, no properties can be edited regardless of what is set inside the property.
@@ -790,14 +790,14 @@ For Angular to be able to load your custom component dynamically, you have to re
 export class MyModule {}
 ```
 
-## AlfrescoTranslationService
+## TranslationService
 
 In order to enable localisation support you will need creating a `/resources/i18n/en.json` file 
 and registering path to it's parent `i18n` folder:
 
 ```ts
 class MainApplication {
-    constructor(translateService: AlfrescoTranslationService) {
+    constructor(translateService: TranslationService) {
         translateService.addTranslationFolder('app', 'resources');
     }
 }
@@ -808,7 +808,7 @@ Imagine you got a language picker that invokes `onLanguageClicked` method:
 
 ```ts
 class MyComponent {
-    constructor(private translateService: AlfrescoTranslationService) {
+    constructor(private translateService: TranslationService) {
     }
 
     onLanguageClicked(lang: string) {
@@ -821,7 +821,7 @@ It is also possible providing custom translations for existing components by ove
 
 ```ts
 class MyComponent {
-    constructor(private translateService: AlfrescoTranslationService) {
+    constructor(private translateService: TranslationService) {
         translateService.addTranslationFolder(
             'ng2-alfresco-login', 
             'i18n/custom-translation/alfresco-login'

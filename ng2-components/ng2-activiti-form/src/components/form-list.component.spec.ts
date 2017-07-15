@@ -23,20 +23,21 @@ import { Observable } from 'rxjs/Rx';
 import { EcmModelService } from '../services/ecm-model.service';
 import { FormService } from '../services/form.service';
 import { FormListComponent } from './form-list.component';
-import { MaterialModule } from './material.module';
+
+declare let jasmine: any;
 
 describe('TaskAttachmentList', () => {
 
     let component: FormListComponent;
     let fixture: ComponentFixture<FormListComponent>;
     let service: FormService;
+    let componentHandler: any;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                DataTableModule,
-                MaterialModule
+                DataTableModule
             ],
             declarations: [
                 FormListComponent
@@ -52,6 +53,12 @@ describe('TaskAttachmentList', () => {
         spyOn(translateService, 'get').and.callFake((key) => {
             return Observable.of(key);
         });
+
+        componentHandler = jasmine.createSpyObj('componentHandler', [
+            'upgradeAllRegistered',
+            'upgradeElement'
+        ]);
+        window['componentHandler'] = componentHandler;
     }));
 
     beforeEach(async(() => {

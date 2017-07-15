@@ -15,12 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { DateAdapter, MD_DATE_FORMATS } from '@angular/material';
-import * as moment from 'moment';
-import { MOMENT_DATE_FORMATS, MomentDateAdapter } from 'ng2-alfresco-core';
-import { LogService } from 'ng2-alfresco-core';
-import { Observable } from 'rxjs/Rx';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { Form } from '../models/form.model';
 import { StartTaskModel } from '../models/start-task.model';
 import { TaskDetailsModel } from '../models/task-details.model';
@@ -31,21 +27,15 @@ import { TaskListService } from './../services/tasklist.service';
 @Component({
     selector: 'adf-start-task, activiti-start-task',
     templateUrl: './start-task.component.html',
-    styleUrls: ['./start-task.component.scss'],
-    providers: [
-        {provide: DateAdapter, useClass: MomentDateAdapter},
-        {provide: MD_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS}],
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./start-task.component.css']
 })
 export class StartTaskComponent implements OnInit {
-
-    public  FORMAT_DATE: string = 'DD/MM/YYYY';
 
     @Input()
     appId: string;
 
     @Output()
-    success: EventEmitter<any> = new EventEmitter<any>();
+    onSuccess: EventEmitter<any> = new EventEmitter<any>();
 
     @Output()
     cancel: EventEmitter<void> = new EventEmitter<void>();
@@ -53,19 +43,11 @@ export class StartTaskComponent implements OnInit {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    people: User[] = [];
+    people: User [] = [];
 
     startTaskmodel: StartTaskModel = new StartTaskModel();
 
-    forms: Form[];
-
-    assigneeId: number;
-
-    formKey: number;
-
-    taskId: string;
-
-    dateError: boolean;
+    forms: Form [];
 
     /**
      * Constructor
@@ -73,9 +55,14 @@ export class StartTaskComponent implements OnInit {
      * @param translate
      * @param taskService
      */
-    constructor(private taskService: TaskListService,
+    constructor(private translateService: AlfrescoTranslationService,
+                private taskService: TaskListService,
                 private peopleService: PeopleService,
                 private logService: LogService) {
+
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
+        }
     }
 
     ngOnInit() {
@@ -83,48 +70,34 @@ export class StartTaskComponent implements OnInit {
         this.getUsers();
     }
 
-    public start(): void {
+    public start() {
         if (this.startTaskmodel.name) {
             this.startTaskmodel.category = this.appId;
-            this.taskService.createNewTask(new TaskDetailsModel(this.startTaskmodel))
-                .switchMap((createRes: any) =>
-                    this.attachForm(createRes.id, this.formKey).defaultIfEmpty(createRes)
-                        .switchMap((attachRes: any) =>
-                            this.assignTaskByUserId(createRes.id, this.assigneeId).defaultIfEmpty(attachRes ? attachRes : createRes)
-                        )
-                )
-                .subscribe(
-                    (res: any) => {
-                        this.success.emit(res);
-                    },
-                    (err) => {
-                        this.error.emit(err);
-                        this.logService.error('An error occurred while creating new task');
-                    });
+            this.taskService.createNewTask(new TaskDetailsModel(this.startTaskmodel)).subscribe(
+                (res: any) => {
+                    this.onSuccess.emit(res);
+                    this.attachForm(res.id);
+                    this.resetForm();
+                },
+                (err) => {
+                    this.error.emit(err);
+                    this.logService.error('An error occurred while trying to add the task');
+                }
+            );
         }
     }
 
-    private attachForm(taskId: string, formKey: number): Observable<any> {
-        let response = Observable.of();
-        if (taskId && formKey) {
-            response = this.taskService.attachFormToATask(taskId, formKey);
+    private attachForm(taskId: string) {
+        if (this.startTaskmodel.formKey && taskId) {
+            this.taskService.attachFormToATask(taskId, Number(this.startTaskmodel.formKey));
         }
-        return response;
     }
 
-    private assignTaskByUserId(taskId: string, userId: any): Observable<any> {
-        let response = Observable.of();
-        if (taskId && userId) {
-            response = this.taskService.assignTaskByUserId(taskId, userId);
-        }
-        return response;
-    }
-
-    public onCancel(): void {
+    public onCancel() {
         this.cancel.emit();
     }
 
-    private loadFormsTask(): void {
+    private loadFormsTask() {
         this.taskService.getFormList().subscribe((res: Form[]) => {
                 this.forms = res;
             },
@@ -134,37 +107,16 @@ export class StartTaskComponent implements OnInit {
             });
     }
 
-    private getUsers(): void {
+    private resetForm() {
+        this.startTaskmodel = null;
+    }
+
+    private getUsers() {
         this.peopleService.getWorkflowUsers().subscribe((users) => {
             this.people = users;
         }, (err) => {
             this.error.emit(err);
             this.logService.error('Could not load users');
         });
-    }
-
-    public isUserNameEmpty(user: any): boolean {
-        return !user || (this.isEmpty(user.firstName) && this.isEmpty(user.lastName));
-    }
-
-    private isEmpty(data: string): boolean {
-        return data === undefined || data === null || data.trim().length === 0;
-    }
-
-    public getDisplayUser(firstName: string, lastName: string, delimiter: string = '-'): string {
-        firstName = (firstName !== null ? firstName : '');
-        lastName = (lastName !== null ? lastName : '');
-        return firstName + delimiter + lastName;
-    }
-
-    onDateChanged(newDateValue): void {
-        this.dateError = false;
-
-        if (newDateValue) {
-            let momentDate = moment(newDateValue, this.FORMAT_DATE, true);
-            if (!momentDate.isValid()) {
-                this.dateError = true;
-            }
-        }
     }
 }

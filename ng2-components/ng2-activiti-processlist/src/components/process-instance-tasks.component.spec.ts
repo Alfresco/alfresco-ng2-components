@@ -26,16 +26,16 @@ import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { taskDetailsMock } from './../assets/task-details.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
 import { ProcessInstance } from './../models/process-instance.model';
-import { ActivitiProcessService } from './../services/activiti-process.service';
-import { ActivitiProcessInstanceTasksComponent } from './activiti-process-instance-tasks.component';
+import { ProcessService } from './../services/process.service';
+import { ProcessInstanceTasksComponent } from './process-instance-tasks.component';
 
-describe('ActivitiProcessInstanceTasksComponent', () => {
+describe('ProcessInstanceTasksComponent', () => {
 
     let componentHandler: any;
-    let component: ActivitiProcessInstanceTasksComponent;
-    let fixture: ComponentFixture<ActivitiProcessInstanceTasksComponent>;
+    let component: ProcessInstanceTasksComponent;
+    let fixture: ComponentFixture<ProcessInstanceTasksComponent>;
     let debugElement: DebugElement;
-    let service: ActivitiProcessService;
+    let service: ProcessService;
     let getProcessTasksSpy: jasmine.Spy;
 
     let exampleProcessInstance = new ProcessInstance({ id: '123' });
@@ -46,11 +46,11 @@ describe('ActivitiProcessInstanceTasksComponent', () => {
                 CoreModule.forRoot()
             ],
             declarations: [
-                ActivitiProcessInstanceTasksComponent
+                ProcessInstanceTasksComponent
             ],
             providers: [
                 { provide: AlfrescoTranslationService, useClass: TranslationMock },
-                ActivitiProcessService
+                ProcessService
             ],
             schemas: [NO_ERRORS_SCHEMA]
         }).compileComponents();
@@ -58,10 +58,10 @@ describe('ActivitiProcessInstanceTasksComponent', () => {
 
     beforeEach(() => {
 
-        fixture = TestBed.createComponent(ActivitiProcessInstanceTasksComponent);
+        fixture = TestBed.createComponent(ProcessInstanceTasksComponent);
         component = fixture.componentInstance;
         debugElement = fixture.debugElement;
-        service = fixture.debugElement.injector.get(ActivitiProcessService);
+        service = fixture.debugElement.injector.get(ProcessService);
         getProcessTasksSpy = spyOn(service, 'getProcessTasks').and.returnValue(Observable.of([new TaskDetailsModel(taskDetailsMock)]));
 
         componentHandler = jasmine.createSpyObj('componentHandler', [

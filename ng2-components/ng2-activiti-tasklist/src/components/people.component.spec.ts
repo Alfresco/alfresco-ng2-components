@@ -20,10 +20,10 @@ import { AlfrescoTranslationService, CoreModule, LogService } from 'ng2-alfresco
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { Observable } from 'rxjs/Observable';
 import { User } from '../models/user.model';
-import { ActivitiPeopleService } from '../services/activiti-people.service';
-import { ActivitiPeopleSearchComponent } from './activiti-people-search.component';
-import { ActivitiPeopleComponent } from './activiti-people.component';
-import { PeopleListComponent } from './adf-people-list.component';
+import { PeopleService } from '../services/people.service';
+import { PeopleSearchComponent } from './people-search.component';
+import { PeopleComponent } from './people.component';
+import { PeopleListComponent } from './people-list.component';
 
 declare let jasmine: any;
 
@@ -41,10 +41,10 @@ const fakeSecondUser: User = new User({
     email: 'fake-involve@mail.com'
 });
 
-describe('ActivitiPeopleComponent', () => {
+describe('PeopleComponent', () => {
 
-    let activitiPeopleComponent: ActivitiPeopleComponent;
-    let fixture: ComponentFixture<ActivitiPeopleComponent>;
+    let activitiPeopleComponent: PeopleComponent;
+    let fixture: ComponentFixture<PeopleComponent>;
     let element: HTMLElement;
     let componentHandler;
     let userArray = [fakeUser, fakeSecondUser];
@@ -57,12 +57,12 @@ describe('ActivitiPeopleComponent', () => {
                 DataTableModule
             ],
             declarations: [
-                ActivitiPeopleSearchComponent,
+                PeopleSearchComponent,
                 PeopleListComponent,
-                ActivitiPeopleComponent
+                PeopleComponent
             ],
             providers: [
-                ActivitiPeopleService
+                PeopleService
             ]
         }).compileComponents().then(() => {
 
@@ -72,7 +72,7 @@ describe('ActivitiPeopleComponent', () => {
             spyOn(translateService, 'addTranslationFolder').and.stub();
             spyOn(translateService.translate, 'get').and.callFake((key) => { return Observable.of(key); });
 
-            fixture = TestBed.createComponent(ActivitiPeopleComponent);
+            fixture = TestBed.createComponent(PeopleComponent);
             activitiPeopleComponent = fixture.componentInstance;
             element = fixture.nativeElement;
             componentHandler = jasmine.createSpyObj('componentHandler', [

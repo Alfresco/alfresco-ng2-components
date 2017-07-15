@@ -39,13 +39,13 @@ import {
 import { Comment } from '../models/comment.model';
 import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
-import { ActivitiTaskListService } from './activiti-tasklist.service';
+import { TaskListService } from './tasklist.service';
 
 declare let jasmine: any;
 
 describe('Activiti TaskList Service', () => {
 
-    let service: ActivitiTaskListService;
+    let service: TaskListService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -53,13 +53,13 @@ describe('Activiti TaskList Service', () => {
                 CoreModule.forRoot()
             ],
             providers: [
-                ActivitiTaskListService
+                TaskListService
             ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
-        service = TestBed.get(ActivitiTaskListService);
+        service = TestBed.get(TaskListService);
     });
 
     beforeEach(() => {

@@ -24,14 +24,20 @@ import { TagListComponent } from './src/components/tag-list.component';
 import { TagNodeListComponent } from './src/components/tag-node-list.component';
 import { TagService } from './src/services/tag.service';
 
-export * from './src/components/tag-actions.component';
-export * from './src/components/tag-list.component';
-export * from './src/components/tag-node-list.component';
-export * from './src/services/tag.service';
+export { TagActionsComponent } from './src/components/tag-actions.component';
+export { TagListComponent } from './src/components/tag-list.component';
+export { TagNodeListComponent } from './src/components/tag-node-list.component';
+export { TagService } from './src/services/tag.service';
+import { TagListComponent as TagList } from './src/components/tag-list.component';
+export { TagNodeListComponent as TagNodeList } from './src/components/tag-node-list.component';
+export { TagListComponent as TagList } from './src/components/tag-list.component';
 
 export const TAG_DIRECTIVES: any[] = [
     TagActionsComponent,
     TagListComponent,
+
+    // Old Deprecated export
+    TagList,
     TagNodeListComponent
 ];
 

@@ -34,14 +34,14 @@ import {
     ObjectDataTableAdapter
 } from 'ng2-alfresco-datatable';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
-import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
+import { TaskListService } from './../services/tasklist.service';
 
 @Component({
     selector: 'adf-tasklist, activiti-tasklist',
-    templateUrl: './activiti-tasklist.component.html',
-    styleUrls: ['./activiti-tasklist.component.css']
+    templateUrl: './tasklist.component.html',
+    styleUrls: ['./tasklist.component.css']
 })
-export class ActivitiTaskListComponent implements OnChanges, AfterContentInit {
+export class TaskListComponent implements OnChanges, AfterContentInit {
 
     requestNode: TaskQueryRequestRepresentationModel;
 
@@ -90,7 +90,7 @@ export class ActivitiTaskListComponent implements OnChanges, AfterContentInit {
      * This allows generating and displaying custom data sets (i.e. filtered out content).
      *
      * @type {boolean}
-     * @memberOf ActivitiTaskListComponent
+     * @memberOf TaskListComponent
      */
     hasCustomDataSource: boolean = false;
 
@@ -100,7 +100,7 @@ export class ActivitiTaskListComponent implements OnChanges, AfterContentInit {
     ];
 
     constructor(private translateService: AlfrescoTranslationService,
-                private taskListService: ActivitiTaskListService,
+                private taskListService: TaskListService,
                 private logService: LogService) {
         if (translateService) {
             translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');

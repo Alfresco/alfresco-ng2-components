@@ -24,34 +24,57 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { CollapsableModule } from './src/components/collapsable/collapsable.module';
 import { ContextMenuModule } from './src/components/context-menu/context-menu.module';
-import { AdfToolbarComponent } from './src/components/toolbar/toolbar.component';
+import { ToolbarComponent } from './src/components/toolbar/toolbar.component';
 import { CardViewModule } from './src/components/view/card-view.module';
 import { MaterialModule } from './src/material.module';
+
+import { AlfrescoApiService } from './src/services/alfresco-api.service';
+import { AlfrescoContentService } from './src/services/alfresco-content.service';
+import { AlfrescoSettingsService } from './src/services/alfresco-settings.service';
 import { AppConfigModule } from './src/services/app-config.service';
+import { AppConfigService } from './src/services/app-config.service';
+import { InitAppConfigServiceProvider } from './src/services/app-config.service';
+import { AuthGuardBpm } from './src/services/auth-guard-bpm.service';
+import { AuthGuardEcm } from './src/services/auth-guard-ecm.service';
+import { AuthGuard } from './src/services/auth-guard.service';
+import { AuthenticationService } from './src/services/authentication.service';
+import { ContentService } from './src/services/content.service';
+import { CookieService } from './src/services/cookie.service';
+import { LogService } from './src/services/log.service';
+import { LogServiceMock } from './src/services/log.service';
+import { NotificationService } from './src/services/notification.service';
+import { RenditionsService } from './src/services/renditions.service';
+import { StorageService } from './src/services/storage.service';
+import { ThumbnailService } from './src/services/thumbnail.service';
+import { AlfrescoTranslateLoader } from './src/services/translate-loader.service';
+import { TranslationService } from './src/services/translation.service';
+import { UploadService } from './src/services/upload.service';
 import { UserPreferencesService } from './src/services/user-preferences.service';
 
-import {
-    AlfrescoApiService,
-    AlfrescoAuthenticationService,
-    AlfrescoContentService,
-    AlfrescoSettingsService,
-    AlfrescoTranslateLoader,
-    AlfrescoTranslationService,
-    AppConfigService,
-    AuthGuard,
-    AuthGuardBpm,
-    AuthGuardEcm,
-    ContentService,
-    CookieService,
-    InitAppConfigServiceProvider,
-    LogService,
-    LogServiceMock,
-    NotificationService,
-    RenditionsService,
-    StorageService,
-    ThumbnailService,
-    UploadService
-} from './src/services/index';
+export { ContentService } from './src/services/content.service';
+export { StorageService } from './src/services/storage.service';
+export { CookieService } from './src/services/cookie.service';
+export { AlfrescoApiService } from './src/services/alfresco-api.service';
+export { AlfrescoSettingsService } from './src/services/alfresco-settings.service';
+export { AlfrescoContentService } from './src/services/alfresco-content.service';
+export { RenditionsService } from './src/services/renditions.service';
+export { AuthGuard } from './src/services/auth-guard.service';
+export { AuthGuardEcm } from './src/services/auth-guard-ecm.service';
+export { AuthGuardBpm } from './src/services/auth-guard-bpm.service';
+export { NotificationService } from './src/services/notification.service';
+export { LogService } from './src/services/log.service';
+export { LogServiceMock } from './src/services/log.service';
+export { AuthenticationService } from './src/services/authentication.service';
+export { TranslationService } from './src/services/translation.service';
+export { AlfrescoTranslateLoader } from './src/services/translate-loader.service';
+export { AppConfigService } from './src/services/app-config.service';
+export { InitAppConfigServiceProvider } from './src/services/app-config.service';
+export { ThumbnailService } from './src/services/thumbnail.service';
+export { UploadService } from './src/services/upload.service';
+export { CardViewUpdateService } from './src/services/card-view-update.service';
+export { UpdateNotification } from './src/services/card-view-update.service';
+export { AppConfigModule } from './src/services/app-config.service';
+export { UserPreferencesService } from './src/services/user-preferences.service';
 
 import { DataColumnListComponent } from './src/components/data-column/data-column-list.component';
 import { DataColumnComponent } from './src/components/data-column/data-column.component';
@@ -68,9 +91,8 @@ import { MDLDirective } from './src/components/material/mdl-upgrade-element.dire
 export { ContextMenuModule } from './src/components/context-menu/context-menu.module';
 export { CardViewModule } from './src/components/view/card-view.module';
 export { CollapsableModule } from './src/components/collapsable/collapsable.module';
-export { UserPreferencesService } from './src/services/user-preferences.service';
 export { CardViewItem } from './src/interface/card-view-item.interface';
-export * from './src/services/index';
+
 export * from './src/components/data-column/data-column.component';
 export * from './src/components/data-column/data-column-list.component';
 export * from './src/directives/upload.directive';
@@ -81,27 +103,37 @@ export * from './src/events/folder-created.event';
 export * from './src/events/file.event';
 export * from './src/models/index';
 
+// Old deprecated import
+import { AuthenticationService as AlfrescoAuthenticationService } from './src/services/authentication.service';
+import { TranslationService as AlfrescoTranslationService } from './src/services/translation.service';
+export { AuthenticationService as AlfrescoAuthenticationService } from './src/services/authentication.service';
+export { TranslationService as AlfrescoTranslationService } from './src/services/translation.service';
+
 export function providers() {
     return [
         UserPreferencesService,
         NotificationService,
         LogService,
         LogServiceMock,
-        AlfrescoAuthenticationService,
+        AuthenticationService,
         AlfrescoContentService,
         AlfrescoSettingsService,
         StorageService,
         CookieService,
         AlfrescoApiService,
         AlfrescoTranslateLoader,
-        AlfrescoTranslationService,
+        TranslationService,
         RenditionsService,
         ContentService,
         AuthGuard,
         AuthGuardEcm,
         AuthGuardBpm,
         ThumbnailService,
-        UploadService
+        UploadService,
+
+        // Old deprecated import
+        AlfrescoTranslationService,
+        AlfrescoAuthenticationService
     ];
 }
 
@@ -146,7 +178,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         DataColumnListComponent,
         FileSizePipe,
         HighlightPipe,
-        AdfToolbarComponent
+        ToolbarComponent
     ],
     providers: providers(),
     exports: [
@@ -166,7 +198,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         DataColumnListComponent,
         FileSizePipe,
         HighlightPipe,
-        AdfToolbarComponent
+        ToolbarComponent
     ]
 })
 export class CoreModule {

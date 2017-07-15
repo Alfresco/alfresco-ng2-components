@@ -21,8 +21,8 @@ import { HttpModule, Response, ResponseOptions, XHRBackend } from '@angular/http
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
-import { AlfrescoTranslateLoader } from './alfresco-translate-loader.service';
-import { AlfrescoTranslationService } from './alfresco-translation.service';
+import { AlfrescoTranslateLoader } from './translate-loader.service';
+import { TranslationService } from './translation.service';
 import { LogService } from './log.service';
 
 let componentJson1 = ' {"TEST": "This is a test", "TEST2": "This is another test"} ' ;
@@ -34,7 +34,7 @@ const mockBackendResponse = (connection: MockConnection, response: string) => {
 describe('TranslateLoader', () => {
     let injector: Injector;
     let backend: any;
-    let alfrescoTranslationService: AlfrescoTranslationService;
+    let translationService: TranslationService;
     let connection: MockConnection; // this will be set when a new connection is emitted from the backend.
     let customLoader;
 
@@ -50,22 +50,22 @@ describe('TranslateLoader', () => {
                 })
             ],
             providers: [
-                AlfrescoTranslationService,
+                TranslationService,
                 LogService,
                 {provide: XHRBackend, useClass: MockBackend}
             ]
         });
         injector = getTestBed();
         backend = injector.get(XHRBackend);
-        alfrescoTranslationService = injector.get(AlfrescoTranslationService);
+        translationService = injector.get(TranslationService);
         backend.connections.subscribe((c: MockConnection) => connection = c);
-        customLoader = alfrescoTranslationService.translate.currentLoader;
+        customLoader = translationService.translate.currentLoader;
     });
 
     it('should be able to provide any TranslateLoader', () => {
-        expect(alfrescoTranslationService).toBeDefined();
-        expect(alfrescoTranslationService.translate.currentLoader).toBeDefined();
-        expect(alfrescoTranslationService.translate.currentLoader instanceof AlfrescoTranslateLoader).toBeTruthy();
+        expect(translationService).toBeDefined();
+        expect(translationService.translate.currentLoader).toBeDefined();
+        expect(translationService.translate.currentLoader instanceof AlfrescoTranslateLoader).toBeTruthy();
     });
 
     it('should add the component to the list', () => {

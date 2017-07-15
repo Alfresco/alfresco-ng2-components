@@ -16,19 +16,31 @@
  */
 
 import { SimpleChange } from '@angular/core';
+<<<<<<< HEAD
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigModule, AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
 
 import { Observable } from 'rxjs/Rx';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
+=======
+import { async } from '@angular/core/testing';
+import { LogServiceMock } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Rx';
+>>>>>>> [ADF-1103] Add custom tslint rules to avoid unwanted Class and File name prefix (#2087)
 import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
 import { TaskListService } from '../services/tasklist.service';
 import { TaskFiltersComponent } from './task-filters.component';
 
 describe('TaskFiltersComponent', () => {
 
+<<<<<<< HEAD
     let activitiService: TaskListService;
+=======
+    let filterList: TaskFiltersComponent;
+    let activitiService: TaskListService;
+    let logService: LogServiceMock;
+>>>>>>> [ADF-1103] Add custom tslint rules to avoid unwanted Class and File name prefix (#2087)
 
     let fakeGlobalFilter = [];
     fakeGlobalFilter.push(new FilterRepresentationModel({
@@ -64,6 +76,7 @@ describe('TaskFiltersComponent', () => {
         reject(fakeErrorFilterList);
     });
 
+<<<<<<< HEAD
     let component: TaskFiltersComponent;
     let fixture: ComponentFixture<TaskFiltersComponent>;
 
@@ -120,12 +133,19 @@ describe('TaskFiltersComponent', () => {
             done();
         });
 
+=======
+    beforeEach(() => {
+        logService = new LogServiceMock();
+        activitiService = new TaskListService(null, logService);
+        filterList = new TaskFiltersComponent(null, activitiService, logService);
+>>>>>>> [ADF-1103] Add custom tslint rules to avoid unwanted Class and File name prefix (#2087)
     });
 
     it('should return the filter task list', (done) => {
         spyOn(activitiService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
         const appId = '1';
         let change = new SimpleChange(null, appId, true);
+<<<<<<< HEAD
         component.ngOnChanges({ 'appId': change });
 
         component.onSuccess.subscribe((res) => {
@@ -139,6 +159,21 @@ describe('TaskFiltersComponent', () => {
         });
 
         component.ngOnInit();
+=======
+        filterList.ngOnChanges({ 'appId': change });
+
+        filterList.onSuccess.subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(filterList.filters).toBeDefined();
+            expect(filterList.filters.length).toEqual(3);
+            expect(filterList.filters[0].name).toEqual('FakeInvolvedTasks');
+            expect(filterList.filters[1].name).toEqual('FakeMyTasks1');
+            expect(filterList.filters[2].name).toEqual('FakeMyTasks2');
+            done();
+        });
+
+        filterList.ngOnInit();
+>>>>>>> [ADF-1103] Add custom tslint rules to avoid unwanted Class and File name prefix (#2087)
     });
 
     it('should return the filter task list, filtered By Name', (done) => {
@@ -151,16 +186,56 @@ describe('TaskFiltersComponent', () => {
         spyOn(activitiService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
 
         let change = new SimpleChange(null, 'test', true);
+<<<<<<< HEAD
         component.ngOnChanges({ 'appName': change });
 
         component.onSuccess.subscribe((res) => {
+=======
+        filterList.ngOnChanges({ 'appName': change });
+
+        filterList.onSuccess.subscribe((res) => {
+>>>>>>> [ADF-1103] Add custom tslint rules to avoid unwanted Class and File name prefix (#2087)
             let deployApp: any = activitiService.getDeployedApplications;
             expect(deployApp.calls.count()).toEqual(1);
             expect(res).toBeDefined();
             done();
         });
 
+<<<<<<< HEAD
         component.ngOnInit();
+=======
+        filterList.ngOnInit();
+    });
+
+    it('should emit an error with a bad response', (done) => {
+        spyOn(activitiService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeErrorFilterPromise));
+
+        const appId = '1';
+        let change = new SimpleChange(null, appId, true);
+        filterList.ngOnChanges({ 'appId': change });
+
+        filterList.onError.subscribe((err) => {
+            expect(err).toBeDefined();
+            done();
+        });
+
+        filterList.ngOnInit();
+    });
+
+    it('should emit an error with a bad response', (done) => {
+        spyOn(activitiService, 'getDeployedApplications').and.returnValue(Observable.fromPromise(fakeErrorFilterPromise));
+
+        const appId = 'fake-app';
+        let change = new SimpleChange(null, appId, true);
+        filterList.ngOnChanges({ 'appName': change });
+
+        filterList.onError.subscribe((err) => {
+            expect(err).toBeDefined();
+            done();
+        });
+
+        filterList.ngOnInit();
+>>>>>>> [ADF-1103] Add custom tslint rules to avoid unwanted Class and File name prefix (#2087)
     });
 
     it('should select the first filter as default', (done) => {
@@ -168,6 +243,7 @@ describe('TaskFiltersComponent', () => {
 
         const appId = '1';
         let change = new SimpleChange(null, appId, true);
+<<<<<<< HEAD
 
         fixture.detectChanges();
         component.ngOnChanges({ 'appId': change });
@@ -179,11 +255,24 @@ describe('TaskFiltersComponent', () => {
             done();
         });
 
+=======
+        filterList.ngOnChanges({ 'appId': change });
+
+        filterList.onSuccess.subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(filterList.currentFilter).toBeDefined();
+            expect(filterList.currentFilter.name).toEqual('FakeInvolvedTasks');
+            done();
+        });
+
+        filterList.ngOnInit();
+>>>>>>> [ADF-1103] Add custom tslint rules to avoid unwanted Class and File name prefix (#2087)
     });
 
     it('should select the task filter based on the input by name param', (done) => {
         spyOn(activitiService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
 
+<<<<<<< HEAD
         component.filterParam = new FilterParamsModel({name: 'FakeMyTasks1'});
         const appId = '1';
         let change = new SimpleChange(null, appId, true);
@@ -198,11 +287,28 @@ describe('TaskFiltersComponent', () => {
             done();
         });
 
+=======
+        filterList.filterParam = new FilterParamsModel({name: 'FakeMyTasks1'});
+
+        const appId = '1';
+        let change = new SimpleChange(null, appId, true);
+        filterList.ngOnChanges({ 'appId': change });
+
+        filterList.onSuccess.subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(filterList.currentFilter).toBeDefined();
+            expect(filterList.currentFilter.name).toEqual('FakeMyTasks1');
+            done();
+        });
+
+        filterList.ngOnInit();
+>>>>>>> [ADF-1103] Add custom tslint rules to avoid unwanted Class and File name prefix (#2087)
     });
 
     it('should select the default task filter if filter input does not exist', (done) => {
         spyOn(activitiService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
 
+<<<<<<< HEAD
         component.filterParam = new FilterParamsModel({name: 'UnexistableFilter'});
 
         const appId = '1';
@@ -218,11 +324,28 @@ describe('TaskFiltersComponent', () => {
             done();
         });
 
+=======
+        filterList.filterParam = new FilterParamsModel({name: 'UnexistableFilter'});
+
+        const appId = '1';
+        let change = new SimpleChange(null, appId, true);
+        filterList.ngOnChanges({ 'appId': change });
+
+        filterList.onSuccess.subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(filterList.currentFilter).toBeDefined();
+            expect(filterList.currentFilter.name).toEqual('FakeInvolvedTasks');
+            done();
+        });
+
+        filterList.ngOnInit();
+>>>>>>> [ADF-1103] Add custom tslint rules to avoid unwanted Class and File name prefix (#2087)
     });
 
     it('should select the task filter based on the input by index param', (done) => {
         spyOn(activitiService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
 
+<<<<<<< HEAD
         component.filterParam = new FilterParamsModel({index: 2});
 
         const appId = '1';
@@ -238,11 +361,28 @@ describe('TaskFiltersComponent', () => {
             done();
         });
 
+=======
+        filterList.filterParam = new FilterParamsModel({index: 2});
+
+        const appId = '1';
+        let change = new SimpleChange(null, appId, true);
+        filterList.ngOnChanges({ 'appId': change });
+
+        filterList.onSuccess.subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(filterList.currentFilter).toBeDefined();
+            expect(filterList.currentFilter.name).toEqual('FakeMyTasks2');
+            done();
+        });
+
+        filterList.ngOnInit();
+>>>>>>> [ADF-1103] Add custom tslint rules to avoid unwanted Class and File name prefix (#2087)
     });
 
     it('should select the task filter based on the input by id param', (done) => {
         spyOn(activitiService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
 
+<<<<<<< HEAD
         component.filterParam = new FilterParamsModel({id: 10});
 
         const appId = '1';
@@ -258,11 +398,28 @@ describe('TaskFiltersComponent', () => {
             done();
         });
 
+=======
+        filterList.filterParam = new FilterParamsModel({id: 10});
+
+        const appId = '1';
+        let change = new SimpleChange(null, appId, true);
+        filterList.ngOnChanges({ 'appId': change });
+
+        filterList.onSuccess.subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(filterList.currentFilter).toBeDefined();
+            expect(filterList.currentFilter.name).toEqual('FakeInvolvedTasks');
+            done();
+        });
+
+        filterList.ngOnInit();
+>>>>>>> [ADF-1103] Add custom tslint rules to avoid unwanted Class and File name prefix (#2087)
     });
 
     it('should emit an event when a filter is selected', (done) => {
         let currentFilter = new FilterRepresentationModel({ filter: { state: 'open', assignment: 'fake-involved' } });
 
+<<<<<<< HEAD
         component.filterClick.subscribe((filter: FilterRepresentationModel) => {
             expect(filter).toBeDefined();
             expect(filter).toEqual(currentFilter);
@@ -301,6 +458,46 @@ describe('TaskFiltersComponent', () => {
         component.ngOnChanges({ 'appName': change });
 
         expect(component.getFiltersByAppName).toHaveBeenCalledWith(appName);
+=======
+        filterList.filterClick.subscribe((filter: FilterRepresentationModel) => {
+            expect(filter).toBeDefined();
+            expect(filter).toEqual(currentFilter);
+            expect(filterList.currentFilter).toEqual(currentFilter);
+            done();
+        });
+
+        filterList.selectFilter(currentFilter);
+    });
+
+    it('should reload filters by appId on binding changes', () => {
+        spyOn(filterList, 'getFiltersByAppId').and.stub();
+        const appId = '1';
+
+        let change = new SimpleChange(null, appId, true);
+        filterList.ngOnChanges({ 'appId': change });
+
+        expect(filterList.getFiltersByAppId).toHaveBeenCalledWith(appId);
+    });
+
+    it('should reload filters by appId null on binding changes', () => {
+        spyOn(filterList, 'getFiltersByAppId').and.stub();
+        const appId = null;
+
+        let change = new SimpleChange(null, appId, true);
+        filterList.ngOnChanges({ 'appId': change });
+
+        expect(filterList.getFiltersByAppId).toHaveBeenCalledWith(appId);
+    });
+
+    it('should reload filters by app name on binding changes', () => {
+        spyOn(filterList, 'getFiltersByAppName').and.stub();
+        const appName = 'fake-app-name';
+
+        let change = new SimpleChange(null, appName, true);
+        filterList.ngOnChanges({ 'appName': change });
+
+        expect(filterList.getFiltersByAppName).toHaveBeenCalledWith(appName);
+>>>>>>> [ADF-1103] Add custom tslint rules to avoid unwanted Class and File name prefix (#2087)
     });
 
     it('should return the current filter after one is selected', () => {
@@ -308,6 +505,7 @@ describe('TaskFiltersComponent', () => {
             name: 'FakeMyTasks',
             filter: { state: 'open', assignment: 'fake-assignee' }
         });
+<<<<<<< HEAD
         expect(component.currentFilter).toBeUndefined();
         component.selectFilter(filter);
         expect(component.getCurrentFilter()).toBe(filter);
@@ -320,10 +518,25 @@ describe('TaskFiltersComponent', () => {
         component.ngOnChanges({ 'appName': change });
 
         expect(component.getFiltersByAppId).toHaveBeenCalled();
+=======
+        expect(filterList.currentFilter).toBeUndefined();
+        filterList.selectFilter(filter);
+        expect(filterList.getCurrentFilter()).toBe(filter);
+    });
+
+    it('should load Default list when no appid or taskid are provided', () => {
+        spyOn(filterList, 'getFiltersByAppId').and.stub();
+
+        let change = new SimpleChange(null, null, true);
+        filterList.ngOnChanges({ 'appName': change });
+
+        expect(filterList.getFiltersByAppId).toHaveBeenCalled();
+>>>>>>> [ADF-1103] Add custom tslint rules to avoid unwanted Class and File name prefix (#2087)
     });
 
     it('should change the current filter if a filter with taskid is found', async(() => {
         spyOn(activitiService, 'isTaskRelatedToFilter').and.returnValue(Observable.of(fakeFilter));
+<<<<<<< HEAD
         component.filters = fakeGlobalFilter;
         component.selectFilterWithTask('111');
         fixture.detectChanges();
@@ -334,6 +547,13 @@ describe('TaskFiltersComponent', () => {
             expect(component.currentFilter.landingTaskId).toBe('111');
         });
 
+=======
+        filterList.filters = fakeGlobalFilter;
+        filterList.selectFilterWithTask('111');
+
+        expect(filterList.currentFilter.landingTaskId).toBeDefined();
+        expect(filterList.currentFilter.landingTaskId).toBe('111');
+>>>>>>> [ADF-1103] Add custom tslint rules to avoid unwanted Class and File name prefix (#2087)
     }));
 
     it('should not change the current filter if no filter with taskid is found', async(() => {
@@ -341,11 +561,20 @@ describe('TaskFiltersComponent', () => {
             name: 'FakeMyTasks',
             filter: { state: 'open', assignment: 'fake-assignee' }
         });
+<<<<<<< HEAD
         component.filters = fakeGlobalFilter;
         component.currentFilter = filter;
         spyOn(activitiService, 'isTaskRelatedToFilter').and.returnValue(Observable.of(null));
         component.selectFilterWithTask('111');
 
         expect(component.currentFilter).toBe(filter);
+=======
+        filterList.filters = fakeGlobalFilter;
+        filterList.currentFilter = filter;
+        spyOn(activitiService, 'isTaskRelatedToFilter').and.returnValue(Observable.of(null));
+        filterList.selectFilterWithTask('111');
+
+        expect(filterList.currentFilter).toBe(filter);
+>>>>>>> [ADF-1103] Add custom tslint rules to avoid unwanted Class and File name prefix (#2087)
     }));
 });

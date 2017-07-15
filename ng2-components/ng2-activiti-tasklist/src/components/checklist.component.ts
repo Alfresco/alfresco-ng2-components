@@ -19,17 +19,17 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { Observable, Observer } from 'rxjs/Rx';
 import { TaskDetailsModel } from '../models/task-details.model';
-import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
+import { TaskListService } from './../services/tasklist.service';
 
 declare let dialogPolyfill: any;
 
 @Component({
     selector: 'adf-checklist, activiti-checklist',
-    templateUrl: './activiti-checklist.component.html',
-    styleUrls: ['./activiti-checklist.component.css'],
-    providers: [ActivitiTaskListService]
+    templateUrl: './checklist.component.html',
+    styleUrls: ['./checklist.component.css'],
+    providers: [TaskListService]
 })
-export class ActivitiChecklistComponent implements OnInit, OnChanges {
+export class ChecklistComponent implements OnInit, OnChanges {
 
     @Input()
     taskId: string;
@@ -65,7 +65,7 @@ export class ActivitiChecklistComponent implements OnInit, OnChanges {
      * @param translate
      */
     constructor(private translateService: AlfrescoTranslationService,
-                private activitiTaskList: ActivitiTaskListService,
+                private activitiTaskList: TaskListService,
                 private logService: LogService) {
 
         if (translateService) {

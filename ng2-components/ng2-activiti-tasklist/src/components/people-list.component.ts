@@ -26,7 +26,7 @@ declare let componentHandler: any;
 @Component({
     selector: 'adf-people-list',
     templateUrl: './people-list.component.html',
-    styleUrls: ['./people-list.component.scss']
+    styleUrls: ['./people-list.component.css']
 })
 
 export class PeopleListComponent implements AfterViewInit, AfterContentInit {
@@ -49,6 +49,9 @@ export class PeopleListComponent implements AfterViewInit, AfterContentInit {
     clickAction: EventEmitter<UserEventModel> = new EventEmitter<UserEventModel>();
 
     user: User;
+
+    constructor() {
+    }
 
     ngAfterContentInit() {
         this.peopleDataTable.columnList = this.columnList;

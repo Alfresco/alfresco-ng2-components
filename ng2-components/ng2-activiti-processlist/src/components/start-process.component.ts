@@ -17,21 +17,21 @@
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { RestVariable } from 'alfresco-js-api';
-import { ActivitiStartFormComponent } from 'ng2-activiti-form';
+import { StartFormComponent } from 'ng2-activiti-form';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ProcessDefinitionRepresentation } from './../models/process-definition.model';
 import { ProcessInstance } from './../models/process-instance.model';
-import { ActivitiProcessService } from './../services/activiti-process.service';
+import { ProcessService } from './../services/process.service';
 
 declare let componentHandler: any;
 declare let dialogPolyfill: any;
 
 @Component({
     selector: 'adf-start-process, activiti-start-process',
-    templateUrl: './activiti-start-process.component.html',
-    styleUrls: ['./activiti-start-process.component.css']
+    templateUrl: './start-process.component.html',
+    styleUrls: ['./start-process.component.css']
 })
-export class ActivitiStartProcessInstanceComponent implements OnChanges {
+export class StartProcessInstanceComponent implements OnChanges {
 
     @Input()
     appId: string;
@@ -45,8 +45,8 @@ export class ActivitiStartProcessInstanceComponent implements OnChanges {
     @Output()
     error: EventEmitter<ProcessInstance> = new EventEmitter<ProcessInstance>();
 
-    @ViewChild(ActivitiStartFormComponent)
-    startForm: ActivitiStartFormComponent;
+    @ViewChild(StartFormComponent)
+    startForm: StartFormComponent;
 
     processDefinitions: ProcessDefinitionRepresentation[] = [];
 
@@ -57,7 +57,7 @@ export class ActivitiStartProcessInstanceComponent implements OnChanges {
     errorMessageId: string = '';
 
     constructor(private translate: AlfrescoTranslationService,
-                private activitiProcess: ActivitiProcessService) {
+                private activitiProcess: ProcessService) {
 
         if (translate) {
             translate.addTranslationFolder('ng2-activiti-processlist', 'assets/ng2-activiti-processlist');

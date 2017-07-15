@@ -1,27 +1,34 @@
-<md-card>
-	<md-card-title>{{'START_PROCESS.FORM.TITLE' | translate}}
-	</md-card-title>
-	<md-card-content *ngIf="isProcessDefinitionEmpty()">
-		<md-card-subtitle id="error-message" *ngIf="errorMessageId">
-			{{errorMessageId|translate}}
-		</md-card-subtitle>
-		<md-input-container>
-			<input mdInput placeholder="{{'START_PROCESS.FORM.LABEL.NAME'|translate}}" [(ngModel)]="name" id="processName" required />
-		</md-input-container>
-		<md-select placeholder="{{'START_PROCESS.FORM.LABEL.TYPE'|translate}}" [(ngModel)]="currentProcessDef.id" (ngModelChange)="onProcessDefChange($event)" required>
-			<md-option>{{'START_PROCESS.FORM.TYPE_PLACEHOLDER' | translate}}</md-option>
-			<md-option *ngFor="let processDef of processDefinitions" [value]="processDef.id">
-				{{ processDef.name }}
-			</md-option>
-		</md-select>
-		<activiti-start-form *ngIf="hasStartForm()" [processDefinitionId]="currentProcessDef.id" (outcomeClick)="onOutcomeClick($event)"></activiti-start-form>
-	</md-card-content>
-	<md-card-content *ngIf="hasErrorMessage()">
-		<md-card-subtitle class="error-message" id="no-process-message">
-			{{'START_PROCESS.NO_PROCESS_DEFINITIONS' | translate}}
-		</md-card-subtitle>
-	</md-card-content>
-	<md-card-actions *ngIf="isProcessDefinitionEmpty()">
-		<button md-button (click)="cancelStartProcess()" id="cancle_process" class=""> {{'START_PROCESS.FORM.ACTION.CANCEL'| translate}} </button>
-		<button md-button *ngIf="!hasStartForm()" [disabled]="!validateForm()" (click)="startProcess()" data-automation-id="btn-start" id="button-start" class="btn-start"> {{'START_PROCESS.FORM.ACTION.START' | translate}} </button>
-	</md-card-actions>
+<div *ngIf="processDefinitions.length > 0 || errorMessageId" class="mdl-card mdl-shadow--2dp">
+    <div class="mdl-card__supporting-text">
+        <div class="mdl-card mdl-shadow--2dp error-message" *ngIf="errorMessageId">
+            <div class="mdl-card__supporting-text">{{errorMessageId|translate}}</div>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield alf-mdl-selectfield">
+            <select name="processDefinition" [(ngModel)]="currentProcessDef.id" (ngModelChange)="onProcessDefChange($event)" id="processDefinition" required>
+                <option value="null">{{'START_PROCESS.DIALOG.TYPE_PLACEHOLDER'|translate}}</option>
+                <option *ngFor="let processDef of processDefinitions" [value]="processDef.id">
+                    {{processDef.name}}
+                </option>
+            </select>
+            <label class="mdl-textfield__label" for="processDefinition">{{'START_PROCESS.DIALOG.LABEL.TYPE'|translate}}</label>
+        </div>
+        <br>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" alfresco-mdl-textfield>
+            <input class="mdl-textfield__input" type="text" [(ngModel)]="name" id="processName" required />
+            <label class="mdl-textfield__label" for="processName">{{'START_PROCESS.DIALOG.LABEL.NAME'|translate}}</label>
+        </div>
+        <adf-start-form *ngIf="hasStartForm()" [processDefinitionId]="currentProcessDef.id"
+                             (outcomeClick)="onOutcomeClick($event)">
+        </adf-start-form>
+    </div>
+    <div class="mdl-card__actions mdl-card--border" *ngIf="!hasStartForm()">
+        <button type="button" [disabled]="!validateForm()" (click)="startProcess()" class="mdl-button" data-automation-id="btn-start">{{'START_PROCESS.DIALOG.ACTION.START'|translate}}</button>
+    </div>
+</div>
+<div *ngIf="processDefinitions.length === 0 && !errorMessageId" class="mdl-card mdl-shadow--2dp">
+    <div class="mdl-card__supporting-text">
+        <div class="mdl-textfield mdl-js-textfield alf-mdl-selectfield">
+            <span id="no-process-message">{{'START_PROCESS.NO_PROCESS_DEFINITIONS' | translate}}</span>
+        </div>
+    </div>
+</div>

@@ -22,10 +22,10 @@ import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { DataRowEvent, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 import { Observable } from 'rxjs/Rx';
-import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
-import { ActivitiTaskListComponent } from './activiti-tasklist.component';
+import { TaskListService } from '../services/tasklist.service';
+import { TaskListComponent } from './tasklist.component';
 
-describe('ActivitiTaskListComponent', () => {
+describe('TaskListComponent', () => {
 
     let fakeGlobalTask = [
         {
@@ -80,9 +80,9 @@ describe('ActivitiTaskListComponent', () => {
     };
 
     let componentHandler: any;
-    let component: ActivitiTaskListComponent;
-    let fixture: ComponentFixture<ActivitiTaskListComponent>;
-    let taskListService: ActivitiTaskListService;
+    let component: TaskListComponent;
+    let fixture: ComponentFixture<TaskListComponent>;
+    let taskListService: TaskListService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -92,10 +92,10 @@ describe('ActivitiTaskListComponent', () => {
                 MdProgressSpinnerModule
             ],
             declarations: [
-                ActivitiTaskListComponent
+                TaskListComponent
             ],
             providers: [
-                ActivitiTaskListService
+                TaskListService
             ]
         }).compileComponents();
 
@@ -106,10 +106,10 @@ describe('ActivitiTaskListComponent', () => {
 
     beforeEach(() => {
 
-        fixture = TestBed.createComponent(ActivitiTaskListComponent);
+        fixture = TestBed.createComponent(TaskListComponent);
         component = fixture.componentInstance;
 
-        taskListService = TestBed.get(ActivitiTaskListService);
+        taskListService = TestBed.get(TaskListService);
 
         componentHandler = jasmine.createSpyObj('componentHandler', [
             'upgradeAllRegistered',

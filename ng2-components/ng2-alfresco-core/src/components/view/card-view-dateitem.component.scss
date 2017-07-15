@@ -1,29 +1,28 @@
-@mixin mat-card-view-dateitem-theme($theme) {
+@import 'theming';
 
-    .adf {
-        &-invisible-date-input {
-            height: 24px;
-            width: 0;
-            overflow: hidden;
-            opacity: 0;
-            border: none;
-            margin: 0;
-            padding: 0;
+.#{$ADF} {
+    &-invisible-date-input {
+        height: 24px;
+        width: 0;
+        overflow: hidden;
+        opacity: 0;
+        border: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    &-dateitem-editable {
+        cursor: pointer;
+
+        button {
+            width: 16px;
+            height: 16px;
+            opacity: 0.5;
+            margin-left: 4px;
         }
 
-        &-dateitem-editable {
-            cursor: pointer;
-
-            button {
-                width: 16px;
-                height: 16px;
-                opacity: 0.5;
-                margin-left: 4px;
-            }
-
-            &:hover button {
-                opacity: 1;
-            }
+        &:hover button {
+            opacity: 1;
         }
     }
 }

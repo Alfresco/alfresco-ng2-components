@@ -49,8 +49,12 @@ describe('PeopleService', () => {
                 CoreModule.forRoot()
             ],
             providers: [
+<<<<<<< HEAD:ng2-components/ng2-activiti-tasklist/src/services/people.service.spec.ts
                 PeopleService,
                 { provide: AppConfigService, useClass: AppConfigServiceMock }
+=======
+                PeopleService
+>>>>>>> [ADF-1103] Add custom tslint rules to avoid unwanted Class and File name prefix (#2087):ng2-components/ng2-activiti-tasklist/src/services/people.service.spec.ts
             ]
         });
         service = TestBed.get(PeopleService);

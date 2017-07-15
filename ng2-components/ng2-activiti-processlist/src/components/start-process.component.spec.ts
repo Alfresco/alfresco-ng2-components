@@ -23,17 +23,17 @@ import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 
 import { RestVariable } from 'alfresco-js-api';
-import { ActivitiProcessService } from '../services/activiti-process.service';
-import { fakeProcessDefs, fakeProcessDefWithForm, newProcess, taskFormMock } from './../assets/activiti-start-process.component.mock';
+import { ProcessService } from '../services/process.service';
+import { fakeProcessDefs, fakeProcessDefWithForm, newProcess, taskFormMock } from './../assets/start-process.component.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
-import { ActivitiStartProcessInstanceComponent } from './activiti-start-process.component';
+import { StartProcessInstanceComponent } from './start-process.component';
 
-describe('ActivitiStartProcessInstanceComponent', () => {
+describe('StartProcessInstanceComponent', () => {
 
     let componentHandler: any;
-    let component: ActivitiStartProcessInstanceComponent;
-    let fixture: ComponentFixture<ActivitiStartProcessInstanceComponent>;
-    let processService: ActivitiProcessService;
+    let component: StartProcessInstanceComponent;
+    let fixture: ComponentFixture<StartProcessInstanceComponent>;
+    let processService: ProcessService;
     let formService: FormService;
     let getDefinitionsSpy: jasmine.Spy;
     let getStartFormDefinitionSpy: jasmine.Spy;
@@ -47,11 +47,11 @@ describe('ActivitiStartProcessInstanceComponent', () => {
                 ActivitiFormModule.forRoot()
             ],
             declarations: [
-                ActivitiStartProcessInstanceComponent
+                StartProcessInstanceComponent
             ],
             providers: [
                 {provide: AlfrescoTranslationService, useClass: TranslationMock},
-                ActivitiProcessService,
+                ProcessService,
                 FormService
             ]
         }).compileComponents();
@@ -59,10 +59,10 @@ describe('ActivitiStartProcessInstanceComponent', () => {
 
     beforeEach(() => {
 
-        fixture = TestBed.createComponent(ActivitiStartProcessInstanceComponent);
+        fixture = TestBed.createComponent(StartProcessInstanceComponent);
         component = fixture.componentInstance;
         debugElement = fixture.debugElement;
-        processService = fixture.debugElement.injector.get(ActivitiProcessService);
+        processService = fixture.debugElement.injector.get(ProcessService);
         formService = fixture.debugElement.injector.get(FormService);
 
         getDefinitionsSpy = spyOn(processService, 'getProcessDefinitions').and.returnValue(Observable.of(fakeProcessDefs));

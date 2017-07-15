@@ -22,7 +22,7 @@ import { Observable } from 'rxjs/Rx';
 import { User } from '../models/user.model';
 
 @Injectable()
-export class ActivitiPeopleService {
+export class PeopleService {
 
     constructor(private alfrescoJsApi: AlfrescoApiService,
                 private logService: LogService) {

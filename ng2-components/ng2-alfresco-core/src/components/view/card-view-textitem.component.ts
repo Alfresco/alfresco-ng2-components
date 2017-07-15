@@ -47,10 +47,6 @@ export class CardViewTextItemComponent implements OnChanges {
         return this.editable && this.property.editable;
     }
 
-    isClickable() {
-        return this.property.clickable;
-    }
-
     setEditMode(editStatus: boolean): void {
         this.inEdit = editStatus;
         setTimeout(() => {
@@ -65,9 +61,5 @@ export class CardViewTextItemComponent implements OnChanges {
 
     update(): void {
         this.cardViewUpdateService.update(this.property, { [this.property.key]: this.editedValue });
-    }
-
-    clicked(): void {
-        this.cardViewUpdateService.clicked(this.property);
     }
 }

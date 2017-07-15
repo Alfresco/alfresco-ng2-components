@@ -20,17 +20,14 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
 
 import { ActivitiFormModule } from 'ng2-activiti-form';
-import { AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
-import { AppConfigServiceMock } from '../assets/app-config.service.mock';
-import { TranslationMock } from '../assets/translation.service.mock';
+import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 
 import { DatePipe } from '@angular/common';
 import { MdInputModule } from '@angular/material';
 import { DataTableModule } from 'ng2-alfresco-datatable';
-import { PeopleService } from '../services/people.service';
 import { TaskListService } from './../services/tasklist.service';
-import { CommentListComponent } from './comment-list.component';
 import { CommentsComponent } from './comments.component';
+import { CommentListComponent } from './comment-list.component';
 
 describe('CommentsComponent', () => {
 
@@ -55,13 +52,13 @@ describe('CommentsComponent', () => {
             ],
             providers: [
                 TaskListService,
-                DatePipe,
-                PeopleService,
-                { provide: TranslationService, useClass: TranslationMock },
-                { provide: AppConfigService, useClass: AppConfigServiceMock }
+                DatePipe
             ]
         }).compileComponents();
 
+        let translateService = TestBed.get(AlfrescoTranslationService);
+        spyOn(translateService, 'addTranslationFolder').and.stub();
+        spyOn(translateService, 'get').and.callFake((key) => { return Observable.of(key); });
     }));
 
     beforeEach(() => {
@@ -69,12 +66,12 @@ describe('CommentsComponent', () => {
         component = fixture.componentInstance;
         service = fixture.debugElement.injector.get(TaskListService);
 
-        getCommentsSpy = spyOn(service, 'getComments').and.returnValue(Observable.of([
+        getCommentsSpy = spyOn(service, 'getTaskComments').and.returnValue(Observable.of([
             { message: 'Test1', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'} },
             { message: 'Test2', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'} },
             { message: 'Test3', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'} }
         ]));
-        addCommentSpy = spyOn(service, 'addComment').and.returnValue(Observable.of({id: 123, message: 'Test Comment', createdBy: {id: '999'}}));
+        addCommentSpy = spyOn(service, 'addTaskComment').and.returnValue(Observable.of({id: 123, message: 'Test Comment'}));
 
         componentHandler = jasmine.createSpyObj('componentHandler', [
             'upgradeAllRegistered',

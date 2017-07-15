@@ -19,7 +19,7 @@ import { TestBed } from '@angular/core/testing';
 import { async } from '@angular/core/testing';
 import { AlfrescoApi } from 'alfresco-js-api';
 import { AlfrescoApiService, CoreModule } from 'ng2-alfresco-core';
-import { exampleProcess } from '../assets/activiti-process.model.mock';
+import { exampleProcess } from '../assets/process.model.mock';
 import {
     fakeApp1,
     fakeApp2,
@@ -28,16 +28,16 @@ import {
     fakeFilters,
     fakeProcessDef,
     fakeTaskList
-} from '../assets/activiti-process.service.mock';
+} from '../assets/process.service.mock';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterRequestRepresentation } from '../models/process-instance-filter.model';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
-import { ActivitiProcessService } from './activiti-process.service';
+import { ProcessService } from './process.service';
 
 declare let jasmine: any;
-describe('ActivitiProcessService', () => {
+describe('ProcessService', () => {
 
-    let service: ActivitiProcessService;
+    let service: ProcessService;
     let apiService: AlfrescoApiService;
     let alfrescoApi: AlfrescoApi;
 
@@ -47,10 +47,10 @@ describe('ActivitiProcessService', () => {
                 CoreModule.forRoot()
             ],
             providers: [
-                ActivitiProcessService
+                ProcessService
             ]
         });
-        service = TestBed.get(ActivitiProcessService);
+        service = TestBed.get(ProcessService);
         apiService = TestBed.get(AlfrescoApiService);
         alfrescoApi = apiService.getInstance();
     });

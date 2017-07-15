@@ -21,14 +21,14 @@ import { AlfrescoTranslationService, DataColumnListComponent } from 'ng2-alfresc
 import { DataColumn, DataRowEvent, DataSorting, DataTableAdapter, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 import { ProcessFilterRequestRepresentation } from '../models/process-instance-filter.model';
 import { ProcessInstance } from '../models/process-instance.model';
-import { ActivitiProcessService } from '../services/activiti-process.service';
+import { ProcessService } from '../services/process.service';
 
 @Component({
     selector: 'adf-process-instance-list, activiti-process-instance-list',
-    styleUrls: ['./activiti-processlist.component.css'],
-    templateUrl: './activiti-processlist.component.html'
+    styleUrls: ['./processlist.component.css'],
+    templateUrl: './processlist.component.html'
 })
-export class ActivitiProcessInstanceListComponent implements OnChanges, AfterContentInit {
+export class ProcessInstanceListComponent implements OnChanges, AfterContentInit {
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
@@ -69,7 +69,7 @@ export class ActivitiProcessInstanceListComponent implements OnChanges, AfterCon
         { type: 'text', key: 'created', title: 'Created', cssClass: 'hidden', sortable: true }
     ];
 
-    constructor(private processService: ActivitiProcessService,
+    constructor(private processService: ProcessService,
                 private translate: AlfrescoTranslationService) {
         if (translate !== null) {
             translate.addTranslationFolder('ng2-activiti-processlist', 'assets/ng2-activiti-processlist');
