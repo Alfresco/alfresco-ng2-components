@@ -11,6 +11,7 @@ $adf-toolbar-font-size: 14px;
 
     .mat-toolbar {
         min-height: $adf-toolbar-height;
+        border: 1px solid $alfresco-divider-color;
     }
 
     .mat-toolbar-row {
