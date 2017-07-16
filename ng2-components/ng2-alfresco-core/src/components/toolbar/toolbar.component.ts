@@ -20,9 +20,10 @@ import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@a
 @Component({
     selector: 'adf-toolbar',
     templateUrl: './toolbar.component.html',
-    styleUrls: ['./toolbar.component.css'],
+    styleUrls: ['./toolbar.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    host: { 'class': 'adf-toolbar' }
 })
 export class ToolbarComponent {
 

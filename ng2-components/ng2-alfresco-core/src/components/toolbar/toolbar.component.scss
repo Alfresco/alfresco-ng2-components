@@ -17,5 +17,14 @@ $adf-toolbar-font-size: 14px;
     .mat-toolbar-row {
         height: $adf-toolbar-height;
         font-size: $adf-toolbar-font-size;
+
+        & > button {
+            color: $alfresco-secondary-text-color;
+            @include material-animation-default(0.28s);
+
+            &:hover {
+                color: $alfresco-primary-text-color;
+            }
+        }
     }
 }
