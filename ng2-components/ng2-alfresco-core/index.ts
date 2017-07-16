@@ -24,14 +24,14 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { CollapsableModule } from './src/components/collapsable/collapsable.module';
 import { ContextMenuModule } from './src/components/context-menu/context-menu.module';
-import { ToolbarComponent } from './src/components/toolbar/toolbar.component';
+import { ToolbarModule } from './src/components/toolbar/toolbar.module';
 import { CardViewModule } from './src/components/view/card-view.module';
 import { MaterialModule } from './src/material.module';
+import { AppConfigModule } from './src/services/app-config.service';
 
 import { AlfrescoApiService } from './src/services/alfresco-api.service';
 import { AlfrescoContentService } from './src/services/alfresco-content.service';
 import { AlfrescoSettingsService } from './src/services/alfresco-settings.service';
-import { AppConfigModule } from './src/services/app-config.service';
 import { AppConfigService } from './src/services/app-config.service';
 import { InitAppConfigServiceProvider } from './src/services/app-config.service';
 import { AuthGuardBpm } from './src/services/auth-guard-bpm.service';
@@ -167,6 +167,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         }),
         MaterialModule,
         AppConfigModule,
+        ToolbarModule,
         ContextMenuModule,
         CardViewModule,
         CollapsableModule
@@ -177,8 +178,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         DataColumnComponent,
         DataColumnListComponent,
         FileSizePipe,
-        HighlightPipe,
-        ToolbarComponent
+        HighlightPipe
     ],
     providers: providers(),
     exports: [
@@ -192,13 +192,13 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         ContextMenuModule,
         CardViewModule,
         CollapsableModule,
+        ToolbarModule,
         ...obsoleteMdlDirectives(),
         UploadDirective,
         DataColumnComponent,
         DataColumnListComponent,
         FileSizePipe,
-        HighlightPipe,
-        ToolbarComponent
+        HighlightPipe
     ]
 })
 export class CoreModule {
