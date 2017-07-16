@@ -3,10 +3,6 @@
         [rootFolderId]="documentList.currentFolderId"
         [versioning]="versioning"
         [enabled]="documentList.hasCreatePermission()">
-        <adf-breadcrumb
-            [target]="documentList"
-            [folderNode]="documentList.folderNode">
-        </adf-breadcrumb>
         <div *ngIf="errorMessage" class="error-message">
             <button (click)="resetError()" class="mdl-button mdl-js-button mdl-button--icon">
                 <i class="material-icons">highlight_off</i>
@@ -14,7 +10,13 @@
             <span class="error-message--text">{{errorMessage}}</span>
         </div>
         <ng-container *ngIf="useCustomToolbar">
-            <adf-toolbar title="Toolbar">
+            <adf-toolbar>
+                <adf-toolbar-title>
+                    <adf-breadcrumb
+                        [target]="documentList"
+                        [folderNode]="documentList.folderNode">
+                    </adf-breadcrumb>
+                </adf-toolbar-title>
                 <button md-icon-button (click)="onCreateFolderClicked($event)">
                     <md-icon>create_new_folder</md-icon>
                 </button>

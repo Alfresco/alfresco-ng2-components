@@ -15,22 +15,26 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { MdToolbarModule } from '@angular/material';
 
-@Component({
-    selector: 'adf-toolbar',
-    templateUrl: './toolbar.component.html',
-    styleUrls: ['./toolbar.component.css'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.None,
-    host: { 'class': 'adf-toolbar' }
+import { ToolbarTitleComponent } from './toolbar-title.component';
+import { ToolbarComponent } from './toolbar.component';
+
+@NgModule({
+    imports: [
+        CommonModule,
+        MdToolbarModule
+    ],
+    declarations: [
+        ToolbarComponent,
+        ToolbarTitleComponent
+    ],
+    exports: [
+        MdToolbarModule,
+        ToolbarComponent,
+        ToolbarTitleComponent
+    ]
 })
-export class ToolbarComponent {
-
-    @Input()
-    title: string = '';
-
-    @Input()
-    color: string;
-
-}
+export class ToolbarModule {}
