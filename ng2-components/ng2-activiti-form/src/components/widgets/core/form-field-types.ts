@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /* tslint:disable:component-selector  */
+
 export class FormFieldTypes {
     static CONTAINER: string = 'container';
     static GROUP: string = 'group';

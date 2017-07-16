@@ -184,17 +184,17 @@ describe('FormComponent', () => {
     });
 
     it('should get process variable if is a process task', () => {
-        spyOn(formService, 'getTaskForm').and.callFake((taskId) => {
+        spyOn(formService, 'getTaskForm').and.callFake((currentTaskId) => {
             return Observable.create(observer => {
-                observer.next({ taskId: taskId });
+                observer.next({ taskId: currentTaskId });
                 observer.complete();
             });
         });
 
         spyOn(visibilityService, 'getTaskProcessVariable').and.returnValue(Observable.of({}));
-        spyOn(formService, 'getTask').and.callFake((taskId) => {
+        spyOn(formService, 'getTask').and.callFake((currentTaskId) => {
             return Observable.create(observer => {
-                observer.next({ taskId: taskId, processDefinitionId: '10201' });
+                observer.next({ taskId: currentTaskId, processDefinitionId: '10201' });
                 observer.complete();
             });
         });
@@ -207,17 +207,17 @@ describe('FormComponent', () => {
     });
 
     it('should not get process variable if is not a process task', () => {
-        spyOn(formService, 'getTaskForm').and.callFake((taskId) => {
+        spyOn(formService, 'getTaskForm').and.callFake((currentTaskId) => {
             return Observable.create(observer => {
-                observer.next({ taskId: taskId });
+                observer.next({ taskId: currentTaskId });
                 observer.complete();
             });
         });
 
         spyOn(visibilityService, 'getTaskProcessVariable').and.returnValue(Observable.of({}));
-        spyOn(formService, 'getTask').and.callFake((taskId) => {
+        spyOn(formService, 'getTask').and.callFake((currentTaskId) => {
             return Observable.create(observer => {
-                observer.next({ taskId: taskId, processDefinitionId: 'null' });
+                observer.next({ taskId: currentTaskId, processDefinitionId: 'null' });
                 observer.complete();
             });
         });
@@ -422,9 +422,9 @@ describe('FormComponent', () => {
 
     it('should fetch and parse form by task id', (done) => {
         spyOn(formService, 'getTask').and.returnValue(Observable.of({}));
-        spyOn(formService, 'getTaskForm').and.callFake((taskId) => {
+        spyOn(formService, 'getTaskForm').and.callFake((currentTaskId) => {
             return Observable.create(observer => {
-                observer.next({ taskId: taskId });
+                observer.next({ taskId: currentTaskId });
                 observer.complete();
             });
         });
@@ -474,9 +474,9 @@ describe('FormComponent', () => {
     });
 
     it('should fetch and parse form definition by id', () => {
-        spyOn(formService, 'getFormDefinitionById').and.callFake((formId) => {
+        spyOn(formService, 'getFormDefinitionById').and.callFake((currentFormId) => {
             return Observable.create(observer => {
-                observer.next({ id: formId });
+                observer.next({ id: currentFormId });
                 observer.complete();
             });
         });
@@ -506,16 +506,16 @@ describe('FormComponent', () => {
     });
 
     it('should fetch and parse form definition by form name', () => {
-        spyOn(formService, 'getFormDefinitionByName').and.callFake((formName) => {
+        spyOn(formService, 'getFormDefinitionByName').and.callFake((currentFormName) => {
             return Observable.create(observer => {
-                observer.next(formName);
+                observer.next(currentFormName);
                 observer.complete();
             });
         });
 
-        spyOn(formService, 'getFormDefinitionById').and.callFake((formName) => {
+        spyOn(formService, 'getFormDefinitionById').and.callFake((currentFormName) => {
             return Observable.create(observer => {
-                observer.next({ name: formName });
+                observer.next({ name: currentFormName });
                 observer.complete();
             });
         });

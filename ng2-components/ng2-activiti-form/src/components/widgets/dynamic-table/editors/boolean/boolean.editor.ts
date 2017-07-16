@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /* tslint:disable:component-selector  */
+
 import { Component, Input } from '@angular/core';
 import { DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './../../dynamic-table.widget.model';
 
@@ -35,7 +37,7 @@ export class BooleanEditorComponent {
     column: DynamicTableColumn;
 
     onValueChanged(row: DynamicTableRow, column: DynamicTableColumn, event: any) {
-        let value: boolean = (<HTMLInputElement>event.target).checked;
+        let value: boolean = (<HTMLInputElement> event.target).checked;
         row.value[column.id] = value;
     }
 

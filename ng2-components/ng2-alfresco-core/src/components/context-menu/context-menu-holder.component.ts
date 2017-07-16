@@ -19,7 +19,7 @@ import { Component, HostListener } from '@angular/core';
 import { ContextMenuService } from './context-menu.service';
 
 @Component({
-    selector: 'context-menu-holder',
+    selector: 'adf-context-menu-holder, context-menu-holder',
     styles: [
         `
         .menu-container {

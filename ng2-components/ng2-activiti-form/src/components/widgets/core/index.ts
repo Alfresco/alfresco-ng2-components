@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /* tslint:disable:component-selector  */
+
 export * from './form-field-metadata';
 export * from './form-values';
 export * from './form-field-types';

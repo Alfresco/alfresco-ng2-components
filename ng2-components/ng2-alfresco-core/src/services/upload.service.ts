@@ -43,7 +43,7 @@ export class UploadService {
     fileUploadComplete: Subject<FileUploadCompleteEvent> = new Subject<FileUploadCompleteEvent>();
 
     constructor(private apiService: AlfrescoApiService, private appConfigService: AppConfigService) {
-        this.excludedFileList = <String[]>this.appConfigService.get('files.excluded');
+        this.excludedFileList = <String[]> this.appConfigService.get('files.excluded');
     }
 
     /**

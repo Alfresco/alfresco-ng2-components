@@ -15,7 +15,9 @@
  * limitations under the License.
  */
 
-import {FormFieldFileSource} from './form-field-file-source';
+ /* tslint:disable:component-selector  */
+
+import { FormFieldFileSource } from './form-field-file-source';
 
 export interface FormFieldMetadata {
     [key: string]: any;
