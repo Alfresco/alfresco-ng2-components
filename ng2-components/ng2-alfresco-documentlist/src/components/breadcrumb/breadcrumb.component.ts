@@ -23,7 +23,10 @@ import { DocumentListComponent } from '../document-list.component';
     selector: 'adf-breadcrumb, alfresco-document-list-breadcrumb',
     templateUrl: './breadcrumb.component.html',
     styleUrls: ['./breadcrumb.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    host: {
+        'class': 'adf-breadcrumb'
+    }
 })
 export class BreadcrumbComponent implements OnChanges {
 
@@ -47,7 +50,7 @@ export class BreadcrumbComponent implements OnChanges {
             let node: MinimalNodeEntryEntity = changes.folderNode.currentValue;
 
             if (node) {
-                let route = <PathElementEntity[]> (node.path.elements || []);
+                let route = <PathElementEntity[]> (node.path.elements || []).slice();
 
                 route.push(<PathElementEntity> {
                     id: node.id,
