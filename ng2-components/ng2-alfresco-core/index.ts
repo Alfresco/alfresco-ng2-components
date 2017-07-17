@@ -51,6 +51,14 @@ import { TranslationService } from './src/services/translation.service';
 import { UploadService } from './src/services/upload.service';
 import { UserPreferencesService } from './src/services/user-preferences.service';
 
+import { DeletedNodesApiService } from './src/services/deleted-nodes-api.service';
+import { FavoritesApiService } from './src/services/favorites-api.service';
+import { NodesApiService } from './src/services/nodes-api.service';
+import { PeopleApiService } from './src/services/people-api.service';
+import { SearchApiService } from './src/services/search-api.service';
+import { SharedLinksApiService } from './src/services/shared-links-api.service';
+import { SitesApiService } from './src/services/sites-api.service';
+
 export { ContentService } from './src/services/content.service';
 export { StorageService } from './src/services/storage.service';
 export { CookieService } from './src/services/cookie.service';
@@ -75,6 +83,14 @@ export { CardViewUpdateService } from './src/services/card-view-update.service';
 export { UpdateNotification } from './src/services/card-view-update.service';
 export { AppConfigModule } from './src/services/app-config.service';
 export { UserPreferencesService } from './src/services/user-preferences.service';
+
+export { DeletedNodesApiService } from './src/services/deleted-nodes-api.service';
+export { FavoritesApiService } from './src/services/favorites-api.service';
+export { NodesApiService } from './src/services/nodes-api.service';
+export { PeopleApiService } from './src/services/people-api.service';
+export { SearchApiService } from './src/services/search-api.service';
+export { SharedLinksApiService } from './src/services/shared-links-api.service';
+export { SitesApiService } from './src/services/sites-api.service';
 
 import { DataColumnListComponent } from './src/components/data-column/data-column-list.component';
 import { DataColumnComponent } from './src/components/data-column/data-column.component';
@@ -130,6 +146,14 @@ export function providers() {
         AuthGuardBpm,
         ThumbnailService,
         UploadService,
+
+        DeletedNodesApiService,
+        FavoritesApiService,
+        NodesApiService,
+        PeopleApiService,
+        SearchApiService,
+        SharedLinksApiService,
+        SitesApiService,
 
         // Old deprecated import
         AlfrescoTranslationService,
