@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /* tslint:disable:component-selector  */
+
 import * as moment from 'moment';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormWidgetModel } from './../core/form-widget.model';

@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /* tslint:disable:component-selector  */
+
 import { FormModel } from './form.model';
 
 export abstract class FormWidgetModel {

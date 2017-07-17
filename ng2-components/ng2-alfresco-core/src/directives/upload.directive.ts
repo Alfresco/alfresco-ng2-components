@@ -204,7 +204,7 @@ export class UploadDirective implements OnInit, OnDestroy {
                                 }
                             }
                         } else {
-                            iterations.push(Promise.resolve(<FileInfo>{
+                            iterations.push(Promise.resolve(<FileInfo> {
                                 entry: null,
                                 file: items[i].getAsFile(),
                                 relativeFolder: '/'
@@ -237,7 +237,7 @@ export class UploadDirective implements OnInit, OnDestroy {
      */
     protected onSelectFiles(e: Event) {
         if (this.isClickMode()) {
-            const input = (<HTMLInputElement>e.currentTarget);
+            const input = (<HTMLInputElement> e.currentTarget);
             const files = FileUtils.toFileArray(input.files);
             this.onUploadFiles(files.map(file => <FileInfo> {
                 entry: null,

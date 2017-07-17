@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /* tslint:disable:component-selector  */
+
 import { DiagramIntermediateCatchingEventComponent } from './diagram-intermediate-catching-event.component';
 
 // primitives

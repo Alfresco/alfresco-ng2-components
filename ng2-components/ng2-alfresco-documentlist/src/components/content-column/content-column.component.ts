@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /* tslint:disable:component-selector  */
+
 import { AfterContentInit, Component, ContentChild, Input, OnInit, TemplateRef } from '@angular/core';
 import { DataColumn } from 'ng2-alfresco-datatable';
 

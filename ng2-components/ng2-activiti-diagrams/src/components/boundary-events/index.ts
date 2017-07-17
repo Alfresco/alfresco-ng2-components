@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /* tslint:disable:component-selector  */
+
 import { DiagramBoundaryEventComponent } from './diagram-boundary-event.component';
 import { DiagramThrowEventComponent } from './diagram-throw-event.component';
 

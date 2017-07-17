@@ -115,7 +115,7 @@ export class SearchAutocompleteComponent implements OnInit, OnChanges {
                     },
                     error => {
                         this.results = null;
-                        this.errorMessage = <any>error;
+                        this.errorMessage = <any> error;
                         this.resultsLoad.error(error);
                     }
                 );

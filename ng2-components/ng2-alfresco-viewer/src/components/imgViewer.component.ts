@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/* tslint:disable:component-selector  */
+
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ContentService } from 'ng2-alfresco-core';
 

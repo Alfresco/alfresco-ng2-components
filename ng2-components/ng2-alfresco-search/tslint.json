@@ -1,6 +1,7 @@
 {
     "rulesDirectory": [
-        "node_modules/codelyzer"
+        "node_modules/codelyzer",
+        "../adf-rules"
     ],
     "rules": {
         "align": [
@@ -128,30 +129,29 @@
             "check-decl",
             "check-operator",
             "check-separator",
-            "check-type"
-        ],
-        "directive-selector": [
-            true,
-            "attribute",
-            "app",
-            "camelCase"
+            "check-typecast",
+            "check-type",
+            "check-typecast",
+            "check-module"
         ],
         "component-selector": [
             true,
             "element",
-            "app",
+            "adf",
             "kebab-case"
         ],
         "ordered-imports": true,
         "use-input-property-decorator": true,
         "use-output-property-decorator": true,
-        "use-host-property-decorator": true,
+        "use-host-property-decorator": false,
         "use-life-cycle-interface": true,
         "use-pipe-transform-interface": true,
         "component-class-suffix": true,
         "directive-class-suffix": true,
         "no-access-missing-member": false,
         "templates-use-public": true,
-        "invoke-injectable": true
+        "invoke-injectable": true,
+        "adf-file-name": true,
+        "adf-class-name": true
     }
 }

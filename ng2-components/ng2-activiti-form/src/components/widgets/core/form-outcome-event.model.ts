@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /* tslint:disable:component-selector  */
+
 import { FormOutcomeModel } from './form-outcome.model';
 
 export class FormOutcomeEvent {

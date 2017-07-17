@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /* tslint:disable:component-selector  */
+
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 
 import { ContentActionHandler } from '../../models/content-action.model';

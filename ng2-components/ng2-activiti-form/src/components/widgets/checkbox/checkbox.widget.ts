@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 
+ /* tslint:disable:component-selector  */
+
 import { Component } from '@angular/core';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { FormService } from './../../../services/form.service';
-import { baseHost , WidgetComponent} from './../widget.component';
+import { baseHost , WidgetComponent } from './../widget.component';
 
 @Component({
     selector: 'checkbox-widget',

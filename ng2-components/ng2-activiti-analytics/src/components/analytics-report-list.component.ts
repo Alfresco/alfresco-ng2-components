@@ -22,7 +22,7 @@ import { ReportParametersModel } from '../models/report.model';
 import { AnalyticsService } from '../services/analytics.service';
 
 @Component({
-    selector: 'analytics-report-list',
+    selector: ' adf-analytics-report-list, analytics-report-list',
     templateUrl: './analytics-report-list.component.html',
     styleUrls: ['./analytics-report-list.component.css']
 })

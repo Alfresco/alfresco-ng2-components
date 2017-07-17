@@ -39,7 +39,7 @@ import { WidgetComponent } from './../widgets/widget.component';
 declare var adf: any;
 
 @Component({
-    selector: 'form-field',
+    selector: 'adf-form-field, form-field',
     template: `
         <div [hidden]="!field?.isVisible">
             <div #container></div>
@@ -78,7 +78,7 @@ export class FormFieldComponent implements OnInit, OnDestroy {
                 if (componentType) {
                     let factory = this.componentFactoryResolver.resolveComponentFactory(componentType);
                     this.componentRef = this.container.createComponent(factory);
-                    let instance = <WidgetComponent>this.componentRef.instance;
+                    let instance = <WidgetComponent> this.componentRef.instance;
                     instance.field = this.field;
                     instance.fieldChanged.subscribe(field => {
                         if (field && field.form) {
