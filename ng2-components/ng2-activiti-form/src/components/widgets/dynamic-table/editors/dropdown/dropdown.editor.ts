@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /* tslint:disable:component-selector  */
+
 import { Component, Input, OnInit } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
 import { FormService } from './../../../../../services/form.service';
@@ -94,7 +96,7 @@ export class DropdownEditorComponent implements OnInit {
     }
 
     onValueChanged(row: DynamicTableRow, column: DynamicTableColumn, event: any) {
-        let value: any = (<HTMLInputElement>event.target).value;
+        let value: any = (<HTMLInputElement> event.target).value;
         value = column.options.find(opt => opt.name === value);
         row.value[column.id] = value;
     }

@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /* tslint:disable:component-selector  */
+
 export class GroupUserModel {
 
     company: string;

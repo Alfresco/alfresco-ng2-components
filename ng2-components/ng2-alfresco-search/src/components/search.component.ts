@@ -128,7 +128,7 @@ export class SearchComponent implements OnChanges, OnInit {
                     },
                     error => {
                         if (error.status !== 400) {
-                            this.errorMessage = <any>error;
+                            this.errorMessage = <any> error;
                             this.resultsLoad.error(error);
                         }
                     }

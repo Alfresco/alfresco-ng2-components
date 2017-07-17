@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/* tslint:disable:component-selector  */
+
 import { Component, Input } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';

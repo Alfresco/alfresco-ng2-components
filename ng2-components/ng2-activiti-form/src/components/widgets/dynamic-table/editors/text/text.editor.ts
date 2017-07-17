@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /* tslint:disable:component-selector  */
+
 import { Component, Input, OnInit } from '@angular/core';
 import { DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './../../dynamic-table.widget.model';
 
@@ -41,7 +43,7 @@ export class TextEditorComponent implements OnInit {
     }
 
     onValueChanged(row: DynamicTableRow, column: DynamicTableColumn, event: any) {
-        let value: any = (<HTMLInputElement>event.target).value;
+        let value: any = (<HTMLInputElement> event.target).value;
         row.value[column.id] = value;
     }
 

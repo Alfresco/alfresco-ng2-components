@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /* tslint:disable:component-selector  */
+
 import { AfterViewChecked, Component, ElementRef, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { FormService } from './../../../services/form.service';

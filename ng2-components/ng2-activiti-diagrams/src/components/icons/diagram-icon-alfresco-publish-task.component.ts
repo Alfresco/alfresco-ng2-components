@@ -15,11 +15,13 @@
  * limitations under the License.
  */
 
+ /* tslint:disable:component-selector  */
+
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DiagramColorService } from '../../services/diagram-color.service';
 
 @Component({
-    selector: 'adf-diagram-icon-publish-task, diagram-icon-alfresco-publish-task',
+    selector: 'diagram-icon-alfresco-publish-task',
     templateUrl: './diagram-icon-alfresco-publish-task.component.html'
 })
 export class DiagramIconAlfrescoPublishTaskComponent implements OnInit {

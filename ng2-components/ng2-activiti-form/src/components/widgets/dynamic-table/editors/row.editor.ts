@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /* tslint:disable:component-selector  */
+
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DynamicRowValidationSummary, DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './../dynamic-table.widget.model';
 

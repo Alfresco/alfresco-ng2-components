@@ -37,7 +37,7 @@ export class AlfrescoApiService {
     }
 
     reset() {
-        this.alfrescoApi = <AlfrescoApi>new alfrescoApi({
+        this.alfrescoApi = <AlfrescoApi> new alfrescoApi({
             provider: this.storage.getItem('AUTH_TYPE'),
             ticketEcm: this.storage.getItem('ticket-ECM'),
             ticketBpm: this.storage.getItem('ticket-BPM'),

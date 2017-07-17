@@ -78,7 +78,7 @@ export class AlfrescoContentService {
     createFolder(relativePath: string, name: string, parentId?: string): Observable<FolderCreatedEvent> {
         return Observable.fromPromise(this.apiService.getInstance().nodes.createFolder(name, relativePath, parentId))
             .do(data => {
-                this.folderCreated.next(<FolderCreatedEvent>{
+                this.folderCreated.next(<FolderCreatedEvent> {
                     relativePath: relativePath,
                     name: name,
                     parentId: parentId,

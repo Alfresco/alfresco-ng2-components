@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /* tslint:disable:component-selector  */
+
 export interface ExternalContent {
     folder: boolean;
     id: string;

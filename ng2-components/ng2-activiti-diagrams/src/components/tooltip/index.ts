@@ -15,4 +15,6 @@
  * limitations under the License.
  */
 
+ /* tslint:disable:component-selector  */
+
 export * from './diagram-tooltip.component';

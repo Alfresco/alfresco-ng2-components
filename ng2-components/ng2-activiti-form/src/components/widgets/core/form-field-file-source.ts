@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /* tslint:disable:component-selector  */
+
 import {FormFieldSelectedFolder} from './form-field-selected-folder';
 
 export interface FormFieldFileSource {
