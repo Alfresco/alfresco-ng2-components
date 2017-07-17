@@ -16,7 +16,7 @@
  */
 
 import { Component } from '@angular/core';
-import { SitesService } from 'ng2-alfresco-documentlist';
+import { SitesApiService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'sites-demo',
@@ -27,7 +27,7 @@ export class SitesDemoComponent {
 
     public folderNodeId: string;
 
-    constructor(private siteService: SitesService) { }
+    constructor(private siteService: SitesApiService) { }
 
     getSiteContent(site) {
         this.folderNodeId = site ? site.guid : null;
