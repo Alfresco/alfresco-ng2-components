@@ -20,10 +20,6 @@
     height:900px;
 }
 
-.files-breadcrumb {
-    margin-bottom: 5px;
-}
-
 adf-document-list >>> adf-datatable tr.is-selected .image-table-cell {
     position: relative;
 }

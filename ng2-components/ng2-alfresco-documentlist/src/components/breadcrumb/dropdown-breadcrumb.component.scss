@@ -27,7 +27,7 @@ $dropdownHorizontalOffset: 30px;
 
     &-current-folder {
         margin-left: $dropdownHorizontalOffset;
-        padding-top: 2px;
+        line-height: 26px;
     }
 
     &-current-folder.isRoot {

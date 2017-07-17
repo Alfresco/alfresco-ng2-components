@@ -20,6 +20,7 @@ $breadcrumb-chevron-spacer: 2px;
         color: $alfresco-secondary-text-color;
         overflow: hidden;
         display: flex;
+        line-height: 24px;
 
         &-anchor {
             color: inherit;
@@ -29,11 +30,6 @@ $breadcrumb-chevron-spacer: 2px;
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
-            padding-top: 2px;
-        }
-
-        &-current {
-            padding-top: 2px;
         }
 
         &-anchor:hover, &.active {
