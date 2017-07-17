@@ -20,7 +20,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MdOptionModule, MdSelectModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { CoreModule } from 'ng2-alfresco-core';
-import { SitesService } from '../../services/sites.service';
 import { DropdownSitesComponent } from './sites-dropdown.component';
 
 declare let jasmine: any;
@@ -78,8 +77,7 @@ describe('DropdownSitesComponent', () => {
             ],
             declarations: [
                 DropdownSitesComponent
-            ],
-            providers: [SitesService]
+            ]
         }).compileComponents();
     }));
 
