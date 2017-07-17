@@ -20,6 +20,7 @@ import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 
 import { BreadcrumbComponent } from './src/components/breadcrumb/breadcrumb.component';
+import { DropdownBreadcrumbComponent } from './src/components/breadcrumb/dropdown-breadcrumb.component';
 import { ContentActionListComponent } from './src/components/content-action/content-action-list.component';
 import { ContentActionComponent } from './src/components/content-action/content-action.component';
 import { ContentColumnListComponent } from './src/components/content-column/content-column-list.component';
@@ -64,7 +65,8 @@ export const DOCUMENT_LIST_DIRECTIVES: any[] = [
     ContentActionComponent,
     ContentActionListComponent,
     EmptyFolderContentDirective,
-    BreadcrumbComponent
+    BreadcrumbComponent,
+    DropdownBreadcrumbComponent
 ];
 
 export const DOCUMENT_LIST_PROVIDERS: any[] = [

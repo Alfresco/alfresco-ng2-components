@@ -12,10 +12,16 @@
         <ng-container *ngIf="useCustomToolbar">
             <adf-toolbar>
                 <adf-toolbar-title>
-                    <adf-breadcrumb
+                    <adf-breadcrumb *ngIf="!useDropdownBreadcrumb"
+                        class="files-breadcrumb"
                         [target]="documentList"
                         [folderNode]="documentList.folderNode">
                     </adf-breadcrumb>
+                    <adf-dropdown-breadcrumb  *ngIf="useDropdownBreadcrumb"
+                        class="files-breadcrumb"
+                        [target]="documentList"
+                        [folderNode]="documentList.folderNode">
+                    </adf-dropdown-breadcrumb>
                 </adf-toolbar-title>
                 <button md-icon-button (click)="onCreateFolderClicked($event)">
                     <md-icon>create_new_folder</md-icon>
@@ -125,6 +131,10 @@
 <context-menu-holder></context-menu-holder>
 
 <div class="container">
+    <section>
+        <md-slide-toggle [(ngModel)]="useDropdownBreadcrumb">Dropdown breadcrumb</md-slide-toggle>
+    </section>
+
     <section>
         <md-slide-toggle [(ngModel)]="useCustomToolbar">Use custom toolbar</md-slide-toggle>
     </section>
