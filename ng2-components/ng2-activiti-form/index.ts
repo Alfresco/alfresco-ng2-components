@@ -47,9 +47,9 @@ export * from './src/services/form-rendering.service';
 export * from './src/events/index';
 
 // Old deprecated import
-import {ActivitiContentComponent as ActivitiContent} from './src/components/activiti-content.component';
-import {FormComponent as ActivitiForm} from './src/components/form.component';
-import {StartFormComponent as ActivitiStartForm} from './src/components/start-form.component';
+import {ActivitiContentComponent as ActivitiContent } from './src/components/activiti-content.component';
+import {FormComponent as ActivitiForm } from './src/components/form.component';
+import {StartFormComponent as ActivitiStartForm } from './src/components/start-form.component';
 export {FormComponent as ActivitiForm} from './src/components/form.component';
 export {ActivitiContentComponent as ActivitiContent} from './src/components/activiti-content.component';
 export {StartFormComponent as ActivitiStartForm} from './src/components/start-form.component';

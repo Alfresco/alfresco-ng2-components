@@ -398,7 +398,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                                 reject(error);
                             });
                         } else {
-                            this.data.loadPage(<NodePaging>val);
+                            this.data.loadPage(<NodePaging> val);
                             this.pagination = val.list.pagination;
                             this.loading = false;
                             this.ready.emit();

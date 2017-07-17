@@ -263,9 +263,9 @@ export class LoginComponent implements OnInit {
     toggleShowPassword() {
         this.isPasswordShow = !this.isPasswordShow;
         if (this.isPasswordShow) {
-            (<HTMLInputElement>document.getElementById('password')).type = 'text';
+            (<HTMLInputElement> document.getElementById('password')).type = 'text';
         } else {
-            (<HTMLInputElement>document.getElementById('password')).type = 'password';
+            (<HTMLInputElement> document.getElementById('password')).type = 'password';
         }
     }
 

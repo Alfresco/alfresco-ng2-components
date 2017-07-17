@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /* tslint:disable:component-selector  */
+
 import { FormFieldEvent } from './../../../events/index';
 import { FormService } from './../../../services/form.service';
 import { ContainerModel } from './container.model';
@@ -137,7 +139,7 @@ export class FormModel {
             let field = this.fields[i];
 
             if (field instanceof ContainerModel) {
-                let container = <ContainerModel>field;
+                let container = <ContainerModel> field;
                 result.push(container.field);
                 result.push(...container.field.fields);
             }

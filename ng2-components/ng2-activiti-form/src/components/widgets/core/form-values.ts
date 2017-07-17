@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /* tslint:disable:component-selector  */
+
 /* tslint:disable */
 import { FormFieldMetadata } from './form-field-metadata';
 

@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /* tslint:disable:component-selector  */
+
 import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './../../dynamic-table.widget.model';
@@ -69,7 +71,7 @@ export class DateEditorComponent implements OnInit {
         this.datePicker.time = dateValue;
         this.row.value[this.column.id] = `${dateValue.format('YYYY-MM-DD')}T00:00:00.000Z`;
         this.table.flushValue();
-    };
+    }
 
     onDateSelected(event: CustomEvent) {
         this.value = this.datePicker.time.format('DD-MM-YYYY');

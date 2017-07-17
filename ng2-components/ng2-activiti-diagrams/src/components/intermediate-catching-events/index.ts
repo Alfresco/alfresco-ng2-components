@@ -15,18 +15,13 @@
  * limitations under the License.
  */
 
-export * from './activiti-apps.component';
-export * from './activiti-tasklist.component';
-export * from './activiti-checklist.component';
-export * from './activiti-comments.component';
-export * from './adf-task-attachment-list.component';
-export * from './activiti-people.component';
-export * from './activiti-task-header.component';
-export * from './no-task-detail-template.component';
-export * from './activiti-filters.component';
-export * from './activiti-task-details.component';
-export * from './activiti-start-task.component';
-export * from './activiti-people-search.component';
-export * from './adf-create-task-attachment.component';
-export * from './adf-people-list.component';
-export * from './adf-comment-list.component';
+ /* tslint:disable:component-selector  */
+
+import { DiagramIntermediateCatchingEventComponent } from './diagram-intermediate-catching-event.component';
+
+// primitives
+export * from './diagram-intermediate-catching-event.component';
+
+export const DIAGRAM_INTERMEDIATE_EVENTS_DIRECTIVES: any[] = [
+    DiagramIntermediateCatchingEventComponent
+];

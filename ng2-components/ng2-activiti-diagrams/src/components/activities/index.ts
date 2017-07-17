@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /* tslint:disable:component-selector  */
+
 import { DiagramAlfrescoPublishTaskComponent } from './diagram-alfresco-publish-task.component';
 import { DiagramBoxPublishTaskComponent } from './diagram-box-publish-task.component';
 import { DiagramBusinessRuleTaskComponent } from './diagram-business-rule-task.component';

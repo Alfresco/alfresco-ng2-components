@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import {DatePipe} from '@angular/common';
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {TaskDetailsEvent} from 'ng2-activiti-tasklist';
-import {AlfrescoTranslationService, LogService} from 'ng2-alfresco-core';
+import { DatePipe } from '@angular/common';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { TaskDetailsEvent } from 'ng2-activiti-tasklist';
+import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 
-import {ProcessInstance} from '../models/process-instance.model';
-import {ProcessService} from './../services/process.service';
-import {ProcessInstanceHeaderComponent} from './process-instance-header.component';
-import {ProcessInstanceTasksComponent} from './process-instance-tasks.component';
+import { ProcessInstance } from '../models/process-instance.model';
+import { ProcessService } from './../services/process.service';
+import { ProcessInstanceHeaderComponent } from './process-instance-header.component';
+import { ProcessInstanceTasksComponent } from './process-instance-tasks.component';
 
 @Component({
     selector: 'adf-process-instance-details, activiti-process-instance-details',
