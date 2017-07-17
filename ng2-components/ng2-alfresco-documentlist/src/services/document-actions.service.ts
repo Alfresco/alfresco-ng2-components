@@ -103,32 +103,21 @@ export class DocumentActionsService {
     }
 
     private deleteNode(obj: any, target?: any, permission?: string): Observable<any> {
-        let handlerObservale;
+        let handlerObservable;
 
         if (this.canExecuteAction(obj)) {
-            if (this.hasPermission(obj.entry, permission)) {
-                handlerObservale = this.documentListService.deleteNode(obj.entry.id);
-                handlerObservale.subscribe(() => {
+            if (this.contentService.hasPermission(obj.entry, permission)) {
+                handlerObservable = this.documentListService.deleteNode(obj.entry.id);
+                handlerObservable.subscribe(() => {
                     if (target && typeof target.reload === 'function') {
                         target.reload();
                     }
                 });
-                return handlerObservale;
+                return handlerObservable;
             } else {
                 this.permissionEvent.next(new PermissionModel({type: 'content', action: 'delete', permission: permission}));
                 return Observable.throw(new Error('No permission to delete'));
             }
         }
-    }
-
-    private hasPermission(node: any, permission: string): boolean {
-        if (this.hasPermissions(node)) {
-            return node.allowableOperations.find(permision => permision === permission) ? true : false;
-        }
-        return false;
-    }
-
-    private hasPermissions(node: any): boolean {
-        return node && node.allowableOperations ? true : false;
     }
 }

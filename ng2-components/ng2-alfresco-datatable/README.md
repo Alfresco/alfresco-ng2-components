@@ -531,9 +531,11 @@ interface DataTableAdapter {
 }
 
 interface DataRow {
-    isSelected: boolean;
-    hasValue(key: string): boolean;
-    getValue(key: string): any;
+     isSelected: boolean;
+     isDropTarget?: boolean;
+     hasValue(key: string): boolean;
+     getValue(key: string): any;
+     cssClass?: string;
 }
 
 interface DataColumn {
