@@ -16,3 +16,4 @@ src/environments/
 /demo-shell-ng2/ng2-components/
 .happypack/
 .happypack/
+.history
