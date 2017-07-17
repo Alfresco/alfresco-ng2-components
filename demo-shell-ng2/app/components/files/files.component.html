@@ -50,6 +50,7 @@
         </ng-container>
         <adf-document-list
                 #documentList
+                [permissionsStyle]="permissionsStyle"
                 [creationMenuActions]="!useCustomToolbar"
                 [currentFolderId]="currentFolderId"
                 [contextMenuActions]="true"

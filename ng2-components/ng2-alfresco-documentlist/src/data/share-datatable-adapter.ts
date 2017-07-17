@@ -16,10 +16,11 @@
  */
 
 import { DatePipe } from '@angular/common';
+import { MinimalNode, MinimalNodeEntity, NodePaging } from 'alfresco-js-api';
 import { ObjectUtils } from 'ng2-alfresco-core';
+import { PermissionsEnum } from 'ng2-alfresco-core';
 import { DataColumn, DataRow, DataSorting, DataTableAdapter } from 'ng2-alfresco-datatable';
-
-import { MinimalNodeEntity, NodePaging } from 'alfresco-js-api';
+import { PermissionStyleModel } from './../models/permissions-style.model';
 import { DocumentListService } from './../services/document-list.service';
 
 declare var require: any;
@@ -42,6 +43,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     private imageResolver: ImageResolver;
 
     thumbnails: boolean = false;
+    permissionsStyle: PermissionStyleModel[];
     selectedRow: DataRow;
 
     constructor(private documentListService: DocumentListService,
@@ -194,7 +196,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         if (page && page.list) {
             let data = page.list.entries;
             if (data && data.length > 0) {
-                rows = data.map(item => new ShareDataRow(item));
+                rows = data.map(item => new ShareDataRow(item, this.documentListService, this.permissionsStyle));
 
                 if (this.filter) {
                     rows = rows.filter(this.filter);
@@ -229,34 +231,53 @@ export class ShareDataRow implements DataRow {
     cache: { [key: string]: any } = {};
     isSelected: boolean = false;
     isDropTarget: boolean;
+    cssClass: string = '';
 
     get node(): MinimalNodeEntity {
         return this.obj;
     }
 
-    constructor(private obj: MinimalNodeEntity) {
+    constructor(private obj: MinimalNodeEntity, private documentListService: DocumentListService, private permissionsStyle: PermissionStyleModel[]) {
         if (!obj) {
             throw new Error(ShareDataRow.ERR_OBJECT_NOT_FOUND);
         }
 
         this.isDropTarget = this.isFolderAndHasPermissionToUpload(obj);
+
+        if (permissionsStyle) {
+            this.cssClass = this.getPermissionClass(obj);
+        }
+    }
+
+    getPermissionClass(nodeEntity: MinimalNodeEntity): string {
+        let permissionsClasses = '';
+
+        this.permissionsStyle.forEach((currentPermissionsStyle: PermissionStyleModel) => {
+
+            if (this.applyPermissionStyleToFolder(nodeEntity.entry, currentPermissionsStyle) || this.applyPermissionStyleToFile(nodeEntity.entry, currentPermissionsStyle)) {
+
+                if (currentPermissionsStyle.permission.startsWith('!') && !this.documentListService.hasPermission(nodeEntity.entry, currentPermissionsStyle.permission)) {
+                    permissionsClasses += ` ${currentPermissionsStyle.css}`;
+                } else if (this.documentListService.hasPermission(nodeEntity.entry, currentPermissionsStyle.permission)) {
+                    permissionsClasses += ` ${currentPermissionsStyle.css}`;
+                }
+            }
+
+        });
+
+        return permissionsClasses;
+    }
+
+    private applyPermissionStyleToFile(node: MinimalNode, currentPermissionsStyle: PermissionStyleModel): boolean {
+        return (currentPermissionsStyle.isFile && node.isFile);
+    }
+
+    private applyPermissionStyleToFolder(node: MinimalNode, currentPermissionsStyle: PermissionStyleModel): boolean {
+        return (currentPermissionsStyle.isFolder && node.isFolder);
     }
 
     isFolderAndHasPermissionToUpload(obj: MinimalNodeEntity): boolean {
-        return this.isFolder(obj) && this.hasCreatePermission(obj);
-    }
-
-    hasCreatePermission(obj: MinimalNodeEntity): boolean {
-        return this.hasPermission(obj, 'create');
-    }
-
-    private hasPermission(obj: MinimalNodeEntity, permission: string): boolean {
-        let hasPermission: boolean = false;
-        if (obj.entry && obj.entry['allowableOperations']) {
-            let permFound = obj.entry['allowableOperations'].find(element => element === permission);
-            hasPermission = permFound ? true : false;
-        }
-        return hasPermission;
+        return this.isFolder(obj) && this.documentListService.hasPermission(obj.entry, 'create');
     }
 
     isFolder(obj: MinimalNodeEntity): boolean {

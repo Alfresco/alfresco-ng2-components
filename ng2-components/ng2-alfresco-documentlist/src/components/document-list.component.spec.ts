@@ -747,7 +747,7 @@ describe('DocumentList', () => {
 
     it('should emit [nodeClick] event on row click', () => {
         let node = new NodeMinimalEntry();
-        let row = new ShareDataRow(node);
+        let row = new ShareDataRow(node, null, null);
         let event = new DataRowEvent(row, null);
 
         spyOn(documentList, 'onNodeClick').and.callThrough();
@@ -757,7 +757,7 @@ describe('DocumentList', () => {
 
     it('should emit node-click DOM event', (done) => {
         let node = new NodeMinimalEntry();
-        let row = new ShareDataRow(node);
+        let row = new ShareDataRow(node, null, null);
         let event = new DataRowEvent(row, null);
 
         const htmlElement = fixture.debugElement.nativeElement as HTMLElement;
@@ -770,7 +770,7 @@ describe('DocumentList', () => {
 
     it('should emit [nodeDblClick] event on row double-click', () => {
         let node = new NodeMinimalEntry();
-        let row = new ShareDataRow(node);
+        let row = new ShareDataRow(node, null, null);
         let event = new DataRowEvent(row, null);
 
         spyOn(documentList, 'onNodeDblClick').and.callThrough();
@@ -780,7 +780,7 @@ describe('DocumentList', () => {
 
     it('should emit node-dblclick DOM event', (done) => {
         let node = new NodeMinimalEntry();
-        let row = new ShareDataRow(node);
+        let row = new ShareDataRow(node, null, null);
         let event = new DataRowEvent(row, null);
 
         const htmlElement = fixture.debugElement.nativeElement as HTMLElement;

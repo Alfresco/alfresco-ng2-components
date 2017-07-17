@@ -15,8 +15,10 @@
  * limitations under the License.
  */
 
+import { async, TestBed } from '@angular/core/testing';
+import { AppConfigModule, CoreModule } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Rx';
 import { FileNode, FolderNode } from '../assets/document-library.model.mock';
-import { DocumentListServiceMock } from '../assets/document-list.service.mock';
 import { ContentActionHandler } from '../models/content-action.model';
 import { DocumentListService } from './document-list.service';
 import { FolderActionsService } from './folder-actions.service';
@@ -26,13 +28,29 @@ describe('FolderActionsService', () => {
     let service: FolderActionsService;
     let documentListService: DocumentListService;
 
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule.forRoot(),
+                AppConfigModule.forRoot('app.config.json', {
+                    ecmHost: 'http://localhost:9876/ecm'
+                })
+            ],
+            providers: [
+                DocumentListService,
+                FolderActionsService
+            ]
+        }).compileComponents();
+    }));
+
     beforeEach(() => {
-        documentListService = new DocumentListServiceMock();
-        service = new FolderActionsService(documentListService);
+        service = TestBed.get(FolderActionsService);
+        documentListService = TestBed.get(DocumentListService);
     });
 
     it('should register custom action handler', () => {
-        let handler: ContentActionHandler = function () {};
+        let handler: ContentActionHandler = function () {
+        };
         service.setHandler('<key>', handler);
         expect(service.getHandler('<key>')).toBe(handler);
     });
@@ -42,7 +60,8 @@ describe('FolderActionsService', () => {
     });
 
     it('should be case insensitive for keys', () => {
-        let handler: ContentActionHandler = function () {};
+        let handler: ContentActionHandler = function () {
+        };
         service.setHandler('<key>', handler);
         expect(service.getHandler('<KEY>')).toBe(handler);
     });
@@ -55,9 +74,6 @@ describe('FolderActionsService', () => {
     it('should allow action execution only when service available', () => {
         let folder = new FolderNode();
         expect(service.canExecuteAction(folder)).toBeTruthy();
-
-        service = new FolderActionsService(null);
-        expect(service.canExecuteAction(folder)).toBeFalsy();
     });
 
     it('should allow action execution only for folder nodes', () => {
@@ -67,7 +83,8 @@ describe('FolderActionsService', () => {
     });
 
     it('should set new handler only by key', () => {
-        let handler: ContentActionHandler = function () {};
+        let handler: ContentActionHandler = function () {
+        };
         expect(service.setHandler(null, handler)).toBeFalsy();
         expect(service.setHandler('', handler)).toBeFalsy();
         expect(service.setHandler('my-handler', handler)).toBeTruthy();
@@ -110,12 +127,17 @@ describe('FolderActionsService', () => {
     });
 
     it('should delete the folder node if there is the delete permission', () => {
-        spyOn(documentListService, 'deleteNode').and.callThrough();
+        spyOn(documentListService, 'deleteNode').and.callFake(() => {
+            return new Observable<any>(observer => {
+                observer.next();
+                observer.complete();
+            });
+        });
 
         let permission = 'delete';
         let folder = new FolderNode();
         let folderWithPermission: any = folder;
-        folderWithPermission.entry.allowableOperations = [ permission ];
+        folderWithPermission.entry.allowableOperations = [permission];
         const deleteObservale = service.getHandler('delete')(folderWithPermission, null, permission);
 
         expect(documentListService.deleteNode).toHaveBeenCalledWith(folder.entry.id);
@@ -123,7 +145,12 @@ describe('FolderActionsService', () => {
     });
 
     it('should not delete the folder node if there is no delete permission', (done) => {
-        spyOn(documentListService, 'deleteNode').and.callThrough();
+        spyOn(documentListService, 'deleteNode').and.callFake(() => {
+            return new Observable<any>(observer => {
+                observer.next();
+                observer.complete();
+            });
+        });
 
         service.permissionEvent.subscribe((permission) => {
             expect(permission).toBeDefined();
@@ -139,7 +166,12 @@ describe('FolderActionsService', () => {
     });
 
     it('should call the error on the returned Observable if there is no delete permission', (done) => {
-        spyOn(documentListService, 'deleteNode').and.callThrough();
+        spyOn(documentListService, 'deleteNode').and.callFake(() => {
+            return new Observable<any>(observer => {
+                observer.next();
+                observer.complete();
+            });
+        });
 
         let folder = new FolderNode();
         let folderWithPermission: any = folder;
@@ -156,7 +188,12 @@ describe('FolderActionsService', () => {
     });
 
     it('should delete the folder node if there is the delete and others permission ', () => {
-        spyOn(documentListService, 'deleteNode').and.callThrough();
+        spyOn(documentListService, 'deleteNode').and.callFake(() => {
+            return new Observable<any>(observer => {
+                observer.next();
+                observer.complete();
+            });
+        });
 
         let permission = 'delete';
         let folder = new FolderNode();
@@ -168,7 +205,12 @@ describe('FolderActionsService', () => {
     });
 
     it('should support deletion only folder node', () => {
-        spyOn(documentListService, 'deleteNode').and.callThrough();
+        spyOn(documentListService, 'deleteNode').and.callFake(() => {
+            return new Observable<any>(observer => {
+                observer.next();
+                observer.complete();
+            });
+        });
 
         let permission = 'delete';
         let file = new FileNode();
@@ -183,7 +225,12 @@ describe('FolderActionsService', () => {
     });
 
     it('should require node id to delete', () => {
-        spyOn(documentListService, 'deleteNode').and.callThrough();
+        spyOn(documentListService, 'deleteNode').and.callFake(() => {
+            return new Observable<any>(observer => {
+                observer.next();
+                observer.complete();
+            });
+        });
 
         let folder = new FolderNode();
         folder.entry.id = null;
@@ -192,8 +239,13 @@ describe('FolderActionsService', () => {
         expect(documentListService.deleteNode).not.toHaveBeenCalled();
     });
 
-    it('should reload target upon node deletion', () => {
-        spyOn(documentListService, 'deleteNode').and.callThrough();
+    it('should reload target upon node deletion', (done) => {
+        spyOn(documentListService, 'deleteNode').and.callFake(() => {
+            return new Observable<any>(observer => {
+                observer.next();
+                observer.complete();
+            });
+        });
 
         let permission = 'delete';
         let target = jasmine.createSpyObj('obj', ['reload']);
@@ -201,9 +253,13 @@ describe('FolderActionsService', () => {
         let folderWithPermission: any = folder;
         folderWithPermission.entry.allowableOperations = [permission];
 
-        service.getHandler('delete')(folderWithPermission, target, permission);
+        let deleteHandler = service.getHandler('delete')(folderWithPermission, target, permission);
+
+        deleteHandler.subscribe(() => {
+            expect(target.reload).toHaveBeenCalled();
+            done();
+        });
 
         expect(documentListService.deleteNode).toHaveBeenCalled();
-        expect(target.reload).toHaveBeenCalled();
     });
 });
