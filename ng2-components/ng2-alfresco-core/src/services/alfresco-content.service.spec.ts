@@ -44,8 +44,7 @@ describe('AlfrescoContentService', () => {
             imports: [
                 AppConfigModule
             ],
-            declarations: [
-            ],
+            declarations: [],
             providers: [
                 AlfrescoApiService,
                 AlfrescoContentService,
@@ -53,7 +52,7 @@ describe('AlfrescoContentService', () => {
                 AlfrescoSettingsService,
                 StorageService,
                 UserPreferencesService,
-                { provide: CookieService, useClass: CookieServiceMock },
+                {provide: CookieService, useClass: CookieServiceMock},
                 LogService
             ]
         }).compileComponents();
@@ -110,5 +109,21 @@ describe('AlfrescoContentService', () => {
             contentType: 'application/json',
             responseText: JSON.stringify({'entry': {'id': 'fake-post-ticket', 'userId': 'admin'}})
         });
+    });
+
+    it('should havePermission should be false if allowableOperation is not present in the node', () => {
+        let permissionNode = {};
+        expect(contentService.hasPermission(permissionNode, 'create')).toBeFalsy();
+    });
+
+    it('should havePermission should be true if allowableOperation is present and you have the permission for the request operation', () => {
+        let permissionNode = {allowableOperations: ['delete', 'update', 'create', 'updatePermissions']};
+
+        expect(contentService.hasPermission(permissionNode, 'create')).toBeTruthy();
+    });
+
+    it('should havePermission should be false if allowableOperation is present but you don\'t have the permission for the request operation', () => {
+        let permissionNode = {allowableOperations: ['delete', 'update', 'updatePermissions']};
+        expect(contentService.hasPermission(permissionNode, 'create')).toBeFalsy();
     });
 });

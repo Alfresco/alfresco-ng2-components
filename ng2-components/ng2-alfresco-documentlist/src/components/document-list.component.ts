@@ -21,18 +21,11 @@ import {
 } from '@angular/core';
 import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, Pagination } from 'alfresco-js-api';
 import { AlfrescoTranslationService, DataColumnListComponent } from 'ng2-alfresco-core';
-import {
-    DataCellEvent,
-    DataColumn,
-    DataRowActionEvent,
-    DataRowEvent,
-    DataSorting,
-    DataTableComponent,
-    ObjectDataColumn
-} from 'ng2-alfresco-datatable';
+import { DataCellEvent, DataColumn, DataRowActionEvent, DataRowEvent, DataSorting, DataTableComponent, ObjectDataColumn } from 'ng2-alfresco-datatable';
 import { Observable, Subject } from 'rxjs/Rx';
 import { ImageResolver, RowFilter, ShareDataRow, ShareDataTableAdapter } from './../data/share-datatable-adapter';
 import { ContentActionModel } from './../models/content-action.model';
+import { PermissionStyleModel } from './../models/permissions-style.model';
 import { DocumentListService } from './../services/document-list.service';
 import { NodeEntityEvent, NodeEntryEvent } from './node.event';
 
@@ -50,6 +43,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     static DEFAULT_PAGE_SIZE: number = 20;
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
+
+    @Input()
+    permissionsStyle: PermissionStyleModel[] = [];
 
     @Input()
     navigate: boolean = true;
@@ -202,6 +198,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     ngOnInit() {
         this.data = new ShareDataTableAdapter(this.documentListService, null, this.getDefaultSorting());
         this.data.thumbnails = this.thumbnails;
+
+        this.data.permissionsStyle = this.permissionsStyle;
         this.contextActionHandler.subscribe(val => this.contextActionCallback(val));
 
         this.enforceSingleClickNavigationForMobile();

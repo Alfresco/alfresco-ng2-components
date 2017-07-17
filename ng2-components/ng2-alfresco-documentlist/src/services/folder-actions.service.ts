@@ -16,6 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
+import { AlfrescoContentService } from 'ng2-alfresco-core';
 import { Observable, Subject } from 'rxjs/Rx';
 import { ContentActionHandler } from '../models/content-action.model';
 import { PermissionModel } from '../models/permissions.model';
@@ -28,7 +29,8 @@ export class FolderActionsService {
 
     private handlers: { [id: string]: ContentActionHandler; } = {};
 
-    constructor(private documentListService?: DocumentListService) {
+    constructor(private documentListService: DocumentListService,
+                private contentService: AlfrescoContentService) {
         this.setupActionHandlers();
     }
 
@@ -87,32 +89,21 @@ export class FolderActionsService {
     }
 
     private deleteNode(obj: any, target?: any, permission?: string): Observable<any> {
-        let handlerObservale: Observable<any>;
+        let handlerObservable: Observable<any>;
 
         if (this.canExecuteAction(obj)) {
-            if (this.hasPermission(obj.entry, permission)) {
-                handlerObservale = this.documentListService.deleteNode(obj.entry.id);
-                handlerObservale.subscribe(() => {
+            if (this.contentService.hasPermission(obj.entry, permission)) {
+                handlerObservable = this.documentListService.deleteNode(obj.entry.id);
+                handlerObservable.subscribe(() => {
                     if (target && typeof target.reload === 'function') {
                         target.reload();
                     }
                 });
-                return handlerObservale;
+                return handlerObservable;
             } else {
                 this.permissionEvent.next(new PermissionModel({type: 'folder', action: 'delete', permission: permission}));
                 return Observable.throw(new Error('No permission to delete'));
             }
         }
-    }
-
-    private hasPermission(node: any, permissionToCheck: string): boolean {
-        if (this.hasPermissions(node)) {
-            return node.allowableOperations.find(permision => permision === permissionToCheck) ? true : false;
-        }
-        return false;
-    }
-
-    private hasPermissions(node: any): boolean {
-        return node && node.allowableOperations ? true : false;
     }
 }

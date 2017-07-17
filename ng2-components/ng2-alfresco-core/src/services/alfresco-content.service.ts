@@ -18,6 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs/Rx';
 import { FolderCreatedEvent } from '../events/folder-created.event';
+import { PermissionsEnum } from '../models/permissions.enum';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AuthenticationService } from './authentication.service';
 import { LogService } from './log.service';
@@ -71,6 +72,7 @@ export class AlfrescoContentService {
             return dataContent;
         })).catch(this.handleError);
     }
+
     /**
      * Create a folder
      * @param name - the folder name
