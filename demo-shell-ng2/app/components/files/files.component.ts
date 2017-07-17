@@ -37,6 +37,7 @@ export class FilesComponent implements OnInit {
     fileShowed: boolean = false;
 
     useCustomToolbar = true;
+    useDropdownBreadcrumb = true;
 
     @Input()
     multipleFileUpload: boolean = false;

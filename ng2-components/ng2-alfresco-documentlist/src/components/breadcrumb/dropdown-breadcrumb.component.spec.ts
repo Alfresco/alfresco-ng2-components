@@ -32,40 +32,32 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
+import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MdOptionModule, MdSelectModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { CoreModule } from 'ng2-alfresco-core';
-import { DataTableModule } from 'ng2-alfresco-datatable';
 import { fakeNodeWithCreatePermission } from '../../assets/document-list.component.mock';
-import { MaterialModule } from '../../material.module';
-import { DocumentListService } from '../../services/document-list.service';
 import { DocumentListComponent } from '../document-list.component';
 import { DropdownBreadcrumbComponent } from './dropdown-breadcrumb.component';
+
+declare let jasmine: any;
 
 describe('DropdownBreadcrumb', () => {
 
     let component: DropdownBreadcrumbComponent;
     let fixture: ComponentFixture<DropdownBreadcrumbComponent>;
     let element: HTMLElement;
-    let documentList: DocumentListComponent;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
-                DataTableModule,
-                MaterialModule
+                CoreModule.forRoot(),
+                MdSelectModule,
+                MdOptionModule
             ],
             declarations: [
-                DocumentListComponent,
                 DropdownBreadcrumbComponent
-            ],
-            providers: [
-                DocumentListService
-            ],
-            schemas: [
-                CUSTOM_ELEMENTS_SCHEMA
             ]
         }).compileComponents();
     }));
@@ -74,8 +66,6 @@ describe('DropdownBreadcrumb', () => {
         fixture = TestBed.createComponent(DropdownBreadcrumbComponent);
         element = fixture.nativeElement;
         component = fixture.componentInstance;
-
-        documentList = TestBed.createComponent(DocumentListComponent).componentInstance;
     });
 
     function openSelect() {
@@ -156,6 +146,7 @@ describe('DropdownBreadcrumb', () => {
     });
 
     it('should update document list  when clicking on an option', () => {
+        let documentList = new DocumentListComponent(null, null, null, null);
         spyOn(documentList, 'loadFolderByNodeId').and.stub();
         component.target = documentList;
         fakeNodeWithCreatePermission.path.elements = [{ id: '1', name: 'Stark Industries' }];
