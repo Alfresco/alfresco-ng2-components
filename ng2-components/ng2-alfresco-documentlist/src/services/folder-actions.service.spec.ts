@@ -127,7 +127,12 @@ describe('FolderActionsService', () => {
     });
 
     it('should delete the folder node if there is the delete permission', () => {
-        spyOn(documentListService, 'deleteNode').and.callThrough();
+        spyOn(documentListService, 'deleteNode').and.callFake(() => {
+            return new Observable<any>(observer => {
+                observer.next();
+                observer.complete();
+            });
+        });
 
         let permission = 'delete';
         let folder = new FolderNode();
@@ -140,7 +145,12 @@ describe('FolderActionsService', () => {
     });
 
     it('should not delete the folder node if there is no delete permission', (done) => {
-        spyOn(documentListService, 'deleteNode').and.callThrough();
+        spyOn(documentListService, 'deleteNode').and.callFake(() => {
+            return new Observable<any>(observer => {
+                observer.next();
+                observer.complete();
+            });
+        });
 
         service.permissionEvent.subscribe((permission) => {
             expect(permission).toBeDefined();
@@ -156,7 +166,12 @@ describe('FolderActionsService', () => {
     });
 
     it('should call the error on the returned Observable if there is no delete permission', (done) => {
-        spyOn(documentListService, 'deleteNode').and.callThrough();
+        spyOn(documentListService, 'deleteNode').and.callFake(() => {
+            return new Observable<any>(observer => {
+                observer.next();
+                observer.complete();
+            });
+        });
 
         let folder = new FolderNode();
         let folderWithPermission: any = folder;
@@ -173,7 +188,12 @@ describe('FolderActionsService', () => {
     });
 
     it('should delete the folder node if there is the delete and others permission ', () => {
-        spyOn(documentListService, 'deleteNode').and.callThrough();
+        spyOn(documentListService, 'deleteNode').and.callFake(() => {
+            return new Observable<any>(observer => {
+                observer.next();
+                observer.complete();
+            });
+        });
 
         let permission = 'delete';
         let folder = new FolderNode();
@@ -185,7 +205,12 @@ describe('FolderActionsService', () => {
     });
 
     it('should support deletion only folder node', () => {
-        spyOn(documentListService, 'deleteNode').and.callThrough();
+        spyOn(documentListService, 'deleteNode').and.callFake(() => {
+            return new Observable<any>(observer => {
+                observer.next();
+                observer.complete();
+            });
+        });
 
         let permission = 'delete';
         let file = new FileNode();
@@ -200,7 +225,12 @@ describe('FolderActionsService', () => {
     });
 
     it('should require node id to delete', () => {
-        spyOn(documentListService, 'deleteNode').and.callThrough();
+        spyOn(documentListService, 'deleteNode').and.callFake(() => {
+            return new Observable<any>(observer => {
+                observer.next();
+                observer.complete();
+            });
+        });
 
         let folder = new FolderNode();
         folder.entry.id = null;

@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
-import { AlfrescoApiService, AlfrescoAuthenticationService, AlfrescoContentService, LogService, ThumbnailService, PermissionsEnum } from 'ng2-alfresco-core';
+import { AlfrescoApiService, AlfrescoAuthenticationService, AlfrescoContentService, LogService, PermissionsEnum, ThumbnailService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 
 @Injectable()

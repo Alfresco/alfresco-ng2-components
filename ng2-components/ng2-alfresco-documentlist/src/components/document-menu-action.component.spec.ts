@@ -18,7 +18,7 @@
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MdButtonModule, MdIconModule, MdMenuModule } from '@angular/material';
-import { AlfrescoTranslationService, CoreModule} from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { DocumentListService } from './../services/document-list.service';
 import { DocumentMenuActionComponent } from './document-menu-action.component';
 
