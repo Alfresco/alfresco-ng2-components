@@ -76,7 +76,7 @@ export class CardViewItemDispatcherComponent implements OnChanges {
             className = `CardView${upperCamelCasedType}ItemComponent`;
 
         const factories = Array.from(this.resolver['_factories'].keys());
-        const factoryClass = <Type<any>>factories.find((x: any) => x.name === className);
+        const factoryClass = <Type<any>> factories.find((x: any) => x.name === className);
         const factory = this.resolver.resolveComponentFactory(factoryClass);
         this.componentReference = this.content.viewContainerRef.createComponent(factory);
 

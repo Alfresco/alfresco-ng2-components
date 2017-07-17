@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/* tslint:disable:component-selector  */
+
 import { Component, Input, OnChanges } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
 import { Http, RequestOptions, Response, ResponseContentType } from '@angular/http';

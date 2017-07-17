@@ -104,7 +104,7 @@ describe('ShareDataTableAdapter', () => {
     it('should fail when getting value for missing row', () => {
         let adapter = new ShareDataTableAdapter(documentListService, null);
         let check = () => {
-            return adapter.getValue(null, <DataColumn>{});
+            return adapter.getValue(null, <DataColumn> {});
         };
         expect(check).toThrowError(adapter.ERR_ROW_NOT_FOUND);
     });
@@ -112,7 +112,7 @@ describe('ShareDataTableAdapter', () => {
     it('should fail when getting value for missing column', () => {
         let adapter = new ShareDataTableAdapter(documentListService, null);
         let check = () => {
-            return adapter.getValue(<DataRow>{}, null);
+            return adapter.getValue(<DataRow> {}, null);
         };
         expect(check).toThrowError(adapter.ERR_COL_NOT_FOUND);
     });

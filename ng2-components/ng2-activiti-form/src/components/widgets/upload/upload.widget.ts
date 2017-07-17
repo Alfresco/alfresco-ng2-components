@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /* tslint:disable:component-selector  */
+
 import { Component, OnInit } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
 import { FormService } from '../../../services/form.service';

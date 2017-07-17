@@ -15,13 +15,16 @@
  * limitations under the License.
  */
 
-export * from './activiti-processlist.component';
-export * from './activiti-filters.component';
-export * from './activiti-process-instance-header.component';
-export * from './activiti-process-instance-tasks.component';
-export * from './activiti-process-instance-variables.component';
-export * from './activiti-process-comments.component';
-export * from './activiti-process-instance-details.component';
-export * from './activiti-start-process.component';
-export * from './adf-process-attachment-list.component';
-export * from './adf-create-process-attachment.component';
+ /* tslint:disable:component-selector  */
+
+import { DiagramBoundaryEventComponent } from './diagram-boundary-event.component';
+import { DiagramThrowEventComponent } from './diagram-throw-event.component';
+
+// primitives
+export * from './diagram-boundary-event.component';
+export * from './diagram-throw-event.component';
+
+export const DIAGRAM_BOUNDARY_EVENTS_DIRECTIVES: any[] = [
+    DiagramBoundaryEventComponent,
+    DiagramThrowEventComponent
+];

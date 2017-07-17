@@ -145,10 +145,10 @@ describe('DocumentActionsService', () => {
     it('should not delete the file node if there is no delete permission', (done) => {
         spyOn(documentListService, 'deleteNode').and.callThrough();
 
-        service.permissionEvent.subscribe((permission) => {
-            expect(permission).toBeDefined();
-            expect(permission.type).toEqual('content');
-            expect(permission.action).toEqual('delete');
+        service.permissionEvent.subscribe((permissionBack) => {
+            expect(permissionBack).toBeDefined();
+            expect(permissionBack.type).toEqual('content');
+            expect(permissionBack.action).toEqual('delete');
             done();
         });
 
@@ -236,7 +236,7 @@ describe('DocumentActionsService', () => {
         const deleteObservale = service.getHandler('delete')(fileWithPermission, null, permission);
 
         expect(documentListService.deleteNode).toHaveBeenCalledWith(file.entry.id);
-        expect(deleteObservale.subscribe).toBeDefined;
+        expect(deleteObservale.subscribe).toBeDefined();
     });
 
     it('should support deletion only file node', () => {

@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /* tslint:disable:component-selector  */
+
 import { FormFieldModel } from './form-field.model';
 import { FormWidgetModel } from './form-widget.model';
 
