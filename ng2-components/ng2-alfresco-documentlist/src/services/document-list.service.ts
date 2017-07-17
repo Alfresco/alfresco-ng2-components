@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
-import { AlfrescoApiService, AlfrescoAuthenticationService, AlfrescoContentService, LogService, ThumbnailService } from 'ng2-alfresco-core';
+import { AlfrescoApiService, AlfrescoAuthenticationService, AlfrescoContentService, LogService, PermissionsEnum, ThumbnailService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 
 @Injectable()
@@ -113,6 +113,10 @@ export class DocumentListService {
 
     getDefaultMimeTypeIcon(): string {
         return this.thumbnailService.getDefaultMimeTypeIcon();
+    }
+
+    hasPermission(node: any, permission: PermissionsEnum|string): boolean {
+        return this.contentService.hasPermission(node, permission);
     }
 
     private handleError(error: Response) {
