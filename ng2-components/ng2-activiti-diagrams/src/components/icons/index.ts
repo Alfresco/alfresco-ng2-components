@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /* tslint:disable:component-selector  */
+
 import { DiagramContainerIconEventTaskComponent } from './diagram-container-icon-event.component';
 import { DiagramIconAlfrescoPublishTaskComponent } from './diagram-icon-alfresco-publish-task.component';
 import { DiagramIconBoxPublishTaskComponent } from './diagram-icon-box-publish-task.component';

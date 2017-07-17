@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /* tslint:disable:component-selector  */
+
 import { DiagramEventGatewayComponent } from './diagram-event-gateway.component';
 import { DiagramExclusiveGatewayComponent } from './diagram-exclusive-gateway.component';
 import { DiagramGatewayComponent } from './diagram-gateway.component';

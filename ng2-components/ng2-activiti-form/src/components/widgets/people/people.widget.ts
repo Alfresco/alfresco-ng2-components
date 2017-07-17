@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /* tslint:disable:component-selector  */
+
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { FormService } from '../../../services/form.service';
 import { GroupUserModel } from '../core/group-user.model';

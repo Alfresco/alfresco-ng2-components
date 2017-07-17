@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-export * from './context-menu/index';
-export * from './material/index';
-export * from './collapsable/index';
-export * from './view/index';
+ /* tslint:disable:component-selector  */
+
+export * from './diagram-tooltip.component';

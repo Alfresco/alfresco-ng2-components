@@ -21,7 +21,7 @@ import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AnalyticsService } from '../services/analytics.service';
 
 @Component({
-    selector: 'analytics-report-heat-map',
+    selector: 'adf-analytics-report-heat-map, analytics-report-heat-map',
     templateUrl: './analytics-report-heat-map.component.html'
 })
 export class AnalyticsReportHeatMapComponent implements  OnInit {
