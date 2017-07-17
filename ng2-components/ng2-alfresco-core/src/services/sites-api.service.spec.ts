@@ -15,141 +15,157 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { async, inject, TestBed } from '@angular/core/testing';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { AlfrescoSettingsService } from './alfresco-settings.service';
 import { AppConfigModule } from './app-config.service';
-import { AuthenticationService } from './authentication.service';
+import { NodesApiService } from './nodes-api.service';
 import { SitesApiService } from './sites-api.service';
 import { StorageService } from './storage.service';
 import { UserPreferencesService } from './user-preferences.service';
 
-declare let jasmine: any;
+class TestConfig {
+    service: any = null;
+    setup: any = {
+        rejectGetSites: false
+    };
 
-describe('Sites service', () => {
+    constructor(setup: any = {}) {
+        Object.assign(this.setup, setup);
 
-    let service;
+        const { alfrescoApiServiceMock } = this;
 
-    beforeEach(async(() => {
+        const alfrescoApiServiceProvider = {
+            provide: AlfrescoApiService,
+            useValue: alfrescoApiServiceMock
+        };
+
         TestBed.configureTestingModule({
             imports: [
                 AppConfigModule.forRoot('app.config.json', {
-                    ecmHost: 'http://localhost:9876/ecm',
-                    files: {
-                        excluded: ['.DS_Store', 'desktop.ini', '.git', '*.git']
+                    pagination: {
+                        size: 20
                     }
                 })
             ],
             providers: [
+                alfrescoApiServiceProvider,
                 SitesApiService,
-                AlfrescoApiService,
+                NodesApiService,
                 UserPreferencesService,
-                AuthenticationService,
-                AlfrescoSettingsService,
                 StorageService
             ]
-        }).compileComponents();
-    }));
-
-    beforeEach(() => {
-        service = TestBed.get(SitesApiService);
-        jasmine.Ajax.install();
-    });
-
-    afterEach(() => {
-        jasmine.Ajax.uninstall();
-    });
-
-    it('Should get a list of users sites', (done) => {
-        service.getSites().subscribe((data) => {
-            expect(data[0].title).toBe('FAKE');
-            done();
         });
 
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'json',
-            responseText: {
-                'list': {
-                    'pagination': {
-                        'count': 1,
-                        'hasMoreItems': false,
-                        'totalItems': 1,
-                        'skipCount': 0,
-                        'maxItems': 100
-                    },
-                    'entries': [
-                        {
-                            'entry': {
-                                'role': 'SiteManager',
-                                'visibility': 'PUBLIC',
-                                'guid': 'b4cff62a-664d-4d45-9302-98723eac1319',
-                                'description': 'This is a Sample Alfresco Team site.',
-                                'id': 'swsdp',
-                                'title': 'FAKE'
-                            }
-                        }
-                    ]
-                }
+        inject([ SitesApiService ], (service: SitesApiService) => {
+            this.service = service;
+        })();
+    }
+
+    private get alfrescoApiServiceMock(): any {
+        const { setup } = this;
+
+        const nodePagingSample = {
+            list: {
+                entries: [
+                    { entry: {} },
+                    { entry: {} }
+                ],
+                pagination: {}
             }
-        });
-    });
+        };
 
-    it('Should get single sites via siteId', (done) => {
-        service.getSite('fake-site-id').subscribe((data) => {
-            expect(data.title).toBe('FAKE-SINGLE-TITLE');
-            done();
-        });
+        const sitesApiMock = {
+            getSites: jasmine.createSpy('getSites').and.callFake(() => {
+                return new Promise((resolve, reject) => {
+                    setup.rejectGetSites
+                        ? reject()
+                        : resolve(nodePagingSample);
+                });
+            })
+        };
 
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'json',
-            responseText: {
-                'entry': {
-                    'role': 'SiteManager',
-                    'visibility': 'PUBLIC',
-                    'guid': 'b4cff62a-664d-4d45-9302-98723eac1319',
-                    'description': 'This is a Sample Alfresco Team site.',
-                    'id': 'swsdp',
-                    'preset': 'site-dashboard',
-                    'title': 'FAKE-SINGLE-TITLE'
-                }
+        return {
+            getInstance: () => {
+                return {
+                    core: { sitesApi: sitesApiMock }
+                };
             }
-        });
-    });
+        };
+    }
 
-    it('deleteSite should perform a call against the server', (done) => {
-        service.deleteSite('fake-site-id').subscribe(() => {
-            expect(jasmine.Ajax.requests.mostRecent().method).toBe('DELETE');
-            expect(jasmine.Ajax.requests.mostRecent().url)
-                .toContain('alfresco/api/-default-/public/alfresco/versions/1/sites/fake-site-id');
-            done();
-        });
+    get getSitesSpy(): any {
+        return this.service.sitesApi.getSites;
+    }
 
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 204
-        });
-    });
+    get getSitesArgs(): any[] {
+        return this.getSitesSpy.calls.mostRecent().args;
+    }
+}
 
-    it('getSites catch errors call', (done) => {
-        service.getSites().subscribe(() => {
-        }, () => {
-            done();
-        });
+describe('Sites API', () => {
+    describe('getSites', () => {
+        describe('Provide a NodePaging', () => {
+            beforeEach(() => {
+                this.config = new TestConfig();
+            });
 
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 403
-        });
-    });
+            it('provides a node paging with entries', async(() => {
+                this.config.service.getSites().subscribe((paging) => {
+                    const { list: { entries, pagination } } = paging;
 
-    it('getSite catch errors call', (done) => {
-        service.getSite('error-id').subscribe(() => {
-        }, () => {
-            done();
+                    expect(entries).toEqual(jasmine.any(Array));
+                    expect(pagination).toEqual(jasmine.any(Object));
+                    expect(entries.length).toBe(2);
+                });
+            }));
         });
 
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 403
+        describe('Manage query options', () => {
+            beforeEach(() => {
+                this.config = new TestConfig();
+
+                this.getCalledArgs = () => {
+                    return this.config.getSitesArgs;
+                };
+            });
+
+            it('has default options', async(() => {
+                this.config.service.getSites();
+
+                const [ { maxItems, skipCount } ] = this.getCalledArgs();
+
+                expect(maxItems).toBe(20);
+                expect(skipCount).toBe(0);
+            }));
+
+            it('combines custom and default options', async(() => {
+                this.config.service.getSites({
+                    maxItems: 5
+                });
+
+                const [ { maxItems, skipCount } ] = this.getCalledArgs();
+
+                expect(maxItems).toBe(5);
+                expect(skipCount).toBe(0);
+            }));
+        });
+
+        describe('Error handling', () => {
+            beforeEach(() => {
+                const config = new TestConfig({
+                    rejectGetSites: true
+                });
+
+                this.service = config.service;
+                this.spy = spyOn(config.service, 'handleError')
+                    .and.callThrough();
+            });
+
+            it('handles error on failure', async(() => {
+                this.service.getSites().subscribe(() => {
+                    expect(this.spy).toHaveBeenCalled();
+                });
+            }));
         });
     });
 });
