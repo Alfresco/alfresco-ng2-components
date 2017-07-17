@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, CardViewUpdateService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 
 import { ProcessInstance } from '../models/process-instance.model';
@@ -42,7 +42,8 @@ describe('ProcessInstanceHeaderComponent', () => {
                 ProcessCommentsComponent
             ],
             providers: [
-                ProcessService
+                ProcessService,
+                CardViewUpdateService
             ]
         }).compileComponents();
 
@@ -76,7 +77,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.processInstance.ended = null;
         component.ngOnChanges({});
         fixture.detectChanges();
-        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="header-status"] .adf-header__value');
+        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-status"]');
         expect(valueEl.innerText).toBe('Running');
     });
 
@@ -84,7 +85,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.processInstance.ended = '2016-11-03';
         component.ngOnChanges({});
         fixture.detectChanges();
-        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="header-status"] .adf-header__value');
+        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-status"]');
         expect(valueEl.innerText).toBe('Completed');
     });
 
@@ -92,7 +93,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.processInstance.ended = '2016-11-03';
         component.ngOnChanges({});
         fixture.detectChanges();
-        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="header-dueDate"] .adf-header__value');
+        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-dateitem-dueDate"]');
         expect(valueEl.innerText).toBe('Nov 03 2016');
     });
 
@@ -100,7 +101,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.processInstance.ended = null;
         component.ngOnChanges({});
         fixture.detectChanges();
-        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="header-dueDate"] .adf-header__value');
+        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-dateitem-dueDate"]');
         expect(valueEl.innerText).toBe('No date');
     });
 
@@ -108,7 +109,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.processInstance.processDefinitionCategory = 'Accounts';
         component.ngOnChanges({});
         fixture.detectChanges();
-        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="header-category"] .adf-header__value');
+        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-category"]');
         expect(valueEl.innerText).toBe('Accounts');
     });
 
@@ -116,7 +117,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.processInstance.processDefinitionCategory = null;
         component.ngOnChanges({});
         fixture.detectChanges();
-        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="header-category"] .adf-header__value');
+        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-category"]');
         expect(valueEl.innerText).toBe('No category');
     });
 
@@ -124,7 +125,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.processInstance.started = '2016-11-03';
         component.ngOnChanges({});
         fixture.detectChanges();
-        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="header-created"] .adf-header__value');
+        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-dateitem-created"]');
         expect(valueEl.innerText).toBe('Nov 03 2016');
     });
 
@@ -132,7 +133,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.processInstance.startedBy = {firstName:  'Admin', lastName: 'User'};
         component.ngOnChanges({});
         fixture.detectChanges();
-        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="header-assignee"] .adf-header__value');
+        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-assignee"]');
         expect(valueEl.innerText).toBe('Admin User');
     });
 
@@ -140,7 +141,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.processInstance.id = '123';
         component.ngOnChanges({});
         fixture.detectChanges();
-        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="header-id"] .adf-header__value');
+        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-id"]');
         expect(valueEl.innerText).toBe('123');
     });
 
@@ -148,7 +149,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.processInstance.processDefinitionDescription = 'Test process';
         component.ngOnChanges({});
         fixture.detectChanges();
-        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="header-description"] .adf-header__value');
+        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-description"]');
         expect(valueEl.innerText).toBe('Test process');
     });
 
@@ -156,7 +157,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.processInstance.processDefinitionDescription = null;
         component.ngOnChanges({});
         fixture.detectChanges();
-        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="header-description"] .adf-header__value');
+        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-description"]');
         expect(valueEl.innerText).toBe('No description');
     });
 });
