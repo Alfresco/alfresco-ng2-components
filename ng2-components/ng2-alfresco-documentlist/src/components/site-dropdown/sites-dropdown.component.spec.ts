@@ -17,11 +17,9 @@
 
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MdSelectModule, OverlayContainer, OverlayModule, ScrollDispatcher } from '@angular/material';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { AppConfigModule, CoreModule } from 'ng2-alfresco-core';
-import { Subject } from 'rxjs/Subject';
+import { MdOptionModule, MdSelectModule } from '@angular/material';
+import { By } from '@angular/platform-browser';
+import { CoreModule } from 'ng2-alfresco-core';
 import { SitesService } from '../../services/sites.service';
 import { DropdownSitesComponent } from './sites-dropdown.component';
 
@@ -41,7 +39,7 @@ let sitesList = {
                 'entry': {
                     'role': 'SiteManager',
                     'visibility': 'PUBLIC',
-                    'guid': 'fe47a4d1-62c1-4338-b814-b410a43421d5',
+                    'guid': 'fake-1',
                     'description': 'fake-test-site',
                     'id': 'fake-test-site',
                     'preset': 'site-dashboard',
@@ -52,18 +50,16 @@ let sitesList = {
                 'entry': {
                     'role': 'SiteManager',
                     'visibility': 'PUBLIC',
-                    'guid': 'b4cff62a-664d-4d45-9302-98723eac1319',
+                    'guid': 'fake-2',
                     'description': 'This is a Sample Alfresco Team site.',
                     'id': 'swsdp',
                     'preset': 'site-dashboard',
-                    'title': 'Sample: Web Site Design Project'
+                    'title': 'fake-test-2'
                 }
             }
         ]
     }
 };
-
-let scrolledSubject = new Subject();
 
 describe('DropdownSitesComponent', () => {
 
@@ -71,50 +67,19 @@ describe('DropdownSitesComponent', () => {
     let fixture: ComponentFixture<DropdownSitesComponent>;
     let debug: DebugElement;
     let element: HTMLElement;
-    let overlayContainerElement: HTMLElement;
 
     beforeEach(async(() => {
+
         TestBed.configureTestingModule({
             imports: [
+                CoreModule.forRoot(),
                 MdSelectModule,
-                ReactiveFormsModule,
-                OverlayModule,
-                FormsModule,
-                NoopAnimationsModule,
-                CoreModule,
-                AppConfigModule.forRoot('app.config.json', {
-                    ecmHost: 'http://localhost:9876/ecm'
-                })
+                MdOptionModule
             ],
             declarations: [
                 DropdownSitesComponent
             ],
-            providers: [
-                {
-                    provide: OverlayContainer, useFactory: () => {
-                        overlayContainerElement = document.createElement('div') as HTMLElement;
-                        overlayContainerElement.classList.add('cdk-overlay-container');
-
-                        document.body.appendChild(overlayContainerElement);
-
-                        // remove body padding to keep consistent cross-browser
-                        document.body.style.padding = '0';
-                        document.body.style.margin = '0';
-
-                        return { getContainerElement: () => overlayContainerElement };
-                    }
-                },
-                SitesService,
-                {
-                    provide: ScrollDispatcher, useFactory: () => {
-                        return {
-                            scrolled: (_delay: number, callback: () => any) => {
-                                return scrolledSubject.asObservable().subscribe(callback);
-                            }
-                        };
-                    }
-                }
-            ]
+            providers: [SitesService]
         }).compileComponents();
     }));
 
@@ -133,15 +98,25 @@ describe('DropdownSitesComponent', () => {
 
         afterEach(() => {
             jasmine.Ajax.uninstall();
+            fixture.destroy();
         });
 
-        it('Dropdown sites should be renedered', () => {
+        it('Dropdown sites should be renedered', async(() => {
             fixture.detectChanges();
-            expect(element.querySelector('#site-dropdown-container')).toBeDefined();
-            expect(element.querySelector('#site-dropdown')).toBeDefined();
-            expect(element.querySelector('#site-dropdown-container')).not.toBeNull();
-            expect(element.querySelector('#site-dropdown')).not.toBeNull();
-        });
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#site-dropdown-container')).toBeDefined();
+                expect(element.querySelector('#site-dropdown')).toBeDefined();
+                expect(element.querySelector('#site-dropdown-container')).not.toBeNull();
+                expect(element.querySelector('#site-dropdown')).not.toBeNull();
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: sitesList
+            });
+        }));
 
         it('should load sites on init', async(() => {
             fixture.detectChanges();
@@ -151,7 +126,12 @@ describe('DropdownSitesComponent', () => {
                 responseText: sitesList
             });
             fixture.whenStable().then(() => {
-                expect(component.siteList.length).toBe(2);
+                fixture.detectChanges();
+                debug.query(By.css('.mat-select-trigger')).triggerEventHandler('click', null);
+                fixture.detectChanges();
+                let options: any = debug.queryAll(By.css('md-option'));
+                expect(options[0].attributes['ng-reflect-value']).toBe('fake-1');
+                expect(options[1].attributes['ng-reflect-value']).toBe('fake-2');
             });
         }));
 
@@ -164,12 +144,16 @@ describe('DropdownSitesComponent', () => {
             });
 
             fixture.whenStable().then(() => {
-                component.siteSelected = sitesList.list.entries[0].entry;
-                component.selectedSite();
+                fixture.detectChanges();
+                debug.query(By.css('.mat-select-trigger')).triggerEventHandler('click', null);
+                fixture.detectChanges();
+                let options: any = debug.queryAll(By.css('md-option'));
+                options[0].triggerEventHandler('click', null);
+                fixture.detectChanges();
             });
 
             component.siteChanged.subscribe((site) => {
-                expect(site.title).toBe('fake-test-site');
+                expect(site).toBe('fake-1');
                 done();
             });
         });

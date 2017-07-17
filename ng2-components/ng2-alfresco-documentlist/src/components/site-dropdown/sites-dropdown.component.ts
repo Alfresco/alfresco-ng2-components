@@ -31,7 +31,7 @@ export class DropdownSitesComponent implements OnInit {
     showDefaultOption: boolean = false;
 
     @Output()
-    siteChanged: EventEmitter<any> = new EventEmitter();
+    siteChanged: EventEmitter<SiteModel> = new EventEmitter();
 
     siteList = [];
 

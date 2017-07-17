@@ -357,6 +357,29 @@ DocumentList provides simple breadcrumb element to indicate the current position
 | --- | --- | --- |
 | navigate | [PathElementEntity](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/PathElementEntity.md) |emitted when user clicks on a breadcrumb  |
 
+## Dropdown Site Component
+
+DocumentList provides simple dropdown element to indicate the current position within a navigation hierarchy.
+
+```html
+ <adf-sites-dropdown  
+  [showDefaultOption]="true"
+  (siteChanged)="getSiteContent($event)">
+ </adf-sites-dropdown>
+```
+
+### Properties
+
+| Name | Type | Description |
+| --- | --- | --- |
+| showDefaultOption | boolean | (optional) Shows into the dropdown a default option |
+
+### Events
+
+| Name | Returned Type | Description |
+| --- | --- | --- |
+| siteChanged | [SiteModel](https://github.com/Alfresco/alfresco-ng2-components/blob/development/ng2-components/ng2-alfresco-documentlist/src/models/site.model.ts) | emitted when user select a site  |
+
 ## Menu Actions
 
 DocumentList provides simple creation menu actions that provide the action to create a new folder.

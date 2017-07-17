@@ -4,7 +4,7 @@
         [(ngModel)]="siteSelected"
         (ngModelChange)="selectedSite()">
         <md-option *ngIf="showDefaultOption" id="default_site_option">{{'DROPDOWN.DEFAULT_OPTION' | translate}}</md-option>
-        <md-option *ngFor="let site of siteList" [value]="site.guid" [id]="site.id">
+        <md-option *ngFor="let site of siteList" [value]="site.guid">
             {{ site.title }}
         </md-option>
     </md-select>
