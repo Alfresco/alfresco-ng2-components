@@ -117,7 +117,11 @@ export * from './src/events/base.event';
 export * from './src/events/base-ui.event';
 export * from './src/events/folder-created.event';
 export * from './src/events/file.event';
-export * from './src/models/index';
+
+export * from './src/models/card-view-textitem.model';
+export * from './src/models/card-view-dateitem.model';
+export * from './src/models/file.model';
+export * from './src/models/permissions.enum';
 
 export * from './src/models/index';
 

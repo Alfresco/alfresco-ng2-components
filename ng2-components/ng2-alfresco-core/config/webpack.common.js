@@ -39,8 +39,7 @@ module.exports = {
                 loader: 'tslint-loader',
                 options: {
                     emitErrors: true,
-                    failOnHint: true,
-                    fix:true
+                    failOnHint: true
                 },
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
             },
