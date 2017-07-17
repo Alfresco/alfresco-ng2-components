@@ -48,8 +48,10 @@ export class SitesApiService {
             .catch(this.handleError);
     }
 
-    deleteSite(siteId: string, permanent: boolean = true): any {
-        return Observable.fromPromise(this.apiService.getInstance().core.sitesApi.deleteSite(siteId, permanent)
+    deleteSite(siteId: string, permanentFlag: boolean = true): any {
+        let options : any = {};
+        options.permanent = permanentFlag;
+        return Observable.fromPromise(this.apiService.getInstance().core.sitesApi.deleteSite(siteId, options)
             .catch(this.handleError));
     }
 
