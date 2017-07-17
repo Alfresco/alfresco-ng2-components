@@ -74,8 +74,8 @@ describe('DropdownBreadcrumb', () => {
         fixture.detectChanges();
     }
 
-    function triggerComponentChange(fakeNodeWithCreatePermission) {
-        const change = new SimpleChange(null, fakeNodeWithCreatePermission, true);
+    function triggerComponentChange(fakeNodeData) {
+        const change = new SimpleChange(null, fakeNodeData, true);
         component.ngOnChanges({'folderNode': change});
         fixture.detectChanges();
     }
