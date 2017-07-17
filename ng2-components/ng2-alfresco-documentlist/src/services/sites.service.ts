@@ -40,8 +40,8 @@ export class SitesService {
             .catch(this.handleError);
     }
 
-    deleteSite(siteId: string, permannent: boolean = true): any {
-        return Observable.fromPromise(this.apiService.getInstance().core.sitesApi.deleteSite(siteId, permannent))
+    deleteSite(siteId: string, permanent: boolean = true): any {
+        return Observable.fromPromise(this.apiService.getInstance().core.sitesApi.deleteSite(siteId, Boolean(permanent))
             .catch(this.handleError);
     }
 
