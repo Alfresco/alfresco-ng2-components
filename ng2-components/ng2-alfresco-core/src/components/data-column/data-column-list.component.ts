@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /* tslint:disable:component-selector  */
+
 import { Component, ContentChildren, QueryList } from '@angular/core';
 import { DataColumnComponent } from './data-column.component';
 

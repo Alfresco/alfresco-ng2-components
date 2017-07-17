@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /* tslint:disable:component-selector  */
+
 import * as moment from 'moment';
 import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 import { ContainerColumnModel } from './container-column.model';
@@ -163,7 +165,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.hyperlinkUrl = json.hyperlinkUrl;
             this.displayText = json.displayText;
             this.visibilityCondition = <WidgetVisibilityModel> json.visibilityCondition;
-            this.enableFractions = <boolean>json.enableFractions;
+            this.enableFractions = <boolean> json.enableFractions;
             this.currency = json.currency;
             this.dateDisplayFormat = json.dateDisplayFormat || this.defaultDateFormat;
             this._value = this.parseValue(json);

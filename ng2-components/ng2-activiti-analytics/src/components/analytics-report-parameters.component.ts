@@ -43,7 +43,7 @@ declare var componentHandler;
 declare let dialogPolyfill: any;
 
 @Component({
-    selector: 'analytics-report-parameters',
+    selector: 'adf-analytics-report-parameters, analytics-report-parameters',
     templateUrl: './analytics-report-parameters.component.html',
     styleUrls: ['./analytics-report-parameters.component.css']
 })

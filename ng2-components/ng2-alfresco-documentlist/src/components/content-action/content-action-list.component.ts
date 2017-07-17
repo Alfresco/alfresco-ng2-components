@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /* tslint:disable:component-selector  */
+
 import { Component } from '@angular/core';
 
 import { ContentActionModel } from './../../models/content-action.model';

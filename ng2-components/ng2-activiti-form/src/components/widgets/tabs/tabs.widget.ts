@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /* tslint:disable:component-selector  */
+
 import { AfterContentChecked, AfterViewInit, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormFieldModel, TabModel } from './../core/index';
 

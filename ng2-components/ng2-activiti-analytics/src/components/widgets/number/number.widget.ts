@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /* tslint:disable:component-selector  */
+
 /* tslint:disable::no-access-missing-member */
 import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';

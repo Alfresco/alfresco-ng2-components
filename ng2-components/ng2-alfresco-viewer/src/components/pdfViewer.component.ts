@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/* tslint:disable:component-selector  */
+
 import { Component, HostListener, Input, OnChanges } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
@@ -376,7 +378,7 @@ export class PdfViewerComponent implements OnChanges {
         bounds.top = page.div.offsetTop;
         bounds.bottom = bounds.top + page.viewport.height;
         return ((bounds.top <= viewport.bottom) && (bounds.bottom >= viewport.top));
-    };
+    }
 
     /**
      * Litener Keyboard Event

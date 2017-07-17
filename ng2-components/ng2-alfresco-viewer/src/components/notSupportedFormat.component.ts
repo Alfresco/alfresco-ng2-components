@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/* tslint:disable:component-selector  */
+
 import { Component, Input, OnInit } from '@angular/core';
 import { ContentService, RenditionsService } from 'ng2-alfresco-core';
 import { AlfrescoApiService } from 'ng2-alfresco-core';

@@ -234,7 +234,7 @@ export class WidgetVisibilityService {
         return Observable.fromPromise(this.apiService.getInstance().activiti.taskFormsApi.getTaskFormVariables(taskId))
             .map(res => {
                 let jsonRes = this.toJson(res);
-                this.processVarList = <TaskProcessVariableModel[]>jsonRes;
+                this.processVarList = <TaskProcessVariableModel[]> jsonRes;
                 return jsonRes;
             })
             .catch(err => this.handleError(err));

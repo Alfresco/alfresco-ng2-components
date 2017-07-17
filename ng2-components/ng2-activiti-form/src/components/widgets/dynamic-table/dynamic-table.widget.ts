@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+ /* tslint:disable:component-selector  */
+
 import { ChangeDetectorRef, Component, ElementRef, Input, OnInit } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
@@ -64,7 +66,7 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
     forceFocusOnAddButton() {
         if (this.content) {
             this.cd.detectChanges();
-            let buttonAddRow = <HTMLButtonElement>this.elementRef.nativeElement.querySelector('#' + this.content.id + '-add-row');
+            let buttonAddRow = <HTMLButtonElement> this.elementRef.nativeElement.querySelector('#' + this.content.id + '-add-row');
             if (this.isDynamicTableReady(buttonAddRow)) {
                 buttonAddRow.focus();
             }
