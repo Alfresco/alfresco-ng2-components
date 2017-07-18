@@ -16,10 +16,10 @@
  */
 
 import { Injectable } from '@angular/core';
-import { MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
+import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
+import { SiteModel } from '../models/site.model';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { NodesApiService } from './nodes-api.service';
 import { UserPreferencesService } from './user-preferences.service';
 
 @Injectable()
@@ -27,36 +27,54 @@ export class SitesApiService {
 
     constructor(
         private apiService: AlfrescoApiService,
-        private nodesApi: NodesApiService,
-        private preferences: UserPreferencesService) {}
+        private preferences: UserPreferencesService) { }
 
-    private get sitesApi() {
-       return this.apiService.getInstance().core.sitesApi;
-    }
-
-    getSites(options: any = {}): Observable<NodePaging> {
-        const { sitesApi, handleError } = this;
+    getSites(opts: any = {}): any {
         const defaultOptions = {
             maxItems: this.preferences.paginationSize,
             skipCount: 0,
-            include: [ 'properties' ]
+            include: ['properties']
         };
-        const queryOptions = Object.assign({}, defaultOptions, options);
-        const promise = sitesApi.getSites(queryOptions);
-
-        return Observable
-            .fromPromise(promise)
-            .catch(handleError);
+        const queryOptions = Object.assign({}, defaultOptions, opts);
+        return Observable.fromPromise(this.apiService.getInstance().core.sitesApi.getSites(queryOptions))
+            .map((res: any) => res.list.entries)
+            .map((objList) => this.convertToModel(objList))
+            .catch(this.handleError);
     }
 
-    getSiteDocumentLibrary(siteId: string): Observable<MinimalNodeEntryEntity> {
-        const { nodesApi } = this;
-
-        return nodesApi
-            .getNode(siteId, { relativePath: '/documentLibrary' });
+    getSite(siteId: string, opts?: any): any {
+        return Observable.fromPromise(this.apiService.getInstance().core.sitesApi.getSite(siteId, opts))
+            .map((res: any) => new SiteModel(res))
+            .catch(this.handleError);
     }
 
-    private handleError(error: any): Observable<any> {
-        return Observable.of(error);
+    deleteSite(siteId: string, permanentFlag: boolean = true): any {
+        let options: any = {};
+        options.permanent = permanentFlag;
+        return Observable.fromPromise(this.apiService.getInstance().core.sitesApi.deleteSite(siteId, options)
+            .catch(this.handleError));
+    }
+
+    getSiteContent(siteId: string): Observable<any> {
+        return this.getSite(siteId, { relations: ['containers'] });
+    }
+
+    getSiteMembers(siteId: string): Observable<any> {
+        return this.getSite(siteId, { relations: ['members'] });
+    }
+
+    private handleError(error: Response): any {
+        console.error(error);
+        return Observable.throw(error || 'Server error');
+    }
+
+    private convertToModel(objList: any[]) {
+        let convertedList: SiteModel[] = [];
+        if (objList && objList.length > 0) {
+            objList.forEach((element: any) => {
+                convertedList.push(new SiteModel(element));
+            });
+        }
+        return convertedList;
     }
 }
