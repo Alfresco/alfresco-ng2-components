@@ -85,6 +85,7 @@ The properties currentFolderId, folderNode and node are the entry initialization
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | selectionMode | string | 'single' | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows.  |
+| selection | Array<MinimalNodeEntity> | [] | Contains selected nodes |
 | rowStyle | string | | The inline style to apply to every row, see [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html) docs for more details and usage examples |
 | rowStyleClass | string | | The CSS class to apply to every row |
 | currentFolderId | string | null | Initial node ID of displayed folder. Can be `-root-`, `-shared-`, `-my-`, or a fixed node ID  |
@@ -128,6 +129,8 @@ All of them are `bubbling`, meaning you can handle them in any component up the 
 | --- | --- |
 | node-click | Raised when user clicks the node |
 | node-dblclick | Raised when user double-clicks the node |
+| node-select | Raised when user selects a node |
+| node-unselect | Raised when user unselects a node |
 
 Every event is represented by a [CustomEvent](https://developer.mozilla.org/en/docs/Web/API/CustomEvent) instance, having at least the following properties as part of the `Event.detail` property value:
 
@@ -137,6 +140,8 @@ Every event is represented by a [CustomEvent](https://developer.mozilla.org/en/d
     node: MinimalNodeEntity
 }
 ```
+
+Please refer to the DataTable documentation to find details about additional DOM events the DocumentList component bubbles up from the DataTable.
 
 ### Handling DOM events
 

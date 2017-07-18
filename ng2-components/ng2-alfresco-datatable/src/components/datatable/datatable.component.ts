@@ -48,9 +48,6 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     selectionMode: string = 'single'; // none|single|multiple
 
     @Input()
-    selection = new Array<DataRow>();
-
-    @Input()
     multiselect: boolean = false;
 
     @Input()
@@ -95,10 +92,11 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     @Input()
     loading: boolean = false;
 
-    public noContentTemplate: TemplateRef<any>;
-    public loadingTemplate: TemplateRef<any>;
+    noContentTemplate: TemplateRef<any>;
+    loadingTemplate: TemplateRef<any>;
 
     isSelectAllChecked: boolean = false;
+    selection = new Array<DataRow>();
 
     private clickObserver: Observer<DataRowEvent>;
     private click$: Observable<DataRowEvent>;
@@ -251,7 +249,10 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
 
                 const domEventName = newValue ? 'row-select' : 'row-unselect';
                 const domEvent = new CustomEvent(domEventName, {
-                    detail: row,
+                    detail: {
+                        row: row,
+                        selection: this.selection
+                    },
                     bubbles: true
                 });
 
@@ -320,7 +321,20 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     }
 
     onCheckboxChange(row: DataRow, event: MdCheckboxChange) {
-        this.selectRow(row, event.checked);
+        const newValue = event.checked;
+
+        this.selectRow(row, newValue);
+
+        const domEventName = newValue ? 'row-select' : 'row-unselect';
+        const domEvent = new CustomEvent(domEventName, {
+            detail: {
+                row: row,
+                selection: this.selection
+            },
+            bubbles: true
+        });
+
+        this.elementRef.nativeElement.dispatchEvent(domEvent);
     }
 
     onImageLoadingError(event: Event) {
@@ -415,7 +429,5 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
                 }
             }
         }
-
-        console.log(this.selection);
     }
 }

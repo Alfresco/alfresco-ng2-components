@@ -133,6 +133,15 @@
 
 <context-menu-holder></context-menu-holder>
 
+<div class="p-10">
+    Selected Nodes:
+    <ul>
+        <li *ngFor="let node of documentList.selection">
+            {{ node.entry.name }}
+        </li>
+    </ul>
+</div>
+
 <div class="container">
     <section>
         <md-slide-toggle [(ngModel)]="multiselect">Multiselect (with checkboxes)</md-slide-toggle>
