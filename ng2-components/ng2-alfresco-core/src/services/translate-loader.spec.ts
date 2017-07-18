@@ -16,14 +16,14 @@
  */
 
 import { Injector } from '@angular/core';
-import {getTestBed, TestBed} from '@angular/core/testing';
+import { getTestBed, TestBed } from '@angular/core/testing';
 import { HttpModule, Response, ResponseOptions, XHRBackend } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
+import { LogService } from './log.service';
 import { AlfrescoTranslateLoader } from './translate-loader.service';
 import { TranslationService } from './translation.service';
-import { LogService } from './log.service';
 
 let componentJson1 = ' {"TEST": "This is a test", "TEST2": "This is another test"} ' ;
 
