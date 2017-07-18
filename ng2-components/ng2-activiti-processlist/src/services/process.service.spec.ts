@@ -424,19 +424,19 @@ describe('ProcessService', () => {
             let getProcessInstanceComments: jasmine.Spy;
 
             beforeEach(() => {
-                getProcessInstanceComments = spyOn(alfrescoApi.activiti.commentsApi, 'getProcessInstanceComments')
+                getProcessInstanceComments = spyOn(alfrescoApi.activiti.commentsApi, 'getComments')
                     .and
                     .returnValue(Promise.resolve({ data: [ fakeComment, fakeComment ] }));
             });
 
             it('should return the correct number of comments', async(() => {
-                service.getProcessInstanceComments(processId).subscribe((tasks) => {
+                service.getComments(processId).subscribe((tasks) => {
                     expect(tasks.length).toBe(2);
                 });
             }));
 
             it('should return the correct comment data', async(() => {
-                service.getProcessInstanceComments(processId).subscribe((comments) => {
+                service.getComments(processId).subscribe((comments) => {
                     let comment = comments[0];
                     expect(comment.id).toBe(fakeComment.id);
                     expect(comment.created).toBe(fakeComment.created);
@@ -446,13 +446,13 @@ describe('ProcessService', () => {
             }));
 
             it('should call service to fetch process instance comments', () => {
-                service.getProcessInstanceComments(processId);
+                service.getComments(processId);
                 expect(getProcessInstanceComments).toHaveBeenCalledWith(processId);
             });
 
             it('should pass on any error that is returned by the API', async(() => {
                 getProcessInstanceComments = getProcessInstanceComments.and.returnValue(Promise.reject(fakeError));
-                service.getProcessInstanceComments(processId).subscribe(
+                service.getComments(processId).subscribe(
                     () => {},
                     (res) => {
                         expect(res).toBe(fakeError);
@@ -462,7 +462,7 @@ describe('ProcessService', () => {
 
             it('should return a default error if no data is returned by the API', async(() => {
                 getProcessInstanceComments = getProcessInstanceComments.and.returnValue(Promise.reject(null));
-                service.getProcessInstanceComments(processId).subscribe(
+                service.getComments(processId).subscribe(
                     () => {},
                     (res) => {
                         expect(res).toBe('Server error');
@@ -478,20 +478,20 @@ describe('ProcessService', () => {
             let addProcessInstanceComment: jasmine.Spy;
 
             beforeEach(() => {
-                addProcessInstanceComment = spyOn(alfrescoApi.activiti.commentsApi, 'addProcessInstanceComment')
+                addProcessInstanceComment = spyOn(alfrescoApi.activiti.commentsApi, 'addComment')
                     .and
                     .returnValue(Promise.resolve(fakeComment));
             });
 
             it('should call service to add comment', () => {
-                service.addProcessInstanceComment(processId, message);
+                service.addComment(processId, message);
                 expect(addProcessInstanceComment).toHaveBeenCalledWith({
                     message: message
                 }, processId);
             });
 
             it('should return the created comment', async(() => {
-                service.addProcessInstanceComment(processId, message).subscribe((comment) => {
+                service.addComment(processId, message).subscribe((comment) => {
                     expect(comment.id).toBe(fakeComment.id);
                     expect(comment.created).toBe(fakeComment.created);
                     expect(comment.message).toBe(fakeComment.message);
@@ -501,7 +501,7 @@ describe('ProcessService', () => {
 
             it('should pass on any error that is returned by the API', async(() => {
                 addProcessInstanceComment = addProcessInstanceComment.and.returnValue(Promise.reject(fakeError));
-                service.addProcessInstanceComment(processId, message).subscribe(
+                service.addComment(processId, message).subscribe(
                     () => {},
                     (res) => {
                         expect(res).toBe(fakeError);
@@ -511,7 +511,7 @@ describe('ProcessService', () => {
 
             it('should return a default error if no data is returned by the API', async(() => {
                 addProcessInstanceComment = addProcessInstanceComment.and.returnValue(Promise.reject(null));
-                service.addProcessInstanceComment(processId, message).subscribe(
+                service.addComment(processId, message).subscribe(
                     () => {},
                     (res) => {
                         expect(res).toBe('Server error');

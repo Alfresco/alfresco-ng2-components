@@ -80,7 +80,7 @@ export class CommentsComponent implements OnChanges {
     private getTaskComments(taskId: string): void {
         this.resetComments();
         if (taskId) {
-            this.activitiTaskList.getTaskComments(taskId).subscribe(
+            this.activitiTaskList.getComments(taskId).subscribe(
                 (res: Comment[]) => {
                     res = res.sort((comment1: Comment, comment2: Comment) => {
                         let date1 = new Date(comment1.created);
@@ -106,7 +106,7 @@ export class CommentsComponent implements OnChanges {
     add(): void {
         if (this.message && this.message.trim() && !this.beingAdded) {
             this.beingAdded = true;
-            this.activitiTaskList.addTaskComment(this.taskId, this.message).subscribe(
+            this.activitiTaskList.addComment(this.taskId, this.message).subscribe(
                 (res: Comment) => {
                     this.comments.unshift(res);
                     this.message = '';

@@ -228,7 +228,7 @@ export class ProcessService {
      * @param id - process instance ID
      * @returns {<Comment[]>}
      */
-    getProcessInstanceComments(id: string): Observable<Comment[]> {
+    getComments(id: string): Observable<Comment[]> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.commentsApi.getProcessInstanceComments(id))
             .map(res => res)
             .map((response: any) => {
@@ -252,7 +252,7 @@ export class ProcessService {
      * @param message - content of the comment
      * @returns {Comment}
      */
-    addProcessInstanceComment(id: string, message: string): Observable<Comment> {
+    addComment(id: string, message: string): Observable<Comment> {
         return Observable.fromPromise(
             this.apiService.getInstance().activiti.commentsApi.addProcessInstanceComment({ message: message }, id)
         )
