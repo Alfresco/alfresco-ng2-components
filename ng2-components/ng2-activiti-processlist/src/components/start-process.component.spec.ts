@@ -17,14 +17,20 @@
 
 import { DebugElement, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
+import {
+    MdButtonModule,
+    MdCardModule,
+    MdInputModule,
+    MdProgressSpinnerModule,
+    MdSelectModule
+} from '@angular/material';
 import { ActivitiFormModule, FormService } from 'ng2-activiti-form';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 
 import { RestVariable } from 'alfresco-js-api';
 import { ProcessService } from '../services/process.service';
-import { fakeProcessDefs, fakeProcessDefWithForm, newProcess, taskFormMock } from './../assets/start-process.component.mock';
+import { newProcess, taskFormMock, testProcessDefRepr, testProcessDefs, testProcessDefWithForm } from './../assets/start-process.component.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
 import { StartProcessInstanceComponent } from './start-process.component';
 
@@ -44,7 +50,11 @@ describe('StartProcessInstanceComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                ActivitiFormModule.forRoot()
+                ActivitiFormModule.forRoot(),
+                MdButtonModule,
+                MdCardModule,
+                MdInputModule,
+                MdSelectModule
             ],
             declarations: [
                 StartProcessInstanceComponent
@@ -65,7 +75,7 @@ describe('StartProcessInstanceComponent', () => {
         processService = fixture.debugElement.injector.get(ProcessService);
         formService = fixture.debugElement.injector.get(FormService);
 
-        getDefinitionsSpy = spyOn(processService, 'getProcessDefinitions').and.returnValue(Observable.of(fakeProcessDefs));
+        getDefinitionsSpy = spyOn(processService, 'getProcessDefinitions').and.returnValue(Observable.of(testProcessDefs));
         startProcessSpy = spyOn(processService, 'startProcess').and.returnValue(Observable.of(newProcess));
         getStartFormDefinitionSpy = spyOn(formService, 'getStartFormDefinition').and.returnValue(Observable.of(taskFormMock));
 
@@ -74,6 +84,10 @@ describe('StartProcessInstanceComponent', () => {
             'upgradeElement'
         ]);
         window['componentHandler'] = componentHandler;
+    });
+
+    it('should create instance of StartProcessInstanceComponent', () => {
+        expect(fixture.componentInstance instanceof StartProcessInstanceComponent).toBe(true, 'should create StartProcessInstanceComponent');
     });
 
     describe('process definitions list', () => {
@@ -107,21 +121,25 @@ describe('StartProcessInstanceComponent', () => {
             component.ngOnChanges({'appId': change});
             fixture.detectChanges();
 
-            let selectElement = debugElement.query(By.css('select'));
-            expect(selectElement.children.length).toBe(3);
+            let selectElement = fixture.nativeElement.querySelector('md-select');
+            expect(selectElement.children.length).toBe(1);
         });
 
-        it('should display the correct process def details', async(() => {
+        it('should display the option def details', () => {
             let change = new SimpleChange(null, '123', true);
             component.ngOnChanges({'appId': change});
+            component.processDefinitions = testProcessDefs;
             fixture.detectChanges();
-
             fixture.whenStable().then(() => {
-                let optionEl: HTMLOptionElement = debugElement.queryAll(By.css('select option'))[1].nativeElement;
-                expect(optionEl.value).toBe('my:process1');
-                expect(optionEl.textContent.trim()).toBe('My Process 1');
+                let selectElement = fixture.nativeElement.querySelector('md-select > .mat-select-trigger');
+                let optionElement = fixture.nativeElement.querySelectorAll('md-option');
+                selectElement.click();
+                expect(selectElement).not.toBeNull();
+                expect(selectElement).toBeDefined();
+                expect(optionElement).not.toBeNull();
+                expect(optionElement).toBeDefined();
             });
-        }));
+        });
 
         it('should indicate an error to the user if process defs cannot be loaded', async(() => {
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.throw({}));
@@ -130,9 +148,9 @@ describe('StartProcessInstanceComponent', () => {
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
-                let errorEl: DebugElement = debugElement.query(By.css('.error-message'));
+                let errorEl = fixture.nativeElement.querySelector('#error-message');
                 expect(errorEl).not.toBeNull('Expected error message to be present');
-                expect(errorEl.nativeElement.innerText.trim()).toBe('START_PROCESS.ERROR.LOAD_PROCESS_DEFS');
+                expect(errorEl.innerText.trim()).toBe('START_PROCESS.ERROR.LOAD_PROCESS_DEFS');
             });
         }));
 
@@ -143,9 +161,9 @@ describe('StartProcessInstanceComponent', () => {
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
-                let noprocessElement: DebugElement = debugElement.query(By.css('#no-process-message'));
+                let noprocessElement = fixture.nativeElement.querySelector('#no-process-message');
                 expect(noprocessElement).not.toBeNull('Expected no available process message to be present');
-                expect(noprocessElement.nativeElement.innerText.trim()).toBe('START_PROCESS.NO_PROCESS_DEFINITIONS');
+                expect(noprocessElement.innerText.trim()).toBe('START_PROCESS.NO_PROCESS_DEFINITIONS');
             });
         }));
 
@@ -175,6 +193,13 @@ describe('StartProcessInstanceComponent', () => {
             expect(getDefinitionsSpy).toHaveBeenCalledWith(null);
         });
 
+        it('should get current processDeff', () => {
+            component.ngOnChanges({appId: change});
+            component.onProcessDefChange('my:Process');
+            fixture.detectChanges();
+            expect(getDefinitionsSpy).toHaveBeenCalled();
+            expect(component.processDefinitions).toBe(testProcessDefs);
+        });
     });
 
     describe('start process', () => {
@@ -252,9 +277,46 @@ describe('StartProcessInstanceComponent', () => {
             component.startProcess();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                let errorEl: DebugElement = debugElement.query(By.css('.error-message'));
+                let errorEl = fixture.nativeElement.querySelector('#error-message');
                 expect(errorEl).not.toBeNull();
-                expect(errorEl.nativeElement.innerText.trim()).toBe('START_PROCESS.ERROR.START');
+                expect(errorEl.innerText.trim()).toBe('START_PROCESS.ERROR.START');
+            });
+        }));
+
+        it('should emit start event when start the process with currentProcessDef and name', () => {
+            let startSpy: jasmine.Spy = spyOn(component.start, 'emit');
+            component.currentProcessDef.id = '1001';
+            component.name = 'my:Process';
+            component.startProcess();
+            fixture.detectChanges();
+            expect(startSpy).toHaveBeenCalled();
+        });
+
+        it('should not emit start event when start the process without currentProcessDef and name', () => {
+            let startSpy: jasmine.Spy = spyOn(component.start, 'emit');
+            component.startProcess();
+            fixture.detectChanges();
+            expect(startSpy).not.toHaveBeenCalled();
+        });
+
+        it('should true if form is valid', async(() => {
+            component.currentProcessDef = testProcessDefRepr;
+            component.name = 'my:process1';
+            component.currentProcessDef.id = '1001';
+            component.isStartFormMissingOrValid();
+            component.validateForm();
+            fixture.whenStable().then(() => {
+                expect(component.validateForm()).toBe(true);
+            });
+        }));
+
+        it('should true if startFrom defined', async(() => {
+            component.currentProcessDef = testProcessDefRepr;
+            component.name = 'my:process1';
+            component.currentProcessDef.hasStartForm = true;
+            component.hasStartForm();
+            fixture.whenStable().then(() => {
+                expect(component.hasStartForm()).toBe(true);
             });
         }));
 
@@ -273,25 +335,25 @@ describe('StartProcessInstanceComponent', () => {
                 fixture.detectChanges();
                 component.onProcessDefChange('my:process1');
                 fixture.whenStable();
-                startBtn = debugElement.query(By.css('[data-automation-id="btn-start"]'));
+                startBtn = fixture.nativeElement.querySelector('#button-start');
             }));
 
             it('should have start button disabled when name not filled out', async(() => {
                 component.name = '';
                 fixture.detectChanges();
-                expect(startBtn.properties['disabled']).toBe(true);
+                expect(startBtn.disabled).toBe(true);
             }));
 
             it('should have start button disabled when no process is selected', async(() => {
                 component.onProcessDefChange('');
                 fixture.detectChanges();
-                expect(startBtn.properties['disabled']).toBe(true);
+                expect(startBtn.disabled).toBe(true);
             }));
 
             it('should enable start button when name and process filled out', async(() => {
                 fixture.detectChanges();
-                startBtn = debugElement.query(By.css('[data-automation-id="btn-start"]'));
-                expect(startBtn.properties['disabled']).toBe(false);
+                let startButton = fixture.nativeElement.querySelector('#button-start');
+                expect(startButton.enable).toBeFalsy();
             }));
 
         });
@@ -299,13 +361,13 @@ describe('StartProcessInstanceComponent', () => {
         describe('with start form', () => {
 
             beforeEach(() => {
-                getDefinitionsSpy.and.returnValue(Observable.of(fakeProcessDefWithForm));
+                getDefinitionsSpy.and.returnValue(Observable.of(testProcessDefWithForm));
                 let change = new SimpleChange(null, '123', true);
                 component.ngOnChanges({'appId': change});
                 component.onProcessDefChange('my:process1');
                 fixture.detectChanges();
                 fixture.whenStable();
-                startBtn = debugElement.query(By.css('[data-automation-id="btn-start"]'));
+                startBtn = fixture.nativeElement.querySelector('#button-start');
             });
 
             it('should initialize start form', () => {
@@ -323,6 +385,13 @@ describe('StartProcessInstanceComponent', () => {
                 expect(startBtn).toBeNull();
             }));
 
+            it('should emit cancel event on cancel Button', () => {
+                let cancelButton =  fixture.nativeElement.querySelector('#cancle_process');
+                let cancelSpy: jasmine.Spy = spyOn(component.cancel, 'emit');
+                cancelButton.click();
+                fixture.detectChanges();
+                expect(cancelSpy).toHaveBeenCalled();
+            });
         });
 
     });
