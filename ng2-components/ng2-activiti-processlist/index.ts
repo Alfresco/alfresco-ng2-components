@@ -16,7 +16,12 @@
  */
 
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { MdProgressSpinnerModule } from '@angular/material';
+import { 
+    MdProgressSpinnerModule,
+    MdButtonModule,
+    MdCardModule,
+    MdInputModule,
+    MdSelectModule } from '@angular/material';
 import { ActivitiFormModule } from 'ng2-activiti-form';
 import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
 import { CoreModule, CardViewUpdateService } from 'ng2-alfresco-core';
@@ -118,7 +123,11 @@ export const ACTIVITI_PROCESSLIST_PROVIDERS: [any] = [
         DataTableModule,
         ActivitiFormModule,
         ActivitiTaskListModule,
-        MdProgressSpinnerModule
+        MdProgressSpinnerModule,
+        MdButtonModule,
+        MdCardModule,
+        MdInputModule,
+        MdSelectModule
     ],
     declarations: [
         ...ACTIVITI_PROCESSLIST_DIRECTIVES

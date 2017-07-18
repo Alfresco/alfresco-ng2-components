@@ -1,37 +1,26 @@
-:host {
+.adf-smoke-bg {
+    background-color: whitesmoke;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
+md-card {
+    width: calc(66.6666% - 48px);
+    margin-left: calc(33.3333333333% / 2);
+    margin-right: calc(33.3333333333% / 2);
+    margin-top: 10px;
+}
+
+md-input-container {
     width: 100%;
 }
 
-.activiti-label {
-    font-weight: bolder;
-}
-
-.material-icons:hover {
-    color: rgb(255, 152, 0);
-}
-
-.mdl-textfield.alf-mdl-selectfield label {
-    color: rgba(0,0,0,.54);
-    font-size: 12px;
-    top: 4px;
-}
-
-.mdl-card {
+md-select {
     width: 100%;
-    min-height: initial;
-    margin-bottom: 20px;
+    padding: 16px 0px 0px 0px;
 }
 
-.mdl-card .mdl-card__supporting-text {
-    width: 100%;
-    padding: 20px;
-    box-sizing: inherit;
-}
-
-.mdl-dialog {
-    width: -moz-fit-content;
-    width: -webkit-fit-content;
-    width: -ms-fit-content;
-    width: -o-fit-content;
-    width: fit-content;
+md-card-actions {
+    text-align: right;
 }
