@@ -18,14 +18,14 @@
  /* tslint:disable:component-selector  */
 
 import { Component, OnInit } from '@angular/core';
-import { LogService } from 'ng2-alfresco-core';
+import { LogService, ThumbnailService } from 'ng2-alfresco-core';
 import { FormService } from '../../../services/form.service';
 import { baseHost, WidgetComponent } from './../widget.component';
 
 @Component({
     selector: 'upload-widget',
     templateUrl: './upload.widget.html',
-    styleUrls: ['./upload.widget.css'],
+    styleUrls: ['./upload.widget.scss'],
     host: baseHost
 })
 export class UploadWidgetComponent extends WidgetComponent implements OnInit {
@@ -34,9 +34,11 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
     fileName: string;
     displayText: string;
     multipleOption: string = '';
+    mimeTypeIcon: string;
 
     constructor(public formService: FormService,
-                private logService: LogService) {
+                private logService: LogService,
+                private thumbnailService: ThumbnailService) {
         super(formService);
     }
 
@@ -48,6 +50,7 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
             let file = this.field.value[0];
             this.fileName = file.name;
             this.displayText = decodeURI(file.name);
+            this.mimeTypeIcon = this.thumbnailService.getMimeTypeIcon(file.mimeType);
         }
         this.getMultipleFileParam();
     }

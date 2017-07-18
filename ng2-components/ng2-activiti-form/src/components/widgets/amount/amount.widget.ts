@@ -24,7 +24,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
 @Component({
     selector: 'amount-widget',
     templateUrl: './amount.widget.html',
-    styleUrls: ['./amount.widget.css'],
+    styleUrls: ['./amount.widget.scss'],
     host: baseHost
 })
 export class AmountWidgetComponent extends WidgetComponent implements OnInit {

@@ -43,7 +43,7 @@ import { FormOutcomeModel } from './widgets/core/index';
 @Component({
     selector: 'adf-start-form, activiti-start-form',
     templateUrl: './start-form.component.html',
-    styleUrls: ['./form.component.css']
+    styleUrls: ['./form.component.scss']
 })
 export class StartFormComponent extends FormComponent implements OnChanges, OnInit {
 

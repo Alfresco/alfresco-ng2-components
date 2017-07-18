@@ -1,8 +1,10 @@
-<div class="mdl-textfield mdl-js-textfield typeahead-widget {{field.className}}"
+<div class="adf-typeahead-widget {{field.className}}"
      [class.is-dirty]="value"
-     [class.typeahead-widget__invalid]="!field.isValid" id="typehead-div" *ngIf="field.isVisible">
-    <label [attr.for]="field.id">{{field.name}}</label>
-    <input class="mdl-textfield__input"
+     [class.adf-invalid]="!field.isValid" id="typehead-div" *ngIf="field.isVisible">
+    <md-input-container>
+    <label class="adf-label" [attr.for]="field.id">{{field.name}}</label>
+    <input mdInput
+           class="adf-input"
            type="text"
            [attr.id]="field.id"
            [(ngModel)]="value"
@@ -10,15 +12,13 @@
            (blur)="onBlur()"
            [disabled]="field.readOnly"
            placeholder="{{field.placeholder}}">
-    <span *ngIf="field.validationSummary" class="mdl-textfield__error">{{field.validationSummary}}</span>
+    <span *ngIf="field.validationSummary" class="adf-error">{{field.validationSummary}}</span>
+    </md-input-container>
 </div>
-<div class="typeahead-autocomplete mdl-shadow--2dp" *ngIf="options.length > 0 && popupVisible">
-    <ul>
-        <li *ngFor="let item of options"
+<div class="adf-typeahead-autocomplete mat-elevation-z2" *ngIf="options.length > 0 && popupVisible">
+        <md-option *ngFor="let item of options"
             [attr.id]="field.id +'-'+item.id"
-            class="mdl-menu__item"
             (click)="onItemClick(item, $event)">
-            {{item.name}}
-        </li>
-    </ul>
+            <span>{{item.name}}</span>
+        </md-option>
 </div>

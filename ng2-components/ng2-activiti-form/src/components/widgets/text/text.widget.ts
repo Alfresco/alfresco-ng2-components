@@ -24,7 +24,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
 @Component({
     selector: 'text-widget',
     templateUrl: './text.widget.html',
-    styleUrls: ['./text.widget.css'],
+    styleUrls: ['./text.widget.scss'],
     host: baseHost
 })
 export class TextWidgetComponent extends WidgetComponent implements OnInit {

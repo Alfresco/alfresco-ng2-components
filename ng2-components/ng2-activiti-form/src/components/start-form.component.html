@@ -1,6 +1,6 @@
 <div>
     <div *ngIf="hasForm()">
-        <div class="mdl-card mdl-shadow--2dp activiti-form-container">
+        <div class="mdl-card mdl-shadow--2dp adf-form-container">
             <div class="mdl-card__title">
                 <i class="material-icons">{{ form.isValid ? 'event_available' : 'event_busy' }}</i>
                 <h2 *ngIf="isTitleEnabled()" class="mdl-card__title-text">{{form.taskName}}</h2>
@@ -21,7 +21,7 @@
                         md-button
                         [disabled]="!isOutcomeButtonEnabled(outcome)"
                         [class.mdl-button--colored]="!outcome.isSystem"
-                        [class.activiti-form-hide-button]="!isOutcomeButtonVisible(outcome, form.readOnly)"
+                        [class.adf-form-hide-button]="!isOutcomeButtonVisible(outcome, form.readOnly)"
                         (click)="onOutcomeClicked(outcome, $event)">
                     {{outcome.name}}
                 </button>

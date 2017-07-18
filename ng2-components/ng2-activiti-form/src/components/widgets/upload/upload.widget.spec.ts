@@ -32,7 +32,7 @@ describe('UploadWidgetComponent', () => {
 
     beforeEach(() => {
         formService = new FormService(null, null, null);
-        widget = new UploadWidgetComponent(formService, null);
+        widget = new UploadWidgetComponent(formService, null, null);
     });
 
     it('should setup with field data', () => {

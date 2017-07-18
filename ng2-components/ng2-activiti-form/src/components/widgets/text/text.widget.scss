@@ -1,0 +1,21 @@
+.adf {
+
+    &-text-widget {
+        width: 100%;
+    }
+
+    &-invalid {
+        .adf-input {
+            border-color: #d50000;
+        }
+        .adf-label {
+            color: #d50000;
+            &:after {
+                background-color: #d50000;
+            }
+        }
+        .adf-error {
+            visibility: visible !important;
+        }
+    }
+}
