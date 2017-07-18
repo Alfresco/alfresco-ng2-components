@@ -25,8 +25,7 @@ import { TaskListService } from '../services/tasklist.service';
 @Component({
     selector: 'adf-comments, activiti-comments',
     templateUrl: './comments.component.html',
-    styleUrls: ['./comments.component.css'],
-    providers: [TaskListService]
+    styleUrls: ['./comments.component.css']
 })
 export class CommentsComponent implements OnChanges {
 
