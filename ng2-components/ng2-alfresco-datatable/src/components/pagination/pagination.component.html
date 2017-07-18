@@ -16,12 +16,12 @@
     <span class="mdl-paging__count">{{summary}}</span>
     <button (click)="showPrevPage()"
             [disabled]="!prevPageAvail()"
-            alfresco-mdl-button class="mdl-button--icon mdl-paging__prev">
-        <i class="material-icons">keyboard_arrow_left</i>
+            md-icon-button class="mdl-button--icon mdl-paging__prev">
+        <md-icon>keyboard_arrow_left</md-icon>
     </button>
     <button (click)="showNextPage()"
             [disabled]="!nextPageAvail()"
-            alfresco-mdl-button class="mdl-button--icon mdl-paging__next">
-        <i class="material-icons">keyboard_arrow_right</i>
+            md-icon-button class="mdl-button--icon mdl-paging__next">
+        <md-icon>keyboard_arrow_right</md-icon>
     </button>
 </div>

@@ -3,10 +3,10 @@
         <h4 class="container-widget__header-text" id="container-header"
             [class.collapsible]="content?.isCollapsible()">
             <button *ngIf="content?.isCollapsible()"
-                    alfresco-mdl-button
+                    md-icon-button
                     class="mdl-button--icon"
                     (click)="onExpanderClicked()">
-                <i class="material-icons">{{ content?.isExpanded ? 'expand_less' : 'expand_more' }}</i>
+                <md-icon>{{ content?.isExpanded ? 'expand_less' : 'expand_more' }}</md-icon>
             </button>
             <span (click)="onExpanderClicked()" id="container-header-label">{{content.name}}</span>
         </h4>
