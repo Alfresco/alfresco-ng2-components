@@ -17,7 +17,7 @@
 
 import {
     AfterContentInit, Component, ContentChild, DoCheck, ElementRef, EventEmitter, Input,
-    IterableDiffers, OnChanges, Optional, Output, SimpleChange, SimpleChanges, TemplateRef
+    IterableDiffers, OnChanges, Output, SimpleChange, SimpleChanges, TemplateRef
 } from '@angular/core';
 import { MdCheckboxChange } from '@angular/material';
 import { AlfrescoTranslationService, DataColumnListComponent } from 'ng2-alfresco-core';
@@ -108,7 +108,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     private multiClickStreamSub: Subscription;
 
     constructor(translateService: AlfrescoTranslationService,
-                @Optional() private el: ElementRef,
+                private elementRef: ElementRef,
                 private differs: IterableDiffers) {
         if (differs) {
             this.differ = differs.find([]).create(null);
@@ -173,10 +173,9 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
 
         this.singleClickStreamSub = singleClickStream.subscribe((obj: DataRowEvent[]) => {
             let event: DataRowEvent = obj[0];
-            let el = obj[0].sender.el;
             this.rowClick.emit(event);
-            if (!event.defaultPrevented && el.nativeElement) {
-                el.nativeElement.dispatchEvent(
+            if (!event.defaultPrevented) {
+                this.elementRef.nativeElement.dispatchEvent(
                     new CustomEvent('row-click', {
                         detail: event,
                         bubbles: true
@@ -192,10 +191,9 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
 
         this.multiClickStreamSub = multiClickStream.subscribe((obj: DataRowEvent[]) => {
             let event: DataRowEvent = obj[0];
-            let el = obj[0].sender.el;
             this.rowDblClick.emit(event);
-            if (!event.defaultPrevented && el.nativeElement) {
-                el.nativeElement.dispatchEvent(
+            if (!event.defaultPrevented) {
+                this.elementRef.nativeElement.dispatchEvent(
                     new CustomEvent('row-dblclick', {
                         detail: event,
                         bubbles: true
@@ -248,9 +246,16 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
                 const newValue = !row.isSelected;
                 const rows = this.data.getRows();
 
+                const domEventName = newValue ? 'row-select' : 'row-unselect';
+                const domEvent = new CustomEvent(domEventName, {
+                    detail: row,
+                    bubbles: true
+                });
+
                 if (this.isSingleSelectionMode()) {
                     rows.forEach(r => r.isSelected = false);
                     row.isSelected = newValue;
+                    this.elementRef.nativeElement.dispatchEvent(domEvent);
                 }
 
                 if (this.isMultiSelectionMode()) {
@@ -259,10 +264,11 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
                         rows.forEach(r => r.isSelected = false);
                     }
                     row.isSelected = newValue;
+                    this.elementRef.nativeElement.dispatchEvent(domEvent);
                 }
             }
 
-            let dataRowEvent = new DataRowEvent(row, e, this);
+            const dataRowEvent = new DataRowEvent(row, e, this);
             this.clickObserver.next(dataRowEvent);
         }
     }
@@ -384,5 +390,4 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
         this.rowStyleClass = this.rowStyleClass ? this.rowStyleClass : '';
         return `${row.cssClass} ${this.rowStyleClass}`;
     }
-
 }
