@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import { ProductVersionModel } from '../models/product-version.model';
+import { BpmProductVersionModel, EcmProductVersionModel } from '../models/product-version.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 
 @Injectable()
@@ -25,14 +25,21 @@ export class DiscoveryApiService {
 
     constructor(private apiService: AlfrescoApiService) { }
 
-    public getProductInfo() {
+    public getEcmProductInfo() {
         return Observable.fromPromise(
             this.apiService.getInstance().discovery.discoveryApi.getRepositoryInformation())
-            .map(res => new ProductVersionModel(res))
+            .map(res => new EcmProductVersionModel(res))
+            .catch(this.handleError);
+    }
+
+    public getBpmProductInfo() {
+        return Observable.fromPromise(
+            this.apiService.getInstance().activiti.aboutApi.getAppVersion())
+            .map(res => new BpmProductVersionModel(res))
             .catch(this.handleError);
     }
 
     private handleError(error): Observable<any> {
-        return Observable.of(error);
+        return Observable.throw(error);
     }
 }

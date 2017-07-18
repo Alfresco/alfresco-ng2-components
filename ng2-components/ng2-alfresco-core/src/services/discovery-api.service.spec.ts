@@ -16,7 +16,7 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { ProductVersionModel } from '../models/product-version.model';
+import { BpmProductVersionModel, EcmProductVersionModel } from '../models/product-version.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AlfrescoSettingsService } from './alfresco-settings.service';
 import { AppConfigModule } from './app-config.service';
@@ -27,7 +27,7 @@ import { UserPreferencesService } from './user-preferences.service';
 
 declare let jasmine: any;
 
-let fakeDiscoveryResponse: any = {
+let fakeEcmDiscoveryResponse: any = {
     'entry': {
         'repository': {
             'edition': 'FAKE',
@@ -82,6 +82,14 @@ let fakeDiscoveryResponse: any = {
     }
 };
 
+let fakeBPMDiscoveryResponse: any = {
+        'revisionVersion': '2',
+        'edition': 'SUPER FAKE EDITION',
+        'type': 'bpmSuite',
+        'majorVersion': '1',
+        'minorVersion': '6'
+    };
+
 fdescribe('Discovery Api Service', () => {
 
     let service;
@@ -113,34 +121,70 @@ fdescribe('Discovery Api Service', () => {
         jasmine.Ajax.uninstall();
     });
 
-    it('Should retrieve the info about the product', (done) => {
-        service.getProductInfo().subscribe((data: ProductVersionModel) => {
-            expect(data).not.toBeNull();
-            expect(data.edition).toBe('FAKE');
-            expect(data.version.schema).toBe(999999);
-            expect(data.license.isClusterEnabled).toBeTruthy();
-            expect(data.status.isQuickShareEnabled).toBeTruthy();
-            expect(data.modules.length).toBe(2);
-            expect(data.modules[0].id).toBe('alfresco-fake-services');
-            expect(data.modules[1].id).toBe('alfresco-trashcan-fake');
-            done();
+    describe('For ECM', () => {
+        it('Should retrieve the info about the product for ECM', (done) => {
+            service.getEcmProductInfo().subscribe((data: EcmProductVersionModel) => {
+                expect(data).not.toBeNull();
+                expect(data.edition).toBe('FAKE');
+                expect(data.version.schema).toBe(999999);
+                expect(data.license.isClusterEnabled).toBeFalsy();
+                expect(data.status.isQuickShareEnabled).toBeTruthy();
+                expect(data.modules.length).toBe(2);
+                expect(data.modules[0].id).toBe('alfresco-fake-services');
+                expect(data.modules[1].id).toBe('alfresco-trashcan-fake');
+                done();
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: fakeEcmDiscoveryResponse
+            });
         });
 
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'json',
-            responseText: fakeDiscoveryResponse
+        it('getEcmProductInfo catch errors call', (done) => {
+            service.getEcmProductInfo().subscribe(
+                () => {
+                },
+                () => {
+                    done();
+                });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 403
+            });
         });
     });
 
-    it('getProductInfo catch errors call', (done) => {
-        service.getProductInfo().subscribe(() => {
-        }, () => {
-            done();
+    describe('For BPM', () => {
+        it('Should retrieve the info about the product for BPM', (done) => {
+            service.getBpmProductInfo().subscribe((data: BpmProductVersionModel) => {
+                expect(data).not.toBeNull();
+                expect(data.edition).toBe('SUPER FAKE EDITION');
+                expect(data.revisionVersion).toBe('2');
+                expect(data.type).toBe('bpmSuite');
+                done();
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: fakeBPMDiscoveryResponse
+            });
         });
 
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 403
+        it('getBpmProductInfo catch errors call', (done) => {
+            service.getBpmProductInfo().subscribe(
+                () => {
+                },
+                () => {
+                    done();
+                });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 403
+            });
         });
     });
+
 });

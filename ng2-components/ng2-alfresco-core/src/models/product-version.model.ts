@@ -15,7 +15,25 @@
  * limitations under the License.
  */
 
-export class ProductVersionModel {
+export class BpmProductVersionModel {
+    edition: string;
+    majorVersion: string;
+    revisionVersion: string;
+    minorVersion: string;
+    type: string;
+
+    constructor(obj?: any) {
+        if (obj) {
+            this.edition = obj.edition || null;
+            this.majorVersion = obj.majorVersion || null;
+            this.revisionVersion = obj.revisionVersion || null;
+            this.minorVersion = obj.minorVersion || null;
+            this.type = obj.type || null;
+        }
+    }
+}
+
+export class EcmProductVersionModel {
     edition: string;
     version: VersionModel;
     license: LicenseModel;
