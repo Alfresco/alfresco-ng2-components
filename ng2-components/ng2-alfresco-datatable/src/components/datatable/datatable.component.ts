@@ -48,6 +48,9 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     selectionMode: string = 'single'; // none|single|multiple
 
     @Input()
+    selection = new Array<DataRow>();
+
+    @Input()
     multiselect: boolean = false;
 
     @Input()
@@ -253,17 +256,17 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
                 });
 
                 if (this.isSingleSelectionMode()) {
-                    rows.forEach(r => r.isSelected = false);
-                    row.isSelected = newValue;
+                    this.resetSelection();
+                    this.selectRow(row, newValue);
                     this.elementRef.nativeElement.dispatchEvent(domEvent);
                 }
 
                 if (this.isMultiSelectionMode()) {
                     const modifier = e.metaKey || e.ctrlKey;
                     if (!modifier) {
-                        rows.forEach(r => r.isSelected = false);
+                        this.resetSelection();
                     }
-                    row.isSelected = newValue;
+                    this.selectRow(row, newValue);
                     this.elementRef.nativeElement.dispatchEvent(domEvent);
                 }
             }
@@ -279,7 +282,9 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
             if (rows && rows.length > 0) {
                 rows.forEach(r => r.isSelected = false);
             }
+            this.selection.splice(0);
         }
+        this.isSelectAllChecked = false;
     }
 
     onRowDblClick(row: DataRow, e?: Event) {
@@ -308,10 +313,14 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
             let rows = this.data.getRows();
             if (rows && rows.length > 0) {
                 for (let i = 0; i < rows.length; i++) {
-                    rows[i].isSelected = e.checked;
+                    this.selectRow(rows[i], e.checked);
                 }
             }
         }
+    }
+
+    onCheckboxChange(row: DataRow, event: MdCheckboxChange) {
+        this.selectRow(row, event.checked);
     }
 
     onImageLoadingError(event: Event) {
@@ -389,5 +398,24 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
         row.cssClass = row.cssClass ? row.cssClass : '';
         this.rowStyleClass = this.rowStyleClass ? this.rowStyleClass : '';
         return `${row.cssClass} ${this.rowStyleClass}`;
+    }
+
+    private selectRow(row: DataRow, value: boolean) {
+        if (row) {
+            row.isSelected = value;
+            const idx = this.selection.indexOf(row);
+
+            if (value) {
+                if (idx < 0) {
+                    this.selection.push(row);
+                }
+            } else {
+                if (idx > -1) {
+                    this.selection.splice(idx, 1);
+                }
+            }
+        }
+
+        console.log(this.selection);
     }
 }
