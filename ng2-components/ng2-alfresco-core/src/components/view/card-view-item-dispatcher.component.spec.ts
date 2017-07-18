@@ -62,7 +62,7 @@ describe('CardViewItemDispatcherComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(CardViewItemDispatcherComponent);
         component = fixture.componentInstance;
-        component.property = <CardViewItem>{
+        component.property = <CardViewItem> {
             type: 'shiny-custom-element',
             label: 'Shiny custom element',
             value: null,
