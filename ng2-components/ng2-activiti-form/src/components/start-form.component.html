@@ -18,7 +18,7 @@
             </div>
             <div *ngIf="showOutcomeButtons && form.hasOutcomes()" class="mdl-card__actions mdl-card--border" #outcomesContainer>
                 <button *ngFor="let outcome of form.outcomes"
-                        alfresco-mdl-button
+                        md-button
                         [disabled]="!isOutcomeButtonEnabled(outcome)"
                         [class.mdl-button--colored]="!outcome.isSystem"
                         [class.activiti-form-hide-button]="!isOutcomeButtonVisible(outcome, form.readOnly)"
