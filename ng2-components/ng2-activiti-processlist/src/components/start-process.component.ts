@@ -43,6 +43,9 @@ export class StartProcessInstanceComponent implements OnChanges {
     start: EventEmitter<ProcessInstance> = new EventEmitter<ProcessInstance>();
 
     @Output()
+    cancel: EventEmitter<ProcessInstance> = new EventEmitter<ProcessInstance>();
+
+    @Output()
     error: EventEmitter<ProcessInstance> = new EventEmitter<ProcessInstance>();
 
     @ViewChild(StartFormComponent)
@@ -109,6 +112,10 @@ export class StartProcessInstanceComponent implements OnChanges {
         } else {
             this.resetSelectedProcessDefinition();
         }
+    }
+
+    public cancelStartProcess() {
+        this.cancel.emit();
     }
 
     hasStartForm() {

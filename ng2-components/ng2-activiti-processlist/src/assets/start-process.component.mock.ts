@@ -23,7 +23,13 @@ export let newProcess = new ProcessInstance({
     name: 'Process'
 });
 
-export let fakeProcessDefs = [new ProcessDefinitionRepresentation({
+export let testProcessDefRepr = new ProcessDefinitionRepresentation({
+    id: 'my:process1',
+    name: 'My Process 1',
+    hasStartForm: false
+});
+
+export let testProcessDefs = [new ProcessDefinitionRepresentation({
     id: 'my:process1',
     name: 'My Process 1',
     hasStartForm: false
@@ -33,7 +39,7 @@ export let fakeProcessDefs = [new ProcessDefinitionRepresentation({
     hasStartForm: false
 })];
 
-export let fakeProcessDefWithForm = [new ProcessDefinitionRepresentation({
+export let testProcessDefWithForm = [new ProcessDefinitionRepresentation({
     id: 'my:process1',
     name: 'My Process 1',
     hasStartForm: true

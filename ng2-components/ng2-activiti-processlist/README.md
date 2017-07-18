@@ -184,14 +184,14 @@ The AccordionComponent is exposed by the alfresco-core.
 
 ## Start Process component
 
-Displays a button which in turn displays a dialog when clicked, allowing the user
-to specify some basic details needed to start a new process instance.
+Displays Start Process, allowing the user to specify some basic details needed to start a new process instance.
 
 ```html
 <adf-start-process 
     appId="YOUR_APP_ID" >
 </adf-start-process>
 ```
+![adf-start-process ](docs/assets/start-process.png)
 
 ### Properties
 
@@ -205,6 +205,7 @@ to specify some basic details needed to start a new process instance.
 | Name | Description |
 | --- | --- |
 | start | Raised when the process start |
+| cancel | Raised when the process canceled |
 | error | Raised when the start process fail |
 
 ## Process Details component
