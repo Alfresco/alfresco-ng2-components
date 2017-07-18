@@ -3,7 +3,7 @@
     <div>
         <span *ngIf="!isClickable(); else elseBlock" [attr.data-automation-id]="'card-mapitem-value-' + property.key">{{ property.displayValue }}</span>
         <ng-template #elseBlock>
-            <span class="adf-card-mapitem-clickable-value" (click)="clicked()" [attr.data-automation-id]="'card-mapitem-value-' + property.key">{{ property.displayValue }}</span>
+            <span class="adf-mapitem-clickable-value" (click)="clicked()" [attr.data-automation-id]="'card-mapitem-value-' + property.key">{{ property.displayValue }}</span>
         </ng-template>
     </div>
 </div>

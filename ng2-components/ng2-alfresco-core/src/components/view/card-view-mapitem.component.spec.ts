@@ -113,7 +113,7 @@ describe('CardViewMapItemComponent', () => {
         });
 
         fixture.detectChanges();
-        let value: any = element.querySelector('.adf-card-mapitem-clickable-value');
+        let value: any = element.querySelector('.adf-mapitem-clickable-value');
 
         service.itemClicked$.subscribe((response) => {
             expect(response.target).not.toBeNull();
