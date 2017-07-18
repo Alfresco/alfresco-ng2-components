@@ -18,6 +18,8 @@
 - [Breadcrumb Component](#breadcrumb-component)
   * [Properties](#properties-1)
   * [Events](#events-1)
+- [Dropdown Site Component](#dropdown-site-component)
+  * [Events](#events-2)
 - [Menu Actions](#menu-actions)
 - [Custom columns](#custom-columns)
   * [DataColumn Properties](#datacolumn-properties)
@@ -33,11 +35,13 @@
     + [Folder actions](#folder-actions)
   * [Context Menu](#context-menu)
   * [Navigation mode](#navigation-mode)
-  * [Events](#events-2)
+  * [Events](#events-3)
 - [Advanced usage and customization](#advanced-usage-and-customization)
   * [Custom row filter](#custom-row-filter)
   * [Custom image resolver](#custom-image-resolver)
   * [Hiding columns on small screens](#hiding-columns-on-small-screens)
+  * [Custom row permissions style](#custom-row-permissions-style)
+    + [Examples](#examples)
   * [Custom 'empty folder' template](#custom-empty-folder-template)
   * [Customizing default actions](#customizing-default-actions)
 - [Build from sources](#build-from-sources)
@@ -356,6 +360,22 @@ DocumentList provides simple breadcrumb element to indicate the current position
 | Name | Returned Type | Description |
 | --- | --- | --- |
 | navigate | [PathElementEntity](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/PathElementEntity.md) |emitted when user clicks on a breadcrumb  |
+
+## Dropdown Site Component
+
+DocumentList provides simple dropdown element to show sites for the current logged in user.
+
+```html
+ <adf-sites-dropdown  
+  (change)="getSiteContent($event)">
+ </adf-sites-dropdown>
+```
+
+### Events
+
+| Name | Returned Type | Description |
+| --- | --- | --- |
+| change | [SiteModel](https://github.com/Alfresco/alfresco-ng2-components/blob/development/ng2-components/ng2-alfresco-documentlist/src/models/site.model.ts) | emitted when user select a site. When default option is selected an empty model is emitted  |
 
 ## Menu Actions
 

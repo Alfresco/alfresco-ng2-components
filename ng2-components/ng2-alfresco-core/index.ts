@@ -120,6 +120,7 @@ export * from './src/models/card-view-textitem.model';
 export * from './src/models/card-view-dateitem.model';
 export * from './src/models/file.model';
 export * from './src/models/permissions.enum';
+export * from './src/models/site.model';
 
 export * from './src/models/index';
 
