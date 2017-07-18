@@ -16,21 +16,21 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
-import { exampleProcess, processEnded } from './../assets/process.model.mock';
-import { TranslationMock } from './../assets/translation.service.mock';
-import { ProcessInstance } from './../models/process-instance.model';
+import { AlfrescoTranslationService, CardViewUpdateService, CoreModule } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Rx';
+
+import { ProcessInstance } from '../models/process-instance.model';
+import { exampleProcess } from './../assets/process.model.mock';
 import { ProcessService } from './../services/process.service';
 import { ProcessCommentsComponent } from './process-comments.component';
 import { ProcessInstanceHeaderComponent } from './process-instance-header.component';
 
 describe('ProcessInstanceHeaderComponent', () => {
 
+    let service: ProcessService;
     let componentHandler: any;
     let component: ProcessInstanceHeaderComponent;
     let fixture: ComponentFixture<ProcessInstanceHeaderComponent>;
-    let element: HTMLElement;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -43,16 +43,20 @@ describe('ProcessInstanceHeaderComponent', () => {
             ],
             providers: [
                 ProcessService,
-                {provide: AlfrescoTranslationService, useClass: TranslationMock}
+                CardViewUpdateService
             ]
         }).compileComponents();
+
+        let translateService = TestBed.get(AlfrescoTranslationService);
+        spyOn(translateService, 'addTranslationFolder').and.stub();
+        spyOn(translateService.translate, 'get').and.callFake((key) => { return Observable.of(key); });
     }));
 
     beforeEach(() => {
 
         fixture = TestBed.createComponent(ProcessInstanceHeaderComponent);
         component = fixture.componentInstance;
-        element = fixture.nativeElement;
+        service = TestBed.get(ProcessService);
 
         component.processInstance = new ProcessInstance(exampleProcess);
 
@@ -63,71 +67,97 @@ describe('ProcessInstanceHeaderComponent', () => {
         window['componentHandler'] = componentHandler;
     });
 
-    it('should render empty component if no form details provided', () => {
+    it('should render empty component if no process details provided', () => {
         component.processInstance = undefined;
         fixture.detectChanges();
         expect(fixture.debugElement.children.length).toBe(0);
     });
 
-    it('should display started by user', () => {
+    it('should display status as running when process is not complete', () => {
+        component.processInstance.ended = null;
+        component.ngOnChanges({});
         fixture.detectChanges();
-        let formValueEl = fixture.debugElement.query(By.css('[data-automation-id="header-started-by"] .activiti-process-header__value'));
-        expect(formValueEl).not.toBeNull();
-        expect(formValueEl.nativeElement.innerText).toBe('Bob Jones');
+        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-status"]');
+        expect(valueEl.innerText).toBe('Running');
     });
 
-    it('should display empty started by user if user unknown', () => {
-        component.processInstance.startedBy = null;
+    it('should display status as completed when process is complete', () => {
+        component.processInstance.ended = '2016-11-03';
+        component.ngOnChanges({});
         fixture.detectChanges();
-        let formValueEl = fixture.debugElement.query(By.css('[data-automation-id="header-started-by"] .activiti-process-header__value'));
-        expect(formValueEl).not.toBeNull();
-        expect(formValueEl.nativeElement.innerText).toBe('');
+        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-status"]');
+        expect(valueEl.innerText).toBe('Completed');
     });
 
-    it('should display process start date', () => {
-        component.processInstance.started = '2016-11-10T03:37:30.010+0000';
+    it('should display due date', () => {
+        component.processInstance.ended = '2016-11-03';
+        component.ngOnChanges({});
         fixture.detectChanges();
-        let formValueEl = fixture.debugElement.query(By.css('[data-automation-id="header-started"] .activiti-process-header__value'));
-        expect(formValueEl).not.toBeNull();
-        expect(formValueEl.nativeElement.innerText).toBe('Nov 10, 2016, 3:37:30 AM');
+        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-dateitem-dueDate"]');
+        expect(valueEl.innerText).toBe('Nov 03 2016');
     });
 
-    it('should display ended date if process is ended', () => {
-        component.processInstance.ended = '2016-11-10T03:37:30.010+0000';
+    it('should display placeholder if no due date', () => {
+        component.processInstance.ended = null;
+        component.ngOnChanges({});
         fixture.detectChanges();
-        let formValueEl = fixture.debugElement.query(By.css('[data-automation-id="header-status"] .activiti-process-header__value'));
-        expect(formValueEl).not.toBeNull();
-        expect(formValueEl.nativeElement.innerText).toBe('Nov 10, 2016, 3:37:30 AM');
+        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-dateitem-dueDate"]');
+        expect(valueEl.innerText).toBe('No date');
     });
 
-    it('should render the button show diagram as default', () => {
+    it('should display process category', () => {
+        component.processInstance.processDefinitionCategory = 'Accounts';
+        component.ngOnChanges({});
         fixture.detectChanges();
-        let formValueEl = fixture.debugElement.query(By.css('[data-automation-id="header-show-diagram"]'));
-        expect(formValueEl).not.toBeNull();
+        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-category"]');
+        expect(valueEl.innerText).toBe('Accounts');
     });
 
-    it('should render the button show diagram enabled as default', () => {
+    it('should display placeholder if no process category', () => {
+        component.processInstance.processDefinitionCategory = null;
+        component.ngOnChanges({});
         fixture.detectChanges();
-        let showButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#show-diagram-button');
-        expect(showButton).toBeDefined();
-        expect(showButton.disabled).toBeFalsy();
+        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-category"]');
+        expect(valueEl.innerText).toBe('No category');
     });
 
-    it('should render the button show diagram disabled', () => {
-        component.processInstance = new ProcessInstance(processEnded);
+    it('should display created date', () => {
+        component.processInstance.started = '2016-11-03';
+        component.ngOnChanges({});
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            let showButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#show-diagram-button');
-            expect(showButton).toBeDefined();
-            expect(showButton.disabled).toBeTruthy();
-        });
+        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-dateitem-created"]');
+        expect(valueEl.innerText).toBe('Nov 03 2016');
     });
 
-    it('should NOT render the button show diagram is the property showDiagram is false', () => {
-        component.showDiagram = false;
+    it('should display started by', () => {
+        component.processInstance.startedBy = {firstName:  'Admin', lastName: 'User'};
+        component.ngOnChanges({});
         fixture.detectChanges();
-        let formValueEl = fixture.debugElement.query(By.css('[data-automation-id="header-show-pippo"]'));
-        expect(formValueEl).toBeNull();
+        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-assignee"]');
+        expect(valueEl.innerText).toBe('Admin User');
     });
 
+    it('should display process instance id', () => {
+        component.processInstance.id = '123';
+        component.ngOnChanges({});
+        fixture.detectChanges();
+        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-id"]');
+        expect(valueEl.innerText).toBe('123');
+    });
+
+    it('should display description', () => {
+        component.processInstance.processDefinitionDescription = 'Test process';
+        component.ngOnChanges({});
+        fixture.detectChanges();
+        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-description"]');
+        expect(valueEl.innerText).toBe('Test process');
+    });
+
+    it('should display placeholder if no description', () => {
+        component.processInstance.processDefinitionDescription = null;
+        component.ngOnChanges({});
+        fixture.detectChanges();
+        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-description"]');
+        expect(valueEl.innerText).toBe('No description');
+    });
 });

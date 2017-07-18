@@ -24,6 +24,7 @@
 - [Process Instance Details Header component](#process-instance-details-header-component)
   * [Properties](#properties-4)
   * [Events](#events-4)
+- [ProcessInstanceModel](#processinstancemodel)
 - [Process Instance Tasks component](#process-instance-tasks-component)
   * [Properties](#properties-5)
   * [Events](#events-5)
@@ -239,19 +240,17 @@ This is a sub-component of the process details component, which renders some gen
     processInstance="localProcessDetails">
 </adf-process-instance-details>
 ```
+![adf-process-instance-header](docs/assets/adf-process-instance-header-attachment.png)
 
 ### Properties
 
 | Name | Type| Description |
 | --- | --- | --- |
-| processInstance | string | (**required**): Full details of the process instance to display information about |
-| showDiagram | boolean | If the value is true the button show diagram is shown |
+| processInstance | [ProcessInstanceModel](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-activiti-processlist/src/models/process-instance.model.ts) | (**required**): Full details of the process instance to display information about |
 
 ### Events
 
-| Name | Description |
-| --- | --- |
-| showProcessDiagram | Raised when the show diagram button is clicked |
+No events
 
 ## Process Instance Tasks component
 
