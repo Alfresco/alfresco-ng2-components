@@ -98,10 +98,8 @@ import { UploadDirective } from './src/directives/upload.directive';
 import { FileSizePipe } from './src/pipes/file-size.pipe';
 import { HighlightPipe } from './src/pipes/text-highlight.pipe';
 
-import { AlfrescoMdlButtonDirective } from './src/components/material/mdl-button.directive';
 import { AlfrescoMdlMenuDirective } from './src/components/material/mdl-menu.directive';
 import { AlfrescoMdlTextFieldDirective } from './src/components/material/mdl-textfield.directive';
-import { AlfrescoMdlTooltipDirective } from './src/components/material/mdl-tooltip.directive';
 import { MDLDirective } from './src/components/material/mdl-upgrade-element.directive';
 
 export { ContextMenuModule } from './src/components/context-menu/context-menu.module';
@@ -168,10 +166,8 @@ export function providers() {
 export function obsoleteMdlDirectives() {
     return [
         MDLDirective,
-        AlfrescoMdlButtonDirective,
         AlfrescoMdlMenuDirective,
-        AlfrescoMdlTextFieldDirective,
-        AlfrescoMdlTooltipDirective
+        AlfrescoMdlTextFieldDirective
     ];
 }
 
