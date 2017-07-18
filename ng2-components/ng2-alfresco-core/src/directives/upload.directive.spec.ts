@@ -89,21 +89,21 @@ describe('UploadDirective', () => {
     it('should prevent default event on drop', () => {
         directive.enabled = true;
         let event = jasmine.createSpyObj('event', ['preventDefault', 'stopPropagation']);
-        directive.onDrop(<DragEvent>event);
+        directive.onDrop(<DragEvent> event);
         expect(event.preventDefault).toHaveBeenCalled();
     });
 
     it('should stop default event propagation on drop', () => {
         directive.enabled = true;
         let event = jasmine.createSpyObj('event', ['preventDefault', 'stopPropagation']);
-        directive.onDrop(<DragEvent>event);
+        directive.onDrop(<DragEvent> event);
         expect(event.stopPropagation).toHaveBeenCalled();
     });
 
     it('should not prevent default event on drop when disabled', () => {
         directive.enabled = false;
         let event = jasmine.createSpyObj('event', ['preventDefault', 'stopPropagation']);
-        directive.onDrop(<DragEvent>event);
+        directive.onDrop(<DragEvent> event);
         expect(event.preventDefault).not.toHaveBeenCalled();
     });
 

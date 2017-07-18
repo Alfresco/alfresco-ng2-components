@@ -51,7 +51,7 @@ describe('CardViewTextItemComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(CardViewTextItemComponent);
         component = fixture.componentInstance;
-        component.property = <CardViewTextItemModel>{
+        component.property = <CardViewTextItemModel> {
             type: 'text',
             label: 'Text label',
             value: 'Lorem ipsum',

@@ -18,10 +18,10 @@
 import { async, TestBed } from '@angular/core/testing';
 import { CookieServiceMock } from './../assets/cookie.service.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { AuthenticationService } from './authentication.service';
 import { AlfrescoContentService } from './alfresco-content.service';
 import { AlfrescoSettingsService } from './alfresco-settings.service';
 import { AppConfigModule } from './app-config.service';
+import { AuthenticationService } from './authentication.service';
 import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
 import { StorageService } from './storage.service';
