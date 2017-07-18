@@ -46,18 +46,14 @@ describe('CardViewDateItemComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(CardViewDateItemComponent);
         component = fixture.componentInstance;
-        component.property = <CardViewDateItemModel> {
-            type: 'date',
+        component.property = new CardViewDateItemModel ({
             label: 'Date label',
             value: new Date('07/10/2017'),
             key: 'datekey',
             default: '',
             format: '',
-            editable: false,
-            get displayValue(): string {
-                return 'Jul 10 2017';
-            }
-        };
+            editable: false
+        });
     });
 
     afterEach(() => {

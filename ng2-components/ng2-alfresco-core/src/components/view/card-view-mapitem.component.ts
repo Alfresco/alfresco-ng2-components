@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
+import { Component, Input, OnChanges } from '@angular/core';
 import { CardViewMapItemModel } from '../../models/card-view-mapitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
-import { Component, Input, OnChanges } from '@angular/core';
 
 @Component({
     selector: 'adf-card-view-mapitem',

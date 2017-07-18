@@ -38,8 +38,10 @@ export class CardViewMapItemModel extends CardViewBaseItemModel implements CardV
     }
 
     get displayValue() {
-        if (this.value.size > 0) {
+        if (this.value && this.value.size > 0) {
             return this.value.values().next().value;
+        } else {
+            return this.default;
         }
     }
 }
