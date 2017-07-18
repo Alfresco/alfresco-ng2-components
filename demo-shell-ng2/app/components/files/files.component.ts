@@ -18,8 +18,8 @@
 import { ChangeDetectorRef, Component, Input, OnInit, Optional, ViewChild } from '@angular/core';
 import { MdDialog } from '@angular/material';
 import { ActivatedRoute, Params } from '@angular/router';
-import { AlfrescoContentService, FileUploadCompleteEvent, FolderCreatedEvent, NotificationService, UploadService } from 'ng2-alfresco-core';
-import { DocumentListComponent, PermissionStyleModel } from 'ng2-alfresco-documentlist';
+import { AlfrescoContentService, FileUploadCompleteEvent, FolderCreatedEvent, NotificationService, SiteModel, UploadService } from 'ng2-alfresco-core';
+import { DocumentListComponent, DropdownSitesComponent, PermissionStyleModel } from 'ng2-alfresco-documentlist';
 
 import { CreateFolderDialogComponent } from '../../dialogs/create-folder.dialog';
 
@@ -143,5 +143,9 @@ export class FilesComponent implements OnInit {
                 );
             }
         });
+    }
+
+    getSiteContent(site: SiteModel) {
+        this.currentFolderId = site && site.guid ? site.guid : '-my-';
     }
 }
