@@ -748,47 +748,43 @@ describe('DocumentList', () => {
     it('should emit [nodeClick] event on row click', () => {
         let node = new NodeMinimalEntry();
         let row = new ShareDataRow(node, null, null);
-        let event = new DataRowEvent(row, null);
 
         spyOn(documentList, 'onNodeClick').and.callThrough();
-        documentList.onRowClick(event);
+        documentList.onNodeClick(node);
         expect(documentList.onNodeClick).toHaveBeenCalledWith(node);
     });
 
     it('should emit node-click DOM event', (done) => {
         let node = new NodeMinimalEntry();
         let row = new ShareDataRow(node, null, null);
-        let event = new DataRowEvent(row, null);
 
         const htmlElement = fixture.debugElement.nativeElement as HTMLElement;
         htmlElement.addEventListener('node-click', (e: CustomEvent) => {
             done();
         });
 
-        documentList.onRowClick(event);
+        documentList.onNodeClick(node);
     });
 
     it('should emit [nodeDblClick] event on row double-click', () => {
         let node = new NodeMinimalEntry();
         let row = new ShareDataRow(node, null, null);
-        let event = new DataRowEvent(row, null);
 
         spyOn(documentList, 'onNodeDblClick').and.callThrough();
-        documentList.onRowDblClick(event);
+        documentList.onNodeDblClick(node);
         expect(documentList.onNodeDblClick).toHaveBeenCalledWith(node);
     });
 
     it('should emit node-dblclick DOM event', (done) => {
         let node = new NodeMinimalEntry();
         let row = new ShareDataRow(node, null, null);
-        let event = new DataRowEvent(row, null);
 
         const htmlElement = fixture.debugElement.nativeElement as HTMLElement;
         htmlElement.addEventListener('node-dblclick', (e: CustomEvent) => {
             done();
         });
 
-        documentList.onRowDblClick(event);
+        documentList.onNodeDblClick(node);
     });
 
     it('should load folder by ID on init', () => {
