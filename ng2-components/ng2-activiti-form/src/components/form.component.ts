@@ -31,7 +31,7 @@ declare var componentHandler: any;
 @Component({
     selector: 'adf-form, activiti-form',
     templateUrl: './form.component.html',
-    styleUrls: ['./form.component.css']
+    styleUrls: ['./form.component.scss']
 })
 export class FormComponent implements OnInit, AfterViewChecked, OnChanges {
 

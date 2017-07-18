@@ -24,7 +24,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
 @Component({
     selector: 'display-text-widget',
     templateUrl: './display-text.widget.html',
-    styleUrls: ['./display-text.widget.css'],
+    styleUrls: ['./display-text.widget.scss'],
     host: baseHost
 })
 export class DisplayTextWidgetComponentComponent extends WidgetComponent {

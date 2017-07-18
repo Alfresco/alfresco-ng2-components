@@ -1,0 +1,38 @@
+.adf {
+    &-form-container {
+        width: 100%;
+        min-height: 100px;
+        overflow: visible;
+    }
+
+    &-form-container > .mdl-card__media {
+        background-color: #fff;
+    }
+
+    &-form-debug-container {
+        padding: 10px;
+    }
+
+    &-form-debug-container .debug-toggle-text {
+        padding-left: 15px;
+        cursor: pointer;
+    }
+
+    &-form-debug-container .debug-toggle-text:hover {
+        font-weight: bold;
+    }
+
+    &-form-reload-button {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    &-form-hide-button {
+        display: none;
+    }
+
+    &-task-title {
+        text-align: center
+    }
+}

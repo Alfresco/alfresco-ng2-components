@@ -1,0 +1,35 @@
+.adf {
+    &-upload-widget {
+        width: 100%;
+        word-break: break-all;
+    }
+
+    &-upload-widget__icon {
+        padding: 6px;
+        float: left;
+    }
+
+    &-adf-file {
+        float: left;
+        margin-top: 4px;
+    }
+
+    &-upload-widget__reset {
+        margin-top: -2px;
+    }
+
+    &-invalid {
+        .adf-file {
+            border-color: #d50000;
+        }
+        .adf-label {
+            color: #d50000;
+            &:after {
+                background-color: #d50000;
+            }
+        }
+        .adf-error {
+            visibility: visible !important;
+        }
+    }
+}
