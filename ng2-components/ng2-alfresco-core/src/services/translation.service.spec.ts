@@ -21,9 +21,9 @@ import { HttpModule, Response, ResponseOptions, XHRBackend } from '@angular/http
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
+import { LogService } from './log.service';
 import { AlfrescoTranslateLoader } from './translate-loader.service';
 import { TranslationService } from './translation.service';
-import { LogService } from './log.service';
 
 const mockBackendResponse = (connection: MockConnection, response: string) => {
     connection.mockRespond(new Response(new ResponseOptions({body: response})));

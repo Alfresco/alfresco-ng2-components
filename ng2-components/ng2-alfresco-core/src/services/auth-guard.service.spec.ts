@@ -16,15 +16,15 @@
  */
 
 import { async, inject, TestBed } from '@angular/core/testing';
-import { Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { CookieServiceMock } from './../assets/cookie.service.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { AuthenticationService } from './authentication.service';
 import { AlfrescoSettingsService } from './alfresco-settings.service';
 import { AppConfigModule } from './app-config.service';
 import { AuthGuard } from './auth-guard.service';
+import { AuthenticationService } from './authentication.service';
 import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
 import { StorageService } from './storage.service';
