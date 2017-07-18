@@ -41,3 +41,10 @@ adf-document-list >>> adf-datatable tr.is-selected .image-table-cell::before {
     border-radius: 100%;
     background: #00bcd4;
 }
+
+.adf-demo-site-container-style {
+    margin-top: 10px;
+    margin-left: 3%;
+    width: 100%;
+    min-width: 200px;
+}
