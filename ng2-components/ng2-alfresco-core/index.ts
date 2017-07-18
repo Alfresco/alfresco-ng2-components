@@ -121,6 +121,7 @@ export * from './src/models/card-view-dateitem.model';
 export * from './src/models/file.model';
 export * from './src/models/permissions.enum';
 export * from './src/models/site.model';
+export * from './src/models/product-version.model';
 
 // Old deprecated import
 import { AuthenticationService as AlfrescoAuthenticationService } from './src/services/authentication.service';
