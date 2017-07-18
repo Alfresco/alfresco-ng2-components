@@ -12,10 +12,14 @@
             "FOLDER": {
                 "SYSTEM_1": "System folder action 1",
                 "CUSTOM": "Custom folder action",
+                "COPY": "Copy",
+                "MOVE": "Move",
                 "DELETE": "Delete"
             },
             "DOCUMENT": {
                 "DOWNLOAD": "Download",
+                "COPY": "Copy",
+                "MOVE": "Move",
                 "DELETE": "Delete",
                 "SYSTEM_2": "System document action 2",
                 "CUSTOM": "Custom action"

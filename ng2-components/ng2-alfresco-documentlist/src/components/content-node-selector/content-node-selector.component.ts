@@ -15,22 +15,10 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
-import { MdButtonModule, MdDialogModule, MdIconModule, MdMenuModule, MdProgressSpinnerModule, MdSelectModule } from '@angular/material';
+import { Component } from '@angular/core';
 
-export function modules() {
-    return [
-        MdMenuModule,
-        MdDialogModule,
-        MdButtonModule,
-        MdIconModule,
-        MdProgressSpinnerModule,
-        MdSelectModule
-    ];
-}
-
-@NgModule({
-    imports: modules(),
-    exports: modules()
+@Component({
+  selector: 'adf-content-node-selector',
+  templateUrl: './content-node-selector.component.html'
 })
-export class MaterialModule {}
+export class ContentNodeSelector {}

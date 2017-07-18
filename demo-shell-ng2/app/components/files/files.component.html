@@ -134,6 +134,14 @@
                     handler="download">
                 </content-action>
                 <content-action
+                    icon="content_copy"
+                    target="document"
+                    title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.COPY' | translate}}"
+                    permission="update"
+                    [disableWithNoPermission]="true"
+                    handler="copy">
+                </content-action>
+                <content-action
                     icon="delete"
                     target="document"
                     permission="delete"

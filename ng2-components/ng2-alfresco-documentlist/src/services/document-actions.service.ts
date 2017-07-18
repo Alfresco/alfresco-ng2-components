@@ -16,9 +16,11 @@
  */
 
 import { Injectable } from '@angular/core';
+import { MdDialog } from '@angular/material';
 import { AlfrescoContentService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Rx';
+import { ContentNodeSelector } from '../components/content-node-selector/content-node-selector.component';
 import { ContentActionHandler } from '../models/content-action.model';
 import { PermissionModel } from '../models/permissions.model';
 import { DocumentListService } from './document-list.service';
@@ -30,7 +32,8 @@ export class DocumentActionsService {
 
     private handlers: { [id: string]: ContentActionHandler; } = {};
 
-    constructor(private documentListService?: DocumentListService,
+    constructor(private dialog: MdDialog,
+                private documentListService?: DocumentListService,
                 private contentService?: AlfrescoContentService) {
         this.setupActionHandlers();
     }
@@ -58,6 +61,7 @@ export class DocumentActionsService {
 
     private setupActionHandlers() {
         this.handlers['download'] = this.download.bind(this);
+        this.handlers['copy'] = this.copyNode.bind(this);
         this.handlers['delete'] = this.deleteNode.bind(this);
 
         // TODO: for demo purposes only, will be removed during future revisions
@@ -100,6 +104,10 @@ export class DocumentActionsService {
             return Observable.of(true);
         }
         return Observable.of(false);
+    }
+
+    private copyNode() {
+        this.dialog.open(ContentNodeSelector);
     }
 
     private deleteNode(obj: any, target?: any, permission?: string): Observable<any> {
