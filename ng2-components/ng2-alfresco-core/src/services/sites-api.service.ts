@@ -36,7 +36,7 @@ export class SitesApiService {
             include: ['properties']
         };
         const queryOptions = Object.assign({}, defaultOptions, opts);
-        return Observable.fromPromise(this.apiService.getInstance().core.sitesApi.getSites(opts))
+        return Observable.fromPromise(this.apiService.getInstance().core.sitesApi.getSites(queryOptions))
             .map((res: any) => res.list.entries)
             .map((objList) => this.convertToModel(objList))
             .catch(this.handleError);
@@ -49,7 +49,7 @@ export class SitesApiService {
     }
 
     deleteSite(siteId: string, permanentFlag: boolean = true): any {
-        let options : any = {};
+        let options: any = {};
         options.permanent = permanentFlag;
         return Observable.fromPromise(this.apiService.getInstance().core.sitesApi.deleteSite(siteId, options)
             .catch(this.handleError));

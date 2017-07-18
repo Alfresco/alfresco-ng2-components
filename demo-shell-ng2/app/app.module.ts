@@ -63,7 +63,6 @@ import {
     SearchBarComponent,
     SearchComponent,
     SettingsComponent,
-    SitesDemoComponent,
     SocialComponent,
     TagComponent,
     WebscriptComponent
@@ -123,8 +122,7 @@ if (process.env.ENV === 'production') {
         CreateFolderDialogComponent,
         SettingsComponent,
         FormDemoComponent,
-        FormListDemoComponent,
-        SitesDemoComponent
+        FormListDemoComponent
     ],
     providers: [
         { provide: AppConfigService, useClass: DebugAppConfigService }

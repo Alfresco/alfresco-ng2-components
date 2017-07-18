@@ -33,7 +33,6 @@ import {
     LoginDemoComponent,
     SearchComponent,
     SettingsComponent,
-    SitesDemoComponent,
     SocialComponent,
     TagComponent,
     WebscriptComponent
@@ -131,11 +130,6 @@ export const appRoutes: Routes = [
         path: 'social',
         component: SocialComponent,
         canActivate: [AuthGuardEcm]
-    },
-    {
-        path: 'sites',
-        component: SitesDemoComponent,
-        canActivate: [AuthGuard]
     },
     { path: 'about', component: AboutComponent },
     { path: 'settings', component: SettingsComponent },

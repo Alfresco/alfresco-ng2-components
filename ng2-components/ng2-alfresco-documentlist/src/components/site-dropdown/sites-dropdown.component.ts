@@ -15,25 +15,24 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AlfrescoTranslationService, SiteModel, SitesApiService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'adf-sites-dropdown',
-    styleUrls: ['./sites-dropdown.component.css'],
+    styleUrls: ['./sites-dropdown.component.scss'],
     templateUrl: './sites-dropdown.component.html'
 })
 export class DropdownSitesComponent implements OnInit {
 
-    @Input()
-    showDefaultOption: boolean = false;
-
     @Output()
-    siteChanged: EventEmitter<SiteModel> = new EventEmitter();
+    change: EventEmitter<SiteModel> = new EventEmitter();
+
+    public DEFAULT_VALUE = 'default';
 
     siteList = [];
 
-    public siteSelected: SiteModel;
+    public siteSelected: string;
 
     constructor(translateService: AlfrescoTranslationService,
                 private sitesService: SitesApiService) {
@@ -49,7 +48,13 @@ export class DropdownSitesComponent implements OnInit {
     }
 
     selectedSite() {
-        this.siteChanged.emit(this.siteSelected);
+        let siteFound;
+        if (this.siteSelected === this.DEFAULT_VALUE) {
+            siteFound = new SiteModel();
+        }else {
+           siteFound = this.siteList.find( site => site.guid === this.siteSelected);
+        }
+        this.change.emit(siteFound);
     }
 
 }

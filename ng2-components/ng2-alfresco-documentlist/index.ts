@@ -44,6 +44,7 @@ export * from './src/components/content-action/content-action.component';
 export * from './src/components/content-action/content-action-list.component';
 export * from './src/components/empty-folder/empty-folder-content.directive';
 export * from './src/components/breadcrumb/breadcrumb.component';
+export * from './src/components/site-dropdown/sites-dropdown.component';
 
 // data
 export * from './src/data/share-datatable-adapter';

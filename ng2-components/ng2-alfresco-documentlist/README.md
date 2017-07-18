@@ -19,7 +19,6 @@
   * [Properties](#properties-1)
   * [Events](#events-1)
 - [Dropdown Site Component](#dropdown-site-component)
-  * [Properties](#properties-2)
   * [Events](#events-2)
 - [Menu Actions](#menu-actions)
 - [Custom columns](#custom-columns)
@@ -41,6 +40,8 @@
   * [Custom row filter](#custom-row-filter)
   * [Custom image resolver](#custom-image-resolver)
   * [Hiding columns on small screens](#hiding-columns-on-small-screens)
+  * [Custom row permissions style](#custom-row-permissions-style)
+    + [Examples](#examples)
   * [Custom 'empty folder' template](#custom-empty-folder-template)
   * [Customizing default actions](#customizing-default-actions)
 - [Build from sources](#build-from-sources)
@@ -362,26 +363,19 @@ DocumentList provides simple breadcrumb element to indicate the current position
 
 ## Dropdown Site Component
 
-DocumentList provides simple dropdown element to indicate the current position within a navigation hierarchy.
+DocumentList provides simple dropdown element to show sites for the current logged in user.
 
 ```html
  <adf-sites-dropdown  
-  [showDefaultOption]="true"
-  (siteChanged)="getSiteContent($event)">
+  (change)="getSiteContent($event)">
  </adf-sites-dropdown>
 ```
-
-### Properties
-
-| Name | Type | Description |
-| --- | --- | --- |
-| showDefaultOption | boolean | (optional) Shows into the dropdown a default option |
 
 ### Events
 
 | Name | Returned Type | Description |
 | --- | --- | --- |
-| siteChanged | [SiteModel](https://github.com/Alfresco/alfresco-ng2-components/blob/development/ng2-components/ng2-alfresco-documentlist/src/models/site.model.ts) | emitted when user select a site  |
+| change | [SiteModel](https://github.com/Alfresco/alfresco-ng2-components/blob/development/ng2-components/ng2-alfresco-documentlist/src/models/site.model.ts) | emitted when user select a site. When default option is selected an empty model is emitted  |
 
 ## Menu Actions
 

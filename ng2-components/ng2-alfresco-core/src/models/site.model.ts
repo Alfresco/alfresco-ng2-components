@@ -27,24 +27,26 @@ export class SiteModel {
     members: SiteMembersModel[] = [];
 
     constructor(obj?: any) {
-        this.role = obj && obj.entry && obj.entry.role;
-        this.visibility = obj && obj.entry && obj.entry.visibility || null;
-        this.guid = obj && obj.entry && obj.entry.guid || null;
-        this.description = obj && obj.entry && obj.entry.description || null;
-        this.id = obj && obj.entry && obj.entry.id || null;
-        this.preset = obj && obj.entry && obj.entry.preset;
-        this.title = obj && obj.entry && obj.entry.title;
+        if (obj && obj.entry) {
+            this.role = obj.entry.role || null;
+            this.visibility = obj.entry.visibility || null;
+            this.guid = obj.entry.guid || null;
+            this.description = obj.entry.description || null;
+            this.id = obj.entry.id || null;
+            this.preset = obj.entry.preset;
+            this.title = obj.entry.title;
 
-        if (obj && obj.relations && obj.relations.containers) {
-            obj.relations.containers.list.entries.forEach((content) => {
-                this.contents.push(new SiteContentsModel(content.entry));
-            });
-        }
+            if (obj.relations && obj.relations.containers) {
+                obj.relations.containers.list.entries.forEach((content) => {
+                    this.contents.push(new SiteContentsModel(content.entry));
+                });
+            }
 
-        if (obj && obj.relations && obj.relations.members) {
-            obj.relations.members.list.entries.forEach((member) => {
-                this.members.push(new SiteMembersModel(member.entry));
-            });
+            if (obj.relations && obj.relations.members) {
+                obj.relations.members.list.entries.forEach((member) => {
+                    this.members.push(new SiteMembersModel(member.entry));
+                });
+            }
         }
     }
 
@@ -55,10 +57,11 @@ export class SiteContentsModel {
     folderId: string;
 
     constructor(obj?: any) {
-        this.id = obj && obj.id || null;
-        this.folderId = obj && obj.folderId || null;
+        if (obj) {
+            this.id = obj.id || null;
+            this.folderId = obj.folderId || null;
+        }
     }
-
 }
 
 export class SiteMembersModel {
@@ -71,12 +74,14 @@ export class SiteMembersModel {
     email: string;
 
     constructor(obj?: any) {
-        this.role = obj && obj.role;
-        this.firstName = obj && obj.firstName || null;
-        this.emailNotificationsEnabled = obj && obj.emailNotificationsEnabled;
-        this.company = obj && obj.company || null;
-        this.id = obj && obj.id || null;
-        this.enable = obj && obj.enable;
-        this.email = obj && obj.email;
+        if (obj) {
+            this.role = obj.role;
+            this.firstName = obj.firstName || null;
+            this.emailNotificationsEnabled = obj.emailNotificationsEnabled;
+            this.company = obj.company || null;
+            this.id = obj.id || null;
+            this.enable = obj.enable;
+            this.email = obj.email;
+        }
     }
 }

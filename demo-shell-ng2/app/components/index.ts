@@ -34,4 +34,3 @@ export { FormNodeViewerComponent } from './activiti/form-node-viewer.component';
 export { ActivitiAppsViewComponent } from './activiti/apps.view';
 export { SettingsComponent } from './settings/settings.component';
 export { FormDemoComponent } from './form/form-demo.component';
-export { SitesDemoComponent } from './sites/sites-demo.component';

@@ -128,8 +128,9 @@ describe('DropdownSitesComponent', () => {
                 debug.query(By.css('.mat-select-trigger')).triggerEventHandler('click', null);
                 fixture.detectChanges();
                 let options: any = debug.queryAll(By.css('md-option'));
-                expect(options[0].attributes['ng-reflect-value']).toBe('fake-1');
-                expect(options[1].attributes['ng-reflect-value']).toBe('fake-2');
+                expect(options[0].attributes['ng-reflect-value']).toBe('default');
+                expect(options[1].attributes['ng-reflect-value']).toBe('fake-1');
+                expect(options[2].attributes['ng-reflect-value']).toBe('fake-2');
             });
         }));
 
@@ -146,12 +147,12 @@ describe('DropdownSitesComponent', () => {
                 debug.query(By.css('.mat-select-trigger')).triggerEventHandler('click', null);
                 fixture.detectChanges();
                 let options: any = debug.queryAll(By.css('md-option'));
-                options[0].triggerEventHandler('click', null);
+                options[1].triggerEventHandler('click', null);
                 fixture.detectChanges();
             });
 
-            component.siteChanged.subscribe((site) => {
-                expect(site).toBe('fake-1');
+            component.change.subscribe((site) => {
+                expect(site.guid).toBe('fake-1');
                 done();
             });
         });
