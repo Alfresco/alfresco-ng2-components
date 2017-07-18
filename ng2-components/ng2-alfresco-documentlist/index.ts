@@ -25,7 +25,7 @@ import { ContentActionListComponent } from './src/components/content-action/cont
 import { ContentActionComponent } from './src/components/content-action/content-action.component';
 import { ContentColumnListComponent } from './src/components/content-column/content-column-list.component';
 import { ContentColumnComponent } from './src/components/content-column/content-column.component';
-import { ContentNodeSelector } from './src/components/content-node-selector/content-node-selector.component';
+import { ContentNodeSelectorComponent } from './src/components/content-node-selector/content-node-selector.component';
 import { DocumentListComponent } from './src/components/document-list.component';
 import { DocumentMenuActionComponent } from './src/components/document-menu-action.component';
 import { EmptyFolderContentDirective } from './src/components/empty-folder/empty-folder-content.directive';
@@ -73,7 +73,7 @@ export const DOCUMENT_LIST_DIRECTIVES: any[] = [
     BreadcrumbComponent,
     DropdownSitesComponent,
     DropdownBreadcrumbComponent,
-    ContentNodeSelector
+    ContentNodeSelectorComponent
 ];
 
 export const DOCUMENT_LIST_PROVIDERS: any[] = [
@@ -95,7 +95,7 @@ export const DOCUMENT_LIST_PROVIDERS: any[] = [
         ...DOCUMENT_LIST_PROVIDERS
     ],
     entryComponents: [
-        ContentNodeSelector
+        ContentNodeSelectorComponent
     ],
     exports: [
         DataTableModule,

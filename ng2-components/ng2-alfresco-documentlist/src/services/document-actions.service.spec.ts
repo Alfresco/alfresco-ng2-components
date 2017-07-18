@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { MdDialog } from '@angular/material';
 import { AlfrescoContentService } from 'ng2-alfresco-core';
 import { FileNode, FolderNode } from '../assets/document-library.model.mock';
 import { DocumentListServiceMock } from '../assets/document-list.service.mock';
@@ -27,11 +28,13 @@ describe('DocumentActionsService', () => {
     let service: DocumentActionsService;
     let documentListService: DocumentListService;
     let contentService: AlfrescoContentService;
+    let mdDialog: MdDialog;
 
     beforeEach(() => {
         documentListService = new DocumentListServiceMock();
         contentService = new AlfrescoContentService(null, null, null);
-        service = new DocumentActionsService(documentListService, contentService);
+        mdDialog = new MdDialog(null, null, null, null);
+        service = new DocumentActionsService(mdDialog, documentListService, contentService);
     });
 
     it('should register default download action', () => {
@@ -201,7 +204,7 @@ describe('DocumentActionsService', () => {
     });
 
     it('should require internal service for download action', () => {
-        let actionService = new DocumentActionsService(null, contentService);
+        let actionService = new DocumentActionsService(mdDialog, null, contentService);
         let file = new FileNode();
         let result = actionService.getHandler('download')(file);
         result.subscribe((value) => {
@@ -210,7 +213,7 @@ describe('DocumentActionsService', () => {
     });
 
     it('should require content service for download action', () => {
-        let actionService = new DocumentActionsService(documentListService, null);
+        let actionService = new DocumentActionsService(mdDialog, documentListService, null);
         let file = new FileNode();
         let result = actionService.getHandler('download')(file);
         result.subscribe((value) => {

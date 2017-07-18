@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { MdDialog } from '@angular/material';
 import { AlfrescoContentService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Rx';
-import { ContentNodeSelector } from '../components/content-node-selector/content-node-selector.component';
+import { ContentNodeSelectorComponent } from '../components/content-node-selector/content-node-selector.component';
 import { ContentActionHandler } from '../models/content-action.model';
 import { PermissionModel } from '../models/permissions.model';
 import { DocumentListService } from './document-list.service';
@@ -106,8 +106,14 @@ export class DocumentActionsService {
         return Observable.of(false);
     }
 
-    private copyNode() {
-        this.dialog.open(ContentNodeSelector);
+    private copyNode(obj: any) {
+        const nodeSelected: EventEmitter<any> = new EventEmitter(),
+            title = `Move ${obj.entry.name} to ...`;
+
+        this.dialog.open(ContentNodeSelectorComponent, {
+                data: { title, nodeSelected },
+                panelClass: 'adf-content-node-selector-dialog'
+        });
     }
 
     private deleteNode(obj: any, target?: any, permission?: string): Observable<any> {

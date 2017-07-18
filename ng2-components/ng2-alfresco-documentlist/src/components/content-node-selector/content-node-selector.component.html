@@ -1,10 +1,26 @@
-<header mdDialogTitle>Header vagyok</header>
-<section mdDialogContent>
+<header mdDialogTitle
+    class="adf-content-node-selector-title"
+    data-automation-id="content-node-selector-title">{{title}}</header>
 
-<input mdInput />
+<section mdDialogContent class="adf-content-node-selector-content">
+
+    <input mdInput />
 
 </section>
-<footer mdDialogActions>
-    <button md-button>Cancel</button>
-    <button md-button>Choose</button>
+
+<footer mdDialogActions class="adf-content-node-selector-actions">
+
+    <button *ngIf="inDialog"
+        md-button
+        class="adf-content-node-selector-actions-cancel"
+        (click)="close()"
+        data-automation-id="content-node-selector-actions-cancel">Cancel
+    </button>
+
+    <button md-button
+        [disabled]="!chosenNode"
+        class="adf-content-node-selector-actions-choose"
+        data-automation-id="content-node-selector-actions-choose">Choose
+    </button>
+
 </footer>

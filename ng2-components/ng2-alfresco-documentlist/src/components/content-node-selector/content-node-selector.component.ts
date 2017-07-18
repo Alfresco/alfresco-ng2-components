@@ -15,10 +15,41 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, Inject, Input, Optional, Output, ViewEncapsulation } from '@angular/core';
+import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
 
 @Component({
-  selector: 'adf-content-node-selector',
-  templateUrl: './content-node-selector.component.html'
+    selector: 'adf-content-node-selector',
+    styleUrls: ['./content-node-selector.component.scss'],
+    templateUrl: './content-node-selector.component.html',
+    encapsulation: ViewEncapsulation.None
 })
-export class ContentNodeSelector {}
+export class ContentNodeSelectorComponent {
+
+    chosenNode: any = null;
+
+    inDialog: boolean = false;
+
+    @Input()
+    title: string;
+
+    @Output()
+    selected: any;
+
+    constructor(
+        @Optional() @Inject(MD_DIALOG_DATA) public data?: any,
+        @Optional() private containingDialog?: MdDialogRef<ContentNodeSelectorComponent>
+    ) {
+        if (data) {
+            this.title = data.title;
+        }
+
+        if (containingDialog) {
+            this.inDialog = true;
+        }
+    }
+
+    close() {
+        this.containingDialog.close();
+    }
+}
