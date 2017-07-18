@@ -117,5 +117,5 @@ export class LoginDemoComponent implements OnInit {
 
         this.providers = '';
         return this.providers;
-    };
+    }
 }
