@@ -15,32 +15,27 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, ViewChild } from '@angular/core';
-import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
+import { CardViewMapItemModel } from '../../models/card-view-mapitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
+import { Component, Input, OnChanges } from '@angular/core';
 
 @Component({
-    selector: 'adf-card-view-textitem',
-    templateUrl: './card-view-textitem.component.html',
-    styleUrls: ['./card-view-textitem.component.scss']
+    selector: 'adf-card-view-mapitem',
+    templateUrl: './card-view-mapitem.component.html',
+    styleUrls: ['./card-view-mapitem.component.scss']
 })
-export class CardViewTextItemComponent implements OnChanges {
+
+export class CardViewMapItemComponent implements OnChanges {
     @Input()
-    property: CardViewTextItemModel;
+    property: CardViewMapItemModel;
 
     @Input()
     editable: boolean;
 
-    @ViewChild('editorInput')
-    private editorInput: any;
-
-    inEdit: boolean = false;
-    editedValue: string;
-
     constructor(private cardViewUpdateService: CardViewUpdateService) {}
 
     ngOnChanges() {
-        this.editedValue = this.property.value;
+        console.log();
     }
 
     isEditble() {
@@ -49,22 +44,6 @@ export class CardViewTextItemComponent implements OnChanges {
 
     isClickable() {
         return this.property.clickable;
-    }
-
-    setEditMode(editStatus: boolean): void {
-        this.inEdit = editStatus;
-        setTimeout(() => {
-            this.editorInput.nativeElement.click();
-        }, 0);
-    }
-
-    reset(): void {
-        this.editedValue = this.property.value;
-        this.setEditMode(false);
-    }
-
-    update(): void {
-        this.cardViewUpdateService.update(this.property, { [this.property.key]: this.editedValue });
     }
 
     clicked(): void {

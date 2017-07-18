@@ -81,6 +81,7 @@ export { ThumbnailService } from './src/services/thumbnail.service';
 export { UploadService } from './src/services/upload.service';
 export { CardViewUpdateService } from './src/services/card-view-update.service';
 export { UpdateNotification } from './src/services/card-view-update.service';
+export { ClickNotification } from './src/services/card-view-update.service';
 export { AppConfigModule } from './src/services/app-config.service';
 export { UserPreferencesService } from './src/services/user-preferences.service';
 
@@ -117,6 +118,7 @@ export * from './src/events/folder-created.event';
 export * from './src/events/file.event';
 
 export * from './src/models/card-view-textitem.model';
+export * from './src/models/card-view-mapitem.model';
 export * from './src/models/card-view-dateitem.model';
 export * from './src/models/file.model';
 export * from './src/models/permissions.enum';

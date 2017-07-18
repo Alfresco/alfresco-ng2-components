@@ -20,32 +20,26 @@
  * This object represent the basic structure of a card view.
  *
  *
- * @returns {CardViewBaseItemModel} .
+ * @returns {CardViewMapItemModel} .
  */
 
-export interface CardViewItemProperties {
-    label: string;
-    value: any;
-    key: any;
-    default?: string;
-    editable?: boolean;
-    clickable?: boolean;
+import { CardViewItem } from '../interface/card-view-item.interface';
+import { CardViewBaseItemModel, CardViewItemProperties } from './card-view-baseitem.model';
+
+export interface CardViewMapItemProperties extends CardViewItemProperties {
+    multiline?: boolean;
 }
+export class CardViewMapItemModel extends CardViewBaseItemModel implements CardViewItem {
+    type: string = 'map';
+    value: Map<string, string>;
 
-export abstract class CardViewBaseItemModel {
-    label: string;
-    value: any;
-    key: any;
-    default: string;
-    editable: boolean;
-    clickable: boolean;
+    constructor(obj: CardViewMapItemProperties) {
+        super(obj);
+    }
 
-    constructor(obj: CardViewItemProperties) {
-        this.label = obj.label || '';
-        this.value = obj.value;
-        this.key = obj.key;
-        this.default = obj.default;
-        this.editable = obj.editable || false;
-        this.clickable = obj.clickable || false;
+    get displayValue() {
+        if (this.value.size > 0) {
+            return this.value.values().next().value;
+        }
     }
 }
