@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { SiteModel, SitesApiService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, SiteModel, SitesApiService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'adf-sites-dropdown',
@@ -34,7 +34,11 @@ export class DropdownSitesComponent implements OnInit {
 
     public siteSelected: string;
 
-    constructor(private sitesService: SitesApiService) {
+    constructor(translateService: AlfrescoTranslationService,
+                private sitesService: SitesApiService) {
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-alfresco-documentlist', 'assets/ng2-alfresco-documentlist');
+        }
     }
 
     ngOnInit() {

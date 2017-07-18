@@ -17,9 +17,9 @@
 
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MdOptionModule, MdSelectModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { CoreModule } from 'ng2-alfresco-core';
-import { MaterialModule } from './../../material.module';
 import { DropdownSitesComponent } from './sites-dropdown.component';
 
 declare let jasmine: any;
@@ -72,7 +72,8 @@ describe('DropdownSitesComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                MaterialModule
+                MdSelectModule,
+                MdOptionModule
             ],
             declarations: [
                 DropdownSitesComponent
@@ -115,8 +116,7 @@ describe('DropdownSitesComponent', () => {
             });
         }));
 
-        // todo: something wrong with the test itself
-        xit('should load sites on init', async(() => {
+        it('should load sites on init', async(() => {
             fixture.detectChanges();
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,

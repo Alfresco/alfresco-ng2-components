@@ -11,5 +11,9 @@
         "EMPTY": {
             "HEADER": "This folder is empty"
         }
+    },
+    "DROPDOWN": {
+        "PLACEHOLDER_LABEL": "Site List",
+        "DEFAULT_OPTION": "No Site Chosen"
     }
 }
