@@ -29,17 +29,10 @@ export class CardViewMapItemComponent implements OnChanges {
     @Input()
     property: CardViewMapItemModel;
 
-    @Input()
-    editable: boolean;
-
     constructor(private cardViewUpdateService: CardViewUpdateService) {}
 
     ngOnChanges() {
         console.log();
-    }
-
-    isEditble() {
-        return this.editable && this.property.editable;
     }
 
     isClickable() {
