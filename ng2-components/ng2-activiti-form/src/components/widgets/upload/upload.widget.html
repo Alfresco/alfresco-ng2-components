@@ -1,21 +1,21 @@
-<div class="upload-widget {{field.className}}"
-     [class.upload-widget__invalid]="!field.isValid">
-    <label class="upload-widget__label" [attr.for]="field.id">{{field.name}}</label>
+<div class="adf-upload-widget {{field.className}}"
+     [class.adf-invalid]="!field.isValid">
+    <label class="adf-label" [attr.for]="field.id">{{field.name}}</label>
     <div>
-        <i *ngIf="hasFile" class="material-icons upload-widget__icon">attachment</i>
-        <span *ngIf="hasFile" class="upload-widget__file">{{displayText}}</span>
+        <img  *ngIf="hasFile"  class="adf-upload-widget__icon" [src]="mimeTypeIcon" [alt]="mimeTypeIcon"/>
+        <span *ngIf="hasFile" class="adf-file">{{displayText}}</span>
         <input *ngIf="!hasFile"
                #file
                type="file"
                [multiple]="multipleOption"
                [attr.id]="field.id"
                [disabled]="field.readOnly"
-               class="upload-widget__file"
+               class="adf-file"
                (change)="onFileChanged($event)">
-        <button *ngIf="hasFile" (click)="reset(file);"
-                class="mdl-button mdl-js-button mdl-button--icon upload-widget__reset">
-            <i class="material-icons">highlight_off</i>
+        <button *ngIf="hasFile" (click)="reset(file);" (keyup.enter)="reset(file);"
+                class="adf-upload-widget__reset" md-icon-button>
+            <md-icon>highlight_off</md-icon>
         </button>
     </div>
-    <span *ngIf="field.validationSummary" class="mdl-textfield__error">{{field.validationSummary}}</span>
+    <span *ngIf="field.validationSummary" class="adf-error">{{field.validationSummary}}</span>
 </div>

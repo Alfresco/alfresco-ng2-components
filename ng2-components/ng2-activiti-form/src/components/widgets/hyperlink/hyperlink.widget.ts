@@ -24,7 +24,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
 @Component({
     selector: 'hyperlink-widget',
     templateUrl: './hyperlink.widget.html',
-    styleUrls: ['./hyperlink.widget.css'],
+    styleUrls: ['./hyperlink.widget.scss'],
     host: baseHost
 })
 export class HyperlinkWidgetComponent extends WidgetComponent implements OnInit {

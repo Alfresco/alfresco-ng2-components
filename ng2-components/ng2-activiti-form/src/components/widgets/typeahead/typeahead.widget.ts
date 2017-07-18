@@ -27,7 +27,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
 @Component({
     selector: 'typeahead-widget',
     templateUrl: './typeahead.widget.html',
-    styleUrls: ['./typeahead.widget.css'],
+    styleUrls: ['./typeahead.widget.scss'],
     host: baseHost
 })
 export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit {

@@ -1,13 +1,13 @@
 <div>
     <div *ngIf="!hasForm()">
-        <h3 class="activiti-task-title">Please select a Task</h3>
+        <h3 class="adf-task-title">Please select a Task</h3>
     </div>
     <div *ngIf="hasForm()" class="{{form.className}}">
         <md-card>
             <md-card-header>
                 <md-card-title>
                     <h4 *ngIf="isTitleEnabled()">
-                        <div *ngIf="showRefreshButton" class="activiti-form-reload-button">
+                        <div *ngIf="showRefreshButton" class="adf-form-reload-button">
                             <button md-icon-button (click)="onRefreshClicked()">
                                 <md-icon>refresh</md-icon>
                             </button>
@@ -34,7 +34,7 @@
                 <button *ngFor="let outcome of form.outcomes"
                         md-button
                         [disabled]="!isOutcomeButtonEnabled(outcome)"
-                        [class.activiti-form-hide-button]="!isOutcomeButtonVisible(outcome, form.readOnly)"
+                        [class.adf-form-hide-button]="!isOutcomeButtonVisible(outcome, form.readOnly)"
                         (click)="onOutcomeClicked(outcome, $event)">
                     {{outcome.name | uppercase}}
                 </button>
@@ -46,7 +46,7 @@
 For debugging and data visualisation purposes,
 will be removed during future revisions
 -->
-<div *ngIf="showDebugButton" class="activiti-form-debug-container">
+<div *ngIf="showDebugButton" class="adf-form-debug-container">
     <md-slide-toggle [(ngModel)]="debugMode">Debug mode</md-slide-toggle>
     <div *ngIf="debugMode && hasForm()">
         <h4>Values</h4>
