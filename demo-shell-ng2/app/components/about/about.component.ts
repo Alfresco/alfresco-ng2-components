@@ -34,8 +34,8 @@ export class AboutComponent implements OnInit {
     ecmHost: string = '';
     bpmHost: string = '';
 
-    ecmVersion: EcmProductVersionModel;
-    bpmVersion: BpmProductVersionModel;
+    ecmVersion: EcmProductVersionModel = null;
+    bpmVersion: BpmProductVersionModel = null;
 
     constructor(private http: Http,
                 private appConfig: AppConfigService,
@@ -48,12 +48,10 @@ export class AboutComponent implements OnInit {
 
         this.discovery.getEcmProductInfo().subscribe((ecmVers) => {
             this.ecmVersion = ecmVers;
-            console.log(this.ecmVersion);
         });
 
         this.discovery.getBpmProductInfo().subscribe((bpmVers) => {
             this.bpmVersion = bpmVers;
-            console.log(this.bpmVersion);
         });
 
         this.http.get('/versions.json').subscribe(response => {
