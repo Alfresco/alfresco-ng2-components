@@ -15,31 +15,42 @@
  * limitations under the License.
  */
 
-import { Injector } from '@angular/core';
-import { getTestBed, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
+import { DataTableCellComponent } from '../components/datatable/datatable-cell.component';
 import { DataTableComponent } from '../components/datatable/datatable.component';
+import { MaterialModule } from '../material.module';
 import { LoadingContentTemplateDirective } from './loading-template.directive';
 
 describe('LoadingContentTemplateDirective', () => {
-    let injector: Injector;
-    let loadingContentTemplateDirective: LoadingContentTemplateDirective;
 
-    beforeEach(() => {
+    let dataTable: DataTableComponent;
+    let directive: LoadingContentTemplateDirective;
+
+    beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+                MaterialModule,
                 CoreModule.forRoot()
             ],
-            providers: [
-                LoadingContentTemplateDirective,
-                DataTableComponent
+            declarations: [
+                DataTableComponent,
+                DataTableCellComponent,
+                LoadingContentTemplateDirective
             ]
-        });
-        injector = getTestBed();
-        loadingContentTemplateDirective = injector.get(LoadingContentTemplateDirective);
+        }).compileComponents();
+    }));
+
+    beforeEach(() => {
+        let fixture = TestBed.createComponent(DataTableComponent);
+        dataTable = fixture.componentInstance;
+        directive = new LoadingContentTemplateDirective(dataTable);
     });
 
-    it('is defined', () => {
-        expect(loadingContentTemplateDirective).toBeDefined();
+    it('applies template to the datatable', () => {
+        const template = {};
+        directive.template = template;
+        directive.ngAfterContentInit();
+        expect(dataTable.loadingTemplate).toBe(template);
     });
 });

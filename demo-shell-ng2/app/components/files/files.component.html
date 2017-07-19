@@ -62,6 +62,8 @@
                 [contextMenuActions]="true"
                 [contentActions]="true"
                 [allowDropFiles]="true"
+                [selectionMode]="selectionMode"
+                [multiselect]="multiselect"
                 (error)="onNavigationError($event)"
                 (success)="resetError()"
                 (preview)="showFile($event)"
@@ -137,7 +139,20 @@
 
 <context-menu-holder></context-menu-holder>
 
+<div class="p-10">
+    Selected Nodes:
+    <ul>
+        <li *ngFor="let node of documentList.selection">
+            {{ node.entry.name }}
+        </li>
+    </ul>
+</div>
+
 <div class="container">
+    <section>
+        <md-slide-toggle [(ngModel)]="multiselect">Multiselect (with checkboxes)</md-slide-toggle>
+    </section>
+
     <section>
         <md-slide-toggle [(ngModel)]="useDropdownBreadcrumb">Dropdown breadcrumb</md-slide-toggle>
     </section>
@@ -202,6 +217,15 @@
     <section>
         <md-checkbox [(ngModel)]="enableUpload">Enable upload (demoing enabled/disabled state)</md-checkbox>
     </section>
+</div>
+
+<div class="p-10">
+    <p>For 'Multiple' selection mode use Cmd (macOS) or Ctrl (Win) to toggle selection of multiple items.</p>
+    <md-select placeholder="Selection Mode" [(ngModel)]="selectionMode" name="food">
+        <md-option *ngFor="let mode of selectionModes" [value]="mode.value">
+            {{mode.viewValue}}
+        </md-option>
+    </md-select>
 </div>
 
 <file-uploading-dialog #fileDialog></file-uploading-dialog>
