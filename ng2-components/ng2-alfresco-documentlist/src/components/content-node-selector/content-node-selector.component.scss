@@ -9,13 +9,19 @@
 
     .#{$ADF}-content-node-selector {
         &-title,
-        &-content {
+        &-content,
+        &-actions {
             padding: 16px;
             margin: 0;
         }
 
+        &-content {
+            &-input {
+                width: 100%;
+            }
+        }
+
         &-actions {
-            margin: 0;
             padding: 8px;
             background-color: rgb(250, 250, 250);
             display: flex;
