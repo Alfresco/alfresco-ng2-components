@@ -6,13 +6,15 @@
                class="adf-input"
                type="text"
                [id]="field.id"
-               [attr.required]="isRequired()"
+               [required]="isRequired()"
                [value]="field.value"
                [(ngModel)]="field.value"
                (ngModelChange)="onFieldChanged(field)"
-               [attr.disabled]="field.readOnly ? true : null"
+               [disabled]="field.readOnly ? true : null"
                [textMask]="{mask: mask, isReversed: isMaskReversed}"
                placeholder="{{field.placeholder}}">
-        <span *ngIf="field.validationSummary" class="adf-error">{{field.validationSummary}}</span>
+        <md-error  *ngIf="field.validationSummary">
+            {{field.validationSummary}}
+        </md-error>
     </md-input-container>
 </div>

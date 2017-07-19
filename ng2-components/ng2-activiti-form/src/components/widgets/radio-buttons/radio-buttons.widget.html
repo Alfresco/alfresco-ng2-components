@@ -15,7 +15,9 @@
             </md-radio-button>
         </md-radio-group>
     </div>
-    <span *ngIf="field.validationSummary" class="adf-error">{{field.validationSummary}}</span>
+    <md-error  *ngIf="field.validationSummary">
+        {{field.validationSummary}}
+    </md-error>
 </div>
 
 
