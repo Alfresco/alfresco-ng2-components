@@ -21,7 +21,6 @@ import {
     MdButtonModule,
     MdCardModule,
     MdInputModule,
-    MdProgressSpinnerModule,
     MdSelectModule
 } from '@angular/material';
 import { ActivitiFormModule, FormService } from 'ng2-activiti-form';
@@ -299,18 +298,19 @@ describe('StartProcessInstanceComponent', () => {
             expect(startSpy).not.toHaveBeenCalled();
         });
 
-        it('should true if form is valid', async(() => {
-            component.currentProcessDef = testProcessDefRepr;
+        it('should able to start the process when the required fields are filled up', async(() => {
+            let startSpy: jasmine.Spy = spyOn(component.start, 'emit');
             component.name = 'my:process1';
-            component.currentProcessDef.id = '1001';
-            component.isStartFormMissingOrValid();
-            component.validateForm();
+            component.onProcessDefChange('my:process1');
+            fixture.detectChanges();
             fixture.whenStable().then(() => {
-                expect(component.validateForm()).toBe(true);
+                let startButton = fixture.nativeElement.querySelector('#button-start');
+                startButton.click();
+                expect(startSpy).toHaveBeenCalled();
             });
         }));
 
-        it('should true if startFrom defined', async(() => {
+        it('should return true if startFrom defined', async(() => {
             component.currentProcessDef = testProcessDefRepr;
             component.name = 'my:process1';
             component.currentProcessDef.hasStartForm = true;
