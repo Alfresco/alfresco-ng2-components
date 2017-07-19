@@ -161,6 +161,7 @@ export class DataTableDemo {
 | allowDropFiles | boolean | false | Toggle file drop support for rows (see **ng2-alfresco-core/UploadDirective** for more details) |
 | loading | boolean | false | Flag that indicate if the datable is in loading state and need to show the loading template. Read the documentation above to know how to configure a loading template  |
 | showHeader | boolean | true | Toggles header visibility |
+| selection | DataRow[] | [] | Contains selected rows |
 
 ### DataColumn Properties
 
@@ -189,14 +190,17 @@ Here's the list of available properties you can define for a Data Column definit
 
 ### DataTable DOM Events
 
-Below are the DOM events raised by DataTable component. 
+Below are the DOM events raised by DataTable component.
+These events bubble up the component tree and can be handled by any parent component.
 
 | Name | Description |
 | --- | --- |
-| row-click | Emitted when user clicks the row |
-| row-dblclick | Emitted when user double-clicks the row |
+| row-click | Raised when user clicks a row |
+| row-dblclick | Raised when user double-clicks a row |
+| row-select | Raised after user selects a row |
+| row-unselect | Raised after user unselects a row |
 
-These events are bubbled up the element tree and can be subscribed to from within parent components.
+For example:
 
 ```html
 <root-component (row-click)="onRowClick($event)">

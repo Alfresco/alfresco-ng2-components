@@ -39,6 +39,18 @@ export class FilesComponent implements OnInit {
     useCustomToolbar = true;
     useDropdownBreadcrumb = true;
 
+    selectionModes = [
+        { value: 'none', viewValue: 'None' },
+        { value: 'single', viewValue: 'Single' },
+        { value: 'multiple', viewValue: 'Multiple' }
+    ];
+
+    @Input()
+    selectionMode = 'multiple';
+
+    @Input()
+    multiselect = false;
+
     @Input()
     multipleFileUpload: boolean = false;
 

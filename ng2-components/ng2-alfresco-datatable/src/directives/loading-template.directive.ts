@@ -30,7 +30,9 @@ export class LoadingContentTemplateDirective implements AfterContentInit {
     }
 
     ngAfterContentInit() {
-        this.dataTable.loadingTemplate = this.template;
+        if (this.dataTable) {
+            this.dataTable.loadingTemplate = this.template;
+        }
     }
 
 }
