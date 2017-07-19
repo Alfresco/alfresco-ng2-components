@@ -27,7 +27,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
 @Component({
     selector: 'dropdown-widget',
     templateUrl: './dropdown.widget.html',
-    styleUrls: ['./dropdown.widget.css'],
+    styleUrls: ['./dropdown.widget.scss'],
     host: baseHost
 })
 export class DropdownWidgetComponent extends WidgetComponent implements OnInit {

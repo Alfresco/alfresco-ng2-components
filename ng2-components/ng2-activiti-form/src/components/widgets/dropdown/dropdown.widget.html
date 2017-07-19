@@ -1,12 +1,17 @@
-<div class="dropdown-widget {{field.className}}"
-     [class.dropdown-widget__invalid]="!field.isValid" *ngIf="field?.isVisible">
-    <label class="dropdown-widget__label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
-    <select class="dropdown-widget__select"
+<div class="adf-dropdown-widget {{field.className}}"
+     [class.adf-invalid]="!field.isValid" *ngIf="field?.isVisible">
+    <div>
+        <label class="adf-label">{{field.name}}<span *ngIf="isRequired()">*</span></label>
+    </div>
+    <md-select class="adf-select"
             [attr.id]="field.id"
             [(ngModel)]="field.value"
             [disabled]="field.readOnly"
             (ngModelChange)="checkVisibility(field)">
-        <option *ngFor="let opt of field.options" [value]="getOptionValue(opt, field.value)" [id]="opt.id">{{opt.name}}</option>
-    </select>
-    <span *ngIf="field.validationSummary" class="mdl-textfield__error">{{field.validationSummary}}</span>
+        <md-option *ngFor="let opt of field.options"
+                   [value]="getOptionValue(opt, field.value)"
+                   [id]="opt.id">{{opt.name}}</md-option>
+    </md-select>
+    <span *ngIf="field.validationSummary"
+    class="adf-error">{{field.validationSummary}}</span>
 </div>
