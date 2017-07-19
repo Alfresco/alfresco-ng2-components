@@ -24,6 +24,10 @@ export interface UpdateNotification {
     changed: any;
 }
 
+export interface ClickNotification {
+    target: any;
+}
+
 @Injectable()
 export class CardViewUpdateService {
 
@@ -33,10 +37,18 @@ export class CardViewUpdateService {
     // Observable streams
     public itemUpdated$ = this.itemUpdatedSource.asObservable();
 
+    public itemClicked$: Subject<ClickNotification> = new Subject<ClickNotification>();
+
     update(property: CardViewBaseItemModel, changed: any) {
         this.itemUpdatedSource.next({
             target: property,
             changed
+        });
+    }
+
+    clicked(property: CardViewBaseItemModel) {
+        this.itemClicked$.next({
+            target: property
         });
     }
 }
