@@ -27,7 +27,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
 @Component({
     selector: 'radio-buttons-widget',
     templateUrl: './radio-buttons.widget.html',
-    styleUrls: ['./radio-buttons.widget.css'],
+    styleUrls: ['./radio-buttons.widget.scss'],
     host: baseHost
 })
 export class RadioButtonsWidgetComponent extends WidgetComponent implements OnInit {
