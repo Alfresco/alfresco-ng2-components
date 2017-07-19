@@ -2,11 +2,48 @@
     class="adf-content-node-selector-title"
     data-automation-id="content-node-selector-title">{{title}}</header>
 
-<section mdDialogContent class="adf-content-node-selector-content">
+<section mdDialogContent
+    class="adf-content-node-selector-content"
+    (node-select)="onNodeSelect($event)"
+    (node-unselect)="onNodeUnselect($event)">
 
     <md-input-container floatPlaceholder="never" class="adf-content-node-selector-content-input">
-        <input mdInput placeholder="Searh">
+        <input #searchInput mdInput placeholder="Search" (keydown)="search(searchInput.value)">
     </md-input-container>
+
+    <!-- <adf-sites-dropdown (change)="siteChanged($event)"></adf-sites-dropdown> -->
+
+    <adf-document-list
+                #documentList
+                [node]="nodes"
+                [permissionsStyle]="permissionsStyle"
+                [creationMenuActions]="false"
+                [currentFolderId]="currentFolderId"
+                [contextMenuActions]="false"
+                [contentActions]="false"
+                [allowDropFiles]="false"
+                [enablePagination]="false"
+                >
+            <empty-folder-content>
+                <template>
+                    <div>Use the search to query nodes</div>
+                </template>
+            </empty-folder-content>
+            <data-columns>
+                <data-column
+                    key="$thumbnail"
+                    type="image"
+                    [sortable]="false"
+                    class="image-table-cell">
+                </data-column>
+                <data-column
+                        title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
+                        key="name"
+                        class="full-width ellipsis-cell">
+                </data-column>
+            </data-columns>
+
+        </adf-document-list>
 
 </section>
 

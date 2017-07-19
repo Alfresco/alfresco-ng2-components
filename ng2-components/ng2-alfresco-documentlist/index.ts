@@ -35,6 +35,7 @@ import { MaterialModule } from './src/material.module';
 import { DocumentActionsService } from './src/services/document-actions.service';
 import { DocumentListService } from './src/services/document-list.service';
 import { FolderActionsService } from './src/services/folder-actions.service';
+import { SearchService } from './src/services/search.service';
 
 // components
 export * from './src/components/document-list.component';
@@ -79,7 +80,8 @@ export const DOCUMENT_LIST_DIRECTIVES: any[] = [
 export const DOCUMENT_LIST_PROVIDERS: any[] = [
     DocumentListService,
     FolderActionsService,
-    DocumentActionsService
+    DocumentActionsService,
+    SearchService
 ];
 
 @NgModule({

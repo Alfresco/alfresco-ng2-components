@@ -16,8 +16,23 @@
         }
 
         &-content {
+            padding-top: 0;
+
             &-input {
                 width: 100%;
+            }
+
+            & /deep/ .adf-site-dropdown-list-element {
+                width: 100%;
+                margin-bottom: 20px;
+
+                .mat-select-trigger {
+                    font-size: 14px;
+                }
+            }
+
+            & /deep/ .adf-data-table .adf-no-content-container {
+                text-align: center;
             }
         }
 
@@ -27,6 +42,10 @@
             display: flex;
             justify-content: flex-end;
             color: rgb(121, 121, 121);
+
+            &:last-child {
+                margin-bottom: 0px;
+            }
 
             &-cancel {
                 font-weight: normal;

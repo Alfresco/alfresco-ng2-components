@@ -16,7 +16,9 @@
  */
 
 import { Component, Inject, Input, Optional, Output, ViewEncapsulation } from '@angular/core';
+import { MinimalNodeEntity, NodePaging, Pagination } from 'alfresco-js-api';
 import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
+import { SearchOptions, SearchService } from '../../services/search.service';
 
 @Component({
     selector: 'adf-content-node-selector',
@@ -26,9 +28,12 @@ import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
 })
 export class ContentNodeSelectorComponent {
 
-    chosenNode: any = null;
+    chosenNode: MinimalNodeEntity|null = null;
 
     inDialog: boolean = false;
+
+    private nodes: NodePaging;
+    private pagination: Pagination;
 
     @Input()
     title: string;
@@ -37,6 +42,7 @@ export class ContentNodeSelectorComponent {
     selected: any;
 
     constructor(
+        private searchService: SearchService,
         @Optional() @Inject(MD_DIALOG_DATA) public data?: any,
         @Optional() private containingDialog?: MdDialogRef<ContentNodeSelectorComponent>
     ) {
@@ -47,6 +53,46 @@ export class ContentNodeSelectorComponent {
         if (containingDialog) {
             this.inDialog = true;
         }
+    }
+
+    search(value) {
+        this.querySearch(value);
+    }
+
+    private querySearch(searchTerm) {
+        if (searchTerm) {
+            searchTerm = searchTerm + '*';
+            let searchOpts: SearchOptions = {
+                include: ['path'],
+                skipCount: 0,
+                rootNodeId: '-root-',
+                nodeType: 'cm:folder',
+                maxItems: 20,
+                orderBy: null
+            };
+            this.searchService
+                .getNodeQueryResults(searchTerm, searchOpts)
+                .subscribe(
+                    results => {
+                        this.nodes = results;
+                        this.pagination = results.list.pagination;
+                    }
+                );
+        }
+    }
+
+    siteChanged(event) {
+        console.log(event);
+    }
+
+    onNodeSelect(event: any) {
+        this.chosenNode = event.node;
+        console.log('selected: ', this.chosenNode);
+    }
+
+    onNodeUnSelect({ node }) {
+        this.chosenNode = null;
+        console.log('selected: ', this.chosenNode);
     }
 
     close() {

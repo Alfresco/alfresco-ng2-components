@@ -108,11 +108,12 @@ export class DocumentActionsService {
 
     private copyNode(obj: any) {
         const nodeSelected: EventEmitter<any> = new EventEmitter(),
-            title = `Move ${obj.entry.name} to ...`;
+            title = `Copy ${obj.entry.name} to ...`;
 
         this.dialog.open(ContentNodeSelectorComponent, {
                 data: { title, nodeSelected },
-                panelClass: 'adf-content-node-selector-dialog'
+                panelClass: 'adf-content-node-selector-dialog',
+                width: '400px'
         });
     }
 
