@@ -55,7 +55,10 @@
             </td>
 
             <td *ngIf="multiselect">
-                <md-checkbox [(ngModel)]="row.isSelected"></md-checkbox>
+                <md-checkbox
+                    [checked]="row.isSelected"
+                    (change)="onCheckboxChange(row, $event)">
+                </md-checkbox>
             </td>
             <td *ngFor="let col of data.getColumns()"
                 class="adf-data-table-cell adf-data-table-cell--{{col.type || 'text'}} {{col.cssClass}}"

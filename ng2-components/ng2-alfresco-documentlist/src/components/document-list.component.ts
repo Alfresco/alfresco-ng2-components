@@ -21,7 +21,7 @@ import {
 } from '@angular/core';
 import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, Pagination } from 'alfresco-js-api';
 import { AlfrescoTranslationService, DataColumnListComponent } from 'ng2-alfresco-core';
-import { DataCellEvent, DataColumn, DataRowActionEvent, DataRowEvent, DataSorting, DataTableComponent, ObjectDataColumn } from 'ng2-alfresco-datatable';
+import { DataCellEvent, DataColumn, DataRow, DataRowActionEvent, DataRowEvent, DataSorting, DataTableComponent, ObjectDataColumn } from 'ng2-alfresco-datatable';
 import { Observable, Subject } from 'rxjs/Rx';
 import { ImageResolver, RowFilter, ShareDataRow, ShareDataTableAdapter } from './../data/share-datatable-adapter';
 import { ContentActionModel } from './../models/content-action.model';
@@ -98,8 +98,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     @Input()
     loading: boolean = false;
 
+    selection = new Array<MinimalNodeEntity>();
     skipCount: number = 0;
-
     pagination: Pagination;
 
     @Input()
@@ -166,7 +166,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     constructor(private documentListService: DocumentListService,
                 private ngZone: NgZone,
                 translateService: AlfrescoTranslationService,
-                private el: ElementRef) {
+                private elementRef: ElementRef) {
 
         if (translateService) {
             translateService.addTranslationFolder('ng2-alfresco-documentlist', 'assets/ng2-alfresco-documentlist');
@@ -390,11 +390,10 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                     val => {
                         if (this.isCurrentPageEmpty(val, skipCount)) {
                             this.updateSkipCount(skipCount - maxItems);
-                            this.loadFolderNodesByFolderNodeId(id, maxItems, skipCount - maxItems).then(() => {
-                                resolve(true);
-                            },                                                                          (error) => {
-                                reject(error);
-                            });
+                            this.loadFolderNodesByFolderNodeId(id, maxItems, skipCount - maxItems).then(
+                                () => resolve(true),
+                                error => reject(error)
+                            );
                         } else {
                             this.data.loadPage(<NodePaging> val);
                             this.pagination = val.list.pagination;
@@ -458,7 +457,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             },
             bubbles: true
         });
-        this.el.nativeElement.dispatchEvent(domEvent);
+        this.elementRef.nativeElement.dispatchEvent(domEvent);
 
         const event = new NodeEntityEvent(node);
         this.nodeClick.emit(event);
@@ -478,11 +477,6 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         }
     }
 
-    onRowClick(event: DataRowEvent) {
-        let item = (<ShareDataRow> event.value).node;
-        this.onNodeClick(item);
-    }
-
     onNodeDblClick(node: MinimalNodeEntity) {
         const domEvent = new CustomEvent('node-dblclick', {
             detail: {
@@ -491,7 +485,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             },
             bubbles: true
         });
-        this.el.nativeElement.dispatchEvent(domEvent);
+        this.elementRef.nativeElement.dispatchEvent(domEvent);
 
         const event = new NodeEntityEvent(node);
         this.nodeDblClick.emit(event);
@@ -511,9 +505,26 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         }
     }
 
-    onRowDblClick(event?: DataRowEvent) {
-        let item = (<ShareDataRow> event.value).node;
-        this.onNodeDblClick(item);
+    onNodeSelect(event: { row: ShareDataRow, selection: Array<ShareDataRow> }) {
+        this.selection = event.selection.map(entry => entry.node);
+        const domEvent = new CustomEvent('node-select', {
+            detail: {
+                node: event.row.node,
+                selection: this.selection
+            }
+        });
+        this.elementRef.nativeElement.dispatchEvent(domEvent);
+    }
+
+    onNodeUnselect(event: { row: ShareDataRow, selection: Array<ShareDataRow> }) {
+        this.selection = event.selection.map(entry => entry.node);
+        const domEvent = new CustomEvent('node-unselect', {
+            detail: {
+                node: event.row.node,
+                selection: this.selection
+            }
+        });
+        this.elementRef.nativeElement.dispatchEvent(domEvent);
     }
 
     onShowRowContextMenu(event: DataCellEvent) {

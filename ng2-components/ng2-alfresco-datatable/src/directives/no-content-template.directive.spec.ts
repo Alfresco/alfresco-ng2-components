@@ -15,31 +15,42 @@
  * limitations under the License.
  */
 
-import { Injector } from '@angular/core';
-import { getTestBed, TestBed } from '@angular/core/testing';
+import { async, getTestBed, TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
+import { DataTableCellComponent } from '../components/datatable/datatable-cell.component';
 import { DataTableComponent } from '../components/datatable/datatable.component';
+import { MaterialModule } from '../material.module';
 import { NoContentTemplateDirective } from './no-content-template.directive';
 
 describe('NoContentTemplateDirective', () => {
-    let injector: Injector;
-    let noContentTemplateDirective: NoContentTemplateDirective;
 
-    beforeEach(() => {
+    let dataTable: DataTableComponent;
+    let directive: NoContentTemplateDirective;
+
+    beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+                MaterialModule,
                 CoreModule.forRoot()
             ],
-            providers: [
-                NoContentTemplateDirective,
-                DataTableComponent
+            declarations: [
+                DataTableComponent,
+                DataTableCellComponent,
+                NoContentTemplateDirective
             ]
-        });
-        injector = getTestBed();
-        noContentTemplateDirective = injector.get(NoContentTemplateDirective);
+        }).compileComponents();
+    }));
+
+    beforeEach(() => {
+        let fixture = TestBed.createComponent(DataTableComponent);
+        dataTable = fixture.componentInstance;
+        directive = new NoContentTemplateDirective(dataTable);
     });
 
-    it('is defined', () => {
-        expect(noContentTemplateDirective).toBeDefined();
+    it('applies template to the datatable', () => {
+        const template = {};
+        directive.template = template;
+        directive.ngAfterContentInit();
+        expect(dataTable.noContentTemplate).toBe(template);
     });
 });
