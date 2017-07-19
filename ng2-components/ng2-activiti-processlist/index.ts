@@ -16,15 +16,15 @@
  */
 
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { 
-    MdProgressSpinnerModule,
+import {
     MdButtonModule,
     MdCardModule,
     MdInputModule,
+    MdProgressSpinnerModule,
     MdSelectModule } from '@angular/material';
 import { ActivitiFormModule } from 'ng2-activiti-form';
 import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
-import { CoreModule, CardViewUpdateService } from 'ng2-alfresco-core';
+import { CardViewUpdateService, CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 
 import { CreateProcessAttachmentComponent } from './src/components/create-process-attachment.component';
