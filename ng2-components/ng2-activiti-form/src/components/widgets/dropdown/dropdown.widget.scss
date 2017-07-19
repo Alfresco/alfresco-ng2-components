@@ -1,0 +1,30 @@
+@import 'theming';
+
+.adf {
+    &-dropdown-widget {
+        width: 100%;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    &-select {
+        width: 100%;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    &-invalid {
+        .adf-select {
+            border-color: #d50000;
+        }
+        .adf-label {
+            color: #d50000;
+            &:after {
+            background-color: #d50000;
+            }
+        }
+        .adf-error {
+            visibility: visible !important;
+        }
+    }
+}
