@@ -23,3 +23,10 @@
 .adf-full-width {
     width: 100%;
 }
+
+adf-comment-list {
+    float: left;
+    overflow: auto;
+    height: calc(100% - 101px);
+    width: 100%;
+}
