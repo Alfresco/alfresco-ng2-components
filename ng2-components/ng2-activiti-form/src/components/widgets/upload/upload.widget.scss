@@ -1,3 +1,5 @@
+@import 'theming';
+
 .adf {
     &-upload-widget {
         width: 100%;
@@ -20,12 +22,12 @@
 
     &-invalid {
         .adf-file {
-            border-color: #d50000;
+            border-color: $alfresco-warn-color--hue-3;
         }
         .adf-label {
-            color: #d50000;
+            color: $alfresco-warn-color--hue-3;
             &:after {
-                background-color: #d50000;
+                background-color: $alfresco-warn-color--hue-3;
             }
         }
         .adf-error {
