@@ -1,0 +1,7 @@
+@import 'theming';
+
+.#{$ADF} {
+    &-mapitem-clickable-value {
+        cursor: pointer;
+    }
+}
