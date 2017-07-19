@@ -1,17 +1,22 @@
-<div class="mdl-textfield mdl-js-textfield multiline-text-widget {{field.className}}"
-     [class.multiline-text-widget__invalid]="!field.isValid">
-    <label [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
-    <textarea class="mdl-textfield__input"
-              type="text"
-              rows= "3"
-              [attr.id]="field.id"
-              [attr.required]="isRequired()"
-              [value]="field.value"
-              [(ngModel)]="field.value"
-              (ngModelChange)="checkVisibility(field)"
-              [disabled]="field.readOnly"
-              placeholder="{{field.placeholder}}">
-    </textarea>
-    <span *ngIf="field.validationSummary" class="mdl-textfield__error">{{field.validationSummary}}</span>
+<div class="adf-multiline-text-widget {{field.className}}"
+     [class.adf-invalid]="!field.isValid">
+    <div>
+       <label [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
+    </div>
+    <md-input-container floatPlaceholder="never">
+        <textarea mdInput class="adf-input"
+                md-autosize
+                type="text"
+                rows= "3"
+                [attr.id]="field.id"
+                [attr.required]="isRequired()"
+                [value]="field.value"
+                [(ngModel)]="field.value"
+                (ngModelChange)="checkVisibility(field)"
+                [disabled]="field.readOnly"
+                placeholder="{{field.placeholder}}">
+        </textarea>
+        <span *ngIf="field.validationSummary" class="adf-error">{{field.validationSummary}}</span>
+    </md-input-container>
 </div>
 

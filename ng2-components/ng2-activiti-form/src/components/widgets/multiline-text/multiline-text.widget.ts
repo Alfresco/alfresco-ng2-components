@@ -24,7 +24,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
 @Component({
     selector: 'multiline-text-widget',
     templateUrl: './multiline-text.widget.html',
-    styleUrls: ['./multiline-text.widget.css'],
+    styleUrls: ['./multiline-text.widget.scss'],
     host: baseHost
 })
 export class MultilineTextWidgetComponentComponent extends WidgetComponent {
