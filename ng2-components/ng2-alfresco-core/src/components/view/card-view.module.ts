@@ -22,8 +22,8 @@ import { MdButtonModule, MdDatepickerModule, MdIconModule, MdInputModule, MdNati
 import { CardViewContentProxyDirective } from './card-view-content-proxy.directive';
 import { CardViewDateItemComponent } from './card-view-dateitem.component';
 import { CardViewItemDispatcherComponent } from './card-view-item-dispatcher.component';
-import { CardViewTextItemComponent } from './card-view-textitem.component';
 import { CardViewMapItemComponent } from './card-view-mapitem.component';
+import { CardViewTextItemComponent } from './card-view-textitem.component';
 import { CardViewComponent } from './card-view.component';
 
 @NgModule({
