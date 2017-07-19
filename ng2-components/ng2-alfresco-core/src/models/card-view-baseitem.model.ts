@@ -29,6 +29,7 @@ export interface CardViewItemProperties {
     key: any;
     default?: string;
     editable?: boolean;
+    clickable?: boolean;
 }
 
 export abstract class CardViewBaseItemModel {
@@ -37,6 +38,7 @@ export abstract class CardViewBaseItemModel {
     key: any;
     default: string;
     editable: boolean;
+    clickable: boolean;
 
     constructor(obj: CardViewItemProperties) {
         this.label = obj.label || '';
@@ -44,5 +46,6 @@ export abstract class CardViewBaseItemModel {
         this.key = obj.key;
         this.default = obj.default;
         this.editable = obj.editable || false;
+        this.clickable = obj.clickable || false;
     }
 }

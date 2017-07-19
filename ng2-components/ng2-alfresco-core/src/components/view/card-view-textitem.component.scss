@@ -23,6 +23,10 @@
         }
     }
 
+    &-textitem-clickable-value {
+        cursor: pointer;
+    }
+
     &-textitem-editable {
         display: flex;
 

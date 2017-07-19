@@ -24,6 +24,7 @@
 <!-- CORE START-->
 - [adf-card-view](ng2-alfresco-core/README.md)
 - [adf-card-view-textitem](ng2-alfresco-core/README.md)
+- [adf-card-view-mapitem](ng2-alfresco-core/README.md)
 - [adf-card-view-item-dispatcher](ng2-alfresco-core/README.md)
 - [adf-card-view-dateitem](ng2-alfresco-core/README.md)
 - [adf-context-menu-holder](ng2-alfresco-core/README.md)
