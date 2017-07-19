@@ -15,13 +15,18 @@
  * limitations under the License.
  */
 
-import { SimpleChange } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
+import { MdInputModule } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
 
-import { ActivitiFormModule } from 'ng2-activiti-form';
+import {
+    CommentListComponent,
+    CommentsComponent,
+    TaskListService
+} from 'ng2-activiti-tasklist';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { DataTableModule } from 'ng2-alfresco-datatable';
 
 import { TranslationMock } from './../assets/translation.service.mock';
 import { ProcessService } from './../services/process.service';
@@ -30,24 +35,27 @@ import { ProcessCommentsComponent } from './process-comments.component';
 describe('ActivitiProcessInstanceComments', () => {
 
     let componentHandler: any;
-    let service: ProcessService;
+    let service: TaskListService;
     let component: ProcessCommentsComponent;
     let fixture: ComponentFixture<ProcessCommentsComponent>;
     let getCommentsSpy: jasmine.Spy;
-    let addCommentSpy: jasmine.Spy;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule,
-                ActivitiFormModule
+                DataTableModule,
+                MdInputModule
             ],
             declarations: [
-                ProcessCommentsComponent
+                ProcessCommentsComponent,
+                CommentsComponent,
+                CommentListComponent
             ],
             providers: [
                 { provide: AlfrescoTranslationService, useClass: TranslationMock },
-                ProcessService
+                { provide: TaskListService, useClass: ProcessService },
+                DatePipe
             ]
         }).compileComponents();
     }));
@@ -56,16 +64,13 @@ describe('ActivitiProcessInstanceComments', () => {
 
         fixture = TestBed.createComponent(ProcessCommentsComponent);
         component = fixture.componentInstance;
-        service = fixture.debugElement.injector.get(ProcessService);
+        service = fixture.debugElement.injector.get(TaskListService);
 
-        getCommentsSpy = spyOn(service, 'getComments').and.returnValue(Observable.of([{
-            message: 'Test1'
-        }, {
-            message: 'Test2'
-        }, {
-            message: 'Test3'
-        }]));
-        addCommentSpy = spyOn(service, 'addComment').and.returnValue(Observable.of({id: 123, message: 'Test'}));
+        getCommentsSpy = spyOn(service, 'getComments').and.returnValue(Observable.of([
+            { message: 'Test1', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'} },
+            { message: 'Test2', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'} },
+            { message: 'Test3', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'} }
+        ]));
 
         componentHandler = jasmine.createSpyObj('componentHandler', [
             'upgradeAllRegistered',
@@ -75,118 +80,75 @@ describe('ActivitiProcessInstanceComments', () => {
     });
 
     it('should load comments when processInstanceId specified', () => {
-        let change = new SimpleChange(null, '123', true);
-        // component.ngOnChanges({ 'processInstanceId': change });
+        component.processInstanceId = '123';
+        fixture.detectChanges();
         expect(getCommentsSpy).toHaveBeenCalled();
     });
 
     it('should emit an error when an error occurs loading comments', () => {
         let emitSpy = spyOn(component.error, 'emit');
         getCommentsSpy.and.returnValue(Observable.throw({}));
-        let change = new SimpleChange(null, '123', true);
-        // component.ngOnChanges({ 'processInstanceId': change });
+        component.processInstanceId = '123';
+        fixture.detectChanges();
         expect(emitSpy).toHaveBeenCalled();
     });
 
-    it('should not comments when no processInstanceId is specified', () => {
+    it('should not load comments when no processInstanceId is specified', () => {
         fixture.detectChanges();
         expect(getCommentsSpy).not.toHaveBeenCalled();
     });
 
     it('should display comments when the process has comments', async(() => {
-        let change = new SimpleChange(null, '123', true);
-        // component.ngOnChanges({ 'processInstanceId': change });
+        component.processInstanceId = '123';
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(fixture.nativeElement.querySelectorAll('#comment-message').length).toBe(3);
+            expect(fixture.nativeElement.querySelector('#comment-message:empty')).toBeNull();
+        });
+    }));
+
+    it('should display comments count when the process has comments', () => {
+        component.processInstanceId = '123';
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(fixture.debugElement.queryAll(By.css('ul.mdl-list li')).length).toBe(3);
+            let element = fixture.nativeElement.querySelector('#comment-header');
+            expect(element.innerText).toContain('(3)');
         });
-    }));
+    });
 
     it('should not display comments when the process has no comments', async(() => {
         component.processInstanceId = '123';
         getCommentsSpy.and.returnValue(Observable.of([]));
-        fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(fixture.debugElement.queryAll(By.css('ul.mdl-list li')).length).toBe(0);
+            expect(fixture.nativeElement.querySelector('#comment-container')).toBeNull();
         });
     }));
 
-    describe('change detection', () => {
-
-        let change = new SimpleChange('123', '456', true);
-        let nullChange = new SimpleChange('123', null, true);
-
-        beforeEach(async(() => {
-            component.processInstanceId = '123';
+    it('should not display comments input by default', async(() => {
+        component.processInstanceId = '123';
+        fixture.whenStable().then(() => {
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                getCommentsSpy.calls.reset();
-            });
-        }));
-
-        it('should fetch new comments when processInstanceId changed', () => {
-            // component.ngOnChanges({ 'processInstanceId': change });
-            expect(getCommentsSpy).toHaveBeenCalledWith('456');
+            expect(fixture.nativeElement.querySelector('#comment-input')).toBeNull();
         });
+    }));
 
-        it('should NOT fetch new comments when empty changeset made', () => {
-            // component.ngOnChanges({});
-            expect(getCommentsSpy).not.toHaveBeenCalled();
-        });
-
-        it('should NOT fetch new comments when processInstanceId changed to null', () => {
-            // component.ngOnChanges({ 'processInstanceId': nullChange });
-            expect(getCommentsSpy).not.toHaveBeenCalled();
-        });
-
-        it('should set a placeholder message when processInstanceId changed to null', () => {
-            // component.ngOnChanges({ 'processInstanceId': nullChange });
+    it('should not display comments input when the process is readonly', async(() => {
+        component.readOnly = true;
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(fixture.debugElement.query(By.css('[data-automation-id="comments-none"]'))).not.toBeNull();
+            expect(fixture.nativeElement.querySelector('#comment-input')).toBeNull();
         });
-    });
+    }));
 
-    describe('Add comment', () => {
-
-        beforeEach(async(() => {
-            component.processInstanceId = '123';
+    it('should display comments input when the process isn\'t readonly', async(() => {
+        component.readOnly = false;
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
             fixture.detectChanges();
-            fixture.whenStable();
-        }));
-
-        it('should display a dialog to the user when the Add button clicked', () => {
-            let dialogEl = fixture.debugElement.query(By.css('.mdl-dialog')).nativeElement;
-            let showSpy: jasmine.Spy = spyOn(dialogEl, 'showModal');
-            // component.showDialog();
-            expect(showSpy).toHaveBeenCalled();
+            expect(fixture.nativeElement.querySelector('#comment-input')).not.toBeNull();
         });
-
-        it('should call service to add a comment', () => {
-            // component.showDialog();
-            // component.message = 'Test comment';
-            // component.add();
-            expect(addCommentSpy).toHaveBeenCalledWith('123', 'Test comment');
-        });
-
-        it('should emit an error when an error occurs adding the comment', () => {
-            let emitSpy = spyOn(component.error, 'emit');
-            addCommentSpy.and.returnValue(Observable.throw({}));
-            // component.showDialog();
-            // component.message = 'Test comment';
-            // component.add();
-            expect(emitSpy).toHaveBeenCalled();
-        });
-
-        it('should close add dialog when close button clicked', () => {
-            let dialogEl = fixture.debugElement.query(By.css('.mdl-dialog')).nativeElement;
-            let closeSpy: jasmine.Spy = spyOn(dialogEl, 'close');
-            // component.showDialog();
-            // component.cancel();
-            expect(closeSpy).toHaveBeenCalled();
-        });
-
-    });
-
+    }));
 });

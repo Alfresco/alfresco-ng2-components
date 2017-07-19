@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TaskListService } from 'ng2-activiti-tasklist';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ProcessService } from './../services/process.service';
@@ -34,6 +34,9 @@ export class ProcessCommentsComponent {
     @Input()
     readOnly: boolean = true;
 
+    @Output()
+    error: EventEmitter<any> = new EventEmitter<any>();
+
     /**
      * Constructor
      * @param translate Translation service
@@ -43,5 +46,9 @@ export class ProcessCommentsComponent {
         if (translate) {
             translate.addTranslationFolder('ng2-activiti-processlist', 'assets/ng2-activiti-processlist');
         }
+    }
+
+    onError(error: any) {
+        this.error.emit(error);
     }
 }

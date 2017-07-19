@@ -1,1 +1,1 @@
-<adf-comments [readOnly]="readOnly" [taskId]="processInstanceId" #activiticomments></adf-comments>
+<adf-comments [readOnly]="readOnly" [taskId]="processInstanceId" (error)="onError($event)" #activiticomments></adf-comments>
