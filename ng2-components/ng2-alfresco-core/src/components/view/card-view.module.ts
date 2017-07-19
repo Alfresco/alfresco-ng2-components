@@ -23,6 +23,7 @@ import { CardViewContentProxyDirective } from './card-view-content-proxy.directi
 import { CardViewDateItemComponent } from './card-view-dateitem.component';
 import { CardViewItemDispatcherComponent } from './card-view-item-dispatcher.component';
 import { CardViewTextItemComponent } from './card-view-textitem.component';
+import { CardViewMapItemComponent } from './card-view-mapitem.component';
 import { CardViewComponent } from './card-view.component';
 
 @NgModule({
@@ -40,10 +41,12 @@ import { CardViewComponent } from './card-view.component';
         CardViewItemDispatcherComponent,
         CardViewContentProxyDirective,
         CardViewTextItemComponent,
+        CardViewMapItemComponent,
         CardViewDateItemComponent
     ],
     entryComponents: [
         CardViewTextItemComponent,
+        CardViewMapItemComponent,
         CardViewDateItemComponent
     ],
     exports: [

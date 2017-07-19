@@ -33,6 +33,8 @@
   * [Defining properties](#defining-properties)
   * [Card Text Item](#card-text-item)
     + [Options](#options)
+  * [Card Map Item](#card-map-item)
+    + [Options](#options)
   * [Card Date Item](#card-date-item)
     + [Options](#options-1)
   * [Defining your custom card Item](#defining-your-custom-card-item)
@@ -645,9 +647,10 @@ export interface CardViewItem {
 }
 ```
 
-At the moment two models are defined out of the box:
+At the moment three models are defined out of the box:
 
 - **[CardViewTextItemModel](#card-text-item)** - *for text items*
+- **[CardViewMapItemModel](#card-map-item)** - *for map items*
 - **[CardViewDateItemModel](#card-date-item)** - *for date items*
 
 Each of them are extending the abstract CardViewBaseItemModel class, and each of them are adding some custom functionality to the basic behaviour.
@@ -660,6 +663,13 @@ Each of them are extending the abstract CardViewBaseItemModel class, and each of
         key: 'name',
         default: 'default bar' ,
         multiline: false
+    }),
+    new CardViewMapItemModel({
+        label: 'My map',
+        value: new Map([['999', 'My Value']]),
+        key: 'map',
+        default: 'default map value' ,
+        clickable: true
     }),
     new CardViewDateItemModel({
         label: 'Birth of date',
@@ -691,7 +701,27 @@ const textItemProperty = new CardViewTextItemModel(options);
 | default | any | --- | The default value to render in case the value is empty |
 | displayValue* | string | --- | The value to render |
 | editable | boolean | false | Whether the property editable or not |
+| clickable | boolean | false | Whether the property clikable or not |
 | multiline | string | false | Single or multiline text |
+
+### Card Map Item
+
+CardViewMapItemModel is a property type for map properties.
+
+```js
+const mapItemProperty = new CardViewMapItemModel(options);
+```
+
+#### Options
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| label* | string | --- | The label to render |
+| value* | Map | --- | A map that contains the key value pairs |
+| key* | string | --- | the key of the property. Have an important role when editing the property. |
+| default | any | --- | The default value to render in case the value is empty |
+| displayValue* | string | --- | The value to render |
+| clickable | boolean | false | Whether the property clickable or not |
 
 ### Card Date Item
 
