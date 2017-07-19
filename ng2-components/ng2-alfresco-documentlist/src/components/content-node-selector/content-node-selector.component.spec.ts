@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-import { DebugElement } from '@angular/core';
+import { DebugElement, EventEmitter } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
 import { By } from '@angular/platform-browser';
+import { MinimalNodeEntity, NodePaging } from 'alfresco-js-api';
 import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { MaterialModule } from '../../material.module';
@@ -66,7 +67,8 @@ describe('ContentNodeSelectorComponent', () => {
 
         beforeEach(async(() => {
             data = {
-                title: 'Move along citizen...'
+                title: 'Move along citizen...',
+                selectionMade: new EventEmitter<MinimalNodeEntity>()
             };
 
             setupTestbed([{ provide: MD_DIALOG_DATA, useValue: data }]);
@@ -88,8 +90,15 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(titleElement.nativeElement.innerText).toBe('Move along citizen...');
             });
 
-            xit('should trigger the INJECTED select event when selection has been made', () => {
+            it('should trigger the INJECTED selectionMade event when selection has been made', (done) => {
+                const expectedNode = <MinimalNodeEntity> {};
+                data.selectionMade.subscribe((node) => {
+                    expect(node).toBe(expectedNode);
+                    done();
+                });
 
+                component.chosenNode = expectedNode;
+                component.choose();
             });
         });
 
@@ -139,7 +148,25 @@ describe('ContentNodeSelectorComponent', () => {
             expect(titleElement.nativeElement.innerText).toBe('Move along citizen...');
         });
 
-        xit('should trigger the select event when selection has been made', () => {
+        it('should trigger the selectionMade event when selection has been made', (done) => {
+            const expectedNode = <MinimalNodeEntity> {};
+            component.selectionMade.subscribe((node) => {
+                expect(node).toBe(expectedNode);
+                done();
+            });
+
+            component.chosenNode = expectedNode;
+            component.choose();
+        });
+    });
+
+    describe('Search functionality', () => {
+
+        xit('should show the default empty list text by default', () => {
+
+        });
+
+        xit('should load the results by calling the search api on search change', () => {
 
         });
     });
@@ -149,6 +176,28 @@ describe('ContentNodeSelectorComponent', () => {
         it('should not be shown if dialogRef is NOT injected', () => {
             const closeButton = fixture.debugElement.query(By.css('[content-node-selector-actions-cancel]'));
             expect(closeButton).toBeNull();
+        });
+    });
+
+    describe('Choose button', () => {
+
+        xit('should be disabled by default', () => {
+
+        });
+
+        xit('should be enabled when clicking on one element in the list', () => {
+
+        });
+
+        xit('should be disabled when deselecting the previously selected element in the list', () => {
+
+        });
+    });
+
+    describe('Mini integration test', () => {
+
+        xit('should trigger the selectionMade event properly when search results are loaded, one element is selected and choose button is clicked', () => {
+
         });
     });
 
