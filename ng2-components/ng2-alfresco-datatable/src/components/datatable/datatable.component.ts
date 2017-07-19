@@ -244,7 +244,6 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
         if (row) {
             if (this.data) {
                 const newValue = !row.isSelected;
-                const rows = this.data.getRows();
 
                 const domEventName = newValue ? 'row-select' : 'row-unselect';
                 const domEvent = new CustomEvent(domEventName, {
