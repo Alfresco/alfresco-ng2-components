@@ -13,8 +13,10 @@
                (blur)="onBlur()"
                [disabled]="field.readOnly"
                placeholder="{{field.placeholder}}">
-        <span *ngIf="field.validationSummary" class="adf-error">{{field.validationSummary}}</span>
-    </md-input-container>
+        <md-error  *ngIf="field.validationSummary">
+            {{field.validationSummary}}
+        </md-error>
+ </md-input-container>
 </div>
 <div class="adf-typeahead-autocomplete mat-elevation-z2" *ngIf="popupVisible && users.length > 0">
     <md-option   *ngFor="let item of users"

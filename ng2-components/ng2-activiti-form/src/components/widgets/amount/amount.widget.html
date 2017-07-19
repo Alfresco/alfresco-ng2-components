@@ -15,7 +15,9 @@
                 (ngModelChange)="checkVisibility(field)"
                 [disabled]="field.readOnly"
                 placeholder="{{field.placeholder}}">
-        <span *ngIf="field.validationSummary" class="amount-widget__error_message">{{field.validationSummary}}</span>
+        <md-error  *ngIf="field.validationSummary">
+            {{field.validationSummary}}
+        </md-error>
     </md-input-container>
 </div>
 
