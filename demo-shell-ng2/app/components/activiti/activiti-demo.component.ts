@@ -47,6 +47,7 @@ import { /*CustomEditorComponent*/ CustomStencil01 } from './custom-editor/custo
 declare var componentHandler;
 
 const currentProcessIdNew = '__NEW__';
+const currentTaskIdNew = '__NEW__';
 
 @Component({
     selector: 'activiti-demo',
@@ -235,6 +236,12 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
         this.currentProcessInstanceId = currentProcessIdNew;
     }
 
+    navigateStartTask(): void {
+        this.resetTaskFilters();
+        this.reloadTaskFilters();
+        this.currentTaskId = currentTaskIdNew;
+    }
+
     onStartProcessInstance(instance: ProcessInstance): void {
         this.currentProcessInstanceId = instance.id;
         this.activitiStartProcess.reset();
@@ -243,6 +250,10 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
 
     isStartProcessMode(): boolean {
         return this.currentProcessInstanceId === currentProcessIdNew;
+    }
+
+    isStartTaskMode(): boolean {
+        return this.currentTaskId === currentTaskIdNew;
     }
 
     processCancelled(data: any): void {
@@ -318,8 +329,16 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
         this.processFilter = null;
     }
 
+    private resetTaskFilters(): void {
+        this.taskFilter = null;
+    }
+
     private reloadProcessFilters(): void {
         this.activitiprocessfilter.selectFilter(null);
+    }
+
+    private reloadTaskFilters(): void {
+        this.activitifilter.selectFilter(null);
     }
 
     onRowClick(event): void {
