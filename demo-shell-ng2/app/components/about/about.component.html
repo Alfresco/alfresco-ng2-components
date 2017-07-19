@@ -10,6 +10,93 @@
         Alfresco Content Services URL: <strong>{{ ecmHost }}</strong>
     </div>
 
+    <h3>Product Versions</h3>
+    <div *ngIf="bpmVersion">
+        <h3>BPM</h3>
+        <label> Edition </label>
+        <p> {{ bpmVersion.edition }}</p>
+        <table border="2" class="adf-table-version">
+            <tr>
+                <th>Major Version</th>
+                <th>Revision Version</th>
+                <th>Minor Version</th>
+                <th>Type</th>
+            </tr>
+            <tr style="align-items: center">
+                <td>{{ bpmVersion.majorVersion }}</td>
+                <td>{{ bpmVersion.revisionVersion }}</td>
+                <td>{{ bpmVersion.minorVersion }}</td>
+                <td>{{ bpmVersion.type }}</td>
+            </tr>
+        </table>
+    </div>
+    <div *ngIf="ecmVersion">
+        <h3>ECM</h3>
+        <label> Edition </label>
+        <p> {{ ecmVersion.edition }}</p>
+        <label> Version </label>
+        <p> {{ ecmVersion.version.display }}</p>
+        <h4>License</h4>
+        <table border="2" class="adf-table-version">
+            <tr>
+                <th> Issued At </th>
+                <th> Expires At </th>
+                <th> Remaining Days </th>
+                <th> Holder </th>
+                <th> Mode </th>
+                <th> Is Cluster Enabled </th>
+                <th> Is Cryptodoc Enable </th>
+            </tr>
+            <tr style="align-items: center">
+                <td>{{ ecmVersion.license.issuedAt }}</td>
+                <td>{{ ecmVersion.license.expiresAt }}</td>
+                <td>{{ ecmVersion.license.remainingDays }}</td>
+                <td>{{ ecmVersion.license.holder }}</td>
+                <td>{{ ecmVersion.license.mode }}</td>
+                <td>{{ ecmVersion.license.isClusterEnabled }}</td>
+                <td>{{ ecmVersion.license.isCryptodocEnabled }}</td>
+            </tr>
+        </table>
+        <h4> Status</h4>
+        <table border="2" class="adf-table-version">
+            <tr>
+                <th> ReadOnly </th>
+                <th> Is Audit Enable </th>
+                <th> Is quick shared enable </th>
+                <th> Thumbnail Generation </th>
+            </tr>
+            <tr style="align-items: center">
+                <td>{{ ecmVersion.status.isReadOnly }}</td>
+                <td>{{ ecmVersion.status.isAuditEnabled }}</td>
+                <td>{{ ecmVersion.status.isQuickShareEnabled }}</td>
+                <td>{{ ecmVersion.status.isThumbnailGenerationEnabled }}</td>
+            </tr>
+        </table>
+        <h4>Modules</h4>
+        <table border="2" class="adf-table-version">
+            <tr>
+                <th> ID </th>
+                <th> Title </th>
+                <th> Description </th>
+                <th> Version </th>
+                <th> Install Date </th>
+                <th> Install State </th>
+                <th> Version Minor </th>
+                <th> Version Max </th>
+            </tr>
+            <tr *ngFor="let module of ecmVersion.modules" style="align-items: center">
+                <td>{{ module.id }}</td>
+                <td>{{ module.title }}</td>
+                <td>{{ module.description }}</td>
+                <td>{{ module.version }}</td>
+                <td>{{ module.installDate }}</td>
+                <td>{{ module.installState }}</td>
+                <td>{{ module.versionMin }}</td>
+                <td>{{ module.versionMax }}</td>
+            </tr>
+        </table>
+    </div>
+
     <div *ngIf="githubUrlCommitAlpha">
         <h3>Source code</h3>
         <small>You are running the project based on the following commit:</small>
