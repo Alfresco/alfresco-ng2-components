@@ -51,17 +51,13 @@ describe('CardViewTextItemComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(CardViewTextItemComponent);
         component = fixture.componentInstance;
-        component.property = <CardViewTextItemModel> {
-            type: 'text',
+        component.property = new CardViewTextItemModel ({
             label: 'Text label',
             value: 'Lorem ipsum',
             key: 'textkey',
             default: '',
-            editable: false,
-            get displayValue(): string {
-                return 'Lorem ipsum';
-            }
-        };
+            editable: false
+        });
     });
 
     afterEach(() => {

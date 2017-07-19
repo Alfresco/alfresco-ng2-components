@@ -1,7 +1,10 @@
 <div class="adf-property-label">{{ property.label }}</div>
 <div class="adf-property-value">
     <span *ngIf="!isEditble()">
-        <span [attr.data-automation-id]="'card-textitem-value-' + property.key">{{ property.displayValue }}</span>
+        <span *ngIf="!isClickable(); else elseBlock" [attr.data-automation-id]="'card-textitem-value-' + property.key">{{ property.displayValue }}</span>
+        <ng-template #elseBlock>
+            <span class="adf-textitem-clickable-value" (click)="clicked()" [attr.data-automation-id]="'card-textitem-value-' + property.key">{{ property.displayValue }}</span>
+        </ng-template>
     </span>
     <span *ngIf="isEditble()">
         <div *ngIf="!inEdit" (click)="setEditMode(true)" class="adf-textitem-readonly" [attr.data-automation-id]="'card-textitem-edit-toggle-' + property.key">

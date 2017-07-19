@@ -27,7 +27,7 @@ import { Component,
     ViewChild
 } from '@angular/core';
 import { ContentLinkModel, FormModel, FormOutcomeEvent, FormService } from 'ng2-activiti-form';
-import { AlfrescoAuthenticationService, AlfrescoTranslationService, CardViewUpdateService, LogService, UpdateNotification } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoTranslationService, CardViewUpdateService, LogService, UpdateNotification, ClickNotification } from 'ng2-alfresco-core';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { User } from '../models/user.model';
@@ -161,6 +161,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
         }
 
         this.cardViewUpdateService.itemUpdated$.subscribe(this.updateTaskDetails.bind(this));
+        this.cardViewUpdateService.itemClicked$.subscribe(this.clickTaskDetails.bind(this));
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -204,6 +205,10 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
             .subscribe(
                 () => { this.loadDetails(this.taskId); }
             );
+    }
+
+    private clickTaskDetails(clickNotification: ClickNotification) {
+        console.log(clickNotification.target);
     }
 
     /**
