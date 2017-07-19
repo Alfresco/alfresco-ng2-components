@@ -52,13 +52,13 @@ import { UploadService } from './src/services/upload.service';
 import { UserPreferencesService } from './src/services/user-preferences.service';
 
 import { DeletedNodesApiService } from './src/services/deleted-nodes-api.service';
+import { DiscoveryApiService } from './src/services/discovery-api.service';
 import { FavoritesApiService } from './src/services/favorites-api.service';
 import { NodesApiService } from './src/services/nodes-api.service';
 import { PeopleApiService } from './src/services/people-api.service';
 import { SearchApiService } from './src/services/search-api.service';
 import { SharedLinksApiService } from './src/services/shared-links-api.service';
 import { SitesApiService } from './src/services/sites-api.service';
-import { DiscoveryApiService } from './src/services/discovery-api.service';
 
 export { ContentService } from './src/services/content.service';
 export { StorageService } from './src/services/storage.service';
