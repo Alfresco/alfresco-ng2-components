@@ -90,7 +90,7 @@ let fakeBPMDiscoveryResponse: any = {
         'minorVersion': '6'
     };
 
-describe('Discovery Api Service', () => {
+fdescribe('Discovery Api Service', () => {
 
     let service;
 
