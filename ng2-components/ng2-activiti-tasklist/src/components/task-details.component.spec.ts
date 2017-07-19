@@ -73,7 +73,7 @@ describe('TaskDetailsComponent', () => {
         getFormSpy = spyOn(formService, 'getTaskForm').and.returnValue(Observable.of(taskFormMock));
         getTasksSpy = spyOn(service, 'getTasks').and.returnValue(Observable.of(tasksMock));
         completeTaskSpy = spyOn(service, 'completeTask').and.returnValue(Observable.of({}));
-        spyOn(service, 'getTaskComments').and.returnValue(Observable.of(noDataMock));
+        spyOn(service, 'getComments').and.returnValue(Observable.of(noDataMock));
         spyOn(service, 'getTaskChecklist').and.returnValue(Observable.of(noDataMock));
 
         componentHandler = jasmine.createSpyObj('componentHandler', [

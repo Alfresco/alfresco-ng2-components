@@ -22,7 +22,6 @@
 
 .adf-full-width {
     width: 100%;
-<<<<<<< HEAD
 }
 
 adf-comment-list {
@@ -30,6 +29,4 @@ adf-comment-list {
     overflow: auto;
     height: calc(100% - 101px);
     width: 100%;
-=======
->>>>>>> [ADF-1103] Add custom tslint rules to avoid unwanted Class and File name prefix (#2087)
 }
