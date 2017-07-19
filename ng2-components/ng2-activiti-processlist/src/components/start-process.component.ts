@@ -122,6 +122,10 @@ export class StartProcessInstanceComponent implements OnChanges {
         return this.currentProcessDef && this.currentProcessDef.hasStartForm;
     }
 
+    isProcessDefinitionEmpty() {
+        return this.processDefinitions ? (this.processDefinitions.length > 0 || this.errorMessageId) : this.errorMessageId;
+    }
+
     isStartFormMissingOrValid() {
         if (this.startForm) {
             return this.startForm.form && this.startForm.form.isValid;
@@ -140,6 +144,10 @@ export class StartProcessInstanceComponent implements OnChanges {
 
     private resetErrorMessage(): void {
         this.errorMessageId = '';
+    }
+
+    hasErrorMessage() {
+        return this.processDefinitions.length === 0 && !this.errorMessageId;
     }
 
     public onOutcomeClick(outcome: string) {
