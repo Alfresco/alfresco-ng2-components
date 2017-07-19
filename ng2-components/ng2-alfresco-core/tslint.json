@@ -1,7 +1,7 @@
 {
     "rulesDirectory": [
         "node_modules/codelyzer",
-        "node_modules/adf-tlsint-rules"
+        "node_modules/adf-tslint-rules"
     ],
     "rules": {
         "align": [

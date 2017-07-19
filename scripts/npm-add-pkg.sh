@@ -5,6 +5,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 eval NAME_PKG=''
 eval SAVE_OPT=false
 eval SAVE_DEV_OPT=false
+eval SAVE_EXACT=false
 
 show_help() {
     echo "Usage: npm-add-pkg.sh"

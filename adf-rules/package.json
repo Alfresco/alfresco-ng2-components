@@ -1,5 +1,5 @@
 {
-  "name": "adf-tlsint-rules",
+  "name": "adf-tslint-rules",
   "description": "Custom Rules for the ADF project",
   "version": "0.0.3",
   "author": "Alfresco Software, Ltd.",

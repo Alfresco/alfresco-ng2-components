@@ -100,6 +100,7 @@
     "@types/hammerjs": "2.0.34",
     "@types/jasmine": "2.5.35",
     "@types/node": "6.0.45",
+    "adf-tslint-rules": "0.0.3",
     "angular2-template-loader": "0.6.2",
     "autoprefixer": "6.5.4",
     "codelyzer": "3.1.2",
@@ -128,8 +129,6 @@
     "karma-systemjs": "0.16.0",
     "karma-webpack": "2.0.3",
     "loader-utils": "1.1.0",
-    "markdown-toc": "1.1.0",
-    "markdownlint-cli": "^0.3.1",
     "merge-stream": "1.0.1",
     "node-sass": "4.5.3",
     "null-loader": "0.1.1",
@@ -153,7 +152,9 @@
     "webpack": "2.2.1",
     "webpack-dev-server": "2.3.0",
     "webpack-merge": "2.6.1",
-    "wsrv": "0.1.7"
+    "wsrv": "0.1.7",
+    "markdown-toc": "1.1.0",
+    "markdownlint-cli": "^0.3.1"
   },
   "license": "Apache-2.0",
   "module": "./index.js",
