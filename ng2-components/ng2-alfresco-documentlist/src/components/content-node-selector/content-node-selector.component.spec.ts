@@ -17,8 +17,16 @@
 
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MD_DIALOG_DATA, MdButtonModule, MdDialogModule, MdDialogRef } from '@angular/material';
+import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
 import { By } from '@angular/platform-browser';
+import { CoreModule } from 'ng2-alfresco-core';
+import { DataTableModule } from 'ng2-alfresco-datatable';
+import { MaterialModule } from '../../material.module';
+import { DocumentListService } from '../../services/document-list.service';
+import { SearchService } from '../../services/search.service';
+import { DocumentListComponent } from '../document-list.component';
+import { DocumentMenuActionComponent } from '../document-menu-action.component';
+import { EmptyFolderContentDirective } from '../empty-folder/empty-folder-content.directive';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
 
 describe('ContentNodeSelectorComponent', () => {
@@ -27,6 +35,27 @@ describe('ContentNodeSelectorComponent', () => {
     let fixture: ComponentFixture<ContentNodeSelectorComponent>;
     let element: DebugElement;
     let data: any;
+
+    function setupTestbed(plusProviders) {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule.forRoot(),
+                DataTableModule.forRoot(),
+                MaterialModule
+            ],
+            declarations: [
+                DocumentListComponent,
+                DocumentMenuActionComponent,
+                EmptyFolderContentDirective,
+                ContentNodeSelectorComponent
+            ],
+            providers: [
+                DocumentListService,
+                SearchService,
+                ...plusProviders
+            ]
+        });
+    }
 
     afterEach(() => {
         fixture.destroy();
@@ -40,17 +69,7 @@ describe('ContentNodeSelectorComponent', () => {
                 title: 'Move along citizen...'
             };
 
-            TestBed.configureTestingModule({
-                imports: [
-                    MdButtonModule,
-                    MdDialogModule
-                ],
-                declarations: [ ContentNodeSelectorComponent ],
-                providers: [
-                    { provide: MD_DIALOG_DATA, useValue: data }
-                ]
-            });
-
+            setupTestbed([{ provide: MD_DIALOG_DATA, useValue: data }]);
             TestBed.compileComponents();
         }));
 
@@ -83,13 +102,13 @@ describe('ContentNodeSelectorComponent', () => {
             });
 
             it('should be shown if dialogRef is injected', () => {
-                const componentInstance = new ContentNodeSelectorComponent(data, dummyMdDialogRef);
+                const componentInstance = new ContentNodeSelectorComponent(null, data, dummyMdDialogRef);
                 expect(componentInstance.inDialog).toBeTruthy();
             });
 
             it('should should call the close method in the injected dialogRef', () => {
                 spyOn(dummyMdDialogRef, 'close');
-                const componentInstance = new ContentNodeSelectorComponent(data, dummyMdDialogRef);
+                const componentInstance = new ContentNodeSelectorComponent(null, data, dummyMdDialogRef);
 
                 componentInstance.close();
 
@@ -101,15 +120,7 @@ describe('ContentNodeSelectorComponent', () => {
     describe('Parameters', () => {
 
         beforeEach(async(() => {
-            TestBed.configureTestingModule({
-                imports: [
-                    MdButtonModule,
-                    MdDialogModule
-                ],
-                declarations: [ ContentNodeSelectorComponent ],
-                providers: []
-            });
-
+            setupTestbed([]);
             TestBed.compileComponents();
         }));
 

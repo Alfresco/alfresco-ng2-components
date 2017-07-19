@@ -242,7 +242,7 @@ describe('SearchComponent', () => {
                     fixture.detectChanges();
                     let errorEl = element.querySelector('[data-automation-id="search_error_message"]');
                     expect(errorEl).not.toBeNull();
-                    expect((<any>errorEl).innerText).toBe('SEARCH.RESULTS.ERROR');
+                    expect((<any> errorEl).innerText).toBe('SEARCH.RESULTS.ERROR');
                     done();
                 });
 
