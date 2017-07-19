@@ -17,7 +17,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
-import { AppConfigService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AppConfigService, BpmProductVersionModel, DiscoveryApiService, EcmProductVersionModel, LogService  } from 'ng2-alfresco-core';
 import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 
 @Component({
@@ -42,10 +42,21 @@ export class AboutComponent implements OnInit {
 
     constructor(private http: Http,
                 private appConfig: AppConfigService,
-                private logService: LogService) {
+                private authService: AlfrescoAuthenticationService,
+                private logService: LogService,
+                private discovery: DiscoveryApiService) {
     }
 
     ngOnInit() {
+
+        this.discovery.getEcmProductInfo().subscribe((ecmVers) => {
+            this.ecmVersion = ecmVers;
+        });
+
+        this.discovery.getBpmProductInfo().subscribe((bpmVers) => {
+            this.bpmVersion = bpmVers;
+        });
+
         this.http.get('/versions.json').subscribe(response => {
             let regexp = new RegExp('^(ng2-activiti|ng2-alfresco|alfresco-)');
 
