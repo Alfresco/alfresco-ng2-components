@@ -58,6 +58,7 @@ import { PeopleApiService } from './src/services/people-api.service';
 import { SearchApiService } from './src/services/search-api.service';
 import { SharedLinksApiService } from './src/services/shared-links-api.service';
 import { SitesApiService } from './src/services/sites-api.service';
+import { DiscoveryApiService } from './src/services/discovery-api.service';
 
 export { ContentService } from './src/services/content.service';
 export { StorageService } from './src/services/storage.service';
@@ -91,6 +92,7 @@ export { PeopleApiService } from './src/services/people-api.service';
 export { SearchApiService } from './src/services/search-api.service';
 export { SharedLinksApiService } from './src/services/shared-links-api.service';
 export { SitesApiService } from './src/services/sites-api.service';
+export { DiscoveryApiService } from './src/services/discovery-api.service';
 
 import { DataColumnListComponent } from './src/components/data-column/data-column-list.component';
 import { DataColumnComponent } from './src/components/data-column/data-column.component';
@@ -121,6 +123,7 @@ export * from './src/models/card-view-dateitem.model';
 export * from './src/models/file.model';
 export * from './src/models/permissions.enum';
 export * from './src/models/site.model';
+export * from './src/models/product-version.model';
 
 // Old deprecated import
 import { AuthenticationService as AlfrescoAuthenticationService } from './src/services/authentication.service';
@@ -157,6 +160,7 @@ export function providers() {
         SearchApiService,
         SharedLinksApiService,
         SitesApiService,
+        DiscoveryApiService,
 
         // Old deprecated import
         AlfrescoTranslationService,
