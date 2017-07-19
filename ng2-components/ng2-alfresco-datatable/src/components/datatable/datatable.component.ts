@@ -17,7 +17,7 @@
 
 import {
     AfterContentInit, Component, ContentChild, DoCheck, ElementRef, EventEmitter, Input,
-    IterableDiffers, OnChanges, Optional, Output, SimpleChange, SimpleChanges, TemplateRef
+    IterableDiffers, OnChanges, Output, SimpleChange, SimpleChanges, TemplateRef
 } from '@angular/core';
 import { MdCheckboxChange } from '@angular/material';
 import { AlfrescoTranslationService, DataColumnListComponent } from 'ng2-alfresco-core';
@@ -92,10 +92,11 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     @Input()
     loading: boolean = false;
 
-    public noContentTemplate: TemplateRef<any>;
-    public loadingTemplate: TemplateRef<any>;
+    noContentTemplate: TemplateRef<any>;
+    loadingTemplate: TemplateRef<any>;
 
     isSelectAllChecked: boolean = false;
+    selection = new Array<DataRow>();
 
     private clickObserver: Observer<DataRowEvent>;
     private click$: Observable<DataRowEvent>;
@@ -108,7 +109,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     private multiClickStreamSub: Subscription;
 
     constructor(translateService: AlfrescoTranslationService,
-                @Optional() private el: ElementRef,
+                private elementRef: ElementRef,
                 private differs: IterableDiffers) {
         if (differs) {
             this.differ = differs.find([]).create(null);
@@ -173,10 +174,9 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
 
         this.singleClickStreamSub = singleClickStream.subscribe((obj: DataRowEvent[]) => {
             let event: DataRowEvent = obj[0];
-            let el = obj[0].sender.el;
             this.rowClick.emit(event);
-            if (!event.defaultPrevented && el.nativeElement) {
-                el.nativeElement.dispatchEvent(
+            if (!event.defaultPrevented) {
+                this.elementRef.nativeElement.dispatchEvent(
                     new CustomEvent('row-click', {
                         detail: event,
                         bubbles: true
@@ -192,10 +192,9 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
 
         this.multiClickStreamSub = multiClickStream.subscribe((obj: DataRowEvent[]) => {
             let event: DataRowEvent = obj[0];
-            let el = obj[0].sender.el;
             this.rowDblClick.emit(event);
-            if (!event.defaultPrevented && el.nativeElement) {
-                el.nativeElement.dispatchEvent(
+            if (!event.defaultPrevented) {
+                this.elementRef.nativeElement.dispatchEvent(
                     new CustomEvent('row-dblclick', {
                         detail: event,
                         bubbles: true
@@ -248,21 +247,32 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
                 const newValue = !row.isSelected;
                 const rows = this.data.getRows();
 
+                const domEventName = newValue ? 'row-select' : 'row-unselect';
+                const domEvent = new CustomEvent(domEventName, {
+                    detail: {
+                        row: row,
+                        selection: this.selection
+                    },
+                    bubbles: true
+                });
+
                 if (this.isSingleSelectionMode()) {
-                    rows.forEach(r => r.isSelected = false);
-                    row.isSelected = newValue;
+                    this.resetSelection();
+                    this.selectRow(row, newValue);
+                    this.elementRef.nativeElement.dispatchEvent(domEvent);
                 }
 
                 if (this.isMultiSelectionMode()) {
                     const modifier = e.metaKey || e.ctrlKey;
                     if (!modifier) {
-                        rows.forEach(r => r.isSelected = false);
+                        this.resetSelection();
                     }
-                    row.isSelected = newValue;
+                    this.selectRow(row, newValue);
+                    this.elementRef.nativeElement.dispatchEvent(domEvent);
                 }
             }
 
-            let dataRowEvent = new DataRowEvent(row, e, this);
+            const dataRowEvent = new DataRowEvent(row, e, this);
             this.clickObserver.next(dataRowEvent);
         }
     }
@@ -273,7 +283,9 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
             if (rows && rows.length > 0) {
                 rows.forEach(r => r.isSelected = false);
             }
+            this.selection.splice(0);
         }
+        this.isSelectAllChecked = false;
     }
 
     onRowDblClick(row: DataRow, e?: Event) {
@@ -302,10 +314,27 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
             let rows = this.data.getRows();
             if (rows && rows.length > 0) {
                 for (let i = 0; i < rows.length; i++) {
-                    rows[i].isSelected = e.checked;
+                    this.selectRow(rows[i], e.checked);
                 }
             }
         }
+    }
+
+    onCheckboxChange(row: DataRow, event: MdCheckboxChange) {
+        const newValue = event.checked;
+
+        this.selectRow(row, newValue);
+
+        const domEventName = newValue ? 'row-select' : 'row-unselect';
+        const domEvent = new CustomEvent(domEventName, {
+            detail: {
+                row: row,
+                selection: this.selection
+            },
+            bubbles: true
+        });
+
+        this.elementRef.nativeElement.dispatchEvent(domEvent);
     }
 
     onImageLoadingError(event: Event) {
@@ -385,4 +414,20 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
         return `${row.cssClass} ${this.rowStyleClass}`;
     }
 
+    private selectRow(row: DataRow, value: boolean) {
+        if (row) {
+            row.isSelected = value;
+            const idx = this.selection.indexOf(row);
+
+            if (value) {
+                if (idx < 0) {
+                    this.selection.push(row);
+                }
+            } else {
+                if (idx > -1) {
+                    this.selection.splice(idx, 1);
+                }
+            }
+        }
+    }
 }
