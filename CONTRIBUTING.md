@@ -31,14 +31,17 @@ Before you submit please follow the following step:
   * Rebase your branch and force push to your GitHub repository (this will update your Pull Request):
 
     ```shell
+    git fetch development
+    git checkout dev-my-branch
     git rebase development -i
     git push -f
     ```
+Note: If you need more information about how to [sync your fork](https://help.github.com/articles/syncing-a-fork/)
 
 ## Code style
 
 The code style in the ADF code follow the [Angular style guide](https://angular.io/guide/styleguide) plus some internal rules.
-You don't have to be worry too much about out those rules because are automatically checked by tslint/codelyzer/adf-rules.
+you don’t have to worry too much about out those rules because are automatically checked by tslint/codelyzer/adf-rules.
 If your code is not complaint to one of this rules you will receive and error when you build the project with some help on how to fix it.
 The ADF-Rules :
 * File name component/directive can not to start with Alfresco/Activiti/adf this rules is to help developer to find files easily
