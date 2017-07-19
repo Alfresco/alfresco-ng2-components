@@ -25,7 +25,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
 @Component({
     selector: 'functional-group-widget',
     templateUrl: './functional-group.widget.html',
-    styleUrls: ['./functional-group.widget.css'],
+    styleUrls: ['./functional-group.widget.scss'],
     host: baseHost
 })
 export class FunctionalGroupWidgetComponent extends WidgetComponent implements OnInit {

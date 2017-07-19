@@ -13,6 +13,6 @@
            [disabled]="field.readOnly"
            placeholder="{{field.placeholder}}">
     <md-error  *ngIf="field.validationSummary">
-        {{field.validationSummary}}
+        <div class="adf-error-text" >{{field.validationSummary}}</div> <i class="material-icons adf-error-icon">warning</i>
     </md-error>
 </div>
