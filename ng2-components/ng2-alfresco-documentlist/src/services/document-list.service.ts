@@ -66,6 +66,17 @@ export class DocumentListService {
     }
 
     /**
+     * Copy a node to destination node
+     *
+     * @param nodeId The id of the node to be copied
+     * @param targetParentId The id of the folder-node where the node have to be copied
+     */
+    copyNode(nodeId: string, targetParentId: string) {
+        return Observable.fromPromise(this.apiService.getInstance().nodes.copyNode(nodeId, {targetParentId}))
+            .catch(err => this.handleError(err));
+    }
+
+    /**
      * Create a new folder in the path.
      * @param name Folder name
      * @param parentId Parent folder ID

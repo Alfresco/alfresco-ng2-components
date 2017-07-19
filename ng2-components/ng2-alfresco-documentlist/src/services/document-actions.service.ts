@@ -19,6 +19,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { MdDialog } from '@angular/material';
 import { AlfrescoContentService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Observable';
+import { MinimalNodeEntity } from 'alfresco-js-api';
 import { Subject } from 'rxjs/Rx';
 import { ContentNodeSelectorComponent } from '../components/content-node-selector/content-node-selector.component';
 import { ContentActionHandler } from '../models/content-action.model';
@@ -107,14 +108,21 @@ export class DocumentActionsService {
     }
 
     private copyNode(obj: any) {
-        const nodeSelected: EventEmitter<any> = new EventEmitter(),
-            title = `Copy ${obj.entry.name} to ...`;
+        const title = `Copy ${obj.entry.name} to ...`,
+            selectionMade: EventEmitter<MinimalNodeEntity> = new EventEmitter<MinimalNodeEntity>();
 
         this.dialog.open(ContentNodeSelectorComponent, {
-                data: { title, nodeSelected },
+                data: { title, selectionMade },
                 panelClass: 'adf-content-node-selector-dialog',
                 width: '400px'
         });
+
+        selectionMade.subscribe((parent) => {
+            this.documentListService.copyNode(obj.entry.id, parent.entry.id);
+            this.dialog.closeAll();
+        });
+
+        return Observable.of(false);
     }
 
     private deleteNode(obj: any, target?: any, permission?: string): Observable<any> {

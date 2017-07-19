@@ -51,9 +51,12 @@
                 font-weight: normal;
             }
 
-            &-choose[disabled] {
+            &-choose {
                 font-weight: normal;
-                opacity: 0.6;
+
+                &[disabled] {
+                    opacity: 0.6;
+                }
             }
         }
     }

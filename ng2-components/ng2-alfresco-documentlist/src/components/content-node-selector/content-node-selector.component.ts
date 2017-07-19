@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, Inject, Input, Optional, Output, ViewEncapsulation } from '@angular/core';
-import { MinimalNodeEntity, NodePaging, Pagination } from 'alfresco-js-api';
+import { Component, EventEmitter, Inject, Input, Optional, Output, ViewEncapsulation } from '@angular/core';
+import { MinimalNodeEntity, NodePaging } from 'alfresco-js-api';
 import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
 import { SearchOptions, SearchService } from '../../services/search.service';
 
@@ -28,31 +28,26 @@ import { SearchOptions, SearchService } from '../../services/search.service';
 })
 export class ContentNodeSelectorComponent {
 
-    chosenNode: MinimalNodeEntity|null = null;
+    chosenNode: MinimalNodeEntity | null = null;
 
     inDialog: boolean = false;
 
     private nodes: NodePaging;
-    private pagination: Pagination;
 
     @Input()
     title: string;
 
     @Output()
-    selected: any;
+    selectionMade: EventEmitter<MinimalNodeEntity> = new EventEmitter<MinimalNodeEntity>();
 
-    constructor(
-        private searchService: SearchService,
-        @Optional() @Inject(MD_DIALOG_DATA) public data?: any,
-        @Optional() private containingDialog?: MdDialogRef<ContentNodeSelectorComponent>
-    ) {
+    constructor(private searchService: SearchService,
+                @Optional() @Inject(MD_DIALOG_DATA) public data?: any,
+                @Optional() private containingDialog?: MdDialogRef<ContentNodeSelectorComponent>) {
         if (data) {
             this.title = data.title;
+            this.selectionMade = data.selectionMade;
         }
-
-        if (containingDialog) {
-            this.inDialog = true;
-        }
+        if (containingDialog) { this.inDialog = true; }
     }
 
     search(value) {
@@ -75,26 +70,39 @@ export class ContentNodeSelectorComponent {
                 .subscribe(
                     results => {
                         this.nodes = results;
-                        this.pagination = results.list.pagination;
                     }
                 );
         }
     }
 
-    siteChanged(event) {
-        console.log(event);
-    }
-
+    /**
+     * Invoked when user selects a node
+     *
+     * @param event CustomEvent for node-select
+     */
     onNodeSelect(event: any) {
-        this.chosenNode = event.node;
-        console.log('selected: ', this.chosenNode);
+        this.chosenNode = event.detail.node;
     }
 
-    onNodeUnSelect({ node }) {
+    /**
+     * * Invoked when user unselects a node
+     *
+     * @param param0 Custom event for node-unselect
+     */
+    onNodeUnselect({ node }) {
         this.chosenNode = null;
-        console.log('selected: ', this.chosenNode);
     }
 
+    /**
+     * Emit event with the chosen node
+     */
+    choose() {
+        this.selectionMade.next(this.chosenNode);
+    }
+
+    /**
+     * Close the dialog
+     */
     close() {
         this.containingDialog.close();
     }

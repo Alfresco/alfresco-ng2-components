@@ -19,11 +19,11 @@
                 [permissionsStyle]="permissionsStyle"
                 [creationMenuActions]="false"
                 [currentFolderId]="currentFolderId"
+                selectionMode="single"
                 [contextMenuActions]="false"
                 [contentActions]="false"
                 [allowDropFiles]="false"
-                [enablePagination]="false"
-                >
+                [enablePagination]="false">
             <empty-folder-content>
                 <template>
                     <div>Use the search to query nodes</div>
@@ -59,6 +59,7 @@
     <button md-button
         [disabled]="!chosenNode"
         class="adf-content-node-selector-actions-choose"
+        (click)="choose()"
         data-automation-id="content-node-selector-actions-choose">Choose
     </button>
 
