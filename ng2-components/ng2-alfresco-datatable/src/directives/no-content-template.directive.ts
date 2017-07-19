@@ -30,6 +30,8 @@ export class NoContentTemplateDirective implements AfterContentInit {
     }
 
     ngAfterContentInit() {
-        this.dataTable.noContentTemplate = this.template;
+        if (this.dataTable) {
+            this.dataTable.noContentTemplate = this.template;
+        }
     }
 }

@@ -20,8 +20,10 @@
     (showRowContextMenu)="onShowRowContextMenu($event)"
     (showRowActionsMenu)="onShowRowActionsMenu($event)"
     (executeRowAction)="onExecuteRowAction($event)"
-    (rowClick)="onRowClick($event)"
-    (rowDblClick)="onRowDblClick($event)">
+    (rowClick)="onNodeClick($event.value?.node)"
+    (rowDblClick)="onNodeDblClick($event.value?.node)"
+    (row-select)="onNodeSelect($event.detail)"
+    (row-unselect)="onNodeUnselect($event.detail)">
     <div *ngIf="!isEmptyTemplateDefined()">
         <no-content-template>
             <ng-template>
