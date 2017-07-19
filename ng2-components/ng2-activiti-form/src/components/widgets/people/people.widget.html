@@ -1,23 +1,25 @@
-<div class="mdl-textfield mdl-js-textfield people-widget {{field.className}}"
-     [class.people-widget__invalid]="!field.isValid">
-    <label [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
-    <input class="mdl-textfield__input"
-           type="text"
-           [attr.id]="field.id"
-           [(ngModel)]="value"
-           (ngModelChange)="checkVisibility(field)"
-           (keyup)="onKeyUp($event)"
-           (blur)="onBlur()"
-           [disabled]="field.readOnly"
-           placeholder="{{field.placeholder}}">
-    <span *ngIf="field.validationSummary" class="mdl-textfield__error">{{field.validationSummary}}</span>
+<div class="adf-people-widget {{field.className}}"
+     [class.is-dirty]="value"
+     [class.adf-invalid]="!field.isValid" id="typehead-div" *ngIf="field.isVisible">
+    <md-input-container>
+        <label class="adf-label" [attr.for]="field.id">{{field.name}}</label>
+        <input mdInput
+               class="adf-input"
+               type="text"
+               [id]="field.id"
+               [(ngModel)]="value"
+               (ngModelChange)="checkVisibility(field)"
+               (keyup)="onKeyUp($event)"
+               (blur)="onBlur()"
+               [disabled]="field.readOnly"
+               placeholder="{{field.placeholder}}">
+        <span *ngIf="field.validationSummary" class="adf-error">{{field.validationSummary}}</span>
+    </md-input-container>
 </div>
-<div class="people-widget--autocomplete mdl-shadow--2dp" *ngIf="popupVisible && users.length > 0">
-    <ul>
-        <li *ngFor="let item of users"
-            class="mdl-menu__item"
-            (click)="onItemClick(item, $event)">
-            {{getDisplayName(item)}}
-        </li>
-    </ul>
+<div class="adf-typeahead-autocomplete mat-elevation-z2" *ngIf="popupVisible && users.length > 0">
+    <md-option   *ngFor="let item of users"
+                 [id]="field.id +'-'+item.id"
+               (click)="onItemClick(item, $event)">
+        <span>{{getDisplayName(item)}}</span>
+    </md-option>
 </div>

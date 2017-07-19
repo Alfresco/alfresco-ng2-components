@@ -26,7 +26,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
 @Component({
     selector: 'people-widget',
     templateUrl: './people.widget.html',
-    styleUrls: ['./people.widget.css'],
+    styleUrls: ['./people.widget.scss'],
     host: baseHost
 })
 export class PeopleWidgetComponent extends WidgetComponent implements OnInit {

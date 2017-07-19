@@ -17,7 +17,7 @@
 </div>
 <div class="adf-typeahead-autocomplete mat-elevation-z2" *ngIf="options.length > 0 && popupVisible">
         <md-option *ngFor="let item of options"
-            [attr.id]="field.id +'-'+item.id"
+            [id]="field.id +'-'+item.id"
             (click)="onItemClick(item, $event)">
             <span>{{item.name}}</span>
         </md-option>
