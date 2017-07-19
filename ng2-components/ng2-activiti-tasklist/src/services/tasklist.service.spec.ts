@@ -161,7 +161,7 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should return the task list filtered', (done) => {
-            service.getTasks(<TaskQueryRequestRepresentationModel>fakeFilter).subscribe(
+            service.getTasks(<TaskQueryRequestRepresentationModel> fakeFilter).subscribe(
                 res => {
                     expect(res).toBeDefined();
                     expect(res.length).toEqual(1);
@@ -181,7 +181,7 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should return the task list filtered by processDefinitionKey', (done) => {
-            service.getTasks(<TaskQueryRequestRepresentationModel>fakeFilterWithProcessDefinitionKey).subscribe(
+            service.getTasks(<TaskQueryRequestRepresentationModel> fakeFilterWithProcessDefinitionKey).subscribe(
                 res => {
                     expect(res).toBeDefined();
                     expect(res.length).toEqual(1);
@@ -202,7 +202,7 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should throw an exception when the response is wrong', () => {
-            service.getTasks(<TaskQueryRequestRepresentationModel>fakeFilter).subscribe(
+            service.getTasks(<TaskQueryRequestRepresentationModel> fakeFilter).subscribe(
                 (res) => {
                 },
                 (err: any) => {
@@ -240,7 +240,7 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should return the tasks comments ', (done) => {
-            service.getTaskComments('999').subscribe(
+            service.getComments('999').subscribe(
                 (res: Comment[]) => {
                     expect(res).toBeDefined();
                     expect(res.length).toEqual(2);
@@ -327,7 +327,7 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should add a comment task ', (done) => {
-            service.addTaskComment('999', 'fake-comment-message').subscribe(
+            service.addComment('999', 'fake-comment-message').subscribe(
                 (res: Comment) => {
                     expect(res).toBeDefined();
                     expect(res.id).not.toEqual('');
@@ -367,7 +367,7 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should return the total number of tasks', (done) => {
-            service.getTotalTasks(<TaskQueryRequestRepresentationModel>fakeFilter).subscribe(
+            service.getTotalTasks(<TaskQueryRequestRepresentationModel> fakeFilter).subscribe(
                 res => {
                     expect(res).toBeDefined();
                     expect(res.size).toEqual(1);
