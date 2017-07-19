@@ -178,7 +178,7 @@ export class TaskListService {
      * @param id - taskId
      * @returns {<Comment[]>}
      */
-    getTaskComments(id: string): Observable<Comment[]> {
+    getComments(id: string): Observable<Comment[]> {
         return Observable.fromPromise(this.callApiTaskComments(id))
             .map(res => res)
             .map((response: any) => {
@@ -321,7 +321,7 @@ export class TaskListService {
      * @param message - content of the comment
      * @returns {Comment}
      */
-    addTaskComment(id: string, message: string): Observable<Comment> {
+    addComment(id: string, message: string): Observable<Comment> {
         return Observable.fromPromise(this.callApiAddTaskComment(id, message))
             .map(res => res)
             .map((response: Comment) => {
