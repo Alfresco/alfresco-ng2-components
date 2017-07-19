@@ -20,10 +20,10 @@
                 <div class="mdl-grid">
                     <div class="mdl-cell mdl-cell--2-col task-column mdl-shadow--2dp">
                         <div class="list-buttons">
-                            <activiti-start-task
-                                [appId]="appId"
-                                (onSuccess)="onStartTaskSuccess($event)">
-                            </activiti-start-task>
+                            <button md-raised-button data-automation-id="btn-start-task" (click)="navigateStartTask()">
+                                <md-icon>add</md-icon>
+                                <span>START TASK</span>
+                            </button>
                         </div>
                         <adf-accordion>
                             <adf-accordion-group [heading]="'Tasks'" [isSelected]="true" [isOpen]="true" [headingIcon]="'assignment'">
@@ -38,7 +38,7 @@
                             </adf-accordion-group>
                         </adf-accordion>
                     </div>
-                    <div class="mdl-cell mdl-cell--3-col task-column mdl-shadow--2dp list-column">
+                    <div class="mdl-cell mdl-cell--3-col task-column mdl-shadow--2dp list-column" *ngIf="taskFilter && !isStartTaskMode()">
                         <activiti-tasklist
                             [appId]="taskFilter?.appId"
                             [processDefinitionKey]="taskFilter?.filter?.processDefinitionKey"
@@ -62,7 +62,9 @@
                             -->
                         </activiti-tasklist>
                     </div>
-                    <div class="mdl-cell mdl-cell--7-col task-column mdl-shadow--2dp">
+                    <div class="mdl-cell mdl-cell--7-col task-column mdl-shadow--2dp" *ngIf="!isStartTaskMode()"
+                            [class.mdl-cell--7-col]="taskFilter && !isStartTaskMode()"
+                            [class.mdl-cell--10-col]="!taskFilter || isStartTaskMode()">
                         <activiti-task-details #activitidetails
                             [debugMode]="true"
                             [taskId]="currentTaskId"
@@ -75,6 +77,12 @@
                         <activiti-task-attachments
                             [taskId]="currentTaskId">
                         </activiti-task-attachments>
+                    </div>
+                    <div class="mdl-cell mdl-cell--10-col task-column mdl-shadow--2dp" *ngIf="isStartTaskMode()">
+                         <activiti-start-task
+                                [appId]="appId"
+                                (onSuccess)="onStartTaskSuccess($event)">
+                        </activiti-start-task>
                     </div>
                 </div>
             </div>
