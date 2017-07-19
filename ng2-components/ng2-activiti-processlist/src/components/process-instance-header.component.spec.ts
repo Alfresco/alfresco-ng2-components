@@ -22,7 +22,6 @@ import { Observable } from 'rxjs/Rx';
 import { ProcessInstance } from '../models/process-instance.model';
 import { exampleProcess } from './../assets/process.model.mock';
 import { ProcessService } from './../services/process.service';
-import { ProcessCommentsComponent } from './process-comments.component';
 import { ProcessInstanceHeaderComponent } from './process-instance-header.component';
 
 describe('ProcessInstanceHeaderComponent', () => {
@@ -38,8 +37,7 @@ describe('ProcessInstanceHeaderComponent', () => {
                 CoreModule.forRoot()
             ],
             declarations: [
-                ProcessInstanceHeaderComponent,
-                ProcessCommentsComponent
+                ProcessInstanceHeaderComponent
             ],
             providers: [
                 ProcessService,
