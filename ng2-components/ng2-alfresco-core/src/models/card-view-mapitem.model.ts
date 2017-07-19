@@ -26,14 +26,11 @@
 import { CardViewItem } from '../interface/card-view-item.interface';
 import { CardViewBaseItemModel, CardViewItemProperties } from './card-view-baseitem.model';
 
-export interface CardViewMapItemProperties extends CardViewItemProperties {
-    multiline?: boolean;
-}
 export class CardViewMapItemModel extends CardViewBaseItemModel implements CardViewItem {
     type: string = 'map';
     value: Map<string, string>;
 
-    constructor(obj: CardViewMapItemProperties) {
+    constructor(obj: CardViewItemProperties) {
         super(obj);
     }
 
