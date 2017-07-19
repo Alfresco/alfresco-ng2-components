@@ -1,0 +1,9 @@
+<div class="adf-property-label">{{ property.label }}</div>
+<div class="adf-property-value">
+    <div>
+        <span *ngIf="!isClickable(); else elseBlock" [attr.data-automation-id]="'card-mapitem-value-' + property.key">{{ property.displayValue }}</span>
+        <ng-template #elseBlock>
+            <span class="adf-mapitem-clickable-value" (click)="clicked()" [attr.data-automation-id]="'card-mapitem-value-' + property.key">{{ property.displayValue }}</span>
+        </ng-template>
+    </div>
+</div>
