@@ -1,7 +1,7 @@
 {
     "rulesDirectory": [
         "node_modules/codelyzer",
-        "adf-rules"
+        "../adf-rules"
     ],
     "rules": {
         "align": [
