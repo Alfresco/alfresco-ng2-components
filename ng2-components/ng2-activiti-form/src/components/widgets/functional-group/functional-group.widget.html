@@ -1,23 +1,27 @@
-<div class="mdl-textfield mdl-js-textfield functional-group-widget {{field.className}}"
-     [class.functional-group-widget__invalid]="!field.isValid">
-    <label [attr.for]="field.id">{{field.name}}</label>
-    <input class="mdl-textfield__input"
-           type="text"
-           [attr.id]="field.id"
-           [(ngModel)]="value"
-           (ngModelChange)="checkVisibility(field)"
-           (keyup)="onKeyUp($event)"
-           (blur)="onBlur()"
-           [disabled]="field.readOnly"
-           placeholder="{{field.placeholder}}">
-    <span *ngIf="field.validationSummary" class="mdl-textfield__error">{{field.validationSummary}}</span>
+<div class="adf-group-widget {{field.className}}"
+     [class.is-dirty]="value"
+     [class.adf-invalid]="!field.isValid" id="typehead-div" *ngIf="field.isVisible">
+    <md-input-container>
+        <label class="adf-label" [attr.for]="field.id">{{field.name}}</label>
+        <input mdInput
+               class="adf-input"
+               type="text"
+               [id]="field.id"
+               [(ngModel)]="value"
+               (ngModelChange)="checkVisibility(field)"
+               (keyup)="onKeyUp($event)"
+               (blur)="onBlur()"
+               [disabled]="field.readOnly"
+               placeholder="{{field.placeholder}}">
+        <md-error  *ngIf="field.validationSummary">
+            <div class="adf-error-text" >{{field.validationSummary}}</div> <i class="material-icons adf-error-icon">warning</i>
+        </md-error>
+    </md-input-container>
 </div>
-<div class="functional-group-widget--autocomplete mdl-shadow--2dp" *ngIf="popupVisible && groups.length > 0">
-    <ul>
-        <li *ngFor="let item of groups"
-            class="mdl-menu__item"
-            (click)="onItemClick(item, $event)">
-            {{item.name}}
-        </li>
-    </ul>
+<div class="adf-typeahead-autocomplete mat-elevation-z2" *ngIf="popupVisible && users.length > 0">
+    <md-option   *ngFor="let item of groups"
+                 [id]="field.id +'-'+item.id"
+                 (click)="onItemClick(item, $event)">
+        <span>{{item.name}}}</span>
+    </md-option>
 </div>
