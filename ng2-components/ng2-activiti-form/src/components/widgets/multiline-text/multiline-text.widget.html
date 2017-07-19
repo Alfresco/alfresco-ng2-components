@@ -8,15 +8,17 @@
                 md-autosize
                 type="text"
                 rows= "3"
-                [attr.id]="field.id"
-                [attr.required]="isRequired()"
+                [id]="field.id"
+                [required]="isRequired()"
                 [value]="field.value"
                 [(ngModel)]="field.value"
                 (ngModelChange)="checkVisibility(field)"
                 [disabled]="field.readOnly"
                 placeholder="{{field.placeholder}}">
         </textarea>
-        <span *ngIf="field.validationSummary" class="adf-error">{{field.validationSummary}}</span>
+        <md-error  *ngIf="field.validationSummary">
+            {{field.validationSummary}}
+        </md-error>
     </md-input-container>
 </div>
 
