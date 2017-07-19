@@ -1,15 +1,19 @@
-<div class="mdl-textfield mdl-js-textfield number-widget {{field.className}}"
-     [class.number-widget__invalid]="!field.isValid">
+<div class="number-widget {{field.className}}"
+     [class.adf-invalid]="!field.isValid">
     <label [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
-    <input class="mdl-textfield__input"
+    <input mdInput
+           class="adf-input"
            type="text"
            pattern="-?[0-9]*(\.[0-9]+)?"
-           [attr.id]="field.id"
-           [attr.required]="isRequired()"
+           [id]="field.id"
+           [required]="isRequired()"
            [value]="field.value"
            [(ngModel)]="field.value"
            (ngModelChange)="checkVisibility(field)"
            [disabled]="field.readOnly"
            placeholder="{{field.placeholder}}">
-    <span *ngIf="field.validationSummary" class="mdl-textfield__error">{{field.validationSummary}}</span>
+    <md-error  *ngIf="field.validationSummary">
+        {{field.validationSummary}}
+    </md-error>
 </div>
+number
