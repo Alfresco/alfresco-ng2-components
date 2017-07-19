@@ -30,6 +30,21 @@
         }
     }
     &-invalid {
+        .adf-error-text {
+            padding: 1px;
+            height: 16px;
+            font-size: 12px;
+            line-height: 1.33;
+            float: left;
+            color: $alfresco-warn-color--hue-3;
+        }
+
+        .adf-error-icon {
+            float: right;
+            font-size: 17px;
+            color: $alfresco-warn-color--hue-3;
+        }
+
         .adf-input {
             border-color: $alfresco-warn-color--hue-3;
         }
@@ -38,9 +53,6 @@
             &:after {
                 background-color: $alfresco-warn-color--hue-3;
             }
-        }
-        .adf-error {
-            visibility: visible !important;
         }
     }
 }
