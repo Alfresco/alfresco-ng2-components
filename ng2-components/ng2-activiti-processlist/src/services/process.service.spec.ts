@@ -424,7 +424,7 @@ describe('ProcessService', () => {
             let getProcessInstanceComments: jasmine.Spy;
 
             beforeEach(() => {
-                getProcessInstanceComments = spyOn(alfrescoApi.activiti.commentsApi, 'getComments')
+                getProcessInstanceComments = spyOn(alfrescoApi.activiti.commentsApi, 'getProcessInstanceComments')
                     .and
                     .returnValue(Promise.resolve({ data: [ fakeComment, fakeComment ] }));
             });
@@ -478,7 +478,7 @@ describe('ProcessService', () => {
             let addProcessInstanceComment: jasmine.Spy;
 
             beforeEach(() => {
-                addProcessInstanceComment = spyOn(alfrescoApi.activiti.commentsApi, 'addComment')
+                addProcessInstanceComment = spyOn(alfrescoApi.activiti.commentsApi, 'addProcessInstanceComment')
                     .and
                     .returnValue(Promise.resolve(fakeComment));
             });
@@ -638,7 +638,7 @@ describe('ProcessService', () => {
             }));
 
             it('should return the default filters', (done) => {
-                service.createDefaultFilters('1234').subscribe(
+                service.createDefaultProcessFilters('1234').subscribe(
                     (res: FilterProcessRepresentationModel []) => {
                         expect(res).toBeDefined();
                         expect(res.length).toEqual(3);
@@ -668,12 +668,12 @@ describe('ProcessService', () => {
             let filter = fakeFilters.data[0];
 
             it('should call the API to create the filter', () => {
-                service.addFilter(filter);
+                service.addProcessFilter(filter);
                 expect(createFilter).toHaveBeenCalledWith(filter);
             });
 
             it('should return the created filter', async(() => {
-                service.addFilter(filter).subscribe((createdFilter: FilterProcessRepresentationModel) => {
+                service.addProcessFilter(filter).subscribe((createdFilter: FilterProcessRepresentationModel) => {
                     expect(createdFilter).toBe(filter);
                 });
             }));
@@ -681,7 +681,7 @@ describe('ProcessService', () => {
             it('should pass on any error that is returned by the API', async(() => {
                 createFilter = createFilter.and.returnValue(Promise.reject(fakeError));
 
-                service.addFilter(filter).subscribe(
+                service.addProcessFilter(filter).subscribe(
                     () => {},
                     (res) => {
                         expect(res).toBe(fakeError);
@@ -691,7 +691,7 @@ describe('ProcessService', () => {
 
             it('should return a default error if no data is returned by the API', async(() => {
                 createFilter = createFilter.and.returnValue(Promise.reject(null));
-                service.addFilter(filter).subscribe(
+                service.addProcessFilter(filter).subscribe(
                     () => {},
                     (res) => {
                         expect(res).toBe('Server error');
