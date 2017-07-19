@@ -24,7 +24,6 @@
 - [Process Instance Details Header component](#process-instance-details-header-component)
   * [Properties](#properties-4)
   * [Events](#events-4)
-- [ProcessInstanceModel](#processinstancemodel)
 - [Process Instance Tasks component](#process-instance-tasks-component)
   * [Properties](#properties-5)
   * [Events](#events-5)
