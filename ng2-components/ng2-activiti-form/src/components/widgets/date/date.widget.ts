@@ -28,7 +28,7 @@ declare var componentHandler: any;
 @Component({
     selector: 'date-widget',
     templateUrl: './date.widget.html',
-    styleUrls: ['./date.widget.css'],
+    styleUrls: ['./date.widget.scss'],
     host: baseHost
 })
 export class DateWidgetComponent extends WidgetComponent implements OnInit, AfterViewChecked {
