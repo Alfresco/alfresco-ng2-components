@@ -1,5 +1,5 @@
 <div class="adf-dynamic-table-widget {{field.className}}"
-    [class.adf-dynamic-table-widget__invalid]="!isValid()" *ngIf="field?.isVisible">
+    [class.adf-invalid]="!isValid()" *ngIf="field?.isVisible">
     <div class="adf-dynamic-table-widget__label">{{content.name}}</div>
 
     <div *ngIf="!editMode">
@@ -60,7 +60,7 @@
         (save)="onSaveChanges()"
         (cancel)="onCancelChanges()">
      </row-editor>
-
-     <div class="dynamic-table-widget__summary">{{content?.field.validationSummary}}</div>
-
+    <md-error  *ngIf="content?.field.validationSummary">
+        <div class="adf-error-text" >{{content?.field.validationSummary}}</div> <i class="material-icons adf-error-icon">warning</i>
+    </md-error>
 </div>

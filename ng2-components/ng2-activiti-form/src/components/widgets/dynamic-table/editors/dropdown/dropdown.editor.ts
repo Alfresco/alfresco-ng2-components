@@ -25,7 +25,7 @@ import { DynamicTableColumn, DynamicTableColumnOption, DynamicTableModel, Dynami
 @Component({
     selector: 'alf-dropdown-editor',
     templateUrl: './dropdown.editor.html',
-    styleUrls: ['./dropdown.editor.css']
+    styleUrls: ['./dropdown.editor.scss']
 })
 export class DropdownEditorComponent implements OnInit {
 
