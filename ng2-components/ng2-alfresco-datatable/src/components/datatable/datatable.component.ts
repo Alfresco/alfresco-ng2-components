@@ -146,7 +146,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
         }
 
         if (changes.selectionMode && !changes.selectionMode.isFirstChange()) {
-            this.resetSelection();
+            this.resetSelection(true);
         }
     }
 
@@ -245,20 +245,12 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
         if (row) {
             if (this.data) {
                 const newValue = !row.isSelected;
-
                 const domEventName = newValue ? 'row-select' : 'row-unselect';
-                const domEvent = new CustomEvent(domEventName, {
-                    detail: {
-                        row: row,
-                        selection: this.selection
-                    },
-                    bubbles: true
-                });
 
                 if (this.isSingleSelectionMode()) {
                     this.resetSelection();
                     this.selectRow(row, newValue);
-                    this.elementRef.nativeElement.dispatchEvent(domEvent);
+                    this.emitRowSelectionEvent(domEventName, row);
                 }
 
                 if (this.isMultiSelectionMode()) {
@@ -267,7 +259,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
                         this.resetSelection();
                     }
                     this.selectRow(row, newValue);
-                    this.elementRef.nativeElement.dispatchEvent(domEvent);
+                    this.emitRowSelectionEvent(domEventName, row);
                 }
             }
 
@@ -276,7 +268,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
         }
     }
 
-    resetSelection(): void {
+    resetSelection(raiseEvent: boolean = false): void {
         if (this.data) {
             const rows = this.data.getRows();
             if (rows && rows.length > 0) {
@@ -285,6 +277,10 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
             this.selection.splice(0);
         }
         this.isSelectAllChecked = false;
+
+        if (raiseEvent) {
+            this.emitRowSelectionEvent('row-unselect', null);
+        }
     }
 
     onRowDblClick(row: DataRow, e?: Event) {
@@ -316,6 +312,11 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
                     this.selectRow(rows[i], e.checked);
                 }
             }
+
+            const domEventName = e.checked ? 'row-select' : 'row-unselect';
+            const row = this.selection.length > 0 ? this.selection[0] : null;
+
+            this.emitRowSelectionEvent(domEventName, row);
         }
     }
 
@@ -325,15 +326,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
         this.selectRow(row, newValue);
 
         const domEventName = newValue ? 'row-select' : 'row-unselect';
-        const domEvent = new CustomEvent(domEventName, {
-            detail: {
-                row: row,
-                selection: this.selection
-            },
-            bubbles: true
-        });
-
-        this.elementRef.nativeElement.dispatchEvent(domEvent);
+        this.emitRowSelectionEvent(domEventName, row);
     }
 
     onImageLoadingError(event: Event) {
@@ -428,5 +421,16 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
                 }
             }
         }
+    }
+
+    private emitRowSelectionEvent(name: string, row: DataRow) {
+        const domEvent = new CustomEvent(name, {
+            detail: {
+                row: row,
+                selection: this.selection
+            },
+            bubbles: true
+        });
+        this.elementRef.nativeElement.dispatchEvent(domEvent);
     }
 }
