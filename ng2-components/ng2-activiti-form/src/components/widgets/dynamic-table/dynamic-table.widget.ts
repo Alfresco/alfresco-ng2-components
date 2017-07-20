@@ -17,7 +17,7 @@
 
  /* tslint:disable:component-selector  */
 
-import { ChangeDetectorRef, Component, ElementRef, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { FormFieldModel } from '../core/form-field.model';
@@ -29,7 +29,8 @@ import { DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './dynami
     selector: 'dynamic-table-widget',
     templateUrl: './dynamic-table.widget.html',
     styleUrls: ['./dynamic-table.widget.scss'],
-    host: baseHost
+    host: baseHost,
+    encapsulation: ViewEncapsulation.None
 })
 export class DynamicTableWidgetComponent extends WidgetComponent implements OnInit {
 

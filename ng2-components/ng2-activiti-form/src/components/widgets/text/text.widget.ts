@@ -17,7 +17,7 @@
 
  /* tslint:disable:component-selector  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormService } from './../../../services/form.service';
 import { baseHost , WidgetComponent } from './../widget.component';
 
@@ -25,7 +25,8 @@ import { baseHost , WidgetComponent } from './../widget.component';
     selector: 'text-widget',
     templateUrl: './text.widget.html',
     styleUrls: ['./text.widget.scss'],
-    host: baseHost
+    host: baseHost,
+    encapsulation: ViewEncapsulation.None
 })
 export class TextWidgetComponent extends WidgetComponent implements OnInit {
 

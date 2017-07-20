@@ -17,7 +17,7 @@
 
  /* tslint:disable:component-selector  */
 
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 import { ExternalContent } from '../core/external-content';
 import { ExternalContentLink } from '../core/external-content-link';
@@ -30,7 +30,9 @@ declare let dialogPolyfill: any;
 @Component({
     selector: 'attach-widget',
     templateUrl: './attach.widget.html',
-    styleUrls: ['./attach.widget.css'], host: baseHost
+    styleUrls: ['./attach.widget.css'],
+    host: baseHost,
+    encapsulation: ViewEncapsulation.None
 })
 export class AttachWidgetComponent extends WidgetComponent implements OnInit {
 

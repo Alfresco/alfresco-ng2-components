@@ -38,6 +38,19 @@
     padding-top: 3px;
 }
 
+
+.amount-widget__invalid .mdl-textfield__input {
+    border-color: #d50000;
+}
+
+.amount-widget__invalid .mdl-textfield__label {
+    color: #d50000;
+}
+
+.amount-widget__invalid .mdl-textfield__label:after {
+    background-color: #d50000;
+}
+
 md-input-container >>> .mat-input-wrapper {
     margin-top: 0px;
     padding-top: 4px;
@@ -51,16 +64,4 @@ md-input-container >>> .mat-input-ripple {
 md-input-container.mat-focused >>> .mat-input-underline .mat-input-ripple {
     visibility: hidden;
     transition: none;
-}
-
-.amount-widget__invalid .mdl-textfield__input {
-    border-color: #d50000;
-}
-
-.amount-widget__invalid .mdl-textfield__label {
-    color: #d50000;
-}
-
-.amount-widget__invalid .mdl-textfield__label:after {
-    background-color: #d50000;
 }

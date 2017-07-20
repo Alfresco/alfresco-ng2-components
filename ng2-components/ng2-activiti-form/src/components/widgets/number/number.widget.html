@@ -1,20 +1,23 @@
 <div class="number-widget {{field.className}}"
      [class.adf-invalid]="!field.isValid">
-    <label [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
+    <div>
+        <label class="adf-label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
+    </div>
     <md-input-container>
-    <input mdInput
-           class="adf-input"
-           type="text"
-           pattern="-?[0-9]*(\.[0-9]+)?"
-           [id]="field.id"
-           [required]="isRequired()"
-           [value]="field.value"
-           [(ngModel)]="field.value"
-           (ngModelChange)="checkVisibility(field)"
-           [disabled]="field.readOnly"
-           placeholder="{{field.placeholder}}">
-    <md-error  *ngIf="field.validationSummary">
-        <div class="adf-error-text" >{{field.validationSummary}}</div> <i class="material-icons adf-error-icon">warning</i>
-    </md-error>
+        <input mdInput
+               class="adf-input"
+               type="text"
+               pattern="-?[0-9]*(\.[0-9]+)?"
+               [id]="field.id"
+               [required]="isRequired()"
+               [value]="field.value"
+               [(ngModel)]="field.value"
+               (ngModelChange)="checkVisibility(field)"
+               [disabled]="field.readOnly"
+               placeholder="{{field.placeholder}}">
+        <md-error *ngIf="field.validationSummary">
+            <div class="adf-error-text">{{field.validationSummary}}</div>
+            <i class="material-icons adf-error-icon">warning</i>
+        </md-error>
     </md-input-container>
 </div>

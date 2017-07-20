@@ -17,11 +17,9 @@
 
  /* tslint:disable:component-selector  */
 
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { FormService } from './../../services/form.service';
 import { FormFieldModel } from './core/index';
-
-declare let componentHandler: any;
 
 export const baseHost = {
     '(click)': 'event($event)',
@@ -41,7 +39,8 @@ export const baseHost = {
 @Component({
     selector: 'base-widget',
     template: '',
-    host: baseHost
+    host: baseHost,
+    encapsulation: ViewEncapsulation.None
 })
 export class WidgetComponent implements AfterViewInit {
 
@@ -78,31 +77,7 @@ export class WidgetComponent implements AfterViewInit {
     }
 
     ngAfterViewInit() {
-        this.setupMaterialComponents(componentHandler);
         this.fieldChanged.emit(this.field);
-    }
-
-    setupMaterialComponents(handler?: any): boolean {
-        // workaround for MDL issues with dynamic components
-        if (handler) {
-            handler.upgradeAllRegistered();
-            return true;
-        }
-        return false;
-    }
-
-    setupMaterialTextField(elementRef: ElementRef, handler: any, value: string): boolean {
-        if (elementRef && handler) {
-            let el = elementRef.nativeElement;
-            if (el) {
-                let container = el.querySelector('.mdl-textfield');
-                if (container) {
-                    container.MaterialTextfield.change(value);
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     /** @deprecated used only to trigger visibility engine, components should do that internally if needed */
