@@ -23,6 +23,7 @@ import { DocumentListServiceMock } from './../../assets/document-list.service.mo
 import { ContentActionHandler } from './../../models/content-action.model';
 import { DocumentActionsService } from './../../services/document-actions.service';
 import { FolderActionsService } from './../../services/folder-actions.service';
+import { NodeActionsService } from './../../services/node-actions.service';
 import { DocumentListComponent } from './../document-list.component';
 import { ContentActionListComponent } from './content-action-list.component';
 import { ContentActionComponent } from './content-action.component';
@@ -37,6 +38,7 @@ describe('ContentAction', () => {
     let contentService: AlfrescoContentService;
     let translateService: AlfrescoTranslationService;
     let notificationService: NotificationService;
+    let nodeActionsService: NodeActionsService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -52,9 +54,10 @@ describe('ContentAction', () => {
     beforeEach(() => {
         contentService = TestBed.get(AlfrescoContentService);
         translateService = <AlfrescoTranslationService> { addTranslationFolder: () => {}};
+        nodeActionsService = new NodeActionsService(null, translateService, null, null);
         notificationService = new NotificationService(null);
         let documentServiceMock = new DocumentListServiceMock();
-        documentActions = new DocumentActionsService(null, translateService, notificationService);
+        documentActions = new DocumentActionsService(translateService, notificationService, nodeActionsService);
         folderActions = new FolderActionsService(null, contentService);
 
         documentList = new DocumentListComponent(documentServiceMock, null, null, null);

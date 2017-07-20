@@ -16,7 +16,6 @@
  */
 
 import { EventEmitter, Injectable } from '@angular/core';
-import { MdDialog } from '@angular/material';
 import { MinimalNodeEntity } from 'alfresco-js-api';
 import { AlfrescoContentService, AlfrescoTranslationService, NotificationService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Observable';
@@ -25,6 +24,7 @@ import { ContentNodeSelectorComponent } from '../components/content-node-selecto
 import { ContentActionHandler } from '../models/content-action.model';
 import { PermissionModel } from '../models/permissions.model';
 import { DocumentListService } from './document-list.service';
+import { NodeActionsService } from './node-actions.service';
 
 @Injectable()
 export class DocumentActionsService {
@@ -33,9 +33,9 @@ export class DocumentActionsService {
 
     private handlers: { [id: string]: ContentActionHandler; } = {};
 
-    constructor(private dialog: MdDialog,
-                private translateService: AlfrescoTranslationService,
+    constructor(private translateService: AlfrescoTranslationService,
                 private notificationService: NotificationService,
+                private nodeActionsService: NodeActionsService,
                 private documentListService?: DocumentListService,
                 private contentService?: AlfrescoContentService) {
         this.setupActionHandlers();
@@ -70,34 +70,6 @@ export class DocumentActionsService {
         this.handlers['copy'] = this.copyNode.bind(this);
         this.handlers['move'] = this.moveNode.bind(this);
         this.handlers['delete'] = this.deleteNode.bind(this);
-
-        // TODO: for demo purposes only, will be removed during future revisions
-        this.handlers['system1'] = this.handleStandardAction1.bind(this);
-        this.handlers['system2'] = this.handleStandardAction2.bind(this);
-    }
-
-    // TODO: for demo purposes only, will be removed during future revisions
-    /**
-     * @deprecated in 1.7.0
-     *
-     * @private
-     * @memberof DocumentActionsService
-     */
-    private handleStandardAction1(/*obj: any*/) {
-        console.log('handleStandardAction1 is deprecated in 1.7.0 and will be removed in future versions');
-        window.alert('standard document action 1');
-    }
-
-    // TODO: for demo purposes only, will be removed during future revisions
-    /**
-     * @deprecated in 1.7.0
-     *
-     * @private
-     * @memberof DocumentActionsService
-     */
-    private handleStandardAction2(/*obj: any*/) {
-        console.log('handleStandardAction2 is deprecated in 1.7.0 and will be removed in future versions');
-        window.alert('standard document action 2');
     }
 
     private download(obj: any): Observable<boolean> {
@@ -114,69 +86,40 @@ export class DocumentActionsService {
     }
 
     private copyNode(obj: any, target?: any, permission?: string) {
-        if (this.contentService.hasPermission(obj.entry, permission)) {
-            const observable: Subject<any> = new Subject<any>(),
-                title = `Copy ${obj.entry.name} to ...`,
-                selectionMade: EventEmitter<MinimalNodeEntity> = new EventEmitter<MinimalNodeEntity>();
-
-            this.dialog.open(ContentNodeSelectorComponent, {
-                data: { title, selectionMade },
-                panelClass: 'adf-content-node-selector-dialog',
-                width: '400px'
-            });
-
-            selectionMade.subscribe((parent) => {
-                this.documentListService.copyNode(obj.entry.id, parent.entry.id).subscribe(() => {
-                        if (target && typeof target.reload === 'function') {
-                            target.reload();
-                        }
-                        let fileOperationMessage: any = this.translateService.get('OPERATION_SUCCES.CONTENT.COPY');
-                        this.notificationService.openSnackMessage(fileOperationMessage.value, 3000);
-                        observable.next();
-                    },
-                    observable.error
-                );
-                this.dialog.closeAll();
-            });
-
-            return observable;
-        } else {
-            this.permissionEvent.next(new PermissionModel({type: 'content', action: 'copy', permission}));
-            return Observable.throw(new Error(`No permission to ${permission}`));
-        }
+        const actionObservable = this.nodeActionsService.copyContent(obj.entry, permission);
+        this.prepareHandlers(actionObservable, 'content', 'copy', target, permission);
+        return actionObservable;
     }
 
     private moveNode(obj: any, target?: any, permission?: string) {
-        if (this.contentService.hasPermission(obj.entry, permission)) {
-            const observable: Subject<any> = new Subject<any>(),
-                title = `Move ${obj.entry.name} to ...`,
-                selectionMade: EventEmitter<MinimalNodeEntity> = new EventEmitter<MinimalNodeEntity>();
+        const actionObservable = this.nodeActionsService.moveContent(obj.entry, permission);
+        this.prepareHandlers(actionObservable, 'content', 'move', target, permission);
+        return actionObservable;
+    }
 
-            this.dialog.open(ContentNodeSelectorComponent, {
-                data: { title, selectionMade },
-                panelClass: 'adf-content-node-selector-dialog',
-                width: '400px'
-            });
-
-            selectionMade.subscribe((parent) => {
-                this.documentListService.moveNode(obj.entry.id, parent.entry.id).subscribe(() => {
-                        if (target && typeof target.reload === 'function') {
-                            target.reload();
-                        }
-                        let fileOperationMessage: any = this.translateService.get('OPERATION_SUCCES.CONTENT.MOVE');
-                        this.notificationService.openSnackMessage(fileOperationMessage.value, 3000);
-                        observable.next();
-                    },
-                    observable.error
-                );
-                this.dialog.closeAll();
-            });
-
-            return observable;
-        } else {
-            this.permissionEvent.next(new PermissionModel({type: 'content', action: 'move', permission}));
-            return Observable.throw(new Error(`No permission to ${permission}`));
-        }
+    private prepareHandlers(actionObservable, type: string, action: string, target?: any, permission?: string): void {
+        actionObservable.subscribe(
+            (fileOperationMessage) => {
+                this.notificationService.openSnackMessage(fileOperationMessage, 3000);
+                if (target && typeof target.reload === 'function') {
+                    target.reload();
+                }
+            },
+            (errorStatusCode) => {
+                switch (errorStatusCode) {
+                    case 403:
+                        this.permissionEvent.next(new PermissionModel({type, action, permission}));
+                        break;
+                    case 409:
+                        let conflictError: any = this.translateService.get('OPERATION.ERROR.CONFLICT');
+                        this.notificationService.openSnackMessage(conflictError.value, 3000);
+                        break;
+                    default:
+                        let unknownError: any = this.translateService.get('OPERATION.ERROR.UNKNOWN');
+                        this.notificationService.openSnackMessage(unknownError.value, 3000);
+                }
+            }
+        );
     }
 
     private deleteNode(obj: any, target?: any, permission?: string): Observable<any> {

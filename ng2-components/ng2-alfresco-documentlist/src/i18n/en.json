@@ -16,10 +16,16 @@
         "PLACEHOLDER_LABEL": "Site List",
         "DEFAULT_OPTION": "No Site Chosen"
     },
-    "OPERATION_SUCCES": {
-        "CONTENT": {
-            "COPY": "Content was copied successfully.",
-            "MOVE": "Content was moved successfully."
+    "OPERATION": {
+        "SUCCES": {
+            "CONTENT": {
+                "COPY": "Content was copied successfully.",
+                "MOVE": "Content was moved successfully."
+            }
+        },
+        "ERROR": {
+            "CONFLICT": "Name already exists in target location.",
+            "UNKNOWN": "Unknown error happened."
         }
     }
 }
