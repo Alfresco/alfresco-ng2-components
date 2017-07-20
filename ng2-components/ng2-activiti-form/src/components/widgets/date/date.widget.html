@@ -1,29 +1,24 @@
-<div class="mdl-grid mdl-grid__date-widget {{field.className}}" *ngIf="field?.isVisible" id="data-widget">
-    <div class="mdl-cell mdl-cell--11-col">
-        <div class="mdl-textfield mdl-js-textfield date-widget"
-             [class.date-widget__invalid]="!field.isValid">
-            <label [attr.for]="field.id">{{field.name}} ({{field.dateDisplayFormat}})<span *ngIf="isRequired()">*</span></label>
-            <input class="mdl-textfield__input mdl-date__input"
-                   type="text"
-                   [attr.id]="field.id"
-                   [attr.required]="isRequired()"
-                   [value]="field.value"
-                   [(ngModel)]="field.value"
-                   (ngModelChange)="onDateChanged()"
-                   (onOk)="onDateSelected()"
-                   [disabled]="field.readOnly"
-                   placeholder="{{field.placeholder}}">
-            <span *ngIf="field.validationSummary" class="mdl-textfield__error">{{field.validationSummary}}</span>
-        </div>
-    </div>
-    <div class="mdl-cell mdl-cell--1-col">
-        <button
-            [attr.id]="field.id+'-button'"
-            [disabled]="field.readOnly"
-            class="mdl-button mdl-js-button mdl-button--icon"
-            (click)="datePicker.toggle()">
-            <i class="material-icons">date_range</i>
-        </button>
-    </div>
+<div class="{{field.className}}" *ngIf="field?.isVisible" id="data-widget">
+    <md-input-container class="adf-date-widget">
+        <input mdInput
+        type="text"
+        [id]="field.id"
+        [required]="isRequired()"
+        [mdDatepicker]="datePicker"
+        [value]="field.value"
+        [(ngModel)]="field.value"
+        (ngModelChange)="onDateChanged()"
+        (onOk)="onDateSelected()"
+        [disabled]="field.readOnly"
+        placeholder="{{field.placeholder}}">
+        <button mdSuffix [mdDatepickerToggle]="datePicker"></button>
+        <md-error  *ngIf="field.validationSummary">
+            <div class="adf-error-text" >{{field.validationSummary}}</div>
+            <i class="material-icons adf-error-icon">warning</i>
+        </md-error>
+    </md-input-container>
+    <md-datepicker #datePicker [touchUi]="true"></md-datepicker>
 </div>
+
+
 
