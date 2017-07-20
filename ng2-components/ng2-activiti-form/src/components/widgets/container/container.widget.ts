@@ -17,18 +17,17 @@
 
  /* tslint:disable:component-selector  */
 
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormService } from './../../../services/form.service';
 import { baseHost , WidgetComponent } from './../widget.component';
 import { ContainerWidgetComponentModel } from './container.widget.model';
 
-declare var componentHandler: any;
-
 @Component({
     selector: 'container-widget',
     templateUrl: './container.widget.html',
-    styleUrls: ['./container.widget.css'],
-    host: baseHost
+    styleUrls: ['./container.widget.scss'],
+    host: baseHost,
+    encapsulation: ViewEncapsulation.None
 })
 export class ContainerWidgetComponent extends WidgetComponent implements OnInit, AfterViewInit {
 
@@ -48,18 +47,5 @@ export class ContainerWidgetComponent extends WidgetComponent implements OnInit,
         if (this.field) {
             this.content = new ContainerWidgetComponentModel(this.field);
         }
-    }
-
-    ngAfterViewInit() {
-        this.setupMaterialComponents();
-    }
-
-    setupMaterialComponents(): boolean {
-        // workaround for MDL issues with dynamic components
-        if (componentHandler) {
-            componentHandler.upgradeAllRegistered();
-            return true;
-        }
-        return false;
     }
 }

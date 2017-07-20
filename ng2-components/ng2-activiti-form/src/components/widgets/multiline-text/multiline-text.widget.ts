@@ -17,7 +17,7 @@
 
  /* tslint:disable:component-selector  */
 
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { FormService } from './../../../services/form.service';
 import { baseHost , WidgetComponent } from './../widget.component';
 
@@ -25,7 +25,8 @@ import { baseHost , WidgetComponent } from './../widget.component';
     selector: 'multiline-text-widget',
     templateUrl: './multiline-text.widget.html',
     styleUrls: ['./multiline-text.widget.scss'],
-    host: baseHost
+    host: baseHost,
+    encapsulation: ViewEncapsulation.None
 })
 export class MultilineTextWidgetComponentComponent extends WidgetComponent {
 

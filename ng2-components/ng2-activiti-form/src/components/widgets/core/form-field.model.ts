@@ -173,8 +173,7 @@ export class FormFieldModel extends FormWidgetModel {
             }
 
             // <container>
-            this.numberOfColumns = <number> json.numberOfColumns;
-
+            this.numberOfColumns = <number> json.numberOfColumns || 1;
             let columnSize: number = 12;
             if (this.numberOfColumns > 1) {
                 columnSize = 12 / this.numberOfColumns;

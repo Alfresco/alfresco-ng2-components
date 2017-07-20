@@ -2,7 +2,7 @@
      [class.is-dirty]="value"
      [class.adf-invalid]="!field.isValid" id="typehead-div" *ngIf="field.isVisible">
     <md-input-container>
-    <label class="adf-label" [attr.for]="field.id">{{field.name}}</label>
+        <label class="adf-label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
     <input mdInput
            class="adf-input"
            type="text"

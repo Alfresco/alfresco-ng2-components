@@ -17,7 +17,7 @@
 
  /* tslint:disable:component-selector  */
 
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation} from '@angular/core';
 import { FormService } from './../../../services/form.service';
 import { baseHost , WidgetComponent } from './../widget.component';
 
@@ -29,7 +29,8 @@ import { baseHost , WidgetComponent } from './../widget.component';
             <span style="color: red">Unknown type: {{field.type}}</span>
         </div>
     `,
-    host: baseHost
+    host: baseHost,
+    encapsulation: ViewEncapsulation.None
 })
 export class UnknownWidgetComponent extends WidgetComponent {
 
