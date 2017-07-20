@@ -86,10 +86,8 @@ export class ContentNodeSelectorComponent {
 
     /**
      * * Invoked when user unselects a node
-     *
-     * @param param0 Custom event for node-unselect
      */
-    onNodeUnselect({ node }) {
+    onNodeUnselect() {
         this.chosenNode = null;
     }
 

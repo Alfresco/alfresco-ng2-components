@@ -69,10 +69,21 @@ export class DocumentListService {
      * Copy a node to destination node
      *
      * @param nodeId The id of the node to be copied
-     * @param targetParentId The id of the folder-node where the node have to be copied
+     * @param targetParentId The id of the folder-node where the node have to be copied to
      */
     copyNode(nodeId: string, targetParentId: string) {
-        return Observable.fromPromise(this.apiService.getInstance().nodes.copyNode(nodeId, {targetParentId}))
+        return Observable.fromPromise(this.apiService.getInstance().nodes.copyNode(nodeId, { targetParentId }))
+            .catch(err => this.handleError(err));
+    }
+
+    /**
+     * Move a node to destination node
+     *
+     * @param nodeId The id of the node to be moved
+     * @param targetParentId The id of the folder-node where the node have to be moved to
+     */
+    moveNode(nodeId: string, targetParentId: string) {
+        return Observable.fromPromise(this.apiService.getInstance().nodes.moveNode(nodeId, { targetParentId }))
             .catch(err => this.handleError(err));
     }
 
