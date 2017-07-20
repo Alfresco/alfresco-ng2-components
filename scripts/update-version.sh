@@ -99,25 +99,22 @@ update_total_build_dependency_version(){
 }
 
 update_total_build_dependency_js_version(){
-    echo "====== UPDATE VERSION OF TOTAL BUILD to  alfresco-js-api version ${1} ======"
-    DESTDIR="$DIR/../ng2-components/"
+    echo "====== UPDATE DEPENDENCY VERSION of total build to ~${1} in ${DESTDIR}======"
+c    DESTDIR="$DIR/../ng2-components/"
     PACKAGETOCHANGE="alfresco-js-api"
 
-    echo "====== UPDATE DEPENDENCY VERSION of total build to ~${1} in ${DESTDIR}======"
     sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
-    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"~${1}\"/g"  ${DESTDIR}/package.json
+    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
 }
 
 update_component_js_version(){
-   echo "====== UPDATE DEPENDENCY VERSION of alfresco-js-api in ${1} to ${VERSION} ======"
+   echo "====== UPDATE DEPENDENCY VERSION of alfresco-js-api in ${1} to ${2} ======"
    DESTDIR="$DIR/../ng2-components/${1}"
 
    PACKAGETOCHANGE="alfresco-js-api"
 
-   echo "====== UPDATE DEPENDENCY VERSION of alfresco-js-api to ~${2} in ${1}======"
-
    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"${2}\"/g"  ${DESTDIR}/package.json
-   sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"~${2}\"/g"  ${DESTDIR}/package.json
+   sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"${2}\"/g"  ${DESTDIR}/package.json
 
 }
 
@@ -127,9 +124,8 @@ update_demo_shell_dependency_version(){
    do
     echo "====== UPDATE VERSION OF DEMO-SHELL to ${projects[$k]} version ${VERSION} ======"
     DESTDIR="$DIR/../demo-shell-ng2/"
-    sed "${sedi[@]}" "s/\"${projects[$k]}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${projects[$k]}\": \"${VERSION}\"/g"  ${DESTDIR}/package.json
 
-    echo "====== UPDATE DEPENDENCY VERSION of ${1} to ~${VERSION} in ${DESTDIR}======"
+    sed "${sedi[@]}" "s/\"${projects[$k]}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${projects[$k]}\": \"${VERSION}\"/g"  ${DESTDIR}/package.json
     sed "${sedi[@]}" "s/\"${projects[$k]}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${projects[$k]}\": \"~${VERSION}\"/g"  ${DESTDIR}/package.json
    done
 }
@@ -140,9 +136,7 @@ update_demo_shell_js_version(){
     PACKAGETOCHANGE="alfresco-js-api"
 
     sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
-
-    echo "====== UPDATE DEPENDENCY VERSION of ${PACKAGETOCHANGE}  to ~${1} in ${DESTDIR}======"
-    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"~${1}\"/g"  ${DESTDIR}/package.json
+    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
 }
 
 clean_lock_demo_shell(){
@@ -193,7 +187,6 @@ if $EXEC_COMPONENT == true; then
        if $JS_API == true; then
 
         if $DIFFERENT_JS_API == true; then
-
             update_component_js_version ${projects[$i]} ${VERSION_JS_API}
         else
             update_component_js_version ${projects[$i]} ${VERSION}
