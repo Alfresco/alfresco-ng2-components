@@ -17,7 +17,7 @@
 
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
-import { MdSelectModule, MdRadioModule, MdAutocompleteModule, MdButtonModule, MdCardModule, MdCheckboxModule, MdIconModule, MdInputModule, MdSlideToggleModule, MdTabsModule } from '@angular/material';
+import { MdDatepickerModule, MdSelectModule, MdRadioModule, MdAutocompleteModule, MdButtonModule, MdCardModule, MdCheckboxModule, MdIconModule, MdInputModule, MdSlideToggleModule, MdTabsModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { ActivitiContentComponent } from './src/components/activiti-content.component';
@@ -92,7 +92,8 @@ export const ACTIVITI_FORM_PROVIDERS: any[] = [
         MdInputModule,
         MdAutocompleteModule,
         MdRadioModule,
-        MdSelectModule
+        MdSelectModule,
+        MdDatepickerModule
     ],
     declarations: [
         ...ACTIVITI_FORM_DIRECTIVES,
@@ -115,7 +116,8 @@ export const ACTIVITI_FORM_PROVIDERS: any[] = [
         MdInputModule,
         MdAutocompleteModule,
         MdRadioModule,
-        MdSelectModule
+        MdSelectModule,
+        MdDatepickerModule
     ]
 })
 export class ActivitiFormModule {
