@@ -16,6 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
+import { ContentApi } from 'alfresco-js-api';
 import { Observable, Subject } from 'rxjs/Rx';
 import { FolderCreatedEvent } from '../events/folder-created.event';
 import { PermissionsEnum } from '../models/permissions.enum';
@@ -33,32 +34,42 @@ export class AlfrescoContentService {
                 private logService: LogService) {
     }
 
+    private get contentApi(): ContentApi {
+        return this.apiService.getInstance().content;
+    }
+
     /**
      * Get thumbnail URL for the given document node.
-     * @param nodeId {string} Node to get URL for.
-     * @returns {string} URL address.
+     *
+     * @param {string|MinimalNodeEntity} nodeId Node to get URL for.
+     * @param {boolean} [attachment] Retrieve content as an attachment for download
+     * @param {string} [ticket] Custom ticket to use for authentication
+     * @returns {string} The URL address pointing to the content.
      */
-    getDocumentThumbnailUrl(nodeId: any): string {
+    getDocumentThumbnailUrl(nodeId: any, attachment?: boolean, ticket?: string): string {
 
         if (nodeId && nodeId.entry) {
             nodeId = nodeId.entry.id;
         }
 
-        return this.apiService.getInstance().content.getDocumentThumbnailUrl(nodeId);
+        return this.contentApi.getDocumentThumbnailUrl(nodeId, attachment, ticket);
     }
 
     /**
      * Get content URL for the given node.
-     * @param nodeId {string} Node to get URL for.
-     * @returns {string} URL address.
+     *
+     * @param nodeId {string|MinimalNodeEntity} Node to get URL for.
+     * @param {boolean} [attachment] Retrieve content as an attachment for download
+     * @param {string} [ticket] Custom ticket to use for authentication
+     * @returns {string} The URL address pointing to the content.
      */
-    getContentUrl(nodeId: any): string {
+    getContentUrl(nodeId: any, attachment?: boolean, ticket?: string): string {
 
         if (nodeId && nodeId.entry) {
             nodeId = nodeId.entry.id;
         }
 
-        return this.apiService.getInstance().content.getContentUrl(nodeId);
+        return this.contentApi.getContentUrl(nodeId, attachment, ticket);
     }
 
     /**
