@@ -17,19 +17,19 @@
 
  /* tslint:disable:component-selector  */
 
-import { AfterViewChecked, Component, ElementRef, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, OnInit, ViewEncapsulation} from '@angular/core';
 import * as moment from 'moment';
 import { FormService } from './../../../services/form.service';
 import { baseHost , WidgetComponent } from './../widget.component';
 
 declare let mdDateTimePicker: any;
-declare var componentHandler: any;
 
 @Component({
     selector: 'date-widget',
     templateUrl: './date.widget.html',
     styleUrls: ['./date.widget.scss'],
-    host: baseHost
+    host: baseHost,
+    encapsulation: ViewEncapsulation.None
 })
 export class DateWidgetComponent extends WidgetComponent implements OnInit, AfterViewChecked {
 
@@ -88,10 +88,6 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit, Afte
         let newValue = this.datePicker.time.format(this.field.dateDisplayFormat);
         this.field.value = newValue;
         this.checkVisibility(this.field);
-
-        if (this.elementRef) {
-            this.setupMaterialTextField(this.elementRef, componentHandler, newValue);
-        }
     }
 
 }

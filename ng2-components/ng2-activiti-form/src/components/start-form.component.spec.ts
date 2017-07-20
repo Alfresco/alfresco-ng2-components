@@ -27,8 +27,8 @@ import { EcmModelService } from './../services/ecm-model.service';
 import { FormService } from './../services/form.service';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
 import { ActivitiContentComponent } from './activiti-content.component';
-import { StartFormComponent } from './start-form.component';
 import { FormFieldComponent } from './form-field/form-field.component';
+import { StartFormComponent } from './start-form.component';
 import { MASK_DIRECTIVE } from './widgets/index';
 import { WIDGET_DIRECTIVES } from './widgets/index';
 

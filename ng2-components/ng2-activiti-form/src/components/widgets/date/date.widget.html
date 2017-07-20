@@ -1,4 +1,7 @@
 <div class="{{field.className}}" *ngIf="field?.isVisible" id="data-widget">
+    <div>
+        <label class="adf-label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
+    </div>
     <md-input-container class="adf-date-widget">
         <input mdInput
         type="text"

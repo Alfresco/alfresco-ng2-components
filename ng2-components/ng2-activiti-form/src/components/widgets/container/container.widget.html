@@ -11,15 +11,13 @@
             <span (click)="onExpanderClicked()" id="container-header-label">{{content.name}}</span>
         </h4>
     </div>
-    <div class="mdl-grid" [ngClass]="{'hidden':!(content?.isVisible && content?.isExpanded)}">
-        <div *ngFor="let col of content.columns" class="mdl-cell mdl-cell--{{col.size}}-col">
-            <div class="mdl-grid container-widget__mdl-grid" *ngIf="col.hasFields()">
-                <div *ngFor="let field of col.fields" class="mdl-cell mdl-cell--12-col">
-                    <div class="mdl-layout-spacer"></div>
-                    <form-field [field]="field"></form-field>
-                    <div class="mdl-layout-spacer"></div>
-                </div>
-            </div>
-        </div>
-    </div>
+
+
+    <md-grid-list rowHeight="100px" [cols]="12" [ngClass]="{'hidden':!(content?.isVisible && content?.isExpanded)}">
+        <md-grid-tile *ngFor="let col of content.columns" [colspan]="col.size">
+           <form-field [field]="field" *ngFor="let field of col.fields" ></form-field>
+        </md-grid-tile>
+    </md-grid-list>
+
 </div>
+

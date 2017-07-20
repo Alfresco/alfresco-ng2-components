@@ -76,7 +76,7 @@ describe('TextWidgetComponent', () => {
                 });
 
                 fixture.detectChanges();
-                inputElement = <HTMLInputElement>element.querySelector('#text-id');
+                inputElement = <HTMLInputElement> element.querySelector('#text-id');
             });
 
             it('should raise ngModelChange event', async(() => {
@@ -118,7 +118,7 @@ describe('TextWidgetComponent', () => {
                 });
 
                 fixture.detectChanges();
-                inputElement = <HTMLInputElement>element.querySelector('#text-id');
+                inputElement = <HTMLInputElement> element.querySelector('#text-id');
             });
 
             it('should show text widget', () => {
@@ -138,7 +138,7 @@ describe('TextWidgetComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    inputElement = <HTMLInputElement>element.querySelector('#text-id');
+                    inputElement = <HTMLInputElement> element.querySelector('#text-id');
                     expect(inputElement.value).toBe('');
                 });
             }));
@@ -153,7 +153,7 @@ describe('TextWidgetComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    inputElement = <HTMLInputElement>element.querySelector('#text-id');
+                    inputElement = <HTMLInputElement> element.querySelector('#text-id');
                     expect(inputElement.value).toBe('');
                 });
             }));
@@ -169,7 +169,7 @@ describe('TextWidgetComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let textEle: HTMLInputElement = <HTMLInputElement>element.querySelector('#text-id');
+                    let textEle: HTMLInputElement = <HTMLInputElement> element.querySelector('#text-id');
                     expect(textEle.value).toBe('1');
                 });
             }));
@@ -185,7 +185,7 @@ describe('TextWidgetComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let textEle: HTMLInputElement = <HTMLInputElement>element.querySelector('#text-id');
+                    let textEle: HTMLInputElement = <HTMLInputElement> element.querySelector('#text-id');
                     expect(textEle.value).toBe('12-345,67%');
                 });
             }));
@@ -206,7 +206,7 @@ describe('TextWidgetComponent', () => {
                 });
 
                 fixture.detectChanges();
-                inputElement = <HTMLInputElement>element.querySelector('#text-id');
+                inputElement = <HTMLInputElement> element.querySelector('#text-id');
             });
 
             afterEach(() => {
@@ -225,7 +225,7 @@ describe('TextWidgetComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let textEle: HTMLInputElement = <HTMLInputElement>element.querySelector('#text-id');
+                    let textEle: HTMLInputElement = <HTMLInputElement> element.querySelector('#text-id');
                     expect(textEle.value).toBe('12,34%');
                 });
             }));
