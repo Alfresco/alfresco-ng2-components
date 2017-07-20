@@ -90,13 +90,6 @@ describe('ContainerWidgetComponent', () => {
         expect(componentHandler.upgradeAllRegistered).toHaveBeenCalled();
     });
 
-    it('should setup MDL content only if component handler available', () => {
-        expect(widget.setupMaterialComponents()).toBeTruthy();
-
-        window['componentHandler'] = null;
-        expect(widget.setupMaterialComponents()).toBeFalsy();
-    });
-
     it('should toggle underlying group container', () => {
         let container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.GROUP,

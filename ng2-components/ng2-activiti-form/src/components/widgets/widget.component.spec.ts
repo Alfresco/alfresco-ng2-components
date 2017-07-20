@@ -76,11 +76,6 @@ describe('WidgetComponent', () => {
         expect(componentHandler.upgradeAllRegistered).toHaveBeenCalled();
     });
 
-    it('should setup MDL content only if component handler available', () => {
-        expect(widget.setupMaterialComponents(componentHandler)).toBeTruthy();
-        expect(widget.setupMaterialComponents()).toBeFalsy();
-    });
-
     it('should check field', () => {
         expect(widget.hasField()).toBeFalsy();
         widget.field = new FormFieldModel(new FormModel());
