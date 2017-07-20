@@ -1,6 +1,7 @@
 <div class="number-widget {{field.className}}"
      [class.adf-invalid]="!field.isValid">
     <label [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
+    <md-input-container>
     <input mdInput
            class="adf-input"
            type="text"
@@ -15,4 +16,5 @@
     <md-error  *ngIf="field.validationSummary">
         <div class="adf-error-text" >{{field.validationSummary}}</div> <i class="material-icons adf-error-icon">warning</i>
     </md-error>
+    </md-input-container>
 </div>

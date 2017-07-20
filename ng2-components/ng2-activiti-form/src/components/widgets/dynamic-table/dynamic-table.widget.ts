@@ -28,7 +28,7 @@ import { DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './dynami
 @Component({
     selector: 'dynamic-table-widget',
     templateUrl: './dynamic-table.widget.html',
-    styleUrls: ['./dynamic-table.widget.css'],
+    styleUrls: ['./dynamic-table.widget.scss'],
     host: baseHost
 })
 export class DynamicTableWidgetComponent extends WidgetComponent implements OnInit {
