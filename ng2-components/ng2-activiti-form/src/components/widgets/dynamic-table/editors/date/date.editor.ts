@@ -26,7 +26,7 @@ declare let mdDateTimePicker: any;
 @Component({
     selector: 'alf-date-editor',
     templateUrl: './date.editor.html',
-    styleUrls: ['./date.editor.css']
+    styleUrls: ['./date.editor.scss']
 })
 export class DateEditorComponent implements OnInit {
 

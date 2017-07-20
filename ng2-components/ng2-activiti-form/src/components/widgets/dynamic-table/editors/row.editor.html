@@ -33,7 +33,9 @@
             </div>
         </div>
     </div>
-    <div class="row-editor__validation-summary" *ngIf="!validationSummary.isValid">{{validationSummary.text}}</div>
+    <md-error  *ngIf="!validationSummary.isValid">
+    <div class="adf-error-text" >{{validationSummary.text}}</div> <i class="material-icons adf-error-icon">warning</i>
+</md-error>
     <div>
         <button
             class="mdl-button mdl-js-button mdl-js-ripple-effect"

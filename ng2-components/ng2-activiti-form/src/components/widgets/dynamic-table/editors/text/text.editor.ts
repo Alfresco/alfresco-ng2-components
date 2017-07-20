@@ -23,7 +23,7 @@ import { DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './../../
 @Component({
     selector: 'alf-text-editor',
     templateUrl: './text.editor.html',
-    styleUrls: ['./text.editor.css']
+    styleUrls: ['./text.editor.scss']
 })
 export class TextEditorComponent implements OnInit {
 
