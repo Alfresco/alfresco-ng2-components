@@ -511,7 +511,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             detail: {
                 node: event.row.node,
                 selection: this.selection
-            }
+            },
+            bubbles: true
         });
         this.elementRef.nativeElement.dispatchEvent(domEvent);
     }
@@ -522,7 +523,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             detail: {
                 node: event.row.node,
                 selection: this.selection
-            }
+            },
+            bubbles: true
         });
         this.elementRef.nativeElement.dispatchEvent(domEvent);
     }
