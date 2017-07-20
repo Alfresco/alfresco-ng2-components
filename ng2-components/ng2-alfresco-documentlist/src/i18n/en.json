@@ -21,6 +21,10 @@
             "CONTENT": {
                 "COPY": "Content was copied successfully.",
                 "MOVE": "Content was moved successfully."
+            },
+            "FOLDER": {
+                "COPY": "Folder was copied successfully.",
+                "MOVE": "Folder was moved successfully."
             }
         },
         "ERROR": {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
 import { AlfrescoContentService, AlfrescoTranslationService, NotificationService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Observable';

@@ -46,9 +46,15 @@ export class NodeActionsService {
         return this.doFileOperation('copy', 'content', contentEntry, permission);
     }
 
-    // public copyFolder(contentEntry: any, permission?: string): Observable<any> {
-    //     return this.doFileOperation('copy', 'folder', contentEntry, permission);
-    // }
+    /**
+     * Copy folder node
+     *
+     * @param contentEntry node to copy
+     * @param permission permission which is needed to apply the action
+     */
+    public copyFolder(contentEntry: MinimalNodeEntryEntity, permission?: string): Subject<string> {
+        return this.doFileOperation('copy', 'folder', contentEntry, permission);
+    }
 
     /**
      * Move content node
@@ -60,9 +66,15 @@ export class NodeActionsService {
         return this.doFileOperation('move', 'content', contentEntry, permission);
     }
 
-    // public moveFolder(contentEntry: any, permission?: string): Observable<any> {
-    //     return this.doFileOperation('move', 'folder', contentEntry, permission);
-    // }
+    /**
+     * Move folder node
+     *
+     * @param contentEntry node to move
+     * @param permission permission which is needed to apply the action
+     */
+    public moveFolder(contentEntry: MinimalNodeEntryEntity, permission?: string): Subject<string> {
+        return this.doFileOperation('move', 'folder', contentEntry, permission);
+    }
 
     /**
      * General method for performing the given operation (copy|move)

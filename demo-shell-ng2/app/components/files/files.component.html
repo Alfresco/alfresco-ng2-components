@@ -118,6 +118,22 @@
             <content-actions>
                 <!-- folder actions -->
                 <content-action
+                    icon="content_copy"
+                    target="folder"
+                    title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.COPY' | translate}}"
+                    permission="update"
+                    [disableWithNoPermission]="true"
+                    handler="copy">
+                </content-action>
+                <content-action
+                    icon="redo"
+                    target="folder"
+                    title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.MOVE' | translate}}"
+                    permission="update"
+                    [disableWithNoPermission]="true"
+                    handler="move">
+                </content-action>
+                <content-action
                     icon="delete"
                     target="folder"
                     permission="delete"
