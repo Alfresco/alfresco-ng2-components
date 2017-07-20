@@ -59,13 +59,6 @@ describe('TabsWidgetComponent', () => {
         expect(componentHandler.upgradeAllRegistered).toHaveBeenCalled();
     });
 
-    it('should setup MDL content only if component handler available', () => {
-        expect(widget.setupMaterialComponents()).toBeTruthy();
-
-        window['componentHandler'] = null;
-        expect(widget.setupMaterialComponents()).toBeFalsy();
-    });
-
     it('should emit tab changed event', (done) => {
         let field = new FormFieldModel(null);
         widget.formTabChanged.subscribe(tab => {
