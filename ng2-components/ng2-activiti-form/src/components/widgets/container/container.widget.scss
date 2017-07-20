@@ -25,5 +25,11 @@
 }
 
 md-input-container {
-    width: 100%;
+    width: 95%;
+}
+
+md-grid-tile {
+    display: block;
+    position: absolute;
+    overflow: visible !important;
 }

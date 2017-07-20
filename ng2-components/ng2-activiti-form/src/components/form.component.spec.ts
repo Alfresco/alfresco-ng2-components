@@ -53,13 +53,6 @@ describe('FormComponent', () => {
         expect(componentHandler.upgradeAllRegistered).toHaveBeenCalled();
     });
 
-    it('should setup MDL content only if component handler available', () => {
-        expect(formComponent.setupMaterialComponents()).toBeTruthy();
-
-        window['componentHandler'] = null;
-        expect(formComponent.setupMaterialComponents()).toBeFalsy();
-    });
-
     it('should check form', () => {
         expect(formComponent.hasForm()).toBeFalsy();
         formComponent.form = new FormModel();
