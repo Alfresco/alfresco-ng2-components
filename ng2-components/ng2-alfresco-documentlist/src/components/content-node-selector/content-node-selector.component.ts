@@ -17,7 +17,7 @@
 
 import { Component, EventEmitter, Inject, Input, Optional, Output, ViewEncapsulation } from '@angular/core';
 import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
-import { MinimalNodeEntity, NodePaging } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
 import { SearchOptions, SearchService } from '../../services/search.service';
 
 @Component({
@@ -28,7 +28,7 @@ import { SearchOptions, SearchService } from '../../services/search.service';
 })
 export class ContentNodeSelectorComponent {
 
-    chosenNode: MinimalNodeEntity | null = null;
+    chosenNode: MinimalNodeEntryEntity | null = null;
 
     inDialog: boolean = false;
 
@@ -38,7 +38,7 @@ export class ContentNodeSelectorComponent {
     title: string;
 
     @Output()
-    selectionMade: EventEmitter<MinimalNodeEntity> = new EventEmitter<MinimalNodeEntity>();
+    selectionMade: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter<MinimalNodeEntryEntity>();
 
     constructor(private searchService: SearchService,
                 @Optional() @Inject(MD_DIALOG_DATA) public data?: any,
@@ -81,7 +81,7 @@ export class ContentNodeSelectorComponent {
      * @param event CustomEvent for node-select
      */
     onNodeSelect(event: any) {
-        this.chosenNode = event.detail.node;
+        this.chosenNode = event.detail.node.entry;
     }
 
     /**

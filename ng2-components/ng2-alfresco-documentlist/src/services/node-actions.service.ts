@@ -17,7 +17,7 @@
 
 import { EventEmitter, Injectable } from '@angular/core';
 import { MdDialog } from '@angular/material';
-import { MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AlfrescoContentService, AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Rx';
@@ -77,7 +77,7 @@ export class NodeActionsService {
 
         if (this.contentService.hasPermission(contentEntry, permission)) {
             const title = `${action} ${contentEntry.name} to ...`,
-                selectionMade: EventEmitter<MinimalNodeEntity> = new EventEmitter<MinimalNodeEntity>();
+                selectionMade: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter<MinimalNodeEntryEntity>();
 
             this.dialog.open(ContentNodeSelectorComponent, {
                 data: { title, selectionMade },
@@ -85,8 +85,8 @@ export class NodeActionsService {
                 width: '400px'
             });
 
-            selectionMade.subscribe((parent) => {
-                this.documentListService[`${action}Node`].call(this.documentListService, contentEntry.id, parent.entry.id)
+            selectionMade.subscribe((parent: MinimalNodeEntryEntity) => {
+                this.documentListService[`${action}Node`].call(this.documentListService, contentEntry.id, parent.id)
                     .subscribe(
                         () => {
                             let fileOperationMessage: any = this.translateService.get(`OPERATION.SUCCES.${type.toUpperCase()}.${action.toUpperCase()}`);

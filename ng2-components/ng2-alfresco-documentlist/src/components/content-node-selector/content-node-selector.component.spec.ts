@@ -19,7 +19,7 @@ import { DebugElement, EventEmitter } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
 import { By } from '@angular/platform-browser';
-import { MinimalNodeEntity, NodePaging } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
 import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { MaterialModule } from '../../material.module';
@@ -68,7 +68,7 @@ describe('ContentNodeSelectorComponent', () => {
         beforeEach(async(() => {
             data = {
                 title: 'Move along citizen...',
-                selectionMade: new EventEmitter<MinimalNodeEntity>()
+                selectionMade: new EventEmitter<MinimalNodeEntryEntity>()
             };
 
             setupTestbed([{ provide: MD_DIALOG_DATA, useValue: data }]);
@@ -91,7 +91,7 @@ describe('ContentNodeSelectorComponent', () => {
             });
 
             it('should trigger the INJECTED selectionMade event when selection has been made', (done) => {
-                const expectedNode = <MinimalNodeEntity> {};
+                const expectedNode = <MinimalNodeEntryEntity> {};
                 data.selectionMade.subscribe((node) => {
                     expect(node).toBe(expectedNode);
                     done();
@@ -149,7 +149,7 @@ describe('ContentNodeSelectorComponent', () => {
         });
 
         it('should trigger the selectionMade event when selection has been made', (done) => {
-            const expectedNode = <MinimalNodeEntity> {};
+            const expectedNode = <MinimalNodeEntryEntity> {};
             component.selectionMade.subscribe((node) => {
                 expect(node).toBe(expectedNode);
                 done();

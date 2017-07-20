@@ -85,13 +85,13 @@ export class DocumentActionsService {
         return Observable.of(false);
     }
 
-    private copyNode(obj: any, target?: any, permission?: string) {
+    private copyNode(obj: MinimalNodeEntity, target?: any, permission?: string) {
         const actionObservable = this.nodeActionsService.copyContent(obj.entry, permission);
         this.prepareHandlers(actionObservable, 'content', 'copy', target, permission);
         return actionObservable;
     }
 
-    private moveNode(obj: any, target?: any, permission?: string) {
+    private moveNode(obj: MinimalNodeEntity, target?: any, permission?: string) {
         const actionObservable = this.nodeActionsService.moveContent(obj.entry, permission);
         this.prepareHandlers(actionObservable, 'content', 'move', target, permission);
         return actionObservable;
