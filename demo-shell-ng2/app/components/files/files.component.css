@@ -44,6 +44,7 @@ adf-document-list >>> adf-datatable tr.is-selected .image-table-cell::before {
 
 .adf-demo-site-container-style {
     margin-top: 10px;
+    margin-bottom: 10px;
     margin-left: 3%;
     width: 100%;
     min-width: 200px;
