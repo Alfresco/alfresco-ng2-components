@@ -18,7 +18,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { MdDialog } from '@angular/material';
 import { MinimalNodeEntity } from 'alfresco-js-api';
-import { AlfrescoContentService } from 'ng2-alfresco-core';
+import { AlfrescoContentService, AlfrescoTranslationService, NotificationService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Rx';
 import { ContentNodeSelectorComponent } from '../components/content-node-selector/content-node-selector.component';
@@ -34,9 +34,14 @@ export class DocumentActionsService {
     private handlers: { [id: string]: ContentActionHandler; } = {};
 
     constructor(private dialog: MdDialog,
+                private translateService: AlfrescoTranslationService,
+                private notificationService: NotificationService,
                 private documentListService?: DocumentListService,
                 private contentService?: AlfrescoContentService) {
         this.setupActionHandlers();
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-alfresco-documentlist', 'assets/ng2-alfresco-documentlist');
+        }
     }
 
     getHandler(key: string): ContentActionHandler {
@@ -63,6 +68,7 @@ export class DocumentActionsService {
     private setupActionHandlers() {
         this.handlers['download'] = this.download.bind(this);
         this.handlers['copy'] = this.copyNode.bind(this);
+        this.handlers['move'] = this.moveNode.bind(this);
         this.handlers['delete'] = this.deleteNode.bind(this);
 
         // TODO: for demo purposes only, will be removed during future revisions
@@ -107,22 +113,70 @@ export class DocumentActionsService {
         return Observable.of(false);
     }
 
-    private copyNode(obj: any) {
-        const title = `Copy ${obj.entry.name} to ...`,
-            selectionMade: EventEmitter<MinimalNodeEntity> = new EventEmitter<MinimalNodeEntity>();
+    private copyNode(obj: any, target?: any, permission?: string) {
+        if (this.contentService.hasPermission(obj.entry, permission)) {
+            const observable: Subject<any> = new Subject<any>(),
+                title = `Copy ${obj.entry.name} to ...`,
+                selectionMade: EventEmitter<MinimalNodeEntity> = new EventEmitter<MinimalNodeEntity>();
 
-        this.dialog.open(ContentNodeSelectorComponent, {
+            this.dialog.open(ContentNodeSelectorComponent, {
                 data: { title, selectionMade },
                 panelClass: 'adf-content-node-selector-dialog',
                 width: '400px'
-        });
+            });
 
-        selectionMade.subscribe((parent) => {
-            this.documentListService.copyNode(obj.entry.id, parent.entry.id);
-            this.dialog.closeAll();
-        });
+            selectionMade.subscribe((parent) => {
+                this.documentListService.copyNode(obj.entry.id, parent.entry.id).subscribe(() => {
+                        if (target && typeof target.reload === 'function') {
+                            target.reload();
+                        }
+                        let fileOperationMessage: any = this.translateService.get('OPERATION_SUCCES.CONTENT.COPY');
+                        this.notificationService.openSnackMessage(fileOperationMessage.value, 3000);
+                        observable.next();
+                    },
+                    observable.error
+                );
+                this.dialog.closeAll();
+            });
 
-        return Observable.of(false);
+            return observable;
+        } else {
+            this.permissionEvent.next(new PermissionModel({type: 'content', action: 'copy', permission}));
+            return Observable.throw(new Error(`No permission to ${permission}`));
+        }
+    }
+
+    private moveNode(obj: any, target?: any, permission?: string) {
+        if (this.contentService.hasPermission(obj.entry, permission)) {
+            const observable: Subject<any> = new Subject<any>(),
+                title = `Move ${obj.entry.name} to ...`,
+                selectionMade: EventEmitter<MinimalNodeEntity> = new EventEmitter<MinimalNodeEntity>();
+
+            this.dialog.open(ContentNodeSelectorComponent, {
+                data: { title, selectionMade },
+                panelClass: 'adf-content-node-selector-dialog',
+                width: '400px'
+            });
+
+            selectionMade.subscribe((parent) => {
+                this.documentListService.moveNode(obj.entry.id, parent.entry.id).subscribe(() => {
+                        if (target && typeof target.reload === 'function') {
+                            target.reload();
+                        }
+                        let fileOperationMessage: any = this.translateService.get('OPERATION_SUCCES.CONTENT.MOVE');
+                        this.notificationService.openSnackMessage(fileOperationMessage.value, 3000);
+                        observable.next();
+                    },
+                    observable.error
+                );
+                this.dialog.closeAll();
+            });
+
+            return observable;
+        } else {
+            this.permissionEvent.next(new PermissionModel({type: 'content', action: 'move', permission}));
+            return Observable.throw(new Error(`No permission to ${permission}`));
+        }
     }
 
     private deleteNode(obj: any, target?: any, permission?: string): Observable<any> {

@@ -17,7 +17,7 @@
 
 import { EventEmitter } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
-import { AlfrescoContentService, CoreModule } from 'ng2-alfresco-core';
+import { AlfrescoContentService, AlfrescoTranslationService, CoreModule, NotificationService } from 'ng2-alfresco-core';
 import { FileNode } from './../../assets/document-library.model.mock';
 import { DocumentListServiceMock } from './../../assets/document-list.service.mock';
 import { ContentActionHandler } from './../../models/content-action.model';
@@ -35,6 +35,8 @@ describe('ContentAction', () => {
     let folderActions: FolderActionsService;
 
     let contentService: AlfrescoContentService;
+    let translateService: AlfrescoTranslationService;
+    let notificationService: NotificationService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -49,8 +51,10 @@ describe('ContentAction', () => {
 
     beforeEach(() => {
         contentService = TestBed.get(AlfrescoContentService);
+        translateService = <AlfrescoTranslationService> { addTranslationFolder: () => {}};
+        notificationService = new NotificationService(null);
         let documentServiceMock = new DocumentListServiceMock();
-        documentActions = new DocumentActionsService(null, null);
+        documentActions = new DocumentActionsService(null, translateService, notificationService);
         folderActions = new FolderActionsService(null, contentService);
 
         documentList = new DocumentListComponent(documentServiceMock, null, null, null);

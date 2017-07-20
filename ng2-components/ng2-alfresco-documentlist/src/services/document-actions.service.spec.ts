@@ -16,7 +16,8 @@
  */
 
 import { MdDialog } from '@angular/material';
-import { AlfrescoContentService } from 'ng2-alfresco-core';
+import { TranslateService } from '@ngx-translate/core';
+import { AlfrescoContentService, AlfrescoTranslationService, NotificationService } from 'ng2-alfresco-core';
 import { FileNode, FolderNode } from '../assets/document-library.model.mock';
 import { DocumentListServiceMock } from '../assets/document-list.service.mock';
 import { ContentActionHandler } from '../models/content-action.model';
@@ -28,13 +29,17 @@ describe('DocumentActionsService', () => {
     let service: DocumentActionsService;
     let documentListService: DocumentListService;
     let contentService: AlfrescoContentService;
+    let translateService: AlfrescoTranslationService;
+    let notificationService: NotificationService;
     let mdDialog: MdDialog;
 
     beforeEach(() => {
         documentListService = new DocumentListServiceMock();
         contentService = new AlfrescoContentService(null, null, null);
         mdDialog = new MdDialog(null, null, null, null);
-        service = new DocumentActionsService(mdDialog, documentListService, contentService);
+        translateService = <AlfrescoTranslationService> { addTranslationFolder: () => {}};
+        notificationService = new NotificationService(null);
+        service = new DocumentActionsService(mdDialog, translateService, notificationService, documentListService, contentService);
     });
 
     it('should register default download action', () => {
@@ -66,7 +71,7 @@ describe('DocumentActionsService', () => {
         let file = new FileNode();
         expect(service.canExecuteAction(file)).toBeTruthy();
 
-        service = new DocumentActionsService(null);
+        service = new DocumentActionsService(null, translateService, notificationService);
         expect(service.canExecuteAction(file)).toBeFalsy();
     });
 
@@ -204,7 +209,7 @@ describe('DocumentActionsService', () => {
     });
 
     it('should require internal service for download action', () => {
-        let actionService = new DocumentActionsService(mdDialog, null, contentService);
+        let actionService = new DocumentActionsService(mdDialog, translateService, notificationService, null, contentService);
         let file = new FileNode();
         let result = actionService.getHandler('download')(file);
         result.subscribe((value) => {
@@ -213,7 +218,7 @@ describe('DocumentActionsService', () => {
     });
 
     it('should require content service for download action', () => {
-        let actionService = new DocumentActionsService(mdDialog, documentListService, null);
+        let actionService = new DocumentActionsService(mdDialog, translateService, notificationService, documentListService, null);
         let file = new FileNode();
         let result = actionService.getHandler('download')(file);
         result.subscribe((value) => {

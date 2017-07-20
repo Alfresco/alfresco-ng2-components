@@ -142,6 +142,14 @@
                     handler="copy">
                 </content-action>
                 <content-action
+                    icon="redo"
+                    target="document"
+                    title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.MOVE' | translate}}"
+                    permission="update"
+                    [disableWithNoPermission]="true"
+                    handler="move">
+                </content-action>
+                <content-action
                     icon="delete"
                     target="document"
                     permission="delete"

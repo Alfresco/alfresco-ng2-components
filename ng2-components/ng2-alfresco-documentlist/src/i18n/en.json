@@ -15,5 +15,11 @@
     "DROPDOWN": {
         "PLACEHOLDER_LABEL": "Site List",
         "DEFAULT_OPTION": "No Site Chosen"
+    },
+    "OPERATION_SUCCES": {
+        "CONTENT": {
+            "COPY": "Content was copied successfully.",
+            "MOVE": "Content was moved successfully."
+        }
     }
 }
