@@ -146,7 +146,8 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
         }
 
         if (changes.selectionMode && !changes.selectionMode.isFirstChange()) {
-            this.resetSelection(true);
+            this.resetSelection();
+            this.emitRowSelectionEvent('row-unselect', null);
         }
     }
 
@@ -268,7 +269,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
         }
     }
 
-    resetSelection(raiseEvent: boolean = false): void {
+    resetSelection(): void {
         if (this.data) {
             const rows = this.data.getRows();
             if (rows && rows.length > 0) {
@@ -277,10 +278,6 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
             this.selection.splice(0);
         }
         this.isSelectAllChecked = false;
-
-        if (raiseEvent) {
-            this.emitRowSelectionEvent('row-unselect', null);
-        }
     }
 
     onRowDblClick(row: DataRow, e?: Event) {
