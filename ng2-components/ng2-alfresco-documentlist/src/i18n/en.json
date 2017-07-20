@@ -16,6 +16,11 @@
         "PLACEHOLDER_LABEL": "Site List",
         "DEFAULT_OPTION": "No Site Chosen"
     },
+    "NODE_SELECTOR": {
+        "CANCEL": "Cancel",
+        "CHOOSE": "Choose",
+        "NO_RESULTS": "No results found"
+    },
     "OPERATION": {
         "SUCCES": {
             "CONTENT": {

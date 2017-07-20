@@ -24,6 +24,20 @@
 
             &-input {
                 width: 100%;
+
+                &-icon {
+                    color: rgba(0, 0, 0, 0.38);
+                    cursor: pointer;
+
+                    &:hover {
+                        color: rgba(0, 0, 0, 1);
+                    }
+                }
+            }
+
+            & /deep/ .mat-input-underline .mat-input-ripple {
+                height: 1px;
+                transition: none;
             }
 
             & /deep/ .adf-site-dropdown-list-element {
@@ -33,10 +47,46 @@
                 .mat-select-trigger {
                     font-size: 14px;
                 }
+
+                .mat-select-placeholder,
+                &.mat-select {
+                    font-family: 'Muli', "Helvetica", "Arial", sans-serif;
+                }
             }
 
-            & /deep/ .adf-data-table .adf-no-content-container {
-                text-align: center;
+            &-list {
+                height: 200px;
+                overflow: auto;
+                border: 1px solid rgba(0, 0, 0, 0.07);
+
+                & /deep/ .adf-data-table {
+                    border: none;
+
+                    .adf-no-content-container {
+                        text-align: center;
+                    }
+
+                    thead {
+                        display: none;
+                    }
+
+                    .adf-data-table-cell {
+                        padding-top: 8px;
+                        padding-bottom: 8px;
+                        border-top: none;
+                        height: 30px;
+                    }
+
+                    tbody tr {
+                        height: auto !important;
+
+                        &:last-child {
+                            .adf-data-table-cell {
+                                border-bottom: none;
+                            }
+                        }
+                    }
+                }
             }
         }
 

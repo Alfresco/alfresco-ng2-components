@@ -16,7 +16,7 @@
  */
 
 import { NgModule } from '@angular/core';
-import { MdButtonModule, MdDialogModule, MdIconModule, MdInputModule, MdMenuModule, MdProgressSpinnerModule, MdSelectModule } from '@angular/material';
+import { MdButtonModule, MdDialogModule, MdIconModule, MdInputModule, MdMenuModule, MdProgressSpinnerModule, MdRippleModule, MdSelectModule } from '@angular/material';
 
 export function modules() {
     return [
@@ -26,7 +26,8 @@ export function modules() {
         MdIconModule,
         MdInputModule,
         MdProgressSpinnerModule,
-        MdSelectModule
+        MdSelectModule,
+        MdRippleModule
     ];
 }
 

@@ -8,42 +8,32 @@
     (node-unselect)="onNodeUnselect($event)">
 
     <md-input-container floatPlaceholder="never" class="adf-content-node-selector-content-input">
-        <input #searchInput mdInput placeholder="Search" (keydown)="search(searchInput.value)">
+        <input #searchInput mdInput placeholder="Search" (keyup)="search(searchInput.value)" [value]="searchTerm">
+        <md-icon *ngIf="searchTerm.length > 0" mdSuffix (click)="clear()" class="adf-content-node-selector-content-input-icon">clear</md-icon>
+        <md-icon *ngIf="searchTerm.length === 0" mdSuffix class="adf-content-node-selector-content-input-icon">search</md-icon>
     </md-input-container>
 
-    <!-- <adf-sites-dropdown (change)="siteChanged($event)"></adf-sites-dropdown> -->
+    <adf-sites-dropdown (change)="siteChanged($event)"></adf-sites-dropdown>
 
-    <adf-document-list
-                #documentList
-                [node]="nodes"
-                [permissionsStyle]="permissionsStyle"
-                [creationMenuActions]="false"
-                [currentFolderId]="currentFolderId"
-                selectionMode="single"
-                [contextMenuActions]="false"
-                [contentActions]="false"
-                [allowDropFiles]="false"
-                [enablePagination]="false">
+    <div class="adf-content-node-selector-content-list">
+        <adf-document-list *ngIf="searched"
+                    #documentList
+                    [node]="nodes"
+                    [permissionsStyle]="permissionsStyle"
+                    [creationMenuActions]="false"
+                    [currentFolderId]="currentFolderId"
+                    [selectionMode]="'single'"
+                    [contextMenuActions]="false"
+                    [contentActions]="false"
+                    [allowDropFiles]="false"
+                    [enablePagination]="false">
             <empty-folder-content>
                 <template>
-                    <div>Use the search to query nodes</div>
+                    <div>{{ 'NODE_SELECTOR.NO_RESULTS' | translate }}</div>
                 </template>
             </empty-folder-content>
-            <data-columns>
-                <data-column
-                    key="$thumbnail"
-                    type="image"
-                    [sortable]="false"
-                    class="image-table-cell">
-                </data-column>
-                <data-column
-                        title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
-                        key="name"
-                        class="full-width ellipsis-cell">
-                </data-column>
-            </data-columns>
-
         </adf-document-list>
+    </div>
 
 </section>
 
@@ -53,14 +43,14 @@
         md-button
         class="adf-content-node-selector-actions-cancel"
         (click)="close()"
-        data-automation-id="content-node-selector-actions-cancel">Cancel
+        data-automation-id="content-node-selector-actions-cancel">{{ 'NODE_SELECTOR.CANCEL' | translate }}
     </button>
 
     <button md-button
         [disabled]="!chosenNode"
         class="adf-content-node-selector-actions-choose"
         (click)="choose()"
-        data-automation-id="content-node-selector-actions-choose">Choose
+        data-automation-id="content-node-selector-actions-choose">{{ 'NODE_SELECTOR.CHOOSE' | translate }}
     </button>
 
 </footer>

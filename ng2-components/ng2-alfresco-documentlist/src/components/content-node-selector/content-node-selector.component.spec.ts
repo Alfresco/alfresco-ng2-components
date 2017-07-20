@@ -20,7 +20,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
-import { CoreModule } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { MaterialModule } from '../../material.module';
 import { DocumentListService } from '../../services/document-list.service';
@@ -28,6 +28,7 @@ import { SearchService } from '../../services/search.service';
 import { DocumentListComponent } from '../document-list.component';
 import { DocumentMenuActionComponent } from '../document-menu-action.component';
 import { EmptyFolderContentDirective } from '../empty-folder/empty-folder-content.directive';
+import { DropdownSitesComponent } from '../site-dropdown/sites-dropdown.component';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
 
 describe('ContentNodeSelectorComponent', () => {
@@ -48,9 +49,11 @@ describe('ContentNodeSelectorComponent', () => {
                 DocumentListComponent,
                 DocumentMenuActionComponent,
                 EmptyFolderContentDirective,
+                DropdownSitesComponent,
                 ContentNodeSelectorComponent
             ],
             providers: [
+                AlfrescoTranslationService,
                 DocumentListService,
                 SearchService,
                 ...plusProviders
@@ -111,13 +114,13 @@ describe('ContentNodeSelectorComponent', () => {
             });
 
             it('should be shown if dialogRef is injected', () => {
-                const componentInstance = new ContentNodeSelectorComponent(null, data, dummyMdDialogRef);
+                const componentInstance = new ContentNodeSelectorComponent(null, null, data, dummyMdDialogRef);
                 expect(componentInstance.inDialog).toBeTruthy();
             });
 
             it('should should call the close method in the injected dialogRef', () => {
                 spyOn(dummyMdDialogRef, 'close');
-                const componentInstance = new ContentNodeSelectorComponent(null, data, dummyMdDialogRef);
+                const componentInstance = new ContentNodeSelectorComponent(null, null, data, dummyMdDialogRef);
 
                 componentInstance.close();
 
@@ -167,6 +170,46 @@ describe('ContentNodeSelectorComponent', () => {
         });
 
         xit('should load the results by calling the search api on search change', () => {
+
+        });
+
+        xit('should NOT call the search api if the searchTerm length is less than 3 characters', () => {
+
+        });
+
+        xit('should debounce the search call by 500 ms', () => {
+
+        });
+
+        xit('should call the search api on changing the site selectbox\'s value', () => {
+
+        });
+
+        xit('should show the search icon by default without the X (clear) icon', () => {
+
+        });
+
+        xit('should show the X (clear) icon without the search icon when the search contains at least one character', () => {
+
+        });
+
+        xit('should clear the search field, nodes adn chosenNode when clicking on the X (clear) icon', () => {
+
+        });
+
+        xit('should show the result list only when search was performed', () => {
+
+        });
+
+        xit('should show the default text instead of result list if search was not performed or cleared', () => {
+
+        });
+
+        xit('should do something with pagination or with many results', () => {
+
+        });
+
+        xit('should show notification toast when error happened during search', () => {
 
         });
     });

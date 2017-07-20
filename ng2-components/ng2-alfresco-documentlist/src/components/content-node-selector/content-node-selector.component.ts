@@ -18,6 +18,7 @@
 import { Component, EventEmitter, Inject, Input, Optional, Output, ViewEncapsulation } from '@angular/core';
 import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
 import { MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
+import { AlfrescoTranslationService, SiteModel } from 'ng2-alfresco-core';
 import { SearchOptions, SearchService } from '../../services/search.service';
 
 @Component({
@@ -28,11 +29,12 @@ import { SearchOptions, SearchService } from '../../services/search.service';
 })
 export class ContentNodeSelectorComponent {
 
-    chosenNode: MinimalNodeEntryEntity | null = null;
-
+    nodes: NodePaging|Array<any>;
+    siteId: null|string;
+    searchTerm: string = '';
+    searched: boolean = false;
     inDialog: boolean = false;
-
-    nodes: NodePaging;
+    chosenNode: MinimalNodeEntryEntity | null = null;
 
     @Input()
     title: string;
@@ -41,34 +43,73 @@ export class ContentNodeSelectorComponent {
     selectionMade: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter<MinimalNodeEntryEntity>();
 
     constructor(private searchService: SearchService,
+                @Optional() private translateService: AlfrescoTranslationService,
                 @Optional() @Inject(MD_DIALOG_DATA) public data?: any,
                 @Optional() private containingDialog?: MdDialogRef<ContentNodeSelectorComponent>) {
+
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-alfresco-documentlist', 'assets/ng2-alfresco-documentlist');
+        }
+
         if (data) {
             this.title = data.title;
             this.selectionMade = data.selectionMade;
         }
-        if (containingDialog) { this.inDialog = true; }
+
+        if (containingDialog) {
+            this.inDialog = true;
+        }
     }
 
-    search(value) {
-        this.querySearch(value);
+    /**
+     * Updates the site attribute and starts a new search
+     *
+     * @param chosenSite Sitemodel to search within
+     */
+    siteChanged(chosenSite: SiteModel): void {
+        this.siteId = chosenSite.guid;
+        this.querySearch();
     }
 
-    private querySearch(searchTerm) {
-        if (searchTerm) {
-            searchTerm = searchTerm + '*';
+    /**
+     * Updates the searchTerm attribute and starts a new search
+     *
+     * @param searchTerm string value to search against
+     */
+    search(searchTerm: string): void {
+        this.searchTerm = searchTerm;
+        this.querySearch();
+    }
+
+    /**
+     * Clear the search input
+     */
+    clear(): void {
+        this.searched = false;
+        this.searchTerm = '';
+        this.nodes = [];
+        this.chosenNode = null;
+    }
+
+    /**
+     * Perform the call to searchService with the proper parameters
+     */
+    private querySearch(): void {
+        if (this.searchTerm.length > 3) {
+            const searchTerm = this.searchTerm + '*';
             let searchOpts: SearchOptions = {
                 include: ['path'],
                 skipCount: 0,
-                rootNodeId: '-root-',
+                rootNodeId: this.siteId,
                 nodeType: 'cm:folder',
-                maxItems: 20,
+                maxItems: 40,
                 orderBy: null
             };
             this.searchService
                 .getNodeQueryResults(searchTerm, searchOpts)
                 .subscribe(
                     results => {
+                        this.searched = true;
                         this.nodes = results;
                     }
                 );
@@ -80,28 +121,28 @@ export class ContentNodeSelectorComponent {
      *
      * @param event CustomEvent for node-select
      */
-    onNodeSelect(event: any) {
+    onNodeSelect(event: any): void {
         this.chosenNode = event.detail.node.entry;
     }
 
     /**
      * * Invoked when user unselects a node
      */
-    onNodeUnselect() {
+    onNodeUnselect(): void {
         this.chosenNode = null;
     }
 
     /**
      * Emit event with the chosen node
      */
-    choose() {
+    choose(): void {
         this.selectionMade.next(this.chosenNode);
     }
 
     /**
      * Close the dialog
      */
-    close() {
+    close(): void {
         this.containingDialog.close();
     }
 }
