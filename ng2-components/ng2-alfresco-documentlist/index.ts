@@ -36,7 +36,6 @@ import { DocumentActionsService } from './src/services/document-actions.service'
 import { DocumentListService } from './src/services/document-list.service';
 import { FolderActionsService } from './src/services/folder-actions.service';
 import { NodeActionsService } from './src/services/node-actions.service';
-import { SearchService } from './src/services/search.service';
 
 // components
 export * from './src/components/document-list.component';
@@ -82,8 +81,7 @@ export const DOCUMENT_LIST_PROVIDERS: any[] = [
     DocumentListService,
     FolderActionsService,
     DocumentActionsService,
-    NodeActionsService,
-    SearchService
+    NodeActionsService
 ];
 
 @NgModule({

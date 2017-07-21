@@ -18,8 +18,7 @@
 import { Component, EventEmitter, Inject, Input, Optional, Output, ViewEncapsulation } from '@angular/core';
 import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
 import { MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
-import { AlfrescoTranslationService, SiteModel } from 'ng2-alfresco-core';
-import { SearchOptions, SearchService } from '../../services/search.service';
+import { AlfrescoTranslationService, SearchOptions, SearchService, SiteModel } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'adf-content-node-selector',
