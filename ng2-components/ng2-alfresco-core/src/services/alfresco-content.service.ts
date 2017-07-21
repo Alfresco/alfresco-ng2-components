@@ -104,7 +104,7 @@ export class AlfrescoContentService {
     /**
      * Check if the user has permissions on that node
      * @param MinimalNode -  node to check allowableOperations
-     * @param PermissionsEnum - create, delete, update
+     * @param PermissionsEnum - create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions
      *
      * @returns {boolean} has permission
      */
@@ -112,7 +112,16 @@ export class AlfrescoContentService {
         let hasPermission = false;
 
         if (this.hasAllowableOperations(node)) {
-            hasPermission = node.allowableOperations.find(currentPermission => currentPermission === permission) ? true : false;
+            if (permission.startsWith("!")) {
+                hasPermission = node.allowableOperations.find(currentPermission => currentPermission === permission.replace("!", "")) ? false : true;
+            } else {
+                hasPermission = node.allowableOperations.find(currentPermission => currentPermission === permission) ? true : false;
+            }
+
+        } else {
+            if (permission.startsWith("!")) {
+                hasPermission = true;
+            }
         }
 
         return hasPermission;

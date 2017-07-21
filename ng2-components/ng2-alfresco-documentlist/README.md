@@ -1060,6 +1060,7 @@ The permissionsStyle array  can define different styles depending from the permi
 [PermissionStyleModel](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-documentlist/src/models/permissions-style.model.ts)
 
 | Property | Description |
+| --- | --- | --- | --- |
 | isFile/isFolder | allow you to select if you want apply the style to file/folder nodes |
 | permission | is an enum value [Permissions](https://github.com/Alfresco/alfresco-ng2-core/blob/master/ng2-components/ng2-alfresco-documentlist/src/models/permissions.enum.ts) | 
 | css| the name of the class to add | 
@@ -1080,9 +1081,8 @@ this.permissionsStyle.push(new PermissionStyleModel('document-list__create', Per
 ```
 
 ```css
-
-adf-document-list >>> adf-datatable >>> tr.alfresco-datatable__row.document-list__create {
-    color: rgb(57, 239, 121);
+adf-document-list >>> adf-datatable tr.document-list__create {
+    background: green !important;
 }
 ```
 
@@ -1102,10 +1102,8 @@ this.permissionsStyle.push(new PermissionStyleModel('document-list__disable', Pe
 ```
 
 ```css
-
-adf-document-list >>> adf-datatable >>> tr.alfresco-datatable__row.document-list__disable {
-    color: rgba(0, 0, 0, 0.28);
-
+adf-document-list >>> adf-datatable tr.document-list__disable {
+    background: red !important;
 }
 ```
 
