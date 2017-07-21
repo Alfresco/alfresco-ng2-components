@@ -1,12 +1,15 @@
 @import 'theming';
 
 .adf {
-
     &-text-widget {
         width: 100%;
     }
 
     &-invalid {
+        .adf-input {
+            border-color: $alfresco-warn-color--hue-3;
+        }
+
         .adf-error-text {
             padding: 1px;
             height: 16px;
@@ -22,9 +25,6 @@
             color: $alfresco-warn-color--hue-3;
         }
 
-        .adf-input {
-            border-color: $alfresco-warn-color--hue-3;
-        }
         .adf-label {
             color: $alfresco-warn-color--hue-3;
             &:after {
