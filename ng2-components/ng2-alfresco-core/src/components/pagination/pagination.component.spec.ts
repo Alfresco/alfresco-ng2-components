@@ -16,7 +16,7 @@
  */
 
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { TestBed, async } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 import { MaterialModule } from '@angular/material';
 
 import { CoreModule } from 'ng2-alfresco-core';
@@ -47,15 +47,12 @@ class TestConfig {
                 CoreModule.forRoot(),
                 MaterialModule
             ],
-            declarations: [
-                PaginationComponent
-            ],
             schemas: [ NO_ERRORS_SCHEMA ]
         });
     }
 }
 
-fdescribe('PaginationComponent', () => {
+describe('PaginationComponent', () => {
     beforeEach(() => {
         jasmine.Ajax.install();
     });

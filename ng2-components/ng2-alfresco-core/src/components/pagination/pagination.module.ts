@@ -1,4 +1,3 @@
-import { NgModule } from '@angular/core';
 /*!
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
@@ -17,6 +16,7 @@ import { NgModule } from '@angular/core';
  */
 
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { MaterialModule } from '@angular/material';
 
 import { TranslateModule } from '@ngx-translate/core';

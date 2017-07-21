@@ -16,11 +16,11 @@
  */
 
 import {
+    ChangeDetectionStrategy,
     Component,
+    EventEmitter,
     Input,
     Output,
-    EventEmitter,
-    ChangeDetectionStrategy,
     ViewEncapsulation
 } from '@angular/core';
 
