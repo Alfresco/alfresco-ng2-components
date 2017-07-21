@@ -19,6 +19,7 @@ import { ElementRef } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import * as moment from 'moment';
 import { CoreModule } from 'ng2-alfresco-core';
+import { MATERIAL_MODULE } from '../../../../index';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 import { EcmModelService } from './../../../services/ecm-model.service';
 import { FormService } from './../../../services/form.service';
@@ -30,14 +31,14 @@ describe('DateWidgetComponent', () => {
 
     let widget: DateWidgetComponent;
     let fixture: ComponentFixture<DateWidgetComponent>;
-    let componentHandler;
     let nativeElement: any;
     let element: HTMLElement;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule.forRoot(),
+                ...MATERIAL_MODULE
             ],
             declarations: [
                 DateWidgetComponent
@@ -61,8 +62,6 @@ describe('DateWidgetComponent', () => {
 
         element = fixture.nativeElement;
         widget = fixture.componentInstance;
-        componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
-        window['componentHandler'] = componentHandler;
     });
 
     it('should setup basic date picker settings on init ', () => {
@@ -154,31 +153,7 @@ describe('DateWidgetComponent', () => {
         expect(widget.field.value).toBe(date);
     });
 
-    it('should update material textfield on date selected', () => {
-        spyOn(widget, 'setupMaterialTextField').and.callThrough();
-
-        widget.field = new FormFieldModel(null, {type: 'date'});
-        widget.ngOnInit();
-
-        widget.datePicker.time = moment();
-        widget.onDateSelected();
-        expect(widget.setupMaterialTextField).toHaveBeenCalled();
-    });
-
-    it('should not update material textfield on date selected', () => {
-        widget.elementRef = undefined;
-        spyOn(widget, 'setupMaterialTextField').and.callThrough();
-
-        widget.field = new FormFieldModel(null, {type: 'date'});
-        widget.ngOnInit();
-
-        widget.datePicker.time = moment();
-        widget.onDateSelected();
-        expect(widget.setupMaterialTextField).not.toHaveBeenCalled();
-    });
-
     it('should send field change event when a new date is picked from data picker', (done) => {
-        spyOn(widget, 'setupMaterialTextField').and.callThrough();
         widget.field = new FormFieldModel(null, {value: '9-9-9999', type: 'date'});
         widget.ngOnInit();
         widget.datePicker.time = moment('9-9-9999', widget.field.dateDisplayFormat);
@@ -192,7 +167,6 @@ describe('DateWidgetComponent', () => {
     });
 
     it('should send field change event when date is changed in input text', (done) => {
-        spyOn(widget, 'setupMaterialTextField').and.callThrough();
         widget.field = new FormFieldModel(null, {value: '9-9-9999', type: 'date'});
         widget.ngOnInit();
         widget.datePicker.time = moment('9-9-9999', widget.field.dateDisplayFormat);
@@ -209,7 +183,6 @@ describe('DateWidgetComponent', () => {
     describe('template check', () => {
 
         beforeEach(() => {
-            spyOn(widget, 'setupMaterialTextField').and.stub();
             widget.field = new FormFieldModel(new FormModel(), {
                 id: 'date-field-id',
                 name: 'date-name',

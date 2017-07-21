@@ -24,18 +24,11 @@ import { GroupModel } from '../core/group.model';
 import { FunctionalGroupWidgetComponent } from './functional-group.widget';
 
 describe('FunctionalGroupWidgetComponent', () => {
-
-    let componentHandler;
     let formService: FormService;
     let elementRef: ElementRef;
     let widget: FunctionalGroupWidgetComponent;
 
     beforeEach(() => {
-        componentHandler =  jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered'
-        ]);
-        window['componentHandler'] = componentHandler;
-
         formService = new FormService(null, null, null);
         elementRef = new ElementRef(null);
         widget = new FunctionalGroupWidgetComponent(formService, elementRef);

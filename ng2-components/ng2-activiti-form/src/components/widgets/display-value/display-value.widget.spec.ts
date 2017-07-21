@@ -19,6 +19,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
+import { MATERIAL_MODULE } from '../../../../index';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { ActivitiContentComponent } from '../../activiti-content.component';
 import { FormFieldTypes } from '../core/form-field-types';
@@ -38,7 +39,8 @@ describe('DisplayValueWidgetComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule.forRoot(),
+                ...MATERIAL_MODULE
             ],
             declarations: [
                 DisplayValueWidgetComponent,
@@ -628,16 +630,6 @@ describe('DisplayValueWidgetComponent', () => {
     });
 
     describe('UI check', () => {
-        let componentHandler;
-
-        beforeEach(async(() => {
-            componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
-            window['componentHandler'] = componentHandler;
-        }));
-
-        beforeEach(() => {
-            spyOn(widget, 'setupMaterialTextField').and.stub();
-        });
 
         afterEach(() => {
             fixture.destroy();

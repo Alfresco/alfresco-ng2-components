@@ -172,7 +172,6 @@ describe('DropdownEditorComponent', () => {
         let dropDownEditorComponent: DropdownEditorComponent;
         let fixture: ComponentFixture<DropdownEditorComponent>;
         let element: HTMLElement;
-        let componentHandler;
         let stubFormService;
         let fakeOptionList: DynamicTableColumnOption[] = [{
             id: 'opt_1',
@@ -184,8 +183,6 @@ describe('DropdownEditorComponent', () => {
         let dynamicTable: DynamicTableModel;
 
         beforeEach(async(() => {
-            componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
-            window['componentHandler'] = componentHandler;
             TestBed.configureTestingModule({
                 imports: [CoreModule],
                 declarations: [DropdownEditorComponent],

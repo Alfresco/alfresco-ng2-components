@@ -7,15 +7,14 @@
                type="text"
                [id]="field.id"
                [required]="isRequired()"
-               [errorStateMatcher]="isValid.bind(this)"
                [value]="field.value"
                [(ngModel)]="field.value"
                (ngModelChange)="onFieldChanged(field)"
                [disabled]="field.readOnly ? true : null"
                [textMask]="{mask: mask, isReversed: isMaskReversed}"
                placeholder="{{field.placeholder}}">
-        <md-error>
+        <div  *ngIf="field.validationSummary" [@transitionMessages]="_subscriptAnimationState">
             <div class="adf-error-text" >{{field.validationSummary}}</div> <i class="material-icons adf-error-icon">warning</i>
-        </md-error>
+        </div>
     </md-input-container>
 </div>

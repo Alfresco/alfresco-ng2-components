@@ -39,8 +39,6 @@ describe('ActivitiContentComponent', () => {
     let serviceForm: FormService;
     let serviceContent: ContentService;
 
-    let componentHandler: any;
-
     function createFakeImageBlob() {
         let data = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
         return new Blob([data], {type: 'image/png'});
@@ -88,11 +86,6 @@ describe('ActivitiContentComponent', () => {
         spyOn(translateService, 'get').and.callFake((key) => {
             return Observable.of(key);
         });
-
-        componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered'
-        ]);
-        window['componentHandler'] = componentHandler;
     }));
 
     beforeEach(() => {
