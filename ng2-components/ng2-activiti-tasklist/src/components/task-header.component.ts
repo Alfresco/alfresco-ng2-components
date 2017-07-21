@@ -54,7 +54,7 @@ export class TaskHeaderComponent implements OnChanges {
 
     refreshData() {
         if (this.taskDetails) {
-            let valueMap = new Map([[this.taskDetails.processDefinitionId, this.taskDetails.processDefinitionName]])
+            let valueMap = new Map([[this.taskDetails.processInstanceId, this.taskDetails.processDefinitionName]]);
             this.properties = [
                 new CardViewTextItemModel({ label: 'Assignee', value: this.taskDetails.getFullName(), key: 'assignee', default: 'No assignee' } ),
                 new CardViewTextItemModel({ label: 'Status', value: this.getTaskStatus(), key: 'status' }),
