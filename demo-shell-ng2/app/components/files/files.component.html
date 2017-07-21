@@ -16,7 +16,7 @@
             <span class="error-message--text">{{errorMessage}}</span>
         </div>
         <ng-container *ngIf="useCustomToolbar">
-            <adf-toolbar>
+            <adf-toolbar [color]="toolbarColor">
                 <adf-toolbar-title>
                     <adf-breadcrumb *ngIf="!useDropdownBreadcrumb"
                         class="files-breadcrumb"
@@ -35,6 +35,18 @@
                 <button md-icon-button>
                     <md-icon>delete</md-icon>
                 </button>
+
+                <button md-icon-button [mdMenuTriggerFor]="themePicker">
+                    <md-icon>format_color_fill</md-icon>
+                </button>
+
+                <md-menu #themePicker="mdMenu">
+                    <button md-menu-item (click)="toolbarColor = 'default'">Default</button>
+                    <button md-menu-item (click)="toolbarColor = 'primary'">Primary</button>
+                    <button md-menu-item (click)="toolbarColor = 'accent'">Accent</button>
+                    <button md-menu-item (click)="toolbarColor = 'warn'">Warn</button>
+                </md-menu>
+
                 <button md-icon-button [mdMenuTriggerFor]="menu">
                     <md-icon>more_vert</md-icon>
                 </button>

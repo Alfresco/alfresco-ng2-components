@@ -37,6 +37,7 @@ export class FilesComponent implements OnInit {
     fileShowed: boolean = false;
 
     useCustomToolbar = true;
+    toolbarColor = 'default';
     useDropdownBreadcrumb = true;
 
     selectionModes = [
