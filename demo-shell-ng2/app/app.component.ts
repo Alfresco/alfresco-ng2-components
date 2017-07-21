@@ -72,7 +72,6 @@ export class AppComponent {
 
     navigateToLogin() {
         this.router.navigate(['/login']);
-        this.hideDrawer();
     }
 
     onToggleSearch(event) {
@@ -87,12 +86,6 @@ export class AppComponent {
 
     changeLanguage(lang: string) {
         this.translateService.use(lang);
-        this.hideDrawer();
-    }
-
-    hideDrawer() {
-        // todo: workaround for drawer closing
-        document.querySelector('.mdl-layout').MaterialLayout.toggleDrawer();
     }
 
     private setProvider() {
