@@ -1,7 +1,11 @@
-.date-editor {
-    width: 100%;
-}
+@import 'theming';
 
-.date-editor--button {
-    margin-top: 15px;
+.adf {
+    &-date-editor {
+        width: 100%;
+    }
+
+    &-date-editor-button {
+        margin-top: 15px;
+    }
 }
