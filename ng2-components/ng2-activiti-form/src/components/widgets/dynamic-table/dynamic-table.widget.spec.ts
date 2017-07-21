@@ -16,8 +16,9 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { LogServiceMock } from 'ng2-alfresco-core';
 import { CoreModule, LogService } from 'ng2-alfresco-core';
+import { LogServiceMock } from 'ng2-alfresco-core';
+import { MATERIAL_MODULE } from '../../../../index';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { EcmModelService } from './../../../services/ecm-model.service';
@@ -79,12 +80,12 @@ describe('DynamicTableWidgetComponent', () => {
     let element: HTMLElement;
     let table: DynamicTableModel;
     let logService: LogService;
-    let componentHandler: any;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule.forRoot(),
+                ...MATERIAL_MODULE
             ],
             declarations: [DynamicTableWidgetComponent, RowEditorComponent,
                 DropdownEditorComponent, DateEditorComponent, BooleanEditorComponent, TextEditorComponent],
@@ -336,11 +337,6 @@ describe('DynamicTableWidgetComponent', () => {
     });
 
     describe('when template is ready', () => {
-
-        beforeEach(async(() => {
-            componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
-            window['componentHandler'] = componentHandler;
-        }));
 
         beforeEach(() => {
             widget.field = new FormFieldModel(new FormModel({taskId: 'fake-task-id'}), fakeFormField);

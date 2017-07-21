@@ -18,8 +18,8 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { MdAutocompleteModule, MdButtonModule, MdCardModule, MdCheckboxModule,
-    MdDatepickerModule, MdIconModule, MdInputModule, MdRadioModule, MdSelectModule,
-    MdSlideToggleModule, MdTabsModule, MdGridListModule, MdTableModule } from '@angular/material';
+    MdDatepickerModule, MdGridListModule, MdIconModule, MdInputModule, MdRadioModule,
+    MdSelectModule, MdSlideToggleModule, MdTableModule, MdTabsModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { ActivitiContentComponent } from './src/components/activiti-content.component';
@@ -74,10 +74,25 @@ export const ACTIVITI_FORM_PROVIDERS: any[] = [
     FormService,
     ActivitiContentService,
     EcmModelService,
-    NodeService,
+    NodeService, []
     WidgetVisibilityService,
     ActivitiAlfrescoContentService,
     FormRenderingService
+];
+
+export const MATERIAL_MODULE: any[] = [
+    MdTabsModule,
+    MdCardModule,
+    MdButtonModule,
+    MdIconModule,
+    MdSlideToggleModule,
+    MdInputModule,
+    MdAutocompleteModule,
+    MdRadioModule,
+    MdSelectModule,
+    MdDatepickerModule,
+    MdGridListModule,
+    MdTableModule
 ];
 
 @NgModule({
@@ -85,19 +100,7 @@ export const ACTIVITI_FORM_PROVIDERS: any[] = [
         CoreModule,
         DataTableModule,
         HttpModule,
-        MdCheckboxModule,
-        MdTabsModule,
-        MdCardModule,
-        MdButtonModule,
-        MdIconModule,
-        MdSlideToggleModule,
-        MdInputModule,
-        MdAutocompleteModule,
-        MdRadioModule,
-        MdSelectModule,
-        MdDatepickerModule,
-        MdGridListModule,
-        MdTableModule
+        ...MATERIAL_MODULE
     ],
     declarations: [
         ...ACTIVITI_FORM_DIRECTIVES,
@@ -111,19 +114,7 @@ export const ACTIVITI_FORM_PROVIDERS: any[] = [
     ],
     exports: [
         ...ACTIVITI_FORM_DIRECTIVES,
-        MdCheckboxModule,
-        MdTabsModule,
-        MdCardModule,
-        MdButtonModule,
-        MdIconModule,
-        MdSlideToggleModule,
-        MdInputModule,
-        MdAutocompleteModule,
-        MdRadioModule,
-        MdSelectModule,
-        MdDatepickerModule,
-        MdGridListModule,
-        MdTableModule
+        ...MATERIAL_MODULE
     ]
 })
 export class ActivitiFormModule {

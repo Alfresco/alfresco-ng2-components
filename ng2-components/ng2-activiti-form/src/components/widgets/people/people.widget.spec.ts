@@ -25,17 +25,11 @@ import { PeopleWidgetComponent } from './people.widget';
 
 describe('PeopleWidgetComponent', () => {
 
-    let componentHandler;
     let elementRef: ElementRef;
     let formService: FormService;
     let widget: PeopleWidgetComponent;
 
     beforeEach(() => {
-        componentHandler =  jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered'
-        ]);
-        window['componentHandler'] = componentHandler;
-
         formService = new FormService(null, null, null);
         elementRef = new ElementRef(null);
         widget = new PeopleWidgetComponent(formService, elementRef);

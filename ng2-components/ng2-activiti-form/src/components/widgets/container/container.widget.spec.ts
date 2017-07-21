@@ -16,8 +16,8 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdInputModule, MdTabsModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
+import { MATERIAL_MODULE } from '../../../../index';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 import { fakeFormJson } from '../../../services/assets/widget-visibility.service.mock';
 import { WIDGET_DIRECTIVES } from '../index';
@@ -38,15 +38,13 @@ describe('ContainerWidgetComponent', () => {
     let fixture: ComponentFixture<ContainerWidgetComponent>;
     let element: HTMLElement;
     let contentService: ActivitiAlfrescoContentService;
-    let componentHandler;
     let dialogPolyfill;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                MdTabsModule,
-                MdInputModule
+                ...MATERIAL_MODULE
             ],
             declarations: [FormFieldComponent, ActivitiContentComponent, WIDGET_DIRECTIVES, MASK_DIRECTIVE],
             providers: [
@@ -70,11 +68,6 @@ describe('ContainerWidgetComponent', () => {
                 };
             }
         };
-        componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered'
-        ]);
-
-        window['componentHandler'] = componentHandler;
     });
 
     it('should wrap field with model instance', () => {
@@ -83,11 +76,6 @@ describe('ContainerWidgetComponent', () => {
         widget.ngOnInit();
         expect(widget.content).toBeDefined();
         expect(widget.content.field).toBe(field);
-    });
-
-    it('should upgrade MDL content on view init', () => {
-        widget.ngAfterViewInit();
-        expect(componentHandler.upgradeAllRegistered).toHaveBeenCalled();
     });
 
     it('should toggle underlying group container', () => {
@@ -153,8 +141,6 @@ describe('ContainerWidgetComponent', () => {
         let fakeContainerInvisible;
 
         beforeEach(() => {
-            componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
-            window['componentHandler'] = componentHandler;
             fakeContainerVisible = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(fakeFormJson), {
                 fieldType: FormFieldTypes.GROUP,
                 id: 'fake-cont-id-1',

@@ -13,9 +13,11 @@
                (ngModelChange)="checkVisibility(field)"
                [disabled]="field.readOnly"
                placeholder="{{field.placeholder}}">
-        <md-error *ngIf="field.validationSummary">
+    </md-input-container>
+    <div class="adf-error-text-container">
+        <div *ngIf="field.validationSummary" [@transitionMessages]="_subscriptAnimationState">
             <div class="adf-error-text">{{field.validationSummary}}</div>
             <i class="material-icons adf-error-icon">warning</i>
-        </md-error>
-    </md-input-container>
+        </div>
+    </div>
 </div>

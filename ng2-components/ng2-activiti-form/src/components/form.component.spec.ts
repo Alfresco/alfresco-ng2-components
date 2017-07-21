@@ -27,7 +27,6 @@ import { FormFieldModel, FormFieldTypes, FormModel, FormOutcomeEvent, FormOutcom
 
 describe('FormComponent', () => {
 
-    let componentHandler: any;
     let formService: FormService;
     let formComponent: FormComponent;
     let visibilityService: WidgetVisibilityService;
@@ -35,22 +34,12 @@ describe('FormComponent', () => {
     let logService: LogService;
 
     beforeEach(() => {
-        componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered'
-        ]);
-        window['componentHandler'] = componentHandler;
-
         logService = new LogService();
         visibilityService = new WidgetVisibilityService(null, logService);
         spyOn(visibilityService, 'refreshVisibility').and.stub();
         formService = new FormService(null, null, logService);
         nodeService = new NodeService(null);
         formComponent = new FormComponent(formService, visibilityService, null, nodeService);
-    });
-
-    it('should upgrade MDL content on view checked', () => {
-        formComponent.ngAfterViewChecked();
-        expect(componentHandler.upgradeAllRegistered).toHaveBeenCalled();
     });
 
     it('should check form', () => {
