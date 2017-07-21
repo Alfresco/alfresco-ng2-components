@@ -94,7 +94,7 @@ export class NodeActionsService {
             this.dialog.open(ContentNodeSelectorComponent, {
                 data: { title, selectionMade },
                 panelClass: 'adf-content-node-selector-dialog',
-                width: '400px'
+                width: '576px'
             });
 
             selectionMade.subscribe((parent: MinimalNodeEntryEntity) => {
