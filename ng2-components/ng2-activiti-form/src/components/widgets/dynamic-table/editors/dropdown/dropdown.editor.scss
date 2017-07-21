@@ -1,3 +1,7 @@
-.dropdown-editor__select {
-    width: 100%;
+@import 'theming';
+
+.adf {
+    &-dropdown-editor-select {
+        width: 100%;
+    }
 }

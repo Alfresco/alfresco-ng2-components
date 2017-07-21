@@ -96,7 +96,7 @@ export class DropdownEditorComponent implements OnInit {
     }
 
     onValueChanged(row: DynamicTableRow, column: DynamicTableColumn, event: any) {
-        let value: any = (<HTMLInputElement> event.target).value;
+        let value: any = (<HTMLInputElement> event).value;
         value = column.options.find(opt => opt.name === value);
         row.value[column.id] = value;
     }
