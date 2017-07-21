@@ -18,11 +18,10 @@
 import { DebugElement, ReflectiveInjector, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { AlfrescoTranslationService, CoreModule, NotificationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, CoreModule, NotificationService, SearchService } from 'ng2-alfresco-core';
 import { DocumentListModule } from 'ng2-alfresco-documentlist';
 import { PermissionModel } from 'ng2-alfresco-documentlist';
 import { Observable } from 'rxjs/Rx';
-import { SearchService } from '../services/search.service';
 import { TranslationMock } from './../assets/translation.service.mock';
 import { SearchComponent } from './search.component';
 

@@ -17,8 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ThumbnailService } from 'ng2-alfresco-core';
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
-import { SearchService } from '../services/search.service';
+import { AlfrescoTranslationService, CoreModule, SearchService } from 'ng2-alfresco-core';
 import { result } from './../assets/search.component.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
 import { SearchAutocompleteComponent } from './search-autocomplete.component';
