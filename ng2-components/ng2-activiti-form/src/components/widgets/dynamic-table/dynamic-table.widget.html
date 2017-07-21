@@ -1,9 +1,9 @@
-<div class="adf-dynamic-table-widget {{field.className}}"
+<div class="{{field.className}}"
     [class.adf-invalid]="!isValid()" *ngIf="field?.isVisible">
-    <div class="adf-dynamic-table-widget__label">{{content.name}}</div>
+    <div class="adf-label">{{content.name}}<span *ngIf="isRequired()">*</span></div>
 
     <div *ngIf="!editMode">
-        <div class="adf-dynamic-table-widget__table-container">
+        <div class="adf-table-container">
             <table class="full-width adf-dynamic-table" id="dynamic-table-{{content.id}}">
                 <thead>
                     <tr>

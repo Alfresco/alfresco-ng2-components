@@ -1,8 +1,6 @@
 <div class="adf-dropdown-widget {{field.className}}"
      [class.adf-invalid]="!field.isValid" *ngIf="field?.isVisible">
-    <div>
-        <label class="adf-label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
-    </div>
+    <label class="adf-label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
     <md-select class="adf-select"
             [attr.id]="field.id"
             [(ngModel)]="field.value"
