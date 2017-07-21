@@ -1,3 +1,7 @@
-.text-editor {
-    width: 100%;
+@import 'theming';
+
+.adf {
+    &-text-editor {
+        width: 100%;
+    }
 }
