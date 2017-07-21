@@ -129,7 +129,7 @@ export class ViewerComponent implements OnDestroy, OnChanges {
     cleanup() {
         this.urlFileContent = '';
         this.displayName = '';
-        this.fileNodeId = null;
+        // this.fileNodeId = null;
         this.loaded = false;
         this.extension = null;
         this.mimeType = null;
