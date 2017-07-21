@@ -176,6 +176,14 @@ $dynamic-table-drag-border: 1px dashed rgb(68,138,255);
             color: $alfresco-warn-color--hue-3;
         }
 
+        .adf-table-container {
+            border: 1px solid $alfresco-warn-color--hue-3;
+        }
+
+        .adf-dynamic-table {
+            border: none;
+        }
+
         .adf-input {
             border-color: $alfresco-warn-color--hue-3;
         }

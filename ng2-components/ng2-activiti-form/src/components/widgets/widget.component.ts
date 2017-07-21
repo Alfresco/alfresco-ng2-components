@@ -70,6 +70,10 @@ export class WidgetComponent implements AfterViewInit {
         return null;
     }
 
+    isValid() {
+        return this.field.validationSummary;
+    }
+
     hasValue(): boolean {
         return this.field &&
             this.field.value !== null &&

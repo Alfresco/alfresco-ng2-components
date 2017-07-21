@@ -6,8 +6,9 @@
         padding-bottom: 10px;
     }
 
-    &-date-widget--button {
-        margin-top: 10px;
+    &-date-widget-button {
+        position: relative;
+        top: 25px;
     }
 
     &-date-input {
