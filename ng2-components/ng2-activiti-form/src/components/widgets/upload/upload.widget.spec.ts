@@ -17,6 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
+import { MATERIAL_MODULE } from '../../../../index';
 import { EcmModelService } from '../../../services/ecm-model.service';
 import { FormService } from '../../../services/form.service';
 import { FormFieldTypes } from '../core/form-field-types';
@@ -26,7 +27,6 @@ import { UploadWidgetComponent } from './upload.widget';
 
 describe('UploadWidgetComponent', () => {
 
-    let componentHandler;
     let widget: UploadWidgetComponent;
     let formService: FormService;
 
@@ -91,13 +91,8 @@ describe('UploadWidgetComponent', () => {
         let inputElement: HTMLInputElement;
 
         beforeEach(async(() => {
-            componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
-            window['componentHandler'] = componentHandler;
-        }));
-
-        beforeEach(async(() => {
             TestBed.configureTestingModule({
-                imports: [CoreModule],
+                imports: [CoreModule, MATERIAL_MODULE],
                 declarations: [UploadWidgetComponent],
                 providers: [FormService, EcmModelService]
             }).compileComponents().then(() => {

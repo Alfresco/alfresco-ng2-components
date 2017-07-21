@@ -1,4 +1,5 @@
 @import 'theming';
+@import '../form';
 
 $dynamic-table-font-size: 14px !default;
 $dynamic-table-header-font-size: 12px !default;
@@ -159,39 +160,4 @@ $dynamic-table-drag-border: 1px dashed rgb(68,138,255);
         color: $alfresco-primary-text-color;
     }
    }
-
-    &-invalid {
-        .adf-error-text {
-            padding: 1px;
-            height: 16px;
-            font-size: 12px;
-            line-height: 1.33;
-            float: left;
-            color: $alfresco-warn-color--hue-3;
-        }
-
-        .adf-error-icon {
-            float: right;
-            font-size: 17px;
-            color: $alfresco-warn-color--hue-3;
-        }
-
-        .adf-table-container {
-            border: 1px solid $alfresco-warn-color--hue-3;
-        }
-
-        .adf-dynamic-table {
-            border: none;
-        }
-
-        .adf-input {
-            border-color: $alfresco-warn-color--hue-3;
-        }
-        .adf-label {
-            color: $alfresco-warn-color--hue-3;
-            &:after {
-                background-color: $alfresco-warn-color--hue-3;
-            }
-        }
-    }
 }
