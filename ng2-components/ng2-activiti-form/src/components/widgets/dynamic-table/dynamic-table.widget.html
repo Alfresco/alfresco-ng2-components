@@ -60,7 +60,5 @@
         (save)="onSaveChanges()"
         (cancel)="onCancelChanges()">
      </row-editor>
-    <md-error  *ngIf="content?.field.validationSummary">
-        <div class="adf-error-text" >{{content?.field.validationSummary}}</div> <i class="material-icons adf-error-icon">warning</i>
-    </md-error>
+    <error-widget [error]="field.validationSummary" ></error-widget>
 </div>

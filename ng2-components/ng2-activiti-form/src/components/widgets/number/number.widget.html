@@ -14,10 +14,5 @@
                [disabled]="field.readOnly"
                placeholder="{{field.placeholder}}">
     </md-input-container>
-    <div class="adf-error-text-container">
-        <div *ngIf="field.validationSummary" [@transitionMessages]="_subscriptAnimationState">
-            <div class="adf-error-text">{{field.validationSummary}}</div>
-            <i class="material-icons adf-error-icon">warning</i>
-        </div>
-    </div>
+    <error-widget [error]="field.validationSummary" ></error-widget>`
 </div>
