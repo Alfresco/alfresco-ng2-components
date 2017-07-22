@@ -112,14 +112,14 @@ export class AlfrescoContentService {
         let hasPermission = false;
 
         if (this.hasAllowableOperations(node)) {
-            if (permission.startsWith("!")) {
-                hasPermission = node.allowableOperations.find(currentPermission => currentPermission === permission.replace("!", "")) ? false : true;
+            if (permission && permission.startsWith('!')) {
+                hasPermission = node.allowableOperations.find(currentPermission => currentPermission === permission.replace('!', '')) ? false : true;
             } else {
                 hasPermission = node.allowableOperations.find(currentPermission => currentPermission === permission) ? true : false;
             }
 
         } else {
-            if (permission.startsWith("!")) {
+            if (permission && permission.startsWith('!')) {
                 hasPermission = true;
             }
         }
