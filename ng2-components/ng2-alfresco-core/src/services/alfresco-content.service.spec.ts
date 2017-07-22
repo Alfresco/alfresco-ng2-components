@@ -111,19 +111,29 @@ describe('AlfrescoContentService', () => {
         });
     });
 
-    it('should havePermission should be false if allowableOperation is not present in the node', () => {
+    it('should havePermission be false if allowableOperation is not present in the node', () => {
         let permissionNode = {};
         expect(contentService.hasPermission(permissionNode, 'create')).toBeFalsy();
     });
 
-    it('should havePermission should be true if allowableOperation is present and you have the permission for the request operation', () => {
+    it('should havePermission be true if allowableOperation is present and you have the permission for the request operation', () => {
         let permissionNode = {allowableOperations: ['delete', 'update', 'create', 'updatePermissions']};
 
         expect(contentService.hasPermission(permissionNode, 'create')).toBeTruthy();
     });
 
-    it('should havePermission should be false if allowableOperation is present but you don\'t have the permission for the request operation', () => {
+    it('should havePermission be false if allowableOperation is present but you don\'t have the permission for the request operation', () => {
         let permissionNode = {allowableOperations: ['delete', 'update', 'updatePermissions']};
         expect(contentService.hasPermission(permissionNode, 'create')).toBeFalsy();
+    });
+
+    it('should havePermission works in the opposite way with negate value', () => {
+        let permissionNode = {allowableOperations: ['delete', 'update', 'updatePermissions']};
+        expect(contentService.hasPermission(permissionNode, '!create')).toBeTruthy();
+    });
+
+    it('should havePermission return false id no permission parameter are passed', () => {
+        let permissionNode = {allowableOperations: ['delete', 'update', 'updatePermissions']};
+        expect(contentService.hasPermission(permissionNode, null)).toBeFalsy();
     });
 });
