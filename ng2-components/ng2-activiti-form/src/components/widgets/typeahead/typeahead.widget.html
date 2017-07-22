@@ -12,10 +12,8 @@
            (blur)="onBlur()"
            [disabled]="field.readOnly"
            placeholder="{{field.placeholder}}">
-        <md-error  *ngIf="field.validationSummary">
-            <div class="adf-error-text" >{{field.validationSummary}}</div> <i class="material-icons adf-error-icon">warning</i>
-        </md-error>
     </md-input-container>
+    <error-widget [error]="field.validationSummary" ></error-widget>
 </div>
 <div class="adf-typeahead-autocomplete mat-elevation-z2" *ngIf="options.length > 0 && popupVisible">
         <md-option *ngFor="let item of options"

@@ -74,25 +74,16 @@ export const ACTIVITI_FORM_PROVIDERS: any[] = [
     FormService,
     ActivitiContentService,
     EcmModelService,
-    NodeService, []
+    NodeService,
     WidgetVisibilityService,
     ActivitiAlfrescoContentService,
     FormRenderingService
 ];
 
 export const MATERIAL_MODULE: any[] = [
-    MdTabsModule,
-    MdCardModule,
-    MdButtonModule,
-    MdIconModule,
-    MdSlideToggleModule,
-    MdInputModule,
-    MdAutocompleteModule,
-    MdRadioModule,
-    MdSelectModule,
-    MdDatepickerModule,
-    MdGridListModule,
-    MdTableModule
+    MdAutocompleteModule, MdButtonModule, MdCardModule, MdCheckboxModule,
+    MdDatepickerModule, MdGridListModule, MdIconModule, MdInputModule, MdRadioModule,
+    MdSelectModule, MdSlideToggleModule, MdTableModule, MdTabsModule
 ];
 
 @NgModule({

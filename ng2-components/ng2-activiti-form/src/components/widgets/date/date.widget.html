@@ -2,21 +2,19 @@
     <md-input-container class="adf-date-widget">
         <label class="adf-label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
         <input mdInput
-        type="text"
-        [id]="field.id"
-        [required]="isRequired()"
-        [mdDatepicker]="datePicker"
-        [value]="field.value"
-        [(ngModel)]="field.value"
-        (ngModelChange)="onDateChanged()"
-        (onOk)="onDateSelected()"
-        [disabled]="field.readOnly"
-        placeholder="{{field.placeholder}}">
+               #resultPickerModel="ngModel"
+               [mdDatepicker]="datePicker"
+               [(ngModel)]="field.value"
+               [id]="field.id"
+               [required]="isRequired()"
+               (dateInput)="onDateSelected($event)"
+               (dateChange)="onDateChanged($event)"
+               [disabled]="field.readOnly"
+               [min]="minDate"
+               [max]="maxDate"
+               placeholder="{{field.placeholder}}">
         <button class="adf-date-widget-button" mdSuffix [mdDatepickerToggle]="datePicker"></button>
-        <md-error  *ngIf="field.validationSummary">
-            <div class="adf-error-text" >{{field.validationSummary}}</div>
-            <i class="material-icons adf-error-icon">warning</i>
-        </md-error>
     </md-input-container>
-    <md-datepicker #datePicker [touchUi]="true"></md-datepicker>
+    <error-widget [error]="field.validationSummary" ></error-widget>
+    <md-datepicker #datePicker [touchUi]="true" [startAt]="startAt" (selectedChanged)="onDateChanged($event)"></md-datepicker>
 </div>
