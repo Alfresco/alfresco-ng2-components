@@ -59,6 +59,7 @@ export * from './src/models/content-action.model';
 export * from './src/models/document-library.model';
 export * from './src/models/permissions.model';
 export * from './src/models/permissions-style.model';
+export * from './src/models/permissions-style.model';
 
 export const DOCUMENT_LIST_DIRECTIVES: any[] = [
     DocumentListComponent,
