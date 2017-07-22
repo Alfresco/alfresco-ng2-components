@@ -10,7 +10,5 @@
                    [value]="getOptionValue(opt, field.value)"
                    [id]="opt.id">{{opt.name}}</md-option>
     </md-select>
-    <md-error  *ngIf="field.validationSummary">
-        <div class="adf-error-text" >{{field.validationSummary}}</div> <i class="material-icons adf-error-icon">warning</i>
-    </md-error>
+    <error-widget [error]="field.validationSummary" ></error-widget>
 </div>

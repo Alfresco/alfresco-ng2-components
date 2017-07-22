@@ -1,26 +1,31 @@
 @import 'theming';
 
 .adf {
+    &-error-text-container{
+        width: 95%;
+        height: 20px;
+        margin-top: -12px;
+    }
+
+    &-error-text {
+        padding: 1px;
+        height: 16px;
+        font-size: 12px;
+        line-height: 1.33;
+        float: left;
+        color: $alfresco-warn-color--hue-3;
+    }
+
+    &-error-icon {
+        float: right;
+        font-size: 17px;
+        color: $alfresco-warn-color--hue-3;
+    }
 
     &-invalid {
-        .adf-error-text-container{
-            width: 95%;
-            height: 20px;
-        }
 
-        .adf-error-text {
-            padding: 1px;
-            height: 16px;
-            font-size: 12px;
-            line-height: 1.33;
-            float: left;
-            color: $alfresco-warn-color--hue-3;
-        }
-
-        .adf-error-icon {
-            float: right;
-            font-size: 17px;
-            color: $alfresco-warn-color--hue-3;
+        .mat-input-underline {
+            background-color: #f44336!important;
         }
 
         .adf-file {

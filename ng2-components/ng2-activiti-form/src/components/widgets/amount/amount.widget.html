@@ -1,23 +1,18 @@
-<div class="amount-widget__container amount-widget {{field.className}}"
-     [class.amount-widget__invalid]="!field.isValid">
-    <div>
-        <label class="adf-label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
-    </div>
+<div class="amount-widget__container amount-widget {{field.className}}" [class.adf-invalid]="!field.isValid">
+    <label class="adf-label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
     <md-input-container floatPlaceholder="never" class="amount-widget__input">
         <span mdPrefix class="adf-amount-widget__prefix-spacing"> {{currency }}</span>
         <input mdInput
                 class="adf-amount-widget"
                 type="text"
-                [attr.id]="field.id"
-                [attr.required]="isRequired()"
+                [id]="field.id"
+                [required]="isRequired()"
                 [value]="field.value"
                 [(ngModel)]="field.value"
                 (ngModelChange)="checkVisibility(field)"
                 [disabled]="field.readOnly"
                 placeholder="{{field.placeholder}}">
-        <md-error  *ngIf="field.validationSummary">
-            {{field.validationSummary}}
-        </md-error>
     </md-input-container>
+    <error-widget [error]="field.validationSummary" ></error-widget>
 </div>
 

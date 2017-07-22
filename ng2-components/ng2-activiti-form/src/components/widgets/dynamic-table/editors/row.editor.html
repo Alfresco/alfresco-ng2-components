@@ -33,9 +33,7 @@
             </div>
         </div>
     </div>
-    <md-error  *ngIf="!validationSummary.isValid">
-    <div class="adf-error-text" >{{validationSummary.text}}</div> <i class="material-icons adf-error-icon">warning</i>
-</md-error>
+    <error-widget [error]="field.validationSummary" ></error-widget>
     <div>
         <button
             class="mdl-button mdl-js-button mdl-js-ripple-effect"

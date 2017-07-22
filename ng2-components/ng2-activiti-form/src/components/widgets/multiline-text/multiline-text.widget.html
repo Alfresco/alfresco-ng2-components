@@ -14,9 +14,7 @@
                 [disabled]="field.readOnly"
                 placeholder="{{field.placeholder}}">
         </textarea>
-        <md-error  *ngIf="field.validationSummary">
-            {{field.validationSummary}}
-        </md-error>
     </md-input-container>
+    <error-widget [error]="field.validationSummary" ></error-widget>
 </div>
 
