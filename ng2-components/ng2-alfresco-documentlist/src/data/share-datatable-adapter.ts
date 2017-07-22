@@ -256,10 +256,8 @@ export class ShareDataRow implements DataRow {
 
             if (this.applyPermissionStyleToFolder(nodeEntity.entry, currentPermissionsStyle) || this.applyPermissionStyleToFile(nodeEntity.entry, currentPermissionsStyle)) {
 
-                if (currentPermissionsStyle.permission.startsWith('!') && !this.documentListService.hasPermission(nodeEntity.entry, currentPermissionsStyle.permission)) {
-                    permissionsClasses += ` ${currentPermissionsStyle.css}`;
-                } else if (this.documentListService.hasPermission(nodeEntity.entry, currentPermissionsStyle.permission)) {
-                    permissionsClasses += ` ${currentPermissionsStyle.css}`;
+                if (this.documentListService.hasPermission(nodeEntity.entry, currentPermissionsStyle.permission)) {
+                     permissionsClasses += ` ${currentPermissionsStyle.css}`;
                 }
             }
 

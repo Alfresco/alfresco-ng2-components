@@ -18,7 +18,7 @@
 import { ChangeDetectorRef, Component, Input, OnInit, Optional, ViewChild } from '@angular/core';
 import { MdDialog } from '@angular/material';
 import { ActivatedRoute, Params } from '@angular/router';
-import { AlfrescoContentService, FileUploadCompleteEvent, FolderCreatedEvent, NotificationService, SiteModel, UploadService } from 'ng2-alfresco-core';
+import { AlfrescoContentService, FileUploadCompleteEvent, FolderCreatedEvent, NotificationService, PermissionsEnum, SiteModel, UploadService } from 'ng2-alfresco-core';
 import { DocumentListComponent, DropdownSitesComponent, PermissionStyleModel } from 'ng2-alfresco-documentlist';
 
 import { CreateFolderDialogComponent } from '../../dialogs/create-folder.dialog';
@@ -40,7 +40,7 @@ export class FilesComponent implements OnInit {
 
     useCustomToolbar = true;
     toolbarColor = 'default';
-    useDropdownBreadcrumb = true;
+    useDropdownBreadcrumb = false;
 
     selectionModes = [
         { value: 'none', viewValue: 'None' },
@@ -115,6 +115,9 @@ export class FilesComponent implements OnInit {
 
         this.uploadService.fileUploadComplete.debounceTime(300).subscribe(value => this.onFileUploadComplete(value));
         this.contentService.folderCreated.subscribe(value => this.onFolderCreated(value));
+
+        // this.permissionsStyle.push(new PermissionStyleModel('document-list__create', PermissionsEnum.CREATE));
+        // this.permissionsStyle.push(new PermissionStyleModel('document-list__disable', PermissionsEnum.NOT_CREATE, false, true));
     }
 
     onNavigationError(err: any) {
