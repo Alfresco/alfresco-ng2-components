@@ -1060,7 +1060,7 @@ The permissionsStyle array  can define different styles depending from the permi
 [PermissionStyleModel](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-documentlist/src/models/permissions-style.model.ts)
 
 | Property | Description |
-| --- | --- | --- | --- |
+| --- | --- |
 | isFile/isFolder | allow you to select if you want apply the style to file/folder nodes |
 | permission | is an enum value [Permissions](https://github.com/Alfresco/alfresco-ng2-core/blob/master/ng2-components/ng2-alfresco-documentlist/src/models/permissions.enum.ts) | 
 | css| the name of the class to add | 
