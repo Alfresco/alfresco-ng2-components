@@ -22,6 +22,7 @@ import { MATERIAL_MODULE } from '../../../../index';
 import { EcmModelService } from '../../../services/ecm-model.service';
 import { FormService } from '../../../services/form.service';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
+import { ErrorWidgetComponent } from '../error/error.component';
 import { FormFieldOption } from './../core/form-field-option';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
@@ -119,7 +120,7 @@ describe('DropdownWidgetComponent', () => {
                     CoreModule,
                     ...MATERIAL_MODULE
                 ],
-                declarations: [DropdownWidgetComponent],
+                declarations: [DropdownWidgetComponent, ErrorWidgetComponent],
                 providers: [FormService, EcmModelService, WidgetVisibilityService]
             }).compileComponents().then(() => {
                 fixture = TestBed.createComponent(DropdownWidgetComponent);

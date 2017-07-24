@@ -34,15 +34,17 @@ export class AppDefinitionRepresentationModel {
     tenantId: number;
 
     constructor(obj?: any) {
-        this.defaultAppId = obj && obj.defaultAppId || null;
-        this.deploymentId = obj && obj.deploymentId || false;
-        this.name = obj && obj.name || null;
-        this.description = obj && obj.description || null;
-        this.theme = obj && obj.theme || null;
-        this.icon = obj && obj.icon || null;
-        this.id = obj && obj.id;
-        this.modelId = obj && obj.modelId;
-        this.tenantId = obj && obj.tenantId;
+        if (obj) {
+            this.defaultAppId = obj.defaultAppId;
+            this.deploymentId = obj.deploymentId;
+            this.name = obj.name;
+            this.description = obj.description;
+            this.theme = obj.theme;
+            this.icon = obj.icon;
+            this.id = obj.id;
+            this.modelId = obj.modelId;
+            this.tenantId = obj.tenantId;
+        }
     }
 }
 
@@ -59,9 +61,11 @@ export class FilterParamsModel {
     index: number;
 
     constructor(obj?: any) {
-        this.id = obj && obj.id || null;
-        this.name = obj && obj.name || null;
-        this.index = obj && obj.index;
+        if (obj) {
+            this.id = obj.id;
+            this.name = obj.name;
+            this.index = obj.index;
+        }
     }
 }
 
@@ -83,14 +87,16 @@ export class FilterRepresentationModel {
     landingTaskId: string;
 
     constructor(obj?: any) {
-        this.id = obj && obj.id || null;
-        this.appId = obj && obj.appId || null;
-        this.name = obj && obj.name || null;
-        this.recent = obj && obj.recent || false;
-        this.icon = obj && obj.icon || null;
-        this.filter = new FilterParamRepresentationModel(obj.filter);
-        this.index = obj && obj.index;
-        this.landingTaskId = obj && obj.landingTaskId;
+        if (obj) {
+            this.id = obj.id;
+            this.appId = obj.appId;
+            this.name = obj.name;
+            this.recent = !!obj.recent;
+            this.icon = obj.icon;
+            this.filter = new FilterParamRepresentationModel(obj.filter);
+            this.index = obj.index;
+            this.landingTaskId = obj.landingTaskId;
+        }
     }
 
     hasFilter() {
@@ -116,14 +122,16 @@ export class FilterParamRepresentationModel {
     dueBefore: Date;
 
     constructor(obj?: any) {
-        this.processDefinitionId = obj && obj.processDefinitionId || null;
-        this.processDefinitionKey = obj && obj.processDefinitionKey || null;
-        this.name = obj && obj.name || null;
-        this.state = obj && obj.state || null;
-        this.sort = obj && obj.sort || null;
-        this.assignment = obj && obj.assignment || null;
-        this.dueAfter = obj && obj.dueAfter || null;
-        this.dueBefore = obj && obj.dueBefore || null;
+        if (obj) {
+            this.processDefinitionId = obj.processDefinitionId;
+            this.processDefinitionKey = obj.processDefinitionKey;
+            this.name = obj.name;
+            this.state = obj.state;
+            this.sort = obj.sort;
+            this.assignment = obj.assignment;
+            this.dueAfter = obj.dueAfter;
+            this.dueBefore = obj.dueBefore;
+        }
     }
 }
 
@@ -141,16 +149,19 @@ export class TaskQueryRequestRepresentationModel {
     landingTaskId: string;
 
     constructor(obj?: any) {
-        this.appDefinitionId = obj && obj.appDefinitionId || null;
-        this.processInstanceId = obj && obj.processInstanceId || null;
-        this.processDefinitionId = obj && obj.processDefinitionId || null;
-        this.processDefinitionKey = obj && obj.processDefinitionKey || null;
-        this.text = obj && obj.text || null;
-        this.assignment = obj && obj.assignment || null;
-        this.state = obj && obj.state || null;
-        this.sort = obj && obj.sort || null;
-        this.page = obj && obj.page || 0;
-        this.size = obj && obj.size || 25;
-        this.landingTaskId = obj && obj.landingTaskId || '';
+        if (obj) {
+
+            this.appDefinitionId = obj.appDefinitionId;
+            this.processInstanceId = obj.processInstanceId;
+            this.processDefinitionId = obj.processDefinitionId;
+            this.processDefinitionKey = obj.processDefinitionKey;
+            this.text = obj.text;
+            this.assignment = obj.assignment;
+            this.state = obj.state;
+            this.sort = obj.sort;
+            this.page = obj.page || 0;
+            this.size = obj.size || 25;
+            this.landingTaskId = obj.landingTaskId || '';
+        }
     }
 }

@@ -25,6 +25,7 @@ import { TextWidgetComponent } from './text.widget';
 import { CoreModule } from 'ng2-alfresco-core';
 import { MATERIAL_MODULE } from '../../../../index';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
+import { ErrorWidgetComponent } from '../error/error.component';
 import { EcmModelService } from './../../../services/ecm-model.service';
 import { FormService } from './../../../services/form.service';
 
@@ -42,6 +43,7 @@ describe('TextWidgetComponent', () => {
             ],
             declarations: [
                 TextWidgetComponent,
+                ErrorWidgetComponent,
                 InputMaskDirective
             ],
             providers: [

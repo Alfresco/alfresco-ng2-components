@@ -27,6 +27,7 @@ import { FormFieldOption } from '../core/form-field-option';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
+import { ErrorWidgetComponent } from '../error/error.component';
 import { TypeaheadWidgetComponent } from './typeahead.widget';
 
 describe('TypeaheadWidgetComponent', () => {
@@ -389,7 +390,7 @@ describe('TypeaheadWidgetComponent', () => {
         beforeEach(async(() => {
             TestBed.configureTestingModule({
                 imports: [CoreModule, MATERIAL_MODULE],
-                declarations: [TypeaheadWidgetComponent],
+                declarations: [TypeaheadWidgetComponent, ErrorWidgetComponent],
                 providers: [FormService, EcmModelService, WidgetVisibilityService]
             }).compileComponents().then(() => {
                 fixture = TestBed.createComponent(TypeaheadWidgetComponent);

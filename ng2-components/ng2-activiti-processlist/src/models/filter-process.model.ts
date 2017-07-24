@@ -32,13 +32,15 @@ export class FilterProcessRepresentationModel {
     index: number;
 
     constructor(obj?: any) {
-        this.id = obj && obj.id || null;
-        this.appId = obj && obj.appId || null;
-        this.name = obj && obj.name || null;
-        this.recent = obj && obj.recent || false;
-        this.icon = obj && obj.icon || null;
-        this.filter = obj && obj.filter || null;
-        this.index = obj && obj.index;
+        if (obj) {
+            this.id = obj.id;
+            this.appId = obj.appId;
+            this.name = obj.name;
+            this.recent = !!obj.recent;
+            this.icon = obj.icon;
+            this.filter = obj.filter;
+            this.index = obj.index;
+        }
     }
 
     hasFilter() {
