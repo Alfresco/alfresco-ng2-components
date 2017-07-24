@@ -1,90 +1,74 @@
-<!-- Always shows a header, even in smaller screens. -->
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-    <header class="mdl-layout__header main_header_adf" [ngClass]="{hide: isAPageWithHeaderBar()}">
-        <div class="mdl-button-padding mdl-layout__header-row">
+<md-toolbar color="primary" *ngIf="!isAPageWithHeaderBar()">
+    <ng2-alfresco-userinfo
+        class="user-profile"
+        [menuOpenType]="left">
+    </ng2-alfresco-userinfo>
 
-            <!-- User Info -->
-            <ng2-alfresco-userinfo class="user-profile" [menuOpenType]="left">
-            </ng2-alfresco-userinfo>
+    <span>ADF Demo Application</span>
 
-            <!-- Title -->
-            <span class="mdl-layout-title">Demo Application</span>
-            <!-- Add spacer, to align navigation to the right -->
-            <div class="mdl-layout-spacer"></div>
+    <div class="app-menu--spacer"></div>
 
-            <!-- Search bar -->
-            <search-bar (expand)="onToggleSearch($event)"></search-bar>
+    <search-bar (expand)="onToggleSearch($event)"></search-bar>
 
-            <!-- Navigation. We hide it in small screens. -->
-            <nav class="mdl-navigation mdl-layout--large-screen-only">
-                <a class="mdl-navigation__link" data-automation-id="home" href="" routerLink="/">Home</a>
-                <a class="mdl-navigation__link" data-automation-id="files" href="" routerLink="/files">DocumentList</a>
-                <a class="mdl-navigation__link" data-automation-id="activiti" href="" routerLink="/activiti">Process Services</a>
-                <a class="mdl-navigation__link" data-automation-id="login" href="" routerLink="/login">Login</a>
-            </nav>
+    <a md-button data-automation-id="home" href="" routerLink="/">Home</a>
+    <a md-button data-automation-id="files" href="" routerLink="/files">Content Services</a>
+    <a md-button data-automation-id="activiti" href="" routerLink="/activiti">Process Services</a>
+    <a md-button data-automation-id="login" href="" routerLink="/login">Login</a>
 
-            <button md-icon-button [mdMenuTriggerFor]="langMenu">
-                <md-icon>language</md-icon>
-            </button>
-            <md-menu #langMenu="mdMenu">
-                <button md-menu-item (click)="changeLanguage('en')">English</button>
-                <button md-menu-item (click)="changeLanguage('it')">Italian</button>
-                <button md-menu-item (click)="changeLanguage('ru')">Russian</button>
-            </md-menu>
+    <button md-icon-button [mdMenuTriggerFor]="langMenu">
+        <md-icon>language</md-icon>
+    </button>
+    <md-menu #langMenu="mdMenu">
+        <button md-menu-item (click)="changeLanguage('en')">English</button>
+        <button md-menu-item (click)="changeLanguage('it')">Italian</button>
+        <button md-menu-item (click)="changeLanguage('ru')">Russian</button>
+    </md-menu>
 
-            <button md-icon-button [mdMenuTriggerFor]="appMenu">
-                <md-icon>more_vert</md-icon>
-            </button>
-            <md-menu #appMenu="mdMenu">
-                <a md-menu-item href="" routerLink="/datatable">
-                    <md-icon>view_module</md-icon>
-                    <span>DataTable</span>
-                </a>
-                <a md-menu-item href="" routerLink="/form">
-                    <md-icon>poll</md-icon>
-                    <span>Form</span>
-                </a>
-                <a md-menu-item href="" routerLink="/form-list">
-                    <md-icon>library_books</md-icon>
-                    <span>Form List</span>
-                </a>
-                <a md-menu-item href="" routerLink="/uploader">
-                    <md-icon>file_upload</md-icon>
-                    <span>Uploader</span>
-                </a>
-                <a md-menu-item href="" routerLink="/webscript">
-                    <md-icon>extension</md-icon>
-                    <span>Webscript</span>
-                </a>
-                <a md-menu-item href="" routerLink="/tag">
-                    <md-icon>local_offer</md-icon>
-                    <span>Tag</span>
-                </a>
-                <a md-menu-item href="" routerLink="/social">
-                    <md-icon>thumb_up</md-icon>
-                    <span>Social</span>
-                </a>
-                <a md-menu-item href="" routerLink="/settings">
-                    <md-icon>settings</md-icon>
-                    <span>Settings</span>
-                </a>
-                <a md-menu-item href="" routerLink="/about">
-                    <md-icon>info_outline</md-icon>
-                    <span>About</span>
-                </a>
-                <button md-menu-item (click)="onLogout($event)">
-                    <md-icon>exit_to_app</md-icon>
-                    <span>Logout</span>
-                </button>
-            </md-menu>
-        </div>
+    <button md-icon-button [mdMenuTriggerFor]="appMenu">
+        <md-icon>more_vert</md-icon>
+    </button>
+    <md-menu #appMenu="mdMenu">
+        <a md-menu-item href="" routerLink="/datatable">
+            <md-icon>view_module</md-icon>
+            <span>DataTable</span>
+        </a>
+        <a md-menu-item href="" routerLink="/form">
+            <md-icon>poll</md-icon>
+            <span>Form</span>
+        </a>
+        <a md-menu-item href="" routerLink="/form-list">
+            <md-icon>library_books</md-icon>
+            <span>Form List</span>
+        </a>
+        <a md-menu-item href="" routerLink="/uploader">
+            <md-icon>file_upload</md-icon>
+            <span>Uploader</span>
+        </a>
+        <a md-menu-item href="" routerLink="/webscript">
+            <md-icon>extension</md-icon>
+            <span>Webscript</span>
+        </a>
+        <a md-menu-item href="" routerLink="/tag">
+            <md-icon>local_offer</md-icon>
+            <span>Tag</span>
+        </a>
+        <a md-menu-item href="" routerLink="/social">
+            <md-icon>thumb_up</md-icon>
+            <span>Social</span>
+        </a>
+        <a md-menu-item href="" routerLink="/settings">
+            <md-icon>settings</md-icon>
+            <span>Settings</span>
+        </a>
+        <a md-menu-item href="" routerLink="/about">
+            <md-icon>info_outline</md-icon>
+            <span>About</span>
+        </a>
+        <button md-menu-item (click)="onLogout($event)">
+            <md-icon>exit_to_app</md-icon>
+            <span>Logout</span>
+        </button>
+    </md-menu>
+</md-toolbar>
 
-    </header>
-
-    <main class="mdl-layout__content" (dragover)="onDragOverMainPage($event)"
-          (drop)="onDragOverMainPage($event)">
-        <div class="page-content">
-            <router-outlet></router-outlet>
-        </div>
-    </main>
-</div>
+<router-outlet></router-outlet>
