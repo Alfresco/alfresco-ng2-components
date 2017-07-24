@@ -1,25 +1,34 @@
 {
-  "FILE_UPLOAD": {
-    "BUTTON": {
-      "UPLOAD_FILE": "Загрузить файл",
-      "UPLOAD_FOLDER": "Загрузить папку",
-      "CANCEL_ALL": "Отменить все"
+    "ADF_FILE_UPLOAD": {
+        "BUTTON": {
+            "MINIMIZE": "Минимизировать",
+            "MAXIMIZE": "Mаксимизировать",
+            "CLOSE": "Закрыть",
+            "CANCEL_ALL": "Отменить загрузку"
+        },
+        "STATUS": {
+            "FILE_CANCELED_STATUS": "Oтменен"
+        }
     },
-    "MESSAGES": {
-      "SINGLE_COMPLETED": "файл загружен",
-      "COMPLETED": "файлы загружены",
-      "PROGRESS": "Идет загрузка...",
-      "FOLDER_ALREADY_EXIST": "Папка {0} уже существует",
-      "FOLDER_NOT_SUPPORTED": "Данный браузер не поддерживает загрузку папки"
-    },
-    "FILE_INFO": {
-      "NAME": "Имя файла",
-      "PROGRESS": "File progress",
-      "SIZE": "Размер",
-      "ACTION": "Действие"
-    },
-    "ACTION": {
-      "UNDO": "Отменить"
+    "FILE_UPLOAD": {
+        "BUTTON": {
+            "UPLOAD_FILE": "Загрузить файл",
+            "UPLOAD_FOLDER": "Загрузить папку",
+            "CANCEL_ALL": "Отменить все"
+        },
+        "MESSAGES": {
+            "UPLOAD_CANCELED": "Отменить отмену",
+            "UPLOAD_COMPLETED": "закачанный {{ completed }} / {{ total }}",
+            "UPLOAD_PROGRESS": "загрузка {{ completed }} / {{ total }}",
+            "UPLOAD_ERROR": "{{ total }} ошибка",
+            "UPLOAD_ERRORS": "{{ total }} ошибки",
+            "PROGRESS": "Идет загрузка...",
+            "FOLDER_ALREADY_EXIST": "Папка {0} уже существует",
+            "FOLDER_NOT_SUPPORTED": "Данный браузер не поддерживает загрузку папки",
+            "REMOVE_FILE_ERROR": "Ошибка удаления файла {{ fileName }}"
+        },
+        "ACTION": {
+            "UNDO": "Отменить"
+        }
     }
-  }
 }
