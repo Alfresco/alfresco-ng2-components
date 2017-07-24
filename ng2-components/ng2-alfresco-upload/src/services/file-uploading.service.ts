@@ -21,7 +21,7 @@ import { Subject } from 'rxjs/Rx';
 
 @Injectable()
 export class FileUploadService {
-    private remove = new Subject<string>();
+    public remove = new Subject<string>();
     public onRemoveFile = this.remove.asObservable();
 
     emitFileRemoved(item: any) {
