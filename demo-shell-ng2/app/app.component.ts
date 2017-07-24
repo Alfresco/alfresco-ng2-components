@@ -28,7 +28,7 @@ import {
 declare var document: any;
 
 @Component({
-    selector: 'alfresco-app',
+    selector: 'adf-app',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
@@ -92,10 +92,5 @@ export class AppComponent {
         if (this.storage.hasItem(`providers`)) {
             this.settingsService.setProviders(this.storage.getItem(`providers`));
         }
-    }
-
-    onDragOverMainPage(event: any): boolean {
-        event.preventDefault();
-        return false;
     }
 }
