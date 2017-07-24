@@ -19,7 +19,7 @@
     <div class="mdl-cell mdl-cell--4-col" data-automation-id="header-status" *ngIf="isRunning()">
         <button type="button" (click)="cancelProcess()" class="mdl-button">{{ 'DETAILS.BUTTON.CANCEL' | translate }}</button>
     </div>
-    <dialog class="mdl-dialog comments-dialog" #dialogComments>
+    <dialog class="mdl-dialog adf-comments-dialog" #dialogComments>
         <div class="mdl-dialog__content">
             <adf-process-instance-comments #activiticomments
                 [readOnly]="!isRunning()"
