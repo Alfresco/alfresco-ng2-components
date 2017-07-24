@@ -46,6 +46,7 @@ export class FileModel {
     status: FileUploadStatus = FileUploadStatus.Pending;
     progress: FileUploadProgress;
     options: FileUploadOptions;
+    data: any;
 
     constructor(file: File, options?: FileUploadOptions) {
         this.file = file;
@@ -53,6 +54,7 @@ export class FileModel {
         this.id = this.generateId();
         this.name = file.name;
         this.size = file.size;
+        this.data = {};
 
         this.progress = {
             loaded: 0,
