@@ -227,6 +227,7 @@ export class UploadService {
     private onUploadComplete(file: FileModel, data: any): void {
         if (file) {
             file.status = FileUploadStatus.Complete;
+            file.data = data;
             this.totalComplete++;
 
             const promise = this.cache[file.id];
