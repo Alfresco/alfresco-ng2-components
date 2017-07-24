@@ -33,13 +33,9 @@
             </div>
         </div>
     </div>
-    <error-widget [error]="field.validationSummary" ></error-widget>
+    <error-widget [error]="validationSummary.text"></error-widget>
     <div>
-        <button
-            class="mdl-button mdl-js-button mdl-js-ripple-effect"
-            (click)="onCancelChanges()">Cancel</button>
-        <button
-            class="mdl-button mdl-js-button mdl-js-ripple-effect"
-            (click)="onSaveChanges()">Save</button>
+        <button md-button (click)="onCancelChanges()">Cancel</button>
+        <button md-button (click)="onSaveChanges()">Save</button>
     </div>
 </div>
