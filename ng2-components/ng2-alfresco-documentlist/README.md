@@ -630,9 +630,12 @@ You can define both folder and document actions at the same time.
 
         <!-- system handler -->
         <content-action
-            target="folder"
-            title="Delete"
-            handler="delete">
+            icon="content_copy"
+            target="document"
+            title="copy"
+            permission="update"
+            [disableWithNoPermission]="true"
+            handler="copy">
         </content-action>
 
         <!-- custom handler -->
@@ -647,6 +650,7 @@ You can define both folder and document actions at the same time.
             target="document"
             title="Delete with additional custom callback"
             handler="delete"
+            permission="delete"
             (execute)="myCustomActionAfterDelete($event)">
         </content-action>
 
@@ -679,6 +683,8 @@ All document actions are rendered as a dropdown menu as on the picture below:
 The following action handlers are provided out-of-box:
 
 - **Download** (document)
+- **Copy** (document, folder)
+- **Move** (document, folder)
 - **Delete** (document, folder)
 
 All system handler names are case-insensitive, `handler="download"` and `handler="DOWNLOAD"`
@@ -765,6 +771,40 @@ Initiates download of the corresponding document file.
 ```
 
 ![Download document action](docs/assets/document-action-download.png)
+
+##### Copy and move
+
+Shows the destination chooser dialog for copy and move actions
+
+![Copy/move dialog](docs/assets/document-action-copymovedialog.png)
+
+```html
+<adf-document-list ...>
+    <content-actions>
+
+        <content-action
+            icon="content_copy"
+            target="document"
+            title="copy"
+            permission="update"
+            [disableWithNoPermission]="true"
+            handler="copy">
+        </content-action>
+
+        <content-action
+            icon="redo"
+            target="document"
+            title="move"
+            permission="update"
+            [disableWithNoPermission]="true"
+            handler="move">
+        </content-action>
+
+    </content-actions>
+</adf-document-list>
+```
+
+![Copy/move document action](docs/assets/document-action-copymove.png)
 
 #### Folder actions
 
