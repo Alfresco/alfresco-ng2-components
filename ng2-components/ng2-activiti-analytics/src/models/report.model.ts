@@ -29,12 +29,12 @@ export class ReportParametersModel {
     created: string;
 
     constructor(obj?: any) {
-        this.id = obj && obj.id;
-        this.name = obj && obj.name || null;
-        if (obj && obj.definition) {
+        this.id = obj.id;
+        this.name = obj.name;
+        if (obj.definition) {
             this.definition = new ReportDefinitionModel(JSON.parse(obj.definition));
         }
-        this.created = obj && obj.created || null;
+        this.created = obj.created;
     }
 
     hasParameters() {
@@ -77,13 +77,15 @@ export class ReportParameterDetailsModel {
     dependsOn: string;
 
     constructor(obj?: any) {
-        this.id = obj && obj.id;
-        this.name = obj && obj.name || null;
-        this.nameKey = obj && obj.nameKey || null;
-        this.type = obj && obj.type || null;
-        this.value = obj && obj.value || null;
-        this.options = obj && obj.options || null;
-        this.dependsOn = obj && obj.dependsOn || null;
+        if (obj) {
+            this.id = obj.id;
+            this.name = obj.name;
+            this.nameKey = obj.nameKey;
+            this.type = obj.type;
+            this.value = obj.value;
+            this.options = obj.options;
+            this.dependsOn = obj.dependsOn;
+        }
     }
 }
 
@@ -94,13 +96,15 @@ export class ParameterValueModel {
     value: string;
 
     constructor(obj?: any) {
-        this.id = obj && obj.id;
-        this.name = obj && obj.name || null;
-        this.value = obj && obj.value || null;
-        this.version = obj && obj.version || null;
+        if (obj) {
+            this.id = obj.id;
+            this.name = obj.name;
+            this.value = obj.value;
+            this.version = obj.version;
+        }
     }
 
-    get label () {
+    get label() {
         return this.version ? `${this.name} (v ${this.version}) ` : this.name;
     }
 }
@@ -117,15 +121,17 @@ export class ReportQuery {
     duration: number;
 
     constructor(obj?: any) {
-        this.reportName = obj && obj.reportName || null;
-        this.processDefinitionId = obj && obj.processDefinitionId || null;
-        this.status = obj && obj.status || null;
-        this.taskName = obj && obj.taskName || null;
-        this.dateRangeInterval = obj && obj.dateRangeInterval || null;
-        this.typeFiltering = obj && obj.typeFiltering || true;
-        this.slowProcessInstanceInteger = obj && obj.slowProcessInstanceInteger || 0;
-        this.duration = obj && obj.duration || 0;
-        this.dateRange = new ReportDateRange(obj);
+        if (obj) {
+            this.reportName = obj.reportName;
+            this.processDefinitionId = obj.processDefinitionId;
+            this.status = obj.status;
+            this.taskName = obj.taskName;
+            this.dateRangeInterval = obj.dateRangeInterval;
+            this.typeFiltering = (typeof obj.typeFiltering !== 'undefined') ? obj.typeFiltering : true;
+            this.slowProcessInstanceInteger = obj.slowProcessInstanceInteger || 0;
+            this.duration = obj.duration || 0;
+            this.dateRange = new ReportDateRange(obj);
+        }
     }
 
 }
@@ -136,9 +142,11 @@ export class ReportDateRange {
     rangeId: string;
 
     constructor(obj?: any) {
-        this.startDate = obj && obj.startDate || null;
-        this.endDate = obj && obj.endDate || null;
-        this.rangeId = obj && obj.rangeId || null;
+        if (obj) {
+            this.startDate = obj.startDate;
+            this.endDate = obj.endDate;
+            this.rangeId = obj.rangeId;
+        }
     }
 
 }

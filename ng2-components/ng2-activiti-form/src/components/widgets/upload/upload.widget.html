@@ -1,7 +1,7 @@
 <div class="adf-upload-widget {{field.className}}"
      [class.adf-invalid]="!field.isValid">
     <label class="adf-label" [attr.for]="field.id">{{field.name}}</label>
-    <div>
+    <div class="adf-upload-widget-container">
         <img  *ngIf="hasFile"  class="adf-upload-widget__icon" [src]="mimeTypeIcon" [alt]="mimeTypeIcon"/>
         <span *ngIf="hasFile" class="adf-file">{{displayText}}</span>
         <input *ngIf="!hasFile"
