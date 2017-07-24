@@ -1,28 +1,16 @@
-@import 'colors';
+@import 'theming';
 
-@mixin mat-file-uploading-row-theme($theme) {
-    $background: map-get($theme, background);
-    $foreground: map-get($theme, foreground);
-    $primary: map-get($theme, primary);
-    $accent: map-get($theme, accent);
-    $warn: map-get($theme, warn);
+:host {
+    display: flex;
+    align-items: center;
+    padding: 0.5em 1em 0.5em 1em;
 
-    $file-uploading-row-hover-color: #eeeeee !default;
-
-    adf-file-uploading-list-row:not(:first-child) {
-        display: block;
-        border-top: 1px solid mat-color($foreground, text, 0.14);
+    &:not(:first-child) {
+         border-top: 1px solid $alfresco-dark-color--hue-1;
     }
 
-    .adf-file-uploading-row {
-        display: flex;
-        align-items: center;
-        padding: 0.5em 1em 0.5em 1em;
+    .list-row {
         cursor: default;
-
-        &:hover {
-            background: $file-uploading-row-hover-color;
-        }
 
         &__name {
             white-space: nowrap;
@@ -41,39 +29,39 @@
         &__group--toggle {
             cursor: pointer;
 
-            .adf-file-uploading-row__status {
+            .list-row__status {
                 display: flex;
             }
 
-            .adf-file-uploading-row__action {
+            .list-row__action {
                 display: none;
             }
 
             &:hover {
-                .adf-file-uploading-row__status {
+                .list-row__status {
                     display: none;
                 }
 
-                .adf-file-uploading-row__action {
+                .list-row__action {
                     display: flex;
                 }
             }
         }
 
         &__status--done {
-            color: mat-color($accent);
+            color: $alfresco-secondary-accent--default;
         }
 
         &__status--error {
-            color: mat-color($warn);
+            color: $alfresco-warn-color--default;
         }
 
         &__action--cancel {
-            color: mat-color($warn);
+            color: $alfresco-warn-color--default;
         }
 
         &__action--remove {
-            color: mat-color($accent);
+            color: $alfresco-secondary-accent--default;
         }
     }
 }

@@ -15,22 +15,31 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core';
-import { FileModel, FileUploadStatus, UploadService } from 'ng2-alfresco-core';
+import { Component, ContentChild, Input, TemplateRef } from '@angular/core';
+import { AlfrescoTranslationService, FileModel, FileUploadStatus, NodesApiService, NotificationService, UploadService } from 'ng2-alfresco-core';
+import { FileUploadService } from '../services/file-uploading.service';
 
 @Component({
     selector: 'adf-file-uploading-list, alfresco-file-uploading-list',
     templateUrl: './file-uploading-list.component.html',
-    styleUrls: ['./file-uploading-list.component.css']
+    styleUrls: ['./file-uploading-list.component.scss']
 })
 export class FileUploadingListComponent {
 
     FileUploadStatus = FileUploadStatus;
 
-    @Input()
-    files: FileModel[];
+    @ContentChild(TemplateRef)
+    template: any;
 
-    constructor(private uploadService: UploadService) {
+    @Input()
+    files: FileModel[] = [];
+
+    constructor(
+        private fileUploadService: FileUploadService,
+        private uploadService: UploadService,
+        private nodesApi: NodesApiService,
+        private notificationService: NotificationService,
+        private translateService: AlfrescoTranslationService) {
     }
 
     /**
@@ -44,6 +53,16 @@ export class FileUploadingListComponent {
         this.uploadService.cancelUpload(file);
     }
 
+    removeFile(file: FileModel): void {
+        const { id } = file.data.entry;
+        this.nodesApi
+            .deleteNode(id, { permanent: true })
+            .subscribe(
+                () => this.onRemoveSuccess(file),
+                () => this.onRemoveFail(file)
+            );
+    }
+
     /**
      * Call the abort method for each file
      */
@@ -51,7 +70,20 @@ export class FileUploadingListComponent {
         if (event) {
             event.preventDefault();
         }
-        this.uploadService.cancelUpload(...this.files);
+
+        this.files.forEach((file) => {
+            const { status } = file;
+            const { Complete, Progress, Pending } = FileUploadStatus;
+
+            if (status === Complete) {
+                this.removeFile(file);
+            }
+
+            if (status === Progress || status === Pending) {
+               this.cancelFileUpload(file);
+            }
+
+        });
     }
 
     /**
@@ -70,5 +102,39 @@ export class FileUploadingListComponent {
             }
         }
         return isAllCompleted;
+    }
+
+    /**
+     * Check if all the files are not in the Progress state.
+     * @returns {boolean} - false if there is at least one file in Progress
+     */
+    isUploadCancelled(): boolean {
+        return this.files
+            .filter((file) => file.status !== FileUploadStatus.Error)
+            .every((file) => file.status === FileUploadStatus.Cancelled
+                || file.status === FileUploadStatus.Aborted);
+    }
+
+    uploadErrorFiles(): FileModel[] {
+        return this.files.filter((item) => item.status === FileUploadStatus.Error);
+    }
+
+    totalErrorFiles(): number {
+        return this.files.filter((item) => item.status === FileUploadStatus.Error).length;
+    }
+
+    private onRemoveSuccess(file: FileModel): void {
+        const { uploadService, fileUploadService } = this;
+
+        uploadService.cancelUpload(file);
+        fileUploadService.emitFileRemoved(file);
+    }
+
+    private onRemoveFail(file: FileModel): void {
+        this.translateService
+            .get('FILE_UPLOAD.MESSAGES.REMOVE_FILE_ERROR', { fileName: file.name})
+            .subscribe((message) =>  {
+                this.notificationService.openSnackMessage(message, 4000);
+            });
     }
 }
