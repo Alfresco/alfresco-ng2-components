@@ -3,6 +3,9 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 eval OPTIONS=""
+eval EXEC_CHANGE_REGISTRY=false
+eval NPM_REGISTRY=false
+eval TOKEN_REGISTRY=""
 eval EXEC_GIT_NPM_INSTALL_JSAPI=false
 eval GIT_ISH=""
 eval EXEC_VERSION_JSAPI=false
@@ -13,8 +16,25 @@ cd "$DIR/../demo-shell-ng2"
 show_help() {
     echo "Usage: npm-prepublish.sh"
     echo ""
+    echo "-r or --registry to publish in an alternative npm registry -registry 'http://npm.local.me:8080/' "
+    echo "-token auth token for publish in the npm registry"
     echo "-gitjsapi to build all the components against a commit-ish version of the JS-API"
     echo "-vjsapi install different version from npm of JS-API defined in the package.json"
+}
+
+enable_change_registry(){
+    NPM_REGISTRY=$1
+    EXEC_CHANGE_REGISTRY=true
+}
+
+get_token_registry(){
+    TOKEN_REGISTRY=$1
+
+    if [[ "${TOKEN_REGISTRY}" == "" ]]
+    then
+      echo "token missing -token"
+      exit 0
+    fi
 }
 
 enable_js_api_git_link() {
@@ -34,12 +54,28 @@ version_js_api() {
     EXEC_VERSION_JSAPI=true
 }
 
+change_registry(){
+    if [[ "${NPM_REGISTRY}" == "" ]]
+    then
+      echo "NPM registry required WITH OPTION -r | -registry"
+      exit 0
+    fi
+
+    echo "====== CHANGE REGISTRY: ${NPM_REGISTRY} ====="
+    touch .npmrc
+    echo 'strict-ssl=false' >> .npmrc
+    echo 'registry=http://'${NPM_REGISTRY} >> .npmrc
+    echo '//'${NPM_REGISTRY}'/:_authToken="'${TOKEN_REGISTRY}'"' >> .npmrc
+}
+
 
 while [[ $1 == -* ]]; do
     case "$1" in
       -h|--help|-\?) show_help; exit 0;;
       -gitjsapi)  enable_js_api_git_link $2; shift 2;;
       -vjsapi)  version_js_api $2; shift 2;;
+      -token) get_token_registry $2; shift 2;;
+      -r|--registry) enable_change_registry $2; shift 2;;
       -*) echo "invalid option: $1" 1>&2; show_help; exit 0;;
     esac
 done
@@ -71,6 +107,10 @@ do
   echo "====== INSTALL AND CLEAN ${PACKAGE} ===== "
   npm run clean
 
+  if $EXEC_CHANGE_REGISTRY == true; then
+    change_registry
+  fi
+
   npm install
 
     if $EXEC_GIT_NPM_INSTALL_JSAPI == true; then
@@ -88,6 +128,10 @@ do
 
   echo "====== PREPUBLISHING: ${DESTDIR} ===== npm prepublish ${OPTIONS}"
   npm run prepublishOnly || exit 1
+
+  if $EXEC_CHANGE_REGISTRY == true; then
+      npm run rimraf .npmrc
+  fi
 
   cd ${DIR}
 done
