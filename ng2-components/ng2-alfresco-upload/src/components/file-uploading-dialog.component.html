@@ -1,20 +1,73 @@
-<div class="file-dialog" [ngClass]="{show: isDialogActive}">
-    <div class="header">
-        <div class="title">
-            <span id="total-upload-completed">{{totalCompleted}}</span> {{ totalCompletedMsg | translate}}
-        </div>
-        <div class="buttons">
-            <div class="minimize-button" [ngClass]="{active: isDialogMinimized}" (keyup.enter)="toggleMinimized()" (click)="toggleMinimized()" tabindex="0">
-                <i class="material-icons down" title="minimize upload list">keyboard_arrow_down</i>
-                <i class="material-icons up" title="expand upload list">keyboard_arrow_up</i>
-            </div>
+<div *ngIf="isDialogActive"
+     class="upload-dialog"
+     [class.upload-dialog--minimized]="isDialogMinimized"
+     [class.upload-dialog--position-left]="position === 'left'"
+     [class.upload-dialog--position-right]="position === 'right'">
+    <header class="upload-dialog__header">
+        <md-icon
+            md-list-icon
+            (click)="toggleMinimized()"
+            title="{{ (isDialogMinimized ? 'ADF_FILE_UPLOAD.BUTTON.MAXIMIZE': 'ADF_FILE_UPLOAD.BUTTON.MINIMIZE') | translate }}">
+            {{ isDialogMinimized ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
+        </md-icon>
 
-            <div *ngIf="showCloseButton" id="button-close-upload-list" class="close-button" (click)="toggleVisible()" (keyup.enter)="toggleVisible()" tabindex="0" title="close upload list">
-                <i class="material-icons">clear</i>
-            </div>
-        </div>
-    </div>
-    <div class="body-dialog" *ngIf="filesUploadingList"  [ngClass]="{hide: isDialogMinimized}">
-        <adf-file-uploading-list [files]="filesUploadingList"></adf-file-uploading-list>
-    </div>
+         <span
+            class="upload-dialog__title"
+            *ngIf="!uploadList.isUploadCompleted()">
+            {{ 'FILE_UPLOAD.MESSAGES.UPLOAD_PROGRESS' | translate: { completed: totalCompleted, total: filesUploadingList.length } }}
+        </span>
+
+         <span
+            class="upload-dialog__title"
+            *ngIf="uploadList.isUploadCompleted() && !uploadList.isUploadCancelled()">
+            {{ 'FILE_UPLOAD.MESSAGES.UPLOAD_COMPLETED' | translate: { completed: totalCompleted, total: filesUploadingList.length } }}
+        </span>
+
+         <span
+            class="upload-dialog__title"
+            *ngIf="uploadList.isUploadCancelled()">
+            {{ 'FILE_UPLOAD.MESSAGES.UPLOAD_CANCELED' | translate }}
+        </span>
+    </header>
+
+      <section
+        class="upload-dialog__info"
+        *ngIf="uploadList.totalErrorFiles()">
+        {{
+            (uploadList.totalErrorFiles() > 1
+                 ? 'FILE_UPLOAD.MESSAGES.UPLOAD_ERRORS'
+                 : 'FILE_UPLOAD.MESSAGES.UPLOAD_ERROR')
+                 | translate: { total: uploadList.totalErrorFiles() }
+        }}
+    </section>
+
+    <section class="upload-dialog__content">
+        <adf-file-uploading-list
+            #uploadList
+            [files]="filesUploadingList">
+                <ng-template let-file="$implicit">
+                     <adf-file-uploading-list-row
+                        [file]="file"
+                        (remove)="uploadList.removeFile(file)"
+                        (cancel)="uploadList.cancelFileUpload(file)">
+                    </adf-file-uploading-list-row>
+                </ng-template>
+        </adf-file-uploading-list>
+    </section>
+
+    <footer class="upload-dialog__actions">
+          <button
+            *ngIf="!uploadList.isUploadCompleted()"
+            md-button
+            (click)="uploadList.cancelAllFiles($event)">
+            {{ 'ADF_FILE_UPLOAD.BUTTON.CANCEL_ALL' | translate }}
+        </button>
+
+        <button
+            *ngIf="uploadList.isUploadCompleted()"
+            md-button
+            (click)="close($event)">
+            {{ 'ADF_FILE_UPLOAD.BUTTON.CLOSE' | translate }}
+        </button>
+    </footer>
 </div>
