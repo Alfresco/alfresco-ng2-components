@@ -1,8 +1,6 @@
 <div class="adf-text-editor">
-    <div>
-        <label [attr.for]="column.id">{{displayName}}</label>
-    </div>
     <md-input-container>
+    <label [attr.for]="column.id">{{displayName}}</label>
     <input mdInput
         type="text"
         [value]="table.getCellValue(row, column)"
