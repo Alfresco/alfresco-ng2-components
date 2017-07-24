@@ -8,14 +8,30 @@
     (node-unselect)="onNodeUnselect($event)">
 
     <md-input-container floatPlaceholder="never" class="adf-content-node-selector-content-input">
-        <input #searchInput mdInput placeholder="Search" (keyup)="search(searchInput.value)" [value]="searchTerm">
-        <md-icon *ngIf="searchTerm.length > 0" mdSuffix (click)="clear()" class="adf-content-node-selector-content-input-icon">clear</md-icon>
-        <md-icon *ngIf="searchTerm.length === 0" mdSuffix class="adf-content-node-selector-content-input-icon">search</md-icon>
+        <input #searchInput
+            mdInput
+            placeholder="Search"
+            (keyup)="search(searchInput.value)"
+            [value]="searchTerm"
+            data-automation-id="content-node-selector-search-input">
+
+        <md-icon *ngIf="searchTerm.length > 0"
+                mdSuffix (click)="clear()"
+                class="adf-content-node-selector-content-input-icon"
+                data-automation-id="content-node-selector-search-clear">clear</md-icon>
+
+        <md-icon *ngIf="searchTerm.length === 0"
+            mdSuffix
+            class="adf-content-node-selector-content-input-icon"
+            data-automation-id="content-node-selector-search-icon">search</md-icon>
+
     </md-input-container>
 
-    <adf-sites-dropdown (change)="siteChanged($event)"></adf-sites-dropdown>
+    <adf-sites-dropdown
+        (change)="siteChanged($event)"
+        data-automation-id="content-node-selector-sites-combo"></adf-sites-dropdown>
 
-    <div class="adf-content-node-selector-content-list">
+    <div class="adf-content-node-selector-content-list" data-automation-id="content-node-selector-content-list">
         <adf-document-list *ngIf="searched"
                     #documentList
                     [node]="nodes"
@@ -26,7 +42,8 @@
                     [contextMenuActions]="false"
                     [contentActions]="false"
                     [allowDropFiles]="false"
-                    [enablePagination]="false">
+                    [enablePagination]="false"
+                    data-automation-id="content-node-selector-document-list">
             <empty-folder-content>
                 <template>
                     <div>{{ 'NODE_SELECTOR.NO_RESULTS' | translate }}</div>
