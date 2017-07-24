@@ -4,7 +4,7 @@
         </adf-sites-dropdown>
     </div>
     <alfresco-upload-drag-area
-        [parentId]="currentFolderId"
+        [parentId]="documentList.currentFolderId"
         [versioning]="versioning"
         [enabled]="documentList.hasCreatePermission()">
         <div *ngIf="errorMessage" class="error-message">
@@ -148,6 +148,8 @@
 </div>
 
 <context-menu-holder></context-menu-holder>
+
+<p>Current folder ID: {{ documentList.currentFolderId }}</p>
 
 <div class="p-10">
     Selected Nodes:
