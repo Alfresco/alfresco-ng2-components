@@ -2,8 +2,17 @@
      [class.adf-invalid]="!field.isValid">
     <label class="adf-label" [attr.for]="field.id">{{field.name}}</label>
     <div class="adf-upload-widget-container">
-        <img  *ngIf="hasFile"  class="adf-upload-widget__icon" [src]="mimeTypeIcon" [alt]="mimeTypeIcon"/>
-        <span *ngIf="hasFile" class="adf-file">{{displayText}}</span>
+        <div>
+            <md-list dense *ngIf="hasFile">
+                <md-list-item class="adf-upload-files-row" *ngFor="let file of field.value">
+                    <img md-list-icon class="adf-upload-widget__icon" [src]="getIcon(file.mimeType)" [alt]="mimeTypeIcon"/>
+                    <span md-line class="adf-file">{{decode(file.name)}}</span>
+                    <button md-icon-button (click)="reset(file);" (keyup.enter)="reset(file);">
+                        <md-icon class="md-24">highlight_off</md-icon>
+                    </button>
+                </md-list-item>
+            </md-list>
+        </div>
         <input *ngIf="!hasFile"
                #file
                type="file"
@@ -12,10 +21,6 @@
                [disabled]="field.readOnly || readonly"
                class="adf-file"
                (change)="onFileChanged($event)">
-        <button *ngIf="hasFile" (click)="reset(file);" (keyup.enter)="reset(file);"   [disabled]="field.readOnly"
-                class="adf-upload-widget__reset" md-icon-button>
-            <md-icon>highlight_off</md-icon>
-        </button>
     </div>
     <error-widget [error]="field.validationSummary" ></error-widget>
 </div>
