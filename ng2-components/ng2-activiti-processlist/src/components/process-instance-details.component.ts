@@ -126,6 +126,10 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
         return this.processInstanceDetails && !this.processInstanceDetails.ended;
     }
 
+    isDiagramDisabled(): boolean {
+        return !this.isRunning() ? true : undefined;
+    }
+
     cancelProcess() {
         this.activitiProcess.cancelProcess(this.processInstanceId).subscribe(
             (data) => {
@@ -158,8 +162,8 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
         }
     }
 
-    onShowProcessDiagram(event: any) {
-        this.showProcessDiagram.emit(event);
+    onShowProcessDiagram(processInstanceId: any) {
+        this.showProcessDiagram.emit({value: this.processInstanceId});
     }
 
 }

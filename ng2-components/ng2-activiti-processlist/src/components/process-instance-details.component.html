@@ -8,6 +8,9 @@
     <div class="mdl-cell mdl-cell--4-col">
         <button type="button" md-button md-raised-button (click)="showCommentsDialog()">{{'DETAILS.LABELS.COMMENTS'|translate}}</button>
     </div>
+    <div class="mdl-cell mdl-cell--4-col">
+        <button id="show-diagram-button" type="button" md-button md-raised-button [disabled]="isDiagramDisabled()" (click)="onShowProcessDiagram(processInstanceId)">{{ 'DETAILS.BUTTON.SHOW_DIAGRAM' | translate }}</button>
+    </div>
     <div class="mdl-card mdl-shadow--2dp activiti-process-container">
         <div class="mdl-cell mdl-cell--12-col">
             <adf-process-instance-tasks
