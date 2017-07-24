@@ -20,6 +20,11 @@ import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
 import { MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
 import { AlfrescoTranslationService, SearchOptions, SearchService, SiteModel } from 'ng2-alfresco-core';
 
+export interface ContentNodeSelectorComponentData {
+    title: string;
+    select: EventEmitter<MinimalNodeEntryEntity>;
+}
+
 @Component({
     selector: 'adf-content-node-selector',
     styleUrls: ['./content-node-selector.component.scss'],
@@ -39,11 +44,11 @@ export class ContentNodeSelectorComponent {
     title: string;
 
     @Output()
-    selectionMade: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter<MinimalNodeEntryEntity>();
+    select: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter<MinimalNodeEntryEntity>();
 
     constructor(private searchService: SearchService,
                 @Optional() private translateService: AlfrescoTranslationService,
-                @Optional() @Inject(MD_DIALOG_DATA) public data?: any,
+                @Optional() @Inject(MD_DIALOG_DATA) public data?: ContentNodeSelectorComponentData,
                 @Optional() private containingDialog?: MdDialogRef<ContentNodeSelectorComponent>) {
 
         if (translateService) {
@@ -52,7 +57,7 @@ export class ContentNodeSelectorComponent {
 
         if (data) {
             this.title = data.title;
-            this.selectionMade = data.selectionMade;
+            this.select = data.select;
         }
 
         if (containingDialog) {
@@ -135,7 +140,7 @@ export class ContentNodeSelectorComponent {
      * Emit event with the chosen node
      */
     choose(): void {
-        this.selectionMade.next(this.chosenNode);
+        this.select.next(this.chosenNode);
     }
 
     /**

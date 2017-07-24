@@ -89,15 +89,15 @@ export class NodeActionsService {
 
         if (this.contentService.hasPermission(contentEntry, permission)) {
             const title = `${action} ${contentEntry.name} to ...`,
-                selectionMade: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter<MinimalNodeEntryEntity>();
+                select: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter<MinimalNodeEntryEntity>();
 
             this.dialog.open(ContentNodeSelectorComponent, {
-                data: { title, selectionMade },
+                data: { title, select },
                 panelClass: 'adf-content-node-selector-dialog',
                 width: '576px'
             });
 
-            selectionMade.subscribe((parent: MinimalNodeEntryEntity) => {
+            select.subscribe((parent: MinimalNodeEntryEntity) => {
                 this.documentListService[`${action}Node`].call(this.documentListService, contentEntry.id, parent.id)
                     .subscribe(
                         () => {

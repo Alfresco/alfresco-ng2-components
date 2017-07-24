@@ -106,7 +106,7 @@ describe('ContentNodeSelectorComponent', () => {
         beforeEach(async(() => {
             data = {
                 title: 'Move along citizen...',
-                selectionMade: new EventEmitter<MinimalNodeEntryEntity>()
+                select: new EventEmitter<MinimalNodeEntryEntity>()
             };
 
             setupTestbed([{ provide: MD_DIALOG_DATA, useValue: data }]);
@@ -128,9 +128,9 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(titleElement.nativeElement.innerText).toBe('Move along citizen...');
             });
 
-            it('should trigger the INJECTED selectionMade event when selection has been made', (done) => {
+            it('should trigger the INJECTED select event when selection has been made', (done) => {
                 const expectedNode = <MinimalNodeEntryEntity> {};
-                data.selectionMade.subscribe((node) => {
+                data.select.subscribe((node) => {
                     expect(node).toBe(expectedNode);
                     done();
                 });
@@ -196,9 +196,9 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(titleElement.nativeElement.innerText).toBe('Move along citizen...');
             });
 
-            it('should trigger the selectionMade event when selection has been made', (done) => {
+            it('should trigger the select event when selection has been made', (done) => {
                 const expectedNode = <MinimalNodeEntryEntity> {};
-                component.selectionMade.subscribe((node) => {
+                component.select.subscribe((node) => {
                     expect(node).toBe(expectedNode);
                     done();
                 });
@@ -368,7 +368,7 @@ describe('ContentNodeSelectorComponent', () => {
 
         describe('Mini integration test', () => {
 
-            xit('should trigger the selectionMade event properly when search results are loaded, one element is selected and choose button is clicked', () => {
+            xit('should trigger the select event properly when search results are loaded, one element is selected and choose button is clicked', () => {
 
             });
         });

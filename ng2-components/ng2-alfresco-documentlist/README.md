@@ -32,6 +32,7 @@
       - [Delete - Show notification message with no permission](#delete---show-notification-message-with-no-permission)
       - [Delete - Disable button checking the permission](#delete---disable-button-checking-the-permission)
       - [Download](#download)
+      - [Copy and move](#copy-and-move)
     + [Folder actions](#folder-actions)
   * [Context Menu](#context-menu)
   * [Navigation mode](#navigation-mode)
