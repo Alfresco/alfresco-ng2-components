@@ -255,5 +255,5 @@ describe('DateWidgetComponent', () => {
     //        dateButton = <HTMLButtonElement> element.querySelector('#date-field-id-button');
     //        expect(dateButton.disabled).toBeTruthy();
     //    }));
-    });
 });
+})

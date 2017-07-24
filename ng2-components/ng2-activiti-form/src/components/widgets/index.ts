@@ -32,6 +32,7 @@ import { DateEditorComponent } from './dynamic-table/editors/date/date.editor';
 import { DropdownEditorComponent } from './dynamic-table/editors/dropdown/dropdown.editor';
 import { RowEditorComponent } from './dynamic-table/editors/row.editor';
 import { TextEditorComponent } from './dynamic-table/editors/text/text.editor';
+import { ErrorWidgetComponent } from './error/error.component';
 import { FunctionalGroupWidgetComponent } from './functional-group/functional-group.widget';
 import { HyperlinkWidgetComponent } from './hyperlink/hyperlink.widget';
 import { MultilineTextWidgetComponentComponent } from './multiline-text/multiline-text.widget';
@@ -42,7 +43,6 @@ import { InputMaskDirective } from './text/text-mask.component';
 import { TextWidgetComponent } from './text/text.widget';
 import { TypeaheadWidgetComponent } from './typeahead/typeahead.widget';
 import { UploadWidgetComponent } from './upload/upload.widget';
-import { ErrorWidgetComponent } from './error/error.component';
 
 // core
 export * from './widget.component';

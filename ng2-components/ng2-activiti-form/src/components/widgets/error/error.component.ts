@@ -18,7 +18,7 @@
 /* tslint:disable:component-selector  */
 
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, ViewEncapsulation, Input } from '@angular/core';
+import { AfterViewInit, Component, Input, ViewEncapsulation } from '@angular/core';
 import { FormService } from './../../../services/form.service';
 import { baseHost , WidgetComponent } from './../widget.component';
 
@@ -37,7 +37,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
     host: baseHost,
     encapsulation: ViewEncapsulation.None
 })
-export class ErrorWidgetComponent extends WidgetComponent {
+export class ErrorWidgetComponent extends WidgetComponent implements AfterViewInit {
 
     @Input()
     error: string;

@@ -22,6 +22,7 @@ import { EcmModelService } from '../../../services/ecm-model.service';
 import { FormService } from '../../../services/form.service';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormModel } from '../core/form.model';
+import { ErrorWidgetComponent } from '../error/error.component';
 import { FormFieldModel } from './../core/form-field.model';
 import { UploadWidgetComponent } from './upload.widget';
 
@@ -92,8 +93,8 @@ describe('UploadWidgetComponent', () => {
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-                imports: [CoreModule, MATERIAL_MODULE],
-                declarations: [UploadWidgetComponent],
+                imports: [CoreModule.forRoot(), MATERIAL_MODULE],
+                declarations: [UploadWidgetComponent, ErrorWidgetComponent],
                 providers: [FormService, EcmModelService]
             }).compileComponents().then(() => {
                 fixture = TestBed.createComponent(UploadWidgetComponent);
