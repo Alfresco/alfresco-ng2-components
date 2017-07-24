@@ -124,7 +124,7 @@ export class StartTaskComponent implements OnInit {
         return !user || (this.isEmpty(user.firstName) && this.isEmpty(user.lastName));
     }
 
-    private isEmpty(data: string){
+    private isEmpty(data: string) {
         return data === undefined || data === null || data.trim().length === 0;
     }
 
