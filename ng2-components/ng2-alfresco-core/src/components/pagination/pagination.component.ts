@@ -25,6 +25,7 @@ import {
 } from '@angular/core';
 
 import { Pagination } from 'alfresco-js-api';
+import { PaginationQueryParams } from './pagination-query-params.interface';
 
 import { UserPreferencesService } from '../../services/user-preferences.service';
 
