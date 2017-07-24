@@ -38,3 +38,7 @@
     transform: translate(0, -50%);
     width: 40%;
 }
+
+adf-comments >>> adf-comment-list {
+    max-height: 400px;
+}
