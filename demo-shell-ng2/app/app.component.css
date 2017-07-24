@@ -1,35 +1,7 @@
-@media screen and (max-width: 1024px) {
-    .mdl-layout__header {
-        display: block;
-    }
-}
-
-@media screen and (max-width: 1024px) {
-    .mdl-layout__header {
-        display: block;
-    }
-}
-
-.mdl-layout-title {
-    font-size: 17px;
-}
-
 .user-profile {
     margin-right: 10px;
 }
 
-.mdl-button-padding {
-    padding-left: 20px;
-}
-
-.hide {
-    display: none !important;
-}
-
-.mdl-navigation__link {
-    cursor: pointer;
-}
-
-.mdl-navigation__link label {
-    cursor: pointer;
+.app-menu--spacer {
+    flex: 1 1 auto;
 }
