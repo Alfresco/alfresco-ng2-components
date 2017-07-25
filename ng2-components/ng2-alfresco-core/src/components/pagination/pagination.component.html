@@ -17,8 +17,11 @@
     </button>
 
     <md-menu #pageSizeMenu="mdMenu">
-        <button md-menu-item *ngFor="let size of pageSizes" (click)="changePageSize(size)">
-            {{ size }}
+        <button
+            md-menu-item
+            *ngFor="let pageSize of supportedPageSizes"
+            (click)="changePageSize(pageSize)">
+            {{ pageSize }}
         </button>
     </md-menu>
 </div>
@@ -35,8 +38,11 @@
     </span>
 
     <md-menu #pagesMenu="mdMenu">
-        <button md-menu-item *ngFor="let n of pages" (click)="changePage(n)">
-            {{ n }}
+        <button
+            md-menu-item
+            *ngFor="let pageNumber of pages"
+            (click)="changePageNumber(pageNumber)">
+            {{ pageNumber }}
         </button>
     </md-menu>
 </div>
