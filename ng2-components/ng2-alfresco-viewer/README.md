@@ -97,10 +97,10 @@ Using with file url:
 
 | Attribute | Options | Default | Description |
 | --- | --- | --- | --- |
-| fileNodeId | string | | Node Id of the file to load the file |
-| urlFile | string | | If you want load an external file that not comes from the ECM you can use this Url where to load the file |
-| urlBlob | Blob | | If you want load a Blob File |
-| overlayMode | boolean | false | if `true` Show the Viewer full page over the present content otherwise will fit the parent div |
+| fileNodeId | string | | Node Id of the file to load |
+| urlFile | string | | If you want to load an external file that does not come from ECM you can use this Url where to load the file |
+| urlBlob | Blob | | If you want to load a Blob File |
+| overlayMode | boolean | false | If `true` show the Viewer full page over the present content otherwise will fit the parent div |
 | showViewer | boolean | true | Hide or show the viewer |
 | showToolbar | boolean | true | Hide or show the toolbars |
 | displayName | string | | You can specify the name of the file |
@@ -117,13 +117,13 @@ Using with file url:
 
 ![Rendition](docs/assets/renditions.png)                         
 
-Note for unsupported extension the viewer will offer the possibility to convert it in PDF is that kind of extension is supported by the [content service renditions service](https://community.alfresco.com/docs/DOC-5879-rendition-service)
+Note for unsupported extensions the viewer will offer the possibility to convert to PDF if that kind of extension is supported by the [content service renditions service](https://community.alfresco.com/docs/DOC-5879-rendition-service)
 
 ## Custom extension handler
 
-If you want handle other file formats that are not yet supported by the ng2-alfresco-viewer you can define your own custom handler.
+If you want to handle other file formats that are not yet supported by the ng2-alfresco-viewer you can define your own custom handler.
 
-Below you can find an example where with the use of `extension-viewer` if you can handle 3d files
+Below you can find an example with the use of `extension-viewer` if you can handle 3d files
 
 ```html
 <adf-viewer 
@@ -143,7 +143,7 @@ Below you can find an example where with the use of `extension-viewer` if you ca
 </adf-viewer> 
 ```
 
-Note: you need adding `ng2-3d-editor` dependency to your `package.json` file to make example above work.
+Note: you need adding `ng2-3d-editor` dependency to your `package.json` file to make the example above work.
 
 It is possible to define multiple `extension-viewer` templates:
 

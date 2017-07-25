@@ -156,10 +156,10 @@ export class DataTableDemo {
 | multiselect | boolean | false | Toggles multiple row selection, renders checkboxes at the beginning of each row |
 | actions | boolean | false | Toggles data actions column |
 | actionsPosition | string (left\|right) | right | Position of the actions dropdown menu. | 
-| fallbackThumbnail | string |  | Fallback image for row ehre thubnail is missing|
+| fallbackThumbnail | string |  | Fallback image for row where thumbnail is missing|
 | contextMenu | boolean | false | Toggles custom context menu for the component |
 | allowDropFiles | boolean | false | Toggle file drop support for rows (see **ng2-alfresco-core/UploadDirective** for more details) |
-| loading | boolean | false | Flag that indicate if the datable is in loading state and need to show the loading template. Read the documentation above to know how to configure a loading template  |
+| loading | boolean | false | Flag that indicates if the datatable is in loading state and needs to show the loading template. Read the documentation above to see how to configure a loading template  |
 | showHeader | boolean | true | Toggles header visibility |
 | selection | DataRow[] | [] | Contains selected rows |
 
@@ -220,7 +220,7 @@ onRowClick(event) {
 
 ### Custom Empty content template
 
-You can add a template that will be showed when there are no result in your datatable:
+You can add a template that will be shown when there are no results in your datatable:
 
 ```html
 <adf-datatable
@@ -246,7 +246,7 @@ You can add a template that will be showed when there are no result in your data
 
 ### Default Empty content template
 
-You can use the empty list component if you want show the default ADF empty template:
+You can use the empty list component if you want to show the default ADF empty template:
 
 ```html
 <adf-datatable
@@ -262,7 +262,7 @@ You can use the empty list component if you want show the default ADF empty temp
         <adf-empty-list 
             [emptyListImageUrl]="'my-background-image.svg'"
             [emptyMsg]="'My custom msg'"
-            [dragDropMsg]="'My drag and drom msg'"
+            [dragDropMsg]="'My drag and drop msg'"
             [additionalMsg]="'My additional msg'">
         </adf-empty-list>
         
@@ -280,7 +280,7 @@ You can use the empty list component if you want show the default ADF empty temp
 
 ### Loading content template
 
-You can add a template that will be showed during the loading of your data:
+You can add a template that will be shown during the loading of your data:
 
 ```html
 <adf-datatable
@@ -318,7 +318,7 @@ Note: the `<loading-content-template>` and `<no-content-template>` can be used t
 
 ### Column Templates
 
-It is possible assigning a custom column template like the following:
+It is possible to assign a custom column template like the following:
 
 ```html
 <adf-datatable ...>
@@ -441,7 +441,7 @@ _This event is cancellable, you can use `event.preventDefault()` to prevent defa
 DataTable will automatically render provided menu items.
 
 _Please refer to [ContextMenu](https://www.npmjs.com/package/ng2-alfresco-core) 
-documentation for more details on context actions format and behavior._
+documentation for more details on context actions format and behaviour._
 
 #### showRowActionsMenu event
 
@@ -507,7 +507,7 @@ onExecuteRowAction(event: DataRowActionEvent) {
 
 ![](docs/assets/datatable-actions-console.png)
 
-Developers are allowed putting any payloads as row actions.
+Developers are allowed to use any payloads as row actions.
 The only requirement for the objects is having `title` property.
 
 Once corresponding action is clicked in the dropdown menu DataTable invokes `executeRowAction` event
@@ -553,7 +553,7 @@ interface DataColumn {
 }
 ```
 
-DataTable provides [ObjectDataTableAdapter](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-datatable/src/data/object-datatable-adapter.ts) out-of-box. 
+DataTable provides [ObjectDataTableAdapter](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-datatable/src/data/object-datatable-adapter.ts) out-of-the-box. 
 This is a simple data adapter implementation that binds to object arrays 
 and turns object fields into columns:
 
@@ -584,7 +584,7 @@ let data = new ObjectDataTableAdapter(
 
 ## Generate schema 
 
-Is possible to auto generate your schema if you have only the data row  
+It is possible to auto generate your schema if you have only the data row  
 
 ```ts
 let data =  [
@@ -615,7 +615,7 @@ let schema = ObjectDataTableAdapter.generateSchema(data);
 
 ## Pagination Component
 
-The pagination object is a generic component to paginate component. The Alfresco API are paginated and returns a Pagination object. You can use the pagination object to feed the pagination component and then listen to the event which return the current pagination and query again the API with the options choose by the user.
+The pagination object is a generic component to paginate component. The Alfresco API are paginated and return a Pagination object. You can use the pagination object to feed the pagination component and then listen to the event which returns the current pagination and query again the API with the options chosen by the user.
 
 ![DataTable demo](docs/assets/pagination-demo.png)
 
@@ -623,9 +623,9 @@ The pagination object is a generic component to paginate component. The Alfresco
 
 | Name | Type | Default | Description
 | --- | --- | --- | --- |
-| supportedPageSizes | numer[] | [5, 10, 20, 50, 100] | This array describe the set of options showed in the pick list |
-| maxItems | boolean | false | Max number of element showed per page. If you pick another size from the pick list this option will be overwritten |
-| pagination | Pagination | {count: 0, totalItems: 0, skipCount: 0, maxItems: 20 , hasMoreItems: true} | The Alfresco Api return a pagination object, you can use it to feed the pagination component, or create your own. |
+| supportedPageSizes | numer[] | [5, 10, 20, 50, 100] | This array describes the set of options shown in the pick list |
+| maxItems | boolean | false | Max number of elements shown per page. If you pick another size from the pick list this option will be overwritten |
+| pagination | Pagination | {count: 0, totalItems: 0, skipCount: 0, maxItems: 20 , hasMoreItems: true} | The Alfresco Api returns a pagination object, you can use it to feed the pagination component, or create your own. |
 
 ### Events
 
@@ -633,7 +633,7 @@ The pagination object is a generic component to paginate component. The Alfresco
 | --- | --- |
 | changePageSize | Emitted when user picks one of the options from the pick list |
 | nextPage | Emitted when user clicks next page button |
-| prevPage | Emitted when user clicks prev page button |
+| prevPage | Emitted when user clicks previous page button |
 
 All the events carry with them the current pagination object.
 

@@ -2,13 +2,13 @@
 
 _Note: it is assumed you are familiar with Alfresco Activiti form definition structure._
 
-- How components and widgets are rendred on a Form
+- How components and widgets are rendered on a Form
 - Replacing default form widgets with custom components
 - Replacing custom stencils with custom components
 
 
 
-## How components and widgets are rendred on a Form
+## How components and widgets are rendered on a Form
 
 All form field editors (aka widgets) on a Form are rendered by means of `FormFieldComponent`
 that takes an instance of a `FormFieldModel`:
@@ -35,7 +35,7 @@ It can be either a predefined component type or a dynamically evaluated based on
 
 #### Static component mapping
 
-You can (re)map fields like following:
+You can (re)map fields like in the following:
 
 ```ts
 let customResolver: ComponentTypeResolver = () => CustomWidgetComponent;
@@ -112,7 +112,7 @@ import { WidgetComponent } from 'ng2-activiti-form';
 export class CustomEditorComponent extends WidgetComponent {}
 ```
 
-Now you will need adding it to the application module or any custom module that is imported into the application one:
+Now you will need to add it to the application module or any custom module that is imported into the application one:
 
 ```ts
 import { NgModule } from '@angular/core';
@@ -128,8 +128,8 @@ export class CustomEditorsModule {}
 
 Every custom widget should be added into all three module collections: `declarations`, `exports` and `entryComponents`.
 
-If you decided storing custom widgets in a separate dedicated module (and optionally as separate redistributable library)
-don't forget importing it into your main application one:
+If you decided to store custom widgets in a separate dedicated module (and optionally as separate redistributable library)
+don't forget to import it into your main application one:
 
 ```ts
 @NgModule({
@@ -194,7 +194,7 @@ Once wired with a new task it should look like the following within Alfresco Act
 
 ### Creating custom widget
 
-If you load previously created task into ADF `<actiiti-form>` component you will see something like the following:
+If you load previously created task into ADF `<activiti-form>` component you will see something like the following:
 
 ![adf stencil](assets/adf-stencil-01.png)
 
@@ -256,6 +256,6 @@ export class MyView {
 }
 ```
 
-At the runtime you should now see your custom Angular 2 component rendered in place of the stencils:
+At runtime you should now see your custom Angular 2 component rendered in place of the stencils:
 
 ![adf stencil runtime](assets/adf-stencil-02.png)
