@@ -9,10 +9,10 @@
                type="file"
                [multiple]="multipleOption"
                [id]="field.id"
-               [disabled]="field.readOnly"
+               [disabled]="field.readOnly || readonly"
                class="adf-file"
                (change)="onFileChanged($event)">
-        <button *ngIf="hasFile" (click)="reset(file);" (keyup.enter)="reset(file);"
+        <button *ngIf="hasFile" (click)="reset(file);" (keyup.enter)="reset(file);"   [disabled]="field.readOnly"
                 class="adf-upload-widget__reset" md-icon-button>
             <md-icon>highlight_off</md-icon>
         </button>
