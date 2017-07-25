@@ -1,10 +1,17 @@
 <div class="adf-pagination__block adf-pagination__range">
-    <span>{{ 'APP.PAGINATION.SHOW_RANGE' | translate: { range: range.join('-'), total: totalItems } }}</span>
+    <span>
+        {{
+            'CORE.PAGINATION.ITEMS_RANGE' | translate: {
+                range: range.join('-'),
+                total: pagination.totalItems
+            }
+        }}
+    </span>
 </div>
 
 <div class="adf-pagination__block adf-pagination__size">
-    <span>{{ 'APP.PAGINATION.ITEMS_PER_PAGE' | translate }}</span>
-    {{ maxItems }}
+    <span>{{ 'CORE.PAGINATION.ITEMS_PER_PAGE' | translate }}</span>
+    {{ pagination.maxItems }}
     <button md-icon-button [mdMenuTriggerFor]="pageSizeMenu">
         <md-icon>arrow_drop_down</md-icon>
     </button>
@@ -17,13 +24,15 @@
 </div>
 
 <div class="adf-pagination__block adf-pagination__current-page">
-    {{ 'APP.PAGINATION.CURRENT_PAGE' | translate }} {{ currentPage }}
+    {{ 'CORE.PAGINATION.CURRENT_PAGE' | translate }} {{ current }}
 
     <button md-icon-button [mdMenuTriggerFor]="pagesMenu" *ngIf="pages.length > 1">
         <md-icon>arrow_drop_down</md-icon>
     </button>
 
-    <span>{{ 'APP.PAGINATION.OF' | translate }} {{ pages.length }}</span>
+    <span>
+        {{ 'CORE.PAGINATION.TOTAL_PAGES' | translate: { total: pages.length } }}
+    </span>
 
     <md-menu #pagesMenu="mdMenu">
         <button md-menu-item *ngFor="let n of pages" (click)="changePage(n)">
