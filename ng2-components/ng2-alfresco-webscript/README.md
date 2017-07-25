@@ -80,17 +80,17 @@ export class AppComponent {
 | contextRoot | string | | path where application is deployed | 
 | scriptPath | string | alfresco |  path to Web Script (as defined by Web Script) | 
 | contentType | string | service | path where Web Script service is mapped default value | 
-| contentType | string | TEXT | how to handle the data received from te web script JSON , HTML , DATATABLE or TEXT |
+| contentType | string | TEXT | how to handle the data received from the web script JSON , HTML , DATATABLE or TEXT |
 | onSuccess | event | |  You can get the plain data from the webscript through the **onSuccess** event parameter and use it as you need in your application |
 | showData | booleann | true | render the webscript data |
 
 **contentType** {string}  
-***data***      {string}  data contain the plain value get from the webscipt is an output parameter
+***data***      {string}  data containing the plain value you get from the webscipt as an output parameter
 
 ## Webscript View HTML example
 
 This sample demonstrates how to implement a Webscript component that renders the HTML contents that come from a webscript
-This sample Web Scripts  reside in your Alfresco Server AND  you can access the folder webscript here:
+This sample Web Scripts reside in your Alfresco Server. You can access the folder webscript here:
 
 ```http://localhost:8080/alfresco/service/sample/folder/Company%20Home```
 
@@ -122,7 +122,7 @@ This sample demonstrates how to implement a Webscript component that renders the
 </adf-webscript-get>
 ```  
 
-If you want show the result from a webscript inside a ng2-alfresco-datatable you have to return from the GET of the webscript the datatructure below:
+If you want to show the result from a webscript inside a ng2-alfresco-datatable you have to return from the GET of the webscript the datastructure below:
 subdivide in data and schema
 
 ```ts
@@ -159,14 +159,14 @@ data: [
 ]]
 ```
 
-that will render the follow table
+that will render the following table
 
 ![Custom columns](docs/assets/datatable.png)
 
 ## Webscript View JSON example
 
 This sample demonstrates how to implement a Webscript component that renders the JSON contents that come from a webscript
-This sample Web Scripts  reside in your Alfresco Server AND  you can access the folder webscript here:
+This sample Web Scripts reside in your Alfresco Server. You can access the folder webscript here:
 
 ```http://localhost:8080/alfresco/service/sample/folder/JSON%EXAMPLE```
 
