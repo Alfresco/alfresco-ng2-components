@@ -355,14 +355,19 @@ describe('Form service', () => {
         it('should get all the forms with modelType=2', (done) => {
             service.getForms().subscribe(result => {
                 expect(jasmine.Ajax.requests.mostRecent().url.endsWith('models?modelType=2')).toBeTruthy();
-                expect(result).toEqual({});
+                expect(result.length).toEqual(2);
                 done();
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 'status': 200,
                 contentType: 'application/json',
-                responseText: JSON.stringify({})
+                responseText: JSON.stringify({
+                    data: [
+                        { name: 'FakeName-1', lastUpdatedByFullName: 'FakeUser-1', lastUpdated: '2017-01-02' },
+                        { name: 'FakeName-2', lastUpdatedByFullName: 'FakeUser-2', lastUpdated: '2017-01-03' }
+                    ]
+                })
             });
         });
 
