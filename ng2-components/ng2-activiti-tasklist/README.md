@@ -199,7 +199,7 @@ This can be changed by adding the following custom html template:
 </adf-task-details>    
 ```
 
-Note that can put any HTML content as part of the template, includuing other Angualr components.
+Note that can put any HTML content as part of the template, including other Angular components.
 
 ## Activiti Apps Component
 
@@ -226,7 +226,7 @@ The component shows all the available apps.
 
 ### How filter the activiti apps 
 
-If you want show some specific apps you can specify them through the filtersAppId parameters
+If you want to show some specific apps you can specify them through the filtersAppId parameters
 
 ```html
 <adf-apps 
@@ -276,7 +276,7 @@ If both `appId` and `appName` are specified then `appName` will take precedence 
 
 | Name | Description |
 | --- | --- |
-| filterClick | Raised when the filter in the  list is clicked  |
+| filterClick | Raised when the filter in the list is clicked  |
 | onSuccess | Raised when the list is loaded  |
 | onError | Raised if there is an error during the loading  |
 
@@ -399,13 +399,13 @@ This component displays Upload Component(Drag and Click) to upload the attachmen
 
 | Name | Description |
 | --- | --- |
-| error | Raised when the error occured while creating/uploading the attachment by the user from within the component |
-| success | Raised when the attachement created/uploaded successfully from within the component |
+| error | Raised when the error occurred while creating/uploading the attachment by the user from within the component |
+| success | Raised when the attachment created/uploaded successfully from within the component |
 
 ## Activiti Task Header
 
 The component shows all the information related to a task. 
-The purpose of the component is populate the local variable called `properties` (array of CardViewModel), with all the information that we want display.
+The purpose of the component is to populate the local variable called `properties` (array of CardViewModel), with all the information that we want to display.
 
 ```html
 <adf-task-header

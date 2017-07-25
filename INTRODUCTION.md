@@ -18,7 +18,7 @@ However, there are use-cases that Share does not fit very well, such as:
 This is where this application development framework comes into play, it can be used to create exactly the user interface 
 (i.e. web client) that the requirements demand.  
  
-The framework consists of a number of components that can be combined together to form a customized content management application.
+The framework consists of several components that can be combined to form a customized content management application.
 Here is a list of some of the available web components:
 
 - [Core library](ng2-components/ng2-alfresco-core/README.md)
@@ -36,6 +36,6 @@ An architecture overview looks like this:
   <img title="alfresco-ng2-components-architecture" alt='alfresco' src='assets/alfresco-app-dev-framework-architecture.png'></img>
 </p>
 
-Here we can also see that there is an Alfresco JavaScript framework in use that wraps the Alfresco REST API. To make things easier for the client developer.
+Here we can also see that there is an Alfresco JavaScript framework in use that wraps the Alfresco REST API, to make things easier for the client developer.
 
 

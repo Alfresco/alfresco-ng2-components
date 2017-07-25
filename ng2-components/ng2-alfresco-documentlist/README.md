@@ -84,7 +84,7 @@ npm install ng2-alfresco-documentlist
 
 ### Properties
 
-The properties currentFolderId, folderNode and node are the entry initialization properties of the document list. They can not be used together, choose the one that suites more your use case.
+The properties currentFolderId, folderNode and node are the entry initialization properties of the document list. They cannot be used together, choose the one that suites more your use case.
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -94,8 +94,8 @@ The properties currentFolderId, folderNode and node are the entry initialization
 | rowStyleClass | string | | The CSS class to apply to every row |
 | currentFolderId | string | null | Initial node ID of displayed folder. Can be `-root-`, `-shared-`, `-my-`, or a fixed node ID  |
 | folderNode | [MinimalNodeEntryEntity](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md) | null | Currently displayed folder node | 
-| permissionsStyle | [PermissionStyleModel[]](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-documentlist/src/models/permissions-style.model.ts) | null | with this array you can define different styles depending from the permission of the user on that node. The PermissionStyleModel allow you to select also if you want apply the style only on the file or folder nodes. With PermissionStyleModel.permission accept the following values [Permissions](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-core/src/models/permissions.enum.ts)   [see more](#custom-row-permissions-style). | 
-| node | [NodePaging](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodePaging.md) | null | Document list will show all the node contained in the NodePaging entity  | 
+| permissionsStyle | [PermissionStyleModel[]](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-documentlist/src/models/permissions-style.model.ts) | null | with this array you can define different styles depending on the permission of the user on that node. The PermissionStyleModel allows you to select also if you want to apply the style only on the file or folder nodes. PermissionStyleModel.permission accepts the following values [Permissions](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-core/src/models/permissions.enum.ts)   [see more](#custom-row-permissions-style). | 
+| node | [NodePaging](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodePaging.md) | null | Document list will show all the nodes contained in the NodePaging entity  | 
 | navigate | boolean | true | Toggles navigation to folder content or file preview |
 | loading | boolean | false | Toggles the loading state and animated spinners for the component. Used in combination with `navigate=false` to perform custom navigation and loading state indication. |
 | navigationMode | string (click,dblclick) | dblclick | User interaction for folder navigation or file preview |
@@ -170,11 +170,11 @@ You can set current folder path by assigning a value for `currentFolderId` prope
 It can be either one of the well-known locations as **-root-**, **-shared-** or **-my-** or a node ID (guid).
 
 There may be scenarios when it is needed to set default path based on relative string value rather than node ID.
-For example when folder name or path is static but it's underlying ID is not (i.e. created manually by admin).
-In this case you can use `alfresco-js-api` to get node details based on it's relative path.
+For example when folder name or path is static but its underlying ID is not (i.e. created manually by admin).
+In this case you can use `alfresco-js-api` to get node details based on its relative path.
 
 Let's try setting default folder to `/Sites/swsdp/documentLibrary` without knowing it's ID beforehand.
-For the sake of simplicity example below shows only main points you may need paying attention to:
+For the sake of simplicity example below shows only main points you may need to pay attention to:
 
 ```ts
 import { ChangeDetectorRef } from '@angular/core';
@@ -287,7 +287,7 @@ export class MyAppComponent {
 }
 ```
 
-However there may scenarios that require you direct access to DocumentList apis. 
+However there may be scenarios that require you direct access to DocumentList apis. 
 You can get reference to the DocumentList instance by means of Angular **Component Interaction** API.
 See more details in [Parent calls a ViewChild](https://angular.io/docs/ts/latest/cookbook/component-communication.html#!#parent-to-view-child) 
 section of the official docs.
@@ -325,7 +325,7 @@ Example above should produce the following browser console output:
 
 ![view-child](docs/assets/viewchild.png)
 
-Now you are able accessing DocumentList properties or calling methods directly.
+Now you are able to access DocumentList properties or to call methods directly.
 
 ```ts
 // print currently displayed folder node object to console
@@ -358,7 +358,7 @@ DocumentList provides simple breadcrumb element to indicate the current position
 | --- | --- | --- |
 | target | DocumentListComponent | (optional) DocumentList component to operate with. Upon clicks will instruct the given component to update. |
 | folderNode | [MinimalNodeEntryEntity](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md) | Active node, builds UI based on `folderNode.path.elements` collection. |
-| root | String |  (optional) Name of the folder where you want start the breadcrumb. Note the root will always be showed as first element and it will continue to be displayed until you are not in a subfolder of it. |
+| root | String |  (optional) Name of the folder where you want start the breadcrumb. Note the root will always be shown as first element and it will continue to be displayed until you are not in a subfolder of it. |
 
 ### Events
 
@@ -380,7 +380,7 @@ DocumentList provides simple dropdown element to show sites for the current logg
 
 | Name | Returned Type | Description |
 | --- | --- | --- |
-| change | [SiteModel](https://github.com/Alfresco/alfresco-ng2-components/blob/development/ng2-components/ng2-alfresco-documentlist/src/models/site.model.ts) | emitted when user select a site. When default option is selected an empty model is emitted  |
+| change | [SiteModel](https://github.com/Alfresco/alfresco-ng2-components/blob/development/ng2-components/ng2-alfresco-documentlist/src/models/site.model.ts) | emitted when user selects a site. When default option is selected an empty model is emitted  |
 
 ## Menu Actions
 
@@ -527,7 +527,7 @@ For a full list of available `format` values please refer to [DatePipe](https://
 
 ### Column Template
 
-It is possible providing custom column/cell template that may contain other Angular components or HTML elmements:
+It is possible to provide custom column/cell template that may contain other Angular components or HTML elements:
 
 Every cell in the DataTable component is bound to the dynamic data context containing the following properties:
 
@@ -546,7 +546,7 @@ In order to wire HTML templates with the data context you will need defining a v
 </template>
 ```
 
-The format of naming is `let-VARIABLE_NAME="$implicit"` where `VARIABLE_NAME` is the name of the variable you want binding template data context to.
+The format of naming is `let-VARIABLE_NAME="$implicit"` where `VARIABLE_NAME` is the name of the variable you want to bind template data context to.
 
 Getting a cell value from the underlying DataTableAdapter:
 
@@ -574,7 +574,7 @@ You may want using **row** api to get raw value access.
 
 Use **data** api to get values with post-processing, like datetime/icon conversion._
 
-In the Example below will prepend `Hi!` to each file and folder name in the list: 
+In the Example below we will prepend `Hi!` to each file and folder name in the list: 
 
 ```html
 <content-column title="Name" key="name" sortable="true" class="full-width ellipsis-cell">
@@ -584,7 +584,7 @@ In the Example below will prepend `Hi!` to each file and folder name in the list
 </content-column>
 ```
 
-In the Example below will add the [ng2-alfresco-tag](https://www.npmjs.com/package/ng2-alfresco-tag) component is integrate in the document list.
+In the Example below we will add the [ng2-alfresco-tag](https://www.npmjs.com/package/ng2-alfresco-tag) component is integrate in the document list.
 
 ```html
 <content-column
@@ -609,7 +609,7 @@ Properties:
 | `target` | string | | "document" or "folder" |
 | `title` | string | | The title of the action as shown in the menu |
 | `handler` | string | | System type actions. Can be "delete" or "download" |
-| `permission` | string | | Then name of the permission |
+| `permission` | string | | The name of the permission |
 
 Events:
 
@@ -619,7 +619,7 @@ Events:
 | `permissionEvent` | Emitted when a permission error happens |
 
 DocumentList supports declarative actions for Documents and Folders.
-Each action can be bound to either default out-of-box handler, to a custom behavior or to both of them.
+Each action can be bound to either default out-of-the-box handler, to a custom behaviour or to both.
 You can define both folder and document actions at the same time.
 
 #### Menu actions
@@ -686,11 +686,11 @@ will trigger the same `download` action.
 
 ##### Delete - System handler combined with custom handler
 
-If you specify both of the **handler="delete"** and your custom **(execute)="myCustomActionAfterDelete($event)"**, your callback will be invoked after a successful delete happened. A successful delete operation happens if there is neither permission error, neither other network related error for the delete operation request. For handling permission errors see the section below.
+If you specify both **handler="delete"** and your custom **(execute)="myCustomActionAfterDelete($event)"**, your callback will be invoked after a successful delete happened. A successful delete operation happens if there is neither permission error, nor other network related error for the delete operation request. For handling permission errors see the section below.
 
 ##### Delete - Show notification message with no permission
 
-You can show a notification error when the user don't have the right permission to perform the action.
+You can show a notification error when the user doesn't have the right permission to perform the action.
 The ContentActionComponent provides the event permissionEvent that is raised when the permission specified in the permission property is missing
 You can subscribe to this event from your component and use the NotificationService to show a message.
 
@@ -726,7 +726,7 @@ export class MyComponent {
 
 You can easily disable a button when the user doesn't own the permission to perform the action related to the button.
 The ContentActionComponent provides the property permission that must contain the permission to check and a property disableWithNoPermission that can be true if
- you want see the button disabled.
+ you want to see the button disabled.
 
 ```html
 <adf-document-list ...>
@@ -768,7 +768,7 @@ Initiates download of the corresponding document file.
 
 #### Folder actions
 
-Folder actions have the same declaration as document actions except ```taget="folder"``` attribute value. You can define system, custom or combined handlers as well just as with the document actions.
+Folder actions have the same declaration as document actions except ```target="folder"``` attribute value. You can define system, custom or combined handlers as well just as with the document actions.
 
 ```html
 <adf-document-list ...>
@@ -820,7 +820,7 @@ export class MyView {
 
 ### Context Menu
 
-DocumentList also provide integration for 'Context Menu Service' from the 
+DocumentList also provides integration for 'Context Menu Service' from the 
 [ng2-alfresco-core](https://www.npmjs.com/package/ng2-alfresco-core) library.
 
 You can automatically turn all menu actions (for the files and folders) 
@@ -874,8 +874,8 @@ DocumentList emits the following events:
 | nodeDblClick | emitted when user double-clicks list node |
 | folderChange | emitted once current display folder has changed |
 | preview | emitted when user acts upon files with either single or double click (depends on `navigation-mode`), recommended for Viewer components integration  |
-| permissionError | emitted when user is attempting to create a folder via action menu but it doesn't have the permission to do it |
-| ready | emitted when the documentList is ready and load all the elements|
+| permissionError | emitted when user is attempting to create a folder via action menu without having the permission to do it |
+| ready | emitted when the documentList is ready and loads all the elements|
 
 ## Advanced usage and customization
 
@@ -1053,14 +1053,14 @@ Now you can declare columns and assign `desktop-only` class where needed:
 
 ### Custom row permissions style
 
-You can personalize the style of the row based on the permissions.
-The property to valorize is permissionsStyle[]:[PermissionStyleModel[]](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-documentlist/src/models/permissions-style.model.ts).
-The permissionsStyle array  can define different styles depending from the permission of the user on that node.
+You can customize the style of the row based on the permissions.
+The property to use is permissionsStyle[]:[PermissionStyleModel[]](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-documentlist/src/models/permissions-style.model.ts).
+The permissionsStyle array can define different styles depending on the permission of the user on that node.
 
 [PermissionStyleModel](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-documentlist/src/models/permissions-style.model.ts)
 
 | Property | Description |
-| isFile/isFolder | allow you to select if you want apply the style to file/folder nodes |
+| isFile/isFolder | allows you to select if you want to apply the style to file/folder nodes |
 | permission | is an enum value [Permissions](https://github.com/Alfresco/alfresco-ng2-core/blob/master/ng2-components/ng2-alfresco-documentlist/src/models/permissions.enum.ts) | 
 | css| the name of the class to add | 
 
@@ -1086,7 +1086,7 @@ adf-document-list >>> adf-datatable >>> tr.alfresco-datatable__row.document-list
 }
 ```
 
-If you want to change the style on the folders where the user doesn't have the permission to update it: 
+If you want to change the style on the folders where the user doesn't have the permission to update: 
 
 ```ts
 

@@ -1,7 +1,7 @@
 # Browser Support
 Browser support and polyfills guide.
 
-Browser compatibility and support depends on targeted browsers and 3rd party libraries. ADF framework is based on the following libraries and components:
+Browser compatibility and support depends on targeted browsers and 3rd party libraries. ADF is based on the following libraries and components:
 
 - Angular 2 (all ADF components)
 - Material Design Lite (all ADF components)

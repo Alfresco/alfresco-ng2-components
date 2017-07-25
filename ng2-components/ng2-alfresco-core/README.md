@@ -182,7 +182,7 @@ onUploadFiles(e: CustomEvent) {
 
 Please note that event will be raised only if valid [Files](https://developer.mozilla.org/en-US/docs/Web/API/File) were dropped onto the decorated element.
 
-The `upload-files` event is cancellable, so you can stop propagation of the drop event to uppper levels in case it has been already handled by your code:
+The `upload-files` event is cancellable, so you can stop propagation of the drop event to upper levels in case it has been already handled by your code:
 
 ```ts
 onUploadFiles(e: CustomEvent) {
@@ -280,7 +280,7 @@ api.nodes.addNode('-root-', body, {});
 The `AppConfigService` service provides support for loading and accessing global application configuration settings that you store on the server side in the form of a JSON file.
 
 > You may need this service when deploying your ADF-based application to production servers. 
-> There can be more than one server running web apps with different settings, like different addresses for Alfreco Content/Process services.
+> There can be more than one server running web apps with different settings, like different addresses for Alfresco Content/Process services.
 > Or there is a need to change global settings for all the clients.
 
 The service is already pre-configured to look for the "app.config.json" file in the application root address.
@@ -342,7 +342,7 @@ export class AppComponent {
 }
 ```
 
-You custom components can also benefit from the `AppConfigService`,
+Your custom components can also benefit from the `AppConfigService`,
 you can put an unlimited number of settings and optionally a nested JSON hierarchy.
 
 ### Different configurations based on environment settings
@@ -439,7 +439,7 @@ class AppComponent {
 
 As soon as you assign the storage prefix all settings that you get or set via the `UserPreferencesService` will be saved to dedicated profile.
 
-You can import the service in your controller an use its APIs like below:
+You can import the service in your controller and use its APIs like below:
 
 ```ts
 @Component({...})
@@ -465,7 +465,7 @@ Known properties:
 ## Notification Service
 
 The Notification Service is implemented on top of the Angular 2 Material Design snackbar.
-Use this service to show a notification message, and optionaly get feedback from it.
+Use this service to show a notification message, and optionally get feedback from it.
 
 ```ts
 import { NotificationService } from 'ng2-alfresco-core';
@@ -537,7 +537,7 @@ export class MyComponent implements OnInit {
 
 ## Accordion Component
 
-The component provide a way to easy create an accordion menu. You can customize the header and the icon.
+The component provides a way to easily create an accordion menu. You can customize the header and the icon.
 
 ```html
 <adf-accordion>
@@ -626,7 +626,7 @@ The CardViewComponent is a configurable property list renderer. You define the p
 ### Editing
 
 The card view can optionally allow its properties to be edited. You can control the editing of the properties in two level.
-- **global level** - *via the editable paramter of the card-view.component*
+- **global level** - *via the editable parameter of the card-view.component*
 - **property level** -  *in each property via the editable attribute*
 
 If you set the global editable parameter to false, no properties can be edited regardless of what is set inside the property.
@@ -701,7 +701,7 @@ const textItemProperty = new CardViewTextItemModel(options);
 | default | any | --- | The default value to render in case the value is empty |
 | displayValue* | string | --- | The value to render |
 | editable | boolean | false | Whether the property editable or not |
-| clickable | boolean | false | Whether the property clikable or not |
+| clickable | boolean | false | Whether the property clickable or not |
 | multiline | string | false | Single or multiline text |
 
 ### Card Map Item
@@ -774,7 +774,7 @@ The type is a **hyphen-separated-lowercase-words** string (just like how I wrote
 
 #### 2. Define the component for the custom type
 
-As discussed in the previous step the only important thing here is the naming of your component class ( **CardViewStarDateItemComponent**). Since the selector is not used in this case, you can give any selector name to it, but it make sense to follow the angular standards.
+As discussed in the previous step the only important thing here is the naming of your component class ( **CardViewStarDateItemComponent**). Since the selector is not used in this case, you can give any selector name to it, but it makes sense to follow the angular standards.
 
 ```js
 @Component({
