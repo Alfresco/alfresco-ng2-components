@@ -17,11 +17,11 @@
 
 /* tslint:disable:component-selector  */
 
-import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { LogService, ThumbnailService } from 'ng2-alfresco-core';
 import { FormService } from '../../../services/form.service';
 import { baseHost, WidgetComponent } from './../widget.component';
-import { FormFieldModel } from '../core/form-field.model';
+import { Observable } from 'rxjs/Rx';
 
 @Component({
     selector: 'upload-widget',
@@ -44,10 +44,11 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.field && this.field.value && this.field.value.length > 0) {
+        if (this.field &&
+            this.field.value &&
+            this.field.value.length > 0) {
             this.hasFile = true;
         }
-
         this.getMultipleFileParam();
     }
 
@@ -56,27 +57,40 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
             this.removeElementFromList(this.field.value, file);
             this.removeElementFromList(this.field.json.value, file);
             this.hasFile = this.field.value.length > 0;
+            this.resetFormValueWithNoFiles();
         }
     }
 
     onFileChanged(event: any) {
         let files = event.target.files;
+        let filesSaved = [];
         if (files && files.length > 0) {
-            for (let file of files) {
-                this.formService.createTemporaryRawRelatedContent(file)
-                    .subscribe((response: any) => {
-                        this.logService.info(response);
-                        this.field.value.push(response);
-                        this.field.json.value.push(response);
-                    }, (error: any) => {
-                        this.logService.error('Error uploading file. See console output for more details.');
-                    });
-            }
+            Observable.from(files).
+                flatMap(file => this.uploadRawContent(file)).subscribe((res) => {
+                    filesSaved.push(res);
+                },
+                (error) => {
+                    this.logService.error('Error uploading file. See console output for more details.');
+                },
+                () => {
+                    this.field.value = filesSaved;
+                    this.field.json.value = filesSaved;
+                });
         }
     }
 
+    private uploadRawContent(file): Observable<any> {
+        return this.formService.createTemporaryRawRelatedContent(file)
+            .map((response: any) => {
+                this.logService.info(response);
+                return response;
+            });
+    }
+
     private getMultipleFileParam() {
-        if (this.field && this.field.params && this.field.params.multiple) {
+        if (this.field &&
+            this.field.params &&
+            this.field.params.multiple) {
             this.multipleOption = this.field.params.multiple ? 'multiple' : '';
         }
     }
@@ -87,13 +101,20 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
 
     private removeElementFromList(list, element) {
         let index = list.indexOf(element);
-        if ( index !== -1) {
-            list.splice(index,1);
+        if (index !== -1) {
+            list.splice(index, 1);
         }
     }
 
-    getIcon(mimeType){
-       return this.thumbnailService.getMimeTypeIcon(mimeType)
+    private resetFormValueWithNoFiles(){
+        if ( this.field.value.length === 0) {
+            this.field.value = null;
+            this.field.json.value = null;
+        }
+    }
+
+    getIcon(mimeType) {
+        return this.thumbnailService.getMimeTypeIcon(mimeType)
     }
 
 }
