@@ -18,9 +18,8 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Optional, Output, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { NodePaging, Pagination } from 'alfresco-js-api';
-import { AlfrescoTranslationService, NotificationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, NotificationService, SearchOptions, SearchService } from 'ng2-alfresco-core';
 import { PermissionModel } from 'ng2-alfresco-documentlist';
-import { SearchOptions, SearchService } from './../services/search.service';
 
 @Component({
     selector: 'adf-search, alfresco-search',

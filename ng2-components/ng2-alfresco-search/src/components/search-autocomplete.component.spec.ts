@@ -23,9 +23,9 @@ import {
     AlfrescoContentService,
     AlfrescoSettingsService,
     AlfrescoTranslationService,
-    CoreModule
+    CoreModule,
+    SearchService
 } from 'ng2-alfresco-core';
-import { SearchService } from '../services/search.service';
 import { errorJson, folderResult, noResult, result, results } from './../assets/search.component.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
 import { SearchAutocompleteComponent } from './search-autocomplete.component';

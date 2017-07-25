@@ -16,12 +16,13 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { AppConfigModule, CoreModule } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, AppConfigModule, CoreModule, NotificationService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { FileNode, FolderNode } from '../assets/document-library.model.mock';
 import { ContentActionHandler } from '../models/content-action.model';
 import { DocumentListService } from './document-list.service';
 import { FolderActionsService } from './folder-actions.service';
+import { NodeActionsService } from './node-actions.service';
 
 describe('FolderActionsService', () => {
 
@@ -38,7 +39,10 @@ describe('FolderActionsService', () => {
             ],
             providers: [
                 DocumentListService,
-                FolderActionsService
+                FolderActionsService,
+                NodeActionsService,
+                AlfrescoTranslationService,
+                NotificationService
             ]
         }).compileComponents();
     }));
@@ -88,23 +92,6 @@ describe('FolderActionsService', () => {
         expect(service.setHandler(null, handler)).toBeFalsy();
         expect(service.setHandler('', handler)).toBeFalsy();
         expect(service.setHandler('my-handler', handler)).toBeTruthy();
-    });
-
-    // TODO: to be removed once demo handlers are removed
-    it('should execute demo actions', () => {
-        spyOn(window, 'alert').and.stub();
-
-        service.getHandler('system1')(null);
-        expect(window.alert).toHaveBeenCalledWith('standard folder action 1');
-
-        service.getHandler('system2')(null);
-        expect(window.alert).toHaveBeenCalledWith('standard folder action 2');
-    });
-
-    // TODO: to be removed once demo handlers are removed
-    it('should register demo handlers', () => {
-        expect(service.getHandler('system1')).toBeDefined();
-        expect(service.getHandler('system2')).toBeDefined();
     });
 
     it('should register delete action', () => {
