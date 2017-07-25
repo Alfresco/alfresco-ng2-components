@@ -85,6 +85,7 @@ export { UpdateNotification } from './src/services/card-view-update.service';
 export { ClickNotification } from './src/services/card-view-update.service';
 export { AppConfigModule } from './src/services/app-config.service';
 export { UserPreferencesService } from './src/services/user-preferences.service';
+import { SearchService } from './src/services/search.service';
 
 export { DeletedNodesApiService } from './src/services/deleted-nodes-api.service';
 export { FavoritesApiService } from './src/services/favorites-api.service';

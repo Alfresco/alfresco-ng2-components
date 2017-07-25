@@ -1,6 +1,7 @@
 <div id="site-dropdown-container" class="adf-site-dropdown-container">
     <md-select class="adf-site-dropdown-list-element" id="site-dropdown"
         placeholder="{{'DROPDOWN.PLACEHOLDER_LABEL' | translate}}"
+        floatPlaceholder="never"
         [(ngModel)]="siteSelected"
         (ngModelChange)="selectedSite()">
         <md-option id="default_site_option" [value]="DEFAULT_VALUE">{{'DROPDOWN.DEFAULT_OPTION' | translate}}</md-option>
