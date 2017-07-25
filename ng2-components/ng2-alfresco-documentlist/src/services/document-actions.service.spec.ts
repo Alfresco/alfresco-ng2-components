@@ -15,23 +15,32 @@
  * limitations under the License.
  */
 
-import { AlfrescoContentService } from 'ng2-alfresco-core';
+import { MdDialog } from '@angular/material';
+import { TranslateService } from '@ngx-translate/core';
+import { AlfrescoContentService, AlfrescoTranslationService, NotificationService } from 'ng2-alfresco-core';
 import { FileNode, FolderNode } from '../assets/document-library.model.mock';
 import { DocumentListServiceMock } from '../assets/document-list.service.mock';
 import { ContentActionHandler } from '../models/content-action.model';
 import { DocumentActionsService } from './document-actions.service';
 import { DocumentListService } from './document-list.service';
+import { NodeActionsService } from './node-actions.service';
 
 describe('DocumentActionsService', () => {
 
     let service: DocumentActionsService;
     let documentListService: DocumentListService;
     let contentService: AlfrescoContentService;
+    let translateService: AlfrescoTranslationService;
+    let notificationService: NotificationService;
+    let nodeActionsService: NodeActionsService;
 
     beforeEach(() => {
         documentListService = new DocumentListServiceMock();
         contentService = new AlfrescoContentService(null, null, null);
-        service = new DocumentActionsService(documentListService, contentService);
+        translateService = <AlfrescoTranslationService> { addTranslationFolder: () => {}};
+        nodeActionsService = new NodeActionsService(null, translateService, null, null);
+        notificationService = new NotificationService(null);
+        service = new DocumentActionsService(translateService, notificationService, nodeActionsService, documentListService, contentService);
     });
 
     it('should register default download action', () => {
@@ -63,7 +72,7 @@ describe('DocumentActionsService', () => {
         let file = new FileNode();
         expect(service.canExecuteAction(file)).toBeTruthy();
 
-        service = new DocumentActionsService(null);
+        service = new DocumentActionsService(translateService, notificationService, nodeActionsService);
         expect(service.canExecuteAction(file)).toBeFalsy();
     });
 
@@ -78,23 +87,6 @@ describe('DocumentActionsService', () => {
         expect(service.setHandler(null, handler)).toBeFalsy();
         expect(service.setHandler('', handler)).toBeFalsy();
         expect(service.setHandler('my-handler', handler)).toBeTruthy();
-    });
-
-    // TODO: to be removed once demo handlers are removed
-    it('should execute demo actions', () => {
-        spyOn(window, 'alert').and.stub();
-
-        service.getHandler('system1')(null);
-        expect(window.alert).toHaveBeenCalledWith('standard document action 1');
-
-        service.getHandler('system2')(null);
-        expect(window.alert).toHaveBeenCalledWith('standard document action 2');
-    });
-
-    // TODO: to be removed once demo handlers are removed
-    it('should register demo handlers', () => {
-        expect(service.getHandler('system1')).toBeDefined();
-        expect(service.getHandler('system2')).toBeDefined();
     });
 
     it('should register delete action', () => {
@@ -201,7 +193,7 @@ describe('DocumentActionsService', () => {
     });
 
     it('should require internal service for download action', () => {
-        let actionService = new DocumentActionsService(null, contentService);
+        let actionService = new DocumentActionsService(translateService, notificationService, nodeActionsService, null, contentService);
         let file = new FileNode();
         let result = actionService.getHandler('download')(file);
         result.subscribe((value) => {
@@ -210,7 +202,7 @@ describe('DocumentActionsService', () => {
     });
 
     it('should require content service for download action', () => {
-        let actionService = new DocumentActionsService(documentListService, null);
+        let actionService = new DocumentActionsService(translateService, notificationService, nodeActionsService, documentListService, null);
         let file = new FileNode();
         let result = actionService.getHandler('download')(file);
         result.subscribe((value) => {

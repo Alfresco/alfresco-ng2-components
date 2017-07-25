@@ -25,6 +25,7 @@ import { ContentActionListComponent } from './src/components/content-action/cont
 import { ContentActionComponent } from './src/components/content-action/content-action.component';
 import { ContentColumnListComponent } from './src/components/content-column/content-column-list.component';
 import { ContentColumnComponent } from './src/components/content-column/content-column.component';
+import { ContentNodeSelectorComponent } from './src/components/content-node-selector/content-node-selector.component';
 import { DocumentListComponent } from './src/components/document-list.component';
 import { DocumentMenuActionComponent } from './src/components/document-menu-action.component';
 import { EmptyFolderContentDirective } from './src/components/empty-folder/empty-folder-content.directive';
@@ -34,6 +35,7 @@ import { MaterialModule } from './src/material.module';
 import { DocumentActionsService } from './src/services/document-actions.service';
 import { DocumentListService } from './src/services/document-list.service';
 import { FolderActionsService } from './src/services/folder-actions.service';
+import { NodeActionsService } from './src/services/node-actions.service';
 
 // components
 export * from './src/components/document-list.component';
@@ -71,13 +73,15 @@ export const DOCUMENT_LIST_DIRECTIVES: any[] = [
     EmptyFolderContentDirective,
     BreadcrumbComponent,
     DropdownSitesComponent,
-    DropdownBreadcrumbComponent
+    DropdownBreadcrumbComponent,
+    ContentNodeSelectorComponent
 ];
 
 export const DOCUMENT_LIST_PROVIDERS: any[] = [
     DocumentListService,
     FolderActionsService,
-    DocumentActionsService
+    DocumentActionsService,
+    NodeActionsService
 ];
 
 @NgModule({
@@ -91,6 +95,9 @@ export const DOCUMENT_LIST_PROVIDERS: any[] = [
     ],
     providers: [
         ...DOCUMENT_LIST_PROVIDERS
+    ],
+    entryComponents: [
+        ContentNodeSelectorComponent
     ],
     exports: [
         DataTableModule,

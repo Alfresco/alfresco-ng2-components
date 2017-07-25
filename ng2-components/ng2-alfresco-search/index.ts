@@ -17,25 +17,24 @@
 
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule, SearchService } from 'ng2-alfresco-core';
 import { DocumentListModule } from 'ng2-alfresco-documentlist';
 import { SearchAutocompleteComponent } from './src/components/search-autocomplete.component';
 import { SearchControlComponent } from './src/components/search-control.component';
 import { SearchComponent } from './src/components/search.component';
-import { SearchService } from './src/services/search.service';
 
 // services
-export * from './src/services/search.service';
+export { SearchOptions, SearchService } from 'ng2-alfresco-core';
 export * from './src/components/search.component';
 export * from './src/components/search-control.component';
 export * from './src/components/search-autocomplete.component';
 
 // Old Deprecated export
+import { SearchService as AlfrescoSearchService } from 'ng2-alfresco-core';
 import { SearchAutocompleteComponent as AlfrescoSearchAutocompleteComponent } from './src/components/search-autocomplete.component';
 import { SearchControlComponent as AlfrescoSearchControlComponent } from './src/components/search-control.component';
 import { SearchComponent as AlfrescoSearchComponent } from './src/components/search.component';
-import { SearchService as AlfrescoSearchService } from './src/services/search.service';
-export { SearchService as AlfrescoSearchService } from './src/services/search.service';
+export { SearchService as AlfrescoSearchService } from 'ng2-alfresco-core';
 export { SearchComponent as AlfrescoSearchComponent } from './src/components/search.component';
 export { SearchControlComponent as AlfrescoSearchControlComponent } from './src/components/search-control.component';
 export { SearchAutocompleteComponent as AlfrescoSearchAutocompleteComponent } from './src/components/search-autocomplete.component';
