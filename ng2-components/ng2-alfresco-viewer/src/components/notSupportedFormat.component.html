@@ -3,12 +3,25 @@
         <div *ngIf="!isConversionStarted" class="viewer-download-text mdl-card__supporting-text">
             <h4>File '<span>{{nameFile}}</span>' is of an unsupported format</h4>
         </div>
-        <md-spinner *ngIf="isConversionStarted" id="conversion-spinner" class="adf-conversion-spinner" color="primary"></md-spinner>
+        
+        <md-spinner *ngIf="isConversionStarted" 
+            id="conversion-spinner" 
+            class="adf-conversion-spinner" 
+            color="primary"
+            data-automation-id="viewer-conversion-spinner"></md-spinner>
+
         <div class="button-container mdl-card__actions">
             <button md-button id="viewer-download-button" aria-label="Download" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" (click)="download()">
                 <md-icon class="viewer-button-icon">cloud_download</md-icon>   Download
             </button>
-            <button md-button *ngIf="convertible" [disabled]="isConversionStarted" id="viewer-convert-button" aria-label="Convert to PDF" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary" (click)="convertToPdf()">
+            <button *ngIf="convertible"
+                md-button
+                id="viewer-convert-button"
+                aria-label="Convert to PDF"
+                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary"
+                [disabled]="isConversionStarted"
+                (click)="convertToPdf()"
+                data-automation-id="viewer-convert-button">
                 <md-icon class="viewer-button-icon">insert_drive_file</md-icon>   Convert to PDF
             </button>
             <button md-button *ngIf="displayable" id="viewer-display-button" aria-label="Show PDF" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary" (click)="showPDF()">
@@ -18,4 +31,9 @@
     </div>
 </section>
 
-<pdf-viewer *ngIf="isConversionFinished" id="pdf-rendition-viewer" [showToolbar]="showToolbar" [urlFile]="renditionUrl" [nameFile]="nameFile"></pdf-viewer>
+<pdf-viewer *ngIf="isConversionFinished" 
+    id="pdf-rendition-viewer" 
+    [showToolbar]="showToolbar" 
+    [urlFile]="renditionUrl" 
+    [nameFile]="nameFile"
+    data-automation-id="pdf-rendition-viewer"></pdf-viewer>
