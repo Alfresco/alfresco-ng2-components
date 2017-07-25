@@ -54,12 +54,18 @@
         display: none;
     }
 
+    &-textitem-editable /deep/ .mat-input-infix {
+        padding: 0;
+        border-top: none;
+    }
+
     &-textitem-editable /deep/ .mat-input-placeholder-wrapper {
         padding-top: 2em;
+        position: static;
     }
 
     &-textitem-editable /deep/ .mat-input-placeholder {
-        top: 3px;
+        top: 0;
     }
 
     &-textitem-editable /deep/ .mat-input-element {
@@ -71,7 +77,7 @@
     &-textitem-editable /deep/ .mat-input-element:focus {
         padding: 5px;
         left: -6px;
-        top: -3px;
+        top: -6px;
     }
 
     &-textitem-editable /deep/ input.mat-input-element {
@@ -79,6 +85,6 @@
     }
 
     &-textitem-editable /deep/ input.mat-input-element:focus {
-        margin-bottom: -7px;
+        margin-bottom: -8px;
     }
 }
