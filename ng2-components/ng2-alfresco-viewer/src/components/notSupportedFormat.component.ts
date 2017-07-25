@@ -17,7 +17,7 @@
 
 /* tslint:disable:component-selector  */
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ContentService, RenditionsService } from 'ng2-alfresco-core';
 import { AlfrescoApiService } from 'ng2-alfresco-core';
 
@@ -28,7 +28,7 @@ const DEFAULT_CONVERSION_ENCODING = 'pdf';
     templateUrl: './notSupportedFormat.component.html',
     styleUrls: ['./notSupportedFormat.component.css']
 })
-export class NotSupportedFormatComponent implements OnInit {
+export class NotSupportedFormatComponent implements OnInit, OnDestroy {
 
     @Input()
     nameFile: string;
@@ -50,12 +50,22 @@ export class NotSupportedFormatComponent implements OnInit {
     isConversionStarted: boolean = false;
     isConversionFinished: boolean = false;
     renditionUrl: string|null = null;
+    conversionsubscription: any = null;
 
     constructor(
         private contentService: ContentService,
         private renditionsService: RenditionsService,
         private apiService: AlfrescoApiService
     ) {}
+
+    /**
+     * Checks for available renditions if the nodeId is present
+     */
+    ngOnInit() {
+        if (this.nodeId) {
+            this.checkRendition();
+        }
+    }
 
     /**
      * Download file opening it in a new window
@@ -65,12 +75,6 @@ export class NotSupportedFormatComponent implements OnInit {
             window.open(this.urlFile);
         } else {
             this.contentService.downloadBlob(this.blobFile, this.nameFile);
-        }
-    }
-
-    ngOnInit() {
-        if (this.nodeId) {
-            this.checkRendition();
         }
     }
 
@@ -104,7 +108,7 @@ export class NotSupportedFormatComponent implements OnInit {
     convertToPdf(): void {
         this.isConversionStarted = true;
 
-        this.renditionsService.convert(this.nodeId, DEFAULT_CONVERSION_ENCODING)
+        this.conversionsubscription = this.renditionsService.convert(this.nodeId, DEFAULT_CONVERSION_ENCODING)
             .subscribe({
                 error: (error) => { this.isConversionStarted = false; },
                 complete: () => { this.showPDF(); }
@@ -118,5 +122,14 @@ export class NotSupportedFormatComponent implements OnInit {
         this.renditionUrl = this.apiService.getInstance().content.getRenditionUrl(this.nodeId, DEFAULT_CONVERSION_ENCODING);
         this.isConversionStarted = false;
         this.isConversionFinished = true;
+    }
+
+    /**
+     * Kills the subscription polling if it has been started
+     */
+    ngOnDestroy(): void {
+        if (this.isConversionStarted) {
+            this.conversionsubscription.unsubscribe();
+        }
     }
 }
