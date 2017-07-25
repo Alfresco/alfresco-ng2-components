@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+/* tslint:disable:component-selector  */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import { FormService } from './../../../services/form.service';
 import { baseHost , WidgetComponent } from './../widget.component';
+import { FormFieldModel } from '../core/form-field.model';
 
 @Component({
     selector: 'text-widget',
@@ -30,8 +31,14 @@ import { baseHost , WidgetComponent } from './../widget.component';
 })
 export class TextWidgetComponent extends WidgetComponent implements OnInit {
 
-    mask;
-    isMaskReversed;
+    @Input()
+    readOnly: boolean = false;
+
+    @Input()
+    field: FormFieldModel;
+
+    mask: string;
+    isMaskReversed: boolean;
 
     constructor(public formService: FormService) {
         super(formService);

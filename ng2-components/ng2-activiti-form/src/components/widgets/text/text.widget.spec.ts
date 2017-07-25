@@ -92,9 +92,26 @@ describe('TextWidgetComponent', () => {
                 });
             }));
 
-            it('should be disabled on readonly forms', async(() => {
-                widget.field.form.readOnly = true;
+        });
 
+        describe('and no mask is configured on text element', () => {
+
+            let inputElement: HTMLInputElement;
+
+            beforeEach(() => {
+                widget.field = new FormFieldModel(new FormModel({taskId: 'fake-task-id'}), {
+                    id: 'text-id',
+                    name: 'text-name',
+                    value: '',
+                    type: FormFieldTypes.TEXT,
+                    readOnly: true
+                });
+
+                fixture.detectChanges();
+                inputElement = <HTMLInputElement> element.querySelector('#text-id');
+            });
+
+            it('should be disabled on readonly forms', async(() => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(inputElement).toBeDefined();
@@ -102,6 +119,7 @@ describe('TextWidgetComponent', () => {
                     expect(inputElement.disabled).toBeTruthy();
                 });
             }));
+
         });
 
         describe('and mask is configured on text element', () => {

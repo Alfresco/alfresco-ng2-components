@@ -2,7 +2,7 @@
      [class.adf-invalid]="!field.isValid" *ngIf="field?.isVisible">
     <label class="adf-label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
     <md-select class="adf-select"
-            [attr.id]="field.id"
+            [id]="field.id"
             [(ngModel)]="field.value"
             [disabled]="field.readOnly"
             (ngModelChange)="checkVisibility(field)">

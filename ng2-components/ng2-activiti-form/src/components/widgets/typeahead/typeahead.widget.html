@@ -1,8 +1,8 @@
 <div class="adf-typeahead-widget {{field.className}}"
      [class.is-dirty]="value"
      [class.adf-invalid]="!field.isValid" id="typehead-div" *ngIf="field.isVisible">
-    <md-input-container>
     <label class="adf-label" [attr.for]="field.id">{{field.name}}</label>
+    <md-input-container>
     <input mdInput
            class="adf-input"
            type="text"
@@ -17,7 +17,6 @@
 </div>
 <div class="adf-typeahead-autocomplete mat-elevation-z2" *ngIf="options.length > 0 && popupVisible">
         <md-option *ngFor="let item of options"
-            [id]="field.id +'-'+item.id"
             (click)="onItemClick(item, $event)">
             <span>{{item.name}}</span>
         </md-option>
