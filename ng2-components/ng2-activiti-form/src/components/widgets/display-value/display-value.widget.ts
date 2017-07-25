@@ -29,7 +29,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
 @Component({
     selector: 'display-value-widget',
     templateUrl: './display-value.widget.html',
-    styleUrls: ['./display-value.widget.css'],
+    styleUrls: ['./display-value.widget.scss'],
     host: baseHost
 })
 export class DisplayValueWidgetComponent extends WidgetComponent implements OnInit {

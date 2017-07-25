@@ -28,85 +28,78 @@ import { UploadWidgetComponent } from './upload.widget';
 
 describe('UploadWidgetComponent', () => {
 
-    let widget: UploadWidgetComponent;
-    let formService: FormService;
+    let uploadWidgetComponent: UploadWidgetComponent;
+    let fixture: ComponentFixture<UploadWidgetComponent>;
+    let element: HTMLInputElement;
+    let inputElement: HTMLInputElement;
 
-    beforeEach(() => {
-        formService = new FormService(null, null, null);
-        widget = new UploadWidgetComponent(formService, null, null);
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [CoreModule.forRoot(), MATERIAL_MODULE],
+            declarations: [UploadWidgetComponent, ErrorWidgetComponent],
+            providers: [FormService, EcmModelService]
+        }).compileComponents().then(() => {
+            fixture = TestBed.createComponent(UploadWidgetComponent);
+            uploadWidgetComponent = fixture.componentInstance;
+            element = fixture.nativeElement;
+        });
+    }));
+
+    afterEach(() => {
+        fixture.destroy();
+        TestBed.resetTestingModule();
     });
 
     it('should setup with field data', () => {
         const fileName = 'hello world';
         const encodedFileName = encodeURI(fileName);
 
-        widget.field = new FormFieldModel(null, {
+        uploadWidgetComponent.field = new FormFieldModel(null, {
             type: FormFieldTypes.UPLOAD,
             value: [
                 { name: encodedFileName }
             ]
         });
 
-        widget.ngOnInit();
-        expect(widget.hasFile).toBeTruthy();
-        expect(widget.fileName).toBe(encodeURI(fileName));
-        expect(widget.displayText).toBe(fileName);
+        uploadWidgetComponent.ngOnInit();
+        expect(uploadWidgetComponent.hasFile).toBeTruthy();
+        expect(uploadWidgetComponent.fileName).toBe(encodeURI(fileName));
+        expect(uploadWidgetComponent.displayText).toBe(fileName);
     });
 
     it('should require form field to setup', () => {
-        widget.field = null;
-        widget.ngOnInit();
+        uploadWidgetComponent.field = null;
+        uploadWidgetComponent.ngOnInit();
 
-        expect(widget.hasFile).toBeFalsy();
-        expect(widget.fileName).toBeUndefined();
-        expect(widget.displayText).toBeUndefined();
+        expect(uploadWidgetComponent.hasFile).toBeFalsy();
+        expect(uploadWidgetComponent.fileName).toBeUndefined();
+        expect(uploadWidgetComponent.displayText).toBeUndefined();
     });
 
     it('should reset local properties', () => {
-        widget.hasFile = true;
-        widget.fileName = '<fileName>';
-        widget.displayText = '<displayText>';
+        uploadWidgetComponent.hasFile = true;
+        uploadWidgetComponent.fileName = '<fileName>';
+        uploadWidgetComponent.displayText = '<displayText>';
 
-        widget.reset();
-        expect(widget.hasFile).toBeFalsy();
-        expect(widget.fileName).toBeNull();
-        expect(widget.displayText).toBeNull();
+        uploadWidgetComponent.reset();
+        expect(uploadWidgetComponent.hasFile).toBeFalsy();
+        expect(uploadWidgetComponent.fileName).toBeNull();
+        expect(uploadWidgetComponent.displayText).toBeNull();
     });
 
     it('should reset field value', () => {
-        widget.field = new FormFieldModel(new FormModel(), {
+        uploadWidgetComponent.field = new FormFieldModel(null, {
             type: FormFieldTypes.UPLOAD,
             value: [
                 { name: 'filename' }
             ]
         });
-        widget.reset();
-        expect(widget.field.value).toBeNull();
-        expect(widget.field.json.value).toBeNull();
+        uploadWidgetComponent.reset();
+        expect(uploadWidgetComponent.field.value).toBeNull();
+        expect(uploadWidgetComponent.field.json.value).toBeNull();
     });
 
     describe('when template is ready', () => {
-        let uploadWidgetComponent: UploadWidgetComponent;
-        let fixture: ComponentFixture<UploadWidgetComponent>;
-        let element: HTMLInputElement;
-        let inputElement: HTMLInputElement;
-
-        beforeEach(async(() => {
-            TestBed.configureTestingModule({
-                imports: [CoreModule.forRoot(), MATERIAL_MODULE],
-                declarations: [UploadWidgetComponent, ErrorWidgetComponent],
-                providers: [FormService, EcmModelService]
-            }).compileComponents().then(() => {
-                fixture = TestBed.createComponent(UploadWidgetComponent);
-                uploadWidgetComponent = fixture.componentInstance;
-                element = fixture.nativeElement;
-            });
-        }));
-
-        afterEach(() => {
-            fixture.destroy();
-            TestBed.resetTestingModule();
-        });
 
         beforeEach(() => {
             uploadWidgetComponent.field = new FormFieldModel(new FormModel({ taskId: 'fake-upload-id' }), {

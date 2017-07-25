@@ -1,7 +1,7 @@
-<div class="adf-textfield text-widget {{field.className}}"
+<div class="adf-textfield adf-text-widget {{field.className}}"
      [class.adf-invalid]="!field.isValid">
+    <label class="adf-label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
     <md-input-container>
-        <label class="adf-label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
         <input mdInput
                class="adf-input"
                type="text"
@@ -10,11 +10,9 @@
                [value]="field.value"
                [(ngModel)]="field.value"
                (ngModelChange)="onFieldChanged(field)"
-               [disabled]="field.readOnly ? true : null"
+               [disabled]="field.readOnly || readOnly"
                [textMask]="{mask: mask, isReversed: isMaskReversed}"
                placeholder="{{field.placeholder}}">
-        <div  *ngIf="field.validationSummary" [@transitionMessages]="_subscriptAnimationState">
-            <div class="adf-error-text" >{{field.validationSummary}}</div> <i class="material-icons adf-error-icon">warning</i>
-        </div>
     </md-input-container>
+    <error-widget [error]="field.validationSummary"></error-widget>
 </div>

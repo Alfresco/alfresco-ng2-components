@@ -13,9 +13,15 @@
     </div>
 
 
-    <md-grid-list rowHeight="100px" [cols]="12" [ngClass]="{'hidden':!(content?.isVisible && content?.isExpanded)}">
-        <md-grid-tile *ngFor="let col of content.columns" [colspan]="col.size">
-           <form-field [field]="field" *ngFor="let field of col.fields" ></form-field>
+    <md-grid-list rowHeight="100px" [cols]="content.field.numberOfColumns"
+                  [ngClass]="{'hidden':!(content?.isVisible && content?.isExpanded)}">
+        <md-grid-tile *ngFor="let col of content.columns" [colspan]="content.colspan"
+                      [rowspan]="content.rowspan">
+            <ul class="adf-field-list">
+                <li *ngFor="let field of col.fields">
+                    <form-field [field]="field"></form-field>
+                </li>
+            </ul>
         </md-grid-tile>
     </md-grid-list>
 

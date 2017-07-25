@@ -366,7 +366,7 @@ describe('DynamicTableWidgetComponent', () => {
 
             fixture.whenStable().then(() => {
                 let selectedRow = element.querySelector('#fake-dynamic-table-row-0');
-                expect(selectedRow.className).toBe('dynamic-table-widget__row-selected');
+                expect(selectedRow.className).toBe('adf-dynamic-table-widget__row-selected');
             });
         }));
 

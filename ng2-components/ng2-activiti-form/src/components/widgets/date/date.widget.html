@@ -1,6 +1,6 @@
 <div class="{{field.className}}" *ngIf="field?.isVisible" id="data-widget" [class.adf-invalid]="!field.isValid">
+    <label class="adf-label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
     <md-input-container class="adf-date-widget">
-        <label class="adf-label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
         <input mdInput
                #resultPickerModel="ngModel"
                [mdDatepicker]="datePicker"

@@ -115,20 +115,4 @@ describe('WidgetComponent', () => {
         expect(widget.isRequired()).toBeTruthy();
     });
 
-    it('should setup textfield', () => {
-        let changeCalled = false;
-        let elementRef = new ElementRef({
-            querySelector: function () {
-                return {
-                    MaterialTextfield: {
-                        change: function () {
-                            changeCalled = true;
-                        }
-                    }
-                };
-            }
-        });
-        expect(changeCalled).toBeTruthy();
-    });
-
 });
