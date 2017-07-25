@@ -85,6 +85,7 @@ export { UpdateNotification } from './src/services/card-view-update.service';
 export { ClickNotification } from './src/services/card-view-update.service';
 export { AppConfigModule } from './src/services/app-config.service';
 export { UserPreferencesService } from './src/services/user-preferences.service';
+import { SearchService } from './src/services/search.service';
 
 export { DeletedNodesApiService } from './src/services/deleted-nodes-api.service';
 export { FavoritesApiService } from './src/services/favorites-api.service';
@@ -132,6 +133,7 @@ import { AuthenticationService as AlfrescoAuthenticationService } from './src/se
 import { TranslationService as AlfrescoTranslationService } from './src/services/translation.service';
 export { AuthenticationService as AlfrescoAuthenticationService } from './src/services/authentication.service';
 export { TranslationService as AlfrescoTranslationService } from './src/services/translation.service';
+export * from './src/services/search.service';
 
 export function providers() {
     return [
@@ -154,6 +156,7 @@ export function providers() {
         AuthGuardBpm,
         ThumbnailService,
         UploadService,
+        SearchService,
 
         DeletedNodesApiService,
         FavoritesApiService,

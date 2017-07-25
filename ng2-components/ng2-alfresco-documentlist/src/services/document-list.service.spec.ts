@@ -177,4 +177,24 @@ describe('DocumentListService', () => {
             contentType: 'json'
         });
     });
+
+    it('should copy a node', (done) => {
+        service.copyNode('node-id', 'parent-id').subscribe(done);
+
+        expect(jasmine.Ajax.requests.mostRecent().method).toBe('POST');
+        expect(jasmine.Ajax.requests.mostRecent().url).toContain('/nodes/node-id/copy');
+        expect(jasmine.Ajax.requests.mostRecent().params).toEqual(JSON.stringify({ targetParentId: 'parent-id' }));
+
+        jasmine.Ajax.requests.mostRecent().respondWith({ status: 200, contentType: 'json' });
+    });
+
+    it('should move a node', (done) => {
+        service.moveNode('node-id', 'parent-id').subscribe(done);
+
+        expect(jasmine.Ajax.requests.mostRecent().method).toBe('POST');
+        expect(jasmine.Ajax.requests.mostRecent().url).toContain('/nodes/node-id/move');
+        expect(jasmine.Ajax.requests.mostRecent().params).toEqual(JSON.stringify({ targetParentId: 'parent-id' }));
+
+        jasmine.Ajax.requests.mostRecent().respondWith({ status: 200, contentType: 'json' });
+    });
 });

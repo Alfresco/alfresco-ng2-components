@@ -24,7 +24,7 @@ import { Observable } from 'rxjs/Rx';
  * Internal service used by Document List component.
  */
 @Injectable()
-export class SearchService {
+export class AlfrescoSearchService {
 
     constructor(public authService: AlfrescoAuthenticationService,
                 private apiService: AlfrescoApiService) {

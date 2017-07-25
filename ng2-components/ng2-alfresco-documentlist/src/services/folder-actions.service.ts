@@ -16,11 +16,13 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoContentService } from 'ng2-alfresco-core';
+import { MinimalNodeEntity } from 'alfresco-js-api';
+import { AlfrescoContentService, AlfrescoTranslationService, NotificationService } from 'ng2-alfresco-core';
 import { Observable, Subject } from 'rxjs/Rx';
 import { ContentActionHandler } from '../models/content-action.model';
 import { PermissionModel } from '../models/permissions.model';
 import { DocumentListService } from './document-list.service';
+import { NodeActionsService } from './node-actions.service';
 
 @Injectable()
 export class FolderActionsService {
@@ -29,7 +31,10 @@ export class FolderActionsService {
 
     private handlers: { [id: string]: ContentActionHandler; } = {};
 
-    constructor(private documentListService: DocumentListService,
+    constructor(private translateService: AlfrescoTranslationService,
+                private notificationService: NotificationService,
+                private nodeActionsService: NodeActionsService,
+                private documentListService: DocumentListService,
                 private contentService: AlfrescoContentService) {
         this.setupActionHandlers();
     }
@@ -56,36 +61,46 @@ export class FolderActionsService {
     }
 
     private setupActionHandlers() {
+        this.handlers['copy'] = this.copyNode.bind(this);
+        this.handlers['move'] = this.moveNode.bind(this);
         this.handlers['delete'] = this.deleteNode.bind(this);
-
-        // TODO: for demo purposes only, will be removed during future revisions
-        this.handlers['system1'] = this.handleStandardAction1.bind(this);
-        this.handlers['system2'] = this.handleStandardAction2.bind(this);
     }
 
-    // TODO: for demo purposes only, will be removed during future revisions
-    /**
-     * @deprecated in 1.7.0
-     *
-     * @private
-     * @param {*} document
-     * @memberof FolderActionsService
-     */
-    private handleStandardAction1(/*document: any*/) {
-        console.log('handleStandardAction1 is deprecated in 1.7.0 and will be removed in future versions');
-        window.alert('standard folder action 1');
+    private copyNode(obj: MinimalNodeEntity, target?: any, permission?: string) {
+        const actionObservable = this.nodeActionsService.copyFolder(obj.entry, permission);
+        this.prepareHandlers(actionObservable, 'folder', 'copy', target, permission);
+        return actionObservable;
     }
 
-    // TODO: for demo purposes only, will be removed during future revisions
-    /**
-     * @deprecated in 1.7.0
-     *
-     * @private
-     * @memberof FolderActionsService
-     */
-    private handleStandardAction2(/*document: any*/) {
-        console.log('handleStandardAction1 is deprecated in 1.7.0 and will be removed in future versions');
-        window.alert('standard folder action 2');
+    private moveNode(obj: MinimalNodeEntity, target?: any, permission?: string) {
+        const actionObservable = this.nodeActionsService.moveFolder(obj.entry, permission);
+        this.prepareHandlers(actionObservable, 'folder', 'move', target, permission);
+        return actionObservable;
+    }
+
+    private prepareHandlers(actionObservable, type: string, action: string, target?: any, permission?: string): void {
+        actionObservable.subscribe(
+            (fileOperationMessage) => {
+                this.notificationService.openSnackMessage(fileOperationMessage, 3000);
+                if (target && typeof target.reload === 'function') {
+                    target.reload();
+                }
+            },
+            (errorStatusCode) => {
+                switch (errorStatusCode) {
+                    case 403:
+                        this.permissionEvent.next(new PermissionModel({type, action, permission}));
+                        break;
+                    case 409:
+                        let conflictError: any = this.translateService.get('OPERATION.ERROR.CONFLICT');
+                        this.notificationService.openSnackMessage(conflictError.value, 3000);
+                        break;
+                    default:
+                        let unknownError: any = this.translateService.get('OPERATION.ERROR.UNKNOWN');
+                        this.notificationService.openSnackMessage(unknownError.value, 3000);
+                }
+            }
+        );
     }
 
     private deleteNode(obj: any, target?: any, permission?: string): Observable<any> {

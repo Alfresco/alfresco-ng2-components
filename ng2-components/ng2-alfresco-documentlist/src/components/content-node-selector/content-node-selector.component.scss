@@ -1,124 +1,114 @@
-@mixin mat-content-node-selector-theme($theme) {
-    $primary: map-get($theme, primary);
+@import 'theming';
 
-    .adf-content-node-selector-dialog {
+.#{$ADF}-content-node-selector-dialog {
 
-        .mat-dialog-container {
-            padding: 0;
+    .mat-dialog-container {
+        padding: 0;
+    }
+
+    .#{$ADF}-content-node-selector {
+        &-title,
+        &-content,
+        &-actions {
+            padding: 16px;
+            margin: 0;
         }
 
-        .adf-content-node-selector {
-            &-title,
-            &-content,
-            &-actions {
-                padding: 16px;
-                margin: 0;
+        &-title {
+            text-transform: capitalize;
+        }
+
+        &-content {
+            padding-top: 0;
+
+            &-input {
+                width: 100%;
+
+                &-icon {
+                    color: rgba(0, 0, 0, 0.38);
+                    cursor: pointer;
+
+                    &:hover {
+                        color: rgba(0, 0, 0, 1);
+                    }
+                }
             }
 
-            &-title {
-                text-transform: capitalize;
+            & /deep/ .mat-input-underline .mat-input-ripple {
+                height: 1px;
+                transition: none;
             }
 
-            &-content {
-                padding-top: 0;
+            & /deep/ .adf-site-dropdown-list-element {
+                width: 100%;
+                margin-bottom: 20px;
 
-                &-input {
-                    width: 100%;
-
-                    &-icon {
-                        color: rgba(0, 0, 0, 0.38);
-                        cursor: pointer;
-
-                        &:hover {
-                            color: rgba(0, 0, 0, 1);
-                        }
-                    }
+                .mat-select-trigger {
+                    font-size: 14px;
                 }
 
-                & /deep/ .mat-input-underline .mat-input-ripple {
-                    height: 1px;
-                    transition: none;
+                .mat-select-placeholder,
+                &.mat-select {
+                    font-family: 'Muli', "Helvetica", "Arial", sans-serif;
                 }
+            }
 
-                & /deep/ .adf-site-dropdown-list-element {
-                    width: 100%;
-                    margin-bottom: 20px;
+            &-list {
+                height: 200px;
+                overflow: auto;
+                border: 1px solid rgba(0, 0, 0, 0.07);
 
-                    .mat-select-trigger {
-                        font-size: 14px;
-                    }
-
-                    .mat-select-placeholder,
-                    &.mat-select {
-                        font-family: 'Muli', "Helvetica", "Arial", sans-serif;
-                    }
-                }
-
-                & /deep/ .adf-toolbar .mat-toolbar {
+                & /deep/ .adf-data-table {
                     border: none;
-                }
 
-                &-list {
-                    height: 200px;
-                    overflow: auto;
-                    border: 1px solid rgba(0, 0, 0, 0.07);
-
-                    & /deep/ .adf-highlight {
-                        color: #33afdfnpm np;
+                    .adf-no-content-container {
+                        text-align: center;
                     }
 
-                    & /deep/ .adf-data-table {
-                        border: none;
+                    thead {
+                        display: none;
+                    }
 
-                        .adf-no-content-container {
-                            text-align: center;
-                        }
+                    .adf-data-table-cell {
+                        padding-top: 8px;
+                        padding-bottom: 8px;
+                        border-top: none;
+                        height: 30px;
+                    }
 
-                        thead {
-                            display: none;
-                        }
+                    tbody tr {
+                        height: auto !important;
 
-                        .adf-data-table-cell {
-                            padding-top: 8px;
-                            padding-bottom: 8px;
-                            border-top: none;
-                            height: 30px;
-                        }
-
-                        tbody tr {
-                            height: auto !important;
-
-                            &:last-child {
-                                .adf-data-table-cell {
-                                    border-bottom: none;
-                                }
+                        &:last-child {
+                            .adf-data-table-cell {
+                                border-bottom: none;
                             }
                         }
                     }
                 }
             }
+        }
 
-            &-actions {
-                padding: 8px;
-                background-color: rgb(250, 250, 250);
-                display: flex;
-                justify-content: flex-end;
-                color: rgb(121, 121, 121);
+        &-actions {
+            padding: 8px;
+            background-color: rgb(250, 250, 250);
+            display: flex;
+            justify-content: flex-end;
+            color: rgb(121, 121, 121);
 
-                &:last-child {
-                    margin-bottom: 0px;
-                }
+            &:last-child {
+                margin-bottom: 0px;
+            }
 
-                &-cancel {
-                    font-weight: normal;
-                }
+            &-cancel {
+                font-weight: normal;
+            }
 
-                &-choose {
-                    font-weight: normal;
+            &-choose {
+                font-weight: normal;
 
-                    &[disabled] {
-                        opacity: 0.6;
-                    }
+                &[disabled] {
+                    opacity: 0.6;
                 }
             }
         }
