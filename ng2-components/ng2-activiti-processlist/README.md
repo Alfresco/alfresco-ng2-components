@@ -105,7 +105,7 @@ Process filters are a collection of criteria used to filter process instances, w
 by users. This component displays a list of available filters and allows the user to select any given
 filter as the active filter.
 
-The most common usage is in driving a process instance list in order to allow the user to choose which
+The most common usage is in driving a process instance list to allow the user to choose which
 process instances are displayed in the list.
 
 ```html
@@ -129,7 +129,7 @@ If both `appId` and `appName` are specified then `appName` will take precedence 
 
 | Name | Description |
 | --- | --- |
-| onSuccess | Raised when the list of filters hase been successfully loaded from the server |
+| onSuccess | Raised when the list of filters has been successfully loaded from the server |
 | onError | Raised when an error occurs |
 | filterClick | Raised when the user selects a filter from the list |
 
@@ -278,7 +278,7 @@ Lists both the active and completed tasks associated with a particular process i
 
 ## Process Instance Comments component
 
-Displays comments associated with a particular process instances and allows the user to add new comments
+Displays comments associated with a particular process instance and allows the user to add new comments
 
 ```html
 <adf-process-instance-comments 
@@ -342,8 +342,8 @@ This component displays Upload Component(Drag and Click) to upload the attachmen
 
 | Name | Description |
 | --- | --- |
-| error | Raised when the error occured while creating/uploading the attachment by the user from within the component |
-| success | Raised when the attachement created/uploaded successfully from within the component |
+| error | Raised when the error occurred while creating/uploading the attachment by the user from within the component |
+| success | Raised when the attachment created/uploaded successfully from within the component |
 
 ## Build from sources
 

@@ -36,7 +36,7 @@ npm install ng2-alfresco-tag
 
 ## Basic usage
 
-In this component are present three different tags:
+In this component there are three different tags:
 
 * alfresco-tag-node-actions-list
 * alfresco-tag-list
