@@ -119,4 +119,18 @@ export class StartTaskComponent implements OnInit {
             this.logService.error('Could not load users');
         });
     }
+
+    isUserNameEmpty(user: any) {
+        return !user || (this.isEmpty(user.firstName) && this.isEmpty(user.lastName));
+    }
+
+    private isEmpty(data: string) {
+        return data === undefined || data === null || data.trim().length === 0;
+    }
+
+    getDisplayUser(firstName: string, lastName: string, delimiter: string = '-'): string {
+        firstName = (firstName !== null ? firstName : '');
+        lastName = (lastName !== null ? lastName : '');
+        return firstName + delimiter + lastName;
+    }
 }

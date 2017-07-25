@@ -28,7 +28,7 @@ import {
 declare var document: any;
 
 @Component({
-    selector: 'alfresco-app',
+    selector: 'adf-app',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
@@ -72,7 +72,6 @@ export class AppComponent {
 
     navigateToLogin() {
         this.router.navigate(['/login']);
-        this.hideDrawer();
     }
 
     onToggleSearch(event) {
@@ -87,22 +86,11 @@ export class AppComponent {
 
     changeLanguage(lang: string) {
         this.translateService.use(lang);
-        this.hideDrawer();
-    }
-
-    hideDrawer() {
-        // todo: workaround for drawer closing
-        document.querySelector('.mdl-layout').MaterialLayout.toggleDrawer();
     }
 
     private setProvider() {
         if (this.storage.hasItem(`providers`)) {
             this.settingsService.setProviders(this.storage.getItem(`providers`));
         }
-    }
-
-    onDragOverMainPage(event: any): boolean {
-        event.preventDefault();
-        return false;
     }
 }

@@ -183,18 +183,24 @@ export class AppComponent {
 
 ## FileUploadingDialogComponent
 
-This component provides a dialog that shows all the files uploaded with upload button or drag & drop area components. 
+This component provides a dialog that shows all the files uploaded with upload button or drag & drop area components.
 This component should be used in combination with upload button or drag & drop area.
 
 ```html
 <file-uploading-dialog></file-uploading-dialog>
 ```
 
+### Properties
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| position | string | 'right' | Dialog position. Accepted values are 'left' or 'right' |
+
 ## UploadService
 
 Provides access to various APIs related to file upload features.
 
-### Configuration 
+### Configuration
 
 There is the possibility to point out file name or file extension to be excluded from upload process into the app.config.json file, see [here](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-alfresco-core#appconfigservice) for more details.
 This will make it easy to avoid uploading of system files like : '.DS_Store'.

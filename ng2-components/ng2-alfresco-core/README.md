@@ -6,8 +6,6 @@
 
 - [Prerequisites](#prerequisites)
 - [Install](#install)
-- [Toolbar Component](#toolbar-component)
-  * [Properties](#properties)
 - [Upload Directive](#upload-directive)
   * [Basic usage](#basic-usage)
   * [Modes](#modes)
@@ -65,25 +63,11 @@ necessary configuration, see this [page](https://github.com/Alfresco/alfresco-ng
 npm install ng2-alfresco-core
 ```
 
-## Toolbar Component
+Available features
 
-```html
-<adf-toolbar title="Toolbar">
-    <button md-icon-button>
-        <md-icon>create_new_folder</md-icon>
-    </button>
-    <button md-icon-button>
-        <md-icon>delete</md-icon>
-    </button>
-</adf-toolbar>
-```
-
-### Properties
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| title | string | | Toolbar title |
-| color | string | | Toolbar color, can be changed to empty value (default), `primary`, `accent` or `warn`. |
+| Feature | Notes | Docs |
+| --- | --- | --- |
+| toolbar | --- | [Docs](src/components/toolbar/toolbar.md) |
 
 ## Upload Directive
 

@@ -1,0 +1,64 @@
+@import 'theming';
+
+:host {
+    & .upload-dialog {
+        position: fixed;
+        bottom: 20px;
+        width: 40%;
+        background: $alfresco-white;
+        box-shadow: 1px 5px 15px $alfresco-drop-shadow;
+
+        &--position-left {
+            left: 25px;
+        }
+
+        &--position-right {
+            right: 25px;
+        }
+
+        &--minimized {
+            width: 20%;
+
+            .upload-dialog__content {
+                display: none;
+            }
+        }
+
+        &__header {
+            padding: 1em;
+            display: flex;
+            align-items: center;
+        }
+
+        &__title {
+            margin-left: 0.5em;
+            flex: 1 1 auto;
+        }
+
+        &__info {
+            padding: 0 1em 1em 1em;
+        }
+
+        &__content {
+            overflow: auto;
+            max-height: 195px;
+            border-top: 1px solid $alfresco-dark-color--hue-1;
+            border-bottom: 1px solid $alfresco-dark-color--hue-1;
+        }
+
+        &__actions {
+            display: flex;
+            justify-content: flex-end;
+            padding: 1em;
+
+            & > button {
+                text-transform: uppercase;
+                color: $alfresco-primary-accent--default;
+            }
+        }
+    }
+
+    & md-icon {
+            cursor: pointer;
+    }
+}

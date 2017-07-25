@@ -25,6 +25,7 @@
         },
         "BUTTON": {
             "CANCEL": "Cancel Process",
+            "CLOSE": "Close",
             "SHOW_DIAGRAM": "Show Diagram",
             "DRAG-ATTACHMENT": "Drop Files Here...",
             "UPLOAD-ATTACHMENT": "Upload Attachment"

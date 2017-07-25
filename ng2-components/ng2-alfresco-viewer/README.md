@@ -35,6 +35,43 @@ necessary configuration [prerequisites](https://github.com/Alfresco/alfresco-ng2
 npm install ng2-alfresco-viewer
 ```
 
+### Configuring PDF.js library
+
+In order to configure your webpack-enabled application with the PDF.js library please follow the next steps.
+
+Install pdfjs-dist
+
+```sh
+npm install pdfjs-dist
+```
+
+Update `vendors.ts` by appending the following:
+
+```ts
+// PDF.js
+require('pdfjs-dist/web/compatibility.js');
+const pdfjsLib = require('pdfjs-dist');
+pdfjsLib.PDFJS.workerSrc = './pdf.worker.js';
+require('pdfjs-dist/web/pdf_viewer.js');
+```
+
+The code above enables the "viewer" component and "compatibility" mode for all the browsers.
+It also configures the web worker for PDF.js library to render PDF files in the background.
+
+Update the `plugins` section of the `webpack.common.js` file with the next lines:
+
+```js
+new CopyWebpackPlugin([
+    ...
+    {
+        from: 'node_modules/pdfjs-dist/build/pdf.worker.js',
+        to: 'pdf.worker.js'
+    }
+])
+```
+
+The Viewer component now should be able displaying PDF files.
+
 ## Basic usage
 
 Using with node id:

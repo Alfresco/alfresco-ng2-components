@@ -24,6 +24,14 @@ adf-document-list >>> adf-datatable tr.is-selected .image-table-cell {
     position: relative;
 }
 
+adf-document-list >>> adf-datatable tr.document-list__create {
+    background: green !important;
+}
+
+adf-document-list >>> adf-datatable tr.document-list__disable {
+    background: red !important;
+}
+
 adf-document-list >>> adf-datatable tr.is-selected .image-table-cell::before {
     content: "\E876"; /* "done" */
     font-family: "Material Icons";
@@ -44,7 +52,9 @@ adf-document-list >>> adf-datatable tr.is-selected .image-table-cell::before {
 
 .adf-demo-site-container-style {
     margin-top: 10px;
-    margin-left: 3%;
+    margin-bottom: 10px;
     width: 100%;
     min-width: 200px;
 }
+
+

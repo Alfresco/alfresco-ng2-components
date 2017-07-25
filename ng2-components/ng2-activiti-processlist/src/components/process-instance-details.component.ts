@@ -25,6 +25,8 @@ import { ProcessService } from './../services/process.service';
 import { ProcessInstanceHeaderComponent } from './process-instance-header.component';
 import { ProcessInstanceTasksComponent } from './process-instance-tasks.component';
 
+declare let dialogPolyfill: any;
+
 @Component({
     selector: 'adf-process-instance-details, activiti-process-instance-details',
     templateUrl: './process-instance-details.component.html',
@@ -40,6 +42,9 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
 
     @ViewChild(ProcessInstanceTasksComponent)
     tasksList: ProcessInstanceTasksComponent;
+
+    @ViewChild('dialogComments')
+    commentsDialog: any;
 
     @Input()
     showTitle: boolean = true;
@@ -104,8 +109,25 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
         }
     }
 
+    public showCommentsDialog(): void {
+        if (!this.commentsDialog.nativeElement.showModal) {
+            dialogPolyfill.registerDialog(this.commentsDialog.nativeElement);
+        }
+        this.commentsDialog.nativeElement.showModal();
+    }
+
+    public closeCommentsDialog(): void {
+        if (this.commentsDialog) {
+            this.commentsDialog.nativeElement.close();
+        }
+    }
+
     isRunning(): boolean {
         return this.processInstanceDetails && !this.processInstanceDetails.ended;
+    }
+
+    isDiagramDisabled(): boolean {
+        return !this.isRunning() ? true : undefined;
     }
 
     cancelProcess() {
@@ -140,8 +162,8 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
         }
     }
 
-    onShowProcessDiagram(event: any) {
-        this.showProcessDiagram.emit(event);
+    onShowProcessDiagram(processInstanceId: any) {
+        this.showProcessDiagram.emit({value: this.processInstanceId});
     }
 
 }
