@@ -150,9 +150,9 @@ export class FormService {
             'modelType': 2
         };
 
-        return Observable.fromPromise(
-            this.apiService.getInstance().activiti.modelsApi.getModels(opts)
-        );
+        return Observable.fromPromise(this.apiService.getInstance().activiti.modelsApi.getModels(opts))
+            .map(this.toJsonArray)
+            .catch(err => this.handleError(err));
     }
 
     /**
