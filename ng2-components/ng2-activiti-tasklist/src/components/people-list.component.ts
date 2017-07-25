@@ -26,7 +26,7 @@ declare let componentHandler: any;
 @Component({
     selector: 'adf-people-list',
     templateUrl: './people-list.component.html',
-    styleUrls: ['./people-list.component.css']
+    styleUrls: ['./people-list.component.scss']
 })
 
 export class PeopleListComponent implements AfterViewInit, AfterContentInit {

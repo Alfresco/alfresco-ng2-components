@@ -21,7 +21,7 @@ import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'adf-create-task-attachment',
-    styleUrls: ['./create-task-attachment.component.css'],
+    styleUrls: ['./create-task-attachment.component.scss'],
     templateUrl: './create-task-attachment.component.html'
 })
 export class AttachmentComponent implements OnChanges {
