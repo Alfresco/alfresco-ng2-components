@@ -68,16 +68,16 @@ describe('PaginationComponent', () => {
             .compileComponents()
             .then(() => {
                 const fixture = test.testBed.createComponent(PaginationComponent);
-                const component = fixture.componentInstance;
+                const component: PaginationComponent = fixture.componentInstance;
 
-                component.ngAfterViewInit = jasmine
+                (<any> component).ngAfterViewInit = jasmine
                     .createSpy('ngAfterViewInit').and
                     .callThrough();
 
-                spyOn(component.onPageChange, 'emit');
-                spyOn(component.onPageSizeChange, 'emit');
+                spyOn(component.onChangePageNumber, 'emit');
+                spyOn(component.onChangePageSize, 'emit');
                 spyOn(component.onNextPage, 'emit');
-                spyOn(component.onPreviousPage, 'emit');
+                spyOn(component.onPrevPage, 'emit');
 
                 this.fixture = fixture;
                 this.component = component;
@@ -100,8 +100,8 @@ describe('PaginationComponent', () => {
         });
 
         it('is first and last page', () => {
-            expect(this.component.isFirst).toBe(true);
-            expect(this.component.isLast).toBe(true);
+            expect(this.component.isFirstPage).toBe(true);
+            expect(this.component.isLastPage).toBe(true);
         });
 
         it('has range', () => {
@@ -137,7 +137,7 @@ describe('PaginationComponent', () => {
         });
 
         it('has the last page', () => {
-            expect(this.component.last).toBe(6);
+            expect(this.component.lastPage).toBe(6);
         });
 
         it('is on the 3rd page', () => {
@@ -149,28 +149,13 @@ describe('PaginationComponent', () => {
             expect(this.component.next).toBe(4);
         });
 
-        it('has size and offset', () => {
-            expect(this.component.size).toBe(25);
-            expect(this.component.offset).toBe(50);
-        });
-
         it('is not first, nor last', () => {
-            expect(this.component.isFirst).toBe(false);
-            expect(this.component.isLast).toBe(false);
+            expect(this.component.isFirstPage).toBe(false);
+            expect(this.component.isLastPage).toBe(false);
         });
 
         it('has range', () => {
             expect(this.component.range).toEqual([ 51, 75 ]);
-        });
-
-        it('changes page size', () => {
-            const { component } = this;
-            component.pageSizeChange(50);
-
-            const { emit: { calls } } = component.onPageSizeChange;
-            const { maxItems } = calls.mostRecent().args[0];
-
-            expect(maxItems).toBe(50);
         });
 
         it('goes next', () => {
@@ -189,18 +174,28 @@ describe('PaginationComponent', () => {
 
             component.goPrevious();
 
-            const { emit: { calls } } = component.onPreviousPage;
+            const { emit: { calls } } = component.onPrevPage;
             const { skipCount } = calls.mostRecent().args[0];
 
             expect(skipCount).toBe(25);
         });
 
-        it('changes page', () => {
+        it('changes page size', () => {
+            const { component } = this;
+            component.changePageSize(50);
+
+            const { emit: { calls } } = component.onChangePageSize;
+            const { maxItems } = calls.mostRecent().args[0];
+
+            expect(maxItems).toBe(50);
+        });
+
+        it('changes page number', () => {
             const { component } = this;
 
-            component.pageChange(5);
+            component.changePageNumber(5);
 
-            const { emit: { calls } } = component.onPageChange;
+            const { emit: { calls } } = component.onChangePageNumber;
             const { skipCount } = calls.mostRecent().args[0];
 
             expect(skipCount).toBe(100);
@@ -217,7 +212,7 @@ describe('PaginationComponent', () => {
 
         it('is on the first page', () => {
             expect(this.component.current).toBe(1);
-            expect(this.component.isFirst).toBe(true);
+            expect(this.component.isFirstPage).toBe(true);
         });
 
         it('has the same, previous page', () => {
@@ -243,7 +238,7 @@ describe('PaginationComponent', () => {
 
         it('is on the last page', () => {
             expect(this.component.current).toBe(10);
-            expect(this.component.isLast).toBe(true);
+            expect(this.component.isLastPage).toBe(true);
         });
 
         it('has the same, next page', () => {
@@ -262,21 +257,17 @@ describe('PaginationComponent', () => {
     describe('Without pagination input', () => {
         it('has defaults', () => {
             const {
-                total, size, offset, current, last, isFirst, isLast,
+                current, lastPage, isFirstPage, isLastPage,
                 next, previous, range, pages
             } = this.component;
 
-            expect(total).toBe(0);
-            expect(size).toBe(0);
-            expect(offset).toBe(0);
-
+            expect(lastPage).toBe(1);
             expect(previous).toBe(1);
             expect(current).toBe(1);
             expect(next).toBe(1);
-            expect(last).toBe(1);
 
-            expect(isFirst).toBe(true);
-            expect(isLast).toBe(true);
+            expect(isFirstPage).toBe(true);
+            expect(isLastPage).toBe(true);
 
             expect(range).toEqual([ 0, 0 ]);
             expect(pages).toEqual([ 1 ]);
