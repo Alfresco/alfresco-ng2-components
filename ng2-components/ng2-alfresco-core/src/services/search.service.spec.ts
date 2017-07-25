@@ -16,30 +16,46 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { AlfrescoApiService, CoreModule } from 'ng2-alfresco-core';
-import { fakeApi, fakeError, fakeSearch } from '../assets/alfresco-search.service.mock';
-import { AlfrescoSearchService } from './alfresco-search.service';
+import { fakeApi, fakeError, fakeSearch } from '../assets/search.service.mock';
+import { CookieServiceMock } from './../assets/cookie.service.mock';
+import { AlfrescoApiService } from './alfresco-api.service';
+import { AlfrescoSettingsService } from './alfresco-settings.service';
+import { AppConfigModule } from './app-config.service';
+import { AuthenticationService } from './authentication.service';
+import { CookieService } from './cookie.service';
+import { LogService } from './log.service';
+import { SearchService } from './search.service';
+import { StorageService } from './storage.service';
+import { UserPreferencesService } from './user-preferences.service';
 
 declare let jasmine: any;
 
-describe('AlfrescoSearchService', () => {
+describe('SearchService', () => {
 
-    let service: AlfrescoSearchService;
+    let service: SearchService;
     let apiService: AlfrescoApiService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                AppConfigModule
             ],
             providers: [
-                AlfrescoSearchService
+                SearchService,
+                AuthenticationService,
+                AlfrescoApiService,
+                AlfrescoSettingsService,
+                AuthenticationService,
+                StorageService,
+                UserPreferencesService,
+                { provide: CookieService, useClass: CookieServiceMock },
+                LogService
             ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
-        service = TestBed.get(AlfrescoSearchService);
+        service = TestBed.get(SearchService);
         apiService = TestBed.get(AlfrescoApiService);
         spyOn(apiService, 'getInstance').and.returnValue(fakeApi);
     });

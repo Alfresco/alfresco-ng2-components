@@ -17,14 +17,14 @@
 
 import { async, TestBed } from '@angular/core/testing';
 import { AlfrescoApiService, CoreModule } from 'ng2-alfresco-core';
-import { fakeApi, fakeError, fakeSearch } from '../assets/search.service.mock';
-import { SearchService } from './search.service';
+import { fakeApi, fakeError, fakeSearch } from '../assets/alfresco-search.service.mock';
+import { AlfrescoSearchService } from './alfresco-search.service';
 
 declare let jasmine: any;
 
-describe('SearchService', () => {
+describe('AlfrescoSearchService', () => {
 
-    let service: SearchService;
+    let service: AlfrescoSearchService;
     let apiService: AlfrescoApiService;
 
     beforeEach(async(() => {
@@ -33,13 +33,13 @@ describe('SearchService', () => {
                 CoreModule
             ],
             providers: [
-                SearchService
+                AlfrescoSearchService
             ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
-        service = TestBed.get(SearchService);
+        service = TestBed.get(AlfrescoSearchService);
         apiService = TestBed.get(AlfrescoApiService);
         spyOn(apiService, 'getInstance').and.returnValue(fakeApi);
     });
