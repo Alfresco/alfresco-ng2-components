@@ -18,6 +18,7 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MdButtonModule, MdIconModule, MdProgressSpinnerModule } from '@angular/material';
+import { By } from '@angular/platform-browser';
 import {
     AlfrescoApiService,
     AlfrescoAuthenticationService,
@@ -35,9 +36,9 @@ interface RenditionResponse {
     entry: {
         status: string
     };
-};
+}
 
-describe('Test ng2-alfresco-viewer Not Supported Format View component', () => {
+describe('NotSupportedFormatComponent', () => {
 
     const nodeId = 'not-supported-node-id';
 
@@ -157,6 +158,60 @@ describe('Test ng2-alfresco-viewer Not Supported Format View component', () => {
                 expect(element.querySelector('#viewer-convert-button')).toBeNull();
             });
         }));
+
+        it('should start the conversion when clicking on the "Convert to PDF" button', () => {
+            component.convertible = true;
+            fixture.detectChanges();
+
+            const convertButton = debug.query(By.css('[data-automation-id="viewer-convert-button"]'));
+            convertButton.triggerEventHandler('click', null);
+            fixture.detectChanges();
+
+            const conversionSpinner = debug.query(By.css('[data-automation-id="viewer-conversion-spinner"]'));
+            expect(renditionsService.convert).toHaveBeenCalled();
+            expect(conversionSpinner).not.toBeNull();
+        });
+
+        it('should remove the spinner if an error happens during conversion', () => {
+            component.convertToPdf();
+
+            conversionSubject.error('whatever');
+            fixture.detectChanges();
+
+            const conversionSpinner = debug.query(By.css('[data-automation-id="viewer-conversion-spinner"]'));
+            expect(conversionSpinner).toBeNull();
+        });
+
+        it('should remove the spinner and show the pdf if conversion has finished', () => {
+            component.convertToPdf();
+
+            conversionSubject.complete();
+            fixture.detectChanges();
+
+            const conversionSpinner = debug.query(By.css('[data-automation-id="viewer-conversion-spinner"]'));
+            const pdfRenditionViewer = debug.query(By.css('[data-automation-id="pdf-rendition-viewer"]'));
+            expect(conversionSpinner).toBeNull();
+            expect(pdfRenditionViewer).not.toBeNull();
+        });
+
+        it('should unsubscribe from the conversion subscription on ngOnDestroy', () => {
+            component.convertToPdf();
+
+            component.ngOnDestroy();
+            conversionSubject.complete();
+            fixture.detectChanges();
+
+            const pdfRenditionViewer = debug.query(By.css('[data-automation-id="pdf-rendition-viewer"]'));
+            expect(pdfRenditionViewer).toBeNull();
+        });
+
+        it('should not throw error on ngOnDestroy if the conversion hasn\'t started at all' , () => {
+            const callNgOnDestroy = () => {
+                component.ngOnDestroy();
+            };
+
+            expect(callNgOnDestroy).not.toThrowError();
+        });
     });
 
     describe('User Interaction', () => {
