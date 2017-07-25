@@ -105,7 +105,7 @@ class SampleClass1 implements OnInit {
 ### Mapping template with component class
 
 In order to map **form runtime template** with the corresponding component class
-you will need registering both parts with `adf.registerComponent(identifier, class)` api:
+you will need to register both parts with `adf.registerComponent(identifier, class)` api:
 
 ```js
 if (adf) {

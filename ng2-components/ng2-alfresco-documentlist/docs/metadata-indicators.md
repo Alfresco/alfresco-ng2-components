@@ -65,7 +65,7 @@ Next we propagate the `value` reference to the `<adf-metadata-icons>` component 
 </data-column>
 ```
 
-So once rendered our component will automatically has access to entire set of node metadata. Let's build some visualization of the `cm:versionLabel` propery. 
+So once rendered our component will automatically have access to entire set of node metadata. Let's build some visualization of the `cm:versionLabel` property. 
 
 For demonstration purposes we are going to display several icons if underlying node has version `2.0`, and just a plain text version value for all other versions.
 
@@ -86,7 +86,7 @@ Note: For a list of the icons that can be used with `<md-icon>` component please
 
 ## Testing component
 
-You will need to enable `versioning` feature for the Document List to be able uploading multiple versions of the file instead of renaming duplicates.
+You will need to enable `versioning` feature for the Document List to be able to upload multiple versions of the file instead of renaming duplicates.
 
 Drag and drop any image file to upload it and ensure it has `1.0` displayed in the column:
 
@@ -97,7 +97,7 @@ You should now see icons instead of version label.
 
 ![](assets/metadata-03.png)
 
-You can see on the screnshot above that only files with version `2.0` got extra icons.
+You can see on the screenshot above that only files with version `2.0` got extra icons.
 
 ## Conclusion
 
@@ -129,4 +129,4 @@ export class MetadataIconsComponent {
 }
 ```
 
-You can use this idea to build more complex indication experience based on the actual metdata state. 
+You can use this idea to build more complex indication experience based on the actual metadata state. 

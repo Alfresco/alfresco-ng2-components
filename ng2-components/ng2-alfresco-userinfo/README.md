@@ -40,13 +40,13 @@ npm install ng2-alfresco-userinfo
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| ecmBackgroundImage | string | (alfresco image) | Custom path for the background banner image for ECM  users |
+| ecmBackgroundImage | string | (alfresco image) | Custom path for the background banner image for ECM users |
 | bpmBackgroundImage | string | (alfresco image) | Custom path for the background banner image for BPM users |
-| menuOpenType | string | right  | Custom choice for opening menu bottom : `right` or `left`  |
-| fallBackThumbnailImage | string | (alfresco image) | Fallback image for profile when thubnail is missing|
+| menuOpenType | string | right  | Custom choice for opening the menu bottom : `right` or `left`  |
+| fallBackThumbnailImage | string | (alfresco image) | Fallback image for profile when thumbnail is missing|
 
-This will show a round icon with user and on click some user information are showed.
-If user is logged in with ECM and BPM the ECM image will be showed.
+This will show a round icon with user and on click some user information.
+If user is logged in with ECM and BPM the ECM image will be shown.
 
 ## Build from sources
 
