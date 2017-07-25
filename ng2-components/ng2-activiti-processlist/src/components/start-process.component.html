@@ -25,4 +25,3 @@
 		<button md-button (click)="cancelStartProcess()" id="cancle_process" class=""> {{'START_PROCESS.FORM.ACTION.CANCEL'| translate}} </button>
 		<button md-button *ngIf="!hasStartForm()" [disabled]="!validateForm()" (click)="startProcess()" data-automation-id="btn-start" id="button-start" class="btn-start"> {{'START_PROCESS.FORM.ACTION.START' | translate}} </button>
 	</md-card-actions>
-</md-card>

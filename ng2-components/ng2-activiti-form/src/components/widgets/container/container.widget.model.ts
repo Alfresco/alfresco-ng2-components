@@ -59,6 +59,8 @@ export class ContainerWidgetComponentModel extends ContainerModel {
         if (this.field) {
             this.columns = this.field.columns || [];
             this.isExpanded = !this.isCollapsedByDefault();
+            this.colspan = field.colspan;
+            this.rowspan = field.rowspan;
         }
     }
 }

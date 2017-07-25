@@ -45,9 +45,6 @@ export class AttachWidgetComponent extends WidgetComponent implements OnInit {
     selectedFolderNodes: [ExternalContent];
     selectedFile: ExternalContent;
 
-    @Input()
-    field: FormFieldModel;
-
     @Output()
     fieldChanged: EventEmitter<FormFieldModel> = new EventEmitter<FormFieldModel>();
 

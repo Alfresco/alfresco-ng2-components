@@ -21,7 +21,6 @@ import { Component, ViewEncapsulation, OnInit, Input } from '@angular/core';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { FormService } from './../../../services/form.service';
 import { baseHost , WidgetComponent } from './../widget.component';
-import { FormFieldModel } from '../core/form-field.model';
 
 @Component({
     selector: 'checkbox-widget',
@@ -30,12 +29,6 @@ import { FormFieldModel } from '../core/form-field.model';
     encapsulation: ViewEncapsulation.None
 })
 export class CheckboxWidgetComponent extends WidgetComponent {
-
-    @Input()
-    readOnly: boolean = false;
-
-    @Input()
-    field: FormFieldModel;
 
     constructor(private visibilityService: WidgetVisibilityService, public formService: FormService) {
         super(formService);
