@@ -40,9 +40,7 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     ngOnInit() {
-
         if (this.field) {
-
             if (this.field.minValue) {
                 this.minDate = moment(this.field.minValue, this.field.dateDisplayFormat).toDate();
             }
