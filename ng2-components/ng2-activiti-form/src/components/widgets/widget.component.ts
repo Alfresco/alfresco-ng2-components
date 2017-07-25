@@ -48,6 +48,9 @@ export class WidgetComponent implements AfterViewInit {
     static DEFAULT_HYPERLINK_SCHEME: string = 'http://';
 
     @Input()
+    readOnly: boolean = false;
+
+    @Input()
     field: FormFieldModel;
 
     /** @deprecated used only to trigger visibility engine, components should do that internally if needed */

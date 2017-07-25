@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+/* tslint:disable:component-selector  */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import { LogService, ThumbnailService } from 'ng2-alfresco-core';
 import { FormService } from '../../../services/form.service';
 import { baseHost, WidgetComponent } from './../widget.component';
+import { FormFieldModel } from '../core/form-field.model';
 
 @Component({
     selector: 'upload-widget',
@@ -44,15 +45,14 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.field &&
-            this.field.value &&
-            this.field.value.length > 0) {
+        if (this.field && this.field.value && this.field.value.length > 0) {
             this.hasFile = true;
             let file = this.field.value[0];
             this.fileName = file.name;
             this.displayText = decodeURI(file.name);
             this.mimeTypeIcon = this.thumbnailService.getMimeTypeIcon(file.mimeType);
         }
+
         this.getMultipleFileParam();
     }
 
@@ -83,9 +83,7 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     private getMultipleFileParam() {
-        if (this.field &&
-            this.field.params &&
-            this.field.params.multiple) {
+        if (this.field && this.field.params && this.field.params.multiple) {
             this.multipleOption = this.field.params.multiple ? 'multiple' : '';
         }
     }

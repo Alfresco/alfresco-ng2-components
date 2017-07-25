@@ -20,7 +20,6 @@
 import { ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
-import { FormFieldModel } from '../core/form-field.model';
 import { FormService } from './../../../services/form.service';
 import { baseHost , WidgetComponent } from './../widget.component';
 import { DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './dynamic-table.widget.model';
@@ -35,12 +34,6 @@ import { DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './dynami
 export class DynamicTableWidgetComponent extends WidgetComponent implements OnInit {
 
     ERROR_MODEL_NOT_FOUND = 'Table model not found';
-
-    @Input()
-    field: FormFieldModel;
-
-    @Input()
-    readOnly: boolean = false;
 
     content: DynamicTableModel;
 

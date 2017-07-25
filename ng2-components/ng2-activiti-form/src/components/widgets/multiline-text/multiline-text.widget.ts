@@ -20,7 +20,6 @@
 import { Component, ViewEncapsulation,Input, OnInit } from '@angular/core';
 import { FormService } from './../../../services/form.service';
 import { baseHost , WidgetComponent } from './../widget.component';
-import { FormFieldModel } from '../core/form-field.model';
 
 @Component({
     selector: 'multiline-text-widget',
@@ -30,12 +29,6 @@ import { FormFieldModel } from '../core/form-field.model';
     encapsulation: ViewEncapsulation.None
 })
 export class MultilineTextWidgetComponentComponent extends WidgetComponent  {
-
-    @Input()
-    readOnly: boolean = false;
-
-    @Input()
-    field: FormFieldModel;
 
     constructor(public formService: FormService) {
         super(formService);

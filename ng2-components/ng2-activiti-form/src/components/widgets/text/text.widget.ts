@@ -31,12 +31,6 @@ import { FormFieldModel } from '../core/form-field.model';
 })
 export class TextWidgetComponent extends WidgetComponent implements OnInit {
 
-    @Input()
-    readOnly: boolean = false;
-
-    @Input()
-    field: FormFieldModel;
-
     mask: string;
     isMaskReversed: boolean;
 
