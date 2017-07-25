@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+/* tslint:disable:component-selector  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation,Input, OnInit } from '@angular/core';
 import { FormService } from './../../../services/form.service';
 import { baseHost , WidgetComponent } from './../widget.component';
+import { FormFieldModel } from '../core/form-field.model';
 
 @Component({
     selector: 'multiline-text-widget',
@@ -28,9 +29,16 @@ import { baseHost , WidgetComponent } from './../widget.component';
     host: baseHost,
     encapsulation: ViewEncapsulation.None
 })
-export class MultilineTextWidgetComponentComponent extends WidgetComponent {
+export class MultilineTextWidgetComponentComponent extends WidgetComponent  {
+
+    @Input()
+    readOnly: boolean = false;
+
+    @Input()
+    field: FormFieldModel;
 
     constructor(public formService: FormService) {
-         super(formService);
+        super(formService);
     }
+
 }

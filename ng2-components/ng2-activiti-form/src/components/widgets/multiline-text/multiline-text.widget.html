@@ -1,20 +1,20 @@
 <div class="adf-multiline-text-widget {{field.className}}"
      [class.adf-invalid]="!field.isValid">
+    <label class="adf-label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
     <md-input-container floatPlaceholder="never">
-        <label class="adf-label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
         <textarea mdInput class="adf-input"
-                md-autosize
-                type="text"
-                rows= "3"
-                [id]="field.id"
-                [required]="isRequired()"
-                [value]="field.value"
-                [(ngModel)]="field.value"
-                (ngModelChange)="checkVisibility(field)"
-                [disabled]="field.readOnly"
-                placeholder="{{field.placeholder}}">
+                  md-autosize
+                  type="text"
+                  rows="1"
+                  [id]="field.id"
+                  [required]="isRequired()"
+                  [value]="field.value"
+                  [(ngModel)]="field.value"
+                  (ngModelChange)="checkVisibility(field)"
+                  [disabled]="field.readOnly || readOnly"
+                  placeholder="{{field.placeholder}}">
         </textarea>
     </md-input-container>
-    <error-widget [error]="field.validationSummary" ></error-widget>
+    <error-widget [error]="field.validationSummary"></error-widget>
 </div>
 

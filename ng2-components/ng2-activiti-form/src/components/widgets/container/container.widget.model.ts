@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+/* tslint:disable:component-selector  */
 
 import { ContainerColumnModel } from './../core/container-column.model';
 import { ContainerModel } from './../core/container.model';
@@ -26,6 +26,8 @@ export class ContainerWidgetComponentModel extends ContainerModel {
 
     columns: ContainerColumnModel[] = [];
     isExpanded: boolean = true;
+    rowspan: number = 1;
+    colspan: number = 1;
 
     isGroup(): boolean {
         return this.type === FormFieldTypes.GROUP;

@@ -1,35 +1,12 @@
-<div [ngSwitch]="fieldType" class="display-value-widget {{field.className}}" *ngIf="field?.isVisible">
+<div [ngSwitch]="fieldType" class="adf-display-value-widget {{field.className}}" *ngIf="field?.isVisible">
     <div *ngSwitchCase="'boolean'">
-        <label class="mdl-checkbox mdl-js-checkbox" [attr.for]="field.id" >
-            <input type="checkbox"
-                   [attr.id]="field.id"
-                   [checked]="value"
-                   [(ngModel)]="value"
-                   class="mdl-checkbox__input"
-                   disabled>
-            <span class="mdl-checkbox__label">{{field.name}}</span>
-        </label>
+        <checkbox-widget readonly="true" [field]="field"></checkbox-widget>
     </div>
-    <div *ngSwitchCase="'text'"
-         class="mdl-textfield mdl-js-textfield text-widget">
-        <label [attr.for]="field.id">{{field.name}}</label>
-        <input
-            class="mdl-textfield__input"
-            type="text"
-            [attr.id]="field.id"
-            [value]="value"
-            disabled>
+    <div *ngSwitchCase="'text'">
+        <text-widget readonly="true" [field]="field"></text-widget>
     </div>
-    <div *ngSwitchCase="'multi-line-text'"
-         class="mdl-textfield mdl-js-textfield multiline-text-widget">
-        <textarea class="mdl-textfield__input"
-                  type="text"
-                  rows="3"
-                  [value]="value"
-                  [attr.id]="field.id"
-                  disabled>
-        </textarea>
-        <label class="mdl-textfield__label" [attr.for]="field.id">{{field.name}}</label>
+    <div *ngSwitchCase="'multi-line-text'">
+        <multiline-text-widget readonly="true" [field]="field"></multiline-text-widget>
     </div>
     <div *ngSwitchCase="'hyperlink'" class="hyperlink-widget">
         <div>
@@ -62,7 +39,7 @@
         <input
             class="mdl-textfield__input"
             type="text"
-            [attr.id]="field.id"
+            [id]="field.id"
             [value]="value"
             disabled>
     </div>
