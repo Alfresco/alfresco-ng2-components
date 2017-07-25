@@ -27,8 +27,6 @@ import {
 import { Pagination } from 'alfresco-js-api';
 import { PaginationQueryParams } from './pagination-query-params.interface';
 
-import { UserPreferencesService } from '../../services/user-preferences.service';
-
 @Component({
     selector: 'adf-pagination',
     host: { 'class': 'adf-pagination' },
@@ -39,78 +37,85 @@ import { UserPreferencesService } from '../../services/user-preferences.service'
 })
 export class PaginationComponent {
 
-    @Input()
-    pageSizes: number[] = [ 25, 50, 100 ];
+    static DEFAULT_PAGE_SIZE: number = 20;
+
+    static ACTIONS = {
+        NEXT_PAGE: 'NEXT_PAGE',
+        PREV_PAGE: 'PREV_PAGE',
+        CHANGE_PAGE_SIZE: 'CHANGE_PAGE_SIZE',
+        CHANGE_PAGE_NUMBER: 'CHANGE_PAGE_NUMBER'
+    };
 
     @Input()
-    pagination: Pagination = null;
+    supportedPageSizes: number[] = [ 25, 50, 100 ];
 
-    @Output()
-    change: EventEmitter<PaginationQueryParams> = new EventEmitter<PaginationQueryParams>();
+    /** @deprecated */
+    /** "pagination" object already has "maxItems" */
+    @Input()
+    maxItems: number = PaginationComponent.DEFAULT_PAGE_SIZE;
 
-    constructor(
-        private preferences: UserPreferencesService
-    ) {}
+    @Input()
+    pagination: Pagination = {
+        skipCount: 0,
+        maxItems: 0,
+        totalItems: 0
+    };
 
-    get totalItems(): number {
-        if (!this.pagination) { return 0; }
-        return this.pagination.totalItems;
-    }
+    @Output('change')
+    onChange: EventEmitter<PaginationQueryParams> = new EventEmitter<PaginationQueryParams>();
 
-    get maxItems(): number {
-        if (!this.pagination) { return 0; }
-        return this.pagination.maxItems;
-    }
+    @Output('changePageNumber')
+    onChangePageNumber: EventEmitter<Pagination> = new EventEmitter<Pagination>();
+
+    @Output('changePageSize')
+    onChangePageSize: EventEmitter<Pagination> = new EventEmitter<Pagination>();
+
+    @Output('nextPage')
+    onNextPage: EventEmitter<Pagination> = new EventEmitter<Pagination>();
+
+    @Output('prevPage')
+    onPrevPage: EventEmitter<Pagination> = new EventEmitter<Pagination>();
 
     get lastPage(): number {
-        const { totalItems, maxItems } = this;
+        const { totalItems, maxItems } = this.pagination;
 
         if (!maxItems) { return 1; }
         return Math.ceil(totalItems / maxItems);
     }
 
-    get skipCount(): number {
-        if (!this.pagination) { return 0; }
-        return this.pagination.skipCount;
-    }
-
-    get currentPage(): number {
-        const { maxItems, skipCount } = this;
+    get current(): number {
+        const { maxItems, skipCount } = this.pagination;
 
         if (!maxItems) { return 1; }
         return Math.floor(skipCount / maxItems) + 1;
     }
 
     get isLastPage(): boolean {
-        const { currentPage, lastPage } = this;
-        return currentPage === lastPage;
+        const { current, lastPage } = this;
+        return current === lastPage;
     }
 
     get isFirstPage(): boolean {
-        const { currentPage, lastPage } = this;
-        return currentPage === 1;
+        const { current, lastPage } = this;
+        return current === 1;
     }
 
-    get nextPage(): number {
-        const { isLastPage, currentPage, lastPage } = this;
-        return isLastPage ? currentPage : currentPage + 1;
+    get next(): number {
+        const { isLastPage, current, lastPage } = this;
+        return isLastPage ? current : current + 1;
     }
 
-    get previousPage(): number {
-        const { isFirstPage, currentPage } = this;
-        return isFirstPage ? 1 : currentPage - 1;
+    get previous(): number {
+        const { isFirstPage, current } = this;
+        return isFirstPage ? 1 : current - 1;
     }
 
     get range(): number[] {
-        let start = 0;
-        let end = 0;
+        const { skipCount, maxItems, totalItems } = this.pagination;
+        const { isLastPage } = this;
 
-        if (this.pagination) {
-            const { skipCount, maxItems, totalItems, isLastPage } = this;
-
-            start = skipCount + 1;
-            end = isLastPage ? totalItems : skipCount + maxItems;
-        }
+        const start = totalItems ? skipCount + 1 : 0;
+        const end = isLastPage ? totalItems : skipCount + maxItems;
 
         return [ start, end ];
     }
@@ -122,41 +127,74 @@ export class PaginationComponent {
     }
 
     goNext() {
-        const { nextPage, maxItems } = this;
-        const params: PaginationQueryParams = {
-            skipCount: (nextPage - 1) * maxItems,
-            maxItems
-        };
+        const { next, pagination: { maxItems } } = this;
 
-        this.change.emit(params);
+        this.handlePaginationEvent(PaginationComponent.ACTIONS.NEXT_PAGE, {
+            skipCount: (next - 1) * maxItems,
+            maxItems
+        });
     }
 
     goPrevious() {
-        const { previousPage, maxItems } = this;
-        const params: PaginationQueryParams = {
-            skipCount: (previousPage - 1) * maxItems,
-            maxItems
-        };
+        const { previous, pagination: { maxItems } } = this;
 
-        this.change.emit(params);
+        this.handlePaginationEvent(PaginationComponent.ACTIONS.PREV_PAGE, {
+            skipCount: (previous - 1) * maxItems,
+            maxItems
+        });
     }
 
-    changePage(pageNumber: number) {
-        const { maxItems } = this;
-        const params: PaginationQueryParams = {
-            skipCount: ((pageNumber - 1) * maxItems),
-            maxItems
-        };
+    changePageNumber(pageNumber: number) {
+        const { pagination: { maxItems } } = this;
 
-        this.change.emit(params);
+        this.handlePaginationEvent(PaginationComponent.ACTIONS.CHANGE_PAGE_NUMBER, {
+            skipCount: (pageNumber - 1) * maxItems,
+            maxItems
+        });
     }
 
     changePageSize(maxItems: number) {
-        const params: PaginationQueryParams = {
+        this.handlePaginationEvent(PaginationComponent.ACTIONS.CHANGE_PAGE_SIZE, {
             skipCount: 0,
             maxItems
-        };
+        });
+    }
 
-        this.change.emit(params);
+    handlePaginationEvent(action: string, params: PaginationQueryParams) {
+        const {
+            NEXT_PAGE,
+            PREV_PAGE,
+            CHANGE_PAGE_NUMBER,
+            CHANGE_PAGE_SIZE
+        } = PaginationComponent.ACTIONS;
+
+        const {
+            onChange,
+            onChangePageNumber,
+            onChangePageSize,
+            onNextPage,
+            onPrevPage,
+            pagination
+        } = this;
+
+        const data = Object.assign({}, pagination, params);
+
+        if (action === NEXT_PAGE) {
+            onNextPage.emit(data);
+        }
+
+        if (action === PREV_PAGE) {
+            onPrevPage.emit(data);
+        }
+
+        if (action === CHANGE_PAGE_NUMBER) {
+            onChangePageNumber.emit(data);
+        }
+
+        if (action === CHANGE_PAGE_SIZE) {
+            onChangePageSize.emit(data);
+        }
+
+        onChange.emit(params);
     }
 }
