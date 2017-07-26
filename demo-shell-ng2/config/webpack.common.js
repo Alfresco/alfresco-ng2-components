@@ -146,6 +146,13 @@ module.exports = {
         host: '0.0.0.0',
         inline: true,
         proxy: {
+            // // The only purpose of this rule is to test invalid response from authentication server
+            // "/ecm/alfresco/api/-default-/public/authentication/versions/1/tickets": {
+            //     target: { host: "0.0.0.0", protocol: 'http:', port: 3000 },
+            //     pathRewrite: {
+            //         '/.*': '/index.html'
+            //     }
+            // },
             '/ecm': {
                 target: {
                     host: "0.0.0.0",
