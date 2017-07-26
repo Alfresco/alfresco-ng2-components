@@ -68,13 +68,14 @@
                 </content-action>
             </content-actions>
         </adf-document-list>
-        <alfresco-pagination
+
+        <adf-pagination
             (changePageSize)="onChangePageSize($event)"
             (nextPage)="onNextPage($event)"
             (prevPage)="onPrevPage($event)"
             [pagination]="pagination"
             [maxItems]="maxResults"
             [supportedPageSizes]="[5, 10, 15, 20]">
-        </alfresco-pagination>
+        </adf-pagination>
     </div>
 </div>
