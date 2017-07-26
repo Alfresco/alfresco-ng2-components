@@ -23,17 +23,18 @@ import { UserPreferencesService } from './user-preferences.service';
 
 @Injectable()
 export class FavoritesApiService {
-    private remapFavoritesData(data: any = {}): NodePaging {
+    static remapFavoritesData(data: any = {}): NodePaging {
         const list = (data.list || {});
         const pagination = (list.pagination || {});
-        const entries: any[] = this.remapFavoriteEntries(list.entries || []);
+        const entries: any[] = FavoritesApiService
+            .remapFavoriteEntries(list.entries || []);
 
         return <NodePaging> {
             list: { entries, pagination }
         };
     }
 
-    private remapEntry({ entry }: any): any {
+    static remapEntry({ entry }: any): any {
         entry.createdAt = new Date(entry.createdAt);
         entry.modifiedAt = new Date(entry.modifiedAt);
 
@@ -45,13 +46,13 @@ export class FavoritesApiService {
         return { entry };
     }
 
-    private remapFavoriteEntries(entries: any[]) {
+    static remapFavoriteEntries(entries: any[]) {
         return entries
             .map(({ entry: { target }}: any) => ({
                 entry: target.file || target.folder
             }))
             .filter(({ entry }) => (!!entry))
-            .map(this.remapEntry);
+            .map(FavoritesApiService.remapEntry);
     }
 
     constructor(
@@ -74,7 +75,7 @@ export class FavoritesApiService {
         const queryOptions = Object.assign(defaultOptions, options);
         const promise = favoritesApi
             .getFavorites(personId, queryOptions)
-            .then(this.remapFavoritesData);
+            .then(FavoritesApiService.remapFavoritesData);
 
         return Observable
             .fromPromise(promise)
