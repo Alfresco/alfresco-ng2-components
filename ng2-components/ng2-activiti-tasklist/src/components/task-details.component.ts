@@ -27,7 +27,7 @@ import { Component,
     ViewChild
 } from '@angular/core';
 import { ContentLinkModel, FormModel, FormOutcomeEvent, FormService } from 'ng2-activiti-form';
-import { AlfrescoAuthenticationService, AlfrescoTranslationService, CardViewUpdateService, LogService, UpdateNotification, ClickNotification } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoTranslationService, CardViewUpdateService, ClickNotification, LogService, UpdateNotification } from 'ng2-alfresco-core';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { User } from '../models/user.model';
@@ -54,12 +54,6 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
     @ViewChild('errorDialog')
     errorDialog: DebugElement;
-
-    @ViewChild('dialogPeople')
-    peopleDialog: any;
-
-    @ViewChild('dialogComments')
-    commentsDialog: any;
 
     @Input()
     debugMode: boolean = false;
@@ -321,32 +315,6 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
     closeErrorDialog(): void {
         this.errorDialog.nativeElement.close();
-    }
-
-    public showPeopleDialog(): void {
-        if (!this.peopleDialog.nativeElement.showModal) {
-            dialogPolyfill.registerDialog(this.peopleDialog.nativeElement);
-        }
-        this.peopleDialog.nativeElement.showModal();
-    }
-
-    public closePeopleDialog(): void {
-        if (this.peopleDialog) {
-            this.peopleDialog.nativeElement.close();
-        }
-    }
-
-    public showCommentsDialog(): void {
-        if (!this.commentsDialog.nativeElement.showModal) {
-            dialogPolyfill.registerDialog(this.commentsDialog.nativeElement);
-        }
-        this.commentsDialog.nativeElement.showModal();
-    }
-
-    public closeCommentsDialog(): void {
-        if (this.commentsDialog) {
-            this.commentsDialog.nativeElement.close();
-        }
     }
 
     onClaimTask(taskId: string): void {
