@@ -514,7 +514,7 @@ This component Creates/Starts new task for the specified app
 
 | Name | Description |
 | --- | --- |
-| onSuccess | Raised when the task is successfully created |
+| success | Raised when the task is successfully created |
 | cancel | Raised when the cancel button is pressed by the user |
 | error | Raised if there is an error during task creation |
 
