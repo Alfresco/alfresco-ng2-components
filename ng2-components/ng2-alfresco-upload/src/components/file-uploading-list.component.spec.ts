@@ -16,9 +16,10 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AlfrescoTranslationService, FileUploadStatus, NodesApiService, NotificationService, UploadService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, FileModel, NodesApiService, NotificationService, UploadService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { UploadModule } from '../../index';
+import { FileUploadService } from '../services/file-uploading.service';
 import { FileUploadingListComponent } from './file-uploading-list.component';
 
 describe('FileUploadingListComponent', () => {
@@ -26,13 +27,10 @@ describe('FileUploadingListComponent', () => {
     let component: FileUploadingListComponent;
     let uploadService: UploadService;
     let nodesApiService: NodesApiService;
+    let fileUploadService: FileUploadService;
     let notificationService: NotificationService;
     let translateService: AlfrescoTranslationService;
-    let file: any;
-
-    beforeEach(() => {
-        file = { data: { entry: { id: 'x' } } };
-    });
+    let file = new FileModel(<File> { name: 'fake-name' });
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -45,245 +43,110 @@ describe('FileUploadingListComponent', () => {
     beforeEach(() => {
         nodesApiService = TestBed.get(NodesApiService);
         uploadService = TestBed.get(UploadService);
+        fileUploadService = TestBed.get(FileUploadService);
         notificationService = TestBed.get(NotificationService);
         translateService = TestBed.get(AlfrescoTranslationService);
         fixture = TestBed.createComponent(FileUploadingListComponent);
         component = fixture.componentInstance;
+        component.files = [ file ];
+        file.data = { entry: { id: 'x' } };
 
         spyOn(translateService, 'get').and.returnValue(Observable.of('some error message'));
-        spyOn(notificationService, 'openSnackMessage');
-        spyOn(uploadService, 'cancelUpload');
     });
 
-    describe('cancelFile()', () => {
-        it('should call uploadService api when cancelling a file', () => {
-            component.cancelFile(file);
+    describe('cancelFileUpload()', () => {
+        it('calls cancelUpload()', () => {
+            spyOn(uploadService, 'cancelUpload');
+            component.cancelFileUpload(file);
 
             expect(uploadService.cancelUpload).toHaveBeenCalledWith(file);
         });
     });
 
     describe('removeFile()', () => {
-        it('should change file status when api returns success', () => {
-            spyOn(nodesApiService, 'deleteNode').and.returnValue(Observable.of(file));
+        it('removes file successfully', () => {
+            spyOn(nodesApiService, 'deleteNode').and.returnValue(Observable.of('success'));
+            spyOn(fileUploadService, 'emitFileRemoved');
 
             component.removeFile(file);
             fixture.detectChanges();
 
-            expect(file.status).toBe(FileUploadStatus.Deleted);
+            expect(fileUploadService.emitFileRemoved).toHaveBeenCalledWith(file);
         });
 
-        it('should change file status when api returns error', () => {
-            spyOn(nodesApiService, 'deleteNode').and.returnValue(Observable.throw(file));
-
-            component.removeFile(file);
-            fixture.detectChanges();
-
-            expect(file.status).toBe(FileUploadStatus.Error);
-        });
-
-        it('should notify fail when api returns error', () => {
-            spyOn(nodesApiService, 'deleteNode').and.returnValue(Observable.throw(file));
+        it('notify on remove file fail', () => {
+            spyOn(nodesApiService, 'deleteNode').and.returnValue(Observable.throw({}));
+            spyOn(notificationService, 'openSnackMessage');
 
             component.removeFile(file);
             fixture.detectChanges();
 
             expect(notificationService.openSnackMessage).toHaveBeenCalled();
-        });
-
-        it('should call uploadService on error', () => {
-            spyOn(nodesApiService, 'deleteNode').and.returnValue(Observable.throw(file));
-
-            component.removeFile(file);
-            fixture.detectChanges();
-
-            expect(uploadService.cancelUpload).toHaveBeenCalled();
-        });
-
-        it('should call uploadService on success', () => {
-            spyOn(nodesApiService, 'deleteNode').and.returnValue(Observable.of(file));
-
-            component.removeFile(file);
-            fixture.detectChanges();
-
-            expect(uploadService.cancelUpload).toHaveBeenCalled();
         });
     });
 
     describe('cancelAllFiles()', () => {
         beforeEach(() => {
-            component.files = <any> [
-                {
-                    data: {
-                        entry: { id: '1' }
-                    },
-                    status: FileUploadStatus.Cancelled
-                },
-                {
-                    data: {
-                        entry: { id: '2' }
-                    },
-                    status: FileUploadStatus.Error
-                }
-            ];
+            spyOn(component, 'removeFile');
+            spyOn(component, 'cancelFileUpload');
         });
 
-        it('should not call deleteNode if there are no competed uploads', () => {
-            spyOn(nodesApiService, 'deleteNode');
+        it('calls remove method if file was uploaded', () => {
+            file.status = 1;
+            component.cancelAllFiles(null);
 
-            component.cancelAllFiles();
-
-            expect(nodesApiService.deleteNode).not.toHaveBeenCalled();
+            expect(component.removeFile).toHaveBeenCalledWith(file);
         });
 
-        it('should not call uploadService if there are no uploading files', () => {
-            component.cancelAllFiles();
+        it('calls cancel method if file is in progress', () => {
+            file.status = 3;
+            component.cancelAllFiles(null);
 
-            expect(uploadService.cancelUpload).not.toHaveBeenCalled();
-        });
-
-        it('should call deleteNode when there are completed uploads', () => {
-            spyOn(nodesApiService, 'deleteNode').and.returnValue(Observable.of({}));
-
-            component.files[0].status = FileUploadStatus.Complete;
-            component.cancelAllFiles();
-
-            expect(nodesApiService.deleteNode).toHaveBeenCalled();
-        });
-
-        it('should call uploadService when there are uploading files', () => {
-            spyOn(nodesApiService, 'deleteNode').and.returnValue(Observable.of({}));
-
-            component.files[0].status = FileUploadStatus.Progress;
-            component.cancelAllFiles();
-
-            expect(uploadService.cancelUpload).toHaveBeenCalled();
-        });
-
-        it('should notify on deleting file error', () => {
-            spyOn(nodesApiService, 'deleteNode').and.returnValue(Observable.throw({}));
-
-            component.files[0].status = FileUploadStatus.Complete;
-            component.cancelAllFiles();
-
-            expect(notificationService.openSnackMessage).toHaveBeenCalled();
+            expect(component.cancelFileUpload).toHaveBeenCalledWith(file);
         });
     });
 
     describe('isUploadCompleted()', () => {
-        it('should return false when at least one file is in progress', () => {
-            component.files = <any> [
-                { status: FileUploadStatus.Progress },
-                { status: FileUploadStatus.Complete }
-            ];
-
-            expect(component.isUploadCompleted()).toBe(false);
-        });
-
-        it('should return false when at least one file is in pending', () => {
-            component.files = <any> [
-                { status: FileUploadStatus.Pending },
-                { status: FileUploadStatus.Complete }
-            ];
-
-            expect(component.isUploadCompleted()).toBe(false);
-        });
-
-        it('should return false when at least one file is in starting state', () => {
-            component.files = <any> [
-                { status: FileUploadStatus.Starting },
-                { status: FileUploadStatus.Complete }
-            ];
-
-            expect(component.isUploadCompleted()).toBe(false);
-        });
-
-        it('should return false when files are cancelled', () => {
-            component.files = <any> [
-                { status: FileUploadStatus.Cancelled },
-                { status: FileUploadStatus.Cancelled }
-            ];
-
-            expect(component.isUploadCompleted()).toBe(false);
-        });
-
-        it('should return true when there are deleted files', () => {
-            component.files = <any> [
-                { status: FileUploadStatus.Complete },
-                { status: FileUploadStatus.Deleted }
-            ];
+        it('returns true', () => {
+            file.status = 1;
 
             expect(component.isUploadCompleted()).toBe(true);
         });
 
-        it('should return true when none of the files is in progress', () => {
-            component.files = <any> [
-                { status: FileUploadStatus.Error },
-                { status: FileUploadStatus.Cancelled },
-                { status: FileUploadStatus.Complete }
-            ];
+        it('returns false', () => {
+            file.status = 3;
 
-            expect(component.isUploadCompleted()).toBe(true);
+            expect(component.isUploadCompleted()).toBe(false);
         });
     });
 
     describe('isUploadCancelled()', () => {
-        it('should return false when not all files are cancelled', () => {
-            component.files = <any> [
-                { status: FileUploadStatus.Complete },
-                { status: FileUploadStatus.Cancelled },
-                { status: FileUploadStatus.Error }
-            ];
-
-            expect(component.isUploadCancelled()).toBe(false);
-        });
-
-        it('should return false when there are no cancelled files', () => {
-            component.files = <any> [
-                { status: FileUploadStatus.Complete },
-                { status: FileUploadStatus.Error },
-                { status: FileUploadStatus.Error }
-            ];
-
-            expect(component.isUploadCancelled()).toBe(false);
-        });
-
-        it('should return false when there is at leat one file in progress', () => {
-            component.files = <any> [
-                { status: FileUploadStatus.Progress },
-                { status: FileUploadStatus.Error },
-                { status: FileUploadStatus.Error }
-            ];
-
-            expect(component.isUploadCancelled()).toBe(false);
-        });
-
-        it('should return false when there is at leat one file in pendding', () => {
-            component.files = <any> [
-                { status: FileUploadStatus.Pending },
-                { status: FileUploadStatus.Error },
-                { status: FileUploadStatus.Error }
-            ];
-
-            expect(component.isUploadCancelled()).toBe(false);
-        });
-
-        it('should return true when all files are aborted', () => {
-            component.files = <any> [
-                { status: FileUploadStatus.Aborted }
-            ];
+        it('return true', () => {
+            file.status = 4;
 
             expect(component.isUploadCancelled()).toBe(true);
         });
 
-        it('should return true when all files are cancelled', () => {
-            component.files = <any> [
-                { status: FileUploadStatus.Cancelled },
-                { status: FileUploadStatus.Cancelled },
-                { status: FileUploadStatus.Aborted }
-            ];
+        it('return false', () => {
+            file.status = 1;
 
-            expect(component.isUploadCancelled()).toBe(true);
+            expect(component.isUploadCancelled()).toBe(false);
+        });
+    });
+
+    describe('uploadErrorFiles()', () => {
+        it('returns the error files', () => {
+            file.status = 6;
+
+            expect(component.uploadErrorFiles()).toEqual([file]);
+        });
+    });
+
+    describe('totalErrorFiles()', () => {
+        it('returns the number of error files', () => {
+            file.status = 6;
+
+            expect(component.totalErrorFiles()).toEqual(1);
         });
     });
 });
