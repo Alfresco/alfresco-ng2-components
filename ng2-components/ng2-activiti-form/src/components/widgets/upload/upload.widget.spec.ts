@@ -58,7 +58,7 @@ let fakeJpgAnswer = {
 
 declare let jasmine: any;
 
-fdescribe('UploadWidgetComponent', () => {
+describe('UploadWidgetComponent', () => {
 
     let widget: UploadWidgetComponent;
     let formService: FormService;
