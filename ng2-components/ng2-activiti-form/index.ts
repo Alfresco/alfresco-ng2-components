@@ -62,9 +62,10 @@ export const ACTIVITI_FORM_DIRECTIVES: any[] = [
     ActivitiContentComponent,
     StartFormComponent,
     FormFieldComponent,
-    ...WIDGET_DIRECTIVES,
+    ...WIDGET_DIRECTIVES
+];
 
-    // Old Deprecated export
+export const DEPRECATED_FORM_DIRECTIVES: any[] = [
     ActivitiForm,
     ActivitiContent,
     ActivitiStartForm
@@ -95,6 +96,7 @@ export const MATERIAL_MODULE: any[] = [
     ],
     declarations: [
         ...ACTIVITI_FORM_DIRECTIVES,
+        ...DEPRECATED_FORM_DIRECTIVES,
         ...MASK_DIRECTIVE
     ],
     entryComponents: [
@@ -105,6 +107,7 @@ export const MATERIAL_MODULE: any[] = [
     ],
     exports: [
         ...ACTIVITI_FORM_DIRECTIVES,
+        ...DEPRECATED_FORM_DIRECTIVES,
         ...MATERIAL_MODULE
     ]
 })
