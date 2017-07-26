@@ -19,11 +19,17 @@
 
 import { Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
 import * as moment from 'moment';
+import { Moment } from 'moment';
 import { FormService } from './../../../services/form.service';
 import { baseHost , WidgetComponent } from './../widget.component';
+import { MD_DATE_FORMATS, DateAdapter } from '@angular/material';
+import { MomentDateAdapter, MOMENT_DATE_FORMATS } from 'ng2-alfresco-core'
 
 @Component({
     selector: 'date-widget',
+    providers: [
+        {provide: DateAdapter, useClass: MomentDateAdapter},
+        {provide: MD_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS}],
     templateUrl: './date.widget.html',
     styleUrls: ['./date.widget.scss'],
     host: baseHost,
@@ -31,36 +37,37 @@ import { baseHost , WidgetComponent } from './../widget.component';
 })
 export class DateWidgetComponent extends WidgetComponent implements OnInit {
 
-    minDate: Date;
-    maxDate: Date;
-    startAt: Date;
+    minDate: Moment;
+    maxDate: Moment;
 
-    constructor(public formService: FormService) {
+    constructor(public formService: FormService, public dateAdapter: MomentDateAdapter) {
         super(formService);
     }
 
     ngOnInit() {
+
+        this.dateAdapter.overrideDisplyaFormat = this.field.dateDisplayFormat;
+
         if (this.field) {
             if (this.field.minValue) {
-                this.minDate = moment(this.field.minValue, this.field.dateDisplayFormat).toDate();
+                this.minDate = moment(this.field.minValue, this.field.dateDisplayFormat);
             }
 
             if (this.field.maxValue) {
-                this.maxDate = moment(this.field.maxValue, this.field.dateDisplayFormat).toDate();
-            }
-
-            if (this.field.value) {
-                this.startAt = moment(this.field.value, this.field.dateDisplayFormat).toDate();
+                this.maxDate = moment(this.field.maxValue, this.field.dateDisplayFormat);
             }
         }
     }
 
-    onDateSelected(date: Date) {
-        this.field.value = date;
-    }
-
-    onDateChanged(date: Date) {
-        this.field.value = date;
+    onDateChanged(newDateValue) {
+        this.field.validationSummary = "";
+        if (newDateValue) {
+            let momentDate = moment(newDateValue, this.field.dateDisplayFormat);
+            if (!momentDate.isValid()) {
+                this.field.validationSummary = this.field.dateDisplayFormat;
+            }
+        }
+        this.checkVisibility(this.field);
     }
 
 }
