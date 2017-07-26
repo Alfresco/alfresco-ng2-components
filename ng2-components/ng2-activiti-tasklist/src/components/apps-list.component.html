@@ -1,6 +1,6 @@
 <div class="menu-container" *ngIf="!isEmpty()">
     <ul class='mdl-list' *ngIf="isList()">
-        <li class="mdl-list__item" (click)="selectApp(app)" *ngFor="let app of appList">
+        <li class="mdl-list__item" (click)="selectApp(app)" (keyup.enter)="selectApp(app)" *ngFor="let app of appList" tabindex="0" role="button" title="{{app.name}}">
             <span class="mdl-list__item-primary-content">
             <i class="material-icons mdl-list__item-icon">touch_app</i>
             {{app.name}}
@@ -8,7 +8,7 @@
         </li>
     </ul>
     <div class="mdl-grid" *ngIf="isGrid()">
-        <div (click)="selectApp(app)" [ngClass]="['mdl-card mdl-cell',  getTheme(app)]" *ngFor="let app of appList">
+        <div (click)="selectApp(app)" (keyup.enter)="selectApp(app)" [ngClass]="['mdl-card mdl-cell',  getTheme(app)]" *ngFor="let app of appList" tabindex="0" role="button" title="{{app.name}}">
             <div class="logo"><i class="material-icons">{{getBackgroundIcon(app)}}</i></div>
             <div class="mdl-card__title">
                 <h1 class="mdl-card__title-text application-title">{{app.name}}</h1>
