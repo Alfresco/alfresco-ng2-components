@@ -38,7 +38,7 @@
                             </adf-accordion-group>
                         </adf-accordion>
                     </div>
-                    <div class="mdl-cell mdl-cell--3-col task-column mdl-shadow--2dp list-column" *ngIf="taskFilter && !isStartTaskMode()">
+                    <div class="mdl-cell mdl-cell--3-col task-column mdl-shadow--2dp" *ngIf="taskFilter && !isStartTaskMode()">
                         <activiti-tasklist
                             [appId]="taskFilter?.appId"
                             [processDefinitionKey]="taskFilter?.filter?.processDefinitionKey"
@@ -74,9 +74,13 @@
                             (taskDeleted)="onTaskDeleted($event)">
                         </activiti-task-details>
                         <hr>
-                        <activiti-task-attachments
-                            [taskId]="currentTaskId">
-                        </activiti-task-attachments>
+                        <md-card>
+                            <md-card-content>
+                                <activiti-task-attachments
+                                    [taskId]="currentTaskId">
+                                </activiti-task-attachments>
+                            </md-card-content>
+                        </md-card>
                     </div>
                     <div class="mdl-cell mdl-cell--10-col task-column mdl-shadow--2dp" *ngIf="isStartTaskMode()">
                          <activiti-start-task
@@ -116,7 +120,7 @@
                                 </adf-accordion-group>
                             </adf-accordion>
                         </div>
-                        <div class="mdl-cell mdl-cell--3-col task-column list-column mdl-shadow--2dp" *ngIf="processFilter && !isStartProcessMode()">
+                        <div class="mdl-cell mdl-cell--3-col task-column mdl-shadow--2dp" *ngIf="processFilter && !isStartProcessMode()">
                             <activiti-process-instance-list
                                 *ngIf="processFilter?.hasFilter()" [appId]="processFilter.appId"
                                 [processDefinitionKey]="processFilter.filter.processDefinitionKey"
@@ -145,9 +149,13 @@
                                 (taskClick)="onProcessDetailsTaskClick($event)">
                             </activiti-process-instance-details>
                             <hr>
-                            <activiti-process-attachments
-                                [processId]="currentProcessInstanceId">
-                            </activiti-process-attachments>
+                            <md-card>
+                                <md-card-content>
+                                    <activiti-process-attachments
+                                        [processId]="currentProcessInstanceId">
+                                    </activiti-process-attachments>
+                                </md-card-content>
+                            </md-card>
                         </div>
                         <div class="mdl-cell mdl-cell--10-col task-column mdl-shadow--2dp" *ngIf="isStartProcessMode()">
                             <activiti-start-process [appId]="appId" (start)="onStartProcessInstance($event)"></activiti-start-process>
