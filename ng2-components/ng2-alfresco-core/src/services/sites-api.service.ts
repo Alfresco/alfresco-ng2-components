@@ -37,8 +37,7 @@ export class SitesApiService {
         };
         const queryOptions = Object.assign({}, defaultOptions, opts);
         return Observable.fromPromise(this.apiService.getInstance().core.sitesApi.getSites(queryOptions))
-            .map((res: any) => res.list.entries)
-            .map((objList) => this.convertToModel(objList))
+            .map((res) => this.convertToModel(res))
             .catch(this.handleError);
     }
 
@@ -68,10 +67,14 @@ export class SitesApiService {
         return Observable.throw(error || 'Server error');
     }
 
-    private convertToModel(objList: any[]) {
+    private convertToModel(response: any) {
         let convertedList: SiteModel[] = [];
-        if (objList && objList.length > 0) {
-            objList.forEach((element: any) => {
+        if (response &&
+            response.list &&
+            response.list.entries &&
+            response.list.entries.length > 0) {
+            response.list.entries.forEach((element: any) => {
+                element.pagination = response.list.pagination;
                 convertedList.push(new SiteModel(element));
             });
         }
