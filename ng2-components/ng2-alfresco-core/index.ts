@@ -60,6 +60,9 @@ import { SearchApiService } from './src/services/search-api.service';
 import { SharedLinksApiService } from './src/services/shared-links-api.service';
 import { SitesApiService } from './src/services/sites-api.service';
 
+export { MomentDateAdapter, MOMENT_DATE_FORMATS } from './src/utils/momentDateAdapter'
+import { MomentDateAdapter, MOMENT_DATE_FORMATS } from './src/utils/momentDateAdapter'
+
 export { ContentService } from './src/services/content.service';
 export { StorageService } from './src/services/storage.service';
 export { CookieService } from './src/services/cookie.service';
@@ -129,6 +132,7 @@ export * from './src/models/permissions.enum';
 export * from './src/models/site.model';
 export * from './src/models/product-version.model';
 
+
 // Old deprecated import
 import { AuthenticationService as AlfrescoAuthenticationService } from './src/services/authentication.service';
 import { TranslationService as AlfrescoTranslationService } from './src/services/translation.service';
@@ -158,7 +162,6 @@ export function providers() {
         ThumbnailService,
         UploadService,
         SearchService,
-
         DeletedNodesApiService,
         FavoritesApiService,
         NodesApiService,
@@ -166,9 +169,12 @@ export function providers() {
         SearchApiService,
         SharedLinksApiService,
         SitesApiService,
-        DiscoveryApiService,
+        DiscoveryApiService
+    ];
+}
 
-        // Old deprecated import
+export function deprecatedProviders() {
+    return [
         AlfrescoTranslationService,
         AlfrescoAuthenticationService
     ];
@@ -216,7 +222,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         FileSizePipe,
         HighlightPipe
     ],
-    providers: providers(),
+    providers: [...providers(), ...deprecatedProviders(), MomentDateAdapter],
     exports: [
         BrowserAnimationsModule,
         CommonModule,
