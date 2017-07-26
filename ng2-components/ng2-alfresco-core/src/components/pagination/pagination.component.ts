@@ -28,7 +28,7 @@ import { Pagination } from 'alfresco-js-api';
 import { PaginationQueryParams } from './pagination-query-params.interface';
 
 @Component({
-    selector: 'adf-pagination',
+    selector: 'adf-pagination, alfresco-pagination',
     host: { 'class': 'adf-pagination' },
     templateUrl: './pagination.component.html',
     styleUrls: [ './pagination.component.scss' ],
