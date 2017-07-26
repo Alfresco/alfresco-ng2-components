@@ -5,6 +5,7 @@
 
     &-upload-widget-container{
         margin-bottom: 15px;
+        max-height: 80px;
     }
 
     &-upload-widget {
@@ -24,6 +25,12 @@
 
     &-upload-widget__reset {
         margin-top: -2px;
+    }
+
+    &-upload-files-row {
+        .mat-line {
+            margin-bottom: 0px;
+        }
     }
 
 }
