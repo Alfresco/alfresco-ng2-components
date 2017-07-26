@@ -638,7 +638,7 @@ describe('ProcessService', () => {
             }));
 
             it('should return the default filters', (done) => {
-                service.createDefaultProcessFilters('1234').subscribe(
+                service.createDefaultFilters('1234').subscribe(
                     (res: FilterProcessRepresentationModel []) => {
                         expect(res).toBeDefined();
                         expect(res.length).toEqual(3);
