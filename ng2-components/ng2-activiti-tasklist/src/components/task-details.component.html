@@ -19,12 +19,6 @@
             (claim)="onClaimTask($event)">
         </adf-task-header>
         <div *ngIf="showHeaderContent" class="mdl-grid">
-            <div *ngIf="showInvolvePeople" class="mdl-cell mdl-cell--4-col">
-                <button type="button" md-button md-raised-button (click)="showPeopleDialog()">{{'TASK_DETAILS.LABELS.INVOLVED_PEOPLE'|translate}}</button>
-            </div>
-            <div *ngIf="showComments" class="mdl-cell mdl-cell--4-col">
-                <button type="button" md-button md-raised-button (click)="showCommentsDialog()">{{'TASK_DETAILS.LABELS.COMMENTS'|translate}}</button>
-            </div>
             <div *ngIf="showChecklist" class="mdl-cell mdl-cell--4-col">
                 <adf-checklist #activitichecklist
                     [readOnly]="readOnlyForm"
@@ -67,26 +61,19 @@
             <button type="button" class="mdl-button" (click)="closeErrorDialog()">{{'TASK_DETAILS.ERROR.CLOSE'|translate}}</button>
         </div>
     </dialog>
-    <dialog class="mdl-dialog people-dialog" #dialogPeople>
-        <div class="mdl-dialog__content">
-            <adf-people
-                        [iconImageUrl]="peopleIconImageUrl"
-                        [people]="taskPeople"
-                        [readOnly]="readOnlyForm"
-                        [taskId]="taskDetails.id">
-            </adf-people>
-            <br><br>
-            <button type="button" md-button md-raised-button (click)="closePeopleDialog()">{{'TASK_DETAILS.ERROR.CLOSE'|translate}}</button>
-        </div>
-    </dialog>
-    <dialog class="mdl-dialog comments-dialog" #dialogComments>
-        <div class="mdl-dialog__content">
+    <br /><br />
+    <adf-people *ngIf="showInvolvePeople"
+                [iconImageUrl]="peopleIconImageUrl"
+                [people]="taskPeople"
+                [readOnly]="readOnlyForm"
+                [taskId]="taskDetails.id">
+    </adf-people>
+    <md-card *ngIf="showComments">
+        <md-card-content>
             <adf-comments #activiticomments
                 [readOnly]="readOnlyForm"
                 [taskId]="taskDetails.id">
             </adf-comments>
-            <br><br>
-            <button type="button" md-button md-raised-button (click)="closeCommentsDialog()">{{'TASK_DETAILS.ERROR.CLOSE'|translate}}</button>
-        </div>
-    </dialog>
+         </md-card-content>
+    </md-card>
 </div>

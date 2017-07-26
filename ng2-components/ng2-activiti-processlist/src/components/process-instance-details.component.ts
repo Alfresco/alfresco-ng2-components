@@ -43,9 +43,6 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
     @ViewChild(ProcessInstanceTasksComponent)
     tasksList: ProcessInstanceTasksComponent;
 
-    @ViewChild('dialogComments')
-    commentsDialog: any;
-
     @Input()
     showTitle: boolean = true;
 
@@ -106,19 +103,6 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
                     this.processInstanceDetails = res;
                 }
             );
-        }
-    }
-
-    public showCommentsDialog(): void {
-        if (!this.commentsDialog.nativeElement.showModal) {
-            dialogPolyfill.registerDialog(this.commentsDialog.nativeElement);
-        }
-        this.commentsDialog.nativeElement.showModal();
-    }
-
-    public closeCommentsDialog(): void {
-        if (this.commentsDialog) {
-            this.commentsDialog.nativeElement.close();
         }
     }
 
