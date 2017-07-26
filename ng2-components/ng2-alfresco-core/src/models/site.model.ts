@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { Pagination } from 'alfresco-js-api';
+
 export class SiteModel {
     role: string;
     visibility: string;
@@ -25,6 +27,7 @@ export class SiteModel {
     title: string;
     contents: SiteContentsModel[] = [];
     members: SiteMembersModel[] = [];
+    pagination: Pagination;
 
     constructor(obj?: any) {
         if (obj && obj.entry) {
@@ -35,6 +38,7 @@ export class SiteModel {
             this.id = obj.entry.id || null;
             this.preset = obj.entry.preset;
             this.title = obj.entry.title;
+            this.pagination = obj.pagination || null;
 
             if (obj.relations && obj.relations.containers) {
                 obj.relations.containers.list.entries.forEach((content) => {
