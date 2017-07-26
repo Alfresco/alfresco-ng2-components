@@ -18,8 +18,8 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { MdAutocompleteModule, MdButtonModule, MdCardModule, MdCheckboxModule,
-    MdDatepickerModule, MdGridListModule, MdIconModule, MdInputModule, MdOptionModule,
-    MdRadioModule, MdSelectModule, MdSlideToggleModule, MdTableModule, MdTabsModule, MdListModule } from '@angular/material';
+    MdDatepickerModule, MdGridListModule, MdIconModule, MdInputModule, MdListModule,
+    MdOptionModule, MdRadioModule, MdSelectModule, MdSlideToggleModule, MdTableModule, MdTabsModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { ActivitiContentComponent } from './src/components/activiti-content.component';

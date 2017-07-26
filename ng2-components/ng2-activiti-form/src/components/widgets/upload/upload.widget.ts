@@ -19,9 +19,9 @@
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { LogService, ThumbnailService } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Rx';
 import { FormService } from '../../../services/form.service';
 import { baseHost, WidgetComponent } from './../widget.component';
-import { Observable } from 'rxjs/Rx';
 
 @Component({
     selector: 'upload-widget',
@@ -38,8 +38,8 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
     mimeTypeIcon: string;
 
     constructor(public formService: FormService,
-        private logService: LogService,
-        private thumbnailService: ThumbnailService) {
+                private logService: LogService,
+                private thumbnailService: ThumbnailService) {
         super(formService);
     }
 
@@ -106,15 +106,15 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
         }
     }
 
-    private resetFormValueWithNoFiles(){
-        if ( this.field.value.length === 0) {
+    private resetFormValueWithNoFiles() {
+        if (this.field.value.length === 0) {
             this.field.value = null;
             this.field.json.value = null;
         }
     }
 
     getIcon(mimeType) {
-        return this.thumbnailService.getMimeTypeIcon(mimeType)
+        return this.thumbnailService.getMimeTypeIcon(mimeType);
     }
 
 }
