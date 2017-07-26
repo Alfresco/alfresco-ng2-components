@@ -143,6 +143,10 @@ $data-table-drag-border: 1px dashed rgb(68,138,255);
             text-align: left;
         }
 
+        &--date {
+            text-align: left;
+        }
+
         &--number {
             text-align: right;
         }
