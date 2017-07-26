@@ -26,7 +26,7 @@
 					[mdDatepicker]="taskDatePicker" 
 					[value]="taskDatePicker" 
 					(click)="taskDatePicker.open()" 
-					(keydown)="true"
+					(keydown)="onKeyDown($event)"
 					placeholder="{{'START_TASK.FORM.LABEL.DATE'|translate}}" 
 					[(ngModel)]="startTaskmodel.dueDate" id="date_id">
 					<button mdSuffix [mdDatepickerToggle]="taskDatePicker"></button>

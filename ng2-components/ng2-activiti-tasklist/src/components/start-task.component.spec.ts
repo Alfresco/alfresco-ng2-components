@@ -312,4 +312,21 @@ describe('StartTaskComponent', () => {
         let isUserNameEmpty2 = activitiStartTaskComponent.isUserNameEmpty(testUser2);
         expect(isUserNameEmpty2).toBe(true);
     });
+
+    it('should clear date when escape key is pressed', () => {
+        activitiStartTaskComponent.startTaskmodel.dueDate = new Date();
+        let event = new KeyboardEvent('keydown', {'key': 'Escape'});
+        element = fixture.nativeElement.querySelector('#date_id');
+        element.dispatchEvent(event);
+        fixture.detectChanges();
+        expect( activitiStartTaskComponent.startTaskmodel.dueDate).toBeNull();
+    });
+
+    it('should not allow date to be entered manually', () => {
+        let event = new KeyboardEvent('keydown', {'key': '2'});
+        element = fixture.nativeElement.querySelector('#date_id');
+        element.dispatchEvent(event);
+        fixture.detectChanges();
+        expect( activitiStartTaskComponent.startTaskmodel.dueDate).toBeNull();
+    });
 });
