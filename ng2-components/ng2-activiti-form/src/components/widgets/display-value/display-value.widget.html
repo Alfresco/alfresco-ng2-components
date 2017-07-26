@@ -22,7 +22,9 @@
         <dynamic-table-widget [field]="field" [readOnly]="!tableEditable"></dynamic-table-widget>
     </div>
     <div *ngSwitchCase="'upload'">
-        <upload-widget readonly="true" [field]="field"></upload-widget>
+        <div *ngFor="let file of field.value">
+            <adf-content [id]="file.id" [showDocumentContent]="showDocumentContent"></adf-content>
+        </div>
     </div>
     <div *ngSwitchCase="'document'">
         <div *ngIf="hasFile">
