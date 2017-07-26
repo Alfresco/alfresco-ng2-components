@@ -5,11 +5,12 @@
 ```html
 <adf-pagination
     [pagination]="pagination"
-    (onPaginationEvent)="doSomething($event)"
-    (onNextPage)="onNext($event)"
-    (onPreviousPage)="onPrevious($event)"
-    (onPageChange)="onChange($event)"
-    (onPageSizeChange)="onPageChange($event)">
+    [supportedPageSizes]="sizes"
+    (change)="onChange($event)"
+    (nextPage)="onNextPage($event)"
+    (prevPage)="onPreviousPage($event)"
+    (changePageSize)="onChangePageSize($event)"
+    (changePageNumber)="onChangePageNumber($event)">
 </adf-pagination>
 ```
 
@@ -22,36 +23,15 @@ Depending on the pagination data, you should see result similar to the following
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | pagination | Pagination | | Pagination object |
-| onPaginationEvent | EventEmitter&lt;Pagination&gt; | | Triggered for any action in pagination |
-| onNextPage | EventEmitter&lt;Pagination&gt; | | Triggered on next page action |
-| onPreviousPage | EventEmitter&lt;Pagination&gt; | | Triggered on previous page action |
-| onPageChange | EventEmitter&lt;Pagination&gt; | | Triggered on page change action |
-| onPageSizeChange | EventEmitter&lt;Pagination&gt; | | Triggered on page size change action |
+| supportedPageSizes | Array&lt;number&gt; | [ 25, 50, 100 ] | An array of page sizes |
+| change | EventEmitter&lt;PaginationQueryParams&gt; | | Triggered for any action in pagination |
+| nextPage | EventEmitter&lt;Pagination&gt; | | Triggered on next page action |
+| prevPage | EventEmitter&lt;Pagination&gt; | | Triggered on previous page action |
+| changePageSize | EventEmitter&lt;Pagination&gt; | | Triggered on page size change action |
+| changePageNumber | EventEmitter&lt;Pagination&gt; | | Triggered on page change action |
 
 Each event helps to detect the certain action that user have made using the component.
 
-To make it simple, since all events emit a [Pagination object](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/Pagination.md), there is the `onPaginationEvent` that's triggered with every action (e.g. when `onNextPage` is triggered, `onPaginationEvent` is triggered as well). This helps when you want to have a single method to treat the pagination changes.
+For `change` event, a [PaginationQueryParams](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-alfresco-core/src/components/pagination/pagination-query-params.ts) (including the query params supported by the REST API, `skipCount` and `maxItems`) is returned.
 
-For each event, a new [Pagination object](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/Pagination.md) is returned as in the folowing example, with updated properties to be used to query further.
-
-We'll take a default [Pagination object](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/Pagination.md):
-
-```js
-{
-    count: 10,
-    hasMoreItems: true,
-    totalItems: 99,
-    skipCount: 40,
-    maxItems: 20
-};
-```
-
-### `onNextPage` 
-emits a new [Pagination object](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/Pagination.md), with the `skipCount` property updated (based on `maxItems`, it increases the amount to be skipped):
-```js
-{
-    // ...,
-    skipCount: 60
-}
-```
-*please note that `onPaginationEvent` also emits the same, updated, [Pagination object](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/Pagination.md).*
+For all other events, other than `change`, a new [Pagination object](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/Pagination.md) is returned as in the folowing example, with updated properties to be used to query further.
