@@ -15,52 +15,37 @@
  * limitations under the License.
  */
 
-import { DebugElement } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdProgressSpinnerModule } from '@angular/material';
-import { CoreModule } from 'ng2-alfresco-core';
-import { FileModel, FileUploadStatus } from 'ng2-alfresco-core';
-import { FileUploadCompleteEvent, FileUploadEvent, UploadService } from 'ng2-alfresco-core';
+import { FileModel, FileUploadCompleteEvent, UploadService } from 'ng2-alfresco-core';
+import { UploadModule } from '../../index';
 import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
-import { FileUploadingListComponent } from './file-uploading-list.component';
 
-xdescribe('FileUploadingDialogComponent', () => {
-
-    let component: FileUploadingDialogComponent;
+describe('FileUploadingDialogComponent', () => {
     let fixture: ComponentFixture<FileUploadingDialogComponent>;
-    let debug: DebugElement;
-    let element: any;
-    let file: FileModel;
     let uploadService: UploadService;
+    let component: FileUploadingDialogComponent;
+    let emitter: EventEmitter<any>;
+    let filelist: FileModel[];
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
-                MdProgressSpinnerModule
-            ],
-            declarations: [
-                FileUploadingDialogComponent,
-                FileUploadingListComponent
-            ],
-            providers: [
-                UploadService
+                UploadModule
             ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
-        const fileFake = new File([''], 'fake-name');
-        file = new FileModel(fileFake);
-
         fixture = TestBed.createComponent(FileUploadingDialogComponent);
-        uploadService = TestBed.get(UploadService);
-
-        debug = fixture.debugElement;
-        element = fixture.nativeElement;
         component = fixture.componentInstance;
+        uploadService = TestBed.get(UploadService);
+        emitter = new EventEmitter();
+        filelist = [
+            new FileModel(<File> { name: 'fake-name', size: 10 }),
+            new FileModel(<File> { name: 'fake-name2', size: 10 })
+        ];
 
-        component.filesUploadingList = [file];
         fixture.detectChanges();
     });
 
@@ -69,78 +54,74 @@ xdescribe('FileUploadingDialogComponent', () => {
         TestBed.resetTestingModule();
     });
 
-    it('should render completed upload 1 when an element is added to Observer', () => {
-        uploadService.fileUploadComplete.next(new FileUploadCompleteEvent(null, 1));
-        fixture.detectChanges();
+    describe('upload service subscribers', () => {
+        it('does not render when uploading list is empty', () => {
+            uploadService.addToQueue();
+            uploadService.uploadFilesInTheQueue(emitter);
 
-        expect(element.querySelector('#total-upload-completed').innerText).toEqual('1');
-    });
-
-    it('should render dialog box with css class show when an element is added to Observer', () => {
-        uploadService.addToQueue(new FileModel(<File> { name: 'file' }));
-        component.filesUploadingList = [file];
-
-        fixture.detectChanges();
-
-        expect(element.querySelector('.file-dialog').getAttribute('class')).toEqual('file-dialog show');
-    });
-
-    it('should render dialog box with css class show when the toggleVisible is called', () => {
-        component.close();
-        fixture.detectChanges();
-
-        expect(element.querySelector('.file-dialog').getAttribute('class')).toEqual('file-dialog show');
-    });
-
-    it('should render dialog box with css class hide', () => {
-        component.isDialogActive = true;
-
-        component.close();
-        fixture.detectChanges();
-
-        expect(element.querySelector('.file-dialog').getAttribute('class')).toEqual('file-dialog');
-    });
-
-    it('should render minimize dialog as default', () => {
-        component.isDialogActive = true;
-
-        component.toggleMinimized();
-        fixture.detectChanges();
-
-        expect(element.querySelector('.minimize-button').getAttribute('class')).toEqual('minimize-button active');
-    });
-
-    it('should show the close button when the file upload is completed', async(() => {
-        component.isDialogActive = true;
-        uploadService.addToQueue(new FileModel(<File> { name: 'file' }));
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            let closeButton = element.querySelector('#button-close-upload-list');
-            expect(closeButton).not.toBeNull();
+            expect(component.isDialogActive).toBe(false);
         });
 
-        uploadService.fileUpload.next(new FileUploadCompleteEvent(file, 1, { status: FileUploadStatus.Complete }, 0));
-    }));
+        it('opens when uploading list is not empty', () => {
+            uploadService.addToQueue(...filelist);
+            uploadService.uploadFilesInTheQueue(emitter);
 
-    it('should show the close button when the file upload is in error', async(() => {
-        component.isDialogActive = true;
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            let closeButton = element.querySelector('#button-close-upload-list');
-            expect(closeButton).not.toBeNull();
+            expect(component.isDialogActive).toBe(true);
         });
 
-        uploadService.fileUpload.next(new FileUploadEvent(file, FileUploadStatus.Error));
-    }));
+        it('updates uploading file list', () => {
+            uploadService.addToQueue(...filelist);
+            uploadService.uploadFilesInTheQueue(emitter);
 
-    it('should show the close button when the file upload is cancelled', async(() => {
-        component.isDialogActive = true;
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            let closeButton = element.querySelector('#button-close-upload-list');
-            expect(closeButton).not.toBeNull();
+            expect(component.filesUploadingList.length).toBe(2);
         });
 
-        uploadService.fileUpload.next(new FileUploadEvent(file, FileUploadStatus.Cancelled));
-    }));
+        it('updates completed uploaded files', () => {
+            const completedFiles = 2;
+            const completeEvent = new FileUploadCompleteEvent(null, completedFiles, null, null);
+            uploadService.fileUploadComplete.next(completeEvent);
+
+            expect(component.totalCompleted).toEqual(completedFiles);
+        });
+    });
+
+    describe('toggleMinimized()', () => {
+        it('minimzes the dialog', () => {
+            component.isDialogMinimized = true;
+            component.toggleMinimized();
+
+            expect(component.isDialogMinimized).toBe(false);
+        });
+
+        it('maximizes the dialog', () => {
+            component.isDialogMinimized = false;
+            component.toggleMinimized();
+
+            expect(component.isDialogMinimized).toBe(true);
+        });
+    });
+
+    describe('close()', () => {
+        it('closes the dialog', () => {
+            component.isDialogActive = true;
+            component.close();
+
+            expect(component.isDialogActive).toBe(false);
+        });
+
+        it('resets dialog minimize state', () => {
+            component.isDialogMinimized = true;
+            component.close();
+
+            expect(component.isDialogMinimized).toBe(false);
+        });
+
+        it('resets upload queue', () => {
+            uploadService.addToQueue(...filelist);
+            uploadService.uploadFilesInTheQueue(emitter);
+            component.close();
+
+            expect(uploadService.getQueue().length).toBe(0);
+        });
+    });
 });
