@@ -133,7 +133,7 @@ describe('StartTaskComponent', () => {
         });
 
         it('should create new task when start is clicked', async(() => {
-            activitiStartTaskComponent.onSuccess.subscribe((res) => {
+            activitiStartTaskComponent.success.subscribe((res) => {
                 expect(res).toBeDefined();
             });
             activitiStartTaskComponent.appId = 'fakeAppId';
@@ -144,8 +144,8 @@ describe('StartTaskComponent', () => {
             });
         }));
 
-        it('should send on onSuccess event when the task is started', async(() => {
-            activitiStartTaskComponent.onSuccess.subscribe((res) => {
+        it('should send on success event when the task is started', async(() => {
+            activitiStartTaskComponent.success.subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(res.id).toBe(91);
                 expect(res.name).toBe('fakeName');
@@ -175,8 +175,8 @@ describe('StartTaskComponent', () => {
             });
         }));
 
-        it('should send on onSuccess event when only name is given', async(() => {
-            activitiStartTaskComponent.onSuccess.subscribe((res) => {
+        it('should send on success event when only name is given', async(() => {
+            activitiStartTaskComponent.success.subscribe((res) => {
                 expect(res).toBeDefined();
             });
             activitiStartTaskComponent.appId = 'fakeAppId';
@@ -191,7 +191,7 @@ describe('StartTaskComponent', () => {
         }));
 
         it('should attach a task when a form id selected', () => {
-            activitiStartTaskComponent.onSuccess.subscribe((res) => {
+            activitiStartTaskComponent.success.subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(res.formKey).toBe('4');
             });
@@ -201,13 +201,13 @@ describe('StartTaskComponent', () => {
             expect(getcreateNewTaskSpy).toHaveBeenCalled();
         });
 
-        it('should not emit onSuccess event when data not present', async(() => {
-            let onSuccessSpy: jasmine.Spy = spyOn(activitiStartTaskComponent.onSuccess, 'emit');
+        it('should not emit success event when data not present', async(() => {
+            let successSpy: jasmine.Spy = spyOn(activitiStartTaskComponent.success, 'emit');
             activitiStartTaskComponent.startTaskmodel = new StartTaskModel(null);
             activitiStartTaskComponent.start();
             fixture.detectChanges();
             expect(getcreateNewTaskSpy).not.toHaveBeenCalled();
-            expect(onSuccessSpy).not.toHaveBeenCalled();
+            expect(successSpy).not.toHaveBeenCalled();
         }));
     });
 
