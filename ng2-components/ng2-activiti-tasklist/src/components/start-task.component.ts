@@ -43,11 +43,11 @@ export class StartTaskComponent implements OnInit {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    people: User [] = [];
+    people: User[] = [];
 
     startTaskmodel: StartTaskModel = new StartTaskModel();
 
-    forms: Form [];
+    forms: Form[];
 
     /**
      * Constructor
@@ -99,8 +99,8 @@ export class StartTaskComponent implements OnInit {
 
     private loadFormsTask() {
         this.taskService.getFormList().subscribe((res: Form[]) => {
-                this.forms = res;
-            },
+            this.forms = res;
+        },
             (err) => {
                 this.error.emit(err);
                 this.logService.error('An error occurred while trying to get the forms');
@@ -132,5 +132,13 @@ export class StartTaskComponent implements OnInit {
         firstName = (firstName !== null ? firstName : '');
         lastName = (lastName !== null ? lastName : '');
         return firstName + delimiter + lastName;
+    }
+
+    onKeyDown(event: KeyboardEvent) {
+        if (event.key === 'Escape') {
+            this.startTaskmodel.dueDate = null;
+        } else {
+            event.preventDefault();
+        }
     }
 }
