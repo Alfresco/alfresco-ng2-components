@@ -1,0 +1,36 @@
+@import 'theming';
+
+.adf {
+    &-field-list {
+        padding: 0;
+        list-style-type: none;
+        width: 100%;
+        height: 100%;
+    }
+
+    .container-widget__header-text {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.87);
+        margin-left: 10px;
+        margin-right: 10px;
+        cursor: default;
+        user-select: none;
+        -webkit-user-select: none;
+        /* Chrome/Safari/Opera */
+        -moz-user-select: none;
+        /* Firefox */
+        -ms-user-select: none;
+        /* IE/Edge */
+        -webkit-touch-callout: none;
+        /* iOS Safari */
+        &.collapsible {
+            cursor: pointer;
+        }
+    }
+}
+
+md-input-container {
+    width: 95%;
+}
+
+
+

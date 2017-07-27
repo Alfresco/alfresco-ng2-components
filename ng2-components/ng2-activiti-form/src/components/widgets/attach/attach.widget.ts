@@ -17,7 +17,7 @@
 
  /* tslint:disable:component-selector  */
 
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 import { ExternalContent } from '../core/external-content';
@@ -31,7 +31,9 @@ declare let dialogPolyfill: any;
 @Component({
     selector: 'attach-widget',
     templateUrl: './attach.widget.html',
-    styleUrls: ['./attach.widget.css'], host: baseHost
+    styleUrls: ['./attach.widget.css'],
+    host: baseHost,
+    encapsulation: ViewEncapsulation.None
 })
 export class AttachWidgetComponent extends WidgetComponent implements OnInit {
 
@@ -42,9 +44,6 @@ export class AttachWidgetComponent extends WidgetComponent implements OnInit {
     fileName: string;
     selectedFolderNodes: [ExternalContent];
     selectedFile: ExternalContent;
-
-    @Input()
-    field: FormFieldModel;
 
     @Output()
     fieldChanged: EventEmitter<FormFieldModel> = new EventEmitter<FormFieldModel>();

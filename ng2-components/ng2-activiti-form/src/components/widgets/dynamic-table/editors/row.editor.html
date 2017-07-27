@@ -33,13 +33,9 @@
             </div>
         </div>
     </div>
-    <div class="row-editor__validation-summary" *ngIf="!validationSummary.isValid">{{validationSummary.text}}</div>
+    <error-widget [error]="validationSummary.text"></error-widget>
     <div>
-        <button
-            class="mdl-button mdl-js-button mdl-js-ripple-effect"
-            (click)="onCancelChanges()">Cancel</button>
-        <button
-            class="mdl-button mdl-js-button mdl-js-ripple-effect"
-            (click)="onSaveChanges()">Save</button>
+        <button md-button (click)="onCancelChanges()">Cancel</button>
+        <button md-button (click)="onSaveChanges()">Save</button>
     </div>
 </div>

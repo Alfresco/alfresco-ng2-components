@@ -1,0 +1,60 @@
+@import 'theming';
+
+.adf {
+
+    &-error-text-container {
+        width: 95%;
+        height: 20px;
+        margin-top: -12px;
+    }
+
+    &-error-text {
+        padding: 1px;
+        height: 16px;
+        font-size: 12px;
+        line-height: 1.33;
+        float: left;
+        color: $alfresco-warn-color--hue-3;
+    }
+
+    &-error-icon {
+        float: right;
+        font-size: 17px;
+        color: $alfresco-warn-color--hue-3;
+    }
+
+    &-label {
+        color: $alfresco-gray-label;
+    }
+
+    &-invalid {
+
+        .mat-input-underline {
+            background-color: #f44336 !important;
+        }
+
+        .adf-file {
+            border-color: $alfresco-warn-color--hue-3;
+        }
+
+        .adf-input {
+            border-color: $alfresco-warn-color--hue-3;
+        }
+
+        .adf-label {
+            color: $alfresco-warn-color--hue-3;
+            &:after {
+                background-color: $alfresco-warn-color--hue-3;
+            }
+        }
+    }
+}
+
+.mat-focused {
+    label {
+        transform: scaleX(1);
+        transition: transform 150ms linear,
+        background-color $swift-ease-in-duration $swift-ease-in-timing-function;
+        color: $alfresco-primary-accent--default;
+    }
+}

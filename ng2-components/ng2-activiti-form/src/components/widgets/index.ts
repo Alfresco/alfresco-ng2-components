@@ -32,6 +32,7 @@ import { DateEditorComponent } from './dynamic-table/editors/date/date.editor';
 import { DropdownEditorComponent } from './dynamic-table/editors/dropdown/dropdown.editor';
 import { RowEditorComponent } from './dynamic-table/editors/row.editor';
 import { TextEditorComponent } from './dynamic-table/editors/text/text.editor';
+import { ErrorWidgetComponent } from './error/error.component';
 import { FunctionalGroupWidgetComponent } from './functional-group/functional-group.widget';
 import { HyperlinkWidgetComponent } from './hyperlink/hyperlink.widget';
 import { MultilineTextWidgetComponentComponent } from './multiline-text/multiline-text.widget';
@@ -70,6 +71,7 @@ export * from './people/people.widget';
 export * from './date/date.widget';
 export * from './amount/amount.widget';
 export * from './dynamic-table/dynamic-table.widget';
+export * from './error/error.component';
 
 // editors (dynamic table)
 export * from './dynamic-table/editors/row.editor';
@@ -104,7 +106,8 @@ export const WIDGET_DIRECTIVES: any[] = [
     DropdownEditorComponent,
     BooleanEditorComponent,
     TextEditorComponent,
-    RowEditorComponent
+    RowEditorComponent,
+    ErrorWidgetComponent
 ];
 
 export const MASK_DIRECTIVE: any[] = [

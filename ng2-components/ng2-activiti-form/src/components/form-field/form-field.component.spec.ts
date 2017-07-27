@@ -16,6 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MdInputModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
 import { FormRenderingService } from './../../services/form-rendering.service';
 import { WidgetVisibilityService } from './../../services/widget-visibility.service';
@@ -29,14 +30,15 @@ describe('FormFieldComponent', () => {
 
     let fixture: ComponentFixture<FormFieldComponent>;
     let component: FormFieldComponent;
-    let componentHandler: any;
     let form: FormModel;
 
     let formRenderingService: FormRenderingService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-                imports: [CoreModule],
+                imports: [CoreModule,
+                    MdInputModule
+                ],
                 declarations: [FormFieldComponent, TextWidgetComponent, CheckboxWidgetComponent, InputMaskDirective],
                 providers: [
                     FormRenderingService,
@@ -47,12 +49,6 @@ describe('FormFieldComponent', () => {
     }));
 
     beforeEach(() => {
-        componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered',
-            'upgradeElement'
-        ]);
-        window['componentHandler'] = componentHandler;
-
         fixture = TestBed.createComponent(FormFieldComponent);
         component = fixture.componentInstance;
         formRenderingService = fixture.debugElement.injector.get(FormRenderingService);

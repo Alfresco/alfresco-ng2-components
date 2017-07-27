@@ -23,7 +23,9 @@ import { InputMaskDirective } from './text-mask.component';
 import { TextWidgetComponent } from './text.widget';
 
 import { CoreModule } from 'ng2-alfresco-core';
+import { MATERIAL_MODULE } from '../../../../index';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
+import { ErrorWidgetComponent } from '../error/error.component';
 import { EcmModelService } from './../../../services/ecm-model.service';
 import { FormService } from './../../../services/form.service';
 
@@ -31,16 +33,17 @@ describe('TextWidgetComponent', () => {
 
     let widget: TextWidgetComponent;
     let fixture: ComponentFixture<TextWidgetComponent>;
-    let componentHandler;
     let element: HTMLElement;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule.forRoot(),
+                MATERIAL_MODULE
             ],
             declarations: [
                 TextWidgetComponent,
+                ErrorWidgetComponent,
                 InputMaskDirective
             ],
             providers: [
@@ -56,8 +59,6 @@ describe('TextWidgetComponent', () => {
 
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
-        componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
-        window['componentHandler'] = componentHandler;
     });
 
     describe('when template is ready', () => {
@@ -67,7 +68,7 @@ describe('TextWidgetComponent', () => {
             let inputElement: HTMLInputElement;
 
             beforeEach(() => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                widget.field = new FormFieldModel(new FormModel({taskId: 'fake-task-id'}), {
                     id: 'text-id',
                     name: 'text-name',
                     value: '',
@@ -76,7 +77,7 @@ describe('TextWidgetComponent', () => {
                 });
 
                 fixture.detectChanges();
-                inputElement = <HTMLInputElement>element.querySelector('#text-id');
+                inputElement = <HTMLInputElement> element.querySelector('#text-id');
             });
 
             it('should raise ngModelChange event', async(() => {
@@ -91,9 +92,26 @@ describe('TextWidgetComponent', () => {
                 });
             }));
 
-            it('should be disabled on readonly forms', async(() => {
-                widget.field.form.readOnly = true;
+        });
 
+        describe('and no mask is configured on text element', () => {
+
+            let inputElement: HTMLInputElement;
+
+            beforeEach(() => {
+                widget.field = new FormFieldModel(new FormModel({taskId: 'fake-task-id'}), {
+                    id: 'text-id',
+                    name: 'text-name',
+                    value: '',
+                    type: FormFieldTypes.TEXT,
+                    readOnly: true
+                });
+
+                fixture.detectChanges();
+                inputElement = <HTMLInputElement> element.querySelector('#text-id');
+            });
+
+            it('should be disabled on readonly forms', async(() => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(inputElement).toBeDefined();
@@ -101,6 +119,7 @@ describe('TextWidgetComponent', () => {
                     expect(inputElement.disabled).toBeTruthy();
                 });
             }));
+
         });
 
         describe('and mask is configured on text element', () => {
@@ -108,17 +127,17 @@ describe('TextWidgetComponent', () => {
             let inputElement: HTMLInputElement;
 
             beforeEach(() => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                widget.field = new FormFieldModel(new FormModel({taskId: 'fake-task-id'}), {
                     id: 'text-id',
                     name: 'text-name',
                     value: '',
-                    params: { inputMask: '##-##0,00%' },
+                    params: {inputMask: '##-##0,00%'},
                     type: FormFieldTypes.TEXT,
                     readOnly: false
                 });
 
                 fixture.detectChanges();
-                inputElement = <HTMLInputElement>element.querySelector('#text-id');
+                inputElement = <HTMLInputElement> element.querySelector('#text-id');
             });
 
             it('should show text widget', () => {
@@ -138,7 +157,7 @@ describe('TextWidgetComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    inputElement = <HTMLInputElement>element.querySelector('#text-id');
+                    inputElement = <HTMLInputElement> element.querySelector('#text-id');
                     expect(inputElement.value).toBe('');
                 });
             }));
@@ -153,7 +172,7 @@ describe('TextWidgetComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    inputElement = <HTMLInputElement>element.querySelector('#text-id');
+                    inputElement = <HTMLInputElement> element.querySelector('#text-id');
                     expect(inputElement.value).toBe('');
                 });
             }));
@@ -169,7 +188,7 @@ describe('TextWidgetComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let textEle: HTMLInputElement = <HTMLInputElement>element.querySelector('#text-id');
+                    let textEle: HTMLInputElement = <HTMLInputElement> element.querySelector('#text-id');
                     expect(textEle.value).toBe('1');
                 });
             }));
@@ -185,7 +204,7 @@ describe('TextWidgetComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let textEle: HTMLInputElement = <HTMLInputElement>element.querySelector('#text-id');
+                    let textEle: HTMLInputElement = <HTMLInputElement> element.querySelector('#text-id');
                     expect(textEle.value).toBe('12-345,67%');
                 });
             }));
@@ -196,17 +215,17 @@ describe('TextWidgetComponent', () => {
             let inputElement: HTMLInputElement;
 
             beforeEach(() => {
-                widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                widget.field = new FormFieldModel(new FormModel({taskId: 'fake-task-id'}), {
                     id: 'text-id',
                     name: 'text-name',
                     value: '',
-                    params: { existingColspan: 1, maxColspan: 2, inputMask: '#.##0,00%', inputMaskReversed: true },
+                    params: {existingColspan: 1, maxColspan: 2, inputMask: '#.##0,00%', inputMaskReversed: true},
                     type: FormFieldTypes.TEXT,
                     readOnly: false
                 });
 
                 fixture.detectChanges();
-                inputElement = <HTMLInputElement>element.querySelector('#text-id');
+                inputElement = <HTMLInputElement> element.querySelector('#text-id');
             });
 
             afterEach(() => {
@@ -225,7 +244,7 @@ describe('TextWidgetComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let textEle: HTMLInputElement = <HTMLInputElement>element.querySelector('#text-id');
+                    let textEle: HTMLInputElement = <HTMLInputElement> element.querySelector('#text-id');
                     expect(textEle.value).toBe('12,34%');
                 });
             }));

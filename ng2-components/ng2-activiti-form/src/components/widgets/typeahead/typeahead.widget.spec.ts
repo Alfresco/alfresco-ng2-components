@@ -19,6 +19,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule, LogServiceMock } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 
+import { By } from '@angular/platform-browser';
+import { MATERIAL_MODULE } from '../../../../index';
 import { EcmModelService } from '../../../services/ecm-model.service';
 import { FormService } from '../../../services/form.service';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
@@ -26,6 +28,7 @@ import { FormFieldOption } from '../core/form-field-option';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
+import { ErrorWidgetComponent } from '../error/error.component';
 import { TypeaheadWidgetComponent } from './typeahead.widget';
 
 describe('TypeaheadWidgetComponent', () => {
@@ -376,7 +379,6 @@ describe('TypeaheadWidgetComponent', () => {
         let typeaheadWidgetComponent: TypeaheadWidgetComponent;
         let fixture: ComponentFixture<TypeaheadWidgetComponent>;
         let element: HTMLElement;
-        let componentHandler;
         let stubFormService;
         let fakeOptionList: FormFieldOption[] = [{
             id: '1',
@@ -387,11 +389,9 @@ describe('TypeaheadWidgetComponent', () => {
         }, { id: '3', name: 'Fake Name 3' }];
 
         beforeEach(async(() => {
-            componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
-            window['componentHandler'] = componentHandler;
             TestBed.configureTestingModule({
-                imports: [CoreModule],
-                declarations: [TypeaheadWidgetComponent],
+                imports: [CoreModule, MATERIAL_MODULE],
+                declarations: [TypeaheadWidgetComponent, ErrorWidgetComponent],
                 providers: [FormService, EcmModelService, WidgetVisibilityService]
             }).compileComponents().then(() => {
                 fixture = TestBed.createComponent(TypeaheadWidgetComponent);
@@ -432,16 +432,13 @@ describe('TypeaheadWidgetComponent', () => {
                 typeaheadWidgetComponent.onKeyUp(null);
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
-                    expect(element.querySelector('#typeahead-id-1')).toBeDefined();
-                    expect(element.querySelector('#typeahead-id-1')).not.toBeNull();
-                    expect(element.querySelector('#typeahead-id-2')).toBeDefined();
-                    expect(element.querySelector('#typeahead-id-2')).not.toBeNull();
-                    expect(element.querySelector('#typeahead-id-3')).toBeDefined();
-                    expect(element.querySelector('#typeahead-id-3')).not.toBeNull();
+                    expect(fixture.debugElement.queryAll(By.css('[id="md-option-1"]'))).toBeDefined();
+                    expect(fixture.debugElement.queryAll(By.css('[id="md-option-2"]'))).toBeDefined();
+                    expect(fixture.debugElement.queryAll(By.css('[id="md-option-3"]'))).toBeDefined();
                 });
             }));
 
-            it('should hide not visibile typeahead', async(() => {
+            it('should hide not visible typeahead', async(() => {
                 typeaheadWidgetComponent.field.isVisible = false;
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
@@ -479,12 +476,9 @@ describe('TypeaheadWidgetComponent', () => {
                 typeaheadWidgetComponent.onKeyUp(null);
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
-                    expect(element.querySelector('#typeahead-id-1')).toBeDefined();
-                    expect(element.querySelector('#typeahead-id-1')).not.toBeNull();
-                    expect(element.querySelector('#typeahead-id-2')).toBeDefined();
-                    expect(element.querySelector('#typeahead-id-2')).not.toBeNull();
-                    expect(element.querySelector('#typeahead-id-3')).toBeDefined();
-                    expect(element.querySelector('#typeahead-id-3')).not.toBeNull();
+                    expect(fixture.debugElement.queryAll(By.css('[id="md-option-1"]'))).toBeDefined();
+                    expect(fixture.debugElement.queryAll(By.css('[id="md-option-2"]'))).toBeDefined();
+                    expect(fixture.debugElement.queryAll(By.css('[id="md-option-3"]'))).toBeDefined();
                 });
             }));
         });

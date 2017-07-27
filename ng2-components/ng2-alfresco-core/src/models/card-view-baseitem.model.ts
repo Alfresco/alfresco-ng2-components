@@ -45,7 +45,7 @@ export abstract class CardViewBaseItemModel {
         this.value = obj.value;
         this.key = obj.key;
         this.default = obj.default;
-        this.editable = obj.editable || false;
-        this.clickable = obj.clickable || false;
+        this.editable = !!obj.editable;
+        this.clickable = !!obj.clickable;
     }
 }
