@@ -261,4 +261,60 @@ describe('UploadButtonComponent', () => {
         fixture.detectChanges();
         expect(compiled.querySelector('#uploadFolder-label-static').textContent).toEqual('test-text');
     });
+
+    describe('uploadFiles', () => {
+
+        const files: File[] = [
+            <File> { name: 'phobos.jpg' },
+            <File> { name: 'deimos.png' },
+            <File> { name: 'ganymede.bmp' }
+        ];
+
+        let addToQueueSpy;
+
+        beforeEach(() => {
+            addToQueueSpy = spyOn(uploadService, 'addToQueue');
+        });
+
+        it('should filter out file, which is not part of the acceptedFilesType', () => {
+            component.acceptedFilesType = '.jpg';
+
+            component.uploadFiles(files);
+
+            const filesCalledWith = addToQueueSpy.calls.mostRecent().args;
+            expect(filesCalledWith.length).toBe(1, 'Files should contain only one element');
+            expect(filesCalledWith[0].name).toBe('phobos.jpg', 'png file should be filtered out');
+        });
+
+        it('should filter out files, which are not part of the acceptedFilesType', () => {
+            component.acceptedFilesType = '.jpg,.png';
+
+            component.uploadFiles(files);
+
+            const filesCalledWith = addToQueueSpy.calls.mostRecent().args;
+            expect(filesCalledWith.length).toBe(2, 'Files should contain two elements');
+            expect(filesCalledWith[0].name).toBe('phobos.jpg');
+            expect(filesCalledWith[1].name).toBe('deimos.png');
+        });
+
+        it('should not filter out anything if acceptedFilesType is wildcard', () => {
+            component.acceptedFilesType = '*';
+
+            component.uploadFiles(files);
+
+            const filesCalledWith = addToQueueSpy.calls.mostRecent().args;
+            expect(filesCalledWith.length).toBe(3, 'Files should contain all elements');
+            expect(filesCalledWith[0].name).toBe('phobos.jpg');
+            expect(filesCalledWith[1].name).toBe('deimos.png');
+            expect(filesCalledWith[2].name).toBe('ganymede.bmp');
+        });
+
+        it('should not add any file to que if everything is filtered out', () => {
+            component.acceptedFilesType = 'doc';
+
+            component.uploadFiles(files);
+
+            expect(addToQueueSpy).not.toHaveBeenCalled();
+        });
+    });
 });
