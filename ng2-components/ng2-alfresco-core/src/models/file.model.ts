@@ -73,4 +73,8 @@ export class FileModel {
             return v.toString(16);
         });
     }
+
+    get extension(): string {
+        return this.name.slice((Math.max(0, this.name.lastIndexOf('.')) || Infinity) + 1);
+    }
 }
