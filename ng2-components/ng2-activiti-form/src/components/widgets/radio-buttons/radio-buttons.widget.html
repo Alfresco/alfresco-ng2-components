@@ -1,7 +1,7 @@
 <div class="adf-radio-buttons-widget {{field.className}}"
-     [class.adf-invalid]="!field.isValid" [id]="field.id" *ngIf="field?.isVisible">
-    <label class="adf-label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
+     [class.adf-invalid]="!field.isValid" [class.adf-readonly]="field.readOnly" [id]="field.id" *ngIf="field?.isVisible">
     <div class="adf-radio-button-container">
+        <label class="adf-label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
         <md-radio-group class="adf-radio-group" [(ngModel)]="field.value">
             <md-radio-button
                 [id]="field.id + '-' + opt.id"

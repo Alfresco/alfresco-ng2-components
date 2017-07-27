@@ -1,9 +1,9 @@
 <div class="adf-typeahead-widget {{field.className}}"
      [class.is-dirty]="value"
-     [class.adf-invalid]="!field.isValid" id="typehead-div" *ngIf="field.isVisible">
-    <label class="adf-label" [attr.for]="field.id">{{field.name}}</label>
+     [class.adf-invalid]="!field.isValid" [class.adf-readonly]="field.readOnly" id="typehead-div" *ngIf="field.isVisible">
     <md-input-container>
-    <input mdInput
+        <label class="adf-label" [attr.for]="field.id">{{field.name}}</label>
+        <input mdInput
            class="adf-input"
            type="text"
            [id]="field.id"

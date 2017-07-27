@@ -1,5 +1,5 @@
 <div class="adf-upload-widget {{field.className}}"
-     [class.adf-invalid]="!field.isValid">
+     [class.adf-invalid]="!field.isValid" [class.adf-readonly]="field.readOnly">
     <label class="adf-label" [attr.for]="field.id">{{field.name}}</label>
     <div class="adf-upload-widget-container">
         <div>
