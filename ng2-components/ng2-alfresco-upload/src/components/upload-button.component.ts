@@ -152,18 +152,51 @@ export class UploadButtonComponent implements OnInit, OnChanges {
      * @param path
      */
     uploadFiles(files: File[]): void {
-        if (files.length > 0) {
-            const latestFilesAdded = files.map(file => new FileModel(file, {
-                newVersion: this.versioning,
-                parentId: this.rootFolderId,
-                path: (file.webkitRelativePath || '').replace(/\/[^\/]*$/, '')
-            }));
+        const latestFilesAdded: FileModel[] = files
+            .map<FileModel>(this.createFileModel.bind(this))
+            .filter(this.isFileAcceptable.bind(this));
+
+        if (latestFilesAdded.length > 0) {
             this.uploadService.addToQueue(...latestFilesAdded);
             this.uploadService.uploadFilesInTheQueue(this.onSuccess);
             if (this.showNotificationBar) {
                 this.showUndoNotificationBar(latestFilesAdded);
             }
         }
+    }
+
+    /**
+     * Creates FileModel from File
+     *
+     * @param file
+     */
+    private createFileModel(file: File): FileModel {
+        return new FileModel(file, {
+            newVersion: this.versioning,
+            parentId: this.rootFolderId,
+            path: (file.webkitRelativePath || '').replace(/\/[^\/]*$/, '')
+        });
+    }
+
+    /**
+     * Checks if the given file is allowed by the extension filters
+     *
+     * @param file FileModel
+     */
+    private isFileAcceptable(file: FileModel): boolean {
+        if (this.acceptedFilesType === '*') {
+            return true;
+        }
+
+        const allowedExtensions = this.acceptedFilesType
+            .split(',')
+            .map(ext => ext.replace(/^\./, ''));
+
+        if (allowedExtensions.indexOf(file.extension) !== -1) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
