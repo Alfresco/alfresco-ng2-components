@@ -3,7 +3,7 @@
     <label class="adf-label" [attr.for]="field.id">{{field.name}}</label>
     <div class="adf-upload-widget-container">
         <div>
-            <md-list dense *ngIf="hasFile">
+            <md-list *ngIf="hasFile">
                 <md-list-item class="adf-upload-files-row" *ngFor="let file of field.value">
                     <img md-list-icon class="adf-upload-widget__icon" [src]="getIcon(file.mimeType)" [alt]="mimeTypeIcon"/>
                     <span md-line id="{{'file-'+file.id}}" class="adf-file">{{decode(file.name)}}</span>

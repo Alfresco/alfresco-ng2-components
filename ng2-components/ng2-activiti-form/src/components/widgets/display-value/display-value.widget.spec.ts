@@ -21,7 +21,7 @@ import { CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { MATERIAL_MODULE } from '../../../../index';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
-import { ActivitiContentComponent } from '../../activiti-content.component';
+import { ContentWidgetComponent } from '../../content.widget';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormModel } from '../core/form.model';
 import { EcmModelService } from './../../../services/ecm-model.service';
@@ -44,7 +44,7 @@ describe('DisplayValueWidgetComponent', () => {
             ],
             declarations: [
                 DisplayValueWidgetComponent,
-                ActivitiContentComponent
+                ContentWidgetComponent
             ],
             providers: [
                 FormService,

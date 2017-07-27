@@ -24,7 +24,7 @@ import { FormModel } from '../core/form.model';
 import { TabModel } from '../core/tab.model';
 import { WIDGET_DIRECTIVES } from '../index';
 import { MASK_DIRECTIVE } from '../index';
-import { ActivitiContentComponent } from './../../activiti-content.component';
+import { ContentWidgetComponent } from './../../content.widget';
 import { FormFieldComponent } from './../../form-field/form-field.component';
 import { TabsWidgetComponent } from './tabs.widget';
 
@@ -87,7 +87,7 @@ describe('TabsWidgetComponent', () => {
         beforeEach(async(() => {
             TestBed.configureTestingModule({
                 imports: [CoreModule, ...MATERIAL_MODULE ],
-                declarations: [FormFieldComponent, ActivitiContentComponent, WIDGET_DIRECTIVES, MASK_DIRECTIVE]
+                declarations: [FormFieldComponent, ContentWidgetComponent, WIDGET_DIRECTIVES, MASK_DIRECTIVE]
             }).compileComponents().then(() => {
                 fixture = TestBed.createComponent(TabsWidgetComponent);
                 tabWidgetComponent = fixture.componentInstance;

@@ -24,7 +24,7 @@ import { WIDGET_DIRECTIVES } from '../index';
 import { MASK_DIRECTIVE } from '../index';
 import { EcmModelService } from './../../../services/ecm-model.service';
 import { FormService } from './../../../services/form.service';
-import { ActivitiContentComponent } from './../../activiti-content.component';
+import { ContentWidgetComponent } from './../../content.widget';
 import { FormFieldComponent } from './../../form-field/form-field.component';
 import { FormFieldTypes } from './../core/form-field-types';
 import { FormFieldModel } from './../core/form-field.model';
@@ -46,7 +46,7 @@ describe('ContainerWidgetComponent', () => {
                 CoreModule.forRoot(),
                 ...MATERIAL_MODULE
             ],
-            declarations: [FormFieldComponent, ActivitiContentComponent, WIDGET_DIRECTIVES, MASK_DIRECTIVE],
+            declarations: [FormFieldComponent, ContentWidgetComponent, WIDGET_DIRECTIVES, MASK_DIRECTIVE],
             providers: [
                 FormService,
                 EcmModelService,
