@@ -1,7 +1,7 @@
 <div class="adf-textfield adf-text-widget {{field.className}}"
-     [class.adf-invalid]="!field.isValid">
-    <label class="adf-label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
+     [class.adf-invalid]="!field.isValid" [class.adf-readonly]="field.readOnly">
     <md-input-container>
+        <label class="adf-label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
         <input mdInput
                class="adf-input"
                type="text"
