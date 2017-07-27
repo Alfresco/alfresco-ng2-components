@@ -46,13 +46,17 @@ export class AboutComponent implements OnInit {
 
     ngOnInit() {
 
-        this.discovery.getEcmProductInfo().subscribe((ecmVers) => {
-            this.ecmVersion = ecmVers;
-        });
+        if (this.authService.isEcmLoggedIn()) {
+            this.discovery.getEcmProductInfo().subscribe((ecmVers) => {
+                this.ecmVersion = ecmVers;
+            });
+        }
 
-        this.discovery.getBpmProductInfo().subscribe((bpmVers) => {
-            this.bpmVersion = bpmVers;
-        });
+        if (this.authService.isBpmLoggedIn()) {
+            this.discovery.getBpmProductInfo().subscribe((bpmVers) => {
+                this.bpmVersion = bpmVers;
+            });
+        }
 
         this.http.get('/versions.json').subscribe(response => {
             let regexp = new RegExp('^(ng2-activiti|ng2-alfresco|alfresco-)');
