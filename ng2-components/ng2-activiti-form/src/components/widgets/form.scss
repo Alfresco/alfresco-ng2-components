@@ -1,7 +1,8 @@
 @import 'theming';
 
 .adf {
-    &-error-text-container{
+
+    &-error-text-container {
         width: 95%;
         height: 20px;
         margin-top: -12px;
@@ -22,10 +23,14 @@
         color: $alfresco-warn-color--hue-3;
     }
 
+    &-label {
+        color: $alfresco-gray-label;
+    }
+
     &-invalid {
 
         .mat-input-underline {
-            background-color: #f44336!important;
+            background-color: #f44336 !important;
         }
 
         .adf-file {
@@ -42,5 +47,14 @@
                 background-color: $alfresco-warn-color--hue-3;
             }
         }
+    }
+}
+
+.mat-focused {
+    label {
+        transform: scaleX(1);
+        transition: transform 150ms linear,
+        background-color $swift-ease-in-duration $swift-ease-in-timing-function;
+        color: $alfresco-primary-accent--default;
     }
 }
