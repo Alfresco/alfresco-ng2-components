@@ -27,7 +27,7 @@ import { TranslationMock } from './../assets/translation.service.mock';
 import { EcmModelService } from './../services/ecm-model.service';
 import { FormService } from './../services/form.service';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
-import { ActivitiContentComponent } from './activiti-content.component';
+import { ContentWidgetComponent } from './content.widget';
 import { FormFieldComponent } from './form-field/form-field.component';
 import { StartFormComponent } from './start-form.component';
 import { MASK_DIRECTIVE } from './widgets/index';
@@ -51,7 +51,7 @@ describe('ActivitiStartForm', () => {
             declarations: [
                 StartFormComponent,
                 FormFieldComponent,
-                ActivitiContentComponent,
+                ContentWidgetComponent,
                 ...WIDGET_DIRECTIVES,
                 ...MASK_DIRECTIVE
             ],

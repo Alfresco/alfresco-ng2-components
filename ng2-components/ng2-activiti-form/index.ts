@@ -22,7 +22,7 @@ import { MdAutocompleteModule, MdButtonModule, MdCardModule, MdCheckboxModule,
     MdOptionModule, MdRadioModule, MdSelectModule, MdSlideToggleModule, MdTableModule, MdTabsModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
-import { ActivitiContentComponent } from './src/components/activiti-content.component';
+import { ContentWidgetComponent } from './src/components/widgets/content/content.widget';
 import { FormFieldComponent } from './src/components/form-field/form-field.component';
 import { FormListComponent } from './src/components/form-list.component';
 import { FormComponent } from './src/components/form.component';
@@ -38,7 +38,7 @@ import { WidgetVisibilityService } from './src/services/widget-visibility.servic
 
 export * from './src/components/form.component';
 export * from './src/components/form-list.component';
-export * from './src/components/activiti-content.component';
+export * from './src/components/widgets/content/content.widget';
 export * from './src/components/start-form.component';
 export * from './src/services/form.service';
 export * from './src/services/activiti-content-service';
@@ -49,17 +49,17 @@ export * from './src/services/form-rendering.service';
 export * from './src/events/index';
 
 // Old deprecated import
-import {ActivitiContentComponent as ActivitiContent } from './src/components/activiti-content.component';
+import {ContentWidgetComponent as ActivitiContent } from './src/components/widgets/content/content.widget';
 import {FormComponent as ActivitiForm } from './src/components/form.component';
 import {StartFormComponent as ActivitiStartForm } from './src/components/start-form.component';
 export {FormComponent as ActivitiForm} from './src/components/form.component';
-export {ActivitiContentComponent as ActivitiContent} from './src/components/activiti-content.component';
+export {ContentWidgetComponent as ActivitiContent} from './src/components/widgets/content/content.widget';
 export {StartFormComponent as ActivitiStartForm} from './src/components/start-form.component';
 
 export const ACTIVITI_FORM_DIRECTIVES: any[] = [
     FormComponent,
     FormListComponent,
-    ActivitiContentComponent,
+    ContentWidgetComponent,
     StartFormComponent,
     FormFieldComponent,
     ...WIDGET_DIRECTIVES

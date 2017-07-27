@@ -24,11 +24,15 @@ import { baseHost , WidgetComponent } from './../widget.component';
 @Component({
     selector: 'unknown-widget',
     template: `
-        <div>
-            <i class="material-icons">error_outline</i>
-            <span style="color: red">Unknown type: {{field.type}}</span>
-        </div>
+               <md-list>
+                <md-list-item>
+                     <md-icon class="md-24">error_outline</md-icon>
+                     <span class="adf-unknown-text">Unknown type: {{field.type}}</span>
+                </md-list-item>
+            </md-list>
+
     `,
+    styleUrls: ['./unknown.widget.scss'],
     host: baseHost,
     encapsulation: ViewEncapsulation.None
 })

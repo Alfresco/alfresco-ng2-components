@@ -40,7 +40,7 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit {
     minDate: Moment;
     maxDate: Moment;
 
-    constructor(public formService: FormService, public dateAdapter: MomentDateAdapter) {
+    constructor(public formService: FormService, public dateAdapter: DateAdapter<Moment>) {
         super(formService);
     }
 

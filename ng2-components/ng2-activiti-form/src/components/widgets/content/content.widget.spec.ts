@@ -22,17 +22,17 @@ import { By } from '@angular/platform-browser';
 import { AlfrescoTranslationService, ContentService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 
-import { FormService } from '../services/form.service';
+import { FormService } from '../../../services/form.service';
 import { EcmModelService } from './../services/ecm-model.service';
-import { ActivitiContentComponent } from './activiti-content.component';
-import { ContentLinkModel } from './widgets/index';
+import { ContentWidgetComponent } from './content.widget';
+import { ContentLinkModel } from '../index';
 
 declare let jasmine: any;
 
-describe('ActivitiContentComponent', () => {
+describe('ContentWidgetComponent', () => {
 
-    let component: ActivitiContentComponent;
-    let fixture: ComponentFixture<ActivitiContentComponent>;
+    let component: ContentWidgetComponent;
+    let fixture: ComponentFixture<ContentWidgetComponent>;
     let debug: DebugElement;
     let element: HTMLElement;
 
@@ -69,7 +69,7 @@ describe('ActivitiContentComponent', () => {
                 CoreModule.forRoot()
             ],
             declarations: [
-                ActivitiContentComponent
+                ContentWidgetComponent
             ],
             providers: [
                 FormService,
@@ -89,7 +89,7 @@ describe('ActivitiContentComponent', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ActivitiContentComponent);
+        fixture = TestBed.createComponent(ContentWidgetComponent);
         component = fixture.componentInstance;
         debug = fixture.debugElement;
         element = fixture.nativeElement;
