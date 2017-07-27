@@ -10,6 +10,7 @@
                 [disabled]="field.readOnly"
                 [checked]="field.value === opt.id"
                 (change)="onOptionClick(opt.id)"
+                color="primary"
                 class="adf-radio-button" *ngFor="let opt of field.options" >
                 {{opt.name}}
             </md-radio-button>
