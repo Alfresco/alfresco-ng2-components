@@ -27,9 +27,7 @@
         </div>
     </div>
     <div *ngSwitchCase="'document'">
-        <div *ngIf="hasFile">
-            <adf-content [id]="id" [showDocumentContent]="true"></adf-content>
-        </div>
+        <adf-content ngIf="hasFile" [id]="id" [showDocumentContent]="true"></adf-content>
     </div>
     <div *ngSwitchDefault>
         <text-widget readonly="true" [field]="field"></text-widget>

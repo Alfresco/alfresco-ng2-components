@@ -4,10 +4,10 @@ import * as moment from 'moment';
 
 export const MOMENT_DATE_FORMATS: MdDateFormats = {
     parse: {
-        dateInput: 'MM$DD$YYYY'
+        dateInput: 'MM-DD-YYYY'
     },
     display: {
-        dateInput: 'MM$DD$YYYY',
+        dateInput: 'MM-DD-YYYY',
         monthYearLabel: 'MMMM Y',
         dateA11yLabel: 'LL',
         monthYearA11yLabel: 'MMMM Y'
