@@ -35,7 +35,7 @@ export class StartTaskComponent implements OnInit {
     appId: string;
 
     @Output()
-    onSuccess: EventEmitter<any> = new EventEmitter<any>();
+    success: EventEmitter<any> = new EventEmitter<any>();
 
     @Output()
     cancel: EventEmitter<void> = new EventEmitter<void>();
@@ -75,7 +75,7 @@ export class StartTaskComponent implements OnInit {
             this.startTaskmodel.category = this.appId;
             this.taskService.createNewTask(new TaskDetailsModel(this.startTaskmodel)).subscribe(
                 (res: any) => {
-                    this.onSuccess.emit(res);
+                    this.success.emit(res);
                     this.attachForm(res.id);
                     this.resetForm();
                 },
