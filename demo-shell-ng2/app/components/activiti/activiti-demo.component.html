@@ -83,10 +83,11 @@
                         </md-card>
                     </div>
                     <div class="mdl-cell mdl-cell--10-col task-column mdl-shadow--2dp" *ngIf="isStartTaskMode()">
-                         <activiti-start-task
+                         <adf-start-task
                                 [appId]="appId"
-                                (onSuccess)="onStartTaskSuccess($event)">
-                        </activiti-start-task>
+                                (success)="onStartTaskSuccess($event)"
+                                (cancel)="onCancelStartTask()">
+                        </adf-start-task>
                     </div>
                 </div>
             </div>
@@ -158,7 +159,11 @@
                             </md-card>
                         </div>
                         <div class="mdl-cell mdl-cell--10-col task-column mdl-shadow--2dp" *ngIf="isStartProcessMode()">
-                            <activiti-start-process [appId]="appId" (start)="onStartProcessInstance($event)"></activiti-start-process>
+                            <adf-start-process 
+                                    [appId]="appId" 
+                                    (start)="onStartProcessInstance($event)"
+                                    (cancel)="onCancelProcessInstance()">
+                            </adf-start-process>
                         </div>
                     </div>
                 </div>

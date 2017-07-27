@@ -192,6 +192,11 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
         this.currentTaskId = event.id;
     }
 
+    onCancelStartTask() {
+        this.currentTaskId = null;
+        this.reloadTaskFilters();
+    }
+
     onSuccessTaskList(event: FilterRepresentationModel) {
         this.currentTaskId = this.taskList.getCurrentId();
     }
@@ -246,6 +251,11 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
         this.currentProcessInstanceId = instance.id;
         this.activitiStartProcess.reset();
         this.resetProcessFilters();
+    }
+
+    onCancelProcessInstance() {
+        this.currentProcessInstanceId = null;
+        this.reloadProcessFilters();
     }
 
     isStartProcessMode(): boolean {
@@ -334,11 +344,11 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     }
 
     private reloadProcessFilters(): void {
-        this.activitiprocessfilter.selectFilter(null);
+        this.activitiprocessfilter.selectFilter(this.activitiprocessfilter.getCurrentFilter());
     }
 
     private reloadTaskFilters(): void {
-        this.activitifilter.selectFilter(null);
+        this.activitifilter.selectFilter(this.activitifilter.getCurrentFilter());
     }
 
     onRowClick(event): void {
