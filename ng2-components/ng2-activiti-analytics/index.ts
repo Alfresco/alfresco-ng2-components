@@ -16,7 +16,7 @@
  */
 
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { MdButtonModule, MdIconModule, MdTooltipModule } from '@angular/material';
+import { MdButtonModule, MdInputModule, MdIconModule, MdTooltipModule, MdNativeDateModule, MdDatepickerModule, MdGridListModule } from '@angular/material';
 import { DiagramsModule } from 'ng2-activiti-diagrams';
 import { CoreModule } from 'ng2-alfresco-core';
 
@@ -29,6 +29,7 @@ import { AnalyticsComponent } from './src/components/analytics.component';
 import { AnalyticsService } from './src/services/analytics.service';
 
 import { WIDGET_DIRECTIVES } from './src/components/widgets/index';
+import { DateWidgetComponent } from './src/components/widgets/date-range/date.widget';
 
 export * from './src/components/analytics.component';
 export * from './src/components/analytics-generator.component';
@@ -43,7 +44,8 @@ export const ANALYTICS_DIRECTIVES: any[] = [
     AnalyticsReportParametersComponent,
     AnalyticsGeneratorComponent,
     AnalyticsReportHeatMapComponent,
-    WIDGET_DIRECTIVES
+    WIDGET_DIRECTIVES,
+    DateWidgetComponent
 ];
 
 export const ANALYTICS_PROVIDERS: any[] = [
@@ -57,7 +59,11 @@ export const ANALYTICS_PROVIDERS: any[] = [
         DiagramsModule,
         MdTooltipModule,
         MdButtonModule,
-        MdIconModule
+        MdIconModule,
+        MdNativeDateModule, 
+        MdDatepickerModule, 
+        MdGridListModule,
+        MdInputModule
     ],
     declarations: [
         ...ANALYTICS_DIRECTIVES
