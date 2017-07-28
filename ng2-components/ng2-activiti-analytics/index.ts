@@ -29,7 +29,6 @@ import { AnalyticsComponent } from './src/components/analytics.component';
 import { AnalyticsService } from './src/services/analytics.service';
 
 import { WIDGET_DIRECTIVES } from './src/components/widgets/index';
-import { DateWidgetComponent } from './src/components/widgets/date-range/date.widget';
 
 export * from './src/components/analytics.component';
 export * from './src/components/analytics-generator.component';
@@ -44,8 +43,7 @@ export const ANALYTICS_DIRECTIVES: any[] = [
     AnalyticsReportParametersComponent,
     AnalyticsGeneratorComponent,
     AnalyticsReportHeatMapComponent,
-    WIDGET_DIRECTIVES,
-    DateWidgetComponent
+    WIDGET_DIRECTIVES
 ];
 
 export const ANALYTICS_PROVIDERS: any[] = [

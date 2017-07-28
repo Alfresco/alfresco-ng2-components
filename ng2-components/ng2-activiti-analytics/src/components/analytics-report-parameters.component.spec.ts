@@ -17,7 +17,15 @@
 
 import { DebugElement, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdButtonModule, MdTooltipModule, OVERLAY_PROVIDERS } from '@angular/material';
+import {
+    MdButtonModule,
+    MdDatepickerModule,
+    MdGridListModule,
+    MdIconModule,
+    MdInputModule,
+    MdNativeDateModule,
+    MdTooltipModule,
+    OVERLAY_PROVIDERS } from '@angular/material';
 import * as moment from 'moment';
 import { AlfrescoTranslationService, AppConfigModule, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
@@ -47,7 +55,12 @@ describe('AnalyticsReportParametersComponent', () => {
                     bpmHost: 'http://localhost:9876/bpm'
                 }),
                 MdTooltipModule,
-                MdButtonModule
+                MdButtonModule,
+                MdIconModule,
+                MdNativeDateModule,
+                MdDatepickerModule,
+                MdGridListModule,
+                MdInputModule
             ],
             declarations: [
                 AnalyticsReportParametersComponent,

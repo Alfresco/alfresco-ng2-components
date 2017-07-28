@@ -17,7 +17,14 @@
 
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdButtonModule, MdIconModule, MdTooltipModule } from '@angular/material';
+import {
+    MdButtonModule,
+    MdDatepickerModule,
+    MdGridListModule,
+    MdIconModule,
+    MdInputModule,
+    MdNativeDateModule,
+    MdTooltipModule } from '@angular/material';
 import { DiagramsModule } from 'ng2-activiti-diagrams';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { ChartsModule } from 'ng2-charts';
@@ -63,6 +70,10 @@ describe('AnalyticsGeneratorComponent', () => {
                 MdButtonModule,
                 MdIconModule,
                 ChartsModule,
+                MdInputModule,
+                MdNativeDateModule,
+                MdDatepickerModule,
+                MdGridListModule,
 
                 DiagramsModule.forRoot()
             ],
