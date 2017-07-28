@@ -185,7 +185,7 @@ export class FormFieldModel extends FormWidgetModel {
                     col.fields = fields;
                     col.rowspan = json.fields[currentField].length;
 
-                    col.fields.forEach((colFields: any)=> {
+                    col.fields.forEach((colFields: any) => {
                         this.colspan = colFields.colspan > this.colspan ? colFields.colspan : this.colspan;
                     });
 

@@ -18,8 +18,8 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { AlfrescoTranslationService, ContentService, LogService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
-import { FormService } from './../../../services/form.service';
 import { ContentLinkModel } from '../core/content-link.model';
+import { FormService } from './../../../services/form.service';
 
 @Component({
     selector: 'adf-content, activiti-content',

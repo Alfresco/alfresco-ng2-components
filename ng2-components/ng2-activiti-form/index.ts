@@ -22,11 +22,11 @@ import { MdAutocompleteModule, MdButtonModule, MdCardModule, MdCheckboxModule,
     MdOptionModule, MdRadioModule, MdSelectModule, MdSlideToggleModule, MdTableModule, MdTabsModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
-import { ContentWidgetComponent } from './src/components/widgets/content/content.widget';
 import { FormFieldComponent } from './src/components/form-field/form-field.component';
 import { FormListComponent } from './src/components/form-list.component';
 import { FormComponent } from './src/components/form.component';
 import { StartFormComponent } from './src/components/start-form.component';
+import { ContentWidgetComponent } from './src/components/widgets/content/content.widget';
 import { MASK_DIRECTIVE, WIDGET_DIRECTIVES } from './src/components/widgets/index';
 import { ActivitiAlfrescoContentService } from './src/services/activiti-alfresco.service';
 import { ActivitiContentService } from './src/services/activiti-content-service';
@@ -49,9 +49,9 @@ export * from './src/services/form-rendering.service';
 export * from './src/events/index';
 
 // Old deprecated import
-import {ContentWidgetComponent as ActivitiContent } from './src/components/widgets/content/content.widget';
 import {FormComponent as ActivitiForm } from './src/components/form.component';
 import {StartFormComponent as ActivitiStartForm } from './src/components/start-form.component';
+import {ContentWidgetComponent as ActivitiContent } from './src/components/widgets/content/content.widget';
 export {FormComponent as ActivitiForm} from './src/components/form.component';
 export {ContentWidgetComponent as ActivitiContent} from './src/components/widgets/content/content.widget';
 export {StartFormComponent as ActivitiStartForm} from './src/components/start-form.component';

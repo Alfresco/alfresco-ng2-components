@@ -119,7 +119,7 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
 
     format(date: Moment, displayFormat: any): string {
 
-        displayFormat = this.overrideDisplyaFormat ? this.overrideDisplyaFormat : displayFormat
+        displayFormat = this.overrideDisplyaFormat ? this.overrideDisplyaFormat : displayFormat;
 
         if (date && date.format) {
             return date.format(displayFormat);
