@@ -196,7 +196,11 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
                 }
             });
         }
-        this.currentFilter = findTaskFilter ? findTaskFilter : this.selectDefaultTaskFilter(filteredFilterList);
+        if (findTaskFilter) {
+            this.currentFilter = findTaskFilter;
+        } else {
+             this.selectDefaultTaskFilter(filteredFilterList);
+        }
     }
 
     /**
