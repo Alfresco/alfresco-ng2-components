@@ -118,7 +118,7 @@ export class ActivitiFilters implements OnInit, OnChanges {
                                 this.filterObserver.next(filter);
                             });
 
-                            this.selectTaskFilter(this.filterParam);
+                            this.selectTaskFilter(this.filterParam, this.filters);
                             this.onSuccess.emit(resDefault);
                         },
                         (errDefault: any) => {
@@ -131,7 +131,7 @@ export class ActivitiFilters implements OnInit, OnChanges {
                         this.filterObserver.next(filter);
                     });
 
-                    this.selectTaskFilter(this.filterParam);
+                    this.selectTaskFilter(this.filterParam, this.filters);
                     this.onSuccess.emit(res);
                 }
             },
@@ -149,7 +149,7 @@ export class ActivitiFilters implements OnInit, OnChanges {
         this.activiti.getDeployedApplications(appName).subscribe(
             application => {
                 this.getFiltersByAppId(application.id);
-                this.selectTaskFilter(this.filterParam);
+                this.selectTaskFilter(this.filterParam, this.filters);
             },
             (err) => {
                 this.onError.emit(err);
@@ -176,7 +176,7 @@ export class ActivitiFilters implements OnInit, OnChanges {
             },
             () => {
                 if (filteredFilterList.length > 0) {
-                    this.selectTaskFilter(new FilterParamsModel({name: 'My Tasks'}));
+                    this.selectTaskFilter(new FilterParamsModel({name: 'My Tasks'}), filteredFilterList);
                     this.currentFilter.landingTaskId = taskId;
                     this.filterClick.emit(this.currentFilter);
                 }
@@ -186,24 +186,27 @@ export class ActivitiFilters implements OnInit, OnChanges {
     /**
      * Select the first filter of a list if present
      */
-    public selectTaskFilter(filterParam: FilterParamsModel) {
+    public selectTaskFilter(filterParam: FilterParamsModel, filteredFilterList: FilterRepresentationModel[]) {
+        let findTaskFilter;
         if (filterParam) {
-            this.filters.filter((taskFilter: FilterRepresentationModel, index) => {
+            filteredFilterList.filter((taskFilter: FilterRepresentationModel, index) => {
                 if (filterParam.name && filterParam.name.toLowerCase() === taskFilter.name.toLowerCase() ||
                     filterParam.id === taskFilter.id || filterParam.index === index) {
-                    this.currentFilter = taskFilter;
+                    findTaskFilter = taskFilter;
                 }
             });
         }
-        if (this.isCurrentFilterEmpty()) {
-            this.selectDefaultTaskFilter();
+        if (findTaskFilter) {
+            this.currentFilter = findTaskFilter;
+        } else {
+             this.selectDefaultTaskFilter(filteredFilterList);
         }
     }
 
     /**
      * Select as default task filter the first in the list
      */
-    public selectDefaultTaskFilter() {
+    public selectDefaultTaskFilter(filteredFilterList: FilterRepresentationModel[]) {
         if (!this.isFilterListEmpty()) {
             this.currentFilter = this.filters[0];
         }
