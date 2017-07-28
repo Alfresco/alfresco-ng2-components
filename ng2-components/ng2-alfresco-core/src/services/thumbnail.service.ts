@@ -18,6 +18,8 @@
 import { Injectable } from '@angular/core';
 import { AlfrescoContentService } from './alfresco-content.service';
 
+declare var require: any;
+
 @Injectable()
 export class ThumbnailService {
 
