@@ -5,6 +5,18 @@ $breadcrumb-chevron-spacer: 2px;
 .adf-breadcrumb {
     display: flex;
 
+    &.mat-primary {
+        color: mat-color($primary);
+    }
+
+    &.mat-accent {
+        color: mat-color($accent);
+    }
+
+    &.mat-warn {
+        color: mat-color($warn);
+    }
+
     &-container {
         margin: 0;
         padding: 0;
@@ -17,7 +29,6 @@ $breadcrumb-chevron-spacer: 2px;
 
     &-item {
         padding-right: $breadcrumb-chevron-spacer;
-        color: $alfresco-secondary-text-color;
         overflow: hidden;
         display: flex;
         line-height: 24px;
@@ -30,10 +41,6 @@ $breadcrumb-chevron-spacer: 2px;
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
-        }
-
-        &-anchor:hover, &.active {
-            color: $alfresco-primary-text-color;
         }
 
         &.active {
