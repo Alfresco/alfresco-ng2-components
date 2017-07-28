@@ -37,7 +37,7 @@ export class FormFieldModel extends FormWidgetModel {
     private _readOnly: boolean = false;
     private _isValid: boolean = true;
 
-    readonly
+    readonly;
     defaultDateFormat: string = 'D-M-YYYY';
 
     // model members
@@ -205,7 +205,7 @@ export class FormFieldModel extends FormWidgetModel {
                     col.fields = fields;
                     col.rowspan = json.fields[currentField].length;
 
-                    col.fields.forEach((colFields: any)=> {
+                    col.fields.forEach((colFields: any) => {
                         this.colspan = colFields.colspan > this.colspan ? colFields.colspan : this.colspan;
                     });
 

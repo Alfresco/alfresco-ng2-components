@@ -17,10 +17,10 @@
 
 /* tslint:disable:component-selector  */
 
-import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormFieldModel } from '../core/form-field.model';
 import { FormService } from './../../../services/form.service';
 import { baseHost , WidgetComponent } from './../widget.component';
-import { FormFieldModel } from '../core/form-field.model';
 
 @Component({
     selector: 'text-widget',

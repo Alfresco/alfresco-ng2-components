@@ -18,12 +18,12 @@
 /* tslint:disable:component-selector  */
 
 import { Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
+import { DateAdapter, MD_DATE_FORMATS } from '@angular/material';
 import * as moment from 'moment';
 import { Moment } from 'moment';
+import { MOMENT_DATE_FORMATS, MomentDateAdapter } from 'ng2-alfresco-core';
 import { FormService } from './../../../services/form.service';
 import { baseHost , WidgetComponent } from './../widget.component';
-import { MD_DATE_FORMATS, DateAdapter } from '@angular/material';
-import { MomentDateAdapter, MOMENT_DATE_FORMATS } from 'ng2-alfresco-core'
 
 @Component({
     selector: 'date-widget',
@@ -60,7 +60,7 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     onDateChanged(newDateValue) {
-        this.field.validationSummary = "";
+        this.field.validationSummary = '';
         if (newDateValue) {
             let momentDate = moment(newDateValue, this.field.dateDisplayFormat);
             if (!momentDate.isValid()) {

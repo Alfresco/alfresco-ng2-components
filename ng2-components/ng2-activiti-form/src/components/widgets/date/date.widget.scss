@@ -5,6 +5,7 @@
 
     &-date-widget-button {
         position: relative;
+        float: right;
     }
 
     &-date-input {
@@ -21,4 +22,10 @@
         margin-top: 0;
         margin-bottom: 0;
     }
+}
+
+.mat-input-suffix {
+    position: absolute;
+    margin-top: 42px;
+    width: 100%;
 }

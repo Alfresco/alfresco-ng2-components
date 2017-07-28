@@ -26,7 +26,8 @@ import {
     OnDestroy,
     OnInit,
     ViewChild,
-    ViewContainerRef
+    ViewContainerRef,
+    ViewEncapsulation
 } from '@angular/core';
 
 import { CoreModule } from 'ng2-alfresco-core';
@@ -44,7 +45,8 @@ declare var adf: any;
         <div [hidden]="!field?.isVisible">
             <div #container></div>
         </div>
-    `
+    `,
+    encapsulation: ViewEncapsulation.None
 })
 export class FormFieldComponent implements OnInit, OnDestroy {
 

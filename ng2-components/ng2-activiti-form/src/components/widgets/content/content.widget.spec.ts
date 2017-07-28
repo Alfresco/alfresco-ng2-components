@@ -23,9 +23,9 @@ import { AlfrescoTranslationService, ContentService, CoreModule } from 'ng2-alfr
 import { Observable } from 'rxjs/Rx';
 
 import { FormService } from '../../../services/form.service';
+import { ContentLinkModel } from '../index';
 import { EcmModelService } from './../services/ecm-model.service';
 import { ContentWidgetComponent } from './content.widget';
-import { ContentLinkModel } from '../index';
 
 declare let jasmine: any;
 

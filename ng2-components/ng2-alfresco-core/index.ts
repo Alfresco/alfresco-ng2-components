@@ -60,8 +60,8 @@ import { SearchApiService } from './src/services/search-api.service';
 import { SharedLinksApiService } from './src/services/shared-links-api.service';
 import { SitesApiService } from './src/services/sites-api.service';
 
-export { MomentDateAdapter, MOMENT_DATE_FORMATS } from './src/utils/momentDateAdapter'
-import { MomentDateAdapter, MOMENT_DATE_FORMATS } from './src/utils/momentDateAdapter'
+export { MomentDateAdapter, MOMENT_DATE_FORMATS } from './src/utils/momentDateAdapter';
+import { MOMENT_DATE_FORMATS, MomentDateAdapter } from './src/utils/momentDateAdapter';
 
 export { ContentService } from './src/services/content.service';
 export { StorageService } from './src/services/storage.service';
@@ -130,7 +130,6 @@ export * from './src/models/file.model';
 export * from './src/models/permissions.enum';
 export * from './src/models/site.model';
 export * from './src/models/product-version.model';
-
 
 // Old deprecated import
 import { AuthenticationService as AlfrescoAuthenticationService } from './src/services/authentication.service';
