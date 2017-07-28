@@ -17,7 +17,15 @@
 
 import { DebugElement, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdButtonModule, MdTooltipModule, OVERLAY_PROVIDERS } from '@angular/material';
+import {
+    MdButtonModule,
+    MdDatepickerModule,
+    MdGridListModule,
+    MdIconModule,
+    MdInputModule,
+    MdNativeDateModule,
+    MdTooltipModule,
+    OVERLAY_PROVIDERS } from '@angular/material';
 import * as moment from 'moment';
 import { AlfrescoTranslationService, AppConfigModule, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
@@ -48,7 +56,12 @@ describe('AnalyticsReportParametersComponent', () => {
                     bpmHost: 'http://localhost:9876/bpm'
                 }),
                 MdTooltipModule,
-                MdButtonModule
+                MdButtonModule,
+                MdIconModule,
+                MdNativeDateModule,
+                MdDatepickerModule,
+                MdGridListModule,
+                MdInputModule
             ],
             declarations: [
                 AnalyticsReportParametersComponent,
@@ -521,14 +534,14 @@ describe('AnalyticsReportParametersComponent', () => {
 
             it('Should show a dialog to allowing report save', async(() => {
                 component.saveReportSuccess.subscribe((repId) => {
-                    let reportDialogTitle: HTMLElement = <HTMLElement>element.querySelector('#report-dialog');
+                    let reportDialogTitle: HTMLElement = <HTMLElement> element.querySelector('#report-dialog');
                     expect(reportDialogTitle.getAttribute('open')).toBeNull();
                     expect(repId).toBe('1');
                 });
 
                 component.submit(values);
                 fixture.detectChanges();
-                let saveButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#save-button');
+                let saveButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#save-button');
                 expect(saveButton).toBeDefined();
                 expect(saveButton).not.toBeNull();
                 saveButton.click();
@@ -537,10 +550,10 @@ describe('AnalyticsReportParametersComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let reportDialogTitle: HTMLElement = <HTMLElement>element.querySelector('#report-dialog-title');
+                    let reportDialogTitle: HTMLElement = <HTMLElement> element.querySelector('#report-dialog-title');
                     let saveTitleSubMessage: HTMLElement = <HTMLElement> element.querySelector('#save-title-submessage');
                     let inputSaveName: HTMLInputElement = <HTMLInputElement> element.querySelector('#repName');
-                    let performActionButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#action-dialog-button');
+                    let performActionButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#action-dialog-button');
                     let todayDate = component.getTodayDate();
 
                     expect(reportDialogTitle).not.toBeNull();
@@ -560,7 +573,7 @@ describe('AnalyticsReportParametersComponent', () => {
             it('Should show a dialog to allowing report export', async(() => {
                 component.submit(values);
                 fixture.detectChanges();
-                let exportButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#export-button');
+                let exportButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#export-button');
 
                 expect(exportButton).toBeDefined();
                 expect(exportButton).not.toBeNull();
@@ -570,9 +583,9 @@ describe('AnalyticsReportParametersComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let reportDialogTitle: HTMLElement = <HTMLElement>element.querySelector('#report-dialog-title');
+                    let reportDialogTitle: HTMLElement = <HTMLElement> element.querySelector('#report-dialog-title');
                     let inputSaveName: HTMLInputElement = <HTMLInputElement> element.querySelector('#repName');
-                    let performActionButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#action-dialog-button');
+                    let performActionButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#action-dialog-button');
                     let todayDate = component.getTodayDate();
 
                     expect(reportDialogTitle).not.toBeNull();
@@ -589,7 +602,7 @@ describe('AnalyticsReportParametersComponent', () => {
             }));
 
             it('Should raise an event for report deleted', async(() => {
-                let deleteButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#delete-button');
+                let deleteButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#delete-button');
                 expect(deleteButton).toBeDefined();
                 expect(deleteButton).not.toBeNull();
 
@@ -606,7 +619,7 @@ describe('AnalyticsReportParametersComponent', () => {
             }));
 
             it('Should hide export button if the form is not valid', async(() => {
-                let exportButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#export-button');
+                let exportButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#export-button');
                 expect(exportButton).toBeDefined();
                 expect(exportButton).not.toBeNull();
                 validForm = false;
@@ -615,13 +628,13 @@ describe('AnalyticsReportParametersComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    exportButton = <HTMLButtonElement>element.querySelector('#export-button');
+                    exportButton = <HTMLButtonElement> element.querySelector('#export-button');
                     expect(exportButton).toBeNull();
                 });
             }));
 
             it('Should hide save button if the form is not valid', async(() => {
-                let saveButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#save-button');
+                let saveButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#save-button');
                 expect(saveButton).toBeDefined();
                 expect(saveButton).not.toBeNull();
                 validForm = false;
@@ -630,7 +643,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    saveButton = <HTMLButtonElement>element.querySelector('#save-button');
+                    saveButton = <HTMLButtonElement> element.querySelector('#save-button');
                     expect(saveButton).toBeNull();
                 });
             }));
@@ -638,8 +651,8 @@ describe('AnalyticsReportParametersComponent', () => {
             it('Should show export and save button when the form became valid', async(() => {
                 validForm = false;
                 fixture.detectChanges();
-                let saveButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#save-button');
-                let exportButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#export-button');
+                let saveButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#save-button');
+                let exportButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#export-button');
                 expect(saveButton).toBeNull();
                 expect(exportButton).toBeNull();
                 validForm = true;
@@ -647,8 +660,8 @@ describe('AnalyticsReportParametersComponent', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
 
-                    saveButton = <HTMLButtonElement>element.querySelector('#save-button');
-                    exportButton = <HTMLButtonElement>element.querySelector('#export-button');
+                    saveButton = <HTMLButtonElement> element.querySelector('#save-button');
+                    exportButton = <HTMLButtonElement> element.querySelector('#export-button');
 
                     expect(saveButton).not.toBeNull();
                     expect(saveButton).toBeDefined();

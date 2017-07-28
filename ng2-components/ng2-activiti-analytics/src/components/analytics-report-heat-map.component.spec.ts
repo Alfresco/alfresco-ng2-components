@@ -17,6 +17,14 @@
 
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+    MdButtonModule,
+    MdDatepickerModule,
+    MdGridListModule,
+    MdIconModule,
+    MdInputModule,
+    MdNativeDateModule,
+    MdTooltipModule } from '@angular/material';
 import { DiagramsModule } from 'ng2-activiti-diagrams';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
@@ -46,7 +54,14 @@ describe('AnalyticsReportHeatMapComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                DiagramsModule.forRoot()
+                DiagramsModule.forRoot(),
+                    MdTooltipModule,
+                    MdButtonModule,
+                    MdInputModule,
+                    MdIconModule,
+                    MdNativeDateModule,
+                    MdDatepickerModule,
+                    MdGridListModule
             ],
             declarations: [
                 AnalyticsReportHeatMapComponent,
