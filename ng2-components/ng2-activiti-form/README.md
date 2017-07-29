@@ -226,6 +226,22 @@ onFormSaved(form: FormModel) {
 }
 ```
 
+### Custom empty form template
+
+You can add a template that will be show if no form definition has been found
+
+```html
+<adf-form .... >
+    
+    <div empty-form >
+        <h2>Empty form</h2>
+    </div>
+
+</adf-form>
+
+```
+
+
 ### Controlling outcome execution behaviour
 
 If absolutely needed it is possible taking full control over form outcome execution by means of `executeOutcome` event. 

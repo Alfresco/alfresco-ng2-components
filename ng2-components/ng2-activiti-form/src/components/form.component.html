@@ -1,5 +1,6 @@
 <div *ngIf="!hasForm()">
-    <h3 class="adf-task-title">Please select a Task</h3>
+    <ng-content select="[empty-form]">
+    </ng-content>
 </div>
 <div *ngIf="hasForm()" class="{{form.className}}">
     <md-card>
