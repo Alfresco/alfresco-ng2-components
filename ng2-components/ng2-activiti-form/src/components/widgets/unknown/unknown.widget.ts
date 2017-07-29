@@ -24,7 +24,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
 @Component({
     selector: 'unknown-widget',
     template: `
-               <md-list>
+            <md-list class="adf-unknown-widget">
                 <md-list-item>
                      <md-icon class="md-24">error_outline</md-icon>
                      <span class="adf-unknown-text">Unknown type: {{field.type}}</span>

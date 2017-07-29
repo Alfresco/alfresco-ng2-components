@@ -18,13 +18,13 @@ $dynamic-table-card-padding: 24px !default;
 $dynamic-table-cell-top: $dynamic-table-card-padding / 2;
 $dynamic-table-drag-border: 1px dashed rgb(68,138,255);
 
+
 .adf {
 
    &-dynamic-table {
     width: 100%;
     position: relative;
     border: $dynamic-table-dividers;
-    border-collapse: collapse;
     white-space: nowrap;
     font-size: $dynamic-table-font-size;
     background-color: unquote("rgb(#{$alfresco-white})");
@@ -94,7 +94,6 @@ $dynamic-table-drag-border: 1px dashed rgb(68,138,255);
         position: relative;
         vertical-align: bottom;
         text-overflow: ellipsis;
-        font-size: 14px;
         font-weight: bold;
         line-height: 24px;
         letter-spacing: 0;

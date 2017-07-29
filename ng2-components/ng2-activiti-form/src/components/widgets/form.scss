@@ -1,5 +1,11 @@
 @import 'theming';
 
+ul > li > form-field > .adf-focus {
+    .adf-label {
+        color: mat-color($primary);
+    }
+}
+
 .adf {
 
     &-error-text-container {
@@ -48,7 +54,7 @@
         .adf-label {
             color: mat-color($warn);
             &:after {
-                background-color:mat-color($warn);
+                background-color: mat-color($warn);
             }
         }
     }
