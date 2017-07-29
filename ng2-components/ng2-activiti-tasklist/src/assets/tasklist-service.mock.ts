@@ -70,6 +70,8 @@ export let fakeFilterWithProcessDefinitionKey = {
 
 export let fakeUser = { id: 1, email: 'fake-email@dom.com', firstName: 'firstName', lastName: 'lastName' };
 
+export let testUser = { id: 1001, email: 'some-one@somegroup.com', firstName: 'some', lastName: 'one' };
+
 export let fakeTaskList = {
     size: 1, total: 1, start: 0,
     data: [

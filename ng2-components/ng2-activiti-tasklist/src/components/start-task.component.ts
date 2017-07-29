@@ -43,11 +43,17 @@ export class StartTaskComponent implements OnInit {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    people: User [] = [];
+    people: User[] = [];
 
     startTaskmodel: StartTaskModel = new StartTaskModel();
 
-    forms: Form [];
+    forms: Form[];
+
+    assignee: any;
+
+    formKey: number;
+
+    taskId: string;
 
     /**
      * Constructor
@@ -75,22 +81,49 @@ export class StartTaskComponent implements OnInit {
             this.startTaskmodel.category = this.appId;
             this.taskService.createNewTask(new TaskDetailsModel(this.startTaskmodel)).subscribe(
                 (res: any) => {
-                    this.success.emit(res);
-                    this.attachForm(res.id);
-                    this.resetForm();
+                    this.taskId = res.id;
+                    if (this.formKey) {
+                        this.attachFormAndAssignTask(this.taskId, this.formKey, this.assignee);
+                    } else if (this.assignee) {
+                        this.assignTask(this.taskId, this.assignee);
+                    } else {
+                        this.success.emit(res);
+                    }
                 },
                 (err) => {
                     this.error.emit(err);
-                    this.logService.error('An error occurred while trying to add the task');
+                    this.logService.error('An error occurred while creating new task');
                 }
             );
         }
     }
 
-    private attachForm(taskId: string) {
-        if (this.startTaskmodel.formKey && taskId) {
-            this.taskService.attachFormToATask(taskId, Number(this.startTaskmodel.formKey));
-        }
+    private attachFormAndAssignTask(taskId: string, formKey: number, assignee: any) {
+        return this.taskService.attachFormToATask(taskId, formKey).subscribe(
+            (res: any) => {
+                if (assignee) {
+                    this.assignTask(taskId, assignee);
+                } else {
+                    this.success.emit(res);
+                }
+            },
+            (err) => {
+                this.error.emit(err);
+                this.logService.error('An error occurred while attaching form to the task');
+            }
+        );
+    }
+
+    private assignTask(taskId: string, assignee: any) {
+        this.taskService.assignTask(taskId, assignee).subscribe(
+            (res: any) => {
+                this.success.emit(res);
+            },
+            (err) => {
+                this.error.emit(err);
+                this.logService.error('An error occurred while assigning task to assignee');
+            }
+        );
     }
 
     public onCancel() {
@@ -99,16 +132,12 @@ export class StartTaskComponent implements OnInit {
 
     private loadFormsTask() {
         this.taskService.getFormList().subscribe((res: Form[]) => {
-                this.forms = res;
-            },
+            this.forms = res;
+        },
             (err) => {
                 this.error.emit(err);
                 this.logService.error('An error occurred while trying to get the forms');
             });
-    }
-
-    private resetForm() {
-        this.startTaskmodel = null;
     }
 
     private getUsers() {

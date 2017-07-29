@@ -34,7 +34,7 @@
 				<md-datepicker #taskDatePicker [touchUi]="true"></md-datepicker>
 			</md-grid-tile>
 			<md-grid-tile>
-				<md-select placeholder="{{'START_TASK.FORM.LABEL.ASSIGNEE'|translate}}" id="assignee_id" class="adf-start-task-input-container" [(ngModel)]="startTaskmodel.assignee">
+				<md-select placeholder="{{'START_TASK.FORM.LABEL.ASSIGNEE'|translate}}" id="assignee_id" class="adf-start-task-input-container" [(ngModel)]="assignee">
 					<md-option>{{'START_TASK.FORM.LABEL.NONE'|translate}}</md-option>
 					<span *ngFor="let user of people">
 						<md-option [value]="user" *ngIf="!isUserNameEmpty(user)">{{ getDisplayUser(user.firstName, user.lastName, ' ')}}</md-option>
@@ -44,7 +44,7 @@
 		</md-grid-list>
 		<md-grid-list cols="2" rowHeight="80px">
 			<md-grid-tile>
-				<md-select placeholder="{{'START_TASK.FORM.LABEL.FORM'|translate}}" id="form_id" [(ngModel)]="startTaskmodel.formKey" class="adf-start-task-input-container">
+				<md-select placeholder="{{'START_TASK.FORM.LABEL.FORM'|translate}}" id="form_id" [(ngModel)]="formKey" class="adf-start-task-input-container">
 					<md-option>{{'START_TASK.FORM.LABEL.NONE'|translate}}</md-option>
 					<md-option *ngFor="let form of forms" [value]="form.id">{{ form.name }}</md-option>
 				</md-select>

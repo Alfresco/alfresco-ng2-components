@@ -34,11 +34,13 @@ import {
     fakeTasksChecklist,
     fakeTasksComment,
     fakeUser,
-    secondFakeTaskList
+    secondFakeTaskList,
+    testUser
 } from '../assets/tasklist-service.mock';
 import { Comment } from '../models/comment.model';
 import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
+import { User } from '../models/user.model';
 import { TaskListService } from './tasklist.service';
 
 declare let jasmine: any;
@@ -541,6 +543,39 @@ describe('Activiti TaskList Service', () => {
                     description: 'FakeDescription',
                     category: '3',
                     assignee: fakeUser,
+                    created: '2016-07-15T11:19:17.440+0000'
+                })
+            });
+        });
+
+        it('should assign task to a user', (done) => {
+            let testTaskId = '8888';
+            service.assignTask(testTaskId, testUser).subscribe(
+                (res: TaskDetailsModel) => {
+                    expect(res).toBeDefined();
+                    expect(res.id).toEqual(testTaskId);
+                    expect(res.name).toEqual('FakeNameTask');
+                    expect(res.description).toEqual('FakeDescription');
+                    expect(res.category).toEqual('3');
+                    expect(res.created).not.toEqual('');
+                    expect(res.adhocTaskCanBeReassigned).toBe(true);
+                    expect(res.assignee).toEqual(new User(testUser));
+                    expect(res.involvedPeople).toEqual([fakeUser]);
+                    done();
+                }
+            );
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 200,
+                contentType: 'application/json',
+                responseText: JSON.stringify({
+                    id: testTaskId,
+                    name: 'FakeNameTask',
+                    description: 'FakeDescription',
+                    adhocTaskCanBeReassigned: true,
+                    category: '3',
+                    assignee: testUser,
+                    involvedPeople: [fakeUser],
                     created: '2016-07-15T11:19:17.440+0000'
                 })
             });
