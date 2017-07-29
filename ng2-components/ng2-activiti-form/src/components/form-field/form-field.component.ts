@@ -42,7 +42,10 @@ declare var adf: any;
 @Component({
     selector: 'adf-form-field, form-field',
     template: `
-        <div [hidden]="!field?.isVisible">
+        <div [hidden]="!field?.isVisible"
+            [class.adf-focus]="focus"
+            (focusin)="focusToggle()"
+            (focusout)="focusToggle()">
             <div #container></div>
         </div>
     `,
@@ -50,7 +53,7 @@ declare var adf: any;
 })
 export class FormFieldComponent implements OnInit, OnDestroy {
 
-    @ViewChild('container', { read: ViewContainerRef })
+    @ViewChild('container', {read: ViewContainerRef})
     container: ViewContainerRef;
 
     @Input()
@@ -58,11 +61,12 @@ export class FormFieldComponent implements OnInit, OnDestroy {
 
     componentRef: ComponentRef<{}>;
 
-    constructor(
-        private formRenderingService: FormRenderingService,
-        private componentFactoryResolver: ComponentFactoryResolver,
-        private visibilityService: WidgetVisibilityService,
-        private compiler: Compiler) {
+    focus: boolean = false;
+
+    constructor(private formRenderingService: FormRenderingService,
+                private componentFactoryResolver: ComponentFactoryResolver,
+                private visibilityService: WidgetVisibilityService,
+                private compiler: Compiler) {
     }
 
     ngOnInit() {
@@ -121,14 +125,19 @@ export class FormFieldComponent implements OnInit, OnDestroy {
     }
 
     private createComponentFactorySync(compiler: Compiler, metadata: Component, componentClass: any): ComponentFactory<any> {
-        const cmpClass = componentClass || class RuntimeComponent { };
+        const cmpClass = componentClass || class RuntimeComponent {
+            };
         const decoratedCmp = Component(metadata)(cmpClass);
 
-        @NgModule({ imports: [CoreModule], declarations: [decoratedCmp] })
-        class RuntimeComponentModule { }
+        @NgModule({imports: [CoreModule], declarations: [decoratedCmp]})
+        class RuntimeComponentModule {
+        }
 
         let module: ModuleWithComponentFactories<any> = compiler.compileModuleAndAllComponentsSync(RuntimeComponentModule);
         return module.componentFactories.find(x => x.componentType === decoratedCmp);
     }
 
+    focusToggle() {
+        this.focus = !this.focus;
+    }
 }
