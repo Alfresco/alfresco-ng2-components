@@ -45,8 +45,13 @@ export class NodePermissionDirective implements OnChanges, AfterViewInit {
         }
     }
 
-    updateElement() {
-
+    /**
+     * Updates disabled state for the decorated elememtn
+     *
+     * @returns {boolean} True if decorated element got disabled, otherwise False
+     * @memberof NodePermissionDirective
+     */
+    updateElement(): boolean {
         let enable = true;
 
         if (this.nodes && this.nodes.length > 0) {
@@ -65,12 +70,24 @@ export class NodePermissionDirective implements OnChanges, AfterViewInit {
         } else {
             this.disableElement();
         }
+
+        return enable;
     }
 
+    /**
+     * Enables decorated element
+     *
+     * @memberof NodePermissionDirective
+     */
     enableElement() {
         this.renderer.removeAttribute(this.elementRef.nativeElement, 'disabled');
     }
 
+    /**
+     * Disables decorated element
+     *
+     * @memberof NodePermissionDirective
+     */
     disableElement() {
         this.renderer.setAttribute(this.elementRef.nativeElement, 'disabled', 'true');
     }
