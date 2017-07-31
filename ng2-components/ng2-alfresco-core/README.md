@@ -90,6 +90,11 @@ You should see result similar to the following one:
 
 For more details about the [toolbar](src/components/toolbar/toolbar.md).
 
+| Feature | Notes | Docs |
+| --- | --- | --- |
+| toolbar | toolbar component | [Docs](src/components/toolbar/toolbar.md) |
+| node-permission | disable elements based on node permissions | [Docs](src/directives/node-permission.md)
+
 ## Upload Directive
 
 Allows your components or common HTML elements reacting on File drag and drop in order to upload content.
