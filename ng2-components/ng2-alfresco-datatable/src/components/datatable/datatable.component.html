@@ -24,7 +24,7 @@
             tabindex="0"
             title="{{col.title}}">
             <span *ngIf="col.srTitle" class="sr-only">{{col.srTitle}}</span>
-            <span *ngIf="col.title">{{col.title}}</span>
+            <span *ngIf="col.title">{{ col.title | translate}}</span>
         </th>
         <!-- Actions (right) -->
         <th *ngIf="actions && actionsPosition === 'right'" class="actions-column">
@@ -35,15 +35,11 @@
 
     <tbody>
     <ng-container *ngIf="!loading">
-        <tr *ngFor="let row of data.getRows(); let idx = index"
+        <tr *ngFor="let row of data.getRows(); let idx = index" tabindex="0"
             [class.is-selected]="row.isSelected"
             [adf-upload]="allowDropFiles && rowAllowsDrop(row)" [adf-upload-data]="row"
             [ngStyle]="rowStyle"
-            [ngClass]="getRowStyle(row)"
-            (click)="onRowClick(row, $event)"
-            (keyup.enter)="onRowClick(row, $event)"
-            tabindex="0"
-            role="button">
+            [ngClass]="getRowStyle(row)">
 
             <!-- Actions (left) -->
             <td *ngIf="actions && actionsPosition === 'left'">
@@ -70,9 +66,12 @@
             </td>
             <td *ngFor="let col of data.getColumns()"
                 class="adf-data-table-cell adf-data-table-cell--{{col.type || 'text'}} {{col.cssClass}}"
+                (click)="onRowClick(row, $event)"
+                (keyup.enter)="onRowClick(row, $event)"
                 [context-menu]="getContextMenuActions(row, col)"
                 [context-menu-enabled]="contextMenu"
-                tabindex="0">
+                tabindex="0"
+                role="button">
                 <div *ngIf="!col.template" class="cell-container">
                     <ng-container [ngSwitch]="col.type">
                         <div *ngSwitchCase="'image'" class="cell-value">
@@ -88,11 +87,23 @@
                                  (error)="onImageLoadingError($event)">
                         </div>
                         <div *ngSwitchCase="'date'" class="cell-value"
-                             [attr.data-automation-id]="'date_' + data.getValue(row, col)">
+                            [mdTooltip]="getCellTooltip(row, col)"
+                            [attr.data-automation-id]="'date_' + data.getValue(row, col)">
                             <adf-datatable-cell [data]="data" [column]="col" [row]="row"></adf-datatable-cell>
                         </div>
+                        <div *ngSwitchCase="'location'" class="cell-value"
+                            [mdTooltip]="getCellTooltip(row, col)"
+                            [attr.data-automation-id]="'location' + data.getValue(row, col)">
+                            <adf-location-cell [data]="data" [column]="col" [row]="row"></adf-location-cell>
+                        </div>
+                        <div *ngSwitchCase="'fileSize'" class="cell-value"
+                            [mdTooltip]="getCellTooltip(row, col)"
+                            [attr.data-automation-id]="'fileSize_' + data.getValue(row, col)">
+                            <adf-datatable-cell [value]="data.getValue(row, col) | adfFileSize"></adf-datatable-cell>
+                        </div>
                         <div *ngSwitchCase="'text'" class="cell-value"
-                             [attr.data-automation-id]="'text_' + data.getValue(row, col)">
+                            [mdTooltip]="getCellTooltip(row, col)"
+                            [attr.data-automation-id]="'text_' + data.getValue(row, col)">
                             <adf-datatable-cell [data]="data" [column]="col" [row]="row"></adf-datatable-cell>
                         </div>
                     <span *ngSwitchDefault class="cell-value">
