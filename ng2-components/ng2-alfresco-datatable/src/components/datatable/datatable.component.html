@@ -18,7 +18,11 @@
             [attr.data-automation-id]="'auto_id_' + col.key"
             [class.adf-data-table__header--sorted-asc]="isColumnSorted(col, 'asc')"
             [class.adf-data-table__header--sorted-desc]="isColumnSorted(col, 'desc')"
-            (click)="onColumnHeaderClick(col)">
+            (click)="onColumnHeaderClick(col)"
+            (keyup.enter)="onColumnHeaderClick(col)"
+            role="button"
+            tabindex="0"
+            title="{{col.title}}">
             <span *ngIf="col.srTitle" class="sr-only">{{col.srTitle}}</span>
             <span *ngIf="col.title">{{col.title}}</span>
         </th>
@@ -63,8 +67,11 @@
             <td *ngFor="let col of data.getColumns()"
                 class="adf-data-table-cell adf-data-table-cell--{{col.type || 'text'}} {{col.cssClass}}"
                 (click)="onRowClick(row, $event)"
+                (keyup.enter)="onRowClick(row, $event)"
                 [context-menu]="getContextMenuActions(row, col)"
-                [context-menu-enabled]="contextMenu">
+                [context-menu-enabled]="contextMenu"
+                tabindex="0"
+                role="button">
                 <div *ngIf="!col.template" class="cell-container">
                     <ng-container [ngSwitch]="col.type">
                         <div *ngSwitchCase="'image'" class="cell-value">
