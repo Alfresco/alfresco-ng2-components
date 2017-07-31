@@ -32,12 +32,12 @@
         data-automation-id="content-node-selector-sites-combo"></adf-sites-dropdown>
 
     <div class="adf-content-node-selector-content-list" data-automation-id="content-node-selector-content-list">
-        <adf-document-list *ngIf="searched"
+        <adf-document-list
                     #documentList
                     [node]="nodes"
                     [permissionsStyle]="permissionsStyle"
                     [creationMenuActions]="false"
-                    [currentFolderId]="currentFolderId"
+                    [currentFolderId]="defaultFolderToShow"
                     [selectionMode]="'single'"
                     [contextMenuActions]="false"
                     [contentActions]="false"

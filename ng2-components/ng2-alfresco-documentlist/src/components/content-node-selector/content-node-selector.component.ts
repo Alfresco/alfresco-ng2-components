@@ -22,6 +22,7 @@ import { AlfrescoTranslationService, SearchOptions, SearchService, SiteModel } f
 
 export interface ContentNodeSelectorComponentData {
     title: string;
+    currentFolderId: string|null;
     select: EventEmitter<MinimalNodeEntryEntity>;
 }
 
@@ -36,12 +37,15 @@ export class ContentNodeSelectorComponent {
     nodes: NodePaging|Array<any>;
     siteId: null|string;
     searchTerm: string = '';
-    searched: boolean = false;
     inDialog: boolean = false;
     chosenNode: MinimalNodeEntryEntity | null = null;
 
     @Input()
     title: string;
+
+    // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
+    @Input()
+    currentFolderId: string|null = null;
 
     @Output()
     select: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter<MinimalNodeEntryEntity>();
@@ -58,6 +62,7 @@ export class ContentNodeSelectorComponent {
         if (data) {
             this.title = data.title;
             this.select = data.select;
+            this.currentFolderId = data.currentFolderId;
         }
 
         if (containingDialog) {
@@ -86,10 +91,20 @@ export class ContentNodeSelectorComponent {
     }
 
     /**
+     * Return the passed currentFolderId if search was not performed
+     */
+    get defaultFolderToShow(): string|null {
+        if (this.searchTerm.length === 0) {
+            return this.currentFolderId;
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * Clear the search input
      */
     clear(): void {
-        this.searched = false;
         this.searchTerm = '';
         this.nodes = [];
         this.chosenNode = null;
@@ -113,7 +128,6 @@ export class ContentNodeSelectorComponent {
                 .getNodeQueryResults(searchTerm, searchOpts)
                 .subscribe(
                     results => {
-                        this.searched = true;
                         this.nodes = results;
                     }
                 );

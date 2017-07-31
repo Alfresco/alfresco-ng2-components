@@ -100,7 +100,8 @@ describe('ContentNodeSelectorComponent', () => {
         beforeEach(async(() => {
             data = {
                 title: 'Move along citizen...',
-                select: new EventEmitter<MinimalNodeEntryEntity>()
+                select: new EventEmitter<MinimalNodeEntryEntity>(),
+                currentFolderId: 'cat-girl-nuku-nuku'
             };
 
             setupTestbed([{ provide: MD_DIALOG_DATA, useValue: data }]);
@@ -120,6 +121,12 @@ describe('ContentNodeSelectorComponent', () => {
                 const titleElement = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-title"]'));
                 expect(titleElement).not.toBeNull();
                 expect(titleElement.nativeElement.innerText).toBe('Move along citizen...');
+            });
+
+            it('should pass through the injected currentFolderId to the documentlist', () => {
+                let documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
+                expect(documentList).not.toBeNull('Document list should be shown');
+                expect(documentList.componentInstance.currentFolderId).toBe('cat-girl-nuku-nuku');
             });
 
             it('should trigger the INJECTED select event when selection has been made', (done) => {
@@ -204,6 +211,11 @@ describe('ContentNodeSelectorComponent', () => {
 
         describe('Search functionality', () => {
 
+            beforeEach(() => {
+                component.currentFolderId = 'cat-girl-nuku-nuku';
+                fixture.detectChanges();
+            });
+
             it('should load the results by calling the search api on search change', () => {
                 typeToSearchBox('kakarot');
 
@@ -270,19 +282,18 @@ describe('ContentNodeSelectorComponent', () => {
                 component.chosenNode = <MinimalNodeEntryEntity> {};
                 component.nodes = [ component.chosenNode ];
                 component.searchTerm = 'whatever';
-                component.searched = true;
 
                 component.clear();
 
-                expect(component.searched).toBe(false);
                 expect(component.searchTerm).toBe('');
                 expect(component.nodes).toEqual([]);
                 expect(component.chosenNode).toBeNull();
             });
 
-            it('should show the default text instead of result list if search was not performed', () => {
-                let documentList = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-document-list"]'));
-                expect(documentList).toBeNull('Document list should not be shown by default');
+            it('should show the current folder\'s content instead of search results if search was not performed', () => {
+                let documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
+                expect(documentList).not.toBeNull('Document list should be shown');
+                expect(documentList.componentInstance.currentFolderId).toBe('cat-girl-nuku-nuku');
             });
 
             it('should show the result list when search was performed', async(() => {
@@ -292,7 +303,8 @@ describe('ContentNodeSelectorComponent', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     let documentList = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-document-list"]'));
-                    expect(documentList).not.toBeNull('Document list should be shown after search');
+                    expect(documentList).not.toBeNull('Document list should be shown');
+                    expect(documentList.componentInstance.currentFolderId).toBeNull();
                 });
             }));
 
@@ -308,7 +320,8 @@ describe('ContentNodeSelectorComponent', () => {
                     fixture.detectChanges();
 
                     let documentList = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-document-list"]'));
-                    expect(documentList).toBeNull('Document list should NOT be shown after clearing the search');
+                    expect(documentList).not.toBeNull('Document list should be shown');
+                    expect(documentList.componentInstance.currentFolderId).toBe('cat-girl-nuku-nuku');
                 });
             }));
 
