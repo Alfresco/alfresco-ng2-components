@@ -45,6 +45,7 @@ $breadcrumb-chevron-spacer: 2px;
 
         &.active {
             display: block;
+            overflow: visible;
         }
     }
 }

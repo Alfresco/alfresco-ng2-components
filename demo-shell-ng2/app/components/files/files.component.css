@@ -8,6 +8,10 @@
     }
 }
 
+.files-toolbar-title {
+    max-width: calc(100% - 160px);
+}
+
 .error-message {
     text-align: left;
 }
