@@ -4,8 +4,8 @@
         <span [attr.data-automation-id]="'card-dateitem-' + property.key">{{ property.displayValue }}</span>
     </span>
     <span *ngIf="isEditble()" class="adf-dateitem-editable">
-        <input class="adf-invisible-date-input" [mdDatepicker]="picker" value="{{property.value}}"><!--
-     --><span
+        <input class="adf-invisible-date-input" [mdDatepicker]="picker" value="{{property.value}}">
+        <span
             class="adf-datepicker-toggle"
             [attr.data-automation-id]="'datepicker-label-toggle-' + property.key"
             (click)="showDatePicker($event)">{{ property.displayValue }}
@@ -17,7 +17,8 @@
         <md-datepicker #picker
             [attr.data-automation-id]="'datepicker-' + property.key"
             (selectedChanged)="dateChanged($event)"
-            [startAt]="property.value">
+            [startAt]="property.value"
+            [touchUi]="true">
         </md-datepicker>
     </span>
 </div>
