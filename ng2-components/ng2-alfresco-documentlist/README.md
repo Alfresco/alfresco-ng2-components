@@ -369,13 +369,15 @@ DocumentList provides simple breadcrumb element to indicate the current position
 
 ## Dropdown Site Component
 
-DocumentList provides simple dropdown element to show sites for the current logged in user.
+DocumentList now provides a simple dropdown component to show and interact with the sites of the current user.
 
 ```html
  <adf-sites-dropdown  
   (change)="getSiteContent($event)">
  </adf-sites-dropdown>
 ```
+![Dropdown sites](docs/assets/document-list-dropdown-list.png)
+
 
 ### Events
 
