@@ -252,8 +252,8 @@ describe('AnalyticsReportParametersComponent', () => {
 
                 let today = moment().format('YYYY-MM-DD');
 
-                const startDate: any = element.querySelector('#startDateInput');
-                const endDate: any = element.querySelector('#endDateInput');
+                const startDate: any = element.querySelector('#startDate_id');
+                const endDate: any = element.querySelector('#endDate_id');
 
                 expect(startDate.value).toEqual(today);
                 expect(endDate.value).toEqual(today);
