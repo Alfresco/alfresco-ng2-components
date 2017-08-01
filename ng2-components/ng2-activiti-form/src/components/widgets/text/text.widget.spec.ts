@@ -101,17 +101,6 @@ describe('TextWidgetComponent', () => {
                     expect(inputElement.disabled).toBeTruthy();
                 });
             }));
-
-            it('should be disabled on readonly forms', async(() => {
-                widget.field.form.readOnly = true;
-
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    expect(inputElement).toBeDefined();
-                    expect(inputElement).not.toBeNull();
-                    expect(inputElement.disabled).toBeTruthy();
-                });
-            }));
         });
 
         describe('and mask is configured on text element', () => {

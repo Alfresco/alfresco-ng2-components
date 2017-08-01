@@ -23,10 +23,6 @@ import { DataColumn, DataRow, DataSorting, DataTableAdapter } from 'ng2-alfresco
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { DocumentListService } from './../services/document-list.service';
 
-declare var require: any;
-
-declare var require: any;
-
 export class ShareDataTableAdapter implements DataTableAdapter {
 
     ERR_ROW_NOT_FOUND: string = 'Row not found';

@@ -102,20 +102,39 @@ export class AlfrescoContentService {
     }
 
     /**
-     * Create a folder
-     * @param name - the folder name
+     * Check if the user has permissions on that node
+     * @param MinimalNode -  node to check allowableOperations
+     * @param PermissionsEnum - create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions
+     *
+     * @returns {boolean} has permission
      */
-    createFolder(relativePath: string, name: string, parentId?: string): Observable<FolderCreatedEvent> {
-        return Observable.fromPromise(this.apiService.getInstance().nodes.createFolder(name, relativePath, parentId))
-            .do(data => {
-                this.folderCreated.next(<FolderCreatedEvent>{
-                    relativePath: relativePath,
-                    name: name,
-                    parentId: parentId,
-                    node: data
-                });
-            })
-            .catch(err => this.handleError(err));
+    hasPermission(node: any, permission: PermissionsEnum|string): boolean {
+        let hasPermission = false;
+
+        if (this.hasAllowableOperations(node)) {
+            if (permission && permission.startsWith('!')) {
+                hasPermission = node.allowableOperations.find(currentPermission => currentPermission === permission.replace('!', '')) ? false : true;
+            } else {
+                hasPermission = node.allowableOperations.find(currentPermission => currentPermission === permission) ? true : false;
+            }
+
+        } else {
+            if (permission && permission.startsWith('!')) {
+                hasPermission = true;
+            }
+        }
+
+        return hasPermission;
+    }
+
+    /**
+     * Check if the node has the properties allowableOperations
+     * @param MinimalNode -  node to check allowableOperations
+     *
+     * @returns {boolean} has AllowableOperations
+     */
+    hasAllowableOperations(node: any): boolean {
+        return node && node.allowableOperations ? true : false;
     }
 
     private handleError(error: any) {
