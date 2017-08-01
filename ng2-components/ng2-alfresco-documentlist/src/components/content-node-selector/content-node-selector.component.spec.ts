@@ -44,8 +44,13 @@ const ONE_FOLDER_RESULT = {
     }
 };
 
-describe('ContentNodeSelectorComponent', () => {
+const NO_RESULT = {
+    list: {
+        entries: []
+    }
+};
 
+describe('ContentNodeSelectorComponent', () => {
     let component: ContentNodeSelectorComponent;
     let fixture: ComponentFixture<ContentNodeSelectorComponent>;
     let element: DebugElement;
@@ -101,6 +106,7 @@ describe('ContentNodeSelectorComponent', () => {
             data = {
                 title: 'Move along citizen...',
                 select: new EventEmitter<MinimalNodeEntryEntity>(),
+                rowFilter: () => {},
                 currentFolderId: 'cat-girl-nuku-nuku'
             };
 
@@ -127,6 +133,12 @@ describe('ContentNodeSelectorComponent', () => {
                 let documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
                 expect(documentList).not.toBeNull('Document list should be shown');
                 expect(documentList.componentInstance.currentFolderId).toBe('cat-girl-nuku-nuku');
+            });
+
+            it('should pass through the injected rowFilter to the documentlist', () => {
+                let documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
+                expect(documentList).not.toBeNull('Document list should be shown');
+                expect(documentList.componentInstance.rowFilter).toBe(data.rowFilter);
             });
 
             it('should trigger the INJECTED select event when selection has been made', (done) => {
@@ -294,6 +306,17 @@ describe('ContentNodeSelectorComponent', () => {
                 let documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
                 expect(documentList).not.toBeNull('Document list should be shown');
                 expect(documentList.componentInstance.currentFolderId).toBe('cat-girl-nuku-nuku');
+            });
+
+            it('should pass through the rowFilter to the documentList', () => {
+                const filter = () => {};
+                component.rowFilter = filter;
+
+                fixture.detectChanges();
+
+                let documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
+                expect(documentList).not.toBeNull('Document list should be shown');
+                expect(documentList.componentInstance.rowFilter).toBe(filter);
             });
 
             it('should show the result list when search was performed', async(() => {

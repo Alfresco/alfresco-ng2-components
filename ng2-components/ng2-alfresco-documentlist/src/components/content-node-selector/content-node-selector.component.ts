@@ -19,10 +19,12 @@ import { Component, EventEmitter, Inject, Input, Optional, Output, ViewEncapsula
 import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
 import { MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
 import { AlfrescoTranslationService, SearchOptions, SearchService, SiteModel } from 'ng2-alfresco-core';
+import { RowFilter } from '../../data/share-datatable-adapter';
 
 export interface ContentNodeSelectorComponentData {
     title: string;
-    currentFolderId: string|null;
+    currentFolderId?: string|null;
+    rowFilter?: RowFilter|null;
     select: EventEmitter<MinimalNodeEntryEntity>;
 }
 
@@ -34,8 +36,8 @@ export interface ContentNodeSelectorComponentData {
 })
 export class ContentNodeSelectorComponent {
 
-    nodes: NodePaging|Array<any>;
-    siteId: null|string;
+    nodes: NodePaging | Array<any>;
+    siteId: null | string;
     searchTerm: string = '';
     inDialog: boolean = false;
     chosenNode: MinimalNodeEntryEntity | null = null;
@@ -43,9 +45,11 @@ export class ContentNodeSelectorComponent {
     @Input()
     title: string;
 
-    // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
     @Input()
-    currentFolderId: string|null = null;
+    currentFolderId: string | null = null;
+
+    @Input()
+    rowFilter: RowFilter = null;
 
     @Output()
     select: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter<MinimalNodeEntryEntity>();
@@ -63,6 +67,7 @@ export class ContentNodeSelectorComponent {
             this.title = data.title;
             this.select = data.select;
             this.currentFolderId = data.currentFolderId;
+            this.rowFilter = data.rowFilter;
         }
 
         if (containingDialog) {

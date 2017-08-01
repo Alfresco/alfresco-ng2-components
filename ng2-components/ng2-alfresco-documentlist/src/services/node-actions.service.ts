@@ -21,7 +21,15 @@ import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AlfrescoContentService, AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { Subject } from 'rxjs/Rx';
 import { ContentNodeSelectorComponent, ContentNodeSelectorComponentData } from '../components/content-node-selector/content-node-selector.component';
+import { ShareDataRow } from '../data/share-datatable-adapter';
 import { DocumentListService } from './document-list.service';
+
+function rowFilter(currentNodeId, row: ShareDataRow) {
+    if (row.node.entry.id === currentNodeId) {
+        return false;
+    }
+    return true;
+}
 
 @Injectable()
 export class NodeActionsService {
@@ -90,6 +98,7 @@ export class NodeActionsService {
             const data: ContentNodeSelectorComponentData = {
                 title: `${action} ${contentEntry.name} to ...`,
                 currentFolderId: contentEntry.parentId,
+                rowFilter: rowFilter.bind(null, contentEntry.id),
                 select: new EventEmitter<MinimalNodeEntryEntity>()
             };
 
