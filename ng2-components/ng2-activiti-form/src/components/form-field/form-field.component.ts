@@ -70,18 +70,18 @@ export class FormFieldComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        let field = this.getField();
-        if (field) {
-            let customTemplate = this.field.form.customFieldTemplates[field.type];
-            if (customTemplate && this.hasController(field.type)) {
-                let factory = this.getComponentFactorySync(field.type, customTemplate);
+        let originalField = this.getField();
+        if (originalField) {
+            let customTemplate = this.field.form.customFieldTemplates[originalField.type];
+            if (customTemplate && this.hasController(originalField.type)) {
+                let factory = this.getComponentFactorySync(originalField.type, customTemplate);
                 this.componentRef = this.container.createComponent(factory);
                 let instance: any = this.componentRef.instance;
                 if (instance) {
-                    instance.field = field;
+                    instance.field = originalField;
                 }
             } else {
-                let componentType = this.formRenderingService.resolveComponentType(field);
+                let componentType = this.formRenderingService.resolveComponentType(originalField);
                 if (componentType) {
                     let factory = this.componentFactoryResolver.resolveComponentFactory(componentType);
                     this.componentRef = this.container.createComponent(factory);
