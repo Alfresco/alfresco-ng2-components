@@ -103,19 +103,10 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     pagination: Pagination;
 
     @Input()
-    set rowFilter(value: RowFilter) {
-        if (this.data && value && this.currentFolderId) {
-            this.data.setFilter(value);
-            this.loadFolderNodesByFolderNodeId(this.currentFolderId, this.pageSize, this.skipCount);
-        }
-    }
+    rowFilter: RowFilter|null = null;
 
     @Input()
-    set imageResolver(value: ImageResolver) {
-        if (this.data) {
-            this.data.setImageResolver(value);
-        }
-    }
+    imageResolver: ImageResolver|null = null;
 
     // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
     @Input()
@@ -198,8 +189,16 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     ngOnInit() {
         this.data = new ShareDataTableAdapter(this.documentListService, null, this.getDefaultSorting());
         this.data.thumbnails = this.thumbnails;
-
         this.data.permissionsStyle = this.permissionsStyle;
+
+        if (this.rowFilter) {
+            this.data.setFilter(this.rowFilter);
+        }
+
+        if (this.imageResolver) {
+            this.data.setImageResolver(this.imageResolver);
+        }
+
         this.contextActionHandler.subscribe(val => this.contextActionCallback(val));
 
         this.enforceSingleClickNavigationForMobile();

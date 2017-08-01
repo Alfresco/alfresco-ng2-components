@@ -728,23 +728,6 @@ describe('DocumentList', () => {
         expect(element.querySelector('alfresco-pagination')).toBe(null);
     });
 
-    it('should set row filter for underlying adapter', () => {
-        let filter = <RowFilter> {};
-        documentList.currentFolderId = 'id';
-        spyOn(documentList.data, 'setFilter').and.callThrough();
-
-        documentList.rowFilter = filter;
-        expect(documentList.data.setFilter).toHaveBeenCalledWith(filter);
-    });
-
-    it('should set image resolver for underlying adapter', () => {
-        let resolver = <ImageResolver> {};
-        spyOn(documentList.data, 'setImageResolver').and.callThrough();
-
-        documentList.imageResolver = resolver;
-        expect(documentList.data.setImageResolver).toHaveBeenCalledWith(resolver);
-    });
-
     it('should emit [nodeClick] event on row click', () => {
         let node = new NodeMinimalEntry();
 
