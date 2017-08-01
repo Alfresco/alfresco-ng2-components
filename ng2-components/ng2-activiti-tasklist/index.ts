@@ -38,6 +38,7 @@ import { PeopleComponent } from './src/components/people.component';
 import { StartTaskComponent } from './src/components/start-task.component';
 import { TaskAttachmentListComponent } from './src/components/task-attachment-list.component';
 import { TaskDetailsComponent } from './src/components/task-details.component';
+import { TaskAuditDirective } from './src/components/task-audit.directive';
 import { TaskFiltersComponent } from './src/components/task-filters.component';
 import { TaskHeaderComponent } from './src/components/task-header.component';
 import { TaskListComponent } from './src/components/tasklist.component';
@@ -52,6 +53,7 @@ export {TaskHeaderComponent } from './src/components/task-header.component';
 export {NoTaskDetailsTemplateDirective } from './src/components/no-task-detail-template.directive';
 export {TaskFiltersComponent } from './src/components/task-filters.component';
 export {TaskDetailsComponent } from './src/components/task-details.component';
+export {TaskAuditDirective } from './src/components/task-audit.directive';
 export {StartTaskComponent } from './src/components/start-task.component';
 export {PeopleSearchComponent } from './src/components/people-search.component';
 export {AttachmentComponent } from './src/components/create-task-attachment.component';
@@ -109,6 +111,7 @@ export const ACTIVITI_TASKLIST_DIRECTIVES: any[] = [
     TaskFiltersComponent,
     TaskListComponent,
     TaskDetailsComponent,
+    TaskAuditDirective,
     ChecklistComponent,
     CommentsComponent,
     PeopleComponent,
