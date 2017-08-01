@@ -226,6 +226,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
         if (this.data) {
             this.data.setRows(this.convertToRowsData(rows));
         }
+    }
 
     private setTableSchema() {
         if (this.columnList && this.columnList.columns) {
