@@ -6,6 +6,8 @@
 
 - [Prerequisites](#prerequisites)
 - [Install](#install)
+- [Toolbar Component](#toolbar-component)
+  * [Basic example](#basic-example)
 - [Upload Directive](#upload-directive)
   * [Basic usage](#basic-usage)
   * [Modes](#modes)
@@ -22,11 +24,11 @@
 - [Notification Service](#notification-service)
 - [Context Menu directive](#context-menu-directive)
 - [Accordion Component](#accordion-component)
-  * [Properties](#properties-1)
+  * [Properties](#properties)
 - [Authentication Service](#authentication-service)
   * [Events](#events-1)
 - [ADF Card View](#adf-card-view)
-  * [Properties](#properties-2)
+  * [Properties](#properties-1)
   * [Editing](#editing)
   * [Defining properties](#defining-properties)
   * [Card Text Item](#card-text-item)
@@ -65,9 +67,28 @@ npm install ng2-alfresco-core
 
 Available features
 
-| Feature | Notes | Docs |
-| --- | --- | --- |
-| toolbar | --- | [Docs](src/components/toolbar/toolbar.md) |
+## Toolbar Component
+
+<adf-toolbar> is an easy container for headers, titles, actions, breadcrumbs.
+
+### Basic example
+
+```html
+<adf-toolbar title="Toolbar">
+    <button md-icon-button>
+        <md-icon>create_new_folder</md-icon>
+    </button>
+    <button md-icon-button>
+        <md-icon>delete</md-icon>
+    </button>
+</adf-toolbar>
+```
+
+You should see result similar to the following one:
+
+![](docs/adf-toolbar-01.png) 
+
+For more details about the [toolbar](src/components/toolbar/toolbar.md).
 
 ## Upload Directive
 

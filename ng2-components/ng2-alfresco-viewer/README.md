@@ -6,6 +6,7 @@
 
 - [Prerequisites](#prerequisites)
 - [Install](#install)
+  * [Configuring PDF.js library](#configuring-pdfjs-library)
 - [Basic usage](#basic-usage)
 - [Properties](#properties)
 - [Supported file formats](#supported-file-formats)

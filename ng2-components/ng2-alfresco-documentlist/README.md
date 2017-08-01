@@ -378,7 +378,6 @@ DocumentList now provides a simple dropdown component to show and interact with 
 ```
 ![Dropdown sites](docs/assets/document-list-dropdown-list.png)
 
-
 ### Events
 
 | Name | Returned Type | Description |
