@@ -16,6 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { Form } from '../models/form.model';
 import { StartTaskModel } from '../models/start-task.model';
@@ -62,9 +63,9 @@ export class StartTaskComponent implements OnInit {
      * @param taskService
      */
     constructor(private translateService: AlfrescoTranslationService,
-                private taskService: TaskListService,
-                private peopleService: PeopleService,
-                private logService: LogService) {
+        private taskService: TaskListService,
+        private peopleService: PeopleService,
+        private logService: LogService) {
 
         if (translateService) {
             translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
@@ -79,51 +80,39 @@ export class StartTaskComponent implements OnInit {
     public start() {
         if (this.startTaskmodel.name) {
             this.startTaskmodel.category = this.appId;
-            this.taskService.createNewTask(new TaskDetailsModel(this.startTaskmodel)).subscribe(
+            this.taskService.createNewTask(new TaskDetailsModel(this.startTaskmodel))
+                .switchMap((createRes: any) =>
+                    this.attachForm(createRes.id, this.formKey).defaultIfEmpty(createRes)
+                        .switchMap((attachRes: any) =>
+                            this.assignTask(createRes.id, this.assignee).defaultIfEmpty(attachRes ? attachRes : createRes)
+                        )
+                )
+                .subscribe(
                 (res: any) => {
-                    this.taskId = res.id;
-                    if (this.formKey) {
-                        this.attachFormAndAssignTask(this.taskId, this.formKey, this.assignee);
-                    } else if (this.assignee) {
-                        this.assignTask(this.taskId, this.assignee);
-                    } else {
-                        this.success.emit(res);
-                    }
+                    this.success.emit(res);
                 },
                 (err) => {
                     this.error.emit(err);
                     this.logService.error('An error occurred while creating new task');
-                }
-            );
+                });
         }
     }
 
-    private attachFormAndAssignTask(taskId: string, formKey: number, assignee: any) {
-        return this.taskService.attachFormToATask(taskId, formKey).subscribe(
-            (res: any) => {
-                if (assignee) {
-                    this.assignTask(taskId, assignee);
-                } else {
-                    this.success.emit(res);
-                }
-            },
-            (err) => {
-                this.error.emit(err);
-                this.logService.error('An error occurred while attaching form to the task');
-            }
-        );
+    private attachForm(taskId: string, formKey: number) {
+        if (taskId && formKey) {
+            return this.taskService.attachFormToATask(taskId, formKey);
+        } else {
+            return Observable.of();
+        }
     }
 
     private assignTask(taskId: string, assignee: any) {
-        this.taskService.assignTask(taskId, assignee).subscribe(
-            (res: any) => {
-                this.success.emit(res);
-            },
-            (err) => {
-                this.error.emit(err);
-                this.logService.error('An error occurred while assigning task to assignee');
-            }
-        );
+        if (taskId && assignee) {
+            return this.taskService.assignTask(taskId, assignee);
+        } else {
+            return Observable.of();
+        }
+
     }
 
     public onCancel() {
