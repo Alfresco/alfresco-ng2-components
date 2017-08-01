@@ -221,25 +221,6 @@ export class UploadButtonComponent implements OnInit, OnChanges {
                 error => this.onError.emit(error)
             );
         }
-        return 'Error';
-    }
-
-    // TODO: move to AlfrescoContentService
-    getFolderNode(nodeId: string): Observable<MinimalNodeEntryEntity> {
-        let opts: any = {
-            includeSource: true,
-            include: ['allowableOperations']
-        };
-
-        return Observable.fromPromise(this.apiService.getInstance().nodes.getNodeInfo(nodeId, opts))
-            .catch(err => this.handleError(err));
-    }
-
-    private handleError(error: Response) {
-        // in a real world app, we may send the error to some remote logging infrastructure
-        // instead of just logging it to the console
-        this.logService.error(error);
-        return Observable.throw(error || 'Server error');
     }
 
     // TODO: move to AlfrescoContentService

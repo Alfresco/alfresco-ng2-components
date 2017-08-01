@@ -34,11 +34,8 @@ export class AboutComponent implements OnInit {
     ecmHost: string = '';
     bpmHost: string = '';
 
-    githubUrlCommitAlpha: string = 'https://github.com/Alfresco/alfresco-ng2-components/commits/';
-
-    configFile: string = '';
-    ecmHost: string = '';
-    bpmHost: string = '';
+    ecmVersion: EcmProductVersionModel = null;
+    bpmVersion: BpmProductVersionModel = null;
 
     constructor(private http: Http,
                 private appConfig: AppConfigService,
@@ -91,21 +88,6 @@ export class AboutComponent implements OnInit {
         this.configFile = this.appConfig.configFile;
         this.ecmHost = this.appConfig.get<string>('ecmHost');
         this.bpmHost = this.appConfig.get<string>('bpmHost');
-    }
-
-    private gitHubLinkCreation(alfrescoPackagesTableRepresentation): void {
-        let corePackage = alfrescoPackagesTableRepresentation.find((packageUp) => {
-            return packageUp.name === 'ng2-alfresco-core';
-        });
-
-        if (corePackage) {
-            let commitIsh = corePackage.version.split('-');
-            if (commitIsh.length > 1) {
-                this.githubUrlCommitAlpha = this.githubUrlCommitAlpha + commitIsh[1];
-            } else {
-                this.githubUrlCommitAlpha = this.githubUrlCommitAlpha + corePackage.version;
-            }
-        }
     }
 
     private gitHubLinkCreation(alfrescoPackagesTableRepresentation): void {

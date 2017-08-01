@@ -128,27 +128,58 @@ export * from './src/models/permissions.enum';
 export * from './src/models/site.model';
 export * from './src/models/product-version.model';
 
-export * from './src/models/index';
+// Old deprecated import
+import { AuthenticationService as AlfrescoAuthenticationService } from './src/services/authentication.service';
+import { TranslationService as AlfrescoTranslationService } from './src/services/translation.service';
+export { AuthenticationService as AlfrescoAuthenticationService } from './src/services/authentication.service';
+export { TranslationService as AlfrescoTranslationService } from './src/services/translation.service';
+export * from './src/services/search.service';
 
-export const ALFRESCO_CORE_PROVIDERS: any[] = [
-    NotificationService,
-    LogService,
-    LogServiceMock,
-    AlfrescoAuthenticationService,
-    AlfrescoContentService,
-    AlfrescoSettingsService,
-    StorageService,
-    CookieService,
-    AlfrescoApiService,
-    AlfrescoTranslateLoader,
-    AlfrescoTranslationService,
-    RenditionsService,
-    ContentService,
-    AuthGuard,
-    AuthGuardEcm,
-    AuthGuardBpm,
-    ...CONTEXT_MENU_PROVIDERS
-];
+export function providers() {
+    return [
+        UserPreferencesService,
+        NotificationService,
+        LogService,
+        LogServiceMock,
+        AuthenticationService,
+        AlfrescoContentService,
+        AlfrescoSettingsService,
+        StorageService,
+        CookieService,
+        AlfrescoApiService,
+        AlfrescoTranslateLoader,
+        TranslationService,
+        RenditionsService,
+        ContentService,
+        AuthGuard,
+        AuthGuardEcm,
+        AuthGuardBpm,
+        ThumbnailService,
+        UploadService,
+        SearchService,
+
+        DeletedNodesApiService,
+        FavoritesApiService,
+        NodesApiService,
+        PeopleApiService,
+        SearchApiService,
+        SharedLinksApiService,
+        SitesApiService,
+        DiscoveryApiService,
+
+        // Old deprecated import
+        AlfrescoTranslationService,
+        AlfrescoAuthenticationService
+    ];
+}
+
+export function obsoleteMdlDirectives() {
+    return [
+        MDLDirective,
+        AlfrescoMdlMenuDirective,
+        AlfrescoMdlTextFieldDirective
+    ];
+}
 
 export function createTranslateLoader(http: Http, logService: LogService) {
     return new AlfrescoTranslateLoader(http, logService);

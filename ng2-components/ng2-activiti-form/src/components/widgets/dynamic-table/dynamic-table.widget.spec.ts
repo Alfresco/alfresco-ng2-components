@@ -30,61 +30,6 @@ import { DateEditorComponent } from './editors/date/date.editor';
 import { DropdownEditorComponent } from './editors/dropdown/dropdown.editor';
 import { RowEditorComponent } from './editors/row.editor';
 import { TextEditorComponent } from './editors/text/text.editor';
-import { CoreModule, LogService } from 'ng2-alfresco-core';
-import { FormService } from './../../../services/form.service';
-import { EcmModelService } from './../../../services/ecm-model.service';
-import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { RowEditorComponent } from './editors/row.editor';
-import { DropdownEditorComponent } from './editors/dropdown/dropdown.editor';
-import { DateEditorComponent } from './editors/date/date.editor';
-import { BooleanEditorComponent } from './editors/boolean/boolean.editor';
-import { TextEditorComponent } from './editors/text/text.editor';
-import { CoreModule, LogService } from 'ng2-alfresco-core';
-import { FormService } from './../../../services/form.service';
-import { EcmModelService } from './../../../services/ecm-model.service';
-import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
-
-let fakeFormField = {
-    id: 'fake-dynamic-table',
-    name: 'fake-label',
-    value: [{1: 1, 2: 2, 3: 4}],
-    required: false,
-    readOnly: false,
-    overrideId: false,
-    colspan: 1,
-    placeholder: null,
-    minLength: 0,
-    maxLength: 0,
-    params: {
-        existingColspan: 1,
-        maxColspan: 1
-    },
-    sizeX: 2,
-    sizeY: 2,
-    row: -1,
-    col: -1,
-    columnDefinitions: [
-        {
-            id: 1,
-            name: 1,
-            type: 'String',
-            visible: true
-        },
-        {
-            id: 2,
-            name: 2,
-            type: 'String',
-            visible: true
-        },
-        {
-            id: 3,
-            name: 3,
-            type: 'String',
-            visible: true
-        }
-    ]
-};
 
 let fakeFormField = {
     id: 'fake-dynamic-table',
