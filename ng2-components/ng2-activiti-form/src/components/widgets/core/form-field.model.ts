@@ -110,8 +110,6 @@ export class FormFieldModel extends FormWidgetModel {
     set readOnly(readOnly: boolean) {
         this._readOnly = readOnly;
         this.updateForm();
-        this._readOnly = readOnly;
-        this.updateForm();
     }
 
     get isValid(): boolean {
