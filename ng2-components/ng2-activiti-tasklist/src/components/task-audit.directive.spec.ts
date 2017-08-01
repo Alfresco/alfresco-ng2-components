@@ -75,7 +75,7 @@ describe('TaskAuditDirective', () => {
         jasmine.Ajax.uninstall();
     });
 
-    fit('should fetch the pdf Blob when the format is pdf', fakeAsync(() => {
+    it('should fetch the pdf Blob when the format is pdf', fakeAsync(() => {
         component.fileName = 'FakeAuditName';
         component.format = 'pdf';
         let blob = createFakePdfBlob();
@@ -95,7 +95,7 @@ describe('TaskAuditDirective', () => {
 
     }));
 
-    fit('should fetch the json info when the format is json', fakeAsync(() => {
+    it('should fetch the json info when the format is json', fakeAsync(() => {
         component.fileName = 'FakeAuditName';
         component.format = 'json';
         component.download = true;
@@ -116,7 +116,7 @@ describe('TaskAuditDirective', () => {
 
     }));
 
-    fit('should fetch the pdf Blob as default when the format is UNKNOW', fakeAsync(() => {
+    it('should fetch the pdf Blob as default when the format is UNKNOW', fakeAsync(() => {
         component.fileName = 'FakeAuditName';
         component.format = 'fakeFormat';
         let blob = createFakePdfBlob();
