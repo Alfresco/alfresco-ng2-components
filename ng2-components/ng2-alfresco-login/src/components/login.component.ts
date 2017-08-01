@@ -29,12 +29,6 @@ enum LoginSteps {
     Welcome = 2
 }
 
-enum LoginSteps {
-    Landing = 0,
-    Checking = 1,
-    Welcome = 2
-}
-
 @Component({
     selector: 'adf-login, alfresco-login',
     templateUrl: './login.component.html',
