@@ -20,8 +20,9 @@
   * [Properties](#properties-1)
   * [Events](#events-1)
 - [FileUploadingDialogComponent](#fileuploadingdialogcomponent)
+  * [Properties](#properties-2)
 - [UploadService](#uploadservice)
-  * [Configuration](#configuration)
+  * [Ignore list configuration](#ignore-list-configuration)
   * [Events](#events-2)
 - [Build from sources](#build-from-sources)
 - [NPM scripts](#npm-scripts)
@@ -200,13 +201,11 @@ This component should be used in combination with upload button or drag & drop a
 
 Provides access to various APIs related to file upload features.
 
-### Configuration
+### Ignore list configuration
 
-There is the possibility to point out file name or file extension to be excluded from upload process into the app.config.json file, see [here](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-alfresco-core#appconfigservice) for more details.
-This will make it easy to avoid uploading of system files like : '.DS_Store'.
-By default the files already filtered out are : '.git', '.DS_Store' and 'desktop.ini'.
-It is possible to add any expression for filtering files like '*.txt'. The file name check is done via 
-[minimatch library](https://www.npmjs.com/package/minimatch) so in excluded files list it is possible to add any expression accepted by this library.
+Is possible add an ignore list for files that you don't want to allow upload on your CS.
+The configuration of this service is saved in the ***app.config.json file***.If you want more details about the configuration service follow this [link](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-alfresco-core#appconfigservice).
+In the example below you can see how filtered out the : '.git', '.DS_Store' and 'desktop.ini'.
 
 **app.config.json**
 
@@ -222,6 +221,10 @@ It is possible to add any expression for filtering files like '*.txt'. The file 
     }
 }
 ```
+
+Note:
+- Standard glob patterns work.
+- You can end patterns with a forward slash / to specify a directory.
 
 ### Events
 
