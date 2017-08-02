@@ -52,18 +52,7 @@ export class NodePermissionDirective implements OnChanges, AfterViewInit {
      * @memberof NodePermissionDirective
      */
     updateElement(): boolean {
-        let enable = true;
-
-        if (this.nodes && this.nodes.length > 0) {
-            for (let node of this.nodes) {
-                if (!this.contentService.hasPermission(node.entry, this.permission)) {
-                    enable = false;
-                    break;
-                }
-            }
-        } else {
-            enable = false;
-        }
+        let enable = this.hasPermission(this.nodes, this.permission);
 
         if (enable) {
             this.enableElement();
@@ -90,6 +79,23 @@ export class NodePermissionDirective implements OnChanges, AfterViewInit {
      */
     disableElement() {
         this.renderer.setAttribute(this.elementRef.nativeElement, 'disabled', 'true');
+    }
+
+    hasPermission(nodes: MinimalNodeEntity[], permission: string) {
+        let result = true;
+
+        if (nodes && nodes.length > 0) {
+            for (let node of nodes) {
+                if (!this.contentService.hasPermission(node.entry, permission)) {
+                    result = false;
+                    break;
+                }
+            }
+        } else {
+            result = false;
+        }
+
+        return result;
     }
 
 }
