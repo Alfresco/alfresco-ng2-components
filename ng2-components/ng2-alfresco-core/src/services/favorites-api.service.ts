@@ -35,9 +35,6 @@ export class FavoritesApiService {
     }
 
     static remapEntry({ entry }: any): any {
-        entry.createdAt = new Date(entry.createdAt);
-        entry.modifiedAt = new Date(entry.modifiedAt);
-
         entry.properties = {
             'cm:title': entry.title,
             'cm:description': entry.description
