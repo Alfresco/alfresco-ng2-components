@@ -1,5 +1,9 @@
 # Contributing to ADF 
 
+- [Library Contents](#submitting-a-pull-request-pr)
+- [Code style](#code-style)
+- [Test guide](#test-guide)
+
 ## Submitting a Pull Request (PR)
 
 Before you submit please follow the steps below: 
@@ -46,4 +50,29 @@ If your code is not compliant to one of these rules you will receive an error wh
 The ADF-Rules :
 * File name component/directive cannot start with Alfresco/Activiti/adf - this rule is to help developers find files easily
 * Class names cannot start with Alfresco/Activiti/adf for the same reason as above
-* scss is mandatory and the classes have to have the adf- prefix
+* scss is mandatory. All the classes need to have the adf- prefix
+
+## Test guide
+In ADF we are encouraging the use of behavior-driven development (BDD)
+
+### General guidelines
+
+* Class selector in all the tests is not suggested. Use of the element ID is preferred
+* Any test case should test only one behavior
+* Use of the Angular [testBed](https://angular.io/guide/testing#testbed) is highly recommended
+
+### File name
+
+* The file name specification as to be the same of the component/service/pipe it test plus the .spec. suffix
+* The specification file has to be in the same folder of the component/service/pipe it test
+
+### Describer Name
+
+* The Main describer of the test should be the name of the class under test
+* The sub describe is used for grouping related behavior test. Do not over use it
+
+### Test Name
+
+Any test should follow the naming convetion:
+
+[Should] [ ***Expected Behavior** ] [when/after/before] [ ***State Under Test*** ].
