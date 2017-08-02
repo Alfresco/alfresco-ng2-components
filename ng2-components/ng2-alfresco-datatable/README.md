@@ -173,7 +173,7 @@ Here's the list of available properties you can define for a Data Column definit
 | type | string (text\|image\|date) | text | Value type |
 | format | string | | Value format (if supported by components), for example format of the date |
 | sortable | boolean | true | Toggles ability to sort by this column, for example by clicking the column header |
-| title | string | | Display title of the column, typically used for column headers |
+| title | string | | Display title of the column, typically used for column headers. You can use the i18n resouce key to get it translated automatically. |
 | template | `TemplateRef` | | Custom column template |
 | sr-title | string | | Screen reader title, used for accessibility purposes |
 | class | string | | Additional CSS class to be applied to column (header and cells) |
@@ -217,6 +217,20 @@ onRowClick(event) {
 ```
 
 ![](docs/assets/datatable-dom-events.png)
+
+### Automatic column header translation
+
+You can also use i18n resource keys with DataColumn `title` property.
+The component will automatically check the corresponding i18n resources and fetch corresponding value.
+
+```html
+<data-column
+    key="name"
+    title="MY.RESOURCE.KEY">
+</data-column>
+```
+
+This feature is optional. Regular text either plain or converted via the `translate` pipe will still be working as it was before.
 
 ### Custom Empty content template
 
