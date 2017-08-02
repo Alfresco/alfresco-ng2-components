@@ -23,7 +23,7 @@ import { ContentLinkModel } from './../components/widgets/core/content-link.mode
 import { GroupUserModel } from './../components/widgets/core/group-user.model';
 import { GroupModel } from './../components/widgets/core/group.model';
 import { FormModel, FormOutcomeEvent, FormOutcomeModel, FormValues } from './../components/widgets/core/index';
-import { FormErrorEvent, FormEvent, FormFieldEvent } from './../events/index';
+import { FormErrorEvent, FormEvent, FormFieldEvent, ValidateFormEvent, ValidateFormFieldEvent } from './../events/index';
 import { EcmModelService } from './ecm-model.service';
 
 @Injectable()
@@ -32,17 +32,20 @@ export class FormService {
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
-    formLoaded: Subject<FormEvent> = new Subject<FormEvent>();
-    formDataRefreshed: Subject<FormEvent> = new Subject<FormEvent>();
-    formFieldValueChanged: Subject<FormFieldEvent> = new Subject<FormFieldEvent>();
-    formEvents: Subject<Event> = new Subject<Event>();
-    taskCompleted: Subject<FormEvent> = new Subject<FormEvent>();
-    taskCompletedError: Subject<FormErrorEvent> = new Subject<FormErrorEvent>();
-    taskSaved: Subject<FormEvent> = new Subject<FormEvent>();
-    taskSavedError: Subject<FormErrorEvent> = new Subject<FormErrorEvent>();
-    formContentClicked: Subject<ContentLinkModel> = new Subject<ContentLinkModel>();
+    formLoaded = new Subject<FormEvent>();
+    formDataRefreshed = new Subject<FormEvent>();
+    formFieldValueChanged = new Subject<FormFieldEvent>();
+    formEvents = new Subject<Event>();
+    taskCompleted = new Subject<FormEvent>();
+    taskCompletedError = new Subject<FormErrorEvent>();
+    taskSaved = new Subject<FormEvent>();
+    taskSavedError = new Subject<FormErrorEvent>();
+    formContentClicked = new Subject<ContentLinkModel>();
 
-    executeOutcome: Subject<FormOutcomeEvent> = new Subject<FormOutcomeEvent>();
+    validateForm = new Subject<ValidateFormEvent>();
+    validateFormField = new Subject<ValidateFormFieldEvent>();
+
+    executeOutcome = new Subject<FormOutcomeEvent>();
 
     constructor(private ecmModelService: EcmModelService,
                 private apiService: AlfrescoApiService,
