@@ -20,7 +20,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { AlfrescoTranslationService, CoreModule, SearchService, SiteModel } from 'ng2-alfresco-core';
+import { AlfrescoContentService, AlfrescoTranslationService, CoreModule, SearchService, SiteModel } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { MaterialModule } from '../../material.module';
 import { DocumentListService } from '../../services/document-list.service';
@@ -41,12 +41,6 @@ const ONE_FOLDER_RESULT = {
                 }
             }
         ]
-    }
-};
-
-const NO_RESULT = {
-    list: {
-        entries: []
     }
 };
 
@@ -87,6 +81,7 @@ describe('ContentNodeSelectorComponent', () => {
                 ContentNodeSelectorComponent
             ],
             providers: [
+                AlfrescoContentService,
                 AlfrescoTranslationService,
                 DocumentListService,
                 SearchService,
@@ -107,6 +102,7 @@ describe('ContentNodeSelectorComponent', () => {
                 title: 'Move along citizen...',
                 select: new EventEmitter<MinimalNodeEntryEntity>(),
                 rowFilter: () => {},
+                imageResolver: () => 'piccolo',
                 currentFolderId: 'cat-girl-nuku-nuku'
             };
 
@@ -141,6 +137,12 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(documentList.componentInstance.rowFilter).toBe(data.rowFilter);
             });
 
+            it('should pass through the injected imageResolver to the documentlist', () => {
+                let documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
+                expect(documentList).not.toBeNull('Document list should be shown');
+                expect(documentList.componentInstance.imageResolver).toBe(data.imageResolver);
+            });
+
             it('should trigger the INJECTED select event when selection has been made', (done) => {
                 const expectedNode = <MinimalNodeEntryEntity> {};
                 data.select.subscribe((node) => {
@@ -162,13 +164,13 @@ describe('ContentNodeSelectorComponent', () => {
             });
 
             it('should be shown if dialogRef is injected', () => {
-                const componentInstance = new ContentNodeSelectorComponent(null, null, data, dummyMdDialogRef);
+                const componentInstance = new ContentNodeSelectorComponent(null, null, null, data, dummyMdDialogRef);
                 expect(componentInstance.inDialog).toBeTruthy();
             });
 
             it('should should call the close method in the injected dialogRef', () => {
                 spyOn(dummyMdDialogRef, 'close');
-                const componentInstance = new ContentNodeSelectorComponent(null, null, data, dummyMdDialogRef);
+                const componentInstance = new ContentNodeSelectorComponent(null, null, null, data, dummyMdDialogRef);
 
                 componentInstance.close();
 
@@ -223,6 +225,17 @@ describe('ContentNodeSelectorComponent', () => {
 
         describe('Search functionality', () => {
 
+            function defaultSearchOptions(rootNodeId = undefined) {
+                return {
+                    include: ['path', 'allowableOperations'],
+                    skipCount: 0,
+                    rootNodeId,
+                    nodeType: 'cm:folder',
+                    maxItems: 40,
+                    orderBy: null
+                };
+            }
+
             beforeEach(() => {
                 component.currentFolderId = 'cat-girl-nuku-nuku';
                 fixture.detectChanges();
@@ -231,14 +244,7 @@ describe('ContentNodeSelectorComponent', () => {
             it('should load the results by calling the search api on search change', () => {
                 typeToSearchBox('kakarot');
 
-                expect(searchSpy).toHaveBeenCalledWith('kakarot*', {
-                    include: ['path'],
-                    skipCount: 0,
-                    rootNodeId: undefined,
-                    nodeType: 'cm:folder',
-                    maxItems: 40,
-                    orderBy: null
-                });
+                expect(searchSpy).toHaveBeenCalledWith('kakarot*', defaultSearchOptions());
             });
 
             it('should NOT call the search api if the searchTerm length is less than 4 characters', () => {
@@ -260,14 +266,7 @@ describe('ContentNodeSelectorComponent', () => {
                 component.siteChanged(<SiteModel> { guid: 'namek' });
 
                 expect(searchSpy.calls.count()).toBe(2, 'Search count should be two after the site change');
-                expect(searchSpy.calls.argsFor(1)).toEqual(['vegeta*', {
-                    include: ['path'],
-                    skipCount: 0,
-                    rootNodeId: 'namek',
-                    nodeType: 'cm:folder',
-                    maxItems: 40,
-                    orderBy: null
-                }]);
+                expect(searchSpy.calls.argsFor(1)).toEqual(['vegeta*', defaultSearchOptions('namek') ]);
             });
 
             it('should show the search icon by default without the X (clear) icon', () => {
@@ -293,7 +292,7 @@ describe('ContentNodeSelectorComponent', () => {
             it('should clear the search field, nodes and chosenNode when clicking on the X (clear) icon', () => {
                 component.chosenNode = <MinimalNodeEntryEntity> {};
                 component.nodes = [ component.chosenNode ];
-                component.searchTerm = 'whatever';
+                component.searchTerm = 'piccolo';
 
                 component.clear();
 
@@ -317,6 +316,17 @@ describe('ContentNodeSelectorComponent', () => {
                 let documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
                 expect(documentList).not.toBeNull('Document list should be shown');
                 expect(documentList.componentInstance.rowFilter).toBe(filter);
+            });
+
+            it('should pass through the imageResolver to the documentList', () => {
+                const resolver = () => 'piccolo';
+                component.imageResolver = resolver;
+
+                fixture.detectChanges();
+
+                let documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
+                expect(documentList).not.toBeNull('Document list should be shown');
+                expect(documentList.componentInstance.imageResolver).toBe(resolver);
             });
 
             it('should show the result list when search was performed', async(() => {
@@ -367,6 +377,14 @@ describe('ContentNodeSelectorComponent', () => {
 
         describe('Choose button', () => {
 
+            const entry: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {};
+            let hasPermission;
+
+            beforeEach(() => {
+                const alfrescoContentService = TestBed.get(AlfrescoContentService);
+                spyOn(alfrescoContentService, 'hasPermission').and.callFake(() => hasPermission);
+            });
+
             it('should be disabled by default', () => {
                 fixture.detectChanges();
 
@@ -374,17 +392,41 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(chooseButton.nativeElement.disabled).toBe(true);
             });
 
-            it('should be enabled when clicking on one element in the list (onNodeSelect)', () => {
-                fixture.detectChanges();
+            it('should be enabled when clicking on a node (with the right permissions) in the list (onNodeSelect)', () => {
+                hasPermission = true;
 
-                component.onNodeSelect({ detail: { node: { entry: <MinimalNodeEntryEntity> {} } } });
+                component.onNodeSelect({ detail: { node: { entry } } });
                 fixture.detectChanges();
 
                 let chooseButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
                 expect(chooseButton.nativeElement.disabled).toBe(false);
             });
 
+            it('should remain disabled when clicking on a node (with the WRONG permissions) in the list (onNodeSelect)', () => {
+                hasPermission = false;
+
+                component.onNodeSelect({ detail: { node: { entry } } });
+                fixture.detectChanges();
+
+                let chooseButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
+                expect(chooseButton.nativeElement.disabled).toBe(true);
+            });
+
+            it('should become disabled when clicking on a node (with the WRONG permissions) after previously selecting a right node', () => {
+                hasPermission = true;
+                component.onNodeSelect({ detail: { node: { entry } } });
+                fixture.detectChanges();
+
+                hasPermission = false;
+                component.onNodeSelect({ detail: { node: { entry } } });
+                fixture.detectChanges();
+
+                let chooseButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
+                expect(chooseButton.nativeElement.disabled).toBe(true);
+            });
+
             it('should be disabled when deselecting the previously selected element in the list (onNodeUnselect)', () => {
+                hasPermission = true;
                 component.onNodeSelect({ detail: { node: { entry: <MinimalNodeEntryEntity> {} } } });
                 fixture.detectChanges();
 

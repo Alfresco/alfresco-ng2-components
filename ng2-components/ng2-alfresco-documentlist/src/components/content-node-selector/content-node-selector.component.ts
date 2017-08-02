@@ -18,13 +18,14 @@
 import { Component, EventEmitter, Inject, Input, Optional, Output, ViewEncapsulation } from '@angular/core';
 import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
 import { MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
-import { AlfrescoTranslationService, SearchOptions, SearchService, SiteModel } from 'ng2-alfresco-core';
-import { RowFilter } from '../../data/share-datatable-adapter';
+import { AlfrescoContentService, AlfrescoTranslationService, SearchOptions, SearchService, SiteModel } from 'ng2-alfresco-core';
+import { ImageResolver, RowFilter } from '../../data/share-datatable-adapter';
 
 export interface ContentNodeSelectorComponentData {
     title: string;
-    currentFolderId?: string|null;
-    rowFilter?: RowFilter|null;
+    currentFolderId?: string;
+    rowFilter?: RowFilter;
+    imageResolver?: ImageResolver;
     select: EventEmitter<MinimalNodeEntryEntity>;
 }
 
@@ -51,11 +52,15 @@ export class ContentNodeSelectorComponent {
     @Input()
     rowFilter: RowFilter = null;
 
+    @Input()
+    imageResolver: ImageResolver = null;
+
     @Output()
     select: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter<MinimalNodeEntryEntity>();
 
     constructor(private searchService: SearchService,
-                @Optional() translateService: AlfrescoTranslationService,
+                private contentService: AlfrescoContentService,
+                @Optional() private translateService: AlfrescoTranslationService,
                 @Optional() @Inject(MD_DIALOG_DATA) public data?: ContentNodeSelectorComponentData,
                 @Optional() private containingDialog?: MdDialogRef<ContentNodeSelectorComponent>) {
 
@@ -68,6 +73,7 @@ export class ContentNodeSelectorComponent {
             this.select = data.select;
             this.currentFolderId = data.currentFolderId;
             this.rowFilter = data.rowFilter;
+            this.imageResolver = data.imageResolver;
         }
 
         if (containingDialog) {
@@ -122,7 +128,7 @@ export class ContentNodeSelectorComponent {
         if (this.searchTerm.length > 3) {
             const searchTerm = this.searchTerm + '*';
             let searchOpts: SearchOptions = {
-                include: ['path'],
+                include: ['path', 'allowableOperations'],
                 skipCount: 0,
                 rootNodeId: this.siteId,
                 nodeType: 'cm:folder',
@@ -145,7 +151,12 @@ export class ContentNodeSelectorComponent {
      * @param event CustomEvent for node-select
      */
     onNodeSelect(event: any): void {
-        this.chosenNode = event.detail.node.entry;
+        const entry: MinimalNodeEntryEntity = event.detail.node.entry;
+        if (this.contentService.hasPermission(entry, 'update')) {
+            this.chosenNode = entry;
+        } else {
+            this.onNodeUnselect();
+        }
     }
 
     /**
