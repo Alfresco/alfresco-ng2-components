@@ -28,6 +28,20 @@ import { FormValues } from './form-values';
 import { FormWidgetModel, FormWidgetModelCache } from './form-widget.model';
 import { TabModel } from './tab.model';
 
+import {
+    DateFieldValidator,
+    FormFieldValidator,
+    MaxDateFieldValidator,
+    MaxLengthFieldValidator,
+    MaxValueFieldValidator,
+    MinDateFieldValidator,
+    MinLengthFieldValidator,
+    MinValueFieldValidator,
+    NumberFieldValidator,
+    RegExFieldValidator,
+    RequiredFieldValidator
+} from './form-field-validator';
+
 export class FormModel {
 
     static UNSET_TASK_NAME: string = 'Nameless task';
@@ -53,6 +67,7 @@ export class FormModel {
     fields: FormWidgetModel[] = [];
     outcomes: FormOutcomeModel[] = [];
     customFieldTemplates: FormFieldTemplates = {};
+    fieldValidators: FormFieldValidator[] = [];
     readonly selectedOutcome: string;
 
     values: FormValues = {};
@@ -121,6 +136,20 @@ export class FormModel {
                 );
             }
         }
+
+        this.fieldValidators = [
+            new RequiredFieldValidator(),
+            new NumberFieldValidator(),
+            new MinLengthFieldValidator(),
+            new MaxLengthFieldValidator(),
+            new MinValueFieldValidator(),
+            new MaxValueFieldValidator(),
+            new RegExFieldValidator(),
+            new DateFieldValidator(),
+            new MinDateFieldValidator(),
+            new MaxDateFieldValidator()
+        ];
+
         this.validateForm();
     }
 
