@@ -98,6 +98,7 @@ export { DiscoveryApiService } from './src/services/discovery-api.service';
 
 import { DataColumnListComponent } from './src/components/data-column/data-column-list.component';
 import { DataColumnComponent } from './src/components/data-column/data-column.component';
+import { NodePermissionDirective } from './src/directives/node-permission.directive';
 import { UploadDirective } from './src/directives/upload.directive';
 import { FileSizePipe } from './src/pipes/file-size.pipe';
 import { HighlightPipe } from './src/pipes/text-highlight.pipe';
@@ -209,6 +210,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
     declarations: [
         ...obsoleteMdlDirectives(),
         UploadDirective,
+        NodePermissionDirective,
         DataColumnComponent,
         DataColumnListComponent,
         FileSizePipe,
@@ -229,6 +231,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         ToolbarModule,
         ...obsoleteMdlDirectives(),
         UploadDirective,
+        NodePermissionDirective,
         DataColumnComponent,
         DataColumnListComponent,
         FileSizePipe,

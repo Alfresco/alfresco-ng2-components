@@ -30,7 +30,9 @@
                 <button md-icon-button (click)="onCreateFolderClicked($event)">
                     <md-icon>create_new_folder</md-icon>
                 </button>
-                <button md-icon-button>
+                <button md-icon-button
+                        adf-node-permission="delete"
+                        [adf-nodes]="documentList.selection">
                     <md-icon>delete</md-icon>
                 </button>
 
