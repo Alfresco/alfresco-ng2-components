@@ -367,6 +367,20 @@ export class TaskListService {
     }
 
     /**
+     * Assign task to user/group
+     * @param taskId - string
+     * @param requestNode - any
+     * @returns {TaskDetailsModel}
+     */
+    assignTask(taskId: string, requestNode: any): Observable<TaskDetailsModel> {
+        return Observable.fromPromise(this.callApiAssignTask(taskId, requestNode))
+            .map(res => res)
+            .map((response: TaskDetailsModel) => {
+                return new TaskDetailsModel(response);
+            }).catch(err => this.handleError(err));
+    }
+
+    /**
      * Claim a task
      * @param id - taskId
      */
@@ -495,5 +509,9 @@ export class TaskListService {
             'icon': 'glyphicon-ok-sign',
             'filter': { 'sort': 'created-desc', 'name': '', 'state': 'completed', 'assignment': 'involved' }
         });
+    }
+
+    private callApiAssignTask(taskId: string, requestNode: any) {
+        return this.apiService.getInstance().activiti.taskApi.assignTask(taskId, requestNode);
     }
 }
