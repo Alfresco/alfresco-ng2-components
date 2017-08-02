@@ -33,12 +33,14 @@ import {
     fakeTaskListDifferentProcessDefinitionKey,
     fakeTasksChecklist,
     fakeTasksComment,
-    fakeUser,
+    fakeUser1,
+    fakeUser2,
     secondFakeTaskList
 } from '../assets/tasklist-service.mock';
 import { Comment } from '../models/comment.model';
 import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
+import { User } from '../models/user.model';
 import { TaskListService } from './tasklist.service';
 
 declare let jasmine: any;
@@ -288,7 +290,7 @@ describe('Activiti TaskList Service', () => {
                 name: 'FakeNameTask',
                 description: null,
                 category: null,
-                assignee: fakeUser,
+                assignee: fakeUser1,
                 created: ''
             });
 
@@ -307,7 +309,7 @@ describe('Activiti TaskList Service', () => {
                 contentType: 'application/json',
                 responseText: JSON.stringify({
                     id: '777', name: 'FakeNameTask', description: null, category: null,
-                    assignee: fakeUser,
+                    assignee: fakeUser1,
                     created: '2016-07-15T11:19:17.440+0000'
                 })
             });
@@ -345,7 +347,7 @@ describe('Activiti TaskList Service', () => {
                 contentType: 'application/json',
                 responseText: JSON.stringify({
                     id: '111', message: 'fake-comment-message',
-                    createdBy: fakeUser,
+                    createdBy: fakeUser1,
                     created: '2016-07-15T11:19:17.440+0000'
                 })
             });
@@ -540,7 +542,40 @@ describe('Activiti TaskList Service', () => {
                     name: 'FakeNameTask',
                     description: 'FakeDescription',
                     category: '3',
-                    assignee: fakeUser,
+                    assignee: fakeUser1,
+                    created: '2016-07-15T11:19:17.440+0000'
+                })
+            });
+        });
+
+        it('should assign task to a user', (done) => {
+            let testTaskId = '8888';
+            service.assignTask(testTaskId, fakeUser2).subscribe(
+                (res: TaskDetailsModel) => {
+                    expect(res).toBeDefined();
+                    expect(res.id).toEqual(testTaskId);
+                    expect(res.name).toEqual('FakeNameTask');
+                    expect(res.description).toEqual('FakeDescription');
+                    expect(res.category).toEqual('3');
+                    expect(res.created).not.toEqual('');
+                    expect(res.adhocTaskCanBeReassigned).toBe(true);
+                    expect(res.assignee).toEqual(new User(fakeUser2));
+                    expect(res.involvedPeople).toEqual([fakeUser1]);
+                    done();
+                }
+            );
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 200,
+                contentType: 'application/json',
+                responseText: JSON.stringify({
+                    id: testTaskId,
+                    name: 'FakeNameTask',
+                    description: 'FakeDescription',
+                    adhocTaskCanBeReassigned: true,
+                    category: '3',
+                    assignee: fakeUser2,
+                    involvedPeople: [fakeUser1],
                     created: '2016-07-15T11:19:17.440+0000'
                 })
             });
