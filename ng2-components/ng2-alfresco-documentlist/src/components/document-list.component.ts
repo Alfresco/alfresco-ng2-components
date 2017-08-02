@@ -228,9 +228,16 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             this.loadFolder();
         } else if (changes['currentFolderId'] && changes['currentFolderId'].currentValue) {
             this.loadFolderByNodeId(changes['currentFolderId'].currentValue);
-        } else if (changes['node'] && changes['node'].currentValue) {
-            if (this.data) {
+        } else if (this.data) {
+            if (changes['node'] && changes['node'].currentValue) {
                 this.data.loadPage(changes['node'].currentValue);
+            } else if (changes['rowFilter']) {
+                this.data.setFilter(changes['rowFilter'].currentValue);
+                if (this.currentFolderId) {
+                    this.loadFolderNodesByFolderNodeId(this.currentFolderId, this.pageSize, this.skipCount);
+                }
+            } else if (changes['imageResolver']) {
+                this.data.setImageResolver(changes['imageResolver'].currentValue);
             }
         }
     }
