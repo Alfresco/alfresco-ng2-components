@@ -96,9 +96,9 @@
                     title="{{'DOCUMENT_LIST.COLUMNS.TAG' | translate}}"
                     key="id"
                     class="full-width ellipsis-cell">
-                    <template let-entry="$implicit">
+                    <ng-template let-entry="$implicit">
                         <alfresco-tag-node-list  [nodeId]="entry.data.getValue(entry.row, entry.col)"></alfresco-tag-node-list>
-                    </template>
+                    </ng-template>
                 </data-column>
                 -->
                 <data-column
