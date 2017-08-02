@@ -82,20 +82,11 @@ export class NodePermissionDirective implements OnChanges, AfterViewInit {
     }
 
     hasPermission(nodes: MinimalNodeEntity[], permission: string) {
-        let result = true;
-
         if (nodes && nodes.length > 0) {
-            for (let node of nodes) {
-                if (!this.contentService.hasPermission(node.entry, permission)) {
-                    result = false;
-                    break;
-                }
-            }
-        } else {
-            result = false;
+            return nodes.every(node => this.contentService.hasPermission(node.entry, permission));
         }
 
-        return result;
+        return false;
     }
 
 }
