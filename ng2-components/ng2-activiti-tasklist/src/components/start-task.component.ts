@@ -17,6 +17,7 @@
 
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Rx';
 import { Form } from '../models/form.model';
 import { StartTaskModel } from '../models/start-task.model';
 import { TaskDetailsModel } from '../models/task-details.model';
@@ -43,11 +44,17 @@ export class StartTaskComponent implements OnInit {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    people: User [] = [];
+    people: User[] = [];
 
     startTaskmodel: StartTaskModel = new StartTaskModel();
 
-    forms: Form [];
+    forms: Form[];
+
+    assignee: any;
+
+    formKey: number;
+
+    taskId: string;
 
     /**
      * Constructor
@@ -70,48 +77,58 @@ export class StartTaskComponent implements OnInit {
         this.getUsers();
     }
 
-    public start() {
+    public start(): void {
         if (this.startTaskmodel.name) {
             this.startTaskmodel.category = this.appId;
-            this.taskService.createNewTask(new TaskDetailsModel(this.startTaskmodel)).subscribe(
+            this.taskService.createNewTask(new TaskDetailsModel(this.startTaskmodel))
+                .switchMap((createRes: any) =>
+                    this.attachForm(createRes.id, this.formKey).defaultIfEmpty(createRes)
+                        .switchMap((attachRes: any) =>
+                            this.assignTask(createRes.id, this.assignee).defaultIfEmpty(attachRes ? attachRes : createRes)
+                        )
+                )
+                .subscribe(
                 (res: any) => {
                     this.success.emit(res);
-                    this.attachForm(res.id);
-                    this.resetForm();
                 },
                 (err) => {
                     this.error.emit(err);
-                    this.logService.error('An error occurred while trying to add the task');
-                }
-            );
+                    this.logService.error('An error occurred while creating new task');
+                });
         }
     }
 
-    private attachForm(taskId: string) {
-        if (this.startTaskmodel.formKey && taskId) {
-            this.taskService.attachFormToATask(taskId, Number(this.startTaskmodel.formKey));
+    private attachForm(taskId: string, formKey: number): Observable<any> {
+        let response = Observable.of();
+        if (taskId && formKey) {
+            response = this.taskService.attachFormToATask(taskId, formKey);
         }
+        return response;
     }
 
-    public onCancel() {
+    private assignTask(taskId: string, assignee: any): Observable<any> {
+        let response = Observable.of();
+        if (taskId && assignee) {
+            response = this.taskService.assignTask(taskId, assignee);
+        }
+        return response;
+    }
+
+    public onCancel(): void {
         this.cancel.emit();
     }
 
-    private loadFormsTask() {
+    private loadFormsTask(): void {
         this.taskService.getFormList().subscribe((res: Form[]) => {
-                this.forms = res;
-            },
+            this.forms = res;
+        },
             (err) => {
                 this.error.emit(err);
                 this.logService.error('An error occurred while trying to get the forms');
             });
     }
 
-    private resetForm() {
-        this.startTaskmodel = null;
-    }
-
-    private getUsers() {
+    private getUsers(): void {
         this.peopleService.getWorkflowUsers().subscribe((users) => {
             this.people = users;
         }, (err) => {
@@ -120,15 +137,15 @@ export class StartTaskComponent implements OnInit {
         });
     }
 
-    isUserNameEmpty(user: any) {
+    public isUserNameEmpty(user: any): boolean {
         return !user || (this.isEmpty(user.firstName) && this.isEmpty(user.lastName));
     }
 
-    private isEmpty(data: string) {
+    private isEmpty(data: string): boolean {
         return data === undefined || data === null || data.trim().length === 0;
     }
 
-    getDisplayUser(firstName: string, lastName: string, delimiter: string = '-'): string {
+    public getDisplayUser(firstName: string, lastName: string, delimiter: string = '-'): string {
         firstName = (firstName !== null ? firstName : '');
         lastName = (lastName !== null ? lastName : '');
         return firstName + delimiter + lastName;
