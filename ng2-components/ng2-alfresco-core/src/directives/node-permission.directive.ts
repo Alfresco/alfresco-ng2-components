@@ -68,7 +68,7 @@ export class NodePermissionDirective implements OnChanges, AfterViewInit {
      *
      * @memberof NodePermissionDirective
      */
-    enableElement() {
+    enableElement(): void {
         this.renderer.removeAttribute(this.elementRef.nativeElement, 'disabled');
     }
 
@@ -77,11 +77,19 @@ export class NodePermissionDirective implements OnChanges, AfterViewInit {
      *
      * @memberof NodePermissionDirective
      */
-    disableElement() {
+    disableElement(): void {
         this.renderer.setAttribute(this.elementRef.nativeElement, 'disabled', 'true');
     }
 
-    hasPermission(nodes: MinimalNodeEntity[], permission: string) {
+    /**
+     * Checks whether all nodes have a particular permission
+     *
+     * @param {MinimalNodeEntity[]} nodes Node collection to check
+     * @param {string} permission Permission to check for each node
+     * @returns {boolean} True if all nodes have provided permission, otherwise False
+     * @memberof NodePermissionDirective
+     */
+    hasPermission(nodes: MinimalNodeEntity[], permission: string): boolean {
         if (nodes && nodes.length > 0) {
             return nodes.every(node => this.contentService.hasPermission(node.entry, permission));
         }
