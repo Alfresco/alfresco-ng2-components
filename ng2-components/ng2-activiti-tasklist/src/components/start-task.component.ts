@@ -16,8 +16,8 @@
  */
 
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Rx';
 import { Form } from '../models/form.model';
 import { StartTaskModel } from '../models/start-task.model';
 import { TaskDetailsModel } from '../models/task-details.model';
@@ -63,9 +63,9 @@ export class StartTaskComponent implements OnInit {
      * @param taskService
      */
     constructor(private translateService: AlfrescoTranslationService,
-        private taskService: TaskListService,
-        private peopleService: PeopleService,
-        private logService: LogService) {
+                private taskService: TaskListService,
+                private peopleService: PeopleService,
+                private logService: LogService) {
 
         if (translateService) {
             translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
@@ -77,7 +77,7 @@ export class StartTaskComponent implements OnInit {
         this.getUsers();
     }
 
-    public start() {
+    public start(): void {
         if (this.startTaskmodel.name) {
             this.startTaskmodel.category = this.appId;
             this.taskService.createNewTask(new TaskDetailsModel(this.startTaskmodel))
@@ -98,28 +98,27 @@ export class StartTaskComponent implements OnInit {
         }
     }
 
-    private attachForm(taskId: string, formKey: number) {
+    private attachForm(taskId: string, formKey: number): Observable<any> {
+        let response = Observable.of();
         if (taskId && formKey) {
-            return this.taskService.attachFormToATask(taskId, formKey);
-        } else {
-            return Observable.of();
+            response = this.taskService.attachFormToATask(taskId, formKey);
         }
+        return response;
     }
 
-    private assignTask(taskId: string, assignee: any) {
+    private assignTask(taskId: string, assignee: any): Observable<any> {
+        let response = Observable.of();
         if (taskId && assignee) {
-            return this.taskService.assignTask(taskId, assignee);
-        } else {
-            return Observable.of();
+            response = this.taskService.assignTask(taskId, assignee);
         }
-
+        return response;
     }
 
-    public onCancel() {
+    public onCancel(): void {
         this.cancel.emit();
     }
 
-    private loadFormsTask() {
+    private loadFormsTask(): void {
         this.taskService.getFormList().subscribe((res: Form[]) => {
             this.forms = res;
         },
@@ -129,7 +128,7 @@ export class StartTaskComponent implements OnInit {
             });
     }
 
-    private getUsers() {
+    private getUsers(): void {
         this.peopleService.getWorkflowUsers().subscribe((users) => {
             this.people = users;
         }, (err) => {
@@ -138,15 +137,15 @@ export class StartTaskComponent implements OnInit {
         });
     }
 
-    isUserNameEmpty(user: any) {
+    public isUserNameEmpty(user: any): boolean {
         return !user || (this.isEmpty(user.firstName) && this.isEmpty(user.lastName));
     }
 
-    private isEmpty(data: string) {
+    private isEmpty(data: string): boolean {
         return data === undefined || data === null || data.trim().length === 0;
     }
 
-    getDisplayUser(firstName: string, lastName: string, delimiter: string = '-'): string {
+    public getDisplayUser(firstName: string, lastName: string, delimiter: string = '-'): string {
         firstName = (firstName !== null ? firstName : '');
         lastName = (lastName !== null ? lastName : '');
         return firstName + delimiter + lastName;
