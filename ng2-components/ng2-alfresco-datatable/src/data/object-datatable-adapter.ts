@@ -20,8 +20,6 @@ import { TemplateRef } from '@angular/core';
 import { ObjectUtils } from 'ng2-alfresco-core';
 import { DataColumn, DataRow, DataSorting, DataTableAdapter } from './datatable-adapter';
 
-declare var require: any;
-
 // Simple implementation of the DataTableAdapter interface.
 export class ObjectDataTableAdapter implements DataTableAdapter {
 
