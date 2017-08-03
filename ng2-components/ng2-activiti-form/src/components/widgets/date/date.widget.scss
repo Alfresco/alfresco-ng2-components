@@ -3,6 +3,14 @@
 
 .adf {
 
+    &-date-widget {
+        .mat-input-suffix {
+            position: absolute;
+            margin-top: 42px;
+            width: 100%;
+        }
+    }
+
     &-date-widget-button {
         position: relative;
         float: right;
@@ -22,10 +30,4 @@
         margin-top: 0;
         margin-bottom: 0;
     }
-}
-
-.mat-input-suffix {
-    position: absolute;
-    margin-top: 42px;
-    width: 100%;
 }

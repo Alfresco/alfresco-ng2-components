@@ -45,8 +45,8 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     ngOnInit() {
-
-        this.dateAdapter.overrideDisplyaFormat = this.field.dateDisplayFormat;
+        let momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
+        momentDateAdapter.overrideDisplyaFormat = this.field.dateDisplayFormat;
 
         if (this.field) {
             if (this.field.minValue) {

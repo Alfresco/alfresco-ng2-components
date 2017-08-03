@@ -1,3 +1,20 @@
+/*!
+ * @license
+ * Copyright 2016 Alfresco Software, Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import { DateAdapter, MdDateFormats } from '@angular/material';
 import { isMoment, Moment } from 'moment';
 import * as moment from 'moment';
@@ -49,6 +66,8 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
                 return this.localeData.monthsShort();
             case 'narrow':
                 return this.localeData.monthsShort().map(month => month[0]);
+            default :
+                return;
         }
     }
 
@@ -63,8 +82,9 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
             case 'short':
                 return this.localeData.weekdaysShort();
             case 'narrow':
-                // Moment does not accept format even though @types/moment suggests it does
                 return this.localeData.weekdaysShort();
+            default :
+                return;
         }
     }
 
@@ -95,9 +115,7 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
     parse(value: any, parseFormat: any): Moment {
         let m = moment(value, parseFormat, true);
         if (!m.isValid()) {
-            // try again, forgiving. will get warning if not ISO8601 or RFC2822
             m = moment(value);
-            console.log(`Moment could not parse '${value}', trying non-strict`, m);
         }
         if (m.isValid()) {
             // if user omits year, it defaults to 2001, so check for that issue.
@@ -111,8 +129,7 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
                 }
             }
             return m;
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -123,8 +140,7 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
 
         if (date && date.format) {
             return date.format(displayFormat);
-        }
-        else {
+        } else {
             return '';
         }
     }
@@ -146,7 +162,6 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
     }
 
     setLocale(locale: any): void {
-        console.info('setLocale', locale);
         this.localeData = moment.localeData(locale);
     }
 
@@ -158,13 +173,10 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
         if (first == null) {
             // same if both null
             return second == null;
-        }
-        else if (isMoment(first)) {
+        } else if (isMoment(first)) {
             return first.isSame(second);
-        }
-        else {
+        } else {
             const isSame = super.sameDate(first, second);
-            console.warn('first not a Moment. fallback to super.sameDate()', first, second, isSame);
             return isSame;
         }
     }
@@ -172,11 +184,9 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
     clampDate(date: Moment, min?: any | Moment, max?: any | Moment): Moment {
         if (min && date.isBefore(min)) {
             return min;
-        }
-        else if (max && date.isAfter(max)) {
+        } else if (max && date.isAfter(max)) {
             return max;
-        }
-        else {
+        } else {
             return date;
         }
     }

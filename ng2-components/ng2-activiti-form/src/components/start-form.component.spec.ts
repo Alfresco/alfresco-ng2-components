@@ -27,9 +27,9 @@ import { TranslationMock } from './../assets/translation.service.mock';
 import { EcmModelService } from './../services/ecm-model.service';
 import { FormService } from './../services/form.service';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
-import { ContentWidgetComponent } from './content.widget';
 import { FormFieldComponent } from './form-field/form-field.component';
 import { StartFormComponent } from './start-form.component';
+import { ContentWidgetComponent } from './widgets/content/content.widget';
 import { MASK_DIRECTIVE } from './widgets/index';
 import { WIDGET_DIRECTIVES } from './widgets/index';
 

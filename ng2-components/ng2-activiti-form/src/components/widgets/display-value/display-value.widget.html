@@ -1,5 +1,6 @@
 <div [ngSwitch]="fieldType" class="adf-display-value-widget {{field.className}}" *ngIf="field?.isVisible">
     <div *ngSwitchCase="'boolean'">
+        {{field}} DISPLAY
         <checkbox-widget readonly="true" [field]="field"></checkbox-widget>
     </div>
     <div *ngSwitchCase="'text'">

@@ -632,19 +632,6 @@ describe('FormComponent', () => {
         expect(formComponent.getFormDefinitionOutcomes).toHaveBeenCalledWith(form);
     });
 
-    /*
-     it('should update the visibility when the container raise the change event', (valueChanged) => {
-     spyOn(formComponent, 'checkVisibility').and.callThrough();
-     let widget = new ContainerWidgetComponent();
-     let fakeForm = new FormModel();
-     let fakeField = new FormFieldModel(fakeForm, {id: 'fakeField', value: 'fakeValue'});
-     widget.formValueChanged.subscribe(field => { valueChanged(); });
-     widget.fieldChanged(fakeField);
-
-     expect(formComponent.checkVisibility).toHaveBeenCalledWith(fakeField);
-     });
-     */
-
     it('should prevent default outcome execution', () => {
 
         let outcome = new FormOutcomeModel(new FormModel(), {

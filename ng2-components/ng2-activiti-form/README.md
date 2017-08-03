@@ -13,6 +13,7 @@
   * [Properties](#properties)
   * [Advanced properties](#advanced-properties)
   * [Events](#events)
+  * [Custom empty form template](#custom-empty-form-template)
   * [Controlling outcome execution behaviour](#controlling-outcome-execution-behaviour)
 - [Activiti Content Component](#activiti-content-component)
   * [Properties](#properties-1)
@@ -240,7 +241,6 @@ You can add a template that will be show if no form definition has been found
 </adf-form>
 
 ```
-
 
 ### Controlling outcome execution behaviour
 

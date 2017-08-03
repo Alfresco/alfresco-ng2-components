@@ -18,6 +18,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MdInputModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
+import { ErrorWidgetComponent } from '../widgets/error/error.component';
 import { FormRenderingService } from './../../services/form-rendering.service';
 import { WidgetVisibilityService } from './../../services/widget-visibility.service';
 import { CheckboxWidgetComponent } from './../widgets/checkbox/checkbox.widget';
@@ -39,7 +40,12 @@ describe('FormFieldComponent', () => {
                 imports: [CoreModule,
                     MdInputModule
                 ],
-                declarations: [FormFieldComponent, TextWidgetComponent, CheckboxWidgetComponent, InputMaskDirective],
+                declarations: [
+                    FormFieldComponent,
+                    TextWidgetComponent,
+                    CheckboxWidgetComponent,
+                    InputMaskDirective,
+                    ErrorWidgetComponent],
                 providers: [
                     FormRenderingService,
                     WidgetVisibilityService
@@ -78,13 +84,6 @@ describe('FormFieldComponent', () => {
 
         expect(component.componentRef).toBeDefined();
         expect(component.componentRef.componentType).toBe(CheckboxWidgetComponent);
-    });
-
-    it('should require field to create component', () => {
-        component.field = null;
-        fixture.detectChanges();
-
-        expect(component.componentRef).toBeUndefined();
     });
 
     it('should require component type to be resolved', () => {

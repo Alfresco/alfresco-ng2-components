@@ -24,8 +24,8 @@ import { FormModel } from '../core/form.model';
 import { TabModel } from '../core/tab.model';
 import { WIDGET_DIRECTIVES } from '../index';
 import { MASK_DIRECTIVE } from '../index';
-import { ContentWidgetComponent } from './../../content.widget';
 import { FormFieldComponent } from './../../form-field/form-field.component';
+import { ContentWidgetComponent } from './../content/content.widget';
 import { TabsWidgetComponent } from './tabs.widget';
 
 describe('TabsWidgetComponent', () => {

@@ -21,15 +21,17 @@ import { CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { MATERIAL_MODULE } from '../../../../index';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
-import { ContentWidgetComponent } from '../../content.widget';
+import { CheckboxWidgetComponent } from '../checkbox/checkbox.widget';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormModel } from '../core/form.model';
+import { ErrorWidgetComponent } from '../error/error.component';
 import { EcmModelService } from './../../../services/ecm-model.service';
 import { FormService } from './../../../services/form.service';
+import { ContentWidgetComponent } from './../content/content.widget';
 import { FormFieldModel } from './../core/form-field.model';
 import { DisplayValueWidgetComponent } from './display-value.widget';
 
-describe('DisplayValueWidgetComponent', () => {
+fdescribe('DisplayValueWidgetComponent', () => {
 
     let widget: DisplayValueWidgetComponent;
     let fixture: ComponentFixture<DisplayValueWidgetComponent>;
@@ -44,7 +46,9 @@ describe('DisplayValueWidgetComponent', () => {
             ],
             declarations: [
                 DisplayValueWidgetComponent,
-                ContentWidgetComponent
+                ContentWidgetComponent,
+                ErrorWidgetComponent,
+                CheckboxWidgetComponent
             ],
             providers: [
                 FormService,
@@ -651,7 +655,7 @@ describe('DisplayValueWidgetComponent', () => {
 
             fixture.whenStable()
                 .then(() => {
-                    let elWidget: any = element.querySelector('#fake-checkbox-id');
+                    let elWidget: any = element.querySelector('#input-fake-checkbox-id');
                     expect(elWidget).toBeDefined();
                     expect(elWidget.checked).toBeTruthy();
                 });
@@ -672,7 +676,7 @@ describe('DisplayValueWidgetComponent', () => {
 
             fixture.whenStable()
                 .then(() => {
-                    let elWidget: any = element.querySelector('#fake-checkbox-id');
+                    let elWidget: any = element.querySelector('#input-fake-checkbox-id');
                     expect(elWidget).toBeDefined();
                     expect(elWidget.checked).toBeFalsy();
                 });

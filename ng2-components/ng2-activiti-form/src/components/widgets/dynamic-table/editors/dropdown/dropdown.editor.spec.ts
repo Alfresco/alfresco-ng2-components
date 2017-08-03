@@ -16,6 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { MATERIAL_MODULE } from '../../../../../../index';
@@ -31,6 +32,12 @@ import {
 import { DropdownEditorComponent } from './dropdown.editor';
 
 describe('DropdownEditorComponent', () => {
+
+    function openSelect() {
+        const dropdown = fixture.debugElement.query(By.css('[class="mat-select-trigger"]'));
+        dropdown.triggerEventHandler('click', null);
+        fixture.detectChanges();
+    }
 
     let component: DropdownEditorComponent;
     let formService: FormService;
@@ -235,9 +242,16 @@ describe('DropdownEditorComponent', () => {
             it('should show visible dropdown widget', async(() => {
                 expect(element.querySelector('#column-id')).toBeDefined();
                 expect(element.querySelector('#column-id')).not.toBeNull();
-                expect(element.querySelector('#opt_1')).not.toBeNull();
-                expect(element.querySelector('#opt_2')).not.toBeNull();
-                expect(element.querySelector('#opt_3')).not.toBeNull();
+
+                openSelect();
+
+                const optOne = fixture.debugElement.queryAll(By.css('[id="md-option-1"]'));
+                const optTwo = fixture.debugElement.queryAll(By.css('[id="md-option-2"]'));
+                const optThree = fixture.debugElement.queryAll(By.css('[id="md-option-3"]'));
+
+                expect(optOne).not.toBeNull();
+                expect(optTwo).not.toBeNull();
+                expect(optThree).not.toBeNull();
             }));
         });
 
@@ -276,18 +290,18 @@ describe('DropdownEditorComponent', () => {
             it('should show visible dropdown widget', async(() => {
                 expect(element.querySelector('#column-id')).toBeDefined();
                 expect(element.querySelector('#column-id')).not.toBeNull();
-                expect(element.querySelector('#opt_1')).not.toBeNull();
-                expect(element.querySelector('#opt_2')).not.toBeNull();
-                expect(element.querySelector('#opt_3')).not.toBeNull();
+
+                openSelect();
+
+                const optOne = fixture.debugElement.queryAll(By.css('[id="md-option-1"]'));
+                const optTwo = fixture.debugElement.queryAll(By.css('[id="md-option-2"]'));
+                const optThree = fixture.debugElement.queryAll(By.css('[id="md-option-3"]'));
+
+                expect(optOne).not.toBeNull();
+                expect(optTwo).not.toBeNull();
+                expect(optThree).not.toBeNull();
             }));
 
-            it('should show visible dropdown widget', async(() => {
-                expect(element.querySelector('#column-id')).toBeDefined();
-                expect(element.querySelector('#column-id')).not.toBeNull();
-                expect(element.querySelector('#opt_1')).not.toBeNull();
-                expect(element.querySelector('#opt_2')).not.toBeNull();
-                expect(element.querySelector('#opt_3')).not.toBeNull();
-            }));
         });
 
     });

@@ -22,9 +22,9 @@ import { By } from '@angular/platform-browser';
 import { AlfrescoTranslationService, ContentService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 
+import { EcmModelService } from '../../../services/ecm-model.service';
 import { FormService } from '../../../services/form.service';
 import { ContentLinkModel } from '../index';
-import { EcmModelService } from './../services/ecm-model.service';
 import { ContentWidgetComponent } from './content.widget';
 
 declare let jasmine: any;
