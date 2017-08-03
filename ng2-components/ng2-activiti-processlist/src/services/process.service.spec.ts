@@ -34,7 +34,6 @@ import { ProcessFilterRequestRepresentation } from '../models/process-instance-f
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessService } from './process.service';
 
-declare let jasmine: any;
 describe('ProcessService', () => {
 
     let service: ProcessService;

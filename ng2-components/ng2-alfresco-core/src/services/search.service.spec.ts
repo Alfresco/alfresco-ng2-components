@@ -28,8 +28,6 @@ import { SearchService } from './search.service';
 import { StorageService } from './storage.service';
 import { UserPreferencesService } from './user-preferences.service';
 
-declare let jasmine: any;
-
 describe('SearchService', () => {
 
     let service: SearchService;

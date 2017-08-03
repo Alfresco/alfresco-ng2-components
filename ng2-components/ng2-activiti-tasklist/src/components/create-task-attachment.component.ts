@@ -35,7 +35,7 @@ export class AttachmentComponent implements OnChanges {
     @Output()
     success: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(private translateService: AlfrescoTranslationService,
+    constructor(translateService: AlfrescoTranslationService,
                 private activitiContentService: ActivitiContentService) {
 
         if (translateService) {

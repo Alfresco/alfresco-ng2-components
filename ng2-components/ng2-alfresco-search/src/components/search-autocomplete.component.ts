@@ -20,8 +20,6 @@ import { MinimalNodeEntity } from 'alfresco-js-api';
 import { AlfrescoTranslationService, SearchOptions, SearchService } from 'ng2-alfresco-core';
 import { ThumbnailService } from 'ng2-alfresco-core';
 
-declare var require: any;
-
 @Component({
     selector: 'adf-search-autocomplete, alfresco-search-autocomplete',
     templateUrl: './search-autocomplete.component.html',

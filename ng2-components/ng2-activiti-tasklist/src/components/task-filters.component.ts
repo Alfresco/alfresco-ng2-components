@@ -16,12 +16,10 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { Observable, Observer } from 'rxjs/Rx';
 import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
 import { TaskListService } from './../services/tasklist.service';
-
-declare let componentHandler: any;
 
 @Component({
     selector: 'adf-filters, activiti-filters',
@@ -59,9 +57,8 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
 
     filters: FilterRepresentationModel [] = [];
 
-    constructor(private translateService: AlfrescoTranslationService,
-                private activiti: TaskListService,
-                private logService: LogService) {
+    constructor(translateService: AlfrescoTranslationService,
+                private activiti: TaskListService) {
         this.filter$ = new Observable<FilterRepresentationModel>(observer => this.filterObserver = observer).share();
 
         if (translateService) {

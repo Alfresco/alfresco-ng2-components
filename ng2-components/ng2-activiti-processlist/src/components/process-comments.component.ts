@@ -41,8 +41,7 @@ export class ProcessCommentsComponent {
      * Constructor
      * @param translate Translation service
      */
-    constructor(private translate: AlfrescoTranslationService) {
-
+    constructor(translate: AlfrescoTranslationService) {
         if (translate) {
             translate.addTranslationFolder('ng2-activiti-processlist', 'assets/ng2-activiti-processlist');
         }
