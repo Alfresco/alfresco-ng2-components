@@ -286,6 +286,16 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
         this.contentName = content.name;
     }
 
+    onAuditClick(event: any): void {
+        this.fileShowed = true;
+        this.content = event.value;
+        this.contentName = event.fileName;
+    }
+
+    onAuditError(event: any): void {
+        console.error('My custom error message' + event);
+    }
+
     onTaskCreated(data: any): void {
         this.currentTaskId = data.parentTaskId;
         this.taskList.reload();
