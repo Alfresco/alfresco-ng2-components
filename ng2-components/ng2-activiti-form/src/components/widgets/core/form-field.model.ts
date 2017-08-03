@@ -16,7 +16,6 @@
  */
 
 /* tslint:disable:component-selector  */
-
 import * as moment from 'moment';
 import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 import { ContainerColumnModel } from './container-column.model';
@@ -128,7 +127,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.name = json.name;
             this.type = json.type;
             this.required = <boolean> json.required;
-            this._readOnly = <boolean> json.readOnly;
+            this._readOnly = <boolean> json.readOnly || json.type === 'readonly';
             this.overrideId = <boolean> json.overrideId;
             this.tab = json.tab;
             this.restUrl = json.restUrl;
@@ -158,7 +157,9 @@ export class FormFieldModel extends FormWidgetModel {
                 this.placeholder = json.placeholder;
             }
 
-            this.containerFactory(json, form);
+            if (json.type === 'container') {
+                this.containerFactory(json, form);
+            }
         }
 
         if (this.hasEmptyValue && this.options && this.options.length > 0) {
