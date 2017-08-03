@@ -45,7 +45,7 @@ describe('FormComponent', () => {
         spyOn(visibilityService, 'refreshVisibility').and.stub();
         formService = new FormService(null, null, logService);
         nodeService = new NodeService(null);
-        formComponent = new FormComponent(formService, visibilityService, null, nodeService, logService);
+        formComponent = new FormComponent(formService, visibilityService, null, nodeService);
     });
 
     it('should upgrade MDL content on view checked', () => {

@@ -232,8 +232,4 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
         this.filters = [];
         this.currentFilter = undefined;
     }
-
-    private isCurrentFilterEmpty(): boolean {
-        return this.currentFilter === undefined || null ? true : false;
-    }
 }
