@@ -24,7 +24,6 @@ import { AttachWidgetComponent } from './attach/attach.widget';
 import { CheckboxWidgetComponent } from './checkbox/checkbox.widget';
 import { DateWidgetComponent } from './date/date.widget';
 import { DisplayTextWidgetComponentComponent } from './display-text/display-text.widget';
-import { DisplayValueWidgetComponent } from './display-value/display-value.widget';
 import { DropdownWidgetComponent } from './dropdown/dropdown.widget';
 import { DynamicTableWidgetComponent } from './dynamic-table/dynamic-table.widget';
 import { BooleanEditorComponent } from './dynamic-table/editors/boolean/boolean.editor';
@@ -61,7 +60,6 @@ export * from './multiline-text/multiline-text.widget';
 export * from './dropdown/dropdown.widget';
 export * from './hyperlink/hyperlink.widget';
 export * from './radio-buttons/radio-buttons.widget';
-export * from './display-value/display-value.widget';
 export * from './display-text/display-text.widget';
 export * from './upload/upload.widget';
 export * from './attach/attach.widget';
@@ -92,7 +90,6 @@ export const WIDGET_DIRECTIVES: any[] = [
     DropdownWidgetComponent,
     HyperlinkWidgetComponent,
     RadioButtonsWidgetComponent,
-    DisplayValueWidgetComponent,
     DisplayTextWidgetComponentComponent,
     UploadWidgetComponent,
     AttachWidgetComponent,
