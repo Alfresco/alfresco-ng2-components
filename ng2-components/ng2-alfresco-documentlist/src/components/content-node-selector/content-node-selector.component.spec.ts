@@ -145,8 +145,9 @@ describe('ContentNodeSelectorComponent', () => {
 
             it('should trigger the INJECTED select event when selection has been made', (done) => {
                 const expectedNode = <MinimalNodeEntryEntity> {};
-                data.select.subscribe((node) => {
-                    expect(node).toBe(expectedNode);
+                data.select.subscribe((nodes) => {
+                    expect(nodes.length).toBe(1);
+                    expect(nodes[0]).toBe(expectedNode);
                     done();
                 });
 
@@ -213,8 +214,9 @@ describe('ContentNodeSelectorComponent', () => {
 
             it('should trigger the select event when selection has been made', (done) => {
                 const expectedNode = <MinimalNodeEntryEntity> {};
-                component.select.subscribe((node) => {
-                    expect(node).toBe(expectedNode);
+                component.select.subscribe((nodes) => {
+                    expect(nodes.length).toBe(1);
+                    expect(nodes[0]).toBe(expectedNode);
                     done();
                 });
 

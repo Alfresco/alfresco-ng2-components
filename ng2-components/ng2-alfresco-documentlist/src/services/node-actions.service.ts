@@ -94,13 +94,14 @@ export class NodeActionsService {
                 currentFolderId: contentEntry.parentId,
                 rowFilter: this.rowFilter.bind(this, contentEntry.id),
                 imageResolver: this.imageResolver.bind(this),
-                select: new EventEmitter<MinimalNodeEntryEntity>()
+                select: new EventEmitter<MinimalNodeEntryEntity[]>()
             };
 
             this.dialog.open(ContentNodeSelectorComponent, { data, panelClass: 'adf-content-node-selector-dialog', width: '576px' });
 
-            data.select.subscribe((parent: MinimalNodeEntryEntity) => {
-                this.documentListService[`${action}Node`].call(this.documentListService, contentEntry.id, parent.id)
+            data.select.subscribe((selections: MinimalNodeEntryEntity[]) => {
+                const selection = selections[0];
+                this.documentListService[`${action}Node`].call(this.documentListService, contentEntry.id, selection.id)
                     .subscribe(
                         () => {
                             let fileOperationMessage: any = this.translateService.get(`OPERATION.SUCCES.${type.toUpperCase()}.${action.toUpperCase()}`);

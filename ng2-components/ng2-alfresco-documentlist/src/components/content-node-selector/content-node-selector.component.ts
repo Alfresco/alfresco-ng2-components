@@ -26,7 +26,7 @@ export interface ContentNodeSelectorComponentData {
     currentFolderId?: string;
     rowFilter?: RowFilter;
     imageResolver?: ImageResolver;
-    select: EventEmitter<MinimalNodeEntryEntity>;
+    select: EventEmitter<MinimalNodeEntryEntity[]>;
 }
 
 @Component({
@@ -56,7 +56,7 @@ export class ContentNodeSelectorComponent {
     imageResolver: ImageResolver = null;
 
     @Output()
-    select: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter<MinimalNodeEntryEntity>();
+    select: EventEmitter<MinimalNodeEntryEntity[]> = new EventEmitter<MinimalNodeEntryEntity[]>();
 
     constructor(private searchService: SearchService,
                 private contentService: AlfrescoContentService,
@@ -170,7 +170,8 @@ export class ContentNodeSelectorComponent {
      * Emit event with the chosen node
      */
     choose(): void {
-        this.select.next(this.chosenNode);
+        // Multiple selections to be implemented...
+        this.select.next([this.chosenNode]);
     }
 
     /**
