@@ -23,7 +23,7 @@ import { ContentLinkModel } from './../components/widgets/core/content-link.mode
 import { GroupUserModel } from './../components/widgets/core/group-user.model';
 import { GroupModel } from './../components/widgets/core/group.model';
 import { FormModel, FormOutcomeEvent, FormOutcomeModel, FormValues } from './../components/widgets/core/index';
-import { FormErrorEvent, FormEvent, FormFieldEvent } from './../events/index';
+import { FormErrorEvent, FormEvent, FormFieldEvent, ValidateFormEvent, ValidateFormFieldEvent } from './../events/index';
 import { EcmModelService } from './ecm-model.service';
 
 @Injectable()
@@ -32,21 +32,52 @@ export class FormService {
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
-    formLoaded: Subject<FormEvent> = new Subject<FormEvent>();
-    formDataRefreshed: Subject<FormEvent> = new Subject<FormEvent>();
-    formFieldValueChanged: Subject<FormFieldEvent> = new Subject<FormFieldEvent>();
-    formEvents: Subject<Event> = new Subject<Event>();
-    taskCompleted: Subject<FormEvent> = new Subject<FormEvent>();
-    taskCompletedError: Subject<FormErrorEvent> = new Subject<FormErrorEvent>();
-    taskSaved: Subject<FormEvent> = new Subject<FormEvent>();
-    taskSavedError: Subject<FormErrorEvent> = new Subject<FormErrorEvent>();
-    formContentClicked: Subject<ContentLinkModel> = new Subject<ContentLinkModel>();
+    formLoaded = new Subject<FormEvent>();
+    formDataRefreshed = new Subject<FormEvent>();
+    formFieldValueChanged = new Subject<FormFieldEvent>();
+    formEvents = new Subject<Event>();
+    taskCompleted = new Subject<FormEvent>();
+    taskCompletedError = new Subject<FormErrorEvent>();
+    taskSaved = new Subject<FormEvent>();
+    taskSavedError = new Subject<FormErrorEvent>();
+    formContentClicked = new Subject<ContentLinkModel>();
 
-    executeOutcome: Subject<FormOutcomeEvent> = new Subject<FormOutcomeEvent>();
+    validateForm = new Subject<ValidateFormEvent>();
+    validateFormField = new Subject<ValidateFormFieldEvent>();
+
+    executeOutcome = new Subject<FormOutcomeEvent>();
 
     constructor(private ecmModelService: EcmModelService,
                 private apiService: AlfrescoApiService,
                 private logService: LogService) {
+    }
+
+    private get contentApi(): any {
+        return this.apiService.getInstance().activiti.contentApi;
+    }
+
+    private get taskApi(): any {
+        return this.apiService.getInstance().activiti.taskApi;
+    }
+
+    private get modelsApi(): any {
+        return this.apiService.getInstance().activiti.modelsApi;
+    }
+
+    private get editorApi(): any {
+        return this.apiService.getInstance().activiti.editorApi;
+    }
+
+    private get processApi(): any {
+        return this.apiService.getInstance().activiti.processApi;
+    }
+
+    private get usersWorkflowApi(): any {
+        return this.apiService.getInstance().activiti.usersWorkflowApi;
+    }
+
+    private get groupsApi(): any {
+        return this.apiService.getInstance().activiti.groupsApi;
     }
 
     parseForm(json: any, data?: FormValues, readOnly: boolean = false): FormModel {
@@ -101,13 +132,13 @@ export class FormService {
         };
 
         return Observable.fromPromise(
-            this.apiService.getInstance().activiti.modelsApi.createModel(dataModel)
+            this.modelsApi.createModel(dataModel)
         );
     }
 
     saveForm(formId: string, formModel: FormDefinitionModel): Observable<any> {
         return Observable.fromPromise(
-            this.apiService.getInstance().activiti.editorApi.saveForm(formId, formModel)
+            this.editorApi.saveForm(formId, formModel)
         );
     }
 
@@ -119,7 +150,7 @@ export class FormService {
     addFieldsToAForm(formId: string, formModel: FormDefinitionModel): Observable<any> {
         console.log('addFieldsToAForm is deprecated in 1.7.0, use saveForm API instead');
         return Observable.fromPromise(
-            this.apiService.getInstance().activiti.editorApi.saveForm(formId, formModel)
+            this.editorApi.saveForm(formId, formModel)
         );
     }
 
@@ -133,7 +164,7 @@ export class FormService {
         };
 
         return Observable.fromPromise(
-            this.apiService.getInstance().activiti.modelsApi.getModels(opts)
+            this.modelsApi.getModels(opts)
         )
         .map(function (forms: any) {
             return forms.data.find(formdata => formdata.name === name);
@@ -150,7 +181,7 @@ export class FormService {
             'modelType': 2
         };
 
-        return Observable.fromPromise(this.apiService.getInstance().activiti.modelsApi.getModels(opts))
+        return Observable.fromPromise(this.modelsApi.getModels(opts))
             .map(this.toJsonArray)
             .catch(err => this.handleError(err));
     }
@@ -160,7 +191,7 @@ export class FormService {
      * @returns {Observable<any>}
      */
     getProcessDefinitions(): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.processApi.getProcessDefinitions({}))
+        return Observable.fromPromise(this.processApi.getProcessDefinitions({}))
             .map(this.toJsonArray)
             .catch(err => this.handleError(err));
     }
@@ -170,7 +201,7 @@ export class FormService {
      * @returns {Observable<any>}
      */
     getTasks(): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.listTasks({}))
+        return Observable.fromPromise(this.taskApi.listTasks({}))
             .map(this.toJsonArray)
             .catch(err => this.handleError(err));
     }
@@ -181,7 +212,7 @@ export class FormService {
      * @returns {Observable<any>}
      */
     getTask(taskId: string): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.getTask(taskId))
+        return Observable.fromPromise(this.taskApi.getTask(taskId))
             .map(this.toJson)
             .catch(err => this.handleError(err));
     }
@@ -195,7 +226,7 @@ export class FormService {
     saveTaskForm(taskId: string, formValues: FormValues): Observable<any> {
         let body = JSON.stringify({values: formValues});
 
-        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.saveTaskForm(taskId, body))
+        return Observable.fromPromise(this.taskApi.saveTaskForm(taskId, body))
             .catch(err => this.handleError(err));
     }
 
@@ -213,7 +244,7 @@ export class FormService {
         }
         let body = JSON.stringify(data);
 
-        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.completeTaskForm(taskId, body))
+        return Observable.fromPromise(this.taskApi.completeTaskForm(taskId, body))
             .catch(err => this.handleError(err));
     }
 
@@ -223,7 +254,7 @@ export class FormService {
      * @returns {Observable<any>}
      */
     getTaskForm(taskId: string): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.getTaskForm(taskId))
+        return Observable.fromPromise(this.taskApi.getTaskForm(taskId))
             .map(this.toJson)
             .catch(err => this.handleError(err));
     }
@@ -234,7 +265,7 @@ export class FormService {
      * @returns {Observable<any>}
      */
     getFormDefinitionById(formId: string): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.editorApi.getForm(formId))
+        return Observable.fromPromise(this.editorApi.getForm(formId))
             .map(this.toJson)
             .catch(err => this.handleError(err));
     }
@@ -251,7 +282,7 @@ export class FormService {
             'modelType': 2
         };
 
-        return Observable.fromPromise(this.apiService.getInstance().activiti.modelsApi.getModels(opts))
+        return Observable.fromPromise(this.modelsApi.getModels(opts))
             .map(this.getFormId)
             .catch(err => this.handleError(err));
     }
@@ -263,7 +294,7 @@ export class FormService {
      */
     getStartFormInstance(processId: string): Observable<any> {
         return Observable.fromPromise(
-            this.apiService.getInstance().activiti.processApi.getProcessInstanceStartForm(processId))
+            this.processApi.getProcessInstanceStartForm(processId))
             .map(this.toJson)
             .catch(err => this.handleError(err));
     }
@@ -275,7 +306,7 @@ export class FormService {
      */
     getStartFormDefinition(processId: string): Observable<any> {
         return Observable.fromPromise(
-            this.apiService.getInstance().activiti.processApi.getProcessDefinitionStartForm(processId))
+            this.processApi.getProcessDefinitionStartForm(processId))
             .map(this.toJson)
             .catch(err => this.handleError(err));
     }
@@ -286,47 +317,39 @@ export class FormService {
      * @returns {Observable<any>}
      */
     createTemporaryRawRelatedContent(file: any): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.contentApi.createTemporaryRawRelatedContent(file)).catch(err => this.handleError(err));
+        return Observable.fromPromise(this.contentApi.createTemporaryRawRelatedContent(file)).catch(err => this.handleError(err));
     }
 
     getFileContent(contentId: number): Observable<any> {
-        let alfrescoApi = this.apiService.getInstance();
-        return Observable.fromPromise(alfrescoApi.activiti.contentApi.getContent(contentId)).catch(err => this.handleError(err));
+        return Observable.fromPromise(this.contentApi.getContent(contentId)).catch(err => this.handleError(err));
     }
 
     getFileRawContent(contentId: number): Observable<any> {
-        let alfrescoApi = this.apiService.getInstance();
-        return Observable.fromPromise(alfrescoApi.activiti.contentApi.getRawContent(contentId)).catch(err => this.handleError(err));
+        return Observable.fromPromise(this.contentApi.getRawContent(contentId)).catch(err => this.handleError(err));
     }
 
     getFileRawContentUrl(contentId: number): string {
-        let alfrescoApi = this.apiService.getInstance();
-        return alfrescoApi.activiti.contentApi.getRawContentUrl(contentId);
+        return this.contentApi.getRawContentUrl(contentId);
     }
 
     getContentThumbnailUrl(contentId: number): Observable<any> {
-        let alfrescoApi = this.apiService.getInstance();
-        return Observable.fromPromise(alfrescoApi.activiti.contentApi.getContentThumbnailUrl(contentId)).catch(err => this.handleError(err));
+        return Observable.fromPromise(this.contentApi.getContentThumbnailUrl(contentId)).catch(err => this.handleError(err));
     }
 
     getRestFieldValues(taskId: string, field: string): Observable<any> {
-        let alfrescoApi = this.apiService.getInstance();
-        return Observable.fromPromise(alfrescoApi.activiti.taskApi.getRestFieldValues(taskId, field)).catch(err => this.handleError(err));
+        return Observable.fromPromise(this.taskApi.getRestFieldValues(taskId, field)).catch(err => this.handleError(err));
     }
 
     getRestFieldValuesByProcessId(processDefinitionId: string, field: string): Observable<any> {
-        let alfrescoApi = this.apiService.getInstance();
-        return Observable.fromPromise(alfrescoApi.activiti.processApi.getRestFieldValues(processDefinitionId, field)).catch(err => this.handleError(err));
+        return Observable.fromPromise(this.processApi.getRestFieldValues(processDefinitionId, field)).catch(err => this.handleError(err));
     }
 
     getRestFieldValuesColumnByProcessId(processDefinitionId: string, field: string, column?: string): Observable<any> {
-        let alfrescoApi = this.apiService.getInstance();
-        return Observable.fromPromise(alfrescoApi.activiti.processApi.getRestTableFieldValues(processDefinitionId, field, column)).catch(err => this.handleError(err));
+        return Observable.fromPromise(this.processApi.getRestTableFieldValues(processDefinitionId, field, column)).catch(err => this.handleError(err));
     }
 
     getRestFieldValuesColumn(taskId: string, field: string, column?: string): Observable<any> {
-        let alfrescoApi = this.apiService.getInstance();
-        return Observable.fromPromise(alfrescoApi.activiti.taskApi.getRestFieldValuesColumn(taskId, field, column)).catch(err => this.handleError(err));
+        return Observable.fromPromise(this.taskApi.getRestFieldValuesColumn(taskId, field, column)).catch(err => this.handleError(err));
     }
 
     getWorkflowUsers(filter: string, groupId?: string): Observable<GroupUserModel[]> {
@@ -334,14 +357,9 @@ export class FormService {
         if (groupId) {
             option.groupId = groupId;
         }
-        return Observable.fromPromise(this.getWorkflowUserApi(option))
+        return Observable.fromPromise(this.usersWorkflowApi.getUsers(option))
             .map((response: any) => <GroupUserModel[]> response.data || [])
             .catch(err => this.handleError(err));
-    }
-
-    private getWorkflowUserApi(options: any) {
-        let alfrescoApi = this.apiService.getInstance();
-        return alfrescoApi.activiti.usersWorkflowApi.getUsers(options);
     }
 
     getWorkflowGroups(filter: string, groupId?: string): Observable<GroupModel[]> {
@@ -349,14 +367,9 @@ export class FormService {
         if (groupId) {
             option.groupId = groupId;
         }
-        return Observable.fromPromise(this.getWorkflowGroupsApi(option))
+        return Observable.fromPromise(this.groupsApi.getGroups(option))
             .map((response: any) => <GroupModel[]> response.data || [])
             .catch(err => this.handleError(err));
-    }
-
-    private getWorkflowGroupsApi(options: any) {
-        let alfrescoApi = this.apiService.getInstance();
-        return alfrescoApi.activiti.groupsApi.getGroups(options);
     }
 
     getFormId(res: any): string {
