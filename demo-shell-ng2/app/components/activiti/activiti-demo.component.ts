@@ -149,6 +149,9 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     }
 
     ngOnInit() {
+        if (this.router.url.includes('processes') ) {
+            this.activeTab = 'processes';
+        }
         this.sub = this.route.params.subscribe(params => {
             let applicationId = params['appId'];
             if (applicationId && applicationId !== '0') {
@@ -326,7 +329,7 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     }
 
     onShowProcessDiagram(event: any): void {
-        this.router.navigate(['/activiti/diagram/' + event.value]);
+        this.router.navigate(['/activiti/apps/' + this.appId + '/diagram/' + event.value]);
     }
 
     onProcessDetailsTaskClick(event: TaskDetailsEvent): void {
