@@ -398,6 +398,24 @@ export class TaskListService {
             .catch(err => this.handleError(err));
     }
 
+    /**
+     * fetch the Task Audit information as a pdf
+     * @param taskId - the task id
+     */
+    fetchTaskAuditPdfById(taskId: string): Observable<Blob> {
+        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.getTaskAuditPdf(taskId))
+            .catch(err => this.handleError(err));
+    }
+
+    /**
+     * fetch the Task Audit information in a json format
+     * @param taskId - the task id
+     */
+    fetchTaskAuditJsonById(taskId: string): Observable<any> {
+        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.getTaskAuditJson(taskId))
+            .catch(err => this.handleError(err));
+    }
+
     private callApiTasksFiltered(requestNode: TaskQueryRequestRepresentationModel) {
         return this.apiService.getInstance().activiti.taskApi.listTasks(requestNode);
     }

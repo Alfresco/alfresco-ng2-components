@@ -74,6 +74,17 @@
                             (taskDeleted)="onTaskDeleted($event)">
                         </activiti-task-details>
                         <hr>
+                        Task Audit log
+                        <button *ngIf="currentTaskId"
+                            adf-task-audit
+                            [task-id]="currentTaskId"
+                            [download]="auditDownload.checked"
+                            md-icon-button (clicked)="onAuditClick($event)" (error)="onAuditError($event)" >
+                            <md-icon>assignment_ind</md-icon>
+                        </button>
+
+                        <md-checkbox #auditDownload>Download</md-checkbox>
+                        <hr>
                         <md-card>
                             <md-card-content>
                                 <activiti-task-attachments
