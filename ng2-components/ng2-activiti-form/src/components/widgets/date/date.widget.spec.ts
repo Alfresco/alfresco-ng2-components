@@ -131,7 +131,7 @@ describe('DateWidgetComponent', () => {
     });
 
     it('should update picker value on input date changed', () => {
-        widget.field = new FormFieldModel(null, {
+        widget.field = new FormFieldModel(new FormModel(), {
             type: 'date',
             value: '13-03-1982'
         });
@@ -145,7 +145,7 @@ describe('DateWidgetComponent', () => {
 
     it('should update field value on date selected', () => {
         widget.elementRef = new ElementRef(nativeElement);
-        widget.field = new FormFieldModel(null, {type: 'date'});
+        widget.field = new FormFieldModel(new FormModel(), {type: 'date'});
         widget.ngOnInit();
 
         let date = '13-3-1982';
@@ -157,7 +157,7 @@ describe('DateWidgetComponent', () => {
     it('should update material textfield on date selected', () => {
         spyOn(widget, 'setupMaterialTextField').and.callThrough();
 
-        widget.field = new FormFieldModel(null, {type: 'date'});
+        widget.field = new FormFieldModel(new FormModel(), {type: 'date'});
         widget.ngOnInit();
 
         widget.datePicker.time = moment();
@@ -169,7 +169,7 @@ describe('DateWidgetComponent', () => {
         widget.elementRef = undefined;
         spyOn(widget, 'setupMaterialTextField').and.callThrough();
 
-        widget.field = new FormFieldModel(null, {type: 'date'});
+        widget.field = new FormFieldModel(new FormModel(), {type: 'date'});
         widget.ngOnInit();
 
         widget.datePicker.time = moment();
@@ -179,7 +179,7 @@ describe('DateWidgetComponent', () => {
 
     it('should send field change event when a new date is picked from data picker', (done) => {
         spyOn(widget, 'setupMaterialTextField').and.callThrough();
-        widget.field = new FormFieldModel(null, {value: '9-9-9999', type: 'date'});
+        widget.field = new FormFieldModel(new FormModel(), {value: '9-9-9999', type: 'date'});
         widget.ngOnInit();
         widget.datePicker.time = moment('9-9-9999', widget.field.dateDisplayFormat);
         widget.fieldChanged.subscribe((field) => {

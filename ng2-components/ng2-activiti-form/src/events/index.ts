@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
-export * from './form.event';
-export * from './form-error.event';
-export * from './form-field.event';
+export { FormEvent } from './form.event';
+export { FormErrorEvent } from './form-error.event';
+export { FormFieldEvent } from './form-field.event';
+export { ValidateFormFieldEvent } from './validate-form-field.event';
+export { ValidateFormEvent } from './validate-form.event';

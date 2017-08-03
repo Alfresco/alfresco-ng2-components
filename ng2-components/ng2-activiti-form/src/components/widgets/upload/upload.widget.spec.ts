@@ -73,7 +73,7 @@ describe('UploadWidgetComponent', () => {
     });
 
     it('should reset field value', () => {
-        widget.field = new FormFieldModel(null, {
+        widget.field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.UPLOAD,
             value: [
                 { name: 'filename' }
@@ -125,7 +125,7 @@ describe('UploadWidgetComponent', () => {
         it('should be disabled on readonly forms', async(() => {
             uploadWidgetComponent.field.form.readOnly = true;
             fixture.detectChanges();
-            inputElement = <HTMLInputElement>element.querySelector('#upload-id');
+            inputElement = <HTMLInputElement> element.querySelector('#upload-id');
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -138,7 +138,7 @@ describe('UploadWidgetComponent', () => {
         it('should have the multiple attribute when is selected in parameters', async(() => {
             uploadWidgetComponent.field.params.multiple = true;
             fixture.detectChanges();
-            inputElement = <HTMLInputElement>element.querySelector('#upload-id');
+            inputElement = <HTMLInputElement> element.querySelector('#upload-id');
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -151,7 +151,7 @@ describe('UploadWidgetComponent', () => {
         it('should not have the multiple attribute if multiple is false', async(() => {
             uploadWidgetComponent.field.params.multiple = false;
             fixture.detectChanges();
-            inputElement = <HTMLInputElement>element.querySelector('#upload-id');
+            inputElement = <HTMLInputElement> element.querySelector('#upload-id');
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
