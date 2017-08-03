@@ -17,7 +17,7 @@
 
  /* tslint:disable:component-selector  */
 
-import { FormFieldEvent } from './../../../events/index';
+import { FormFieldEvent, ValidateFormEvent, ValidateFormFieldEvent } from './../../../events/index';
 import { FormService } from './../../../services/form.service';
 import { ContainerModel } from './container.model';
 import { FormFieldTemplates } from './form-field-templates';
@@ -27,6 +27,20 @@ import { FormOutcomeModel } from './form-outcome.model';
 import { FormValues } from './form-values';
 import { FormWidgetModel, FormWidgetModelCache } from './form-widget.model';
 import { TabModel } from './tab.model';
+
+import {
+    DateFieldValidator,
+    FormFieldValidator,
+    MaxDateFieldValidator,
+    MaxLengthFieldValidator,
+    MaxValueFieldValidator,
+    MinDateFieldValidator,
+    MinLengthFieldValidator,
+    MinValueFieldValidator,
+    NumberFieldValidator,
+    RegExFieldValidator,
+    RequiredFieldValidator
+} from './form-field-validator';
 
 export class FormModel {
 
@@ -53,6 +67,7 @@ export class FormModel {
     fields: FormWidgetModel[] = [];
     outcomes: FormOutcomeModel[] = [];
     customFieldTemplates: FormFieldTemplates = {};
+    fieldValidators: FormFieldValidator[] = [];
     readonly selectedOutcome: string;
 
     values: FormValues = {};
@@ -121,6 +136,20 @@ export class FormModel {
                 );
             }
         }
+
+        this.fieldValidators = [
+            new RequiredFieldValidator(),
+            new NumberFieldValidator(),
+            new MinLengthFieldValidator(),
+            new MaxLengthFieldValidator(),
+            new MinValueFieldValidator(),
+            new MaxValueFieldValidator(),
+            new RegExFieldValidator(),
+            new DateFieldValidator(),
+            new MinDateFieldValidator(),
+            new MaxDateFieldValidator()
+        ];
+
         this.validateForm();
     }
 
@@ -148,21 +177,63 @@ export class FormModel {
         return result;
     }
 
-    private validateForm() {
-        this._isValid = true;
-        let fields = this.getFormFields();
-        for (let i = 0; i < fields.length; i++) {
-            if (!fields[i].validate()) {
-                this._isValid = false;
-                return;
+    /**
+     * Validates entire form and all form fields.
+     *
+     * @returns {void}
+     * @memberof FormModel
+     */
+    validateForm(): void {
+        const validateFormEvent = new ValidateFormEvent(this);
+
+        if (this.formService) {
+            this.formService.validateForm.next(validateFormEvent);
+        }
+
+        this._isValid = validateFormEvent.isValid;
+
+        if (validateFormEvent.defaultPrevented) {
+            return;
+        }
+
+        if (validateFormEvent.isValid) {
+            let fields = this.getFormFields();
+            for (let i = 0; i < fields.length; i++) {
+                if (!fields[i].validate()) {
+                    this._isValid = false;
+                    return;
+                }
             }
         }
     }
 
-    private validateField(field: FormFieldModel) {
+    /**
+     * Validates a specific form field, triggers form validation.
+     *
+     * @param {FormFieldModel} field Form field to validate.
+     * @returns {void}
+     * @memberof FormModel
+     */
+    validateField(field: FormFieldModel): void {
         if (!field) {
             return;
         }
+
+        const validateFieldEvent = new ValidateFormFieldEvent(this, field);
+
+        if (this.formService) {
+            this.formService.validateFormField.next(validateFieldEvent);
+        }
+
+        if (!validateFieldEvent.isValid) {
+            this._isValid = false;
+            return;
+        }
+
+        if (validateFieldEvent.defaultPrevented) {
+            return;
+        }
+
         if (!field.validate()) {
             this._isValid = false;
             return;

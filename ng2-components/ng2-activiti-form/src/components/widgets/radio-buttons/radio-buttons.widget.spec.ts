@@ -203,7 +203,7 @@ describe('RadioButtonsWidgetComponent', () => {
 
             it('should evaluate visibility on option click', async(() => {
                 spyOn(stubVisibilityService, 'evaluateVisibility').and.returnValue(false);
-                let option: HTMLElement = <HTMLElement>element.querySelector('#opt-1');
+                let option: HTMLElement = <HTMLElement> element.querySelector('#opt-1');
                 expect(element.querySelector('#radio-id')).not.toBeNull();
                 expect(option).not.toBeNull();
                 option.click();

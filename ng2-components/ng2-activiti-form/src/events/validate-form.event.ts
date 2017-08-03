@@ -15,23 +15,14 @@
  * limitations under the License.
  */
 
-import { FormModel } from './../components/widgets/core/index';
+import { FormFieldModel, FormModel } from './../components/widgets/core/index';
+import { FormEvent } from './form.event';
 
-export class FormEvent {
+export class ValidateFormEvent extends FormEvent {
 
-    private isDefaultPrevented: boolean = false;
-
-    readonly form: FormModel;
+    isValid = true;
 
     constructor(form: FormModel) {
-        this.form = form;
-    }
-
-    get defaultPrevented() {
-        return this.isDefaultPrevented;
-    }
-
-    preventDefault() {
-        this.isDefaultPrevented = true;
+        super(form);
     }
 }
