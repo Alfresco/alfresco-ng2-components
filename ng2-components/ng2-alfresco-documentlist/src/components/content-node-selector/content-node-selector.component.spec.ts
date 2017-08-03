@@ -24,6 +24,7 @@ import { AlfrescoContentService, AlfrescoTranslationService, CoreModule, SearchS
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { MaterialModule } from '../../material.module';
 import { DocumentListService } from '../../services/document-list.service';
+import { DropdownBreadcrumbComponent } from '../breadcrumb/dropdown-breadcrumb.component';
 import { DocumentListComponent } from '../document-list.component';
 import { DocumentMenuActionComponent } from '../document-menu-action.component';
 import { EmptyFolderContentDirective } from '../empty-folder/empty-folder-content.directive';
@@ -78,6 +79,7 @@ describe('ContentNodeSelectorComponent', () => {
                 DocumentMenuActionComponent,
                 EmptyFolderContentDirective,
                 DropdownSitesComponent,
+                DropdownBreadcrumbComponent,
                 ContentNodeSelectorComponent
             ],
             providers: [
@@ -225,6 +227,99 @@ describe('ContentNodeSelectorComponent', () => {
             });
         });
 
+        describe('Breadcrumbs', () => {
+
+            let documentListService,
+                expectedNode;
+
+            beforeEach(() => {
+                expectedNode = <MinimalNodeEntryEntity> { path: { elements: [] } };
+                documentListService = TestBed.get(DocumentListService);
+                spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.resolve(expectedNode));
+                component.currentFolderId = 'cat-girl-nuku-nuku';
+                fixture.detectChanges();
+            });
+
+            it('should show the breadcrumb for the currentFolderId by default', (done) => {
+                fixture.detectChanges();
+
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
+                    expect(breadcrumb).not.toBeNull();
+                    expect(breadcrumb.componentInstance.folderNode).toBe(expectedNode);
+                    done();
+                });
+            });
+
+            it('should not show the breadcrumb if search was performed as last action', (done) => {
+                typeToSearchBox();
+                respondWithSearchResults(ONE_FOLDER_RESULT);
+
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
+                    expect(breadcrumb).toBeNull();
+                    done();
+                });
+            });
+
+            it('should show the breadcrumb again on folder navigation in the results list', (done) => {
+                typeToSearchBox();
+                respondWithSearchResults(ONE_FOLDER_RESULT);
+
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    component.onFolderChange();
+                    fixture.detectChanges();
+                    const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
+                    expect(breadcrumb).not.toBeNull();
+                    done();
+                });
+            });
+
+            it('should show the breadcrumb for the selected node is the node is folder', (done) => {
+                const alfrescoContentService = TestBed.get(AlfrescoContentService);
+                spyOn(alfrescoContentService, 'hasPermission').and.returnValue(true);
+
+                typeToSearchBox();
+                respondWithSearchResults(ONE_FOLDER_RESULT);
+
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+
+                    const chosenNode = <MinimalNodeEntryEntity> { path: { elements: [] }, isFolder: true };
+                    component.onNodeSelect({ detail: { node: { entry: chosenNode} } });
+                    fixture.detectChanges();
+
+                    const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
+                    expect(breadcrumb).not.toBeNull();
+                    expect(breadcrumb.componentInstance.folderNode).toBe(chosenNode);
+                    done();
+                });
+            });
+
+            it('should NOT show the breadcrumb for the selected node is the node is NOT folder', (done) => {
+                const alfrescoContentService = TestBed.get(AlfrescoContentService);
+                spyOn(alfrescoContentService, 'hasPermission').and.returnValue(true);
+
+                typeToSearchBox();
+                respondWithSearchResults(ONE_FOLDER_RESULT);
+
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+
+                    const chosenNode = <MinimalNodeEntryEntity> { path: { elements: [] }, isFolder: false };
+                    component.onNodeSelect({ detail: { node: { entry: chosenNode} } });
+                    fixture.detectChanges();
+
+                    const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
+                    expect(breadcrumb).toBeNull();
+                    done();
+                });
+            });
+        });
+
         describe('Search functionality', () => {
 
             function defaultSearchOptions(rootNodeId = undefined) {
@@ -247,6 +342,13 @@ describe('ContentNodeSelectorComponent', () => {
                 typeToSearchBox('kakarot');
 
                 expect(searchSpy).toHaveBeenCalledWith('kakarot*', defaultSearchOptions());
+            });
+
+            it('should reset the currently chosen node in case of starting a new search', () => {
+                component.chosenNode = <MinimalNodeEntryEntity> {};
+                typeToSearchBox('kakarot');
+
+                expect(component.chosenNode).toBeNull();
             });
 
             it('should NOT call the search api if the searchTerm length is less than 4 characters', () => {
@@ -295,12 +397,14 @@ describe('ContentNodeSelectorComponent', () => {
                 component.chosenNode = <MinimalNodeEntryEntity> {};
                 component.nodes = [ component.chosenNode ];
                 component.searchTerm = 'piccolo';
+                component.showingSearchResults = true;
 
                 component.clear();
 
                 expect(component.searchTerm).toBe('');
                 expect(component.nodes).toEqual([]);
                 expect(component.chosenNode).toBeNull();
+                expect(component.showingSearchResults).toBeFalsy();
             });
 
             it('should show the current folder\'s content instead of search results if search was not performed', () => {

@@ -123,10 +123,13 @@ export class NodeActionsService {
     }
 
     private rowFilter(currentNodeId, row: ShareDataRow): boolean {
-        if (row.node.entry.id === currentNodeId) {
+        const node: MinimalNodeEntryEntity = row.node.entry;
+
+        if (node.id === currentNodeId || node.isFile) {
             return false;
+        } else {
+            return true;
         }
-        return true;
     }
 
     private imageResolver(row: ShareDataRow, col: DataColumn): string|null {

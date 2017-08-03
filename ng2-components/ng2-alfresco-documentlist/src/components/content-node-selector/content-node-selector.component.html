@@ -32,6 +32,16 @@
         data-automation-id="content-node-selector-sites-combo"></adf-sites-dropdown>
 
     <div class="adf-content-node-selector-content-list" data-automation-id="content-node-selector-content-list">
+         <adf-toolbar>
+            <adf-toolbar-title>
+                <adf-dropdown-breadcrumb *ngIf="breadcrumbFolderNode"
+                    class="adf-content-node-selector-content-list-breadcrumb"
+                    [target]="documentList"
+                    [folderNode]="breadcrumbFolderNode"
+                    data-automation-id="content-node-selector-content-list-breadcrumb">
+                </adf-dropdown-breadcrumb>
+            </adf-toolbar-title>
+        </adf-toolbar>
         <adf-document-list
                     #documentList
                     [node]="nodes"
@@ -45,6 +55,7 @@
                     [contentActions]="false"
                     [allowDropFiles]="false"
                     [enablePagination]="false"
+                    (folderChange)="onFolderChange"
                     data-automation-id="content-node-selector-document-list">
             <empty-folder-content>
                 <ng-template>

@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Inject, Input, Optional, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, Optional, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
 import { MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
 import { AlfrescoContentService, AlfrescoTranslationService, SearchOptions, SearchService, SiteModel } from 'ng2-alfresco-core';
 import { ImageResolver, RowFilter } from '../../data/share-datatable-adapter';
+import { DocumentListComponent } from '../document-list.component';
 
 export interface ContentNodeSelectorComponentData {
     title: string;
@@ -40,6 +41,7 @@ export class ContentNodeSelectorComponent {
     nodes: NodePaging | Array<any>;
     siteId: null | string;
     searchTerm: string = '';
+    showingSearchResults: boolean = false;
     inDialog: boolean = false;
     chosenNode: MinimalNodeEntryEntity | null = null;
 
@@ -57,6 +59,9 @@ export class ContentNodeSelectorComponent {
 
     @Output()
     select: EventEmitter<MinimalNodeEntryEntity[]> = new EventEmitter<MinimalNodeEntryEntity[]>();
+
+    @ViewChild(DocumentListComponent)
+    documentList: DocumentListComponent;
 
     constructor(private searchService: SearchService,
                 private contentService: AlfrescoContentService,
@@ -102,13 +107,26 @@ export class ContentNodeSelectorComponent {
     }
 
     /**
-     * Return the passed currentFolderId if search was not performed
+     * Returns the passed currentFolderId if search was not performed
      */
     get defaultFolderToShow(): string|null {
-        if (this.searchTerm.length === 0) {
-            return this.currentFolderId;
-        } else {
+        if (this.showingSearchResults) {
             return null;
+        } else {
+            return this.currentFolderId;
+        }
+    }
+
+    /**
+     * Returns the actually selected|entered folder node or null in case of searching for the breadcrumb
+     */
+    get breadcrumbFolderNode(): MinimalNodeEntryEntity|null {
+        if (this.chosenNode && this.chosenNode.isFolder) {
+            return this.chosenNode;
+        } else if (this.showingSearchResults) {
+            return null;
+        } else {
+            return this.documentList.folderNode;
         }
     }
 
@@ -119,6 +137,7 @@ export class ContentNodeSelectorComponent {
         this.searchTerm = '';
         this.nodes = [];
         this.chosenNode = null;
+        this.showingSearchResults = false;
     }
 
     /**
@@ -126,6 +145,7 @@ export class ContentNodeSelectorComponent {
      */
     private querySearch(): void {
         if (this.searchTerm.length > 3) {
+            this.chosenNode = null;
             const searchTerm = this.searchTerm + '*';
             let searchOpts: SearchOptions = {
                 include: ['path', 'allowableOperations'],
@@ -139,6 +159,7 @@ export class ContentNodeSelectorComponent {
                 .getNodeQueryResults(searchTerm, searchOpts)
                 .subscribe(
                     results => {
+                        this.showingSearchResults = true;
                         this.nodes = results;
                     }
                 );
@@ -157,6 +178,13 @@ export class ContentNodeSelectorComponent {
         } else {
             this.onNodeUnselect();
         }
+    }
+
+    /**
+     * Sets showingSearchResults state to be able to differentiate between search results or folder results
+     */
+    onFolderChange() {
+        this.showingSearchResults = false;
     }
 
     /**

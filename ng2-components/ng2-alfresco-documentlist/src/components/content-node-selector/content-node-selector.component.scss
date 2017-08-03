@@ -53,6 +53,10 @@
                 }
             }
 
+            & /deep/ .adf-toolbar .mat-toolbar {
+                border: none;
+            }
+
             &-list {
                 height: 200px;
                 overflow: auto;
