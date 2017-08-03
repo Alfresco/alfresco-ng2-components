@@ -17,14 +17,13 @@
 
  /* tslint:disable:component-selector  */
 
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DiagramColorService } from '../../services/diagram-color.service';
+import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
     selector: 'diagram-container-icon-event',
     templateUrl: './diagram-container-icon-event.component.html'
 })
-export class DiagramContainerIconEventTaskComponent implements OnInit {
+export class DiagramContainerIconEventTaskComponent {
     @Input()
     data: any;
 
@@ -37,9 +36,5 @@ export class DiagramContainerIconEventTaskComponent implements OnInit {
     @Output()
     onError = new EventEmitter();
 
-    constructor(public elementRef: ElementRef,
-                private diagramColorService: DiagramColorService) {}
-
-    ngOnInit() {
-    }
+    constructor(public elementRef: ElementRef) {}
 }

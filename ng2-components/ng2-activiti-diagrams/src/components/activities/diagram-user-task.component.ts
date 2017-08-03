@@ -17,24 +17,18 @@
 
  /* tslint:disable:component-selector  */
 
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DiagramColorService } from '../../services/diagram-color.service';
+import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
     selector: 'diagram-user-task',
     templateUrl: './diagram-user-task.component.html'
 })
-export class DiagramUserTaskComponent implements OnInit {
+export class DiagramUserTaskComponent {
     @Input()
     data: any;
 
     @Output()
     onError = new EventEmitter();
 
-    constructor(public elementRef: ElementRef,
-                private diagramColorService: DiagramColorService) {}
-
-    ngOnInit() {
-
-    }
+    constructor(public elementRef: ElementRef) {}
 }

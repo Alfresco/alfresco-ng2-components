@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { Chart } from '../models/chart.model';
 import { ReportQuery } from '../models/report.model';
 import { AnalyticsService } from '../services/analytics.service';
@@ -62,10 +62,8 @@ export class AnalyticsGeneratorComponent implements OnChanges {
         }
     };
 
-    constructor(private translateService: AlfrescoTranslationService,
-                private analyticsService: AnalyticsService,
-                private logService: LogService) {
-        logService.info('AnalyticsGeneratorComponent');
+    constructor(translateService: AlfrescoTranslationService,
+                private analyticsService: AnalyticsService) {
         if (translateService) {
             translateService.addTranslationFolder('ng2-activiti-analytics', 'assets/ng2-activiti-analytics');
         }
