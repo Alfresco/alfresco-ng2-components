@@ -25,6 +25,7 @@ import { FormFieldTypes } from '../core/form-field-types';
 import { EcmModelService } from './../../../services/ecm-model.service';
 import { FormService } from './../../../services/form.service';
 import { FormFieldModel } from './../core/form-field.model';
+import { FormModel } from './../core/form.model';
 import { AttachWidgetComponent } from './attach.widget';
 
 describe('AttachWidgetComponent', () => {
@@ -146,7 +147,7 @@ describe('AttachWidgetComponent', () => {
     });
 
     it('should reset', () => {
-        widget.field = new FormFieldModel(null, {
+        widget.field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.UPLOAD,
             value: [{name: 'filename'}]
         });

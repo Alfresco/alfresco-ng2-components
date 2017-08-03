@@ -66,7 +66,7 @@ necessary configuration, see this [page](https://github.com/Alfresco/alfresco-ng
 npm install ng2-activiti-form
 ```
 
-## ActivitiForm Component
+## Form Component
 
 The component shows a Form from Activiti
 
@@ -165,6 +165,26 @@ The recommended set of properties can be found in the following table:
 | saveMetadata | boolean | false | Store the value of the form as metadata. |
 | path | string |  |  Path of the folder where to store the metadata. |
 | nameNode | string | true | Name to assign to the new node where the metadata are stored. |
+| fieldValidators | FormFieldValidator[] | *see below* | Contains a list of form field validator instances. |
+
+#### Form Field Validators
+
+The Form component provides you with access to all Form Field validators. By default the following instances are created automatically:
+
+- RequiredFieldValidator
+- NumberFieldValidator
+- MinLengthFieldValidator
+- MaxLengthFieldValidator
+- MinValueFieldValidator
+- MaxValueFieldValidator
+- RegExFieldValidator
+- DateFieldValidator
+- MinDateFieldValidator
+- MaxDateFieldValidator
+
+If needed, you can completely redefine the set of validators used by the form.
+
+All changes to `fieldValidators` collection are automatically applied to all the further validation cycles.
 
 ### Advanced properties
  
@@ -338,7 +358,9 @@ class MyComponent {
 | taskSaved | FormEvent | Raised when a task is saved successfully |
 | taskSavedError | FormErrorEvent | Raised when a task is saved unsuccessfully |
 | executeOutcome | FormOutcomeEvent | Raised when a form outcome is executed |
-| formEvents | Event | You can subscribe to this event to listen : ( click, blur, change, focus, focusin, focusout, input, invalid, select) of any elements in the form , see doc below|
+| formEvents | Event | You can subscribe to this event to listen : ( click, blur, change, focus, focusin, focusout, input, invalid, select) of any elements in the form , see doc below |
+| validateForm | ValidateFormEvent | Raised each time a form is validated. You can use it to provide custom validation or prevent default behaviour. |
+| validateFormField | ValidateFormFieldEvent | Raised each time a form field is validated. You can use it to provide custom validation or prevent default behaviour.|
 
 ### Methods
 
