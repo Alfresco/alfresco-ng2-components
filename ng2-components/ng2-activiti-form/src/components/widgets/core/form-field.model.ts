@@ -23,19 +23,7 @@ import { ContainerColumnModel } from './container-column.model';
 import { FormFieldMetadata } from './form-field-metadata';
 import { FormFieldOption } from './form-field-option';
 import { FormFieldTypes } from './form-field-types';
-import {
-    DateFieldValidator,
-    FormFieldValidator,
-    MaxDateFieldValidator,
-    MaxLengthFieldValidator,
-    MaxValueFieldValidator,
-    MinDateFieldValidator,
-    MinLengthFieldValidator,
-    MinValueFieldValidator,
-    NumberFieldValidator,
-    RegExFieldValidator,
-    RequiredFieldValidator
-} from './form-field-validator';
+import { NumberFieldValidator } from './form-field-validator';
 import { FormWidgetModel } from './form-widget.model';
 import { FormModel } from './form.model';
 
@@ -88,7 +76,6 @@ export class FormFieldModel extends FormWidgetModel {
     // util members
     emptyOption: FormFieldOption;
     validationSummary: string;
-    validators: FormFieldValidator[] = [];
 
     get value(): any {
         return this._value;
@@ -119,13 +106,11 @@ export class FormFieldModel extends FormWidgetModel {
     validate(): boolean {
         this.validationSummary = null;
 
-        // TODO: consider doing that on value setter and caching result
-        if (this.validators && this.validators.length > 0) {
-            for (let i = 0; i < this.validators.length; i++) {
-                if (!this.validators[i].validate(this)) {
-                    this._isValid = false;
-                    return this._isValid;
-                }
+        let validators = this.form.fieldValidators || [];
+        for (let validator of validators) {
+            if (!validator.validate(this)) {
+                this._isValid = false;
+                return this._isValid;
             }
         }
 
@@ -200,19 +185,6 @@ export class FormFieldModel extends FormWidgetModel {
         if (this.hasEmptyValue && this.options && this.options.length > 0) {
             this.emptyOption = this.options[0];
         }
-
-        this.validators = [
-            new RequiredFieldValidator(),
-            new NumberFieldValidator(),
-            new MinLengthFieldValidator(),
-            new MaxLengthFieldValidator(),
-            new MinValueFieldValidator(),
-            new MaxValueFieldValidator(),
-            new RegExFieldValidator(),
-            new DateFieldValidator(),
-            new MinDateFieldValidator(),
-            new MaxDateFieldValidator()
-        ];
 
         this.updateForm();
     }
