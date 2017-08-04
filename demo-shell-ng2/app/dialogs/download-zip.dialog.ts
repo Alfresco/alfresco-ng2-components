@@ -53,6 +53,18 @@ export class DownloadZipDialogComponent implements OnInit {
                 @Inject(MD_DIALOG_DATA) private data: { nodeIds?: string[] }) {
     }
 
+    private get downloadsApi() {
+        return this.apiService.getInstance().core.downloadsApi;
+    }
+
+    private get nodesApi() {
+        return this.apiService.getInstance().core.nodesApi;
+    }
+
+    private get contentApi() {
+        return this.apiService.getInstance().content;
+    }
+
     ngOnInit() {
         if (this.data && this.data.nodeIds && this.data.nodeIds.length > 0) {
             // change timeout to have a delay for demo purposes
@@ -76,11 +88,7 @@ export class DownloadZipDialogComponent implements OnInit {
     downloadZip(nodeIds: string[]) {
         if (nodeIds && nodeIds.length > 0) {
 
-            const downloadsApi = this.apiService.getInstance().core.downloadsApi;
-            const nodesApi = this.apiService.getInstance().core.nodesApi;
-            const contentApi = this.apiService.getInstance().content;
-
-            const promise: any = downloadsApi.createDownload({ nodeIds });
+            const promise: any = this.downloadsApi.createDownload({ nodeIds });
 
             promise.on('progress', progress => console.log('Progress', progress));
             promise.on('error', error => console.log('Error', error));
@@ -89,9 +97,9 @@ export class DownloadZipDialogComponent implements OnInit {
             promise.on('success', (data: DownloadEntry) => {
                 console.log('Success', data);
                 if (data && data.entry && data.entry.id) {
-                    const url = contentApi.getContentUrl(data.entry.id, true);
+                    const url = this.contentApi.getContentUrl(data.entry.id, true);
                     // the call is needed only to get the name of the package
-                    nodesApi.getNode(data.entry.id).then((downloadNode: MinimalNodeEntity) => {
+                    this.nodesApi.getNode(data.entry.id).then((downloadNode: MinimalNodeEntity) => {
                         console.log(downloadNode);
                         const fileName = downloadNode.entry.name;
                         // this.download(url, fileName);
@@ -107,8 +115,7 @@ export class DownloadZipDialogComponent implements OnInit {
             return;
         }
 
-        const downloadsApi = this.apiService.getInstance().core.downloadsApi;
-        downloadsApi.getDownload(downloadId).then((d: DownloadEntry) => {
+        this.downloadsApi.getDownload(downloadId).then((d: DownloadEntry) => {
             if (d.entry) {
                 if (d.entry.status === 'DONE') {
                     this.download(url, fileName);
