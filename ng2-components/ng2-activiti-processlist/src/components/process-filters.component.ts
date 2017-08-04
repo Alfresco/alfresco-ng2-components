@@ -16,12 +16,10 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { Observable, Observer } from 'rxjs/Rx';
 import { FilterParamsModel, FilterProcessRepresentationModel } from './../models/filter-process.model';
 import { ProcessService } from './../services/process.service';
-
-declare let componentHandler: any;
 
 @Component({
     selector: 'adf-process-instance-filters, activiti-process-instance-filters',
@@ -58,9 +56,8 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
 
     filters: FilterProcessRepresentationModel [] = [];
 
-    constructor(private translate: AlfrescoTranslationService,
-                private activiti: ProcessService,
-                private logService: LogService) {
+    constructor(translate: AlfrescoTranslationService,
+                private activiti: ProcessService) {
         this.filter$ = new Observable<FilterProcessRepresentationModel>(observer => this.filterObserver = observer).share();
 
         if (translate) {

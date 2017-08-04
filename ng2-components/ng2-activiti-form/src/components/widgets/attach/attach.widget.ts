@@ -18,7 +18,6 @@
  /* tslint:disable:component-selector  */
 
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { LogService } from 'ng2-alfresco-core';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 import { ExternalContent } from '../core/external-content';
 import { ExternalContentLink } from '../core/external-content-link';
@@ -56,8 +55,7 @@ export class AttachWidgetComponent extends WidgetComponent implements OnInit {
     dialog: any;
 
     constructor(public formService: FormService,
-                private contentService: ActivitiAlfrescoContentService,
-                private logService: LogService) {
+                private contentService: ActivitiAlfrescoContentService) {
          super(formService);
     }
 

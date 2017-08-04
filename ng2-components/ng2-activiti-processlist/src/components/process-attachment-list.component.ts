@@ -41,7 +41,7 @@ export class ProcessAttachmentListComponent implements OnChanges {
     attachments: any[] = [];
     isLoading: boolean = true;
 
-    constructor(private translateService: AlfrescoTranslationService,
+    constructor(translateService: AlfrescoTranslationService,
                 private activitiContentService: ActivitiContentService,
                 private contentService: ContentService,
                 private thumbnailService: ThumbnailService) {

@@ -17,7 +17,6 @@
 
 /* tslint:disable */
 import { AfterViewChecked, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { LogService } from 'ng2-alfresco-core';
 import { FormErrorEvent, FormEvent } from './../events/index';
 import { EcmModelService } from './../services/ecm-model.service';
 import { FormService } from './../services/form.service';
@@ -118,8 +117,7 @@ export class FormComponent implements OnInit, AfterViewChecked, OnChanges {
     constructor(protected formService: FormService,
                 protected visibilityService: WidgetVisibilityService,
                 private ecmModelService: EcmModelService,
-                private nodeService: NodeService,
-                private logService: LogService) {
+                private nodeService: NodeService) {
     }
 
     hasForm(): boolean {

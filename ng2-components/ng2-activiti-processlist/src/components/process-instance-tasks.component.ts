@@ -23,7 +23,6 @@ import { Observable, Observer } from 'rxjs/Rx';
 import { ProcessInstance } from '../models/process-instance.model';
 import { ProcessService } from './../services/process.service';
 
-declare let componentHandler: any;
 declare let dialogPolyfill: any;
 
 @Component({
@@ -66,7 +65,7 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges {
     @Output()
     taskClick: EventEmitter<TaskDetailsEvent> = new EventEmitter<TaskDetailsEvent>();
 
-    constructor(private translate: AlfrescoTranslationService,
+    constructor(translate: AlfrescoTranslationService,
                 private activitiProcess: ProcessService,
                 private logService: LogService) {
         if (translate) {

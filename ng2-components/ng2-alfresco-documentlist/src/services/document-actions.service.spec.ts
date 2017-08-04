@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-import { MdDialog } from '@angular/material';
-import { TranslateService } from '@ngx-translate/core';
 import { AlfrescoContentService, AlfrescoTranslationService, NotificationService } from 'ng2-alfresco-core';
 import { FileNode, FolderNode } from '../assets/document-library.model.mock';
 import { DocumentListServiceMock } from '../assets/document-list.service.mock';

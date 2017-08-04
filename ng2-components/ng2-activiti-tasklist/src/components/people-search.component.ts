@@ -22,7 +22,6 @@ import { Observable } from 'rxjs/Observable';
 import { User } from '../models/user.model';
 
 declare let componentHandler: any;
-declare var require: any;
 
 @Component({
     selector: 'adf-people-search, activiti-people-search',
@@ -50,7 +49,7 @@ export class PeopleSearchComponent implements OnInit, AfterViewInit {
 
     selectedUser: User;
 
-    constructor(private translateService: AlfrescoTranslationService) {
+    constructor(translateService: AlfrescoTranslationService) {
         if (translateService) {
             translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
         }

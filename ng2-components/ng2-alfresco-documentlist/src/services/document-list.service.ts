@@ -26,7 +26,7 @@ export class DocumentListService {
 
     static ROOT_ID = '-root-';
 
-    constructor(private authService: AlfrescoAuthenticationService,
+    constructor(authService: AlfrescoAuthenticationService,
                 private contentService: AlfrescoContentService,
                 private apiService: AlfrescoApiService,
                 private logService: LogService,
