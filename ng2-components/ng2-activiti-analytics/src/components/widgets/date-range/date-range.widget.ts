@@ -15,13 +15,9 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
-/* tslint:disable::no-access-missing-member */
-import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
-import { WidgetComponent } from './../widget.component';
 
 function dateCheck(c: AbstractControl) {
     let startDate = moment(c.get('startDate').value);
@@ -30,22 +26,14 @@ function dateCheck(c: AbstractControl) {
     return result ? {'greaterThan': true} : null;
 }
 
-declare let mdDateTimePicker: any;
-
 @Component({
-    selector: 'date-range-widget',
+    selector: 'adf-date-range-widget',
     templateUrl: './date-range.widget.html',
     styleUrls: ['./date-range.widget.css']
 })
-export class DateRangeWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
+export class DateRangeWidgetComponent implements OnInit {
 
     public static FORMAT_DATE_ACTIVITI: string =  'YYYY-MM-DD';
-
-    @ViewChild('startElement')
-    startElement: any;
-
-    @ViewChild('endElement')
-    endElement: any;
 
     @Input('group')
     public dateRange: FormGroup;
@@ -58,18 +46,11 @@ export class DateRangeWidgetComponent extends WidgetComponent implements OnInit,
 
     debug: boolean = false;
 
-    dialogStart: any;
-
-    dialogEnd: any;
-
-    constructor(public elementRef: ElementRef,
-                private formBuilder: FormBuilder) {
-        super();
+    constructor(private formBuilder: FormBuilder) {
     }
 
     ngOnInit() {
         this.initForm();
-        this.addAccessibilityLabelToDatePicker();
     }
 
     initForm() {
@@ -88,98 +69,6 @@ export class DateRangeWidgetComponent extends WidgetComponent implements OnInit,
 
         this.dateRange.setValidators(dateCheck);
         this.dateRange.valueChanges.subscribe(data => this.onGroupValueChanged(data));
-
-        this.initSartDateDialog(startDate);
-        this.initEndDateDialog(endDate);
-    }
-
-    initSartDateDialog(date: string) {
-        let settings: any = {
-            type: 'date',
-            past: moment().subtract(100, 'years'),
-            future: moment().add(100, 'years')
-        };
-
-        settings.init = moment(date, DateRangeWidgetComponent.FORMAT_DATE_ACTIVITI);
-
-        this.dialogStart = new mdDateTimePicker.default(settings);
-        this.dialogStart.trigger = this.startElement.nativeElement;
-
-        let startDateButton = document.getElementById('startDateButton');
-        startDateButton.addEventListener('click', () => {
-            this.dialogStart.toggle();
-        });
-    }
-
-    private addAccessibilityLabelToDatePicker() {
-        let left: any = document.querySelector('#mddtp-date__left');
-        if (left) {
-            left.appendChild(this.createCustomElement('date left'));
-        }
-
-        let right: any = document.querySelector('#mddtp-date__right');
-        if (right) {
-            right.appendChild(this.createCustomElement('date right'));
-        }
-
-        let cancel: any = document.querySelector('#mddtp-date__cancel');
-        if (cancel) {
-            cancel.appendChild(this.createCustomElement('date cancel'));
-        }
-
-        let ok: any = document.querySelector('#mddtp-date__ok');
-        if (ok) {
-            ok.appendChild(this.createCustomElement('date ok'));
-        }
-    }
-
-    private createCustomElement(text: string): HTMLElement {
-        let span = document.createElement('span');
-        span.style.visibility = 'hidden';
-        let rightSpanText = document.createTextNode(text);
-        span.appendChild(rightSpanText);
-        return span;
-    }
-
-    initEndDateDialog(date: string) {
-        let settings: any = {
-            type: 'date',
-            past: moment().subtract(100, 'years'),
-            future: moment().add(100, 'years')
-        };
-
-        settings.init = moment(date, DateRangeWidgetComponent.FORMAT_DATE_ACTIVITI);
-
-        this.dialogEnd = new mdDateTimePicker.default(settings);
-        this.dialogEnd.trigger = this.endElement.nativeElement;
-
-        let endDateButton = document.getElementById('endDateButton');
-        endDateButton.addEventListener('click', () => {
-            this.dialogEnd.toggle();
-        });
-    }
-
-    onOkStart(inputEl: HTMLInputElement) {
-        let date = this.dialogStart.time.format(DateRangeWidgetComponent.FORMAT_DATE_ACTIVITI);
-        this.dateRange.patchValue({
-            startDate: date
-        });
-        let materialElemen: any = inputEl.parentElement;
-        if (materialElemen) {
-            materialElemen.MaterialTextfield.change(date);
-        }
-    }
-
-    onOkEnd(inputEl: HTMLInputElement) {
-        let date = this.dialogEnd.time.format(DateRangeWidgetComponent.FORMAT_DATE_ACTIVITI);
-        this.dateRange.patchValue({
-            endDate: date
-        });
-
-        let materialElemen: any = inputEl.parentElement;
-        if (materialElemen) {
-            materialElemen.MaterialTextfield.change(date);
-        }
     }
 
     onGroupValueChanged(data: any) {
@@ -202,7 +91,11 @@ export class DateRangeWidgetComponent extends WidgetComponent implements OnInit,
         }
     }
 
-    ngOnDestroy() {
+    isStartDateGreaterThanEndDate() {
+        return this.dateRange && this.dateRange.errors && this.dateRange.errors.greaterThan;
+    }
 
+    isStartDateEmpty() {
+        return this.dateRange && this.dateRange.controls.startDate && !this.dateRange.controls.startDate.valid;
     }
 }

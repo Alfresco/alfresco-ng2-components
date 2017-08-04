@@ -50,5 +50,13 @@
   "DIALOG":{
       "SAVE_MESSAGE" : "The current parameter settings will be stored, and a new report will be shown in the reports list. When that particular report is clicked, the report will be generated using these saved parameter values.",
       "EXPORT_MESSAGE":""
+  },
+  "DATE-WIDGET":{
+      "START-DATE" : "Start date",
+      "END-DATE": "End date",
+      "MESSAGES":{
+        "START-DATE-REQUIRED": "Start date is required",
+        "START-LESS-THAN-END-DATE":"Start date must be less than End date"
+      }
   }
 }
