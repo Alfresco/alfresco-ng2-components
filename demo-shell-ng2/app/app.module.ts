@@ -40,9 +40,11 @@ import { ChartsModule } from 'ng2-charts';
 import { AppComponent } from './app.component';
 import { routing } from './app.routes';
 import { CustomEditorsModule } from './components/activiti/custom-editor/custom-editor.component';
-import { CreateFolderDialogComponent } from './dialogs/create-folder.dialog';
 import { MaterialModule } from './material.module';
 import { DebugAppConfigService } from './services/debug-app-config.service';
+
+import { CreateFolderDialogComponent } from './dialogs/create-folder.dialog';
+import { DownloadZipDialogComponent } from './dialogs/download-zip.dialog';
 
 import { FormListDemoComponent } from './components/form/form-list-demo.component';
 
@@ -120,6 +122,7 @@ if (process.env.ENV === 'production') {
         FilesComponent,
         FormNodeViewerComponent,
         CreateFolderDialogComponent,
+        DownloadZipDialogComponent,
         SettingsComponent,
         FormDemoComponent,
         FormListDemoComponent
@@ -129,7 +132,8 @@ if (process.env.ENV === 'production') {
     ],
     bootstrap: [ AppComponent ],
     entryComponents: [
-        CreateFolderDialogComponent
+        CreateFolderDialogComponent,
+        DownloadZipDialogComponent
     ]
 })
 export class AppModule { }
