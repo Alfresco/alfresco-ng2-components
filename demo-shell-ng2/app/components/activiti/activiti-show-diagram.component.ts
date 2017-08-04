@@ -16,8 +16,8 @@
  */
 
 import { Location } from '@angular/common';
-import { Component, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
 @Component({
@@ -25,25 +25,22 @@ import { Subscription } from 'rxjs/Rx';
     templateUrl: './activiti-show-diagram.component.html',
     styleUrls: ['./activiti-show-diagram.component.css']
 })
-export class ActivitiShowDiagramComponent implements OnDestroy {
+export class ActivitiShowDiagramComponent {
 
-    sub: Subscription;
     processDefinitionId: string;
+    appId: string;
 
     constructor(private route: ActivatedRoute,
+                private router: Router,
                 private location: Location) {
-        this.sub = this.route.params.subscribe(params => {
+        this.route.params.subscribe(params => {
             this.processDefinitionId = params['processDefinitionId'];
+            this.appId = params['appId'];
         });
-
-    }
-
-    ngOnDestroy() {
-        this.sub.unsubscribe();
     }
 
     onClickBack() {
-        this.location.back();
+        this.router.navigate(['/activiti/apps/' + this.appId + '/processes']);
     }
 
 }
