@@ -18,13 +18,18 @@
 import { ChangeDetectorRef, Component, Input, OnInit, Optional, ViewChild } from '@angular/core';
 import { MdDialog } from '@angular/material';
 import { ActivatedRoute, Params } from '@angular/router';
-import { AlfrescoContentService, FileUploadCompleteEvent, FolderCreatedEvent, NotificationService, PermissionsEnum, SiteModel, UploadService } from 'ng2-alfresco-core';
+import { DownloadEntry, MinimalNodeEntity } from 'alfresco-js-api';
+import {
+    AlfrescoApiService, AlfrescoContentService, FileUploadCompleteEvent,
+    FolderCreatedEvent, NotificationService, PermissionsEnum, SiteModel, UploadService
+} from 'ng2-alfresco-core';
 import { DocumentListComponent, DropdownSitesComponent, PermissionStyleModel } from 'ng2-alfresco-documentlist';
 
 import { CreateFolderDialogComponent } from '../../dialogs/create-folder.dialog';
+import { DownloadZipDialogComponent } from './../../dialogs/download-zip.dialog';
 
 @Component({
-    selector: 'files-component',
+    selector: 'adf-files-component',
     templateUrl: './files.component.html',
     styleUrls: ['./files.component.css']
 })
@@ -79,6 +84,7 @@ export class FilesComponent implements OnInit {
     permissionsStyle: PermissionStyleModel[] = [];
 
     constructor(private changeDetector: ChangeDetectorRef,
+                private apiService: AlfrescoApiService,
                 private notificationService: NotificationService,
                 private uploadService: UploadService,
                 private contentService: AlfrescoContentService,
@@ -163,5 +169,77 @@ export class FilesComponent implements OnInit {
 
     getSiteContent(site: SiteModel) {
         this.currentFolderId = site && site.guid ? site.guid : '-my-';
+    }
+
+    hasSelection(selection: Array<MinimalNodeEntity>): boolean {
+        return selection && selection.length > 0;
+    }
+
+    downloadNodes(selection: Array<MinimalNodeEntity>) {
+        if (!selection || selection.length === 0) {
+            return;
+        }
+
+        if (selection.length === 1) {
+            this.downloadNode(selection[0]);
+        } else {
+            this.downloadZip(selection);
+        }
+    }
+
+    downloadNode(node: MinimalNodeEntity) {
+        if (node && node.entry) {
+            const entry = node.entry;
+
+            if (entry.isFile) {
+                this.downloadFile(node);
+            }
+
+            if (entry.isFolder) {
+                this.downloadZip([node]);
+            }
+        }
+    }
+
+    downloadFile(node: MinimalNodeEntity) {
+        if (node && node.entry) {
+            const nodesApi = this.apiService.getInstance().core.nodesApi;
+            const contentApi = this.apiService.getInstance().content;
+
+            const url = contentApi.getContentUrl(node.entry.id, true);
+            const fileName = node.entry.name;
+
+            this.download(url, fileName);
+        }
+    }
+
+    downloadZip(selection: Array<MinimalNodeEntity>) {
+        if (selection && selection.length > 0) {
+            const nodeIds = selection.map(node => node.entry.id);
+
+            const dialogRef = this.dialog.open(DownloadZipDialogComponent, {
+                width: '600px',
+                data: {
+                    nodeIds: nodeIds
+                }
+            });
+            dialogRef.afterClosed().subscribe(result => {
+                console.log(result);
+            });
+        }
+    }
+
+    download(url: string, fileName: string) {
+        if (url && fileName) {
+            const link = document.createElement('a');
+
+            link.style.display = 'none';
+            link.download = fileName;
+            link.href = url;
+
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
     }
 }
