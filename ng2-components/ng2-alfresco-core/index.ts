@@ -59,6 +59,8 @@ import { PeopleApiService } from './src/services/people-api.service';
 import { SearchApiService } from './src/services/search-api.service';
 import { SharedLinksApiService } from './src/services/shared-links-api.service';
 import { SitesApiService } from './src/services/sites-api.service';
+import { SearchService } from './src/services/search.service';
+import { HighlightTransformService } from './src/services/highlight-transform.service';
 
 export { MomentDateAdapter, MOMENT_DATE_FORMATS } from './src/utils/momentDateAdapter';
 import { MomentDateAdapter } from './src/utils/momentDateAdapter';
@@ -88,7 +90,7 @@ export { UpdateNotification } from './src/services/card-view-update.service';
 export { ClickNotification } from './src/services/card-view-update.service';
 export { AppConfigModule } from './src/services/app-config.service';
 export { UserPreferencesService } from './src/services/user-preferences.service';
-import { SearchService } from './src/services/search.service';
+export { HighlightTransformService, HightlightTransformResult } from './src/services/highlight-transform.service';
 
 export { DeletedNodesApiService } from './src/services/deleted-nodes-api.service';
 export { FavoritesApiService } from './src/services/favorites-api.service';
@@ -176,6 +178,7 @@ export function providers() {
 
 export function deprecatedProviders() {
     return [
+        { provide: HighlightTransformService, useValue: HighlightTransformService },
         AlfrescoTranslationService,
         AlfrescoAuthenticationService
     ];
