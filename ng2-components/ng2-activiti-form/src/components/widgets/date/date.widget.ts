@@ -65,6 +65,9 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit {
             let momentDate = moment(newDateValue, this.field.dateDisplayFormat);
             if (!momentDate.isValid()) {
                 this.field.validationSummary = this.field.dateDisplayFormat;
+                this.field.value = '';
+            }else {
+                this.field.value = newDateValue;
             }
         }
         this.checkVisibility(this.field);

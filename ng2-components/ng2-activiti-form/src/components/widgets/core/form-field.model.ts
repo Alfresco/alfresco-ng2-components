@@ -157,8 +157,8 @@ export class FormFieldModel extends FormWidgetModel {
                 this.placeholder = json.placeholder;
             }
 
-            if (json.type === 'readonly'){
-                if (json.params && json.params.field && json.params.field.responseVariable){
+            if (json.type === 'readonly') {
+                if (json.params && json.params.field && json.params.field.responseVariable) {
                     this.value = this.getVariablesValue(json.params.field.name, form);
                 }
             }
@@ -175,12 +175,12 @@ export class FormFieldModel extends FormWidgetModel {
         this.updateForm();
     }
 
-    private getVariablesValue(variableName: string, form: FormModel){
+    private getVariablesValue(variableName: string, form: FormModel) {
         let variable = form.json.variables.find((currentVariable) => {
             return currentVariable.name === variableName;
         });
 
-        if (variable.type === 'boolean'){
+        if (variable.type === 'boolean') {
             return JSON.parse(variable.value);
         }
 

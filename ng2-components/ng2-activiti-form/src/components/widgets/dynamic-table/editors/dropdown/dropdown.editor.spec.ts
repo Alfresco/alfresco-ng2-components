@@ -33,12 +33,6 @@ import { DropdownEditorComponent } from './dropdown.editor';
 
 describe('DropdownEditorComponent', () => {
 
-    function openSelect() {
-        const dropdown = fixture.debugElement.query(By.css('[class="mat-select-trigger"]'));
-        dropdown.triggerEventHandler('click', null);
-        fixture.detectChanges();
-    }
-
     let component: DropdownEditorComponent;
     let formService: FormService;
     let form: FormModel;
@@ -171,12 +165,19 @@ describe('DropdownEditorComponent', () => {
     });
 
     it('should update row on value change', () => {
-        let event = {target: {value: 'two'}};
+        let event = {value: 'two'};
         component.onValueChanged(row, column, event);
         expect(row.value[column.id]).toBe(column.options[1]);
     });
 
     describe('when template is ready', () => {
+
+        function openSelect() {
+            const dropdown = fixture.debugElement.query(By.css('[class="mat-select-trigger"]'));
+            dropdown.triggerEventHandler('click', null);
+            fixture.detectChanges();
+        }
+
         let dropDownEditorComponent: DropdownEditorComponent;
         let fixture: ComponentFixture<DropdownEditorComponent>;
         let element: HTMLElement;
