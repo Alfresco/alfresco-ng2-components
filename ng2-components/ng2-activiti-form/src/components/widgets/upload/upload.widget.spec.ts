@@ -93,12 +93,13 @@ describe('UploadWidgetComponent', () => {
     });
 
     it('should reset field value', () => {
-        widget.field = new FormFieldModel(null, {
+        widget.field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.UPLOAD,
             value: [
                 { name: 'filename' }
             ]
         });
+
         widget.reset(widget.field.value[0]);
         expect(widget.field.value).toBeNull();
         expect(widget.field.json.value).toBeNull();

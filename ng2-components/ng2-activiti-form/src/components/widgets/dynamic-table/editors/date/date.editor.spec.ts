@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { ElementRef } from '@angular/core';
 import * as moment from 'moment';
 import { FormFieldModel, FormModel } from '../../../index';
 import { DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './../../dynamic-table.widget.model';
@@ -24,7 +23,6 @@ import { DateEditorComponent } from './date.editor';
 describe('DateEditorComponent', () => {
 
     let nativeElement: any;
-    let elementRef: ElementRef;
     let component: DateEditorComponent;
     let row: DynamicTableRow;
     let column: DynamicTableColumn;
@@ -41,12 +39,36 @@ describe('DateEditorComponent', () => {
         table = new DynamicTableModel(field);
         table.rows.push(row);
         table.columns.push(column);
-
-        elementRef = new ElementRef(nativeElement);
-        component = new DateEditorComponent(elementRef);
+        component = new DateEditorComponent(null);
         component.table = table;
         component.row = row;
         component.column = column;
     });
 
+    it('should update fow value on change', () => {
+        component.ngOnInit();
+        let newDate = moment('14-03-1879', 'DD-MM-YYYY');
+        component.onDateChanged(newDate);
+        expect(row.value[column.id]).toBe('1879-03-14T00:00:00.000Z');
+    });
+
+    it('should update row value upon user input', () => {
+        const input = '14-03-2016';
+
+        component.ngOnInit();
+        component.onDateChanged(input);
+
+        let actual = row.value[column.id];
+        expect(actual).toBe('2016-03-14T00:00:00.000Z');
+    });
+
+    it('should flush value on user input', () => {
+        spyOn(table, 'flushValue').and.callThrough();
+        const input = '14-03-2016';
+
+        component.ngOnInit();
+        component.onDateChanged(input);
+
+        expect(table.flushValue).toHaveBeenCalled();
+    });
 });

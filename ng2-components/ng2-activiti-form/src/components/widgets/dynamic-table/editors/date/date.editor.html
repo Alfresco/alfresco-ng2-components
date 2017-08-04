@@ -5,15 +5,14 @@
             id="dateInput"
             type="text"
             [mdDatepicker]="datePicker"
-            [value]="datePicker"
+            [value]="value"
             [id]="column.id"
             [required]="column.required"
             [disabled]="!column.editable"
-            (keyup)="onDateChanged($event)">
+           (focusout)="onDateChanged($event.srcElement.value)">
             <button mdSuffix *ngIf="column.editable"
             [mdDatepickerToggle]="datePicker" class="adf-date-editor-button"></button>
     </md-input-container>
-    <md-datepicker #datePicker (selectedChanged)="onDateSelected($event)"
-    [touchUi]="true"></md-datepicker>
+    <md-datepicker #datePicker (selectedChanged)="onDateChanged($event)" [touchUi]="true"></md-datepicker>
 </div>
 

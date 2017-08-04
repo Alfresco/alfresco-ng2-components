@@ -66,4 +66,132 @@ describe('DateWidgetComponent', () => {
         widget = fixture.componentInstance;
     });
 
+    it('should setup min value for date picker', () => {
+        let minValue = '13-03-1982';
+        widget.field = new FormFieldModel(null, {
+            id: 'date-id',
+            name: 'date-name',
+            minValue: minValue
+        });
+
+        widget.ngOnInit();
+
+        let expected = moment(minValue, widget.field.dateDisplayFormat);
+        expect(widget.minDate.isSame(expected)).toBeTruthy();
+    });
+
+    it('should date field be present', () => {
+        let minValue = '13-03-1982';
+        widget.field = new FormFieldModel(null, {
+            minValue: minValue
+        });
+
+        widget.ngOnInit();
+
+        expect(element.querySelector('#dropdown-id')).toBeDefined();
+    });
+
+    it('should setup max value for date picker', () => {
+        let maxValue = '31-03-1982';
+        widget.field = new FormFieldModel(null, {
+            maxValue: maxValue
+        });
+        widget.ngOnInit();
+
+        let expected = moment(maxValue, widget.field.dateDisplayFormat);
+        expect(widget.maxDate.isSame(expected)).toBeTruthy();
+    });
+
+    it('should eval visibility on date changed', () => {
+        spyOn(widget, 'checkVisibility').and.callThrough();
+
+        let field = new FormFieldModel(null);
+        widget.field = field;
+
+        widget.onDateChanged('12/12/2012');
+        expect(widget.checkVisibility).toHaveBeenCalledWith(field);
+    });
+
+    describe('template check', () => {
+
+        beforeEach(() => {
+            widget.field = new FormFieldModel(new FormModel(), {
+                id: 'date-field-id',
+                name: 'date-name',
+                value: '9-9-9999',
+                type: 'date',
+                readOnly: 'false'
+            });
+            widget.field.isVisible = true;
+            fixture.detectChanges();
+        });
+
+        afterEach(() => {
+            fixture.destroy();
+            TestBed.resetTestingModule();
+        });
+
+        it('should show visible date widget', async(() => {
+            fixture.whenStable()
+                .then(() => {
+                    expect(element.querySelector('#date-field-id')).toBeDefined();
+                    expect(element.querySelector('#date-field-id')).not.toBeNull();
+                    let dateElement: any = element.querySelector('#date-field-id');
+                    expect(dateElement.value).toEqual('9-9-9999');
+                });
+        }));
+
+        it('should hide not visible date widget', async(() => {
+            widget.field.isVisible = false;
+            fixture.detectChanges();
+            fixture.whenStable()
+                .then(() => {
+                    fixture.detectChanges();
+                    expect(element.querySelector('#data-widget')).toBeNull();
+                });
+        }));
+
+        it('should become visibile if the visibility change to true', async(() => {
+            widget.field.isVisible = false;
+            fixture.detectChanges();
+            widget.fieldChanged.subscribe((field) => {
+                field.isVisible = true;
+                fixture.detectChanges();
+                fixture.whenStable()
+                    .then(() => {
+                        expect(element.querySelector('#date-field-id')).toBeDefined();
+                        expect(element.querySelector('#date-field-id')).not.toBeNull();
+                        let dateElement: any = element.querySelector('#date-field-id');
+                        expect(dateElement.value).toEqual('9-9-9999');
+                    });
+            });
+            widget.checkVisibility(widget.field);
+        }));
+
+        it('should be hided if the visibility change to false', async(() => {
+            widget.fieldChanged.subscribe((field) => {
+                field.isVisible = false;
+                fixture.detectChanges();
+                fixture.whenStable()
+                    .then(() => {
+                        expect(element.querySelector('#data-widget')).toBeNull();
+                    });
+            });
+            widget.checkVisibility(widget.field);
+        }));
+
+        it('should disable date button when is readonly', async(() => {
+            widget.field.readOnly = false;
+            fixture.detectChanges();
+
+            let dateButton = <HTMLButtonElement> element.querySelector('button');
+            expect(dateButton.disabled).toBeFalsy();
+
+            widget.field.readOnly = true;
+            fixture.detectChanges();
+
+            dateButton = <HTMLButtonElement> element.querySelector('button');
+            expect(dateButton.disabled).toBeTruthy();
+        }));
+    });
 });

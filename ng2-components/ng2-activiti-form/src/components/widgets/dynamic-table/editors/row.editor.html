@@ -3,33 +3,33 @@
     <div class="mdl-grid" *ngFor="let column of table.columns">
         <div class="mdl-cell mdl-cell--6-col" [ngSwitch]="column.type">
             <div *ngSwitchCase="'Dropdown'">
-                <alf-dropdown-editor
+                <adf-dropdown-editor
                     [table]="table"
                     [row]="row"
                     [column]="column">
-                </alf-dropdown-editor>
+                </adf-dropdown-editor>
                 </div>
                 <div *ngSwitchCase="'Date'">
-                    <alf-date-editor
+                    <adf-date-editor
                     [table]="table"
                     [row]="row"
                     [column]="column">
-                </alf-date-editor>
+                </adf-date-editor>
                 </div>
 
                 <div *ngSwitchCase="'Boolean'">
-                <alf-boolean-editor
+                <adf-boolean-editor
                     [table]="table"
                     [row]="row"
                     [column]="column">
-                </alf-boolean-editor>
+                </adf-boolean-editor>
                 </div>
                 <div *ngSwitchDefault>
-                <alf-text-editor
+                <adf-text-editor
                     [table]="table"
                     [row]="row"
                     [column]="column">
-                </alf-text-editor>
+                </adf-text-editor>
             </div>
         </div>
     </div>

@@ -23,7 +23,7 @@ import { FormService } from './../../../../../services/form.service';
 import { DynamicTableColumn, DynamicTableColumnOption, DynamicTableModel, DynamicTableRow } from './../../dynamic-table.widget.model';
 
 @Component({
-    selector: 'alf-dropdown-editor',
+    selector: 'adf-dropdown-editor',
     templateUrl: './dropdown.editor.html',
     styleUrls: ['./dropdown.editor.scss']
 })
