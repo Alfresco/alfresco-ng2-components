@@ -26,6 +26,7 @@ import {
 import { DocumentListComponent, DropdownSitesComponent, PermissionStyleModel } from 'ng2-alfresco-documentlist';
 
 import { CreateFolderDialogComponent } from '../../dialogs/create-folder.dialog';
+import { DownloadZipDialogComponent } from './../../dialogs/download-zip.dialog';
 
 @Component({
     selector: 'adf-files-component',
@@ -212,51 +213,20 @@ export class FilesComponent implements OnInit {
         }
     }
 
-    // Download as ZIP prototype
-    // js-api@alpha 1.8.0-c422a3b69b1b96f72abc61ab370eff53590f8ee4
     downloadZip(selection: Array<MinimalNodeEntity>) {
         if (selection && selection.length > 0) {
             const nodeIds = selection.map(node => node.entry.id);
 
-            const downloadsApi = this.apiService.getInstance().core.downloadsApi;
-            const nodesApi = this.apiService.getInstance().core.nodesApi;
-            const contentApi = this.apiService.getInstance().content;
-
-            const promise: any = downloadsApi.createDownload({ nodeIds });
-
-            promise.on('progress', progress => console.log('Progress', progress));
-            promise.on('error', error => console.log('Error', error));
-            promise.on('abort', data => console.log('Abort', data));
-
-            promise.on('success', (data: DownloadEntry) => {
-                console.log('Success', data);
-                if (data && data.entry && data.entry.id) {
-                    const url = contentApi.getContentUrl(data.entry.id, true);
-                    // the call is needed only to get the name of the package
-                    nodesApi.getNode(data.entry.id).then((downloadNode: MinimalNodeEntity) => {
-                        console.log(downloadNode);
-                        const fileName = downloadNode.entry.name;
-                        // this.download(url, fileName);
-                        this.waitAndDownload(data.entry.id, url, fileName);
-                    });
+            const dialogRef = this.dialog.open(DownloadZipDialogComponent, {
+                width: '600px',
+                data: {
+                    nodeIds: nodeIds
                 }
             });
+            dialogRef.afterClosed().subscribe(result => {
+                console.log(result);
+            });
         }
-    }
-
-    waitAndDownload(downloadId: string, url: string, fileName: string) {
-        const downloadsApi = this.apiService.getInstance().core.downloadsApi;
-        downloadsApi.getDownload(downloadId).then((d: DownloadEntry) => {
-            if (d.entry) {
-                if (d.entry.status === 'DONE') {
-                    this.download(url, fileName);
-                } else {
-                    setTimeout(() => {
-                        this.waitAndDownload(downloadId, url, fileName);
-                    }, 1000);
-                }
-            }
-        });
     }
 
     download(url: string, fileName: string) {
