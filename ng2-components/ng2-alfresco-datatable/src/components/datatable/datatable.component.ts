@@ -27,8 +27,6 @@ import { ObjectDataRow, ObjectDataTableAdapter } from '../../data/object-datatab
 import { DataCellEvent } from './data-cell.event';
 import { DataRowActionEvent } from './data-row-action.event';
 
-declare var componentHandler;
-
 @Component({
     selector: 'adf-datatable, alfresco-datatable',
     styleUrls: ['./datatable.component.scss'],
@@ -110,7 +108,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
 
     constructor(translateService: AlfrescoTranslationService,
                 private elementRef: ElementRef,
-                private differs: IterableDiffers) {
+                differs: IterableDiffers) {
         if (differs) {
             this.differ = differs.find([]).create(null);
         }

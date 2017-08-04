@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { TaskDetailsComponent } from './task-details.component';
 import { NoTaskDetailsTemplateDirective } from './no-task-detail-template.directive';
+import { TaskDetailsComponent } from './task-details.component';
 
 describe('NoTaskDetailsTemplateDirective', () => {
 
@@ -24,7 +24,7 @@ describe('NoTaskDetailsTemplateDirective', () => {
     let detailsComponent: TaskDetailsComponent;
 
     beforeEach(() => {
-        detailsComponent = new TaskDetailsComponent(null, null, null, null, null, null);
+        detailsComponent = new TaskDetailsComponent(null, null, null, null);
         component = new NoTaskDetailsTemplateDirective(detailsComponent);
     });
 

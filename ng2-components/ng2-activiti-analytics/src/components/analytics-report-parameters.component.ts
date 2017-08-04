@@ -107,7 +107,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     private hideParameters: boolean = true;
     private formValidState: boolean = false;
 
-    constructor(private translateService: AlfrescoTranslationService,
+    constructor(translateService: AlfrescoTranslationService,
                 private analyticsService: AnalyticsService,
                 private formBuilder: FormBuilder,
                 private logService: LogService,

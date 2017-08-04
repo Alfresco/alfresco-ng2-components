@@ -42,7 +42,7 @@ export class AnalyticsReportHeatMapComponent implements  OnInit {
     currentMetricColors: string;
     metricType: string;
 
-    constructor(private translateService: AlfrescoTranslationService,
+    constructor(translateService: AlfrescoTranslationService,
                 private analyticsService: AnalyticsService,
                 private formBuilder: FormBuilder) {
         if (translateService) {

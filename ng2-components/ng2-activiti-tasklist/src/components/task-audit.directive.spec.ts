@@ -22,7 +22,6 @@ import {
     fakeAsync,
     TestBed
 } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { TaskListService } from './../services/tasklist.service';
@@ -34,7 +33,6 @@ describe('TaskAuditDirective', () => {
 
     let fixture: ComponentFixture<BasicButtonComponent>;
     let component: BasicButtonComponent;
-    let auditDirective: TaskAuditDirective;
     let service: TaskListService;
 
     function createFakePdfBlob(): Blob {

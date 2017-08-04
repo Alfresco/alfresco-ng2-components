@@ -55,7 +55,7 @@ export class PeopleComponent implements AfterViewInit {
      * @param translate
      * @param people service
      */
-    constructor(private translateService: AlfrescoTranslationService,
+    constructor(translateService: AlfrescoTranslationService,
                 private peopleService: PeopleService,
                 private logService: LogService) {
         if (translateService) {

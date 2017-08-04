@@ -67,8 +67,8 @@ export class ContextMenuHolderComponent {
     isShown = false;
     private mouseLocation: { left: number, top: number } = {left: 0, top: 0};
 
-    constructor(private _contextMenuService: ContextMenuService) {
-        _contextMenuService.show.subscribe(e => this.showMenu(e.event, e.obj));
+    constructor(contextMenuService: ContextMenuService) {
+        contextMenuService.show.subscribe(e => this.showMenu(e.event, e.obj));
     }
 
     get locationCss() {

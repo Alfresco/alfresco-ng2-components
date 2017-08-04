@@ -39,7 +39,7 @@ export class TaskHeaderComponent implements OnChanges {
     properties: CardViewItem [];
     inEdit: boolean = false;
 
-    constructor(private translateService: AlfrescoTranslationService,
+    constructor(translateService: AlfrescoTranslationService,
                 private activitiTaskService: TaskListService,
                 private logService: LogService) {
         if (translateService) {
