@@ -27,8 +27,16 @@
                         [folderNode]="documentList.folderNode">
                     </adf-dropdown-breadcrumb>
                 </adf-toolbar-title>
-                <button md-icon-button (click)="onCreateFolderClicked($event)">
+
+                <button md-icon-button
+                    (click)="onCreateFolderClicked($event)">
                     <md-icon>create_new_folder</md-icon>
+                </button>
+                <button md-icon-button
+                    [disabled]="!hasSelection(documentList.selection)"
+                    title="Download"
+                    (click)="downloadNodes(documentList.selection)">
+                    <md-icon>get_app</md-icon>
                 </button>
                 <button md-icon-button
                         adf-node-permission="delete"
@@ -145,12 +153,6 @@
                     handler="delete">
                 </content-action>
                 <!-- document actions -->
-                <content-action
-                    icon="file_download"
-                    target="document"
-                    title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DOWNLOAD' | translate}}"
-                    handler="download">
-                </content-action>
                 <content-action
                     icon="content_copy"
                     target="document"
