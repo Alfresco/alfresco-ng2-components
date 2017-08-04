@@ -19,7 +19,7 @@ import { DebugElement, EventEmitter } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
 import { By } from '@angular/platform-browser';
-import { MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AlfrescoTranslationService, CoreModule, SearchService, SiteModel } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { MaterialModule } from '../../material.module';
@@ -41,12 +41,6 @@ const ONE_FOLDER_RESULT = {
                 }
             }
         ]
-    }
-};
-
-const NO_RESULT = {
-    list: {
-        entries: []
     }
 };
 

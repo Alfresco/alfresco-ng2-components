@@ -18,7 +18,7 @@
 import { NgZone, SimpleChange, TemplateRef } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
-import { DataColumn, DataRowEvent, DataTableComponent } from 'ng2-alfresco-datatable';
+import { DataColumn, DataTableComponent } from 'ng2-alfresco-datatable';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { Observable, Subject } from 'rxjs/Rx';
 import { FileNode, FolderNode } from '../assets/document-library.model.mock';
@@ -31,7 +31,7 @@ import {
 import { MaterialModule } from '../material.module';
 import { ContentActionModel } from '../models/content-action.model';
 import { NodeMinimal, NodeMinimalEntry, NodePaging } from '../models/document-library.model';
-import { ImageResolver, RowFilter, ShareDataRow } from './../data/share-datatable-adapter';
+import { ImageResolver, RowFilter } from './../data/share-datatable-adapter';
 import { DocumentListService } from './../services/document-list.service';
 import { DocumentListComponent } from './document-list.component';
 import { DocumentMenuActionComponent } from './document-menu-action.component';
@@ -747,7 +747,6 @@ describe('DocumentList', () => {
 
     it('should emit [nodeClick] event on row click', () => {
         let node = new NodeMinimalEntry();
-        let row = new ShareDataRow(node, null, null);
 
         spyOn(documentList, 'onNodeClick').and.callThrough();
         documentList.onNodeClick(node);
@@ -756,7 +755,6 @@ describe('DocumentList', () => {
 
     it('should emit node-click DOM event', (done) => {
         let node = new NodeMinimalEntry();
-        let row = new ShareDataRow(node, null, null);
 
         const htmlElement = fixture.debugElement.nativeElement as HTMLElement;
         htmlElement.addEventListener('node-click', (e: CustomEvent) => {
@@ -768,7 +766,6 @@ describe('DocumentList', () => {
 
     it('should emit [nodeDblClick] event on row double-click', () => {
         let node = new NodeMinimalEntry();
-        let row = new ShareDataRow(node, null, null);
 
         spyOn(documentList, 'onNodeDblClick').and.callThrough();
         documentList.onNodeDblClick(node);
@@ -777,7 +774,6 @@ describe('DocumentList', () => {
 
     it('should emit node-dblclick DOM event', (done) => {
         let node = new NodeMinimalEntry();
-        let row = new ShareDataRow(node, null, null);
 
         const htmlElement = fixture.debugElement.nativeElement as HTMLElement;
         htmlElement.addEventListener('node-dblclick', (e: CustomEvent) => {

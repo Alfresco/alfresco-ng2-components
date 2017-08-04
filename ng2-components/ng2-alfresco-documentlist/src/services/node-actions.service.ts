@@ -19,7 +19,6 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { MdDialog } from '@angular/material';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AlfrescoContentService, AlfrescoTranslationService } from 'ng2-alfresco-core';
-import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Rx';
 import { ContentNodeSelectorComponent } from '../components/content-node-selector/content-node-selector.component';
 import { DocumentListService } from './document-list.service';

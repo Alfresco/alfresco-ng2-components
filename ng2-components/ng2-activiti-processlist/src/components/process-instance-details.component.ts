@@ -25,8 +25,6 @@ import { ProcessService } from './../services/process.service';
 import { ProcessInstanceHeaderComponent } from './process-instance-header.component';
 import { ProcessInstanceTasksComponent } from './process-instance-tasks.component';
 
-declare let dialogPolyfill: any;
-
 @Component({
     selector: 'adf-process-instance-details, activiti-process-instance-details',
     templateUrl: './process-instance-details.component.html',
@@ -68,7 +66,7 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
      * @param translate Translation service
      * @param activitiProcess   Process service
      */
-    constructor(private translate: AlfrescoTranslationService,
+    constructor(translate: AlfrescoTranslationService,
                 private activitiProcess: ProcessService,
                 private logService: LogService) {
 

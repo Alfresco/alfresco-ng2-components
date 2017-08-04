@@ -70,7 +70,7 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     ];
 
     constructor(private processService: ProcessService,
-                private translate: AlfrescoTranslationService) {
+                translate: AlfrescoTranslationService) {
         if (translate !== null) {
             translate.addTranslationFolder('ng2-activiti-processlist', 'assets/ng2-activiti-processlist');
         }

@@ -26,8 +26,6 @@ import { TaskListService } from '../services/tasklist.service';
 import { startTaskMock } from './../assets/start-task.mock';
 import { StartTaskComponent } from './start-task.component';
 
-declare let jasmine: any;
-
 describe('StartTaskComponent', () => {
 
     let activitiStartTaskComponent: StartTaskComponent;

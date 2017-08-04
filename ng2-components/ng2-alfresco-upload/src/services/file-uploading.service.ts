@@ -16,13 +16,11 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Rx';
 
 @Injectable()
 export class FileUploadService {
-    public remove = new Subject<string>();
-    public onRemoveFile = this.remove.asObservable();
+    remove = new Subject<string>();
 
     emitFileRemoved(item: any) {
         this.remove.next(item);

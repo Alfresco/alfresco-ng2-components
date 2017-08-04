@@ -18,7 +18,6 @@
  /* tslint:disable:component-selector  */
 
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DiagramColorService } from '../../services/diagram-color.service';
 
 @Component({
     selector: 'diagram-event',
@@ -39,8 +38,7 @@ export class DiagramEventComponent implements OnInit {
 
     center: any = {};
 
-    constructor(public elementRef: ElementRef,
-                private diagramColorService: DiagramColorService) {}
+    constructor(public elementRef: ElementRef) {}
 
     ngOnInit() {
 

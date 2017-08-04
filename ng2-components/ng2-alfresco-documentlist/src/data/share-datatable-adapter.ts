@@ -18,7 +18,6 @@
 import { DatePipe } from '@angular/common';
 import { MinimalNode, MinimalNodeEntity, NodePaging } from 'alfresco-js-api';
 import { ObjectUtils } from 'ng2-alfresco-core';
-import { PermissionsEnum } from 'ng2-alfresco-core';
 import { DataColumn, DataRow, DataSorting, DataTableAdapter } from 'ng2-alfresco-datatable';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { DocumentListService } from './../services/document-list.service';

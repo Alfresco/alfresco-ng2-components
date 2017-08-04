@@ -41,8 +41,6 @@ import { fakeNodeWithCreatePermission } from '../../assets/document-list.compone
 import { DocumentListComponent } from '../document-list.component';
 import { DropdownBreadcrumbComponent } from './dropdown-breadcrumb.component';
 
-declare let jasmine: any;
-
 describe('DropdownBreadcrumb', () => {
 
     let component: DropdownBreadcrumbComponent;
