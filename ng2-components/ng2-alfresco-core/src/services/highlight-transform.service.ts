@@ -16,14 +16,12 @@
  */
 
 export interface HightlightTransformResult {
-    text: string,
+    text: string;
     changed: boolean;
 }
 export class HighlightTransformService {
 
-    private constructor() {}
-
-    static highlight(text: string, search: string, wrapperClass: string = 'highlight'): HightlightTransformResult {
+    public highlight(text: string, search: string, wrapperClass: string = 'highlight'): HightlightTransformResult {
         let isMatching = false,
             result = text;
 

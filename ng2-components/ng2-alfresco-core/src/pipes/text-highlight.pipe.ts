@@ -16,7 +16,7 @@
  */
 
 import { Inject, Pipe, PipeTransform } from '@angular/core';
-import { HightlightTransformResult, HighlightTransformService } from '../services/highlight-transform.service';
+import { HighlightTransformService, HightlightTransformResult } from '../services/highlight-transform.service';
 
 @Pipe({
     name: 'highlight'
@@ -26,8 +26,7 @@ export class HighlightPipe implements PipeTransform {
     constructor(private highlightTransformService: HighlightTransformService) { }
 
     transform(text: string, search: string): string {
-        const HighlightTransform = this.highlightTransformService;
-        const result: HightlightTransformResult = HighlightTransformService.highlight(text, search);
+        const result: HightlightTransformResult = this.highlightTransformService.highlight(text, search);
         return result.text;
     }
 }

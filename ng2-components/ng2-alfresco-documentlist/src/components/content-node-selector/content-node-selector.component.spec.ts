@@ -16,7 +16,7 @@
  */
 
 import { DebugElement, EventEmitter } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
@@ -59,7 +59,7 @@ describe('ContentNodeSelectorComponent', () => {
     function typeToSearchBox(searchTerm = 'string-to-search') {
         let searchInput = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-input"]'));
         searchInput.nativeElement.value = searchTerm;
-        searchInput.triggerEventHandler('keyup', {});
+        searchInput.triggerEventHandler('input', {});
         fixture.detectChanges();
     }
 
@@ -445,6 +445,16 @@ describe('ContentNodeSelectorComponent', () => {
                     expect(documentList).not.toBeNull('Document list should be shown');
                     expect(documentList.componentInstance.currentFolderId).toBeNull();
                 });
+            }));
+
+            it('should highlight the results when search was performed in the next timeframe', fakeAsync(() => {
+                spyOn(component.highlighter, 'highlight');
+                typeToSearchBox('shenron');
+                respondWithSearchResults(ONE_FOLDER_RESULT);
+
+                expect(component.highlighter.highlight).not.toHaveBeenCalled();
+                tick();
+                expect(component.highlighter.highlight).toHaveBeenCalledWith('shenron');
             }));
 
             it('should show the default text instead of result list if search was cleared', async(() => {

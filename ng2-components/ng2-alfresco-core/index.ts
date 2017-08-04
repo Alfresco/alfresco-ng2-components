@@ -51,16 +51,17 @@ import { TranslationService } from './src/services/translation.service';
 import { UploadService } from './src/services/upload.service';
 import { UserPreferencesService } from './src/services/user-preferences.service';
 
+import { HighlightDirective } from './src/directives/highlight.directive';
 import { DeletedNodesApiService } from './src/services/deleted-nodes-api.service';
 import { DiscoveryApiService } from './src/services/discovery-api.service';
 import { FavoritesApiService } from './src/services/favorites-api.service';
+import { HighlightTransformService } from './src/services/highlight-transform.service';
 import { NodesApiService } from './src/services/nodes-api.service';
 import { PeopleApiService } from './src/services/people-api.service';
 import { SearchApiService } from './src/services/search-api.service';
+import { SearchService } from './src/services/search.service';
 import { SharedLinksApiService } from './src/services/shared-links-api.service';
 import { SitesApiService } from './src/services/sites-api.service';
-import { SearchService } from './src/services/search.service';
-import { HighlightTransformService } from './src/services/highlight-transform.service';
 
 export { MomentDateAdapter, MOMENT_DATE_FORMATS } from './src/utils/momentDateAdapter';
 import { MomentDateAdapter } from './src/utils/momentDateAdapter';
@@ -122,6 +123,7 @@ export { CardViewItem } from './src/interface/card-view-item.interface';
 export * from './src/components/data-column/data-column.component';
 export * from './src/components/data-column/data-column-list.component';
 export * from './src/directives/upload.directive';
+export * from './src/directives/highlight.directive';
 export * from './src/utils/index';
 export * from './src/events/base.event';
 export * from './src/events/base-ui.event';
@@ -172,13 +174,13 @@ export function providers() {
         SearchApiService,
         SharedLinksApiService,
         SitesApiService,
-        DiscoveryApiService
+        DiscoveryApiService,
+        HighlightTransformService
     ];
 }
 
 export function deprecatedProviders() {
     return [
-        { provide: HighlightTransformService, useValue: HighlightTransformService },
         AlfrescoTranslationService,
         AlfrescoAuthenticationService
     ];
@@ -221,6 +223,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         ...obsoleteMdlDirectives(),
         UploadDirective,
         NodePermissionDirective,
+        HighlightDirective,
         DataColumnComponent,
         DataColumnListComponent,
         FileSizePipe,
@@ -243,6 +246,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         ...obsoleteMdlDirectives(),
         UploadDirective,
         NodePermissionDirective,
+        HighlightDirective,
         DataColumnComponent,
         DataColumnListComponent,
         FileSizePipe,

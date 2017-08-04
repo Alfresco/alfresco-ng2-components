@@ -18,7 +18,7 @@
 import { Component, EventEmitter, Inject, Input, Optional, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
 import { MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
-import { AlfrescoContentService, AlfrescoTranslationService, SearchOptions, SearchService, SiteModel } from 'ng2-alfresco-core';
+import { AlfrescoContentService, AlfrescoTranslationService, HighlightDirective, SearchOptions, SearchService, SiteModel } from 'ng2-alfresco-core';
 import { ImageResolver, RowFilter } from '../../data/share-datatable-adapter';
 import { DocumentListComponent } from '../document-list.component';
 
@@ -62,6 +62,9 @@ export class ContentNodeSelectorComponent {
 
     @ViewChild(DocumentListComponent)
     documentList: DocumentListComponent;
+
+    @ViewChild(HighlightDirective)
+    highlighter: HighlightDirective;
 
     constructor(private searchService: SearchService,
                 private contentService: AlfrescoContentService,
@@ -146,6 +149,7 @@ export class ContentNodeSelectorComponent {
     private querySearch(): void {
         if (this.searchTerm.length > 3) {
             this.chosenNode = null;
+
             const searchTerm = this.searchTerm + '*';
             let searchOpts: SearchOptions = {
                 include: ['path', 'allowableOperations'],
@@ -161,9 +165,19 @@ export class ContentNodeSelectorComponent {
                     results => {
                         this.showingSearchResults = true;
                         this.nodes = results;
+                        this.highlight();
                     }
                 );
         }
+    }
+
+    /**
+     * Hightlight the actual searchterm in the next frame
+     */
+    highlight() {
+        setTimeout(() => {
+            this.highlighter.highlight(this.searchTerm);
+        }, 0);
     }
 
     /**
