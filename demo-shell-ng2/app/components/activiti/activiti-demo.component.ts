@@ -113,7 +113,7 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
                 private route: ActivatedRoute,
                 private router: Router,
                 private apiService: AlfrescoApiService,
-                // private formRenderingService: FormRenderingService,
+                formRenderingService: FormRenderingService,
                 formService: FormService) {
         this.dataTasks = new ObjectDataTableAdapter();
         this.dataTasks.setSorting(new DataSorting('created', 'desc'));
