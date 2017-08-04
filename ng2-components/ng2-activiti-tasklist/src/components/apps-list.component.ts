@@ -23,8 +23,6 @@ import { AppDefinitionRepresentationModel } from '../models/filter.model';
 import { IconModel } from '../models/icon.model';
 import { TaskListService } from './../services/tasklist.service';
 
-declare let componentHandler: any;
-
 @Component({
     selector: 'adf-apps, activiti-apps',
     templateUrl: 'apps-list.component.html',
@@ -67,7 +65,7 @@ export class AppsListComponent implements OnInit {
      * @param translate Translate service
      * @param activitiTaskList Task service
      */
-    constructor(private translateService: AlfrescoTranslationService,
+    constructor(translateService: AlfrescoTranslationService,
                 private activitiTaskList: TaskListService) {
 
         if (translateService) {

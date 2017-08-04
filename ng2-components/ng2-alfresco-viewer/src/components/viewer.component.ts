@@ -93,18 +93,21 @@ export class ViewerComponent implements OnDestroy, OnChanges {
                     this.urlFileContent = this.urlFile;
                     resolve();
                 } else if (this.fileNodeId) {
-                    this.apiService.getInstance().nodes.getNodeInfo(this.fileNodeId).then((data: MinimalNodeEntryEntity) => {
-                        this.mimeType = data.content.mimeType;
-                        this.displayName = data.name;
-                        this.urlFileContent = this.apiService.getInstance().content.getContentUrl(data.id);
-                        this.extension = this.getFileExtension(data.name);
-                        this.extensionChange.emit(this.extension);
-                        this.loaded = true;
-                        resolve();
-                    },                                                                    function (error) {
-                        reject(error);
-                        this.logService.error('This node does not exist');
-                    });
+                    this.apiService.getInstance().nodes.getNodeInfo(this.fileNodeId).then(
+                        (data: MinimalNodeEntryEntity) => {
+                            this.mimeType = data.content.mimeType;
+                            this.displayName = data.name;
+                            this.urlFileContent = this.apiService.getInstance().content.getContentUrl(data.id);
+                            this.extension = this.getFileExtension(data.name);
+                            this.extensionChange.emit(this.extension);
+                            this.loaded = true;
+                            resolve();
+                        },
+                        (error) => {
+                            reject(error);
+                            this.logService.error('This node does not exist');
+                        }
+                    );
                 }
             });
         }
@@ -285,7 +288,7 @@ export class ViewerComponent implements OnDestroy, OnChanges {
      * Check if in the document there are scrollable main area and disable it
      */
     private blockOtherScrollBar() {
-        let mainElements: any = document.getElementsByTagName('main');
+        let mainElements: any = this.document.getElementsByTagName('main');
 
         for (let i = 0; i < mainElements.length; i++) {
             mainElements[i].style.overflow = 'hidden';
@@ -296,7 +299,7 @@ export class ViewerComponent implements OnDestroy, OnChanges {
      * Check if in the document there are scrollable main area and re-enable it
      */
     private unblockOtherScrollBar() {
-        let mainElements: any = document.getElementsByTagName('main');
+        let mainElements: any = this.document.getElementsByTagName('main');
 
         for (let i = 0; i < mainElements.length; i++) {
             mainElements[i].style.overflow = '';
@@ -336,7 +339,7 @@ export class ViewerComponent implements OnDestroy, OnChanges {
      */
     private hideOtherHeaderBar() {
         if (this.overlayMode && !this.isParentElementHeaderBar()) {
-            this.otherMenu = document.querySelector('header');
+            this.otherMenu = this.document.querySelector('header');
             if (this.otherMenu) {
                 this.otherMenu.hidden = true;
             }

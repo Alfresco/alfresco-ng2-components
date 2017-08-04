@@ -26,15 +26,14 @@ import { Component,
     TemplateRef,
     ViewChild
 } from '@angular/core';
-import { ContentLinkModel, FormModel, FormOutcomeEvent, FormService } from 'ng2-activiti-form';
-import { AlfrescoAuthenticationService, AlfrescoTranslationService, CardViewUpdateService, ClickNotification, LogService, UpdateNotification } from 'ng2-alfresco-core';
+import { ContentLinkModel, FormModel, FormOutcomeEvent } from 'ng2-activiti-form';
+import { AlfrescoAuthenticationService, AlfrescoTranslationService, CardViewUpdateService, ClickNotification, UpdateNotification } from 'ng2-alfresco-core';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { User } from '../models/user.model';
 import { TaskListService } from './../services/tasklist.service';
 
 declare var require: any;
-declare let dialogPolyfill: any;
 
 @Component({
     selector: 'adf-task-details, activiti-task-details',
@@ -128,22 +127,10 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
     noTaskDetailsTemplateComponent: TemplateRef<any>;
 
-    /**
-     *
-     * @param translateService
-     * @param activitiForm
-     * @param activitiTaskList
-     * @param logService
-     * @param authService
-     */
-    constructor(private translateService: AlfrescoTranslationService,
-                private activitiForm: FormService,
+    constructor(translateService: AlfrescoTranslationService,
                 private activitiTaskList: TaskListService,
-                private logService: LogService,
                 private authService: AlfrescoAuthenticationService,
-                private cardViewUpdateService: CardViewUpdateService
-) {
-
+                private cardViewUpdateService: CardViewUpdateService) {
         if (translateService) {
             translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
         }

@@ -75,7 +75,7 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
                 formService: FormService,
                 visibilityService: WidgetVisibilityService,
                 logService: LogService) {
-        super(formService, visibilityService, null, null, logService);
+        super(formService, visibilityService, null, null);
 
         if (this.translate) {
             this.translate.addTranslationFolder('ng2-activiti-form', 'assets/ng2-activiti-form');

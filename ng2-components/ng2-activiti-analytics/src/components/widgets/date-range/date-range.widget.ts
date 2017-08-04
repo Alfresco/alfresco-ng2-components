@@ -19,7 +19,7 @@
 
 /* tslint:disable::no-access-missing-member */
 import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { WidgetComponent } from './../widget.component';
 
@@ -62,8 +62,7 @@ export class DateRangeWidgetComponent extends WidgetComponent implements OnInit,
 
     dialogEnd: any;
 
-    constructor(public elementRef: ElementRef,
-                private formBuilder: FormBuilder) {
+    constructor(public elementRef: ElementRef) {
         super();
     }
 

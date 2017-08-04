@@ -47,7 +47,7 @@ export class ContentNodeSelectorComponent {
     select: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter<MinimalNodeEntryEntity>();
 
     constructor(private searchService: SearchService,
-                @Optional() private translateService: AlfrescoTranslationService,
+                @Optional() translateService: AlfrescoTranslationService,
                 @Optional() @Inject(MD_DIALOG_DATA) public data?: ContentNodeSelectorComponentData,
                 @Optional() private containingDialog?: MdDialogRef<ContentNodeSelectorComponent>) {
 
