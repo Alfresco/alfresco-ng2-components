@@ -58,26 +58,4 @@ ul > li > form-field > .adf-focus {
             }
         }
     }
-
-    &-content-container  {
-        .mat-focused {
-
-            label {
-                transform: scaleX(1);
-                transition: transform 150ms linear,
-                background-color $swift-ease-in-duration $swift-ease-in-timing-function;
-                color: mat-color($primary);
-            }
-
-            .mat-input-prefix {
-                color: mat-color($primary);
-            }
-        }
-
-        .mat-grid-tile {
-            overflow: visible;
-        }
-
-    }
 }
-
