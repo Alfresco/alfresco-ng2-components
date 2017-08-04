@@ -18,13 +18,17 @@
 import { ChangeDetectorRef, Component, Input, OnInit, Optional, ViewChild } from '@angular/core';
 import { MdDialog } from '@angular/material';
 import { ActivatedRoute, Params } from '@angular/router';
-import { AlfrescoContentService, FileUploadCompleteEvent, FolderCreatedEvent, NotificationService, PermissionsEnum, SiteModel, UploadService } from 'ng2-alfresco-core';
+import { DownloadEntry, MinimalNodeEntity } from 'alfresco-js-api';
+import {
+    AlfrescoApiService, AlfrescoContentService, FileUploadCompleteEvent,
+    FolderCreatedEvent, NotificationService, PermissionsEnum, SiteModel, UploadService
+} from 'ng2-alfresco-core';
 import { DocumentListComponent, DropdownSitesComponent, PermissionStyleModel } from 'ng2-alfresco-documentlist';
 
 import { CreateFolderDialogComponent } from '../../dialogs/create-folder.dialog';
 
 @Component({
-    selector: 'files-component',
+    selector: 'adf-files-component',
     templateUrl: './files.component.html',
     styleUrls: ['./files.component.css']
 })
@@ -79,6 +83,7 @@ export class FilesComponent implements OnInit {
     permissionsStyle: PermissionStyleModel[] = [];
 
     constructor(private changeDetector: ChangeDetectorRef,
+                private apiService: AlfrescoApiService,
                 private notificationService: NotificationService,
                 private uploadService: UploadService,
                 private contentService: AlfrescoContentService,
@@ -163,5 +168,108 @@ export class FilesComponent implements OnInit {
 
     getSiteContent(site: SiteModel) {
         this.currentFolderId = site && site.guid ? site.guid : '-my-';
+    }
+
+    hasSelection(selection: Array<MinimalNodeEntity>): boolean {
+        return selection && selection.length > 0;
+    }
+
+    downloadNodes(selection: Array<MinimalNodeEntity>) {
+        if (!selection || selection.length === 0) {
+            return;
+        }
+
+        if (selection.length === 1) {
+            this.downloadNode(selection[0]);
+        } else {
+            this.downloadZip(selection);
+        }
+    }
+
+    downloadNode(node: MinimalNodeEntity) {
+        if (node && node.entry) {
+            const entry = node.entry;
+
+            if (entry.isFile) {
+                this.downloadFile(node);
+            }
+
+            if (entry.isFolder) {
+                this.downloadZip([node]);
+            }
+        }
+    }
+
+    downloadFile(node: MinimalNodeEntity) {
+        if (node && node.entry) {
+            const nodesApi = this.apiService.getInstance().core.nodesApi;
+            const contentApi = this.apiService.getInstance().content;
+
+            const url = contentApi.getContentUrl(node.entry.id, true);
+            const fileName = node.entry.name;
+
+            this.download(url, fileName);
+        }
+    }
+
+    // Download as ZIP prototype
+    // js-api@alpha 1.8.0-c422a3b69b1b96f72abc61ab370eff53590f8ee4
+    downloadZip(selection: Array<MinimalNodeEntity>) {
+        if (selection && selection.length > 0) {
+            const nodeIds = selection.map(node => node.entry.id);
+
+            const downloadsApi = this.apiService.getInstance().core.downloadsApi;
+            const nodesApi = this.apiService.getInstance().core.nodesApi;
+            const contentApi = this.apiService.getInstance().content;
+
+            const promise: any = downloadsApi.createDownload({ nodeIds });
+
+            promise.on('progress', progress => console.log('Progress', progress));
+            promise.on('error', error => console.log('Error', error));
+            promise.on('abort', data => console.log('Abort', data));
+
+            promise.on('success', (data: DownloadEntry) => {
+                console.log('Success', data);
+                if (data && data.entry && data.entry.id) {
+                    const url = contentApi.getContentUrl(data.entry.id, true);
+                    // the call is needed only to get the name of the package
+                    nodesApi.getNode(data.entry.id).then((downloadNode: MinimalNodeEntity) => {
+                        console.log(downloadNode);
+                        const fileName = downloadNode.entry.name;
+                        // this.download(url, fileName);
+                        this.waitAndDownload(data.entry.id, url, fileName);
+                    });
+                }
+            });
+        }
+    }
+
+    waitAndDownload(downloadId: string, url: string, fileName: string) {
+        const downloadsApi = this.apiService.getInstance().core.downloadsApi;
+        downloadsApi.getDownload(downloadId).then((d: DownloadEntry) => {
+            if (d.entry) {
+                if (d.entry.status === 'DONE') {
+                    this.download(url, fileName);
+                } else {
+                    setTimeout(() => {
+                        this.waitAndDownload(downloadId, url, fileName);
+                    }, 1000);
+                }
+            }
+        });
+    }
+
+    download(url: string, fileName: string) {
+        if (url && fileName) {
+            const link = document.createElement('a');
+
+            link.style.display = 'none';
+            link.download = fileName;
+            link.href = url;
+
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
     }
 }
