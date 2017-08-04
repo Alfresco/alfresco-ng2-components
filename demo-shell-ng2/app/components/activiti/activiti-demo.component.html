@@ -74,17 +74,17 @@
                             (taskDeleted)="onTaskDeleted($event)">
                         </activiti-task-details>
                         <hr>
-                        Task Audit log
-                        <button *ngIf="currentTaskId"
-                            adf-task-audit
-                            [task-id]="currentTaskId"
-                            [download]="auditDownload.checked"
-                            md-icon-button (clicked)="onAuditClick($event)" (error)="onAuditError($event)" >
-                            <md-icon>assignment_ind</md-icon>
-                        </button>
-
-                        <md-checkbox #auditDownload>Download</md-checkbox>
-                        <hr>
+                        <div *ngIf="currentTaskId">
+                            Task Audit log
+                            <button
+                                adf-task-audit
+                                [task-id]="currentTaskId"
+                                [download]="true"
+                                md-icon-button (clicked)="onAuditClick($event)" (error)="onAuditError($event)" >
+                                <md-icon>assignment_ind</md-icon>
+                            </button>
+                            <hr>
+                        </div>
                         <md-card>
                             <md-card-content>
                                 <activiti-task-attachments
@@ -170,8 +170,8 @@
                             </md-card>
                         </div>
                         <div class="mdl-cell mdl-cell--10-col task-column mdl-shadow--2dp" *ngIf="isStartProcessMode()">
-                            <adf-start-process 
-                                    [appId]="appId" 
+                            <adf-start-process
+                                    [appId]="appId"
                                     (start)="onStartProcessInstance($event)"
                                     (cancel)="onCancelProcessInstance()">
                             </adf-start-process>
