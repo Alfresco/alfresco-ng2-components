@@ -16,6 +16,7 @@
  */
 
 import * as moment from 'moment';
+import { MomentDateAdapter } from 'ng2-alfresco-core';
 import { FormFieldModel, FormModel } from '../../../index';
 import { DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './../../dynamic-table.widget.model';
 import { DateEditorComponent } from './date.editor';
@@ -39,7 +40,7 @@ describe('DateEditorComponent', () => {
         table = new DynamicTableModel(field);
         table.rows.push(row);
         table.columns.push(column);
-        component = new DateEditorComponent(null);
+        component = new DateEditorComponent(new MomentDateAdapter());
         component.table = table;
         component.row = row;
         component.column = column;

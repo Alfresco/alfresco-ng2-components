@@ -104,7 +104,14 @@ describe('DateWidgetComponent', () => {
     it('should eval visibility on date changed', () => {
         spyOn(widget, 'checkVisibility').and.callThrough();
 
-        let field = new FormFieldModel(null);
+        let field = new FormFieldModel(new FormModel(), {
+            id: 'date-field-id',
+            name: 'date-name',
+            value: '9-9-9999',
+            type: 'date',
+            readOnly: 'false'
+        });
+
         widget.field = field;
 
         widget.onDateChanged('12/12/2012');
