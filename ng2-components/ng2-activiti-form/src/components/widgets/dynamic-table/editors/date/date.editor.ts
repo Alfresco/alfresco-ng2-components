@@ -62,7 +62,8 @@ export class DateEditorComponent implements OnInit {
 
     onDateChanged(newDateValue) {
         if (newDateValue) {
-            let momentDate = moment(newDateValue, this.DATE_FORMAT);
+            let momentDate = moment(newDateValue, this.DATE_FORMAT, true);
+
             if (!momentDate.isValid()) {
                 this.row.value[this.column.id]   = '';
             }else {
