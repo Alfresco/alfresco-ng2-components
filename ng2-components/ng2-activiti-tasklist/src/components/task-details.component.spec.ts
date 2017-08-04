@@ -39,6 +39,7 @@ describe('TaskDetailsComponent', () => {
     let getTaskDetailsSpy: jasmine.Spy;
     let getFormSpy: jasmine.Spy;
     let getTasksSpy: jasmine.Spy;
+    let getFormTaskSpy: jasmine.Spy;
     let completeTaskSpy: jasmine.Spy;
 
     beforeEach(async(() => {
@@ -71,6 +72,9 @@ describe('TaskDetailsComponent', () => {
 
         getTaskDetailsSpy = spyOn(service, 'getTaskDetails').and.returnValue(Observable.of(taskDetailsMock));
         getFormSpy = spyOn(formService, 'getTaskForm').and.returnValue(Observable.of(taskFormMock));
+        taskDetailsMock.processDefinitionId = null;
+        getFormTaskSpy = spyOn(formService, 'getTask').and.returnValue(Observable.of(taskDetailsMock));
+
         getTasksSpy = spyOn(service, 'getTasks').and.returnValue(Observable.of(tasksMock));
         completeTaskSpy = spyOn(service, 'completeTask').and.returnValue(Observable.of({}));
         spyOn(service, 'getComments').and.returnValue(Observable.of(noDataMock));
@@ -99,12 +103,12 @@ describe('TaskDetailsComponent', () => {
         expect(fixture.nativeElement.innerText).toBe('TASK_DETAILS.MESSAGES.NONE');
     });
 
-    it('should display a form when the task has an associated form', () => {
+    it('shoud display a form when the task has an associated form', () => {
         component.taskId = '123';
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(fixture.debugElement.query(By.css('activiti-form'))).not.toBeNull();
+            expect(fixture.debugElement.query(By.css('adf-form'))).not.toBeNull();
         });
     });
 
@@ -114,7 +118,7 @@ describe('TaskDetailsComponent', () => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(fixture.debugElement.query(By.css('activiti-form'))).toBeNull();
+            expect(fixture.debugElement.query(By.css('adf-form'))).toBeNull();
         });
     }));
 
