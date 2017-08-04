@@ -18,12 +18,12 @@
 import { ChangeDetectorRef, Component, Input, OnInit, Optional, ViewChild } from '@angular/core';
 import { MdDialog } from '@angular/material';
 import { ActivatedRoute, Params } from '@angular/router';
-import { DownloadEntry, MinimalNodeEntity } from 'alfresco-js-api';
+import { MinimalNodeEntity } from 'alfresco-js-api';
 import {
     AlfrescoApiService, AlfrescoContentService, FileUploadCompleteEvent,
-    FolderCreatedEvent, NotificationService, PermissionsEnum, SiteModel, UploadService
+    FolderCreatedEvent, NotificationService, SiteModel, UploadService
 } from 'ng2-alfresco-core';
-import { DocumentListComponent, DropdownSitesComponent, PermissionStyleModel } from 'ng2-alfresco-documentlist';
+import { DocumentListComponent, PermissionStyleModel } from 'ng2-alfresco-documentlist';
 
 import { CreateFolderDialogComponent } from '../../dialogs/create-folder.dialog';
 import { DownloadZipDialogComponent } from './../../dialogs/download-zip.dialog';
@@ -203,7 +203,6 @@ export class FilesComponent implements OnInit {
 
     downloadFile(node: MinimalNodeEntity) {
         if (node && node.entry) {
-            const nodesApi = this.apiService.getInstance().core.nodesApi;
             const contentApi = this.apiService.getInstance().content;
 
             const url = contentApi.getContentUrl(node.entry.id, true);
