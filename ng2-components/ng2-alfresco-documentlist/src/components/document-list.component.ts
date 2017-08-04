@@ -21,7 +21,7 @@ import {
 } from '@angular/core';
 import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, Pagination } from 'alfresco-js-api';
 import { AlfrescoTranslationService, DataColumnListComponent } from 'ng2-alfresco-core';
-import { DataCellEvent, DataColumn, DataRow, DataRowActionEvent, DataRowEvent, DataSorting, DataTableComponent, ObjectDataColumn } from 'ng2-alfresco-datatable';
+import { DataCellEvent, DataColumn, DataRowActionEvent, DataSorting, DataTableComponent, ObjectDataColumn } from 'ng2-alfresco-datatable';
 import { Observable, Subject } from 'rxjs/Rx';
 import { ImageResolver, RowFilter, ShareDataRow, ShareDataTableAdapter } from './../data/share-datatable-adapter';
 import { ContentActionModel } from './../models/content-action.model';

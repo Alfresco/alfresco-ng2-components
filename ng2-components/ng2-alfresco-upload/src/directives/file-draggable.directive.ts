@@ -40,7 +40,7 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
     private cssClassName: string = 'file-draggable__input-focus';
     private element: HTMLElement;
 
-    constructor(private el: ElementRef, private ngZone: NgZone) {
+    constructor(el: ElementRef, private ngZone: NgZone) {
         this.element = el.nativeElement;
     }
 

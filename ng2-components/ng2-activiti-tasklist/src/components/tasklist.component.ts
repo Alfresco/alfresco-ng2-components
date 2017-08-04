@@ -25,7 +25,7 @@ import {
     Output,
     SimpleChanges
 } from '@angular/core';
-import { AlfrescoTranslationService, DataColumnListComponent, LogService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, DataColumnListComponent } from 'ng2-alfresco-core';
 import {
     DataColumn,
     DataRowEvent,
@@ -99,9 +99,8 @@ export class TaskListComponent implements OnChanges, AfterContentInit {
         { type: 'text', key: 'created', title: 'Created', cssClass: 'hidden', sortable: true }
     ];
 
-    constructor(private translateService: AlfrescoTranslationService,
-                private taskListService: TaskListService,
-                private logService: LogService) {
+    constructor(translateService: AlfrescoTranslationService,
+                private taskListService: TaskListService) {
         if (translateService) {
             translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
         }

@@ -18,7 +18,6 @@
  /* tslint:disable:component-selector  */
 
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DiagramColorService } from '../../services/diagram-color.service';
 
 @Component({
     selector: 'diagram-lane',
@@ -40,8 +39,7 @@ export class DiagramLaneComponent implements OnInit {
     textTransform: string;
     options: any = {stroke: '#000000', fillColors: 'none', fillOpacity: '', strokeWidth: '1', radius: 0};
 
-    constructor(public elementRef: ElementRef,
-                private diagramColorService: DiagramColorService) {}
+    constructor(public elementRef: ElementRef) {}
 
     ngOnInit() {
         this.rectLeftCorner = {x: this.lane.x, y: this.lane.y};

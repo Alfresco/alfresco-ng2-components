@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, getTestBed, TestBed } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableCellComponent } from '../components/datatable/datatable-cell.component';
 import { DataTableComponent } from '../components/datatable/datatable.component';

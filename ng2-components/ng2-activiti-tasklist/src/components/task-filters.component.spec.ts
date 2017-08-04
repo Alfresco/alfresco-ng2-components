@@ -66,7 +66,7 @@ describe('TaskFiltersComponent', () => {
     beforeEach(() => {
         logService = new LogServiceMock();
         activitiService = new TaskListService(null, logService);
-        filterList = new TaskFiltersComponent(null, activitiService, logService);
+        filterList = new TaskFiltersComponent(null, activitiService);
     });
 
     it('should return the filter task list', (done) => {

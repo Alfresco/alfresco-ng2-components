@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { AlfrescoApiService, AlfrescoContentService, AlfrescoTranslationService, FileModel, FileUtils, LogService, NotificationService, UploadService } from 'ng2-alfresco-core';
+import { AlfrescoApiService, AlfrescoTranslationService, FileModel, FileUtils, LogService, NotificationService, UploadService } from 'ng2-alfresco-core';
 import { Observable, Subject } from 'rxjs/Rx';
 import { PermissionModel } from '../models/permissions.model';
 
@@ -86,13 +86,11 @@ export class UploadButtonComponent implements OnInit, OnChanges {
 
     private permissionValue: Subject<boolean> = new Subject<boolean>();
 
-    constructor(private el: ElementRef,
-                private uploadService: UploadService,
+    constructor(private uploadService: UploadService,
                 private translateService: AlfrescoTranslationService,
                 private logService: LogService,
                 private notificationService: NotificationService,
-                private apiService: AlfrescoApiService,
-                private contentService: AlfrescoContentService) {
+                private apiService: AlfrescoApiService) {
         if (translateService) {
             translateService.addTranslationFolder('ng2-alfresco-upload', 'assets/ng2-alfresco-upload');
         }

@@ -23,9 +23,6 @@ import { ProcessDefinitionRepresentation } from './../models/process-definition.
 import { ProcessInstance } from './../models/process-instance.model';
 import { ProcessService } from './../services/process.service';
 
-declare let componentHandler: any;
-declare let dialogPolyfill: any;
-
 @Component({
     selector: 'adf-start-process, activiti-start-process',
     templateUrl: './start-process.component.html',
@@ -59,7 +56,7 @@ export class StartProcessInstanceComponent implements OnChanges {
 
     errorMessageId: string = '';
 
-    constructor(private translate: AlfrescoTranslationService,
+    constructor(translate: AlfrescoTranslationService,
                 private activitiProcess: ProcessService) {
 
         if (translate) {

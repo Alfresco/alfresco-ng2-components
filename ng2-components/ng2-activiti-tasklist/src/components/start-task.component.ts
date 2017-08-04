@@ -62,7 +62,7 @@ export class StartTaskComponent implements OnInit {
      * @param translate
      * @param taskService
      */
-    constructor(private translateService: AlfrescoTranslationService,
+    constructor(translateService: AlfrescoTranslationService,
                 private taskService: TaskListService,
                 private peopleService: PeopleService,
                 private logService: LogService) {

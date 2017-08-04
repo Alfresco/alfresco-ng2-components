@@ -52,7 +52,7 @@ export class CommentsComponent implements OnChanges {
      * @param translate Translation service
      * @param activitiTaskList Task service
      */
-    constructor(private translateService: AlfrescoTranslationService,
+    constructor(translateService: AlfrescoTranslationService,
                 private activitiTaskList: TaskListService) {
 
         if (translateService) {

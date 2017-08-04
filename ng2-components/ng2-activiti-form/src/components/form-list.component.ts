@@ -16,7 +16,6 @@
  */
 
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { LogService } from 'ng2-alfresco-core';
 import { FormService } from './../services/form.service';
 
 @Component({
@@ -29,8 +28,7 @@ export class FormListComponent implements OnChanges {
     @Input()
     forms: any [] = [];
 
-    constructor(protected formService: FormService,
-                private logService: LogService) {
+    constructor(protected formService: FormService) {
     }
 
     ngOnChanges(changes: SimpleChanges) {
