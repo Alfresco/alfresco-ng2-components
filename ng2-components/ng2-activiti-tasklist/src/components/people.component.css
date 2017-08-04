@@ -60,7 +60,7 @@ adf-people-list >>> adf-datatable >>> .people-edit-label {
 
 adf-people-list >>> adf-datatable >>> .people-pic {
     background: #ffc800;
-    padding: 12px 10px;
+    padding: 10px 10px;
     border-radius: 100px;
     color: #fff;
     text-align: center;
@@ -68,6 +68,13 @@ adf-people-list >>> adf-datatable >>> .people-pic {
     font-size: 18px;
     font-family: Muli;
     text-transform: uppercase
+}
+
+.people-img {
+    border-radius: 90%;
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
 }
 
 adf-people-list >>> adf-datatable >>> td.mdl-data-table__cell--non-numeric.non-selectable.data-cell{
