@@ -15,10 +15,8 @@
  * limitations under the License.
  */
 
-import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
 
 @Component({
     selector: 'activiti-show-diagram',
@@ -31,8 +29,7 @@ export class ActivitiShowDiagramComponent {
     appId: string;
 
     constructor(private route: ActivatedRoute,
-                private router: Router,
-                private location: Location) {
+                private router: Router) {
         this.route.params.subscribe(params => {
             this.processDefinitionId = params['processDefinitionId'];
             this.appId = params['appId'];
