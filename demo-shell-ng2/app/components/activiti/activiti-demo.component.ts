@@ -286,10 +286,8 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
         this.contentName = content.name;
     }
 
-    onAuditClick(event: any): void {
-        this.fileShowed = true;
-        this.content = event.value;
-        this.contentName = event.fileName;
+    onAuditClick(event: any) {
+        console.log(event);
     }
 
     onAuditError(event: any): void {
