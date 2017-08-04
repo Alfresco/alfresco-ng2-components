@@ -25,8 +25,6 @@ import { EcmModelService } from '../services/ecm-model.service';
 import { FormService } from '../services/form.service';
 import { FormListComponent } from './form-list.component';
 
-declare let jasmine: any;
-
 describe('TaskAttachmentList', () => {
 
     let component: FormListComponent;

@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { ElementRef } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
 import { ActivitiAlfrescoContentService } from '../../services/activiti-alfresco.service';

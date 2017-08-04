@@ -17,11 +17,8 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdTabsModule } from '@angular/material';
-import { Observable } from 'rxjs/Rx';
-
-import { MdInputModule } from '@angular/material';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Rx';
 import { MATERIAL_MODULE } from '../../index';
 import { TranslationMock } from './../assets/translation.service.mock';
 import { EcmModelService } from './../services/ecm-model.service';

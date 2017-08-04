@@ -17,7 +17,7 @@
 
 /* tslint:disable:component-selector  */
 
-import { Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DateAdapter, MD_DATE_FORMATS } from '@angular/material';
 import * as moment from 'moment';
 import { Moment } from 'moment';

@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { ElementRef } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import * as moment from 'moment';
 import { CoreModule } from 'ng2-alfresco-core';

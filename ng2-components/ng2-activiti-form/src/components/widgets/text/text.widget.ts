@@ -17,8 +17,7 @@
 
 /* tslint:disable:component-selector  */
 
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormFieldModel } from '../core/form-field.model';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormService } from './../../../services/form.service';
 import { baseHost , WidgetComponent } from './../widget.component';
 

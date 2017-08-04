@@ -17,7 +17,7 @@
 
 /* tslint:disable:component-selector  */
 
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { FormService } from './../../services/form.service';
 import { FormFieldModel } from './core/index';
 

@@ -61,7 +61,7 @@ import { SharedLinksApiService } from './src/services/shared-links-api.service';
 import { SitesApiService } from './src/services/sites-api.service';
 
 export { MomentDateAdapter, MOMENT_DATE_FORMATS } from './src/utils/momentDateAdapter';
-import { MOMENT_DATE_FORMATS, MomentDateAdapter } from './src/utils/momentDateAdapter';
+import { MomentDateAdapter } from './src/utils/momentDateAdapter';
 
 export { ContentService } from './src/services/content.service';
 export { StorageService } from './src/services/storage.service';

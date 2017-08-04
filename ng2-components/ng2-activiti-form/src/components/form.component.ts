@@ -16,7 +16,7 @@
  */
 
 /* tslint:disable */
-import { AfterViewChecked, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { FormErrorEvent, FormEvent } from './../events/index';
 import { EcmModelService } from './../services/ecm-model.service';
 import { FormService } from './../services/form.service';
