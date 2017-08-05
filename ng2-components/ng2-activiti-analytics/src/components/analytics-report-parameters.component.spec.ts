@@ -210,6 +210,7 @@ describe('AnalyticsReportParametersComponent', () => {
                     typeFiltering: true
                 }
             };
+
             component.submit(values);
         });
 
