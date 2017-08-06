@@ -35,15 +35,15 @@ export class AppDefinitionRepresentationModel {
 
     constructor(obj?: any) {
         if (obj) {
-            this.defaultAppId = obj.defaultAppId;
-            this.deploymentId = obj.deploymentId;
-            this.name = obj.name;
-            this.description = obj.description;
-            this.theme = obj.theme;
-            this.icon = obj.icon;
-            this.id = obj.id;
-            this.modelId = obj.modelId;
-            this.tenantId = obj.tenantId;
+            this.defaultAppId = obj.defaultAppId ? obj.defaultAppId : null;
+            this.deploymentId = obj.deploymentId ? obj.deploymentId  : null;
+            this.name = obj.name ? obj.name  : null;
+            this.description = obj.description ? obj.description  : null;
+            this.theme = obj.theme ? obj.theme  : null;
+            this.icon = obj.icon ? obj.icon  : null;
+            this.id = obj.id ? obj.id  : null;
+            this.modelId = obj.modelId ? obj.modelId  : null;
+            this.tenantId = obj.tenantId ? obj.tenantId  : null;
         }
     }
 }
@@ -62,8 +62,8 @@ export class FilterParamsModel {
 
     constructor(obj?: any) {
         if (obj) {
-            this.id = obj.id;
-            this.name = obj.name;
+            this.id = obj.id || null;
+            this.name = obj.name || null;
             this.index = obj.index;
         }
     }
@@ -88,11 +88,11 @@ export class FilterRepresentationModel {
 
     constructor(obj?: any) {
         if (obj) {
-            this.id = obj.id;
-            this.appId = obj.appId;
-            this.name = obj.name;
+            this.id = obj.id || null;
+            this.appId = obj.appId || null;
+            this.name = obj.name || null;
             this.recent = !!obj.recent;
-            this.icon = obj.icon;
+            this.icon = obj.icon || null;
             this.filter = new FilterParamRepresentationModel(obj.filter);
             this.index = obj.index;
             this.landingTaskId = obj.landingTaskId;
@@ -123,14 +123,14 @@ export class FilterParamRepresentationModel {
 
     constructor(obj?: any) {
         if (obj) {
-            this.processDefinitionId = obj.processDefinitionId;
-            this.processDefinitionKey = obj.processDefinitionKey;
-            this.name = obj.name;
-            this.state = obj.state;
-            this.sort = obj.sort;
-            this.assignment = obj.assignment;
-            this.dueAfter = obj.dueAfter;
-            this.dueBefore = obj.dueBefore;
+            this.processDefinitionId = obj.processDefinitionId || null;
+            this.processDefinitionKey = obj.processDefinitionKey || null;
+            this.name = obj.name || null;
+            this.state = obj.state || null;
+            this.sort = obj.sort || null;
+            this.assignment = obj.assignment || null;
+            this.dueAfter = obj.dueAfter || null;
+            this.dueBefore = obj.dueBefore || null;
         }
     }
 }
@@ -150,15 +150,14 @@ export class TaskQueryRequestRepresentationModel {
 
     constructor(obj?: any) {
         if (obj) {
-
-            this.appDefinitionId = obj.appDefinitionId;
-            this.processInstanceId = obj.processInstanceId;
-            this.processDefinitionId = obj.processDefinitionId;
-            this.processDefinitionKey = obj.processDefinitionKey;
-            this.text = obj.text;
-            this.assignment = obj.assignment;
-            this.state = obj.state;
-            this.sort = obj.sort;
+            this.appDefinitionId = obj.appDefinitionId || null;
+            this.processInstanceId = obj.processInstanceId || null;
+            this.processDefinitionId = obj.processDefinitionId || null;
+            this.processDefinitionKey = obj.processDefinitionKey || null;
+            this.text = obj.text || null;
+            this.assignment = obj.assignment || null;
+            this.state = obj.state || null;
+            this.sort = obj.sort || null;
             this.page = obj.page || 0;
             this.size = obj.size || 25;
             this.landingTaskId = obj.landingTaskId || '';

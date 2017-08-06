@@ -19,8 +19,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { DataRowActionEvent, DataRowEvent, DataTableModule, ObjectDataRow } from 'ng2-alfresco-datatable';
 import { Observable } from 'rxjs/Observable';
-import { User } from '../models/user.model';
 import { UserEventModel } from '../models/user-event.model';
+import { User } from '../models/user.model';
 import { PeopleListComponent } from './people-list.component';
 
 declare let jasmine: any;

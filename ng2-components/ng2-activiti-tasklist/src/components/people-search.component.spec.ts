@@ -20,8 +20,8 @@ import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { Observable } from 'rxjs/Observable';
 import { User } from '../models/user.model';
-import { PeopleSearchComponent } from './people-search.component';
 import { PeopleListComponent } from './people-list.component';
+import { PeopleSearchComponent } from './people-search.component';
 
 declare let jasmine: any;
 

@@ -59,37 +59,37 @@ export class TaskDetailsModel {
 
     constructor(obj?: any) {
         if (obj) {
-            this.id = obj.id;
-            this.name = obj.name;
+            this.id = obj.id || null;
+            this.name = obj.name || null;
             this.priority = obj.priority;
             this.assignee = obj.assignee ? new User(obj.assignee) : null;
             this.adhocTaskCanBeReassigned = obj.adhocTaskCanBeReassigned;
-            this.category = obj.category;
-            this.created = obj.created;
-            this.description = obj.description;
-            this.dueDate = obj.dueDate;
-            this.duration = obj.duration;
-            this.endDate = obj.endDate;
-            this.executionId = obj.executionId;
-            this.formKey = obj.formKey;
+            this.category = obj.category || null;
+            this.created = obj.created || null;
+            this.description = obj.description || null;
+            this.dueDate = obj.dueDate || null;
+            this.duration = obj.duration || null;
+            this.endDate = obj.endDate || null;
+            this.executionId = obj.executionId || null;
+            this.formKey = obj.formKey || null;
             this.initiatorCanCompleteTask = !!obj.initiatorCanCompleteTask;
             this.managerOfCandidateGroup = !!obj.managerOfCandidateGroup;
             this.memberOfCandidateGroup = !!obj.memberOfCandidateGroup;
             this.memberOfCandidateUsers = !!obj.memberOfCandidateUsers;
             this.involvedPeople = obj.involvedPeople;
-            this.parentTaskId = obj.parentTaskId;
-            this.parentTaskName = obj.parentTaskName;
-            this.processDefinitionCategory = obj.processDefinitionCategory;
-            this.processDefinitionDeploymentId = obj.processDefinitionDeploymentId;
-            this.processDefinitionDescription = obj.processDefinitionDescription;
-            this.processDefinitionId = obj.processDefinitionId;
-            this.processDefinitionKey = obj.processDefinitionKey;
-            this.processDefinitionName = obj.processDefinitionName;
+            this.parentTaskId = obj.parentTaskId || null;
+            this.parentTaskName = obj.parentTaskName || null;
+            this.processDefinitionCategory = obj.processDefinitionCategory || null;
+            this.processDefinitionDeploymentId = obj.processDefinitionDeploymentId || null;
+            this.processDefinitionDescription = obj.processDefinitionDescription || null;
+            this.processDefinitionId = obj.processDefinitionId || null;
+            this.processDefinitionKey = obj.processDefinitionKey || null;
+            this.processDefinitionName = obj.processDefinitionName || null;
             this.processDefinitionVersion = obj.processDefinitionVersion || 0;
-            this.processInstanceId = obj.processInstanceId;
-            this.processInstanceName = obj.processInstanceName;
-            this.processInstanceStartUserId = obj.processInstanceStartUserId;
-            this.taskDefinitionKey = obj.taskDefinitionKey;
+            this.processInstanceId = obj.processInstanceId || null;
+            this.processInstanceName = obj.processInstanceName || null;
+            this.processInstanceStartUserId = obj.processInstanceStartUserId || null;
+            this.taskDefinitionKey = obj.taskDefinitionKey || null;
         }
     }
 
