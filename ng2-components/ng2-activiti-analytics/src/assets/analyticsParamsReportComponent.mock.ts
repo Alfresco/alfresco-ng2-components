@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ReportParameterDetailsModel } from '../models/report.model';
+import { ReportParameterDetailsModel } from 'ng2-activiti-diagrams';
 
 export let reportDefParamStatus = {
     'id': 2005,

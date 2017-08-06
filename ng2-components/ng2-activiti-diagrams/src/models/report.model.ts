@@ -29,16 +29,16 @@ export class ReportParametersModel {
     created: string;
 
     constructor(obj?: any) {
-        this.id = obj.id;
-        this.name = obj.name ;
-        if (obj.definition) {
+        this.id = obj && obj.id;
+        this.name = obj && obj.name || null;
+        if (obj && obj.definition) {
             this.definition = new ReportDefinitionModel(JSON.parse(obj.definition));
         }
-        this.created = obj.created ;
+        this.created = obj && obj.created || null;
     }
 
     hasParameters() {
-        return (this.definition && this.definition.parameters) ? true : false;
+        return (this.definition && this.definition.parameters && this.definition.parameters.length > 0) ? true : false;
     }
 }
 
@@ -72,18 +72,18 @@ export class ReportParameterDetailsModel {
     name: string;
     nameKey: string;
     type: string;
-    value: string;
+    value: any;
     options: ParameterValueModel[];
     dependsOn: string;
 
     constructor(obj?: any) {
-        this.id = obj.id;
-        this.name = obj.name ;
-        this.nameKey = obj.nameKey ;
-        this.type = obj.type ;
-        this.value = obj.value ;
-        this.options = obj.options ;
-        this.dependsOn = obj.dependsOn ;
+        this.id = obj && obj.id;
+        this.name = obj && obj.name || null;
+        this.nameKey = obj && obj.nameKey || null;
+        this.type = obj && obj.type || null;
+        this.value = obj && obj.value || null;
+        this.options = obj && obj.options || null;
+        this.dependsOn = obj && obj.dependsOn || null;
     }
 }
 
@@ -94,10 +94,10 @@ export class ParameterValueModel {
     value: string;
 
     constructor(obj?: any) {
-        this.id = obj.id;
-        this.name = obj.name ;
-        this.value = obj.value ;
-        this.version = obj.version ;
+        this.id = obj && obj.id;
+        this.name = obj && obj.name || null;
+        this.value = obj && obj.value || null;
+        this.version = obj && obj.version || null;
     }
 
     get label () {
@@ -106,6 +106,7 @@ export class ParameterValueModel {
 }
 
 export class ReportQuery {
+    reportName: string;
     processDefinitionId: string;
     status: string;
     taskName: string;
@@ -116,26 +117,28 @@ export class ReportQuery {
     duration: number;
 
     constructor(obj?: any) {
-        if(obj) {
-            this.processDefinitionId = obj.processDefinitionId ;
-            this.status = obj.status ;
-            this.taskName = obj.taskName ;
-            this.dateRangeInterval = obj.dateRangeInterval ;
-            this.typeFiltering = (typeof obj.typeFiltering !== 'undefined') ? obj.typeFiltering : true;
-            this.slowProcessInstanceInteger = obj.slowProcessInstanceInteger || 0;
-            this.duration = obj.duration || 0;
-            this.dateRange = new ReportDateRange(obj);
-        }
+        this.reportName = obj && obj.reportName || null;
+        this.processDefinitionId = obj && obj.processDefinitionId || null;
+        this.status = obj && obj.status || null;
+        this.taskName = obj && obj.taskName || null;
+        this.dateRangeInterval = obj && obj.dateRangeInterval || null;
+        this.typeFiltering = obj && (typeof obj.typeFiltering !== 'undefined') ? obj.typeFiltering : true;
+        this.slowProcessInstanceInteger = obj && obj.slowProcessInstanceInteger || 0;
+        this.duration = obj && obj.duration || 0;
+        this.dateRange = new ReportDateRange(obj);
     }
+
 }
 
 export class ReportDateRange {
     startDate: string;
     endDate: string;
+    rangeId: string;
 
     constructor(obj?: any) {
-        this.startDate = obj.startDate ;
-        this.endDate = obj.endDate ;
+        this.startDate = obj && obj.startDate || null;
+        this.endDate = obj && obj.endDate || null;
+        this.rangeId = obj && obj.rangeId || null;
     }
 
 }

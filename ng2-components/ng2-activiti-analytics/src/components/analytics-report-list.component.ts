@@ -16,8 +16,8 @@
  */
 
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ReportParametersModel } from 'ng2-activiti-diagrams';
 import { Observable, Observer } from 'rxjs/Rx';
-import { ReportParametersModel } from '../models/report.model';
 import { AnalyticsService } from '../services/analytics.service';
 
 @Component({
