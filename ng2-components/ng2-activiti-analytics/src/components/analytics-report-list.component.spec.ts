@@ -17,10 +17,10 @@
 
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReportParametersModel } from 'ng2-activiti-diagrams';
 import { AlfrescoTranslationService, AppConfigModule, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { AnalyticsReportListComponent } from '../components/analytics-report-list.component';
-import { ReportParametersModel } from '../models/report.model';
 import { AnalyticsService } from '../services/analytics.service';
 
 declare let jasmine: any;

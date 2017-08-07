@@ -79,7 +79,7 @@ describe('AppsListComponent', () => {
         expect(getAppsSpy).toHaveBeenCalled();
     });
 
-    it('should show the apps filterd by defaultAppId', () => {
+    it('should show the apps filtered by defaultAppId', () => {
         component.filtersAppId = [{defaultAppId: 'fake-app-1'}];
         fixture.detectChanges();
         expect(component.isEmpty()).toBe(false);
@@ -87,7 +87,7 @@ describe('AppsListComponent', () => {
         expect(component.appList.length).toEqual(1);
     });
 
-    it('should show the apps filterd by deploymentId', () => {
+    it('should show the apps filtered by deploymentId', () => {
         component.filtersAppId = [{deploymentId: '4'}];
         fixture.detectChanges();
         expect(component.isEmpty()).toBe(false);
@@ -96,7 +96,7 @@ describe('AppsListComponent', () => {
         expect(component.appList[0].deploymentId).toEqual('4');
     });
 
-    it('should show the apps filterd by name', () => {
+    it('should show the apps filtered by name', () => {
         component.filtersAppId = [{name: 'App5'}];
         fixture.detectChanges();
         expect(component.isEmpty()).toBe(false);
@@ -105,7 +105,7 @@ describe('AppsListComponent', () => {
         expect(component.appList[0].name).toEqual('App5');
     });
 
-    it('should show the apps filterd by id', () => {
+    it('should show the apps filtered by id', () => {
         component.filtersAppId = [{id: 6}];
         fixture.detectChanges();
         expect(component.isEmpty()).toBe(false);
@@ -114,7 +114,7 @@ describe('AppsListComponent', () => {
         expect(component.appList[0].id).toEqual(6);
     });
 
-    it('should show the apps filterd by modelId', () => {
+    it('should show the apps filtered by modelId', () => {
         component.filtersAppId = [{modelId: 66}];
         fixture.detectChanges();
         expect(component.isEmpty()).toBe(false);
@@ -123,7 +123,7 @@ describe('AppsListComponent', () => {
         expect(component.appList[0].modelId).toEqual(66);
     });
 
-    it('should show the apps filterd by tenandId', () => {
+    it('should show the apps filtered by tenandId', () => {
         component.filtersAppId = [{tenantId: 9}];
         fixture.detectChanges();
         expect(component.isEmpty()).toBe(false);

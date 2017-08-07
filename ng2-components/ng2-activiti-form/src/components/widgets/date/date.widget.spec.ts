@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import { ElementRef } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import * as moment from 'moment';
 import { CoreModule } from 'ng2-alfresco-core';
+import { MATERIAL_MODULE } from '../../../../index';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
+import { ErrorWidgetComponent } from '../error/error.component';
 import { EcmModelService } from './../../../services/ecm-model.service';
 import { FormService } from './../../../services/form.service';
 import { FormFieldModel } from './../core/form-field.model';
@@ -30,17 +31,18 @@ describe('DateWidgetComponent', () => {
 
     let widget: DateWidgetComponent;
     let fixture: ComponentFixture<DateWidgetComponent>;
-    let componentHandler;
     let nativeElement: any;
     let element: HTMLElement;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule.forRoot(),
+                ...MATERIAL_MODULE
             ],
             declarations: [
-                DateWidgetComponent
+                DateWidgetComponent,
+                ErrorWidgetComponent
             ],
             providers: [
                 FormService,
@@ -61,25 +63,31 @@ describe('DateWidgetComponent', () => {
 
         element = fixture.nativeElement;
         widget = fixture.componentInstance;
-        componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
-        window['componentHandler'] = componentHandler;
-    });
-
-    it('should setup basic date picker settings on init ', () => {
-        expect(widget.datePicker).toBeUndefined();
-        widget.ngOnInit();
-        expect(widget.datePicker).toBeDefined();
     });
 
     it('should setup min value for date picker', () => {
         let minValue = '13-03-1982';
         widget.field = new FormFieldModel(null, {
+            id: 'date-id',
+            name: 'date-name',
             minValue: minValue
         });
+
         widget.ngOnInit();
 
         let expected = moment(minValue, widget.field.dateDisplayFormat);
-        expect(widget.datePicker._past.isSame(expected)).toBeTruthy();
+        expect(widget.minDate.isSame(expected)).toBeTruthy();
+    });
+
+    it('should date field be present', () => {
+        let minValue = '13-03-1982';
+        widget.field = new FormFieldModel(null, {
+            minValue: minValue
+        });
+
+        widget.ngOnInit();
+
+        expect(element.querySelector('#dropdown-id')).toBeDefined();
     });
 
     it('should setup max value for date picker', () => {
@@ -90,126 +98,29 @@ describe('DateWidgetComponent', () => {
         widget.ngOnInit();
 
         let expected = moment(maxValue, widget.field.dateDisplayFormat);
-        expect(widget.datePicker._future.isSame(expected)).toBeTruthy();
-    });
-
-    it('should setup default time value for date picker', () => {
-        let dateValue = '13-03-1982';
-        widget.field = new FormFieldModel(null, {
-            type: 'date',
-            value: '1982-03-13'
-        });
-        widget.ngOnInit();
-
-        let expected = moment(dateValue, widget.field.dateDisplayFormat);
-        expect(widget.datePicker.time.isSame(expected)).toBeTruthy();
-    });
-
-    it('should setup trigger element', () => {
-        widget.elementRef = new ElementRef(nativeElement);
-        let el = {};
-        spyOn(nativeElement, 'querySelector').and.returnValue(el);
-        widget.field = new FormFieldModel(null, {id: 'fake-id'});
-        widget.ngOnInit();
-        widget.ngAfterViewChecked();
-        expect(widget.datePicker.trigger).toBe(el);
-    });
-
-    it('should not setup trigger element', () => {
-        widget.ngOnInit();
-        expect(widget.datePicker.trigger).toBeFalsy();
+        expect(widget.maxDate.isSame(expected)).toBeTruthy();
     });
 
     it('should eval visibility on date changed', () => {
         spyOn(widget, 'checkVisibility').and.callThrough();
 
-        let field = new FormFieldModel(null);
+        let field = new FormFieldModel(new FormModel(), {
+            id: 'date-field-id',
+            name: 'date-name',
+            value: '9-9-9999',
+            type: 'date',
+            readOnly: 'false'
+        });
+
         widget.field = field;
 
-        widget.onDateChanged();
+        widget.onDateChanged('12/12/2012');
         expect(widget.checkVisibility).toHaveBeenCalledWith(field);
-    });
-
-    it('should update picker value on input date changed', () => {
-        widget.field = new FormFieldModel(new FormModel(), {
-            type: 'date',
-            value: '13-03-1982'
-        });
-        widget.ngOnInit();
-        widget.field.value = '31-03-1982';
-        widget.onDateChanged();
-
-        let expected = moment('31-03-1982', widget.field.dateDisplayFormat);
-        expect(widget.datePicker.time.isSame(expected)).toBeTruthy();
-    });
-
-    it('should update field value on date selected', () => {
-        widget.elementRef = new ElementRef(nativeElement);
-        widget.field = new FormFieldModel(new FormModel(), {type: 'date'});
-        widget.ngOnInit();
-
-        let date = '13-3-1982';
-        widget.datePicker.time = moment(date, widget.field.dateDisplayFormat);
-        widget.onDateSelected();
-        expect(widget.field.value).toBe(date);
-    });
-
-    it('should update material textfield on date selected', () => {
-        spyOn(widget, 'setupMaterialTextField').and.callThrough();
-
-        widget.field = new FormFieldModel(new FormModel(), {type: 'date'});
-        widget.ngOnInit();
-
-        widget.datePicker.time = moment();
-        widget.onDateSelected();
-        expect(widget.setupMaterialTextField).toHaveBeenCalled();
-    });
-
-    it('should not update material textfield on date selected', () => {
-        widget.elementRef = undefined;
-        spyOn(widget, 'setupMaterialTextField').and.callThrough();
-
-        widget.field = new FormFieldModel(new FormModel(), {type: 'date'});
-        widget.ngOnInit();
-
-        widget.datePicker.time = moment();
-        widget.onDateSelected();
-        expect(widget.setupMaterialTextField).not.toHaveBeenCalled();
-    });
-
-    it('should send field change event when a new date is picked from data picker', (done) => {
-        spyOn(widget, 'setupMaterialTextField').and.callThrough();
-        widget.field = new FormFieldModel(new FormModel(), {value: '9-9-9999', type: 'date'});
-        widget.ngOnInit();
-        widget.datePicker.time = moment('9-9-9999', widget.field.dateDisplayFormat);
-        widget.fieldChanged.subscribe((field) => {
-            expect(field).toBeDefined();
-            expect(field).not.toBeNull();
-            expect(field.value).toEqual('9-9-9999');
-            done();
-        });
-        widget.onDateSelected();
-    });
-
-    it('should send field change event when date is changed in input text', (done) => {
-        spyOn(widget, 'setupMaterialTextField').and.callThrough();
-        widget.field = new FormFieldModel(null, {value: '9-9-9999', type: 'date'});
-        widget.ngOnInit();
-        widget.datePicker.time = moment('9-9-9999', widget.field.dateDisplayFormat);
-        widget.fieldChanged.subscribe((field) => {
-            expect(field).toBeDefined();
-            expect(field).not.toBeNull();
-            expect(field.value).toEqual('9-9-9999');
-            done();
-        });
-
-        widget.onDateChanged();
     });
 
     describe('template check', () => {
 
         beforeEach(() => {
-            spyOn(widget, 'setupMaterialTextField').and.stub();
             widget.field = new FormFieldModel(new FormModel(), {
                 id: 'date-field-id',
                 name: 'date-name',
@@ -279,13 +190,13 @@ describe('DateWidgetComponent', () => {
             widget.field.readOnly = false;
             fixture.detectChanges();
 
-            let dateButton = <HTMLButtonElement> element.querySelector('#date-field-id-button');
+            let dateButton = <HTMLButtonElement> element.querySelector('button');
             expect(dateButton.disabled).toBeFalsy();
 
             widget.field.readOnly = true;
             fixture.detectChanges();
 
-            dateButton = <HTMLButtonElement> element.querySelector('#date-field-id-button');
+            dateButton = <HTMLButtonElement> element.querySelector('button');
             expect(dateButton.disabled).toBeTruthy();
         }));
     });

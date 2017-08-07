@@ -18,8 +18,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LogServiceMock } from 'ng2-alfresco-core';
 import { CoreModule, LogService } from 'ng2-alfresco-core';
+import { MATERIAL_MODULE } from '../../../../index';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
+import { ErrorWidgetComponent } from '../error/error.component';
 import { EcmModelService } from './../../../services/ecm-model.service';
 import { FormService } from './../../../services/form.service';
 import { FormFieldModel, FormFieldTypes, FormModel } from './../core/index';
@@ -79,15 +81,16 @@ describe('DynamicTableWidgetComponent', () => {
     let element: HTMLElement;
     let table: DynamicTableModel;
     let logService: LogService;
-    let componentHandler: any;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule.forRoot(),
+                ...MATERIAL_MODULE
             ],
             declarations: [DynamicTableWidgetComponent, RowEditorComponent,
-                DropdownEditorComponent, DateEditorComponent, BooleanEditorComponent, TextEditorComponent],
+                DropdownEditorComponent, DateEditorComponent, BooleanEditorComponent,
+                TextEditorComponent, ErrorWidgetComponent],
             providers: [
                 FormService,
                 {provide: LogService, useClass: LogServiceMock},
@@ -337,11 +340,6 @@ describe('DynamicTableWidgetComponent', () => {
 
     describe('when template is ready', () => {
 
-        beforeEach(async(() => {
-            componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
-            window['componentHandler'] = componentHandler;
-        }));
-
         beforeEach(() => {
             widget.field = new FormFieldModel(new FormModel({taskId: 'fake-task-id'}), fakeFormField);
             widget.field.type = FormFieldTypes.DYNAMIC_TABLE;
@@ -368,7 +366,7 @@ describe('DynamicTableWidgetComponent', () => {
 
             fixture.whenStable().then(() => {
                 let selectedRow = element.querySelector('#fake-dynamic-table-row-0');
-                expect(selectedRow.className).toBe('dynamic-table-widget__row-selected');
+                expect(selectedRow.className).toBe('adf-dynamic-table-widget__row-selected');
             });
         }));
 

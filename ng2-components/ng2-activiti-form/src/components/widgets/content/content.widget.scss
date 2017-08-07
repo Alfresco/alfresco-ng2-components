@@ -1,0 +1,19 @@
+.adf {
+    &-content-container  {
+
+    }
+
+    &-img-upload-widget {
+        width: 100%;
+        height: 100%;
+        border: 1px solid rgba(117, 117, 117, 0.57);
+        box-shadow: 1px 1px 2px #dddddd;
+        background-color: #ffffff;
+    }
+
+    &-content-widget-preview-text {
+        word-wrap: break-word;
+        word-break: break-all;
+        text-align: center;
+    }
+}

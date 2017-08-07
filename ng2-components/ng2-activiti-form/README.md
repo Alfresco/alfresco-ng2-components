@@ -9,10 +9,12 @@
   * [Services](#services)
 - [Prerequisites](#prerequisites)
 - [Install](#install)
-- [ActivitiForm Component](#activitiform-component)
+- [Form Component](#form-component)
   * [Properties](#properties)
+    + [Form Field Validators](#form-field-validators)
   * [Advanced properties](#advanced-properties)
   * [Events](#events)
+  * [Custom empty form template](#custom-empty-form-template)
   * [Controlling outcome execution behaviour](#controlling-outcome-execution-behaviour)
 - [Activiti Content Component](#activiti-content-component)
   * [Properties](#properties-1)
@@ -224,6 +226,21 @@ All `form*` events receive an instance of the `FormModel` as event argument for 
 onFormSaved(form: FormModel) {
     console.log(form);
 }
+```
+
+### Custom empty form template
+
+You can add a template that will be show if no form definition has been found
+
+```html
+<adf-form .... >
+
+    <div empty-form >
+        <h2>Empty form</h2>
+    </div>
+
+</adf-form>
+
 ```
 
 ### Controlling outcome execution behaviour

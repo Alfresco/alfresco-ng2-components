@@ -1,0 +1,28 @@
+@import 'theming';
+@import '../form';
+
+.adf {
+    &-amount-widget {
+        width: 100%;
+        vertical-align: baseline !important;
+        padding-left: 14px;
+    }
+
+    &-amount-widget__container {
+        max-width: 100%;
+    }
+
+    &-amount-widget__input .mat-focused {
+        transition: none;
+    }
+
+    &-amount-widget__prefix-spacing {
+        padding-right: 5px;
+    }
+
+}
+
+.mat-input-prefix {
+    position: absolute;
+    margin-top: 42px;
+}

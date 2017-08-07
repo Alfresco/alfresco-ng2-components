@@ -11,6 +11,7 @@
   * [DataColumn Properties](#datacolumn-properties)
   * [DataTable Events](#datatable-events)
   * [DataTable DOM Events](#datatable-dom-events)
+  * [Automatic column header translation](#automatic-column-header-translation)
   * [Custom Empty content template](#custom-empty-content-template)
   * [Default Empty content template](#default-empty-content-template)
   * [Loading content template](#loading-content-template)

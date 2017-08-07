@@ -1,18 +1,20 @@
-<div class="radio-buttons-widget {{field.className}}"
-     [class.radio-buttons-widget__invalid]="!field.isValid" [id]="field.id" *ngIf="field?.isVisible">
-    <label class="radio-buttons-widget__label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
-    <div *ngFor="let opt of field.options">
-        <label [id]="opt.id" [attr.for]="field.id + '-' + opt.id" class="mdl-radio mdl-js-radio">
-            <input type="radio"
-                   class="mdl-radio__button"
-                   [checked]="field.value === opt.id"
-                   [attr.id]="field.id + '-' + opt.id"
-                   [attr.name]="field.id"
-                   [attr.value]="opt.id"
-                   [disabled]="field.readOnly"
-                   (click)="onOptionClick(opt.id)">
-            <span class="mdl-radio__label">{{opt.name}}</span>
-        </label>
+<div class="adf-radio-buttons-widget {{field.className}}"
+     [class.adf-invalid]="!field.isValid" [class.adf-readonly]="field.readOnly" [id]="field.id" *ngIf="field?.isVisible">
+    <div class="adf-radio-button-container">
+        <label class="adf-label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
+        <md-radio-group class="adf-radio-group" [(ngModel)]="field.value">
+            <md-radio-button
+                [id]="field.id + '-' + opt.id"
+                [name]="field.id"
+                [value]="opt.id"
+                [disabled]="field.readOnly"
+                [checked]="field.value === opt.id"
+                (change)="onOptionClick(opt.id)"
+                color="primary"
+                class="adf-radio-button" *ngFor="let opt of field.options" >
+                {{opt.name}}
+            </md-radio-button>
+        </md-radio-group>
     </div>
-    <span *ngIf="field.validationSummary" class="mdl-textfield__error">{{field.validationSummary}}</span>
+    <error-widget [error]="field.validationSummary" ></error-widget>
 </div>

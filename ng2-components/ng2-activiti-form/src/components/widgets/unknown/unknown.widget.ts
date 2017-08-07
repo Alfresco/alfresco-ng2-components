@@ -17,19 +17,24 @@
 
  /* tslint:disable:component-selector  */
 
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { FormService } from './../../../services/form.service';
 import { baseHost , WidgetComponent } from './../widget.component';
 
 @Component({
     selector: 'unknown-widget',
     template: `
-        <div>
-            <i class="material-icons">error_outline</i>
-            <span style="color: red">Unknown type: {{field.type}}</span>
-        </div>
+            <md-list class="adf-unknown-widget">
+                <md-list-item>
+                     <md-icon class="md-24">error_outline</md-icon>
+                     <span class="adf-unknown-text">Unknown type: {{field.type}}</span>
+                </md-list-item>
+            </md-list>
+
     `,
-    host: baseHost
+    styleUrls: ['./unknown.widget.scss'],
+    host: baseHost,
+    encapsulation: ViewEncapsulation.None
 })
 export class UnknownWidgetComponent extends WidgetComponent {
 
