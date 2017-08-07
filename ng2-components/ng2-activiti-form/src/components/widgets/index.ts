@@ -24,7 +24,6 @@ import { AttachWidgetComponent } from './attach/attach.widget';
 import { CheckboxWidgetComponent } from './checkbox/checkbox.widget';
 import { DateWidgetComponent } from './date/date.widget';
 import { DisplayTextWidgetComponentComponent } from './display-text/display-text.widget';
-import { DisplayValueWidgetComponent } from './display-value/display-value.widget';
 import { DropdownWidgetComponent } from './dropdown/dropdown.widget';
 import { DynamicTableWidgetComponent } from './dynamic-table/dynamic-table.widget';
 import { BooleanEditorComponent } from './dynamic-table/editors/boolean/boolean.editor';
@@ -32,6 +31,7 @@ import { DateEditorComponent } from './dynamic-table/editors/date/date.editor';
 import { DropdownEditorComponent } from './dynamic-table/editors/dropdown/dropdown.editor';
 import { RowEditorComponent } from './dynamic-table/editors/row.editor';
 import { TextEditorComponent } from './dynamic-table/editors/text/text.editor';
+import { ErrorWidgetComponent } from './error/error.component';
 import { FunctionalGroupWidgetComponent } from './functional-group/functional-group.widget';
 import { HyperlinkWidgetComponent } from './hyperlink/hyperlink.widget';
 import { MultilineTextWidgetComponentComponent } from './multiline-text/multiline-text.widget';
@@ -60,7 +60,6 @@ export * from './multiline-text/multiline-text.widget';
 export * from './dropdown/dropdown.widget';
 export * from './hyperlink/hyperlink.widget';
 export * from './radio-buttons/radio-buttons.widget';
-export * from './display-value/display-value.widget';
 export * from './display-text/display-text.widget';
 export * from './upload/upload.widget';
 export * from './attach/attach.widget';
@@ -70,6 +69,7 @@ export * from './people/people.widget';
 export * from './date/date.widget';
 export * from './amount/amount.widget';
 export * from './dynamic-table/dynamic-table.widget';
+export * from './error/error.component';
 
 // editors (dynamic table)
 export * from './dynamic-table/editors/row.editor';
@@ -90,7 +90,6 @@ export const WIDGET_DIRECTIVES: any[] = [
     DropdownWidgetComponent,
     HyperlinkWidgetComponent,
     RadioButtonsWidgetComponent,
-    DisplayValueWidgetComponent,
     DisplayTextWidgetComponentComponent,
     UploadWidgetComponent,
     AttachWidgetComponent,
@@ -104,7 +103,8 @@ export const WIDGET_DIRECTIVES: any[] = [
     DropdownEditorComponent,
     BooleanEditorComponent,
     TextEditorComponent,
-    RowEditorComponent
+    RowEditorComponent,
+    ErrorWidgetComponent
 ];
 
 export const MASK_DIRECTIVE: any[] = [

@@ -5,23 +5,11 @@
     &-amount-widget {
         width: 100%;
         vertical-align: baseline !important;
-
-        .mat-input-element {
-            margin-left: 11px;
-        }
+        padding-left: 14px;
     }
 
     &-amount-widget__container {
         max-width: 100%;
-
-        .mat-input-placeholder-wrapper {
-            top: -6px !important;
-        }
-
-        .mat-input-placeholder-wrapper {
-            top: 0 !important;
-            left: 13px;
-        }
     }
 
     &-amount-widget__input .mat-focused {

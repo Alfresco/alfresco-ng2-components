@@ -22,24 +22,22 @@ import { By } from '@angular/platform-browser';
 import { AlfrescoTranslationService, ContentService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 
-import { FormService } from '../services/form.service';
-import { EcmModelService } from './../services/ecm-model.service';
-import { ActivitiContentComponent } from './activiti-content.component';
-import { ContentLinkModel } from './widgets/index';
+import { EcmModelService } from '../../../services/ecm-model.service';
+import { FormService } from '../../../services/form.service';
+import { ContentLinkModel } from '../index';
+import { ContentWidgetComponent } from './content.widget';
 
 declare let jasmine: any;
 
-describe('ActivitiContentComponent', () => {
+describe('ContentWidgetComponent', () => {
 
-    let component: ActivitiContentComponent;
-    let fixture: ComponentFixture<ActivitiContentComponent>;
+    let component: ContentWidgetComponent;
+    let fixture: ComponentFixture<ContentWidgetComponent>;
     let debug: DebugElement;
     let element: HTMLElement;
 
     let serviceForm: FormService;
     let serviceContent: ContentService;
-
-    let componentHandler: any;
 
     function createFakeImageBlob() {
         let data = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
@@ -71,7 +69,7 @@ describe('ActivitiContentComponent', () => {
                 CoreModule.forRoot()
             ],
             declarations: [
-                ActivitiContentComponent
+                ContentWidgetComponent
             ],
             providers: [
                 FormService,
@@ -88,15 +86,10 @@ describe('ActivitiContentComponent', () => {
         spyOn(translateService, 'get').and.callFake((key) => {
             return Observable.of(key);
         });
-
-        componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered'
-        ]);
-        window['componentHandler'] = componentHandler;
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ActivitiContentComponent);
+        fixture = TestBed.createComponent(ContentWidgetComponent);
         component = fixture.componentInstance;
         debug = fixture.debugElement;
         element = fixture.nativeElement;

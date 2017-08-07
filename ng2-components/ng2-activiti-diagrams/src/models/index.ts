@@ -15,5 +15,5 @@
  * limitations under the License.
  */
 
-export * from './datatable.component';
-export * from './datatable-cell.component';
+export * from './chart.model';
+export * from './report.model';

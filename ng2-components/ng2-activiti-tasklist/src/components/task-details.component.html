@@ -46,6 +46,8 @@
             (formLoaded)='onFormLoaded($event)'
             (onError)='onFormError($event)'
             (executeOutcome)='onFormExecuteOutcome($event)'>
+            <div empty-form ><h3 class="adf-task-title">Please select a Task</h3></div>
+
         </adf-form>
     </div>
     <div *ngIf="!isAssigned()">

@@ -18,10 +18,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
+import { MATERIAL_MODULE } from '../../../../index';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 import { ExternalContent } from '../core/external-content';
 import { ExternalContentLink } from '../core/external-content-link';
 import { FormFieldTypes } from '../core/form-field-types';
+import { ErrorWidgetComponent } from '../error/error.component';
 import { EcmModelService } from './../../../services/ecm-model.service';
 import { FormService } from './../../../services/form.service';
 import { FormFieldModel } from './../core/form-field.model';
@@ -39,10 +41,12 @@ describe('AttachWidgetComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule.forRoot(),
+                ...MATERIAL_MODULE
             ],
             declarations: [
-                AttachWidgetComponent
+                AttachWidgetComponent,
+                ErrorWidgetComponent
             ],
             providers: [
                 FormService,

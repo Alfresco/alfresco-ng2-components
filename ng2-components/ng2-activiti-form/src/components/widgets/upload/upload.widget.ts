@@ -15,28 +15,31 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+/* tslint:disable:component-selector  */
 
-import { Component, OnInit } from '@angular/core';
-import { LogService } from 'ng2-alfresco-core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { LogService, ThumbnailService } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Rx';
 import { FormService } from '../../../services/form.service';
 import { baseHost, WidgetComponent } from './../widget.component';
 
 @Component({
     selector: 'upload-widget',
     templateUrl: './upload.widget.html',
-    styleUrls: ['./upload.widget.css'],
-    host: baseHost
+    styleUrls: ['./upload.widget.scss'],
+    host: baseHost,
+    encapsulation: ViewEncapsulation.None
 })
 export class UploadWidgetComponent extends WidgetComponent implements OnInit {
 
     hasFile: boolean;
-    fileName: string;
     displayText: string;
     multipleOption: string = '';
+    mimeTypeIcon: string;
 
     constructor(public formService: FormService,
-                private logService: LogService) {
+                private logService: LogService,
+                private thumbnailService: ThumbnailService) {
         super(formService);
     }
 
@@ -45,37 +48,43 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
             this.field.value &&
             this.field.value.length > 0) {
             this.hasFile = true;
-            let file = this.field.value[0];
-            this.fileName = file.name;
-            this.displayText = decodeURI(file.name);
         }
         this.getMultipleFileParam();
     }
 
-    reset() {
-        this.hasFile = false;
-        this.fileName = null;
-        this.displayText = null;
-
+    reset(file: any) {
         if (this.field) {
-            this.field.value = null;
-            this.field.json.value = null;
+            this.removeElementFromList(this.field.value, file);
+            this.removeElementFromList(this.field.json.value, file);
+            this.hasFile = this.field.value.length > 0;
+            this.resetFormValueWithNoFiles();
         }
     }
 
     onFileChanged(event: any) {
         let files = event.target.files;
+        let filesSaved = [];
         if (files && files.length > 0) {
-            let file = files[0];
-            this.formService.createTemporaryRawRelatedContent(file)
-                .subscribe((response: any) => {
-                    this.logService.info(response);
-                    this.field.value = [response];
-                    this.field.json.value = [response];
-                }, (error: any) => {
+            Observable.from(files).
+                flatMap(file => this.uploadRawContent(file)).subscribe((res) => {
+                    filesSaved.push(res);
+                },
+                (error) => {
                     this.logService.error('Error uploading file. See console output for more details.');
+                },
+                () => {
+                    this.field.value = filesSaved;
+                    this.field.json.value = filesSaved;
                 });
         }
+    }
+
+    private uploadRawContent(file): Observable<any> {
+        return this.formService.createTemporaryRawRelatedContent(file)
+            .map((response: any) => {
+                this.logService.info(response);
+                return response;
+            });
     }
 
     private getMultipleFileParam() {
@@ -84,6 +93,28 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
             this.field.params.multiple) {
             this.multipleOption = this.field.params.multiple ? 'multiple' : '';
         }
+    }
+
+    decode(fileName: string): string {
+        return decodeURI(fileName);
+    }
+
+    private removeElementFromList(list, element) {
+        let index = list.indexOf(element);
+        if (index !== -1) {
+            list.splice(index, 1);
+        }
+    }
+
+    private resetFormValueWithNoFiles() {
+        if (this.field.value.length === 0) {
+            this.field.value = null;
+            this.field.json.value = null;
+        }
+    }
+
+    getIcon(mimeType) {
+        return this.thumbnailService.getMimeTypeIcon(mimeType);
     }
 
 }

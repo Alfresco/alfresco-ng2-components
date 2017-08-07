@@ -17,10 +17,9 @@
 
  /* tslint:disable:component-selector  */
 
-import { ChangeDetectorRef, Component, ElementRef, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
-import { FormFieldModel } from '../core/form-field.model';
 import { FormService } from './../../../services/form.service';
 import { baseHost , WidgetComponent } from './../widget.component';
 import { DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './dynamic-table.widget.model';
@@ -28,18 +27,13 @@ import { DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './dynami
 @Component({
     selector: 'dynamic-table-widget',
     templateUrl: './dynamic-table.widget.html',
-    styleUrls: ['./dynamic-table.widget.css'],
-    host: baseHost
+    styleUrls: ['./dynamic-table.widget.scss'],
+    host: baseHost,
+    encapsulation: ViewEncapsulation.None
 })
 export class DynamicTableWidgetComponent extends WidgetComponent implements OnInit {
 
     ERROR_MODEL_NOT_FOUND = 'Table model not found';
-
-    @Input()
-    field: FormFieldModel;
-
-    @Input()
-    readOnly: boolean = false;
 
     content: DynamicTableModel;
 

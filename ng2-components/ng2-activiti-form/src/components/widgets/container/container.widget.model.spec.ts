@@ -34,48 +34,6 @@ describe('ContainerWidgetComponentModel', () => {
         expect(container.isExpanded).toBeTruthy();
     });
 
-    it('should wrap fields into columns on setup', () => {
-        let form = new FormModel();
-
-        let json = {
-            fieldType: '<type>',
-            id: '<id>',
-            name: '<name>',
-            type: '<type>',
-            tab: '<tab>',
-            numberOfColumns: 3,
-            params: {},
-            visibilityCondition: {},
-            fields: {
-                '1': [
-                    { id: 'field-1' },
-                    { id: 'field-3' }
-                ],
-                '2': [
-                    { id: 'field-2' }
-                ],
-                '3': null
-            }
-        };
-
-        let field = new FormFieldModel(form, json);
-
-        let container = new ContainerWidgetComponentModel(field);
-        expect(container.columns.length).toBe(3);
-
-        let col1 = container.columns[0];
-        expect(col1.fields.length).toBe(2);
-        expect(col1.fields[0].id).toBe('field-1');
-        expect(col1.fields[1].id).toBe('field-3');
-
-        let col2 = container.columns[1];
-        expect(col2.fields.length).toBe(1);
-        expect(col2.fields[0].id).toBe('field-2');
-
-        let col3 = container.columns[2];
-        expect(col3.fields.length).toBe(0);
-    });
-
     it('should allow collapsing only when of a group type', () => {
         let container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(), {
             type:  FormFieldTypes.CONTAINER,

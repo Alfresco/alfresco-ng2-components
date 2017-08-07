@@ -25,7 +25,6 @@ import { baseHost , WidgetComponent } from './../widget.component';
 @Component({
     selector: 'error-widget',
     templateUrl: './error.component.html',
-    styleUrls: ['./error.component.scss'],
     animations: [
         trigger('transitionMessages', [
             state('enter', style({opacity: 1, transform: 'translateY(0%)'})),

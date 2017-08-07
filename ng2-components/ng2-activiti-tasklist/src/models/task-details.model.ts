@@ -104,16 +104,4 @@ export class TaskDetailsModel {
 
         return fullName.trim();
     }
-
-    getFullName(): string {
-        let fullName: string = '';
-
-        if (this.assignee) {
-            let firstName: string = this.assignee.firstName ? this.assignee.firstName : '';
-            let lastName: string = this.assignee.lastName ? this.assignee.lastName : '';
-            fullName = `${firstName} ${lastName}`;
-        }
-
-        return fullName.trim();
-    }
 }

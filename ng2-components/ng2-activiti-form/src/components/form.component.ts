@@ -16,7 +16,7 @@
  */
 
 /* tslint:disable */
-import { AfterViewChecked, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { FormErrorEvent, FormEvent } from './../events/index';
 import { EcmModelService } from './../services/ecm-model.service';
 import { FormService } from './../services/form.service';
@@ -26,14 +26,13 @@ import { FormFieldModel, FormModel, FormOutcomeEvent, FormOutcomeModel, FormValu
 
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
 
-declare var componentHandler: any;
-
 @Component({
     selector: 'adf-form, activiti-form',
     templateUrl: './form.component.html',
-    styleUrls: ['./form.component.css']
+    styleUrls: ['./form.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
-export class FormComponent implements OnInit, AfterViewChecked, OnChanges {
+export class FormComponent implements OnInit, OnChanges {
 
     static SAVE_OUTCOME_ID: string = '$save';
     static COMPLETE_OUTCOME_ID: string = '$complete';
@@ -176,10 +175,6 @@ export class FormComponent implements OnInit, AfterViewChecked, OnChanges {
         });
     }
 
-    ngAfterViewChecked() {
-        this.setupMaterialComponents();
-    }
-
     ngOnChanges(changes: SimpleChanges) {
         let taskId = changes['taskId'];
         if (taskId && taskId.currentValue) {
@@ -304,15 +299,6 @@ export class FormComponent implements OnInit, AfterViewChecked, OnChanges {
 
     isAProcessTask(taskRepresentation) {
         return taskRepresentation.processDefinitionId && taskRepresentation.processDefinitionDeploymentId !== 'null';
-    }
-
-    setupMaterialComponents(): boolean {
-        // workaround for MDL issues with dynamic components
-        if (componentHandler) {
-            componentHandler.upgradeAllRegistered();
-            return true;
-        }
-        return false;
     }
 
     getFormByTaskId(taskId: string): Promise<FormModel> {

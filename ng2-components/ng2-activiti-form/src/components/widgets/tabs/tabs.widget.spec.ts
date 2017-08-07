@@ -16,31 +16,24 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdInputModule, MdTabsModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
+import { MATERIAL_MODULE } from '../../../../index';
 import { fakeFormJson } from '../../../services/assets/widget-visibility.service.mock';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { TabModel } from '../core/tab.model';
-import { MASK_DIRECTIVE } from '../index';
 import { WIDGET_DIRECTIVES } from '../index';
-import { ActivitiContentComponent } from './../../activiti-content.component';
+import { MASK_DIRECTIVE } from '../index';
 import { FormFieldComponent } from './../../form-field/form-field.component';
+import { ContentWidgetComponent } from './../content/content.widget';
 import { TabsWidgetComponent } from './tabs.widget';
 
 describe('TabsWidgetComponent', () => {
 
-    let componentHandler;
     let widget: TabsWidgetComponent;
 
     beforeEach(() => {
         widget = new TabsWidgetComponent();
-
-        componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered'
-        ]);
-
-        window['componentHandler'] = componentHandler;
     });
 
     it('should check tabs', () => {
@@ -52,18 +45,6 @@ describe('TabsWidgetComponent', () => {
 
         widget.tabs = [new TabModel(null)];
         expect(widget.hasTabs()).toBeTruthy();
-    });
-
-    it('should upgrade MDL content on view init', () => {
-        widget.ngAfterViewInit();
-        expect(componentHandler.upgradeAllRegistered).toHaveBeenCalled();
-    });
-
-    it('should setup MDL content only if component handler available', () => {
-        expect(widget.setupMaterialComponents()).toBeTruthy();
-
-        window['componentHandler'] = null;
-        expect(widget.setupMaterialComponents()).toBeFalsy();
     });
 
     it('should emit tab changed event', (done) => {
@@ -105,8 +86,8 @@ describe('TabsWidgetComponent', () => {
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-                imports: [CoreModule, MdTabsModule, MdInputModule],
-                declarations: [FormFieldComponent, ActivitiContentComponent, WIDGET_DIRECTIVES, MASK_DIRECTIVE]
+                imports: [CoreModule, ...MATERIAL_MODULE ],
+                declarations: [FormFieldComponent, ContentWidgetComponent, WIDGET_DIRECTIVES, MASK_DIRECTIVE]
             }).compileComponents().then(() => {
                 fixture = TestBed.createComponent(TabsWidgetComponent);
                 tabWidgetComponent = fixture.componentInstance;
@@ -115,9 +96,6 @@ describe('TabsWidgetComponent', () => {
         }));
 
         beforeEach(() => {
-            componentHandler = jasmine.createSpyObj('componentHandler',
-                ['upgradeAllRegistered', 'upgradeElement', 'downgradeElements']);
-            window['componentHandler'] = componentHandler;
             fakeTabVisible = new TabModel(new FormModel(fakeFormJson), {
                 id: 'tab-id-visible',
                 title: 'tab-title-visible'

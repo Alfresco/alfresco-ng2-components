@@ -26,6 +26,7 @@ import { RAPHAEL_PROVIDERS } from './src/components/raphael/index';
 // primitives
 export * from './src/components/index';
 export * from './src/components/raphael/index';
+export * from './src/models/index';
 
 @NgModule({
     imports: [

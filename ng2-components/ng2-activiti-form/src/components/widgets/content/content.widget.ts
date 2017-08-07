@@ -15,18 +15,19 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { AlfrescoTranslationService, ContentService, LogService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
-import { FormService } from './../services/form.service';
-import { ContentLinkModel } from './widgets/core/content-link.model';
+import { ContentLinkModel } from '../core/content-link.model';
+import { FormService } from './../../../services/form.service';
 
 @Component({
     selector: 'adf-content, activiti-content',
-    templateUrl: './activiti-content.component.html',
-    styleUrls: ['./activiti-content.component.css']
+    templateUrl: './content.widget.html',
+    styleUrls: ['./content.widget.scss'],
+    encapsulation: ViewEncapsulation.None
 })
-export class ActivitiContentComponent implements OnChanges {
+export class ContentWidgetComponent implements OnChanges {
 
     @Input()
     id: string;

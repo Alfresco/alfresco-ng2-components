@@ -16,9 +16,9 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { ReportQuery } from 'ng2-activiti-diagrams';
+import { Chart } from 'ng2-activiti-diagrams';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
-import { Chart } from '../models/chart.model';
-import { ReportQuery } from '../models/report.model';
 import { AnalyticsService } from '../services/analytics.service';
 
 @Component({

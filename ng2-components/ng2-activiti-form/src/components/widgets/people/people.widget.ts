@@ -17,7 +17,7 @@
 
  /* tslint:disable:component-selector  */
 
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormService } from '../../../services/form.service';
 import { GroupUserModel } from '../core/group-user.model';
 import { GroupModel } from '../core/group.model';
@@ -26,8 +26,9 @@ import { baseHost , WidgetComponent } from './../widget.component';
 @Component({
     selector: 'people-widget',
     templateUrl: './people.widget.html',
-    styleUrls: ['./people.widget.css'],
-    host: baseHost
+    styleUrls: ['./people.widget.scss'],
+    host: baseHost,
+    encapsulation: ViewEncapsulation.None
 })
 export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
 
@@ -121,16 +122,5 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         if (event) {
             event.preventDefault();
         }
-    }
-
-    setupMaterialComponents(handler: any): boolean {
-        super.setupMaterialComponents(handler);
-        if (handler) {
-            if (this.elementRef && this.value) {
-                this.setupMaterialTextField(this.elementRef, handler, this.value);
-                return true;
-            }
-        }
-        return false;
     }
 }

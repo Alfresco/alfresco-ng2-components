@@ -30,13 +30,13 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
-import { AlfrescoTranslationService, ContentService, LogService } from 'ng2-alfresco-core';
 import {
     ParameterValueModel,
     ReportParameterDetailsModel,
     ReportParametersModel,
     ReportQuery
-} from '../models/report.model';
+} from 'ng2-activiti-diagrams';
+import { AlfrescoTranslationService, ContentService, LogService } from 'ng2-alfresco-core';
 import { AnalyticsService } from '../services/analytics.service';
 
 declare var componentHandler;

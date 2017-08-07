@@ -103,7 +103,7 @@ module.exports = {
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
             },
             {
-                test: /\.component.scss$/,
+                test: /\.scss$/,
                 use: [{
                     loader: "to-string-loader"
                 }, {

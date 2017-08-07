@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+/* tslint:disable:component-selector  */
 
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { FormService } from './../../../services/form.service';
 import { baseHost , WidgetComponent } from './../widget.component';
@@ -25,12 +25,13 @@ import { baseHost , WidgetComponent } from './../widget.component';
 @Component({
     selector: 'checkbox-widget',
     templateUrl: './checkbox.widget.html',
-    host: baseHost
+    host: baseHost,
+    encapsulation: ViewEncapsulation.None
 })
 export class CheckboxWidgetComponent extends WidgetComponent {
 
     constructor(private visibilityService: WidgetVisibilityService, public formService: FormService) {
-         super(formService);
+        super(formService);
     }
 
     onChange() {
