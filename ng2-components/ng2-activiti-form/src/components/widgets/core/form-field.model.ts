@@ -32,6 +32,7 @@ export class FormFieldModel extends FormWidgetModel {
     private _value: string;
     private _readOnly: boolean = false;
     private _isValid: boolean = true;
+    private _required: boolean = false;
 
     readonly defaultDateFormat: string = 'D-M-YYYY';
 
@@ -40,7 +41,6 @@ export class FormFieldModel extends FormWidgetModel {
     id: string;
     name: string;
     type: string;
-    required: boolean;
     overrideId: boolean;
     tab: string;
     rowspan: number = 1;
@@ -99,6 +99,15 @@ export class FormFieldModel extends FormWidgetModel {
         this.updateForm();
     }
 
+    get required(): boolean {
+        return this._required;
+    }
+
+    set required(value: boolean) {
+        this._required = value;
+        this.updateForm();
+    }
+
     get isValid(): boolean {
         return this._isValid;
     }
@@ -126,7 +135,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.id = json.id;
             this.name = json.name;
             this.type = json.type;
-            this.required = <boolean> json.required;
+            this._required = <boolean> json.required;
             this._readOnly = <boolean> json.readOnly || json.type === 'readonly';
             this.overrideId = <boolean> json.overrideId;
             this.tab = json.tab;
