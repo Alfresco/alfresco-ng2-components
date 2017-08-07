@@ -29,17 +29,8 @@ import { FormWidgetModel, FormWidgetModelCache } from './form-widget.model';
 import { TabModel } from './tab.model';
 
 import {
-    DateFieldValidator,
-    FormFieldValidator,
-    MaxDateFieldValidator,
-    MaxLengthFieldValidator,
-    MaxValueFieldValidator,
-    MinDateFieldValidator,
-    MinLengthFieldValidator,
-    MinValueFieldValidator,
-    NumberFieldValidator,
-    RegExFieldValidator,
-    RequiredFieldValidator
+    FORM_FIELD_VALIDATORS,
+    FormFieldValidator
 } from './form-field-validator';
 
 export class FormModel {
@@ -67,7 +58,7 @@ export class FormModel {
     fields: FormWidgetModel[] = [];
     outcomes: FormOutcomeModel[] = [];
     customFieldTemplates: FormFieldTemplates = {};
-    fieldValidators: FormFieldValidator[] = [];
+    fieldValidators: FormFieldValidator[] = [...FORM_FIELD_VALIDATORS];
     readonly selectedOutcome: string;
 
     values: FormValues = {};
@@ -138,19 +129,6 @@ export class FormModel {
             }
         }
 
-        this.fieldValidators = [
-            new RequiredFieldValidator(),
-            new NumberFieldValidator(),
-            new MinLengthFieldValidator(),
-            new MaxLengthFieldValidator(),
-            new MinValueFieldValidator(),
-            new MaxValueFieldValidator(),
-            new RegExFieldValidator(),
-            new DateFieldValidator(),
-            new MinDateFieldValidator(),
-            new MaxDateFieldValidator()
-        ];
-
         this.validateForm();
     }
 
@@ -159,6 +137,10 @@ export class FormModel {
         if (this.formService) {
             this.formService.formFieldValueChanged.next(new FormFieldEvent(this, field));
         }
+    }
+
+    getFieldById(fieldId: string): FormFieldModel {
+        return this.getFormFields().find(field => field.id === fieldId);
     }
 
     // TODO: consider evaluating and caching once the form is loaded

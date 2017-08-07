@@ -20,6 +20,8 @@ import { ValidateFormEvent } from './../../../events/validate-form.event';
 import { FormService } from './../../../services/form.service';
 import { ContainerModel } from './container.model';
 import { FormFieldTypes } from './form-field-types';
+import { FORM_FIELD_VALIDATORS, FormFieldValidator } from './form-field-validator';
+import { FormFieldModel } from './form-field.model';
 import { FormOutcomeModel } from './form-outcome.model';
 import { FormModel } from './form.model';
 import { TabModel } from './tab.model';
@@ -380,5 +382,68 @@ describe('FormModel', () => {
         expect(prevented).toBeTruthy();
         expect(field.validate).not.toHaveBeenCalled();
         expect(form.validateForm).not.toHaveBeenCalled();
+    });
+
+    it('should get field by id', () => {
+        const form = new FormModel({}, null, false, formService);
+        const field = { id: 'field1' };
+        spyOn(form, 'getFormFields').and.returnValue([field]);
+
+        const result = form.getFieldById('field1');
+        expect(result).toBe(field);
+    });
+
+    it('should use custom field validator', () => {
+        const form = new FormModel({}, null, false, formService);
+        const testField = new FormFieldModel(form, {
+            id: 'test-field-1'
+        });
+
+        spyOn(form, 'getFormFields').and.returnValue([testField]);
+
+        let validator = <FormFieldValidator> {
+            isSupported(field: FormFieldModel): boolean {
+                return true;
+            },
+            validate(field: FormFieldModel): boolean {
+                return true;
+            }
+        };
+
+        spyOn(validator, 'validate').and.callThrough();
+
+        form.fieldValidators = [validator];
+        form.validateForm();
+
+        expect(validator.validate).toHaveBeenCalledWith(testField);
+    });
+
+    it('should re-validate the field when required attribute changes', () => {
+        const form = new FormModel({}, null, false, formService);
+        const testField = new FormFieldModel(form, {
+            id: 'test-field-1',
+            required: false
+        });
+
+        spyOn(form, 'getFormFields').and.returnValue([testField]);
+        spyOn(form, 'onFormFieldChanged').and.callThrough();
+        spyOn(form, 'validateField').and.callThrough();
+
+        testField.required = true;
+
+        expect(testField.required).toBeTruthy();
+        expect(form.onFormFieldChanged).toHaveBeenCalledWith(testField);
+        expect(form.validateField).toHaveBeenCalledWith(testField);
+    });
+
+    it('should not change default validators export', () => {
+        const form = new FormModel({}, null, false, formService);
+        const defaultLength = FORM_FIELD_VALIDATORS.length;
+
+        expect(form.fieldValidators.length).toBe(defaultLength);
+        form.fieldValidators.push(<any> {});
+
+        expect(form.fieldValidators.length).toBe(defaultLength + 1);
+        expect(FORM_FIELD_VALIDATORS.length).toBe(defaultLength);
     });
 });

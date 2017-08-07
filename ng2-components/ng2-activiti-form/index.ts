@@ -47,6 +47,7 @@ export * from './src/services/ecm-model.service';
 export * from './src/services/node.service';
 export * from './src/services/form-rendering.service';
 export * from './src/events/index';
+export { FORM_FIELD_VALIDATORS } from './src/components/widgets/core/form-field-validator';
 
 // Old deprecated import
 import {FormComponent as ActivitiForm } from './src/components/form.component';
