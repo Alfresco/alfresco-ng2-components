@@ -52,7 +52,7 @@ export class PeopleService {
             });
     }
 
-    private addImageToUser(user: User): Observable<User> {
+    addImageToUser(user: User): Observable<User> {
         return this.getUserImage(user)
                    .map((img) => {
                         user.userImage = img;

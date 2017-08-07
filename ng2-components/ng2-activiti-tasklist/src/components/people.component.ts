@@ -32,7 +32,7 @@ declare var require: any;
     templateUrl: './people.component.html',
     styleUrls: ['./people.component.css']
 })
-export class PeopleComponent implements AfterViewInit {
+export class PeopleComponent implements OnInit, AfterViewInit {
 
     @Input()
     iconImageUrl: string = require('../assets/images/user.jpg');
@@ -62,6 +62,14 @@ export class PeopleComponent implements AfterViewInit {
     constructor(private peopleService: PeopleService,
                 private logService: LogService) {
         this.peopleSearch$ = new Observable<User[]>(observer => this.peopleSearchObserver = observer).share();
+    }
+
+    ngOnInit(){
+        if (this.people && this.people.length > 0){
+            Observable.from(this.people)
+                .flatMap(
+                    (user: User) => this.peopleService.addImageToUser(user)).subscribe();
+        }
     }
 
     ngAfterViewInit() {
