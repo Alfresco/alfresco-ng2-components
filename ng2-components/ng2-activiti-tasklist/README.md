@@ -169,6 +169,7 @@ The component shows the details of the task id passed in input
 | showInvolvePeople | boolean | true | Toggle `Involve People` feature for Header component |
 | showComments | boolean | true | Toggle `Comments` feature for Header component |
 | showChecklist | boolean | true | Toggle `Checklist` feature for Header component |
+| fieldValidators | FormFieldValidator[] | [] | Field validators for use with the form. |
 
 ### Events
 

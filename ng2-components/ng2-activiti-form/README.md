@@ -188,6 +188,117 @@ If needed, you can completely redefine the set of validators used by the form.
 
 All changes to `fieldValidators` collection are automatically applied to all the further validation cycles.
 
+##### Custom set of validators
+
+You can provide your own set of field validators based on either custom validator instances, or a mixture of default and custom ones.
+
+```html
+<adf-form [fieldValidators]="fieldValidators"></adf-form>
+```
+
+The Form component exposes a special `FORM_FIELD_VALIDATORS` constant that allows you get a quick access to all system validator instances.
+
+```ts
+import { FORM_FIELD_VALIDATORS } from 'ng2-activiti-form';
+
+@Component({...})
+export class AppComponent {
+
+    fieldValidators = [
+        // default set of ADF validators if needed
+        ...FORM_FIELD_VALIDATORS,
+
+        // custom validators
+        new MyValidator1(),
+        new MyValidator2()
+    ];
+
+}
+```
+
+##### Custom validator example
+
+A form field validator must implement the "FormFieldValidator" interface:
+
+```ts
+export interface FormFieldValidator {
+
+    isSupported(field: FormFieldModel): boolean;
+    validate(field: FormFieldModel): boolean;
+
+}
+```
+
+There might be many different validators used for various field types and purposes,
+so the validation layer needs every validator instance to support "isSupported" call.
+
+It is up to validator to declare support for a form field.
+If you want to check field types the [FormFieldTypes](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-activiti-form/src/components/widgets/core/form-field-types.ts) class can help you with the predefined constants and helper methods.
+
+In addition every validator has access to all underlying APIs of the [FormFieldModel](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-activiti-form/src/components/widgets/core/form-field.model.ts),
+including the reference to the Form instance and so other form fields.
+
+Below is a source code for a demo validator that is executed for all the "TEXT" fields, and ensures the value is not "admin", otherwise the `field.validationSummary` value is set to an error.
+
+```ts
+import { FormFieldModel, FormFieldTypes, FormFieldValidator } from 'ng2-activiti-form';
+
+export class DemoFieldValidator implements FormFieldValidator {
+
+    isSupported(field: FormFieldModel): boolean {
+        return field && field.type === FormFieldTypes.TEXT;
+    }
+
+    validate(field: FormFieldModel): boolean {
+        if (this.isSupported(field)) {
+            if (field.value && field.value.toLowerCase() === 'admin') {
+                field.validationSummary = 'Sorry, the value cannot be "admin".';
+                return false;
+            }
+        }
+        return true;
+    }
+
+}
+```
+
+Your component can extend the default validation set instead of replacing it entirely.
+In the example below we redefine a default validation set with an additional "DemoFieldValidator":
+
+```ts
+import { DemoFieldValidator } from './demo-field-validator';
+
+@Component({...})
+export class AppComponent {
+
+    fieldValidators = [
+        ...FORM_FIELD_VALIDATORS,
+        new DemoFieldValidator()
+    ];
+
+}
+```
+
+You can now use the 'fieldValidators' property with the Form or Task Details components to assign custom validator set for the underlying Form Model:
+
+```html
+<activiti-task-details
+    [fieldValidators]="fieldValidators"
+    taskId="123">
+</<activiti-task-details>
+
+<!-- OR -->
+
+<adf-form
+    [fieldValidators]="fieldValidators"
+    taskI="123">
+</adf-form>
+```
+
+Now if you run the application and try to enter "admin" in one of the text fields (either optional or required), you should see the following error:
+
+![](docs/assets/demo-validator.png)
+
 ### Advanced properties
  
  The following properties are for complex customisation purposes:
