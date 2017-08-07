@@ -188,6 +188,34 @@ If needed, you can completely redefine the set of validators used by the form.
 
 All changes to `fieldValidators` collection are automatically applied to all the further validation cycles.
 
+##### Custom set of validators
+
+You can provide your own set of field validators based on either custom validator instances, or a mixture of default and custom ones.
+
+```html
+<adf-form [fieldValidators]="fieldValidators"></adf-form>
+```
+
+The Form component exposes a special `FORM_FIELD_VALIDATORS` constant that allows you get a quick access to all system validator instances.
+
+```ts
+import { FORM_FIELD_VALIDATORS } from 'ng2-activiti-form';
+
+@Component({...})
+export class AppComponent {
+
+    fieldValidators = [
+        // default set of ADF validators if needed
+        ...FORM_FIELD_VALIDATORS,
+
+        // custom validators
+        new MyValidator1(),
+        new MyValidator2()
+    ];
+
+}
+```
+
 ### Advanced properties
  
  The following properties are for complex customisation purposes:

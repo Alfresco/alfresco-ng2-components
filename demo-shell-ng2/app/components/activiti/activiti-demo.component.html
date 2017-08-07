@@ -68,6 +68,7 @@
                         <activiti-task-details #activitidetails
                             [debugMode]="true"
                             [taskId]="currentTaskId"
+                            [fieldValidators]="fieldValidators"
                             (formCompleted)="onFormCompleted($event)"
                             (formContentClicked)="onFormContentClick($event)"
                             (taskCreated)="onTaskCreated($event)"

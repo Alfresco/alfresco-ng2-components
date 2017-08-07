@@ -40,6 +40,7 @@
             [disableCompleteButton]="!isAssignedToMe()"
             [showSaveButton]="showFormSaveButton"
             [readOnly]="readOnlyForm"
+            [fieldValidators]="fieldValidators"
             (formSaved)='onFormSaved($event)'
             (formCompleted)='onFormCompleted($event)'
             (formContentClicked)='onFormContentClick($event)'

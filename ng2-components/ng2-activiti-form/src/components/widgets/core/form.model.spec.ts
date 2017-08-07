@@ -20,7 +20,7 @@ import { ValidateFormEvent } from './../../../events/validate-form.event';
 import { FormService } from './../../../services/form.service';
 import { ContainerModel } from './container.model';
 import { FormFieldTypes } from './form-field-types';
-import { FormFieldValidator } from './form-field-validator';
+import { FORM_FIELD_VALIDATORS, FormFieldValidator } from './form-field-validator';
 import { FormFieldModel } from './form-field.model';
 import { FormOutcomeModel } from './form-outcome.model';
 import { FormModel } from './form.model';
@@ -434,5 +434,16 @@ describe('FormModel', () => {
         expect(testField.required).toBeTruthy();
         expect(form.onFormFieldChanged).toHaveBeenCalledWith(testField);
         expect(form.validateField).toHaveBeenCalledWith(testField);
+    });
+
+    it('should not change default validators export', () => {
+        const form = new FormModel({}, null, false, formService);
+        const defaultLength = FORM_FIELD_VALIDATORS.length;
+
+        expect(form.fieldValidators.length).toBe(defaultLength);
+        form.fieldValidators.push(<any> {});
+
+        expect(form.fieldValidators.length).toBe(defaultLength + 1);
+        expect(FORM_FIELD_VALIDATORS.length).toBe(defaultLength);
     });
 });

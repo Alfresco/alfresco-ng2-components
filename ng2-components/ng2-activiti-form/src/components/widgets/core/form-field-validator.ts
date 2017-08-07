@@ -355,3 +355,16 @@ export class RegExFieldValidator implements FormFieldValidator {
     }
 
 }
+
+export const FORM_FIELD_VALIDATORS = [
+    new RequiredFieldValidator(),
+    new NumberFieldValidator(),
+    new MinLengthFieldValidator(),
+    new MaxLengthFieldValidator(),
+    new MinValueFieldValidator(),
+    new MaxValueFieldValidator(),
+    new RegExFieldValidator(),
+    new DateFieldValidator(),
+    new MinDateFieldValidator(),
+    new MaxDateFieldValidator()
+];
