@@ -44,7 +44,7 @@ export class BreadcrumbComponent implements OnChanges {
     @Output()
     navigate: EventEmitter<PathElementEntity> = new EventEmitter<PathElementEntity>();
 
-    public ngOnChanges(changes: SimpleChanges): void {
+    ngOnChanges(changes: SimpleChanges): void {
         if (changes.folderNode) {
 
             let node: MinimalNodeEntryEntity = changes.folderNode.currentValue;
@@ -57,8 +57,8 @@ export class BreadcrumbComponent implements OnChanges {
                     name: node.name
                 });
 
-                if (this.root) {
-                    route = this.checkRoot(route);
+                if (this.root && route.length > 0) {
+                    route[0].name = this.root;
                 }
 
                 this.route = route;
@@ -66,25 +66,7 @@ export class BreadcrumbComponent implements OnChanges {
         }
     }
 
-    private checkRoot(route: PathElementEntity[]): PathElementEntity[] {
-        let isRoot = false;
-        route = route.filter((currentElement) => {
-            if (currentElement.name === this.root) {
-                isRoot = true;
-            }
-            return isRoot;
-        });
-
-        if (route.length === 0) {
-            route.push(<PathElementEntity> {
-                id: undefined,
-                name: this.root
-            });
-        }
-        return route;
-    }
-
-    public onRoutePathClick(route: PathElementEntity, event?: Event): void {
+    onRoutePathClick(route: PathElementEntity, event?: Event): void {
         if (event) {
             event.preventDefault();
         }
