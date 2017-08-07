@@ -18,7 +18,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { MdDialog } from '@angular/material';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { AlfrescoContentService, AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { AlfrescoContentService } from 'ng2-alfresco-core';
 import { DataColumn } from 'ng2-alfresco-datatable';
 import { Subject } from 'rxjs/Rx';
 import { ContentNodeSelectorComponent, ContentNodeSelectorComponentData } from '../components/content-node-selector/content-node-selector.component';
@@ -29,13 +29,8 @@ import { DocumentListService } from './document-list.service';
 export class NodeActionsService {
 
     constructor(private dialog: MdDialog,
-                private translateService: AlfrescoTranslationService,
                 private documentListService?: DocumentListService,
-                private contentService?: AlfrescoContentService) {
-        if (translateService) {
-            translateService.addTranslationFolder('ng2-alfresco-documentlist', 'assets/ng2-alfresco-documentlist');
-        }
-    }
+                private contentService?: AlfrescoContentService) {}
 
     /**
      * Copy content node
@@ -103,21 +98,15 @@ export class NodeActionsService {
                 const selection = selections[0];
                 this.documentListService[`${action}Node`].call(this.documentListService, contentEntry.id, selection.id)
                     .subscribe(
-                        () => {
-                            let fileOperationMessage: any = this.translateService.get(`OPERATION.SUCCES.${type.toUpperCase()}.${action.toUpperCase()}`);
-                            observable.next(fileOperationMessage.value);
-                        },
-                        (errors) => {
-                            const errorStatusCode = JSON.parse(errors.message).error.statusCode;
-                            observable.error(errorStatusCode);
-                        }
+                        observable.next.bind(observable, `OPERATION.SUCCES.${type.toUpperCase()}.${action.toUpperCase()}`),
+                        observable.error.bind(observable)
                     );
                 this.dialog.closeAll();
             });
 
             return observable;
         } else {
-            observable.error(403);
+            observable.error(new Error(JSON.stringify({ error: { statusCode: 403 } })));
             return observable;
         }
     }

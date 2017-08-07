@@ -36,9 +36,9 @@ describe('DocumentActionsService', () => {
         documentListService = new DocumentListServiceMock();
         contentService = new AlfrescoContentService(null, null, null);
         translateService = <AlfrescoTranslationService> { addTranslationFolder: () => {}};
-        nodeActionsService = new NodeActionsService(null, translateService, null, null);
+        nodeActionsService = new NodeActionsService(null, null, null);
         notificationService = new NotificationService(null);
-        service = new DocumentActionsService(translateService, notificationService, nodeActionsService, documentListService, contentService);
+        service = new DocumentActionsService(nodeActionsService, documentListService, contentService);
     });
 
     it('should register default download action', () => {
@@ -70,7 +70,7 @@ describe('DocumentActionsService', () => {
         let file = new FileNode();
         expect(service.canExecuteAction(file)).toBeTruthy();
 
-        service = new DocumentActionsService(translateService, notificationService, nodeActionsService);
+        service = new DocumentActionsService(nodeActionsService);
         expect(service.canExecuteAction(file)).toBeFalsy();
     });
 
@@ -191,7 +191,7 @@ describe('DocumentActionsService', () => {
     });
 
     it('should require internal service for download action', () => {
-        let actionService = new DocumentActionsService(translateService, notificationService, nodeActionsService, null, contentService);
+        let actionService = new DocumentActionsService(nodeActionsService, null, contentService);
         let file = new FileNode();
         let result = actionService.getHandler('download')(file);
         result.subscribe((value) => {
@@ -200,7 +200,7 @@ describe('DocumentActionsService', () => {
     });
 
     it('should require content service for download action', () => {
-        let actionService = new DocumentActionsService(translateService, notificationService, nodeActionsService, documentListService, null);
+        let actionService = new DocumentActionsService(nodeActionsService, documentListService, null);
         let file = new FileNode();
         let result = actionService.getHandler('download')(file);
         result.subscribe((value) => {
