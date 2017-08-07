@@ -69,8 +69,8 @@ export class ContentNodeSelectorComponent implements OnInit {
 
     constructor(private searchService: SearchService,
                 private contentService: AlfrescoContentService,
-                @Optional() private translateService: AlfrescoTranslationService,
-                @Optional() @Inject(MD_DIALOG_DATA) public data?: ContentNodeSelectorComponentData,
+                @Optional() translateService: AlfrescoTranslationService,
+                @Optional() @Inject(MD_DIALOG_DATA) data?: ContentNodeSelectorComponentData,
                 @Optional() private containingDialog?: MdDialogRef<ContentNodeSelectorComponent>) {
 
         if (translateService) {
@@ -85,7 +85,7 @@ export class ContentNodeSelectorComponent implements OnInit {
             this.imageResolver = data.imageResolver;
         }
 
-        if (containingDialog) {
+        if (this.containingDialog) {
             this.inDialog = true;
         }
     }

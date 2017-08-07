@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Inject, Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 import { HighlightTransformService, HightlightTransformResult } from '../services/highlight-transform.service';
 
 @Pipe({
