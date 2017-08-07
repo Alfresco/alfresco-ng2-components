@@ -17,7 +17,7 @@
 
  /* tslint:disable:component-selector  */
 
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormService } from '../../../services/form.service';
 import { GroupModel } from './../core/group.model';
 import { baseHost , WidgetComponent } from './../widget.component';
@@ -25,8 +25,9 @@ import { baseHost , WidgetComponent } from './../widget.component';
 @Component({
     selector: 'functional-group-widget',
     templateUrl: './functional-group.widget.html',
-    styleUrls: ['./functional-group.widget.css'],
-    host: baseHost
+    styleUrls: ['./functional-group.widget.scss'],
+    host: baseHost,
+    encapsulation: ViewEncapsulation.None
 })
 export class FunctionalGroupWidgetComponent extends WidgetComponent implements OnInit {
 
@@ -108,16 +109,5 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
         if (event) {
             event.preventDefault();
         }
-    }
-
-    setupMaterialComponents(handler: any): boolean {
-        super.setupMaterialComponents(handler);
-        if (handler) {
-            if (this.elementRef && this.value) {
-                this.setupMaterialTextField(this.elementRef, handler, this.value);
-                return true;
-            }
-        }
-        return false;
     }
 }

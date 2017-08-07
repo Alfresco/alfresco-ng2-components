@@ -21,9 +21,9 @@ import { Component, Input } from '@angular/core';
 import { DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './../../dynamic-table.widget.model';
 
 @Component({
-    selector: 'alf-boolean-editor',
+    selector: 'adf-boolean-editor',
     templateUrl: './boolean.editor.html',
-    styleUrls: ['./boolean.editor.css']
+    styleUrls: ['./boolean.editor.scss']
 })
 export class BooleanEditorComponent {
 
@@ -37,7 +37,7 @@ export class BooleanEditorComponent {
     column: DynamicTableColumn;
 
     onValueChanged(row: DynamicTableRow, column: DynamicTableColumn, event: any) {
-        let value: boolean = (<HTMLInputElement> event.target).checked;
+        let value: boolean = (<HTMLInputElement> event).checked;
         row.value[column.id] = value;
     }
 

@@ -26,8 +26,8 @@ import { DatePipe } from '@angular/common';
 import { MdInputModule } from '@angular/material';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { TaskListService } from './../services/tasklist.service';
-import { CommentsComponent } from './comments.component';
 import { CommentListComponent } from './comment-list.component';
+import { CommentsComponent } from './comments.component';
 
 describe('CommentsComponent', () => {
 

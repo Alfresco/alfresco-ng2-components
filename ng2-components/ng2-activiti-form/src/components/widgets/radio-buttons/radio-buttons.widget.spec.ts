@@ -19,11 +19,13 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule, LogServiceMock } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 
+import { MATERIAL_MODULE } from '../../../../index';
 import { EcmModelService } from '../../../services/ecm-model.service';
 import { FormService } from '../../../services/form.service';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { ContainerModel } from '../core/container.model';
 import { FormFieldTypes } from '../core/form-field-types';
+import { ErrorWidgetComponent } from '../error/error.component';
 import { FormFieldOption } from './../core/form-field-option';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
@@ -137,7 +139,6 @@ describe('RadioButtonsWidgetComponent', () => {
         let radioButtonWidget: RadioButtonsWidgetComponent;
         let fixture: ComponentFixture<RadioButtonsWidgetComponent>;
         let element: HTMLElement;
-        let componentHandler;
         let stubFormService: FormService;
         let stubVisibilityService: WidgetVisibilityService;
         let restOption: FormFieldOption[] = [{ id: 'opt-1', name: 'opt-name-1' }, {
@@ -146,11 +147,9 @@ describe('RadioButtonsWidgetComponent', () => {
         }];
 
         beforeEach(async(() => {
-            componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
-            window['componentHandler'] = componentHandler;
             TestBed.configureTestingModule({
-                imports: [CoreModule],
-                declarations: [RadioButtonsWidgetComponent],
+                imports: [CoreModule, MATERIAL_MODULE ],
+                declarations: [RadioButtonsWidgetComponent, ErrorWidgetComponent],
                 providers: [FormService, EcmModelService, WidgetVisibilityService]
             }).compileComponents().then(() => {
                 fixture = TestBed.createComponent(RadioButtonsWidgetComponent);
@@ -184,9 +183,9 @@ describe('RadioButtonsWidgetComponent', () => {
 
             it('should show visible radio buttons', async(() => {
                 expect(element.querySelector('#radio-id')).toBeDefined();
-                expect(element.querySelector('#opt-1')).not.toBeNull();
+                expect(element.querySelector('#radio-id-opt-1-input')).not.toBeNull();
                 expect(element.querySelector('#radio-id-opt-1')).not.toBeNull();
-                expect(element.querySelector('#opt-2')).not.toBeNull();
+                expect(element.querySelector('#radio-id-opt-2-input')).not.toBeNull();
                 expect(element.querySelector('#radio-id-opt-2')).not.toBeNull();
             }));
 
@@ -196,14 +195,14 @@ describe('RadioButtonsWidgetComponent', () => {
                 fixture.whenStable()
                     .then(() => {
                         expect(element.querySelector('#radio-id')).toBeNull();
-                        expect(element.querySelector('#opt-1')).toBeNull();
-                        expect(element.querySelector('#opt-2')).toBeNull();
+                        expect(element.querySelector('#radio-id-opt-1-input')).toBeNull();
+                        expect(element.querySelector('#radio-id-opt-2-input')).toBeNull();
                     });
             }));
 
             it('should evaluate visibility on option click', async(() => {
                 spyOn(stubVisibilityService, 'evaluateVisibility').and.returnValue(false);
-                let option: HTMLElement = <HTMLElement> element.querySelector('#opt-1');
+                let option: HTMLElement = <HTMLElement> element.querySelector('#radio-id-opt-1-input');
                 expect(element.querySelector('#radio-id')).not.toBeNull();
                 expect(option).not.toBeNull();
                 option.click();
@@ -211,7 +210,7 @@ describe('RadioButtonsWidgetComponent', () => {
                 fixture.whenStable()
                     .then(() => {
                         expect(element.querySelector('#radio-id')).toBeNull();
-                        expect(element.querySelector('#opt-1')).toBeNull();
+                        expect(element.querySelector('#radio-id-opt-1-input')).toBeNull();
                     });
             }));
         });
@@ -233,9 +232,9 @@ describe('RadioButtonsWidgetComponent', () => {
 
             it('should show visible radio buttons', async(() => {
                 expect(element.querySelector('#radio-id')).toBeDefined();
-                expect(element.querySelector('#opt-1')).not.toBeNull();
+                expect(element.querySelector('#radio-id-opt-1-input')).not.toBeNull();
                 expect(element.querySelector('#radio-id-opt-1')).not.toBeNull();
-                expect(element.querySelector('#opt-2')).not.toBeNull();
+                expect(element.querySelector('#radio-id-opt-2-input')).not.toBeNull();
                 expect(element.querySelector('#radio-id-opt-2')).not.toBeNull();
             }));
         });

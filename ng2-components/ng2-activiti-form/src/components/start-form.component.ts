@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { FormService } from './../services/form.service';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
@@ -43,7 +43,8 @@ import { FormOutcomeModel } from './widgets/core/index';
 @Component({
     selector: 'adf-start-form, activiti-start-form',
     templateUrl: './start-form.component.html',
-    styleUrls: ['./form.component.css']
+    styleUrls: ['./form.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class StartFormComponent extends FormComponent implements OnChanges, OnInit {
 

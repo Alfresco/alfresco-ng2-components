@@ -22,10 +22,10 @@ import * as moment from 'moment';
 import { AlfrescoTranslationService, AppConfigModule, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 
+import { ReportParametersModel } from 'ng2-activiti-diagrams';
 import * as analyticParamsMock from '../assets/analyticsParamsReportComponent.mock';
 import { AnalyticsReportParametersComponent } from '../components/analytics-report-parameters.component';
 import { WIDGET_DIRECTIVES } from '../components/widgets/index';
-import { ReportParametersModel } from '../models/report.model';
 import { AnalyticsService } from '../services/analytics.service';
 
 declare let jasmine: any;
@@ -210,6 +210,7 @@ describe('AnalyticsReportParametersComponent', () => {
                     typeFiltering: true
                 }
             };
+
             component.submit(values);
         });
 

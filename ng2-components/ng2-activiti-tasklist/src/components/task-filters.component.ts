@@ -24,7 +24,7 @@ import { TaskListService } from './../services/tasklist.service';
 @Component({
     selector: 'adf-filters, activiti-filters',
     templateUrl: './task-filters.component.html',
-    styleUrls: ['task-filters.component.css'],
+    styleUrls: ['task-filters.component.scss'],
     providers: [TaskListService]
 })
 export class TaskFiltersComponent implements OnInit, OnChanges {

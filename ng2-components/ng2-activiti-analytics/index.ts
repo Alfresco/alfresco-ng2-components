@@ -37,9 +37,6 @@ export * from './src/components/analytics-report-parameters.component';
 export * from './src/services/analytics.service';
 export * from './src/components/widgets/index';
 
-// exporting models
-export * from './src/models/index';
-
 export const ANALYTICS_DIRECTIVES: any[] = [
     AnalyticsComponent,
     AnalyticsReportListComponent,
