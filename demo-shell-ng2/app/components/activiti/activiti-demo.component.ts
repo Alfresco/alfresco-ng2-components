@@ -44,6 +44,7 @@ import {
 } from 'ng2-alfresco-datatable';
 import { Subscription } from 'rxjs/Rx';
 import { /*CustomEditorComponent*/ CustomStencil01 } from './custom-editor/custom-editor.component';
+import { DemoFieldValidator } from './demo-field-validator';
 
 declare var componentHandler;
 
@@ -111,7 +112,8 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     dataProcesses: ObjectDataTableAdapter;
 
     fieldValidators = [
-        ...FORM_FIELD_VALIDATORS
+        ...FORM_FIELD_VALIDATORS,
+        new DemoFieldValidator()
     ];
 
     constructor(private elementRef: ElementRef,
