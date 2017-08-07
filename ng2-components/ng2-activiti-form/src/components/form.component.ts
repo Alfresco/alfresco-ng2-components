@@ -22,7 +22,7 @@ import { EcmModelService } from './../services/ecm-model.service';
 import { FormService } from './../services/form.service';
 import { NodeService } from './../services/node.service';
 import { ContentLinkModel } from './widgets/core/content-link.model';
-import { FormFieldModel, FormModel, FormOutcomeEvent, FormOutcomeModel, FormValues } from './widgets/core/index';
+import { FormFieldModel, FormModel, FormOutcomeEvent, FormOutcomeModel, FormValues, FormFieldValidator } from './widgets/core/index';
 
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
 
@@ -89,6 +89,9 @@ export class FormComponent implements OnInit, OnChanges {
 
     @Input()
     showValidationIcon: boolean = true;
+
+    @Input()
+    fieldValidators: FormFieldValidator[] = [];
 
     @Output()
     formSaved: EventEmitter<FormModel> = new EventEmitter<FormModel>();
@@ -307,16 +310,16 @@ export class FormComponent implements OnInit, OnChanges {
                 this.formService
                     .getTaskForm(taskId)
                     .subscribe(
-                    form => {
-                        this.form = new FormModel(form, this.data, this.readOnly, this.formService);
-                        this.onFormLoaded(this.form);
-                        resolve(this.form);
-                    },
-                    error => {
-                        this.handleError(error);
-                        // reject(error);
-                        resolve(null);
-                    }
+                        form => {
+                            this.form = this.parseForm(form);
+                            this.onFormLoaded(this.form);
+                            resolve(this.form);
+                        },
+                        error => {
+                            this.handleError(error);
+                            // reject(error);
+                            resolve(null);
+                        }
                     );
             });
         });
@@ -396,6 +399,10 @@ export class FormComponent implements OnInit, OnChanges {
             if (!json.fields) {
                 form.outcomes = this.getFormDefinitionOutcomes(form);
             }
+            if (this.fieldValidators && this.fieldValidators.length > 0) {
+                console.log('Applying custom field validators');
+                form.fieldValidators = this.fieldValidators;
+            }
             return form;
         }
         return null;
@@ -419,7 +426,7 @@ export class FormComponent implements OnInit, OnChanges {
     }
 
     private refreshFormData() {
-        this.form = new FormModel(this.form.json, this.data, this.readOnly, this.formService);
+        this.form = this.parseForm(this.form.json);
         this.onFormLoaded(this.form);
         this.onFormDataRefreshed(this.form);
     }

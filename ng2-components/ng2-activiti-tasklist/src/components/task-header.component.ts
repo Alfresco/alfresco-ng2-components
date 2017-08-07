@@ -48,7 +48,6 @@ export class TaskHeaderComponent implements OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        console.log('change van:', changes, this.taskDetails);
         this.refreshData();
     }
 
