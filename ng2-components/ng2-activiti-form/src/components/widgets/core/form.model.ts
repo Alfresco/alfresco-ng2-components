@@ -161,6 +161,10 @@ export class FormModel {
         }
     }
 
+    getFieldById(fieldId: string): FormFieldModel {
+        return this.getFormFields().find(field => field.id === fieldId);
+    }
+
     // TODO: consider evaluating and caching once the form is loaded
     getFormFields(): FormFieldModel[] {
         let result: FormFieldModel[] = [];
