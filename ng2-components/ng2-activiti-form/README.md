@@ -238,7 +238,6 @@ If you want to check field types the [FormFieldTypes](https://github.com/Alfresc
 In addition every validator has access to all underlying APIs of the [FormFieldModel](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-activiti-form/src/components/widgets/core/form-field.model.ts),
 including the reference to the Form instance and so other form fields.
 
-
 Below is a source code for a demo validator that is executed for all the "TEXT" fields, and ensures the value is not "admin", otherwise the `field.validationSummary` value is set to an error.
 
 ```ts
