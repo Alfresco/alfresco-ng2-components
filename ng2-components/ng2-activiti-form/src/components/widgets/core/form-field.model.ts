@@ -136,7 +136,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.name = json.name;
             this.type = json.type;
             this._required = <boolean> json.required;
-            this._readOnly = <boolean> json.readOnly;
+            this._readOnly = <boolean> json.readOnly || json.type === 'readonly';
             this.overrideId = <boolean> json.overrideId;
             this.tab = json.tab;
             this.restUrl = json.restUrl;
