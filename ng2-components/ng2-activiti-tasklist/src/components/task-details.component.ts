@@ -26,7 +26,7 @@ import { Component,
     TemplateRef,
     ViewChild
 } from '@angular/core';
-import { ContentLinkModel, FormModel, FormOutcomeEvent } from 'ng2-activiti-form';
+import { ContentLinkModel, FormFieldValidator, FormModel, FormOutcomeEvent } from 'ng2-activiti-form';
 import { AlfrescoAuthenticationService, AlfrescoTranslationService, CardViewUpdateService, ClickNotification, UpdateNotification } from 'ng2-alfresco-core';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
@@ -95,6 +95,9 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
     @Input()
     peopleIconImageUrl: string = require('../assets/images/user.jpg');
+
+    @Input()
+    fieldValidators: FormFieldValidator[] = [];
 
     @Output()
     formSaved: EventEmitter<FormModel> = new EventEmitter<FormModel>();
