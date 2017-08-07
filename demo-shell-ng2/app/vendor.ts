@@ -33,6 +33,9 @@ import 'ng2-alfresco-userinfo';
 import 'ng2-alfresco-viewer';
 import 'ng2-alfresco-webscript';
 
+// Load the Angular Material 2 stylesheet
+import '@angular/material/prebuilt-themes/indigo-pink.css';
+
 // Polyfill(s) for dialogs
 require('script-loader!dialog-polyfill/dialog-polyfill');
 import 'dialog-polyfill/dialog-polyfill.css';
