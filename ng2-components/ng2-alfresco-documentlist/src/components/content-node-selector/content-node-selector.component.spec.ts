@@ -230,12 +230,12 @@ describe('ContentNodeSelectorComponent', () => {
         describe('Breadcrumbs', () => {
 
             let documentListService,
-                expectedNode;
+                expectedDefaultFolderNode;
 
             beforeEach(() => {
-                expectedNode = <MinimalNodeEntryEntity> { path: { elements: [] } };
+                expectedDefaultFolderNode = <MinimalNodeEntryEntity> { path: { elements: [] } };
                 documentListService = TestBed.get(DocumentListService);
-                spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.resolve(expectedNode));
+                spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.resolve(expectedDefaultFolderNode));
                 component.currentFolderId = 'cat-girl-nuku-nuku';
                 fixture.detectChanges();
             });
@@ -247,7 +247,7 @@ describe('ContentNodeSelectorComponent', () => {
                     fixture.detectChanges();
                     const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
                     expect(breadcrumb).not.toBeNull();
-                    expect(breadcrumb.componentInstance.folderNode).toBe(expectedNode);
+                    expect(breadcrumb.componentInstance.folderNode).toBe(expectedDefaultFolderNode);
                     done();
                 });
             });
@@ -278,7 +278,7 @@ describe('ContentNodeSelectorComponent', () => {
                 });
             });
 
-            it('should show the breadcrumb for the selected node is the node is folder', (done) => {
+            it('should show the breadcrumb for the selected node when search results are displayed', (done) => {
                 const alfrescoContentService = TestBed.get(AlfrescoContentService);
                 spyOn(alfrescoContentService, 'hasPermission').and.returnValue(true);
 
@@ -288,7 +288,7 @@ describe('ContentNodeSelectorComponent', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
 
-                    const chosenNode = <MinimalNodeEntryEntity> { path: { elements: [] }, isFolder: true };
+                    const chosenNode = <MinimalNodeEntryEntity> { path: { elements: [] } };
                     component.onNodeSelect({ detail: { node: { entry: chosenNode} } });
                     fixture.detectChanges();
 
@@ -299,7 +299,7 @@ describe('ContentNodeSelectorComponent', () => {
                 });
             });
 
-            it('should NOT show the breadcrumb for the selected node is the node is NOT folder', (done) => {
+            it('should NOT show the breadcrumb for the selected node when not on search results list', (done) => {
                 const alfrescoContentService = TestBed.get(AlfrescoContentService);
                 spyOn(alfrescoContentService, 'hasPermission').and.returnValue(true);
 
@@ -308,13 +308,16 @@ describe('ContentNodeSelectorComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
+                    component.onFolderChange();
+                    fixture.detectChanges();
 
-                    const chosenNode = <MinimalNodeEntryEntity> { path: { elements: [] }, isFolder: false };
+                    const chosenNode = <MinimalNodeEntryEntity> { path: { elements: [] } };
                     component.onNodeSelect({ detail: { node: { entry: chosenNode} } });
                     fixture.detectChanges();
 
                     const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
-                    expect(breadcrumb).toBeNull();
+                    expect(breadcrumb).not.toBeNull();
+                    expect(breadcrumb.componentInstance.folderNode).toBe(expectedDefaultFolderNode);
                     done();
                 });
             });
@@ -541,12 +544,12 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(chooseButton.nativeElement.disabled).toBe(true);
             });
 
-            it('should be disabled when deselecting the previously selected element in the list (onNodeUnselect)', () => {
+            it('should be disabled when resetting the chosen node', () => {
                 hasPermission = true;
                 component.onNodeSelect({ detail: { node: { entry: <MinimalNodeEntryEntity> {} } } });
                 fixture.detectChanges();
 
-                component.onNodeUnselect();
+                component.resetChosenNode();
                 fixture.detectChanges();
 
                 let chooseButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));

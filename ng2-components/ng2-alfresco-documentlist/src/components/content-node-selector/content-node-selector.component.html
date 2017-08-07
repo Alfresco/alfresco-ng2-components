@@ -4,8 +4,7 @@
 
 <section mdDialogContent
     class="adf-content-node-selector-content"
-    (node-select)="onNodeSelect($event)"
-    (node-unselect)="onNodeUnselect()">
+    (node-select)="onNodeSelect($event)">
 
     <md-input-container floatPlaceholder="never" class="adf-content-node-selector-content-input">
         <input #searchInput
@@ -33,7 +32,7 @@
 
     <adf-toolbar>
         <adf-toolbar-title>
-            <adf-dropdown-breadcrumb *ngIf="breadcrumbFolderNode"
+            <adf-dropdown-breadcrumb *ngIf="needBreadcrumbs()"
                 class="adf-content-node-selector-content-breadcrumb"
                 [target]="documentList"
                 [folderNode]="breadcrumbFolderNode"
@@ -52,13 +51,13 @@
                     [imageResolver]="imageResolver"
                     [permissionsStyle]="permissionsStyle"
                     [creationMenuActions]="false"
-                    [currentFolderId]="defaultFolderToShow"
+                    [currentFolderId]="folderIdToShow"
                     [selectionMode]="'single'"
                     [contextMenuActions]="false"
                     [contentActions]="false"
                     [allowDropFiles]="false"
                     [enablePagination]="false"
-                    (folderChange)="onFolderChange"
+                    (folderChange)="onFolderChange($event)"
                     data-automation-id="content-node-selector-document-list">
             <empty-folder-content>
                 <ng-template>

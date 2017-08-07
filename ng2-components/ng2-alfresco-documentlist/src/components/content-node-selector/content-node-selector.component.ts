@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Inject, Input, Optional, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Optional, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
 import { MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
 import { AlfrescoContentService, AlfrescoTranslationService, HighlightDirective, SearchOptions, SearchService, SiteModel } from 'ng2-alfresco-core';
@@ -36,7 +36,7 @@ export interface ContentNodeSelectorComponentData {
     templateUrl: './content-node-selector.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class ContentNodeSelectorComponent {
+export class ContentNodeSelectorComponent implements OnInit {
 
     nodes: NodePaging | Array<any>;
     siteId: null | string;
@@ -44,6 +44,7 @@ export class ContentNodeSelectorComponent {
     showingSearchResults: boolean = false;
     inDialog: boolean = false;
     chosenNode: MinimalNodeEntryEntity | null = null;
+    folderIdToShow: string | null = null;
 
     @Input()
     title: string;
@@ -89,6 +90,10 @@ export class ContentNodeSelectorComponent {
         }
     }
 
+    ngOnInit() {
+        this.folderIdToShow = this.currentFolderId;
+    }
+
     /**
      * Updates the site attribute and starts a new search
      *
@@ -109,25 +114,19 @@ export class ContentNodeSelectorComponent {
         this.querySearch();
     }
 
-    /**
-     * Returns the passed currentFolderId if search was not performed
-     */
-    get defaultFolderToShow(): string|null {
-        if (this.showingSearchResults) {
-            return null;
-        } else {
-            return this.currentFolderId;
-        }
+    needBreadcrumbs() {
+        const whenInFolderNavigation = !this.showingSearchResults,
+            whenInSelectingSearchResult = this.showingSearchResults && this.chosenNode;
+
+        return whenInFolderNavigation || whenInSelectingSearchResult;
     }
 
     /**
      * Returns the actually selected|entered folder node or null in case of searching for the breadcrumb
      */
     get breadcrumbFolderNode(): MinimalNodeEntryEntity|null {
-        if (this.chosenNode && this.chosenNode.isFolder) {
+        if (this.showingSearchResults && this.chosenNode) {
             return this.chosenNode;
-        } else if (this.showingSearchResults) {
-            return null;
         } else {
             return this.documentList.folderNode;
         }
@@ -141,6 +140,7 @@ export class ContentNodeSelectorComponent {
         this.nodes = [];
         this.chosenNode = null;
         this.showingSearchResults = false;
+        this.folderIdToShow = this.currentFolderId;
     }
 
     /**
@@ -164,6 +164,7 @@ export class ContentNodeSelectorComponent {
                 .subscribe(
                     results => {
                         this.showingSearchResults = true;
+                        this.folderIdToShow = null;
                         this.nodes = results;
                         this.highlight();
                     }
@@ -190,7 +191,7 @@ export class ContentNodeSelectorComponent {
         if (this.contentService.hasPermission(entry, 'update')) {
             this.chosenNode = entry;
         } else {
-            this.onNodeUnselect();
+            this.resetChosenNode();
         }
     }
 
@@ -202,9 +203,9 @@ export class ContentNodeSelectorComponent {
     }
 
     /**
-     * * Invoked when user unselects a node
+     * Clears the chosen node
      */
-    onNodeUnselect(): void {
+    resetChosenNode(): void {
         this.chosenNode = null;
     }
 
