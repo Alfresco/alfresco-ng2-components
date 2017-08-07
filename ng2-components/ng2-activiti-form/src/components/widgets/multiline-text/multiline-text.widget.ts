@@ -15,21 +15,23 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+/* tslint:disable:component-selector  */
 
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { FormService } from './../../../services/form.service';
 import { baseHost , WidgetComponent } from './../widget.component';
 
 @Component({
     selector: 'multiline-text-widget',
     templateUrl: './multiline-text.widget.html',
-    styleUrls: ['./multiline-text.widget.css'],
-    host: baseHost
+    styleUrls: ['./multiline-text.widget.scss'],
+    host: baseHost,
+    encapsulation: ViewEncapsulation.None
 })
-export class MultilineTextWidgetComponentComponent extends WidgetComponent {
+export class MultilineTextWidgetComponentComponent extends WidgetComponent  {
 
     constructor(public formService: FormService) {
-         super(formService);
+        super(formService);
     }
+
 }

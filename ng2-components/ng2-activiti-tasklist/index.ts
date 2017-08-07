@@ -37,8 +37,8 @@ import { PeopleSearchComponent } from './src/components/people-search.component'
 import { PeopleComponent } from './src/components/people.component';
 import { StartTaskComponent } from './src/components/start-task.component';
 import { TaskAttachmentListComponent } from './src/components/task-attachment-list.component';
-import { TaskDetailsComponent } from './src/components/task-details.component';
 import { TaskAuditDirective } from './src/components/task-audit.directive';
+import { TaskDetailsComponent } from './src/components/task-details.component';
 import { TaskFiltersComponent } from './src/components/task-filters.component';
 import { TaskHeaderComponent } from './src/components/task-header.component';
 import { TaskListComponent } from './src/components/tasklist.component';

@@ -20,24 +20,23 @@ import { By } from '@angular/platform-browser';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { Observable } from 'rxjs/Rx';
+import { MATERIAL_MODULE } from '../../index';
 import { EcmModelService } from '../services/ecm-model.service';
 import { FormService } from '../services/form.service';
 import { FormListComponent } from './form-list.component';
-
-declare let jasmine: any;
 
 describe('TaskAttachmentList', () => {
 
     let component: FormListComponent;
     let fixture: ComponentFixture<FormListComponent>;
     let service: FormService;
-    let componentHandler: any;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                DataTableModule
+                DataTableModule,
+                MATERIAL_MODULE
             ],
             declarations: [
                 FormListComponent
@@ -53,12 +52,6 @@ describe('TaskAttachmentList', () => {
         spyOn(translateService, 'get').and.callFake((key) => {
             return Observable.of(key);
         });
-
-        componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered',
-            'upgradeElement'
-        ]);
-        window['componentHandler'] = componentHandler;
     }));
 
     beforeEach(async(() => {

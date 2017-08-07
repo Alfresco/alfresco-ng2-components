@@ -27,7 +27,6 @@ import { FormFieldModel, FormFieldTypes, FormModel, FormOutcomeEvent, FormOutcom
 
 describe('FormComponent', () => {
 
-    let componentHandler: any;
     let formService: FormService;
     let formComponent: FormComponent;
     let visibilityService: WidgetVisibilityService;
@@ -35,29 +34,12 @@ describe('FormComponent', () => {
     let logService: LogService;
 
     beforeEach(() => {
-        componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered'
-        ]);
-        window['componentHandler'] = componentHandler;
-
         logService = new LogService();
         visibilityService = new WidgetVisibilityService(null, logService);
         spyOn(visibilityService, 'refreshVisibility').and.stub();
         formService = new FormService(null, null, logService);
         nodeService = new NodeService(null);
         formComponent = new FormComponent(formService, visibilityService, null, nodeService);
-    });
-
-    it('should upgrade MDL content on view checked', () => {
-        formComponent.ngAfterViewChecked();
-        expect(componentHandler.upgradeAllRegistered).toHaveBeenCalled();
-    });
-
-    it('should setup MDL content only if component handler available', () => {
-        expect(formComponent.setupMaterialComponents()).toBeTruthy();
-
-        window['componentHandler'] = null;
-        expect(formComponent.setupMaterialComponents()).toBeFalsy();
     });
 
     it('should check form', () => {
@@ -649,19 +631,6 @@ describe('FormComponent', () => {
         let form = formComponent.parseForm({ id: '<id>' });
         expect(formComponent.getFormDefinitionOutcomes).toHaveBeenCalledWith(form);
     });
-
-    /*
-     it('should update the visibility when the container raise the change event', (valueChanged) => {
-     spyOn(formComponent, 'checkVisibility').and.callThrough();
-     let widget = new ContainerWidgetComponent();
-     let fakeForm = new FormModel();
-     let fakeField = new FormFieldModel(fakeForm, {id: 'fakeField', value: 'fakeValue'});
-     widget.formValueChanged.subscribe(field => { valueChanged(); });
-     widget.fieldChanged(fakeField);
-
-     expect(formComponent.checkVisibility).toHaveBeenCalledWith(fakeField);
-     });
-     */
 
     it('should prevent default outcome execution', () => {
 

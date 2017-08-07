@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+/* tslint:disable:component-selector  */
 
 import { ContainerColumnModel } from './../core/container-column.model';
 import { ContainerModel } from './../core/container.model';
@@ -26,6 +26,8 @@ export class ContainerWidgetComponentModel extends ContainerModel {
 
     columns: ContainerColumnModel[] = [];
     isExpanded: boolean = true;
+    rowspan: number = 1;
+    colspan: number = 1;
 
     isGroup(): boolean {
         return this.type === FormFieldTypes.GROUP;
@@ -57,6 +59,8 @@ export class ContainerWidgetComponentModel extends ContainerModel {
         if (this.field) {
             this.columns = this.field.columns || [];
             this.isExpanded = !this.isCollapsedByDefault();
+            this.colspan = field.colspan;
+            this.rowspan = field.rowspan;
         }
     }
 }

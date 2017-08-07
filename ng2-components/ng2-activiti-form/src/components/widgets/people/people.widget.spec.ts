@@ -25,17 +25,11 @@ import { PeopleWidgetComponent } from './people.widget';
 
 describe('PeopleWidgetComponent', () => {
 
-    let componentHandler;
     let elementRef: ElementRef;
     let formService: FormService;
     let widget: PeopleWidgetComponent;
 
     beforeEach(() => {
-        componentHandler =  jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered'
-        ]);
-        window['componentHandler'] = componentHandler;
-
         formService = new FormService(null, null, null);
         elementRef = new ElementRef(null);
         widget = new PeopleWidgetComponent(formService, elementRef);
@@ -235,38 +229,5 @@ describe('PeopleWidgetComponent', () => {
 
         expect(widget.value).toBeNull();
         expect(widget.field.value).toBeNull();
-    });
-
-    it('should setup mdl textfield on view init', () => {
-        spyOn(widget, 'setupMaterialComponents').and.callThrough();
-        spyOn(widget, 'setupMaterialTextField').and.callThrough();
-
-        widget.value = '<value>';
-        widget.ngAfterViewInit();
-
-        expect(widget.setupMaterialComponents).toHaveBeenCalledWith(componentHandler);
-        expect(widget.setupMaterialTextField).toHaveBeenCalled();
-    });
-
-    it('should require component handler to setup textfield', () => {
-        expect(widget.setupMaterialComponents(null)).toBeFalsy();
-    });
-
-    it('should require element reference to setup textfield', () => {
-        let w = new PeopleWidgetComponent(formService, null);
-        w.value = '<value>';
-        expect(w.setupMaterialComponents(componentHandler)).toBeFalsy();
-
-        w = new PeopleWidgetComponent(formService, elementRef);
-        w.value = '<value>';
-        expect(w.setupMaterialComponents(componentHandler)).toBeTruthy();
-    });
-
-    it('should require value to setup textfield', () => {
-        widget.value = '<value>';
-        expect(widget.setupMaterialComponents(componentHandler)).toBeTruthy();
-
-        widget.value = null;
-        expect(widget.setupMaterialComponents(componentHandler)).toBeFalsy();
     });
 });

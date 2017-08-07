@@ -17,24 +17,21 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdTabsModule } from '@angular/material';
-import { Observable } from 'rxjs/Rx';
-
-import { MdInputModule } from '@angular/material';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Rx';
+import { MATERIAL_MODULE } from '../../index';
 import { TranslationMock } from './../assets/translation.service.mock';
 import { EcmModelService } from './../services/ecm-model.service';
 import { FormService } from './../services/form.service';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
-import { ActivitiContentComponent } from './activiti-content.component';
 import { FormFieldComponent } from './form-field/form-field.component';
 import { StartFormComponent } from './start-form.component';
+import { ContentWidgetComponent } from './widgets/content/content.widget';
 import { MASK_DIRECTIVE } from './widgets/index';
 import { WIDGET_DIRECTIVES } from './widgets/index';
 
 describe('ActivitiStartForm', () => {
 
-    let componentHandler: any;
     let formService: FormService;
     let component: StartFormComponent;
     let fixture: ComponentFixture<StartFormComponent>;
@@ -46,13 +43,12 @@ describe('ActivitiStartForm', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                MdTabsModule,
-                MdInputModule,
+                ...MATERIAL_MODULE,
                 CoreModule.forRoot()],
             declarations: [
                 StartFormComponent,
                 FormFieldComponent,
-                ActivitiContentComponent,
+                ContentWidgetComponent,
                 ...WIDGET_DIRECTIVES,
                 ...MASK_DIRECTIVE
             ],
@@ -75,11 +71,6 @@ describe('ActivitiStartForm', () => {
             processDefinitionName: 'my:process'
         }));
 
-        componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered',
-            'upgradeElement'
-        ]);
-        window['componentHandler'] = componentHandler;
     });
 
     it('should load start form on change if processDefinitionId defined', () => {

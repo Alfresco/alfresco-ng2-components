@@ -17,16 +17,15 @@
 
  /* tslint:disable:component-selector  */
 
-import { AfterContentChecked, AfterViewInit, Component, EventEmitter, Input, Output } from '@angular/core';
+import { AfterContentChecked, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { FormFieldModel, TabModel } from './../core/index';
-
-declare var componentHandler: any;
 
 @Component({
     selector: 'tabs-widget',
-    templateUrl: './tabs.widget.html'
+    templateUrl: './tabs.widget.html',
+    encapsulation: ViewEncapsulation.None
 })
-export class TabsWidgetComponent implements AfterContentChecked, AfterViewInit {
+export class TabsWidgetComponent implements AfterContentChecked {
 
     @Input()
     tabs: TabModel[] = [];
@@ -44,23 +43,10 @@ export class TabsWidgetComponent implements AfterContentChecked, AfterViewInit {
         this.filterVisibleTabs();
     }
 
-    ngAfterViewInit() {
-        this.setupMaterialComponents();
-    }
-
     filterVisibleTabs() {
         this.visibleTabs = this.tabs.filter(tab => {
             return tab.isVisible;
         });
-    }
-
-    setupMaterialComponents(): boolean {
-        // workaround for MDL issues with dynamic components
-        if (componentHandler) {
-            componentHandler.upgradeAllRegistered();
-            return true;
-        }
-        return false;
     }
 
     tabChanged(field: FormFieldModel) {

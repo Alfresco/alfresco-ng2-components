@@ -29,7 +29,7 @@ describe('BooleanEditorComponent', () => {
     it('should update row value on change', () => {
         let row = <DynamicTableRow> { value: {} };
         let column = <DynamicTableColumn> { id: 'key' };
-        let event = { target: { checked: true } };
+        let event = { checked: true } ;
 
         component.onValueChanged(row, column, event);
         expect(row.value[column.id]).toBeTruthy();

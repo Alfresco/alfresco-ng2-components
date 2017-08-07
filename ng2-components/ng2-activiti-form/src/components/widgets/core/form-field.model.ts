@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
-
+/* tslint:disable:component-selector  */
 import * as moment from 'moment';
 import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 import { ContainerColumnModel } from './container-column.model';
@@ -44,6 +43,7 @@ export class FormFieldModel extends FormWidgetModel {
     required: boolean;
     overrideId: boolean;
     tab: string;
+    rowspan: number = 1;
     colspan: number = 1;
     placeholder: string = null;
     minLength: number = 0;
@@ -127,7 +127,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.name = json.name;
             this.type = json.type;
             this.required = <boolean> json.required;
-            this._readOnly = <boolean> json.readOnly;
+            this._readOnly = <boolean> json.readOnly || json.type === 'readonly';
             this.overrideId = <boolean> json.overrideId;
             this.tab = json.tab;
             this.restUrl = json.restUrl;
@@ -157,29 +157,15 @@ export class FormFieldModel extends FormWidgetModel {
                 this.placeholder = json.placeholder;
             }
 
-            // <container>
-            this.numberOfColumns = <number> json.numberOfColumns;
-
-            let columnSize: number = 12;
-            if (this.numberOfColumns > 1) {
-                columnSize = 12 / this.numberOfColumns;
+            if (json.type === 'readonly') {
+                if (json.params && json.params.field && json.params.field.responseVariable) {
+                    this.value = this.getVariablesValue(json.params.field.name, form);
+                }
             }
 
-            for (let i = 0; i < this.numberOfColumns; i++) {
-                let col = new ContainerColumnModel();
-                col.size = columnSize;
-                this.columns.push(col);
+            if (json.type === 'container') {
+                this.containerFactory(json, form);
             }
-
-            if (json.fields) {
-                Object.keys(json.fields).map(key => {
-                    let fields = (json.fields[key] || []).map(f => new FormFieldModel(form, f));
-                    let col = this.columns[parseInt(key, 10) - 1];
-                    col.fields = fields;
-                    this.fields.push(...fields);
-                });
-            }
-            // </container>
         }
 
         if (this.hasEmptyValue && this.options && this.options.length > 0) {
@@ -187,6 +173,46 @@ export class FormFieldModel extends FormWidgetModel {
         }
 
         this.updateForm();
+    }
+
+    private getVariablesValue(variableName: string, form: FormModel) {
+        let variable = form.json.variables.find((currentVariable) => {
+            return currentVariable.name === variableName;
+        });
+
+        if (variable.type === 'boolean') {
+            return JSON.parse(variable.value);
+        }
+
+        return variable.value;
+    }
+
+    private containerFactory(json: any, form: FormModel): void {
+        this.numberOfColumns = <number> json.numberOfColumns || 1;
+
+        this.fields = json.fields;
+
+        this.rowspan = 1;
+        this.colspan = 1;
+
+        if (json.fields) {
+            for (let currentField in json.fields) {
+                if (json.fields.hasOwnProperty(currentField)) {
+                    let col = new ContainerColumnModel();
+
+                    let fields: FormFieldModel[] = (json.fields[currentField] || []).map(f => new FormFieldModel(form, f));
+                    col.fields = fields;
+                    col.rowspan = json.fields[currentField].length;
+
+                    col.fields.forEach((colFields: any) => {
+                        this.colspan = colFields.colspan > this.colspan ? colFields.colspan : this.colspan;
+                    });
+
+                    this.rowspan = this.rowspan < col.rowspan ? col.rowspan : this.rowspan;
+                    this.columns.push(col);
+                }
+            }
+        }
     }
 
     parseValue(json: any): any {
@@ -275,7 +301,7 @@ export class FormFieldModel extends FormWidgetModel {
                 break;
             case FormFieldTypes.UPLOAD:
                 if (this.value && this.value.length > 0) {
-                    this.form.values[this.id] = `${this.value[0].id}`;
+                    this.form.values[this.id] = this.value.map(elem => elem.id).join(',');
                 } else {
                     this.form.values[this.id] = null;
                 }

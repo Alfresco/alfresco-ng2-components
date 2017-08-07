@@ -17,23 +17,25 @@
 
  /* tslint:disable:component-selector  */
 
-import { Component, ElementRef, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { DateAdapter, MD_DATE_FORMATS } from '@angular/material';
 import * as moment from 'moment';
+import { Moment } from 'moment';
+import { MOMENT_DATE_FORMATS, MomentDateAdapter } from 'ng2-alfresco-core';
 import { DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './../../dynamic-table.widget.model';
 
-declare let mdDateTimePicker: any;
-
 @Component({
-    selector: 'alf-date-editor',
+    selector: 'adf-date-editor',
     templateUrl: './date.editor.html',
-    styleUrls: ['./date.editor.css']
+    providers: [
+        {provide: DateAdapter, useClass: MomentDateAdapter},
+        {provide: MD_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS}],
+    styleUrls: ['./date.editor.scss']
 })
 export class DateEditorComponent implements OnInit {
 
     DATE_FORMAT: string = 'DD-MM-YYYY';
 
-    datePicker: any;
-    settings: any;
     value: any;
 
     @Input()
@@ -45,56 +47,30 @@ export class DateEditorComponent implements OnInit {
     @Input()
     column: DynamicTableColumn;
 
-    constructor(public elementRef: ElementRef) {}
+    minDate: Moment;
+    maxDate: Moment;
+
+    constructor(public dateAdapter: DateAdapter<Moment>) {
+    }
 
     ngOnInit() {
-        this.settings = {
-            type: 'date',
-            past: moment().subtract(100, 'years'),
-            future: moment().add(100, 'years')
-        };
+        let momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
+        momentDateAdapter.overrideDisplyaFormat = this.DATE_FORMAT;
 
-        this.value = this.table.getCellValue(this.row, this.column);
-        if (this.value) {
-            this.settings.init = moment(this.value, this.DATE_FORMAT);
-        }
-
-        this.datePicker = new mdDateTimePicker.default(this.settings);
-        if (this.elementRef) {
-            this.datePicker.trigger = this.elementRef.nativeElement.querySelector('#dateInput');
-        }
+        this.value =  moment(this.table.getCellValue(this.row, this.column), this.DATE_FORMAT);
     }
 
-    onDateChanged(event: any) {
-        let newValue = (<HTMLInputElement> event.target).value;
-        let dateValue = moment(newValue, this.DATE_FORMAT);
-        this.datePicker.time = dateValue;
-        this.row.value[this.column.id] = `${dateValue.format('YYYY-MM-DD')}T00:00:00.000Z`;
-        this.table.flushValue();
-    }
+    onDateChanged(newDateValue) {
+        if (newDateValue) {
+            let momentDate = moment(newDateValue, this.DATE_FORMAT, true);
 
-    onDateSelected(event: CustomEvent) {
-        this.value = this.datePicker.time.format('DD-MM-YYYY');
-        let newValue = this.datePicker.time.format('YYYY-MM-DD');
-        this.row.value[this.column.id] = `${newValue}T00:00:00.000Z`;
-        this.table.flushValue();
-
-        if (this.elementRef) {
-            this.updateMaterialTextField(this.elementRef, newValue);
-        }
-    }
-
-    updateMaterialTextField(elementRef: ElementRef, value: string): boolean {
-        if (elementRef) {
-            let el = elementRef.nativeElement;
-            if (el) {
-                let container = el.querySelector('.mdl-textfield');
-                if (container) {
-                    container.MaterialTextfield.change(value);
-                    return true;
-                }
+            if (!momentDate.isValid()) {
+                this.row.value[this.column.id]   = '';
+            }else {
+                this.row.value[this.column.id] = `${momentDate.format('YYYY-MM-DD')}T00:00:00.000Z`;
+                this.table.flushValue();
             }
         }
-        return false;
     }
+
 }

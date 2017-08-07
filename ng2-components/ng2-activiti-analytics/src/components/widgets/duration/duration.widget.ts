@@ -20,7 +20,7 @@
 /* tslint:disable::no-access-missing-member */
 import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ParameterValueModel, ReportParameterDetailsModel } from './../../../models/report.model';
+import { ParameterValueModel, ReportParameterDetailsModel } from 'ng2-activiti-diagrams';
 import { NumberWidgetComponent } from './../number/number.widget';
 
 @Component({

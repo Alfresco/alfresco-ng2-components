@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+/* tslint:disable:component-selector  */
 
 import { FormFieldModel } from './form-field.model';
 
@@ -23,6 +23,8 @@ export class ContainerColumnModel {
 
     size: number = 12;
     fields: FormFieldModel[] = [];
+    colspan: number = 1;
+    rowspan: number = 1;
 
     hasFields(): boolean {
         return this.fields && this.fields.length > 0;
