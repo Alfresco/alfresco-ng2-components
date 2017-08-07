@@ -17,15 +17,16 @@
 
  /* tslint:disable:component-selector  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormService } from './../../../services/form.service';
 import { baseHost , WidgetComponent } from './../widget.component';
 
 @Component({
     selector: 'amount-widget',
     templateUrl: './amount.widget.html',
-    styleUrls: ['./amount.widget.css'],
-    host: baseHost
+    styleUrls: ['./amount.widget.scss'],
+    host: baseHost,
+    encapsulation: ViewEncapsulation.None
 })
 export class AmountWidgetComponent extends WidgetComponent implements OnInit {
 

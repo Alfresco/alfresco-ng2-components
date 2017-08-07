@@ -1,25 +1,25 @@
-<div class="container-widget">
-    <div [ngClass]="{'hidden':!(content?.isGroup() && content?.isVisible)}" class="container-widget__header">
-        <h4 class="container-widget__header-text" id="container-header"
-            [class.collapsible]="content?.isCollapsible()">
-            <button *ngIf="content?.isCollapsible()"
-                    md-icon-button
-                    class="mdl-button--icon"
-                    (click)="onExpanderClicked()">
-                <md-icon>{{ content?.isExpanded ? 'expand_less' : 'expand_more' }}</md-icon>
-            </button>
-            <span (click)="onExpanderClicked()" id="container-header-label">{{content.name}}</span>
-        </h4>
-    </div>
-    <div class="mdl-grid" [ngClass]="{'hidden':!(content?.isVisible && content?.isExpanded)}">
-        <div *ngFor="let col of content.columns" class="mdl-cell mdl-cell--{{col.size}}-col">
-            <div class="mdl-grid container-widget__mdl-grid" *ngIf="col.hasFields()">
-                <div *ngFor="let field of col.fields" class="mdl-cell mdl-cell--12-col">
-                    <div class="mdl-layout-spacer"></div>
-                    <form-field [field]="field"></form-field>
-                    <div class="mdl-layout-spacer"></div>
-                </div>
-            </div>
-        </div>
-    </div>
+<div [ngClass]="{'hidden':!(content?.isGroup() && content?.isVisible)}" class="container-widget__header">
+    <h4 class="container-widget__header-text" id="container-header"
+        [class.collapsible]="content?.isCollapsible()">
+        <button *ngIf="content?.isCollapsible()"
+                md-icon-button
+                class="mdl-button--icon"
+                (click)="onExpanderClicked()">
+            <md-icon>{{ content?.isExpanded ? 'expand_less' : 'expand_more' }}</md-icon>
+        </button>
+        <span (click)="onExpanderClicked()" id="container-header-label">{{content.name}}</span>
+    </h4>
 </div>
+
+<md-grid-list rowHeight="100px" [cols]="content.field.numberOfColumns"
+              [ngClass]="{'hidden':!(content?.isVisible && content?.isExpanded)}">
+    <md-grid-tile *ngFor="let col of content.columns"
+                  [colspan]="content.colspan"
+                  [rowspan]="content.rowspan">
+        <ul class="adf-field-list">
+            <li *ngFor="let field of col.fields">
+                <form-field [field]="field"></form-field>
+            </li>
+        </ul>
+    </md-grid-tile>
+</md-grid-list>

@@ -199,6 +199,8 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     private loadDetails(taskId: string) {
         this.taskPeople = [];
         this.taskFormName = null;
+        this.readOnlyForm = false;
+
         if (taskId) {
             this.activitiTaskList.getTaskDetails(taskId).subscribe(
                 (res: TaskDetailsModel) => {

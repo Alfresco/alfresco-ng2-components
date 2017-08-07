@@ -1,15 +1,14 @@
 <div class="dropdown-editor">
     <label [attr.for]="column.id">{{column.name}}</label>
-    <div>
-        <select
-            class="dropdown-editor__select"
-            [attr.id]="column.id"
-            [value]="value"
-            [required]="column.required"
-            [disabled]="!column.editable"
-            (change)="onValueChanged(row, column, $event)">
-            <option></option>
-            <option *ngFor="let opt of options" [value]="opt.name" [id]="opt.id">{{opt.name}}</option>
-        </select>
-    </div>
+    <md-select
+        floatPlaceholder="never"
+        class="adf-dropdown-editor-select"
+        [id]="column.id"
+        [(ngModel)]="value"
+        [required]="column.required"
+        [disabled]="!column.editable"
+        (change)="onValueChanged(row, column, $event)">
+        <md-option></md-option>
+        <md-option *ngFor="let opt of options" [value]="opt.name" [id]="opt.id">{{opt.name}}</md-option>
+    </md-select>
 </div>

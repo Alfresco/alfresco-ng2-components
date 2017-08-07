@@ -1,23 +1,17 @@
-<div class="mdl-grid">
-    <div class="mdl-cell mdl-cell--11-col">
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label date-editor">
-            <input id="dateInput"
-                class="mdl-textfield__input"
-                type="text"
-                [value]="value"
-                [attr.id]="column.id"
-                [required]="column.required"
-                [disabled]="!column.editable"
-                (keyup)="onDateChanged($event)"
-                (onOk)="onDateSelected($event)">
-            <label class="mdl-textfield__label" [attr.for]="column.id">{{column.name}} (d-M-yyyy)</label>
-        </div>
-    </div>
-    <div *ngIf="column.editable" class="mdl-cell mdl-cell--1-col">
-        <button
-            class="mdl-button mdl-js-button mdl-button--icon date-editor--button"
-            (click)="datePicker.toggle()">
-            <i class="material-icons">date_range</i>
-        </button>
-    </div>
+<div>
+    <md-input-container class="adf-date-editor">
+        <label [attr.for]="column.id">{{column.name}} (d-M-yyyy)</label>
+        <input mdInput
+            id="dateInput"
+            type="text"
+            [mdDatepicker]="datePicker"
+            [value]="value"
+            [id]="column.id"
+            [required]="column.required"
+            [disabled]="!column.editable"
+           (focusout)="onDateChanged($event.srcElement.value)">
+            <button mdSuffix *ngIf="column.editable"
+            [mdDatepickerToggle]="datePicker" class="adf-date-editor-button"></button>
+    </md-input-container>
+    <md-datepicker #datePicker (selectedChanged)="onDateChanged($event)" [touchUi]="true"></md-datepicker>
 </div>

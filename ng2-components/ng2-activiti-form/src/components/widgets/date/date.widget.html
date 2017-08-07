@@ -1,29 +1,19 @@
-<div class="mdl-grid mdl-grid__date-widget {{field.className}}" *ngIf="field?.isVisible" id="data-widget">
-    <div class="mdl-cell mdl-cell--11-col">
-        <div class="mdl-textfield mdl-js-textfield date-widget"
-             [class.date-widget__invalid]="!field.isValid">
-            <label [attr.for]="field.id">{{field.name}} ({{field.dateDisplayFormat}})<span *ngIf="isRequired()">*</span></label>
-            <input class="mdl-textfield__input mdl-date__input"
-                   type="text"
-                   [attr.id]="field.id"
-                   [attr.required]="isRequired()"
-                   [value]="field.value"
-                   [(ngModel)]="field.value"
-                   (ngModelChange)="onDateChanged()"
-                   (onOk)="onDateSelected()"
-                   [disabled]="field.readOnly"
-                   placeholder="{{field.placeholder}}">
-            <span *ngIf="field.validationSummary" class="mdl-textfield__error">{{field.validationSummary}}</span>
-        </div>
-    </div>
-    <div class="mdl-cell mdl-cell--1-col">
-        <button
-            [attr.id]="field.id+'-button'"
-            [disabled]="field.readOnly"
-            class="mdl-button mdl-js-button mdl-button--icon"
-            (click)="datePicker.toggle()">
-            <i class="material-icons">date_range</i>
-        </button>
-    </div>
+<div class="{{field.className}}" *ngIf="field?.isVisible" id="data-widget" [class.adf-invalid]="!field.isValid || field.validationSummary">
+    <md-input-container class="adf-date-widget">
+        <label class="adf-label" [attr.for]="field.id">{{field.name}} ({{field.dateDisplayFormat}})<span *ngIf="isRequired()">*</span></label>
+        <input mdInput
+               [id]="field.id"
+               [mdDatepicker]="datePicker"
+               [(value)]="field.value"
+               [required]="isRequired()"
+               [disabled]="field.readOnly"
+               [min]="minDate"
+               [max]="maxDate"
+               (focusout)="onDateChanged($event.srcElement.value)"
+               placeholder="{{field.placeholder}}">
+        <button class="adf-date-widget-button" mdSuffix [mdDatepickerToggle]="datePicker"  [disabled]="field.readOnly"></button>
+    </md-input-container>
+    <error-widget [error]="field.validationSummary" ></error-widget>
+    <md-datepicker #datePicker [touchUi]="true" [startAt]="startAt" (selectedChanged)="onDateChanged($event)"></md-datepicker>
 </div>
 

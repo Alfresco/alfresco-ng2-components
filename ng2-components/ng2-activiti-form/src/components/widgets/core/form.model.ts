@@ -124,6 +124,7 @@ export class FormModel {
                     }
                 }
             }
+
             if (json.fields) {
                 let saveOutcome = new FormOutcomeModel(this, { id: FormModel.SAVE_OUTCOME, name: 'Save', isSystem: true });
                 let completeOutcome = new FormOutcomeModel(this, { id: FormModel.COMPLETE_OUTCOME, name: 'Complete', isSystem: true });
@@ -170,7 +171,10 @@ export class FormModel {
             if (field instanceof ContainerModel) {
                 let container = <ContainerModel> field;
                 result.push(container.field);
-                result.push(...container.field.fields);
+
+                container.field.columns.forEach((column) => {
+                    result.push(...column.fields);
+                });
             }
         }
 

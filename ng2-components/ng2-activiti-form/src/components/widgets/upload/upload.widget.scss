@@ -1,0 +1,38 @@
+@import 'theming';
+@import '../form';
+
+.adf {
+
+    &-upload-widget-container{
+        margin-bottom: 15px;
+        max-height: 80px;
+    }
+
+    &-upload-widget {
+        width: 100%;
+        word-break: break-all;
+        padding: 0.4375em 0;
+        border-top: 0.84375em solid transparent;
+    }
+
+    &-upload-widget__icon {
+        padding: 6px;
+        float: left;
+    }
+
+    &-adf-file {
+        float: left;
+        margin-top: 4px;
+    }
+
+    &-upload-widget__reset {
+        margin-top: -2px;
+    }
+
+    &-upload-files-row {
+        .mat-line {
+            margin-bottom: 0px;
+        }
+    }
+
+}

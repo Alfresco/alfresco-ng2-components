@@ -26,7 +26,7 @@ import { ProcessService } from './../services/process.service';
 @Component({
     selector: 'adf-start-process, activiti-start-process',
     templateUrl: './start-process.component.html',
-    styleUrls: ['./start-process.component.css']
+    styleUrls: ['./start-process.component.scss']
 })
 export class StartProcessInstanceComponent implements OnChanges {
 
