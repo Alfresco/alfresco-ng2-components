@@ -8,8 +8,8 @@
         [versioning]="versioning"
         [enabled]="documentList.hasCreatePermission()">
         <div *ngIf="errorMessage" class="error-message">
-            <button (click)="resetError()" class="mdl-button mdl-js-button mdl-button--icon">
-                <i class="material-icons">highlight_off</i>
+            <button (click)="resetError()" md-icon-button>
+                <md-icon>highlight_off</md-icon>
             </button>
             <span class="error-message--text">{{errorMessage}}</span>
         </div>
