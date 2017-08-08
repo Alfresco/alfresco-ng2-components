@@ -58,6 +58,12 @@ export class ContentActionComponent implements OnInit, OnChanges {
     @Output()
     permissionEvent = new EventEmitter();
 
+    @Output()
+    error = new EventEmitter();
+
+    @Output()
+    success = new EventEmitter();
+
     model: ContentActionModel;
 
     constructor(
@@ -111,6 +117,15 @@ export class ContentActionComponent implements OnInit, OnChanges {
                     this.documentActions.permissionEvent.subscribe((permision) => {
                         this.permissionEvent.emit(permision);
                     });
+
+                    this.documentActions.error.subscribe((errors) => {
+                        this.error.emit(errors);
+                    });
+
+                    this.documentActions.success.subscribe((message) => {
+                        this.success.emit(message);
+                    });
+
                     return this.documentActions.getHandler(name);
                 }
                 return null;
@@ -121,6 +136,15 @@ export class ContentActionComponent implements OnInit, OnChanges {
                     this.folderActions.permissionEvent.subscribe((permision) => {
                         this.permissionEvent.emit(permision);
                     });
+
+                    this.folderActions.error.subscribe((errors) => {
+                        this.error.emit(errors);
+                    });
+
+                    this.folderActions.success.subscribe((message) => {
+                        this.success.emit(message);
+                    });
+
                     return this.folderActions.getHandler(name);
                 }
                 return null;

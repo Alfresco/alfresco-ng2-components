@@ -137,6 +137,8 @@
                     title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.COPY' | translate}}"
                     permission="update"
                     [disableWithNoPermission]="true"
+                    (error)="onContentActionError($event)"
+                    (success)="onContentActionSuccess($event)"
                     handler="copy">
                 </content-action>
                 <content-action
@@ -145,6 +147,8 @@
                     title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.MOVE' | translate}}"
                     permission="update"
                     [disableWithNoPermission]="true"
+                    (error)="onContentActionError($event)"
+                    (success)="onContentActionSuccess($event)"
                     handler="move">
                 </content-action>
                 <content-action
@@ -163,6 +167,8 @@
                     title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.COPY' | translate}}"
                     permission="update"
                     [disableWithNoPermission]="true"
+                    (error)="onContentActionError($event)"
+                    (success)="onContentActionSuccess($event)"
                     handler="copy">
                 </content-action>
                 <content-action
@@ -171,6 +177,8 @@
                     title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.MOVE' | translate}}"
                     permission="update"
                     [disableWithNoPermission]="true"
+                    (error)="onContentActionError($event)"
+                    (success)="onContentActionSuccess($event)"
                     handler="move">
                 </content-action>
                 <content-action

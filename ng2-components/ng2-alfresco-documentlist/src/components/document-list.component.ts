@@ -103,19 +103,10 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     pagination: Pagination;
 
     @Input()
-    set rowFilter(value: RowFilter) {
-        if (this.data && value && this.currentFolderId) {
-            this.data.setFilter(value);
-            this.loadFolderNodesByFolderNodeId(this.currentFolderId, this.pageSize, this.skipCount);
-        }
-    }
+    rowFilter: RowFilter|null = null;
 
     @Input()
-    set imageResolver(value: ImageResolver) {
-        if (this.data) {
-            this.data.setImageResolver(value);
-        }
-    }
+    imageResolver: ImageResolver|null = null;
 
     // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
     @Input()
@@ -198,8 +189,16 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     ngOnInit() {
         this.data = new ShareDataTableAdapter(this.documentListService, null, this.getDefaultSorting());
         this.data.thumbnails = this.thumbnails;
-
         this.data.permissionsStyle = this.permissionsStyle;
+
+        if (this.rowFilter) {
+            this.data.setFilter(this.rowFilter);
+        }
+
+        if (this.imageResolver) {
+            this.data.setImageResolver(this.imageResolver);
+        }
+
         this.contextActionHandler.subscribe(val => this.contextActionCallback(val));
 
         this.enforceSingleClickNavigationForMobile();
@@ -229,9 +228,16 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             this.loadFolder();
         } else if (changes['currentFolderId'] && changes['currentFolderId'].currentValue) {
             this.loadFolderByNodeId(changes['currentFolderId'].currentValue);
-        } else if (changes['node'] && changes['node'].currentValue) {
-            if (this.data) {
+        } else if (this.data) {
+            if (changes['node'] && changes['node'].currentValue) {
                 this.data.loadPage(changes['node'].currentValue);
+            } else if (changes['rowFilter']) {
+                this.data.setFilter(changes['rowFilter'].currentValue);
+                if (this.currentFolderId) {
+                    this.loadFolderNodesByFolderNodeId(this.currentFolderId, this.pageSize, this.skipCount);
+                }
+            } else if (changes['imageResolver']) {
+                this.data.setImageResolver(changes['imageResolver'].currentValue);
             }
         }
     }

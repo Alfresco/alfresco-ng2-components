@@ -34,7 +34,8 @@
         },
         "ERROR": {
             "CONFLICT": "Name already exists in target location.",
-            "UNKNOWN": "Unknown error happened."
+            "UNKNOWN": "Unknown error happened.",
+            "PERMISSION": "You don't have the permission to perform this action."
         }
     }
 }
