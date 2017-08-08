@@ -17,7 +17,10 @@
 
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
+import { AlfrescoApiService } from 'ng2-alfresco-core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+
+import { ViewerDialogSettings } from './viewer-dialog.settings';
 
 @Component({
     selector: 'adf-viwer-dialog',
@@ -28,19 +31,35 @@ import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 export class ViewerDialogComponent implements OnInit {
 
     fileName: string = 'Unknown file';
-    previewError = true;
-    previewErrorIcon = 'wifi_tethering';
-    previewErrorText = 'Document preview could not be loaded.';
+    fileUrl: string = null;
+
+    unknownFormatIcon = 'wifi_tethering';
+    unknownFormatText = 'Document preview could not be loaded.';
+
+    mimeType: string = null;
 
     constructor(private dialogRef: MdDialogRef<ViewerDialogComponent>,
-                @Inject(MD_DIALOG_DATA) private data: { node?: MinimalNodeEntryEntity }) {
+                @Inject(MD_DIALOG_DATA) private settings: ViewerDialogSettings,
+                private apiService: AlfrescoApiService) {
+    }
 
+    private get contentApi() {
+        return this.apiService.getInstance().content;
     }
 
     ngOnInit() {
-        const node = this.data.node;
+        const node = this.settings.node;
         if (node && node.isFile) {
-            this.fileName  = node.name;
+            this.displayFile(node);
+        }
+    }
+
+    private displayFile(node: MinimalNodeEntryEntity) {
+        if (node) {
+            this.fileName = node.name;
+            this.mimeType = node.content.mimeType;
+            this.fileUrl = this.contentApi.getContentUrl(node.id);
+            console.log(node);
         }
     }
 

@@ -28,7 +28,7 @@ import { DocumentListComponent, PermissionStyleModel } from 'ng2-alfresco-docume
 import { CreateFolderDialogComponent } from '../../dialogs/create-folder.dialog';
 import { DownloadZipDialogComponent } from './../../dialogs/download-zip.dialog';
 
-import { ViewerDialogComponent } from 'ng2-alfresco-viewer';
+import { ViewerDialogComponent, ViewerDialogSettings } from 'ng2-alfresco-viewer';
 
 @Component({
     selector: 'adf-files-component',
@@ -99,11 +99,13 @@ export class FilesComponent implements OnInit {
         if (event.value.entry.isFile) {
             // this.fileNodeId = event.value.entry.id;
             // this.fileShowed = true;
+            const settings: ViewerDialogSettings = {
+                node: event.value.entry
+            };
+
             const dialogRef = this.dialog.open(ViewerDialogComponent, {
                 panelClass: 'adf-viewer-dialog-panel',
-                data: {
-                    node: event.value.entry
-                }
+                data: settings
             });
             dialogRef.afterClosed().subscribe(result => {
                 console.log(result);

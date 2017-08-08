@@ -46,7 +46,9 @@ export * from './src/components/mediaPlayer.component';
 export * from './src/components/notSupportedFormat.component';
 export * from './src/components/pdfViewer.component';
 export * from './src/components/txtViewer.component';
+
 export { ViewerDialogComponent } from './src/components/viewer-dialog.component';
+export { ViewerDialogSettings } from './src/components/viewer-dialog.settings';
 
 export const VIEWER_DIRECTIVES: any[] = [
     ViewerComponent,

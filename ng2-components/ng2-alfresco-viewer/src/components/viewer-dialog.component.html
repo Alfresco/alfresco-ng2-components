@@ -43,10 +43,26 @@
 </adf-toolbar>
 
  <md-dialog-content>
-    <div class="adf-viewer-dialog-preview-error" *ngIf="previewError">
-        <div>
-            <md-icon class="icon">{{ previewErrorIcon }}</md-icon>
-            <div class="label">{{ previewErrorText | translate }}</div>
-        </div>
-    </div>
+    <ng-container [ngSwitch]="mimeType">
+        <ng-container *ngSwitchCase="'image/png'">
+            <div>
+                <img *ngIf="fileUrl" [src]="fileUrl">
+            </div>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'image/jpeg'">
+            <div>
+                <img *ngIf="fileUrl" [src]="fileUrl">
+            </div>
+        </ng-container>
+
+        <ng-container *ngSwitchDefault>
+            <div class="adf-viewer-dialog-preview-centered">
+                <div>
+                    <md-icon class="icon">{{ unknownFormatIcon }}</md-icon>
+                    <div class="label">{{ unknownFormatText | translate }}</div>
+                </div>
+            </div>
+        </ng-container>
+    </ng-container>
  </md-dialog-content>
