@@ -54,7 +54,7 @@
 
             & > button {
                 text-transform: uppercase;
-                color: $alfresco-primary-accent--default;
+                color: mat-color($primary);
             }
         }
     }

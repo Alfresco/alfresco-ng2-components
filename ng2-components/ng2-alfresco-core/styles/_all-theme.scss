@@ -1,0 +1,8 @@
+// Import all the theming functionality.
+@import '../../ng2-alfresco-documentlist/src/components/breadcrumb/breadcrumb.component';
+
+
+// Create a theme.
+@mixin alfresco-material-theme($theme) {
+    @include mat-breadcrumb-theme($theme);
+}

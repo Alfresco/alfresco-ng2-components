@@ -49,19 +49,19 @@
         }
 
         &__status--done {
-            color: $alfresco-secondary-accent--default;
+            color: mat-color($accent);
         }
 
         &__status--error {
-            color: $alfresco-warn-color--default;
+            color: mat-color($warn);
         }
 
         &__action--cancel {
-            color: $alfresco-warn-color--default;
+            color: mat-color($warn);
         }
 
         &__action--remove {
-            color: $alfresco-secondary-accent--default;
+            color: mat-color($accent);
         }
     }
 }
