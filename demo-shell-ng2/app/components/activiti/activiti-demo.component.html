@@ -162,6 +162,18 @@
                                 (taskClick)="onProcessDetailsTaskClick($event)">
                             </activiti-process-instance-details>
                             <hr>
+                            <div *ngIf="currentProcessInstanceId">
+                                Process Audit log
+                                <button adf-process-audit
+                                    [process-id]="currentProcessInstanceId"
+                                    [download]="true" md-icon-button
+                                    [format]="'pdf'"
+                                    (clicked)="onAuditClick($event)"
+                                    (error)="onAuditError($event)">
+                                    <md-icon>assignment_ind</md-icon>
+                                </button>
+                                <hr>
+                            </div>
                             <md-card>
                                 <md-card-content>
                                     <activiti-process-attachments
