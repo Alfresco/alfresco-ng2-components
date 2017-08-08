@@ -32,6 +32,12 @@ describe('SearchComponent', () => {
 
     let result = {
         list: {
+            pagination: {
+                hasMoreItems: false,
+                maxItems: 25,
+                skipCount: 0,
+                totalItems: 1
+            },
             entries: [
                 {
                     entry: {
@@ -55,6 +61,12 @@ describe('SearchComponent', () => {
 
     let folderResult = {
         list: {
+            pagination: {
+                hasMoreItems: false,
+                maxItems: 25,
+                skipCount: 0,
+                totalItems: 1
+            },
             entries: [
                 {
                     entry: {
@@ -76,6 +88,12 @@ describe('SearchComponent', () => {
 
     let noResult = {
         list: {
+            pagination: {
+                hasMoreItems: false,
+                maxItems: 25,
+                skipCount: 0,
+                totalItems: 0
+            },
             entries: []
         }
     };
