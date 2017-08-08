@@ -91,6 +91,24 @@ export class ProcessService extends TaskListService {
     }
 
     /**
+     * fetch the Process Audit information as a pdf
+     * @param processId - the process id
+     */
+    fetchProcessAuditPdfById(processId: string): Observable<Blob> {
+        return Observable.fromPromise(this.alfrescoApiService.getInstance().activiti.processApi.getProcessAuditPdf(processId))
+            .catch(err => this.handleProcessError(err));
+    }
+
+    /**
+     * fetch the Process Audit information in a json format
+     * @param processId - the process id
+     */
+    fetchProcessAuditJsonById(processId: string): Observable<any> {
+        return Observable.fromPromise(this.alfrescoApiService.getInstance().activiti.processApi.getProcessAuditJson(processId))
+            .catch(err => this.handleProcessError(err));
+    }
+
+    /**
      * Create and return the default filters
      * @param appId
      * @returns {FilterProcessRepresentationModel[]}
