@@ -27,12 +27,13 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CoreModule } from 'ng2-alfresco-core';
 
-import { MdButtonModule, MdIconModule, MdProgressSpinnerModule } from '@angular/material';
+import { MdButtonModule, MdIconModule, MdProgressSpinnerModule, MdDialogModule, MdMenuModule } from '@angular/material';
 import { ImgViewerComponent } from './src/components/imgViewer.component';
 import { MediaPlayerComponent } from './src/components/mediaPlayer.component';
 import { NotSupportedFormatComponent } from './src/components/notSupportedFormat.component';
 import { PdfViewerComponent } from './src/components/pdfViewer.component';
 import { TxtViewerComponent } from './src/components/txtViewer.component';
+import { ViewerDialogComponent } from './src/components/viewer-dialog.component';
 import { ViewerComponent } from './src/components/viewer.component';
 import { ExtensionViewerDirective } from './src/directives/extension-viewer.directive';
 import { RenderingQueueServices } from './src/services/rendering-queue.services';
@@ -44,6 +45,7 @@ export * from './src/components/mediaPlayer.component';
 export * from './src/components/notSupportedFormat.component';
 export * from './src/components/pdfViewer.component';
 export * from './src/components/txtViewer.component';
+export { ViewerDialogComponent } from './src/components/viewer-dialog.component';
 
 export const VIEWER_DIRECTIVES: any[] = [
     ViewerComponent,
@@ -52,7 +54,8 @@ export const VIEWER_DIRECTIVES: any[] = [
     MediaPlayerComponent,
     NotSupportedFormatComponent,
     PdfViewerComponent,
-    ExtensionViewerDirective
+    ExtensionViewerDirective,
+    ViewerDialogComponent
 ];
 
 export const VIEWER_PROVIDERS: any[] = [
@@ -64,7 +67,9 @@ export const VIEWER_PROVIDERS: any[] = [
         CoreModule,
         MdIconModule,
         MdButtonModule,
-        MdProgressSpinnerModule
+        MdProgressSpinnerModule,
+        MdDialogModule,
+        MdMenuModule
     ],
     declarations: [
         ...VIEWER_DIRECTIVES
@@ -74,10 +79,15 @@ export const VIEWER_PROVIDERS: any[] = [
     ],
     exports: [
         ...VIEWER_DIRECTIVES
+    ],
+    entryComponents: [
+        ViewerDialogComponent
     ]
 })
 export class ViewerModule {
+    /** @deprecated in 1.8.0 */
     static forRoot(): ModuleWithProviders {
+        console.log('ViewerModule.forRoot is deprecated and will be removed in future versions');
         return {
             ngModule: ViewerModule,
             providers: [
