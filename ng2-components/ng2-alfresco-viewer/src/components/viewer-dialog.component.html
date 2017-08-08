@@ -42,5 +42,11 @@
     </md-menu>
 </adf-toolbar>
 
-<md-dialog-content>
-</md-dialog-content>
+ <md-dialog-content>
+    <div class="adf-viewer-dialog-preview-error" *ngIf="previewError">
+        <div>
+            <md-icon class="icon">{{ previewErrorIcon }}</md-icon>
+            <div class="label">{{ previewErrorText | translate }}</div>
+        </div>
+    </div>
+ </md-dialog-content>

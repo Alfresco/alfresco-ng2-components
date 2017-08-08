@@ -6,3 +6,13 @@
         height: 99vh;
     }
 }
+
+.adf-viewer-dialog {
+    &-preview-error {
+        height: 90vh;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+}

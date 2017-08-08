@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 
@@ -26,6 +26,10 @@ import { MinimalNodeEntryEntity } from 'alfresco-js-api';
     encapsulation: ViewEncapsulation.None
 })
 export class ViewerDialogComponent implements OnInit {
+
+    previewError = true;
+    previewErrorIcon = 'wifi_tethering';
+    previewErrorText = 'Document preview could not be loaded.';
 
     constructor(private dialogRef: MdDialogRef<ViewerDialogComponent>,
                 @Inject(MD_DIALOG_DATA) private data: { node?: MinimalNodeEntryEntity }) {
