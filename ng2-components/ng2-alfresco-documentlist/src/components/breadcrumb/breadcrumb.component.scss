@@ -33,6 +33,13 @@ $breadcrumb-chevron-spacer: 2px;
         display: flex;
         line-height: 24px;
 
+        font-family: Muli, Roboto, "Helvetica Neue", sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: -0.2px;
+        text-align: left;
+        color: $alfresco-secondary-text-color;
+
         &-anchor {
             color: inherit;
             text-decoration: none;
@@ -41,6 +48,15 @@ $breadcrumb-chevron-spacer: 2px;
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
+        }
+
+        &:hover,
+        &.active {
+            color: $alfresco-primary-text-color;
+        }
+
+        &-chevron {
+            color: $alfresco-primary-text-color;
         }
 
         &.active {
