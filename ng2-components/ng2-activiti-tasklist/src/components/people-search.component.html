@@ -1,4 +1,4 @@
-<div class="search-text-header">{{ getSearchTextHeader() | translate }}</div>
+<div class="search-text-header">{{ headerTitle | translate }}</div>
 <md-input-container class="search-text-container">
 	<input mdInput placeholder="{{'PEOPLE.SEARCH_USER'|translate}}" type="text" id="userSearchText" [value]="" [formControl]="searchUser">
 </md-input-container>
@@ -25,6 +25,6 @@
         {{'PEOPLE.DIALOG_CLOSE' | translate }}
     </button>
     <button md-button type="button" id="add-people" (click)="addInvolvedUser()">
-        {{ getAddPeopleText() | translate }}
+        {{ actionButtonLabel | translate }}
     </button>
 </div>

@@ -19,7 +19,8 @@
             (success)="assignTaskToUser($event)"
             (closeSearch)="onCloseSearch()"
             [results]="peopleSearch$"
-            [type]="'assign'">
+            [headerTitle]="'TASK_DETAILS.LABELS.ADD_ASSIGNEE'"
+            [actionButtonLabel]="'PEOPLE.ADD_ASSIGNEE'">
             </adf-people-search>
         </div>
         <adf-task-header *ngIf="showHeaderContent"
