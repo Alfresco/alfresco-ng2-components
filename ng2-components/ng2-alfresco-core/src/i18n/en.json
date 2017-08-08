@@ -1,3 +1,10 @@
 {
-
+    "CORE": {
+        "PAGINATION": {
+            "ITEMS_RANGE": "Showing {{ range }} of {{ total }}",
+            "ITEMS_PER_PAGE": "Items per page",
+            "CURRENT_PAGE": "Page",
+            "TOTAL_PAGES": "of {{ total }}"
+        }
+    }
 }

@@ -1,5 +1,5 @@
-<div class="adf-pagination__block">
-    <span class="adf-pagination__range">
+<div class="adf-pagination__block adf-pagination__range">
+    <span>
         {{
             'CORE.PAGINATION.ITEMS_RANGE' | translate: {
                 range: range.join('-'),
@@ -9,15 +9,9 @@
     </span>
 </div>
 
-<div class="adf-pagination__block">
-    <span>
-        {{ 'CORE.PAGINATION.ITEMS_PER_PAGE' | translate }}
-    </span>
-
-    <span class="adf-pagination__max-items">
-        {{ pagination.maxItems }}
-    </span>
-
+<div class="adf-pagination__block adf-pagination__size">
+    <span>{{ 'CORE.PAGINATION.ITEMS_PER_PAGE' | translate }}</span>
+    {{ pagination.maxItems }}
     <button md-icon-button [mdMenuTriggerFor]="pageSizeMenu">
         <md-icon>arrow_drop_down</md-icon>
     </button>
@@ -32,19 +26,14 @@
     </md-menu>
 </div>
 
-<div class="adf-pagination__block">
-    <span class="adf-pagination__current-page">
-        {{ 'CORE.PAGINATION.CURRENT_PAGE' | translate: { number: current } }}
-    </span>
+<div class="adf-pagination__block adf-pagination__current-page">
+    {{ 'CORE.PAGINATION.CURRENT_PAGE' | translate }} {{ current }}
 
-    <button
-        md-icon-button
-        [mdMenuTriggerFor]="pagesMenu"
-        *ngIf="pages.length > 1">
+    <button md-icon-button [mdMenuTriggerFor]="pagesMenu" *ngIf="pages.length > 1">
         <md-icon>arrow_drop_down</md-icon>
     </button>
 
-    <span class="adf-pagination__total-pages">
+    <span>
         {{ 'CORE.PAGINATION.TOTAL_PAGES' | translate: { total: pages.length } }}
     </span>
 
@@ -58,9 +47,8 @@
     </md-menu>
 </div>
 
-<div class="adf-pagination__block">
+<div class="adf-pagination__block adf-pagination__navigation">
     <button
-        class="adf-pagination__previous-button"
         md-icon-button
         [disabled]="isFirstPage"
         (click)="goPrevious()">
@@ -68,7 +56,6 @@
     </button>
 
     <button
-        class="adf-pagination__next-button"
         md-icon-button
         [disabled]="isLastPage"
         (click)="goNext()">

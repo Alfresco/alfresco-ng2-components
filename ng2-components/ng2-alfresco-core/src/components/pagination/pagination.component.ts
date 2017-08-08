@@ -26,7 +26,6 @@ import {
 } from '@angular/core';
 
 import { Pagination } from 'alfresco-js-api';
-import { TranslationService } from './../../services/translation.service';
 import { PaginationQueryParams } from './pagination-query-params.interface';
 
 @Component({
@@ -40,12 +39,6 @@ import { PaginationQueryParams } from './pagination-query-params.interface';
 export class PaginationComponent implements OnInit {
 
     static DEFAULT_PAGE_SIZE: number = 25;
-
-    static DEFAULT_PAGINATION: Pagination = {
-        skipCount: 0,
-        maxItems: PaginationComponent.DEFAULT_PAGE_SIZE,
-        totalItems: 0
-    };
 
     static ACTIONS = {
         NEXT_PAGE: 'NEXT_PAGE',
@@ -80,16 +73,12 @@ export class PaginationComponent implements OnInit {
     @Output('prevPage')
     onPrevPage: EventEmitter<Pagination> = new EventEmitter<Pagination>();
 
-    constructor(translationService: TranslationService) {
-        if (translationService) {
-            translationService.addTranslationFolder('ng2-alfresco-core', 'assets/ng2-alfresco-core');
-        }
-    }
-
     ngOnInit() {
-        if (!this.pagination) {
-            this.pagination = PaginationComponent.DEFAULT_PAGINATION;
-        }
+        this.pagination = {
+            skipCount: 0,
+            maxItems: PaginationComponent.DEFAULT_PAGE_SIZE,
+            totalItems: 0
+        };
     }
 
     get lastPage(): number {
