@@ -4,6 +4,7 @@ $breadcrumb-chevron-spacer: 2px;
 
 .adf-breadcrumb {
     display: flex;
+    flex: 1;
 
     &.mat-primary {
         color: mat-color($primary);
