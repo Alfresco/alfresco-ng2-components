@@ -107,12 +107,11 @@ export class PaginationComponent {
     }
 
     get isFirstPage(): boolean {
-        const { current, lastPage } = this;
-        return current === 1;
+        return this.current === 1;
     }
 
     get next(): number {
-        const { isLastPage, current, lastPage } = this;
+        const { isLastPage, current } = this;
         return isLastPage ? current : current + 1;
     }
 
