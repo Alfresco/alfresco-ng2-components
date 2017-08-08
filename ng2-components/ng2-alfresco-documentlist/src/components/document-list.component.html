@@ -5,6 +5,7 @@
     (error)="onActionMenuError($event)"
     (permissionErrorEvent)="onPermissionError($event)">
 </adf-document-menu-action>
+
 <adf-datatable
     [selectionMode]="selectionMode"
     [data]="data"
@@ -24,6 +25,7 @@
     (rowDblClick)="onNodeDblClick($event.value?.node)"
     (row-select)="onNodeSelect($event.detail)"
     (row-unselect)="onNodeUnselect($event.detail)">
+
     <div *ngIf="!isEmptyTemplateDefined()">
         <no-content-template>
             <ng-template>
@@ -33,24 +35,28 @@
             </ng-template>
         </no-content-template>
     </div>
+
     <div>
         <loading-content-template>
             <ng-template>
                 <div class="adf-document-list-loading-container">
-                    <md-progress-spinner id="adf-document-list-loading"
-                                         class="adf-document-list-loading-margin"
-                                         [color]="'primary'"
-                                         [mode]="'indeterminate'">
+                    <md-progress-spinner
+                        id="adf-document-list-loading"
+                        class="adf-document-list-loading-margin"
+                        [color]="'primary'"
+                        [mode]="'indeterminate'">
                     </md-progress-spinner>
                 </div>
             </ng-template>
         </loading-content-template>
     </div>
 </adf-datatable>
-<adf-pagination *ngIf="isPaginationEnabled()"
-                     (changePageSize)="onChangePageSize($event)"
-                     (nextPage)="onNextPage($event)"
-                     (prevPage)="onPrevPage($event)"
-                     [pagination]="pagination"
-                     [supportedPageSizes]="[5, 10, 15, 20]">
+
+<adf-pagination
+    *ngIf="isPaginationEnabled()"
+    (changePageSize)="onChangePageSize($event)"
+    (nextPage)="onNextPage($event)"
+    (prevPage)="onPrevPage($event)"
+    [pagination]="pagination"
+    [supportedPageSizes]="[5, 10, 15, 20]">
 </adf-pagination>

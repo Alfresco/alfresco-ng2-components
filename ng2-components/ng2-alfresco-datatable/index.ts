@@ -24,14 +24,12 @@ export * from './src/data/index';
 export { DataTableCellComponent } from './src/components/datatable/datatable-cell.component';
 export { DataTableComponent } from './src/components/datatable/datatable.component';
 export { EmptyListComponent } from './src/components/datatable/empty-list.component';
-export { PaginationComponent } from './src/components/pagination/pagination.component';
 export { DataCellEvent, DataCellEventModel } from './src/components/datatable/data-cell.event';
 export { DataRowActionEvent, DataRowActionModel } from './src/components/datatable/data-row-action.event';
 
 import { DataTableCellComponent } from './src/components/datatable/datatable-cell.component';
 import { DataTableComponent } from './src/components/datatable/datatable.component';
 import { EmptyListComponent } from './src/components/datatable/empty-list.component';
-import { PaginationComponent } from './src/components/pagination/pagination.component';
 import { LoadingContentTemplateDirective } from './src/directives/loading-template.directive';
 import { NoContentTemplateDirective } from './src/directives/no-content-template.directive';
 
@@ -41,8 +39,7 @@ export function directives() {
         EmptyListComponent,
         DataTableCellComponent,
         NoContentTemplateDirective,
-        LoadingContentTemplateDirective,
-        PaginationComponent
+        LoadingContentTemplateDirective
     ];
 }
 

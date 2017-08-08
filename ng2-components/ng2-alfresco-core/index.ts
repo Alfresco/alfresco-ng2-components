@@ -24,6 +24,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { CollapsableModule } from './src/components/collapsable/collapsable.module';
 import { ContextMenuModule } from './src/components/context-menu/context-menu.module';
+import { PaginationModule } from './src/components/pagination/pagination.module';
 import { ToolbarModule } from './src/components/toolbar/toolbar.module';
 import { CardViewModule } from './src/components/view/card-view.module';
 import { MaterialModule } from './src/material.module';
@@ -209,6 +210,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         }),
         MaterialModule,
         AppConfigModule,
+        PaginationModule,
         ToolbarModule,
         ContextMenuModule,
         CardViewModule,
@@ -236,6 +238,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         ContextMenuModule,
         CardViewModule,
         CollapsableModule,
+        PaginationModule,
         ToolbarModule,
         ...obsoleteMdlDirectives(),
         UploadDirective,
