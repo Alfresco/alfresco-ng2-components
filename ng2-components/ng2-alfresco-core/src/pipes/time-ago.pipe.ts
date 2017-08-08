@@ -25,11 +25,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class TimeAgoPipe implements PipeTransform {
 
     transform(value: Date) {
-        if (value !== null && value !== undefined ) {
-            const then = moment(value);
-            const diff = moment().diff(then, 'days');
-            return diff > 7 ? then.format('DD/MM/YYYY HH:mm') : then.fromNow();
-        }
-        return '';
+        const then = moment(value);
+        const diff = moment().diff(then, 'days');
+        return diff > 7 ? then.format('DD/MM/YYYY HH:mm') : then.fromNow();
     }
 }
