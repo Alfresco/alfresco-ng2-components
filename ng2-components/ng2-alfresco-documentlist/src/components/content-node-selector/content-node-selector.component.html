@@ -4,14 +4,13 @@
 
 <section mdDialogContent
     class="adf-content-node-selector-content"
-    (node-select)="onNodeSelect($event)"
-    (node-unselect)="onNodeUnselect()">
+    (node-select)="onNodeSelect($event)">
 
     <md-input-container floatPlaceholder="never" class="adf-content-node-selector-content-input">
         <input #searchInput
             mdInput
             placeholder="Search"
-            (keyup)="search(searchInput.value)"
+            (input)="search(searchInput.value)"
             [value]="searchTerm"
             data-automation-id="content-node-selector-search-input">
 
@@ -31,18 +30,34 @@
         (change)="siteChanged($event)"
         data-automation-id="content-node-selector-sites-combo"></adf-sites-dropdown>
 
+    <adf-toolbar>
+        <adf-toolbar-title>
+            <adf-dropdown-breadcrumb *ngIf="needBreadcrumbs()"
+                class="adf-content-node-selector-content-breadcrumb"
+                [target]="documentList"
+                [folderNode]="breadcrumbFolderNode"
+                data-automation-id="content-node-selector-content-breadcrumb">
+            </adf-dropdown-breadcrumb>
+        </adf-toolbar-title>
+    </adf-toolbar>
+
     <div class="adf-content-node-selector-content-list" data-automation-id="content-node-selector-content-list">
-        <adf-document-list *ngIf="searched"
+        <adf-document-list
                     #documentList
+                    adf-highlight
+                    adf-highlight-selector=".cell-value adf-datatable-cell"
                     [node]="nodes"
+                    [rowFilter]="rowFilter"
+                    [imageResolver]="imageResolver"
                     [permissionsStyle]="permissionsStyle"
                     [creationMenuActions]="false"
-                    [currentFolderId]="currentFolderId"
+                    [currentFolderId]="folderIdToShow"
                     [selectionMode]="'single'"
                     [contextMenuActions]="false"
                     [contentActions]="false"
                     [allowDropFiles]="false"
-                    [enablePagination]="false"
+                    [enablePagination]="!showingSearchResults"
+                    (folderChange)="onFolderChange($event)"
                     data-automation-id="content-node-selector-document-list">
             <empty-folder-content>
                 <ng-template>

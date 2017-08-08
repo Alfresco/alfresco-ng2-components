@@ -33,6 +33,7 @@
       - [Delete - Disable button checking the permission](#delete---disable-button-checking-the-permission)
       - [Download](#download)
       - [Copy and move](#copy-and-move)
+        * [Error, Permission and success callback](#error-permission-and-success-callback)
     + [Folder actions](#folder-actions)
   * [Context Menu](#context-menu)
   * [Navigation mode](#navigation-mode)
@@ -610,15 +611,17 @@ Properties:
 | --- | --- | --- | --- |
 | `target` | string | | "document" or "folder" |
 | `title` | string | | The title of the action as shown in the menu |
-| `handler` | string | | System type actions. Can be "delete" or "download" |
+| `handler` | string | | System type actions. Can be "delete", "download", "copy" or "move" |
 | `permission` | string | | The name of the permission |
 
 Events:
 
-| Name | Description |
-| --- | --- |
-| `execute` | Emitted when user clicks on the action. For combined handlers see below |
-| `permissionEvent` | Emitted when a permission error happens |
+| Name | Handler | Description |
+| --- | --- | --- |
+| `execute` | All | Emitted when user clicks on the action. For combined handlers see below |
+| `permissionEvent` | All | Emitted when a permission error happens |
+| `success` | copy, move | Emitted on successful action with the success string message |
+| `error` | copy, move | Emitted on unsuccessful action with the error event |
 
 DocumentList supports declarative actions for Documents and Folders.
 Each action can be bound to either default out-of-the-box handler, to a custom behaviour or to both.
@@ -776,7 +779,7 @@ Initiates download of the corresponding document file.
 
 ##### Copy and move
 
-Shows the destination chooser dialog for copy and move actions
+Shows the destination chooser dialog for copy and move actions. By default the destination chooser lists all the folders of the subject item's parent (except the selected item which is about to be copied/moved if it was a folder itself also).
 
 ![Copy/move dialog](docs/assets/document-action-copymovedialog.png)
 
@@ -790,21 +793,35 @@ Shows the destination chooser dialog for copy and move actions
             title="copy"
             permission="update"
             [disableWithNoPermission]="true"
+            (error)="onContentActionError($event)"
+            (success)="onContentActionSuccess($event)"
+            (permissionEvent)="onPermissionsFailed($event)"
             handler="copy">
         </content-action>
 
         <content-action
             icon="redo"
-            target="document"
+            target="folder"
             title="move"
             permission="update"
             [disableWithNoPermission]="true"
+            (error)="onContentActionError($event)"
+            (success)="onContentActionSuccess($event)"
+            (permissionEvent)="onPermissionsFailed($event)"
             handler="move">
         </content-action>
 
     </content-actions>
 </adf-document-list>
 ```
+
+###### Error, Permission and success callback
+
+Defining error, permission and success callbacks are pretty much the same as doing it for the delete permission handling.
+
+- The error handler callback gets the error object which was raised
+- The success callback's only parameter is the translatable success message string (could be used for showing in snackbar for example)
+- The permissionEvent callback is the same as described above with the delete action
 
 ![Copy/move document action](docs/assets/document-action-copymove.png)
 

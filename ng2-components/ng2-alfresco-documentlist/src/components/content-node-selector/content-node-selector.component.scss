@@ -53,10 +53,18 @@
                 }
             }
 
+            & /deep/ .adf-toolbar .mat-toolbar {
+                border: none;
+            }
+
             &-list {
                 height: 200px;
                 overflow: auto;
                 border: 1px solid rgba(0, 0, 0, 0.07);
+
+                & /deep/ .adf-highlight {
+                    color: #33afdf;
+                }
 
                 & /deep/ .adf-data-table {
                     border: none;
