@@ -34,6 +34,9 @@ export class PeopleSearchComponent implements OnInit, AfterViewInit {
     @Input()
     results: Observable<User[]>;
 
+    @Input()
+    type: string = 'involved';
+
     @Output()
     searchPeople: EventEmitter<any> = new EventEmitter();
 
@@ -119,5 +122,21 @@ export class PeopleSearchComponent implements OnInit, AfterViewInit {
 
     hasUsers() {
         return (this.users && this.users.length > 0);
+    }
+
+    getSearchTextHeader() {
+        if (this.type === 'assign') {
+            return 'TASK_DETAILS.LABELS.ADD_ASSIGNEE';
+        } else {
+            return 'TASK_DETAILS.LABELS.ADD_PEOPLE';
+        }
+    }
+
+    getAddPeopleText() {
+        if (this.type === 'assign') {
+            return 'PEOPLE.ADD_ASSIGNEE';
+        } else {
+            return 'PEOPLE.ADD_USER';
+        }
     }
 }

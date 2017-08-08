@@ -1,4 +1,4 @@
-<div class="search-text-header">{{ 'TASK_DETAILS.LABELS.ADD_PEOPLE' | translate }}</div>
+<div class="search-text-header">{{ getSearchTextHeader() | translate }}</div>
 <div class="search-text-container">
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
         <input class="mdl-textfield__input" type="text" id="userSearchText" [value]="" [formControl]="searchUser"/>
@@ -28,6 +28,6 @@
         {{'PEOPLE.DIALOG_CLOSE' | translate }}
     </button>
     <button type="button" id="add-people" (click)="addInvolvedUser()" class="mdl-button close">
-        {{'PEOPLE.ADD_USER' | translate }}
+        {{ getAddPeopleText() | translate }}
     </button>
 </div>
