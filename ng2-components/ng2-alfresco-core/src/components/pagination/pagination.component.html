@@ -1,0 +1,64 @@
+<div class="adf-pagination__block adf-pagination__range">
+    <span>
+        {{
+            'CORE.PAGINATION.ITEMS_RANGE' | translate: {
+                range: range.join('-'),
+                total: pagination.totalItems
+            }
+        }}
+    </span>
+</div>
+
+<div class="adf-pagination__block adf-pagination__size">
+    <span>{{ 'CORE.PAGINATION.ITEMS_PER_PAGE' | translate }}</span>
+    {{ pagination.maxItems }}
+    <button md-icon-button [mdMenuTriggerFor]="pageSizeMenu">
+        <md-icon>arrow_drop_down</md-icon>
+    </button>
+
+    <md-menu #pageSizeMenu="mdMenu">
+        <button
+            md-menu-item
+            *ngFor="let pageSize of supportedPageSizes"
+            (click)="changePageSize(pageSize)">
+            {{ pageSize }}
+        </button>
+    </md-menu>
+</div>
+
+<div class="adf-pagination__block adf-pagination__current-page">
+    {{ 'CORE.PAGINATION.CURRENT_PAGE' | translate }} {{ current }}
+
+    <button md-icon-button [mdMenuTriggerFor]="pagesMenu" *ngIf="pages.length > 1">
+        <md-icon>arrow_drop_down</md-icon>
+    </button>
+
+    <span>
+        {{ 'CORE.PAGINATION.TOTAL_PAGES' | translate: { total: pages.length } }}
+    </span>
+
+    <md-menu #pagesMenu="mdMenu">
+        <button
+            md-menu-item
+            *ngFor="let pageNumber of pages"
+            (click)="changePageNumber(pageNumber)">
+            {{ pageNumber }}
+        </button>
+    </md-menu>
+</div>
+
+<div class="adf-pagination__block adf-pagination__navigation">
+    <button
+        md-icon-button
+        [disabled]="isFirstPage"
+        (click)="goPrevious()">
+        <md-icon>keyboard_arrow_left</md-icon>
+    </button>
+
+    <button
+        md-icon-button
+        [disabled]="isLastPage"
+        (click)="goNext()">
+        <md-icon>keyboard_arrow_right</md-icon>
+    </button>
+</div>

@@ -1,0 +1,37 @@
+@import 'theming';
+
+$adf-pagination--height: 48px;
+$adf-pagination--icon-button-size: 32px;
+
+.adf-pagination {
+    display: flex;
+    border-top: 1px solid $alfresco-divider-color;
+    height: $adf-pagination--height;
+    line-height: $adf-pagination--height;
+
+    &__block {
+        display: flex;
+        align-items: center;
+        padding: 0 12px;
+        border-right: 1px solid $alfresco-divider-color;
+
+        &:first-child {
+            flex: 1 1 auto;
+        }
+
+        &:last-child {
+            border-right-width: 0;
+        }
+
+        span {
+            color: $alfresco-secondary-text-color;
+            margin: 0 5px;
+        }
+    }
+
+    button[md-icon-button] {
+        width: $adf-pagination--icon-button-size;
+        height: $adf-pagination--icon-button-size;
+        line-height: $adf-pagination--icon-button-size;
+    }
+}
