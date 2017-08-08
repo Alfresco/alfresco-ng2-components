@@ -18,22 +18,19 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { MdDialog } from '@angular/material';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { AlfrescoContentService, AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { AlfrescoContentService } from 'ng2-alfresco-core';
+import { DataColumn } from 'ng2-alfresco-datatable';
 import { Subject } from 'rxjs/Rx';
-import { ContentNodeSelectorComponent } from '../components/content-node-selector/content-node-selector.component';
+import { ContentNodeSelectorComponent, ContentNodeSelectorComponentData } from '../components/content-node-selector/content-node-selector.component';
+import { ShareDataRow } from '../data/share-datatable-adapter';
 import { DocumentListService } from './document-list.service';
 
 @Injectable()
 export class NodeActionsService {
 
     constructor(private dialog: MdDialog,
-                private translateService: AlfrescoTranslationService,
                 private documentListService?: DocumentListService,
-                private contentService?: AlfrescoContentService) {
-        if (translateService) {
-            translateService.addTranslationFolder('ng2-alfresco-documentlist', 'assets/ng2-alfresco-documentlist');
-        }
-    }
+                private contentService?: AlfrescoContentService) {}
 
     /**
      * Copy content node
@@ -87,34 +84,49 @@ export class NodeActionsService {
         const observable: Subject<string> = new Subject<string>();
 
         if (this.contentService.hasPermission(contentEntry, permission)) {
-            const title = `${action} ${contentEntry.name} to ...`,
-                select: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter<MinimalNodeEntryEntity>();
+            const data: ContentNodeSelectorComponentData = {
+                title: `${action} ${contentEntry.name} to ...`,
+                currentFolderId: contentEntry.parentId,
+                rowFilter: this.rowFilter.bind(this, contentEntry.id),
+                imageResolver: this.imageResolver.bind(this),
+                select: new EventEmitter<MinimalNodeEntryEntity[]>()
+            };
 
-            this.dialog.open(ContentNodeSelectorComponent, {
-                data: { title, select },
-                panelClass: 'adf-content-node-selector-dialog',
-                width: '576px'
-            });
+            this.dialog.open(ContentNodeSelectorComponent, { data, panelClass: 'adf-content-node-selector-dialog', width: '576px' });
 
-            select.subscribe((parent: MinimalNodeEntryEntity) => {
-                this.documentListService[`${action}Node`].call(this.documentListService, contentEntry.id, parent.id)
+            data.select.subscribe((selections: MinimalNodeEntryEntity[]) => {
+                const selection = selections[0];
+                this.documentListService[`${action}Node`].call(this.documentListService, contentEntry.id, selection.id)
                     .subscribe(
-                        () => {
-                            let fileOperationMessage: any = this.translateService.get(`OPERATION.SUCCES.${type.toUpperCase()}.${action.toUpperCase()}`);
-                            observable.next(fileOperationMessage.value);
-                        },
-                        (errors) => {
-                            const errorStatusCode = JSON.parse(errors.message).error.statusCode;
-                            observable.error(errorStatusCode);
-                        }
+                        observable.next.bind(observable, `OPERATION.SUCCES.${type.toUpperCase()}.${action.toUpperCase()}`),
+                        observable.error.bind(observable)
                     );
                 this.dialog.closeAll();
             });
 
             return observable;
         } else {
-            observable.error(403);
+            observable.error(new Error(JSON.stringify({ error: { statusCode: 403 } })));
             return observable;
         }
+    }
+
+    private rowFilter(currentNodeId, row: ShareDataRow): boolean {
+        const node: MinimalNodeEntryEntity = row.node.entry;
+
+        if (node.id === currentNodeId || node.isFile) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private imageResolver(row: ShareDataRow, col: DataColumn): string|null {
+        const entry: MinimalNodeEntryEntity = row.node.entry;
+        if (!this.contentService.hasPermission(entry, 'update')) {
+            return this.documentListService.getMimeTypeIcon('disable/folder');
+        }
+
+        return null;
     }
 }

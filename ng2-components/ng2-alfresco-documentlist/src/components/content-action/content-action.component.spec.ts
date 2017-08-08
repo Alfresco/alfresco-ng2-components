@@ -54,11 +54,11 @@ describe('ContentAction', () => {
     beforeEach(() => {
         contentService = TestBed.get(AlfrescoContentService);
         translateService = <AlfrescoTranslationService> { addTranslationFolder: () => {}};
-        nodeActionsService = new NodeActionsService(null, translateService, null, null);
+        nodeActionsService = new NodeActionsService(null, null, null);
         notificationService = new NotificationService(null);
         let documentServiceMock = new DocumentListServiceMock();
-        documentActions = new DocumentActionsService(translateService, notificationService, nodeActionsService);
-        folderActions = new FolderActionsService(translateService, notificationService, nodeActionsService, null, contentService);
+        documentActions = new DocumentActionsService(nodeActionsService);
+        folderActions = new FolderActionsService(nodeActionsService, null, contentService);
 
         documentList = new DocumentListComponent(documentServiceMock, null, null, null);
         actionList = new ContentActionListComponent(documentList);
