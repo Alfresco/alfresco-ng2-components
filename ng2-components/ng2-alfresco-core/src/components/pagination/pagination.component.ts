@@ -64,7 +64,8 @@ export class PaginationComponent {
 
     @Input()
     set pagination(pagination: Pagination) {
-        this._pagination = pagination || PaginationComponent.DEFAULT_PAGINATION;
+        this._pagination = Object
+            .assign(PaginationComponent.DEFAULT_PAGINATION, pagination);
     }
 
     @Output('change')
