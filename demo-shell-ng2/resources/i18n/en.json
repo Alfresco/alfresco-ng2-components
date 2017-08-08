@@ -6,7 +6,8 @@
             "DISPLAY_NAME": "Display name",
             "TAG": "Tag",
             "CREATED_BY": "Created by",
-            "CREATED_ON": "Created on"
+            "CREATED_ON": "Created on",
+            "CREATED": "Created"
         },
         "ACTIONS": {
             "FOLDER": {
