@@ -17,6 +17,7 @@
 
 import { NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MdButtonModule, MdInputModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
@@ -59,7 +60,9 @@ describe('TaskDetailsComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                ActivitiFormModule.forRoot()
+                ActivitiFormModule.forRoot(),
+                MdButtonModule,
+                MdInputModule
             ],
             declarations: [
                 TaskDetailsComponent,

@@ -21,10 +21,10 @@
     </adf-people-list>
 </div>
 <div class="search-list-action-container">
-    <button type="button" id="close-people-search" (click)="closeSearchList()" class="mdl-button close">
+    <button md-button type="button" id="close-people-search" (click)="closeSearchList()">
         {{'PEOPLE.DIALOG_CLOSE' | translate }}
     </button>
-    <button type="button" id="add-people" (click)="addInvolvedUser()" class="mdl-button close">
+    <button md-button type="button" id="add-people" (click)="addInvolvedUser()">
         {{ getAddPeopleText() | translate }}
     </button>
 </div>
