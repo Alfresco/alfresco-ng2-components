@@ -29,6 +29,8 @@
                     </adf-dropdown-breadcrumb>
                 </adf-toolbar-title>
 
+                <adf-toolbar-divider></adf-toolbar-divider>
+
                 <button md-icon-button
                     (click)="onCreateFolderClicked($event)">
                     <md-icon>create_new_folder</md-icon>
@@ -55,6 +57,8 @@
                     <button md-menu-item (click)="toolbarColor = 'accent'">Accent</button>
                     <button md-menu-item (click)="toolbarColor = 'warn'">Warn</button>
                 </md-menu>
+
+                <adf-toolbar-divider></adf-toolbar-divider>
 
                 <button md-icon-button [mdMenuTriggerFor]="menu">
                     <md-icon>more_vert</md-icon>
