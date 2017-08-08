@@ -103,8 +103,10 @@ import { DataColumnListComponent } from './src/components/data-column/data-colum
 import { DataColumnComponent } from './src/components/data-column/data-column.component';
 import { NodePermissionDirective } from './src/directives/node-permission.directive';
 import { UploadDirective } from './src/directives/upload.directive';
+
 import { FileSizePipe } from './src/pipes/file-size.pipe';
 import { HighlightPipe } from './src/pipes/text-highlight.pipe';
+import { TimeAgoPipe } from './src/pipes/time-ago.pipe';
 
 import { AlfrescoMdlMenuDirective } from './src/components/material/mdl-menu.directive';
 import { AlfrescoMdlTextFieldDirective } from './src/components/material/mdl-textfield.directive';
@@ -219,7 +221,8 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         DataColumnComponent,
         DataColumnListComponent,
         FileSizePipe,
-        HighlightPipe
+        HighlightPipe,
+        TimeAgoPipe
     ],
     providers: [...providers(), ...deprecatedProviders(), MomentDateAdapter],
     exports: [
@@ -240,7 +243,8 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         DataColumnComponent,
         DataColumnListComponent,
         FileSizePipe,
-        HighlightPipe
+        HighlightPipe,
+        TimeAgoPipe
     ]
 })
 export class CoreModule {
