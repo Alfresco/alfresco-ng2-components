@@ -200,6 +200,7 @@ export class ContentNodeSelectorComponent implements OnInit {
      */
     onFolderChange() {
         this.showingSearchResults = false;
+        this.chosenNode = null;
     }
 
     /**

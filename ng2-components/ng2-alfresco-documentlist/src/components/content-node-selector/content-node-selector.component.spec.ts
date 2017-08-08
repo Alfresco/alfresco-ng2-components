@@ -331,7 +331,7 @@ describe('ContentNodeSelectorComponent', () => {
                     skipCount: 0,
                     rootNodeId,
                     nodeType: 'cm:folder',
-                    maxItems: 40,
+                    maxItems: 200,
                     orderBy: null
                 };
             }
@@ -538,6 +538,18 @@ describe('ContentNodeSelectorComponent', () => {
 
                 hasPermission = false;
                 component.onNodeSelect({ detail: { node: { entry } } });
+                fixture.detectChanges();
+
+                let chooseButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
+                expect(chooseButton.nativeElement.disabled).toBe(true);
+            });
+
+            it('should become disabled when changing directory after previously selecting a right node', () => {
+                hasPermission = true;
+                component.onNodeSelect({ detail: { node: { entry } } });
+                fixture.detectChanges();
+
+                component.onFolderChange();
                 fixture.detectChanges();
 
                 let chooseButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
