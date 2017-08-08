@@ -32,6 +32,7 @@ import { ProcessAttachmentListComponent } from './src/components/process-attachm
 import { ProcessCommentsComponent } from './src/components/process-comments.component';
 import { ProcessFiltersComponent } from './src/components/process-filters.component';
 import { ProcessInstanceDetailsComponent } from './src/components/process-instance-details.component';
+import { ProcessAuditDirective } from './src/components/process-audit.directive';
 import { ProcessInstanceHeaderComponent } from './src/components/process-instance-header.component';
 import { ProcessInstanceTasksComponent } from './src/components/process-instance-tasks.component';
 import { ProcessInstanceVariablesComponent } from './src/components/process-instance-variables.component';
@@ -41,6 +42,7 @@ export {ProcessAttachmentListComponent} from './src/components/process-attachmen
 export {ProcessCommentsComponent} from './src/components/process-comments.component';
 export {ProcessFiltersComponent} from './src/components/process-filters.component';
 export {ProcessInstanceDetailsComponent} from './src/components/process-instance-details.component';
+export {ProcessAuditDirective} from './src/components/process-audit.directive';
 export {ProcessInstanceHeaderComponent} from './src/components/process-instance-header.component';
 export {ProcessInstanceTasksComponent} from './src/components/process-instance-tasks.component';
 export {ProcessInstanceVariablesComponent} from './src/components/process-instance-variables.component';
@@ -87,6 +89,7 @@ export const ACTIVITI_PROCESSLIST_DIRECTIVES: [any] = [
     ProcessInstanceListComponent,
     ProcessFiltersComponent,
     ProcessInstanceDetailsComponent,
+    ProcessAuditDirective,
     ProcessInstanceHeaderComponent,
     ProcessInstanceTasksComponent,
     ProcessInstanceVariablesComponent,
