@@ -27,6 +27,7 @@ import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 })
 export class ViewerDialogComponent implements OnInit {
 
+    fileName: string = 'Unknown file';
     previewError = true;
     previewErrorIcon = 'wifi_tethering';
     previewErrorText = 'Document preview could not be loaded.';
@@ -37,12 +38,14 @@ export class ViewerDialogComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log(this.data);
+        const node = this.data.node;
+        if (node && node.isFile) {
+            this.fileName  = node.name;
+        }
     }
 
     close() {
         this.dialogRef.close(false);
     }
-
 
 }
