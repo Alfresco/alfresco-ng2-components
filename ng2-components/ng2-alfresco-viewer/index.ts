@@ -27,7 +27,8 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CoreModule } from 'ng2-alfresco-core';
 
-import { MdButtonModule, MdIconModule, MdProgressSpinnerModule, MdDialogModule, MdMenuModule } from '@angular/material';
+import { MaterialModule } from './src/material.module';
+
 import { ImgViewerComponent } from './src/components/imgViewer.component';
 import { MediaPlayerComponent } from './src/components/mediaPlayer.component';
 import { NotSupportedFormatComponent } from './src/components/notSupportedFormat.component';
@@ -65,11 +66,7 @@ export const VIEWER_PROVIDERS: any[] = [
 @NgModule({
     imports: [
         CoreModule,
-        MdIconModule,
-        MdButtonModule,
-        MdProgressSpinnerModule,
-        MdDialogModule,
-        MdMenuModule
+        MaterialModule
     ],
     declarations: [
         ...VIEWER_DIRECTIVES
