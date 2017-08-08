@@ -20,6 +20,7 @@ import {
     Component,
     EventEmitter,
     Input,
+    OnInit,
     Output,
     ViewEncapsulation
 } from '@angular/core';
@@ -35,7 +36,7 @@ import { PaginationQueryParams } from './pagination-query-params.interface';
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
-export class PaginationComponent {
+export class PaginationComponent implements OnInit {
 
     static DEFAULT_PAGE_SIZE: number = 25;
 
@@ -46,14 +47,6 @@ export class PaginationComponent {
         CHANGE_PAGE_NUMBER: 'CHANGE_PAGE_NUMBER'
     };
 
-    static DEFAULT_PAGINATION: Pagination = {
-        skipCount: 0,
-        maxItems: PaginationComponent.DEFAULT_PAGE_SIZE,
-        totalItems: 0
-    };
-
-    private _pagination: Pagination;
-
     @Input()
     supportedPageSizes: number[] = [ 25, 50, 100 ];
 
@@ -63,10 +56,7 @@ export class PaginationComponent {
     maxItems: number = PaginationComponent.DEFAULT_PAGE_SIZE;
 
     @Input()
-    set pagination(pagination: Pagination) {
-        this._pagination = Object
-            .assign(PaginationComponent.DEFAULT_PAGINATION, pagination);
-    }
+    pagination: Pagination;
 
     @Output('change')
     onChange: EventEmitter<PaginationQueryParams> = new EventEmitter<PaginationQueryParams>();
@@ -83,22 +73,28 @@ export class PaginationComponent {
     @Output('prevPage')
     onPrevPage: EventEmitter<Pagination> = new EventEmitter<Pagination>();
 
-    get pagination(): Pagination {
-        return this._pagination;
+    ngOnInit() {
+        this.pagination = {
+            skipCount: 0,
+            maxItems: PaginationComponent.DEFAULT_PAGE_SIZE,
+            totalItems: 0
+        };
     }
 
     get lastPage(): number {
-        const { totalItems, maxItems } = this.pagination;
+        const { maxItems, totalItems } = this.pagination;
 
-        if (!maxItems) { return 1; }
-        return Math.ceil(totalItems / maxItems);
+        return (totalItems && maxItems)
+            ? Math.ceil(totalItems / maxItems)
+            : 1;
     }
 
     get current(): number {
         const { maxItems, skipCount } = this.pagination;
 
-        if (!maxItems) { return 1; }
-        return Math.floor(skipCount / maxItems) + 1;
+        return (skipCount && maxItems)
+            ? Math.floor(skipCount / maxItems) + 1
+            : 1;
     }
 
     get isLastPage(): boolean {
