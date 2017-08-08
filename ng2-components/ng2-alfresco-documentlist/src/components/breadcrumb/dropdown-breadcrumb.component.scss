@@ -11,6 +11,9 @@ $dropdownHorizontalOffset: 30px;
 
     &-dropdown-breadcumb-trigger {
         cursor: pointer;
+        padding: 0;
+        border: none;
+        background: transparent;
     }
 
     &-dropdown-breadcumb-trigger.isRoot {
