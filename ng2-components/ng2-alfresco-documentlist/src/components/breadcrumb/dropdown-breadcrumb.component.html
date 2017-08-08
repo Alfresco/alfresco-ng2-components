@@ -1,25 +1,28 @@
 <ng-container *ngIf="route.length > 0">
 
-    <md-icon
+    <button
+        tabindex="0"
         class="adf-dropdown-breadcumb-trigger"
-        [class.isRoot]="!hasPreviousNodes()"
         (click)="open()"
-        data-automation-id="dropdown-breadcrumb-trigger">folder</md-icon>
+        data-automation-id="dropdown-breadcrumb-trigger">
+        <md-icon [class.isRoot]="!hasPreviousNodes()">folder</md-icon>
+    </button>
     <i class="material-icons adf-dropddown-breadcrumb-item-chevron">chevron_right</i>
 
     <md-select
         *ngIf="hasPreviousNodes()"
         class="adf-dropdown-breadcrumb-path"
+        tabindex="0"
         data-automation-id="dropdown-breadcrumb-path" >
 
         <md-option
             *ngFor="let node of previousNodes;"
             (click)="onRoutePathClick(node, $event)"
             class="adf-dropdown-breadcrumb-path-option"
+            tabindex="0"
             data-automation-class="dropdown-breadcrumb-path-option">
             {{ node.name }}
         </md-option>
-
     </md-select>
 
     <span

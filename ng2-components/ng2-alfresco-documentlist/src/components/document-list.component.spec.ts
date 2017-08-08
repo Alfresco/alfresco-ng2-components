@@ -728,20 +728,33 @@ describe('DocumentList', () => {
         expect(element.querySelector('alfresco-pagination')).toBe(null);
     });
 
-    it('should set row filter for underlying adapter', () => {
+    it('should set row filter and reload contents if currentFolderId is set when setting rowFilter', () => {
         let filter = <RowFilter> {};
         documentList.currentFolderId = 'id';
         spyOn(documentList.data, 'setFilter').and.callThrough();
+        spyOn(documentListService, 'getFolder');
 
-        documentList.rowFilter = filter;
+        documentList.ngOnChanges({rowFilter: new SimpleChange(null, filter, true)});
+
         expect(documentList.data.setFilter).toHaveBeenCalledWith(filter);
+        expect(documentListService.getFolder).toHaveBeenCalled();
+    });
+
+    it('should NOT reload contents if currentFolderId is NOT set when setting rowFilter', () => {
+        documentList.currentFolderId = null;
+        spyOn(documentListService, 'getFolder');
+
+        documentList.ngOnChanges({rowFilter: new SimpleChange(null, <RowFilter> {}, true)});
+
+        expect(documentListService.getFolder).not.toHaveBeenCalled();
     });
 
     it('should set image resolver for underlying adapter', () => {
         let resolver = <ImageResolver> {};
         spyOn(documentList.data, 'setImageResolver').and.callThrough();
 
-        documentList.imageResolver = resolver;
+        documentList.ngOnChanges({imageResolver: new SimpleChange(null, resolver, true)});
+
         expect(documentList.data.setImageResolver).toHaveBeenCalledWith(resolver);
     });
 
