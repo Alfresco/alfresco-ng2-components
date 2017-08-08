@@ -37,7 +37,7 @@ import { PaginationQueryParams } from './pagination-query-params.interface';
 })
 export class PaginationComponent {
 
-    static DEFAULT_PAGE_SIZE: number = 20;
+    static DEFAULT_PAGE_SIZE: number = 25;
 
     static ACTIONS = {
         NEXT_PAGE: 'NEXT_PAGE',
@@ -45,6 +45,14 @@ export class PaginationComponent {
         CHANGE_PAGE_SIZE: 'CHANGE_PAGE_SIZE',
         CHANGE_PAGE_NUMBER: 'CHANGE_PAGE_NUMBER'
     };
+
+    static DEFAULT_PAGINATION: Pagination = {
+        skipCount: 0,
+        maxItems: PaginationComponent.DEFAULT_PAGE_SIZE,
+        totalItems: 0
+    };
+
+    private _pagination: Pagination;
 
     @Input()
     supportedPageSizes: number[] = [ 25, 50, 100 ];
@@ -55,11 +63,9 @@ export class PaginationComponent {
     maxItems: number = PaginationComponent.DEFAULT_PAGE_SIZE;
 
     @Input()
-    pagination: Pagination = {
-        skipCount: 0,
-        maxItems: 0,
-        totalItems: 0
-    };
+    set pagination(pagination: Pagination) {
+        this._pagination = pagination || PaginationComponent.DEFAULT_PAGINATION;
+    }
 
     @Output('change')
     onChange: EventEmitter<PaginationQueryParams> = new EventEmitter<PaginationQueryParams>();
@@ -75,6 +81,10 @@ export class PaginationComponent {
 
     @Output('prevPage')
     onPrevPage: EventEmitter<Pagination> = new EventEmitter<Pagination>();
+
+    get pagination(): Pagination {
+        return this._pagination;
+    }
 
     get lastPage(): number {
         const { totalItems, maxItems } = this.pagination;
