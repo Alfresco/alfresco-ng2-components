@@ -94,3 +94,7 @@ adf-people-list >>> adf-datatable >>> td.mdl-data-table__cell--non-numeric.non-s
 adf-people-list >>> adf-datatable >>> .adf-data-table td:first-of-type {
     padding: 10px !important;
 }
+
+.search-text-container {
+    width: 100%;
+}

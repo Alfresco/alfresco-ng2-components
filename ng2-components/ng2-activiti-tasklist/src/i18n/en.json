@@ -93,6 +93,7 @@
         "DIALOG_CLOSE": "CLOSE",
         "ADD_USER": "ADD",
         "ADD_ASSIGNEE": "ASSIGN",
+        "SEARCH_USER": "Search user",
         "SEARCH": {
             "NO_USERS": "No user found to involve"
         }
