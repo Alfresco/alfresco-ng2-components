@@ -261,16 +261,16 @@ describe('PaginationComponent', () => {
                 next, previous, range, pages
             } = this.component;
 
-            expect(lastPage).toBe(1);
-            expect(previous).toBe(1);
-            expect(current).toBe(1);
-            expect(next).toBe(1);
+            expect(lastPage).toBe(1, 'lastPage');
+            expect(previous).toBe(1, 'previous');
+            expect(current).toBe(1, 'current');
+            expect(next).toBe(1, 'next');
 
-            expect(isFirstPage).toBe(true);
-            expect(isLastPage).toBe(true);
+            expect(isFirstPage).toBe(true, 'isFirstPage');
+            expect(isLastPage).toBe(true, 'isLastPage');
 
-            expect(range).toEqual([ 0, 0 ]);
-            expect(pages).toEqual([ 1 ]);
+            expect(range).toEqual([ 0, 0 ], 'range');
+            expect(pages).toEqual([ 1 ], 'pages');
         });
     });
 });
