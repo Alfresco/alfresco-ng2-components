@@ -56,7 +56,7 @@
                     [contextMenuActions]="false"
                     [contentActions]="false"
                     [allowDropFiles]="false"
-                    [enablePagination]="false"
+                    [enablePagination]="!showingSearchResults"
                     (folderChange)="onFolderChange($event)"
                     data-automation-id="content-node-selector-document-list">
             <empty-folder-content>

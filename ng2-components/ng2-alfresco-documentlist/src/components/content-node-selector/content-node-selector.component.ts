@@ -156,7 +156,7 @@ export class ContentNodeSelectorComponent implements OnInit {
                 skipCount: 0,
                 rootNodeId: this.siteId,
                 nodeType: 'cm:folder',
-                maxItems: 40,
+                maxItems: 200,
                 orderBy: null
             };
             this.searchService
