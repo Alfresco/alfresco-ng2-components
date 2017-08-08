@@ -20,7 +20,7 @@ import { MdDialog } from '@angular/material';
 import { ActivatedRoute, Params } from '@angular/router';
 import { MinimalNodeEntity } from 'alfresco-js-api';
 import {
-    AlfrescoApiService, AlfrescoContentService, FileUploadCompleteEvent,
+    AlfrescoApiService, AlfrescoContentService, AlfrescoTranslationService, FileUploadCompleteEvent,
     FolderCreatedEvent, NotificationService, SiteModel, UploadService
 } from 'ng2-alfresco-core';
 import { DocumentListComponent, PermissionStyleModel } from 'ng2-alfresco-documentlist';
@@ -89,6 +89,7 @@ export class FilesComponent implements OnInit {
                 private uploadService: UploadService,
                 private contentService: AlfrescoContentService,
                 private dialog: MdDialog,
+                private translateService: AlfrescoTranslationService,
                 @Optional() private route: ActivatedRoute) {
     }
 
@@ -153,6 +154,29 @@ export class FilesComponent implements OnInit {
             `You don't have the ${event.permission} permission to ${event.action} the ${event.type} `,
             4000
         );
+    }
+
+    onContentActionError(errors) {
+        const errorStatusCode = JSON.parse(errors.message).error.statusCode;
+        let translatedErrorMessage: any;
+
+        switch (errorStatusCode) {
+            case 403:
+                translatedErrorMessage = this.translateService.get('OPERATION.ERROR.PERMISSION');
+                break;
+            case 409:
+                translatedErrorMessage = this.translateService.get('OPERATION.ERROR.CONFLICT');
+                break;
+            default:
+                translatedErrorMessage = this.translateService.get('OPERATION.ERROR.UNKNOWN');
+        }
+
+        this.notificationService.openSnackMessage(translatedErrorMessage.value, 4000);
+    }
+
+    onContentActionSuccess(message) {
+        let translatedMessage: any = this.translateService.get(message);
+        this.notificationService.openSnackMessage(translatedMessage.value, 4000);
     }
 
     onCreateFolderClicked(event: Event) {

@@ -16,25 +16,17 @@
  */
 
 import { Pipe, PipeTransform } from '@angular/core';
+import { HighlightTransformService, HightlightTransformResult } from '../services/highlight-transform.service';
 
 @Pipe({
     name: 'highlight'
 })
 export class HighlightPipe implements PipeTransform {
 
-    constructor() { }
+    constructor(private highlightTransformService: HighlightTransformService) { }
 
-    transform(text: string, search: string): any {
-        if (search && text) {
-            let pattern = search.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
-            pattern = pattern.split(' ').filter((t) => {
-                return t.length > 0;
-            }).join('|');
-            const regex = new RegExp(pattern, 'gi');
-            let result = text.replace(regex, (match) => `<span class="highlight">${match}</span>`);
-            return result;
-        } else {
-            return text;
-        }
+    transform(text: string, search: string): string {
+        const result: HightlightTransformResult = this.highlightTransformService.highlight(text, search);
+        return result.text;
     }
 }
