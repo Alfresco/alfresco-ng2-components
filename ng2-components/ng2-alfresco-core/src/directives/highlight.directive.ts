@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { Directive, ElementRef, Input, OnChanges, Renderer } from '@angular/core';
+import { Directive, ElementRef, Input, Renderer } from '@angular/core';
 import { HighlightTransformService, HightlightTransformResult } from '../services/highlight-transform.service';
 
 @Directive({
     selector: '[adf-highlight]'
 })
-export class HighlightDirective implements OnChanges {
+export class HighlightDirective {
 
     @Input('adf-highlight-selector')
     selector: string = '';
@@ -36,10 +36,6 @@ export class HighlightDirective implements OnChanges {
         private el: ElementRef,
         private renderer: Renderer,
         private highlightTransformService: HighlightTransformService) { }
-
-    ngOnChanges() {
-        this.highlight();
-    }
 
     public highlight(search = this.search, selector = this.selector, classToApply = this.classToApply) {
         if (search && selector) {
