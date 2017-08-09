@@ -45,19 +45,19 @@
  <md-dialog-content>
     <ng-container [ngSwitch]="mimeType">
         <ng-container *ngSwitchCase="'image/png'">
-            <div>
+            <div class="adf-viewer-dialog-image-view">
                 <img *ngIf="fileUrl" [src]="fileUrl">
             </div>
         </ng-container>
 
         <ng-container *ngSwitchCase="'image/jpeg'">
-            <div>
+            <div class="adf-viewer-dialog-image-view">
                 <img *ngIf="fileUrl" [src]="fileUrl">
             </div>
         </ng-container>
 
         <ng-container *ngSwitchDefault>
-            <div class="adf-viewer-dialog-preview-centered">
+            <div class="adf-viewer-dialog-unknown-view">
                 <div>
                     <md-icon class="icon">{{ unknownFormatIcon }}</md-icon>
                     <div class="label">{{ unknownFormatText | translate }}</div>

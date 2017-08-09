@@ -17,16 +17,17 @@
 
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
-import { AlfrescoApiService } from 'ng2-alfresco-core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { AlfrescoApiService } from 'ng2-alfresco-core';
 
 import { ViewerDialogSettings } from './viewer-dialog.settings';
 
 @Component({
-    selector: 'adf-viwer-dialog',
+    selector: 'adf-viewer-dialog',
     templateUrl: 'viewer-dialog.component.html',
     styleUrls: ['viewer-dialog.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    host: { 'class': 'adf-viewer-dialog' }
 })
 export class ViewerDialogComponent implements OnInit {
 
