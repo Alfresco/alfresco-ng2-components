@@ -213,6 +213,10 @@
 </div>
 
 <div class="container">
+    <section *ngIf="!useViewerDialog">
+        <md-slide-toggle [(ngModel)]="useInlineViewer">Use inline viewer (no overlay)</md-slide-toggle>
+    </section>
+
     <section>
         <md-slide-toggle [(ngModel)]="useViewerDialog">Use File Viewer dialog</md-slide-toggle>
     </section>
@@ -299,25 +303,28 @@
 <file-uploading-dialog #fileDialog></file-uploading-dialog>
 
 <div *ngIf="fileShowed">
-    <alfresco-viewer [(showViewer)]="fileShowed"
-                     [fileNodeId]="fileNodeId"
-                     [overlayMode]="true">
+    <ng-container *ngIf="!useInlineViewer">
+        <alfresco-viewer
+            [(showViewer)]="fileShowed"
+            [fileNodeId]="fileNodeId"
+            [overlayMode]="true">
 
-        <extension-viewer [supportedExtensions]="['obj','3DS']" #extension>
-            <ng-template let-urlFileContent="urlFileContent" let-extension="extension" >
-                <threed-viewer [urlFile]="urlFileContent" [extension]="extension" ></threed-viewer>
-            </ng-template>
-        </extension-viewer>
+            <extension-viewer [supportedExtensions]="['obj','3DS']" #extension>
+                <ng-template let-urlFileContent="urlFileContent" let-extension="extension" >
+                    <threed-viewer [urlFile]="urlFileContent" [extension]="extension" ></threed-viewer>
+                </ng-template>
+            </extension-viewer>
 
-    </alfresco-viewer>
+        </alfresco-viewer>
+    </ng-container>
 
-    <!-- Comment the viewer above and uncomment that one below if you want test the overlay false viewer-->
-
-    <!--<div *ngIf="fileShowed" class="adf-not-overlay-viewer">-->
-        <!--<alfresco-viewer [(showViewer)]="fileShowed"-->
-                         <!--[fileNodeId]="fileNodeId"-->
-                         <!--[overlayMode]="false">-->
-        <!--</alfresco-viewer>-->
-    <!--</div>-->
-
+    <ng-container *ngIf="useInlineViewer">
+        <div class="adf-not-overlay-viewer">
+            <alfresco-viewer
+                [(showViewer)]="fileShowed"
+                [fileNodeId]="fileNodeId"
+                [overlayMode]="false">
+            </alfresco-viewer>
+        </div>
+    </ng-container>
 </div>

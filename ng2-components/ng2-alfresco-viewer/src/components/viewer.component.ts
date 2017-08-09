@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, HostListener, Inject, Input, OnChanges, OnDestroy, Output, TemplateRef } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Inject, Input, OnChanges, OnDestroy, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
@@ -23,7 +23,9 @@ import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 @Component({
     selector: 'adf-viewer, alfresco-viewer',
     templateUrl: './viewer.component.html',
-    styleUrls: ['./viewer.component.css']
+    styleUrls: ['./viewer.component.scss'],
+    host: { 'class': 'adf-viewer' },
+    encapsulation: ViewEncapsulation.None
 })
 export class ViewerComponent implements OnDestroy, OnChanges {
 

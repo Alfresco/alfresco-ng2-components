@@ -117,13 +117,13 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
                 let closebutton: any = element.querySelector('#viewer-close-button');
                 closebutton.click();
                 fixture.detectChanges();
-                expect(element.querySelector('#viewer-main-container')).toBeNull();
+                expect(element.querySelector('.adf-viewer-content')).toBeNull();
             });
 
             it('should Esc button hide the viewer', () => {
                 EventMock.keyDown(27);
                 fixture.detectChanges();
-                expect(element.querySelector('#viewer-main-container')).toBeNull();
+                expect(element.querySelector('.adf-viewer-content')).toBeNull();
             });
 
             it('should all-space class not be present if is in overlay mode', () => {
@@ -149,7 +149,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
             it('should Esc button not hide the viewer if is not overlay mode', () => {
                 EventMock.keyDown(27);
                 fixture.detectChanges();
-                expect(element.querySelector('#viewer-main-container')).not.toBeNull();
+                expect(element.querySelector('.adf-viewer-content')).not.toBeNull();
             });
 
             it('all-space class should be present if is not overlay mode', () => {
@@ -196,7 +196,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
             component.showViewer = false;
 
             fixture.detectChanges();
-            expect(element.querySelector('#viewer-main-container')).toBeNull();
+            expect(element.querySelector('.adf-viewer-content')).toBeNull();
         });
     });
 
