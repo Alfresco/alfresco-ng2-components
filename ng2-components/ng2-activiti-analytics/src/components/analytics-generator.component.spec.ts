@@ -17,14 +17,6 @@
 
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import {
-    MdButtonModule,
-    MdDatepickerModule,
-    MdGridListModule,
-    MdIconModule,
-    MdInputModule,
-    MdNativeDateModule,
-    MdTooltipModule } from '@angular/material';
 import { DiagramsModule } from 'ng2-activiti-diagrams';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { ChartsModule } from 'ng2-charts';
@@ -38,6 +30,7 @@ import { AnalyticsReportHeatMapComponent } from '../components/analytics-report-
 import { AnalyticsReportListComponent } from '../components/analytics-report-list.component';
 import { AnalyticsReportParametersComponent } from '../components/analytics-report-parameters.component';
 import { WIDGET_DIRECTIVES } from '../components/widgets/index';
+import { MaterialModule } from '../material.module';
 import { AnalyticsService } from '../services/analytics.service';
 
 export const ANALYTICS_DIRECTIVES: any[] = [
@@ -66,15 +59,8 @@ describe('AnalyticsGeneratorComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                MdTooltipModule,
-                MdButtonModule,
-                MdIconModule,
+                MaterialModule,
                 ChartsModule,
-                MdInputModule,
-                MdNativeDateModule,
-                MdDatepickerModule,
-                MdGridListModule,
-
                 DiagramsModule.forRoot()
             ],
             declarations: [

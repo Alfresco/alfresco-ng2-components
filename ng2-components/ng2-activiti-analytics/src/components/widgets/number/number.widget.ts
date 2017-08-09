@@ -25,7 +25,7 @@ import { WidgetComponent } from './../widget.component';
 @Component({
     selector: 'number-widget',
     templateUrl: './number.widget.html',
-    styleUrls: ['./number.widget.css']
+    styleUrls: ['./number.widget.scss']
 })
 export class NumberWidgetComponent extends WidgetComponent implements OnInit {
 

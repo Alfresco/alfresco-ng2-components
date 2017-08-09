@@ -13,10 +13,8 @@ module.exports = function (config) {
       //diagrams
       './node_modules/alfresco-js-api/dist/alfresco-js-api.js',
       './node_modules/moment/min/moment.min.js',
-      './node_modules/md-date-time-picker/dist/js/mdDateTimePicker.js',
 
       {pattern: './node_modules/ng2-translate/**/*.js', included: false, watched: false},
-      {pattern: './node_modules/md-date-time-picker/**/*.js', included: false, served: true, watched: false},
       {pattern: './node_modules/moment/**/*.js', included: false, served: true, watched: false},
 
       {pattern: 'karma-test-shim.js', watched: false},

@@ -23,7 +23,7 @@ import { AnalyticsGeneratorComponent } from './analytics-generator.component';
 @Component({
     selector: 'adf-analytics, activiti-analytics',
     templateUrl: './analytics.component.html',
-    styleUrls: ['./analytics.component.css']
+    styleUrls: ['./analytics.component.scss']
 })
 export class AnalyticsComponent implements OnChanges {
 

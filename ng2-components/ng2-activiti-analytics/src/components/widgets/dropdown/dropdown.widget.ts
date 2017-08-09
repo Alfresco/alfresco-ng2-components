@@ -25,7 +25,7 @@ import { WidgetComponent } from './../widget.component';
 @Component({
     selector: 'dropdown-widget',
     templateUrl: './dropdown.widget.html',
-    styleUrls: ['./dropdown.widget.css']
+    styleUrls: ['./dropdown.widget.scss']
 })
 export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
 

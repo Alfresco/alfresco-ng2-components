@@ -26,7 +26,7 @@ import { NumberWidgetComponent } from './../number/number.widget';
 @Component({
     selector: 'duration-widget',
     templateUrl: './duration.widget.html',
-    styleUrls: ['./duration.widget.css']
+    styleUrls: ['./duration.widget.scss']
 })
 export class DurationWidgetComponent extends NumberWidgetComponent implements OnInit {
 
