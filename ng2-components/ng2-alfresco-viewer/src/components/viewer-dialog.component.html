@@ -43,14 +43,8 @@
 </adf-toolbar>
 
  <md-dialog-content>
-    <ng-container [ngSwitch]="mimeType">
-        <ng-container *ngSwitchCase="'image/png'">
-            <div class="adf-viewer-dialog-image-view">
-                <img *ngIf="fileUrl" [src]="fileUrl">
-            </div>
-        </ng-container>
-
-        <ng-container *ngSwitchCase="'image/jpeg'">
+    <ng-container [ngSwitch]="viewerType">
+        <ng-container *ngSwitchCase="'image'">
             <div class="adf-viewer-dialog-image-view">
                 <img *ngIf="fileUrl" [src]="fileUrl">
             </div>

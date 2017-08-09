@@ -38,6 +38,7 @@ export class ViewerDialogComponent implements OnInit {
     unknownFormatText = 'Document preview could not be loaded.';
 
     mimeType: string = null;
+    viewerType: string = null;
 
     constructor(private dialogRef: MdDialogRef<ViewerDialogComponent>,
                 @Inject(MD_DIALOG_DATA) private settings: ViewerDialogSettings,
@@ -59,9 +60,20 @@ export class ViewerDialogComponent implements OnInit {
         if (node) {
             this.fileName = node.name;
             this.mimeType = node.content.mimeType;
+            this.viewerType = this.detectViewerType(node);
             this.fileUrl = this.contentApi.getContentUrl(node.id);
             console.log(node);
         }
+    }
+
+    private detectViewerType(node: MinimalNodeEntryEntity) {
+        if (node && node.content && node.content.mimeType) {
+            const mimeType = node.content.mimeType.toLowerCase();
+            if (mimeType.startsWith('image/')) {
+                return 'image';
+            }
+        }
+        return 'unknown';
     }
 
     close() {
