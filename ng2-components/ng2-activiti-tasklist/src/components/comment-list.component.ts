@@ -23,7 +23,7 @@ import { User } from '../models/user.model';
 @Component({
     selector: 'adf-comment-list',
     templateUrl: './comment-list.component.html',
-    styleUrls: ['./comment-list.component.css']
+    styleUrls: ['./comment-list.component.scss']
 })
 
 export class CommentListComponent {
@@ -76,6 +76,10 @@ export class CommentListComponent {
 
     hasComments(): boolean {
         return this.comments && this.comments.length && true;
+    }
+
+    getImage(user: User){
+        return 'url('+user.userImage+')';
     }
 
 }

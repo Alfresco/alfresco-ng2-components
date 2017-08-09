@@ -66,9 +66,9 @@ export class PeopleComponent implements OnInit, AfterViewInit {
 
     ngOnInit(){
         if (this.people && this.people.length > 0){
-            Observable.from(this.people)
-                .flatMap(
-                    (user: User) => this.peopleService.addImageToUser(user)).subscribe();
+            this.people.forEach((person) =>{
+                person.userImage =this.peopleService.getUserImage(person);
+            });
         }
     }
 
@@ -99,7 +99,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
     }
 
     searchUser(searchedWord: string) {
-        this.peopleService.getWorkflowUsers(this.taskId, searchedWord)
+        this.peopleService.getWorkflowUsersWithImages(this.taskId, searchedWord)
             .subscribe((users) => {
                 this.peopleSearchObserver.next(users);
             },         error => this.logService.error('Could not load users'));
@@ -153,5 +153,9 @@ export class PeopleComponent implements OnInit, AfterViewInit {
 
     onCloseSearch() {
         this.showAssignment = false;
+    }
+
+    getImage(user: User) {
+        return 'url('+user.userImage+')';
     }
 }

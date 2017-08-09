@@ -1,0 +1,92 @@
+@import 'theming';
+
+:host {
+  width: 100%;
+}
+
+.activiti-label {
+  font-weight: bolder;
+}
+
+.material-icons.people-search__icon:hover {
+  color: mat-color($primary);
+}
+
+.fix-element-user-list {
+  padding-top: 0px;
+  padding-right: 0px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+}
+
+.mdl-chip-search-people {
+  margin: auto;
+  min-width: 60%;
+  &:hover {
+    background-color: #c1c1c1;
+    cursor: pointer;
+  }
+  img {
+    margin-left: -30px;
+  }
+}
+
+.mdl-chip-search-people__text {
+  padding-left: 10px;
+}
+
+.search-text-header {
+  font-weight: bold;
+  opacity: 0.54;
+}
+
+.search-list-container {
+  max-height: 152px;
+  width: 100%;
+  overflow-y: auto;
+}
+
+adf-people-list /deep/ adf-datatable /deep/ thead {
+  display: none;
+}
+
+.search-list-action-container {
+  border-top: 1px solid #eee;
+  text-align: right;
+  padding: 5px 0px;
+  margin-top: 5px;
+  > button {
+    opacity: 0.54;
+    font-weight: bolder;
+    &:hover {
+      color: mat-color($primary);
+    }
+  }
+}
+
+adf-people-list /deep/ adf-datatable /deep/ .people-full-name {
+  font-family: 'Muli';
+}
+
+.people-pic {
+  background: mat-color($primary);
+  background-size: cover;
+  padding: 10px 6px;
+  border-radius: 90%;
+  color: #fff;
+  width: 30px;
+  text-align: center;
+  font-weight: bolder;
+  font-size: 16px;
+  font-family: Muli;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+adf-people-list /deep/ alfresco-datatable /deep/ td.mdl-data-table__cell--non-numeric.non-selectable.data-cell {
+  padding: 4px 12px;
+}
+
+.mdl-textfield {
+  width: 100%;
+}

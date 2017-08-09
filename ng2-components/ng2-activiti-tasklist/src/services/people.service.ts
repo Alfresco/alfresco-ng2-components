@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
-import { AlfrescoApiService, LogService, ContentService } from 'ng2-alfresco-core';
+import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { User } from '../models/user.model';
 
@@ -25,39 +25,32 @@ import { User } from '../models/user.model';
 export class PeopleService {
 
     constructor(private alfrescoJsApi: AlfrescoApiService,
-                private logService: LogService,
-                private contentService: ContentService) {
+                private logService: LogService) {
     }
 
     getWorkflowUsers(taskId?: string, searchWord?: string): Observable<User[]> {
         let option = { excludeTaskId: taskId, filter: searchWord };
         return Observable.fromPromise(this.getWorkflowUserApi(option))
-            .switchMap((response: any) => <User[]>response.data)
-            .map((user: User) => this.addImageToUser(user))
-            .combineAll()
+            .map((response: any) => <User[]>response.data || [])
             .catch(err => this.handleError(err));
     }
 
-    getUserImage(user: User): Observable<string> {
-        return Observable.fromPromise(this.getUserProfileImageApi(user.id+''))
-            .map((img : Blob) =>{
-                return img ? this.contentService.createTrustedUrl(img) : null;
-            })
-            .catch( (error)  => {
-                if(error.error.status === 404) {
-                    return Observable.of(null);
-                }else{
-                    return this.handleError(error);
-                }
-            });
+    getWorkflowUsersWithImages(taskId?: string, searchWord?: string): Observable<User[]> {
+        let option = { excludeTaskId: taskId, filter: searchWord };
+        return Observable.fromPromise(this.getWorkflowUserApi(option))
+            .switchMap((response: any) => <User[]>response.data || [])
+            .map((user: User) => this.addImageToUser(user))
+            .combineAll()
+            .catch(err => this.handleError(err))
+    }
+
+    getUserImage(user: User): string {
+        return this.getUserProfileImageApi(user.id+'');
     }
 
     addImageToUser(user: User): Observable<User> {
-        return this.getUserImage(user)
-                   .map((img) => {
-                        user.userImage = img;
-                        return user;
-                    });
+        user.userImage = this.getUserImage(user);
+        return Observable.of(user);
     }
 
     involveUserWithTask(taskId: string, idToInvolve: string): Observable<User[]> {
@@ -85,7 +78,7 @@ export class PeopleService {
     }
 
     private getUserProfileImageApi(userId: string) {
-        return this.alfrescoJsApi.getInstance().activiti.userApi.getProfilePicture(userId);
+        return this.alfrescoJsApi.getInstance().activiti.userApi.getUserProfilePictureUrl(userId);
     }
 
     /**

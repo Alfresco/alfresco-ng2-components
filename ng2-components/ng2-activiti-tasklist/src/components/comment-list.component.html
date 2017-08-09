@@ -5,8 +5,11 @@
     <data-columns>
         <data-column key="createdBy">
             <ng-template let-entry="$implicit">
-                <div id="comment-user-icon" class="adf-comment-img-container">
-                    <div class="adf-comment-user-icon">{{getUserShortName(entry.row.obj.createdBy)}}</div>
+                <div id="comment-user-icon"
+                class="adf-comment-img-container">
+                    <div class="adf-comment-user-icon"
+                    [style.background-image]="getImage(entry.row.obj.createdBy)">
+                    {{getUserShortName(entry.row.obj.createdBy)}}</div>
                 </div>
             </ng-template>
         </data-column>
