@@ -382,4 +382,9 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     isTaskCompleted(): boolean {
         return this.activitidetails.isCompletedTask();
     }
+
+    onAssignTask() {
+        this.taskList.reload();
+        this.currentTaskId = null;
+    }
 }
