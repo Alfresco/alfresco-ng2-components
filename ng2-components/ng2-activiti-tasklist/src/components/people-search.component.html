@@ -1,10 +1,9 @@
-<div class="search-text-header">{{ 'TASK_DETAILS.LABELS.ADD_PEOPLE' | translate }}</div>
-<div class="search-text-container">
-    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <input class="mdl-textfield__input" type="text" id="userSearchText" [value]="" [formControl]="searchUser"/>
-        <label class="mdl-textfield__label" for="userSearchText">Search user</label>
-    </div>
+<div class="search-text-header">
+    <ng-content select="header-title"></ng-content>
 </div>
+<md-input-container class="search-text-container">
+	<input mdInput placeholder="{{'PEOPLE.SEARCH_USER'|translate}}" type="text" id="userSearchText" [value]="" [formControl]="searchUser">
+</md-input-container>
 <div class="search-list-container" id="search-people-list" *ngIf="hasUsers()">
     <adf-people-list
     [users]="users"
@@ -24,10 +23,10 @@
     </adf-people-list>
 </div>
 <div class="search-list-action-container">
-    <button type="button" id="close-people-search" (click)="closeSearchList()" class="mdl-button close">
+    <button md-button type="button" id="close-people-search" (click)="closeSearchList()">
         {{'PEOPLE.DIALOG_CLOSE' | translate }}
     </button>
-    <button type="button" id="add-people" (click)="addInvolvedUser()" class="mdl-button close">
-        {{'PEOPLE.ADD_USER' | translate }}
+    <button md-button type="button" id="add-people" (click)="addInvolvedUser()">
+        <ng-content select="action-button-label"></ng-content>
     </button>
 </div>
