@@ -35,6 +35,7 @@ import * as analyticParamsMock from '../assets/analyticsParamsReportComponent.mo
 import { AnalyticsReportParametersComponent } from '../components/analytics-report-parameters.component';
 import { WIDGET_DIRECTIVES } from '../components/widgets/index';
 import { AnalyticsService } from '../services/analytics.service';
+import { MaterialModule } from '../material.module';
 
 declare let jasmine: any;
 
@@ -54,13 +55,7 @@ describe('AnalyticsReportParametersComponent', () => {
                 AppConfigModule.forRoot('app.config.json', {
                     bpmHost: 'http://localhost:9876/bpm'
                 }),
-                MdTooltipModule,
-                MdButtonModule,
-                MdIconModule,
-                MdNativeDateModule,
-                MdDatepickerModule,
-                MdGridListModule,
-                MdInputModule
+                MaterialModule
             ],
             declarations: [
                 AnalyticsReportParametersComponent,
