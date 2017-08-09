@@ -302,10 +302,10 @@
 
 <file-uploading-dialog #fileDialog></file-uploading-dialog>
 
-<div *ngIf="fileShowed">
+<div *ngIf="showViewer">
     <ng-container *ngIf="!useInlineViewer">
         <alfresco-viewer
-            [(showViewer)]="fileShowed"
+            [(showViewer)]="showViewer"
             [fileNodeId]="fileNodeId"
             [overlayMode]="true">
 
@@ -321,9 +321,8 @@
     <ng-container *ngIf="useInlineViewer">
         <div class="adf-not-overlay-viewer">
             <alfresco-viewer
-                [(showViewer)]="fileShowed"
-                [fileNodeId]="fileNodeId"
-                [overlayMode]="false">
+                [(showViewer)]="showViewer"
+                [fileNodeId]="fileNodeId">
             </alfresco-viewer>
         </div>
     </ng-container>

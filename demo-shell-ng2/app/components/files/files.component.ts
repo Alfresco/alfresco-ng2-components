@@ -41,7 +41,7 @@ export class FilesComponent implements OnInit {
 
     errorMessage: string = null;
     fileNodeId: any;
-    fileShowed: boolean = false;
+    showViewer: boolean = false;
 
     useCustomToolbar = true;
     toolbarColor = 'default';
@@ -115,9 +115,9 @@ export class FilesComponent implements OnInit {
         } else {
             if (event.value.entry.isFile) {
                 this.fileNodeId = event.value.entry.id;
-                this.fileShowed = true;
+                this.showViewer = true;
             } else {
-                this.fileShowed = false;
+                this.showViewer = false;
             }
         }
     }
