@@ -124,6 +124,7 @@ Here's the list of available properties you can define for a Data Column definit
 | --- | --- | --- | --- |
 | appId | string || The id of the app. |
 | processDefinitionKey | string || The processDefinitionKey of the process. |
+| processInstanceId | string || The processInstanceId of the process. |
 | assignment | string || The assignment of the process. <ul>Possible values are: <li>assignee : where the current user is the assignee</li> <li>candidate: where the current user is a task candidate </li><li>group_x: where the task is assigned to a group where the current user is a member of.</li> <li>no value: where the current user is involved</li> </ul> |
 | state | string || Define state of the processes. Possible values are: `completed`, `active` |
 | hasIcon | boolean | true | Toggle the icon on the left . |
