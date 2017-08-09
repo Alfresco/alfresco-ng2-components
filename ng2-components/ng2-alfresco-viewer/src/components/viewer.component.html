@@ -39,12 +39,12 @@
                         </ng-container>
 
                         <ng-container *ngIf="isMedia()">
-                            <media-player
+                            <adf-media-player
                                 [urlFile]="urlFileContent"
                                 [mimeType]="mimeType"
                                 [blobFile]="blobFile"
                                 [nameFile]="displayName">
-                            </media-player>
+                            </adf-media-player>
                         </ng-container>
 
                         <ng-container *ngIf="isText()">

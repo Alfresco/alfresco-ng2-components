@@ -33,7 +33,6 @@ import { RenderingQueueServices } from './src/services/rendering-queue.services'
 export * from './src/components/viewer.component';
 export * from './src/services/rendering-queue.services';
 export * from './src/components/imgViewer.component';
-export * from './src/components/mediaPlayer.component';
 export * from './src/components/pdfViewer.component';
 
 export { ViewerDialogComponent } from './src/components/viewer-dialog.component';
