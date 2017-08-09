@@ -13,7 +13,18 @@
             <md-icon *ngIf="showHeaderContent">expand_less</md-icon>
             <span>{{taskDetails.name || 'No name'}}</span>
         </h2>
+        <div class="assignment-container" *ngIf="showAssignee">
+            <adf-people-search
+            (searchPeople)="searchUser($event)"
+            (success)="assignTaskToUser($event)"
+            (closeSearch)="onCloseSearch()"
+            [results]="peopleSearch$">
+                <header-title>{{ 'TASK_DETAILS.LABELS.ADD_ASSIGNEE' | translate }}</header-title>
+                <action-button-label>{{ 'PEOPLE.ADD_ASSIGNEE' | translate }}</action-button-label>
+            </adf-people-search>
+        </div>
         <adf-task-header *ngIf="showHeaderContent"
+            [class]="getTaskHeaderViewClass()"
             [taskDetails]="taskDetails"
             [formName]="taskFormName"
             (claim)="onClaimTask($event)">
