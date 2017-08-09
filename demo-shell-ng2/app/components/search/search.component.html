@@ -1,6 +1,8 @@
 <div class="search-results-container">
     <h1>Search results</h1>
-    <alfresco-search (preview)="showFile($event)"></alfresco-search>
+    <alfresco-search
+        [navigate]="false"
+        (nodeDbClick)="nodeDbClick($event)"></alfresco-search>
 </div>
 
 <div *ngIf="fileShowed">
