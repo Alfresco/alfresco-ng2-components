@@ -60,14 +60,14 @@
                          </span>
 
                         <div *ngIf="!supportedExtension()" class="adf-viewer-unknown-content">
-                            <not-supported-format
+                            <adf-not-supported-format
                                 *ngIf="!extensionTemplate"
                                 [urlFile]="urlFileContent"
                                 [blobFile]="blobFile"
                                 [nameFile]="displayName"
                                 [showToolbar]="showToolbar"
                                 [nodeId]="fileNodeId">
-                            </not-supported-format>
+                            </adf-not-supported-format>
                         </div>
 
                     </div>

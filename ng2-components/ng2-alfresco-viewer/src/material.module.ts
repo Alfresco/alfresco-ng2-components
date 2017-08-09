@@ -18,9 +18,11 @@
 import { NgModule } from '@angular/core';
 import {
     MdButtonModule,
+    MdCardModule,
     MdDialogModule,
     MdIconModule,
     MdMenuModule,
+    MdProgressBarModule,
     MdProgressSpinnerModule,
     MdTooltipModule
 } from '@angular/material';
@@ -28,9 +30,11 @@ import {
 export function modules() {
     return [
         MdButtonModule,
+        MdCardModule,
         MdDialogModule,
         MdIconModule,
         MdMenuModule,
+        MdProgressBarModule,
         MdProgressSpinnerModule,
         MdTooltipModule
     ];
