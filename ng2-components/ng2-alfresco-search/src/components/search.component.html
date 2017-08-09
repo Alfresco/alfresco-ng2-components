@@ -8,7 +8,9 @@
             [creationMenuActions]="false"
             [contentActions]="true"
             [navigationMode]="navigationMode"
+            [navigate]="navigate"
             [enablePagination]="false"
+            (nodeDblClick)="onDoubleClick($event)"
             (preview)="onPreviewFile($event)">
             <empty-folder-content>
                 <ng-template>
