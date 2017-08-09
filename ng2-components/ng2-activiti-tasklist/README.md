@@ -48,6 +48,9 @@
 - [Task Audit Directive](#task-audit-directive)
   * [Properties](#properties-11)
     + [Events](#events-10)
+- [People Search Component](#people-search-component)
+  * [Properties](#properties-12)
+  * [Events](#events-12)
 - [Build from sources](#build-from-sources)
 - [NPM scripts](#npm-scripts)
 - [Demo](#demo)
@@ -554,6 +557,42 @@ This directive provide a way to fetch the Task Audit information in the pdf or j
 | --- | --- |
 | clicked | Raised when the task audit info is ready |
 | error | Raised if there is an error during fetching task information |
+
+## People Search
+
+The component used to search users/people.
+
+```html
+<adf-people-search></adf-people-search>
+```
+
+### Properties
+
+| Name | Type | Description |
+| --- | --- | --- |
+| results | Observable<User[]> | The params to show people list |
+
+### Events
+
+| Name | Description |
+| --- | --- |
+| searchPeople | Raised when the search people with new keyword  |
+| success | Raised when select the user and click action button  |
+| closeSearch | Raised when click the clse button  |
+
+### How to use
+
+ ```html
+<adf-people-search
+        (searchPeople)="searchUser($event)"
+        (success)="involveUser($event)"
+        (closeSearch)="onCloseSearch()"
+        [results]="peopleSearch$">
+            <header-title>{{ 'TASK_DETAILS.LABELS.ADD_PEOPLE' | translate }}</header-title>
+            <action-button-label>{{ 'PEOPLE.ADD_USER' | translate }}</action-button-label>
+        </adf-people-search>
+
+```
 
 ## Build from sources
 

@@ -16,7 +16,8 @@
             "COMMENTS": "Comments",
             "CHECKLIST": "Checklist",
             "INVOLVED_PEOPLE": "Involved people",
-            "ADD_PEOPLE": "Add people & groups"
+            "ADD_PEOPLE": "Add people & groups",
+            "ADD_ASSIGNEE": "Add new assignee"
         },
         "BUTTON": {
             "COMPLETE": "Complete",
@@ -91,6 +92,8 @@
     "PEOPLE": {
         "DIALOG_CLOSE": "CLOSE",
         "ADD_USER": "ADD",
+        "ADD_ASSIGNEE": "ASSIGN",
+        "SEARCH_USER": "Search user",
         "SEARCH": {
             "NO_USERS": "No user found to involve"
         }

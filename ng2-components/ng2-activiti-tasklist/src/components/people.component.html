@@ -16,6 +16,8 @@
         (success)="involveUser($event)"
         (closeSearch)="onCloseSearch()"
         [results]="peopleSearch$">
+            <header-title>{{ 'TASK_DETAILS.LABELS.ADD_PEOPLE' | translate }}</header-title>
+            <action-button-label>{{ 'PEOPLE.ADD_USER' | translate }}</action-button-label>
         </adf-people-search>
     </div>
     <div class="assignment-list-container" id="assignment-people-list" *ngIf="hasPeople()">
