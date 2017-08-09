@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MdButtonModule, MdInputModule } from '@angular/material';
 import { AlfrescoTranslationService, CoreModule, LogService } from 'ng2-alfresco-core';
@@ -66,7 +67,8 @@ describe('PeopleComponent', () => {
             ],
             providers: [
                 PeopleService
-            ]
+            ],
+            schemas: [ NO_ERRORS_SCHEMA ]
         }).compileComponents().then(() => {
 
             logService = TestBed.get(LogService);
