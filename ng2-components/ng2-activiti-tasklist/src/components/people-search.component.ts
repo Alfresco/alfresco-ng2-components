@@ -32,12 +32,6 @@ export class PeopleSearchComponent implements OnInit {
     @Input()
     results: Observable<User[]>;
 
-    @Input()
-    headerTitle: string = 'TASK_DETAILS.LABELS.ADD_PEOPLE';
-
-    @Input()
-    actionButtonLabel: string = 'PEOPLE.ADD_USER';
-
     @Output()
     searchPeople: EventEmitter<any> = new EventEmitter();
 
