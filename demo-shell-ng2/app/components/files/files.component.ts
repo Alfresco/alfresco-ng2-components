@@ -46,6 +46,7 @@ export class FilesComponent implements OnInit {
     useCustomToolbar = true;
     toolbarColor = 'default';
     useDropdownBreadcrumb = false;
+    useViewerDialog = true;
 
     selectionModes = [
         { value: 'none', viewValue: 'None' },
@@ -96,22 +97,27 @@ export class FilesComponent implements OnInit {
     }
 
     showFile(event) {
-        if (event.value.entry.isFile) {
-            // this.fileNodeId = event.value.entry.id;
-            // this.fileShowed = true;
-            const settings: ViewerDialogSettings = {
-                node: event.value.entry
-            };
+        if (this.useViewerDialog) {
+            if (event.value.entry.isFile) {
+                const settings: ViewerDialogSettings = {
+                    node: event.value.entry
+                };
 
-            const dialogRef = this.dialog.open(ViewerDialogComponent, {
-                panelClass: 'adf-viewer-dialog-panel',
-                data: settings
-            });
-            dialogRef.afterClosed().subscribe(result => {
-                console.log(result);
-            });
+                const dialogRef = this.dialog.open(ViewerDialogComponent, {
+                    panelClass: 'adf-viewer-dialog-panel',
+                    data: settings
+                });
+                dialogRef.afterClosed().subscribe(result => {
+                    console.log(result);
+                });
+            }
         } else {
-            // this.fileShowed = false;
+            if (event.value.entry.isFile) {
+                this.fileNodeId = event.value.entry.id;
+                this.fileShowed = true;
+            } else {
+                this.fileShowed = false;
+            }
         }
     }
 
