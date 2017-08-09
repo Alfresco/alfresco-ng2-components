@@ -15,15 +15,6 @@
  * limitations under the License.
  */
 
-/**
- * ng2-alfresco-viewer, provide components to view files.
- *
- * Components provided:
- *           <alfresco-viewer [urlFile]="'localTestFile.pdf'">
- *              <div class="mdl-spinner mdl-js-spinner is-active"></div>
- *          </alfresco-viewer>
- */
-
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CoreModule } from 'ng2-alfresco-core';
 
@@ -45,7 +36,6 @@ export * from './src/components/imgViewer.component';
 export * from './src/components/mediaPlayer.component';
 export * from './src/components/notSupportedFormat.component';
 export * from './src/components/pdfViewer.component';
-export * from './src/components/txtViewer.component';
 
 export { ViewerDialogComponent } from './src/components/viewer-dialog.component';
 export { ViewerDialogSettings } from './src/components/viewer-dialog.settings';
