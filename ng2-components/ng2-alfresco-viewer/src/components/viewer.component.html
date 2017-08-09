@@ -35,7 +35,11 @@
                         </ng-container>
 
                         <ng-container *ngIf="isImage()">
-                            <img-viewer [urlFile]="urlFileContent" [nameFile]="displayName" [blobFile]="blobFile"></img-viewer>
+                            <adf-img-viewer
+                                [urlFile]="urlFileContent"
+                                [nameFile]="displayName"
+                                [blobFile]="blobFile">
+                            </adf-img-viewer>
                         </ng-container>
 
                         <ng-container *ngIf="isMedia()">
