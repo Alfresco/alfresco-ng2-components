@@ -161,6 +161,49 @@ export class TaskListService {
     }
 
     /**
+     * Retrieve tasks filtered by filterModel and state
+     * @param filter - TaskFilterRepresentationModel
+     * @returns {any}
+     */
+    findTasksByState(requestNode: TaskQueryRequestRepresentationModel, state?: string): Observable<TaskDetailsModel[]> {
+        if (state) {
+            requestNode.state = state;
+        }
+        return this.getTasks(requestNode);
+    }
+
+    /**
+     * Retrieve all tasks filtered by filterModel and state
+     * @param filter - TaskFilterRepresentationModel
+     * @returns {any}
+     */
+    findAllTaskByState(requestNode: TaskQueryRequestRepresentationModel, state?: string): Observable<TaskDetailsModel[]> {
+        if (state) {
+            requestNode.state = state;
+        }
+        return this.getTotalTasks(requestNode).
+        switchMap((res: any) => {
+            requestNode.size = res.total;
+            return this.getTasks(requestNode);
+        });
+    }
+
+    /**
+     * Retrieve all tasks filtered by filterModel irrespective of state
+     * @param filter - TaskFilterRepresentationModel
+     * @returns {any}
+     */
+    findAllTasksWhitoutState(requestNode: TaskQueryRequestRepresentationModel): Observable<TaskDetailsModel[]> {
+        return Observable.forkJoin(
+                this.findTasksByState(requestNode, 'open'),
+                this.findAllTaskByState(requestNode, 'completed'),
+                (activeTasks: any, completedTasks: any) => {
+                    return activeTasks.concat(completedTasks);
+                }
+            );
+    }
+
+    /**
      * Retrieve all the task details
      * @param id - taskId
      * @returns {<TaskDetailsModel>}
