@@ -15,13 +15,11 @@
  * limitations under the License.
  */
 
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Observable';
 import { User } from '../models/user.model';
-
-declare let componentHandler: any;
 
 @Component({
     selector: 'adf-people-search, activiti-people-search',
@@ -29,7 +27,7 @@ declare let componentHandler: any;
     styleUrls: ['./people-search.component.css']
 })
 
-export class PeopleSearchComponent implements OnInit, AfterViewInit {
+export class PeopleSearchComponent implements OnInit {
 
     @Input()
     results: Observable<User[]>;
@@ -70,20 +68,6 @@ export class PeopleSearchComponent implements OnInit, AfterViewInit {
         this.results.subscribe((list) => {
             this.users = list;
         });
-    }
-
-    ngAfterViewInit() {
-        this.setupMaterialComponents(componentHandler);
-    }
-
-    setupMaterialComponents(handler?: any): boolean {
-        // workaround for MDL issues with dynamic components
-        let isUpgraded: boolean = false;
-        if (handler) {
-            handler.upgradeAllRegistered();
-            isUpgraded = true;
-        }
-        return isUpgraded;
     }
 
     onRowClick(user: User) {
