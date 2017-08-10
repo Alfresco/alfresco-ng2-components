@@ -25,8 +25,22 @@ import { AlfrescoTranslationService, FileInfo, FileModel, FileUtils, Notificatio
 })
 export class UploadDragAreaComponent {
 
+    /** @deprecated
+     *
+     * Deprecated in favor of disabled input property
+     */
     @Input()
-    enabled: boolean = true;
+    set enabled(enabled: boolean) {
+        console.warn('Deprecated: enabled input property should not be used for UploadDragAreaComponent. Please use disabled instead.');
+        this.disabled = !enabled;
+    }
+
+    get enabled(): boolean {
+        return !this.disabled;
+    }
+
+    @Input()
+    disabled: boolean = false;
 
     /**
      * @deprecated Deprecated in 1.6.0, you can use UploadService events and NotificationService api instead.
@@ -100,7 +114,7 @@ export class UploadDragAreaComponent {
      * @param {File[]} files - files dropped in the drag area.
      */
     onFilesDropped(files: File[]): void {
-        if (this.enabled && files.length) {
+        if (!this.disabled && files.length) {
             const fileModels = files.map(file => new FileModel(file, {
                 newVersion: this.versioning,
                 path: '/',
@@ -120,7 +134,7 @@ export class UploadDragAreaComponent {
      * @param item - FileEntity
      */
     onFilesEntityDropped(item: any): void {
-        if (this.enabled) {
+        if (!this.disabled) {
             item.file((file: File) => {
                 const fileModel = new FileModel(file, {
                     newVersion: this.versioning,
@@ -141,7 +155,7 @@ export class UploadDragAreaComponent {
      * @param folder - name of the dropped folder
      */
     onFolderEntityDropped(folder: any): void {
-        if (this.enabled && folder.isDirectory) {
+        if (!this.disabled && folder.isDirectory) {
             FileUtils.flattern(folder).then(entries => {
                 let files = entries.map(entry => {
                     return new FileModel(entry.file, {
@@ -206,6 +220,6 @@ export class UploadDragAreaComponent {
     }
 
     private isAllowed(node: any) {
-        return this.enabled || this.hasCreatePermission(node);
+        return !this.disabled || this.hasCreatePermission(node);
     }
 }
