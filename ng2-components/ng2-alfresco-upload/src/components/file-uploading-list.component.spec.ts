@@ -210,18 +210,45 @@ describe('FileUploadingListComponent', () => {
     });
 
     describe('uploadErrorFiles()', () => {
-        it('returns the error files', () => {
-            file.status = 6;
+        it('returns array of error files', () => {
+            component.files = <any> [
+                { status: FileUploadStatus.Complete },
+                { status: FileUploadStatus.Error },
+                { status: FileUploadStatus.Error }
+            ];
 
-            expect(component.uploadErrorFiles()).toEqual([file]);
+            expect(component.uploadErrorFiles.length).toEqual(2);
+        });
+
+        it('returns empty array when no error files found', () => {
+            component.files = <any> [
+                { status: FileUploadStatus.Complete },
+                { status: FileUploadStatus.Pending }
+            ];
+
+            expect(component.uploadErrorFiles.length).toEqual(0);
         });
     });
 
-    describe('totalErrorFiles()', () => {
-        it('returns the number of error files', () => {
-            file.status = 6;
+    describe('uploadCancelledFiles()', () => {
+        it('returns array of cancelled files', () => {
+            component.files = <any> [
+                { status: FileUploadStatus.Cancelled },
+                { status: FileUploadStatus.Complete },
+                { status: FileUploadStatus.Error }
+            ];
 
-            expect(component.totalErrorFiles()).toEqual(1);
+            expect(component.uploadCancelledFiles.length).toEqual(1);
+        });
+
+        it('returns emty array when no cancelled files found', () => {
+            component.files = <any> [
+                { status: FileUploadStatus.Error },
+                { status: FileUploadStatus.Complete },
+                { status: FileUploadStatus.Pending }
+            ];
+
+            expect(component.uploadCancelledFiles.length).toEqual(0);
         });
     });
 });
