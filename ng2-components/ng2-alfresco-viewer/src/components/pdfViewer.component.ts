@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, HostListener, Input, OnChanges } from '@angular/core';
+import { Component, HostListener, Input, OnChanges, ViewEncapsulation } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 
@@ -24,8 +24,13 @@ declare let PDFJS: any;
 @Component({
     selector: 'adf-pdf-viewer',
     templateUrl: './pdfViewer.component.html',
-    styleUrls: ['./pdfViewer.component.css', './pdfViewerHost.component.css'],
-    providers: [ RenderingQueueServices ]
+    styleUrls: [
+        './pdfViewer.component.scss',
+        './pdfViewerHost.component.scss'
+    ],
+    providers: [ RenderingQueueServices ],
+    host: { 'class': 'adf-pdf-viewer' },
+    encapsulation: ViewEncapsulation.None
 })
 export class PdfViewerComponent implements OnChanges {
 
