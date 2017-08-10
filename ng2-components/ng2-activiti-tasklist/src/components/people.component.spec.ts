@@ -192,7 +192,7 @@ describe('PeopleComponent', () => {
             });
         });
 
-        it('should return an empty list for not valid search', (done) => {
+        fit('should return an empty list for not valid search', (done) => {
             activitiPeopleComponent.peopleSearch$.subscribe((users) => {
                 expect(users.length).toBe(0);
                 done();
@@ -201,7 +201,7 @@ describe('PeopleComponent', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: {}
+                responseText: {data: []}
             });
         });
     });

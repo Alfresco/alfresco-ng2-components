@@ -19,8 +19,8 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import { Observable, Observer } from 'rxjs/Rx';
 
 import { Comment } from '../models/comment.model';
-import { TaskListService } from '../services/tasklist.service';
 import { PeopleService } from '../services/people.service';
+import { TaskListService } from '../services/tasklist.service';
 
 @Component({
     selector: 'adf-comments, activiti-comments',
@@ -81,7 +81,7 @@ export class CommentsComponent implements OnChanges {
                         return date1 > date2 ? -1 : date1 < date2 ? 1 : 0;
                     });
                     res.forEach((comment) => {
-                        this.peopleService.addImageToUser(comment.createdBy);
+                        comment.createdBy.userImage = this.peopleService.getUserImage(comment.createdBy);
                         this.commentObserver.next(comment);
                     });
                     },

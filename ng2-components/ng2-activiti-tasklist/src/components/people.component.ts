@@ -38,7 +38,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
     iconImageUrl: string = require('../assets/images/user.jpg');
 
     @Input()
-    people: User [] = [];
+    people: User[] = [];
 
     @Input()
     taskId: string = '';
@@ -64,10 +64,10 @@ export class PeopleComponent implements OnInit, AfterViewInit {
         this.peopleSearch$ = new Observable<User[]>(observer => this.peopleSearchObserver = observer).share();
     }
 
-    ngOnInit(){
-        if (this.people && this.people.length > 0){
-            this.people.forEach((person) =>{
-                person.userImage =this.peopleService.getUserImage(person);
+    ngOnInit() {
+        if (this.people && this.people.length > 0) {
+            this.people.forEach((person) => {
+                person.userImage = this.peopleService.getUserImage(person);
             });
         }
     }
@@ -102,14 +102,14 @@ export class PeopleComponent implements OnInit, AfterViewInit {
         this.peopleService.getWorkflowUsersWithImages(this.taskId, searchedWord)
             .subscribe((users) => {
                 this.peopleSearchObserver.next(users);
-            },         error => this.logService.error('Could not load users'));
+            }, error => this.logService.error('Could not load users'));
     }
 
     involveUser(user: User) {
         this.peopleService.involveUserWithTask(this.taskId, user.id.toString())
             .subscribe(() => {
                 this.people = [...this.people, user];
-            },         error => this.logService.error('Impossible to involve user with task'));
+            }, error => this.logService.error('Impossible to involve user with task'));
     }
 
     removeInvolvedUser(user: User) {
@@ -118,7 +118,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
                 this.people = this.people.filter((involvedUser) => {
                     return involvedUser.id !== user.id;
                 });
-            },         error => this.logService.error('Impossible to remove involved user from task'));
+            }, error => this.logService.error('Impossible to remove involved user from task'));
     }
 
     getDisplayUser(firstName: string, lastName: string, delimiter: string = '-'): string {
@@ -156,6 +156,6 @@ export class PeopleComponent implements OnInit, AfterViewInit {
     }
 
     getImage(user: User) {
-        return 'url('+user.userImage+')';
+        return 'url(' + user.userImage + ')';
     }
 }

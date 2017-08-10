@@ -31,21 +31,21 @@ export class PeopleService {
     getWorkflowUsers(taskId?: string, searchWord?: string): Observable<User[]> {
         let option = { excludeTaskId: taskId, filter: searchWord };
         return Observable.fromPromise(this.getWorkflowUserApi(option))
-            .map((response: any) => <User[]>response.data || [])
+            .map((response: any) => <User[]> response.data || [])
             .catch(err => this.handleError(err));
     }
 
     getWorkflowUsersWithImages(taskId?: string, searchWord?: string): Observable<User[]> {
         let option = { excludeTaskId: taskId, filter: searchWord };
         return Observable.fromPromise(this.getWorkflowUserApi(option))
-            .switchMap((response: any) => <User[]>response.data || [])
+            .switchMap((response: any) => <User[]> response.data || [])
             .map((user: User) => this.addImageToUser(user))
             .combineAll()
-            .catch(err => this.handleError(err))
+            .catch(err => this.handleError(err));
     }
 
     getUserImage(user: User): string {
-        return this.getUserProfileImageApi(user.id+'');
+        return this.getUserProfileImageApi(user.id + '');
     }
 
     addImageToUser(user: User): Observable<User> {

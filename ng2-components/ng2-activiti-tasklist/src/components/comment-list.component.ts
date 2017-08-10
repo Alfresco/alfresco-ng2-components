@@ -63,11 +63,11 @@ export class CommentListComponent {
         let today = Number.parseInt(this.datePipe.transform(Date.now(), 'yMMdd'));
         if (givenDate === today) {
             formattedDate = 'Today, ' + this.datePipe.transform(aDate, 'hh:mm a');
-        }else {
+        } else {
             let yesterday = Number.parseInt(this.datePipe.transform(Date.now() - 24 * 3600 * 1000, 'yMMdd'));
             if (givenDate === yesterday) {
                 formattedDate = 'Yesterday, ' + this.datePipe.transform(aDate, 'hh:mm a');
-            }else {
+            } else {
                 formattedDate = this.datePipe.transform(aDate, 'MMM dd y, hh:mm a');
             }
         }
@@ -78,8 +78,8 @@ export class CommentListComponent {
         return this.comments && this.comments.length && true;
     }
 
-    getImage(user: User){
-        return 'url('+user.userImage+')';
+    getImage(user: User) {
+        return 'url(' + user.userImage + ')';
     }
 
 }
