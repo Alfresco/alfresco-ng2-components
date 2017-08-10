@@ -30,7 +30,7 @@ declare var require: any;
 @Component({
     selector: 'adf-people, activiti-people',
     templateUrl: './people.component.html',
-    styleUrls: ['./people.component.css']
+    styleUrls: ['./people.component.scss']
 })
 export class PeopleComponent implements OnInit, AfterViewInit {
 
@@ -102,7 +102,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
         this.peopleService.getWorkflowUsersWithImages(this.taskId, searchedWord)
             .subscribe((users) => {
                 this.peopleSearchObserver.next(users);
-            }, error => this.logService.error('Could not load users'));
+            }, error => this.logService.error(error));
     }
 
     involveUser(user: User) {
