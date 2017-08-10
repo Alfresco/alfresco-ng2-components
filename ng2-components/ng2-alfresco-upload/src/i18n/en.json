@@ -18,7 +18,7 @@
             "UPLOAD_FOLDER": "Upload folder"
         },
         "MESSAGES": {
-            "UPLOAD_CANCELED": "Upload canceled",
+            "UPLOAD_CANCELED": "Upload cancelled",
             "UPLOAD_COMPLETED": "Uploaded {{ completed }} / {{ total }}",
             "UPLOAD_PROGRESS": "Uploading {{ completed }} / {{ total }}",
             "UPLOAD_ERROR": "{{ total }} error",
