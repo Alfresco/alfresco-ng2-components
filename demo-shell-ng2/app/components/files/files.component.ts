@@ -28,7 +28,7 @@ import { DocumentListComponent, PermissionStyleModel } from 'ng2-alfresco-docume
 import { CreateFolderDialogComponent } from '../../dialogs/create-folder.dialog';
 import { DownloadZipDialogComponent } from './../../dialogs/download-zip.dialog';
 
-import { ViewerDialogComponent, ViewerDialogSettings } from 'ng2-alfresco-viewer';
+import { ViewerDialogComponent, ViewerDialogSettings, ViewerService } from 'ng2-alfresco-viewer';
 
 @Component({
     selector: 'adf-files-component',
@@ -46,7 +46,7 @@ export class FilesComponent implements OnInit {
     useCustomToolbar = true;
     toolbarColor = 'default';
     useDropdownBreadcrumb = false;
-    useViewerDialog = false;
+    useViewerDialog = true;
     useInlineViewer = false;
 
     selectionModes = [
@@ -94,23 +94,18 @@ export class FilesComponent implements OnInit {
                 private contentService: AlfrescoContentService,
                 private dialog: MdDialog,
                 private translateService: AlfrescoTranslationService,
+                private viewerService: ViewerService,
                 @Optional() private route: ActivatedRoute) {
     }
 
     showFile(event) {
         if (this.useViewerDialog) {
             if (event.value.entry.isFile) {
-                const settings: ViewerDialogSettings = {
-                    node: event.value.entry
-                };
-
-                const dialogRef = this.dialog.open(ViewerDialogComponent, {
-                    panelClass: 'adf-viewer-dialog-panel',
-                    data: settings
-                });
-                dialogRef.afterClosed().subscribe(result => {
-                    console.log(result);
-                });
+                this.viewerService
+                    .showViewerForNode(event.value.entry)
+                    .then(result => {
+                        console.log(result);
+                    });
             }
         } else {
             if (event.value.entry.isFile) {

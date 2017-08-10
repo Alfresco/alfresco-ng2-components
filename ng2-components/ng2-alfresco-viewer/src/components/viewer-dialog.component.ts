@@ -17,8 +17,6 @@
 
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { AlfrescoApiService } from 'ng2-alfresco-core';
 
 import { ViewerDialogSettings } from './viewer-dialog.settings';
 
@@ -33,42 +31,27 @@ export class ViewerDialogComponent implements OnInit {
 
     fileName: string = 'Unknown file';
     fileUrl: string = null;
+    fileMimeType: string = null;
 
     unknownFormatIcon = 'wifi_tethering';
     unknownFormatText = 'Document preview could not be loaded.';
 
-    mimeType: string = null;
     viewerType: string = null;
 
     constructor(private dialogRef: MdDialogRef<ViewerDialogComponent>,
-                @Inject(MD_DIALOG_DATA) private settings: ViewerDialogSettings,
-                private apiService: AlfrescoApiService) {
-    }
-
-    private get contentApi() {
-        return this.apiService.getInstance().content;
+                @Inject(MD_DIALOG_DATA) settings: ViewerDialogSettings) {
+        this.fileUrl = settings.fileUrl;
+        this.fileName = settings.fileName;
+        this.fileMimeType = settings.fileMimeType;
     }
 
     ngOnInit() {
-        const node = this.settings.node;
-        if (node && node.isFile) {
-            this.displayFile(node);
-        }
+        this.viewerType = this.detectViewerType(this.fileMimeType);
     }
 
-    private displayFile(node: MinimalNodeEntryEntity) {
-        if (node) {
-            this.fileName = node.name;
-            this.mimeType = node.content.mimeType;
-            this.viewerType = this.detectViewerType(node);
-            this.fileUrl = this.contentApi.getContentUrl(node.id);
-            console.log(node);
-        }
-    }
-
-    private detectViewerType(node: MinimalNodeEntryEntity) {
-        if (node && node.content && node.content.mimeType) {
-            const mimeType = node.content.mimeType.toLowerCase();
+    private detectViewerType(mimeType: string) {
+        if (mimeType) {
+            mimeType = mimeType.toLowerCase();
             if (mimeType.startsWith('image/')) {
                 return 'image';
             }

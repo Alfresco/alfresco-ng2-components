@@ -20,6 +20,7 @@ import { CoreModule } from 'ng2-alfresco-core';
 
 import { MaterialModule } from './src/material.module';
 
+export { ViewerComponent } from './src/components/viewer.component';
 import { ImgViewerComponent } from './src/components/imgViewer.component';
 import { MediaPlayerComponent } from './src/components/mediaPlayer.component';
 import { NotSupportedFormatComponent } from './src/components/notSupportedFormat.component';
@@ -28,12 +29,13 @@ import { TxtViewerComponent } from './src/components/txtViewer.component';
 import { ViewerDialogComponent } from './src/components/viewer-dialog.component';
 import { ViewerComponent } from './src/components/viewer.component';
 import { ExtensionViewerDirective } from './src/directives/extension-viewer.directive';
-import { RenderingQueueServices } from './src/services/rendering-queue.services';
 
-export { ViewerComponent } from './src/components/viewer.component';
+import { RenderingQueueServices } from './src/services/rendering-queue.services';
+import { ViewerService } from './src/services/viewer.service';
 
 export { ViewerDialogComponent } from './src/components/viewer-dialog.component';
 export { ViewerDialogSettings } from './src/components/viewer-dialog.settings';
+export { ViewerService } from './src/services/viewer.service';
 
 export const VIEWER_DIRECTIVES: any[] = [
     ViewerComponent,
@@ -55,7 +57,8 @@ export const VIEWER_DIRECTIVES: any[] = [
         ...VIEWER_DIRECTIVES
     ],
     providers: [
-        RenderingQueueServices
+        RenderingQueueServices,
+        ViewerService
     ],
     exports: [
         ...VIEWER_DIRECTIVES
@@ -71,7 +74,8 @@ export class ViewerModule {
         return {
             ngModule: ViewerModule,
             providers: [
-                RenderingQueueServices
+                RenderingQueueServices,
+                ViewerService
             ]
         };
     }

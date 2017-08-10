@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-
 export interface ViewerDialogSettings {
-    node?: MinimalNodeEntryEntity;
+    fileUrl?: string;
+    fileMimeType?: string;
+    fileName?: string;
+    downloadUrl?: string;
 }
