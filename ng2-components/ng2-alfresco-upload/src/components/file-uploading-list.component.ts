@@ -91,17 +91,14 @@ export class FileUploadingListComponent {
      * @returns {boolean} - false if there is at least one file in Progress
      */
     isUploadCompleted(): boolean {
-        let isPending = false;
-        let isAllCompleted = true;
-
-        for (let i = 0; i < this.files.length && !isPending; i++) {
-            let file = this.files[i];
-            if (file.status === FileUploadStatus.Progress) {
-                isPending = true;
-                isAllCompleted = false;
-            }
-        }
-        return isAllCompleted;
+         return !this.isUploadCancelled() &&
+            !!this.files.length &&
+            !this.files
+                .some(({status}) =>
+                    status === FileUploadStatus.Starting ||
+                    status === FileUploadStatus.Progress ||
+                    status === FileUploadStatus.Pending
+                );
     }
 
     /**
@@ -109,10 +106,13 @@ export class FileUploadingListComponent {
      * @returns {boolean} - false if there is at least one file in Progress
      */
     isUploadCancelled(): boolean {
-        return this.files
-            .filter((file) => file.status !== FileUploadStatus.Error)
-            .every((file) => file.status === FileUploadStatus.Cancelled
-                || file.status === FileUploadStatus.Aborted);
+        return !!this.files.length &&
+            this.files
+                .every(({status}) =>
+                    status === FileUploadStatus.Aborted ||
+                    status === FileUploadStatus.Cancelled ||
+                    status === FileUploadStatus.Error
+                );
     }
 
     uploadErrorFiles(): FileModel[] {
