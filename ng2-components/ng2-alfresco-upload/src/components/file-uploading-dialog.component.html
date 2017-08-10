@@ -14,13 +14,23 @@
         <span
             class="upload-dialog__title"
             *ngIf="!uploadList.isUploadCompleted() && !uploadList.isUploadCancelled()">
-            {{ 'FILE_UPLOAD.MESSAGES.UPLOAD_PROGRESS' | translate: { completed: totalCompleted, total: filesUploadingList.length } }}
+            {{ 'FILE_UPLOAD.MESSAGES.UPLOAD_PROGRESS'
+                | translate: {
+                    completed: totalCompleted,
+                    total: filesUploadingList.length
+                }
+            }}
         </span>
 
         <span
             class="upload-dialog__title"
             *ngIf="uploadList.isUploadCompleted()">
-            {{ 'FILE_UPLOAD.MESSAGES.UPLOAD_COMPLETED' | translate: { completed: totalCompleted, total: filesUploadingList.length } }}
+            {{ 'FILE_UPLOAD.MESSAGES.UPLOAD_COMPLETED'
+                | translate: {
+                    completed: (totalCompleted - uploadList.uploadCancelledFiles.length),
+                    total: filesUploadingList.length
+                }
+            }}
         </span>
 
         <span
@@ -32,12 +42,12 @@
 
     <section
         class="upload-dialog__info"
-        *ngIf="uploadList.totalErrorFiles()">
+        *ngIf="uploadList.uploadErrorFiles.length">
         {{
-            (uploadList.totalErrorFiles() > 1
+            (uploadList.uploadErrorFiles.length > 1
                  ? 'FILE_UPLOAD.MESSAGES.UPLOAD_ERRORS'
                  : 'FILE_UPLOAD.MESSAGES.UPLOAD_ERROR')
-                 | translate: { total: uploadList.totalErrorFiles() }
+                 | translate: { total: uploadList.uploadErrorFiles.length }
         }}
     </section>
 
