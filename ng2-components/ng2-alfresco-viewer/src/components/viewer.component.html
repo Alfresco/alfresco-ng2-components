@@ -26,12 +26,12 @@
                     <div class="adf-viewer-content-container">
 
                         <ng-container *ngIf="isPdf()">
-                            <pdf-viewer
+                            <adf-pdf-viewer
                                 [showToolbar]="showToolbar"
                                 [blobFile]="blobFile"
                                 [urlFile]="urlFileContent"
                                 [nameFile]="displayName">
-                            </pdf-viewer>
+                            </adf-pdf-viewer>
                         </ng-container>
 
                         <ng-container *ngIf="isImage()">

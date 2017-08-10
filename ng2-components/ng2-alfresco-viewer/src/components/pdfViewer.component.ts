@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector  */
-
 import { Component, HostListener, Input, OnChanges } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
@@ -24,10 +22,10 @@ import { RenderingQueueServices } from '../services/rendering-queue.services';
 declare let PDFJS: any;
 
 @Component({
-    selector: 'pdf-viewer',
+    selector: 'adf-pdf-viewer',
     templateUrl: './pdfViewer.component.html',
     styleUrls: ['./pdfViewer.component.css', './pdfViewerHost.component.css'],
-    providers: [RenderingQueueServices]
+    providers: [ RenderingQueueServices ]
 })
 export class PdfViewerComponent implements OnChanges {
 
@@ -47,7 +45,7 @@ export class PdfViewerComponent implements OnChanges {
     page: number;
     displayPage: number;
     totalPages: number;
-    laodingPercent: number;
+    loadingPercent: number;
     pdfViewer: any;
     currentScaleMode: string = 'auto';
     currentScale: number;
@@ -86,7 +84,7 @@ export class PdfViewerComponent implements OnChanges {
 
         loadingTask.onProgress = (progressData) => {
             let level = progressData.loaded / progressData.total;
-            this.laodingPercent = Math.round(level * 100);
+            this.loadingPercent = Math.round(level * 100);
         };
 
         loadingTask.then((pdfDocument) => {

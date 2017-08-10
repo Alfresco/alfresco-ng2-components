@@ -109,8 +109,8 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
         });
 
         it('should Input Page elements be present', () => {
-            expect(element.querySelector('#viewer-pagenumber-input')).toBeDefined();
-            expect(element.querySelector('#viewer-total-pages')).toBeDefined();
+            expect(element.querySelector('.viewer-pagenumber-input')).toBeDefined();
+            expect(element.querySelector('.viewer-total-pages')).toBeDefined();
 
             expect(element.querySelector('#viewer-previous-page-button')).not.toBeNull();
             expect(element.querySelector('#viewer-next-page-button')).not.toBeNull();
@@ -121,8 +121,8 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
 
             fixture.detectChanges();
 
-            expect(element.querySelector('#viewer-toolbar-command')).toBeNull();
-            expect(element.querySelector('#viewer-toolbar-pagination')).toBeNull();
+            expect(element.querySelector('.viewer-toolbar-command')).toBeNull();
+            expect(element.querySelector('.viewer-toolbar-pagination')).toBeNull();
         });
     });
 
@@ -157,8 +157,8 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
         });
 
         it('should Input Page elements be present', () => {
-            expect(element.querySelector('#viewer-pagenumber-input')).toBeDefined();
-            expect(element.querySelector('#viewer-total-pages')).toBeDefined();
+            expect(element.querySelector('.viewer-pagenumber-input')).toBeDefined();
+            expect(element.querySelector('.viewer-total-pages')).toBeDefined();
 
             expect(element.querySelector('#viewer-previous-page-button')).not.toBeNull();
             expect(element.querySelector('#viewer-next-page-button')).not.toBeNull();
@@ -169,8 +169,8 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
 
             fixture.detectChanges();
 
-            expect(element.querySelector('#viewer-toolbar-command')).toBeNull();
-            expect(element.querySelector('#viewer-toolbar-pagination')).toBeNull();
+            expect(element.querySelector('.viewer-toolbar-command')).toBeNull();
+            expect(element.querySelector('.viewer-toolbar-pagination')).toBeNull();
         });
     });
 

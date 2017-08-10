@@ -30,9 +30,7 @@ import { ViewerComponent } from './src/components/viewer.component';
 import { ExtensionViewerDirective } from './src/directives/extension-viewer.directive';
 import { RenderingQueueServices } from './src/services/rendering-queue.services';
 
-export * from './src/components/viewer.component';
-export * from './src/services/rendering-queue.services';
-export * from './src/components/pdfViewer.component';
+export { ViewerComponent } from './src/components/viewer.component';
 
 export { ViewerDialogComponent } from './src/components/viewer-dialog.component';
 export { ViewerDialogSettings } from './src/components/viewer-dialog.settings';
@@ -48,10 +46,6 @@ export const VIEWER_DIRECTIVES: any[] = [
     ViewerDialogComponent
 ];
 
-export const VIEWER_PROVIDERS: any[] = [
-    RenderingQueueServices
-];
-
 @NgModule({
     imports: [
         CoreModule,
@@ -61,7 +55,7 @@ export const VIEWER_PROVIDERS: any[] = [
         ...VIEWER_DIRECTIVES
     ],
     providers: [
-        ...VIEWER_PROVIDERS
+        RenderingQueueServices
     ],
     exports: [
         ...VIEWER_DIRECTIVES
@@ -77,7 +71,7 @@ export class ViewerModule {
         return {
             ngModule: ViewerModule,
             providers: [
-                ...VIEWER_PROVIDERS
+                RenderingQueueServices
             ]
         };
     }
