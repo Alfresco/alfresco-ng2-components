@@ -5,12 +5,13 @@
 
     <div class="adf-viewer-content">
         <ng-container *ngIf="overlayMode">
-            <adf-toolbar color="default">
+            <adf-toolbar color="default" class="adf-viewer-toolbar">
                 <adf-toolbar-title>
-                    <span>{{ displayName }}</span>
+                    <span class="adf-viewer-filename">{{ displayName }}</span>
                 </adf-toolbar-title>
                 <button
                     md-icon-button
+                    class="adf-viewer-close-button"
                     mdTooltip="Close and go back"
                     mdTooltipPosition="before"
                     (click)="close()"
