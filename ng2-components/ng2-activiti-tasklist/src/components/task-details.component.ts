@@ -27,10 +27,12 @@ import { Component,
     ViewChild
 } from '@angular/core';
 import { ContentLinkModel, FormFieldValidator, FormModel, FormOutcomeEvent } from 'ng2-activiti-form';
-import { AlfrescoAuthenticationService, AlfrescoTranslationService, CardViewUpdateService, ClickNotification, UpdateNotification } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoTranslationService, CardViewUpdateService, ClickNotification, LogService, UpdateNotification } from 'ng2-alfresco-core';
+import { Observable, Observer } from 'rxjs/Rx';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { User } from '../models/user.model';
+import { PeopleService } from './../services/people.service';
 import { TaskListService } from './../services/tasklist.service';
 
 declare var require: any;
@@ -123,6 +125,9 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     @Output()
     executeOutcome: EventEmitter<FormOutcomeEvent> = new EventEmitter<FormOutcomeEvent>();
 
+    @Output()
+    assignTask: EventEmitter<void> = new EventEmitter<void>();
+
     taskDetails: TaskDetailsModel;
     taskFormName: string = null;
 
@@ -130,13 +135,22 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
     noTaskDetailsTemplateComponent: TemplateRef<any>;
 
+    showAssignee: boolean = false;
+
+    private peopleSearchObserver: Observer<User[]>;
+    peopleSearch$: Observable<User[]>;
+
     constructor(translateService: AlfrescoTranslationService,
                 private activitiTaskList: TaskListService,
                 private authService: AlfrescoAuthenticationService,
+                private peopleService: PeopleService,
+                private logService: LogService,
                 private cardViewUpdateService: CardViewUpdateService) {
         if (translateService) {
             translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
         }
+
+        this.peopleSearch$ = new Observable<User[]>(observer => this.peopleSearchObserver = observer).share();
     }
 
     ngOnInit() {
@@ -150,6 +164,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
     ngOnChanges(changes: SimpleChanges): void {
         let taskId = changes.taskId;
+        this.showAssignee = false;
 
         if (taskId && !taskId.currentValue) {
             this.reset();
@@ -193,6 +208,9 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
     private clickTaskDetails(clickNotification: ClickNotification) {
         console.log(clickNotification.target);
+        if (clickNotification.target.key === 'assignee') {
+            this.showAssignee = true;
+        }
     }
 
     /**
@@ -319,5 +337,35 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
     isCompletedTask(): boolean {
         return this.taskDetails && this.taskDetails.endDate ? true : undefined;
+    }
+
+    searchUser(searchedWord: string) {
+        this.peopleService.getWorkflowUsers(null, searchedWord)
+            .subscribe((users) => {
+                users = users.filter((user) => user.id !== this.taskDetails.assignee.id);
+                this.peopleSearchObserver.next(users);
+            },         error => this.logService.error('Could not load users'));
+    }
+
+    onCloseSearch() {
+        this.showAssignee = false;
+        console.log(this.taskDetails.assignee);
+    }
+
+    assignTaskToUser(selectedUser: User) {
+        this.activitiTaskList.assignTask(this.taskDetails.id, selectedUser).subscribe(
+            (res: any) => {
+                this.logService.info('Task Assigned to ' + selectedUser.email);
+                this.assignTask.emit();
+            });
+        this.showAssignee = false;
+    }
+
+    getTaskHeaderViewClass() {
+        if (this.showAssignee) {
+            return 'assign-edit-view';
+        } else {
+            return 'default-view';
+        }
     }
 }

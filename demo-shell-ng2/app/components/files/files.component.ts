@@ -17,7 +17,7 @@
 
 import { ChangeDetectorRef, Component, Input, OnInit, Optional, ViewChild } from '@angular/core';
 import { MdDialog } from '@angular/material';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MinimalNodeEntity } from 'alfresco-js-api';
 import {
     AlfrescoApiService, AlfrescoContentService, AlfrescoTranslationService, FileUploadCompleteEvent,
@@ -95,6 +95,7 @@ export class FilesComponent implements OnInit {
                 private dialog: MdDialog,
                 private translateService: AlfrescoTranslationService,
                 private viewerService: ViewerService,
+                private router: Router,
                 @Optional() private route: ActivatedRoute) {
     }
 
@@ -115,6 +116,10 @@ export class FilesComponent implements OnInit {
                 this.showViewer = false;
             }
         }
+    }
+
+    onFolderChange($event) {
+        this.router.navigate(['/files', $event.value.id]);
     }
 
     toggleFolder() {

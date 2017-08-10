@@ -16,7 +16,7 @@
  */
 
 import { DatePipe } from '@angular/common';
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { MdAutocompleteModule, MdButtonModule, MdCardModule, MdDatepickerModule, MdGridListModule,
     MdIconModule, MdInputModule, MdNativeDateModule, MdProgressSpinnerModule, MdSelectModule } from '@angular/material';
 import { ActivitiFormModule } from 'ng2-activiti-form';
@@ -176,7 +176,8 @@ export const ACTIVITI_TASKLIST_PROVIDERS: any[] = [
         ...ACTIVITI_TASKLIST_DIRECTIVES,
         MdIconModule,
         MdButtonModule
-    ]
+    ],
+    schemas: [ NO_ERRORS_SCHEMA ]
 })
 export class ActivitiTaskListModule {
     static forRoot(): ModuleWithProviders {

@@ -48,6 +48,9 @@
 - [Task Audit Directive](#task-audit-directive)
   * [Properties](#properties-11)
     + [Events](#events-10)
+- [People Search Component](#people-search-component)
+  * [Properties](#properties-12)
+  * [Events](#events-12)
 - [Build from sources](#build-from-sources)
 - [NPM scripts](#npm-scripts)
 - [Demo](#demo)
@@ -124,6 +127,7 @@ Here's the list of available properties you can define for a Data Column definit
 | --- | --- | --- | --- |
 | appId | string || The id of the app. |
 | processDefinitionKey | string || The processDefinitionKey of the process. |
+| processInstanceId | string || The processInstanceId of the process. |
 | assignment | string || The assignment of the process. <ul>Possible values are: <li>assignee : where the current user is the assignee</li> <li>candidate: where the current user is a task candidate </li><li>group_x: where the task is assigned to a group where the current user is a member of.</li> <li>no value: where the current user is involved</li> </ul> |
 | state | string || Define state of the processes. Possible values are: `completed`, `active` |
 | hasIcon | boolean | true | Toggle the icon on the left . |
@@ -553,6 +557,42 @@ This directive provide a way to fetch the Task Audit information in the pdf or j
 | --- | --- |
 | clicked | Raised when the task audit info is ready |
 | error | Raised if there is an error during fetching task information |
+
+## People Search
+
+The component used to search users/people.
+
+```html
+<adf-people-search></adf-people-search>
+```
+
+### Properties
+
+| Name | Type | Description |
+| --- | --- | --- |
+| results | Observable<User[]> | The params to show people list |
+
+### Events
+
+| Name | Description |
+| --- | --- |
+| searchPeople | Raised when the search people with new keyword  |
+| success | Raised when select the user and click action button  |
+| closeSearch | Raised when click the clse button  |
+
+### How to use
+
+ ```html
+<adf-people-search
+        (searchPeople)="searchUser($event)"
+        (success)="involveUser($event)"
+        (closeSearch)="onCloseSearch()"
+        [results]="peopleSearch$">
+            <header-title>{{ 'TASK_DETAILS.LABELS.ADD_PEOPLE' | translate }}</header-title>
+            <action-button-label>{{ 'PEOPLE.ADD_USER' | translate }}</action-button-label>
+        </adf-people-search>
+
+```
 
 ## Build from sources
 
