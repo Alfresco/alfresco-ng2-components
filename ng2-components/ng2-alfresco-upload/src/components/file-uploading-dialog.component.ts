@@ -79,6 +79,8 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
      * Dismiss dialog
      */
     close(): void {
+        this.totalCompleted = 0;
+        this.filesUploadingList = [];
         this.isDialogActive = false;
         this.isDialogMinimized = false;
         this.uploadService.clearQueue();
