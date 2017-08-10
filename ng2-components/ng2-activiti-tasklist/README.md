@@ -474,6 +474,62 @@ This component displays involved users to a specified task
 
 No Events
 
+How to customize the people component behavior
+
+The people component provide two methods to customize the behavior:
+ - involveUserAndCloseSearch: The selected user is going to be added and the search section closed
+ - involveUserWithoutCloseSearch: The selected user is going to be added without close the search section
+
+In this way will be easy customize the people component to involve the user with the single or double click event:
+
+Involve People single click and close search
+```html
+<adf-people #people
+    (row-click)="people.involveUserAndCloseSearch()"
+    [people]="YOUR_INVOLVED_PEOPLE_LIST"
+    [taskId]="YOUR_TASK_ID"
+    [readOnly]="YOUR_READ_ONLY_FLAG">
+</adf-people>
+```
+
+![involve-people-single-click-and-close-search](docs/assets/involve-people-single-click-and-close-search.gif)
+
+Involve People single click without close search
+```html
+<adf-people #people
+    (row-click)="people.involveUserWithoutCloseSearch()"
+    [people]="YOUR_INVOLVED_PEOPLE_LIST"
+    [taskId]="YOUR_TASK_ID"
+    [readOnly]="YOUR_READ_ONLY_FLAG">
+</adf-people>
+```
+
+![involve-people-single-click-without-close-search](docs/assets/involve-people-single-click-without-close-search.gif)
+
+Involve People double click and close search
+```html
+<adf-people #people
+    (row-dblclick)="people.involveUserAndCloseSearch()"
+    [people]="YOUR_INVOLVED_PEOPLE_LIST"
+    [taskId]="YOUR_TASK_ID"
+    [readOnly]="YOUR_READ_ONLY_FLAG">
+</adf-people>
+```
+
+![involve-people-double-click-and-close-search](docs/assets/involve-people-double-click-and-close-search.gif)
+
+Involve People double double without close search
+```html
+<adf-people #people
+    (row-dblclick)="people.involveUserWithoutCloseSearch()"
+    [people]="YOUR_INVOLVED_PEOPLE_LIST"
+    [taskId]="YOUR_TASK_ID"
+    [readOnly]="YOUR_READ_ONLY_FLAG">
+</adf-people>
+```
+
+![involve-people-double-click-without-close-search](docs/assets/involve-people-double-click-without-close-search.gif)
+
 ## ADF Comments Component
 
 This component displays comments entered by involved users to a specified task. It also allows an involved user to add his/her comment to the task.
