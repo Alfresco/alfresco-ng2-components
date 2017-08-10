@@ -60,7 +60,7 @@ describe('ContentAction', () => {
         documentActions = new DocumentActionsService(nodeActionsService);
         folderActions = new FolderActionsService(nodeActionsService, null, contentService);
 
-        documentList = new DocumentListComponent(documentServiceMock, null, null, null);
+        documentList = new DocumentListComponent(documentServiceMock, null, null);
         actionList = new ContentActionListComponent(documentList);
     });
 

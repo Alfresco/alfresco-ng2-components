@@ -16,7 +16,7 @@
  */
 
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 
 import { BreadcrumbComponent } from './src/components/breadcrumb/breadcrumb.component';
@@ -94,7 +94,15 @@ export const DOCUMENT_LIST_PROVIDERS: any[] = [
         ...DOCUMENT_LIST_DIRECTIVES
     ],
     providers: [
-        ...DOCUMENT_LIST_PROVIDERS
+        ...DOCUMENT_LIST_PROVIDERS,
+        {
+            provide: TRANSLATION_PROVIDER,
+            multi: true,
+            useValue: {
+                name: 'ng2-alfresco-documentlist',
+                source: 'assets/ng2-alfresco-documentlist'
+            }
+        }
     ],
     entryComponents: [
         ContentNodeSelectorComponent

@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService, CardViewDateItemModel, CardViewItem, CardViewMapItemModel, CardViewTextItemModel, LogService } from 'ng2-alfresco-core';
+import { CardViewDateItemModel, CardViewItem, CardViewMapItemModel, CardViewTextItemModel, LogService } from 'ng2-alfresco-core';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 
@@ -39,12 +39,8 @@ export class TaskHeaderComponent implements OnChanges {
     properties: CardViewItem [];
     inEdit: boolean = false;
 
-    constructor(translateService: AlfrescoTranslationService,
-                private activitiTaskService: TaskListService,
+    constructor(private activitiTaskService: TaskListService,
                 private logService: LogService) {
-        if (translateService) {
-            translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
-        }
     }
 
     ngOnChanges(changes: SimpleChanges) {

@@ -27,19 +27,24 @@ export class AlfrescoTranslateLoader implements TranslateLoader {
 
     private prefix: string = 'i18n';
     private suffix: string = '.json';
-    private _componentList: ComponentTranslationModel[] = [];
+    private providers: ComponentTranslationModel[] = [];
     private queue: string [][] = [];
 
     constructor(private http: Http,
                 private logService: LogService) {
     }
 
-    addComponentList(nameInput: string, pathInput: string) {
-        this._componentList.push(new ComponentTranslationModel({name: nameInput, path: pathInput}));
+    registerProvider(name: string, path: string) {
+        let registered = this.providers.find(provider => provider.name === name);
+        if (registered) {
+            registered.path = path;
+        } else {
+            this.providers.push(new ComponentTranslationModel({name: name, path: path}));
+        }
     }
 
-    existComponent(name: string): boolean {
-        return this._componentList.find(x => x.name === name) ? true : false;
+    providerRegistered(name: string): boolean {
+        return this.providers.find(x => x.name === name) ? true : false;
     }
 
     getComponentToFetch(lang: string) {
@@ -47,7 +52,7 @@ export class AlfrescoTranslateLoader implements TranslateLoader {
         if (!this.queue[lang]) {
             this.queue[lang] = [];
         }
-        this._componentList.forEach((component) => {
+        this.providers.forEach((component) => {
             if (!this.isComponentInQueue(lang, component.name)) {
                 this.queue[lang].push(component.name);
                 observableBatch.push(this.http.get(`${component.path}/${this.prefix}/${lang}${this.suffix}`)
@@ -75,7 +80,7 @@ export class AlfrescoTranslateLoader implements TranslateLoader {
 
     getFullTranslationJSON(lang: string) {
         let fullTranslation: string = '';
-        let cloneList = this._componentList.slice(0);
+        let cloneList = this.providers.slice(0);
         cloneList.reverse().forEach((component) => {
             if (component.json && component.json[lang]) {
                 fullTranslation += JSON.stringify(component.json[lang]);

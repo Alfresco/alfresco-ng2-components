@@ -24,15 +24,15 @@ import {
     MdSelectModule } from '@angular/material';
 import { ActivitiFormModule } from 'ng2-activiti-form';
 import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
-import { CardViewUpdateService, CoreModule } from 'ng2-alfresco-core';
+import { CardViewUpdateService, CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 
 import { CreateProcessAttachmentComponent } from './src/components/create-process-attachment.component';
 import { ProcessAttachmentListComponent } from './src/components/process-attachment-list.component';
+import { ProcessAuditDirective } from './src/components/process-audit.directive';
 import { ProcessCommentsComponent } from './src/components/process-comments.component';
 import { ProcessFiltersComponent } from './src/components/process-filters.component';
 import { ProcessInstanceDetailsComponent } from './src/components/process-instance-details.component';
-import { ProcessAuditDirective } from './src/components/process-audit.directive';
 import { ProcessInstanceHeaderComponent } from './src/components/process-instance-header.component';
 import { ProcessInstanceTasksComponent } from './src/components/process-instance-tasks.component';
 import { ProcessInstanceVariablesComponent } from './src/components/process-instance-variables.component';
@@ -136,7 +136,15 @@ export const ACTIVITI_PROCESSLIST_PROVIDERS: [any] = [
         ...ACTIVITI_PROCESSLIST_DIRECTIVES
     ],
     providers: [
-        ...ACTIVITI_PROCESSLIST_PROVIDERS
+        ...ACTIVITI_PROCESSLIST_PROVIDERS,
+        {
+            provide: TRANSLATION_PROVIDER,
+            multi: true,
+            useValue: {
+                name: 'ng2-activiti-processlist',
+                source: 'assets/ng2-activiti-processlist'
+            }
+        }
     ],
     exports: [
         ...ACTIVITI_PROCESSLIST_DIRECTIVES

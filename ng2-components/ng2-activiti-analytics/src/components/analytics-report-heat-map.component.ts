@@ -17,7 +17,6 @@
 
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AnalyticsService } from '../services/analytics.service';
 
 @Component({
@@ -42,12 +41,8 @@ export class AnalyticsReportHeatMapComponent implements  OnInit {
     currentMetricColors: string;
     metricType: string;
 
-    constructor(translateService: AlfrescoTranslationService,
-                private analyticsService: AnalyticsService,
+    constructor(private analyticsService: AnalyticsService,
                 private formBuilder: FormBuilder) {
-        if (translateService) {
-            translateService.addTranslationFolder('ng2-activiti-analytics', 'assets/ng2-activiti-analytics');
-        }
     }
 
     ngOnInit() {
