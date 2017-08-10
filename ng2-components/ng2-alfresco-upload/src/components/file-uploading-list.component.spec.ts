@@ -189,6 +189,15 @@ describe('FileUploadingListComponent', () => {
             expect(component.isUploadCancelled()).toBe(false);
         });
 
+        it('return true when all files are aborted', () => {
+            component.files = <any> [
+                { status: FileUploadStatus.Aborted },
+                { status: FileUploadStatus.Aborted }
+            ];
+
+            expect(component.isUploadCancelled()).toBe(true);
+        });
+
         it('return true when all files are cancelled', () => {
             component.files = <any> [
                 { status: FileUploadStatus.Cancelled },
