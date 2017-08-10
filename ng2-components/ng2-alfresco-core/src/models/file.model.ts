@@ -54,7 +54,7 @@ export class FileModel {
         this.id = this.generateId();
         this.name = file.name;
         this.size = file.size;
-        this.data = {};
+        this.data = null;
 
         this.progress = {
             loaded: 0,
