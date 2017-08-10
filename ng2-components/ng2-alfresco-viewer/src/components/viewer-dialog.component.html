@@ -8,7 +8,11 @@
 
     <adf-toolbar-divider></adf-toolbar-divider>
 
-    <button md-icon-button mdTooltip="Download">
+    <button
+        *ngIf="downloadUrl"
+        md-icon-button
+        mdTooltip="Download"
+        (click)="download()">
         <md-icon>file_download</md-icon>
     </button>
     <button md-icon-button mdTooltip="Print">

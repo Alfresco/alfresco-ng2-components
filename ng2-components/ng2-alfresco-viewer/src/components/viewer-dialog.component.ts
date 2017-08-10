@@ -32,6 +32,7 @@ export class ViewerDialogComponent implements OnInit {
     fileName: string = 'Unknown file';
     fileUrl: string = null;
     fileMimeType: string = null;
+    downloadUrl: string = null;
 
     unknownFormatIcon = 'wifi_tethering';
     unknownFormatText = 'Document preview could not be loaded.';
@@ -43,6 +44,7 @@ export class ViewerDialogComponent implements OnInit {
         this.fileUrl = settings.fileUrl;
         this.fileName = settings.fileName;
         this.fileMimeType = settings.fileMimeType;
+        this.downloadUrl = settings.downloadUrl;
     }
 
     ngOnInit() {
@@ -59,8 +61,21 @@ export class ViewerDialogComponent implements OnInit {
         return 'unknown';
     }
 
-    close() {
-        this.dialogRef.close(false);
+    download() {
+        if (this.downloadUrl && this.fileName) {
+            const link = document.createElement('a');
+
+            link.style.display = 'none';
+            link.download = this.fileName;
+            link.href = this.downloadUrl;
+
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
     }
 
+    close() {
+        this.dialogRef.close(true);
+    }
 }
