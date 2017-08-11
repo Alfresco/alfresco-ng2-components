@@ -23,7 +23,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { LogService } from './log.service';
 import { AlfrescoTranslateLoader } from './translate-loader.service';
-import { TranslationService } from './translation.service';
+import { TRANSLATION_PROVIDER, TranslationService } from './translation.service';
 
 let componentJson1 = ' {"TEST": "This is a test", "TEST2": "This is another test"} ' ;
 
@@ -36,7 +36,7 @@ describe('TranslateLoader', () => {
     let backend: any;
     let translationService: TranslationService;
     let connection: MockConnection; // this will be set when a new connection is emitted from the backend.
-    let customLoader;
+    let customLoader: AlfrescoTranslateLoader;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -52,14 +52,22 @@ describe('TranslateLoader', () => {
             providers: [
                 TranslationService,
                 LogService,
-                {provide: XHRBackend, useClass: MockBackend}
+                { provide: XHRBackend, useClass: MockBackend },
+                {
+                    provide: TRANSLATION_PROVIDER,
+                    multi: true,
+                    useValue: {
+                        name: 'ng2-alfresco-core',
+                        source: 'assets/ng2-alfresco-core'
+                    }
+                }
             ]
         });
         injector = getTestBed();
         backend = injector.get(XHRBackend);
         translationService = injector.get(TranslationService);
         backend.connections.subscribe((c: MockConnection) => connection = c);
-        customLoader = translationService.translate.currentLoader;
+        customLoader = <AlfrescoTranslateLoader> translationService.translate.currentLoader;
     });
 
     it('should be able to provide any TranslateLoader', () => {
@@ -69,12 +77,12 @@ describe('TranslateLoader', () => {
     });
 
     it('should add the component to the list', () => {
-        customLoader.addComponentList('login', 'path/login');
-        expect(customLoader.existComponent('login')).toBeTruthy();
+        customLoader.registerProvider('login', 'path/login');
+        expect(customLoader.providerRegistered('login')).toBeTruthy();
     });
 
     it('should return the Json translation ', () => {
-        customLoader.addComponentList('login', 'path/login');
+        customLoader.registerProvider('login', 'path/login');
         customLoader.getTranslation('en').subscribe(
             (response) => {
                 expect(response).toBeDefined();

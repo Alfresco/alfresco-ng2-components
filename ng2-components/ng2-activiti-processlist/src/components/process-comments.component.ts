@@ -17,7 +17,6 @@
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TaskListService } from 'ng2-activiti-tasklist';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ProcessService } from './../services/process.service';
 
 @Component({
@@ -36,16 +35,6 @@ export class ProcessCommentsComponent {
 
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
-
-    /**
-     * Constructor
-     * @param translate Translation service
-     */
-    constructor(translate: AlfrescoTranslationService) {
-        if (translate) {
-            translate.addTranslationFolder('ng2-activiti-processlist', 'assets/ng2-activiti-processlist');
-        }
-    }
 
     onError(error: any) {
         this.error.emit(error);

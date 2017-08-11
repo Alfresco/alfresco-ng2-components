@@ -712,7 +712,7 @@ describe('DocumentList', () => {
 
     it('should check [empty folder] template ', () => {
         documentList.emptyFolderTemplate = <TemplateRef<any>> {};
-        documentList.dataTable = new DataTableComponent(null, null, null);
+        documentList.dataTable = new DataTableComponent(null, null);
         expect(documentList.dataTable).toBeDefined();
         expect(documentList.isEmptyTemplateDefined()).toBeTruthy();
 
@@ -722,7 +722,7 @@ describe('DocumentList', () => {
 
     it('should empty folder NOT show the pagination', () => {
         documentList.emptyFolderTemplate = <TemplateRef<any>> {};
-        documentList.dataTable = new DataTableComponent(null, null, null);
+        documentList.dataTable = new DataTableComponent(null, null);
 
         expect(documentList.isEmpty()).toBeTruthy();
         expect(element.querySelector('alfresco-pagination')).toBe(null);
