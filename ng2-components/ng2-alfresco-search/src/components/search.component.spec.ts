@@ -152,15 +152,6 @@ describe('SearchComponent', () => {
         expect(search.searchTerm).toBe('exampleTerm692');
     });
 
-    it('should setup i18n folder', () => {
-        let translationService = TestBed.get(AlfrescoTranslationService);
-        spyOn(translationService, 'addTranslationFolder');
-
-        fixture.detectChanges();
-
-        expect(translationService.addTranslationFolder).toHaveBeenCalledWith('ng2-alfresco-search', 'assets/ng2-alfresco-search');
-    });
-
     it('should show the Notification snackbar on permission error', () => {
         const notoficationService = TestBed.get(NotificationService);
         spyOn(notoficationService, 'openSnackMessage');

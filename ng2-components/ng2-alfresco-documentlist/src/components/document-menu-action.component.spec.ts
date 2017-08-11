@@ -17,8 +17,8 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdButtonModule, MdIconModule, MdMenuModule } from '@angular/material';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { MaterialModule } from './../material.module';
 import { DocumentListService } from './../services/document-list.service';
 import { DocumentMenuActionComponent } from './document-menu-action.component';
 
@@ -84,9 +84,7 @@ describe('Document menu action', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                MdMenuModule,
-                MdButtonModule,
-                MdIconModule
+                MaterialModule
             ],
             declarations: [DocumentMenuActionComponent],
             providers: [

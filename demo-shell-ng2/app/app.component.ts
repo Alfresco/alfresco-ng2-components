@@ -42,10 +42,6 @@ export class AppComponent {
                 private storage: StorageService,
                 private logService: LogService) {
         this.setProvider();
-
-        if (translateService) {
-            translateService.addTranslationFolder('app', 'resources');
-        }
     }
 
     isAPageWithHeaderBar(): boolean {

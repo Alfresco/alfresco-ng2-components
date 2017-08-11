@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
-import { AlfrescoTranslationService, SearchOptions, SearchService } from 'ng2-alfresco-core';
+import { SearchOptions, SearchService } from 'ng2-alfresco-core';
 import { ThumbnailService } from 'ng2-alfresco-core';
 
 @Component({
@@ -25,7 +25,7 @@ import { ThumbnailService } from 'ng2-alfresco-core';
     templateUrl: './search-autocomplete.component.html',
     styleUrls: ['./search-autocomplete.component.css']
 })
-export class SearchAutocompleteComponent implements OnInit, OnChanges {
+export class SearchAutocompleteComponent implements OnChanges {
 
     @Input()
     searchTerm: string = '';
@@ -70,14 +70,7 @@ export class SearchAutocompleteComponent implements OnInit, OnChanges {
     @ViewChild('resultsTableBody', {}) resultsTableBody: ElementRef;
 
     constructor(private searchService: SearchService,
-                private translateService: AlfrescoTranslationService,
                 private thumbnailService: ThumbnailService) {
-    }
-
-    ngOnInit(): void {
-        if (this.translateService) {
-            this.translateService.addTranslationFolder('ng2-alfresco-search', 'assets/ng2-alfresco-search');
-        }
     }
 
     ngOnChanges(changes) {

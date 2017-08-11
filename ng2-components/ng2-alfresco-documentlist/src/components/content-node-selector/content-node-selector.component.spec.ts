@@ -167,13 +167,13 @@ describe('ContentNodeSelectorComponent', () => {
             });
 
             it('should be shown if dialogRef is injected', () => {
-                const componentInstance = new ContentNodeSelectorComponent(null, null, null, data, dummyMdDialogRef);
+                const componentInstance = new ContentNodeSelectorComponent(null, null, data, dummyMdDialogRef);
                 expect(componentInstance.inDialog).toBeTruthy();
             });
 
             it('should should call the close method in the injected dialogRef', () => {
                 spyOn(dummyMdDialogRef, 'close');
-                const componentInstance = new ContentNodeSelectorComponent(null, null, null, data, dummyMdDialogRef);
+                const componentInstance = new ContentNodeSelectorComponent(null, null, data, dummyMdDialogRef);
 
                 componentInstance.close();
 

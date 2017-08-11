@@ -17,7 +17,6 @@
 
 import { Component, DebugElement, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { DataCellEvent, DataTableAdapter, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 import { ProcessInstanceVariable } from './../models/process-instance-variable.model';
 import { ProcessService } from './../services/process.service';
@@ -67,13 +66,7 @@ export class ProcessInstanceVariablesComponent implements OnInit, OnChanges {
      * @param translate Translation service
      * @param activitiProcess Process service
      */
-    constructor(translate: AlfrescoTranslationService,
-                private activitiProcess: ProcessService) {
-
-        if (translate) {
-            translate.addTranslationFolder('ng2-activiti-processlist', 'assets/ng2-activiti-processlist');
-        }
-
+    constructor(private activitiProcess: ProcessService) {
     }
 
     ngOnInit() {

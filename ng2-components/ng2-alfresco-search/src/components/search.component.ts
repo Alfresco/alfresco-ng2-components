@@ -77,10 +77,6 @@ export class SearchComponent implements OnChanges, OnInit {
     }
 
     ngOnInit() {
-        if (this.translateService !== null) {
-            this.translateService.addTranslationFolder('ng2-alfresco-search', 'assets/ng2-alfresco-search');
-        }
-
         if (this.route) {
             this.route.params.forEach((params: Params) => {
                 this.searchTerm = params.hasOwnProperty(this.queryParamName) ? params[this.queryParamName] : null;

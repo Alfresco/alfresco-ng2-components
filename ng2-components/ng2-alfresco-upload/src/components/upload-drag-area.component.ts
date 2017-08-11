@@ -67,9 +67,6 @@ export class UploadDragAreaComponent {
     constructor(private uploadService: UploadService,
                 private translateService: AlfrescoTranslationService,
                 private notificationService: NotificationService) {
-        if (translateService) {
-            translateService.addTranslationFolder('ng2-alfresco-upload', 'assets/ng2-alfresco-upload');
-        }
     }
 
     /**
