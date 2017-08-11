@@ -10,15 +10,11 @@
             <label
                 id="upload-multiple-file-label"
                 *ngIf="!staticTitle"
-                for="upload-multiple-files">
-                {{ 'FILE_UPLOAD.BUTTON.UPLOAD_FILE' | translate }}
-            </label>
+                for="upload-multiple-files">{{ 'FILE_UPLOAD.BUTTON.UPLOAD_FILE' | translate }}</label>
             <label
                 id="upload-multiple-file-label-static"
                 *ngIf="staticTitle"
-                for="upload-multiple-files">
-                {{ staticTitle }}
-            </label>
+                for="upload-multiple-files">{{ staticTitle }}</label>
             <input #uploadFiles
                 id="upload-multiple-files"
                 data-automation-id="upload-multiple-files"
@@ -36,15 +32,11 @@
             <label
                 id="upload-single-file-label"
                 *ngIf="!staticTitle"
-                for="upload-single-file">
-                {{ 'FILE_UPLOAD.BUTTON.UPLOAD_FILE' | translate }}
-            </label>
+                for="upload-single-file">{{ 'FILE_UPLOAD.BUTTON.UPLOAD_FILE' | translate }}</label>
             <label
                 id="upload-single-file-label-static"
                 *ngIf="staticTitle"
-                for="upload-single-file">
-                {{ staticTitle }}
-            </label>
+                for="upload-single-file">{{ staticTitle }}</label>
             <input #uploadFiles
                 id="upload-single-file"
                 data-automation-id="upload-single-file"
@@ -65,15 +57,11 @@
         <label
             id="uploadFolder-label"
             *ngIf="!staticTitle"
-            for="uploadFolder">
-            {{ 'FILE_UPLOAD.BUTTON.UPLOAD_FOLDER' | translate }}
-        </label>
+            for="uploadFolder">{{ 'FILE_UPLOAD.BUTTON.UPLOAD_FOLDER' | translate }}</label>
         <label
             id="uploadFolder-label-static"
             *ngIf="staticTitle"
-            for="uploadFolder">
-            {{ staticTitle }}
-        </label>
+            for="uploadFolder">{{ staticTitle }}</label>
         <input #uploadFolders
             id="uploadFolder"
             data-automation-id="uploadFolder"
