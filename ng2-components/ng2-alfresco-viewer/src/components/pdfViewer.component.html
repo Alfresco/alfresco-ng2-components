@@ -3,8 +3,7 @@
     <div id="viewer-viewerPdf" class="pdfViewer">
         <div id="loader-container" class="loader-container">
             <div class="loader-item">
-                <div id="loader-spin" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
-                <div id="loader-text" class="loader-text">Loading <span>{{nameFile}}</span> {{laodingPercent}}%</div>
+                <md-progress-bar mode="indeterminate"></md-progress-bar>
             </div >
         </div>
     </div>
@@ -13,33 +12,62 @@
 
 
 <!-- Pagination toolbar start -->
-<div *ngIf="showToolbar" id="viewer-toolbar-pagination" class="viewer-toolbar-pagination mdl-cell--hide-tablet mdl-cell--hide-phone">
-    <div id="viewer-previous-page-button" aria-label="arrow left" class="button-page left" (click)="previousPage()" tabindex="0">
-        <i class="icon material-icons">keyboard_arrow_left</i>
+<div *ngIf="showToolbar" class="viewer-toolbar-pagination">
+    <div
+        id="viewer-previous-page-button"
+        aria-label="arrow left"
+        class="button-page left"
+        tabindex="0"
+        (click)="previousPage()">
+        <md-icon>keyboard_arrow_left</md-icon>
     </div>
 
     <div class="viewer-page-counter left" >
-        <input id="viewer-pagenumber-input"  #page
-               (keyup.enter)="inputPage(page.value)" class="viewer-pagenumber-input left" type="text" pattern="-?[0-9]*(\.[0-9]+)?" value="{{displayPage}}">
-        <div id="viewer-total-pages"  class="left viewer-total-pages">/ {{totalPages}}</div>
+        <input #page
+            class="viewer-pagenumber-input left"
+            type="text"
+            pattern="-?[0-9]*(\.[0-9]+)?"
+            value="{{ displayPage }}"
+            (keyup.enter)="inputPage(page.value)">
+        <div class="left viewer-total-pages">/ {{ totalPages }}</div>
     </div>
 
-    <div id="viewer-next-page-button" aria-label="arrow right" class="button-page left"  (click)="nextPage()" tabindex="0">
-        <i class="icon material-icons" >keyboard_arrow_right</i>
+    <div
+        id="viewer-next-page-button"
+        aria-label="arrow right"
+        class="button-page left"
+        tabindex="0"
+        (click)="nextPage()">
+        <md-icon>keyboard_arrow_right</md-icon>
     </div>
 </div>
 <!-- Pagination toolbar end -->
 
 <!-- Command toolbar start -->
-<div *ngIf="showToolbar"  id="viewer-toolbar-command" class="viewer-toolbar-command">
-    <div id="viewer-scale-page-button" aria-label="zoom out map" class="button-page left" (click)="pageFit()" tabindex="0">
-        <i class="icon material-icons">zoom_out_map</i>
+<div *ngIf="showToolbar" class="viewer-toolbar-command">
+    <div
+        id="viewer-scale-page-button"
+        aria-label="zoom out map"
+        class="button-page left"
+        tabindex="0"
+        (click)="pageFit()">
+        <md-icon>zoom_out_map</md-icon>
     </div>
-    <div id="viewer-zoom-in-button" aria-label="zoom in" class="button-page left" (click)="zoomIn()" tabindex="0">
-        <i class="icon material-icons">zoom_in</i>
+    <div
+        id="viewer-zoom-in-button"
+        aria-label="zoom in"
+        class="button-page left"
+        tabindex="0"
+        (click)="zoomIn()">
+        <md-icon>zoom_in</md-icon>
     </div>
-    <div id="viewer-zoom-out-button" aria-label="zoom out" class="button-page left" (click)="zoomOut()" tabindex="0">
-        <i class="icon material-icons">zoom_out</i>
+    <div
+        id="viewer-zoom-out-button"
+        aria-label="zoom out"
+        class="button-page left"
+        tabindex="0"
+        (click)="zoomOut()">
+        <md-icon>zoom_out</md-icon>
     </div>
 </div>
 <!-- Command toolbar end -->

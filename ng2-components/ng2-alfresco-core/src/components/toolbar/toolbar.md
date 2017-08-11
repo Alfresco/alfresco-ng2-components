@@ -41,6 +41,19 @@ The toolbar should now look similar to the following:
 
 ![](docs/adf-toolbar-02.png)
 
+## Divider
+
+You can divide groups of elements with a visual separator `<adf-toolbar-divider>`:
+
+```html
+<adf-toolbar>
+    <button></button>
+    <button></button>
+    <adf-toolbar-divider></adf-toolbar-divider>
+    <button></button>
+</adf-toolbar>
+```
+
 ## Dropdown menu
 
 You can use the following example to create a dropdown menu:

@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector  */
-
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { ContentService } from 'ng2-alfresco-core';
 
 @Component({
-    selector: 'img-viewer',
+    selector: 'adf-img-viewer',
     templateUrl: './imgViewer.component.html',
-    styleUrls: ['./imgViewer.component.css']
+    styleUrls: ['./imgViewer.component.scss'],
+    host: { 'class': 'adf-img-viewer' },
+    encapsulation: ViewEncapsulation.None
 })
 export class ImgViewerComponent implements OnChanges {
 

@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector  */
-
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { ContentService, RenditionsService } from 'ng2-alfresco-core';
 import { AlfrescoApiService } from 'ng2-alfresco-core';
 
 const DEFAULT_CONVERSION_ENCODING = 'pdf';
 
 @Component({
-    selector: 'not-supported-format',
+    selector: 'adf-not-supported-format',
     templateUrl: './notSupportedFormat.component.html',
-    styleUrls: ['./notSupportedFormat.component.css']
+    styleUrls: ['./notSupportedFormat.component.scss'],
+    host: { 'class': 'adf-not-supported-format' },
+    encapsulation: ViewEncapsulation.None
 })
 export class NotSupportedFormatComponent implements OnInit, OnDestroy {
 
