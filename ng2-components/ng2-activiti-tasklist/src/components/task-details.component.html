@@ -76,7 +76,7 @@
         </div>
     </dialog>
     <br /><br />
-    <adf-people *ngIf="showInvolvePeople"
+    <adf-people *ngIf="showInvolvePeople" #people
                 [iconImageUrl]="peopleIconImageUrl"
                 [people]="taskPeople"
                 [readOnly]="readOnlyForm"
