@@ -16,7 +16,7 @@
  */
 
 import { AfterViewInit, Component, Input } from '@angular/core';
-import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
+import { LogService } from 'ng2-alfresco-core';
 import { Observable, Observer } from 'rxjs/Rx';
 import { UserEventModel } from '../models/user-event.model';
 import { User } from '../models/user.model';
@@ -55,12 +55,8 @@ export class PeopleComponent implements AfterViewInit {
      * @param translate
      * @param people service
      */
-    constructor(translateService: AlfrescoTranslationService,
-                private peopleService: PeopleService,
+    constructor(private peopleService: PeopleService,
                 private logService: LogService) {
-        if (translateService) {
-            translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
-        }
         this.peopleSearch$ = new Observable<User[]>(observer => this.peopleSearchObserver = observer).share();
     }
 

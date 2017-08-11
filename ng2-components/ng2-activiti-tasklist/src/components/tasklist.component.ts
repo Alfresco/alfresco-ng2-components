@@ -15,24 +15,9 @@
  * limitations under the License.
  */
 
-import {
-    AfterContentInit,
-    Component,
-    ContentChild,
-    EventEmitter,
-    Input,
-    OnChanges,
-    Output,
-    SimpleChanges
-} from '@angular/core';
-import { AlfrescoTranslationService, DataColumnListComponent } from 'ng2-alfresco-core';
-import {
-    DataColumn,
-    DataRowEvent,
-    DataTableAdapter,
-    ObjectDataRow,
-    ObjectDataTableAdapter
-} from 'ng2-alfresco-datatable';
+import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { DataColumnListComponent } from 'ng2-alfresco-core';
+import { DataColumn, DataRowEvent, DataTableAdapter, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 import { Observable } from 'rxjs/Rx';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
@@ -104,11 +89,7 @@ export class TaskListComponent implements OnChanges, AfterContentInit {
         { type: 'text', key: 'created', title: 'Created', cssClass: 'hidden', sortable: true }
     ];
 
-    constructor(translateService: AlfrescoTranslationService,
-                private taskListService: TaskListService) {
-        if (translateService) {
-            translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
-        }
+    constructor(private taskListService: TaskListService) {
     }
 
     ngAfterContentInit() {

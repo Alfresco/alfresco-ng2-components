@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { AlfrescoTranslationService, ContentService, LogService } from 'ng2-alfresco-core';
+import { ContentService, LogService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { ContentLinkModel } from '../core/content-link.model';
 import { FormService } from './../../../services/form.service';
@@ -49,13 +49,9 @@ export class ContentWidgetComponent implements OnChanges {
 
     content: ContentLinkModel;
 
-    constructor(private translate: AlfrescoTranslationService,
-                protected formService: FormService,
+    constructor(protected formService: FormService,
                 private logService: LogService,
                 private contentService: ContentService) {
-        if (this.translate) {
-            this.translate.addTranslationFolder('ng2-activiti-form', 'assets/ng2-activiti-form');
-        }
     }
 
     ngOnChanges(changes: SimpleChanges) {

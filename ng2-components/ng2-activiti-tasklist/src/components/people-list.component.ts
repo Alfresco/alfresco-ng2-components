@@ -50,9 +50,6 @@ export class PeopleListComponent implements AfterViewInit, AfterContentInit {
 
     user: User;
 
-    constructor() {
-    }
-
     ngAfterContentInit() {
         this.peopleDataTable.columnList = this.columnList;
     }

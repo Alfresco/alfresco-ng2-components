@@ -20,7 +20,7 @@ import { HttpModule } from '@angular/http';
 import { MdAutocompleteModule, MdButtonModule, MdCardModule, MdCheckboxModule,
     MdDatepickerModule, MdGridListModule, MdIconModule, MdInputModule, MdListModule,
     MdOptionModule, MdRadioModule, MdSelectModule, MdSlideToggleModule, MdTableModule, MdTabsModule } from '@angular/material';
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { FormFieldComponent } from './src/components/form-field/form-field.component';
 import { FormListComponent } from './src/components/form-list.component';
@@ -104,7 +104,15 @@ export const MATERIAL_MODULE: any[] = [
         ...WIDGET_DIRECTIVES
     ],
     providers: [
-        ...ACTIVITI_FORM_PROVIDERS
+        ...ACTIVITI_FORM_PROVIDERS,
+        {
+            provide: TRANSLATION_PROVIDER,
+            multi: true,
+            useValue: {
+                name: 'ng2-activiti-form',
+                source: 'assets/ng2-activiti-form'
+            }
+        }
     ],
     exports: [
         ...ACTIVITI_FORM_DIRECTIVES,

@@ -17,7 +17,6 @@
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { ReportQuery } from 'ng2-activiti-diagrams';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AnalyticsGeneratorComponent } from './analytics-generator.component';
 
 @Component({
@@ -52,12 +51,6 @@ export class AnalyticsComponent implements OnChanges {
     analyticsgenerator: AnalyticsGeneratorComponent;
 
     reportParamQuery: ReportQuery;
-
-    constructor(translateService: AlfrescoTranslationService) {
-        if (translateService) {
-            translateService.addTranslationFolder('ng2-activiti-analytics', 'assets/ng2-activiti-analytics');
-        }
-    }
 
     ngOnChanges(changes: SimpleChanges) {
         this.analyticsgenerator.reset();

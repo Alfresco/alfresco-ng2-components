@@ -17,7 +17,6 @@
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ActivitiContentService } from 'ng2-activiti-form';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'adf-create-process-attachment',
@@ -35,12 +34,7 @@ export class CreateProcessAttachmentComponent implements OnChanges {
     @Output()
     success: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(translateService: AlfrescoTranslationService,
-                private activitiContentService: ActivitiContentService) {
-
-        if (translateService) {
-            translateService.addTranslationFolder('ng2-activiti-processlist', 'assets/ng2-activiti-processlist/src');
-        }
+    constructor(private activitiContentService: ActivitiContentService) {
     }
 
     ngOnChanges(changes: SimpleChanges) {

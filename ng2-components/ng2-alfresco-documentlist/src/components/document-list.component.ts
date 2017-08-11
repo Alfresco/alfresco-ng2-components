@@ -20,7 +20,7 @@ import {
     OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild
 } from '@angular/core';
 import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, Pagination } from 'alfresco-js-api';
-import { AlfrescoTranslationService, DataColumnListComponent } from 'ng2-alfresco-core';
+import { DataColumnListComponent } from 'ng2-alfresco-core';
 import { DataCellEvent, DataColumn, DataRowActionEvent, DataSorting, DataTableComponent, ObjectDataColumn } from 'ng2-alfresco-datatable';
 import { Observable, Subject } from 'rxjs/Rx';
 import { ImageResolver, RowFilter, ShareDataRow, ShareDataTableAdapter } from './../data/share-datatable-adapter';
@@ -156,12 +156,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     constructor(private documentListService: DocumentListService,
                 private ngZone: NgZone,
-                translateService: AlfrescoTranslationService,
                 private elementRef: ElementRef) {
-
-        if (translateService) {
-            translateService.addTranslationFolder('ng2-alfresco-documentlist', 'assets/ng2-alfresco-documentlist');
-        }
     }
 
     getContextActions(node: MinimalNodeEntity) {

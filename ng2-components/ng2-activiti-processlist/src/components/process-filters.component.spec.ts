@@ -53,7 +53,7 @@ describe('ActivitiFilters', () => {
     beforeEach(() => {
         logService = new LogServiceMock();
         activitiService = new ProcessService(null, logService);
-        filterList = new ProcessFiltersComponent(null, activitiService);
+        filterList = new ProcessFiltersComponent(activitiService);
     });
 
     it('should return the filter task list', (done) => {

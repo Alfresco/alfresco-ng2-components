@@ -36,7 +36,7 @@ import {
     ReportParametersModel,
     ReportQuery
 } from 'ng2-activiti-diagrams';
-import { AlfrescoTranslationService, ContentService, LogService } from 'ng2-alfresco-core';
+import { ContentService, LogService } from 'ng2-alfresco-core';
 import { AnalyticsService } from '../services/analytics.service';
 
 declare var componentHandler;
@@ -107,14 +107,10 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     private hideParameters: boolean = true;
     private formValidState: boolean = false;
 
-    constructor(translateService: AlfrescoTranslationService,
-                private analyticsService: AnalyticsService,
+    constructor(private analyticsService: AnalyticsService,
                 private formBuilder: FormBuilder,
                 private logService: LogService,
                 private contentService: ContentService) {
-        if (translateService) {
-            translateService.addTranslationFolder('ng2-activiti-analytics', 'assets/ng2-activiti-analytics');
-        }
     }
 
     ngOnInit() {

@@ -18,7 +18,7 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { MdButtonModule, MdIconModule, MdTooltipModule } from '@angular/material';
 import { DiagramsModule } from 'ng2-activiti-diagrams';
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 
 import { ChartsModule } from 'ng2-charts';
 import { AnalyticsGeneratorComponent } from './src/components/analytics-generator.component';
@@ -63,7 +63,15 @@ export const ANALYTICS_PROVIDERS: any[] = [
         ...ANALYTICS_DIRECTIVES
     ],
     providers: [
-        ...ANALYTICS_PROVIDERS
+        ...ANALYTICS_PROVIDERS,
+        {
+            provide: TRANSLATION_PROVIDER,
+            multi: true,
+            useValue: {
+                name: 'ng2-activiti-analytics',
+                source: 'assets/ng2-activiti-analytics'
+            }
+        }
     ],
     exports: [
         ...ANALYTICS_DIRECTIVES,

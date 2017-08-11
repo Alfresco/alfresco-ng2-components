@@ -18,7 +18,7 @@
 import { Component, EventEmitter, Inject, Input, OnInit, Optional, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
 import { MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
-import { AlfrescoContentService, AlfrescoTranslationService, HighlightDirective, SearchOptions, SearchService, SiteModel } from 'ng2-alfresco-core';
+import { AlfrescoContentService, HighlightDirective, SearchOptions, SearchService, SiteModel } from 'ng2-alfresco-core';
 import { ImageResolver, RowFilter } from '../../data/share-datatable-adapter';
 import { DocumentListComponent } from '../document-list.component';
 
@@ -69,14 +69,8 @@ export class ContentNodeSelectorComponent implements OnInit {
 
     constructor(private searchService: SearchService,
                 private contentService: AlfrescoContentService,
-                @Optional() translateService: AlfrescoTranslationService,
                 @Optional() @Inject(MD_DIALOG_DATA) data?: ContentNodeSelectorComponentData,
                 @Optional() private containingDialog?: MdDialogRef<ContentNodeSelectorComponent>) {
-
-        if (translateService) {
-            translateService.addTranslationFolder('ng2-alfresco-documentlist', 'assets/ng2-alfresco-documentlist');
-        }
-
         if (data) {
             this.title = data.title;
             this.select = data.select;

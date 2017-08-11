@@ -17,7 +17,7 @@
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ActivitiContentService } from 'ng2-activiti-form';
-import { AlfrescoTranslationService, ContentService, ThumbnailService } from 'ng2-alfresco-core';
+import { ContentService, ThumbnailService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'adf-task-attachment-list',
@@ -41,14 +41,9 @@ export class TaskAttachmentListComponent implements OnChanges {
     attachments: any[] = [];
     isLoading: boolean = true;
 
-    constructor(translateService: AlfrescoTranslationService,
-                private activitiContentService: ActivitiContentService,
+    constructor(private activitiContentService: ActivitiContentService,
                 private contentService: ContentService,
                 private thumbnailService: ThumbnailService) {
-
-        if (translateService) {
-            translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
-        }
     }
 
     ngOnChanges(changes: SimpleChanges) {

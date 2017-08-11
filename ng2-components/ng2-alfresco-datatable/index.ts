@@ -16,7 +16,7 @@
  */
 
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { MaterialModule } from './src/material.module';
 
 export * from './src/data/index';
@@ -49,6 +49,16 @@ export function directives() {
         MaterialModule
     ],
     declarations: directives(),
+    providers: [
+        {
+            provide: TRANSLATION_PROVIDER,
+            multi: true,
+            useValue: {
+                name: 'ng2-alfresco-datatable',
+                source: 'assets/ng2-alfresco-datatable'
+            }
+        }
+    ],
     exports: [
         ...directives(),
         MaterialModule
