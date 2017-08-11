@@ -28,7 +28,7 @@ import { DocumentListComponent, PermissionStyleModel } from 'ng2-alfresco-docume
 import { CreateFolderDialogComponent } from '../../dialogs/create-folder.dialog';
 import { DownloadZipDialogComponent } from './../../dialogs/download-zip.dialog';
 
-import { ViewerDialogComponent, ViewerDialogSettings, ViewerService } from 'ng2-alfresco-viewer';
+import { ViewerService } from 'ng2-alfresco-viewer';
 
 @Component({
     selector: 'adf-files-component',
