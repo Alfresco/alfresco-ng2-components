@@ -102,9 +102,10 @@
                     class="image-table-cell">
                 </data-column>
                 <data-column
-                        title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
-                        key="name"
-                        class="full-width ellipsis-cell">
+                    title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
+                    key="name"
+                    [formatTooltip]="getNodeNameTooltip"
+                    class="full-width ellipsis-cell">
                 </data-column>
                 <!-- Notes: has performance overhead due to multiple files/folders causing separate HTTP calls to get tags -->
                 <!--
