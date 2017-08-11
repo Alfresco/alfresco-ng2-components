@@ -23,7 +23,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { LogService } from './log.service';
 import { AlfrescoTranslateLoader } from './translate-loader.service';
-import { TranslationService } from './translation.service';
+import { TRANSLATION_PROVIDER, TranslationService } from './translation.service';
 
 const mockBackendResponse = (connection: MockConnection, response: string) => {
     connection.mockRespond(new Response(new ResponseOptions({body: response})));
@@ -49,7 +49,15 @@ describe('TranslationService', () => {
             providers: [
                 TranslationService,
                 LogService,
-                {provide: XHRBackend, useClass: MockBackend}
+                { provide: XHRBackend, useClass: MockBackend },
+                {
+                    provide: TRANSLATION_PROVIDER,
+                    multi: true,
+                    useValue: {
+                        name: 'ng2-alfresco-core',
+                        source: 'assets/ng2-alfresco-core'
+                    }
+                }
             ]
         });
         injector = getTestBed();

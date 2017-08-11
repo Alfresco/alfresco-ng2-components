@@ -23,7 +23,7 @@ import { DiagramsModule } from 'ng2-activiti-diagrams';
 import { ActivitiFormModule } from 'ng2-activiti-form';
 import { ActivitiProcessListModule } from 'ng2-activiti-processlist';
 import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
-import { AppConfigService, CoreModule } from 'ng2-alfresco-core';
+import { AppConfigService, CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { DocumentListModule } from 'ng2-alfresco-documentlist';
 import { LoginModule } from 'ng2-alfresco-login';
@@ -128,7 +128,15 @@ if (process.env.ENV === 'production') {
         FormListDemoComponent
     ],
     providers: [
-        { provide: AppConfigService, useClass: DebugAppConfigService }
+        { provide: AppConfigService, useClass: DebugAppConfigService },
+        {
+            provide: TRANSLATION_PROVIDER,
+            multi: true,
+            useValue: {
+                name: 'app',
+                source: 'resources'
+            }
+        }
     ],
     bootstrap: [ AppComponent ],
     entryComponents: [

@@ -16,7 +16,6 @@
  */
 
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { AppDefinitionRepresentationModel } from '../models/filter.model';
@@ -65,13 +64,7 @@ export class AppsListComponent implements OnInit {
      * @param translate Translate service
      * @param activitiTaskList Task service
      */
-    constructor(translateService: AlfrescoTranslationService,
-                private activitiTaskList: TaskListService) {
-
-        if (translateService) {
-            translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
-        }
-
+    constructor(private activitiTaskList: TaskListService) {
         this.apps$ = new Observable<AppDefinitionRepresentationModel>(observer =>  this.appsObserver = observer).share();
     }
 

@@ -144,7 +144,7 @@ describe('DropdownBreadcrumb', () => {
     });
 
     it('should update document list  when clicking on an option', () => {
-        let documentList = new DocumentListComponent(null, null, null, null);
+        let documentList = new DocumentListComponent(null, null, null);
         spyOn(documentList, 'loadFolderByNodeId').and.stub();
         component.target = documentList;
         fakeNodeWithCreatePermission.path.elements = [{ id: '1', name: 'Stark Industries' }];

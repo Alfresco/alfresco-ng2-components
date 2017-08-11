@@ -52,14 +52,6 @@ describe('SearchControlComponent', () => {
         });
     }));
 
-    it('should setup i18n folder', () => {
-        let translationService = TestBed.get(AlfrescoTranslationService);
-        spyOn(translationService, 'addTranslationFolder');
-        fixture.detectChanges();
-        expect(translationService.addTranslationFolder)
-            .toHaveBeenCalledWith('ng2-alfresco-search', 'assets/ng2-alfresco-search');
-    });
-
     it('should emit searchChange when search term input changed', (done) => {
         fixture.componentInstance.searchChange.subscribe(e => {
             expect(e.value).toBe('customSearchTerm');
