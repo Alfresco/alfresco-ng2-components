@@ -19,22 +19,6 @@
   padding-left: 0px;
 }
 
-.mdl-chip-search-people {
-  margin: auto;
-  min-width: 60%;
-  &:hover {
-    background-color: #c1c1c1;
-    cursor: pointer;
-  }
-  img {
-    margin-left: -30px;
-  }
-}
-
-.mdl-chip-search-people__text {
-  padding-left: 10px;
-}
-
 .search-text-header {
   font-weight: bold;
   opacity: 0.54;
@@ -85,8 +69,4 @@ adf-people-list /deep/ adf-datatable /deep/ .people-full-name {
 
 adf-people-list /deep/ alfresco-datatable /deep/ td.mdl-data-table__cell--non-numeric.non-selectable.data-cell {
   padding: 4px 12px;
-}
-
-.mdl-textfield {
-  width: 100%;
 }
