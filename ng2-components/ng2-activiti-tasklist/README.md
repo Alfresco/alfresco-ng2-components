@@ -39,6 +39,11 @@
 - [Task People Component](#task-people-component)
   * [Properties](#properties-8)
     + [Events](#events-7)
+    + [How to customize the people component behavior](#how-to-customize-the-people-component-behavior)
+    + [Involve People single click and close search](#involve-people-single-click-and-close-search)
+    + [Involve People single click without close search](#involve-people-single-click-without-close-search)
+    + [Involve People double click and close search](#involve-people-double-click-and-close-search)
+    + [Involve People double double without close search](#involve-people-double-double-without-close-search)
 - [ADF Comments Component](#adf-comments-component)
   * [Properties](#properties-9)
     + [Events](#events-8)
@@ -50,7 +55,7 @@
     + [Events](#events-10)
 - [People Search Component](#people-search-component)
   * [Properties](#properties-12)
-  * [Events](#events-12)
+  * [Events](#events-11)
 - [Build from sources](#build-from-sources)
 - [NPM scripts](#npm-scripts)
 - [Demo](#demo)
@@ -473,6 +478,66 @@ This component displays involved users to a specified task
 #### Events
 
 No Events
+
+#### How to customize the people component behavior
+
+The people component provide two methods to customize the behavior:
+- involveUserAndCloseSearch: The selected user is going to be added and the search section closed
+- involveUserWithoutCloseSearch: The selected user is going to be added without close the search section
+
+In this way will be easy customize the people component to involve the user with the single or double click event:
+
+#### Involve People single click and close search
+
+```html
+<adf-people #people
+    (row-click)="people.involveUserAndCloseSearch()"
+    [people]="YOUR_INVOLVED_PEOPLE_LIST"
+    [taskId]="YOUR_TASK_ID"
+    [readOnly]="YOUR_READ_ONLY_FLAG">
+</adf-people>
+```
+
+![involve-people-single-click-and-close-search](docs/assets/involve-people-single-click-and-close-search.gif)
+
+#### Involve People single click without close search
+
+```html
+<adf-people #people
+    (row-click)="people.involveUserWithoutCloseSearch()"
+    [people]="YOUR_INVOLVED_PEOPLE_LIST"
+    [taskId]="YOUR_TASK_ID"
+    [readOnly]="YOUR_READ_ONLY_FLAG">
+</adf-people>
+```
+
+![involve-people-single-click-without-close-search](docs/assets/involve-people-single-click-without-close-search.gif)
+
+#### Involve People double click and close search
+
+```html
+<adf-people #people
+    (row-dblclick)="people.involveUserAndCloseSearch()"
+    [people]="YOUR_INVOLVED_PEOPLE_LIST"
+    [taskId]="YOUR_TASK_ID"
+    [readOnly]="YOUR_READ_ONLY_FLAG">
+</adf-people>
+```
+
+![involve-people-double-click-and-close-search](docs/assets/involve-people-double-click-and-close-search.gif)
+
+#### Involve People double double without close search
+
+```html
+<adf-people #people
+    (row-dblclick)="people.involveUserWithoutCloseSearch()"
+    [people]="YOUR_INVOLVED_PEOPLE_LIST"
+    [taskId]="YOUR_TASK_ID"
+    [readOnly]="YOUR_READ_ONLY_FLAG">
+</adf-people>
+```
+
+![involve-people-double-click-without-close-search](docs/assets/involve-people-double-click-without-close-search.gif)
 
 ## ADF Comments Component
 

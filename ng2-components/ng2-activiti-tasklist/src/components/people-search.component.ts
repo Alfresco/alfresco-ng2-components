@@ -73,7 +73,12 @@ export class PeopleSearchComponent implements OnInit {
         this.closeSearch.emit();
     }
 
-    addInvolvedUser() {
+    involveUserAndClose() {
+        this.involveUser();
+        this.closeSearchList();
+    }
+
+    involveUser() {
         if (this.selectedUser === undefined) {
             return;
         }
