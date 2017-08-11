@@ -48,7 +48,7 @@ import { RenditionsService } from './src/services/renditions.service';
 import { StorageService } from './src/services/storage.service';
 import { ThumbnailService } from './src/services/thumbnail.service';
 import { AlfrescoTranslateLoader } from './src/services/translate-loader.service';
-import { TranslationService } from './src/services/translation.service';
+import { TRANSLATION_PROVIDER, TranslationService } from './src/services/translation.service';
 import { UploadService } from './src/services/upload.service';
 import { UserPreferencesService } from './src/services/user-preferences.service';
 
@@ -81,7 +81,7 @@ export { NotificationService } from './src/services/notification.service';
 export { LogService } from './src/services/log.service';
 export { LogServiceMock } from './src/services/log.service';
 export { AuthenticationService } from './src/services/authentication.service';
-export { TranslationService } from './src/services/translation.service';
+export { TranslationService, TRANSLATION_PROVIDER, TranslationProvider } from './src/services/translation.service';
 export { AlfrescoTranslateLoader } from './src/services/translate-loader.service';
 export { AppConfigService } from './src/services/app-config.service';
 export { InitAppConfigServiceProvider } from './src/services/app-config.service';
@@ -232,7 +232,19 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         HighlightPipe,
         TimeAgoPipe
     ],
-    providers: [...providers(), ...deprecatedProviders(), MomentDateAdapter],
+    providers: [
+        ...providers(),
+        ...deprecatedProviders(),
+        MomentDateAdapter,
+        {
+            provide: TRANSLATION_PROVIDER,
+            multi: true,
+            useValue: {
+                name: 'ng2-alfresco-core',
+                source: 'assets/ng2-alfresco-core'
+            }
+        }
+    ],
     exports: [
         BrowserAnimationsModule,
         CommonModule,

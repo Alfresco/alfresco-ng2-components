@@ -20,7 +20,7 @@ import {
     IterableDiffers, OnChanges, Output, SimpleChange, SimpleChanges, TemplateRef
 } from '@angular/core';
 import { MdCheckboxChange } from '@angular/material';
-import { AlfrescoTranslationService, DataColumnListComponent } from 'ng2-alfresco-core';
+import { DataColumnListComponent } from 'ng2-alfresco-core';
 import { Observable, Observer, Subscription } from 'rxjs/Rx';
 import { DataColumn, DataRow, DataRowEvent, DataSorting, DataTableAdapter } from '../../data/datatable-adapter';
 import { ObjectDataRow, ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
@@ -106,17 +106,11 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     private singleClickStreamSub: Subscription;
     private multiClickStreamSub: Subscription;
 
-    constructor(translateService: AlfrescoTranslationService,
-                private elementRef: ElementRef,
-                differs: IterableDiffers) {
+    constructor(private elementRef: ElementRef, differs: IterableDiffers) {
         if (differs) {
             this.differ = differs.find([]).create(null);
         }
         this.click$ = new Observable<DataRowEvent>(observer => this.clickObserver = observer).share();
-
-        if (translateService) {
-            translateService.addTranslationFolder('ng2-alfresco-datatable', 'assets/ng2-alfresco-datatable');
-        }
     }
 
     ngAfterContentInit() {

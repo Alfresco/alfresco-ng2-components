@@ -16,7 +16,7 @@
  */
 
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
-import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
+import { LogService } from 'ng2-alfresco-core';
 import { FormService } from './../services/form.service';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
 import { FormComponent } from './form.component';
@@ -72,16 +72,10 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
     @ViewChild('outcomesContainer', {})
     outcomesContainer: ElementRef = null;
 
-    constructor(private translate: AlfrescoTranslationService,
-                formService: FormService,
+    constructor(formService: FormService,
                 visibilityService: WidgetVisibilityService,
                 logService: LogService) {
         super(formService, visibilityService, null, null);
-
-        if (this.translate) {
-            this.translate.addTranslationFolder('ng2-activiti-form', 'assets/ng2-activiti-form');
-        }
-
         this.showTitle = false;
     }
 

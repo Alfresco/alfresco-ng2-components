@@ -27,7 +27,7 @@ import { Component,
     ViewChild
 } from '@angular/core';
 import { ContentLinkModel, FormFieldValidator, FormModel, FormOutcomeEvent } from 'ng2-activiti-form';
-import { AlfrescoAuthenticationService, AlfrescoTranslationService, CardViewUpdateService, ClickNotification, LogService, UpdateNotification } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, CardViewUpdateService, ClickNotification, LogService, UpdateNotification } from 'ng2-alfresco-core';
 import { Observable, Observer } from 'rxjs/Rx';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
@@ -140,16 +140,11 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     private peopleSearchObserver: Observer<User[]>;
     peopleSearch$: Observable<User[]>;
 
-    constructor(translateService: AlfrescoTranslationService,
-                private activitiTaskList: TaskListService,
+    constructor(private activitiTaskList: TaskListService,
                 private authService: AlfrescoAuthenticationService,
                 private peopleService: PeopleService,
                 private logService: LogService,
                 private cardViewUpdateService: CardViewUpdateService) {
-        if (translateService) {
-            translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
-        }
-
         this.peopleSearch$ = new Observable<User[]>(observer => this.peopleSearchObserver = observer).share();
     }
 

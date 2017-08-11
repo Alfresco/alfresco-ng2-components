@@ -27,7 +27,7 @@ describe('ContentColumnList', () => {
 
     beforeEach(() => {
         let documentListService = new DocumentListServiceMock();
-        documentList = new DocumentListComponent(documentListService, null, null, null);
+        documentList = new DocumentListComponent(documentListService, null, null);
         actionList = new ContentActionListComponent(documentList);
     });
 

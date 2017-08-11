@@ -17,7 +17,7 @@
 
 import { DatePipe } from '@angular/common';
 import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService, DataColumnListComponent } from 'ng2-alfresco-core';
+import { DataColumnListComponent } from 'ng2-alfresco-core';
 import { DataColumn, DataRowEvent, DataSorting, DataTableAdapter, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 import { ProcessFilterRequestRepresentation } from '../models/process-instance-filter.model';
 import { ProcessInstance } from '../models/process-instance.model';
@@ -69,11 +69,7 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
         { type: 'text', key: 'created', title: 'Created', cssClass: 'hidden', sortable: true }
     ];
 
-    constructor(private processService: ProcessService,
-                translate: AlfrescoTranslationService) {
-        if (translate !== null) {
-            translate.addTranslationFolder('ng2-activiti-processlist', 'assets/ng2-activiti-processlist');
-        }
+    constructor(private processService: ProcessService) {
     }
 
     ngAfterContentInit() {

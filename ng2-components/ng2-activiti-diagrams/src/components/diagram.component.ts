@@ -16,7 +16,6 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { DiagramElementModel, DiagramModel } from '../models/diagram.model';
 import { DiagramColorService } from '../services/diagram-color.service';
 import { DiagramsService } from '../services/diagrams.service';
@@ -60,13 +59,9 @@ export class DiagramComponent implements OnChanges {
 
     diagram: DiagramModel;
 
-    constructor(translateService: AlfrescoTranslationService,
-                private diagramColorService: DiagramColorService,
+    constructor(private diagramColorService: DiagramColorService,
                 private raphaelService: RaphaelService,
                 private diagramsService: DiagramsService) {
-        if (translateService) {
-            translateService.addTranslationFolder('ng2-activiti-diagrams', 'assets/ng2-activiti-diagrams');
-        }
     }
 
     ngOnChanges(changes: SimpleChanges) {

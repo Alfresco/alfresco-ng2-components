@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
+import { LogService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { Form } from '../models/form.model';
 import { StartTaskModel } from '../models/start-task.model';
@@ -62,14 +62,9 @@ export class StartTaskComponent implements OnInit {
      * @param translate
      * @param taskService
      */
-    constructor(translateService: AlfrescoTranslationService,
-                private taskService: TaskListService,
+    constructor(private taskService: TaskListService,
                 private peopleService: PeopleService,
                 private logService: LogService) {
-
-        if (translateService) {
-            translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
-        }
     }
 
     ngOnInit() {

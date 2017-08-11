@@ -18,7 +18,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { TaskDetailsEvent, TaskDetailsModel } from 'ng2-activiti-tasklist';
-import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
+import { LogService } from 'ng2-alfresco-core';
 import { Observable, Observer } from 'rxjs/Rx';
 import { ProcessInstance } from '../models/process-instance.model';
 import { ProcessService } from './../services/process.service';
@@ -65,13 +65,8 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges {
     @Output()
     taskClick: EventEmitter<TaskDetailsEvent> = new EventEmitter<TaskDetailsEvent>();
 
-    constructor(translate: AlfrescoTranslationService,
-                private activitiProcess: ProcessService,
+    constructor(private activitiProcess: ProcessService,
                 private logService: LogService) {
-        if (translate) {
-            translate.addTranslationFolder('ng2-activiti-processlist', 'assets/ng2-activiti-processlist');
-        }
-
         this.task$ = new Observable<TaskDetailsModel>(observer => this.taskObserver = observer).share();
         this.completedTask$ = new Observable<TaskDetailsModel>(observer => this.completedTaskObserver = observer).share();
     }

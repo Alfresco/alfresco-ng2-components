@@ -17,7 +17,7 @@
 
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { MdCheckboxModule, MdIconModule, MdInputModule, MdProgressSpinnerModule } from '@angular/material';
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 
 import { LoginComponent } from './src/components/login.component';
 import { LoginFooterDirective } from './src/directives/login-footer.directive';
@@ -51,7 +51,16 @@ export const ALFRESCO_LOGIN_DIRECTIVES: any[] = [
     declarations: [
         ...ALFRESCO_LOGIN_DIRECTIVES
     ],
-    providers: [],
+    providers: [
+        {
+            provide: TRANSLATION_PROVIDER,
+            multi: true,
+            useValue: {
+                name: 'ng2-alfresco-login',
+                source: 'assets/ng2-alfresco-login'
+            }
+        }
+    ],
     exports: [
         ...ALFRESCO_LOGIN_DIRECTIVES,
         MdInputModule,

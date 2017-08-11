@@ -57,10 +57,6 @@ export class TagActionsComponent implements OnChanges {
     disableAddTag: boolean = true;
 
     constructor(private tagService: TagService, private translateService: AlfrescoTranslationService) {
-        if (translateService) {
-            translateService.addTranslationFolder('ng2-alfresco-tag', 'assets/ng2-alfresco-tag');
-        }
-
         this.tagService.refresh.subscribe(() => {
             this.refreshTag();
         });

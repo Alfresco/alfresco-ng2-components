@@ -17,7 +17,6 @@
 
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Observable';
 import { User } from '../models/user.model';
 
@@ -47,11 +46,7 @@ export class PeopleSearchComponent implements OnInit {
 
     selectedUser: User;
 
-    constructor(translateService: AlfrescoTranslationService) {
-        if (translateService) {
-            translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
-        }
-
+    constructor() {
         this.searchUser
             .valueChanges
             .debounceTime(200)
