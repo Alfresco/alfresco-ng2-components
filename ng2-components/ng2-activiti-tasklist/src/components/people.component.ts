@@ -155,7 +155,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
         this.showAssignment = false;
     }
 
-    getImage(user: User) {
-        return 'url(' + user.userImage + ')';
+    onErrorImageLoad(user: User) {
+        user.userImage = null;
     }
 }

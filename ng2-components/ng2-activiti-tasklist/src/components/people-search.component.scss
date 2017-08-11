@@ -24,6 +24,10 @@
   opacity: 0.54;
 }
 
+.search-text-container {
+    width: 100%;
+}
+
 .search-list-container {
   max-height: 152px;
   width: 100%;
@@ -53,18 +57,24 @@ adf-people-list /deep/ adf-datatable /deep/ .people-full-name {
 }
 
 .people-pic {
-  background: mat-color($primary);
-  background-size: cover;
-  padding: 10px 6px;
-  border-radius: 90%;
-  color: #fff;
-  width: 30px;
-  text-align: center;
-  font-weight: bolder;
-  font-size: 16px;
-  font-family: Muli;
-  text-transform: uppercase;
-  vertical-align: middle;
+    background: mat-color($primary);
+    width: 30px;
+    padding: 10px 5px;
+    border-radius: 90%;
+    color: #fff;
+    text-align: center;
+    font-weight: bolder;
+    font-size: 18px;
+    font-family: Muli;
+    text-transform: uppercase;
+    vertical-align: text-bottom;
+}
+
+.people-img {
+    border-radius: 90%;
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
 }
 
 adf-people-list /deep/ alfresco-datatable /deep/ td.mdl-data-table__cell--non-numeric.non-selectable.data-cell {

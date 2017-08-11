@@ -78,8 +78,8 @@ export class CommentListComponent {
         return this.comments && this.comments.length && true;
     }
 
-    getImage(user: User) {
-        return 'url(' + user.userImage + ')';
+    onErrorImageLoad(user: User) {
+        user.userImage = null;
     }
 
 }

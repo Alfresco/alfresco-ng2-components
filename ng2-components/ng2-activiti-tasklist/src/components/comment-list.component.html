@@ -7,9 +7,14 @@
             <ng-template let-entry="$implicit">
                 <div id="comment-user-icon"
                 class="adf-comment-img-container">
-                    <div class="adf-comment-user-icon"
-                    [style.background-image]="getImage(entry.row.obj.createdBy)">
-                    {{getUserShortName(entry.row.obj.createdBy)}}</div>
+                    <div id="comment-user-icon"
+                        *ngIf="!entry.row.obj.createdBy.userImage" class="adf-comment-user-icon">
+                            {{getUserShortName(entry.row.obj.createdBy)}}</div>
+                    <div>
+                        <img *ngIf="entry.row.obj.createdBy.userImage" class="adf-people-img"
+                            [src]="entry.row.obj.createdBy.userImage"
+                            (error)="onErrorImageLoad(entry.row.obj.createdBy)"/>
+                    </div>
                 </div>
             </ng-template>
         </data-column>

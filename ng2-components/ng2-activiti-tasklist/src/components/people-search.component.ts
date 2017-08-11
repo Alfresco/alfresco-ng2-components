@@ -105,7 +105,7 @@ export class PeopleSearchComponent implements OnInit {
         return (this.users && this.users.length > 0);
     }
 
-    getImage(user: User) {
-        return 'url(' + user.userImage + ')';
+    onErrorImageLoad(user: User) {
+        user.userImage = null;
     }
 }

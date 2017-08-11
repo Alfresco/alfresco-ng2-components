@@ -58,8 +58,8 @@ adf-people-list /deep/ adf-datatable /deep/ {
   }
   .people-pic {
     background: mat-color($primary);
-    background-size: cover;
-    padding: 10px 10px;
+    width: 30px;
+    padding: 10px 5px;
     border-radius: 100px;
     color: #fff;
     text-align: center;
@@ -67,14 +67,15 @@ adf-people-list /deep/ adf-datatable /deep/ {
     font-size: 18px;
     font-family: Muli;
     text-transform: uppercase;
+    vertical-align: text-bottom;
   }
 }
 
 .people-img {
-  border-radius: 90%;
-  width: 40px;
-  height: 40px;
-  vertical-align: middle;
+    border-radius: 90%;
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
 }
 
 adf-people-list /deep/ adf-datatable /deep/ td.mdl-data-table__cell--non-numeric.non-selectable.data-cell {
