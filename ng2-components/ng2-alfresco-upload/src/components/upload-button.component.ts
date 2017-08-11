@@ -55,6 +55,9 @@ export class UploadButtonComponent implements OnInit, OnChanges {
     @Input()
     staticTitle: string;
 
+    @Input()
+    tooltip: string = null;
+
     /**
      * @deprecated Deprecated in 1.6.0, this property is not used for couple of releases already.
      *
