@@ -29,6 +29,8 @@
                     </adf-dropdown-breadcrumb>
                 </adf-toolbar-title>
 
+                <adf-toolbar-divider></adf-toolbar-divider>
+
                 <button md-icon-button
                     (click)="onCreateFolderClicked($event)">
                     <md-icon>create_new_folder</md-icon>
@@ -55,6 +57,8 @@
                     <button md-menu-item (click)="toolbarColor = 'accent'">Accent</button>
                     <button md-menu-item (click)="toolbarColor = 'warn'">Warn</button>
                 </md-menu>
+
+                <adf-toolbar-divider></adf-toolbar-divider>
 
                 <button md-icon-button [mdMenuTriggerFor]="menu">
                     <md-icon>more_vert</md-icon>
@@ -210,6 +214,14 @@
 </div>
 
 <div class="container">
+    <section *ngIf="!useViewerDialog">
+        <md-slide-toggle [(ngModel)]="useInlineViewer">Use inline viewer (no overlay)</md-slide-toggle>
+    </section>
+
+    <section>
+        <md-slide-toggle [(ngModel)]="useViewerDialog">Use File Viewer dialog</md-slide-toggle>
+    </section>
+
     <section>
         <md-slide-toggle [(ngModel)]="multiselect">Multiselect (with checkboxes)</md-slide-toggle>
     </section>
@@ -291,26 +303,28 @@
 
 <file-uploading-dialog #fileDialog></file-uploading-dialog>
 
-<div *ngIf="fileShowed">
-    <alfresco-viewer [(showViewer)]="fileShowed"
-                     [fileNodeId]="fileNodeId"
-                     [overlayMode]="true">
+<div *ngIf="showViewer">
+    <ng-container *ngIf="!useInlineViewer">
+        <alfresco-viewer
+            [(showViewer)]="showViewer"
+            [fileNodeId]="fileNodeId"
+            [overlayMode]="true">
 
-        <extension-viewer [supportedExtensions]="['obj','3DS']" #extension>
-            <ng-template let-urlFileContent="urlFileContent" let-extension="extension" >
-                <threed-viewer [urlFile]="urlFileContent" [extension]="extension" ></threed-viewer>
-            </ng-template>
-        </extension-viewer>
+            <extension-viewer [supportedExtensions]="['obj','3DS']" #extension>
+                <ng-template let-urlFileContent="urlFileContent" let-extension="extension" >
+                    <threed-viewer [urlFile]="urlFileContent" [extension]="extension" ></threed-viewer>
+                </ng-template>
+            </extension-viewer>
 
-    </alfresco-viewer>
+        </alfresco-viewer>
+    </ng-container>
 
-    <!-- Comment the viewer above and uncomment that one below if you want test the overlay false viewer-->
-
-    <!--<div *ngIf="fileShowed" class="adf-not-overlay-viewer">-->
-        <!--<alfresco-viewer [(showViewer)]="fileShowed"-->
-                         <!--[fileNodeId]="fileNodeId"-->
-                         <!--[overlayMode]="false">-->
-        <!--</alfresco-viewer>-->
-    <!--</div>-->
-
+    <ng-container *ngIf="useInlineViewer">
+        <div class="adf-not-overlay-viewer">
+            <alfresco-viewer
+                [(showViewer)]="showViewer"
+                [fileNodeId]="fileNodeId">
+            </alfresco-viewer>
+        </div>
+    </ng-container>
 </div>

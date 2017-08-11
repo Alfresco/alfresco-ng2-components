@@ -17,13 +17,10 @@
 
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import {
-    AlfrescoApiService,
-    AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
-    CoreModule,
-    RenditionsService
-} from 'ng2-alfresco-core';
+
+import { CoreModule } from 'ng2-alfresco-core';
+import { MaterialModule } from './../material.module';
+
 import { EventMock } from '../assets/event.mock';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { ImgViewerComponent } from './imgViewer.component';
@@ -35,7 +32,7 @@ import { ViewerComponent } from './viewer.component';
 
 declare let jasmine: any;
 
-describe('Test ng2-alfresco-viewer ViewerComponent', () => {
+describe('ViewerComponent', () => {
 
     let component: ViewerComponent;
     let fixture: ComponentFixture<ViewerComponent>;
@@ -45,7 +42,8 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                CoreModule,
+                MaterialModule
             ],
             declarations: [
                 ViewerComponent,
@@ -56,11 +54,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
                 ImgViewerComponent
             ],
             providers: [
-                AlfrescoSettingsService,
-                AlfrescoAuthenticationService,
-                AlfrescoApiService,
-                RenderingQueueServices,
-                RenditionsService
+                RenderingQueueServices
             ]
         }).compileComponents();
     }));
@@ -94,40 +88,32 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
                 fixture.detectChanges();
             });
 
-            it('should shadow overlay be present if is overlay mode', () => {
-                expect(element.querySelector('#viewer-shadow-transparent')).not.toBeNull();
-            });
-
             it('should header be present if is overlay mode', () => {
-                expect(element.querySelector('header')).not.toBeNull();
+                expect(element.querySelector('.adf-viewer-toolbar')).not.toBeNull();
             });
 
             it('should Name File be present if is overlay mode ', () => {
                 component.ngOnChanges(null).then(() => {
                     fixture.detectChanges();
-                    expect(element.querySelector('#viewer-name-file').innerHTML).toEqual('fake-test-file.pdf');
+                    expect(element.querySelector('.adf-viewer-filename').innerHTML).toEqual('fake-test-file.pdf');
                 });
             });
 
             it('should Close button be present if overlay mode', () => {
-                expect(element.querySelector('#viewer-close-button')).not.toBeNull();
+                expect(element.querySelector('.adf-viewer-close-button')).not.toBeNull();
             });
 
             it('should Click on close button hide the viewer', () => {
-                let closebutton: any = element.querySelector('#viewer-close-button');
+                let closebutton: any = element.querySelector('.adf-viewer-close-button');
                 closebutton.click();
                 fixture.detectChanges();
-                expect(element.querySelector('#viewer-main-container')).toBeNull();
+                expect(element.querySelector('.adf-viewer-content')).toBeNull();
             });
 
             it('should Esc button hide the viewer', () => {
                 EventMock.keyDown(27);
                 fixture.detectChanges();
-                expect(element.querySelector('#viewer-main-container')).toBeNull();
-            });
-
-            it('should all-space class not be present if is in overlay mode', () => {
-                expect(element.querySelector('#viewer').getAttribute('class')).toEqual('');
+                expect(element.querySelector('.adf-viewer-content')).toBeNull();
             });
         });
 
@@ -143,17 +129,13 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
             });
 
             it('should Close button be not present if is not overlay mode', () => {
-                expect(element.querySelector('#viewer-close-button')).toBeNull();
+                expect(element.querySelector('.adf-viewer-close-button')).toBeNull();
             });
 
             it('should Esc button not hide the viewer if is not overlay mode', () => {
                 EventMock.keyDown(27);
                 fixture.detectChanges();
-                expect(element.querySelector('#viewer-main-container')).not.toBeNull();
-            });
-
-            it('all-space class should be present if is not overlay mode', () => {
-                expect(element.querySelector('#viewer').getAttribute('class')).toEqual('all-space');
+                expect(element.querySelector('.adf-viewer-content')).not.toBeNull();
             });
         });
     });
@@ -196,7 +178,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
             component.showViewer = false;
 
             fixture.detectChanges();
-            expect(element.querySelector('#viewer-main-container')).toBeNull();
+            expect(element.querySelector('.adf-viewer-content')).toBeNull();
         });
     });
 
@@ -206,7 +188,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
 
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
-                expect(element.querySelector('pdf-viewer')).not.toBeNull();
+                expect(element.querySelector('adf-pdf-viewer')).not.toBeNull();
                 done();
             });
         });
@@ -226,7 +208,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
 
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
-                expect(element.querySelector('media-player')).not.toBeNull();
+                expect(element.querySelector('adf-media-player')).not.toBeNull();
                 done();
             });
         });
@@ -236,7 +218,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
 
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
-                expect(element.querySelector('media-player')).not.toBeNull();
+                expect(element.querySelector('adf-media-player')).not.toBeNull();
                 done();
             });
         });
@@ -246,7 +228,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
 
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
-                expect(element.querySelector('media-player')).not.toBeNull();
+                expect(element.querySelector('adf-media-player')).not.toBeNull();
                 done();
             });
         });
@@ -256,7 +238,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
 
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
-                expect(element.querySelector('txt-viewer')).not.toBeNull();
+                expect(element.querySelector('adf-txt-viewer')).not.toBeNull();
                 done();
             });
         });
@@ -267,7 +249,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
 
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
-                expect(element.querySelector('not-supported-format')).not.toBeNull();
+                expect(element.querySelector('adf-not-supported-format')).not.toBeNull();
                 done();
             });
         });
@@ -280,7 +262,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
 
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
-                expect(element.querySelector('pdf-viewer')).not.toBeNull();
+                expect(element.querySelector('adf-pdf-viewer')).not.toBeNull();
                 done();
             });
 
@@ -292,7 +274,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
 
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
-                expect(element.querySelector('pdf-viewer')).not.toBeNull();
+                expect(element.querySelector('adf-pdf-viewer')).not.toBeNull();
                 done();
             });
         });
@@ -325,7 +307,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
 
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
-                expect(element.querySelector('media-player')).not.toBeNull();
+                expect(element.querySelector('adf-media-player')).not.toBeNull();
                 done();
             });
         });
@@ -336,7 +318,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
 
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
-                expect(element.querySelector('txt-viewer')).not.toBeNull();
+                expect(element.querySelector('adf-txt-viewer')).not.toBeNull();
                 done();
             });
         });
@@ -347,7 +329,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
 
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
-                expect(element.querySelector('media-player')).not.toBeNull();
+                expect(element.querySelector('adf-media-player')).not.toBeNull();
                 done();
             });
         });
@@ -358,7 +340,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
 
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
-                expect(element.querySelector('media-player')).toBeNull();
+                expect(element.querySelector('adf-media-player')).toBeNull();
                 done();
             });
         });

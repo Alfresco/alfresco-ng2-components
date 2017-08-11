@@ -11,7 +11,6 @@
     .mat-dialog-content {
         display: flex;
         max-height: 90vh;
-        justify-content: center;
     }
 
     &-unknown-view {
@@ -23,7 +22,7 @@
         justify-content: center;
     }
 
-    &__image-view {
+    &-image-view {
         display: flex;
         flex: 1;
         text-align: center;
@@ -32,44 +31,6 @@
         height: 90vh;
         img {
             object-fit: contain;
-        }
-    }
-
-    &__text-view {
-        display: flex;
-        background-color: white;
-        width: 100vw;
-        overflow: hidden;
-
-        & > pre {
-            overflow: auto;
-            width: 100%;
-        }
-    }
-
-    &__video-view {
-        video {
-            display: flex;
-            flex: 1;
-            max-height: 90vh;
-        }
-    }
-
-    &__audio-view {
-        video {
-            display: flex;
-            flex: 1;
-            max-height: 90vh;
-        }
-    }
-
-    &__pdf-view {
-        .viewer-pdf-container {
-            top: 52px;
-            left: 7px;
-            right: 7px;
-            border: 1px solid lightgray;
-            background-color: lightgray;
         }
     }
 }
