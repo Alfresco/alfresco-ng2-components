@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import { AfterViewInit, Component, Input } from '@angular/core';
+import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
 import { Observable, Observer } from 'rxjs/Rx';
 import { UserEventModel } from '../models/user-event.model';
 import { User } from '../models/user.model';
+import { PeopleSearchComponent } from './people-search.component';
 
 import { PeopleService } from '../services/people.service';
 
@@ -44,6 +45,9 @@ export class PeopleComponent implements AfterViewInit {
 
     @Input()
     readOnly: boolean = false;
+
+    @ViewChild(PeopleSearchComponent)
+    peopleSearch: PeopleSearchComponent;
 
     showAssignment: boolean = false;
 
@@ -74,6 +78,18 @@ export class PeopleComponent implements AfterViewInit {
         return isUpgraded;
     }
 
+    involveUserAndCloseSearch() {
+        if (this.peopleSearch) {
+            this.peopleSearch.involveUserAndClose();
+        }
+    }
+
+    involveUserWithoutCloseSearch() {
+        if (this.peopleSearch) {
+            this.peopleSearch.involveUser();
+        }
+    }
+
     searchUser(searchedWord: string) {
         this.peopleService.getWorkflowUsers(this.taskId, searchedWord)
             .subscribe((users) => {
@@ -82,7 +98,6 @@ export class PeopleComponent implements AfterViewInit {
     }
 
     involveUser(user: User) {
-        this.showAssignment = false;
         this.peopleService.involveUserWithTask(this.taskId, user.id.toString())
             .subscribe(() => {
                 this.people = [...this.people, user];
