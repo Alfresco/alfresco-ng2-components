@@ -2,6 +2,7 @@
 
 :host {
     & .upload-dialog {
+        color: $alfresco-secondary-text-color;
         position: fixed;
         bottom: 20px;
         width: 40%;
