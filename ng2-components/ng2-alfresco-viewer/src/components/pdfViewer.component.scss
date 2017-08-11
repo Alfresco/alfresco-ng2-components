@@ -1,0 +1,91 @@
+.adf-pdf-viewer {
+    .loader-container {
+        display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+        display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+        display: -webkit-flex;     /* NEW - Chrome */
+        display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
+        -webkit-box-flex-direction: row;
+        -moz-box-flex-direction: row;
+        -webkit-flex-direction: row;
+        flex-direction: row;
+        height:100%;
+    }
+
+    .loader-item {
+        margin: auto;
+        max-height:100px;
+        max-width:300px;
+    }
+
+    .left {
+        float: left;
+    }
+
+    .viewer-toolbar-pagination{
+        padding-top: 4px;
+        top: 80px;
+        right:35px;
+        width:auto;
+        position:absolute;
+        border-radius: 10px;
+        background: #3E3E3E;
+        color: white;
+    }
+
+    .viewer-toolbar-command{
+        height: 30px;
+        padding-top: 4px;
+        top: 80px;
+        left:35px;
+        width:auto;
+        position:absolute;
+        border-radius: 10px;
+        background: #3E3E3E;
+        color: white;
+    }
+
+    .viewer-pagenumber-input {
+        border: none;
+        display: block;
+        font-size: 16px;
+        padding: 4px 0;
+        background: 0 0;
+        text-align: right;
+        color: inherit;
+        width: 33px;
+        margin-right: 4px;
+        height: 20px;
+    }
+
+    .viewer-total-pages {
+        border: medium none;
+        display: flex;
+        font-size: 16px;
+        padding: 4px 0px;
+        background: transparent none repeat scroll 0px 0px;
+        text-align: right;
+        color: inherit;
+        margin-right: 4px;
+        height: 20px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .viewer-page-counter {
+        margin-right: 20px;
+    }
+
+    .button-page {
+        margin-right: 4px;
+        height: 24px;
+        width: 24px;
+        margin-left: 4px;
+        cursor: pointer;
+    }
+
+    .button-page:hover {
+        cursor: pointer;
+        background: grey;
+        border-radius: 24px;
+    }
+}

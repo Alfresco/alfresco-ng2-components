@@ -1,0 +1,36 @@
+.adf-viewer-dialog-panel {
+    .mat-dialog-container {
+        padding: 0;
+        max-width: none;
+        width: 99vw;
+        height: 99vh;
+    }
+}
+
+.adf-viewer-dialog {
+    .mat-dialog-content {
+        display: flex;
+        max-height: 90vh;
+    }
+
+    &-unknown-view {
+        height: 90vh;
+        text-align: center;
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    &-image-view {
+        display: flex;
+        flex: 1;
+        text-align: center;
+        flex-direction: row;
+        justify-content: center;
+        height: 90vh;
+        img {
+            object-fit: contain;
+        }
+    }
+}

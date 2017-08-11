@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector  */
-
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { ContentService } from 'ng2-alfresco-core';
 
 @Component({
-    selector: 'media-player',
+    selector: 'adf-media-player',
     templateUrl: './mediaPlayer.component.html',
-    styleUrls: ['./mediaPlayer.component.css']
+    styleUrls: ['./mediaPlayer.component.scss'],
+    host: { 'class': 'adf-media-player' },
+    encapsulation: ViewEncapsulation.None
 })
 export class MediaPlayerComponent implements OnChanges {
 

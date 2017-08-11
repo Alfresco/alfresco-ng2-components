@@ -15,29 +15,33 @@
  * limitations under the License.
  */
 
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MdToolbarModule } from '@angular/material';
+import {
+    MdButtonModule,
+    MdCardModule,
+    MdDialogModule,
+    MdIconModule,
+    MdMenuModule,
+    MdProgressBarModule,
+    MdProgressSpinnerModule,
+    MdTooltipModule
+} from '@angular/material';
 
-import { ToolbarDividerComponent } from './toolbar-divider.component';
-import { ToolbarTitleComponent } from './toolbar-title.component';
-import { ToolbarComponent } from './toolbar.component';
+export function modules() {
+    return [
+        MdButtonModule,
+        MdCardModule,
+        MdDialogModule,
+        MdIconModule,
+        MdMenuModule,
+        MdProgressBarModule,
+        MdProgressSpinnerModule,
+        MdTooltipModule
+    ];
+}
 
 @NgModule({
-    imports: [
-        CommonModule,
-        MdToolbarModule
-    ],
-    declarations: [
-        ToolbarComponent,
-        ToolbarTitleComponent,
-        ToolbarDividerComponent
-    ],
-    exports: [
-        MdToolbarModule,
-        ToolbarComponent,
-        ToolbarTitleComponent,
-        ToolbarDividerComponent
-    ]
+    imports: modules(),
+    exports: modules()
 })
-export class ToolbarModule {}
+export class MaterialModule {}
