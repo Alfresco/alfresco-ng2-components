@@ -25,52 +25,36 @@ import { AlfrescoTranslationService, FileInfo, FileModel, FileUtils, Notificatio
 })
 export class UploadDragAreaComponent {
 
-    /** @deprecated
-     *
-     * Deprecated in favor of disabled input property
-     */
+    /** @deprecated Deprecated in favor of disabled input property */
     @Input()
     set enabled(enabled: boolean) {
         console.warn('Deprecated: enabled input property should not be used for UploadDragAreaComponent. Please use disabled instead.');
         this.disabled = !enabled;
     }
 
+    /** @deprecated Deprecated in favor of disabled input property */
     get enabled(): boolean {
+        console.warn('Deprecated: enabled input property should not be used for UploadDragAreaComponent. Please use disabled instead.');
         return !this.disabled;
     }
+
+    /** @deprecated Deprecated in 1.6.0, you can use UploadService events and NotificationService api instead. */
+    @Input()
+    showNotificationBar: boolean = true;
+
+    /** @deprecated Deprecated in 1.6.0, this property is not used for couple of releases already. Use rootFolderId instead. */
+    @Input()
+    currentFolderPath: string = '/';
+
+    /** @deprecated Deprecated in 1.6.2, this property is not used for couple of releases already. Use parentId instead. */
+    @Input()
+    rootFolderId: string = '-root-';
 
     @Input()
     disabled: boolean = false;
 
-    /**
-     * @deprecated Deprecated in 1.6.0, you can use UploadService events and NotificationService api instead.
-     *
-     * @type {boolean}
-     * @memberof UploadButtonComponent
-     */
-    @Input()
-    showNotificationBar: boolean = true;
-
     @Input()
     versioning: boolean = false;
-
-    /**
-     * @deprecated Deprecated in 1.6.0, this property is not used for couple of releases already. Use rootFolderId instead.
-     *
-     * @type {string}
-     * @memberof UploadDragAreaComponent
-     */
-    @Input()
-    currentFolderPath: string = '/';
-
-    /**
-     * @deprecated Deprecated in 1.6.2, this property is not used for couple of releases already. Use parentId instead.
-     *
-     * @type {string}
-     * @memberof UploadDragAreaComponent
-     */
-    @Input()
-    rootFolderId: string = '-root-';
 
     @Input()
     parentId: string;
@@ -81,31 +65,6 @@ export class UploadDragAreaComponent {
     constructor(private uploadService: UploadService,
                 private translateService: AlfrescoTranslationService,
                 private notificationService: NotificationService) {
-    }
-
-    /**
-     * Handles 'upload-files' events raised by child components.
-     * @param event DOM event
-     */
-    onUploadFiles(event: CustomEvent) {
-        event.stopPropagation();
-        event.preventDefault();
-        let isAllowed: boolean = this.isAllowed(event.detail.data.obj.entry);
-        if (isAllowed) {
-            let files: FileInfo[] = event.detail.files;
-            if (files && files.length > 0) {
-                let parentId = this.parentId || this.rootFolderId;
-                if (event.detail.data && event.detail.data.obj.entry.isFolder) {
-                    parentId = event.detail.data.obj.entry.id || this.parentId || this.rootFolderId;
-                }
-                const fileModels = files.map(fileInfo => new FileModel(fileInfo.file, {
-                    newVersion: this.versioning,
-                    path: fileInfo.relativeFolder,
-                    parentId: parentId
-                }));
-                this.uploadFiles(fileModels, isAllowed);
-            }
-        }
     }
 
     /**
@@ -131,6 +90,7 @@ export class UploadDragAreaComponent {
 
     /**
      * Called when the file are dropped in the drag area
+     *
      * @param item - FileEntity
      */
     onFilesEntityDropped(item: any): void {
@@ -152,6 +112,7 @@ export class UploadDragAreaComponent {
 
     /**
      * Called when a folder are dropped in the drag area
+     *
      * @param folder - name of the dropped folder
      */
     onFolderEntityDropped(folder: any): void {
@@ -192,6 +153,7 @@ export class UploadDragAreaComponent {
 
     /**
      * Show the error inside Notification bar
+     *
      * @param Error message
      * @private
      */
@@ -199,8 +161,44 @@ export class UploadDragAreaComponent {
         this.notificationService.openSnackMessage(errorMessage, 3000);
     }
 
-    private uploadFiles(files: FileModel[], isAllowed: boolean): void {
-        if (isAllowed && files.length) {
+    /** Returns true or false considering the component options and node permissions */
+    isDroppable(): boolean {
+        return !this.disabled;
+    }
+
+    /**
+     * Handles 'upload-files' events raised by child components.
+     *
+     * @param event DOM event
+     */
+    onUploadFiles(event: CustomEvent) {
+        event.stopPropagation();
+        event.preventDefault();
+        let isAllowed: boolean = this.hasCreatePermission(event.detail.data.obj.entry);
+        if (isAllowed) {
+            let files: FileInfo[] = event.detail.files;
+            if (files && files.length > 0) {
+                let parentId = this.parentId || this.rootFolderId;
+                if (event.detail.data && event.detail.data.obj.entry.isFolder) {
+                    parentId = event.detail.data.obj.entry.id || this.parentId || this.rootFolderId;
+                }
+                const fileModels = files.map(fileInfo => new FileModel(fileInfo.file, {
+                    newVersion: this.versioning,
+                    path: fileInfo.relativeFolder,
+                    parentId: parentId
+                }));
+                this.uploadFiles(fileModels);
+            }
+        }
+    }
+
+    /**
+     * Does the actual file uploading and show the notification
+     *
+     * @param files
+     */
+    private uploadFiles(files: FileModel[]): void {
+        if (files.length) {
             this.uploadService.addToQueue(...files);
             this.uploadService.uploadFilesInTheQueue(this.onSuccess);
             let latestFilesAdded = this.uploadService.getQueue();
@@ -210,6 +208,11 @@ export class UploadDragAreaComponent {
         }
     }
 
+    /**
+     * Check if "create" permission is present on the given node
+     *
+     * @param node
+     */
     private hasCreatePermission(node: any): boolean {
         let isPermitted = false;
         if (node && node['allowableOperations']) {
@@ -217,9 +220,5 @@ export class UploadDragAreaComponent {
             isPermitted = permFound ? true : false;
         }
         return isPermitted;
-    }
-
-    private isAllowed(node: any) {
-        return !this.disabled || this.hasCreatePermission(node);
     }
 }

@@ -1,4 +1,4 @@
-<div [file-draggable]="enabled" id="UploadBorder" class="upload-border"
+<div [file-draggable]="isDroppable()" id="UploadBorder" class="upload-border"
      (onFilesDropped)="onFilesDropped($event)"
      (onFilesEntityDropped)="onFilesEntityDropped($event)"
      (onFolderEntityDropped)="onFolderEntityDropped($event)"

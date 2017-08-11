@@ -6,7 +6,7 @@
     <alfresco-upload-drag-area
         [parentId]="documentList.currentFolderId"
         [versioning]="versioning"
-        [enabled]="documentList.hasCreatePermission()">
+        [disabled]="!documentList.hasCreatePermission()">
         <div *ngIf="errorMessage" class="error-message">
             <button (click)="resetError()" md-icon-button>
                 <md-icon>highlight_off</md-icon>
