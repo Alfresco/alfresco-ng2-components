@@ -275,7 +275,8 @@
             [multipleFiles]="multipleFileUpload"
             [uploadFolders]="folderUpload"
             [versioning]="versioning"
-            [disableWithNoPermission]="disableWithNoPermission"
+            [adf-node-permission]="'create'"
+            [adf-nodes]="getCurrentDocumentListNode()"
             (permissionEvent)="handlePermissionError($event)">
         </alfresco-upload-button>
     </div>
@@ -290,7 +291,8 @@
             [multipleFiles]="multipleFileUpload"
             [uploadFolders]="folderUpload"
             [versioning]="versioning"
-            [disableWithNoPermission]="disableWithNoPermission"
+            [adf-node-permission]="'create'"
+            [adf-nodes]="getCurrentDocumentListNode()"
             (permissionEvent)="handlePermissionError($event)">
         </alfresco-upload-button>
     </div>
