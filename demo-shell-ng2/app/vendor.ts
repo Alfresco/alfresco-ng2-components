@@ -65,15 +65,12 @@ require('pdfjs-dist/web/compatibility.js');
 
 // Setting worker path to worker bundle.
 let pdfjsLib = require('pdfjs-dist');
-if (process.env.ENV === 'production') {
-    pdfjsLib.PDFJS.workerSrc = './pdf.worker.js';
-} else {
-    pdfjsLib.PDFJS.workerSrc = '../../node_modules/pdfjs-dist/build/pdf.worker.js';
-}
+pdfjsLib.PDFJS.workerSrc = 'pdf.worker.js';
 
 require('pdfjs-dist/web/pdf_viewer.js');
-require('three/build/three.min.js');
+
 
 // 3D viewer
+require('three/build/three.min.js');
 import 'ng2-3d-editor';
 import 'three';
