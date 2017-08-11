@@ -28,6 +28,8 @@ import { DocumentListComponent, PermissionStyleModel } from 'ng2-alfresco-docume
 import { CreateFolderDialogComponent } from '../../dialogs/create-folder.dialog';
 import { DownloadZipDialogComponent } from './../../dialogs/download-zip.dialog';
 
+import { ViewerDialogComponent, ViewerDialogSettings, ViewerService } from 'ng2-alfresco-viewer';
+
 @Component({
     selector: 'adf-files-component',
     templateUrl: './files.component.html',
@@ -39,11 +41,13 @@ export class FilesComponent implements OnInit {
 
     errorMessage: string = null;
     fileNodeId: any;
-    fileShowed: boolean = false;
+    showViewer: boolean = false;
 
     useCustomToolbar = true;
     toolbarColor = 'default';
     useDropdownBreadcrumb = false;
+    useViewerDialog = true;
+    useInlineViewer = false;
 
     selectionModes = [
         { value: 'none', viewValue: 'None' },
@@ -90,16 +94,27 @@ export class FilesComponent implements OnInit {
                 private contentService: AlfrescoContentService,
                 private dialog: MdDialog,
                 private translateService: AlfrescoTranslationService,
+                private viewerService: ViewerService,
                 private router: Router,
                 @Optional() private route: ActivatedRoute) {
     }
 
     showFile(event) {
-        if (event.value.entry.isFile) {
-            this.fileNodeId = event.value.entry.id;
-            this.fileShowed = true;
+        if (this.useViewerDialog) {
+            if (event.value.entry.isFile) {
+                this.viewerService
+                    .showViewerForNode(event.value.entry)
+                    .then(result => {
+                        console.log(result);
+                    });
+            }
         } else {
-            this.fileShowed = false;
+            if (event.value.entry.isFile) {
+                this.fileNodeId = event.value.entry.id;
+                this.showViewer = true;
+            } else {
+                this.showViewer = false;
+            }
         }
     }
 
