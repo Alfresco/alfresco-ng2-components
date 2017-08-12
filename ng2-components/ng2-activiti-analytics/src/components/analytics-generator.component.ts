@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
 import { ReportQuery } from 'ng2-activiti-diagrams';
 import { Chart } from 'ng2-activiti-diagrams';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
@@ -24,7 +24,8 @@ import { AnalyticsService } from '../services/analytics.service';
 @Component({
     selector: 'adf-analytics-generator, activiti-analytics-generator',
     templateUrl: './analytics-generator.component.html',
-    styleUrls: ['./analytics-generator.component.css']
+    styleUrls: ['./analytics-generator.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class AnalyticsGeneratorComponent implements OnChanges {
 
@@ -69,7 +70,7 @@ export class AnalyticsGeneratorComponent implements OnChanges {
         }
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges() {
         if (this.reportId && this.reportParamQuery) {
             this.generateReport(this.reportId, this.reportParamQuery);
         } else {

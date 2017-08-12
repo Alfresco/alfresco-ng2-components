@@ -34,5 +34,5 @@ The button will become disabled by default, and is going to change its state onc
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| adf-node-permission | string | null | Node permission to check |
+| adf-node-permission | [Permissions](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-core/src/models/permissions.enum.ts) | null | Node permission to check (create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions)|
 | adf-nodes | MinimalNodeEntity[] | [] | Nodes to check permission for |

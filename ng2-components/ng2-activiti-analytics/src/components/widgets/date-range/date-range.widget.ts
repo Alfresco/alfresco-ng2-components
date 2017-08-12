@@ -15,25 +15,26 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { DateAdapter, MD_DATE_FORMATS } from '@angular/material';
 import * as moment from 'moment';
-
-function dateCheck(c: AbstractControl) {
-    let startDate = moment(c.get('startDate').value);
-    let endDate = moment(c.get('endDate').value);
-    let result = startDate.isAfter(endDate);
-    return result ? {'greaterThan': true} : null;
-}
+import { Moment } from 'moment';
+import { MOMENT_DATE_FORMATS, MomentDateAdapter } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'adf-date-range-widget',
     templateUrl: './date-range.widget.html',
-    styleUrls: ['./date-range.widget.scss']
+    providers: [
+        {provide: DateAdapter, useClass: MomentDateAdapter},
+        {provide: MD_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS}],
+    styleUrls: ['./date-range.widget.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class DateRangeWidgetComponent implements OnInit {
 
-    public static FORMAT_DATE_ACTIVITI: string =  'YYYY-MM-DD';
+    public FORMAT_DATE_ACTIVITI: string = 'YYYY-MM-DD';
+    public SHOW_FORMAT: string = 'DD/MM/YYYY';
 
     @Input('group')
     public dateRange: FormGroup;
@@ -44,51 +45,59 @@ export class DateRangeWidgetComponent implements OnInit {
     @Output()
     dateRangeChanged: EventEmitter<any> = new EventEmitter<any>();
 
+    minDate: Moment;
+    maxDate: Moment;
+    startDatePicker: Moment;
+    endDatePicker: Moment;
+
     debug: boolean = false;
 
-    constructor(private formBuilder: FormBuilder) {
+    constructor(public dateAdapter: DateAdapter<Moment>) {
     }
 
     ngOnInit() {
-        this.initForm();
-    }
+        let momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
+        momentDateAdapter.overrideDisplyaFormat = this.SHOW_FORMAT;
 
-    initForm() {
-        let startDateForm = this.field.value ? this.field.value.startDate : '' ;
-        let startDate = this.convertToMomentDate(startDateForm);
-        let endDateForm = this.field.value ? this.field.value.endDate : '' ;
-        let endDate = this.convertToMomentDate(endDateForm);
+        if (this.field) {
+            if (this.field.value && this.field.value.startDate) {
+                this.startDatePicker = moment(this.field.value.startDate, this.FORMAT_DATE_ACTIVITI);
+            }
 
-        let startDateControl = new FormControl(startDate);
+            if (this.field.value && this.field.value.endDate) {
+                this.endDatePicker = moment(this.field.value.endDate, this.FORMAT_DATE_ACTIVITI);
+            }
+        }
+
+        let startDateControl = new FormControl(this.startDatePicker);
         startDateControl.setValidators(Validators.required);
         this.dateRange.addControl('startDate', startDateControl);
 
-        let endDateControl = new FormControl(endDate);
+        let endDateControl = new FormControl(this.endDatePicker);
         endDateControl.setValidators(Validators.required);
         this.dateRange.addControl('endDate', endDateControl);
 
-        this.dateRange.setValidators(dateCheck);
-        this.dateRange.valueChanges.subscribe(data => this.onGroupValueChanged(data));
+        this.dateRange.setValidators(this.dateCheck);
+        this.dateRange.valueChanges.subscribe(() => this.onGroupValueChanged());
     }
 
-    onGroupValueChanged(data: any) {
+    onGroupValueChanged() {
         if (this.dateRange.valid) {
-            let dateStart = this.convertToMomentDateWithTime(this.dateRange.controls['startDate'].value);
-            let endStart = this.convertToMomentDateWithTime(this.dateRange.controls['endDate'].value);
+            let dateStart = this.convertToMomentDateWithTime(this.dateRange.controls.startDate.value);
+            let endStart = this.convertToMomentDateWithTime(this.dateRange.controls.endDate.value);
             this.dateRangeChanged.emit({startDate: dateStart, endDate: endStart});
         }
     }
 
-    public convertToMomentDateWithTime(date: string) {
-        return moment(date, DateRangeWidgetComponent.FORMAT_DATE_ACTIVITI, true).format(DateRangeWidgetComponent.FORMAT_DATE_ACTIVITI) + 'T00:00:00.000Z';
+    convertToMomentDateWithTime(date: string) {
+        return moment(date, this.FORMAT_DATE_ACTIVITI, true).format(this.FORMAT_DATE_ACTIVITI) + 'T00:00:00.000Z';
     }
 
-    private convertToMomentDate(date: string) {
-        if (date) {
-            return moment(date).format(DateRangeWidgetComponent.FORMAT_DATE_ACTIVITI);
-        } else {
-            return moment().format(DateRangeWidgetComponent.FORMAT_DATE_ACTIVITI);
-        }
+    dateCheck(formControl: AbstractControl) {
+        let startDate = moment(formControl.get('startDate').value);
+        let endDate = moment(formControl.get('endDate').value);
+        let result = startDate.isAfter(endDate);
+        return result ? {'greaterThan': true} : null;
     }
 
     isStartDateGreaterThanEndDate() {

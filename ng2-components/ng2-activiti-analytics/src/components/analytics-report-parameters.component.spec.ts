@@ -17,25 +17,15 @@
 
 import { DebugElement, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import {
-    MdButtonModule,
-    MdDatepickerModule,
-    MdGridListModule,
-    MdIconModule,
-    MdInputModule,
-    MdNativeDateModule,
-    MdTooltipModule,
-    OVERLAY_PROVIDERS } from '@angular/material';
-import * as moment from 'moment';
+import { ReportParametersModel } from 'ng2-activiti-diagrams';
 import { AlfrescoTranslationService, AppConfigModule, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
-
-import { ReportParametersModel } from 'ng2-activiti-diagrams';
 import * as analyticParamsMock from '../assets/analyticsParamsReportComponent.mock';
 import { AnalyticsReportParametersComponent } from '../components/analytics-report-parameters.component';
 import { WIDGET_DIRECTIVES } from '../components/widgets/index';
-import { AnalyticsService } from '../services/analytics.service';
 import { MaterialModule } from '../material.module';
+import { AnalyticsService } from '../services/analytics.service';
+import { DateRangeWidgetComponent } from './widgets/date-range/date-range.widget';
 
 declare let jasmine: any;
 
@@ -58,12 +48,12 @@ describe('AnalyticsReportParametersComponent', () => {
                 MaterialModule
             ],
             declarations: [
+                DateRangeWidgetComponent,
                 AnalyticsReportParametersComponent,
                 ...WIDGET_DIRECTIVES
             ],
             providers: [
-                AnalyticsService,
-                OVERLAY_PROVIDERS
+                AnalyticsService
             ]
         }).compileComponents();
 
@@ -123,7 +113,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
             let reportId = 1;
             let change = new SimpleChange(null, reportId, true);
-            component.ngOnChanges({ 'reportId': change });
+            component.ngOnChanges({'reportId': change});
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -143,7 +133,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
             let reportId = 1;
             let change = new SimpleChange(null, reportId, true);
-            component.ngOnChanges({ 'reportId': change });
+            component.ngOnChanges({'reportId': change});
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -170,7 +160,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
             let reportId = 1;
             let change = new SimpleChange(null, reportId, true);
-            component.ngOnChanges({ 'reportId': change });
+            component.ngOnChanges({'reportId': change});
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -232,7 +222,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
             let reportId = 1;
             let change = new SimpleChange(null, reportId, true);
-            component.ngOnChanges({ 'reportId': change });
+            component.ngOnChanges({'reportId': change});
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -243,21 +233,15 @@ describe('AnalyticsReportParametersComponent', () => {
 
         it('Should render a date range components when the definition parameter type is \'dateRange\' ', (done) => {
             component.onSuccessReportParams.subscribe(() => {
-                fixture.detectChanges();
-
-                let today = moment().format('YYYY-MM-DD');
-
-                const startDate: any = element.querySelector('#startDate_id');
-                const endDate: any = element.querySelector('#endDate_id');
-
-                expect(startDate.value).toEqual(today);
-                expect(endDate.value).toEqual(today);
+                let dateElement: any = element.querySelector('adf-date-range-widget');
+                expect(dateElement).toBeDefined();
                 done();
             });
 
             let reportId = 1;
             let change = new SimpleChange(null, reportId, true);
-            component.ngOnChanges({ 'reportId': change });
+            component.toggleParameters();
+            component.ngOnChanges({'reportId': change});
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -282,7 +266,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
             let reportId = 1;
             let change = new SimpleChange(null, reportId, true);
-            component.ngOnChanges({ 'reportId': change });
+            component.ngOnChanges({'reportId': change});
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -320,7 +304,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
             let reportId = 1;
             let change = new SimpleChange(null, reportId, true);
-            component.ngOnChanges({ 'reportId': change });
+            component.ngOnChanges({'reportId': change});
 
         });
 
@@ -354,7 +338,7 @@ describe('AnalyticsReportParametersComponent', () => {
             component.appId = appId;
             component.reportId = '1';
             let change = new SimpleChange(null, appId, true);
-            component.ngOnChanges({ 'appId': change });
+            component.ngOnChanges({'appId': change});
 
         });
 
@@ -367,7 +351,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
             let reportId = 1;
             let change = new SimpleChange(null, reportId, true);
-            component.ngOnChanges({ 'reportId': change });
+            component.ngOnChanges({'reportId': change});
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -417,7 +401,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
             let reportId = 1;
             let change = new SimpleChange(null, reportId, true);
-            component.ngOnChanges({ 'reportId': change });
+            component.ngOnChanges({'reportId': change});
 
         });
 
@@ -429,7 +413,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
             let reportId = 1;
             let change = new SimpleChange(null, reportId, true);
-            component.ngOnChanges({ 'reportId': change });
+            component.ngOnChanges({'reportId': change});
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 404,
@@ -475,7 +459,7 @@ describe('AnalyticsReportParametersComponent', () => {
             beforeEach(async(() => {
                 let reportId = 1;
                 let change = new SimpleChange(null, reportId, true);
-                component.ngOnChanges({ 'reportId': change });
+                component.ngOnChanges({'reportId': change});
                 fixture.detectChanges();
 
                 jasmine.Ajax.requests.mostRecent().respondWith({
