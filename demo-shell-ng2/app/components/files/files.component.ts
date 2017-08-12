@@ -43,7 +43,6 @@ export class FilesComponent implements OnInit {
     fileNodeId: any;
     showViewer: boolean = false;
 
-    useCustomToolbar = true;
     toolbarColor = 'default';
     useDropdownBreadcrumb = false;
     useViewerDialog = true;
