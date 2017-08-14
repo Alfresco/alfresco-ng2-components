@@ -57,8 +57,6 @@ require('script-loader!raphael/raphael.min.js');
 
 require('script-loader!moment/min/moment.min.js');
 
-require('script-loader!md-date-time-picker/dist/js/draggabilly.pkgd.min.js');
-
 require('pdfjs-dist/web/compatibility.js');
 
 // Setting worker path to worker bundle.
