@@ -678,6 +678,39 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
+        it('should assign task to a userId', (done) => {
+            let testTaskId = '8888';
+            service.assignTaskByUserId(testTaskId, fakeUser2.id).subscribe(
+                (res: TaskDetailsModel) => {
+                    expect(res).toBeDefined();
+                    expect(res.id).toEqual(testTaskId);
+                    expect(res.name).toEqual('FakeNameTask');
+                    expect(res.description).toEqual('FakeDescription');
+                    expect(res.category).toEqual('3');
+                    expect(res.created).not.toEqual('');
+                    expect(res.adhocTaskCanBeReassigned).toBe(true);
+                    expect(res.assignee).toEqual(new User(fakeUser2));
+                    expect(res.involvedPeople).toEqual([fakeUser1]);
+                    done();
+                }
+            );
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 200,
+                contentType: 'application/json',
+                responseText: JSON.stringify({
+                    id: testTaskId,
+                    name: 'FakeNameTask',
+                    description: 'FakeDescription',
+                    adhocTaskCanBeReassigned: true,
+                    category: '3',
+                    assignee: fakeUser2,
+                    involvedPeople: [fakeUser1],
+                    created: '2016-07-15T11:19:17.440+0000'
+                })
+            });
+        });
+
         it('should claim a task', (done) => {
             let taskId = '111';
 
