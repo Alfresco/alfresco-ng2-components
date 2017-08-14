@@ -7,7 +7,7 @@
             <ng-template let-entry="$implicit">
                 <div id="comment-user-icon"
                 class="adf-comment-img-container">
-                    <div id="comment-user-icon"
+                    <div
                         *ngIf="!entry.row.obj.createdBy.userImage" class="adf-comment-user-icon">
                             {{getUserShortName(entry.row.obj.createdBy)}}</div>
                     <div>
