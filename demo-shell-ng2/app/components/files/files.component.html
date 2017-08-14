@@ -263,6 +263,7 @@
     <div *ngIf="!acceptedFilesTypeShow">
         <alfresco-upload-button
             #uploadButton
+            tooltip="Custom tooltip"
             [disabled]="!enableUpload"
             data-automation-id="multiple-file-upload"
             [rootFolderId]="documentList.currentFolderId"
@@ -276,6 +277,7 @@
     <div *ngIf="acceptedFilesTypeShow">
         <alfresco-upload-button
             #uploadButton
+            tooltip="Custom tooltip"
             [disabled]="!enableUpload"
             data-automation-id="multiple-file-upload"
             [rootFolderId]="documentList.currentFolderId"

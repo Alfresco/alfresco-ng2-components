@@ -1,8 +1,8 @@
-<form class="adf-upload-button-file-container">
+<form>
     <!--Files Upload-->
-    <a *ngIf="!uploadFolders"
-        [disabled]="isButtonDisabled()"
-        md-raised-button color="primary">
+    <div *ngIf="!uploadFolders"
+        [class.mdl-button--file--disabled]="isButtonDisabled()"
+        class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-button--file">
         <md-icon>file_upload</md-icon>
 
         <!--Multiple Files Upload-->
@@ -47,11 +47,12 @@
                 [title]="tooltip"
                 (change)="onFilesAdded($event)">
         </span>
-    </a>
+    </div>
 
     <!--Folders Upload-->
-    <a *ngIf="uploadFolders"
-        [disabled]="isButtonDisabled()" md-raised-button color="primary">
+    <div *ngIf="uploadFolders"
+        [class.mdl-button--file--disabled]="isButtonDisabled()"
+        class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-button--file">
         <md-icon>file_upload</md-icon>
         <label
             id="uploadFolder-label"
@@ -72,5 +73,5 @@
             [attr.disabled]="isButtonDisabled()"
             [title]="tooltip"
             (change)="onDirectoryAdded($event)">
-    </a>
+    </div>
 </form>
