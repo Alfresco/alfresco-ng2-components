@@ -30,6 +30,9 @@ import { CardViewModule } from './src/components/view/card-view.module';
 import { MaterialModule } from './src/material.module';
 import { AppConfigModule } from './src/services/app-config.service';
 
+import { CreateFolderDialogComponent } from './src/dialogs/create-folder.dialog';
+import { DownloadZipDialogComponent } from './src/dialogs/download-zip.dialog';
+
 import { AlfrescoApiService } from './src/services/alfresco-api.service';
 import { AlfrescoContentService } from './src/services/alfresco-content.service';
 import { AlfrescoSettingsService } from './src/services/alfresco-settings.service';
@@ -66,6 +69,9 @@ import { SitesApiService } from './src/services/sites-api.service';
 
 export { MomentDateAdapter, MOMENT_DATE_FORMATS } from './src/utils/momentDateAdapter';
 import { MomentDateAdapter } from './src/utils/momentDateAdapter';
+
+export { CreateFolderDialogComponent } from './src/dialogs/create-folder.dialog';
+export { DownloadZipDialogComponent } from './src/dialogs/download-zip.dialog';
 
 export { ContentService } from './src/services/content.service';
 export { StorageService } from './src/services/storage.service';
@@ -230,7 +236,9 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         DataColumnListComponent,
         FileSizePipe,
         HighlightPipe,
-        TimeAgoPipe
+        TimeAgoPipe,
+        CreateFolderDialogComponent,
+        DownloadZipDialogComponent
     ],
     providers: [
         ...providers(),
@@ -266,7 +274,13 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         DataColumnListComponent,
         FileSizePipe,
         HighlightPipe,
-        TimeAgoPipe
+        TimeAgoPipe,
+        CreateFolderDialogComponent,
+        DownloadZipDialogComponent
+    ],
+    entryComponents: [
+        CreateFolderDialogComponent,
+        DownloadZipDialogComponent
     ]
 })
 export class CoreModule {
