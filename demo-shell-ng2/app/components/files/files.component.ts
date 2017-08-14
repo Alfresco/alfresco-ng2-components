@@ -57,12 +57,6 @@ export class FilesComponent implements OnInit {
     selectionMode = 'multiple';
 
     @Input()
-    multiselect = false;
-
-    @Input()
-    folderUpload: boolean = false;
-
-    @Input()
     versioning: boolean = false;
 
     @ViewChild(DocumentListComponent)
@@ -103,12 +97,6 @@ export class FilesComponent implements OnInit {
 
     onFolderChange($event) {
         this.router.navigate(['/files', $event.value.id]);
-    }
-
-    toggleFolder() {
-        this.multipleFileUpload = false;
-        this.folderUpload = !this.folderUpload;
-        return this.folderUpload;
     }
 
     ngOnInit() {
