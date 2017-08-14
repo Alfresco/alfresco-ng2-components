@@ -93,6 +93,7 @@ npm install ng2-alfresco-upload
 | versioning | boolean | false | Versioning false is the default uploader behaviour and it renames the file using an integer suffix if there is a name clash. Versioning true to indicate that a major version should be created |
 | staticTitle | string | (predefined) | define the text of the upload button |
 | disableWithNoPermission | boolean | false |  If the value is true and the user doesn't have the permission to delete the node the button will be disabled |
+| tooltip | string | | Custom tooltip |
 
 ### Events
 
