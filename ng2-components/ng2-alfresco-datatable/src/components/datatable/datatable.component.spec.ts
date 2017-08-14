@@ -133,7 +133,7 @@ describe('DataTable', () => {
         expect(rows[1].isSelected).toBeTruthy();
     });
 
-    it('should unselect the row with [single] selection mode', () => {
+    it('should not unselect the row with [single] selection mode', () => {
         dataTable.selectionMode = 'single';
         dataTable.data = new ObjectDataTableAdapter(
             [
@@ -150,8 +150,27 @@ describe('DataTable', () => {
         expect(rows[1].isSelected).toBeFalsy();
 
         dataTable.onRowClick(rows[0], null);
-        expect(rows[0].isSelected).toBeFalsy();
+        expect(rows[0].isSelected).toBeTruthy();
         expect(rows[1].isSelected).toBeFalsy();
+    });
+
+    it('should unselect the row with [multiple] selection mode and modifier key', () => {
+        dataTable.selectionMode = 'multiple';
+        dataTable.data = new ObjectDataTableAdapter(
+            [ { name: '1' } ],
+            [ new ObjectDataColumn({ key: 'name'}) ]
+        );
+        const rows = dataTable.data.getRows();
+
+        dataTable.ngOnChanges({});
+        dataTable.onRowClick(rows[0], null);
+        expect(rows[0].isSelected).toBeTruthy();
+
+        dataTable.onRowClick(rows[0], null);
+        expect(rows[0].isSelected).toBeTruthy();
+
+        dataTable.onRowClick(rows[0], <any> { metaKey: true, preventDefault() {} });
+        expect(rows[0].isSelected).toBeFalsy();
     });
 
     it('should select multiple rows with [multiple] selection mode', () => {
