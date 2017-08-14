@@ -15,7 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { DateAdapter, MD_DATE_FORMATS } from '@angular/material';
+import * as moment from 'moment';
+import { MOMENT_DATE_FORMATS, MomentDateAdapter } from 'ng2-alfresco-core';
 import { LogService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { Form } from '../models/form.model';
@@ -28,9 +31,15 @@ import { TaskListService } from './../services/tasklist.service';
 @Component({
     selector: 'adf-start-task, activiti-start-task',
     templateUrl: './start-task.component.html',
-    styleUrls: ['./start-task.component.css']
+    styleUrls: ['./start-task.component.scss'],
+    providers: [
+        {provide: DateAdapter, useClass: MomentDateAdapter},
+        {provide: MD_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS}],
+    encapsulation: ViewEncapsulation.None
 })
 export class StartTaskComponent implements OnInit {
+
+    public  FORMAT_DATE: string = 'DD/MM/YYYY';
 
     @Input()
     appId: string;
@@ -55,6 +64,8 @@ export class StartTaskComponent implements OnInit {
     formKey: number;
 
     taskId: string;
+
+    dateError: boolean;
 
     /**
      * Constructor
@@ -83,13 +94,13 @@ export class StartTaskComponent implements OnInit {
                         )
                 )
                 .subscribe(
-                (res: any) => {
-                    this.success.emit(res);
-                },
-                (err) => {
-                    this.error.emit(err);
-                    this.logService.error('An error occurred while creating new task');
-                });
+                    (res: any) => {
+                        this.success.emit(res);
+                    },
+                    (err) => {
+                        this.error.emit(err);
+                        this.logService.error('An error occurred while creating new task');
+                    });
         }
     }
 
@@ -115,8 +126,8 @@ export class StartTaskComponent implements OnInit {
 
     private loadFormsTask(): void {
         this.taskService.getFormList().subscribe((res: Form[]) => {
-            this.forms = res;
-        },
+                this.forms = res;
+            },
             (err) => {
                 this.error.emit(err);
                 this.logService.error('An error occurred while trying to get the forms');
@@ -144,5 +155,16 @@ export class StartTaskComponent implements OnInit {
         firstName = (firstName !== null ? firstName : '');
         lastName = (lastName !== null ? lastName : '');
         return firstName + delimiter + lastName;
+    }
+
+    onDateChanged(newDateValue): void {
+        this.dateError = false;
+
+        if (newDateValue) {
+            let momentDate = moment(newDateValue, this.FORMAT_DATE, true);
+            if (!momentDate.isValid()) {
+                this.dateError = true;
+            }
+        }
     }
 }
