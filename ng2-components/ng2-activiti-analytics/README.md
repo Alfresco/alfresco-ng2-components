@@ -81,7 +81,6 @@ The component shows the charts related to the reportId passed as input
 | appId | string | The application id |
 | reportId | string | The report id |
 | hideParameters | boolean | Toggle the analytics parameters |
-| debug | boolean | Toggle debug mode, outputs the Form values in the console log if enabled. |
 
 You can also hide chart parameters UI by setting the `hideParameters` to `true`:
 
