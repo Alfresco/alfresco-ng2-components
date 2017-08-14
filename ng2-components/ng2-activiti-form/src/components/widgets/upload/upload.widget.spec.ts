@@ -112,6 +112,7 @@ describe('UploadWidgetComponent', () => {
         let element: HTMLInputElement;
         let debugElement: DebugElement;
         let inputElement: HTMLInputElement;
+        let formServiceInstance: FormService;
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
@@ -140,6 +141,7 @@ describe('UploadWidgetComponent', () => {
                 type: FormFieldTypes.UPLOAD,
                 readOnly: false
             });
+            formServiceInstance = TestBed.get(FormService);
             jasmine.Ajax.install();
         });
 
@@ -248,6 +250,33 @@ describe('UploadWidgetComponent', () => {
                 expect(uploadWidgetComponent.field.value.length).toBe(1);
             });
         }));
+
+        it('should emit form content clicked event on icon click', (done) => {
+
+            formServiceInstance.formContentClicked.subscribe((content: any) => {
+                expect(content.name).toBe(fakeJpgAnswer.name);
+                expect(content.id).toBe(fakeJpgAnswer.id);
+                expect(content.contentBlob).not.toBeNull();
+                done();
+            });
+
+            uploadWidgetComponent.field.params.multiple = true;
+            uploadWidgetComponent.field.value = [];
+            uploadWidgetComponent.field.value.push(fakeJpgAnswer);
+            uploadWidgetComponent.field.value.push(fakePngAnswer);
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                let fileJpegIcon = debugElement.query(By.css('#file-1156-icon'));
+                fileJpegIcon.nativeElement.dispatchEvent(new MouseEvent('click'));
+                jasmine.Ajax.requests.mostRecent().respondWith({
+                    status: 200,
+                    contentType: 'json',
+                    responseText: new Blob()
+                });
+            });
+
+        });
 
     });
 
