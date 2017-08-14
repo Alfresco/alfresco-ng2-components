@@ -1,0 +1,82 @@
+@import 'theming';
+
+:host {
+  width: 100%;
+}
+
+.activiti-label {
+  font-weight: bolder;
+}
+
+.material-icons.people-search__icon:hover {
+  color: mat-color($primary);
+}
+
+.fix-element-user-list {
+  padding-top: 0px;
+  padding-right: 0px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+}
+
+.search-text-header {
+  font-weight: bold;
+  opacity: 0.54;
+}
+
+.search-text-container {
+    width: 100%;
+}
+
+.search-list-container {
+  max-height: 152px;
+  width: 100%;
+  overflow-y: auto;
+}
+
+adf-people-list /deep/ adf-datatable /deep/ thead {
+  display: none;
+}
+
+.search-list-action-container {
+  border-top: 1px solid #eee;
+  text-align: right;
+  padding: 5px 0px;
+  margin-top: 5px;
+  > button {
+    opacity: 0.54;
+    font-weight: bolder;
+    &:hover {
+      color: mat-color($primary);
+    }
+  }
+}
+
+adf-people-list /deep/ adf-datatable /deep/ .people-full-name {
+  font-family: 'Muli';
+}
+
+.people-pic {
+    background: mat-color($primary);
+    width: 30px;
+    padding: 10px 5px;
+    border-radius: 90%;
+    color: #fff;
+    text-align: center;
+    font-weight: bolder;
+    font-size: 18px;
+    font-family: Muli;
+    text-transform: uppercase;
+    vertical-align: text-bottom;
+}
+
+.people-img {
+    border-radius: 90%;
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
+}
+
+adf-people-list /deep/ alfresco-datatable /deep/ td.mdl-data-table__cell--non-numeric.non-selectable.data-cell {
+  padding: 4px 12px;
+}

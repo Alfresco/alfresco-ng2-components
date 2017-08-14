@@ -82,6 +82,38 @@ describe('PeopleService', () => {
             });
         });
 
+        it('should be able to get people images for people retrieved', (done) => {
+            service.getWorkflowUsersWithImages('fake-task-id', 'fake-filter').subscribe(
+                (users: User[]) => {
+                    expect(users).toBeDefined();
+                    expect(users.length).toBe(2);
+                    expect(users[0].userImage).toContain('/app/rest/users/' + users[0].id + '/picture');
+                    expect(users[1].userImage).toContain('/app/rest/users/' + users[1].id + '/picture');
+                    done();
+                });
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: {data: fakeInvolveUserList}
+            });
+        });
+
+        it('should be able to return user with image url', (done) => {
+            service.addImageToUser(firstInvolvedUser).subscribe(
+                (user: User) => {
+                    expect(user).toBeDefined();
+                    expect(user.userImage).toContain('/app/rest/users/' + user.id + '/picture');
+                    expect(user.id).toBe('1');
+                    done();
+                });
+        });
+
+        it('should return user image url', () => {
+            let url = service.getUserImage(firstInvolvedUser);
+
+            expect(url).toContain('/app/rest/users/' + firstInvolvedUser.id + '/picture');
+        });
+
         it('should return empty list when there are no users to involve', (done) => {
             service.getWorkflowUsers('fake-task-id', 'fake-filter').subscribe(
                 (users: User[]) => {

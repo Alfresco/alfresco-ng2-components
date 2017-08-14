@@ -28,11 +28,14 @@ export class User {
     email: string;
     firstName: string;
     lastName: string;
+    userImage: string;
 
     constructor(obj?: any) {
-        this.id = obj && obj.id;
-        this.email = obj && obj.email || null;
-        this.firstName = obj && obj.firstName || null;
-        this.lastName = obj && obj.lastName || null;
+        if (obj) {
+            this.id = obj.id;
+            this.email = obj.email || null;
+            this.firstName = obj.firstName || null;
+            this.lastName = obj.lastName || null;
+        }
     }
 }
