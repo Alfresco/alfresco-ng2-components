@@ -23,7 +23,7 @@ import { User } from '../models/user.model';
 @Component({
     selector: 'adf-people-search, activiti-people-search',
     templateUrl: './people-search.component.html',
-    styleUrls: ['./people-search.component.css']
+    styleUrls: ['./people-search.component.scss']
 })
 
 export class PeopleSearchComponent implements OnInit {
@@ -103,5 +103,9 @@ export class PeopleSearchComponent implements OnInit {
 
     hasUsers() {
         return (this.users && this.users.length > 0);
+    }
+
+    onErrorImageLoad(user: User) {
+        user.userImage = null;
     }
 }
