@@ -41,6 +41,12 @@ export class PaginationComponent implements OnInit {
 
     static DEFAULT_PAGE_SIZE: number = 25;
 
+    static DEFAULT_PAGINATION: Pagination = {
+        skipCount: 0,
+        maxItems: PaginationComponent.DEFAULT_PAGE_SIZE,
+        totalItems: 0
+    };
+
     static ACTIONS = {
         NEXT_PAGE: 'NEXT_PAGE',
         PREV_PAGE: 'PREV_PAGE',
@@ -81,11 +87,9 @@ export class PaginationComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.pagination = {
-            skipCount: 0,
-            maxItems: PaginationComponent.DEFAULT_PAGE_SIZE,
-            totalItems: 0
-        };
+        if (!this.pagination) {
+            this.pagination = PaginationComponent.DEFAULT_PAGINATION;
+        }
     }
 
     get lastPage(): number {
