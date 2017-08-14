@@ -309,7 +309,7 @@ Note the `#documentList` ID we've just added to be able referencing this compone
 import { ViewChild, AfterViewInit } from '@angular/core';
 import { DocumentListComponent } from 'ng2-alfresco-documentlist';
 
-@Component(...)
+@Component({...})
 export class MyAppComponent implements AfterViewInit {
 
     myStartFolder: string = '-my-';
@@ -366,7 +366,7 @@ DocumentList provides simple breadcrumb element to indicate the current position
 
 | Name | Returned Type | Description |
 | --- | --- | --- |
-| navigate | [PathElementEntity](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/PathElementEntity.md) |emitted when user clicks on a breadcrumb  |
+| navigate | [PathElementEntity](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/PathElementEntity.md) | emitted when user clicks on a breadcrumb  |
 
 ## Dropdown Site Component
 
@@ -410,29 +410,29 @@ A custom set of columns can look like the following:
 
 ```html
 <adf-document-list ...>
-    <content-columns>
-        <content-column key="$thumbnail" type="image"></content-column>
-        <content-column 
+    <data-columns>
+        <data-column key="$thumbnail" type="image"></data-column>
+        <data-column
             title="Name" 
             key="name" 
             sortable="true"
             class="full-width ellipsis-cell">
-        </content-column>
-        <content-column 
+        </data-column>
+        <data-column
             title="Created By" 
             key="createdByUser.displayName"
             sortable="true"
             class="desktop-only">
-        </content-column>
-        <content-column 
+        </data-column>
+        <data-column
             title="Created On" 
             key="createdAt" 
             type="date" 
             format="medium"
             sortable="true"
             class="desktop-only">
-        </content-column>
-    </content-columns>
+        </data-column>
+    </data-columns>
 </adf-document-list>
 ```
 
@@ -466,6 +466,7 @@ Here's the list of available properties you can define for a Data Column definit
 | template | `TemplateRef` | | Custom column template |
 | sr-title | string | | Screen reader title, used for accessibility purposes |
 | class | string | | Additional CSS class to be applied to column (header and cells) |
+| formatTooltip | Function | | Custom tooltip formatter function. |
 
 DocumentList component assigns an instance of `MinimalNode` type (`alfresco-js-api`) as a data context of each row.
 
@@ -499,14 +500,14 @@ Here's a short example:
 
 ```html
 <adf-document-list ...>
-    <content-columns>
-        <content-column key="$thumbnail" type="image"></content-column>
-        <content-column title="Name" key="name" class="full-width ellipsis-cell"></content-column>
-        <content-column 
+    <data-columns>
+        <data-column key="$thumbnail" type="image"></data-column>
+        <data-column title="Name" key="name" class="full-width ellipsis-cell"></data-column>
+        <data-column
             title="Created By" 
             key="createdByUser.displayName">
-        </content-column>
-    </content-columns>
+        </data-column>
+    </data-columns>
 </adf-document-list>
 ```
 
@@ -544,9 +545,9 @@ You can use all three properties to gain full access to underlying data from wit
 In order to wire HTML templates with the data context you will need defining a variable that is bound to `$implicit` like shown below:
 
 ```html
-<template let-context="$implicit">
+<ng-template let-context="$implicit">
     <!-- template body -->
-</template>
+</ng-template>
 ```
 
 The format of naming is `let-VARIABLE_NAME="$implicit"` where `VARIABLE_NAME` is the name of the variable you want to bind template data context to.
@@ -567,12 +568,12 @@ context.row.getValue('createdByUser.displayName')
 You may want using **row** api to get raw value access.
 
 ```html
-<content-column title="Name" key="name" sortable="true" class="full-width ellipsis-cell">
-    <template let-context="$implicit">
+<data-column title="Name" key="name" sortable="true" class="full-width ellipsis-cell">
+    <ng-template let-context="$implicit">
         <span>Hi! {{context.row.getValue('createdByUser.displayName')}}</span>
         <span>Hi! {{context.row.getValue('name')}}</span>
-    </template>
-</content-column>
+    </ng-template>
+</data-column>
 ```
 
 Use **data** api to get values with post-processing, like datetime/icon conversion._
@@ -580,25 +581,25 @@ Use **data** api to get values with post-processing, like datetime/icon conversi
 In the Example below we will prepend `Hi!` to each file and folder name in the list: 
 
 ```html
-<content-column title="Name" key="name" sortable="true" class="full-width ellipsis-cell">
-    <template let-entry="$implicit">
+<data-column title="Name" key="name" sortable="true" class="full-width ellipsis-cell">
+    <ng-template let-entry="$implicit">
         <span>Hi! {{entry.data.getValue(entry.row, entry.col)}}</span>
-    </template>
-</content-column>
+    </ng-template>
+</data-column>
 ```
 
 In the Example below we will add the [ng2-alfresco-tag](https://www.npmjs.com/package/ng2-alfresco-tag) component is integrate in the document list.
 
 ```html
-<content-column
+<data-column
     title="{{'DOCUMENT_LIST.COLUMNS.TAG' | translate}}"
     key="id"
     sortable="true"
     class="full-width ellipsis-cell">
-    <template let-entry="$implicit">
+    <ng-template let-entry="$implicit">
         <adf-tag-node-list  [nodeId]="entry.data.getValue(entry.row, entry.col)"></adf-tag-node-list>
-    </template>
-</content-column>
+    </ng-template>
+</data-column>
 ```
 
 ![Tag component in document List](docs/assets/document-list-tag-template.png)
@@ -937,6 +938,39 @@ DocumentList emits the following events:
 | ready | emitted when the documentList is ready and loads all the elements|
 
 ## Advanced usage and customization
+
+### Custom tooltips
+
+You can create custom tooltips for the table cells by providing a `formatTooltip` property with a tooltip formatter function when declaring a data column.
+
+```html
+<data-column
+    title="Name"
+    key="name"
+    [formatTooltip]="getNodeNameTooltip"
+    class="full-width ellipsis-cell">
+</data-column>
+```
+
+And the code in this case will be similar to the following:
+
+```ts
+import { DataColumn, DataRow } from 'ng2-alfresco-datatable';
+
+@Component({...})
+export class MyComponent {
+    ...
+
+    getNodeNameTooltip(row: DataRow, col: DataColumn): string {
+        if (row) {
+            return row.getValue('name');
+        }
+        return null;
+    }
+}
+```
+
+To disable the tooltip your function can return `null` or an empty string.
 
 ### Custom row filter
 

@@ -24,6 +24,7 @@ import {
     DownloadZipDialogComponent, FileUploadCompleteEvent, FolderCreatedEvent, NotificationService,
     SiteModel, UploadService
 } from 'ng2-alfresco-core';
+import { DataColumn, DataRow } from 'ng2-alfresco-datatable';
 import { DocumentListComponent, PermissionStyleModel } from 'ng2-alfresco-documentlist';
 
 import { ViewerService } from 'ng2-alfresco-viewer';
@@ -282,5 +283,12 @@ export class FilesComponent implements OnInit {
             link.click();
             document.body.removeChild(link);
         }
+    }
+
+    getNodeNameTooltip(row: DataRow, col: DataColumn): string {
+        if (row) {
+            return row.getValue('name');
+        }
+        return null;
     }
 }

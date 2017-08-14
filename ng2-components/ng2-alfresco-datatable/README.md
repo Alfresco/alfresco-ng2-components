@@ -178,6 +178,7 @@ Here's the list of available properties you can define for a Data Column definit
 | template | `TemplateRef` | | Custom column template |
 | sr-title | string | | Screen reader title, used for accessibility purposes |
 | class | string | | Additional CSS class to be applied to column (header and cells) |
+| formatTooltip | Function | | Custom tooltip formatter function. |
 
 ### DataTable Events
 
@@ -232,6 +233,39 @@ The component will automatically check the corresponding i18n resources and fetc
 ```
 
 This feature is optional. Regular text either plain or converted via the `translate` pipe will still be working as it was before.
+
+### Custom tooltips
+
+You can create custom tooltips for the table cells by providing a `formatTooltip` property with a tooltip formatter function when declaring a data column.
+
+```html
+<data-column
+    title="Name"
+    key="name"
+    [formatTooltip]="getNodeNameTooltip"
+    class="full-width ellipsis-cell">
+</data-column>
+```
+
+And the code in this case will be similar to the following:
+
+```ts
+import { DataColumn, DataRow } from 'ng2-alfresco-datatable';
+
+@Component({...})
+export class MyComponent {
+    ...
+
+    getNodeNameTooltip(row: DataRow, col: DataColumn): string {
+        if (row) {
+            return row.getValue('name');
+        }
+        return null;
+    }
+}
+```
+
+To disable the tooltip your function can return `null` or an empty string.
 
 ### Custom Empty content template
 
