@@ -1,66 +1,82 @@
 <md-card class="adf-new-task-layout-card">
-	<md-grid-list cols="1" rowHeight="60px">
-		<md-grid-tile>
-			<div class="adf-new-task-heading">{{'START_TASK.FORM.TITLE'|translate}}</div>
-		</md-grid-tile>
-	</md-grid-list>
-	<md-card-content>
-		<md-grid-list cols="1" rowHeight="80px">
-			<md-grid-tile>
-				<md-input-container class="adf-new-task-text-width">
-					<input mdInput placeholder="{{'START_TASK.FORM.LABEL.NAME'|translate}}" [(ngModel)]="startTaskmodel.name" required id="name_id">
-				</md-input-container>
-			</md-grid-tile>
-		</md-grid-list>
-		<md-grid-list cols="1" rowHeight="80px">
-			<md-grid-tile>
-				<md-input-container class="adf-new-task-text-width">
-					<textarea mdInput placeholder="{{'START_TASK.FORM.LABEL.DESCRIPTION'|translate}}" [(ngModel)]="startTaskmodel.description" id="description_id"></textarea>
-				</md-input-container>
-			</md-grid-tile>
-		</md-grid-list>
-		<md-grid-list cols="2" rowHeight="80px">
-			<md-grid-tile>
-				<md-input-container class="adf-start-task-input-container">
-					<input mdInput 
-					[mdDatepicker]="taskDatePicker" 
-					[value]="taskDatePicker" 
-					(click)="taskDatePicker.open()" 
-					(keydown)="true"
-					placeholder="{{'START_TASK.FORM.LABEL.DATE'|translate}}" 
-					[(ngModel)]="startTaskmodel.dueDate" id="date_id">
-					<button mdSuffix [mdDatepickerToggle]="taskDatePicker"></button>
-				</md-input-container>
-				<md-datepicker #taskDatePicker [touchUi]="true"></md-datepicker>
-			</md-grid-tile>
-			<md-grid-tile>
-				<md-select placeholder="{{'START_TASK.FORM.LABEL.ASSIGNEE'|translate}}" id="assignee_id" class="adf-start-task-input-container" [(ngModel)]="assignee">
-					<md-option>{{'START_TASK.FORM.LABEL.NONE'|translate}}</md-option>
+    <md-grid-list cols="1" rowHeight="60px">
+        <md-grid-tile>
+            <div class="adf-new-task-heading">{{'START_TASK.FORM.TITLE'|translate}}</div>
+        </md-grid-tile>
+    </md-grid-list>
+    <md-card-content>
+        <md-grid-list cols="1" rowHeight="80px">
+            <md-grid-tile>
+                <md-input-container class="adf-new-task-text-width">
+                    <input mdInput placeholder="{{'START_TASK.FORM.LABEL.NAME'|translate}}"
+                           [(ngModel)]="startTaskmodel.name" required id="name_id">
+                </md-input-container>
+            </md-grid-tile>
+        </md-grid-list>
+        <md-grid-list cols="1" rowHeight="80px">
+            <md-grid-tile>
+                <md-input-container class="adf-new-task-text-width">
+                    <textarea mdInput placeholder="{{'START_TASK.FORM.LABEL.DESCRIPTION'|translate}}"
+                              [(ngModel)]="startTaskmodel.description" id="description_id"></textarea>
+                </md-input-container>
+            </md-grid-tile>
+        </md-grid-list>
+        <md-grid-list cols="2" rowHeight="80px">
+            <md-grid-tile>
+                <md-input-container class="adf-start-task-input-container">
+                    <input mdInput
+                           [mdDatepicker]="taskDatePicker"
+                           (keydown)="true"
+                           (focusout)="onDateChanged($event.srcElement.value)"
+                           placeholder="{{'START_TASK.FORM.LABEL.DATE'|translate}}"
+                           [(ngModel)]="startTaskmodel.dueDate" id="date_id">
+                    <button mdSuffix [mdDatepickerToggle]="taskDatePicker"></button>
+                </md-input-container>
+                <md-datepicker #taskDatePicker [touchUi]="true"
+                               (selectedChanged)="onDateChanged($event)"></md-datepicker>
+                <div class="adf-error-text-container">
+                    <div *ngIf="dateError">
+                        <div class="adf-error-text">{{'START_TASK.FORM.DATE.ERROR'|translate}}</div>
+                        <i class="material-icons adf-error-icon">warning</i>
+                    </div>
+                </div>
+            </md-grid-tile>
+            <md-grid-tile>
+                <md-select placeholder="{{'START_TASK.FORM.LABEL.ASSIGNEE'|translate}}" id="assignee_id"
+                           class="adf-start-task-input-container" [(ngModel)]="assignee">
+                    <md-option>{{'START_TASK.FORM.LABEL.NONE'|translate}}</md-option>
 					<span *ngFor="let user of people">
-						<md-option [value]="user" *ngIf="!isUserNameEmpty(user)">{{ getDisplayUser(user.firstName, user.lastName, ' ')}}</md-option>
+						<md-option [value]="user" *ngIf="!isUserNameEmpty(user)">{{ getDisplayUser(user.firstName,
+                            user.lastName, ' ')}}
+                        </md-option>
 					</span>
-				</md-select>
-			</md-grid-tile>
-		</md-grid-list>
-		<md-grid-list cols="2" rowHeight="80px">
-			<md-grid-tile>
-				<md-select placeholder="{{'START_TASK.FORM.LABEL.FORM'|translate}}" id="form_id" [(ngModel)]="formKey" class="adf-start-task-input-container">
-					<md-option>{{'START_TASK.FORM.LABEL.NONE'|translate}}</md-option>
-					<md-option *ngFor="let form of forms" [value]="form.id">{{ form.name }}</md-option>
-				</md-select>
-			</md-grid-tile>
-			<md-grid-tile></md-grid-tile>
-		</md-grid-list>
-	</md-card-content>
-	<md-card-actions>
-		<md-grid-list cols="1" rowHeight="60px">
-			<md-grid-tile>
-				<div class="adf-new-task-footer">
-					<button md-button (click)="onCancel()" id="button-cancle">{{'START_TASK.FORM.ACTION.CANCEL'|translate}}</button>
-					<button md-button [disabled]="!startTaskmodel.name" (click)="start()" id="button-start">{{'START_TASK.FORM.ACTION.START'|translate}}</button>
-				</div>
-			</md-grid-tile>
-		</md-grid-list>
-	</md-card-actions>
+                </md-select>
+            </md-grid-tile>
+        </md-grid-list>
+        <md-grid-list cols="2" rowHeight="80px">
+            <md-grid-tile>
+                <md-select placeholder="{{'START_TASK.FORM.LABEL.FORM'|translate}}" id="form_id" [(ngModel)]="formKey"
+                           class="adf-start-task-input-container">
+                    <md-option>{{'START_TASK.FORM.LABEL.NONE'|translate}}</md-option>
+                    <md-option *ngFor="let form of forms" [value]="form.id">{{ form.name }}</md-option>
+                </md-select>
+            </md-grid-tile>
+            <md-grid-tile></md-grid-tile>
+        </md-grid-list>
+    </md-card-content>
+    <md-card-actions>
+        <md-grid-list cols="1" rowHeight="60px">
+            <md-grid-tile>
+                <div class="adf-new-task-footer">
+                    <button md-button (click)="onCancel()" id="button-cancle">
+                        {{'START_TASK.FORM.ACTION.CANCEL'|translate}}
+                    </button>
+                    <button md-button [disabled]="!startTaskmodel.name || dateError" (click)="start()" id="button-start">
+                        {{'START_TASK.FORM.ACTION.START'|translate}}
+                    </button>
+                </div>
+            </md-grid-tile>
+        </md-grid-list>
+    </md-card-actions>
 </md-card>
 

@@ -76,32 +76,31 @@ describe('StartTaskComponent', () => {
             fixture = TestBed.createComponent(StartTaskComponent);
             activitiStartTaskComponent = fixture.componentInstance;
             element = fixture.nativeElement;
+
+            service = fixture.debugElement.injector.get(TaskListService);
+            peopleService = fixture.debugElement.injector.get(PeopleService);
+            getFormlistSpy = spyOn(service, 'getFormList').and.returnValue(Observable.of(fakeForms));
+            getWorkflowUsersSpy = spyOn(peopleService, 'getWorkflowUsers').and.returnValue(Observable.of([
+                {
+                    id: 1,
+                    firstName: 'fakeName',
+                    lastName: 'fakeName',
+                    email: 'fake@app.activiti.com',
+                    company: 'Alfresco.com',
+                    pictureId: 3003
+                },
+                {
+                    id: 1001,
+                    firstName: 'fake-name',
+                    lastName: 'fake-name',
+                    email: 'fake-@app.com',
+                    company: 'app'
+                }
+            ]));
+
             fixture.detectChanges();
         });
     }));
-
-    beforeEach(() => {
-        service = fixture.debugElement.injector.get(TaskListService);
-        peopleService = fixture.debugElement.injector.get(PeopleService);
-        getFormlistSpy = spyOn(service, 'getFormList').and.returnValue(Observable.of(fakeForms));
-        getWorkflowUsersSpy = spyOn(peopleService, 'getWorkflowUsers').and.returnValue(Observable.of([
-            {
-                id: 1,
-                firstName: 'fakeName',
-                lastName: 'fakeName',
-                email: 'fake@app.activiti.com',
-                company: 'Alfresco.com',
-                pictureId: 3003
-            },
-            {
-                id: 1001,
-                firstName: 'fake-name',
-                lastName: 'fake-name',
-                email: 'fake-@app.com',
-                company: 'app'
-            }
-        ]));
-    });
 
     it('should create instance of StartTaskComponent', () => {
         expect(fixture.componentInstance instanceof StartTaskComponent).toBe(true, 'should create StartTaskComponent');
