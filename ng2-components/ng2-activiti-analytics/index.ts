@@ -16,7 +16,6 @@
  */
 
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { MdButtonModule, MdIconModule, MdTooltipModule } from '@angular/material';
 import { DiagramsModule } from 'ng2-activiti-diagrams';
 import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 
@@ -27,8 +26,8 @@ import { AnalyticsReportListComponent } from './src/components/analytics-report-
 import { AnalyticsReportParametersComponent } from './src/components/analytics-report-parameters.component';
 import { AnalyticsComponent } from './src/components/analytics.component';
 import { AnalyticsService } from './src/services/analytics.service';
-
 import { WIDGET_DIRECTIVES } from './src/components/widgets/index';
+import { MaterialModule } from './src/material.module';
 
 export * from './src/components/analytics.component';
 export * from './src/components/analytics-generator.component';
@@ -55,9 +54,7 @@ export const ANALYTICS_PROVIDERS: any[] = [
         CoreModule,
         ChartsModule,
         DiagramsModule,
-        MdTooltipModule,
-        MdButtonModule,
-        MdIconModule
+        MaterialModule
     ],
     declarations: [
         ...ANALYTICS_DIRECTIVES
@@ -75,9 +72,7 @@ export const ANALYTICS_PROVIDERS: any[] = [
     ],
     exports: [
         ...ANALYTICS_DIRECTIVES,
-        MdTooltipModule,
-        MdButtonModule,
-        MdIconModule
+        MaterialModule
     ]
 })
 export class AnalyticsModule {

@@ -20,11 +20,6 @@ module.exports = function (config) {
             {pattern: './node_modules/alfresco-js-api/dist/alfresco-js-api.min.js', included: true, watched: false},
             {pattern: './node_modules/raphael/raphael.min.js', included: true, watched: false},
             {pattern: './node_modules/moment/min/moment.min.js', included: true, watched: false},
-            {
-                pattern: './node_modules/md-date-time-picker/dist/js/mdDateTimePicker.min.js',
-                included: true,
-                watched: false
-            },
 
             {pattern: './node_modules/ng2-translate/ng2-translate.js', included: false, watched: false},
             {
