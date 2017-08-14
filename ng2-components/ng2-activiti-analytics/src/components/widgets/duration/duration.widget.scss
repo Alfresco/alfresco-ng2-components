@@ -1,0 +1,22 @@
+.adf-number-widget {
+    width: 100%;
+}
+
+.adf-number-widget__invalid {
+.mdl-textfield__input {
+    border-color: #d50000;
+}
+.mdl-textfield__label {
+    color: #d50000;
+&:after {
+     background-color: #d50000;
+ }
+}
+.mdl-textfield__error {
+    visibility: visible !important;
+}
+}
+
+.dropdown-container {
+    margin-top: 30px;
+}
