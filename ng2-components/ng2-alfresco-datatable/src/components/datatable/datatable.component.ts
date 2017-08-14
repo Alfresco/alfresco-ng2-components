@@ -412,6 +412,16 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
         }
     }
 
+    getCellTooltip(row: DataRow, col: DataColumn): string {
+        if (row && col && col.formatTooltip) {
+            const result: string = col.formatTooltip(row, col);
+            if (result) {
+                return result;
+            }
+        }
+        return null;
+    }
+
     private emitRowSelectionEvent(name: string, row: DataRow) {
         const domEvent = new CustomEvent(name, {
             detail: {

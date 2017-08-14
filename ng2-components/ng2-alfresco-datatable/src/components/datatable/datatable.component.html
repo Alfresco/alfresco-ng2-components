@@ -80,11 +80,13 @@
                                  (error)="onImageLoadingError($event)">
                         </div>
                         <div *ngSwitchCase="'date'" class="cell-value"
-                             [attr.data-automation-id]="'date_' + data.getValue(row, col)">
+                            [mdTooltip]="getCellTooltip(row, col)"
+                            [attr.data-automation-id]="'date_' + data.getValue(row, col)">
                             <adf-datatable-cell [data]="data" [column]="col" [row]="row"></adf-datatable-cell>
                         </div>
                         <div *ngSwitchCase="'text'" class="cell-value"
-                             [attr.data-automation-id]="'text_' + data.getValue(row, col)">
+                            [mdTooltip]="getCellTooltip(row, col)"
+                            [attr.data-automation-id]="'text_' + data.getValue(row, col)">
                             <adf-datatable-cell [data]="data" [column]="col" [row]="row"></adf-datatable-cell>
                         </div>
                     <span *ngSwitchDefault class="cell-value">

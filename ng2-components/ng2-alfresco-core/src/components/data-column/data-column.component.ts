@@ -43,6 +43,9 @@ export class DataColumnComponent implements OnInit {
     @ContentChild(TemplateRef)
     template: any;
 
+    @Input()
+    formatTooltip: Function;
+
     /**
      * Title to be used for screen readers.
      */
@@ -57,5 +60,4 @@ export class DataColumnComponent implements OnInit {
             this.srTitle = 'Thumbnail';
         }
     }
-
 }
