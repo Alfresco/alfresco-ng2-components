@@ -1,11 +1,3 @@
-<adf-document-menu-action
-    *ngIf="creationMenuActions"
-    [folderId]="currentFolderId"
-    (success)="onActionMenuSuccess($event)"
-    (error)="onActionMenuError($event)"
-    (permissionErrorEvent)="onPermissionError($event)">
-</adf-document-menu-action>
-
 <adf-datatable
     [selectionMode]="selectionMode"
     [data]="data"
