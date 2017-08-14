@@ -18,13 +18,14 @@
  /* tslint:disable:component-selector  */
 
 /* tslint:disable:no-access-missing-member */
-import { Component, ElementRef, Input } from '@angular/core';
+import { Component, ElementRef, Input, ViewEncapsulation } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { WidgetComponent } from './../widget.component';
 
 @Component({
     selector: 'checkbox-widget',
-    templateUrl: './checkbox.widget.html'
+    templateUrl: './checkbox.widget.html',
+    encapsulation: ViewEncapsulation.None
 })
 export class CheckboxWidgetComponent extends WidgetComponent {
 

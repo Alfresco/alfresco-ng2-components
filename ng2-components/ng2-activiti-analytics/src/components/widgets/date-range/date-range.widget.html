@@ -1,43 +1,46 @@
 <label>{{field.nameKey | translate}}</label><br>
 <div [formGroup]="dateRange">
-    <small *ngIf="dateRange && dateRange.errors && dateRange.errors.greaterThan" [hidden]="!dateRange.errors" class="text-danger">
-        Start date must be less than End date
+    <small *ngIf="isStartDateGreaterThanEndDate()" class="adf-text-danger">
+       {{'DATE-WIDGET.MESSAGES.START-LESS-THAN-END-DATE' | translate}}
     </small>
-    <div class="mdl-grid">
-        <div class="mdl-cell mdl-cell--4-col">
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input"
-                       formControlName="startDate"
-                       type="text"
-                       (onOk)="onOkStart(startElement)"
-                       id="startDateInput" #startElement>
-                <label class="mdl-textfield__label" for="startDateInput">Start Date</label>
-                <small [hidden]="dateRange && dateRange.controls.startDate && dateRange.controls.startDate.valid" class="text-danger">
-                    Start is required
-                </small>
-            </div>
-        </div>
-        <div class="mdl-cell mdl-cell--2-col">
-            <button id="startDateButton" class="mdl-button mdl-js-button mdl-button--fab date-picker-mdl">
-                <i class="material-icons">date_range</i>
-            </button>
-        </div>
-        <div class="mdl-cell mdl-cell--4-col">
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input"
-                       formControlName="endDate"
-                       type="text"
-                       (onOk)="onOkEnd(endElement)"
-                       id="endDateInput" #endElement>
-                <label class="mdl-textfield__label" for="endDateInput">End Date</label>
-            </div>
-        </div>
-        <div class="mdl-cell mdl-cell--2-col">
-            <button id="endDateButton" class="mdl-button mdl-js-button mdl-button--fab date-picker-mdl">
-                <i class="material-icons">date_range</i>
-            </button>
-        </div>
-    </div>
+    <small *ngIf="isStartDateEmpty()" class="adf-text-danger">
+       {{'DATE-WIDGET.MESSAGES.START-DATE-REQUIRED' | translate}}
+    </small>
+
+            <md-grid-list cols="2" rowHeight="80px">
+                <md-grid-tile>
+                    <md-input-container>
+                        <input mdInput
+                               [min]="minDate"
+                               [max]="maxDate"
+                        formControlName="startDate"
+                        [mdDatepicker]="startDatePicker"
+                        [value]="startDatePicker"
+                        (keydown)="true"
+                        placeholder="{{'DATE-WIDGET.START-DATE' | translate}}"
+                        id="startDate_id"
+                        required>
+                        <button mdSuffix [mdDatepickerToggle]="startDatePicker"></button>
+                    </md-input-container>
+                    <md-datepicker #startDatePicker [touchUi]="true" [startAt]="startAt" (selectedChanged)="onGroupValueChanged($event)"></md-datepicker>
+                </md-grid-tile>
+                <md-grid-tile>
+                    <md-input-container class="adf-start-task-input-container">
+                        <input mdInput
+                               [min]="minDate"
+                               [max]="maxDate"
+                        formControlName="endDate"
+                        [mdDatepicker]="endDatePicker"
+                        [value]="endDatePicker"
+                        (keydown)="true"
+                        placeholder="{{'DATE-WIDGET.END-DATE' | translate}}"
+                        id="endDate_id"
+                        required>
+                        <button mdSuffix [mdDatepickerToggle]="endDatePicker"></button>
+                    </md-input-container>
+                    <md-datepicker #endDatePicker [touchUi]="true" [startAt]="startAt" (selectedChanged)="onGroupValueChanged($event)"></md-datepicker>
+                </md-grid-tile>
+            </md-grid-list>
 </div>
 <div *ngIf="debug">
     <p>FormGroup : {{dateRange && dateRange.value | json }}</p>

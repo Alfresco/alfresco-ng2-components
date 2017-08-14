@@ -26,7 +26,8 @@ import {
     OnInit,
     Output,
     SimpleChanges,
-    ViewChild
+    ViewChild,
+    ViewEncapsulation
 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
@@ -45,7 +46,8 @@ declare let dialogPolyfill: any;
 @Component({
     selector: 'adf-analytics-report-parameters, analytics-report-parameters',
     templateUrl: './analytics-report-parameters.component.html',
-    styleUrls: ['./analytics-report-parameters.component.css']
+    styleUrls: ['./analytics-report-parameters.component.css'],
+    encapsulation: ViewEncapsulation.None
 })
 export class AnalyticsReportParametersComponent implements OnInit, OnChanges, OnDestroy, AfterViewChecked, AfterContentChecked {
 
