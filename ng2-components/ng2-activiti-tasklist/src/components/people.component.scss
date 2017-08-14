@@ -1,0 +1,83 @@
+@import 'theming';
+
+.assignment-header {
+  width: 100%;
+  border-bottom: 1px solid #eee;
+  padding: 6px 20px;
+}
+
+.assigment-count {
+  float: left;
+  padding: 10px 0px;
+  font-weight: bolder;
+  font-family: Muli;
+  opacity: 0.54;
+}
+
+.add-people {
+  float: right;
+  padding: 8px;
+  height: 26px;
+  opacity: 0.54;
+  cursor: pointer;
+  &:hover {
+    color: mat-color($primary);
+  }
+}
+
+.assignment-top-container {
+  border-top: 2px solid #eee;
+  margin: 0px;
+  padding: 0px;
+}
+
+.assignment-container {
+  padding: 10px 20px;
+  border-bottom: 1px solid #eee;
+  width: 100%;
+}
+
+.assignment-list-container {
+  padding: 0px;
+  width: 100%;
+}
+
+adf-people-list /deep/ adf-datatable /deep/ {
+  thead {
+    display: none;
+  }
+  .people-full-name {
+    font-family: 'Muli';
+  }
+  .people-email {
+    font-family: 'Muli';
+    opacity: 0.54;
+  }
+  .people-edit-label {
+    font-family: 'Muli';
+  }
+  .people-pic {
+    background: mat-color($primary);
+    width: 30px;
+    padding: 10px 5px;
+    border-radius: 100px;
+    color: #fff;
+    text-align: center;
+    font-weight: bolder;
+    font-size: 18px;
+    font-family: Muli;
+    text-transform: uppercase;
+    vertical-align: text-bottom;
+  }
+}
+
+.people-img {
+    border-radius: 90%;
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
+}
+
+adf-people-list /deep/ adf-datatable /deep/ td.mdl-data-table__cell--non-numeric.non-selectable.data-cell {
+  padding: 10px;
+}

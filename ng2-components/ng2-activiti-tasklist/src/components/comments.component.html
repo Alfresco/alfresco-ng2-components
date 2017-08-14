@@ -8,6 +8,8 @@
             </md-input-container>
     </div>
 
-    <adf-comment-list [comments]="comments">
-    </adf-comment-list>
+    <div *ngIf="comments.length > 0">
+        <adf-comment-list [comments]="comments">
+        </adf-comment-list>
+    </div>
 </div>

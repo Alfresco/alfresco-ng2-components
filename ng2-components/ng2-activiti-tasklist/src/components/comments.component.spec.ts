@@ -25,6 +25,7 @@ import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { DatePipe } from '@angular/common';
 import { MdInputModule } from '@angular/material';
 import { DataTableModule } from 'ng2-alfresco-datatable';
+import { PeopleService } from '../services/people.service';
 import { TaskListService } from './../services/tasklist.service';
 import { CommentListComponent } from './comment-list.component';
 import { CommentsComponent } from './comments.component';
@@ -52,7 +53,8 @@ describe('CommentsComponent', () => {
             ],
             providers: [
                 TaskListService,
-                DatePipe
+                DatePipe,
+                PeopleService
             ]
         }).compileComponents();
 
@@ -71,7 +73,7 @@ describe('CommentsComponent', () => {
             { message: 'Test2', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'} },
             { message: 'Test3', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'} }
         ]));
-        addCommentSpy = spyOn(service, 'addComment').and.returnValue(Observable.of({id: 123, message: 'Test Comment'}));
+        addCommentSpy = spyOn(service, 'addComment').and.returnValue(Observable.of({id: 123, message: 'Test Comment', createdBy: {id: '999'}}));
 
         componentHandler = jasmine.createSpyObj('componentHandler', [
             'upgradeAllRegistered',

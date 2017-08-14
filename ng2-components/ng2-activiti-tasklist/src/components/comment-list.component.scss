@@ -1,0 +1,76 @@
+@import 'theming';
+
+.adf {
+
+    &-comment-img-container {
+        float: left;
+        width: 40px;
+        padding: 5px 10px;
+        height: 100%;
+    }
+
+    &-comment-user-icon {
+        padding: 10px 5px;
+        width: 30px;
+        background-color: mat-color($primary);
+        border-radius: 50%;
+        font-family: Muli;
+        font-size: 16px;
+        color: #fff;
+        text-align: center;
+        height: 18px;
+        background-size: cover;
+    }
+
+    &-comment-user-name {
+        float: left;
+        width: calc(100% - 120px);
+        padding: 2px 10px;
+        font-family: Muli;
+        font-weight: 600;
+        color: #595959;
+    }
+
+    &-comment-message {
+        float: left;
+        width: calc(100% - 10px);
+        padding: 2px 10px;
+        font-family: Muli;
+        font-style: italic;
+        color: #595959;
+        white-space: initial;
+    }
+
+    &-comment-message-time {
+        float: left;
+        width: calc(100% - 120px);
+        padding: 2px 10px;
+        font-family: Muli;
+        font-size: 12px;
+        color: #595959;
+    }
+
+    &-comment-contents {
+        float: left;
+        width: calc(100% - 10px);
+    }
+
+    &-datatable /deep/ table {
+        thead {
+            display: none;
+        }
+        border: none !important;
+        tbody td {
+            padding: 0px !important;
+            border-top: none !important;
+        }
+    }
+
+    &-people-img {
+        border-radius: 90%;
+        width: 40px;
+        height: 40px;
+        vertical-align: middle;
+    }
+
+}
