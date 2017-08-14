@@ -19,7 +19,7 @@ import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
 
 import { DownloadEntry, MinimalNodeEntity } from 'alfresco-js-api';
-import { AlfrescoApiService } from 'ng2-alfresco-core';
+import { AlfrescoApiService } from './../services/alfresco-api.service';
 
 @Component({
     selector: 'adf-download-zip-dialog',
@@ -83,8 +83,6 @@ export class DownloadZipDialogComponent implements OnInit {
         this.dialogRef.close(false);
     }
 
-    // Download as ZIP prototype
-    // js-api@alpha 1.8.0-c422a3b69b1b96f72abc61ab370eff53590f8ee4
     downloadZip(nodeIds: string[]) {
         if (nodeIds && nodeIds.length > 0) {
 
@@ -102,7 +100,6 @@ export class DownloadZipDialogComponent implements OnInit {
                     this.nodesApi.getNode(data.entry.id).then((downloadNode: MinimalNodeEntity) => {
                         console.log(downloadNode);
                         const fileName = downloadNode.entry.name;
-                        // this.download(url, fileName);
                         this.waitAndDownload(data.entry.id, url, fileName);
                     });
                 }

@@ -20,13 +20,11 @@ import { MdDialog } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MinimalNodeEntity } from 'alfresco-js-api';
 import {
-    AlfrescoApiService, AlfrescoContentService, AlfrescoTranslationService, FileUploadCompleteEvent,
-    FolderCreatedEvent, NotificationService, SiteModel, UploadService
+    AlfrescoApiService, AlfrescoContentService, AlfrescoTranslationService, CreateFolderDialogComponent,
+    DownloadZipDialogComponent, FileUploadCompleteEvent, FolderCreatedEvent, NotificationService,
+    SiteModel, UploadService
 } from 'ng2-alfresco-core';
 import { DocumentListComponent, PermissionStyleModel } from 'ng2-alfresco-documentlist';
-
-import { CreateFolderDialogComponent } from '../../dialogs/create-folder.dialog';
-import { DownloadZipDialogComponent } from './../../dialogs/download-zip.dialog';
 
 import { ViewerService } from 'ng2-alfresco-viewer';
 
