@@ -16,7 +16,9 @@
  */
 
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { ErrorWidgetComponent } from 'ng2-activiti-form';
+import { DateAdapter, MD_DATE_FORMATS } from '@angular/material';
+import * as moment from 'moment';
+import { MOMENT_DATE_FORMATS, MomentDateAdapter } from 'ng2-alfresco-core';
 import { LogService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { Form } from '../models/form.model';
@@ -25,10 +27,6 @@ import { TaskDetailsModel } from '../models/task-details.model';
 import { User } from '../models/user.model';
 import { PeopleService } from '../services/people.service';
 import { TaskListService } from './../services/tasklist.service';
-import { DateAdapter, MD_DATE_FORMATS } from '@angular/material';
-import * as moment from 'moment';
-import { Moment } from 'moment';
-import { MOMENT_DATE_FORMATS, MomentDateAdapter } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'adf-start-task, activiti-start-task',
@@ -41,7 +39,7 @@ import { MOMENT_DATE_FORMATS, MomentDateAdapter } from 'ng2-alfresco-core';
 })
 export class StartTaskComponent implements OnInit {
 
-    public  FORMAT_DATE: string =  'DD/MM/YYYY';
+    public  FORMAT_DATE: string = 'DD/MM/YYYY';
 
     @Input()
     appId: string;
@@ -159,7 +157,7 @@ export class StartTaskComponent implements OnInit {
         return firstName + delimiter + lastName;
     }
 
-    onDateChanged(newDateValue) {
+    onDateChanged(newDateValue): void {
         this.dateError = false;
 
         if (newDateValue) {
