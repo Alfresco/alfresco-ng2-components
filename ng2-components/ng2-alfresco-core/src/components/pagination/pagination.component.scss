@@ -2,31 +2,49 @@
 
 $adf-pagination--height: 48px;
 $adf-pagination--icon-button-size: 32px;
+$adf-pagination--border: 1px solid $alfresco-divider-color;
 
 .adf-pagination {
     display: flex;
-    border-top: 1px solid $alfresco-divider-color;
+    border-top: $adf-pagination--border;
     height: $adf-pagination--height;
     line-height: $adf-pagination--height;
+    color: $alfresco-secondary-text-color;
 
     &__block {
         display: flex;
         align-items: center;
         padding: 0 12px;
-        border-right: 1px solid $alfresco-divider-color;
+        border-right: $adf-pagination--border;
 
         &:first-child {
             flex: 1 1 auto;
+            padding-left: 24px;
         }
 
         &:last-child {
             border-right-width: 0;
         }
+    }
 
-        span {
-            color: $alfresco-secondary-text-color;
-            margin: 0 5px;
+    &__max-items {
+        margin-left: 10px;
+    }
+
+    &__max-items, &__current-page {
+        margin-right: 5px;
+
+        &, & + button {
+            color: $alfresco-primary-text-color;
         }
+
+        & + button {
+            margin-left: -10px;
+        }
+    }
+
+    &__previous-button, &__next-button {
+        margin: 0 5px;
     }
 
     button[md-icon-button] {
