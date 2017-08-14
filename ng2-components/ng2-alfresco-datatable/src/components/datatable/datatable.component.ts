@@ -237,17 +237,17 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
 
         if (row) {
             if (this.data) {
-                const newValue = !row.isSelected;
-                const domEventName = newValue ? 'row-select' : 'row-unselect';
-
                 if (this.isSingleSelectionMode()) {
                     this.resetSelection();
-                    this.selectRow(row, newValue);
-                    this.emitRowSelectionEvent(domEventName, row);
+                    this.selectRow(row, true);
+                    this.emitRowSelectionEvent('row-select', row);
                 }
 
                 if (this.isMultiSelectionMode()) {
-                    const modifier = e.metaKey || e.ctrlKey;
+                    const modifier = e && (e.metaKey || e.ctrlKey);
+                    const newValue = modifier ? !row.isSelected : true;
+                    const domEventName = newValue ? 'row-select' : 'row-unselect';
+
                     if (!modifier) {
                         this.resetSelection();
                     }
