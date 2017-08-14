@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { ReportParametersModel } from 'ng2-activiti-diagrams';
 import { Observable, Observer } from 'rxjs/Rx';
 import { AnalyticsService } from '../services/analytics.service';
@@ -23,7 +23,8 @@ import { AnalyticsService } from '../services/analytics.service';
 @Component({
     selector: ' adf-analytics-report-list, analytics-report-list',
     templateUrl: './analytics-report-list.component.html',
-    styleUrls: ['./analytics-report-list.component.css']
+    styleUrls: ['./analytics-report-list.component.css'],
+    encapsulation: ViewEncapsulation.None
 })
 export class AnalyticsReportListComponent implements OnInit {
 

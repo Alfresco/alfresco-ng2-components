@@ -15,14 +15,15 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ReportQuery } from 'ng2-activiti-diagrams';
 import { AnalyticsGeneratorComponent } from './analytics-generator.component';
 
 @Component({
     selector: 'adf-analytics, activiti-analytics',
     templateUrl: './analytics.component.html',
-    styleUrls: ['./analytics.component.css']
+    styleUrls: ['./analytics.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class AnalyticsComponent implements OnChanges {
 

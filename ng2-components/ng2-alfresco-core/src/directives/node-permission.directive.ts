@@ -25,7 +25,7 @@ import { AlfrescoContentService } from './../services/alfresco-content.service';
 export class NodePermissionDirective implements OnChanges, AfterViewInit {
 
     @Input('adf-node-permission')
-    permission: string = null;
+    permission: string  = null;
 
     @Input('adf-nodes')
     nodes: MinimalNodeEntity[] = [];
