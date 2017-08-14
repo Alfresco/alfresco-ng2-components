@@ -13,76 +13,73 @@
             </button>
             <span class="error-message--text">{{errorMessage}}</span>
         </div>
-        <ng-container *ngIf="useCustomToolbar">
-            <adf-toolbar [color]="toolbarColor">
-                <adf-toolbar-title>
-                    <adf-breadcrumb *ngIf="!useDropdownBreadcrumb"
-                        class="files-breadcrumb"
-                        root="Personal Files"
-                        [target]="documentList"
-                        [folderNode]="documentList.folderNode">
-                    </adf-breadcrumb>
-                    <adf-dropdown-breadcrumb  *ngIf="useDropdownBreadcrumb"
-                        class="files-breadcrumb"
-                        [target]="documentList"
-                        [folderNode]="documentList.folderNode">
-                    </adf-dropdown-breadcrumb>
-                </adf-toolbar-title>
+        <adf-toolbar [color]="toolbarColor">
+            <adf-toolbar-title>
+                <adf-breadcrumb *ngIf="!useDropdownBreadcrumb"
+                    class="files-breadcrumb"
+                    root="Personal Files"
+                    [target]="documentList"
+                    [folderNode]="documentList.folderNode">
+                </adf-breadcrumb>
+                <adf-dropdown-breadcrumb  *ngIf="useDropdownBreadcrumb"
+                    class="files-breadcrumb"
+                    [target]="documentList"
+                    [folderNode]="documentList.folderNode">
+                </adf-dropdown-breadcrumb>
+            </adf-toolbar-title>
 
-                <adf-toolbar-divider></adf-toolbar-divider>
+            <adf-toolbar-divider></adf-toolbar-divider>
 
-                <button md-icon-button
-                    (click)="onCreateFolderClicked($event)">
-                    <md-icon>create_new_folder</md-icon>
+            <button md-icon-button
+                (click)="onCreateFolderClicked($event)">
+                <md-icon>create_new_folder</md-icon>
+            </button>
+            <button md-icon-button
+                [disabled]="!hasSelection(documentList.selection)"
+                title="Download"
+                (click)="downloadNodes(documentList.selection)">
+                <md-icon>get_app</md-icon>
+            </button>
+            <button md-icon-button
+                    adf-node-permission="delete"
+                    [adf-nodes]="documentList.selection">
+                <md-icon>delete</md-icon>
+            </button>
+
+            <button md-icon-button [mdMenuTriggerFor]="themePicker">
+                <md-icon>format_color_fill</md-icon>
+            </button>
+
+            <md-menu #themePicker="mdMenu">
+                <button md-menu-item (click)="toolbarColor = 'default'">Default</button>
+                <button md-menu-item (click)="toolbarColor = 'primary'">Primary</button>
+                <button md-menu-item (click)="toolbarColor = 'accent'">Accent</button>
+                <button md-menu-item (click)="toolbarColor = 'warn'">Warn</button>
+            </md-menu>
+
+            <adf-toolbar-divider></adf-toolbar-divider>
+
+            <button md-icon-button [mdMenuTriggerFor]="menu">
+                <md-icon>more_vert</md-icon>
+            </button>
+            <md-menu #menu="mdMenu">
+                <button md-menu-item>
+                    <md-icon>dialpad</md-icon>
+                    <span>Redial</span>
                 </button>
-                <button md-icon-button
-                    [disabled]="!hasSelection(documentList.selection)"
-                    title="Download"
-                    (click)="downloadNodes(documentList.selection)">
-                    <md-icon>get_app</md-icon>
+                <button md-menu-item disabled>
+                    <md-icon>voicemail</md-icon>
+                    <span>Check voicemail</span>
                 </button>
-                <button md-icon-button
-                        adf-node-permission="delete"
-                        [adf-nodes]="documentList.selection">
-                    <md-icon>delete</md-icon>
+                <button md-menu-item>
+                    <md-icon>notifications_off</md-icon>
+                    <span>Disable alerts</span>
                 </button>
-
-                <button md-icon-button [mdMenuTriggerFor]="themePicker">
-                    <md-icon>format_color_fill</md-icon>
-                </button>
-
-                <md-menu #themePicker="mdMenu">
-                    <button md-menu-item (click)="toolbarColor = 'default'">Default</button>
-                    <button md-menu-item (click)="toolbarColor = 'primary'">Primary</button>
-                    <button md-menu-item (click)="toolbarColor = 'accent'">Accent</button>
-                    <button md-menu-item (click)="toolbarColor = 'warn'">Warn</button>
-                </md-menu>
-
-                <adf-toolbar-divider></adf-toolbar-divider>
-
-                <button md-icon-button [mdMenuTriggerFor]="menu">
-                    <md-icon>more_vert</md-icon>
-                </button>
-                <md-menu #menu="mdMenu">
-                    <button md-menu-item>
-                        <md-icon>dialpad</md-icon>
-                        <span>Redial</span>
-                    </button>
-                    <button md-menu-item disabled>
-                        <md-icon>voicemail</md-icon>
-                        <span>Check voicemail</span>
-                    </button>
-                    <button md-menu-item>
-                        <md-icon>notifications_off</md-icon>
-                        <span>Disable alerts</span>
-                    </button>
-                </md-menu>
-            </adf-toolbar>
-        </ng-container>
+            </md-menu>
+        </adf-toolbar>
         <adf-document-list
                 #documentList
                 [permissionsStyle]="permissionsStyle"
-                [creationMenuActions]="!useCustomToolbar"
                 [currentFolderId]="currentFolderId"
                 [contextMenuActions]="true"
                 [contentActions]="true"
@@ -229,10 +226,6 @@
 
     <section>
         <md-slide-toggle [(ngModel)]="useDropdownBreadcrumb">Dropdown breadcrumb</md-slide-toggle>
-    </section>
-
-    <section>
-        <md-slide-toggle [(ngModel)]="useCustomToolbar">Use custom toolbar</md-slide-toggle>
     </section>
 
     <section>

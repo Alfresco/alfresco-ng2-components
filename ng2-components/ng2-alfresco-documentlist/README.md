@@ -79,8 +79,7 @@ npm install ng2-alfresco-documentlist
     #documentList
     [currentFolderId]="'-my-'"
     [contextMenuActions]="true"
-    [contentActions]="true"
-    [creationMenuActions]="true">
+    [contentActions]="true">
 </adf-document-list>
 ```
 
@@ -107,7 +106,6 @@ The properties currentFolderId, folderNode and node are the entry initialization
 | contentActionsPosition | string (left\|right) | right | Position of the content actions dropdown menu. |
 | contextMenuActions | boolean | false | Toggles context menus for each row |
 | enablePagination | boolean | true | Shows pagination |
-| creationMenuActions | boolean | true | Toggles the creation menu actions |
 | rowFilter | `RowFilter` | | Custom row filter, [see more](#custom-row-filter). |
 | imageResolver | `ImageResolver` | | Custom image resolver, [see more](#custom-image-resolver). |
 | allowDropFiles | boolean | false | Toggle file drop support for rows (see **ng2-alfresco-core/UploadDirective** for more details) |
@@ -384,22 +382,6 @@ DocumentList now provides a simple dropdown component to show and interact with 
 | Name | Returned Type | Description |
 | --- | --- | --- |
 | change | [SiteModel](https://github.com/Alfresco/alfresco-ng2-components/blob/development/ng2-components/ng2-alfresco-documentlist/src/models/site.model.ts) | emitted when user selects a site. When default option is selected an empty model is emitted  |
-
-## Menu Actions
-
-DocumentList provides simple creation menu actions that provide the action to create a new folder.
-
-```html
-<adf-document-menu-action 
-    [folderId]="folderId">
-</adf-document-menu-action>
-```
-
-![Creation Menu Action](docs/assets/document-list-creation-menu-actions-1.png)
-
-When the "New Folder" button is pressed the dialog appears.
-
-![Creation Menu Action](docs/assets/document-list-creation-menu-actions-2.png)
 
 ## Custom columns
 
