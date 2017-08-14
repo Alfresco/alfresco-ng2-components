@@ -27,7 +27,6 @@ import { ContentColumnListComponent } from './src/components/content-column/cont
 import { ContentColumnComponent } from './src/components/content-column/content-column.component';
 import { ContentNodeSelectorComponent } from './src/components/content-node-selector/content-node-selector.component';
 import { DocumentListComponent } from './src/components/document-list.component';
-import { DocumentMenuActionComponent } from './src/components/document-menu-action.component';
 import { EmptyFolderContentDirective } from './src/components/empty-folder/empty-folder-content.directive';
 import { DropdownSitesComponent } from './src/components/site-dropdown/sites-dropdown.component';
 import { MaterialModule } from './src/material.module';
@@ -65,7 +64,6 @@ export * from './src/models/permissions-style.model';
 
 export const DOCUMENT_LIST_DIRECTIVES: any[] = [
     DocumentListComponent,
-    DocumentMenuActionComponent,
     ContentColumnComponent,
     ContentColumnListComponent,
     ContentActionComponent,
@@ -114,7 +112,9 @@ export const DOCUMENT_LIST_PROVIDERS: any[] = [
     ]
 })
 export class DocumentListModule {
+    /** @deprecated in 1.8.0 */
     static forRoot(): ModuleWithProviders {
+        console.log('DocumentListModule.forRoot is deprecated and will be removed in future versions');
         return {
             ngModule: DocumentListModule,
             providers: [
