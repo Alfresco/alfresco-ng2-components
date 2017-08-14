@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
 import { Observable, Observer } from 'rxjs/Rx';
 import { UserEventModel } from '../models/user-event.model';
@@ -30,15 +30,15 @@ declare var require: any;
 @Component({
     selector: 'adf-people, activiti-people',
     templateUrl: './people.component.html',
-    styleUrls: ['./people.component.css']
+    styleUrls: ['./people.component.scss']
 })
-export class PeopleComponent implements AfterViewInit {
+export class PeopleComponent implements OnInit, AfterViewInit {
 
     @Input()
     iconImageUrl: string = require('../assets/images/user.jpg');
 
     @Input()
-    people: User [] = [];
+    people: User[] = [];
 
     @Input()
     taskId: string = '';
@@ -62,6 +62,14 @@ export class PeopleComponent implements AfterViewInit {
     constructor(private peopleService: PeopleService,
                 private logService: LogService) {
         this.peopleSearch$ = new Observable<User[]>(observer => this.peopleSearchObserver = observer).share();
+    }
+
+    ngOnInit() {
+        if (this.people && this.people.length > 0) {
+            this.people.forEach((person) => {
+                person.userImage = this.peopleService.getUserImage(person);
+            });
+        }
     }
 
     ngAfterViewInit() {
@@ -91,17 +99,17 @@ export class PeopleComponent implements AfterViewInit {
     }
 
     searchUser(searchedWord: string) {
-        this.peopleService.getWorkflowUsers(this.taskId, searchedWord)
+        this.peopleService.getWorkflowUsersWithImages(this.taskId, searchedWord)
             .subscribe((users) => {
                 this.peopleSearchObserver.next(users);
-            },         error => this.logService.error('Could not load users'));
+            }, error => this.logService.error(error));
     }
 
     involveUser(user: User) {
         this.peopleService.involveUserWithTask(this.taskId, user.id.toString())
             .subscribe(() => {
                 this.people = [...this.people, user];
-            },         error => this.logService.error('Impossible to involve user with task'));
+            }, error => this.logService.error('Impossible to involve user with task'));
     }
 
     removeInvolvedUser(user: User) {
@@ -110,7 +118,7 @@ export class PeopleComponent implements AfterViewInit {
                 this.people = this.people.filter((involvedUser) => {
                     return involvedUser.id !== user.id;
                 });
-            },         error => this.logService.error('Impossible to remove involved user from task'));
+            }, error => this.logService.error('Impossible to remove involved user from task'));
     }
 
     getDisplayUser(firstName: string, lastName: string, delimiter: string = '-'): string {
@@ -147,4 +155,7 @@ export class PeopleComponent implements AfterViewInit {
         this.showAssignment = false;
     }
 
+    onErrorImageLoad(user: User) {
+        user.userImage = null;
+    }
 }

@@ -11,7 +11,13 @@
         <data-columns>
             <data-column key="firstName">
                 <ng-template let-entry="$implicit">
-                    <div class="people-pic">{{getInitialUserName(entry.row.obj.firstName, entry.row.obj.lastName)}}</div>
+                        <div *ngIf="!entry.row.obj.userImage" class="people-pic">
+                            {{getInitialUserName(entry.row.obj.firstName, entry.row.obj.lastName)}}</div>
+                        <div>
+                            <img *ngIf="entry.row.obj.userImage" class="people-img"
+                                [src]="entry.row.obj.userImage"
+                                (error)="onErrorImageLoad(entry.row.obj)"/>
+                        </div>
                 </ng-template>
             </data-column>
             <data-column key="email" class="full-width">
