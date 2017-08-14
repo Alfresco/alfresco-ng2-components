@@ -21,6 +21,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { LogService, ThumbnailService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { FormService } from '../../../services/form.service';
+import { ContentLinkModel } from '../core/content-link.model';
 import { baseHost, WidgetComponent } from './../widget.component';
 
 @Component({
@@ -115,6 +116,18 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
 
     getIcon(mimeType) {
         return this.thumbnailService.getMimeTypeIcon(mimeType);
+    }
+
+    fileClicked(file: ContentLinkModel): void {
+        this.formService.getFileRawContent(file.id).subscribe(
+            (blob: Blob) => {
+                file.contentBlob = blob;
+                this.formService.formContentClicked.next(file);
+            },
+            (error) => {
+                this.logService.error('Unable to send evento for file ' + file.name);
+            }
+        );
     }
 
 }
