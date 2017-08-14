@@ -38,8 +38,8 @@ import {
     WebscriptComponent
 } from './components/index';
 
-import { UploadButtonComponent } from 'ng2-alfresco-upload';
 import { FormListDemoComponent } from './components/form/form-list-demo.component';
+import { UploadComponent } from './components/upload/upload.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginDemoComponent },
@@ -70,7 +70,7 @@ export const appRoutes: Routes = [
     },
     {
         path: 'uploader',
-        component: UploadButtonComponent,
+        component: UploadComponent,
         canActivate: [AuthGuardEcm]
     },
     {
