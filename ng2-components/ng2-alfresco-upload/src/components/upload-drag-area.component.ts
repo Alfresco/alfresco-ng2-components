@@ -80,15 +80,6 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
     }
 
     /**
-     * Connector method for the NodePermissionSubject
-     *
-     * @param enabled
-     */
-    setEnabled(enabled: boolean) {
-        this.disabled = !enabled;
-    }
-
-    /**
      * Method called when files are dropped in the drag area.
      *
      * @param {File[]} files - files dropped in the drag area.
