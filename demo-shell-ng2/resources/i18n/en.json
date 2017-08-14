@@ -25,5 +25,10 @@
     },
     "ANALYTICS_REPORT":{
         "NO_REPORT_MESSAGE":"No report selected. Choose a report from the list"
+    },
+    "PS-TAB":{
+        "TASKS-TAB":"Tasks",
+        "PROCESSES-TAB":"Process",
+        "REPORTS-TAB":"Reports"
     }
 }
