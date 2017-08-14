@@ -26,7 +26,6 @@ import { MaterialModule } from '../../material.module';
 import { DocumentListService } from '../../services/document-list.service';
 import { DropdownBreadcrumbComponent } from '../breadcrumb/dropdown-breadcrumb.component';
 import { DocumentListComponent } from '../document-list.component';
-import { DocumentMenuActionComponent } from '../document-menu-action.component';
 import { EmptyFolderContentDirective } from '../empty-folder/empty-folder-content.directive';
 import { DropdownSitesComponent } from '../site-dropdown/sites-dropdown.component';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
@@ -76,7 +75,6 @@ describe('ContentNodeSelectorComponent', () => {
             ],
             declarations: [
                 DocumentListComponent,
-                DocumentMenuActionComponent,
                 EmptyFolderContentDirective,
                 DropdownSitesComponent,
                 DropdownBreadcrumbComponent,
