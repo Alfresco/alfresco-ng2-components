@@ -60,25 +60,10 @@ export class FilesComponent implements OnInit {
     multiselect = false;
 
     @Input()
-    multipleFileUpload: boolean = false;
-
-    @Input()
-    disableWithNoPermission: boolean = false;
-
-    @Input()
     folderUpload: boolean = false;
 
     @Input()
-    acceptedFilesTypeShow: boolean = false;
-
-    @Input()
     versioning: boolean = false;
-
-    @Input()
-    acceptedFilesType: string = '.jpg,.pdf,.js';
-
-    @Input()
-    enableUpload: boolean = true;
 
     @ViewChild(DocumentListComponent)
     documentList: DocumentListComponent;
