@@ -105,11 +105,6 @@
                             </button>
                         </div>
                     </dialog>
-                    <div *ngIf="debug">
-                        <p>ReportForm valid : {{ reportForm.valid }}</p>
-                        <p>ReportForm status : {{ reportForm.errors | json }}</p>
-                        <p>ReportForm FormGroup valid : {{reportForm && reportForm.controls.dateRange.valid | json }}</p>
-                    </div>
                 </form>
             </div>
         </div>

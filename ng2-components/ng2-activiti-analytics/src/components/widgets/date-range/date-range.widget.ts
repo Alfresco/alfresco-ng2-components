@@ -50,8 +50,6 @@ export class DateRangeWidgetComponent implements OnInit {
     startDatePicker: Moment;
     endDatePicker: Moment;
 
-    debug: boolean = false;
-
     constructor(public dateAdapter: DateAdapter<Moment>) {
     }
 
