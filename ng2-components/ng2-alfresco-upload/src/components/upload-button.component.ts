@@ -15,18 +15,31 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { AlfrescoApiService, AlfrescoTranslationService, FileModel, FileUtils, LogService, NotificationService, UploadService } from 'ng2-alfresco-core';
+import {
+    AlfrescoApiService,
+    AlfrescoTranslationService,
+    EXTENDIBLE_COMPONENT,
+    FileModel,
+    FileUtils,
+    LogService,
+    NodePermissionSubject,
+    NotificationService,
+    UploadService
+} from 'ng2-alfresco-core';
 import { Observable, Subject } from 'rxjs/Rx';
 import { PermissionModel } from '../models/permissions.model';
 
 @Component({
     selector: 'adf-upload-button, alfresco-upload-button',
     templateUrl: './upload-button.component.html',
-    styleUrls: ['./upload-button.component.css']
+    styleUrls: ['./upload-button.component.css'],
+    providers: [
+        { provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadButtonComponent)}
+    ]
 })
-export class UploadButtonComponent implements OnInit, OnChanges {
+export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionSubject {
 
     /** @deprecated Deprecated in 1.6.0, you can use UploadService events and NotificationService api instead. */
     @Input()
@@ -84,8 +97,7 @@ export class UploadButtonComponent implements OnInit, OnChanges {
                 private translateService: AlfrescoTranslationService,
                 private logService: LogService,
                 private notificationService: NotificationService,
-                private apiService: AlfrescoApiService,
-                private elementRef: ElementRef) {
+                private apiService: AlfrescoApiService) {
         if (translateService) {
             translateService.addTranslationFolder('ng2-alfresco-upload', 'assets/ng2-alfresco-upload');
         }
@@ -95,6 +107,10 @@ export class UploadButtonComponent implements OnInit, OnChanges {
         this.permissionValue.subscribe((permission: boolean) => {
             this.hasPermission = permission;
         });
+    }
+
+    setEnabled(enabled: boolean) {
+        this.disabled = !enabled;
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -109,7 +125,7 @@ export class UploadButtonComponent implements OnInit, OnChanges {
     }
 
     isForceDisable(): boolean {
-        return this.disabled || !!this.elementRef.nativeElement.getAttribute('disabled') ? true : undefined;
+        return this.disabled ? true : undefined;
     }
 
     /** @deprecated Deprecated in 1.8.0, use the button with combination of adf-node-permission directive */
