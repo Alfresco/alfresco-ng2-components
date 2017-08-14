@@ -62,9 +62,6 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     @Input()
     hideComponent: boolean = false;
 
-    @Input()
-    debug: boolean = false;
-
     @Output()
     onSuccess = new EventEmitter();
 
