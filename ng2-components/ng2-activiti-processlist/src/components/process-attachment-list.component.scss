@@ -1,12 +1,20 @@
-.empty-list_empty_template {
-    text-align: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
+adf-datatable /deep/ .column-header {
+    color: #232323;
+    font-size: 15px;
 }
 
-.empty-list__this-space-is-empty {
+adf-datatable /deep/ .data-cell {
+    cursor: pointer !important;
+}
+
+.adf-attachment-list-loading-margin {
+    margin-left: calc((100% - 100px) / 2);
+    margin-right: calc((100% - 100px) / 2);
+}
+
+adf-empty-list-header /deep/ div {
     height: 32px;
-    opacity: 0.26;
+    opacity: 0.26 !important;
     font-family: Muli, Helvetica, Arial, sans-serif;
     font-size: 24px;
     line-height: 1.33;
@@ -14,7 +22,7 @@
     color: #000000;
 }
 
-.empty-list__drag-drop {
+.adf-empty-list-drag_drop {
     height: 56px;
     opacity: 0.54;
     font-family: Muli, Helvetica, Arial, sans-serif;
@@ -22,10 +30,10 @@
     line-height: 1;
     letter-spacing: -2px;
     color: #000000;
-    margin-top: 40px;
+    margin-top: 40px !important;
 }
 
-.empty-list__any-files-here-to-add {
+.adf-empty-list__any-files-here-to-add {
     height: 24px;
     opacity: 0.54;
     font-family: Muli, Helvetica, Arial, sans-serif;
@@ -36,7 +44,7 @@
     margin-top: 17px;
 }
 
-.empty-list__empty_doc_lib {
+.adf-empty-list__empty_doc_lib {
     width: 565px;
     height: 161px;
     object-fit: contain;

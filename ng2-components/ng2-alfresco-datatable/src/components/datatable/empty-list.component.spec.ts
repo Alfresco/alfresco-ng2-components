@@ -41,27 +41,11 @@ describe('EmptyListComponentComponent', () => {
         expect(component).toBeDefined();
     });
 
-    it('should show the default values', async(() => {
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('.empty-list__this-space-is-empty').innerHTML).toEqual('ADF-DATATABLE.EMPTY.HEADER');
-            expect(fixture.nativeElement.querySelector('.empty-list__drag-drop').innerHTML).toEqual('ADF-DATATABLE.EMPTY.DRAG-AND-DROP.TITLE');
-            expect(fixture.nativeElement.querySelector('.empty-list__any-files-here-to-add').innerHTML).toEqual('ADF-DATATABLE.EMPTY.DRAG-AND-DROP.SUBTITLE');
-            expect(fixture.nativeElement.querySelector('.empty-list__empty_doc_lib').src).toContain('empty_doc_lib');
-        });
-    }));
-
     it('should render the input values', async(() => {
-        component.emptyMsg = 'Fake empty msg';
-        component.dragDropMsg = 'Fake drag drop msg';
-        component.additionalMsg = 'Fake additional msg';
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('.empty-list__this-space-is-empty').innerHTML).toEqual('Fake empty msg');
-            expect(fixture.nativeElement.querySelector('.empty-list__drag-drop').innerHTML).toEqual('Fake drag drop msg');
-            expect(fixture.nativeElement.querySelector('.empty-list__any-files-here-to-add').innerHTML).toEqual('Fake additional msg');
+            expect(fixture.nativeElement.querySelector('.adf-empty-list_template')).toBeDefined();
         });
     }));
 });

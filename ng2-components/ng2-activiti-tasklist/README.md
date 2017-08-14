@@ -379,6 +379,7 @@ This component displays attached documents on a specified task
 | Name | Type | Description |
 | --- | --- | --- |
 | taskId | string | (**required**): The ID of the task to display |
+| disabled | boolean | false | Disable/Enable read only mode for attachement list |
 
 ### Events
 
