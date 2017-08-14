@@ -6,9 +6,13 @@
         <div>
             <md-list *ngIf="hasFile">
                 <md-list-item class="adf-upload-files-row" *ngFor="let file of field.value">
-                    <img md-list-icon class="adf-upload-widget__icon" [src]="getIcon(file.mimeType)" [alt]="mimeTypeIcon"/>
+                    <img md-list-icon class="adf-upload-widget__icon"
+                            [id]="'file-'+file.id+'-icon'"
+                            [src]="getIcon(file.mimeType)"
+                            [alt]="mimeTypeIcon"
+                            (click)="fileClicked(file)"/>
                     <span md-line id="{{'file-'+file.id}}" class="adf-file">{{decode(file.name)}}</span>
-                    <button md-icon-button [id]="'file-'+file.id+'-remove'" (click)="reset(file);" (keyup.enter)="reset(file);">
+                    <button *ngIf="!field.readOnly" md-icon-button [id]="'file-'+file.id+'-remove'" (click)="reset(file);" (keyup.enter)="reset(file);">
                         <md-icon class="md-24">highlight_off</md-icon>
                     </button>
                 </md-list-item>
@@ -24,4 +28,5 @@
                (change)="onFileChanged($event)">
     </div>
     <error-widget [error]="field.validationSummary" ></error-widget>
+
 </div>
