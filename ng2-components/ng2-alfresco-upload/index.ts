@@ -16,8 +16,9 @@
  */
 
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { MdButtonModule, MdIconModule, MdProgressSpinnerModule } from '@angular/material';
+
 import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
+import { MaterialModule } from './src/material.module';
 
 import { FileUploadingDialogComponent } from './src/components/file-uploading-dialog.component';
 import { FileUploadingListRowComponent } from './src/components/file-uploading-list-row.component';
@@ -52,9 +53,7 @@ export const UPLOAD_PROVIDERS: any[] = [
 @NgModule({
     imports: [
         CoreModule,
-        MdIconModule,
-        MdProgressSpinnerModule,
-        MdButtonModule
+        MaterialModule
     ],
     declarations: [
         ...UPLOAD_DIRECTIVES
