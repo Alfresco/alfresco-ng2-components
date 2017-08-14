@@ -416,7 +416,17 @@ export class TaskListService {
      * @returns {TaskDetailsModel}
      */
     assignTask(taskId: string, requestNode: any): Observable<TaskDetailsModel> {
-        return Observable.fromPromise(this.callApiAssignTask(taskId, requestNode))
+        let assignee = {assignee: requestNode.id} ;
+        return Observable.fromPromise(this.callApiAssignTask(taskId, assignee))
+            .map(res => res)
+            .map((response: TaskDetailsModel) => {
+                return new TaskDetailsModel(response);
+            }).catch(err => this.handleError(err));
+    }
+
+    assignTaskByUserId(taskId: string, userId: number): Observable<TaskDetailsModel> {
+        let assignee = {assignee: userId} ;
+        return Observable.fromPromise(this.callApiAssignTask(taskId, assignee))
             .map(res => res)
             .map((response: TaskDetailsModel) => {
                 return new TaskDetailsModel(response);
