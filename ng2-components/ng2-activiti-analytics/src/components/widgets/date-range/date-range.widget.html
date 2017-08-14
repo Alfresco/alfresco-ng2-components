@@ -42,10 +42,3 @@
                 </md-grid-tile>
             </md-grid-list>
 </div>
-<div *ngIf="debug">
-    <p>FormGroup : {{dateRange && dateRange.value | json }}</p>
-    <p>FormGroup valid : {{dateRange && dateRange.valid }}</p>
-    <p>FormGroup status : {{dateRange && dateRange.errors | json }}</p>
-    <p>FormGroup start status : {{dateRange && dateRange.controls.startDate && dateRange.controls.startDate.errors | json }}</p>
-    <p>FormGroup end status: {{dateRange && dateRange.controls.endDate.errors | json }}</p>
-</div>
