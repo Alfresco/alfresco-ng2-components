@@ -1,0 +1,94 @@
+@import 'theming';
+
+.adf-new-task-heading {
+    padding: 12px 20px;
+    font-family: Muli;
+    font-weight: bold;
+    border-bottom: 1px solid #eee;
+    font-size: 18px;
+    float: left;
+    text-align: left;
+    width: calc(100% - 40px);
+}
+
+.adf-new-task-layout-card {
+    width: 66.6667%;
+    margin-right: calc(33.3333%/2 - 24px);
+    margin-left: calc(33.3333%/2 - 24px);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 0px;
+}
+
+.adf-new-task-footer {
+    padding: 4px;
+    font-family: Muli;
+    font-size: 18px;
+    border-top: 1px solid #eee;
+    float: left;
+    width: calc(100% - 40px);
+    text-align: right;
+}
+
+.adf-start-task-input-container {
+    width: 80%;
+}
+
+.adf-new-task-text-width {
+    width: 90%;
+}
+
+.adf {
+
+    &-error-text-container {
+        position: absolute;
+        width: 81%;
+        height: 20px;
+        margin-top: 30px;
+    }
+
+    &-error-text {
+        padding: 1px;
+        height: 16px;
+        font-size: 12px;
+        line-height: 1.33;
+        float: left;
+        color: mat-color($warn);
+    }
+
+    &-error-icon {
+        float: right;
+        font-size: 17px;
+        color: mat-color($warn);
+    }
+
+    &-label {
+        color: $alfresco-gray-label;
+    }
+
+    &-invalid {
+
+        .mat-input-underline {
+            background-color: #f44336 !important;
+        }
+
+        .adf-file {
+            border-color: mat-color($warn);
+        }
+
+        .mat-input-prefix {
+            color: mat-color($warn);
+        }
+
+        .adf-input {
+            border-color: mat-color($warn);
+        }
+
+        .adf-label {
+            color: mat-color($warn);
+            &:after {
+                background-color: mat-color($warn);
+            }
+        }
+    }
+}

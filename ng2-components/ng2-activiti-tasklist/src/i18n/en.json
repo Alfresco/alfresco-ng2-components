@@ -78,14 +78,17 @@
                 "NONE": "None",
                 "NAME": "Name",
                 "DESCRIPTION": "Description",
-                "ATTACHFORM" : "Attach a Form",
-                "ASSIGNEE"   : "Assignee",
-                "FORM"       : "Form",
-                "DATE"       : "Choose a Date"
+                "ATTACHFORM": "Attach a Form",
+                "ASSIGNEE": "Assignee",
+                "FORM": "Form",
+                "DATE": "Choose a Date"
             },
             "ACTION": {
                 "START": "Start",
                 "CANCEL": "Cancel"
+            },
+            "DATE": {
+                "ERROR": "Date format DD/MM/YYYY"
             }
         }
     },
