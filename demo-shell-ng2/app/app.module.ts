@@ -43,9 +43,6 @@ import { CustomEditorsModule } from './components/activiti/custom-editor/custom-
 import { MaterialModule } from './material.module';
 import { DebugAppConfigService } from './services/debug-app-config.service';
 
-import { CreateFolderDialogComponent } from './dialogs/create-folder.dialog';
-import { DownloadZipDialogComponent } from './dialogs/download-zip.dialog';
-
 import { FormListDemoComponent } from './components/form/form-list-demo.component';
 
 import {
@@ -121,8 +118,6 @@ if (process.env.ENV === 'production') {
         AboutComponent,
         FilesComponent,
         FormNodeViewerComponent,
-        CreateFolderDialogComponent,
-        DownloadZipDialogComponent,
         SettingsComponent,
         FormDemoComponent,
         FormListDemoComponent
@@ -138,10 +133,6 @@ if (process.env.ENV === 'production') {
             }
         }
     ],
-    bootstrap: [ AppComponent ],
-    entryComponents: [
-        CreateFolderDialogComponent,
-        DownloadZipDialogComponent
-    ]
+    bootstrap: [ AppComponent ]
 })
 export class AppModule { }

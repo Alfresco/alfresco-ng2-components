@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
     selector: 'adf-create-folder-dialog',
@@ -37,7 +37,8 @@ import { Component } from '@angular/core';
             width: 100%;
         }
         `
-    ]
+    ],
+    encapsulation: ViewEncapsulation.None
 })
 export class CreateFolderDialogComponent {
     value: string = '';
