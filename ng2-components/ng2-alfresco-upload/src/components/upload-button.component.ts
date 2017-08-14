@@ -109,6 +109,11 @@ export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionS
         });
     }
 
+    /**
+     * Connector method for the NodePermissionSubject
+     *
+     * @param enabled
+     */
     setEnabled(enabled: boolean) {
         this.disabled = !enabled;
     }

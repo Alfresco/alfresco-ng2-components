@@ -15,15 +15,27 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AlfrescoTranslationService, FileInfo, FileModel, FileUtils, NotificationService, UploadService } from 'ng2-alfresco-core';
+import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
+import {
+    AlfrescoTranslationService,
+    EXTENDIBLE_COMPONENT,
+    FileInfo,
+    FileModel,
+    FileUtils,
+    NodePermissionSubject,
+    NotificationService,
+    UploadService
+} from 'ng2-alfresco-core';
 
 @Component({
     selector: 'adf-upload-drag-area, alfresco-upload-drag-area',
     templateUrl: './upload-drag-area.component.html',
-    styleUrls: ['./upload-drag-area.component.css']
+    styleUrls: ['./upload-drag-area.component.css'],
+    providers: [
+        { provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadDragAreaComponent)}
+    ]
 })
-export class UploadDragAreaComponent {
+export class UploadDragAreaComponent implements NodePermissionSubject {
 
     /** @deprecated Deprecated in favor of disabled input property */
     @Input()
@@ -65,6 +77,15 @@ export class UploadDragAreaComponent {
     constructor(private uploadService: UploadService,
                 private translateService: AlfrescoTranslationService,
                 private notificationService: NotificationService) {
+    }
+
+    /**
+     * Connector method for the NodePermissionSubject
+     *
+     * @param enabled
+     */
+    setEnabled(enabled: boolean) {
+        this.disabled = !enabled;
     }
 
     /**
