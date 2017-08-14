@@ -90,7 +90,7 @@ export class StartTaskComponent implements OnInit {
                 .switchMap((createRes: any) =>
                     this.attachForm(createRes.id, this.formKey).defaultIfEmpty(createRes)
                         .switchMap((attachRes: any) =>
-                            this.assignTask(createRes.id, this.assignee).defaultIfEmpty(attachRes ? attachRes : createRes)
+                            this.assignTaskByUserId(createRes.id, this.assignee.id).defaultIfEmpty(attachRes ? attachRes : createRes)
                         )
                 )
                 .subscribe(
@@ -112,10 +112,10 @@ export class StartTaskComponent implements OnInit {
         return response;
     }
 
-    private assignTask(taskId: string, assignee: any): Observable<any> {
+    private assignTaskByUserId(taskId: string, userId: any): Observable<any> {
         let response = Observable.of();
-        if (taskId && assignee) {
-            response = this.taskService.assignTask(taskId, assignee);
+        if (taskId && userId) {
+            response = this.taskService.assignTaskByUserId(taskId, userId);
         }
         return response;
     }
