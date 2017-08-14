@@ -586,4 +586,41 @@ describe('DataTable', () => {
         expect(event.target.src).toBe(originalSrc);
     });
 
+    it('should not get cell tooltip when row is not provided', () => {
+        const col = <DataColumn> { key: 'name', type: 'text' };
+        expect(dataTable.getCellTooltip(null, col)).toBeNull();
+    });
+
+    it('should not get cell tooltip when column is not provided', () => {
+        const row = <DataRow> {};
+        expect(dataTable.getCellTooltip(row, null)).toBeNull();
+    });
+
+    it('should not get cell tooltip when formatter is not provided', () => {
+        const col = <DataColumn> { key: 'name', type: 'text' };
+        const row = <DataRow> {};
+        expect(dataTable.getCellTooltip(row, col)).toBeNull();
+    });
+
+    it('should use formatter function to generate tooltip', () => {
+        const tooltip = 'tooltip value';
+        const col = <DataColumn> {
+            key: 'name',
+            type: 'text',
+            formatTooltip: () =>  tooltip
+        };
+        const row = <DataRow> {};
+        expect(dataTable.getCellTooltip(row, col)).toBe(tooltip);
+    });
+
+    it('should return null value from the tooltip formatter', () => {
+        const col = <DataColumn> {
+            key: 'name',
+            type: 'text',
+            formatTooltip: () =>  null
+        };
+        const row = <DataRow> {};
+        expect(dataTable.getCellTooltip(row, col)).toBeNull();
+    });
+
 });
