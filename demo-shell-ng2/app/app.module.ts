@@ -43,6 +43,7 @@ import { CustomEditorsModule } from './components/activiti/custom-editor/custom-
 import { MaterialModule } from './material.module';
 import { DebugAppConfigService } from './services/debug-app-config.service';
 
+import { TrashcanComponent } from './components/files/trashcan.component';
 import { FormListDemoComponent } from './components/form/form-list-demo.component';
 
 import {
@@ -120,7 +121,8 @@ if (process.env.ENV === 'production') {
         FormNodeViewerComponent,
         SettingsComponent,
         FormDemoComponent,
-        FormListDemoComponent
+        FormListDemoComponent,
+        TrashcanComponent
     ],
     providers: [
         { provide: AppConfigService, useClass: DebugAppConfigService },

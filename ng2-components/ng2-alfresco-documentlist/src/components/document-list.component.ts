@@ -20,7 +20,7 @@ import {
     OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild
 } from '@angular/core';
 import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, Pagination } from 'alfresco-js-api';
-import { DataColumnListComponent } from 'ng2-alfresco-core';
+import { AlfrescoApiService, DataColumnListComponent } from 'ng2-alfresco-core';
 import { DataCellEvent, DataColumn, DataRowActionEvent, DataSorting, DataTableComponent, ObjectDataColumn } from 'ng2-alfresco-datatable';
 import { Observable, Subject } from 'rxjs/Rx';
 import { ImageResolver, RowFilter, ShareDataRow, ShareDataTableAdapter } from './../data/share-datatable-adapter';
@@ -147,8 +147,13 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     constructor(private documentListService: DocumentListService,
                 private ngZone: NgZone,
-                private elementRef: ElementRef) {
+                private elementRef: ElementRef,
+                private apiService: AlfrescoApiService) {
     }
+
+    private get nodesApi() {
+        return this.apiService.getInstance().core.nodesApi;
+     }
 
     getContextActions(node: MinimalNodeEntity) {
         if (node && node.entry) {
@@ -360,14 +365,30 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     // gets folder node and its content
     loadFolderByNodeId(nodeId: string) {
         this.loading = true;
-        this.documentListService.getFolderNode(nodeId).then(node => {
-            this.folderNode = node;
-            this.currentFolderId = node.id;
-            this.skipCount = 0;
-            this.currentNodeAllowableOperations = node['allowableOperations'] ? node['allowableOperations'] : [];
-            this.loadFolderNodesByFolderNodeId(node.id, this.pageSize, this.skipCount).catch(err => this.error.emit(err));
-        })
-            .catch(err => this.error.emit(err));
+
+        if (nodeId === '-trashcan-') {
+            const options = {
+                include: [ 'path', 'properties' ],
+                maxItems: this.pageSize,
+                skipCount: this.skipCount
+            };
+            this.nodesApi.getDeletedNodes(options).then((page: NodePaging) => {
+                this.data.loadPage(page);
+                this.pagination = page.list.pagination;
+                this.loading = false;
+                this.ready.emit();
+            });
+        } else {
+            this.documentListService
+                .getFolderNode(nodeId).then(node => {
+                    this.folderNode = node;
+                    this.currentFolderId = node.id;
+                    this.skipCount = 0;
+                    this.currentNodeAllowableOperations = node['allowableOperations'] ? node['allowableOperations'] : [];
+                    this.loadFolderNodesByFolderNodeId(node.id, this.pageSize, this.skipCount).catch(err => this.error.emit(err));
+                })
+                .catch(err => this.error.emit(err));
+        }
     }
 
     loadFolderNodesByFolderNodeId(id: string, maxItems: number, skipCount: number): Promise<any> {
@@ -596,5 +617,4 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     hasCreatePermission() {
         return this.hasCurrentNodePermission(this.CREATE_PERMISSION);
     }
-
 }
