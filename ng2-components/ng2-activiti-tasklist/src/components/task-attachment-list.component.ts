@@ -21,13 +21,16 @@ import { ContentService, ThumbnailService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'adf-task-attachment-list',
-    styleUrls: ['./task-attachment-list.component.css'],
+    styleUrls: ['./task-attachment-list.component.scss'],
     templateUrl: './task-attachment-list.component.html'
 })
 export class TaskAttachmentListComponent implements OnChanges {
 
     @Input()
     taskId: string;
+
+    @Input()
+    disabled: boolean = false;
 
     @Output()
     attachmentClick = new EventEmitter();
@@ -37,6 +40,9 @@ export class TaskAttachmentListComponent implements OnChanges {
 
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
+
+    @Input()
+    emptyListImageUrl: string = require('./../assets/images/empty_doc_lib.svg');
 
     attachments: any[] = [];
     isLoading: boolean = true;
@@ -133,9 +139,12 @@ export class TaskAttachmentListComponent implements OnChanges {
 
         event.value.actions = [
             viewAction,
-            removeAction,
             downloadAction
         ];
+
+        if (!this.disabled) {
+            event.value.actions.splice(1, 0, removeAction);
+        }
     }
 
     onExecuteRowAction(event: any) {
@@ -174,5 +183,9 @@ export class TaskAttachmentListComponent implements OnChanges {
                 this.error.emit(err);
             }
         );
+    }
+
+    isDisabled(): boolean {
+        return this.disabled;
     }
 }

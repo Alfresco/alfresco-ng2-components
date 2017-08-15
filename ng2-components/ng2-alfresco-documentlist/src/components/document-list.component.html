@@ -21,8 +21,10 @@
     <div *ngIf="!isEmptyTemplateDefined()">
         <no-content-template>
             <ng-template>
-                <adf-empty-list
-                    emptyMsg="ADF-DOCUMENT-LIST.EMPTY.HEADER">
+                <adf-empty-list>
+                    <adf-empty-list-header>
+                        <div> {{'ADF-DOCUMENT-LIST.EMPTY.HEADER' | translate}} </div>
+                    </adf-empty-list-header>
                 </adf-empty-list>
             </ng-template>
         </no-content-template>
