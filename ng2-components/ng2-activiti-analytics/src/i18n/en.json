@@ -1,6 +1,6 @@
 {
   "ANALYTICS": {
-    "TTILE": "ANALYTICS",
+    "TITLE": "ANALYTICS",
     "MESSAGES": {
       "UNKNOWN-WIDGET-TYPE": "UNKNOWN WIDGET TYPE",
       "FILL-PARAMETER": "Fill in the parameters to generate your report",

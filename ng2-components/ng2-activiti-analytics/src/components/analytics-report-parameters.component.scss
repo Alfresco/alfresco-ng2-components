@@ -22,63 +22,54 @@
     visibility: visible !important;
 }
 
-.large {
-    font-size: x-large;
-    margin-top: 24px;
-    margin-left: 12px;
-}
-
-.icon-small i {
+.adf-edit-report-title {
     float: left;
-    margin-right: 10px;
-    display: none;
-    position: absolute;
+    font-size: 20px;
+    padding-left: 38px;
+    padding-top: 10px;
 }
 
-.icon-small h4 {
-    clear: left;
-    margin-left: 26px;
+.adf-report-icon {
+    float: left;
+    margin-right: 5px;
+    padding: 4px 0 0 9px;
+    visibility: hidden;
 }
 
-.icon-small:hover {
-    color: rgb(68,138,255);
+.adf-report-title-container {
     cursor: pointer;
-}
 
-.icon-small:hover .material-icons {
-    display: block;
+    :hover .adf-report-icon {
+        color: rgb(68, 138, 255);
+        visibility: visible;
+    }
+
 }
 
 .is-hide {
-    height: 0px;
+    height: 0;
     overflow: hidden;
     transition: height 0.5s;
 }
 
-.report-container {
+.adf-report-report-container {
     border-bottom: solid 1px rgb(212, 212, 212);
     padding: 10px 10px 10px 10px;
+
+    .mat-toolbar {
+        border: 0 !important;
+    }
 }
 
 .report-container-setting {
     padding-left: 10px;
 }
 
-.option_button_details{
+.option_button_details {
     padding-top: 20px;
 }
 
-.report-icons {
-    float: right;
-}
-
-.report-icons button {
-    min-width: 48px;
-    padding: 0 0px;
-}
-
-
-.mdl-dialog__title.choose_name{
+.mdl-dialog__title.choose_name {
     padding: 0px;
 }
 
@@ -86,12 +77,12 @@
     width: 30%;
 }
 
-.export-message{
+.export-message {
     background-color: lightgray;
 }
 
-.save-export-input{
-    width:100%;
+.save-export-input {
+    width: 100%;
 }
 
 .delete-parameter {

@@ -31,12 +31,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
-import {
-    ParameterValueModel,
-    ReportParameterDetailsModel,
-    ReportParametersModel,
-    ReportQuery
-} from 'ng2-activiti-diagrams';
+import { ParameterValueModel, ReportParameterDetailsModel, ReportParametersModel, ReportQuery } from 'ng2-activiti-diagrams';
 import { ContentService, LogService } from 'ng2-alfresco-core';
 import { AnalyticsService } from '../services/analytics.service';
 
@@ -46,7 +41,7 @@ declare let dialogPolyfill: any;
 @Component({
     selector: 'adf-analytics-report-parameters, analytics-report-parameters',
     templateUrl: './analytics-report-parameters.component.html',
-    styleUrls: ['./analytics-report-parameters.component.css'],
+    styleUrls: ['./analytics-report-parameters.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class AnalyticsReportParametersComponent implements OnInit, OnChanges, OnDestroy, AfterViewChecked, AfterContentChecked {
