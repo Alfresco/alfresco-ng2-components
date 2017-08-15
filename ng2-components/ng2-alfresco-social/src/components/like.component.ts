@@ -15,14 +15,15 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
 import { RatingService } from './../services/rating.service';
 
 @Component({
     selector: 'adf-like',
-    styleUrls: ['./like.component.css'],
+    styleUrls: ['./like.component.scss'],
     templateUrl: './like.component.html',
-    providers: [RatingService]
+    providers: [RatingService],
+    encapsulation: ViewEncapsulation.None
 })
 export class LikeComponent implements OnChanges {
 
