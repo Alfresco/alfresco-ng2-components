@@ -18,8 +18,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import * as moment from 'moment';
 import { CoreModule } from 'ng2-alfresco-core';
-import { MATERIAL_MODULE } from '../../../../index';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
+import { MaterialModule } from '../../material.module';
 import { ErrorWidgetComponent } from '../error/error.component';
 import { EcmModelService } from './../../../services/ecm-model.service';
 import { FormService } from './../../../services/form.service';
@@ -38,7 +38,7 @@ describe('DateWidgetComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                ...MATERIAL_MODULE
+                MaterialModule
             ],
             declarations: [
                 DateWidgetComponent,
