@@ -6,18 +6,6 @@ $breadcrumb-chevron-spacer: 2px;
     display: flex;
     flex: 1;
 
-    &.mat-primary {
-        color: mat-color($primary);
-    }
-
-    &.mat-accent {
-        color: mat-color($accent);
-    }
-
-    &.mat-warn {
-        color: mat-color($warn);
-    }
-
     &-container {
         margin: 0;
         padding: 0;
@@ -39,7 +27,28 @@ $breadcrumb-chevron-spacer: 2px;
         font-weight: 600;
         letter-spacing: -0.2px;
         text-align: left;
-        color: $alfresco-secondary-text-color;
+        opacity: 0.6;
+
+        &:hover,
+        &.active {
+            opacity: 1;
+        }
+
+        &-chevron {
+            opacity: 1;
+        }
+
+        &.mat-primary {
+            color: mat-color($primary);
+        }
+
+        &.mat-accent {
+            color: mat-color($accent);
+        }
+
+        &.mat-warn {
+            color: mat-color($warn);
+        }
 
         &-anchor {
             color: inherit;
@@ -49,15 +58,6 @@ $breadcrumb-chevron-spacer: 2px;
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
-        }
-
-        &:hover,
-        &.active {
-            color: $alfresco-primary-text-color;
-        }
-
-        &-chevron {
-            color: $alfresco-secondary-text-color;
         }
 
         &.active {
