@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DebugElement, EventEmitter } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, DebugElement, EventEmitter } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
 import { By } from '@angular/platform-browser';
@@ -86,7 +86,8 @@ describe('ContentNodeSelectorComponent', () => {
                 DocumentListService,
                 SearchService,
                 ...plusProviders
-            ]
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });
     }
 
