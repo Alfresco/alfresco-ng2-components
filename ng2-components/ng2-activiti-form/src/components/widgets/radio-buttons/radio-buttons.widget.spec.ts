@@ -19,10 +19,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule, LogServiceMock } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 
-import { MATERIAL_MODULE } from '../../../../index';
 import { EcmModelService } from '../../../services/ecm-model.service';
 import { FormService } from '../../../services/form.service';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
+import { MaterialModule } from '../../material.module';
 import { ContainerModel } from '../core/container.model';
 import { FormFieldTypes } from '../core/form-field-types';
 import { ErrorWidgetComponent } from '../error/error.component';
@@ -148,7 +148,7 @@ describe('RadioButtonsWidgetComponent', () => {
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-                imports: [CoreModule, MATERIAL_MODULE ],
+                imports: [CoreModule, MaterialModule ],
                 declarations: [RadioButtonsWidgetComponent, ErrorWidgetComponent],
                 providers: [FormService, EcmModelService, WidgetVisibilityService]
             }).compileComponents().then(() => {

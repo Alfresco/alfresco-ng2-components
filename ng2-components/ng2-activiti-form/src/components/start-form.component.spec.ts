@@ -19,12 +19,12 @@ import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
-import { MATERIAL_MODULE } from '../../index';
 import { TranslationMock } from './../assets/translation.service.mock';
 import { EcmModelService } from './../services/ecm-model.service';
 import { FormService } from './../services/form.service';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
 import { FormFieldComponent } from './form-field/form-field.component';
+import { MaterialModule } from './material.module';
 import { StartFormComponent } from './start-form.component';
 import { ContentWidgetComponent } from './widgets/content/content.widget';
 import { MASK_DIRECTIVE } from './widgets/index';
@@ -43,7 +43,7 @@ describe('ActivitiStartForm', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                ...MATERIAL_MODULE,
+                MaterialModule,
                 CoreModule.forRoot()],
             declarations: [
                 StartFormComponent,
