@@ -23,8 +23,8 @@ import { InputMaskDirective } from './text-mask.component';
 import { TextWidgetComponent } from './text.widget';
 
 import { CoreModule } from 'ng2-alfresco-core';
-import { MATERIAL_MODULE } from '../../../../index';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
+import { MaterialModule } from '../../material.module';
 import { ErrorWidgetComponent } from '../error/error.component';
 import { EcmModelService } from './../../../services/ecm-model.service';
 import { FormService } from './../../../services/form.service';
@@ -39,7 +39,7 @@ describe('TextWidgetComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                MATERIAL_MODULE
+                MaterialModule
             ],
             declarations: [
                 TextWidgetComponent,

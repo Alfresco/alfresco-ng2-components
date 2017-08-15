@@ -17,8 +17,8 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
-import { MATERIAL_MODULE } from '../../../../index';
 import { fakeFormJson } from '../../../services/assets/widget-visibility.service.mock';
+import { MaterialModule } from '../../material.module';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { TabModel } from '../core/tab.model';
@@ -86,7 +86,7 @@ describe('TabsWidgetComponent', () => {
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-                imports: [CoreModule, ...MATERIAL_MODULE ],
+                imports: [CoreModule, MaterialModule ],
                 declarations: [FormFieldComponent, ContentWidgetComponent, WIDGET_DIRECTIVES, MASK_DIRECTIVE]
             }).compileComponents().then(() => {
                 fixture = TestBed.createComponent(TabsWidgetComponent);
