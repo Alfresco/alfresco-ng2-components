@@ -100,5 +100,17 @@
         "SEARCH": {
             "NO_USERS": "No user found to involve"
         }
+    },
+    "TASK-ATTACHMENT": {
+        "EMPTY": {
+            "HEADER": "This list is empty",
+            "DRAG-AND-DROP": {
+                "TITLE": "Drag and drop",
+                "SUBTITLE": "any files here to add"
+            }
+        },
+        "EMPTY-LIST": {
+            "HEADER": "No documents are available"
+        }
     }
 }

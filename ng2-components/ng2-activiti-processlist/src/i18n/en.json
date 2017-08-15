@@ -104,5 +104,17 @@
           "LOAD_PROCESS_DEFS": "Could not load process definitions, please check you have access.",
           "START": "Could not start new process instance, please check you have permission."
         }
+    },
+    "PROCESS-ATTACHMENT": {
+        "EMPTY": {
+            "HEADER": "This list is empty",
+            "DRAG-AND-DROP": {
+                "TITLE": "Drag and drop",
+                "SUBTITLE": "any files here to add"
+            }
+        },
+        "EMPTY-LIST": {
+            "HEADER": "No documents are available"
+        }
     }
 }

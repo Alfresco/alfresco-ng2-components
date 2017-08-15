@@ -300,10 +300,10 @@ Displays comments associated with a particular process instance and allows the u
 This component displays attached documents on a specified process instance
 
 ```html
-<process-attachment-list 
+<adf-process-attachment-list
     [processInstanceId]="YOUR_PROCESS_INSTANCE_ID"
-    (attachmentClick="YOUR_ATTACHMENT_CLICK_EMITTER_HANDLER">
-</process-attachment-list>
+    (attachmentClick)="YOUR_ATTACHMENT_CLICK_EMITTER_HANDLER">
+</adf-process-attachment-list>
 ```
 ![process-attachment-list-sample](docs/assets/process-attachment-list.png)
 
@@ -312,6 +312,7 @@ This component displays attached documents on a specified process instance
 | Name | Type | Description |
 | --- | --- | -- |
 | processInstanceId | string | (**required**): The ID of the process instance to display |
+| disabled | boolean | false | Disable/Enable read only mode for attachement list |
 
 ### Events
 
