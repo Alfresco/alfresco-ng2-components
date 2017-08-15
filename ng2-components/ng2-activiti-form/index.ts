@@ -17,12 +17,12 @@
 
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
-import { MaterialModule } from './src/components/material.module';
 import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { FormFieldComponent } from './src/components/form-field/form-field.component';
 import { FormListComponent } from './src/components/form-list.component';
 import { FormComponent } from './src/components/form.component';
+import { MaterialModule } from './src/components/material.module';
 import { StartFormComponent } from './src/components/start-form.component';
 import { ContentWidgetComponent } from './src/components/widgets/content/content.widget';
 import { MASK_DIRECTIVE, WIDGET_DIRECTIVES } from './src/components/widgets/index';

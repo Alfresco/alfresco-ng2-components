@@ -17,10 +17,10 @@
 
 import { NgModule } from '@angular/core';
 import {
-    MdAutocompleteModule, MdButtonModule, MdCardModule, MdCheckboxModule,
-    MdDatepickerModule, MdGridListModule, MdIconModule, MdInputModule, MdListModule,
-    MdOptionModule, MdRadioModule, MdSelectModule, MdSlideToggleModule, MdTableModule, MdTabsModule,
-    MD_PLACEHOLDER_GLOBAL_OPTIONS
+    MD_PLACEHOLDER_GLOBAL_OPTIONS, MdAutocompleteModule, MdButtonModule, MdCardModule,
+    MdCheckboxModule, MdDatepickerModule, MdGridListModule, MdIconModule, MdInputModule,
+    MdListModule, MdOptionModule, MdRadioModule, MdSelectModule, MdSlideToggleModule, MdTableModule,
+    MdTabsModule
 } from '@angular/material';
 
 export function modules() {

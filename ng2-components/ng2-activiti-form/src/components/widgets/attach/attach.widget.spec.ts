@@ -18,8 +18,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
-import { MATERIAL_MODULE } from '../../../../index';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
+import { MaterialModule } from '../../material.module';
 import { ExternalContent } from '../core/external-content';
 import { ExternalContentLink } from '../core/external-content-link';
 import { FormFieldTypes } from '../core/form-field-types';
@@ -42,7 +42,7 @@ describe('AttachWidgetComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                ...MATERIAL_MODULE
+                MaterialModule
             ],
             declarations: [
                 AttachWidgetComponent,

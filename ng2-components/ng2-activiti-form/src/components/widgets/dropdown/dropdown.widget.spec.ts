@@ -19,10 +19,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
-import { MATERIAL_MODULE } from '../../../../index';
 import { EcmModelService } from '../../../services/ecm-model.service';
 import { FormService } from '../../../services/form.service';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
+import { MaterialModule } from '../../material.module';
 import { ErrorWidgetComponent } from '../error/error.component';
 import { FormFieldOption } from './../core/form-field-option';
 import { FormFieldModel } from './../core/form-field.model';
@@ -52,7 +52,7 @@ describe('DropdownWidgetComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule,
-                ...MATERIAL_MODULE
+                MaterialModule
             ],
             declarations: [DropdownWidgetComponent, ErrorWidgetComponent],
             providers: [FormService, EcmModelService, WidgetVisibilityService]
