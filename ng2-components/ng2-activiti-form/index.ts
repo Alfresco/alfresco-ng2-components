@@ -17,14 +17,12 @@
 
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
-import { MdAutocompleteModule, MdButtonModule, MdCardModule, MdCheckboxModule,
-    MdDatepickerModule, MdGridListModule, MdIconModule, MdInputModule, MdListModule,
-    MdOptionModule, MdRadioModule, MdSelectModule, MdSlideToggleModule, MdTableModule, MdTabsModule } from '@angular/material';
 import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { FormFieldComponent } from './src/components/form-field/form-field.component';
 import { FormListComponent } from './src/components/form-list.component';
 import { FormComponent } from './src/components/form.component';
+import { MaterialModule } from './src/components/material.module';
 import { StartFormComponent } from './src/components/start-form.component';
 import { ContentWidgetComponent } from './src/components/widgets/content/content.widget';
 import { MASK_DIRECTIVE, WIDGET_DIRECTIVES } from './src/components/widgets/index';
@@ -82,18 +80,12 @@ export const ACTIVITI_FORM_PROVIDERS: any[] = [
     FormRenderingService
 ];
 
-export const MATERIAL_MODULE: any[] = [
-    MdAutocompleteModule, MdButtonModule, MdCardModule, MdCheckboxModule,
-    MdDatepickerModule, MdGridListModule, MdIconModule, MdInputModule, MdRadioModule,
-    MdSelectModule, MdSlideToggleModule, MdTableModule, MdTabsModule, MdOptionModule, MdListModule
-];
-
 @NgModule({
     imports: [
         CoreModule,
         DataTableModule,
         HttpModule,
-        ...MATERIAL_MODULE
+        MaterialModule
     ],
     declarations: [
         ...ACTIVITI_FORM_DIRECTIVES,
@@ -117,7 +109,7 @@ export const MATERIAL_MODULE: any[] = [
     exports: [
         ...ACTIVITI_FORM_DIRECTIVES,
         ...DEPRECATED_FORM_DIRECTIVES,
-        ...MATERIAL_MODULE
+        MaterialModule
     ]
 })
 export class ActivitiFormModule {

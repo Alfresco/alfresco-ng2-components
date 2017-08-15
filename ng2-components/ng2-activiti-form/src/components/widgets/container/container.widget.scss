@@ -37,7 +37,20 @@ container-widget{
         width: 95%;
     }
 
+    .mat-input-placeholder-wrapper{
+        top:0px !important;
+    }
+
+    .mat-input-placeholder{
+        top: 2.5em !important;
+    }
+
     .mat-focused {
+
+        .mat-input-placeholder-wrapper{
+            display: none;
+        }
+
         label {
             transform: scaleX(1);
             transition: transform 150ms linear,
