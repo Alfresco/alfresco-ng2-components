@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { TagService } from '../services/tag.service';
 
 /**
@@ -27,7 +27,9 @@ import { TagService } from '../services/tag.service';
 
 @Component({
     selector: 'adf-tag-list, alfresco-tag-list',
-    templateUrl: './tag-list.component.html'
+    templateUrl: './tag-list.component.html',
+    styleUrls: ['./tag-list.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class TagListComponent implements OnInit {
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
 import { TagService } from '../services/tag.service';
 
 /**
@@ -28,7 +28,8 @@ import { TagService } from '../services/tag.service';
 @Component({
     selector: 'adf-tag-node-list, alfresco-tag-node-list',
     templateUrl: './tag-node-list.component.html',
-    styleUrls: ['./tag-node-list.component.css']
+    styleUrls: ['./tag-node-list.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class TagNodeListComponent implements OnChanges {
 
