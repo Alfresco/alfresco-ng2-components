@@ -19,8 +19,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
-import { MATERIAL_MODULE } from '../../../../../../index';
 import { EcmModelService } from '../../../../../services/ecm-model.service';
+import { MaterialModule } from '../../../../material.module';
 import { FormService } from './../../../../../services/form.service';
 import { FormFieldModel, FormModel } from './../../../core/index';
 import {
@@ -193,7 +193,7 @@ describe('DropdownEditorComponent', () => {
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-                imports: [CoreModule, ...MATERIAL_MODULE],
+                imports: [CoreModule, MaterialModule],
                 declarations: [DropdownEditorComponent],
                 providers: [FormService, EcmModelService]
             }).compileComponents().then(() => {
