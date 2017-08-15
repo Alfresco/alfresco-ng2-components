@@ -1,0 +1,13 @@
+<label for="nodeId"><b>Insert Node Id</b></label><br>
+<input id="nodeId" type="text" size="48" [(ngModel)]="nodeId"><br>
+<div class="adf-tag-example-area">
+    <alfresco-tag-node-actions-list [nodeId]="nodeId"></alfresco-tag-node-actions-list>
+</div>
+<div class="adf-tag-example-area">
+    <div class="adf-tag-example-title">List Tags Content Services</div>
+    <alfresco-tag-list></alfresco-tag-list>
+</div>
+<div class="adf-tag-example-area">
+    <div class="adf-tag-example-title">Tag list By Node ID</div>
+    <alfresco-tag-node-list [nodeId]="nodeId"></alfresco-tag-node-list>
+</div>
