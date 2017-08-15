@@ -1,11 +1,22 @@
-<adf-datatable
-    [rows]="attachments"
-    [actions]="true"
-    [loading]="isLoading"
-    (rowDblClick)="openContent($event)"
-    (showRowActionsMenu)="onShowRowActionsMenu($event)"
+<adf-datatable [rows]="attachments" [actions]="true" [loading]="isLoading" (rowDblClick)="openContent($event)" (showRowActionsMenu)="onShowRowActionsMenu($event)"
     (executeRowAction)="onExecuteRowAction($event)">
-    <adf-empty-list></adf-empty-list>
+    <adf-empty-list *ngIf="!isDisabled()">
+        <adf-empty-list-header>
+            <div> {{'PROCESS-ATTACHMENT.EMPTY.HEADER' | translate}} </div>
+        </adf-empty-list-header>
+        <adf-empty-list-body>
+            <div class="adf-empty-list-drag_drop">{{'PROCESS-ATTACHMENT.EMPTY.DRAG-AND-DROP.TITLE' | translate}}</div>
+            <div class="adf-empty-list__any-files-here-to-add"> {{'PROCESS-ATTACHMENT.EMPTY.DRAG-AND-DROP.SUBTITLE' | translate}} </div>
+        </adf-empty-list-body>
+        <adf-empty-list-footer>
+            <div><img class="adf-empty-list__empty_doc_lib" [src]="emptyListImageUrl"></div>
+        </adf-empty-list-footer>
+    </adf-empty-list>
+    <adf-empty-list *ngIf="isDisabled()">
+        <adf-empty-list-header>
+            <div> {{'PROCESS-ATTACHMENT.EMPTY-LIST.HEADER' | translate}} </div>
+        </adf-empty-list-header>
+    </adf-empty-list>
     <data-columns>
         <data-column key="icon" type="icon" srTitle="Thumbnail" [sortable]="false"></data-column>
         <data-column key="name" type="text" title="Name" class="full-width ellipsis-cell" [sortable]="true"></data-column>
@@ -14,11 +25,8 @@
     <loading-content-template>
         <ng-template>
             <!--Add your custom loading template here-->
-            <md-progress-spinner
-                class="adf-attachment-list-loading-margin"
-                [color]="'primary'"
-                [mode]="'indeterminate'">
+            <md-progress-spinner class="adf-attachment-list-loading-margin" [color]="'primary'" [mode]="'indeterminate'">
             </md-progress-spinner>
         </ng-template>
-        </loading-content-template>
+    </loading-content-template>
 </adf-datatable>

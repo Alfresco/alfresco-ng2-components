@@ -21,13 +21,16 @@ import { ContentService, ThumbnailService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'adf-process-attachment-list',
-    styleUrls: ['./process-attachment-list.component.css'],
+    styleUrls: ['./process-attachment-list.component.scss'],
     templateUrl: './process-attachment-list.component.html'
 })
 export class ProcessAttachmentListComponent implements OnChanges {
 
     @Input()
     processInstanceId: string;
+
+    @Input()
+    disabled: boolean = false;
 
     @Output()
     attachmentClick = new EventEmitter();
@@ -37,6 +40,9 @@ export class ProcessAttachmentListComponent implements OnChanges {
 
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
+
+    @Input()
+    emptyListImageUrl: string = require('./../assets/images/empty_doc_lib.svg');
 
     attachments: any[] = [];
     isLoading: boolean = true;
@@ -131,9 +137,12 @@ export class ProcessAttachmentListComponent implements OnChanges {
 
         event.value.actions = [
             viewAction,
-            removeAction,
             downloadAction
         ];
+
+        if (!this.disabled) {
+            event.value.actions.splice(1, 0, removeAction);
+        }
     }
 
     onExecuteRowAction(event: any) {
@@ -172,5 +181,9 @@ export class ProcessAttachmentListComponent implements OnChanges {
                 this.error.emit(err);
             }
         );
+    }
+
+    isDisabled(): boolean {
+        return this.disabled;
     }
 }
