@@ -441,7 +441,7 @@ Here's the list of available properties you can define for a Data Column definit
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | key | string | | Data source key, can be either column/property key like `title` or property path like `createdBy.name` |
-| type | string (text\|image\|date) | text | Value type |
+| type | string | text | Value type |
 | format | string | | Value format (if supported by components), for example format of the date |
 | sortable | boolean | true | Toggles ability to sort by this column, for example by clicking the column header |
 | title | string | | Display title of the column, typically used for column headers |
@@ -449,6 +449,17 @@ Here's the list of available properties you can define for a Data Column definit
 | sr-title | string | | Screen reader title, used for accessibility purposes |
 | class | string | | Additional CSS class to be applied to column (header and cells) |
 | formatTooltip | Function | | Custom tooltip formatter function. |
+
+### Column Types
+
+The DataColumn `type` property can take one of the following values:
+
+- text
+- image
+- date
+- fileSize
+
+### Underlying node object
 
 DocumentList component assigns an instance of `MinimalNode` type (`alfresco-js-api`) as a data context of each row.
 
