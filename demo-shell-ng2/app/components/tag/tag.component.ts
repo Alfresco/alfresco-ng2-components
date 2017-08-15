@@ -20,7 +20,7 @@ import { Component } from '@angular/core';
 @Component({
     selector: 'alfresco-tag-demo',
     templateUrl: 'tag.component.html',
-    styleUrls: ['tag.component.scss']
+    styleUrls: ['tag.component.css']
 })
 export class TagComponent {
 

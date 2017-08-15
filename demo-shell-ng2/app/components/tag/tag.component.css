@@ -1,0 +1,9 @@
+.adf-tag-example-area {
+    width: calc(33.3333333333% - 16px);
+    margin: 8px;
+    float: left;
+}
+
+.adf-tag-example-title {
+    padding-bottom: 12px;
+}

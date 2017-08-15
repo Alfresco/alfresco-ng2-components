@@ -1,67 +1,30 @@
-<!--isContextMenu-->
-<div *ngIf="isContextMenu">
-    <li class="mdl-menu__item" *ngFor="let currentEntry of tagsEntries; let idx = index">
-            <span id="tag_name_{{idx}}" class="mdl-list__item-primary-content">
+<md-list>
+    <md-list-item *ngFor="let currentEntry of tagsEntries; let idx = index">
+        <div class="adf-tag-actions-container" id="tag_delete_{{idx}}" (click)="removeTag(currentEntry.entry.id)">
+            <div class="adf-tag-actions-delete-text" id="tag_name_{{idx}}">
                 {{currentEntry.entry.tag}}
-            </span>
-        <div id="tag_delete_{{idx}}" class="mdl-list__item-secondary-action" (click)="removeTag(currentEntry.entry.id)">
-            <i class="material-icons">delete</i>
+            </div>
+            <md-icon class="adf-tag-actions-delete-icon">delete</md-icon>
         </div>
-    </li>
-    <li>
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <table class="adf-full-width" cellspacing="0">
-                <tr>
-                    <td>
-                        <md-input-container class="adf-full-width">
-                            <input mdInput placeholder="{{'TAG.LABEL.NEWTAG' | translate }}"
-                                   type="text"
-                                   class="mdl-textfield__input"
-                                   (keypress)="cleanErrorMsg()"
-                                   [(ngModel)]="newTagName"
-                                   id="new-tag-text"/>
-                            <md-hint *ngIf="error" [ngStyle]="{'color': 'red'}" align="start">{{errorMsg}}</md-hint>
-                        </md-input-container>
-                    </td>
-                    <td>
-                        <button  class="adf-full-width" id="add-tag" (click)="addTag()" [disabled]="disableAddTag" md-raised-button>
-                            {{'TAG.BUTTON.ADD' | translate }}
-                        </button>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </li>
-</div>
-
-<!--not ContextMenu-->
-<ul *ngIf="!isContextMenu" class="tag-list-control mdl-list">
-    <li class="mdl-list__item tag-element" *ngFor="let currentEntry of tagsEntries; let idx = index">
-        <span id="tag_name_{{idx}}" class="mdl-list__item-primary-content">{{currentEntry.entry.tag}}</span>
-        <div id="tag_delete_{{idx}}" class="mdl-list__item-secondary-action" (click)="removeTag(currentEntry.entry.id)">
-            <i class="material-icons">delete</i>
-        </div>
-    </li>
-    <li>
-        <table class="adf-full-width" cellspacing="0">
-            <tr>
-                <td>
-                    <md-input-container class="adf-full-width">
-                        <input mdInput placeholder="{{'TAG.LABEL.NEWTAG' | translate }}"
-                               type="text"
-                               class="mdl-textfield__input"
-                               (keypress)="cleanErrorMsg()"
-                               [(ngModel)]="newTagName"
-                               id="new-tag-text"/>
-                        <md-hint *ngIf="error" [ngStyle]="{'color': 'red'}" align="start">{{errorMsg}}</md-hint>
-                    </md-input-container>
-                </td>
-                <td>
-                    <button  class="adf-full-width" id="add-tag" (click)="addTag()" [disabled]="disableAddTag" md-raised-button>
-                        {{'TAG.BUTTON.ADD' | translate }}
-                    </button>
-                </td>
-            </tr>
-        </table>
-    </li>
-</ul>
+    </md-list-item>
+</md-list>
+<table class="adf-full-width" cellspacing="0">
+    <tr>
+        <td>
+            <md-input-container class="adf-full-width">
+                <input mdInput placeholder="{{'TAG.LABEL.NEWTAG' | translate }}"
+                       type="text"
+                       (keypress)="cleanErrorMsg()"
+                       [(ngModel)]="newTagName"
+                       id="new-tag-text"/>
+                <md-hint *ngIf="error" [ngStyle]="{'color': 'red'}" align="start">{{errorMsg}}</md-hint>
+            </md-input-container>
+        </td>
+        <td>
+            <button class="adf-full-width" id="add-tag" (click)="addTag()" [disabled]="disableAddTag"
+                    md-raised-button>
+                {{'TAG.BUTTON.ADD' | translate }}
+            </button>
+        </td>
+    </tr>
+</table>
