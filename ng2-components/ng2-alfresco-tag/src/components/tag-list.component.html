@@ -1,9 +1,5 @@
-<div class="tag-container">
-    <div id="table-cards-container">
-        <ul class="tag-list-control mdl-list">
-            <li class="mdl-list__item tag-element" *ngFor="let currentEntry of tagsEntries; let idx = index">
-                <span id="tag_name_{{idx}}"  class="mdl-list__item-primary-content">{{currentEntry.entry.tag}}</span>
-            </li>
-        </ul>
-    </div>
-</div>
+<md-list>
+    <md-list-item *ngFor="let currentEntry of tagsEntries; let idx = index">
+        <div class="adf-list-tag" id="tag_name_{{idx}}">{{currentEntry.entry.tag}}</div>
+    </md-list-item>
+</md-list>

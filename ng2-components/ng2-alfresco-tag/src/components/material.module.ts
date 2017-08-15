@@ -15,14 +15,19 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { NgModule } from '@angular/core';
+import {
+    MdButtonModule, MdChipsModule, MdIconModule, MdInputModule
+} from '@angular/material';
 
-@Component({
-    selector: 'alfresco-tag-demo',
-    templateUrl: 'tag.component.html',
-    styleUrls: ['tag.component.css']
-})
-export class TagComponent {
-
-    nodeId: string = '74cd8a96-8a21-47e5-9b3b-a1b3e296787d';
+export function modules() {
+    return [
+        MdButtonModule, MdInputModule, MdChipsModule, MdIconModule
+    ];
 }
+
+@NgModule({
+    imports: modules(),
+    exports: modules()
+})
+export class MaterialModule {}
