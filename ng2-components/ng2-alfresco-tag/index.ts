@@ -16,7 +16,7 @@
  */
 
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { MdButtonModule, MdInputModule } from '@angular/material';
+import { MaterialModule } from './src/components/material.module';
 import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 
 import { TagActionsComponent } from './src/components/tag-actions.component';
@@ -48,8 +48,7 @@ export const TAG_PROVIDERS: any[] = [
 @NgModule({
     imports: [
         CoreModule,
-        MdInputModule,
-        MdButtonModule
+        MaterialModule
     ],
     declarations: [
         ...TAG_DIRECTIVES
@@ -67,8 +66,7 @@ export const TAG_PROVIDERS: any[] = [
     ],
     exports: [
         ...TAG_DIRECTIVES,
-        MdInputModule,
-        MdButtonModule
+        MaterialModule
     ]
 })
 export class TagModule {
