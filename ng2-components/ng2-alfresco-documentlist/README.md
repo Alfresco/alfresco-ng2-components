@@ -493,23 +493,13 @@ Here's a short example:
 </adf-document-list>
 ```
 
-## Column definition
-
-Properties:
-
-| Name | Type | Default | Description
-| --- | --- | --- | --- |
-| title | string | | Column title |
-| sr-title | string | | Screen reader title, used only when `title` is empty |
-| key | string | | Column source key, example: `createdByUser.displayName` |
-| sortable | boolean | false | Toggle sorting ability via column header clicks |
-| class | string | | CSS class list, example: `full-width ellipsis-cell` |
-| type | string | text | Column type, text\|date\|number |
-| format | string | | Value format pattern |
-| template | `TemplateRef<any>` | | Column template |
+### Date Column
 
 For `date` column type the [DatePipe](https://angular.io/docs/ts/latest/api/common/DatePipe-class.html) formatting is used.
 For a full list of available `format` values please refer to [DatePipe](https://angular.io/docs/ts/latest/api/common/DatePipe-class.html) documentation.
+
+ADF also supports additional `timeAgo` value for the `format` property.
+That triggers the date values to be rendered using popular ["Time from now"](https://momentjs.com/docs/#/displaying/fromnow/) format.
 
 ### Column Template
 

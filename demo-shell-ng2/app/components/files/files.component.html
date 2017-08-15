@@ -124,11 +124,8 @@
                     title="{{'DOCUMENT_LIST.COLUMNS.CREATED' | translate}}"
                     key="createdAt"
                     type="date"
-                    format="medium"
+                    format="timeAgo"
                     class="desktop-only">
-                    <ng-template let-value="value">
-                        <span title="{{ value }}">{{ value | adfTimeAgo }}</span>
-                    </ng-template>
                 </data-column>
             </data-columns>
 
