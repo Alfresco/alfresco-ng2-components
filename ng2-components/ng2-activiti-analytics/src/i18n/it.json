@@ -1,6 +1,6 @@
 {
     "ANALYTICS": {
-        "TTILE": "ANALYTICS",
+        "TITLE": "ANALYTICS",
         "MESSAGES": {
             "UNKNOWN-WIDGET-TYPE": "TIPO WIDGET SCONOSCIUTO",
             "FILL-PARAMETER": "Riempi tutti i campi per generare il report",
