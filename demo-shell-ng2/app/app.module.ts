@@ -44,6 +44,7 @@ import { MaterialModule } from './material.module';
 import { DebugAppConfigService } from './services/debug-app-config.service';
 
 import { FormListDemoComponent } from './components/form/form-list-demo.component';
+import { UploadComponent } from './components/upload/upload.component';
 
 import {
     AboutComponent,
@@ -120,7 +121,8 @@ if (process.env.ENV === 'production') {
         FormNodeViewerComponent,
         SettingsComponent,
         FormDemoComponent,
-        FormListDemoComponent
+        FormListDemoComponent,
+        UploadComponent
     ],
     providers: [
         { provide: AppConfigService, useClass: DebugAppConfigService },

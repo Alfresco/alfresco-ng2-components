@@ -28,9 +28,18 @@
                 </adf-dropdown-breadcrumb>
             </adf-toolbar-title>
 
+            <button
+                md-icon-button
+                mdTooltip="Toggle checkbox multiselection mode (tablet mode)"
+                (click)="documentList.multiselect = !documentList.multiselect">
+                <md-icon>{{ documentList.multiselect ? 'check_box' : 'check_box_outline_blank' }}</md-icon>
+            </button>
+
             <adf-toolbar-divider></adf-toolbar-divider>
 
-            <button md-icon-button
+            <button
+                md-icon-button
+                mdTooltip="Create new folder"
                 (click)="onCreateFolderClicked($event)">
                 <md-icon>create_new_folder</md-icon>
             </button>
@@ -200,17 +209,6 @@
 
 <context-menu-holder></context-menu-holder>
 
-<p>Current folder ID: {{ documentList.currentFolderId }}</p>
-
-<div class="p-10">
-    Selected Nodes:
-    <ul>
-        <li *ngFor="let node of documentList.selection">
-            {{ node.entry.name }}
-        </li>
-    </ul>
-</div>
-
 <div class="container">
     <section *ngIf="!useViewerDialog">
         <md-slide-toggle [(ngModel)]="useInlineViewer">Use inline viewer (no overlay)</md-slide-toggle>
@@ -221,70 +219,11 @@
     </section>
 
     <section>
-        <md-slide-toggle [(ngModel)]="multiselect">Multiselect (with checkboxes)</md-slide-toggle>
-    </section>
-
-    <section>
         <md-slide-toggle [(ngModel)]="useDropdownBreadcrumb">Dropdown breadcrumb</md-slide-toggle>
     </section>
 
     <section>
-        <md-slide-toggle [(ngModel)]="multipleFileUpload">Multiple File Upload</md-slide-toggle>
-    </section>
-
-    <section>
-        <md-slide-toggle [(ngModel)]="folderUpload">Folder upload</md-slide-toggle>
-    </section>
-
-    <section>
-        <md-slide-toggle [(ngModel)]="acceptedFilesTypeShow">Custom extensions filter</md-slide-toggle>
-    </section>
-
-    <section>
         <md-slide-toggle [(ngModel)]="versioning">Enable versioning</md-slide-toggle>
-    </section>
-
-    <section>
-        <md-slide-toggle [(ngModel)]="disableWithNoPermission">Disable upload button when user has no permissions</md-slide-toggle>
-    </section>
-
-    <h5>Upload</h5>
-    <section *ngIf="acceptedFilesTypeShow">
-        <md-input-container>
-            <input mdInput placeholder="Extension accepted" [(ngModel)]="acceptedFilesType"  data-automation-id="accepted-files-type">
-        </md-input-container>
-    </section>
-    <div *ngIf="!acceptedFilesTypeShow">
-        <alfresco-upload-button
-            #uploadButton
-            tooltip="Custom tooltip"
-            [disabled]="!enableUpload"
-            data-automation-id="multiple-file-upload"
-            [rootFolderId]="documentList.currentFolderId"
-            [multipleFiles]="multipleFileUpload"
-            [uploadFolders]="folderUpload"
-            [versioning]="versioning"
-            [disableWithNoPermission]="disableWithNoPermission"
-            (permissionEvent)="handlePermissionError($event)">
-        </alfresco-upload-button>
-    </div>
-    <div *ngIf="acceptedFilesTypeShow">
-        <alfresco-upload-button
-            #uploadButton
-            tooltip="Custom tooltip"
-            [disabled]="!enableUpload"
-            data-automation-id="multiple-file-upload"
-            [rootFolderId]="documentList.currentFolderId"
-            [acceptedFilesType]="acceptedFilesType"
-            [multipleFiles]="multipleFileUpload"
-            [uploadFolders]="folderUpload"
-            [versioning]="versioning"
-            [disableWithNoPermission]="disableWithNoPermission"
-            (permissionEvent)="handlePermissionError($event)">
-        </alfresco-upload-button>
-    </div>
-    <section>
-        <md-checkbox [(ngModel)]="enableUpload">Enable upload (demoing enabled/disabled state)</md-checkbox>
     </section>
 </div>
 
