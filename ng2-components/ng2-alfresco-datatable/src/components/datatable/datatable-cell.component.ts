@@ -37,8 +37,6 @@ export class DataTableCellComponent implements OnInit {
     @Input()
     value: any;
 
-    constructor() { }
-
     ngOnInit() {
         if (!this.value && this.column && this.column.key && this.row && this.data) {
             this.value = this.data.getValue(this.row, this.column);

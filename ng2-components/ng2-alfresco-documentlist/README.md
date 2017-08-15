@@ -458,6 +458,7 @@ The DataColumn `type` property can take one of the following values:
 - image
 - date
 - fileSize
+- location
 
 ### Underlying node object
 
@@ -511,6 +512,46 @@ For a full list of available `format` values please refer to [DatePipe](https://
 
 ADF also supports additional `timeAgo` value for the `format` property.
 That triggers the date values to be rendered using popular ["Time from now"](https://momentjs.com/docs/#/displaying/fromnow/) format.
+
+### Location Column
+
+This column is used to dispalay a clickable location link pointing to the parent path of the node.
+
+You are going to use it with custom navigation or when displaying content from the sources like:
+
+- Sites
+- Shared Links
+- Recent Files
+- Favorites
+- Trashcan
+
+or any other location that needs nagivating to the node parent folder easily.
+
+Note that the parent node is is evaluated automatically,
+the generated link will be pointinng to URL based on the `format` property value with the node `id` value appended:
+
+```text
+/<format>/:id
+```
+
+For example:
+
+```html
+<data-column
+    key="path"
+    type="location"
+    format="/files"
+    title="Location">
+</data-column>
+```
+
+All links rendered in the column above will have an address mapped to `/files`:
+
+```text
+/files/node-1-id
+/files/node-2-id
+...
+```
 
 ### Column Template
 

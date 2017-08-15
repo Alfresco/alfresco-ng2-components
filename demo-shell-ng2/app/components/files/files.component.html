@@ -99,11 +99,20 @@
                     class="image-table-cell">
                 </data-column>
                 <data-column
-                    title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
                     key="name"
+                    title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
                     [formatTooltip]="getNodeNameTooltip"
                     class="full-width ellipsis-cell">
                 </data-column>
+                <!-- Location column demo -->
+                <!--
+                <data-column
+                    key="path"
+                    type="location"
+                    format="/files"
+                    title="Location">
+                </data-column>
+                -->
                 <data-column
                     key="content.sizeInBytes"
                     title="Size"
