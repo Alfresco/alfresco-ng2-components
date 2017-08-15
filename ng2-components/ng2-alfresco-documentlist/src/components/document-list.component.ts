@@ -367,17 +367,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         this.loading = true;
 
         if (nodeId === '-trashcan-') {
-            const options = {
-                include: [ 'path', 'properties' ],
-                maxItems: this.pageSize,
-                skipCount: this.skipCount
-            };
-            this.nodesApi.getDeletedNodes(options).then((page: NodePaging) => {
-                this.data.loadPage(page);
-                this.pagination = page.list.pagination;
-                this.loading = false;
-                this.ready.emit();
-            });
+            this.loadTrashcan();
         } else {
             this.documentListService
                 .getFolderNode(nodeId).then(node => {
@@ -420,6 +410,20 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                     });
         });
 
+    }
+
+    private loadTrashcan(): void {
+        const options = {
+            include: [ 'path', 'properties' ],
+            maxItems: this.pageSize,
+            skipCount: this.skipCount
+        };
+        this.nodesApi.getDeletedNodes(options).then((page: NodePaging) => {
+            this.data.loadPage(page);
+            this.pagination = page.list.pagination;
+            this.loading = false;
+            this.ready.emit();
+        });
     }
 
     private isCurrentPageEmpty(node, skipCount): boolean {
