@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { NgZone, SimpleChange, TemplateRef } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgZone, SimpleChange, TemplateRef } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { DataColumn, DataTableComponent } from 'ng2-alfresco-datatable';
@@ -61,7 +61,8 @@ describe('DocumentList', () => {
             providers: [
                 DocumentListService,
                 {provide: NgZone, useValue: zone}
-            ]
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
         }).compileComponents();
     }));
 

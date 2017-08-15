@@ -293,9 +293,11 @@ You can add a template that will be shown when there are no results in your data
 </adf-datatable>
 ```
 
-### Default Empty content template
+### Custom Empty content template
 
 You can use the empty list component if you want to show the default ADF empty template:
+
+You can use any HTML layout or Angular component as a content of the empty template section by using the special `<adf-empty-list-header>, <adf-empty-list-body>, <adf-empty-list-footer>` elements:
 
 ```html
 <adf-datatable
@@ -308,11 +310,11 @@ You can use the empty list component if you want to show the default ADF empty t
     (rowClick)="onRowClick($event)"
     (rowDblClick)="onRowDblClick($event)">
         
-        <adf-empty-list 
-            [emptyListImageUrl]="'my-background-image.svg'"
-            [emptyMsg]="'My custom msg'"
-            [dragDropMsg]="'My drag and drop msg'"
-            [additionalMsg]="'My additional msg'">
+        <adf-empty-list>
+            <adf-empty-list-header>"'My custom Header'"</adf-empty-list-header>
+            <adf-empty-list-body>"'My custom body'"</adf-empty-list-body>
+            <adf-empty-list-footer>"'My custom footer'"</adf-empty-list-footer>
+            <ng-content>"'HTML Layout'"</ng-content>
         </adf-empty-list>
         
 </adf-datatable>

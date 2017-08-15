@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 
@@ -109,7 +109,8 @@ export const DOCUMENT_LIST_PROVIDERS: any[] = [
         DataTableModule,
         ...DOCUMENT_LIST_DIRECTIVES,
         MaterialModule
-    ]
+    ],
+    schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class DocumentListModule {
     /** @deprecated in 1.8.0 */
