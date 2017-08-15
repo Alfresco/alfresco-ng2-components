@@ -98,9 +98,6 @@ export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionS
                 private logService: LogService,
                 private notificationService: NotificationService,
                 private apiService: AlfrescoApiService) {
-        if (translateService) {
-            translateService.addTranslationFolder('ng2-alfresco-upload', 'assets/ng2-alfresco-upload');
-        }
     }
 
     ngOnInit() {

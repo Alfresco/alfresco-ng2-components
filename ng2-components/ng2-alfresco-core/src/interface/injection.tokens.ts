@@ -17,4 +17,4 @@
 
 import { Component, InjectionToken } from '@angular/core';
 
-export const EXTENDIBLE_COMPONENT = new InjectionToken<Component>('exntedible.component');
+export const EXTENDIBLE_COMPONENT = new InjectionToken<Component>('extendible.component');
