@@ -515,7 +515,7 @@ That triggers the date values to be rendered using popular ["Time from now"](htt
 
 ### Location Column
 
-This column is used to dispalay a clickable location link pointing to the parent path of the node.
+This column is used to display a clickable location link pointing to the parent path of the node.
 
 You are going to use it with custom navigation or when displaying content from the sources like:
 
@@ -527,8 +527,8 @@ You are going to use it with custom navigation or when displaying content from t
 
 or any other location that needs nagivating to the node parent folder easily.
 
-Note that the parent node is is evaluated automatically,
-the generated link will be pointinng to URL based on the `format` property value with the node `id` value appended:
+Note that the parent node is evaluated automatically,
+the generated link will be pointing to URL based on the `format` property value with the node `id` value appended:
 
 ```text
 /<format>/:id
