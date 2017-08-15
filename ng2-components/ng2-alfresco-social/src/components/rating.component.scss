@@ -1,0 +1,34 @@
+.adf-rating-container {
+    overflow: hidden;
+    width: 100%;
+
+    .adf-rating-star {
+        float: left;
+        transition: all .3s;
+        padding: 1px;
+        cursor: pointer;
+
+        .mat-list-item-content {
+            padding: 0 2px !important;
+        }
+    }
+
+    .adf-colored-star {
+        color: #ffe944;
+    }
+
+    .adf-grey-star {
+        color: #808080;
+    }
+
+    .adf-stars-container {
+        padding: 0 !important;
+        margin: 0 !important;
+        display: inline-block;
+    }
+
+    .adf-rating-star:hover {
+        transform: rotate(13deg) scale(1.2);
+    }
+
+}
