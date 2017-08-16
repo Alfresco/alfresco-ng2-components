@@ -1,29 +1,3 @@
 <adf-document-list
     currentFolderId="-sites-">
-    <data-columns>
-
-        <data-column
-            key="$thumbnail"
-            type="image"
-            [sortable]="false"
-            class="image-table-cell">
-        </data-column>
-
-        <data-column
-            key="title"
-            title="Name"
-            class="full-width ellipsis-cell">
-        </data-column>
-
-        <data-column
-            key="visibility"
-            title="Status">
-            <ng-template let-value="value">
-                <span *ngIf="(value == 'PUBLIC')" title="Public">Public</span>
-                <span *ngIf="(value == 'PRIVATE')" title="Private">Private</span>
-                <span *ngIf="(value == 'MODERATED')" title="Moderated">Moderated</span>
-            </ng-template>
-        </data-column>
-
-    </data-columns>
 </adf-document-list>

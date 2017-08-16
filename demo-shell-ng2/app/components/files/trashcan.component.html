@@ -1,42 +1,4 @@
 <adf-document-list
-    currentFolderId="-trashcan-">
-    <data-columns>
-        <data-column
-            key="$thumbnail"
-            type="image"
-            [sortable]="false"
-            class="image-table-cell">
-        </data-column>
-
-        <data-column
-            title="Name"
-            key="name"
-            class="full-width ellipsis-cell">
-        </data-column>
-
-        <data-column
-            key="path"
-            title="Location"
-            type="location"
-            format="/files">
-        </data-column>
-
-        <data-column
-            key="content.sizeInBytes"
-            title="Size"
-            type="fileSize">
-        </data-column>
-
-        <data-column
-            key="archivedAt"
-            type="date"
-            title="Deleted"
-            format="timeAgo">
-        </data-column>
-
-        <data-column
-            key="archivedByUser.displayName"
-            title="Deleted by">
-        </data-column>
-    </data-columns>
+    currentFolderId="-trashcan-"
+    locationFormat="/files">
 </adf-document-list>

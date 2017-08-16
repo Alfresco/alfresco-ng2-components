@@ -48,6 +48,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     permissionsStyle: PermissionStyleModel[] = [];
 
     @Input()
+    locationFormat: string = '/';
+
+    @Input()
     navigate: boolean = true;
 
     @Input()
@@ -230,7 +233,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
         let columns = this.data.getColumns();
         if (!columns || columns.length === 0) {
-            this.setupDefaultColumns();
+            this.setupDefaultColumns(this.currentFolderId);
         }
     }
 
@@ -554,23 +557,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     /**
      * Creates a set of predefined columns.
      */
-    setupDefaultColumns(): void {
-        let colThumbnail = new ObjectDataColumn({
-            type: 'image',
-            key: '$thumbnail',
-            title: '',
-            srTitle: 'Thumbnail'
-        });
-
-        let colName = new ObjectDataColumn({
-            type: 'text',
-            key: 'name',
-            title: 'Name',
-            cssClass: 'full-width',
-            sortable: true
-        });
-
-        this.data.setColumns([colThumbnail, colName]);
+    setupDefaultColumns(preset: string = 'default'): void {
+        const columns = this.getLayoutPreset(preset);
+        this.data.setColumns(columns);
     }
 
     onPreviewFile(node: MinimalNodeEntity) {
@@ -747,5 +736,233 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     hasCreatePermission() {
         return this.hasCurrentNodePermission(this.CREATE_PERMISSION);
+    }
+
+    private getLayoutPreset(name: string = 'default'): DataColumn[] {
+        const presets = {
+            '-trashcan-': [
+                {
+                    key: '$thumbnail',
+                    type: 'image',
+                    srTitle: 'Thumbnail',
+                    sortable: false
+                },
+                {
+                    key: 'name',
+                    type: 'text',
+                    title: 'Name',
+                    cssClass: 'full-width ellipsis-cell',
+                    sortable: true
+                },
+                {
+                    key: 'path',
+                    type: 'location',
+                    title: 'Location',
+                    format: this.locationFormat,
+                    sortable: true
+                },
+                {
+                    key: 'content.sizeInBytes',
+                    type: 'fileSize',
+                    title: 'Size',
+                    sortable: true
+                },
+                {
+                    key: 'archivedAt',
+                    type: 'date',
+                    title: 'Deleted',
+                    format: 'timeAgo',
+                    sortable: true
+                },
+                {
+                    key: 'archivedByUser.displayName',
+                    type: 'text',
+                    title: 'Deleted by',
+                    sortable: true
+                }
+            ],
+            '-sites-': [
+                {
+                    key: '$thumbnail',
+                    type: 'image',
+                    srTitle: 'Thumbnail',
+                    sortable: false
+                },
+                {
+                    key: 'title',
+                    type: 'text',
+                    title: 'Name',
+                    cssClass: 'full-width ellipsis-cell',
+                    sortable: true
+                },
+                {
+                    key: 'visibility',
+                    type: 'text',
+                    title: 'Status',
+                    sortable: true
+                }
+            ],
+            '-favorites-': [
+                {
+                    key: '$thumbnail',
+                    type: 'image',
+                    srTitle: 'Thumbnail',
+                    sortable: false
+                },
+                {
+                    key: 'name',
+                    type: 'text',
+                    title: 'Name',
+                    cssClass: 'full-width ellipsis-cell',
+                    sortable: true
+                },
+                {
+                    key: 'path',
+                    type: 'location',
+                    title: 'Location',
+                    format: this.locationFormat,
+                    sortable: true
+                },
+                {
+                    key: 'content.sizeInBytes',
+                    type: 'fileSize',
+                    title: 'Size',
+                    sortable: true
+                },
+                {
+                    key: 'modifiedAt',
+                    type: 'date',
+                    title: 'Modified',
+                    format: 'timeAgo',
+                    sortable: true
+                },
+                {
+                    key: 'modifiedByUser.displayName',
+                    type: 'text',
+                    title: 'Modified by',
+                    sortable: true
+                }
+            ],
+            '-recent-': [
+                {
+                    key: '$thumbnail',
+                    type: 'image',
+                    srTitle: 'Thumbnail',
+                    sortable: false
+                },
+                {
+                    key: 'name',
+                    type: 'text',
+                    title: 'Name',
+                    cssClass: 'full-width ellipsis-cell',
+                    sortable: true
+                },
+                {
+                    key: 'path',
+                    type: 'location',
+                    title: 'Location',
+                    cssClass: 'ellipsis-cell',
+                    format: this.locationFormat,
+                    sortable: true
+                },
+                {
+                    key: 'content.sizeInBytes',
+                    type: 'fileSize',
+                    title: 'Size',
+                    sortable: true
+                },
+                {
+                    key: 'modifiedAt',
+                    type: 'date',
+                    title: 'Modified',
+                    format: 'timeAgo',
+                    sortable: true
+                }
+            ],
+            '-sharedlinks-': [
+                {
+                    key: '$thumbnail',
+                    type: 'image',
+                    srTitle: 'Thumbnail',
+                    sortable: false
+                },
+                {
+                    key: 'name',
+                    type: 'text',
+                    title: 'Name',
+                    cssClass: 'full-width ellipsis-cell',
+                    sortable: true
+                },
+                {
+                    key: 'path',
+                    type: 'location',
+                    title: 'Location',
+                    cssClass: 'ellipsis-cell',
+                    format: this.locationFormat,
+                    sortable: true
+                },
+                {
+                    key: 'content.sizeInBytes',
+                    type: 'fileSize',
+                    title: 'Size',
+                    sortable: true
+                },
+                {
+                    key: 'modifiedAt',
+                    type: 'date',
+                    title: 'Modified',
+                    format: 'timeAgo',
+                    sortable: true
+                },
+                {
+                    key: 'modifiedByUser.displayName',
+                    type: 'text',
+                    title: 'Modified by',
+                    sortable: true
+                },
+                {
+                    key: 'sharedByUser.displayName',
+                    type: 'text',
+                    title: 'Shared by',
+                    sortable: true
+                }
+            ],
+            'default': [
+                {
+                    key: '$thumbnail',
+                    type: 'image',
+                    srTitle: 'Thumbnail',
+                    sortable: false
+                },
+                {
+                    key: 'name',
+                    type: 'text',
+                    title: 'Name',
+                    cssClass: 'full-width ellipsis-cell',
+                    sortable: true
+                },
+                {
+                    key: 'content.sizeInBytes',
+                    type: 'fileSize',
+                    title: 'Size',
+                    sortable: true
+                },
+                {
+                    key: 'modifiedAt',
+                    type: 'date',
+                    title: 'Modified',
+                    format: 'timeAgo',
+                    sortable: true
+                },
+                {
+                    key: 'modifiedByUser.displayName',
+                    type: 'text',
+                    title: 'Modified by',
+                    sortable: true
+                },
+            ]
+        };
+
+        return (presets[name] || presets['default']).map(col => new ObjectDataColumn(col));
     }
 }
