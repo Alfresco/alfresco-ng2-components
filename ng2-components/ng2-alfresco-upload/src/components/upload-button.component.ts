@@ -15,30 +15,46 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { AlfrescoApiService, AlfrescoTranslationService, FileModel, FileUtils, LogService, NotificationService, UploadService } from 'ng2-alfresco-core';
+import {
+    AlfrescoApiService,
+    AlfrescoTranslationService,
+    EXTENDIBLE_COMPONENT,
+    FileModel,
+    FileUtils,
+    LogService,
+    NodePermissionSubject,
+    NotificationService,
+    UploadService
+} from 'ng2-alfresco-core';
 import { Observable, Subject } from 'rxjs/Rx';
 import { PermissionModel } from '../models/permissions.model';
 
 @Component({
     selector: 'adf-upload-button, alfresco-upload-button',
     templateUrl: './upload-button.component.html',
-    styleUrls: ['./upload-button.component.css']
+    styleUrls: ['./upload-button.component.css'],
+    providers: [
+        { provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadButtonComponent)}
+    ]
 })
-export class UploadButtonComponent implements OnInit, OnChanges {
+export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionSubject {
+
+    /** @deprecated Deprecated in 1.6.0, you can use UploadService events and NotificationService api instead. */
+    @Input()
+    showNotificationBar: boolean = true;
+
+    /** @deprecated Deprecated in 1.6.0, this property is not used for couple of releases already. */
+    @Input()
+    currentFolderPath: string = '/';
+
+    /** @deprecated Deprecated in 1.8.0, use the button with combination of adf-node-permission directive */
+    @Input()
+    disableWithNoPermission: boolean = false;
 
     @Input()
     disabled: boolean = false;
-
-    /**
-     * @deprecated Deprecated in 1.6.0, you can use UploadService events and NotificationService api instead.
-     *
-     * @type {boolean}
-     * @memberof UploadButtonComponent
-     */
-    @Input()
-    showNotificationBar: boolean = true;
 
     @Input()
     uploadFolders: boolean = false;
@@ -58,20 +74,8 @@ export class UploadButtonComponent implements OnInit, OnChanges {
     @Input()
     tooltip: string = null;
 
-    /**
-     * @deprecated Deprecated in 1.6.0, this property is not used for couple of releases already.
-     *
-     * @type {string}
-     * @memberof UploadDragAreaComponent
-     */
-    @Input()
-    currentFolderPath: string = '/';
-
     @Input()
     rootFolderId: string = '-root-';
-
-    @Input()
-    disableWithNoPermission: boolean = false;
 
     @Output()
     onSuccess = new EventEmitter();
@@ -117,6 +121,7 @@ export class UploadButtonComponent implements OnInit, OnChanges {
         return this.disabled ? true : undefined;
     }
 
+    /** @deprecated Deprecated in 1.8.0, use the button with combination of adf-node-permission directive */
     isDisableWithNoPermission(): boolean {
         return !this.hasPermission && this.disableWithNoPermission ? true : undefined;
     }

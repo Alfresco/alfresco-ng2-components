@@ -15,9 +15,14 @@
  * limitations under the License.
  */
 
-import { AfterViewInit, Directive, ElementRef, Input, OnChanges, Renderer2, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, Host, Inject, Input, OnChanges, Optional, Renderer2, SimpleChanges } from '@angular/core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
+import { EXTENDIBLE_COMPONENT } from './../interface/injection.tokens';
 import { AlfrescoContentService } from './../services/alfresco-content.service';
+
+export interface NodePermissionSubject {
+    disabled: boolean;
+}
 
 @Directive({
     selector: '[adf-node-permission]'
@@ -32,7 +37,11 @@ export class NodePermissionDirective implements OnChanges, AfterViewInit {
 
     constructor(private elementRef: ElementRef,
                 private renderer: Renderer2,
-                private contentService: AlfrescoContentService) {
+                private contentService: AlfrescoContentService,
+
+                @Host()
+                @Optional()
+                @Inject(EXTENDIBLE_COMPONENT) private parentComponent?: NodePermissionSubject) {
     }
 
     ngAfterViewInit() {
@@ -55,12 +64,28 @@ export class NodePermissionDirective implements OnChanges, AfterViewInit {
         let enable = this.hasPermission(this.nodes, this.permission);
 
         if (enable) {
-            this.enableElement();
+            this.enable();
         } else {
-            this.disableElement();
+            this.disable();
         }
 
         return enable;
+    }
+
+    private enable(): void {
+        if (this.parentComponent) {
+            this.parentComponent.disabled = false;
+        } else {
+            this.enableElement();
+        }
+    }
+
+    private disable(): void {
+        if (this.parentComponent) {
+            this.parentComponent.disabled = true;
+        } else {
+            this.disableElement();
+        }
     }
 
     /**
