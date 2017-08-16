@@ -153,7 +153,11 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     private get nodesApi() {
         return this.apiService.getInstance().core.nodesApi;
-     }
+    }
+
+    private get sharedLinksApi() {
+        return this.apiService.getInstance().core.sharedlinksApi;
+    }
 
     getContextActions(node: MinimalNodeEntity) {
         if (node && node.entry) {
@@ -368,6 +372,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
         if (nodeId === '-trashcan-') {
             this.loadTrashcan();
+        } else if (nodeId === '-sharedlinks-') {
+            this.loadSharedLinks();
         } else {
             this.documentListService
                 .getFolderNode(nodeId).then(node => {
@@ -419,11 +425,26 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             skipCount: this.skipCount
         };
         this.nodesApi.getDeletedNodes(options).then((page: NodePaging) => {
-            this.data.loadPage(page);
-            this.pagination = page.list.pagination;
-            this.loading = false;
-            this.ready.emit();
+            this.onPageLoaded(page);
         });
+    }
+
+    private loadSharedLinks(): void {
+        const options = {
+            include: [ 'properties', 'allowableOperations' ],
+            maxItems: this.pageSize,
+            skipCount: this.skipCount
+        };
+        this.sharedLinksApi.findSharedLinks(options).then((page: NodePaging) => {
+           this.onPageLoaded(page);
+        });
+    }
+
+    private onPageLoaded(page: NodePaging) {
+        this.data.loadPage(page);
+        this.pagination = page.list.pagination;
+        this.loading = false;
+        this.ready.emit();
     }
 
     private isCurrentPageEmpty(node, skipCount): boolean {
@@ -606,7 +627,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     canNavigateFolder(node: MinimalNodeEntity): boolean {
-        const restricted = ['-trashcan-'];
+        const restricted = ['-trashcan-', '-sharedlinks-'];
 
         if (restricted.indexOf(this.currentFolderId) > -1) {
             return false;

@@ -98,7 +98,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
             }
 
             if (col.key === '$thumbnail') {
-                let node = (<ShareDataRow> row).node;
+                const node = (<ShareDataRow> row).node;
 
                 if (node.entry.isFolder) {
                     return this.documentListService.getMimeTypeIcon('folder');
@@ -108,12 +108,12 @@ export class ShareDataTableAdapter implements DataTableAdapter {
                     if (this.thumbnails) {
                         return this.documentListService.getDocumentThumbnailUrl(node);
                     }
+                }
 
-                    if (node.entry.content) {
-                        let mimeType = node.entry.content.mimeType;
-                        if (mimeType) {
-                            return this.documentListService.getMimeTypeIcon(mimeType);
-                        }
+                if (node.entry.content) {
+                    const mimeType = node.entry.content.mimeType;
+                    if (mimeType) {
+                        return this.documentListService.getMimeTypeIcon(mimeType);
                     }
                 }
 
