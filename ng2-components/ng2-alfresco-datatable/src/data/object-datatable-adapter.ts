@@ -17,7 +17,8 @@
 
 import { DatePipe } from '@angular/common';
 import { TemplateRef } from '@angular/core';
-import { ObjectUtils } from 'ng2-alfresco-core';
+
+import { ObjectUtils, TimeAgoPipe } from 'ng2-alfresco-core';
 import { DataColumn, DataRow, DataSorting, DataTableAdapter } from './datatable-adapter';
 
 // Simple implementation of the DataTableAdapter interface.
@@ -103,18 +104,31 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
         let value = row.getValue(col.key);
 
         if (col.type === 'date') {
-            let datePipe = new DatePipe('en-US');
-            let format = col.format || 'medium';
             try {
-                return datePipe.transform(value, format);
+                return this.formatDate(col, value);
             } catch (err) {
-                console.error(`DocumentList: error parsing date ${value} to format ${format}`);
+                console.error(`Error parsing date ${value} to format ${col.format}`);
             }
         }
 
         if (col.type === 'icon') {
             const icon = row.getValue(col.key);
             return icon;
+        }
+
+        return value;
+    }
+
+    formatDate(col: DataColumn, value: any): string {
+        if (col.type === 'date') {
+            const format = col.format || 'medium';
+            if (format === 'timeAgo') {
+                const timeAgoPipe = new TimeAgoPipe();
+                return timeAgoPipe.transform(value);
+            } else {
+                const datePipe = new DatePipe('en-US');
+                return datePipe.transform(value, format);
+            }
         }
 
         return value;

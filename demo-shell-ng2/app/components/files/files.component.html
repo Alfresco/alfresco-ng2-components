@@ -99,10 +99,24 @@
                     class="image-table-cell">
                 </data-column>
                 <data-column
-                    title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
                     key="name"
+                    title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
                     [formatTooltip]="getNodeNameTooltip"
                     class="full-width ellipsis-cell">
+                </data-column>
+                <!-- Location column demo -->
+                <!--
+                <data-column
+                    key="path"
+                    type="location"
+                    format="/files"
+                    title="Location">
+                </data-column>
+                -->
+                <data-column
+                    key="content.sizeInBytes"
+                    title="Size"
+                    type="fileSize">
                 </data-column>
                 <!-- Notes: has performance overhead due to multiple files/folders causing separate HTTP calls to get tags -->
                 <!--
@@ -124,11 +138,8 @@
                     title="{{'DOCUMENT_LIST.COLUMNS.CREATED' | translate}}"
                     key="createdAt"
                     type="date"
-                    format="medium"
+                    format="timeAgo"
                     class="desktop-only">
-                    <ng-template let-value="value">
-                        <span title="{{ value }}">{{ value | adfTimeAgo }}</span>
-                    </ng-template>
                 </data-column>
             </data-columns>
 
