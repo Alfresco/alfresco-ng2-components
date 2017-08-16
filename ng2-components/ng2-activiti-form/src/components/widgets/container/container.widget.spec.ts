@@ -26,6 +26,7 @@ import { EcmModelService } from './../../../services/ecm-model.service';
 import { FormService } from './../../../services/form.service';
 import { FormFieldComponent } from './../../form-field/form-field.component';
 import { ContentWidgetComponent } from './../content/content.widget';
+import { ContainerColumnModel } from './../core/container-column.model';
 import { FormFieldTypes } from './../core/form-field-types';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
@@ -211,7 +212,57 @@ describe('ContainerWidgetComponent', () => {
             });
             widget.onFieldChanged(null);
         }));
-
     });
 
+    describe('fields', () => {
+
+        it('should serializes the content fields', () => {
+            const field1 = <FormFieldModel> {id: '1'},
+                field2 = <FormFieldModel> {id: '2'},
+                field3 = <FormFieldModel> {id: '3'},
+                field4 = <FormFieldModel> {id: '4'},
+                field5 = <FormFieldModel> {id: '5'},
+                field6 = <FormFieldModel> {id: '6'};
+
+            let container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel()));
+            container.columns = [
+                <ContainerColumnModel> { fields: [
+                    field1,
+                    field2,
+                    field3
+                ] },
+                <ContainerColumnModel> { fields: [
+                    field4,
+                    field5
+                ] },
+                <ContainerColumnModel> { fields: [
+                    field6
+                ] }
+            ];
+
+            widget.content = container;
+
+            expect(widget.fields[0].id).toEqual('1');
+            expect(widget.fields[1].id).toEqual('4');
+            expect(widget.fields[2].id).toEqual('6');
+            expect(widget.fields[3].id).toEqual('2');
+            expect(widget.fields[4].id).toEqual('5');
+            expect(widget.fields[5]).toEqual(undefined);
+            expect(widget.fields[6].id).toEqual('3');
+            expect(widget.fields[7]).toEqual(undefined);
+            expect(widget.fields[8]).toEqual(undefined);
+        });
+    });
+
+    describe('getColumnWith', () => {
+
+        it('should calculate the column width based on the numberOfColumns and current field\'s colspan property', () => {
+            let container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(), { numberOfColumns: 4 }));
+            widget.content = container;
+
+            expect(widget.getColumnWith(undefined)).toBe('25%');
+            expect(widget.getColumnWith(<FormFieldModel> { colspan: 1 })).toBe('25%');
+            expect(widget.getColumnWith(<FormFieldModel> { colspan: 3 })).toBe('75%');
+        });
+    });
 });
