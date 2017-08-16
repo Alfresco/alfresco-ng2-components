@@ -6,7 +6,8 @@
     <alfresco-upload-drag-area
         [parentId]="documentList.currentFolderId"
         [versioning]="versioning"
-        [enabled]="documentList.hasCreatePermission()">
+        [adf-node-permission]="'create'"
+        [adf-nodes]="getCurrentDocumentListNode()">
         <div *ngIf="errorMessage" class="error-message">
             <button (click)="resetError()" md-icon-button>
                 <md-icon>highlight_off</md-icon>
@@ -275,7 +276,8 @@
             [multipleFiles]="multipleFileUpload"
             [uploadFolders]="folderUpload"
             [versioning]="versioning"
-            [disableWithNoPermission]="disableWithNoPermission"
+            [adf-node-permission]="'create'"
+            [adf-nodes]="getCurrentDocumentListNode()"
             (permissionEvent)="handlePermissionError($event)">
         </alfresco-upload-button>
     </div>
@@ -290,7 +292,8 @@
             [multipleFiles]="multipleFileUpload"
             [uploadFolders]="folderUpload"
             [versioning]="versioning"
-            [disableWithNoPermission]="disableWithNoPermission"
+            [adf-node-permission]="'create'"
+            [adf-nodes]="getCurrentDocumentListNode()"
             (permissionEvent)="handlePermissionError($event)">
         </alfresco-upload-button>
     </div>
