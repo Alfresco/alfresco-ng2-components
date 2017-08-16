@@ -959,7 +959,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                     type: 'text',
                     title: 'Modified by',
                     sortable: true
-                },
+                }
             ]
         };
 
