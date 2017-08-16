@@ -19,6 +19,7 @@
 
 import { AfterViewInit, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormService } from './../../../services/form.service';
+import { FormFieldModel } from './../core/form-field.model';
 import { baseHost , WidgetComponent } from './../widget.component';
 import { ContainerWidgetComponentModel } from './container.widget.model';
 
@@ -47,5 +48,40 @@ export class ContainerWidgetComponent extends WidgetComponent implements OnInit,
         if (this.field) {
             this.content = new ContainerWidgetComponentModel(this.field);
         }
+    }
+
+    /**
+     * Serializes column fields
+     */
+    get fields(): FormFieldModel[] {
+        const fields = [];
+
+        let rowContainsElement = true,
+            rowIndex = 0;
+
+        while (rowContainsElement) {
+            rowContainsElement = false;
+            for (let i = 0; i < this.content.columns.length; i++ ) {
+                let field = this.content.columns[i].fields[rowIndex];
+                if (field) {
+                    rowContainsElement = true;
+                }
+
+                fields.push(field);
+            }
+            rowIndex++;
+        }
+
+        return fields;
+    }
+
+    /**
+     * Calculate the column width based on the numberOfColumns and current field's colspan property
+     *
+     * @param field
+     */
+    getColumnWith(field: FormFieldModel): string {
+        const colspan = field ? field.colspan : 1;
+        return (100 / this.content.json.numberOfColumns) * colspan + '%';
     }
 }
