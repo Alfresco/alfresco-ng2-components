@@ -143,6 +143,14 @@ export class FilesComponent implements OnInit {
         // this.permissionsStyle.push(new PermissionStyleModel('document-list__disable', PermissionsEnum.NOT_CREATE, false, true));
     }
 
+    getCurrentDocumentListNode(): MinimalNodeEntity[] {
+        if (this.documentList.folderNode) {
+            return [ { entry: this.documentList.folderNode } ];
+        } else {
+            return [];
+        }
+    }
+
     onNavigationError(err: any) {
         if (err) {
             this.errorMessage = err.message || 'Navigation error';

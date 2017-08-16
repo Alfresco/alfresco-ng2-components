@@ -127,11 +127,13 @@ export { CardViewModule } from './src/components/view/card-view.module';
 export { CollapsableModule } from './src/components/collapsable/collapsable.module';
 export { CardViewItem } from './src/interface/card-view-item.interface';
 export { TimeAgoPipe } from './src/pipes/time-ago.pipe';
+export { EXTENDIBLE_COMPONENT } from './src/interface/injection.tokens';
 
 export * from './src/components/data-column/data-column.component';
 export * from './src/components/data-column/data-column-list.component';
 export * from './src/directives/upload.directive';
 export * from './src/directives/highlight.directive';
+export * from './src/directives/node-permission.directive';
 export * from './src/utils/index';
 export * from './src/events/base.event';
 export * from './src/events/base-ui.event';
