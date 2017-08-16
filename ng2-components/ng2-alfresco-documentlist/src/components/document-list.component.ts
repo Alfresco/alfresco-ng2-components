@@ -161,7 +161,11 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     private get sitesApi() {
         return this.apiService.getInstance().core.sitesApi;
-     }
+    }
+
+    private get favoritesApi() {
+        return this.apiService.getInstance().core.favoritesApi;
+    }
 
     getContextActions(node: MinimalNodeEntity) {
         if (node && node.entry) {
@@ -380,6 +384,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             this.loadSharedLinks();
         } else if (nodeId === '-sites-') {
             this.loadSites();
+        } else if (nodeId === '-favorites-') {
+            this.loadFavorites();
         } else {
             this.documentListService
                 .getFolderNode(nodeId).then(node => {
@@ -454,6 +460,35 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         };
 
         this.sitesApi.getSites(options).then((page: NodePaging) => {
+            this.onPageLoaded(page);
+        });
+    }
+
+    private loadFavorites(): void {
+        const options = {
+            maxItems: this.pageSize,
+            skipCount: this.skipCount,
+            where: '(EXISTS(target/file) OR EXISTS(target/folder))',
+            include: [ 'properties', 'allowableOperations', 'path' ]
+        };
+
+        this.favoritesApi.getFavorites('-me-', options).then((result: NodePaging) => {
+            let page: NodePaging = {
+                list: {
+                    entries: result.list.entries
+                        .map(({ entry: { target }}: any) => ({
+                            entry: target.file || target.folder
+                        }))
+                        .map(({ entry }: any) => {
+                            entry.properties = {
+                                'cm:title': entry.title,
+                                'cm:description': entry.description
+                            };
+                            return { entry };
+                        }),
+                    pagination: result.list.pagination
+                }
+            };
             this.onPageLoaded(page);
         });
     }
@@ -645,7 +680,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     canNavigateFolder(node: MinimalNodeEntity): boolean {
-        const restricted = ['-trashcan-', '-sharedlinks-', '-sites-'];
+        const restricted = ['-trashcan-', '-sharedlinks-', '-sites-', '-favorites-'];
 
         if (restricted.indexOf(this.currentFolderId) > -1) {
             return false;

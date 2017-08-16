@@ -43,6 +43,7 @@ import { CustomEditorsModule } from './components/activiti/custom-editor/custom-
 import { MaterialModule } from './material.module';
 import { DebugAppConfigService } from './services/debug-app-config.service';
 
+import { FavoritesComponent } from './components/files/favorites.component';
 import { SharedLinksComponent } from './components/files/shared-links.component';
 import { SitesComponent } from './components/files/sites.component';
 import { TrashcanComponent } from './components/files/trashcan.component';
@@ -126,7 +127,8 @@ if (process.env.ENV === 'production') {
         FormListDemoComponent,
         TrashcanComponent,
         SharedLinksComponent,
-        SitesComponent
+        SitesComponent,
+        FavoritesComponent
     ],
     providers: [
         { provide: AppConfigService, useClass: DebugAppConfigService },
