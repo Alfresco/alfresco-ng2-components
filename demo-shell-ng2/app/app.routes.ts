@@ -40,6 +40,7 @@ import {
 
 import { UploadButtonComponent } from 'ng2-alfresco-upload';
 import { SharedLinksComponent } from './components/files/shared-links.component';
+import { SitesComponent } from './components/files/sites.component';
 import { TrashcanComponent } from './components/files/trashcan.component';
 import { FormListDemoComponent } from './components/form/form-list-demo.component';
 
@@ -73,6 +74,11 @@ export const appRoutes: Routes = [
     {
         path: 'shared-links',
         component: SharedLinksComponent,
+        canActivate: [AuthGuardEcm]
+    },
+    {
+        path: 'sites',
+        component: SitesComponent,
         canActivate: [AuthGuardEcm]
     },
     {

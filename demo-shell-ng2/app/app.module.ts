@@ -44,6 +44,7 @@ import { MaterialModule } from './material.module';
 import { DebugAppConfigService } from './services/debug-app-config.service';
 
 import { SharedLinksComponent } from './components/files/shared-links.component';
+import { SitesComponent } from './components/files/sites.component';
 import { TrashcanComponent } from './components/files/trashcan.component';
 import { FormListDemoComponent } from './components/form/form-list-demo.component';
 
@@ -124,7 +125,8 @@ if (process.env.ENV === 'production') {
         FormDemoComponent,
         FormListDemoComponent,
         TrashcanComponent,
-        SharedLinksComponent
+        SharedLinksComponent,
+        SitesComponent
     ],
     providers: [
         { provide: AppConfigService, useClass: DebugAppConfigService },

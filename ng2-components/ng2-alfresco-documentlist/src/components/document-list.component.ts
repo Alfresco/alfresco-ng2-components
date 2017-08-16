@@ -159,6 +159,10 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         return this.apiService.getInstance().core.sharedlinksApi;
     }
 
+    private get sitesApi() {
+        return this.apiService.getInstance().core.sitesApi;
+     }
+
     getContextActions(node: MinimalNodeEntity) {
         if (node && node.entry) {
             let actions = this.getNodeActions(node);
@@ -374,6 +378,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             this.loadTrashcan();
         } else if (nodeId === '-sharedlinks-') {
             this.loadSharedLinks();
+        } else if (nodeId === '-sites-') {
+            this.loadSites();
         } else {
             this.documentListService
                 .getFolderNode(nodeId).then(node => {
@@ -437,6 +443,18 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         };
         this.sharedLinksApi.findSharedLinks(options).then((page: NodePaging) => {
            this.onPageLoaded(page);
+        });
+    }
+
+    private loadSites(): void {
+        const options = {
+            include: [ 'properties' ],
+            maxItems: this.pageSize,
+            skipCount: this.skipCount
+        };
+
+        this.sitesApi.getSites(options).then((page: NodePaging) => {
+            this.onPageLoaded(page);
         });
     }
 
@@ -627,7 +645,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     canNavigateFolder(node: MinimalNodeEntity): boolean {
-        const restricted = ['-trashcan-', '-sharedlinks-'];
+        const restricted = ['-trashcan-', '-sharedlinks-', '-sites-'];
 
         if (restricted.indexOf(this.currentFolderId) > -1) {
             return false;

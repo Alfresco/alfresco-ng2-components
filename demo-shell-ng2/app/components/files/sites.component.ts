@@ -18,8 +18,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'adf-shared-links-demo',
-    templateUrl: 'shared-links.component.html'
+    selector: 'adf-sites-demo',
+    templateUrl: 'sites.component.html'
 })
-export class SharedLinksComponent {
+export class SitesComponent {
 }
