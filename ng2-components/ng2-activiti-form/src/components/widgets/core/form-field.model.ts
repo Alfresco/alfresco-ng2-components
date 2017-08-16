@@ -166,13 +166,13 @@ export class FormFieldModel extends FormWidgetModel {
                 this.placeholder = json.placeholder;
             }
 
-            if (json.type === 'readonly') {
+            if (FormFieldTypes.isReadOnlyType(json.type)) {
                 if (json.params && json.params.field && json.params.field.responseVariable) {
                     this.value = this.getVariablesValue(json.params.field.name, form);
                 }
             }
 
-            if (json.type === 'container') {
+            if (FormFieldTypes.isContainerType(json.type)) {
                 this.containerFactory(json, form);
             }
         }
