@@ -19,7 +19,7 @@ import {
     AfterContentInit, Component, ContentChild, ElementRef, EventEmitter, HostListener, Input, NgZone,
     OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild
 } from '@angular/core';
-import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, Pagination } from 'alfresco-js-api';
+import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, Pagination, PersonEntry } from 'alfresco-js-api';
 import { AlfrescoApiService, DataColumnListComponent } from 'ng2-alfresco-core';
 import { DataCellEvent, DataColumn, DataRowActionEvent, DataSorting, DataTableComponent, ObjectDataColumn } from 'ng2-alfresco-datatable';
 import { Observable, Subject } from 'rxjs/Rx';
@@ -165,6 +165,14 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     private get favoritesApi() {
         return this.apiService.getInstance().core.favoritesApi;
+    }
+
+    private get peopleApi() {
+        return this.apiService.getInstance().core.peopleApi;
+    }
+
+    private get searchApi() {
+        return this.apiService.getInstance().search.searchApi;
     }
 
     getContextActions(node: MinimalNodeEntity) {
@@ -386,6 +394,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             this.loadSites();
         } else if (nodeId === '-favorites-') {
             this.loadFavorites();
+        } else if (nodeId === '-recent-') {
+            this.loadRecent();
         } else {
             this.documentListService
                 .getFolderNode(nodeId).then(node => {
@@ -490,6 +500,35 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                 }
             };
             this.onPageLoaded(page);
+        });
+    }
+
+    private loadRecent(): void {
+        this.peopleApi.getPerson('-me-').then((person: PersonEntry) => {
+            const username = person.entry.id;
+            const query = {
+                query: {
+                    query: '*',
+                    language: 'afts'
+                },
+                filterQueries: [
+                    { query: `cm:modified:[NOW/DAY-30DAYS TO NOW/DAY+1DAY]` },
+                    { query: `cm:modifier:${username} OR cm:creator:${username}` },
+                    { query: `TYPE:"content" AND -TYPE:"app:filelink" AND -TYPE:"fm:post"` }
+                ],
+                include: [ 'path', 'properties', 'allowableOperations' ],
+                sort: [{
+                    type: 'FIELD',
+                    field: 'cm:modified',
+                    ascending: false
+                }],
+                paging: {
+                    maxItems: this.pageSize,
+                    skipCount: this.skipCount
+                }
+            };
+
+            this.searchApi.search(query).then(page => this.onPageLoaded(page));
         });
     }
 
@@ -680,7 +719,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     canNavigateFolder(node: MinimalNodeEntity): boolean {
-        const restricted = ['-trashcan-', '-sharedlinks-', '-sites-', '-favorites-'];
+        const restricted = ['-trashcan-', '-sharedlinks-', '-sites-', '-favorites-', '-recent-'];
 
         if (restricted.indexOf(this.currentFolderId) > -1) {
             return false;

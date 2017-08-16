@@ -1,0 +1,40 @@
+<adf-document-list
+    currentFolderId="-recent-">
+    <data-columns>
+
+        <data-column
+            key="$thumbnail"
+            type="image"
+            [sortable]="false"
+            class="image-table-cell">
+        </data-column>
+
+        <data-column
+            key="name"
+            class="full-width ellipsis-cell"
+            title="Name">
+        </data-column>
+
+        <data-column
+            key="path"
+            class="ellipsis-cell"
+            title="Location"
+            type="location"
+            format="/files">
+        </data-column>
+
+        <data-column
+            key="content.sizeInBytes"
+            title="Size"
+            type="fileSize">
+        </data-column>
+
+        <data-column
+            key="modifiedAt"
+            type="date"
+            title="Modified"
+            format="timeAgo">
+        </data-column>
+
+    </data-columns>
+</adf-document-list>
