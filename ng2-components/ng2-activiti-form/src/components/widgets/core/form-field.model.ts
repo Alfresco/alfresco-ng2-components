@@ -172,7 +172,7 @@ export class FormFieldModel extends FormWidgetModel {
                 }
             }
 
-            if (json.type === 'container') {
+            if (FormFieldTypes.isContainerType(json.type)) {
                 this.containerFactory(json, form);
             }
         }
