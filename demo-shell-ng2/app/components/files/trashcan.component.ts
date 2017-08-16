@@ -19,8 +19,7 @@ import { Component } from '@angular/core';
 
 @Component({
     selector: 'adf-trashcan-demo',
-    templateUrl: 'trashcan.component.html',
-    styleUrls: ['trashcan.component.css']
+    templateUrl: 'trashcan.component.html'
 })
 export class TrashcanComponent {
 }

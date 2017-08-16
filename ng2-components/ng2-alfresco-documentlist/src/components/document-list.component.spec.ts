@@ -120,8 +120,8 @@ describe('DocumentList', () => {
         columns.push(column);
 
         documentList.ngAfterContentInit();
-        expect(columns.length).toBe(3);
-        expect(columns[2]).toBe(column);
+        expect(columns.length).toBe(6);
+        expect(columns[5]).toBe(column);
     });
 
     it('should call action\'s handler with node', () => {
