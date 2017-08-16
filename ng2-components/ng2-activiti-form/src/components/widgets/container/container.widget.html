@@ -11,15 +11,10 @@
     </h4>
 </div>
 
-<md-grid-list rowHeight="100px" [cols]="content.field.numberOfColumns"
-              [ngClass]="{'hidden':!(content?.isVisible && content?.isExpanded)}">
-    <md-grid-tile *ngFor="let col of content.columns"
-                  [colspan]="content.colspan"
-                  [rowspan]="content.rowspan">
-        <ul class="adf-field-list">
-            <li *ngFor="let field of col.fields">
-                <form-field [field]="field"></form-field>
-            </li>
-        </ul>
-    </md-grid-tile>
-</md-grid-list>
+<section class="grid-list" [ngClass]="{'hidden':!(content?.isVisible && content?.isExpanded)}">
+    <div class="grid-list-item" *ngFor="let field of fields" [style.width]="getColumnWith(field)">
+        <form-field *ngIf="field" [field]="field"></form-field>
+    </div>
+</section>
+
+
