@@ -84,6 +84,16 @@
                             [attr.data-automation-id]="'date_' + data.getValue(row, col)">
                             <adf-datatable-cell [data]="data" [column]="col" [row]="row"></adf-datatable-cell>
                         </div>
+                        <div *ngSwitchCase="'location'" class="cell-value"
+                            [mdTooltip]="getCellTooltip(row, col)"
+                            [attr.data-automation-id]="'location' + data.getValue(row, col)">
+                            <adf-location-cell [data]="data" [column]="col" [row]="row"></adf-location-cell>
+                        </div>
+                        <div *ngSwitchCase="'fileSize'" class="cell-value"
+                            [mdTooltip]="getCellTooltip(row, col)"
+                            [attr.data-automation-id]="'fileSize_' + data.getValue(row, col)">
+                            <adf-datatable-cell [value]="data.getValue(row, col) | adfFileSize"></adf-datatable-cell>
+                        </div>
                         <div *ngSwitchCase="'text'" class="cell-value"
                             [mdTooltip]="getCellTooltip(row, col)"
                             [attr.data-automation-id]="'text_' + data.getValue(row, col)">

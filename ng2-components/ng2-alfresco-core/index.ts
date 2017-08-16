@@ -126,6 +126,7 @@ export { ContextMenuModule } from './src/components/context-menu/context-menu.mo
 export { CardViewModule } from './src/components/view/card-view.module';
 export { CollapsableModule } from './src/components/collapsable/collapsable.module';
 export { CardViewItem } from './src/interface/card-view-item.interface';
+export { TimeAgoPipe } from './src/pipes/time-ago.pipe';
 
 export * from './src/components/data-column/data-column.component';
 export * from './src/components/data-column/data-column-list.component';

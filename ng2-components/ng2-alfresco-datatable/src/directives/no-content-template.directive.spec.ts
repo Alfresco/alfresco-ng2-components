@@ -16,9 +16,11 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableCellComponent } from '../components/datatable/datatable-cell.component';
 import { DataTableComponent } from '../components/datatable/datatable.component';
+import { LocationCellComponent } from '../components/datatable/location-cell.component';
 import { MaterialModule } from '../material.module';
 import { NoContentTemplateDirective } from './no-content-template.directive';
 
@@ -30,13 +32,15 @@ describe('NoContentTemplateDirective', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+                RouterTestingModule,
                 MaterialModule,
-                CoreModule.forRoot()
+                CoreModule
             ],
             declarations: [
                 DataTableComponent,
                 DataTableCellComponent,
-                NoContentTemplateDirective
+                NoContentTemplateDirective,
+                LocationCellComponent
             ]
         }).compileComponents();
     }));

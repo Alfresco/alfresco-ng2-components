@@ -17,7 +17,7 @@
 
 import { DatePipe } from '@angular/common';
 import { MinimalNode, MinimalNodeEntity, NodePaging } from 'alfresco-js-api';
-import { ObjectUtils } from 'ng2-alfresco-core';
+import { ObjectUtils, TimeAgoPipe } from 'ng2-alfresco-core';
 import { DataColumn, DataRow, DataSorting, DataTableAdapter } from 'ng2-alfresco-datatable';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { DocumentListService } from './../services/document-list.service';
@@ -26,8 +26,6 @@ export class ShareDataTableAdapter implements DataTableAdapter {
 
     ERR_ROW_NOT_FOUND: string = 'Row not found';
     ERR_COL_NOT_FOUND: string = 'Column not found';
-
-    DEFAULT_DATE_FORMAT: string = 'medium';
 
     private sorting: DataSorting;
     private rows: DataRow[];
@@ -81,13 +79,11 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         }
 
         if (col.type === 'date') {
-            let datePipe = new DatePipe('en-US');
-            let format = col.format || this.DEFAULT_DATE_FORMAT;
             try {
-                let result = datePipe.transform(value, format);
+                const result =  this.formatDate(col, value);
                 return dataRow.cacheValue(col.key, result);
             } catch (err) {
-                console.error(`Error parsing date ${value} to format ${format}`);
+                console.error(`Error parsing date ${value} to format ${col.format}`);
                 return 'Error';
             }
         }
@@ -127,6 +123,21 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         }
 
         return dataRow.cacheValue(col.key, value);
+    }
+
+    formatDate(col: DataColumn, value: any): string {
+        if (col.type === 'date') {
+            const format = col.format || 'medium';
+            if (format === 'timeAgo') {
+                const timeAgoPipe = new TimeAgoPipe();
+                return timeAgoPipe.transform(value);
+            } else {
+                const datePipe = new DatePipe('en-US');
+                return datePipe.transform(value, format);
+            }
+        }
+
+        return value;
     }
 
     getSorting(): DataSorting {

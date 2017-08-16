@@ -441,7 +441,7 @@ Here's the list of available properties you can define for a Data Column definit
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | key | string | | Data source key, can be either column/property key like `title` or property path like `createdBy.name` |
-| type | string (text\|image\|date) | text | Value type |
+| type | string | text | Value type |
 | format | string | | Value format (if supported by components), for example format of the date |
 | sortable | boolean | true | Toggles ability to sort by this column, for example by clicking the column header |
 | title | string | | Display title of the column, typically used for column headers |
@@ -449,6 +449,18 @@ Here's the list of available properties you can define for a Data Column definit
 | sr-title | string | | Screen reader title, used for accessibility purposes |
 | class | string | | Additional CSS class to be applied to column (header and cells) |
 | formatTooltip | Function | | Custom tooltip formatter function. |
+
+### Column Types
+
+The DataColumn `type` property can take one of the following values:
+
+- text
+- image
+- date
+- fileSize
+- location
+
+### Underlying node object
 
 DocumentList component assigns an instance of `MinimalNode` type (`alfresco-js-api`) as a data context of each row.
 
@@ -493,23 +505,53 @@ Here's a short example:
 </adf-document-list>
 ```
 
-## Column definition
-
-Properties:
-
-| Name | Type | Default | Description
-| --- | --- | --- | --- |
-| title | string | | Column title |
-| sr-title | string | | Screen reader title, used only when `title` is empty |
-| key | string | | Column source key, example: `createdByUser.displayName` |
-| sortable | boolean | false | Toggle sorting ability via column header clicks |
-| class | string | | CSS class list, example: `full-width ellipsis-cell` |
-| type | string | text | Column type, text\|date\|number |
-| format | string | | Value format pattern |
-| template | `TemplateRef<any>` | | Column template |
+### Date Column
 
 For `date` column type the [DatePipe](https://angular.io/docs/ts/latest/api/common/DatePipe-class.html) formatting is used.
 For a full list of available `format` values please refer to [DatePipe](https://angular.io/docs/ts/latest/api/common/DatePipe-class.html) documentation.
+
+ADF also supports additional `timeAgo` value for the `format` property.
+That triggers the date values to be rendered using popular ["Time from now"](https://momentjs.com/docs/#/displaying/fromnow/) format.
+
+### Location Column
+
+This column is used to display a clickable location link pointing to the parent path of the node.
+
+You are going to use it with custom navigation or when displaying content from the sources like:
+
+- Sites
+- Shared Links
+- Recent Files
+- Favorites
+- Trashcan
+
+or any other location that needs nagivating to the node parent folder easily.
+
+Note that the parent node is evaluated automatically,
+the generated link will be pointing to URL based on the `format` property value with the node `id` value appended:
+
+```text
+/<format>/:id
+```
+
+For example:
+
+```html
+<data-column
+    key="path"
+    type="location"
+    format="/files"
+    title="Location">
+</data-column>
+```
+
+All links rendered in the column above will have an address mapped to `/files`:
+
+```text
+/files/node-1-id
+/files/node-2-id
+...
+```
 
 ### Column Template
 
