@@ -18,6 +18,7 @@
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MdCheckboxChange } from '@angular/material';
+import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from 'ng2-alfresco-core';
 import { MaterialModule } from '../../material.module';
 import {
@@ -29,6 +30,7 @@ import {
 } from './../../data/index';
 import { DataTableCellComponent } from './datatable-cell.component';
 import { DataTableComponent } from './datatable.component';
+import { LocationCellComponent } from './location-cell.component';
 
 describe('DataTable', () => {
 
@@ -40,11 +42,13 @@ describe('DataTable', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
+                RouterTestingModule,
+                CoreModule,
                 MaterialModule
             ],
             declarations: [
                 DataTableCellComponent,
+                LocationCellComponent,
                 DataTableComponent
             ]
         }).compileComponents();

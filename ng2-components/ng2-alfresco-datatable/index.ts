@@ -16,6 +16,7 @@
  */
 
 import { ModuleWithProviders, NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { MaterialModule } from './src/material.module';
 
@@ -30,6 +31,7 @@ export { DataRowActionEvent, DataRowActionModel } from './src/components/datatab
 import { DataTableCellComponent } from './src/components/datatable/datatable-cell.component';
 import { DataTableComponent } from './src/components/datatable/datatable.component';
 import { EmptyListComponent } from './src/components/datatable/empty-list.component';
+import { LocationCellComponent } from './src/components/datatable/location-cell.component';
 import { LoadingContentTemplateDirective } from './src/directives/loading-template.directive';
 import { NoContentTemplateDirective } from './src/directives/no-content-template.directive';
 
@@ -38,6 +40,7 @@ export function directives() {
         DataTableComponent,
         EmptyListComponent,
         DataTableCellComponent,
+        LocationCellComponent,
         NoContentTemplateDirective,
         LoadingContentTemplateDirective
     ];
@@ -45,6 +48,7 @@ export function directives() {
 
 @NgModule({
     imports: [
+        RouterModule,
         CoreModule,
         MaterialModule
     ],
@@ -61,7 +65,8 @@ export function directives() {
     ],
     exports: [
         ...directives(),
-        MaterialModule
+        MaterialModule,
+        RouterModule
     ]
 })
 export class DataTableModule {
