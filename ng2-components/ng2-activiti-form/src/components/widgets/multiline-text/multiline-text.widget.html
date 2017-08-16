@@ -8,7 +8,6 @@
                   rows="3"
                   [id]="field.id"
                   [required]="isRequired()"
-                  [value]="field.value"
                   [(ngModel)]="field.value"
                   (ngModelChange)="checkVisibility(field)"
                   [disabled]="field.readOnly || readOnly"
