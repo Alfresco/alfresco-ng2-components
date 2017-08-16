@@ -23,40 +23,38 @@ import { TranslationMock } from '../assets/translation.service.mock';
 import { FileDraggableDirective } from '../directives/file-draggable.directive';
 import { UploadDragAreaComponent } from './upload-drag-area.component';
 
-let fakeShareDataRow = {
-    obj: {
-        entry: {
-            createdAt: '2017-06-04T04:32:15.597Z',
-            path: {
-                name: '/Company Home/User Homes/Test',
-                isComplete: true,
-                elements: [
-                    {
-                        id: '94acfc73-7014-4475-9bd9-93a2162f0f8c',
-                        name: 'Company Home'
-                    },
-                    {
-                        id: '55052317-7e59-4058-8e07-769f41e615e1',
-                        name: 'User Homes'
-                    },
-                    {
-                        id: '70e1cc6a-6918-468a-b84a-1048093b06fd',
-                        name: 'Test'
-                    }
-                ]
-            },
-            isFolder: true,
-            name: 'pippo',
-            id: '7462d28e-bd43-4b91-9e7b-0d71598680ac',
-            nodeType: 'cm:folder',
-            allowableOperations: [
-                'delete',
-                'update',
-                'create'
-            ]
+function getFakeShareDataRow(allowableOperations = ['delete', 'update', 'create']) {
+    return {
+        obj: {
+            entry: {
+                createdAt: '2017-06-04T04:32:15.597Z',
+                path: {
+                    name: '/Company Home/User Homes/Test',
+                    isComplete: true,
+                    elements: [
+                        {
+                            id: '94acfc73-7014-4475-9bd9-93a2162f0f8c',
+                            name: 'Company Home'
+                        },
+                        {
+                            id: '55052317-7e59-4058-8e07-769f41e615e1',
+                            name: 'User Homes'
+                        },
+                        {
+                            id: '70e1cc6a-6918-468a-b84a-1048093b06fd',
+                            name: 'Test'
+                        }
+                    ]
+                },
+                isFolder: true,
+                name: 'pippo',
+                id: '7462d28e-bd43-4b91-9e7b-0d71598680ac',
+                nodeType: 'cm:folder',
+                allowableOperations
+            }
         }
-    }
-};
+    };
+}
 
 describe('UploadDragAreaComponent', () => {
 
@@ -98,6 +96,96 @@ describe('UploadDragAreaComponent', () => {
     afterEach(() => {
         fixture.destroy();
         TestBed.resetTestingModule();
+    });
+
+    describe('When disabled', () => {
+
+        it('should NOT upload the list of files dropped', () => {
+            component.enabled = false;
+            spyOn(uploadService, 'addToQueue');
+            spyOn(uploadService, 'uploadFilesInTheQueue');
+            fixture.detectChanges();
+
+            const file = <File> {name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json'};
+            let filesList = [file];
+            component.onFilesDropped(filesList);
+
+            expect(uploadService.addToQueue).not.toHaveBeenCalled();
+            expect(uploadService.uploadFilesInTheQueue).not.toHaveBeenCalled();
+        });
+
+        it('should NOT upload the file dropped', () => {
+            component.enabled = false;
+            spyOn(uploadService, 'addToQueue');
+            spyOn(uploadService, 'uploadFilesInTheQueue');
+            fixture.detectChanges();
+
+            let itemEntity = {
+                fullPath: '/folder-fake/file-fake.png',
+                isDirectory: false,
+                isFile: true,
+                name: 'file-fake.png',
+                file: (callbackFile) => {
+                    let fileFake = new File(['fakefake'], 'file-fake.png', {type: 'image/png'});
+                    callbackFile(fileFake);
+                }
+            };
+            component.onFilesEntityDropped(itemEntity);
+
+            expect(uploadService.addToQueue).not.toHaveBeenCalled();
+            expect(uploadService.uploadFilesInTheQueue).not.toHaveBeenCalled();
+        });
+
+        it('should NOT upload the folder dropped', (done) => {
+            component.enabled = false;
+            spyOn(uploadService, 'addToQueue');
+            spyOn(uploadService, 'uploadFilesInTheQueue');
+            fixture.detectChanges();
+
+            let itemEntity = {
+                isDirectory: true,
+                createReader: () => {
+                    return {
+                        readEntries: (cb) => {
+                            cb([]);
+                        }
+                    };
+                }
+            };
+            component.onFolderEntityDropped(itemEntity);
+
+            setTimeout(() => {
+                expect(uploadService.addToQueue).not.toHaveBeenCalled();
+                expect(uploadService.uploadFilesInTheQueue).not.toHaveBeenCalled();
+                done();
+            }, 0);
+        });
+
+        it('should NOT upload the files', () => {
+            component.enabled = false;
+            spyOn(uploadService, 'addToQueue');
+            spyOn(uploadService, 'uploadFilesInTheQueue');
+
+            let fakeItem = {
+                fullPath: '/folder-fake/file-fake.png',
+                isDirectory: false,
+                isFile: true,
+                name: 'file-fake.png',
+                file: (callbackFile) => {
+                    let fileFake = new File(['fakefake'], 'file-fake.png', {type: 'image/png'});
+                    callbackFile(fileFake);
+                }
+            };
+            fixture.detectChanges();
+
+            let fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
+                detail: { data: getFakeShareDataRow([]), files: [fakeItem] }
+            });
+            component.onUploadFiles(fakeCustomEvent);
+
+            expect(uploadService.addToQueue).not.toHaveBeenCalled();
+            expect(uploadService.uploadFilesInTheQueue).not.toHaveBeenCalled();
+        });
     });
 
     it('should upload the list of files dropped', (done) => {
@@ -203,7 +291,7 @@ describe('UploadDragAreaComponent', () => {
 
         let fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
             detail: {
-                data: fakeShareDataRow,
+                data: getFakeShareDataRow(),
                 files: [fakeItem]
             }
         });
