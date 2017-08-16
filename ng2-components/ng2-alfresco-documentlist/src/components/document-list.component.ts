@@ -321,7 +321,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     performNavigation(node: MinimalNodeEntity): boolean {
-        if (node && node.entry && node.entry.isFolder) {
+        if (this.canNavigateFolder(node)) {
             this.currentFolderId = node.entry.id;
             this.folderNode = node.entry;
             this.skipCount = 0;
@@ -603,6 +603,20 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             defaultSorting = new DataSorting(key, direction);
         }
         return defaultSorting;
+    }
+
+    canNavigateFolder(node: MinimalNodeEntity): boolean {
+        const restricted = ['-trashcan-'];
+
+        if (restricted.indexOf(this.currentFolderId) > -1) {
+            return false;
+        }
+
+        if (node && node.entry && node.entry.isFolder) {
+            return true;
+        }
+
+        return false;
     }
 
     updateSkipCount(newSkipCount) {
