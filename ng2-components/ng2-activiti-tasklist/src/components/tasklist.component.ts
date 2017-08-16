@@ -15,20 +15,22 @@
  * limitations under the License.
  */
 
-import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Pagination } from 'alfresco-js-api';
 import { DataColumnListComponent } from 'ng2-alfresco-core';
 import { DataColumn, DataRowEvent, DataTableAdapter, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
-import { Observable } from 'rxjs/Rx';
+import { Observable, Observer } from 'rxjs/Rx';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
-import { TaskDetailsModel } from '../models/task-details.model';
+import { TaskListModel } from '../models/task-list.model';
 import { TaskListService } from './../services/tasklist.service';
 
+const DEFAULT_SIZE = 5;
 @Component({
     selector: 'adf-tasklist, activiti-tasklist',
     templateUrl: './tasklist.component.html',
     styleUrls: ['./tasklist.component.css']
 })
-export class TaskListComponent implements OnChanges, AfterContentInit {
+export class TaskListComponent implements OnChanges, OnInit, AfterContentInit, Observer<TaskListModel> {
 
     requestNode: TaskQueryRequestRepresentationModel;
 
@@ -72,6 +74,14 @@ export class TaskListComponent implements OnChanges, AfterContentInit {
 
     currentInstanceId: string;
 
+    pagination: Pagination = {};
+
+    @Input()
+    page: number = 0;
+
+    @Input()
+    maxItems: number = DEFAULT_SIZE;
+
     isLoading: boolean = true;
 
     /**
@@ -90,6 +100,27 @@ export class TaskListComponent implements OnChanges, AfterContentInit {
     ];
 
     constructor(private taskListService: TaskListService) {
+    }
+
+    ngOnInit() {
+        this.taskListService.tasksList$.subscribe(this);
+    }
+
+    next(tasks: TaskListModel) {
+        this.pagination = {count: tasks.data.length, maxItems: this.maxItems, skipCount: 0, totalItems: tasks.total};
+        let instancesRow = this.createDataRow(tasks.data);
+        this.renderInstances(instancesRow);
+        this.selectTask(this.landingTaskId);
+        this.onSuccess.emit(tasks);
+        this.isLoading = false;
+    }
+
+    error(err: any) {
+
+    }
+
+    complete() {
+
     }
 
     ngAfterContentInit() {
@@ -140,6 +171,8 @@ export class TaskListComponent implements OnChanges, AfterContentInit {
         let state = changes['state'];
         let sort = changes['sort'];
         let name = changes['name'];
+        let maxItems = changes['maxItems'];
+        let page = changes['page'];
         let assignment = changes['assignment'];
         let landingTaskId = changes['landingTaskId'];
         if (appId && appId.currentValue) {
@@ -153,6 +186,10 @@ export class TaskListComponent implements OnChanges, AfterContentInit {
         } else if (sort && sort.currentValue) {
             changed = true;
         } else if (name && name.currentValue) {
+            changed = true;
+        } else if (maxItems && maxItems.currentValue) {
+            changed = true;
+        } else if (page && page.currentValue) {
             changed = true;
         } else if (assignment && assignment.currentValue) {
             changed = true;
@@ -171,23 +208,32 @@ export class TaskListComponent implements OnChanges, AfterContentInit {
 
     private load(requestNode: TaskQueryRequestRepresentationModel) {
         this.isLoading = true;
-        this.loadTasksByState().subscribe(
-            (response) => {
-                let instancesRow = this.createDataRow(response);
-                this.renderInstances(instancesRow);
-                this.selectTask(requestNode.landingTaskId);
-                this.onSuccess.emit(response);
-                this.isLoading = false;
-            }, (error) => {
-                this.onError.emit(error);
-                this.isLoading = false;
-            });
+        this.loadTasksByState().subscribe();
     }
 
-    private loadTasksByState(): Observable<TaskDetailsModel[]> {
+    private loadTasksByState(): Observable<TaskListModel> {
         return this.requestNode.state === 'all'
                ? this.taskListService.findAllTasksWhitoutState(this.requestNode)
-               : this.taskListService.findAllTaskByState(this.requestNode);
+               : this.taskListService.findTasksByState(this.requestNode);
+    }
+
+    onChangePageSize(pagination: Pagination): void {
+        this.maxItems = pagination.maxItems;
+        this.reload();
+    }
+
+    onChangePageNumber(pagination: Pagination): void {
+        this.maxItems = pagination.maxItems;
+        this.reload();
+    }
+
+    onNextPage(pagination: Pagination): void {
+        this.page++;
+        this.reload();
+    }
+    onPrevPage(pagination: Pagination) {
+        this.page--;
+        this.reload();
     }
     /**
      * Create an array of ObjectDataRow
@@ -281,6 +327,7 @@ export class TaskListComponent implements OnChanges, AfterContentInit {
     }
 
     private createRequestNode() {
+
         let requestNode = {
             appDefinitionId: this.appId,
             processInstanceId: this.processInstanceId,
@@ -289,7 +336,10 @@ export class TaskListComponent implements OnChanges, AfterContentInit {
             assignment: this.assignment,
             state: this.state,
             sort: this.sort,
-            landingTaskId: this.landingTaskId
+            landingTaskId: this.landingTaskId,
+            page: this.page,
+            size: this.maxItems,
+            start: 0
         };
         return new TaskQueryRequestRepresentationModel(requestNode);
     }

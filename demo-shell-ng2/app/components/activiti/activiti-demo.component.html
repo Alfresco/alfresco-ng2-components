@@ -27,6 +27,8 @@
                      *ngIf="taskFilter && !isStartTaskMode()">
                     <activiti-tasklist
                         [appId]="taskFilter?.appId"
+                        [page]="taskPage"
+                        [maxItems]="taskMaxItems"
                         [processDefinitionKey]="taskFilter?.filter?.processDefinitionKey"
                         [name]="taskFilter?.filter?.name"
                         [assignment]="taskFilter?.filter?.assignment"
@@ -47,6 +49,15 @@
                         </data-columns>
                         -->
                     </activiti-tasklist>
+
+                    <adf-pagination
+                        (onChangePageNumber)="onChangePageNumber($event)"
+                        (changePageSize)="onChangePageSize($event)"
+                        (nextPage)="onNextPage($event)"
+                        (prevPage)="onPrevPage($event)"
+                        [pagination]="activititasklist.pagination"
+                        [supportedPageSizes]="[5, 10, 15, 20]">
+                    </adf-pagination>
                 </div>
                 <div class="activiti-demo-grid-item activiti-demo-tasks-details" *ngIf="!isStartTaskMode()"
                      [class.mdl-cell--7-col]="taskFilter && !isStartTaskMode()"

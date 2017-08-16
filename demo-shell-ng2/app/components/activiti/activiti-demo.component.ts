@@ -18,6 +18,7 @@
 // tslint:disable-next-line:adf-file-name
 import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Pagination } from 'alfresco-js-api';
 import { AnalyticsReportListComponent } from 'ng2-activiti-analytics';
 import { FORM_FIELD_VALIDATORS, FormEvent, FormFieldEvent, FormRenderingService, FormService } from 'ng2-activiti-form';
 import {
@@ -34,7 +35,8 @@ import {
     TaskDetailsComponent,
     TaskDetailsEvent,
     TaskFiltersComponent,
-    TaskListComponent
+    TaskListComponent,
+    TaskListService
 } from 'ng2-activiti-tasklist';
 import { AlfrescoApiService } from 'ng2-alfresco-core';
 import {
@@ -96,6 +98,8 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     currentProcessInstanceId: string;
 
     taskSchemaColumns: any [] = [];
+    taskPage: number = 0;
+    taskMaxItems: number = 5;
     processSchemaColumns: any [] = [];
 
     activeTab: string = 'tasks'; // tasks|processes|reports
@@ -119,6 +123,7 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     constructor(private elementRef: ElementRef,
                 private route: ActivatedRoute,
                 private router: Router,
+                private taskListService: TaskListService,
                 private apiService: AlfrescoApiService,
                 formRenderingService: FormRenderingService,
                 formService: FormService) {
@@ -155,6 +160,18 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
             console.log('Event Target:' + event.target);
         });
         */
+    }
+
+    onNextPage(pagination: Pagination): void {
+        this.taskPage++;
+    }
+
+    onChangePageSize(pagination: Pagination): void {
+        this.taskMaxItems = pagination.maxItems;
+    }
+
+    onChangePageNumber(pagination: Pagination): void {
+        this.taskMaxItems = pagination.maxItems;
     }
 
     ngOnInit() {
