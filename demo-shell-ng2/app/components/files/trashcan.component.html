@@ -15,14 +15,23 @@
         </data-column>
 
         <data-column
+            key="path"
+            title="Location"
+            type="location"
+            format="/files">
+        </data-column>
+
+        <data-column
             key="content.sizeInBytes"
-            title="Size">
+            title="Size"
+            type="fileSize">
         </data-column>
 
         <data-column
             key="archivedAt"
             type="date"
-            title="Deleted">
+            title="Deleted"
+            format="timeAgo">
         </data-column>
 
         <data-column

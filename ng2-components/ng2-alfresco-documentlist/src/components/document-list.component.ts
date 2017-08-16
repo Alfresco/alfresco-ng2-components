@@ -431,7 +431,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     private loadSharedLinks(): void {
         const options = {
-            include: [ 'properties', 'allowableOperations' ],
+            include: [ 'properties', 'allowableOperations', 'path' ],
             maxItems: this.pageSize,
             skipCount: this.skipCount
         };
