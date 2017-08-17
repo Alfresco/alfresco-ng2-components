@@ -536,10 +536,12 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     private onPageLoaded(page: NodePaging) {
-        this.data.loadPage(page);
-        this.pagination = page.list.pagination;
-        this.loading = false;
-        this.ready.emit();
+        if (page) {
+            this.data.loadPage(page);
+            this.pagination = page.list.pagination;
+            this.loading = false;
+            this.ready.emit();
+        }
     }
 
     private isCurrentPageEmpty(node, skipCount): boolean {
