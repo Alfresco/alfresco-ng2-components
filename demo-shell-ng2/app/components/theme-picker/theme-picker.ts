@@ -55,7 +55,7 @@ export class ThemePickerComponent {
     installTheme(theme: DocsSiteTheme) {
         this.currentTheme = this._getCurrentThemeFromHref(theme.href);
 
-        this.styleManager.setStyle('theme', `prebuilt-theme/${theme.href}`);
+        this.styleManager.setStyle('theme', `prebuilt-themes/${theme.href}`);
 
         if (this.currentTheme) {
             this._themeStorage.storeTheme(this.currentTheme);

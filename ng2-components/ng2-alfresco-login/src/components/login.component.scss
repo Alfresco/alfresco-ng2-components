@@ -2,6 +2,7 @@
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
     $warn: map-get($theme, warn);
+    $background: map-get($theme, background);
 
     .show {
         display: block !important;
@@ -49,7 +50,7 @@
 
     .adf-login-card-wide {
         border-radius: 8px;
-        background-color: #ffffff;
+        background-color: mat-color($background, dialog);
         box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12);
         width: 450px;
         min-width: 350px;
@@ -204,7 +205,6 @@
         text-align: center;
         padding-top: 16px;
         font-size: 12px;
-        color: #000;
         opacity: 0.54;
     }
 
@@ -224,14 +224,6 @@
     .adf-login__field > > > .mat-input-wrapper {
         margin: 1em 0 0 0;
         font-size: 16px;
-    }
-
-    .adf-login__field > > > input {
-        color: rgba(0, 0, 0, 0.87);
-    }
-
-    .adf-login__field .mat-focused > > > .mat-input-placeholder {
-        color: rgba(0, 0, 0, 0.38);
     }
 
     .adf-login-validation {

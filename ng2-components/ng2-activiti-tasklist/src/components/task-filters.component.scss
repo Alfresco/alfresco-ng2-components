@@ -1,27 +1,31 @@
-.mdl-list__item {
-    cursor: pointer;
-}
+@mixin mat-filters-task-theme($theme) {
+    $primary: map-get($theme, primary);
 
-.adf {
-
-    &-filters__entry {
+    .mdl-list__item {
         cursor: pointer;
     }
 
-    &-filters__entry-icon {
-        margin-right: 12px !important;
-    }
+    .adf {
 
-    &-filters__entry {
-        &.active {
-            color: rgb(68, 138, 255);
+        &-filters__entry {
+            cursor: pointer;
         }
-        &:hover {
-            opacity: 0.8;
-        }
-        &.active .adf-filters__entry-icon {
-            color: rgb(68, 138, 255);
-        }
-    }
 
+        &-filters__entry-icon {
+            margin-right: 12px !important;
+        }
+
+        &-filters__entry {
+            &.active {
+                color: mat-color($primary);
+            }
+            &:hover {
+                opacity: 0.8;
+            }
+            &.active .adf-filters__entry-icon {
+                color: mat-color($primary);
+            }
+        }
+
+    }
 }

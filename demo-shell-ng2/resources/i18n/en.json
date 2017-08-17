@@ -28,7 +28,10 @@
     "PS-TAB": {
         "TASKS-TAB": "Tasks",
         "PROCESSES-TAB": "Process",
-        "REPORTS-TAB": "Reports"
+        "REPORTS-TAB": "Reports",
+        "START-TASK": "Start task",
+        "START-PROCESS": "Start process",
+        "AUDIT-LOG": "Process Audit log"
     },
     "SETTINGS": {
         "TITLE": "Settings",

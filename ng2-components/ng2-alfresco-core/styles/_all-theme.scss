@@ -4,16 +4,23 @@
 @import '../../ng2-activiti-form/src/components/widgets/container/container.widget';
 
 @import '../../ng2-activiti-diagrams/src/components/tooltip/diagram-tooltip.component.scss';
+@import '../../ng2-activiti-analytics/src/components/analytics-report-list.component.scss';
 
 @import '../../ng2-activiti-tasklist/src/components/comment-list.component.scss';
 @import '../../ng2-activiti-tasklist/src/components/start-task.component.scss';
 @import '../../ng2-activiti-tasklist/src/components/people-search.component.scss';
 @import '../../ng2-activiti-tasklist/src/components/people.component.scss';
+@import '../../ng2-activiti-tasklist/src/components/task-filters.component.scss';
+@import '../../ng2-activiti-tasklist/src/components/task-header.component.scss';
+
+@import '../../ng2-activiti-processlist/src/components/process-filters.component.scss';
 
 @import '../../ng2-alfresco-upload/src/components/file-uploading-list-row.component.scss';
 @import '../../ng2-alfresco-upload/src/components/file-uploading-dialog.component.scss';
 
 @import '../../ng2-alfresco-login/src/components/login.component.scss';
+
+@import '../../ng2-alfresco-core/src/components/collapsable/accordion-group.component';
 
 
 @mixin alfresco-material-theme($theme) {
@@ -27,4 +34,9 @@
     @include mat-file-uploading-list-theme($theme);
     @include mat-people-theme($theme);
     @include mat-login-theme($theme);
+    @include mat-accordion-theme($theme);
+    @include mat-filters-task-theme($theme);
+    @include mat-filters-process-theme($theme);
+    @include mat-analytics-report-list-theme($theme);
+    @include mat-header-theme($theme);
 }
