@@ -51,7 +51,6 @@ import { RecentComponent } from './components/files/recent.component';
 import { SharedLinksComponent } from './components/files/shared-links.component';
 import { SitesComponent } from './components/files/sites.component';
 import { TrashcanComponent } from './components/files/trashcan.component';
-import { FormListDemoComponent } from './components/form/form-list-demo.component';
 
 import {
     AboutComponent,
