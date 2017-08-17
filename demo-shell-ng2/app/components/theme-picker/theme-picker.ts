@@ -77,14 +77,14 @@ export class ThemePickerComponent {
         {
             primary: '#2196f3',
             accent: '#ff9800',
-            name: 'ECM Blue Purple',
+            name: 'ECM Blue Orange',
             href: 'adf-blue-orange.css',
             isDark: false
         },
         {
             primary: '#2196f3',
             accent: '#3f51b5',
-            name: 'ECM Blue Orange',
+            name: 'ECM Blue Purple',
             href: 'adf-blue-purple.css',
             isDark: false
         }
