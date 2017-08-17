@@ -1,15 +1,27 @@
 {
+    "ADF-DOCUMENT-LIST": {
+        "EMPTY": {
+            "HEADER": "This folder is empty"
+        },
+        "LAYOUT": {
+            "THUMBNAIL": "Thumbnail",
+            "NAME": "Name",
+            "LOCATION": "Location",
+            "SIZE": "Size",
+            "DELETED_ON": "Deleted",
+            "DELETED_BY": "Deleted by",
+            "STATUS": "Status",
+            "MODIFIED_ON": "Modified",
+            "MODIFIED_BY": "Modified by",
+            "SHARED_BY": "Shared by"
+        }
+    },
     "ALFRESCO_DOCUMENT_LIST": {
         "BUTTON": {
             "ACTION_CREATE": "Create...",
             "ACTION_NEW_FOLDER": "New Folder",
             "CREATE": "Create",
             "CANCEL": "Cancel"
-        }
-    },
-    "ADF-DOCUMENT-LIST": {
-        "EMPTY": {
-            "HEADER": "This folder is empty"
         }
     },
     "DROPDOWN": {
