@@ -15,9 +15,13 @@
  * limitations under the License.
  */
 
-import { DataTableComponent } from 'ng2-alfresco-datatable';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { async, TestBed } from '@angular/core/testing';
+import { CoreModule } from 'ng2-alfresco-core';
+import { DataTableComponent, DataTableModule } from 'ng2-alfresco-datatable';
+import { MaterialModule } from '../../material.module';
+import { DocumentListService } from '../../services/document-list.service';
 
-import { DocumentListServiceMock } from './../../assets/document-list.service.mock';
 import { DocumentListComponent } from './../document-list.component';
 import { EmptyFolderContentDirective } from './empty-folder-content.directive';
 
@@ -26,9 +30,27 @@ describe('EmptyFolderContent', () => {
     let emptyFolderContent: EmptyFolderContentDirective;
     let documentList: DocumentListComponent;
 
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule,
+                DataTableModule,
+                MaterialModule
+            ],
+            declarations: [
+                DocumentListComponent
+            ],
+            providers: [
+                DocumentListService
+            ],
+            schemas: [
+                CUSTOM_ELEMENTS_SCHEMA
+            ]
+        }).compileComponents();
+    }));
+
     beforeEach(() => {
-        let documentListService = new DocumentListServiceMock();
-        documentList = new DocumentListComponent(documentListService, null, null);
+        documentList = TestBed.createComponent(DocumentListComponent).componentInstance;
         documentList.dataTable = new DataTableComponent(null, null);
         emptyFolderContent = new EmptyFolderContentDirective(documentList);
     });
