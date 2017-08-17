@@ -23,7 +23,7 @@ import { PermissionModel } from 'ng2-alfresco-documentlist';
 
 @Component({
     selector: 'adf-search, alfresco-search',
-    styleUrls: ['./search.component.css'],
+    styleUrls: ['./search.component.scss'],
     templateUrl: './search.component.html'
 })
 export class SearchComponent implements OnChanges, OnInit {

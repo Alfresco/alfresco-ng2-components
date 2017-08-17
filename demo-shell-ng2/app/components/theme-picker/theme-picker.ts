@@ -19,8 +19,8 @@ export class ThemePickerComponent {
 
     themes = [
         {
-            primary: '#00695c',
-            accent: '#ff9800',
+            primary: '#ff9800',
+            accent: '#3f51b5',
             name: 'Developer Theme',
             href: '',
             isDefault: true
@@ -72,13 +72,6 @@ export class ThemePickerComponent {
             accent: '#69f0ae',
             name: 'Purple Green Dark',
             href: 'adf-purple-green.css',
-            isDark: false
-        },
-        {
-            primary: '#ff9800',
-            accent: '#3f51b5',
-            name: 'Orange Purple',
-            href: 'adf-orange-purple.css',
             isDark: false
         },
         {

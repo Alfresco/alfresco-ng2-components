@@ -14,8 +14,7 @@ module.exports = {
         'adf-green-orange': './ng2-alfresco-core/styles/prebuilt/adf-green-orange.scss',
         'adf-pink-bluegrey': './ng2-alfresco-core/styles/prebuilt/adf-pink-bluegrey.scss',
         'adf-indigo-pink': './ng2-alfresco-core/styles/prebuilt/adf-indigo-pink.scss',
-        'adf-purple-green': './ng2-alfresco-core/styles/prebuilt/adf-purple-green.scss',
-        'adf-orange-purple': './ng2-alfresco-core/styles/prebuilt/adf-orange-purple.scss'
+        'adf-purple-green': './ng2-alfresco-core/styles/prebuilt/adf-purple-green.scss'
     },
 
     output: {
