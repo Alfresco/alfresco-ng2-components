@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { FormSubmitEvent } from '../models/form-submit-event.model';
@@ -32,8 +32,9 @@ enum LoginSteps {
 @Component({
     selector: 'adf-login, alfresco-login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.css'],
-    host: {'(blur)': 'onBlur($event)'}
+    styleUrls: ['./login.component.scss'],
+    host: {'(blur)': 'onBlur($event)'},
+    encapsulation: ViewEncapsulation.None
 })
 export class LoginComponent implements OnInit {
 
