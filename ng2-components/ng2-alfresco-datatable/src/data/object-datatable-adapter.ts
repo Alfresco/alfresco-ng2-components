@@ -198,6 +198,7 @@ export class ObjectDataColumn implements DataColumn {
 
     key: string;
     type: string; // text|image
+    format: string;
     sortable: boolean;
     title: string;
     srTitle: string;
@@ -207,6 +208,7 @@ export class ObjectDataColumn implements DataColumn {
     constructor(obj: any) {
         this.key = obj.key;
         this.type = obj.type || 'text';
+        this.format = obj.format;
         this.sortable = obj.sortable;
         this.title = obj.title;
         this.srTitle = obj.srTitle;

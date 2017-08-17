@@ -17,7 +17,7 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA, NgZone, SimpleChange, TemplateRef } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { AlfrescoApiService, AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { DataColumn, DataTableComponent } from 'ng2-alfresco-datatable';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { Observable, Subject } from 'rxjs/Rx';
@@ -41,10 +41,10 @@ describe('DocumentList', () => {
 
     let documentList: DocumentListComponent;
     let documentListService: DocumentListService;
+    let apiService: AlfrescoApiService;
     let fixture: ComponentFixture<DocumentListComponent>;
     let element: HTMLElement;
     let eventMock: any;
-    let componentHandler;
 
     beforeEach(async(() => {
         let zone = new NgZone({enableLongStackTrace: false});
@@ -73,15 +73,10 @@ describe('DocumentList', () => {
             }
         };
 
-        componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered', 'upgradeElement'
-        ]);
-        window['componentHandler'] = componentHandler;
-
         fixture = TestBed.createComponent(DocumentListComponent);
 
         let translateService = TestBed.get(AlfrescoTranslationService);
-        spyOn(translateService, 'addTranslationFolder').and.stub();
+        // spyOn(translateService, 'addTranslationFolder').and.stub();
         spyOn(translateService, 'get').and.callFake((key) => {
             return Observable.of(key);
         });
@@ -89,6 +84,7 @@ describe('DocumentList', () => {
         element = fixture.nativeElement;
         documentList = fixture.componentInstance;
         documentListService = TestBed.get(DocumentListService);
+        apiService = TestBed.get(AlfrescoApiService);
         fixture.detectChanges();
     });
 
@@ -120,8 +116,8 @@ describe('DocumentList', () => {
         columns.push(column);
 
         documentList.ngAfterContentInit();
-        expect(columns.length).toBe(3);
-        expect(columns[2]).toBe(column);
+        expect(columns.length).toBe(6);
+        expect(columns[5]).toBe(column);
     });
 
     it('should call action\'s handler with node', () => {
@@ -872,5 +868,68 @@ describe('DocumentList', () => {
             expect(documentList.hasCreatePermission()).toBeFalsy();
             done();
         });
+    });
+
+    it('should not perform navigation for virtual sources', () => {
+        const sources = ['-trashcan-', '-sharedlinks-', '-sites-', '-favorites-', '-recent-'];
+        const node = new FolderNode('folder');
+
+        documentList.currentFolderId = 'node-id';
+        expect(documentList.canNavigateFolder(node)).toBeTruthy();
+
+        sources.forEach(source => {
+            documentList.currentFolderId = source;
+            expect(documentList.canNavigateFolder(node)).toBeFalsy();
+        });
+    });
+
+    it('should fetch trashcan', () => {
+        const nodesApi = apiService.getInstance().core.nodesApi;
+        spyOn(nodesApi, 'getDeletedNodes').and.returnValue(Promise.resolve(null));
+
+        documentList.loadFolderByNodeId('-trashcan-');
+        expect(nodesApi.getDeletedNodes).toHaveBeenCalled();
+    });
+
+    it('should fetch shared links', () => {
+        const sharedlinksApi = apiService.getInstance().core.sharedlinksApi;
+        spyOn(sharedlinksApi, 'findSharedLinks').and.returnValue(Promise.resolve(null));
+
+        documentList.loadFolderByNodeId('-sharedlinks-');
+        expect(sharedlinksApi.findSharedLinks).toHaveBeenCalled();
+    });
+
+    it('should fetch sites', () => {
+        const sitesApi = apiService.getInstance().core.sitesApi;
+        spyOn(sitesApi, 'getSites').and.returnValue(Promise.resolve(null));
+
+        documentList.loadFolderByNodeId('-sites-');
+        expect(sitesApi.getSites).toHaveBeenCalled();
+    });
+
+    it('should fetch favorites', () => {
+        const favoritesApi = apiService.getInstance().core.favoritesApi;
+        spyOn(favoritesApi, 'getFavorites').and.returnValue(Promise.resolve(null));
+
+        documentList.loadFolderByNodeId('-favorites-');
+        expect(favoritesApi.getFavorites).toHaveBeenCalled();
+    });
+
+    it('should fetch recent', (done) => {
+
+        const person = { entry: { id: 'person '} };
+        const peopleApi = apiService.getInstance().core.peopleApi;
+        const searchApi = apiService.getInstance().search.searchApi;
+
+        spyOn(peopleApi, 'getPerson').and.returnValue(Promise.resolve(person));
+        spyOn(searchApi, 'search').and.returnValue(Promise.resolve(null));
+
+        documentList.loadFolderByNodeId('-recent-');
+
+        setTimeout(function() {
+            expect(peopleApi.getPerson).toHaveBeenCalledWith('-me-');
+            expect(searchApi.search).toHaveBeenCalled();
+            done();
+        }, 100);
     });
 });

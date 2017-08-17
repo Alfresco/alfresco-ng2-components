@@ -93,7 +93,7 @@ The properties currentFolderId, folderNode and node are the entry initialization
 | selection | Array<MinimalNodeEntity> | [] | Contains selected nodes |
 | rowStyle | string | | The inline style to apply to every row, see [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html) docs for more details and usage examples |
 | rowStyleClass | string | | The CSS class to apply to every row |
-| currentFolderId | string | null | Initial node ID of displayed folder. Can be `-root-`, `-shared-`, `-my-`, or a fixed node ID  |
+| currentFolderId | string | null | The ID of the folder node to display or a reserved string alias for special sources (see **Data Sources**) |
 | folderNode | [MinimalNodeEntryEntity](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md) | null | Currently displayed folder node | 
 | permissionsStyle | [PermissionStyleModel[]](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-documentlist/src/models/permissions-style.model.ts) | null | with this array you can define different styles depending on the permission of the user on that node. The PermissionStyleModel allows you to select also if you want to apply the style only on the file or folder nodes. PermissionStyleModel.permission accepts the following values [Permissions](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-core/src/models/permissions.enum.ts)   [see more](#custom-row-permissions-style). | 
 | node | [NodePaging](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodePaging.md) | null | Document list will show all the nodes contained in the NodePaging entity  | 
@@ -110,6 +110,7 @@ The properties currentFolderId, folderNode and node are the entry initialization
 | imageResolver | `ImageResolver` | | Custom image resolver, [see more](#custom-image-resolver). |
 | allowDropFiles | boolean | false | Toggle file drop support for rows (see **ng2-alfresco-core/UploadDirective** for more details) |
 | sorting | string[] | | Defines default sorting. The format is an array of 2 strings `[key, direction]` i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want to override default sorting detected by the component based on columns. |
+| locationFormat | string | '/' | The default route for all the location-based columns (if declared). |
 
 ### Events
 
@@ -163,6 +164,135 @@ Here's a basic example on handling DOM events in the parent elements:
     </div>
 </div>
 ```
+
+### Data Sources
+
+For the Document List data sources you can use one of the following options:
+
+#### Node ID
+
+The unique identifier of the Node. Gets automatically updated when you perform navigation to other folders.
+
+#### Repository aliases
+
+You can use one of the well-known reserved aliases:
+
+- `-root-`
+- `-shared-`
+- `-my-`
+
+#### DocumentList aliases
+
+The DocumentList component also provides support for the following reserved aliases you can use:
+
+- `-trashcan-`,
+- `-sharedlinks-`
+- `-sites-`
+- `-favorites-`
+- `-recent-`
+
+Note that due to specific origin of the data the sources above do not support navigation.
+You may want handling single and double clicks yourself to perform navigation to other sources.
+
+DocumentList component supports default presets for all the custom sources mentioned earlier.
+If you don't provide any custom column definition utilizing "data-columns" component,
+then a default preset will be automatically used at runtime.
+
+Some of the presets use the Location columns that allow you to navigate to the parent folder of the node,
+for instance navigating from the "Favorite" node to the folder containing it.
+There's a possibility to set the default location format using "locationFormat" property, to avoid re-defining entire columns layout.
+
+The default column layout for non-reserved views is:
+
+- Icon
+- Name
+- Size
+- Modified (date)
+- Modified by
+
+### Trashcan
+
+```html
+<adf-document-list
+    currentFolderId="-trashcan-"
+    locationFormat="/files">
+</adf-document-list>
+```
+
+Default layout:
+
+- Icon
+- Name
+- Location
+- Size
+- Deleted
+- Deleted by
+
+### Shared Links
+
+```html
+<adf-document-list
+    currentFolderId="-sharedlinks-"
+    locationFormat="/files">
+</adf-document-list>
+```
+
+Default layout:
+
+- Icon
+- Name
+- Location
+- Size
+- Modified
+- Modified by
+- Shared by
+
+### Sites
+
+```html
+<adf-document-list
+    currentFolderId="-sites-">
+</adf-document-list>
+```
+
+Default layout:
+
+- Icon
+- Title
+- Status
+
+### Favorites
+
+```html
+<adf-document-list
+    currentFolderId="-favorites-"
+    locationFormat="/files">
+</adf-document-list>
+```
+
+Default layout:
+
+- Icon
+- Name
+- Location
+- Size
+- Modified
+- Modified by
+
+### Recent Files
+
+```html
+<adf-document-list
+    currentFolderId="-recent-"
+    locationFormat="/files">
+</adf-document-list>
+```
+
+Default layout:
+
+- Icon
+- Name
+- Location
 
 ### Setting default folder
 
