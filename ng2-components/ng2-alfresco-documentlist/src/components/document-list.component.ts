@@ -744,40 +744,40 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                 {
                     key: '$thumbnail',
                     type: 'image',
-                    srTitle: 'Thumbnail',
+                    srTitle: 'ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL',
                     sortable: false
                 },
                 {
                     key: 'name',
                     type: 'text',
-                    title: 'Name',
+                    title: 'ADF-DOCUMENT-LIST.LAYOUT.NAME',
                     cssClass: 'full-width ellipsis-cell',
                     sortable: true
                 },
                 {
                     key: 'path',
                     type: 'location',
-                    title: 'Location',
+                    title: 'ADF-DOCUMENT-LIST.LAYOUT.LOCATION',
                     format: this.locationFormat,
                     sortable: true
                 },
                 {
                     key: 'content.sizeInBytes',
                     type: 'fileSize',
-                    title: 'Size',
+                    title: 'ADF-DOCUMENT-LIST.LAYOUT.SIZE',
                     sortable: true
                 },
                 {
                     key: 'archivedAt',
                     type: 'date',
-                    title: 'Deleted',
+                    title: 'ADF-DOCUMENT-LIST.LAYOUT.DELETED_ON',
                     format: 'timeAgo',
                     sortable: true
                 },
                 {
                     key: 'archivedByUser.displayName',
                     type: 'text',
-                    title: 'Deleted by',
+                    title: 'ADF-DOCUMENT-LIST.LAYOUT.DELETED_BY',
                     sortable: true
                 }
             ],
@@ -785,20 +785,20 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                 {
                     key: '$thumbnail',
                     type: 'image',
-                    srTitle: 'Thumbnail',
+                    srTitle: 'ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL',
                     sortable: false
                 },
                 {
                     key: 'title',
                     type: 'text',
-                    title: 'Name',
+                    title: 'ADF-DOCUMENT-LIST.LAYOUT.NAME',
                     cssClass: 'full-width ellipsis-cell',
                     sortable: true
                 },
                 {
                     key: 'visibility',
                     type: 'text',
-                    title: 'Status',
+                    title: 'ADF-DOCUMENT-LIST.LAYOUT.STATUS',
                     sortable: true
                 }
             ],
@@ -806,40 +806,40 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                 {
                     key: '$thumbnail',
                     type: 'image',
-                    srTitle: 'Thumbnail',
+                    srTitle: 'ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL',
                     sortable: false
                 },
                 {
                     key: 'name',
                     type: 'text',
-                    title: 'Name',
+                    title: 'ADF-DOCUMENT-LIST.LAYOUT.NAME',
                     cssClass: 'full-width ellipsis-cell',
                     sortable: true
                 },
                 {
                     key: 'path',
                     type: 'location',
-                    title: 'Location',
+                    title: 'ADF-DOCUMENT-LIST.LAYOUT.LOCATION',
                     format: this.locationFormat,
                     sortable: true
                 },
                 {
                     key: 'content.sizeInBytes',
                     type: 'fileSize',
-                    title: 'Size',
+                    title: 'ADF-DOCUMENT-LIST.LAYOUT.SIZE',
                     sortable: true
                 },
                 {
                     key: 'modifiedAt',
                     type: 'date',
-                    title: 'Modified',
+                    title: 'ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_ON',
                     format: 'timeAgo',
                     sortable: true
                 },
                 {
                     key: 'modifiedByUser.displayName',
                     type: 'text',
-                    title: 'Modified by',
+                    title: 'ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_BY',
                     sortable: true
                 }
             ],
@@ -847,20 +847,20 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                 {
                     key: '$thumbnail',
                     type: 'image',
-                    srTitle: 'Thumbnail',
+                    srTitle: 'ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL',
                     sortable: false
                 },
                 {
                     key: 'name',
                     type: 'text',
-                    title: 'Name',
+                    title: 'ADF-DOCUMENT-LIST.LAYOUT.NAME',
                     cssClass: 'full-width ellipsis-cell',
                     sortable: true
                 },
                 {
                     key: 'path',
                     type: 'location',
-                    title: 'Location',
+                    title: 'ADF-DOCUMENT-LIST.LAYOUT.LOCATION',
                     cssClass: 'ellipsis-cell',
                     format: this.locationFormat,
                     sortable: true
@@ -868,13 +868,13 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                 {
                     key: 'content.sizeInBytes',
                     type: 'fileSize',
-                    title: 'Size',
+                    title: 'ADF-DOCUMENT-LIST.LAYOUT.SIZE',
                     sortable: true
                 },
                 {
                     key: 'modifiedAt',
                     type: 'date',
-                    title: 'Modified',
+                    title: 'ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_ON',
                     format: 'timeAgo',
                     sortable: true
                 }
@@ -883,20 +883,20 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                 {
                     key: '$thumbnail',
                     type: 'image',
-                    srTitle: 'Thumbnail',
+                    srTitle: 'ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL',
                     sortable: false
                 },
                 {
                     key: 'name',
                     type: 'text',
-                    title: 'Name',
+                    title: 'ADF-DOCUMENT-LIST.LAYOUT.NAME',
                     cssClass: 'full-width ellipsis-cell',
                     sortable: true
                 },
                 {
                     key: 'path',
                     type: 'location',
-                    title: 'Location',
+                    title: 'ADF-DOCUMENT-LIST.LAYOUT.LOCATION',
                     cssClass: 'ellipsis-cell',
                     format: this.locationFormat,
                     sortable: true
@@ -904,26 +904,26 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                 {
                     key: 'content.sizeInBytes',
                     type: 'fileSize',
-                    title: 'Size',
+                    title: 'ADF-DOCUMENT-LIST.LAYOUT.SIZE',
                     sortable: true
                 },
                 {
                     key: 'modifiedAt',
                     type: 'date',
-                    title: 'Modified',
+                    title: 'ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_ON',
                     format: 'timeAgo',
                     sortable: true
                 },
                 {
                     key: 'modifiedByUser.displayName',
                     type: 'text',
-                    title: 'Modified by',
+                    title: 'ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_BY',
                     sortable: true
                 },
                 {
                     key: 'sharedByUser.displayName',
                     type: 'text',
-                    title: 'Shared by',
+                    title: 'ADF-DOCUMENT-LIST.LAYOUT.SHARED_BY',
                     sortable: true
                 }
             ],
@@ -931,33 +931,33 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                 {
                     key: '$thumbnail',
                     type: 'image',
-                    srTitle: 'Thumbnail',
+                    srTitle: 'ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL',
                     sortable: false
                 },
                 {
                     key: 'name',
                     type: 'text',
-                    title: 'Name',
+                    title: 'ADF-DOCUMENT-LIST.LAYOUT.NAME',
                     cssClass: 'full-width ellipsis-cell',
                     sortable: true
                 },
                 {
                     key: 'content.sizeInBytes',
                     type: 'fileSize',
-                    title: 'Size',
+                    title: 'ADF-DOCUMENT-LIST.LAYOUT.SIZE',
                     sortable: true
                 },
                 {
                     key: 'modifiedAt',
                     type: 'date',
-                    title: 'Modified',
+                    title: 'ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_ON',
                     format: 'timeAgo',
                     sortable: true
                 },
                 {
                     key: 'modifiedByUser.displayName',
                     type: 'text',
-                    title: 'Modified by',
+                    title: 'ADF-DOCUMENT-LIST.LAYOUT.MODIFIED_BY',
                     sortable: true
                 }
             ]
