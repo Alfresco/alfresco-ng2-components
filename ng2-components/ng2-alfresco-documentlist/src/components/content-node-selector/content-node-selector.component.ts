@@ -181,12 +181,7 @@ export class ContentNodeSelectorComponent implements OnInit {
      * @param event CustomEvent for node-select
      */
     onNodeSelect(event: any): void {
-        const entry: MinimalNodeEntryEntity = event.detail.node.entry;
-        if (this.contentService.hasPermission(entry, 'update')) {
-            this.chosenNode = entry;
-        } else {
-            this.resetChosenNode();
-        }
+        this.attemptNodeSelection(event.detail.node.entry);
     }
 
     /**
@@ -194,7 +189,26 @@ export class ContentNodeSelectorComponent implements OnInit {
      */
     onFolderChange() {
         this.showingSearchResults = false;
-        this.chosenNode = null;
+    }
+
+    /**
+     * Attempts to set the currently loaded node
+     */
+    onFolderLoaded() {
+        this.attemptNodeSelection(this.documentList.folderNode);
+    }
+
+    /**
+     * Selects node as choosen if it has the right permission, clears the selection otherwise
+     *
+     * @param entry
+     */
+    private attemptNodeSelection(entry: MinimalNodeEntryEntity): void {
+        if (this.contentService.hasPermission(entry, 'update')) {
+            this.chosenNode = entry;
+        } else {
+            this.resetChosenNode();
+        }
     }
 
     /**

@@ -510,6 +510,26 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(chooseButton.nativeElement.disabled).toBe(true);
             });
 
+            it('should become enabled after loading node with the necessary permissions', () => {
+                hasPermission = true;
+                component.documentList.folderNode = entry;
+                component.documentList.ready.emit();
+                fixture.detectChanges();
+
+                let chooseButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
+                expect(chooseButton.nativeElement.disabled).toBe(false);
+            });
+
+            it('should remain disabled after loading node without the necessary permissions', () => {
+                hasPermission = false;
+                component.documentList.folderNode = entry;
+                component.documentList.ready.emit();
+                fixture.detectChanges();
+
+                let chooseButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
+                expect(chooseButton.nativeElement.disabled).toBe(true);
+            });
+
             it('should be enabled when clicking on a node (with the right permissions) in the list (onNodeSelect)', () => {
                 hasPermission = true;
 
@@ -537,18 +557,6 @@ describe('ContentNodeSelectorComponent', () => {
 
                 hasPermission = false;
                 component.onNodeSelect({ detail: { node: { entry } } });
-                fixture.detectChanges();
-
-                let chooseButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
-                expect(chooseButton.nativeElement.disabled).toBe(true);
-            });
-
-            it('should become disabled when changing directory after previously selecting a right node', () => {
-                hasPermission = true;
-                component.onNodeSelect({ detail: { node: { entry } } });
-                fixture.detectChanges();
-
-                component.onFolderChange();
                 fixture.detectChanges();
 
                 let chooseButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
