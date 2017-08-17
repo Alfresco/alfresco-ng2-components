@@ -19,6 +19,7 @@
 
 import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild } from '@angular/core';
 const POSITION = { BOTTOM: 'bottom', LEFT: 'left', RIGHT: 'right', TOP: 'top'};
+const STRATEGY = { CURSOR: 'cursor', ELEMENT: 'element'};
 const IS_ACTIVE_CLASS = 'is-active';
 
 @Component({
@@ -41,6 +42,9 @@ export class DiagramTooltipComponent implements AfterViewInit, OnDestroy {
 
     @Input()
     position: string = 'bottom';
+
+    @Input()
+    strategy: string = 'cursor';
 
     /**
      * Set up event listeners for the target element (defined in the data.id)
@@ -95,11 +99,17 @@ export class DiagramTooltipComponent implements AfterViewInit, OnDestroy {
      * @param event mouseenter/touchend event
      */
     private handleMouseEnter(event): void {
-        const props = event.target.getBoundingClientRect(),
-            top = props.top + (props.height / 2),
-            marginLeft = -1 * (this.tooltipElement.offsetWidth / 2),
-            marginTop = -1 * (this.tooltipElement.offsetHeight / 2);
+        let props;
 
+        if(this.strategy === STRATEGY.ELEMENT ) {
+            props = event.target.getBoundingClientRect();
+        }else {
+            props = {top: (event.pageY - 150), left: event.pageX , width: event.layerX, height: 50};
+        }
+
+        let top = props.top + (props.height / 2);
+        let marginLeft = -1 * (this.tooltipElement.offsetWidth / 2);
+        let marginTop = -1 * (this.tooltipElement.offsetHeight / 2);
         let left = props.left + (props.width / 2);
 
         if (this.position === POSITION.LEFT || this.position === POSITION.RIGHT) {
