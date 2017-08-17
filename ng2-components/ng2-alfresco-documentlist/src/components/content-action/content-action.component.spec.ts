@@ -15,11 +15,15 @@
  * limitations under the License.
  */
 
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
 import { AlfrescoContentService, AlfrescoTranslationService, CoreModule, NotificationService } from 'ng2-alfresco-core';
+import { DataTableModule } from 'ng2-alfresco-datatable';
+import { MaterialModule } from '../../material.module';
+
+import { DocumentListService } from '../../services/document-list.service';
 import { FileNode } from './../../assets/document-library.model.mock';
-import { DocumentListServiceMock } from './../../assets/document-list.service.mock';
 import { ContentActionHandler } from './../../models/content-action.model';
 import { DocumentActionsService } from './../../services/document-actions.service';
 import { FolderActionsService } from './../../services/folder-actions.service';
@@ -43,10 +47,18 @@ describe('ContentAction', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule,
+                DataTableModule,
+                MaterialModule
             ],
             providers: [
-                AlfrescoContentService
+                DocumentListService
+            ],
+            declarations: [
+                DocumentListComponent
+            ],
+            schemas: [
+                CUSTOM_ELEMENTS_SCHEMA
             ]
         }).compileComponents();
     }));
@@ -56,11 +68,10 @@ describe('ContentAction', () => {
         translateService = <AlfrescoTranslationService> { addTranslationFolder: () => {}};
         nodeActionsService = new NodeActionsService(null, null, null);
         notificationService = new NotificationService(null);
-        let documentServiceMock = new DocumentListServiceMock();
         documentActions = new DocumentActionsService(nodeActionsService);
         folderActions = new FolderActionsService(nodeActionsService, null, contentService);
 
-        documentList = new DocumentListComponent(documentServiceMock, null, null);
+        documentList = TestBed.createComponent(DocumentListComponent).componentInstance;
         actionList = new ContentActionListComponent(documentList);
     });
 

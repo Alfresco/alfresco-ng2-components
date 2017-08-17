@@ -17,5 +17,6 @@ $adf-toolbar-font-size: 14px;
     .mat-toolbar-row {
         height: $adf-toolbar-height;
         font-size: $adf-toolbar-font-size;
+        white-space: normal;
     }
 }
