@@ -1220,7 +1220,11 @@ input.mat-input-element:-webkit-autofill + .mat-input-placeholder .mat-placehold
 
 .adf-breadcrumb {
   display: flex;
-  flex: 1; }
+  flex: 1;
+  line-height: 24px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.2px; }
   .adf-breadcrumb-container {
     margin: 0;
     padding: 0;
@@ -1242,6 +1246,8 @@ input.mat-input-element:-webkit-autofill + .mat-input-placeholder .mat-placehold
     opacity: 0.6; }
     .adf-breadcrumb-item:hover, .adf-breadcrumb-item.active {
       opacity: 1; }
+    .adf-breadcrumb-item.active {
+      flex: 1 0 auto; }
     .adf-breadcrumb-item-chevron {
       opacity: 1; }
     .adf-breadcrumb-item.mat-primary {
@@ -2060,3 +2066,21 @@ adf-people-list /deep/ adf-datatable /deep/ td.mdl-data-table__cell--non-numeric
 
 .adf-analytics-report-list .selectedIcon {
   color: #e9f1f3 !important; }
+
+.adf-controls {
+  display: flex;
+  justify-content: space-between; }
+
+.adf-edit-controls {
+  display: flex;
+  justify-content: flex-end;
+  margin-left: auto; }
+
+.adf-switch-to-edit-mode, .adf-save-edit-mode {
+  color: #7b1fa2; }
+
+.adf-cancel-edit-mode, .adf-claim-controls {
+  color: #838383; }
+
+.adf-card-container {
+  font-family: inherit; }

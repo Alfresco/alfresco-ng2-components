@@ -3,20 +3,15 @@
 </button>
 
 <md-menu class="docs-theme-picker-menu" #themeMenu="mdMenu" x-position="before">
-    <md-grid-list cols="2">
-        <md-grid-tile *ngFor="let theme of themes">
-            <div md-menu-item (click)="installTheme(theme)">
-                <div class="docs-theme-picker-swatch">
-                    <md-icon class="docs-theme-chosen-icon" [style.color]="theme.primary"
-                             [style.background]="theme.accent"
-                             *ngIf="currentTheme === theme">check_circle
-                    </md-icon>
-                    <md-icon class="docs-theme-chosen-icon" [style.color]="theme.primary"
-                             [style.background]="theme.accent"
-                             *ngIf="currentTheme !== theme">invert_colors
-                    </md-icon>
-                </div>
-            </div>
-        </md-grid-tile>
-    </md-grid-list>
+    <md-list-item *ngFor="let theme of themes"  md-menu-item (click)="installTheme(theme)" >
+        <md-icon md-list-icon [mdTooltip]="theme.name" class="docs-theme-chosen-icon" [style.color]="theme.accent"
+                 [style.background]="theme.primary"
+                 *ngIf="currentTheme === theme">check_circle
+        </md-icon>
+        <md-icon md-list-icon [mdTooltip]="theme.name" class="docs-theme-chosen-icon" [style.color]="theme.accent"
+                 [style.background]="theme.primary"
+                 *ngIf="currentTheme !== theme">invert_colors
+        </md-icon>
+        {{theme.name}}
+    </md-list-item>
 </md-menu>

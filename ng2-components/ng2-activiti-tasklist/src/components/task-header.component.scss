@@ -1,7 +1,7 @@
 @mixin mat-header-theme($theme) {
     $primary: map-get($theme, primary);
 
-    .#{$ADF} {
+    .adf {
         &-controls {
             display: flex;
             justify-content: space-between;

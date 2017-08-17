@@ -8,38 +8,6 @@
     overflow: hidden;
 }
 
-.docs-theme-picker-menu .docs-theme-picker-swatch {
-    position: relative;
-    width: 36px;
-    height: 36px;
-    margin: 6px;
-    border-radius: 50%;
-    overflow: hidden;
-}
-
-.docs-theme-picker-menu .docs-theme-picker-swatch .docs-theme-chosen-icon {
-    color: white;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.docs-theme-picker-menu .docs-theme-picker-swatch .mat-icon {
-    border-radius: 16px;
-}
-
-.docs-theme-picker-menu .docs-theme-picker-swatch::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 50%;
-}
 
 .docs-theme-picker-menu .docs-theme-picker-primary {
     width: 25px;
@@ -52,3 +20,7 @@
      width: 100%;
      height: 6px;
  }
+
+.docs-theme-chosen-icon{
+    border-radius: 13px;
+}

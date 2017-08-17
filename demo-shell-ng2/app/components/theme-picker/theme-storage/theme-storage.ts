@@ -2,6 +2,7 @@ import {EventEmitter, Injectable} from '@angular/core';
 
 export interface DocsSiteTheme {
   href: string;
+  name: string;
   accent: string;
   primary: string;
   isDark?: boolean;

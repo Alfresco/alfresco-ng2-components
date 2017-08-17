@@ -52,7 +52,7 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                exclude: [helpers.root('app'), helpers.root('../ng2-components'), '/public/prebuilt-theme/'],
+                exclude: [helpers.root('app'), helpers.root('../ng2-components')],
                 loader: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
                     use: 'css-loader?sourceMap'

@@ -42,12 +42,7 @@ import 'material-design-icons/iconfont/material-icons.css';
 import 'material-design-lite/dist/material.orange-blue.min.css';
 import 'material-design-lite/material.js';
 
-import '../public/css/app.css';
 import '../public/css/muli-font.css';
-import '../public/prebuilt-themes/adf-orange-purple.css';
-import '../public/prebuilt-themes/adf-indigo-pink.css';
-import '../public/prebuilt-themes/adf-pink-bluegrey.css';
-import '../public/prebuilt-themes/adf-purple-green.css';
 
 import 'ng2-activiti-form/stencils/runtime.adf';
 import 'ng2-activiti-form/stencils/runtime.ng1';

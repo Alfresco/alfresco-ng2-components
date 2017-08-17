@@ -8,4 +8,4 @@ $accent:  mat-palette($mat-blue-grey, A200, A100, A400);
 $theme: mat-dark-theme($primary, $accent);
 
 @include angular-material-theme($theme);
-//@include alfresco-material-theme($theme);
+@include alfresco-material-theme($theme);
