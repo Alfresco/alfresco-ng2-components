@@ -47,10 +47,10 @@ export class BreadcrumbComponent implements OnChanges {
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.folderNode) {
 
-            let node: MinimalNodeEntryEntity = changes.folderNode.currentValue;
+            const node: MinimalNodeEntryEntity = changes.folderNode.currentValue;
 
-            if (node) {
-                let route = <PathElementEntity[]> (node.path.elements || []).slice();
+            if (node && node.path) {
+                const route = <PathElementEntity[]> (node.path.elements || []).slice();
 
                 route.push(<PathElementEntity> {
                     id: node.id,
