@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AfterViewChecked, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { AlfrescoSettingsService, LogService, StorageService } from 'ng2-alfresco-core';
 
@@ -26,7 +26,7 @@ declare var componentHandler: any;
     templateUrl: 'settings.component.html',
     styleUrls: ['settings.component.css']
 })
-export class SettingsComponent implements AfterViewChecked {
+export class SettingsComponent {
 
     HOST_REGEX: string = '^(http|https):\/\/.*[^/]$';
 

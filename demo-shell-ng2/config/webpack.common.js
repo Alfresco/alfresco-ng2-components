@@ -52,7 +52,7 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                exclude: [helpers.root('app'), helpers.root('../ng2-components')],
+                exclude: [helpers.root('app'), helpers.root('../ng2-components'), '/public/prebuilt-theme/'],
                 loader: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
                     use: 'css-loader?sourceMap'
@@ -65,7 +65,6 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-                include: [helpers.root('app'), helpers.root('../ng2-components')],
                 use: [{
                     loader: "to-string-loader"
                 }, {
@@ -75,8 +74,7 @@ module.exports = {
                     options: {
                         includePaths: [path.resolve(__dirname, '../../ng2-components/ng2-alfresco-core/styles')]
                     }
-                }],
-                exclude: [/node_modules/, /bundles/, /dist/, /demo/]
+                }]
             },
             {
                 test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,

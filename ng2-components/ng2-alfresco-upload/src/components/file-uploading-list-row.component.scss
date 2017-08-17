@@ -1,4 +1,4 @@
-@import '~ng2-alfresco-core/styles/colors';
+@import 'colors';
 
 @mixin mat-file-uploading-list-theme($theme) {
     $primary: map-get($theme, primary);

@@ -8,8 +8,9 @@ module.exports = {
     entry: {
         'adf-deeppurple-amber': './ng2-alfresco-core/styles/prebuilt/adf-deeppurple-amber.scss',
         'adf-indigo-pink': './ng2-alfresco-core/styles/prebuilt/adf-indigo-pink.scss',
-        'adf-pink-bluegrey.': './ng2-alfresco-core/styles/prebuilt/adf-pink-bluegrey.scss',
-        'adf-purple-green': './ng2-alfresco-core/styles/prebuilt/adf-purple-green.scss'
+        'adf-pink-bluegrey': './ng2-alfresco-core/styles/prebuilt/adf-pink-bluegrey.scss',
+        'adf-purple-green': './ng2-alfresco-core/styles/prebuilt/adf-purple-green.scss',
+        'adf-orange-purple': './ng2-alfresco-core/styles/prebuilt/adf-orange-purple.scss'
     },
 
     output: {

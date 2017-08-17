@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormModel, FormService } from 'ng2-activiti-form';
 import { ActivitiForm } from 'ng2-activiti-form';
 
@@ -44,7 +44,7 @@ declare var componentHandler;
         }
     `]
 })
-export class FormListDemoComponent implements AfterViewInit {
+export class FormListDemoComponent {
 
     @ViewChild(ActivitiForm)
     activitiForm: ActivitiForm;
@@ -63,13 +63,6 @@ export class FormListDemoComponent implements AfterViewInit {
             e.preventDefault();
             console.log(e.outcome);
         });
-    }
-
-    ngAfterViewInit() {
-        // workaround for MDL issues with dynamic components
-        if (componentHandler) {
-            componentHandler.upgradeAllRegistered();
-        }
     }
 
     onRowDblClick(event: CustomEvent) {
