@@ -100,7 +100,7 @@ export class DiagramTooltipComponent implements AfterViewInit, OnDestroy {
      */
     private handleMouseEnter(event): void {
         let props;
-        console.log(event);
+
         if(this.strategy === STRATEGY.ELEMENT ) {
             props = event.target.getBoundingClientRect();
         }else {
