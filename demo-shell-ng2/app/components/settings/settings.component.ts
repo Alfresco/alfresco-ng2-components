@@ -16,6 +16,7 @@
  */
 
 import { AfterViewChecked, Component } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { AlfrescoSettingsService, LogService, StorageService } from 'ng2-alfresco-core';
 
 declare var componentHandler: any;
@@ -27,21 +28,18 @@ declare var componentHandler: any;
 })
 export class SettingsComponent implements AfterViewChecked {
 
+    HOST_REGEX: string = '^(http|https):\/\/.*[^/]$';
+
     ecmHost: string;
     bpmHost: string;
+    urlFormControlEcm = new FormControl('', [Validators.required, Validators.pattern(this.HOST_REGEX)]);
+    urlFormControlBpm = new FormControl('', [Validators.required, Validators.pattern(this.HOST_REGEX)]);
 
     constructor(private settingsService: AlfrescoSettingsService,
                 private storage: StorageService,
                 private logService: LogService) {
         this.ecmHost = storage.getItem('ecmHost') || this.settingsService.ecmHost;
         this.bpmHost = storage.getItem('bpmHost') || this.settingsService.bpmHost;
-    }
-
-    ngAfterViewChecked() {
-        // workaround for MDL issues with dynamic components
-        if (componentHandler) {
-            componentHandler.upgradeAllRegistered();
-        }
     }
 
     public onChangeECMHost(event: KeyboardEvent): void {

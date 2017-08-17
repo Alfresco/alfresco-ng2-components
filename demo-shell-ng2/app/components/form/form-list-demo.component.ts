@@ -30,8 +30,8 @@ declare var componentHandler;
             <activiti-form [form]="form" [data]="restoredData">
             </activiti-form>
         </div>
-        <button class="mdl-button mdl-js-button" (click)="store()">STORE</button>
-        <button class="mdl-button mdl-js-button" (click)="restore()">RESTORE</button>
+        <button md-button (click)="store()" color="primary">{{'FORM-LIST.STORE' | translate }}</button>
+        <button md-button (click)="restore()" color="primary">{{'FORM-LIST.RESTORE' | translate }}</button>
     `,
     styles: [`
         .form-container {
@@ -46,7 +46,7 @@ declare var componentHandler;
 })
 export class FormListDemoComponent implements AfterViewInit {
 
-     @ViewChild(ActivitiForm)
+    @ViewChild(ActivitiForm)
     activitiForm: ActivitiForm;
 
     formList: any [] = [];
