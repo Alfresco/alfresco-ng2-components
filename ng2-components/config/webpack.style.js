@@ -1,30 +1,35 @@
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const path = require('path');
 
-const extractSass = new ExtractTextPlugin({
-    filename: "[name].css"
-});
+const extractScss = new ExtractTextPlugin('./ng2-alfresco-core/prebuilt-themes/[name].css');
 
 module.exports = {
+
+    entry: {
+        'adf-deeppurple-amber': './ng2-alfresco-core/styles/prebuilt/adf-deeppurple-amber.scss',
+        'adf-indigo-pink': './ng2-alfresco-core/styles/prebuilt/adf-indigo-pink.scss',
+        'adf-pink-bluegrey.': './ng2-alfresco-core/styles/prebuilt/adf-pink-bluegrey.scss',
+        'adf-purple-green': './ng2-alfresco-core/styles/prebuilt/adf-purple-green.scss'
+    },
+
     output: {
-        filename: '[name]/bundles/[name].js'
+        filename: './dist/[name].js'
     },
 
     module: {
         rules: [{
             test: /\.scss$/,
-            include:  [ path.resolve(__dirname, '../../ng2-components/ng2-alfresco-core/styles/prebuilt')],
-            use: extractSass.extract({
-                use: [{
-                    loader: "css-loader"
-                }, {
-                    loader: "sass-loader"
-                }],
-                fallback: "style-loader"
-            })
+            use: extractScss.extract([{
+                loader: "raw-loader"
+            }, {
+                loader: "sass-loader",
+                options: {
+                    includePaths: [path.resolve(__dirname, '../../ng2-components/ng2-alfresco-core/styles')]
+                }
+            }])
         }]
     },
     plugins: [
-        extractSass
+        extractScss
     ]
 };

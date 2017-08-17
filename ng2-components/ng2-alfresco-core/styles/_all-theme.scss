@@ -1,8 +1,30 @@
-// Import all the theming functionality.
 @import '../../ng2-alfresco-documentlist/src/components/breadcrumb/breadcrumb.component';
 
+@import '../../ng2-activiti-form/src/components/widgets/form';
+@import '../../ng2-activiti-form/src/components/widgets/container/container.widget';
 
-// Create a theme.
+@import '../../ng2-activiti-diagrams/src/components/tooltip/diagram-tooltip.component.scss';
+
+@import '../../ng2-activiti-tasklist/src/components/comment-list.component.scss';
+@import '../../ng2-activiti-tasklist/src/components/start-task.component.scss';
+@import '../../ng2-activiti-tasklist/src/components/people-search.component.scss';
+@import '../../ng2-activiti-tasklist/src/components/people.component.scss';
+
+@import '../../ng2-alfresco-upload/src/components/file-uploading-list-row.component.scss';
+@import '../../ng2-alfresco-upload/src/components/file-uploading-dialog.component.scss';
+
+@import '../../ng2-alfresco-login/src/components/login.component.scss';
+
+
 @mixin alfresco-material-theme($theme) {
     @include mat-breadcrumb-theme($theme);
+    @include mat-form-theme($theme);
+    @include mat-container-widget-theme($theme);
+    @include mat-diagram-tooltip-theme($theme);
+    @include mat-comment-list-theme($theme);
+    @include mat-start-task-theme($theme);
+    @include mat-people-search-theme($theme);
+    @include mat-file-uploading-list-theme($theme);
+    @include mat-people-theme($theme);
+    @include mat-login-theme($theme);
 }

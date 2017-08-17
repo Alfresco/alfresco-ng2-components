@@ -1,3 +1,42 @@
+:host .upload-dialog {
+  color: rgba(0, 0, 0, 0.54);
+  position: fixed;
+  bottom: 20px;
+  width: 40%;
+  background: #fff;
+  box-shadow: 1px 5px 15px #888888; }
+  :host .upload-dialog--position-left {
+    left: 25px; }
+  :host .upload-dialog--position-right {
+    right: 25px; }
+  :host .upload-dialog--minimized {
+    width: 20%; }
+    :host .upload-dialog--minimized .upload-dialog__content {
+      display: none; }
+  :host .upload-dialog__header {
+    padding: 1em;
+    display: flex;
+    align-items: center; }
+  :host .upload-dialog__title {
+    margin-left: 0.5em;
+    flex: 1 1 auto; }
+  :host .upload-dialog__info {
+    padding: 0 1em 1em 1em; }
+  :host .upload-dialog__content {
+    overflow: auto;
+    max-height: 195px;
+    border-top: 1px solid #eceff1;
+    border-bottom: 1px solid #eceff1; }
+  :host .upload-dialog__actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1em; }
+    :host .upload-dialog__actions > button {
+      text-transform: uppercase; }
+
+:host md-icon {
+  cursor: pointer; }
+
 /**
  * Applies styles for users in high contrast mode. Note that this only applies
  * to Microsoft browsers. Chrome can be included by checking for the `html[hc]`
