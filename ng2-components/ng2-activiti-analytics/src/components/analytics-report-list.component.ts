@@ -93,7 +93,6 @@ export class AnalyticsReportListComponent implements OnInit {
                         this.reportObserver.next(report);
                     });
                     if (reportId) {
-                        console.log('SELEZIONO IL REPORT!');
                         this.selectReportByReportId(reportId);
                     }
                     if (this.selectFirst) {
