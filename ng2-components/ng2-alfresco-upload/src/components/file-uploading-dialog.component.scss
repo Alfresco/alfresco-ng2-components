@@ -1,4 +1,4 @@
-@import 'theming';
+@import '~ng2-alfresco-core/styles/colors';
 
 :host {
     & .upload-dialog {
@@ -54,7 +54,6 @@
 
             & > button {
                 text-transform: uppercase;
-                color: mat-color($primary);
             }
         }
     }
