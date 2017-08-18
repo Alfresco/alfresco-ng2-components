@@ -476,6 +476,33 @@ describe('ContentNodeSelectorComponent', () => {
                 });
             }));
 
+            it('should reload the original documentlist when clearing the search input', async(() => {
+                typeToSearchBox('shenron');
+                respondWithSearchResults(ONE_FOLDER_RESULT);
+
+                fixture.whenStable().then(() => {
+                    typeToSearchBox('');
+                    fixture.detectChanges();
+
+                    let documentList = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-document-list"]'));
+                    expect(documentList.componentInstance.currentFolderId).toBe('cat-girl-nuku-nuku');
+                });
+            }));
+
+            it('should set the folderIdToShow to the default "currentFolderId" if siteId is undefined', () => {
+                component.siteChanged(<SiteModel> { guid: 'Kame-Sennin Muten Roshi' });
+                fixture.detectChanges();
+
+                let documentList = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-document-list"]'));
+                expect(documentList.componentInstance.currentFolderId).toBe('Kame-Sennin Muten Roshi');
+
+                component.siteChanged(<SiteModel> { guid: undefined });
+                fixture.detectChanges();
+
+                documentList = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-document-list"]'));
+                expect(documentList.componentInstance.currentFolderId).toBe('cat-girl-nuku-nuku');
+            });
+
             xit('should do something with pagination or with many results', () => {
 
             });
@@ -510,6 +537,26 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(chooseButton.nativeElement.disabled).toBe(true);
             });
 
+            it('should become enabled after loading node with the necessary permissions', () => {
+                hasPermission = true;
+                component.documentList.folderNode = entry;
+                component.documentList.ready.emit();
+                fixture.detectChanges();
+
+                let chooseButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
+                expect(chooseButton.nativeElement.disabled).toBe(false);
+            });
+
+            it('should remain disabled after loading node without the necessary permissions', () => {
+                hasPermission = false;
+                component.documentList.folderNode = entry;
+                component.documentList.ready.emit();
+                fixture.detectChanges();
+
+                let chooseButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
+                expect(chooseButton.nativeElement.disabled).toBe(true);
+            });
+
             it('should be enabled when clicking on a node (with the right permissions) in the list (onNodeSelect)', () => {
                 hasPermission = true;
 
@@ -537,18 +584,6 @@ describe('ContentNodeSelectorComponent', () => {
 
                 hasPermission = false;
                 component.onNodeSelect({ detail: { node: { entry } } });
-                fixture.detectChanges();
-
-                let chooseButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
-                expect(chooseButton.nativeElement.disabled).toBe(true);
-            });
-
-            it('should become disabled when changing directory after previously selecting a right node', () => {
-                hasPermission = true;
-                component.onNodeSelect({ detail: { node: { entry } } });
-                fixture.detectChanges();
-
-                component.onFolderChange();
                 fixture.detectChanges();
 
                 let chooseButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
