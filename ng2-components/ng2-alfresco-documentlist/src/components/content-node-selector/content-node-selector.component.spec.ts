@@ -476,6 +476,33 @@ describe('ContentNodeSelectorComponent', () => {
                 });
             }));
 
+            it('should reload the original documentlist when clearing the search input', async(() => {
+                typeToSearchBox('shenron');
+                respondWithSearchResults(ONE_FOLDER_RESULT);
+
+                fixture.whenStable().then(() => {
+                    typeToSearchBox('');
+                    fixture.detectChanges();
+
+                    let documentList = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-document-list"]'));
+                    expect(documentList.componentInstance.currentFolderId).toBe('cat-girl-nuku-nuku');
+                });
+            }));
+
+            it('should set the folderIdToShow to the default "currentFolderId" if siteId is undefined', () => {
+                component.siteChanged(<SiteModel> { guid: 'Kame-Sennin Muten Roshi' });
+                fixture.detectChanges();
+
+                let documentList = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-document-list"]'));
+                expect(documentList.componentInstance.currentFolderId).toBe('Kame-Sennin Muten Roshi');
+
+                component.siteChanged(<SiteModel> { guid: undefined });
+                fixture.detectChanges();
+
+                documentList = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-document-list"]'));
+                expect(documentList.componentInstance.currentFolderId).toBe('cat-girl-nuku-nuku');
+            });
+
             xit('should do something with pagination or with many results', () => {
 
             });

@@ -95,7 +95,7 @@ export class ContentNodeSelectorComponent implements OnInit {
      */
     siteChanged(chosenSite: SiteModel): void {
         this.siteId = chosenSite.guid;
-        this.querySearch();
+        this.updateResults();
     }
 
     /**
@@ -105,9 +105,12 @@ export class ContentNodeSelectorComponent implements OnInit {
      */
     search(searchTerm: string): void {
         this.searchTerm = searchTerm;
-        this.querySearch();
+        this.updateResults();
     }
 
+    /**
+     * Returns whether breadcrumb has to be shown or not
+     */
     needBreadcrumbs() {
         const whenInFolderNavigation = !this.showingSearchResults,
             whenInSelectingSearchResult = this.showingSearchResults && this.chosenNode;
@@ -138,6 +141,17 @@ export class ContentNodeSelectorComponent implements OnInit {
     }
 
     /**
+     * Update the result list depending on the criterias
+     */
+    private updateResults() {
+        if (this.searchTerm.length === 0) {
+            this.folderIdToShow = this.siteId || this.currentFolderId;
+        } else {
+        this.querySearch();
+        }
+    }
+
+    /**
      * Perform the call to searchService with the proper parameters
      */
     private querySearch(): void {
@@ -153,8 +167,7 @@ export class ContentNodeSelectorComponent implements OnInit {
                 maxItems: 200,
                 orderBy: null
             };
-            this.searchService
-                .getNodeQueryResults(searchTerm, searchOpts)
+            this.searchService.getNodeQueryResults(searchTerm, searchOpts)
                 .subscribe(
                     results => {
                         this.showingSearchResults = true;
@@ -222,7 +235,6 @@ export class ContentNodeSelectorComponent implements OnInit {
      * Emit event with the chosen node
      */
     choose(): void {
-        // Multiple selections to be implemented...
         this.select.next([this.chosenNode]);
     }
 
