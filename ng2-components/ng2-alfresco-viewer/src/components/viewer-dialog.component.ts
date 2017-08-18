@@ -16,7 +16,9 @@
  */
 
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Http, Response } from '@angular/http';
 import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
+import { Observable } from 'rxjs/Rx';
 
 import { ViewerDialogSettings } from './viewer-dialog.settings';
 
@@ -38,24 +40,51 @@ export class ViewerDialogComponent implements OnInit {
     unknownFormatText = 'Document preview could not be loaded.';
 
     viewerType: string = null;
+    asText: Observable<string>;
+
+    private types = [
+        { mimeType: 'application/x-javascript', type: 'text' },
+        { mimeType: 'application/pdf', type: 'pdf' }
+    ];
 
     constructor(private dialogRef: MdDialogRef<ViewerDialogComponent>,
-                @Inject(MD_DIALOG_DATA) settings: ViewerDialogSettings) {
+                @Inject(MD_DIALOG_DATA) settings: ViewerDialogSettings,
+                private http: Http) {
         this.fileUrl = settings.fileUrl;
         this.fileName = settings.fileName;
         this.fileMimeType = settings.fileMimeType;
         this.downloadUrl = settings.downloadUrl;
+        // console.log(settings);
     }
 
     ngOnInit() {
         this.viewerType = this.detectViewerType(this.fileMimeType);
+        this.asText = this.getAsText();
     }
 
     private detectViewerType(mimeType: string) {
         if (mimeType) {
             mimeType = mimeType.toLowerCase();
+
             if (mimeType.startsWith('image/')) {
                 return 'image';
+            }
+
+            if (mimeType.startsWith('text/')) {
+                return 'text';
+            }
+
+            if (mimeType.startsWith('video/')) {
+                return 'video';
+            }
+
+            if (mimeType.startsWith('audio/')) {
+                return 'audio';
+            }
+
+            const registered = this.types.find(t => t.mimeType === mimeType);
+            if (registered) {
+                return registered.type;
             }
         }
         return 'unknown';
@@ -73,6 +102,10 @@ export class ViewerDialogComponent implements OnInit {
             link.click();
             document.body.removeChild(link);
         }
+    }
+
+    private getAsText(): Observable<string> {
+        return this.http.get(this.fileUrl).map((res: Response) => res.text());
     }
 
     close() {
