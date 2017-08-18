@@ -6,6 +6,25 @@
         <span>{{ fileName }}</span>
     </adf-toolbar-title>
 
+    <button md-button [mdMenuTriggerFor]="mnuOpenWith">
+        Open with
+        <md-icon>arrow_drop_down</md-icon>
+    </button>
+    <md-menu #mnuOpenWith="mdMenu" [overlapTrigger]="false">
+        <button md-menu-item>
+            <md-icon>dialpad</md-icon>
+            <span>Option 1</span>
+        </button>
+        <button md-menu-item disabled>
+            <md-icon>voicemail</md-icon>
+            <span>Option 2</span>
+        </button>
+        <button md-menu-item>
+            <md-icon>notifications_off</md-icon>
+            <span>Option 3</span>
+        </button>
+    </md-menu>
+
     <adf-toolbar-divider></adf-toolbar-divider>
 
     <button
@@ -15,17 +34,14 @@
         (click)="download()">
         <md-icon>file_download</md-icon>
     </button>
+
     <button md-icon-button mdTooltip="Print">
         <md-icon>print</md-icon>
     </button>
+
     <button md-icon-button mdTooltip="Share">
         <md-icon>share</md-icon>
     </button>
-    <button md-icon-button mdTooltip="Info">
-        <md-icon>info_outline</md-icon>
-    </button>
-
-    <adf-toolbar-divider></adf-toolbar-divider>
 
     <button md-icon-button [mdMenuTriggerFor]="menu">
         <md-icon>more_vert</md-icon>
@@ -44,13 +60,50 @@
             <span>Disable alerts</span>
         </button>
     </md-menu>
+
+    <adf-toolbar-divider></adf-toolbar-divider>
+
+    <button md-icon-button mdTooltip="Info">
+        <md-icon>info_outline</md-icon>
+    </button>
+
 </adf-toolbar>
 
  <md-dialog-content>
     <ng-container [ngSwitch]="viewerType">
+
         <ng-container *ngSwitchCase="'image'">
-            <div class="adf-viewer-dialog-image-view">
+            <div class="adf-viewer-dialog__image-view">
                 <img *ngIf="fileUrl" [src]="fileUrl">
+            </div>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'text'">
+            <div class="adf-viewer-dialog__text-view">
+                <pre>{{ asText | async }}</pre>
+            </div>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'pdf'">
+            <adf-pdf-viewer class="adf-viewer-dialog__pdf-view"
+                [showToolbar]="true"
+                [urlFile]="fileUrl">
+            </adf-pdf-viewer>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'video'">
+            <div class="adf-viewer-dialog__video-view">
+                <video controls>
+                    <source [src]="fileUrl" [type]="fileMimeType">
+                </video>
+            </div>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'audio'">
+            <div class="adf-viewer-dialog__audio-view">
+                <video controls>
+                    <source [src]="fileUrl" [type]="fileMimeType">
+                </video>
             </div>
         </ng-container>
 
@@ -62,5 +115,6 @@
                 </div>
             </div>
         </ng-container>
+
     </ng-container>
  </md-dialog-content>
