@@ -8,12 +8,10 @@
 }
 
 .adf-home-card-title {
-    color: white;
     padding: 24px;
     cursor: pointer;
     height: 55px;
     margin: -63px -24px 18px -25px !important;
-    background: darkgrey;
 }
 
 .adf-home-card__text {

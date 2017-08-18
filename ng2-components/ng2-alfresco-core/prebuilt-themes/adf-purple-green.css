@@ -2152,13 +2152,27 @@ adf-people-list /deep/ adf-datatable /deep/ td.mdl-data-table__cell--non-numeric
   margin-bottom: -8px; }
 
 .adf-primary-color {
-  color: #7b1fa2; }
+  color: #7b1fa2 !important; }
 
 .adf-accent-color {
-  color: #69f0ae; }
+  color: #69f0ae !important; }
 
 .adf-warn-color {
-  color: #f44336; }
+  color: #f44336 !important; }
 
 .adf-background-color {
-  background: #424242; }
+  background: #424242 !important; }
+
+.adf-primary-background-color {
+  color: rgba(255, 255, 255, 0.87) !important;
+  background: #7b1fa2 !important; }
+
+.adf-accent-background-color {
+  color: rgba(0, 0, 0, 0.87) !important;
+  background: #69f0ae !important; }
+
+.adf-primary-contrast-text-color {
+  color: rgba(255, 255, 255, 0.87) !important; }
+
+.adf-accent-contrast-text-color {
+  color: rgba(0, 0, 0, 0.87) !important; }
