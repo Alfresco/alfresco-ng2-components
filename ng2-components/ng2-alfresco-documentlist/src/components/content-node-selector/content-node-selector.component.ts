@@ -95,7 +95,7 @@ export class ContentNodeSelectorComponent implements OnInit {
      */
     siteChanged(chosenSite: SiteModel): void {
         this.siteId = chosenSite.guid;
-        this.querySearch();
+        this.updateResults();
     }
 
     /**
@@ -105,9 +105,12 @@ export class ContentNodeSelectorComponent implements OnInit {
      */
     search(searchTerm: string): void {
         this.searchTerm = searchTerm;
-        this.querySearch();
+        this.updateResults();
     }
 
+    /**
+     * Returns whether breadcrumb has to be shown or not
+     */
     needBreadcrumbs() {
         const whenInFolderNavigation = !this.showingSearchResults,
             whenInSelectingSearchResult = this.showingSearchResults && this.chosenNode;
@@ -138,6 +141,17 @@ export class ContentNodeSelectorComponent implements OnInit {
     }
 
     /**
+     * Update the result list depending on the criterias
+     */
+    private updateResults() {
+        if (this.searchTerm.length === 0) {
+            this.folderIdToShow = this.siteId || this.currentFolderId;
+        } else {
+        this.querySearch();
+        }
+    }
+
+    /**
      * Perform the call to searchService with the proper parameters
      */
     private querySearch(): void {
@@ -153,8 +167,7 @@ export class ContentNodeSelectorComponent implements OnInit {
                 maxItems: 200,
                 orderBy: null
             };
-            this.searchService
-                .getNodeQueryResults(searchTerm, searchOpts)
+            this.searchService.getNodeQueryResults(searchTerm, searchOpts)
                 .subscribe(
                     results => {
                         this.showingSearchResults = true;
@@ -181,12 +194,7 @@ export class ContentNodeSelectorComponent implements OnInit {
      * @param event CustomEvent for node-select
      */
     onNodeSelect(event: any): void {
-        const entry: MinimalNodeEntryEntity = event.detail.node.entry;
-        if (this.contentService.hasPermission(entry, 'update')) {
-            this.chosenNode = entry;
-        } else {
-            this.resetChosenNode();
-        }
+        this.attemptNodeSelection(event.detail.node.entry);
     }
 
     /**
@@ -194,7 +202,26 @@ export class ContentNodeSelectorComponent implements OnInit {
      */
     onFolderChange() {
         this.showingSearchResults = false;
-        this.chosenNode = null;
+    }
+
+    /**
+     * Attempts to set the currently loaded node
+     */
+    onFolderLoaded() {
+        this.attemptNodeSelection(this.documentList.folderNode);
+    }
+
+    /**
+     * Selects node as choosen if it has the right permission, clears the selection otherwise
+     *
+     * @param entry
+     */
+    private attemptNodeSelection(entry: MinimalNodeEntryEntity): void {
+        if (this.contentService.hasPermission(entry, 'update')) {
+            this.chosenNode = entry;
+        } else {
+            this.resetChosenNode();
+        }
     }
 
     /**
@@ -208,7 +235,6 @@ export class ContentNodeSelectorComponent implements OnInit {
      * Emit event with the chosen node
      */
     choose(): void {
-        // Multiple selections to be implemented...
         this.select.next([this.chosenNode]);
     }
 
