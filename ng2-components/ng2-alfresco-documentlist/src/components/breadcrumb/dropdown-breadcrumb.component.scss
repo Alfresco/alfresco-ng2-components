@@ -1,54 +1,56 @@
-@import 'theming';
 
-$dropdownHorizontalOffset: 30px;
+@mixin mat-breadcrumb-dropdown-theme($theme) {
+    $primary: map-get($theme, primary);
+    $dropdownHorizontalOffset: 30px;
 
-.#{$ADF} {
-    &-dropdown-breadcrumb {
-        display: flex;
-        justify-content: flex-start;
-        height: 25px;
-    }
+    .adf {
+        &-dropdown-breadcrumb {
+            display: flex;
+            justify-content: flex-start;
+            height: 25px;
+        }
 
-    &-dropdown-breadcumb-trigger {
-        cursor: pointer;
-        padding: 0;
-        border: none;
-        background: transparent;
-    }
+        &-dropdown-breadcumb-trigger {
+            cursor: pointer;
+            padding: 0;
+            border: none;
+            background: transparent;
+        }
 
-    &-dropdown-breadcumb-trigger.isRoot {
-        cursor: not-allowed;
-    }
+        &-dropdown-breadcumb-trigger.isRoot {
+            cursor: not-allowed;
+        }
 
-    &-dropdown-breadcrumb-path {
-        width: 0;
-        height: 0;
-        overflow: hidden;
-        margin-top: 35px;
-        margin-left: -$dropdownHorizontalOffset;
-    }
+        &-dropdown-breadcrumb-path {
+            width: 0;
+            height: 0;
+            overflow: hidden;
+            margin-top: 35px;
+            margin-left: -$dropdownHorizontalOffset;
+        }
 
-    &-current-folder {
-        margin-left: $dropdownHorizontalOffset;
-        line-height: 26px;
-    }
+        &-current-folder {
+            margin-left: $dropdownHorizontalOffset;
+            line-height: 26px;
+        }
 
-    &-current-folder.isRoot {
-        margin-left: 0;
-    }
+        &-current-folder.isRoot {
+            margin-left: 0;
+        }
 
-    &-dropdown-breadcrumb-path-option.mat-option {
-        height: 28px;
-        line-height: 28px;
-        padding: 0 12px;
-        font-size: 13px;
-    }
+        &-dropdown-breadcrumb-path-option.mat-option {
+            height: 28px;
+            line-height: 28px;
+            padding: 0 12px;
+            font-size: 13px;
+        }
 
-    &-dropdown-breadcrumb-path-option.mat-option:first-child {
-        padding-top: 4px;
-    }
+        &-dropdown-breadcrumb-path-option.mat-option:first-child {
+            padding-top: 4px;
+        }
 
-    &-dropdown-breadcrumb-path-option.mat-option:last-child {
-        padding-bottom: 4px;
+        &-dropdown-breadcrumb-path-option.mat-option:last-child {
+            padding-bottom: 4px;
+        }
     }
 }

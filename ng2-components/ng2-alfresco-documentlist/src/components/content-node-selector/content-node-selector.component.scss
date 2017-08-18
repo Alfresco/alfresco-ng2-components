@@ -1,122 +1,124 @@
-@import 'theming';
+@mixin mat-content-node-selector-theme($theme) {
+    $primary: map-get($theme, primary);
 
-.#{$ADF}-content-node-selector-dialog {
+    .adf-content-node-selector-dialog {
 
-    .mat-dialog-container {
-        padding: 0;
-    }
-
-    .#{$ADF}-content-node-selector {
-        &-title,
-        &-content,
-        &-actions {
-            padding: 16px;
-            margin: 0;
+        .mat-dialog-container {
+            padding: 0;
         }
 
-        &-title {
-            text-transform: capitalize;
-        }
+        .adf-content-node-selector {
+            &-title,
+            &-content,
+            &-actions {
+                padding: 16px;
+                margin: 0;
+            }
 
-        &-content {
-            padding-top: 0;
+            &-title {
+                text-transform: capitalize;
+            }
 
-            &-input {
-                width: 100%;
+            &-content {
+                padding-top: 0;
 
-                &-icon {
-                    color: rgba(0, 0, 0, 0.38);
-                    cursor: pointer;
+                &-input {
+                    width: 100%;
 
-                    &:hover {
-                        color: rgba(0, 0, 0, 1);
+                    &-icon {
+                        color: rgba(0, 0, 0, 0.38);
+                        cursor: pointer;
+
+                        &:hover {
+                            color: rgba(0, 0, 0, 1);
+                        }
                     }
                 }
-            }
 
-            & /deep/ .mat-input-underline .mat-input-ripple {
-                height: 1px;
-                transition: none;
-            }
-
-            & /deep/ .adf-site-dropdown-list-element {
-                width: 100%;
-                margin-bottom: 20px;
-
-                .mat-select-trigger {
-                    font-size: 14px;
+                & /deep/ .mat-input-underline .mat-input-ripple {
+                    height: 1px;
+                    transition: none;
                 }
 
-                .mat-select-placeholder,
-                &.mat-select {
-                    font-family: 'Muli', "Helvetica", "Arial", sans-serif;
-                }
-            }
+                & /deep/ .adf-site-dropdown-list-element {
+                    width: 100%;
+                    margin-bottom: 20px;
 
-            & /deep/ .adf-toolbar .mat-toolbar {
-                border: none;
-            }
+                    .mat-select-trigger {
+                        font-size: 14px;
+                    }
 
-            &-list {
-                height: 200px;
-                overflow: auto;
-                border: 1px solid rgba(0, 0, 0, 0.07);
-
-                & /deep/ .adf-highlight {
-                    color: #33afdf;
+                    .mat-select-placeholder,
+                    &.mat-select {
+                        font-family: 'Muli', "Helvetica", "Arial", sans-serif;
+                    }
                 }
 
-                & /deep/ .adf-data-table {
+                & /deep/ .adf-toolbar .mat-toolbar {
                     border: none;
+                }
 
-                    .adf-no-content-container {
-                        text-align: center;
+                &-list {
+                    height: 200px;
+                    overflow: auto;
+                    border: 1px solid rgba(0, 0, 0, 0.07);
+
+                    & /deep/ .adf-highlight {
+                        color: #33afdfnpm np;
                     }
 
-                    thead {
-                        display: none;
-                    }
+                    & /deep/ .adf-data-table {
+                        border: none;
 
-                    .adf-data-table-cell {
-                        padding-top: 8px;
-                        padding-bottom: 8px;
-                        border-top: none;
-                        height: 30px;
-                    }
+                        .adf-no-content-container {
+                            text-align: center;
+                        }
 
-                    tbody tr {
-                        height: auto !important;
+                        thead {
+                            display: none;
+                        }
 
-                        &:last-child {
-                            .adf-data-table-cell {
-                                border-bottom: none;
+                        .adf-data-table-cell {
+                            padding-top: 8px;
+                            padding-bottom: 8px;
+                            border-top: none;
+                            height: 30px;
+                        }
+
+                        tbody tr {
+                            height: auto !important;
+
+                            &:last-child {
+                                .adf-data-table-cell {
+                                    border-bottom: none;
+                                }
                             }
                         }
                     }
                 }
             }
-        }
 
-        &-actions {
-            padding: 8px;
-            background-color: rgb(250, 250, 250);
-            display: flex;
-            justify-content: flex-end;
-            color: rgb(121, 121, 121);
+            &-actions {
+                padding: 8px;
+                background-color: rgb(250, 250, 250);
+                display: flex;
+                justify-content: flex-end;
+                color: rgb(121, 121, 121);
 
-            &:last-child {
-                margin-bottom: 0px;
-            }
+                &:last-child {
+                    margin-bottom: 0px;
+                }
 
-            &-cancel {
-                font-weight: normal;
-            }
+                &-cancel {
+                    font-weight: normal;
+                }
 
-            &-choose {
-                font-weight: normal;
+                &-choose {
+                    font-weight: normal;
 
-                &[disabled] {
-                    opacity: 0.6;
+                    &[disabled] {
+                        opacity: 0.6;
+                    }
                 }
             }
         }

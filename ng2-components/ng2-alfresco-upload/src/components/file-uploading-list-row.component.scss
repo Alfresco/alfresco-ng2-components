@@ -4,13 +4,15 @@
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
     $warn: map-get($theme, warn);
+
+
     .adf-file-uploading-list {
         display: flex;
         align-items: center;
         padding: 0.5em 1em 0.5em 1em;
 
         &:not(:first-child) {
-            border-top: 1px solid $alfresco-dark-color--hue-1;
+            border-top: 1px solid ;
         }
 
         .list-row {

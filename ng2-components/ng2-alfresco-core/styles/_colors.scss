@@ -1,3 +1,4 @@
+
 // Accent color palette
 $black-87-opacity: rgba(black, 0.87);
 $white-87-opacity: rgba(white, 0.87);
@@ -5,7 +6,6 @@ $black-12-opacity: rgba(black, 0.12);
 $white-12-opacity: rgba(white, 0.12);
 $black-6-opacity: rgba(black, 0.06);
 $white-6-opacity: rgba(white, 0.06);
-
 
 $alfresco-ecm-cyan: (
     50: #e0f7fa,
@@ -237,25 +237,3 @@ $alfresco-accent-orange: (
         A700: black,
     )
 );
-
-// Grayscale
-$alfresco-white: #fff;
-$alfresco-black: #000;
-
-// Dark
-$alfresco-dark-color--default: #78909c;
-$alfresco-dark-color--hue-1: #eceff1;
-$alfresco-dark-color--hue-3: #546e7a;
-$alfresco-drop-shadow: #888888;
-
-$alfresco-primary-text-color: rgba($alfresco-black, .87);
-$alfresco-secondary-text-color: rgba($alfresco-black, .54);
-
-$alfresco-hint-text-color: rgba($alfresco-black, .38);
-$alfresco-disabled-text-color: rgba($alfresco-black, .26);
-
-$alfresco-divider-color: rgba($alfresco-black, .07);
-
-$alfresco-gray-background: #fafafa;
-
-$alfresco-gray-label: rgb(186, 186, 186);
