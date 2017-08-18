@@ -112,10 +112,10 @@
                                  [ngForTemplate]="footerTemplate">
                     </ng-template>
                     <div class="adf-login-action" *ngIf="!footerTemplate && showLoginActions">
-                        <div id="adf-login-action-help" class="adf-login-action-left">
+                        <div id="adf-login-action-left" class="adf-login-action-left">
                             <a href="{{needHelpLink}}">{{'LOGIN.ACTION.HELP' | translate }}</a>
                         </div>
-                        <div id="adf-login-action-register" class="adf-login-action-right">
+                        <div id="adf-login-action-right" class="adf-login-action-right">
                             <a href="{{registerLink}}">{{'LOGIN.ACTION.REGISTER' | translate }}</a>
                         </div>
                     </div>

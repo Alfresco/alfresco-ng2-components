@@ -1,0 +1,22 @@
+@mixin mat-colors-theme($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+    $background: map-get($theme, background);
+
+    .adf-primary-color{
+        color: mat-color($primary);
+    }
+
+    .adf-accent-color{
+        color: mat-color($accent);
+    }
+
+    .adf-warn-color{
+        color: mat-color($warn);
+    }
+
+    .adf-background-color{
+        background: mat-color($background, dialog);
+    }
+}

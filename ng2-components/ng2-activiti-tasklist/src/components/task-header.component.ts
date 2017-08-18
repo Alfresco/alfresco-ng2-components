@@ -23,7 +23,7 @@ import { TaskListService } from './../services/tasklist.service';
 @Component({
     selector: 'adf-task-header, activiti-task-header',
     templateUrl: './task-header.component.html',
-    styleUrls: ['./task-header.component.scss', './task-header.component.css']
+    styleUrls: ['./task-header.component.scss']
 })
 export class TaskHeaderComponent implements OnChanges {
 

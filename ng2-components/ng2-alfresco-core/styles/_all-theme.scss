@@ -21,6 +21,8 @@
 @import '../../ng2-alfresco-login/src/components/login.component.scss';
 
 @import '../../ng2-alfresco-core/src/components/collapsable/accordion-group.component';
+@import '../../ng2-alfresco-core/src/components/view/card-view-textitem.component';
+@import '../../ng2-alfresco-core/styles/theme-colors';
 
 
 @mixin alfresco-material-theme($theme) {
@@ -39,4 +41,6 @@
     @include mat-filters-process-theme($theme);
     @include mat-analytics-report-list-theme($theme);
     @include mat-header-theme($theme);
+    @include mat-card-view-textitem-theme($theme);
+    @include mat-colors-theme($theme);
 }
