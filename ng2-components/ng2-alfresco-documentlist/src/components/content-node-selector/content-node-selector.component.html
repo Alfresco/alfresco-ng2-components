@@ -57,6 +57,7 @@
                     [allowDropFiles]="false"
                     [enablePagination]="!showingSearchResults"
                     (folderChange)="onFolderChange($event)"
+                    (ready)="onFolderLoaded()"
                     data-automation-id="content-node-selector-document-list">
             <empty-folder-content>
                 <ng-template>
