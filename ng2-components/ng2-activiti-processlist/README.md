@@ -37,7 +37,7 @@
   * [Events](#events-7)
 - [Process Audit Directive](#process-audit-directive)
   * [Properties](#properties-9)
-  * [Events](#events-8)
+    + [Events](#events-8)
 - [Build from sources](#build-from-sources)
 - [NPM scripts](#npm-scripts)
 - [Demo](#demo)

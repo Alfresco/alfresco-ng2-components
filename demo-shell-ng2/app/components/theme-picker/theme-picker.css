@@ -1,0 +1,26 @@
+.docs-theme-picker-menu .md-menu-content {
+    padding: 8px;
+}
+
+.docs-theme-picker-menu [md-menu-item] {
+    flex: 0 0 auto;
+    padding: 0;
+    overflow: hidden;
+}
+
+
+.docs-theme-picker-menu .docs-theme-picker-primary {
+    width: 25px;
+    height: 25px;
+}
+
+.docs-theme-picker-menu .docs-theme-picker-accent {
+     position: absolute;
+     bottom: 6px;
+     width: 100%;
+     height: 6px;
+ }
+
+.docs-theme-chosen-icon{
+    border-radius: 13px;
+}

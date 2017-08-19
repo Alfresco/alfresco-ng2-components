@@ -1,162 +1,162 @@
-@import 'theming';
 @import '../form';
+@import 'mixins';
 
-$dynamic-table-font-size: 14px !default;
-$dynamic-table-header-font-size: 12px !default;
-$dynamic-table-header-sort-icon-size: 16px !default;
-$dynamic-table-header-color: $alfresco-secondary-text-color !default;
-$dynamic-table-header-sorted-color: $alfresco-primary-text-color !default;
-$dynamic-table-header-sorted-icon-hover-color: $alfresco-disabled-text-color !default;
-$dynamic-table-divider-color: $alfresco-divider-color !default;
-$dynamic-table-hover-color: #eeeeee !default;
-$dynamic-table-selection-color: #e0f7fa !default;
-$dynamic-table-dividers: 1px solid $dynamic-table-divider-color !default;
-$dynamic-table-row-height: 56px !default;
-$dynamic-table-column-spacing: 36px !default;
-$dynamic-table-column-padding: $dynamic-table-column-spacing / 2;
-$dynamic-table-card-padding: 24px !default;
-$dynamic-table-cell-top: $dynamic-table-card-padding / 2;
-$dynamic-table-drag-border: 1px dashed rgb(68,138,255);
+@mixin mat-dynamic-table-theme($theme) {
+    $foreground: map-get($theme, foreground);
+    $dynamic-table-font-size: 14px !default;
+    $dynamic-table-header-font-size: 12px !default;
+    $dynamic-table-header-sort-icon-size: 16px !default;
+    $dynamic-table-header-color: mat-color($primary, default-contrast) !default;
+    $dynamic-table-header-sorted-color: mat-color($foreground, text) !default;
+    $dynamic-table-header-sorted-icon-hover-color: mat-color($foreground, disabled-text) !default;
+    $dynamic-table-divider-color: mat-color($foreground, text, .07) !default;
+    $dynamic-table-hover-color: #eeeeee !default;
+    $dynamic-table-selection-color: #e0f7fa !default;
+    $dynamic-table-dividers: 1px solid $dynamic-table-divider-color !default;
+    $dynamic-table-row-height: 56px !default;
+    $dynamic-table-column-spacing: 36px !default;
+    $dynamic-table-column-padding: $dynamic-table-column-spacing / 2;
+    $dynamic-table-card-padding: 24px !default;
+    $dynamic-table-cell-top: $dynamic-table-card-padding / 2;
+    $dynamic-table-drag-border: 1px dashed rgb(68, 138, 255);
 
+    .adf {
 
-.adf {
-
-   &-dynamic-table {
-    width: 100%;
-    position: relative;
-    border: $dynamic-table-dividers;
-    white-space: nowrap;
-    font-size: $dynamic-table-font-size;
-    background-color: unquote("rgb(#{$alfresco-white})");
-
-    /* Firefox fixes */
-    border-collapse: unset;
-    border-spacing: 0;
-
-    thead {
-        padding-bottom: 3px;
-    }
-
-    tbody {
-        tr {
+        &-dynamic-table {
+            width: 100%;
             position: relative;
-            height: $dynamic-table-row-height;
-            @include material-animation-default(0.28s);
-            transition-property: background-color;
+            border: $dynamic-table-dividers;
+            white-space: nowrap;
+            font-size: $dynamic-table-font-size;
 
-            &:hover {
-                background-color: $dynamic-table-hover-color;
+            /* Firefox fixes */
+            border-collapse: unset;
+            border-spacing: 0;
+
+            thead {
+                padding-bottom: 3px;
             }
 
-            &.is-selected, &.is-selected:hover {
-                background-color: $dynamic-table-selection-color;
-            }
+            tbody {
+                tr {
+                    position: relative;
+                    height: $dynamic-table-row-height;
+                    @include material-animation-default(0.28s);
+                    transition-property: background-color;
 
-            &:focus {
-                outline-offset: -1px;
-                outline-width: 1px;
-                outline-color: rgb(68,138,255);
-                outline-style: solid;
-            }
-        }
-    }
+                    &:hover {
+                        background-color: $dynamic-table-hover-color;
+                    }
 
-    td, th {
-        padding: 0 $dynamic-table-column-padding 12px $dynamic-table-column-padding;
-        text-align: center;
+                    &.is-selected, &.is-selected:hover {
+                        background-color: $dynamic-table-selection-color;
+                    }
 
-        &:first-of-type {
-            padding-left: 24px;
-        }
-
-        &:last-of-type {
-            padding-right: 24px;
-        }
-    }
-
-    td {
-        color: $alfresco-secondary-text-color;
-        position: relative;
-        vertical-align: middle;
-        height: $dynamic-table-row-height;
-        border-top: $dynamic-table-dividers;
-        border-bottom: $dynamic-table-dividers;
-        padding-top: $dynamic-table-cell-top;
-        box-sizing: border-box;
-
-        @include no-select;
-        cursor: default;
-    }
-
-    th {
-        @include no-select;
-        cursor: pointer;
-        position: relative;
-        vertical-align: bottom;
-        text-overflow: ellipsis;
-        font-weight: bold;
-        line-height: 24px;
-        letter-spacing: 0;
-        height: $dynamic-table-row-height;
-        font-size: $dynamic-table-header-font-size;
-        color: $dynamic-table-header-color;
-        padding-bottom: 8px;
-        box-sizing: border-box;
-
-        &.sortable {
-            @include no-select;
-            &:hover {
-                cursor: pointer;
-            }
-        }
-
-        &.adf-dynamic-table__header--sorted-asc,
-        &.adf-dynamic-table__header--sorted-desc {
-            color: $dynamic-table-header-sorted-color;
-            &:before {
-                @include typo-icon;
-                font-size: $dynamic-table-header-sort-icon-size;
-                content: "\e5d8";
-                margin-right: 5px;
-                vertical-align: sub;
-            }
-            &:hover {
-                cursor: pointer;
-                &:before {
-                    color: $dynamic-table-header-sorted-icon-hover-color;
+                    &:focus {
+                        outline-offset: -1px;
+                        outline-width: 1px;
+                        outline-color: rgb(68, 138, 255);
+                        outline-style: solid;
+                    }
                 }
             }
-        }
-        &.adf-dynamic-table__header--sorted-desc:before {
-            content: "\e5db";
-        }
-    }
 
-    .adf-dynamic-table-cell {
-        text-align: left;
-        cursor: default;
+            td, th {
+                padding: 0 $dynamic-table-column-padding 12px $dynamic-table-column-padding;
+                text-align: center;
 
-        &--text {
-            text-align: left;
-        }
+                &:first-of-type {
+                    padding-left: 24px;
+                }
 
-        &--number {
-            text-align: right;
-        }
+                &:last-of-type {
+                    padding-right: 24px;
+                }
+            }
 
-        &--image {
-            text-align: left;
+            td {
+                color: mat-color($foreground, text);
+                position: relative;
+                vertical-align: middle;
+                height: $dynamic-table-row-height;
+                border-top: $dynamic-table-dividers;
+                border-bottom: $dynamic-table-dividers;
+                padding-top: $dynamic-table-cell-top;
+                box-sizing: border-box;
 
-            img {
-                width: 24px;
-                height: 24px;
+                @include no-select;
+                cursor: default;
+            }
+
+            th {
+                @include no-select;
+                cursor: pointer;
+                position: relative;
+                vertical-align: bottom;
+                text-overflow: ellipsis;
+                font-weight: bold;
+                line-height: 24px;
+                letter-spacing: 0;
+                height: $dynamic-table-row-height;
+                font-size: $dynamic-table-header-font-size;
+                color: $dynamic-table-header-color;
+                padding-bottom: 8px;
+                box-sizing: border-box;
+
+                &.sortable {
+                    @include no-select;
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+
+                &.adf-dynamic-table__header--sorted-asc,
+                &.adf-dynamic-table__header--sorted-desc {
+                    color: $dynamic-table-header-sorted-color;
+                    &:before {
+                        @include typo-icon;
+                        font-size: $dynamic-table-header-sort-icon-size;
+                        content: "\e5d8";
+                        margin-right: 5px;
+                        vertical-align: sub;
+                    }
+                    &:hover {
+                        cursor: pointer;
+                        &:before {
+                            color: $dynamic-table-header-sorted-icon-hover-color;
+                        }
+                    }
+                }
+                &.adf-dynamic-table__header--sorted-desc:before {
+                    content: "\e5db";
+                }
+            }
+
+            .adf-dynamic-table-cell {
+                text-align: left;
+                cursor: default;
+
+                &--text {
+                    text-align: left;
+                }
+
+                &--number {
+                    text-align: right;
+                }
+
+                &--image {
+                    text-align: left;
+
+                    img {
+                        width: 24px;
+                        height: 24px;
+                    }
+                }
+            }
+
+            .full-width {
+                width: 100%;
             }
         }
     }
-
-    .full-width {
-        width: 100%;
-        color: $alfresco-primary-text-color;
-    }
-   }
 }

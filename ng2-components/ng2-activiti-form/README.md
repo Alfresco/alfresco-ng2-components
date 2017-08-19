@@ -12,6 +12,8 @@
 - [Form Component](#form-component)
   * [Properties](#properties)
     + [Form Field Validators](#form-field-validators)
+      - [Custom set of validators](#custom-set-of-validators)
+      - [Custom validator example](#custom-validator-example)
   * [Advanced properties](#advanced-properties)
   * [Events](#events)
   * [Custom empty form template](#custom-empty-form-template)

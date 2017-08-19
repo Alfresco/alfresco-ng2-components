@@ -1,6 +1,5 @@
 {
     "title": "Welcome",
-
     "DOCUMENT_LIST": {
         "COLUMNS": {
             "DISPLAY_NAME": "Display name",
@@ -23,12 +22,26 @@
             }
         }
     },
-    "ANALYTICS_REPORT":{
-        "NO_REPORT_MESSAGE":"No report selected. Choose a report from the list"
+    "ANALYTICS_REPORT": {
+        "NO_REPORT_MESSAGE": "No report selected. Choose a report from the list"
     },
-    "PS-TAB":{
-        "TASKS-TAB":"Tasks",
-        "PROCESSES-TAB":"Process",
-        "REPORTS-TAB":"Reports"
+    "PS-TAB": {
+        "TASKS-TAB": "Tasks",
+        "PROCESSES-TAB": "Process",
+        "REPORTS-TAB": "Reports",
+        "START-TASK": "Start task",
+        "START-PROCESS": "Start process",
+        "AUDIT-LOG": "Process Audit log"
+    },
+    "SETTINGS": {
+        "TITLE": "Settings",
+        "CS-HOST": "Content Services host URL configuration",
+        "BP-HOST": "Process Services host URL configuration",
+        "BACK": "Back",
+        "APPLY": "APPLY"
+    },
+    "FORM-LIST":{
+        "STORE": "Store",
+        "RESTORE": "Restore"
     }
 }

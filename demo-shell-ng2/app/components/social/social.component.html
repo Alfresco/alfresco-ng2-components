@@ -1,0 +1,16 @@
+<label for="nodeId"><b>Insert Node Id</b></label><br>
+<input id="nodeId" type="text" size="48" [(ngModel)]="nodeId"><br>
+<md-grid-list cols="2" rowHeight="100px">
+    <md-grid-tile>
+        <md-list>
+            <md-list-item> <div class="adf-social-title" >Like component</div> </md-list-item>
+            <md-list-item> <adf-like [nodeId]="nodeId"></adf-like></md-list-item>
+        </md-list>
+    </md-grid-tile>
+    <md-grid-tile>
+        <md-list>
+            <md-list-item> <div class="adf-social-title" >Rating component</div> </md-list-item>
+            <md-list-item> <adf-rating [nodeId]="nodeId"></adf-rating></md-list-item>
+        </md-list>
+    </md-grid-tile>
+</md-grid-list>

@@ -1,75 +1,76 @@
-@import 'theming';
+@mixin mat-diagram-tooltip-theme($theme) {
 
-.#{$ADF} {
-    &-diagram-tooltip {
-        transform: scale(0);
-        transform-origin: top center;
-        z-index: 999;
-        display: inline-block;
-        font-weight: 500;
-        line-height: 14px;
-        font-size: 14px;
-        max-width: 300px;
-        position: fixed;
-        top: -500px;
-        left: -500px;
-        text-align: left;
-        will-change: unset;
-        border: 1px solid #c5c5c5;
-        word-wrap: break-word;
+    .adf {
+        &-diagram-tooltip {
+            transform: scale(0);
+            transform-origin: top center;
+            z-index: 999;
+            display: inline-block;
+            font-weight: 500;
+            line-height: 14px;
+            font-size: 14px;
+            max-width: 300px;
+            position: fixed;
+            top: -500px;
+            left: -500px;
+            text-align: left;
+            will-change: unset;
+            border: 1px solid #c5c5c5;
+            word-wrap: break-word;
+        }
+
+        &-diagram-tooltip.is-active {
+            animation: tooltipAnimation 200ms cubic-bezier(0, 0, 0.2, 1) forwards;
+        }
+
+        &-diagram-tooltip-header {
+            background-color: rgba(43, 65, 79, 0.95);
+            color: #FFF;
+            padding: 8px;
+            font-weight: bold;
+            min-width: 200px;
+            line-height: 20px;
+        }
+
+        &-diagram-tooltip-body {
+            color: #4a4a4a;
+            background-color: rgba(255, 255, 255, 0.95);
+        }
+
+        &-diagram-tooltip-body > div {
+            padding: 4px 8px;
+        }
+
+        &-diagram-tooltip-body > div:first-child {
+            padding-top: 8px;
+        }
+
+        &-diagram-tooltip-body > div:last-child {
+            padding-bottom: 8px;
+        }
+
+        &-diagram-propertyName {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        &-diagram-propertyValue {
+            font-style: italic;
+        }
     }
 
-    &-diagram-tooltip.is-active {
-        animation: tooltipAnimation 200ms cubic-bezier(0, 0, 0.2, 1) forwards;
-    }
-
-    &-diagram-tooltip-header {
-        background-color: rgba(43, 65, 79, 0.95);
-        color: #FFF;
-        padding: 8px;
-        font-weight: bold;
-        min-width: 200px;
-        line-height: 20px;
-    }
-
-    &-diagram-tooltip-body {
-        color: #4a4a4a;
-        background-color: rgba(255, 255, 255, 0.95);
-    }
-
-    &-diagram-tooltip-body > div {
-        padding: 4px 8px;
-    }
-
-    &-diagram-tooltip-body > div:first-child {
-        padding-top: 8px;
-    }
-
-    &-diagram-tooltip-body > div:last-child {
-        padding-bottom: 8px;
-    }
-
-    &-diagram-propertyName {
-        font-weight: bold;
-        margin-right: 5px;
-    }
-
-    &-diagram-propertyValue {
-        font-style: italic;
-    }
-}
-
-@keyframes tooltipAnimation {
-    0% {
-        transform: scale(0);
-        opacity: 0;
-    }
-    50% {
-        transform: scale(0.99);
-    }
-    100% {
-        transform: scale(1);
-        opacity: 1;
-        visibility: visible;
+    @keyframes tooltipAnimation {
+        0% {
+            transform: scale(0);
+            opacity: 0;
+        }
+        50% {
+            transform: scale(0.99);
+        }
+        100% {
+            transform: scale(1);
+            opacity: 1;
+            visibility: visible;
+        }
     }
 }

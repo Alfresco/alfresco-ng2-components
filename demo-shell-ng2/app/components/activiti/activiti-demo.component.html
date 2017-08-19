@@ -6,7 +6,7 @@
                     <div class="list-buttons">
                         <button md-raised-button data-automation-id="btn-start-task" (click)="navigateStartTask()">
                             <md-icon>add</md-icon>
-                            <span>START TASK</span>
+                            <span>{{'PS-TAB.START-TASK' | translate}}</span>
                         </button>
                     </div>
                     <adf-accordion>
@@ -63,7 +63,7 @@
                     </activiti-task-details>
                     <hr>
                     <div *ngIf="currentTaskId">
-                        Task Audit log
+                        {{'PS-TAB.AUDIT-LOG' | translate}}
                         <button
                             adf-task-audit
                             [task-id]="currentTaskId"
@@ -148,7 +148,7 @@
                     </activiti-process-instance-details>
                     <hr>
                     <div *ngIf="currentProcessInstanceId">
-                        Process Audit log
+                        {{'PS-TAB.START-PROCESS' | translate}}
                         <button adf-process-audit
                                 [process-id]="currentProcessInstanceId"
                                 [download]="true" md-icon-button

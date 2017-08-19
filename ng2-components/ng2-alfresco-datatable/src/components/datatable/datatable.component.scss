@@ -1,264 +1,268 @@
-@import 'theming';
 
-$data-table-font-size: 14px !default;
-$data-table-header-font-size: 12px !default;
-$data-table-header-sort-icon-size: 16px !default;
-$data-table-header-color: $alfresco-secondary-text-color !default;
-$data-table-header-sorted-color: $alfresco-primary-text-color !default;
-$data-table-header-sorted-icon-hover-color: $alfresco-disabled-text-color !default;
-$data-table-divider-color: $alfresco-divider-color !default;
-$data-table-hover-color: #eeeeee !default;
-$data-table-selection-color: #e0f7fa !default;
-$data-table-dividers: 1px solid $data-table-divider-color !default;
-$data-table-row-height: 56px !default;
-// $data-table-last-row-height: 56px !default;
-// $data-table-header-height: 56px !default;
-$data-table-column-spacing: 36px !default;
-$data-table-column-padding: $data-table-column-spacing / 2;
-// $data-table-card-header-height: 64px !default;
-// $data-table-card-title-top: 20px !default;
-$data-table-card-padding: 24px !default;
-// $data-table-button-padding-right: 16px !default;
-$data-table-cell-top: $data-table-card-padding / 2;
-$data-table-drag-border: 1px dashed rgb(68,138,255);
+@mixin mat-datatable-theme($theme) {
+    $foreground: map-get($theme, foreground);
+    $primary: map-get($theme, primary);
 
-.adf-data-table {
-    width: 100%;
-    position: relative;
-    border: $data-table-dividers;
-    border-collapse: collapse;
-    white-space: nowrap;
-    font-size: $data-table-font-size;
-    background-color: unquote("rgb(#{$alfresco-white})");
+    $data-table-font-size: 14px !default;
+    $data-table-header-font-size: 12px !default;
+    $data-table-header-sort-icon-size: 16px !default;
+    $data-table-header-color: mat-color($primary, default-contrast) !default;
+    $data-table-header-sorted-color: mat-color($foreground, text) !default;
+    $data-table-header-sorted-icon-hover-color: mat-color($foreground, disabled-text) !default;
+    $data-table-divider-color: mat-color($foreground, text, .07) !default;
+    $data-table-hover-color: #eeeeee !default;
+    $data-table-selection-color: #e0f7fa !default;
+    $data-table-dividers: 1px solid $data-table-divider-color !default;
+    $data-table-row-height: 56px !default;
+    // $data-table-last-row-height: 56px !default;
+    // $data-table-header-height: 56px !default;
+    $data-table-column-spacing: 36px !default;
+    $data-table-column-padding: $data-table-column-spacing / 2;
+    // $data-table-card-header-height: 64px !default;
+    // $data-table-card-title-top: 20px !default;
+    $data-table-card-padding: 24px !default;
+    // $data-table-button-padding-right: 16px !default;
+    $data-table-cell-top: $data-table-card-padding / 2;
+    $data-table-drag-border: 1px dashed rgb(68, 138, 255);
 
-    /* Firefox fixes */
-    border-collapse: unset;
-    border-spacing: 0;
-
-    thead {
-        padding-bottom: 3px;
-    }
-
-    tbody {
-        tr {
-            position: relative;
-            height: $data-table-row-height;
-            @include material-animation-default(0.28s);
-            transition-property: background-color;
-
-            &:hover {
-                background-color: $data-table-hover-color;
-            }
-
-            &.is-selected, &.is-selected:hover {
-                background-color: $data-table-selection-color;
-            }
-
-            &:focus {
-                outline-offset: -1px;
-                outline-width: 1px;
-                outline-color: rgb(68,138,255);
-                outline-style: solid;
-            }
-        }
-    }
-
-    td, th {
-        padding: 0 $data-table-column-padding 12px $data-table-column-padding;
-        text-align: right;
-
-        &:first-of-type {
-            padding-left: 24px;
-        }
-
-        &:last-of-type {
-            padding-right: 24px;
-        }
-    }
-
-    td {
-        color: $alfresco-secondary-text-color;
+    .adf-data-table {
+        width: 100%;
         position: relative;
-        vertical-align: middle;
-        height: $data-table-row-height;
-        border-top: $data-table-dividers;
-        border-bottom: $data-table-dividers;
-        padding-top: $data-table-cell-top;
-        box-sizing: border-box;
+        border: $data-table-dividers;
+        border-collapse: collapse;
+        white-space: nowrap;
+        font-size: $data-table-font-size;
 
-        @include no-select;
-        cursor: default;
-    }
+        /* Firefox fixes */
+        border-collapse: unset;
+        border-spacing: 0;
 
-    th {
-        @include no-select;
-        cursor: pointer;
-        position: relative;
-        vertical-align: bottom;
-        text-overflow: ellipsis;
-        font-size: 14px;
-        font-weight: bold;
-        line-height: 24px;
-        letter-spacing: 0;
-        height: $data-table-row-height;
-        font-size: $data-table-header-font-size;
-        color: $data-table-header-color;
-        padding-bottom: 8px;
-        box-sizing: border-box;
-
-        &.sortable {
-            @include no-select;
-            &:hover {
-                cursor: pointer;
-            }
+        thead {
+            padding-bottom: 3px;
         }
 
-        &.adf-data-table__header--sorted-asc,
-        &.adf-data-table__header--sorted-desc {
-            color: $data-table-header-sorted-color;
-            &:before {
-                @include typo-icon;
-                font-size: $data-table-header-sort-icon-size;
-                content: "\e5d8";
-                margin-right: 5px;
-                vertical-align: sub;
-            }
-            &:hover {
-                cursor: pointer;
-                &:before {
-                    color: $data-table-header-sorted-icon-hover-color;
+        tbody {
+            tr {
+                position: relative;
+                height: $data-table-row-height;
+                @include material-animation-default(0.28s);
+                transition-property: background-color;
+
+                &:hover {
+                    background-color: $data-table-hover-color;
+                }
+
+                &.is-selected, &.is-selected:hover {
+                    background-color: $data-table-selection-color;
+                }
+
+                &:focus {
+                    outline-offset: -1px;
+                    outline-width: 1px;
+                    outline-color: rgb(68, 138, 255);
+                    outline-style: solid;
                 }
             }
         }
-        &.adf-data-table__header--sorted-desc:before {
-            content: "\e5db";
-        }
-    }
 
-    .adf-data-table-cell {
-        text-align: left;
-        cursor: default;
-
-        &--text {
-            text-align: left;
-        }
-
-        &--date {
-            text-align: left;
-        }
-
-        &--number {
+        td, th {
+            padding: 0 $data-table-column-padding 12px $data-table-column-padding;
             text-align: right;
+
+            &:first-of-type {
+                padding-left: 24px;
+            }
+
+            &:last-of-type {
+                padding-right: 24px;
+            }
         }
 
-        &--image {
-            text-align: left;
+        td {
+            color: mat-color($foreground, text);
+            position: relative;
+            vertical-align: middle;
+            height: $data-table-row-height;
+            border-top: $data-table-dividers;
+            border-bottom: $data-table-dividers;
+            padding-top: $data-table-cell-top;
+            box-sizing: border-box;
 
-            img {
-                width: 24px;
-                height: 24px;
+            @include no-select;
+            cursor: default;
+        }
+
+        th {
+            @include no-select;
+            cursor: pointer;
+            position: relative;
+            vertical-align: bottom;
+            text-overflow: ellipsis;
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 24px;
+            letter-spacing: 0;
+            height: $data-table-row-height;
+            font-size: $data-table-header-font-size;
+            color: $data-table-header-color;
+            padding-bottom: 8px;
+            box-sizing: border-box;
+
+            &.sortable {
+                @include no-select;
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+
+            &.adf-data-table__header--sorted-asc,
+            &.adf-data-table__header--sorted-desc {
+                color: $data-table-header-sorted-color;
+                &:before {
+                    @include typo-icon;
+                    font-size: $data-table-header-sort-icon-size;
+                    content: "\e5d8";
+                    margin-right: 5px;
+                    vertical-align: sub;
+                }
+                &:hover {
+                    cursor: pointer;
+                    &:before {
+                        color: $data-table-header-sorted-icon-hover-color;
+                    }
+                }
+            }
+            &.adf-data-table__header--sorted-desc:before {
+                content: "\e5db";
+            }
+        }
+
+        .adf-data-table-cell {
+            text-align: left;
+            cursor: default;
+
+            &--text {
+                text-align: left;
+            }
+
+            &--date {
+                text-align: left;
+            }
+
+            &--number {
+                text-align: right;
+            }
+
+            &--image {
+                text-align: left;
+
+                img {
+                    width: 24px;
+                    height: 24px;
+                }
+            }
+        }
+
+        .full-width {
+            width: 100%;
+        }
+
+        /* Empty folder */
+        .adf-no-content-container {
+            padding: 0 !important;
+
+            & > img {
+                width: 100%;
+            }
+        }
+
+        /* Loading folder */
+        .adf-loading-content-container {
+            padding: 0 !important;
+
+            & > img {
+                width: 100%;
+            }
+        }
+
+        .ellipsis-cell {
+            .cell-container {
+                height: 1em;
+            }
+
+            /* visible content */
+            .cell-value {
+                display: block;
+                position: absolute;
+                max-width: 100%;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                /* for vertical align of text */
+                line-height: 1em;
+            }
+
+            /* cell stretching content */
+            & > div:after {
+                content: attr(title);
+                overflow: hidden;
+                height: 0;
+                display: block;
             }
         }
     }
 
-    .full-width {
-        width: 100%;
-        color: $alfresco-primary-text-color;
+    /* Utils */
+
+    /* [Accessibility] For screen reader only */
+    :host .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
     }
 
-    /* Empty folder */
-    .adf-no-content-container {
-        padding: 0 !important;
-
-        & > img {
-            width: 100%;
-        }
-    }
-
-    /* Loading folder */
-    .adf-loading-content-container {
-        padding: 0 !important;
-
-        & > img {
-            width: 100%;
-        }
-    }
-
-    .ellipsis-cell {
-        .cell-container {
-            height: 1em;
-        }
-
-        /* visible content */
-        .cell-value {
-            display: block;
-            position: absolute;
-            max-width: 100%;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            /* for vertical align of text */
-            line-height: 1em;
-        }
-
-        /* cell stretching content */
-        & > div:after {
-            content: attr(title);
-            overflow: hidden;
-            height: 0;
-            display: block;
-        }
-    }
-}
-
-/* Utils */
-
-/* [Accessibility] For screen reader only */
-:host .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0,0,0,0);
-    border: 0;
-}
-
-.hidden {
-    display: none;
-}
-
-/* small desktop */
-@media all and (max-width: 1200px) {}
-
-/* tablet */
-@media all and (max-width: 1024px) {}
-
-/* mobile phone */
-@media all and (max-width: 768px) {
-    .desktop-only {
+    .hidden {
         display: none;
     }
-}
 
-@media (max-device-width: 768px){
-    .desktop-only {
-        display: none;
+    /* small desktop */
+    @media all and (max-width: 1200px) {
     }
-}
 
-.adf-upload__dragging {
-    & > td {
-        border-top: $data-table-drag-border;
-        border-bottom: $data-table-drag-border;
+    /* tablet */
+    @media all and (max-width: 1024px) {
+    }
 
-        &:first-child {
-            border-left: $data-table-drag-border;
+    /* mobile phone */
+    @media all and (max-width: 768px) {
+        .desktop-only {
+            display: none;
         }
+    }
 
-        &:last-child {
-            border-right: $data-table-drag-border;
+    @media (max-device-width: 768px) {
+        .desktop-only {
+            display: none;
+        }
+    }
+
+    .adf-upload__dragging {
+        & > td {
+            border-top: $data-table-drag-border;
+            border-bottom: $data-table-drag-border;
+
+            &:first-child {
+                border-left: $data-table-drag-border;
+            }
+
+            &:last-child {
+                border-right: $data-table-drag-border;
+            }
         }
     }
 }
