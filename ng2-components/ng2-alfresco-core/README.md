@@ -42,6 +42,8 @@
     + [2. Define the component for the custom type](#2-define-the-component-for-the-custom-type)
     + [3. Add you custom component to your module's entryComponents list](#3-add-you-custom-component-to-your-modules-entrycomponents-list)
 - [TranslationService](#translationservice)
+  * [Registering translation sources](#registering-translation-sources)
+  * [Switching languages](#switching-languages)
 - [Renditions Service](#renditions-service)
 - [Build from sources](#build-from-sources)
 - [NPM scripts](#npm-scripts)

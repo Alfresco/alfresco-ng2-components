@@ -33,8 +33,6 @@
 @import '../../ng2-alfresco-core/styles/theme-colors';
 
 @import '../../ng2-alfresco-datatable/src/components/datatable/datatable.component.scss';
-@import '../../ng2-alfresco-userinfo/src/components/user-info.component.scss';
-
 
 @mixin alfresco-material-theme($theme) {
     @include mat-colors-theme($theme);
@@ -45,7 +43,7 @@
     @include mat-comment-list-theme($theme);
     @include mat-start-task-theme($theme);
     @include mat-people-search-theme($theme);
-    @include mat-file-uploading-row-theme($theme);
+    @include mat-file-uploading-list-theme($theme);
     @include mat-people-theme($theme);
     @include mat-login-theme($theme);
     @include mat-accordion-theme($theme);
@@ -63,5 +61,4 @@
     @include mat-breadcrumb-dropdown-theme($theme);
     @include mat-datatable-theme($theme);
     @include mat-content-node-selector-theme($theme);
-    @include mat-userinfo-theme($theme);
 }

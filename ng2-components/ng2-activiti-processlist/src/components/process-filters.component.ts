@@ -23,7 +23,7 @@ import { ProcessService } from './../services/process.service';
 @Component({
     selector: 'adf-process-instance-filters, activiti-process-instance-filters',
     templateUrl: './process-filters.component.html',
-    styleUrls: ['process-filters.component.css']
+    styleUrls: ['process-filters.component.scss']
 })
 export class ProcessFiltersComponent implements OnInit, OnChanges {
 

@@ -1,8 +1,8 @@
 <md-chip-list>
-    <md-chip class="adf-tag-chips" *ngFor="let currentEntry of tagsEntries; let idx = index">
+    <md-chip class="adf-tag-chips adf-primary-background-color" *ngFor="let currentEntry of tagsEntries; let idx = index">
         <span id="tag_name_{{idx}}">{{currentEntry.entry.tag}}</span>
         <button class="adf-tag-chips-delete" id="tag_delete_{{idx}}" type="button" (click)="removeTag(currentEntry.entry.id)">
-            <md-icon class="adf-tag-chips-delete-icon">cancel</md-icon>
+            <md-icon class="adf-tag-chips-delete-icon adf-primary-contrast-text-color">cancel</md-icon>
         </button>
     </md-chip>
 </md-chip-list>

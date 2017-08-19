@@ -1,90 +1,92 @@
-@import 'theming';
+@mixin mat-card-view-textitem-theme($theme) {
 
-.#{$ADF} {
-    &-textitem-icon {
-        font-size: 16px;
-        width: 16px;
-        height: 16px;
-        position: relative;
-        top: 3px;
-        padding-left: 8px;
-        opacity: 0.5;
-    }
-
-    &-update-icon {
-        padding-left: 13px;
-    }
-
-    &-textitem-readonly {
-        cursor: pointer;
-
-        &:hover md-icon {
-            opacity: 1;
+    .adf {
+        &-textitem-icon {
+            font-size: 16px;
+            width: 16px;
+            height: 16px;
+            position: relative;
+            top: 3px;
+            padding-left: 8px;
+            opacity: 0.5;
         }
-    }
 
-    &-textitem-clickable-value {
-        cursor: pointer;
-    }
+        &-update-icon {
+            padding-left: 13px;
+        }
 
-    &-textitem-editable {
-        display: flex;
-
-        md-icon:hover {
-            opacity: 1;
+        &-textitem-readonly {
             cursor: pointer;
+
+            &:hover md-icon {
+                opacity: 1;
+            }
         }
 
-        md-input-container {
-            width: 100%;
+        &-textitem-clickable-value {
+            cursor: pointer;
+            color: mat-color($primary);
         }
 
-        input:focus,
-        textarea:focus {
-            border: 1px solid #EEE;
+        &-textitem-editable {
+            display: flex;
+
+            md-icon:hover {
+                opacity: 1;
+                cursor: pointer;
+            }
+
+            md-input-container {
+                width: 100%;
+            }
+
+            input:focus,
+            textarea:focus {
+                border: 1px solid #EEE;
+            }
         }
-    }
 
-    &-textitem-editable /deep/ .mat-input-wrapper {
-        margin: 0;
-        padding-bottom: 0;
-    }
+        &-textitem-editable /deep/ .mat-input-wrapper {
+            margin: 0;
+            padding-bottom: 0;
+        }
 
-    &-textitem-editable /deep/ .mat-input-underline {
-        display: none;
-    }
+        &-textitem-editable /deep/ .mat-input-underline {
+            display: none;
+        }
 
-    &-textitem-editable /deep/ .mat-input-infix {
-        padding: 0;
-        border-top: none;
-    }
+        &-textitem-editable /deep/ .mat-input-infix {
+            padding: 0;
+            border-top: none;
+        }
 
-    &-textitem-editable /deep/ .mat-input-placeholder-wrapper {
-        padding-top: 2em;
-        position: static;
-    }
+        &-textitem-editable /deep/ .mat-input-placeholder-wrapper {
+            padding-top: 2em;
+            position: static;
+        }
 
-    &-textitem-editable /deep/ .mat-input-placeholder {
-        top: 0;
-    }
+        &-textitem-editable /deep/ .mat-input-placeholder {
+            top: 0;
+        }
 
-    &-textitem-editable /deep/ .mat-input-element {
-        font-family: inherit;
-        position: relative;
-        padding-top: 3px;
-    }
+        &-textitem-editable /deep/ .mat-input-element {
+            font-family: inherit;
+            position: relative;
+            padding-top: 3px;
+        }
 
-    &-textitem-editable /deep/ .mat-input-element:focus {
-        padding: 5px;
-        left: -6px;
-        top: -6px;
-    }
+        &-textitem-editable /deep/ .mat-input-element:focus {
+            padding: 5px;
+            left: -6px;
+            top: -6px;
+        }
 
-    &-textitem-editable /deep/ input.mat-input-element {
-        margin-bottom: 2px;
-    }
+        &-textitem-editable /deep/ input.mat-input-element {
+            margin-bottom: 2px;
+        }
 
-    &-textitem-editable /deep/ input.mat-input-element:focus {
-        margin-bottom: -8px;
+        &-textitem-editable /deep/ input.mat-input-element:focus {
+            margin-bottom: -8px;
+        }
     }
 }
