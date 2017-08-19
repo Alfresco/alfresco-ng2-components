@@ -20,7 +20,7 @@
 
 ## Guide
 
-- [Theming](../alfresco-ng2-components/docs/theming.md)
+- [Theming](../docs/theming.md)
 
 ## Core
 
