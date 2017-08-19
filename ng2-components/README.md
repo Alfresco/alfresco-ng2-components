@@ -4,6 +4,7 @@
 
 <!-- toc -->
 
+- [Guide](#guide)
 - [Core](#core)
   * [Components](#components)
   * [Directives](#directives)
@@ -16,6 +17,10 @@
 <!-- tocstop -->
 
 <!-- markdown-toc end -->
+
+## Guide
+
+- [Theming](../alfresco-ng2-components/docs/theming.md)
 
 ## Core
 
