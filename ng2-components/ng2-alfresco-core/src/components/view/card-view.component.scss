@@ -1,32 +1,34 @@
-@import 'theming';
 
-.#{$ADF} {
-    &-property-list {
-        display: table;
-        width: 100%;
-        border-collapse: collapse;
-        border-spacing: 0;
-    }
+@mixin mat-card-view-theme($theme) {
 
-    &-property {
-        display: table-row;
-    }
+    .adf {
+        &-property-list {
+            display: table;
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
 
-    &-property /deep/ &-property-label {
-        display: table-cell;
-        min-width: 100px;
-        padding-right: 30px;
-        word-wrap: break-word;
-        color: $alfresco-gray-label;
-        vertical-align: top;
-        padding-bottom: 20px;
-    }
+        &-property {
+            display: table-row;
+        }
 
-    &-property /deep/ &-property-value {
-        width: 100%;
-        display: table-cell;
-        color: rgb(101, 101, 101);
-        vertical-align: top;
-        padding-bottom: 20px;
+        &-property /deep/ &-property-label {
+            display: table-cell;
+            min-width: 100px;
+            padding-right: 30px;
+            word-wrap: break-word;
+            color: rgb(186, 186, 186);;
+            vertical-align: top;
+            padding-bottom: 20px;
+        }
+
+        &-property /deep/ &-property-value {
+            width: 100%;
+            display: table-cell;
+            color: rgb(101, 101, 101);
+            vertical-align: top;
+            padding-bottom: 20px;
+        }
     }
 }

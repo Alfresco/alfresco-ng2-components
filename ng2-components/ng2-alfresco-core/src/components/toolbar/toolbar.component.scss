@@ -1,22 +1,25 @@
-@import 'theming';
 
-$adf-toolbar-height: 48px;
-$adf-toolbar-font-size: 14px;
+@mixin mat-adf-toolbar-theme($theme) {
+    $foreground: map-get($theme, foreground);
+    $adf-toolbar-height: 48px;
+    $adf-toolbar-font-size: 14px;
 
-.adf-toolbar--spacer {
-  flex: 1 1 auto;
-}
-
-.adf-toolbar {
-
-    .mat-toolbar {
-        min-height: $adf-toolbar-height;
-        border: 1px solid $alfresco-divider-color;
+    .adf-toolbar--spacer {
+        flex: 1 1 auto;
     }
 
-    .mat-toolbar-row {
-        height: $adf-toolbar-height;
-        font-size: $adf-toolbar-font-size;
-        white-space: normal;
+    .adf-toolbar {
+
+        .mat-toolbar {
+            min-height: $adf-toolbar-height;
+            border: 1px solid mat-color($foreground, text, .07);
+        }
+
+        .mat-toolbar-row {
+            height: $adf-toolbar-height;
+            font-size: $adf-toolbar-font-size;
+            white-space: normal;
+        }
     }
+
 }

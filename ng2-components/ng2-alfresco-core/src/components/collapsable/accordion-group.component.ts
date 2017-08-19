@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { AccordionComponent } from './accordion.component';
 
 @Component({
     selector: 'adf-accordion-group',
     templateUrl: 'accordion-group.component.html',
-    styleUrls: ['./accordion-group.component.css']
-
+    styleUrls: ['./accordion-group.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class AccordionGroupComponent implements OnDestroy {
     private _isOpen: boolean = false;

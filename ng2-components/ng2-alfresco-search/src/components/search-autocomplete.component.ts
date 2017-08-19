@@ -23,7 +23,7 @@ import { ThumbnailService } from 'ng2-alfresco-core';
 @Component({
     selector: 'adf-search-autocomplete, alfresco-search-autocomplete',
     templateUrl: './search-autocomplete.component.html',
-    styleUrls: ['./search-autocomplete.component.css']
+    styleUrls: ['./search-autocomplete.component.scss']
 })
 export class SearchAutocompleteComponent implements OnChanges {
 

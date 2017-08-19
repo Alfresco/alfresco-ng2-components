@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { AccordionGroupComponent } from './accordion-group.component';
 
 @Component({
@@ -25,7 +25,8 @@ import { AccordionGroupComponent } from './accordion-group.component';
     `,
     host: {
         'class': 'panel-group'
-    }
+    },
+    encapsulation: ViewEncapsulation.None
 })
 export class AccordionComponent {
     groups: Array<AccordionGroupComponent> = [];

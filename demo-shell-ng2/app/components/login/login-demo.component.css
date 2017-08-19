@@ -3,6 +3,8 @@
     right: 10px;
     top: 10px;
     z-index: 1;
+    background-color: rgb(68,138,255);
+    color: rgb(255,255,255);
 }
 
 .settings {

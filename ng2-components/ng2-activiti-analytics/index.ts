@@ -25,9 +25,9 @@ import { AnalyticsReportHeatMapComponent } from './src/components/analytics-repo
 import { AnalyticsReportListComponent } from './src/components/analytics-report-list.component';
 import { AnalyticsReportParametersComponent } from './src/components/analytics-report-parameters.component';
 import { AnalyticsComponent } from './src/components/analytics.component';
-import { AnalyticsService } from './src/services/analytics.service';
 import { WIDGET_DIRECTIVES } from './src/components/widgets/index';
 import { MaterialModule } from './src/material.module';
+import { AnalyticsService } from './src/services/analytics.service';
 
 export * from './src/components/analytics.component';
 export * from './src/components/analytics-generator.component';

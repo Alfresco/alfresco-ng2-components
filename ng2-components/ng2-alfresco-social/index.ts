@@ -20,8 +20,8 @@ import { CoreModule } from 'ng2-alfresco-core';
 
 import { LikeComponent } from './src/components/like.component';
 import { RatingComponent } from './src/components/rating.component';
-import { RatingService } from './src/services/rating.service';
 import { MaterialModule } from './src/material.module';
+import { RatingService } from './src/services/rating.service';
 
 export * from './src/components/rating.component';
 export * from './src/components/like.component';

@@ -1,61 +1,71 @@
-@import 'theming';
+@import './hyperlink/hyperlink.widget';
+@import 'colors';
 
-ul > li > form-field > .adf-focus {
-    .adf-label {
-        color: mat-color($primary);
-    }
-}
+@mixin mat-form-theme($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
 
-.adf {
+    @include mat-hyperlink-widget-theme($theme);
 
-    &-error-text-container {
-        width: 95%;
-        height: 20px;
-        margin-top: -12px;
-    }
-
-    &-error-text {
-        padding: 1px;
-        height: 16px;
-        font-size: 12px;
-        line-height: 1.33;
-        float: left;
-        color: mat-color($warn);
-    }
-
-    &-error-icon {
-        float: right;
-        font-size: 17px;
-        color: mat-color($warn);
-    }
-
-    &-label {
-        color: $alfresco-gray-label;
-    }
-
-    &-invalid {
-
-        .mat-input-underline {
-            background-color: #f44336 !important;
-        }
-
-        .adf-file {
-            border-color: mat-color($warn);
-        }
-
-        .mat-input-prefix {
-            color: mat-color($warn);
-        }
-
-        .adf-input {
-            border-color: mat-color($warn);
-        }
-
+    ul > li > form-field > .adf-focus {
         .adf-label {
+            color: mat-color($primary);
+        }
+    }
+
+    .adf {
+
+        &-error-text-container {
+            width: 95%;
+            height: 20px;
+            margin-top: -12px;
+        }
+
+        &-error-text {
+            padding: 1px;
+            height: 16px;
+            font-size: 12px;
+            line-height: 1.33;
+            float: left;
             color: mat-color($warn);
-            &:after {
-                background-color: mat-color($warn);
+        }
+
+        &-error-icon {
+            float: right;
+            font-size: 17px;
+            color: mat-color($warn);
+        }
+
+        &-label {
+            color: rgb(186, 186, 186);;
+        }
+
+        &-invalid {
+
+            .mat-input-underline {
+                background-color: #f44336 !important;
+            }
+
+            .adf-file {
+                border-color: mat-color($warn);
+            }
+
+            .mat-input-prefix {
+                color: mat-color($warn);
+            }
+
+            .adf-input {
+                border-color: mat-color($warn);
+            }
+
+            .adf-label {
+                color: mat-color($warn);
+                &:after {
+                    background-color: mat-color($warn);
+                }
             }
         }
     }
+
 }

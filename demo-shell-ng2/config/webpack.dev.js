@@ -103,6 +103,13 @@ module.exports = webpackMerge(commonConfig, {
                     to: `assets/${lib}/i18n/`
                 }
             })
+        ]),
+        new CopyWebpackPlugin([
+            {
+                context: `../ng2-components/ng2-alfresco-core/prebuilt-themes/`,
+                from: '**/*.css',
+                to: 'prebuilt-themes'
+            }
         ])
     ]
 });

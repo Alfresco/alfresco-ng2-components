@@ -1,55 +1,58 @@
-@import 'theming';
 
-$adf-pagination--height: 48px;
-$adf-pagination--icon-button-size: 32px;
-$adf-pagination--border: 1px solid $alfresco-divider-color;
+@mixin mat-pagination-theme($theme) {
+    $foreground: map-get($theme, foreground);
 
-.adf-pagination {
-    display: flex;
-    border-top: $adf-pagination--border;
-    height: $adf-pagination--height;
-    line-height: $adf-pagination--height;
-    color: $alfresco-secondary-text-color;
+    $adf-pagination--height: 48px;
+    $adf-pagination--icon-button-size: 32px;
+    $adf-pagination--border: 1px solid  mat-color($foreground, text, .07);
 
-    &__block {
+    .adf-pagination {
         display: flex;
-        align-items: center;
-        padding: 0 12px;
-        border-right: $adf-pagination--border;
+        border-top: $adf-pagination--border;
+        height: $adf-pagination--height;
+        line-height: $adf-pagination--height;
+        color: mat-color($primary, default-contrast);
 
-        &:first-child {
-            flex: 1 1 auto;
-            padding-left: 24px;
+        &__block {
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            border-right: $adf-pagination--border;
+
+            &:first-child {
+                flex: 1 1 auto;
+                padding-left: 24px;
+            }
+
+            &:last-child {
+                border-right-width: 0;
+            }
         }
 
-        &:last-child {
-            border-right-width: 0;
-        }
-    }
-
-    &__max-items {
-        margin-left: 10px;
-    }
-
-    &__max-items, &__current-page {
-        margin-right: 5px;
-
-        &, & + button {
-            color: $alfresco-primary-text-color;
+        &__max-items {
+            margin-left: 10px;
         }
 
-        & + button {
-            margin-left: -10px;
+        &__max-items, &__current-page {
+            margin-right: 5px;
+
+            &, & + button {
+                color: mat-color($foreground, text);
+            }
+
+            & + button {
+                margin-left: -10px;
+            }
         }
-    }
 
-    &__previous-button, &__next-button {
-        margin: 0 5px;
-    }
+        &__previous-button, &__next-button {
+            margin: 0 5px;
+        }
 
-    button[md-icon-button] {
-        width: $adf-pagination--icon-button-size;
-        height: $adf-pagination--icon-button-size;
-        line-height: $adf-pagination--icon-button-size;
+        button[md-icon-button] {
+            width: $adf-pagination--icon-button-size;
+            height: $adf-pagination--icon-button-size;
+            line-height: $adf-pagination--icon-button-size;
+        }
     }
 }

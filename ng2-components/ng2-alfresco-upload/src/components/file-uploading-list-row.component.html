@@ -1,60 +1,62 @@
-<md-icon
-    md-list-icon
-    class="list-row__type">
-    insert_drive_file
-</md-icon>
+<div class="adf-file-uploading-list">
+    <md-icon
+        md-list-icon
+        class="list-row__type">
+        insert_drive_file
+    </md-icon>
 
-<span
-    class="list-row__name"
-    title="{{ file.name }}">
-    {{ file.name }}
-</span>
+    <span
+        class="list-row__name"
+        title="{{ file.name }}">
+        {{ file.name }}
+    </span>
 
-<div
-    *ngIf="file.status === FileUploadStatus.Progress"
-    (click)="onCancel(file)"
-    class="list-row__group list-row__group--toggle"
-    title="{{ 'ADF_FILE_UPLOAD.BUTTON.CANCEL_FILE' | translate }}">
+    <div
+        *ngIf="file.status === FileUploadStatus.Progress"
+        (click)="onCancel(file)"
+        class="list-row__group list-row__group--toggle"
+        title="{{ 'ADF_FILE_UPLOAD.BUTTON.CANCEL_FILE' | translate }}">
     <span class="list-row__status">
         {{ file.progress.loaded | adfFileSize }} / {{ file.progress.total | adfFileSize }}
     </span>
 
-    <md-icon
-        md-list-icon
-        class="list-row__action list-row__action--cancel">
-        clear
-    </md-icon>
-</div>
+        <md-icon
+            md-list-icon
+            class="list-row__action list-row__action--cancel">
+            clear
+        </md-icon>
+    </div>
 
- <div
-    *ngIf="file.status === FileUploadStatus.Complete"
-    (click)="onRemove(file)"
-    class="list-row__group list-row__group--toggle"
-    title="{{ 'ADF_FILE_UPLOAD.BUTTON.REMOVE_FILE' | translate }}">
-    <md-icon
-        md-list-icon
-        class="list-row__status list-row__status--done">
-        check_circle
-    </md-icon>
+    <div
+        *ngIf="file.status === FileUploadStatus.Complete"
+        (click)="onRemove(file)"
+        class="list-row__group list-row__group--toggle"
+        title="{{ 'ADF_FILE_UPLOAD.BUTTON.REMOVE_FILE' | translate }}">
+        <md-icon
+            md-list-icon
+            class="list-row__status list-row__status--done">
+            check_circle
+        </md-icon>
 
-    <md-icon
-        md-list-icon
-        class="list-row__action list-row__action--remove">
-        remove_circle
-    </md-icon>
-</div>
+        <md-icon
+            md-list-icon
+            class="list-row__action list-row__action--remove">
+            remove_circle
+        </md-icon>
+    </div>
 
-<div
-    *ngIf="file.status === FileUploadStatus.Error"
-    class="list-row__block list-row__status--error"
-    title="{{ file.response }}">
-    <md-icon md-list-icon>
-        report_problem
-    </md-icon>
-</div>
+    <div
+        *ngIf="file.status === FileUploadStatus.Error"
+        class="list-row__block list-row__status--error"
+        title="{{ file.response }}">
+        <md-icon md-list-icon>
+            report_problem
+        </md-icon>
+    </div>
 
-<div
-    *ngIf="file.status === FileUploadStatus.Cancelled  || file.status === FileUploadStatus.Aborted"
-    class="list-row__block list-row__status--cancelled">
-    {{ 'ADF_FILE_UPLOAD.STATUS.FILE_CANCELED_STATUS' | translate }}
+    <div
+        *ngIf="file.status === FileUploadStatus.Cancelled  || file.status === FileUploadStatus.Aborted"
+        class="list-row__block list-row__status--cancelled">
+        {{ 'ADF_FILE_UPLOAD.STATUS.FILE_CANCELED_STATUS' | translate }}
+    </div>
 </div>

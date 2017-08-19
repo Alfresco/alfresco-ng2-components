@@ -1,13 +1,16 @@
-@import 'theming';
+@import 'colors';
 
-:host {
-    & .upload-dialog {
-        color: $alfresco-secondary-text-color;
+@mixin mat-upload-dialog-theme($theme) {
+    $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
+
+    .upload-dialog {
+        background: mat-color($background, dialog);
+        color: mat-color($foreground, text, 0.54);
         position: fixed;
         bottom: 20px;
         width: 40%;
-        background: $alfresco-white;
-        box-shadow: 1px 5px 15px $alfresco-drop-shadow;
+        box-shadow: 1px 5px 15px #888888;
 
         &--position-left {
             left: 25px;
@@ -43,8 +46,8 @@
         &__content {
             overflow: auto;
             max-height: 195px;
-            border-top: 1px solid $alfresco-dark-color--hue-1;
-            border-bottom: 1px solid $alfresco-dark-color--hue-1;
+            border-top: 1px solid mat-color($foreground, text, 0.14);
+            border-bottom: 1px solid mat-color($foreground, text, 0.14);
         }
 
         &__actions {
@@ -54,12 +57,11 @@
 
             & > button {
                 text-transform: uppercase;
-                color: $alfresco-primary-accent--default;
             }
         }
-    }
 
-    & md-icon {
+        & md-icon {
             cursor: pointer;
+        }
     }
 }
