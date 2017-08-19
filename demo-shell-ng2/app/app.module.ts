@@ -40,6 +40,9 @@ import { ChartsModule } from 'ng2-charts';
 import { AppComponent } from './app.component';
 import { routing } from './app.routes';
 import { CustomEditorsModule } from './components/activiti/custom-editor/custom-editor.component';
+import { FormListDemoComponent } from './components/form/form-list-demo.component';
+import { StyleManager } from './components/theme-picker/style-manager/style-manager';
+import { ThemePickerModule } from './components/theme-picker/theme-picker';
 import { MaterialModule } from './material.module';
 import { DebugAppConfigService } from './services/debug-app-config.service';
 
@@ -48,7 +51,6 @@ import { RecentComponent } from './components/files/recent.component';
 import { SharedLinksComponent } from './components/files/shared-links.component';
 import { SitesComponent } from './components/files/sites.component';
 import { TrashcanComponent } from './components/files/trashcan.component';
-import { FormListDemoComponent } from './components/form/form-list-demo.component';
 
 import {
     AboutComponent,
@@ -102,7 +104,8 @@ if (process.env.ENV === 'production') {
         DiagramsModule.forRoot(),
         CustomEditorsModule,
         Editor3DModule.forRoot(),
-        ChartsModule
+        ChartsModule,
+        ThemePickerModule
     ],
     declarations: [
         AppComponent,

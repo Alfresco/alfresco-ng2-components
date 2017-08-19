@@ -81,7 +81,7 @@ describe('AlfrescoLogin', () => {
     describe('Login button', () => {
 
         const getLoginButton = () => element.querySelector('#login-button');
-        const getLoginButtonText = () => element.querySelector('#login-button span.login-button-label').innerText;
+        const getLoginButtonText = () => element.querySelector('#login-button span.adf-login-button-label').innerText;
 
         it('should be rendered with the proper key by default', () => {
             expect(getLoginButton()).not.toBeNull();
@@ -150,11 +150,11 @@ describe('AlfrescoLogin', () => {
         expect(element.querySelector('[for="password"]')).toBeDefined();
         expect(element.querySelector('[for="password"]').innerText).toEqual('LOGIN.LABEL.PASSWORD');
 
-        expect(element.querySelector('#login-action-help')).toBeDefined();
-        expect(element.querySelector('#login-action-help').innerText).toEqual('LOGIN.ACTION.HELP');
+        expect(element.querySelector('#adf-login-action-left')).toBeDefined();
+        expect(element.querySelector('#adf-login-action-left').innerText).toEqual('LOGIN.ACTION.HELP');
 
-        expect(element.querySelector('#login-action-register')).toBeDefined();
-        expect(element.querySelector('#login-action-register').innerText).toEqual('LOGIN.ACTION.REGISTER');
+        expect(element.querySelector('#adf-login-action-right')).toBeDefined();
+        expect(element.querySelector('#adf-login-action-right').innerText).toEqual('LOGIN.ACTION.REGISTER');
     });
 
     describe('Copyright text', () => {
@@ -478,7 +478,7 @@ describe('AlfrescoLogin', () => {
         expect(component.error).toBe(false);
         expect(component.success).toBe(true);
         expect(element.querySelector('#login-success')).toBeDefined();
-        expect(element.querySelector('#login-success').innerHTML).toEqual('LOGIN.MESSAGES.LOGIN-SUCCESS');
+        expect(element.querySelector('#login-success').innerHTML).toContain('LOGIN.MESSAGES.LOGIN-SUCCESS');
         expect(component.onSuccess.emit).toHaveBeenCalledWith({
             token: true,
             username: 'fake-username',

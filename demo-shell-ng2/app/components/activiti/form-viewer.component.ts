@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AfterViewChecked, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
@@ -26,7 +26,7 @@ declare var componentHandler;
     templateUrl: './form-viewer.component.html',
     styleUrls: ['./form-viewer.component.css']
 })
-export class FormViewerComponent implements OnInit, OnDestroy, AfterViewChecked {
+export class FormViewerComponent implements OnInit, OnDestroy {
 
     taskId: string;
 
@@ -43,13 +43,6 @@ export class FormViewerComponent implements OnInit, OnDestroy, AfterViewChecked 
 
     ngOnDestroy() {
         this.sub.unsubscribe();
-    }
-
-    ngAfterViewChecked() {
-        // workaround for MDL issues with dynamic components
-        if (componentHandler) {
-            componentHandler.upgradeAllRegistered();
-        }
     }
 
 }

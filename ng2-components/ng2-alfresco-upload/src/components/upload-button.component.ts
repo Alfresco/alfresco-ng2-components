@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, forwardRef, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import {
     AlfrescoApiService,
@@ -34,10 +34,11 @@ import { PermissionModel } from '../models/permissions.model';
 @Component({
     selector: 'adf-upload-button, alfresco-upload-button',
     templateUrl: './upload-button.component.html',
-    styleUrls: ['./upload-button.component.css'],
+    styleUrls: ['./upload-button.component.scss'],
     providers: [
         { provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadButtonComponent)}
-    ]
+    ],
+    encapsulation: ViewEncapsulation.None
 })
 export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionSubject {
 

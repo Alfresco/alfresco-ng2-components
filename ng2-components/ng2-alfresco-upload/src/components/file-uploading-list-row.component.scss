@@ -1,67 +1,74 @@
-@import 'theming';
+@import 'colors';
 
-:host {
-    display: flex;
-    align-items: center;
-    padding: 0.5em 1em 0.5em 1em;
+@mixin mat-file-uploading-list-theme($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
 
-    &:not(:first-child) {
-         border-top: 1px solid $alfresco-dark-color--hue-1;
-    }
 
-    .list-row {
-        cursor: default;
+    .adf-file-uploading-list {
+        display: flex;
+        align-items: center;
+        padding: 0.5em 1em 0.5em 1em;
 
-        &__name {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            flex: 1 1 auto;
-            padding: 0 1em 0 0.5em;
+        &:not(:first-child) {
+            border-top: 1px solid ;
         }
 
-        &__group, &__block {
-            min-width: 200px;
-            display: flex;
-            justify-content: flex-end;
-        }
+        .list-row {
+            cursor: default;
 
-        &__group--toggle {
-            cursor: pointer;
+            &__name {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                flex: 1 1 auto;
+                padding: 0 1em 0 0.5em;
+            }
 
-            .list-row__status {
+            &__group, &__block {
+                min-width: 200px;
                 display: flex;
+                justify-content: flex-end;
             }
 
-            .list-row__action {
-                display: none;
-            }
+            &__group--toggle {
+                cursor: pointer;
 
-            &:hover {
                 .list-row__status {
-                    display: none;
+                    display: flex;
                 }
 
                 .list-row__action {
-                    display: flex;
+                    display: none;
+                }
+
+                &:hover {
+                    .list-row__status {
+                        display: none;
+                    }
+
+                    .list-row__action {
+                        display: flex;
+                    }
                 }
             }
-        }
 
-        &__status--done {
-            color: $alfresco-secondary-accent--default;
-        }
+            &__status--done {
+                color: mat-color($accent);
+            }
 
-        &__status--error {
-            color: $alfresco-warn-color--default;
-        }
+            &__status--error {
+                color: mat-color($warn);
+            }
 
-        &__action--cancel {
-            color: $alfresco-warn-color--default;
-        }
+            &__action--cancel {
+                color: mat-color($warn);
+            }
 
-        &__action--remove {
-            color: $alfresco-secondary-accent--default;
+            &__action--remove {
+                color: mat-color($accent);
+            }
         }
     }
 }

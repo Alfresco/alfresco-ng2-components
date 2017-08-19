@@ -16,8 +16,8 @@
  */
 
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { MaterialModule } from './src/components/material.module';
 import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
+import { MaterialModule } from './src/components/material.module';
 
 import { TagActionsComponent } from './src/components/tag-actions.component';
 import { TagListComponent } from './src/components/tag-list.component';
