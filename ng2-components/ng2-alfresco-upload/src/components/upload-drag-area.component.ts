@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, Output, ViewEncapsulation } from '@angular/core';
 import {
     AlfrescoTranslationService,
     EXTENDIBLE_COMPONENT,
@@ -33,7 +33,8 @@ import {
     styleUrls: ['./upload-drag-area.component.css'],
     providers: [
         { provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadDragAreaComponent)}
-    ]
+    ],
+    encapsulation: ViewEncapsulation.None
 })
 export class UploadDragAreaComponent implements NodePermissionSubject {
 

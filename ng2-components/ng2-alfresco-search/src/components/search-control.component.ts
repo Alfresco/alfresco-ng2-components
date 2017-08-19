@@ -24,7 +24,7 @@ import { SearchAutocompleteComponent } from './search-autocomplete.component';
 @Component({
     selector: 'adf-search-control, alfresco-search-control',
     templateUrl: './search-control.component.html',
-    styleUrls: ['./search-control.component.css']
+    styleUrls: ['./search-control.component.scss']
 })
 export class SearchControlComponent implements OnInit, OnDestroy {
 

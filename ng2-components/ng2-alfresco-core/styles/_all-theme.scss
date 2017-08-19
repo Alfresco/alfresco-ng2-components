@@ -1,0 +1,64 @@
+@import '../../ng2-alfresco-documentlist/src/components/breadcrumb/breadcrumb.component';
+@import '../../ng2-alfresco-documentlist/src/components/breadcrumb/dropdown-breadcrumb.component';
+@import '../../ng2-alfresco-documentlist/src/components/content-node-selector/content-node-selector.component';
+
+@import '../../ng2-activiti-form/src/components/widgets/form';
+@import '../../ng2-activiti-form/src/components/widgets/container/container.widget';
+@import '../../ng2-activiti-form/src/components/widgets/dynamic-table/dynamic-table.widget.scss';
+
+@import '../../ng2-activiti-diagrams/src/components/tooltip/diagram-tooltip.component';
+
+@import '../../ng2-activiti-analytics/src/components/analytics-report-list.component';
+
+@import '../../ng2-activiti-tasklist/src/components/comment-list.component';
+@import '../../ng2-activiti-tasklist/src/components/start-task.component';
+@import '../../ng2-activiti-tasklist/src/components/people-search.component';
+@import '../../ng2-activiti-tasklist/src/components/people.component';
+@import '../../ng2-activiti-tasklist/src/components/task-filters.component';
+@import '../../ng2-activiti-tasklist/src/components/task-header.component';
+
+@import '../../ng2-activiti-processlist/src/components/process-filters.component';
+
+@import '../../ng2-alfresco-upload/src/components/file-uploading-list-row.component';
+@import '../../ng2-alfresco-upload/src/components/file-uploading-dialog.component';
+
+@import '../../ng2-alfresco-login/src/components/login.component';
+
+@import '../../ng2-alfresco-core/src/components/collapsable/accordion-group.component';
+@import '../../ng2-alfresco-core/src/components/view/card-view-textitem.component';
+@import '../../ng2-alfresco-core/src/components/view/card-view-dateitem.component';
+@import '../../ng2-alfresco-core/src/components/view/card-view.component';
+@import '../../ng2-alfresco-core/src/components/toolbar/toolbar.component';
+@import '../../ng2-alfresco-core/src/components/pagination/pagination.component';
+@import '../../ng2-alfresco-core/styles/theme-colors';
+
+@import '../../ng2-alfresco-datatable/src/components/datatable/datatable.component.scss';
+
+@mixin alfresco-material-theme($theme) {
+    @include mat-colors-theme($theme);
+    @include mat-breadcrumb-theme($theme);
+    @include mat-form-theme($theme);
+    @include mat-container-widget-theme($theme);
+    @include mat-diagram-tooltip-theme($theme);
+    @include mat-comment-list-theme($theme);
+    @include mat-start-task-theme($theme);
+    @include mat-people-search-theme($theme);
+    @include mat-file-uploading-list-theme($theme);
+    @include mat-people-theme($theme);
+    @include mat-login-theme($theme);
+    @include mat-accordion-theme($theme);
+    @include mat-filters-task-theme($theme);
+    @include mat-filters-process-theme($theme);
+    @include mat-analytics-report-list-theme($theme);
+    @include mat-header-theme($theme);
+    @include mat-card-view-textitem-theme($theme);
+    @include mat-card-view-dateitem-theme($theme);
+    @include mat-pagination-theme($theme);
+    @include mat-upload-dialog-theme($theme);
+    @include mat-card-view-theme($theme);
+    @include mat-adf-toolbar-theme($theme);
+    @include mat-dynamic-table-theme($theme);
+    @include mat-breadcrumb-dropdown-theme($theme);
+    @include mat-datatable-theme($theme);
+    @include mat-content-node-selector-theme($theme);
+}

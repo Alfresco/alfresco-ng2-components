@@ -2,38 +2,47 @@
 
 <div class="settings">
     <p class="toggle">
-        <label for="switch1" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
-            <input type="checkbox" id="switch1" [checked]="isECM" class="mdl-switch__input"
-                   (click)="toggleECM()">
-            <span class="mdl-switch__label">Content Services</span>
-        </label>
+        <md-slide-toggle
+            id="switch1"
+            [color]="'primary'"
+            (click)="toggleECM()"
+            [checked]="isECM">
+            Content Services
+        </md-slide-toggle>
     </p>
     <p class="toggle">
-        <label for="switch2" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
-            <input type="checkbox" id="switch2" [checked]="isBPM" class="mdl-switch__input"
-                   (click)="toggleBPM()">
-            <span class="mdl-switch__label">Process Services</span>
-        </label>
+        <md-slide-toggle
+            id="switch2"
+            [color]="'primary'"
+            (click)="toggleBPM()"
+            [checked]="isBPM">
+            Process Services
+        </md-slide-toggle>
     </p>
     <p class="toggle">
-        <label for="switch3" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
-            <input type="checkbox" id="switch3" class="mdl-switch__input" [checked]="!disableCsrf" (click)="toggleCSRF()">
-            <span class="mdl-switch__label">CSRF</span>
-        </label>
+        <md-slide-toggle
+            id="switch3"
+            [color]="'primary'"
+            (click)="toggleCSRF()"
+            [checked]="!disableCsrf">
+            CSRF
+        </md-slide-toggle>
     </p>
     <p class="toggle">
-        <label for="switch4" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
-            <input type="checkbox" id="switch4" class="mdl-switch__input" [checked]="showFooter" (click)="toggleFooter()">
-            <span class="mdl-switch__label">Login footer</span>
-        </label>
+        <md-slide-toggle
+            id="switch4"
+            [color]="'primary'"
+            (click)="toggleFooter()"
+            [checked]="showFooter">
+            Login footer
+        </md-slide-toggle>
     </p>
 </div>
 
 <!--SETTING BUTTON-->
-<a class="mdl-navigation__link setting-button" data-automation-id="settings" href="" routerLink="/settings">
-    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored">
-        <i class="material-icons">settings</i>
-    </button>
+
+<a md-fab class="setting-button" data-automation-id="settings" href="" routerLink="/settings" >
+    <md-icon>settings</md-icon>
 </a>
 
 <alfresco-login #alfrescologin
@@ -47,30 +56,40 @@
                 (onError)="onError($event)">
     <div class="mobile-settings">
         <p>
-            <label for="switch1-mobile" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
-                <input type="checkbox" id="switch1-mobile" [checked]="isECM" class="mdl-switch__input"
-                       (click)="toggleECM()">
-                <span class="mdl-switch__label">Content Services</span>
-            </label>
+            <md-slide-toggle
+                id="switch1-mobile"
+                [color]="'primary'"
+                (click)="toggleECM()"
+                [checked]="isECM">
+                Content Services
+            </md-slide-toggle>
         </p>
         <p>
-            <label for="switch2-mobile" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
-                <input type="checkbox" id="switch2-mobile" [checked]="isBPM" class="mdl-switch__input"
-                       (click)="toggleBPM()">
-                <span class="mdl-switch__label">Process Services</span>
-            </label>
+            <md-slide-toggle
+                id="switch2-mobile"
+                [color]="'primary'"
+                (click)="toggleBPM()"
+                [checked]="isBPM">
+                Process Services
+            </md-slide-toggle>
         </p>
         <p>
-            <label for="switch3-mobile" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
-                <input type="checkbox" id="switch3-mobile" class="mdl-switch__input" [checked]="!disableCsrf" (click)="toggleCSRF()">
-                <span class="mdl-switch__label">CSRF</span>
-            </label>
+            <md-slide-toggle
+                id="switch3-mobile"
+                [color]="'primary'"
+                (click)="toggleCSRF()"
+                [checked]="!disableCsrf">
+                CSRF
+            </md-slide-toggle>
         </p>
         <p>
-            <label for="switch4-mobile" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
-                <input type="checkbox" id="switch4-mobile" class="mdl-switch__input" [checked]="showFooter" (click)="toggleFooter()">
-                <span class="mdl-switch__label">Login footer</span>
-            </label>
+            <md-slide-toggle
+                id="switch4-mobile"
+                [color]="'primary'"
+                (click)="toggleFooter()"
+                [checked]="showFooter">
+                Login footer
+            </md-slide-toggle>
         </p>
     </div>
 </alfresco-login>

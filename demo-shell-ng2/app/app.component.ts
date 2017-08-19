@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import {
     AlfrescoAuthenticationService,
@@ -30,7 +30,8 @@ declare var document: any;
 @Component({
     selector: 'adf-app',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css']
+    styleUrls: ['./app.component.scss', './theme.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
     searchTerm: string = '';

@@ -45,7 +45,7 @@ adf-document-list >>> adf-datatable tr.is-selected .image-table-cell::before {
     top: 50%;
     left: 50%;
     margin-top: -16px;
-    margin-left: -14px;
+    margin-left: -28px;
     border-radius: 100%;
     background: #00bcd4;
 }

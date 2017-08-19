@@ -1,11 +1,12 @@
 <div class="menu-container">
-    <ul class='mdl-list'>
-        <li class="mdl-list__item adf-filters__entry" (click)="selectFilter(filter)" *ngFor="let filter of filters"
-            [class.active]="currentFilter === filter">
-            <span class="mdl-list__item-primary-content">
-            <i *ngIf="hasIcon" class="material-icons mdl-list__item-icon adf-filters__entry-icon" [attr.data-automation-id]="filter.name + '_filter'" >assignment</i>
+    <md-list>
+        <md-list-item (click)="selectFilter(filter)" *ngFor="let filter of filters"
+                      [class.active]="currentFilter === filter">
+                        <span class="mdl-list__item-primary-content">
+            <i *ngIf="hasIcon" class="material-icons mdl-list__item-icon adf-filters__entry-icon"
+               [attr.data-automation-id]="filter.name + '_filter'">assignment</i>
             {{filter.name}}
             </span>
-        </li>
-    </ul>
+        </md-list-item>
+    </md-list>
 </div>

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormModel, FormService } from 'ng2-activiti-form';
 import { ActivitiForm } from 'ng2-activiti-form';
 
@@ -30,8 +30,8 @@ declare var componentHandler;
             <activiti-form [form]="form" [data]="restoredData">
             </activiti-form>
         </div>
-        <button class="mdl-button mdl-js-button" (click)="store()">STORE</button>
-        <button class="mdl-button mdl-js-button" (click)="restore()">RESTORE</button>
+        <button md-button (click)="store()" color="primary">{{'FORM-LIST.STORE' | translate }}</button>
+        <button md-button (click)="restore()" color="primary">{{'FORM-LIST.RESTORE' | translate }}</button>
     `,
     styles: [`
         .form-container {
@@ -44,9 +44,9 @@ declare var componentHandler;
         }
     `]
 })
-export class FormListDemoComponent implements AfterViewInit {
+export class FormListDemoComponent {
 
-     @ViewChild(ActivitiForm)
+    @ViewChild(ActivitiForm)
     activitiForm: ActivitiForm;
 
     formList: any [] = [];
@@ -63,13 +63,6 @@ export class FormListDemoComponent implements AfterViewInit {
             e.preventDefault();
             console.log(e.outcome);
         });
-    }
-
-    ngAfterViewInit() {
-        // workaround for MDL issues with dynamic components
-        if (componentHandler) {
-            componentHandler.upgradeAllRegistered();
-        }
     }
 
     onRowDblClick(event: CustomEvent) {
