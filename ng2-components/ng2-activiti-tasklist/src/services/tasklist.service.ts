@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
-import { Subject, Observable } from 'rxjs/Rx';
+import { Observable, Subject } from 'rxjs/Rx';
 import { Comment } from '../models/comment.model';
 import {
     FilterRepresentationModel,

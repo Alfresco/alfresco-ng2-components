@@ -177,15 +177,21 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     }
 
     onChangePageSize(pagination: Pagination): void {
-        const { maxItems, skipCount } = pagination;
-        this.taskPage = (skipCount && maxItems) ? Math.floor(skipCount / maxItems) : 0;
+        const { skipCount, maxItems } = pagination;
+        this.taskPage = this.currentPage(skipCount, maxItems);
         this.taskPagination.maxItems = maxItems;
         this.taskPagination.skipCount = skipCount;
     }
 
     onChangePageNumber(pagination: Pagination): void {
-        this.taskPagination.skipCount = pagination.skipCount;
-        this.taskPage = Math.floor(pagination.skipCount / pagination.maxItems);
+        const { maxItems, skipCount } = pagination;
+        this.taskPage = this.currentPage(skipCount, maxItems);
+        this.taskPagination.maxItems = maxItems;
+        this.taskPagination.skipCount = skipCount;
+    }
+
+    currentPage(skipCount: number, maxItems: number): number {
+        return (skipCount && maxItems) ? Math.floor(skipCount / maxItems) : 0;
     }
 
     ngOnInit() {
@@ -329,10 +335,11 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     onFormCompleted(form): void {
         this.currentTaskId = null;
         this.taskPagination.totalItems--;
-        if (this.taskPagination.totalItems > 0 && (this.taskPagination.skipCount >= this.taskPagination.totalItems)) {
-            this.taskPagination.skipCount -= this.taskPagination.maxItems;
+        const { skipCount, maxItems, totalItems } = this.taskPagination;
+        if (totalItems > 0 && (skipCount >= totalItems)) {
+            this.taskPagination.skipCount -= maxItems;
         }
-        this.taskPage = (this.taskPagination.skipCount && this.taskPagination.maxItems) ? Math.floor(this.taskPagination.skipCount / this.taskPagination.maxItems) : 0;
+        this.taskPage = this.currentPage(this.taskPagination.skipCount, maxItems);
         this.taskList.reload();
     }
 

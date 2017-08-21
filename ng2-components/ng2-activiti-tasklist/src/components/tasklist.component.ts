@@ -155,38 +155,11 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
     }
 
     private isPropertyChanged(changes: SimpleChanges): boolean {
-        let changed: boolean = false;
+        let changed: boolean = true;
 
-        let appId = changes['appId'];
-        let processInstanceId = changes['processInstanceId'];
-        let processDefinitionKey = changes['processDefinitionKey'];
-        let state = changes['state'];
-        let sort = changes['sort'];
-        let name = changes['name'];
-        let size = changes['size'];
-        let page = changes['page'];
-        let assignment = changes['assignment'];
         let landingTaskId = changes['landingTaskId'];
-        if (appId && appId.currentValue) {
-            changed = true;
-        } else if (processInstanceId && processInstanceId.currentValue) {
-            changed = true;
-        } else if (processDefinitionKey && processDefinitionKey.currentValue) {
-            changed = true;
-        } else if (state && state.currentValue) {
-            changed = true;
-        } else if (sort && sort.currentValue) {
-            changed = true;
-        } else if (name && name.currentValue) {
-            changed = true;
-        } else if (size && size.currentValue) {
-            changed = true;
-        } else if (page && (page.currentValue > -1)) {
-            changed = true;
-        } else if (assignment && assignment.currentValue) {
-            changed = true;
-        } else if (landingTaskId && landingTaskId.currentValue && !this.isEqualToCurrentId(landingTaskId.currentValue)) {
-            changed = true;
+        if (landingTaskId && landingTaskId.currentValue && this.isEqualToCurrentId(landingTaskId.currentValue)) {
+            changed = false;
         }
         return changed;
     }
