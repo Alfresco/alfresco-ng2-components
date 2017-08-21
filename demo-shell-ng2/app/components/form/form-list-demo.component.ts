@@ -19,8 +19,6 @@ import { Component, ViewChild } from '@angular/core';
 import { FormModel, FormService } from 'ng2-activiti-form';
 import { ActivitiForm } from 'ng2-activiti-form';
 
-declare var componentHandler;
-
 @Component({
     selector: 'form-list-demo',
     template: `
