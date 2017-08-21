@@ -23,6 +23,7 @@ export { LoginDemoComponent } from './login/login-demo.component';
 export { ActivitiDemoComponent } from './activiti/activiti-demo.component';
 export { ActivitiTaskAttachmentsComponent } from './activiti/activiti-task-attachments.component';
 export { ActivitiProcessAttachmentsComponent } from './activiti/activiti-process-attachments.component';
+export { ActivitiTasklistPaginatorComponent } from './activiti/activiti-tasklist-paginator.component';
 export { ActivitiShowDiagramComponent } from './activiti/activiti-show-diagram.component';
 export { FormViewerComponent } from './activiti/form-viewer.component';
 export { WebscriptComponent } from './webscript/webscript.component';

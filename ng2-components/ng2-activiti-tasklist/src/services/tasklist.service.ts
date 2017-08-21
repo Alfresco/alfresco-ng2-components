@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
-import { BehaviorSubject, Observable } from 'rxjs/Rx';
+import { Subject, Observable } from 'rxjs/Rx';
 import { Comment } from '../models/comment.model';
 import {
     FilterRepresentationModel,
@@ -30,15 +30,7 @@ import { User } from '../models/user.model';
 
 @Injectable()
 export class TaskListService {
-    private tasksListSubject = new BehaviorSubject(
-        {
-            size: 0,
-            total: 0,
-            start: 0,
-            length: 0,
-            data: []
-        }
-    );
+    private tasksListSubject = new Subject<TaskListModel>();
 
     public tasksList$: Observable<TaskListModel> = this.tasksListSubject.asObservable();
 

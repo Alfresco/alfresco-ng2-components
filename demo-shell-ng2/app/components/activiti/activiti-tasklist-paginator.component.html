@@ -1,0 +1,18 @@
+<activiti-tasklist
+    [appId]="'2002'"
+    [assignment]="'assignee'"
+    [state]="'open'"
+    [sort]="'created-desc'"
+    [page]="page"
+    [size]="pagination.maxItems"
+    #activititasklist>
+</activiti-tasklist>
+
+<adf-pagination
+    [pagination]="pagination"
+    [supportedPageSizes]="[5, 10, 15, 20]"
+    (changePageNumber)="onChangePageNumber($event)"
+    (changePageSize)="onChangePageSize($event)"
+    (nextPage)="onNextPage($event)"
+    (prevPage)="onPrevPage($event)">
+</adf-pagination>

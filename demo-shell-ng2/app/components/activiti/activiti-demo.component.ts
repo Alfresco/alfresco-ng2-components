@@ -98,8 +98,12 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     currentProcessInstanceId: string;
 
     taskSchemaColumns: any [] = [];
+    taskPagination: Pagination = {
+        skipCount: 0,
+        maxItems: 2,
+        totalItems: 0
+    };
     taskPage: number = 0;
-    taskMaxItems: number = 5;
     processSchemaColumns: any [] = [];
 
     activeTab: string = 'tasks'; // tasks|processes|reports
@@ -162,19 +166,37 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
         */
     }
 
+    onPrevPage(pagination: Pagination): void {
+        this.taskPagination.skipCount = pagination.skipCount;
+        this.taskPage--;
+    }
+
     onNextPage(pagination: Pagination): void {
+        this.taskPagination.skipCount = pagination.skipCount;
         this.taskPage++;
     }
 
     onChangePageSize(pagination: Pagination): void {
-        this.taskMaxItems = pagination.maxItems;
+        const { maxItems, skipCount } = pagination;
+        this.taskPage = (skipCount && maxItems) ? Math.floor(skipCount / maxItems) : 0;
+        this.taskPagination.maxItems = maxItems;
+        this.taskPagination.skipCount = skipCount;
     }
 
     onChangePageNumber(pagination: Pagination): void {
-        this.taskMaxItems = pagination.maxItems;
+        this.taskPagination.skipCount = pagination.skipCount;
+        this.taskPage = Math.floor(pagination.skipCount / pagination.maxItems);
     }
 
     ngOnInit() {
+        this.taskListService.tasksList$.subscribe(
+            (tasks) => {
+                this.taskPagination = {count: tasks.data.length, maxItems: this.taskPagination.maxItems, skipCount: this.taskPagination.skipCount, totalItems: tasks.total};
+                console.log({count: tasks.data.length, maxItems: this.taskPagination.maxItems, skipCount: this.taskPagination.skipCount, totalItems: tasks.total});
+            }, (err) => {
+            console.log('err');
+        });
+
         if (this.router.url.includes('processes') ) {
             this.activeTab = 'processes';
         }
@@ -305,8 +327,13 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     }
 
     onFormCompleted(form): void {
-        this.taskList.reload();
         this.currentTaskId = null;
+        this.taskPagination.totalItems--;
+        if (this.taskPagination.totalItems > 0 && (this.taskPagination.skipCount >= this.taskPagination.totalItems)) {
+            this.taskPagination.skipCount -= this.taskPagination.maxItems;
+        }
+        this.taskPage = (this.taskPagination.skipCount && this.taskPagination.maxItems) ? Math.floor(this.taskPagination.skipCount / this.taskPagination.maxItems) : 0;
+        this.taskList.reload();
     }
 
     onFormContentClick(content: any): void {

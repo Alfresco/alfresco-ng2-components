@@ -16,10 +16,9 @@
  */
 
 import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { Pagination } from 'alfresco-js-api';
 import { DataColumnListComponent } from 'ng2-alfresco-core';
 import { DataColumn, DataRowEvent, DataTableAdapter, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
-import { Observable, Observer } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskListModel } from '../models/task-list.model';
 import { TaskListService } from './../services/tasklist.service';
@@ -30,7 +29,7 @@ const DEFAULT_SIZE = 5;
     templateUrl: './tasklist.component.html',
     styleUrls: ['./tasklist.component.css']
 })
-export class TaskListComponent implements OnChanges, OnInit, AfterContentInit, Observer<TaskListModel> {
+export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
 
     requestNode: TaskQueryRequestRepresentationModel;
 
@@ -74,13 +73,11 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit, O
 
     currentInstanceId: string;
 
-    pagination: Pagination = {};
-
     @Input()
     page: number = 0;
 
     @Input()
-    maxItems: number = DEFAULT_SIZE;
+    size: number = DEFAULT_SIZE;
 
     isLoading: boolean = true;
 
@@ -103,24 +100,19 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit, O
     }
 
     ngOnInit() {
-        this.taskListService.tasksList$.subscribe(this);
-    }
+        if (this.data === undefined) {
+            this.data = new ObjectDataTableAdapter();
+        }
+        this.taskListService.tasksList$.subscribe(
+            (tasks) => {
+                let instancesRow = this.createDataRow(tasks.data);
+                this.renderInstances(instancesRow);
+                this.selectTask(this.landingTaskId);
+                this.onSuccess.emit(tasks);
+                this.isLoading = false;
+        }, (err) => {
 
-    next(tasks: TaskListModel) {
-        this.pagination = {count: tasks.data.length, maxItems: this.maxItems, skipCount: 0, totalItems: tasks.total};
-        let instancesRow = this.createDataRow(tasks.data);
-        this.renderInstances(instancesRow);
-        this.selectTask(this.landingTaskId);
-        this.onSuccess.emit(tasks);
-        this.isLoading = false;
-    }
-
-    error(err: any) {
-
-    }
-
-    complete() {
-
+        });
     }
 
     ngAfterContentInit() {
@@ -171,7 +163,7 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit, O
         let state = changes['state'];
         let sort = changes['sort'];
         let name = changes['name'];
-        let maxItems = changes['maxItems'];
+        let size = changes['size'];
         let page = changes['page'];
         let assignment = changes['assignment'];
         let landingTaskId = changes['landingTaskId'];
@@ -187,9 +179,9 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit, O
             changed = true;
         } else if (name && name.currentValue) {
             changed = true;
-        } else if (maxItems && maxItems.currentValue) {
+        } else if (size && size.currentValue) {
             changed = true;
-        } else if (page && page.currentValue) {
+        } else if (page && (page.currentValue > -1)) {
             changed = true;
         } else if (assignment && assignment.currentValue) {
             changed = true;
@@ -217,24 +209,6 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit, O
                : this.taskListService.findTasksByState(this.requestNode);
     }
 
-    onChangePageSize(pagination: Pagination): void {
-        this.maxItems = pagination.maxItems;
-        this.reload();
-    }
-
-    onChangePageNumber(pagination: Pagination): void {
-        this.maxItems = pagination.maxItems;
-        this.reload();
-    }
-
-    onNextPage(pagination: Pagination): void {
-        this.page++;
-        this.reload();
-    }
-    onPrevPage(pagination: Pagination) {
-        this.page--;
-        this.reload();
-    }
     /**
      * Create an array of ObjectDataRow
      * @param instances
@@ -338,7 +312,7 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit, O
             sort: this.sort,
             landingTaskId: this.landingTaskId,
             page: this.page,
-            size: this.maxItems,
+            size: this.size,
             start: 0
         };
         return new TaskQueryRequestRepresentationModel(requestNode);
