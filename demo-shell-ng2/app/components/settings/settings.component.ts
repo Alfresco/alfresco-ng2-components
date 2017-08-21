@@ -19,8 +19,6 @@ import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { AlfrescoSettingsService, LogService, StorageService } from 'ng2-alfresco-core';
 
-declare var componentHandler: any;
-
 @Component({
     selector: 'app-settings',
     templateUrl: 'settings.component.html',

@@ -101,7 +101,7 @@ export class DiagramTooltipComponent implements AfterViewInit, OnDestroy {
     private handleMouseEnter(event): void {
         let props;
 
-        if(this.strategy === STRATEGY.ELEMENT ) {
+        if (this.strategy === STRATEGY.ELEMENT ) {
             props = event.target.getBoundingClientRect();
         }else {
             props = {top: (event.pageY - 150), left: event.pageX , width: event.layerX, height: 50};
