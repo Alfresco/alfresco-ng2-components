@@ -1,5 +1,5 @@
 import {CommonModule} from '@angular/common';
-import {ChangeDetectionStrategy, Component, NgModule, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, NgModule} from '@angular/core';
 import {
     MdButtonModule, MdGridListModule, MdIconModule, MdMenuModule,
     MdTooltipModule
