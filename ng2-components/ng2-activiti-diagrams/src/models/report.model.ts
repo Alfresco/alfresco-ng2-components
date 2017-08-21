@@ -38,7 +38,7 @@ export class ReportParametersModel {
     }
 
     hasParameters() {
-        return (this.definition && this.definition.parameters) ? true : false;
+        return (this.definition && this.definition.parameters && this.definition.parameters.length > 0) ? true : false;
     }
 }
 
@@ -72,7 +72,7 @@ export class ReportParameterDetailsModel {
     name: string;
     nameKey: string;
     type: string;
-    value: string;
+    value: any;
     options: ParameterValueModel[];
     dependsOn: string;
 
@@ -106,6 +106,7 @@ export class ParameterValueModel {
 }
 
 export class ReportQuery {
+    reportName: string;
     processDefinitionId: string;
     status: string;
     taskName: string;
@@ -116,24 +117,28 @@ export class ReportQuery {
     duration: number;
 
     constructor(obj?: any) {
+        this.reportName = obj && obj.reportName || null;
         this.processDefinitionId = obj && obj.processDefinitionId || null;
         this.status = obj && obj.status || null;
         this.taskName = obj && obj.taskName || null;
         this.dateRangeInterval = obj && obj.dateRangeInterval || null;
-        this.typeFiltering = obj && obj.typeFiltering || true;
+        this.typeFiltering = obj && (typeof obj.typeFiltering !== 'undefined') ? obj.typeFiltering : true;
         this.slowProcessInstanceInteger = obj && obj.slowProcessInstanceInteger || 0;
         this.duration = obj && obj.duration || 0;
         this.dateRange = new ReportDateRange(obj);
     }
+
 }
 
 export class ReportDateRange {
     startDate: string;
     endDate: string;
+    rangeId: string;
 
     constructor(obj?: any) {
         this.startDate = obj && obj.startDate || null;
         this.endDate = obj && obj.endDate || null;
+        this.rangeId = obj && obj.rangeId || null;
     }
 
 }

@@ -26,17 +26,13 @@ import {
     OnInit,
     Output,
     SimpleChanges,
-    ViewChild
+    ViewChild,
+    ViewEncapsulation
 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
-import { AlfrescoTranslationService, ContentService, LogService } from 'ng2-alfresco-core';
-import {
-    ParameterValueModel,
-    ReportParameterDetailsModel,
-    ReportParametersModel,
-    ReportQuery
-} from '../models/report.model';
+import { ParameterValueModel, ReportParameterDetailsModel, ReportParametersModel, ReportQuery } from 'ng2-activiti-diagrams';
+import { ContentService, LogService } from 'ng2-alfresco-core';
 import { AnalyticsService } from '../services/analytics.service';
 
 declare var componentHandler;
@@ -45,7 +41,8 @@ declare let dialogPolyfill: any;
 @Component({
     selector: 'adf-analytics-report-parameters, analytics-report-parameters',
     templateUrl: './analytics-report-parameters.component.html',
-    styleUrls: ['./analytics-report-parameters.component.css']
+    styleUrls: ['./analytics-report-parameters.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class AnalyticsReportParametersComponent implements OnInit, OnChanges, OnDestroy, AfterViewChecked, AfterContentChecked {
 
@@ -59,9 +56,6 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
 
     @Input()
     hideComponent: boolean = false;
-
-    @Input()
-    debug: boolean = false;
 
     @Output()
     onSuccess = new EventEmitter();
@@ -107,14 +101,10 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     private hideParameters: boolean = true;
     private formValidState: boolean = false;
 
-    constructor(private translateService: AlfrescoTranslationService,
-                private analyticsService: AnalyticsService,
+    constructor(private analyticsService: AnalyticsService,
                 private formBuilder: FormBuilder,
                 private logService: LogService,
                 private contentService: ContentService) {
-        if (translateService) {
-            translateService.addTranslationFolder('ng2-activiti-analytics', 'assets/ng2-activiti-analytics');
-        }
     }
 
     ngOnInit() {

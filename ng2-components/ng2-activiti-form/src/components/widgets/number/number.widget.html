@@ -1,15 +1,18 @@
-<div class="mdl-textfield mdl-js-textfield number-widget {{field.className}}"
-     [class.number-widget__invalid]="!field.isValid">
-    <label [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
-    <input class="mdl-textfield__input"
-           type="text"
-           pattern="-?[0-9]*(\.[0-9]+)?"
-           [attr.id]="field.id"
-           [attr.required]="isRequired()"
-           [value]="field.value"
-           [(ngModel)]="field.value"
-           (ngModelChange)="checkVisibility(field)"
-           [disabled]="field.readOnly"
-           placeholder="{{field.placeholder}}">
-    <span *ngIf="field.validationSummary" class="mdl-textfield__error">{{field.validationSummary}}</span>
+<div class="adf-textfield adf-number-widget {{field.className}}"
+     [class.adf-invalid]="!field.isValid" [class.adf-readonly]="field.readOnly">
+    <md-input-container>
+        <label class="adf-label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
+        <input mdInput
+               class="adf-input"
+               type="text"
+               pattern="-?[0-9]*(\.[0-9]+)?"
+               [id]="field.id"
+               [required]="isRequired()"
+               [value]="field.value"
+               [(ngModel)]="field.value"
+               (ngModelChange)="checkVisibility(field)"
+               [disabled]="field.readOnly"
+               placeholder="{{field.placeholder}}">
+    </md-input-container>
+    <error-widget [error]="field.validationSummary" ></error-widget>
 </div>

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { TagService } from './../services/tag.service';
 
@@ -29,15 +29,13 @@ import { TagService } from './../services/tag.service';
 @Component({
     selector: 'adf-tag-node-actions-list, alfresco-tag-node-actions-list',
     templateUrl: './tag-actions.component.html',
-    styleUrls: ['./tag-actions.component.css']
+    styleUrls: ['./tag-actions.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class TagActionsComponent implements OnChanges {
 
     @Input()
     nodeId: string;
-
-    @Input()
-    isContextMenu: boolean = false;
 
     @Output()
     successAdd: EventEmitter<any> = new EventEmitter();
@@ -57,10 +55,6 @@ export class TagActionsComponent implements OnChanges {
     disableAddTag: boolean = true;
 
     constructor(private tagService: TagService, private translateService: AlfrescoTranslationService) {
-        if (translateService) {
-            translateService.addTranslationFolder('ng2-alfresco-tag', 'assets/ng2-alfresco-tag');
-        }
-
         this.tagService.refresh.subscribe(() => {
             this.refreshTag();
         });

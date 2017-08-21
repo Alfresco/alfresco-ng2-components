@@ -59,3 +59,13 @@
     flex-direction: row;
     height: 100%;
 }
+
+adf-empty-list-header >>>>div {
+    height: 32px;
+    opacity: 0.26 !important;
+    font-family: Muli, Helvetica, Arial, sans-serif;
+    font-size: 24px;
+    line-height: 1.33;
+    letter-spacing: -1px;
+    color: #000000;
+}

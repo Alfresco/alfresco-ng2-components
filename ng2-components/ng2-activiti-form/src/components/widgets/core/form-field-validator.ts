@@ -132,9 +132,9 @@ export class DateFieldValidator implements FormFieldValidator {
     ];
 
     // Validates that the input string is a valid date formatted as <dateFormat> (default D-M-YYYY)
-    static isValidDate(dateString: string, dateFormat: string = 'D-M-YYYY'): boolean {
-        if (dateString) {
-            let d = moment(dateString.split('T')[0], dateFormat, true);
+    static isValidDate(inputDate: string, dateFormat: string = 'D-M-YYYY'): boolean {
+        if (inputDate) {
+            let d = moment(inputDate, dateFormat, true);
             return d.isValid();
         }
 
@@ -355,3 +355,16 @@ export class RegExFieldValidator implements FormFieldValidator {
     }
 
 }
+
+export const FORM_FIELD_VALIDATORS = [
+    new RequiredFieldValidator(),
+    new NumberFieldValidator(),
+    new MinLengthFieldValidator(),
+    new MaxLengthFieldValidator(),
+    new MinValueFieldValidator(),
+    new MaxValueFieldValidator(),
+    new RegExFieldValidator(),
+    new DateFieldValidator(),
+    new MinDateFieldValidator(),
+    new MaxDateFieldValidator()
+];

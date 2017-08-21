@@ -17,17 +17,20 @@
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ActivitiContentService } from 'ng2-activiti-form';
-import { AlfrescoTranslationService, ContentService, ThumbnailService } from 'ng2-alfresco-core';
+import { ContentService, ThumbnailService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'adf-process-attachment-list',
-    styleUrls: ['./process-attachment-list.component.css'],
+    styleUrls: ['./process-attachment-list.component.scss'],
     templateUrl: './process-attachment-list.component.html'
 })
 export class ProcessAttachmentListComponent implements OnChanges {
 
     @Input()
     processInstanceId: string;
+
+    @Input()
+    disabled: boolean = false;
 
     @Output()
     attachmentClick = new EventEmitter();
@@ -38,17 +41,15 @@ export class ProcessAttachmentListComponent implements OnChanges {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
+    @Input()
+    emptyListImageUrl: string = require('./../assets/images/empty_doc_lib.svg');
+
     attachments: any[] = [];
     isLoading: boolean = true;
 
-    constructor(private translateService: AlfrescoTranslationService,
-                private activitiContentService: ActivitiContentService,
+    constructor(private activitiContentService: ActivitiContentService,
                 private contentService: ContentService,
                 private thumbnailService: ThumbnailService) {
-
-        if (translateService) {
-            translateService.addTranslationFolder('ng2-activiti-processlist', 'assets/ng2-activiti-processlist');
-        }
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -136,9 +137,12 @@ export class ProcessAttachmentListComponent implements OnChanges {
 
         event.value.actions = [
             viewAction,
-            removeAction,
             downloadAction
         ];
+
+        if (!this.disabled) {
+            event.value.actions.splice(1, 0, removeAction);
+        }
     }
 
     onExecuteRowAction(event: any) {
@@ -177,5 +181,9 @@ export class ProcessAttachmentListComponent implements OnChanges {
                 this.error.emit(err);
             }
         );
+    }
+
+    isDisabled(): boolean {
+        return this.disabled;
     }
 }

@@ -22,6 +22,7 @@ import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { AnalyticsReportHeatMapComponent } from '../components/analytics-report-heat-map.component';
 import { WIDGET_DIRECTIVES } from '../components/widgets/index';
+import { MaterialModule } from '../material.module';
 import { AnalyticsService } from '../services/analytics.service';
 
 declare let jasmine: any;
@@ -46,7 +47,8 @@ describe('AnalyticsReportHeatMapComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                DiagramsModule.forRoot()
+                DiagramsModule.forRoot(),
+                MaterialModule
             ],
             declarations: [
                 AnalyticsReportHeatMapComponent,

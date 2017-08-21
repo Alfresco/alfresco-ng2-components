@@ -1,8 +1,9 @@
 <div [ngClass]="field.className">
     <md-checkbox
         [id]="field.id"
+        color="primary"
         [required]="field.required"
-        [disabled]="field.readOnly"
+        [disabled]="field.readOnly || readOnly"
         [(ngModel)]="field.value"
         (change)="onChange()">
         {{field.name}}

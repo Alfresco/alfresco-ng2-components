@@ -1,6 +1,6 @@
-<div  id="adf-empty-list" class="empty-list_empty_template">
-    <div class="empty-list__this-space-is-empty">{{ emptyMsg | translate }}</div>
-    <div class="empty-list__drag-drop">{{ dragDropMsg | translate }}</div>
-    <div class="empty-list__any-files-here-to-add">{{ additionalMsg | translate }}</div>
-    <img [src]="emptyListImageUrl" class="empty-list__empty_doc_lib">
+<div class="adf-empty-list_template">
+    <ng-content select="adf-empty-list-header"></ng-content>
+    <ng-content select="adf-empty-list-body"></ng-content>
+    <ng-content select="adf-empty-list-footer"></ng-content>
+    <ng-content></ng-content>
 </div>

@@ -17,11 +17,10 @@
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ActivitiContentService } from 'ng2-activiti-form';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'adf-create-task-attachment',
-    styleUrls: ['./create-task-attachment.component.css'],
+    styleUrls: ['./create-task-attachment.component.scss'],
     templateUrl: './create-task-attachment.component.html'
 })
 export class AttachmentComponent implements OnChanges {
@@ -35,12 +34,7 @@ export class AttachmentComponent implements OnChanges {
     @Output()
     success: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(private translateService: AlfrescoTranslationService,
-                private activitiContentService: ActivitiContentService) {
-
-        if (translateService) {
-            translateService.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
-        }
+    constructor(private activitiContentService: ActivitiContentService) {
     }
 
     ngOnChanges(changes: SimpleChanges) {

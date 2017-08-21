@@ -1,0 +1,22 @@
+<md-card class="example-card" class="adf-content-container" *ngIf="content">
+    <md-card-content *ngIf="showDocumentContent">
+        <div *ngIf="content.isThumbnailSupported()" >
+            <img id="thumbnailPreview" class="adf-img-upload-widget" [src]="content.thumbnailUrl">
+        </div>
+        <div *ngIf="!content.isThumbnailSupported()">
+            <i class="material-icons">image</i>
+            <div id="unsupported-thumbnail" class="adf-content-widget-preview-text">{{ 'FORM.PREVIEW.IMAGE_NOT_AVAILABLE' | translate }}
+            </div>
+        </div>
+        <div class="mdl-card__supporting-text upload-widget__content-text">{{content.name}}</div>
+    </md-card-content>
+
+    <md-card-actions>
+        <button md-icon-button id="view" (click)="openViewer(content)">
+            <md-icon class="md-24">zoom_in</md-icon>
+        </button>
+        <button md-icon-button id="download" (click)="download(content)">
+            <md-icon class="md-24">file_download</md-icon>
+        </button>
+    </md-card-actions>
+</md-card>

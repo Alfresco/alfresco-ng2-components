@@ -17,7 +17,7 @@
 
  /* tslint:disable:component-selector  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { FormService } from './../../../services/form.service';
@@ -27,8 +27,9 @@ import { baseHost , WidgetComponent } from './../widget.component';
 @Component({
     selector: 'typeahead-widget',
     templateUrl: './typeahead.widget.html',
-    styleUrls: ['./typeahead.widget.css'],
-    host: baseHost
+    styleUrls: ['./typeahead.widget.scss'],
+    host: baseHost,
+    encapsulation: ViewEncapsulation.None
 })
 export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit {
 

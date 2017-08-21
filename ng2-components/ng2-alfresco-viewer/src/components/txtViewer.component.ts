@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-/* tslint:disable:component-selector  */
-
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
 import { Http, RequestOptions, Response, ResponseContentType } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 @Component({
-    selector: 'txt-viewer',
+    selector: 'adf-txt-viewer',
     templateUrl: './txtViewer.component.html',
-    styleUrls: ['./txtViewer.component.css']
+    styleUrls: ['./txtViewer.component.scss'],
+    host: { 'class': 'adf-txt-viewer' },
+    encapsulation: ViewEncapsulation.None
 })
 export class TxtViewerComponent implements OnChanges {
 

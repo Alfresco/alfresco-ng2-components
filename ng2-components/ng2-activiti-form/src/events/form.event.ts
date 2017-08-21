@@ -19,9 +19,19 @@ import { FormModel } from './../components/widgets/core/index';
 
 export class FormEvent {
 
+    private isDefaultPrevented: boolean = false;
+
     readonly form: FormModel;
 
     constructor(form: FormModel) {
         this.form = form;
+    }
+
+    get defaultPrevented() {
+        return this.isDefaultPrevented;
+    }
+
+    preventDefault() {
+        this.isDefaultPrevented = true;
     }
 }

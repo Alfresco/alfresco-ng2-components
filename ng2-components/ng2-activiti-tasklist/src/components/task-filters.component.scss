@@ -1,0 +1,31 @@
+@mixin mat-filters-task-theme($theme) {
+    $primary: map-get($theme, primary);
+
+    .mdl-list__item {
+        cursor: pointer;
+    }
+
+    .adf {
+
+        &-filters__entry {
+            cursor: pointer;
+        }
+
+        &-filters__entry-icon {
+            margin-right: 12px !important;
+        }
+
+        &-filters__entry {
+            &.active {
+                color: mat-color($primary);
+            }
+            &:hover {
+                opacity: 0.8;
+            }
+            &.active .adf-filters__entry-icon {
+                color: mat-color($primary);
+            }
+        }
+
+    }
+}

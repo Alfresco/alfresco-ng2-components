@@ -18,6 +18,7 @@
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MdCheckboxChange } from '@angular/material';
+import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from 'ng2-alfresco-core';
 import { MaterialModule } from '../../material.module';
 import {
@@ -29,6 +30,7 @@ import {
 } from './../../data/index';
 import { DataTableCellComponent } from './datatable-cell.component';
 import { DataTableComponent } from './datatable.component';
+import { LocationCellComponent } from './location-cell.component';
 
 describe('DataTable', () => {
 
@@ -40,11 +42,13 @@ describe('DataTable', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
+                RouterTestingModule,
+                CoreModule,
                 MaterialModule
             ],
             declarations: [
                 DataTableCellComponent,
+                LocationCellComponent,
                 DataTableComponent
             ]
         }).compileComponents();
@@ -133,7 +137,7 @@ describe('DataTable', () => {
         expect(rows[1].isSelected).toBeTruthy();
     });
 
-    it('should unselect the row with [single] selection mode', () => {
+    it('should not unselect the row with [single] selection mode', () => {
         dataTable.selectionMode = 'single';
         dataTable.data = new ObjectDataTableAdapter(
             [
@@ -150,8 +154,27 @@ describe('DataTable', () => {
         expect(rows[1].isSelected).toBeFalsy();
 
         dataTable.onRowClick(rows[0], null);
-        expect(rows[0].isSelected).toBeFalsy();
+        expect(rows[0].isSelected).toBeTruthy();
         expect(rows[1].isSelected).toBeFalsy();
+    });
+
+    it('should unselect the row with [multiple] selection mode and modifier key', () => {
+        dataTable.selectionMode = 'multiple';
+        dataTable.data = new ObjectDataTableAdapter(
+            [ { name: '1' } ],
+            [ new ObjectDataColumn({ key: 'name'}) ]
+        );
+        const rows = dataTable.data.getRows();
+
+        dataTable.ngOnChanges({});
+        dataTable.onRowClick(rows[0], null);
+        expect(rows[0].isSelected).toBeTruthy();
+
+        dataTable.onRowClick(rows[0], null);
+        expect(rows[0].isSelected).toBeTruthy();
+
+        dataTable.onRowClick(rows[0], <any> { metaKey: true, preventDefault() {} });
+        expect(rows[0].isSelected).toBeFalsy();
     });
 
     it('should select multiple rows with [multiple] selection mode', () => {
@@ -207,14 +230,14 @@ describe('DataTable', () => {
     });
 
     it('should initialize default adapter', () => {
-        let table = new DataTableComponent(null, null, null);
+        let table = new DataTableComponent(null, null);
         expect(table.data).toBeUndefined();
         table.ngOnChanges({'data': new SimpleChange('123', {}, true)});
         expect(table.data).toEqual(jasmine.any(ObjectDataTableAdapter));
     });
 
     it('should load data table on onChange', () => {
-        let table = new DataTableComponent(null, null, null);
+        let table = new DataTableComponent(null, null);
         let data = new ObjectDataTableAdapter([], []);
 
         expect(table.data).toBeUndefined();
@@ -565,6 +588,43 @@ describe('DataTable', () => {
         dataTable.fallbackThumbnail = null;
         dataTable.onImageLoadingError(event);
         expect(event.target.src).toBe(originalSrc);
+    });
+
+    it('should not get cell tooltip when row is not provided', () => {
+        const col = <DataColumn> { key: 'name', type: 'text' };
+        expect(dataTable.getCellTooltip(null, col)).toBeNull();
+    });
+
+    it('should not get cell tooltip when column is not provided', () => {
+        const row = <DataRow> {};
+        expect(dataTable.getCellTooltip(row, null)).toBeNull();
+    });
+
+    it('should not get cell tooltip when formatter is not provided', () => {
+        const col = <DataColumn> { key: 'name', type: 'text' };
+        const row = <DataRow> {};
+        expect(dataTable.getCellTooltip(row, col)).toBeNull();
+    });
+
+    it('should use formatter function to generate tooltip', () => {
+        const tooltip = 'tooltip value';
+        const col = <DataColumn> {
+            key: 'name',
+            type: 'text',
+            formatTooltip: () =>  tooltip
+        };
+        const row = <DataRow> {};
+        expect(dataTable.getCellTooltip(row, col)).toBe(tooltip);
+    });
+
+    it('should return null value from the tooltip formatter', () => {
+        const col = <DataColumn> {
+            key: 'name',
+            type: 'text',
+            formatTooltip: () =>  null
+        };
+        const row = <DataRow> {};
+        expect(dataTable.getCellTooltip(row, col)).toBeNull();
     });
 
 });

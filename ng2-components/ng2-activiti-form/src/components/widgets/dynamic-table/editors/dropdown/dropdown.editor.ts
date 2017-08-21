@@ -23,9 +23,9 @@ import { FormService } from './../../../../../services/form.service';
 import { DynamicTableColumn, DynamicTableColumnOption, DynamicTableModel, DynamicTableRow } from './../../dynamic-table.widget.model';
 
 @Component({
-    selector: 'alf-dropdown-editor',
+    selector: 'adf-dropdown-editor',
     templateUrl: './dropdown.editor.html',
-    styleUrls: ['./dropdown.editor.css']
+    styleUrls: ['./dropdown.editor.scss']
 })
 export class DropdownEditorComponent implements OnInit {
 
@@ -96,7 +96,7 @@ export class DropdownEditorComponent implements OnInit {
     }
 
     onValueChanged(row: DynamicTableRow, column: DynamicTableColumn, event: any) {
-        let value: any = (<HTMLInputElement> event.target).value;
+        let value: any = (<HTMLInputElement> event).value;
         value = column.options.find(opt => opt.name === value);
         row.value[column.id] = value;
     }

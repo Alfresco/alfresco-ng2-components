@@ -1,59 +1,60 @@
-<div id="viewer" *ngIf="showViewer" [ngClass]="{'all-space': !overlayMode }">
-    <div *ngIf="overlayMode">
-        <div id="viewer-shadow-transparent" class="viewer-shadow-transparent"></div>
-    </div>
+<div *ngIf="showViewer"
+    class="adf-viewer-container"
+    [class.adf-viewer-overlay-container]="overlayMode"
+    [class.adf-viewer-inline-container]="!overlayMode">
 
-    <div id="viewer-main-container" class="all-space" [ngClass]="{'viewer-overlay-view': overlayMode }">
+    <div class="adf-viewer-content">
+        <ng-container *ngIf="overlayMode">
+            <adf-toolbar color="default" class="adf-viewer-toolbar">
+                <adf-toolbar-title>
+                    <span class="adf-viewer-filename">{{ displayName }}</span>
+                </adf-toolbar-title>
+                <button
+                    md-icon-button
+                    class="adf-viewer-close-button"
+                    mdTooltip="Close and go back"
+                    mdTooltipPosition="before"
+                    (click)="close()"
+                    aria-label="Close">
+                    <md-icon>close</md-icon>
+                </button>
+            </adf-toolbar>
+        </ng-container>
 
-        <!-- Start Layout -->
-        <div [ngClass]="{'mdl-layout mdl-js-layout mdl-layout--fixed-header': overlayMode, 'all-space': !overlayMode}">
+        <div class="adf-viewer-layout">
+            <div class="adf-viewer-layout-content">
+                <div *ngIf="isLoaded()">
+                    <div class="adf-viewer-content-container">
 
-            <header *ngIf="overlayMode" class="mdl-layout__header">
-                <div class="mdl-layout__header-row">
+                        <ng-container *ngIf="isPdf()">
+                            <adf-pdf-viewer
+                                [showToolbar]="showToolbar"
+                                [blobFile]="blobFile"
+                                [urlFile]="urlFileContent"
+                                [nameFile]="displayName">
+                            </adf-pdf-viewer>
+                        </ng-container>
 
-                    <!-- File Title -->
-                    <span id="viewer-name-file" class="mdl-layout-title viewer-name-file">{{displayName}}</span>
+                        <ng-container *ngIf="isImage()">
+                            <adf-img-viewer
+                                [urlFile]="urlFileContent"
+                                [nameFile]="displayName"
+                                [blobFile]="blobFile">
+                            </adf-img-viewer>
+                        </ng-container>
 
-                    <span class="vertical-divider"></span>
+                        <ng-container *ngIf="isMedia()">
+                            <adf-media-player
+                                [urlFile]="urlFileContent"
+                                [mimeType]="mimeType"
+                                [blobFile]="blobFile"
+                                [nameFile]="displayName">
+                            </adf-media-player>
+                        </ng-container>
 
-                    <div class="mdl-layout-spacer"></div>
-
-                    <!-- Start Navigation -->
-                    <nav class="mdl-navigation">
-                        <div id="viewer-toolbar-view-options">
-                            <button *ngIf="overlayMode"
-                                    class="mdl-color--black mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
-                                    (click)="close()" aria-label="Close">
-                                <i id="viewer-close-button" class="icon material-icons">close</i>
-                            </button>
-                        </div>
-                    </nav>
-                    <!-- End Navigation -->
-                </div>
-            </header>
-
-            <main id="page-content" class="mdl-layout__content" [ngClass]="{'all-space': !overlayMode }">
-
-                <div class="mdl-grid">
-
-                    <div id="viewer-content-container" *ngIf="isLoaded()"
-                         class="center-element mdl-cell mdl-cell--12-col">
-
-                        <!-- Start View Switch-->
-                        <div *ngIf="isPdf()">
-                            <pdf-viewer [showToolbar]="showToolbar" [blobFile]="blobFile" [urlFile]="urlFileContent"
-                                        [nameFile]="displayName"></pdf-viewer>
-                        </div>
-                        <div class="center-element" *ngIf="isImage()">
-                            <img-viewer [urlFile]="urlFileContent" [nameFile]="displayName" [blobFile]="blobFile"></img-viewer>
-                        </div>
-                        <div class="center-element" *ngIf="isMedia()">
-                            <media-player [urlFile]="urlFileContent" [mimeType]="mimeType" [blobFile]="blobFile"
-                                          [nameFile]="displayName"></media-player>
-                        </div>
-                        <div class="center-element" *ngIf="isText()">
-                            <txt-viewer [urlFile]="urlFileContent" [blobFile]="blobFile" ></txt-viewer>
-                        </div>
+                        <ng-container *ngIf="isText()">
+                            <adf-txt-viewer [urlFile]="urlFileContent" [blobFile]="blobFile" ></adf-txt-viewer>
+                        </ng-container>
 
                          <span *ngFor="let extensionTemplate of extensionTemplates">
                             <ng-template
@@ -63,22 +64,20 @@
                             </ng-template>
                          </span>
 
-                        <div *ngIf="!supportedExtension()">
-                            <not-supported-format  *ngIf="!extensionTemplate"
-                                                   [urlFile]="urlFileContent"
-                                                   [blobFile]="blobFile"
-                                                   [nameFile]="displayName"
-                                                   [showToolbar]="showToolbar"
-                                                   [nodeId]="fileNodeId">
-                            </not-supported-format>
+                        <div *ngIf="!supportedExtension()" class="adf-viewer-unknown-content">
+                            <adf-not-supported-format
+                                *ngIf="!extensionTemplate"
+                                [urlFile]="urlFileContent"
+                                [blobFile]="blobFile"
+                                [nameFile]="displayName"
+                                [showToolbar]="showToolbar"
+                                [nodeId]="fileNodeId">
+                            </adf-not-supported-format>
                         </div>
-                        <!-- End View Switch -->
 
                     </div>
-
                 </div>
-            </main>
+            </div>
         </div>
-        <!-- End Layout -->
     </div>
 </div>

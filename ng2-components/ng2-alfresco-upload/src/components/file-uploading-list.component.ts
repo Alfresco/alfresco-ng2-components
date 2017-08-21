@@ -87,40 +87,48 @@ export class FileUploadingListComponent {
     }
 
     /**
-     * Check if all the files are not in the Progress state.
-     * @returns {boolean} - false if there is at least one file in Progress
+     * Checks if all the files are uploaded
+     * @returns {boolean} - false if there is at least one file in Progress | Starting | Pending
      */
     isUploadCompleted(): boolean {
-        let isPending = false;
-        let isAllCompleted = true;
-
-        for (let i = 0; i < this.files.length && !isPending; i++) {
-            let file = this.files[i];
-            if (file.status === FileUploadStatus.Progress) {
-                isPending = true;
-                isAllCompleted = false;
-            }
-        }
-        return isAllCompleted;
+         return !this.isUploadCancelled() &&
+            !!this.files.length &&
+            !this.files
+                .some(({status}) =>
+                    status === FileUploadStatus.Starting ||
+                    status === FileUploadStatus.Progress ||
+                    status === FileUploadStatus.Pending
+                );
     }
 
     /**
-     * Check if all the files are not in the Progress state.
-     * @returns {boolean} - false if there is at least one file in Progress
+     * Check if all the files are Cancelled | Aborted | Error.
+     * @returns {boolean} - false if there is at least one file in uploading states
      */
     isUploadCancelled(): boolean {
-        return this.files
-            .filter((file) => file.status !== FileUploadStatus.Error)
-            .every((file) => file.status === FileUploadStatus.Cancelled
-                || file.status === FileUploadStatus.Aborted);
+        return !!this.files.length &&
+            this.files
+                .every(({status}) =>
+                    status === FileUploadStatus.Aborted ||
+                    status === FileUploadStatus.Cancelled ||
+                    status === FileUploadStatus.Error
+                );
     }
 
-    uploadErrorFiles(): FileModel[] {
-        return this.files.filter((item) => item.status === FileUploadStatus.Error);
+    /**
+     * Gets all the files with status Error.
+     * @returns {boolean} - false if there is none
+     */
+    get uploadErrorFiles(): FileModel[] {
+        return this.files.filter(({status}) => status === FileUploadStatus.Error);
     }
 
-    totalErrorFiles(): number {
-        return this.files.filter((item) => item.status === FileUploadStatus.Error).length;
+    /**
+     * Gets all the files with status Cancelled.
+     * @returns {boolean} - false if there is none
+     */
+    get uploadCancelledFiles(): FileModel[] {
+        return this.files.filter(({status}) => status === FileUploadStatus.Cancelled);
     }
 
     private onRemoveSuccess(file: FileModel): void {

@@ -1,25 +1,35 @@
-<div class="content-grid mdl-grid content-layout login-content"
+<div class="adf-login-content"
      [style.background-image]="'url(' + backgroundImageUrl + ')'">
-    <div class="mdl-card login-card-wide">
+    <md-card class="adf-login-card-wide">
         <form [formGroup]="form" (submit)="onSubmit(form.value, $event)">
-            <div class="mdl-card__title alfresco-logo">
-                <!--HEADER TEMPLATE-->
-                <ng-template *ngIf="headerTemplate"
-                          ngFor [ngForOf]="[data]"
-                          [ngForTemplate]="headerTemplate">
-                </ng-template>
-                <img *ngIf="!headerTemplate" class="center" [src]="logoImageUrl" alt="{{'LOGIN.LOGO' | translate }}">
-            </div>
-            <div class="mdl-card__supporting-text login-controls">
+
+            <md-card-header>
+                <md-card-title>
+                    <div class="adf-alfresco-logo">
+                        <!--HEADER TEMPLATE-->
+                        <ng-template *ngIf="headerTemplate"
+                                     ngFor [ngForOf]="[data]"
+                                     [ngForTemplate]="headerTemplate">
+                        </ng-template>
+                        <img *ngIf="!headerTemplate" class="adf-img-logo" [src]="logoImageUrl"
+                             alt="{{'LOGIN.LOGO' | translate }}">
+                    </div>
+                </md-card-title>
+            </md-card-header>
+
+            <md-card-content class="adf-login-controls">
 
                 <!--ERRORS AREA-->
                 <div>
                     <div *ngIf="error" id="login-error" data-automation-id="login-error"
-                         class="error mdl-card__supporting-text adf-error-message">
-                         <md-icon class="error-icon">warning</md-icon>
-                         <span class="login-error-message">{{errorMsg | translate }}</span>
+                         class="error  adf-error-message">
+                        <md-icon class="error-icon">warning</md-icon>
+                        <span class="login-error-message">{{errorMsg | translate }}</span>
                     </div>
-                    <div *ngIf="success" id="login-success" data-automation-id="login-success" class="mdl-card__supporting-text" class="alfresco-login__message">{{'LOGIN.MESSAGES.LOGIN-SUCCESS' | translate }}</div>
+                    <div *ngIf="success" id="login-success" data-automation-id="login-success"
+                         class="adf-login-message">
+                        {{'LOGIN.MESSAGES.LOGIN-SUCCESS' | translate }}
+                    </div>
                 </div>
 
                 <!--USERNAME FIELD-->
@@ -36,8 +46,8 @@
                                tabindex="1">
                     </md-input-container>
 
-                    <span class="alfresco-login__validation" for="username" *ngIf="formError.username">
-                        <span id="username-error" class="alfresco-login__error" data-automation-id="username-error">{{formError.username | translate }}</span>
+                    <span class="adf-login-validation" for="username" *ngIf="formError.username">
+                        <span id="username-error" class="adf-login-error" data-automation-id="username-error">{{formError.username | translate }}</span>
                     </span>
                 </div>
 
@@ -50,11 +60,16 @@
                                id="password"
                                data-automation-id="password"
                                tabindex="2">
-                        <md-icon *ngIf="isPasswordShow" mdSuffix class="alfresco-login__password-icon" data-automation-id="show_password" (click)="toggleShowPassword()">visibility</md-icon>
-                        <md-icon *ngIf="!isPasswordShow" mdSuffix class="alfresco-login__password-icon" data-automation-id="hide_password" (click)="toggleShowPassword()">visibility_off</md-icon>
+                        <md-icon *ngIf="isPasswordShow" mdSuffix class="adf-login-password-icon"
+                                 data-automation-id="show_password" (click)="toggleShowPassword()">visibility
+                        </md-icon>
+                        <md-icon *ngIf="!isPasswordShow" mdSuffix class="adf-login-password-icon"
+                                 data-automation-id="hide_password" (click)="toggleShowPassword()">visibility_off
+                        </md-icon>
                     </md-input-container>
-                    <span class="alfresco-login__validation" for="password" *ngIf="formError.password">
-                        <span id="password-required" class="alfresco-login__error" data-automation-id="password-required">{{formError.password | translate }}</span>
+                    <span class="adf-login-validation" for="password" *ngIf="formError.password">
+                        <span id="password-required" class="adf-login-error"
+                              data-automation-id="password-required">{{formError.password | translate }}</span>
                     </span>
                 </div>
 
@@ -63,49 +78,52 @@
 
                 <br>
                 <button type="submit" id="login-button" tabindex="3"
-                        class="adf-login-button center mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+                        class="adf-login-button"
+                        md-raised-button color="primary"
                         [class.isChecking]="actualLoginStep === LoginSteps.Checking"
                         [class.isWelcome]="actualLoginStep === LoginSteps.Welcome"
                         data-automation-id="login-button" [disabled]="!form.valid">
 
-                            <span *ngIf="actualLoginStep === LoginSteps.Landing" class="login-button-label">{{ 'LOGIN.BUTTON.LOGIN' | translate }}</span>
+                    <span *ngIf="actualLoginStep === LoginSteps.Landing" class="adf-login-button-label">{{ 'LOGIN.BUTTON.LOGIN' | translate }}</span>
 
-                            <div *ngIf="actualLoginStep === LoginSteps.Checking" class="adf-interactive-login-label">
-                                <span class="login-button-label">{{ 'LOGIN.BUTTON.CHECKING' | translate }}</span>
-                                <md-spinner id="checking-spinner" class="adf-login-checking-spinner"></md-spinner>
-                            </div>
+                    <div *ngIf="actualLoginStep === LoginSteps.Checking" class="adf-interactive-login-label">
+                        <span class="adf-login-button-label">{{ 'LOGIN.BUTTON.CHECKING' | translate }}</span>
+                        <md-spinner id="checking-spinner" class="adf-login-checking-spinner"></md-spinner>
+                    </div>
 
-                            <div *ngIf="actualLoginStep === LoginSteps.Welcome" class="adf-interactive-login-label">
-                                <span class="login-button-label">{{ 'LOGIN.BUTTON.WELCOME' | translate }}</span>
-                                <md-icon class="welcome-icon">done</md-icon>
-                            </div>
+                    <div *ngIf="actualLoginStep === LoginSteps.Welcome" class="adf-interactive-login-label">
+                        <span class="adf-login-button-label">{{ 'LOGIN.BUTTON.WELCOME' | translate }}</span>
+                        <md-icon class="welcome-icon">done</md-icon>
+                    </div>
 
                 </button>
-                <div *ngIf="showRememberMe" class="adf-login__remember-me" id ="login-remember">
-                    <md-checkbox color="primary" class="rememberme-cb" [checked]="rememberMe" (change)="rememberMe = !rememberMe">{{ 'LOGIN.LABEL.REMEMBER' | translate }}</md-checkbox>
+                <div *ngIf="showRememberMe" class="adf-login__remember-me" id="login-remember">
+                    <md-checkbox color="primary" class="rememberme-cb" [checked]="rememberMe"
+                                 (change)="rememberMe = !rememberMe">{{ 'LOGIN.LABEL.REMEMBER' | translate }}
+                    </md-checkbox>
                 </div>
-            </div>
-            <div *ngIf="footerTemplate || showLoginActions" class="mdl-card__actions mdl-card--border mdl-card__link">
+            </md-card-content>
+            <md-card-actions *ngIf="footerTemplate || showLoginActions">
 
-                <!--FOOTER TEMPLATE-->
-                <ng-template *ngIf="footerTemplate"
-                          ngFor [ngForOf]="[data]"
-                          [ngForTemplate]="footerTemplate">
-                </ng-template>
-                <div class="login-action" *ngIf="!footerTemplate && showLoginActions">
-                    <div id="login-action-help" class="login-action-left">
-                        <a href="{{needHelpLink}}">{{'LOGIN.ACTION.HELP' | translate }}</a>
-                    </div>
-                    <div id="login-action-register" class="login-action-right">
-                        <a href="{{registerLink}}">{{'LOGIN.ACTION.REGISTER' | translate }}</a>
+                <div class="adf-login-action-container">
+                    <!--FOOTER TEMPLATE-->
+                    <ng-template *ngIf="footerTemplate"
+                                 ngFor [ngForOf]="[data]"
+                                 [ngForTemplate]="footerTemplate">
+                    </ng-template>
+                    <div class="adf-login-action" *ngIf="!footerTemplate && showLoginActions">
+                        <div id="adf-login-action-left" class="adf-login-action-left">
+                            <a href="{{needHelpLink}}">{{'LOGIN.ACTION.HELP' | translate }}</a>
+                        </div>
+                        <div id="adf-login-action-right" class="adf-login-action-right">
+                            <a href="{{registerLink}}">{{'LOGIN.ACTION.REGISTER' | translate }}</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="mdl-card__menu">
-                <div class="mdl-spinner mdl-js-spinner"></div>
-            </div>
+            </md-card-actions>
+
         </form>
-    </div>
+    </md-card>
 
     <div class="copyright" data-automation-id="login-copyright">
         {{ copyrightText }}

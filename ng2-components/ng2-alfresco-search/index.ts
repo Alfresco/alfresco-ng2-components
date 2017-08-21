@@ -17,7 +17,7 @@
 
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CoreModule, SearchService } from 'ng2-alfresco-core';
+import { CoreModule, SearchService, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { DocumentListModule } from 'ng2-alfresco-documentlist';
 import { SearchAutocompleteComponent } from './src/components/search-autocomplete.component';
 import { SearchControlComponent } from './src/components/search-control.component';
@@ -68,7 +68,15 @@ export const ALFRESCO_SEARCH_PROVIDERS: [any] = [
         ...ALFRESCO_SEARCH_DIRECTIVES
     ],
     providers: [
-        ...ALFRESCO_SEARCH_PROVIDERS
+        ...ALFRESCO_SEARCH_PROVIDERS,
+        {
+            provide: TRANSLATION_PROVIDER,
+            multi: true,
+            useValue: {
+                name: 'ng2-alfresco-search',
+                source: 'assets/ng2-alfresco-search'
+            }
+        }
     ],
     exports: [
         ...ALFRESCO_SEARCH_DIRECTIVES

@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
-import { AlfrescoContentService, AlfrescoTranslationService, NotificationService } from 'ng2-alfresco-core';
+import { AlfrescoContentService } from 'ng2-alfresco-core';
 import { Observable, Subject } from 'rxjs/Rx';
 import { ContentActionHandler } from '../models/content-action.model';
 import { PermissionModel } from '../models/permissions.model';
@@ -28,12 +28,12 @@ import { NodeActionsService } from './node-actions.service';
 export class FolderActionsService {
 
     permissionEvent: Subject<PermissionModel> = new Subject<PermissionModel>();
+    error: Subject<Error> = new Subject<Error>();
+    success: Subject<string> = new Subject<string>();
 
     private handlers: { [id: string]: ContentActionHandler; } = {};
 
-    constructor(private translateService: AlfrescoTranslationService,
-                private notificationService: NotificationService,
-                private nodeActionsService: NodeActionsService,
+    constructor(private nodeActionsService: NodeActionsService,
                 private documentListService: DocumentListService,
                 private contentService: AlfrescoContentService) {
         this.setupActionHandlers();
@@ -81,25 +81,12 @@ export class FolderActionsService {
     private prepareHandlers(actionObservable, type: string, action: string, target?: any, permission?: string): void {
         actionObservable.subscribe(
             (fileOperationMessage) => {
-                this.notificationService.openSnackMessage(fileOperationMessage, 3000);
                 if (target && typeof target.reload === 'function') {
                     target.reload();
                 }
+                this.success.next(fileOperationMessage);
             },
-            (errorStatusCode) => {
-                switch (errorStatusCode) {
-                    case 403:
-                        this.permissionEvent.next(new PermissionModel({type, action, permission}));
-                        break;
-                    case 409:
-                        let conflictError: any = this.translateService.get('OPERATION.ERROR.CONFLICT');
-                        this.notificationService.openSnackMessage(conflictError.value, 3000);
-                        break;
-                    default:
-                        let unknownError: any = this.translateService.get('OPERATION.ERROR.UNKNOWN');
-                        this.notificationService.openSnackMessage(unknownError.value, 3000);
-                }
-            }
+            this.error.next.bind(this.error)
         );
     }
 

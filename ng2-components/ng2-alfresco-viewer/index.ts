@@ -15,35 +15,27 @@
  * limitations under the License.
  */
 
-/**
- * ng2-alfresco-viewer, provide components to view files.
- *
- * Components provided:
- *           <alfresco-viewer [urlFile]="'localTestFile.pdf'">
- *              <div class="mdl-spinner mdl-js-spinner is-active"></div>
- *          </alfresco-viewer>
- */
-
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CoreModule } from 'ng2-alfresco-core';
 
-import { MdButtonModule, MdIconModule, MdProgressSpinnerModule } from '@angular/material';
+import { MaterialModule } from './src/material.module';
+
+export { ViewerComponent } from './src/components/viewer.component';
 import { ImgViewerComponent } from './src/components/imgViewer.component';
 import { MediaPlayerComponent } from './src/components/mediaPlayer.component';
 import { NotSupportedFormatComponent } from './src/components/notSupportedFormat.component';
 import { PdfViewerComponent } from './src/components/pdfViewer.component';
 import { TxtViewerComponent } from './src/components/txtViewer.component';
+import { ViewerDialogComponent } from './src/components/viewer-dialog.component';
 import { ViewerComponent } from './src/components/viewer.component';
 import { ExtensionViewerDirective } from './src/directives/extension-viewer.directive';
-import { RenderingQueueServices } from './src/services/rendering-queue.services';
 
-export * from './src/components/viewer.component';
-export * from './src/services/rendering-queue.services';
-export * from './src/components/imgViewer.component';
-export * from './src/components/mediaPlayer.component';
-export * from './src/components/notSupportedFormat.component';
-export * from './src/components/pdfViewer.component';
-export * from './src/components/txtViewer.component';
+import { RenderingQueueServices } from './src/services/rendering-queue.services';
+import { ViewerService } from './src/services/viewer.service';
+
+export { ViewerDialogComponent } from './src/components/viewer-dialog.component';
+export { ViewerDialogSettings } from './src/components/viewer-dialog.settings';
+export { ViewerService } from './src/services/viewer.service';
 
 export const VIEWER_DIRECTIVES: any[] = [
     ViewerComponent,
@@ -52,36 +44,38 @@ export const VIEWER_DIRECTIVES: any[] = [
     MediaPlayerComponent,
     NotSupportedFormatComponent,
     PdfViewerComponent,
-    ExtensionViewerDirective
-];
-
-export const VIEWER_PROVIDERS: any[] = [
-    RenderingQueueServices
+    ExtensionViewerDirective,
+    ViewerDialogComponent
 ];
 
 @NgModule({
     imports: [
         CoreModule,
-        MdIconModule,
-        MdButtonModule,
-        MdProgressSpinnerModule
+        MaterialModule
     ],
     declarations: [
         ...VIEWER_DIRECTIVES
     ],
     providers: [
-        ...VIEWER_PROVIDERS
+        RenderingQueueServices,
+        ViewerService
     ],
     exports: [
         ...VIEWER_DIRECTIVES
+    ],
+    entryComponents: [
+        ViewerDialogComponent
     ]
 })
 export class ViewerModule {
+    /** @deprecated in 1.8.0 */
     static forRoot(): ModuleWithProviders {
+        console.log('ViewerModule.forRoot is deprecated and will be removed in future versions');
         return {
             ngModule: ViewerModule,
             providers: [
-                ...VIEWER_PROVIDERS
+                RenderingQueueServices,
+                ViewerService
             ]
         };
     }

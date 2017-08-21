@@ -4,6 +4,7 @@
 
 <!-- toc -->
 
+- [Guide](#guide)
 - [Core](#core)
   * [Components](#components)
   * [Directives](#directives)
@@ -16,6 +17,10 @@
 <!-- tocstop -->
 
 <!-- markdown-toc end -->
+
+## Guide
+
+- [Theming](../docs/theming.md)
 
 ## Core
 
@@ -62,7 +67,7 @@
 - [adf-dropdown-breadcrumb](ng2-alfresco-documentlist/README.md)
 - [adf-breadcrumb](ng2-alfresco-documentlist/README.md)
 - [adf-document-list](ng2-alfresco-documentlist/README.md)
-- [adf-pagination](ng2-alfresco-datatable/README.md)
+- [adf-pagination](ng2-alfresco-core/src/components/pagination/pagination.md)
 - [adf-empty-list](ng2-alfresco-datatable/README.md)
 - [adf-datatable](ng2-alfresco-datatable/README.md)
 - [adf-datatable-cell](ng2-alfresco-datatable/README.md)

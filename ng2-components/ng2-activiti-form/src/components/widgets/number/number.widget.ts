@@ -17,15 +17,16 @@
 
  /* tslint:disable:component-selector  */
 
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { FormService } from './../../../services/form.service';
 import { baseHost , WidgetComponent } from './../widget.component';
 
 @Component({
     selector: 'number-widget',
     templateUrl: './number.widget.html',
-    styleUrls: ['./number.widget.css'],
-    host: baseHost
+    styleUrls: ['./number.widget.scss'],
+    host: baseHost,
+    encapsulation: ViewEncapsulation.None
 })
 export class NumberWidgetComponent extends WidgetComponent {
 

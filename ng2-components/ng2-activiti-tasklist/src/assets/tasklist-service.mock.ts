@@ -68,14 +68,16 @@ export let fakeFilterWithProcessDefinitionKey = {
     sort: 'created-desc', text: '', state: 'open', assignment: 'fake-assignee', processDefinitionKey: '1'
 };
 
-export let fakeUser = { id: 1, email: 'fake-email@dom.com', firstName: 'firstName', lastName: 'lastName' };
+export let fakeUser1 = { id: 1, email: 'fake-email@dom.com', firstName: 'firstName', lastName: 'lastName' };
+
+export let fakeUser2 = { id: 1001, email: 'some-one@somegroup.com', firstName: 'some', lastName: 'one' };
 
 export let fakeTaskList = {
     size: 1, total: 1, start: 0,
     data: [
         {
             id: '1', name: 'FakeNameTask', description: null, category: null,
-            assignee: fakeUser,
+            assignee: fakeUser1,
             created: '2016-07-15T11:19:17.440+0000'
         }
     ]
@@ -86,13 +88,13 @@ export let fakeTaskListDifferentProcessDefinitionKey = {
     data: [
         {
             id: '1', name: 'FakeNameTask', description: null, category: null,
-            assignee: fakeUser,
+            assignee: fakeUser1,
             processDefinitionKey: '1',
             created: '2016-07-15T11:19:17.440+0000'
         },
         {
             id: '2', name: 'FakeNameTask2', description: null, category: null,
-            assignee: fakeUser,
+            assignee: fakeUser1,
             processDefinitionKey: '2',
             created: '2016-07-15T11:19:17.440+0000'
         }
@@ -104,7 +106,7 @@ export let secondFakeTaskList = {
     data: [
         {
             id: '200', name: 'FakeNameTask', description: null, category: null,
-            assignee: fakeUser,
+            assignee: fakeUser1,
             created: '2016-07-15T11:19:17.440+0000'
         }
     ]
@@ -114,16 +116,16 @@ export let fakeErrorTaskList = {
     error: 'wrong request'
 };
 
-export let fakeTaskDetails = { id: '999', name: 'fake-task-name', formKey: '99', assignee: fakeUser };
+export let fakeTaskDetails = { id: '999', name: 'fake-task-name', formKey: '99', assignee: fakeUser1 };
 
 export let fakeTasksComment = {
     size: 2, total: 2, start: 0,
     data: [
         {
-            id: 1, message: 'fake-message-1', created: '', createdBy: fakeUser
+            id: 1, message: 'fake-message-1', created: '', createdBy: fakeUser1
         },
         {
-            id: 2, message: 'fake-message-2', created: '', createdBy: fakeUser
+            id: 2, message: 'fake-message-2', created: '', createdBy: fakeUser1
         }
     ]
 };
@@ -133,12 +135,12 @@ export let fakeTasksChecklist = {
     data: [
         {
             id: 1, name: 'FakeCheckTask1', description: null, category: null,
-            assignee: fakeUser,
+            assignee: fakeUser1,
             created: '2016-07-15T11:19:17.440+0000'
         },
         {
             id: 2, name: 'FakeCheckTask2', description: null, category: null,
-            assignee: fakeUser,
+            assignee: fakeUser1,
             created: '2016-07-15T11:19:17.440+0000'
         }
     ]

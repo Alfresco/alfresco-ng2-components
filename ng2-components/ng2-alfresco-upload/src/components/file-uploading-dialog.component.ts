@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { ChangeDetectorRef, Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core';
-import { AlfrescoTranslationService, FileModel, FileUploadCompleteEvent, FileUploadStatus, UploadService } from 'ng2-alfresco-core';
+import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { FileModel, FileUploadCompleteEvent, UploadService } from 'ng2-alfresco-core';
 import { Subscription } from 'rxjs/Rx';
 
 @Component({
@@ -39,13 +39,8 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     private fileUploadSubscription: Subscription;
 
     constructor(
-        private translateService: AlfrescoTranslationService,
         private uploadService: UploadService,
         private changeDetecor: ChangeDetectorRef) {
-
-        if (translateService) {
-            translateService.addTranslationFolder('ng2-alfresco-upload', 'assets/ng2-alfresco-upload');
-        }
     }
 
     ngOnInit() {
@@ -79,6 +74,8 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
      * Dismiss dialog
      */
     close(): void {
+        this.totalCompleted = 0;
+        this.filesUploadingList = [];
         this.isDialogActive = false;
         this.isDialogMinimized = false;
         this.uploadService.clearQueue();

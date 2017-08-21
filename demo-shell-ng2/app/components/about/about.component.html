@@ -1,20 +1,21 @@
 <div class="about-container">
-
     <h3>Server settings</h3>
-    <small>The values below are taken from the AppConfigService and loaded from the '{{ configFile }}' file.</small>
-    <div>
-        Alfresco Process Services URL: <strong>{{ bpmHost }}</strong>
-    </div>
-
-    <div>
-        Alfresco Content Services URL: <strong>{{ ecmHost }}</strong>
-    </div>
+    <md-list>
+        <small>The values below are taken from the AppConfigService and loaded from the '{{ configFile }}' file.</small>
+        <md-list-item>
+            <h4 md-line> Alfresco Process Services URL: {{ bpmHost }}</h4>
+        </md-list-item>
+        <md-divider></md-divider>
+        <md-list-item>
+            <h4 md-line>Alfresco Content Services URL: {{ ecmHost }}</h4>
+        </md-list-item>
+    </md-list>
 
     <h3>Product Versions</h3>
     <div *ngIf="bpmVersion">
         <h3>BPM</h3>
-        <label> Edition </label>
-        <p> {{ bpmVersion.edition }}</p>
+        <label> Edition </label> {{ bpmVersion.edition }}
+        <p></p>
         <table border="2" class="adf-table-version">
             <tr>
                 <th>Major Version</th>
@@ -32,10 +33,10 @@
     </div>
     <div *ngIf="ecmVersion">
         <h3>ECM</h3>
-        <label> Edition </label>
-        <p> {{ ecmVersion.edition }}</p>
-        <label> Version </label>
-        <p> {{ ecmVersion.version.display }}</p>
+        <label> Edition </label> {{ ecmVersion.edition }}
+        <p></p>
+        <label> Version </label> {{ ecmVersion.version.display }}
+        <p></p>
         <h4>License</h4>
         <table border="2" class="adf-table-version">
             <tr>
@@ -104,7 +105,6 @@
             <a [href]="githubUrlCommitAlpha">{{githubUrlCommitAlpha}}</a>
         </div>
     </div>
-
 
     <h3>Packages</h3>
     <small>Current project is using the following ADF libraries:</small>

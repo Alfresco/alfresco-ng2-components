@@ -15,22 +15,21 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { LogService } from 'ng2-alfresco-core';
+import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { FormService } from './../services/form.service';
 
 @Component({
     selector: 'adf-form-list',
     templateUrl: './form-list.component.html',
-    styleUrls: ['./form-list.component.css']
+    styleUrls: ['./form-list.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class FormListComponent implements OnChanges {
 
     @Input()
     forms: any [] = [];
 
-    constructor(protected formService: FormService,
-                private logService: LogService) {
+    constructor(protected formService: FormService) {
     }
 
     ngOnChanges(changes: SimpleChanges) {

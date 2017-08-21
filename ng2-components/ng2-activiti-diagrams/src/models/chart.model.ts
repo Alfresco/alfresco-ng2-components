@@ -15,14 +15,18 @@
  * limitations under the License.
  */
 
+import * as moment from 'moment';
+
 export class Chart {
     id: string;
     type: string;
+    icon: string;
 
     constructor(obj?: any) {
         this.id = obj && obj.id || null;
         if (obj && obj.type) {
             this.type = this.convertType(obj.type);
+            this.icon = this.getIconType(this.type);
         }
     }
 
@@ -41,14 +45,51 @@ export class Chart {
             case 'barChart':
                 chartType = 'bar';
                 break;
+            case 'multiBarChart':
+                chartType = 'multiBar';
+                break;
             case 'processDefinitionHeatMap':
                 chartType = 'HeatMap';
+                break;
+            case 'masterDetailTable':
+                chartType = 'masterDetailTable';
                 break;
             default:
                 chartType = 'table';
                 break;
         }
         return chartType;
+    }
+
+    private getIconType(type: string): string {
+        let typeIcon: string = '';
+        switch (type) {
+            case 'pie':
+                typeIcon = 'pie_chart';
+                break;
+            case 'table':
+                typeIcon = 'web';
+                break;
+            case 'line':
+                typeIcon = 'show_chart';
+                break;
+            case 'bar':
+                typeIcon = 'equalizer';
+                break;
+            case 'multiBar':
+                typeIcon = 'poll';
+                break;
+            case 'HeatMap':
+                typeIcon = 'share';
+                break;
+            case 'masterDetailTable':
+                typeIcon = 'subtitles';
+                break;
+            default:
+                typeIcon = 'web';
+                break;
+        }
+        return typeIcon;
     }
 }
 
@@ -73,16 +114,24 @@ export class LineChart extends Chart {
 export class BarChart extends Chart {
     title: string;
     titleKey: string;
-    labels: string[] = [];
+    labels: any = [];
     datasets: any[] = [];
     data: any[] = [];
+    xAxisType: string;
+    yAxisType: string;
     options: any = {
+        responsive: true,
         scales: {
             yAxes: [{
                 ticks: {
                     beginAtZero: true,
                     stepSize: 1
                 }
+            }],
+            xAxes: [{
+                ticks: {
+                },
+                stacked: false
             }]
         }
     };
@@ -91,25 +140,69 @@ export class BarChart extends Chart {
         super(obj);
         this.title = obj && obj.title || null;
         this.titleKey = obj && obj.titleKey || null;
-        obj.values.forEach((params: any) => {
-            let dataValue = [];
-            params.values.forEach((info: any) => {
-                info.forEach((value: any, index: any) => {
-                    if (index % 2 === 0) {
-                        this.labels.push(value);
-                    } else {
-                        dataValue.push(value);
-                    }
+        this.xAxisType = obj && obj.xAxisType || null;
+        this.yAxisType = obj && obj.yAxisType || null;
+        this.options.scales.xAxes[0].ticks.callback = this.xAxisTickFormatFunction(this.xAxisType);
+        this.options.scales.yAxes[0].ticks.callback = this.yAxisTickFormatFunction(this.yAxisType);
+        if (obj.values) {
+            obj.values.forEach((params: any) => {
+                let dataValue = [];
+                params.values.forEach((info: any) => {
+                    info.forEach((value: any, index: any) => {
+                        if (index % 2 === 0) {
+                            if (!this.labels.includes(value)) {
+                                this.labels.push(value);
+                            }
+                        } else {
+                            dataValue.push(value);
+                        }
+                    });
                 });
+                if (dataValue && dataValue.length > 0) {
+                    this.datasets.push({data: dataValue, label: params.key});
+                }
             });
-            if (dataValue && dataValue.length > 0) {
-                this.datasets.push({data: dataValue, label: params.key});
-            }
-        });
+        }
     }
+
+    xAxisTickFormatFunction = function (xAxisType) {
+        return function (value) {
+            if (xAxisType !== null && xAxisType !== undefined) {
+                if ('date_day' === xAxisType) {
+                    return moment(new Date(value)).format('DD');
+                } else if ('date_month' === xAxisType) {
+                    return moment(new Date(value)).format('MMMM');
+                } else if ('date_year' === xAxisType) {
+                    return moment(new Date(value)).format('YYYY');
+                }
+            }
+            return value;
+        };
+    };
+
+    yAxisTickFormatFunction = function (yAxisType) {
+        return function (value) {
+            if (yAxisType !== null && yAxisType !== undefined) {
+                if ('count' === yAxisType) {
+                    let label = '' + value;
+                    if (label.indexOf('.') !== -1) {
+                        return '';
+                    }
+                }
+            }
+            return value;
+        };
+    };
 
     hasDatasets() {
         return this.datasets && this.datasets.length > 0 ? true : false;
+    }
+}
+
+export class MultiBarChart extends BarChart {
+
+    constructor(obj?: any) {
+        super(obj);
     }
 }
 
@@ -131,6 +224,22 @@ export class TableChart extends Chart {
 
     hasDatasets() {
         return this.datasets && this.datasets.length > 0 ? true : false;
+    }
+}
+
+export class DetailsTableChart extends TableChart {
+    detailsTable: any;
+    showDetails: boolean = false;
+
+    constructor(obj?: any) {
+        super(obj);
+        if (obj.detailTables) {
+            this.detailsTable = new TableChart(obj.detailTables[0]);
+        }
+    }
+
+    hasDetailsTable() {
+        return this.detailsTable ? true : false;
     }
 }
 
@@ -179,7 +288,20 @@ export class PieChart extends Chart {
         this.data.push(data);
     }
 
-    hasData() {
+    hasData(): boolean {
         return this.data && this.data.length > 0 ? true : false;
+    }
+
+    hasZeroValues(): boolean {
+        let isZeroValues: boolean = false;
+        if (this.hasData()) {
+            isZeroValues = true;
+            this.data.forEach((value) => {
+                if (value.toString() !== '0') {
+                    isZeroValues = false;
+                }
+            });
+        }
+        return isZeroValues;
     }
 }

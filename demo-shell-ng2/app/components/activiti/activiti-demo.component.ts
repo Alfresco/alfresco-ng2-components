@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
+// tslint:disable-next-line:adf-file-name
 import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AnalyticsReportListComponent } from 'ng2-activiti-analytics';
-import { FormEvent, FormFieldEvent, FormRenderingService, FormService } from 'ng2-activiti-form';
+import { FORM_FIELD_VALIDATORS, FormEvent, FormFieldEvent, FormRenderingService, FormService } from 'ng2-activiti-form';
 import {
     FilterProcessRepresentationModel,
     ProcessFiltersComponent,
@@ -43,6 +44,7 @@ import {
 } from 'ng2-alfresco-datatable';
 import { Subscription } from 'rxjs/Rx';
 import { /*CustomEditorComponent*/ CustomStencil01 } from './custom-editor/custom-editor.component';
+import { DemoFieldValidator } from './demo-field-validator';
 
 declare var componentHandler;
 
@@ -109,12 +111,17 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     dataTasks: ObjectDataTableAdapter;
     dataProcesses: ObjectDataTableAdapter;
 
+    fieldValidators = [
+        ...FORM_FIELD_VALIDATORS,
+        new DemoFieldValidator()
+    ];
+
     constructor(private elementRef: ElementRef,
                 private route: ActivatedRoute,
                 private router: Router,
                 private apiService: AlfrescoApiService,
-                private formRenderingService: FormRenderingService,
-                private formService: FormService) {
+                formRenderingService: FormRenderingService,
+                formService: FormService) {
         this.dataTasks = new ObjectDataTableAdapter();
         this.dataTasks.setSorting(new DataSorting('created', 'desc'));
 
@@ -141,14 +148,19 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
             console.log(`Field value changed. Form: ${e.form.id}, Field: ${e.field.id}, Value: ${e.field.value}`);
         });
 
+        // Uncomment this block to see form event handling in action
+        /*
         formService.formEvents.subscribe((event: Event) => {
             console.log('Event fired:' + event.type);
             console.log('Event Target:' + event.target);
         });
-
+        */
     }
 
     ngOnInit() {
+        if (this.router.url.includes('processes') ) {
+            this.activeTab = 'processes';
+        }
         this.sub = this.route.params.subscribe(params => {
             let applicationId = params['appId'];
             if (applicationId && applicationId !== '0') {
@@ -286,6 +298,14 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
         this.contentName = content.name;
     }
 
+    onAuditClick(event: any) {
+        console.log(event);
+    }
+
+    onAuditError(event: any): void {
+        console.error('My custom error message' + event);
+    }
+
     onTaskCreated(data: any): void {
         this.currentTaskId = data.parentTaskId;
         this.taskList.reload();
@@ -316,7 +336,7 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     }
 
     onShowProcessDiagram(event: any): void {
-        this.router.navigate(['/activiti/diagram/' + event.value]);
+        this.router.navigate(['/activiti/apps/' + this.appId + '/diagram/' + event.value]);
     }
 
     onProcessDetailsTaskClick(event: TaskDetailsEvent): void {
@@ -361,5 +381,10 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
 
     isTaskCompleted(): boolean {
         return this.activitidetails.isCompletedTask();
+    }
+
+    onAssignTask() {
+        this.taskList.reload();
+        this.currentTaskId = null;
     }
 }

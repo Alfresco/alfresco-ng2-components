@@ -16,10 +16,8 @@
  */
 
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService, CardViewDateItemModel, CardViewItem, CardViewTextItemModel, LogService } from 'ng2-alfresco-core';
+import { CardViewDateItemModel, CardViewItem, CardViewTextItemModel } from 'ng2-alfresco-core';
 import { ProcessInstance } from '../models/process-instance.model';
-
-declare let componentHandler: any;
 
 @Component({
     selector: 'adf-process-instance-header, activiti-process-instance-header',
@@ -32,14 +30,6 @@ export class ProcessInstanceHeaderComponent implements OnChanges {
     processInstance: ProcessInstance;
 
     properties: CardViewItem [];
-
-    constructor(private translate: AlfrescoTranslationService,
-                private logService: LogService) {
-
-        if (translate) {
-            translate.addTranslationFolder('ng2-activiti-processlist', 'assets/ng2-activiti-processlist');
-        }
-    }
 
     ngOnChanges(changes: SimpleChanges) {
         this.refreshData();

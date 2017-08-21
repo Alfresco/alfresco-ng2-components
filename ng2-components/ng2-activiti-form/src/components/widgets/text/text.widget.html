@@ -1,15 +1,18 @@
-<div class="mdl-textfield mdl-js-textfield text-widget {{field.className}}"
-     [class.text-widget__invalid]="!field.isValid">
-    <label [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
-    <input class="mdl-textfield__input"
-           type="text"
-           [attr.id]="field.id"
-           [attr.required]="isRequired()"
-           [value]="field.value"
-           [(ngModel)]="field.value"
-           (ngModelChange)="onFieldChanged(field)"
-           [attr.disabled]="field.readOnly ? true : null"
-           [textMask]="{mask: mask, isReversed: isMaskReversed}"
-           placeholder="{{field.placeholder}}">
-    <span *ngIf="field.validationSummary" class="mdl-textfield__error">{{field.validationSummary}}</span>
+<div class="adf-textfield adf-text-widget {{field.className}}"
+     [class.adf-invalid]="!field.isValid" [class.adf-readonly]="field.readOnly">
+    <md-input-container>
+        <label class="adf-label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
+        <input mdInput
+               class="adf-input"
+               type="text"
+               [id]="field.id"
+               [required]="isRequired()"
+               [value]="field.value"
+               [(ngModel)]="field.value"
+               (ngModelChange)="onFieldChanged(field)"
+               [disabled]="field.readOnly || readOnly"
+               [textMask]="{mask: mask, isReversed: isMaskReversed}"
+               placeholder="{{field.placeholder}}">
+    </md-input-container>
+    <error-widget [error]="field.validationSummary"></error-widget>
 </div>

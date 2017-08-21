@@ -42,6 +42,8 @@
     + [2. Define the component for the custom type](#2-define-the-component-for-the-custom-type)
     + [3. Add you custom component to your module's entryComponents list](#3-add-you-custom-component-to-your-modules-entrycomponents-list)
 - [TranslationService](#translationservice)
+  * [Registering translation sources](#registering-translation-sources)
+  * [Switching languages](#switching-languages)
 - [Renditions Service](#renditions-service)
 - [Build from sources](#build-from-sources)
 - [NPM scripts](#npm-scripts)
@@ -89,6 +91,11 @@ You should see result similar to the following one:
 ![](docs/adf-toolbar-01.png) 
 
 For more details about the [toolbar](src/components/toolbar/toolbar.md).
+
+| Feature | Notes | Docs |
+| --- | --- | --- |
+| toolbar | toolbar component | [Docs](src/components/toolbar/toolbar.md) |
+| node-permission | disable elements based on node permissions | [Docs](src/directives/node-permission.md)
 
 ## Upload Directive
 
@@ -827,19 +834,47 @@ export class MyModule {}
 
 ## TranslationService
 
-In order to enable localisation support you will need creating a `/resources/i18n/en.json` file 
-and registering path to it's parent `i18n` folder:
+### Registering translation sources
+
+In order to enable localisation support you will need to create a `/resources/i18n/en.json` file 
+and register its parent `i18n` folder with your component or application module.
+
+For example:
 
 ```ts
-class MainApplication {
-    constructor(translateService: TranslationService) {
-        translateService.addTranslationFolder('app', 'resources');
-    }
-}
+import { TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
+
+@NgModule({
+    ...
+    providers: [
+        ...
+        {
+            provide: TRANSLATION_PROVIDER,
+            multi: true,
+            useValue: {
+                name: 'ng2-alfresco-core',
+                source: 'assets/ng2-alfresco-core'
+            }
+        }
+    ]
+})
 ```
 
-Service also allows changing current language for entire application.
-Imagine you got a language picker that invokes `onLanguageClicked` method:
+Note: the `source` property points to the web application root, please ensure you have webpack settings to copy all the i18n files at compile time.
+
+```text
+index.html
+assets/ng2-alfresco-core/i18n/en.json
+...
+```
+
+You can register as many entries as you would like.
+
+### Switching languages
+
+Depending on your application, you may want to have buttons or dropdown menus to allow language selection for the end users.
+
+You can use `TranslationService` to switch languages from your code based on input events of your choice:
 
 ```ts
 class MyComponent {
@@ -847,26 +882,10 @@ class MyComponent {
     }
 
     onLanguageClicked(lang: string) {
-        this.translateService.use('en');
+        this.translateService.use(lang || 'en');
     }
 }
 ```
-
-It is also possible providing custom translations for existing components by overriding their resource paths:
-
-```ts
-class MyComponent {
-    constructor(private translateService: TranslationService) {
-        translateService.addTranslationFolder(
-            'ng2-alfresco-login', 
-            'i18n/custom-translation/alfresco-login'
-        );
-    }
-}
-```
-
-**Important note**: `addTranslationFolder` method redirects **all** languages to a new folder, you may need implementing multiple languages 
-or copying existing translation files to a new path.
 
 ## Renditions Service
 

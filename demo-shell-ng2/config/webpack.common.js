@@ -46,6 +46,7 @@ module.exports = {
             },
             {
                 test: /\.html$/,
+                include: [helpers.root('app'), helpers.root('../ng2-components')],
                 loader: 'html-loader',
                 exclude: [/node_modules/, /public/, /resources/, /dist/]
             },
@@ -63,7 +64,7 @@ module.exports = {
                 loader: 'raw-loader'
             },
             {
-                test: /\.component.scss$/,
+                test: /\.scss$/,
                 use: [{
                     loader: "to-string-loader"
                 }, {

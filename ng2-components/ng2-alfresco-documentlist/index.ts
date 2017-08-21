@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { ModuleWithProviders, NgModule } from '@angular/core';
-import { CoreModule } from 'ng2-alfresco-core';
+import { CUSTOM_ELEMENTS_SCHEMA, ModuleWithProviders, NgModule } from '@angular/core';
+import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 
 import { BreadcrumbComponent } from './src/components/breadcrumb/breadcrumb.component';
@@ -27,7 +27,6 @@ import { ContentColumnListComponent } from './src/components/content-column/cont
 import { ContentColumnComponent } from './src/components/content-column/content-column.component';
 import { ContentNodeSelectorComponent } from './src/components/content-node-selector/content-node-selector.component';
 import { DocumentListComponent } from './src/components/document-list.component';
-import { DocumentMenuActionComponent } from './src/components/document-menu-action.component';
 import { EmptyFolderContentDirective } from './src/components/empty-folder/empty-folder-content.directive';
 import { DropdownSitesComponent } from './src/components/site-dropdown/sites-dropdown.component';
 import { MaterialModule } from './src/material.module';
@@ -65,7 +64,6 @@ export * from './src/models/permissions-style.model';
 
 export const DOCUMENT_LIST_DIRECTIVES: any[] = [
     DocumentListComponent,
-    DocumentMenuActionComponent,
     ContentColumnComponent,
     ContentColumnListComponent,
     ContentActionComponent,
@@ -94,7 +92,15 @@ export const DOCUMENT_LIST_PROVIDERS: any[] = [
         ...DOCUMENT_LIST_DIRECTIVES
     ],
     providers: [
-        ...DOCUMENT_LIST_PROVIDERS
+        ...DOCUMENT_LIST_PROVIDERS,
+        {
+            provide: TRANSLATION_PROVIDER,
+            multi: true,
+            useValue: {
+                name: 'ng2-alfresco-documentlist',
+                source: 'assets/ng2-alfresco-documentlist'
+            }
+        }
     ],
     entryComponents: [
         ContentNodeSelectorComponent
@@ -103,10 +109,13 @@ export const DOCUMENT_LIST_PROVIDERS: any[] = [
         DataTableModule,
         ...DOCUMENT_LIST_DIRECTIVES,
         MaterialModule
-    ]
+    ],
+    schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class DocumentListModule {
+    /** @deprecated in 1.8.0 */
     static forRoot(): ModuleWithProviders {
+        console.log('DocumentListModule.forRoot is deprecated and will be removed in future versions');
         return {
             ngModule: DocumentListModule,
             providers: [

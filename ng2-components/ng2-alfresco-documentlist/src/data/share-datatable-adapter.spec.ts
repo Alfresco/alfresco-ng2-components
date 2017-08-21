@@ -270,12 +270,29 @@ describe('ShareDataTableAdapter', () => {
         let file = new FileNode();
         file.entry.isFile = false;
         file.entry.isFolder = false;
+        file.entry.content = null;
 
         let row = new ShareDataRow(file, documentListService, null);
         let col = <DataColumn> {type: 'image', key: '$thumbnail'};
 
         let value = adapter.getValue(row, col);
         expect(value).toContain(`assets/images/ft_ic_miscellaneous`);
+        expect(value).toContain(`svg`);
+    });
+
+    it('should resolve file icon for content type', () => {
+        let adapter = new ShareDataTableAdapter(documentListService, null);
+
+        let file = new FileNode();
+        file.entry.isFile = false;
+        file.entry.isFolder = false;
+        file.entry.content.mimeType = 'image/png';
+
+        let row = new ShareDataRow(file, documentListService, null);
+        let col = <DataColumn> {type: 'image', key: '$thumbnail'};
+
+        let value = adapter.getValue(row, col);
+        expect(value).toContain(`assets/images/ft_ic_raster_image`);
         expect(value).toContain(`svg`);
     });
 

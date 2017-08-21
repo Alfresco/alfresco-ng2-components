@@ -18,7 +18,6 @@
  /* tslint:disable:component-selector  */
 
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DiagramColorService } from '../../services/diagram-color.service';
 
 @Component({
     selector: 'diagram-icon-camel-task',
@@ -35,8 +34,7 @@ export class DiagramIconCamelTaskComponent implements OnInit {
 
     options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: ''};
 
-    constructor(public elementRef: ElementRef,
-                private diagramColorService: DiagramColorService) {}
+    constructor(public elementRef: ElementRef) {}
 
     ngOnInit() {
         this.position = {x: this.data.x + 8, y: this.data.y + 6};

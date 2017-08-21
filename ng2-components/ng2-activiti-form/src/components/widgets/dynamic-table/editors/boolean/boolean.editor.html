@@ -1,11 +1,11 @@
- <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" [attr.for]="column.id">
-    <input
-        class="mdl-checkbox__input"
-        type="checkbox"
-        [attr.id]="column.id"
+ <label [attr.for]="column.id">
+    <md-checkbox
+        color="primary"
+        [id]="column.id"
         [checked]="table.getCellValue(row, column)"
         [required]="column.required"
         [disabled]="!column.editable"
         (change)="onValueChanged(row, column, $event)">
-    <span class="mdl-checkbox__label">{{column.name}}</span>
+    <span class="adf-checkbox-label">{{column.name}}</span>
+    </md-checkbox>
 </label>
