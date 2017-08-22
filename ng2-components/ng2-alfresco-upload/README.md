@@ -240,6 +240,7 @@ Note:
 | fileUploadAborted | FileUploadEvent | Raised when file upload gets aborted by the server. |
 | fileUploadError | FileUploadEvent | Raised when an error occurs to file upload. |
 | fileUploadComplete | FileUploadCompleteEvent | Raised when file upload is complete. |
+| fileUploadDelete | FileUploadDeleteEvent | Raised when uploaded file is removed from server. |
 
 ## Build from sources
 
