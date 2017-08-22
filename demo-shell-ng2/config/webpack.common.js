@@ -64,19 +64,6 @@ module.exports = {
                 loader: 'raw-loader'
             },
             {
-                test: /\.scss$/,
-                use: [{
-                    loader: "to-string-loader"
-                }, {
-                    loader: "raw-loader"
-                }, {
-                    loader: "sass-loader",
-                    options: {
-                        includePaths: [path.resolve(__dirname, '../../ng2-components/ng2-alfresco-core/styles')]
-                    }
-                }]
-            },
-            {
                 test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
                 loader: 'file-loader?name=assets/[name].[hash].[ext]'
             },
