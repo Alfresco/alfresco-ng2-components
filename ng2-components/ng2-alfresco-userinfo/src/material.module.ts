@@ -18,9 +18,9 @@
 import { NgModule } from '@angular/core';
 import {
     MdButtonModule,
+    MdCardModule,
     MdMenuModule,
-    MdTabsModule,
-    MdCardModule
+    MdTabsModule
 } from '@angular/material';
 
 export function modules() {

@@ -6,9 +6,10 @@
              (error)="onImageLoadingError($event)" class="adf-userinfo-profile-image"/>
     </div>
 </button>
-    <md-menu #menu="mdMenu" [xPosition]="menuPositionX" [yPosition]="menuPositionY" [overlapTrigger]="false" class="adf-userinfo-menu">
-        <md-tab-group (click)="stopClosing($event)" class="adf-userinfo-tab">
-            <md-tab label="Content Services" *ngIf="ecmUser">
+    <md-menu #menu="mdMenu" id="user-profile-lists" [xPosition]="menuPositionX" [yPosition]="menuPositionY" [overlapTrigger]="false" class="adf-userinfo-menu">
+        <md-tab-group id="tab-group-env" (click)="stopClosing($event)"
+            class="adf-userinfo-tab" [class.adf-hide-tab]="!bpmUser || !ecmUser">
+            <md-tab id="ecm-panel" label="Content Services" *ngIf="ecmUser">
                 <md-card class="adf-userinfo-card">
                     <md-card-header class="adf-userinfo-card-header" [style.background-image]="'url(' + ecmBackgroundImage + ')'">
                         <img class="adf-userinfo-profile-picture"
@@ -20,23 +21,21 @@
                     </md-card-header>
                     <md-card-content>
                         <div class="adf-userinfo-supporting-text">
-                            <md-list>
-                                <md-list-item>
-                                    <span md-line id="ecm-full-name" class="adf-userinfo__detail-title">{{ecmUser.fullNameDisplay}}</span>
-                                    <span md-line class="adf-userinfo__detail-profile" id="ecm-email"> {{ecmUser.email}} </span>
-                                </md-list-item>
-                                <md-list-item>
-                                    <span md-line class="adf-userinfo__secondary-info">
+                                <div class="adf-userinfo-detail">
+                                    <span id="ecm-full-name" class="adf-userinfo__detail-title">{{ecmUser.fullNameDisplay}}</span>
+                                    <span class="adf-userinfo__detail-profile" id="ecm-email"> {{ecmUser.email}} </span>
+                                </div>
+                                <div class="adf-userinfo-detail">
+                                    <span class="adf-userinfo__secondary-info">
                                         {{ 'USER_PROFILE.LABELS.ECM.JOB_TITLE' | translate }}
-                                        <span md-line class="adf-userinfo__detail-profile"> {{ ecmUser.jobTitle ? ecmUser.jobTitle : 'N/A' }} </span>
+                                        <span id="ecm-job-title" class="adf-userinfo__detail-profile"> {{ ecmUser.jobTitle ? ecmUser.jobTitle : 'N/A' }} </span>
                                     </span>
-                                </md-list-item>
-                            </md-list>
+                                </div>
                         </div>
                     </md-card-content>
                 </md-card>
             </md-tab>
-            <md-tab label="Process Services" *ngIf="bpmUser">
+            <md-tab label="Process Services" id="bpm-panel" *ngIf="bpmUser">
             <md-card class="adf-userinfo-card">
                 <md-card-header class="adf-userinfo-card-header" [style.background-image]="'url(' + bpmBackgroundImage + ')'">
                     <img class="adf-userinfo-profile-picture"
@@ -48,18 +47,16 @@
                 </md-card-header>
                 <md-card-content>
                     <div class="adf-userinfo-supporting-text">
-                        <md-list>
-                            <md-list-item>
-                                <span md-line id="bpm-full-name" class="adf-userinfo__detail-title">{{ bpmUser.fullNameDisplay }}</span>
-                                <p md-line class="adf-userinfo__detail-profile" id="bpm-email"> {{bpmUser.email}} </p>
-                            </md-list-item>
-                            <md-list-item>
-                                <span id="bpm-tenant" md-line class="adf-userinfo__secondary-info">
-                                        {{ 'USER_PROFILE.LABELS.BPM.TENANT' | translate }}
-                                        <span md-line class="adf-userinfo__detail-profile">{{ bpmUser.tenantName ? bpmUser.tenantName : 'N/A' }}</span>
+                            <div class="adf-userinfo-detail">
+                                <span id="bpm-full-name" class="adf-userinfo__detail-title">{{ bpmUser.fullNameDisplay }}</span>
+                                <span class="adf-userinfo__detail-profile" id="bpm-email"> {{bpmUser.email}} </span>
+                            </div>
+                            <div class="adf-userinfo-detail">
+                                <span id="bpm-tenant" class="adf-userinfo__secondary-info">
+                                    {{ 'USER_PROFILE.LABELS.BPM.TENANT' | translate }}
+                                    <span class="adf-userinfo__detail-profile">{{ bpmUser.tenantName ? bpmUser.tenantName : 'N/A' }}</span>
                                 </span>
-                            </md-list-item>
-                        </md-list>
+                            </div>
                     </div>
                 </md-card-content>
             </md-card>
