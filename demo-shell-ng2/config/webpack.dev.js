@@ -45,7 +45,20 @@ module.exports = webpackMerge(commonConfig, {
                     'happypack/loader?id=ts','angular2-template-loader'
                 ],
                 exclude: [/node_modules/, /public/, /resources/, /dist/]
-            }
+            },
+            {
+                test: /\.scss$/,
+                use: [{
+                    loader: "to-string-loader"
+                }, {
+                    loader: "raw-loader"
+                }, {
+                    loader: "sass-loader",
+                    options: {
+                        includePaths: [path.resolve(__dirname, '../../ng2-components/ng2-alfresco-core/styles')]
+                    }
+                }]
+            },
         ]
     },
 
