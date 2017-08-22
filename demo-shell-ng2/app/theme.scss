@@ -1,6 +1,6 @@
 @import '~@angular/material/theming';
-@import 'colors';
-@import 'all-theme';
+@import '_colors';
+@import '_all-theme';
 
 @include mat-core();
 
