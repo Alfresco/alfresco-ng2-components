@@ -6,7 +6,7 @@ const helpers = require('./helpers');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 var HappyPack = require('happypack');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
-
+const path = require('path');
 const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
 
 const alfrescoLibs = [
@@ -50,7 +50,20 @@ module.exports = webpackMerge(commonConfig, {
                 include: [helpers.root('app'), helpers.root('../ng2-components')],
                 use: ['happypack/loader?id=ts', 'angular2-template-loader'],
                 exclude: [/node_modules/, /public/, /resources/, /dist/]
-            }
+            },
+            {
+                test: /\.scss$/,
+                use: [{
+                    loader: "to-string-loader"
+                }, {
+                    loader: "raw-loader"
+                }, {
+                    loader: "sass-loader",
+                    options: {
+                        includePaths: [path.resolve(__dirname, helpers.root('node_modules') + '/ng2-alfresco-core/styles')]
+                    }
+                }]
+            },
         ]
     },
 
@@ -81,6 +94,13 @@ module.exports = webpackMerge(commonConfig, {
                     to: `assets/`
                 }
             })
+        ]),
+        new CopyWebpackPlugin([
+            {
+                context: `node_modules/ng2-alfresco-core/prebuilt-themes/`,
+                from: '**/*.css',
+                to: 'prebuilt-themes'
+            }
         ]),
         new webpack.NoEmitOnErrorsPlugin(),
         new webpack.optimize.UglifyJsPlugin({ // https://github.com/angular/angular/issues/10618
