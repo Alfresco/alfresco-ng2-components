@@ -44,10 +44,6 @@ export const UPLOAD_DIRECTIVES: any[] = [
     FileUploadingListRowComponent
 ];
 
-export const UPLOAD_PROVIDERS: any[] = [
-
-];
-
 @NgModule({
     imports: [
         CoreModule,
@@ -57,7 +53,6 @@ export const UPLOAD_PROVIDERS: any[] = [
         ...UPLOAD_DIRECTIVES
     ],
     providers: [
-        ...UPLOAD_PROVIDERS,
         {
             provide: TRANSLATION_PROVIDER,
             multi: true,
@@ -74,10 +69,7 @@ export const UPLOAD_PROVIDERS: any[] = [
 export class UploadModule {
     static forRoot(): ModuleWithProviders {
         return {
-            ngModule: UploadModule,
-            providers: [
-                ...UPLOAD_PROVIDERS
-            ]
+            ngModule: UploadModule
         };
     }
 }
