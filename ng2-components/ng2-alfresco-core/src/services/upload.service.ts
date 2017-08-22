@@ -184,7 +184,7 @@ export class UploadService {
             emitter.emit({ value: data });
         })
         .catch(err => {
-            return err;
+            throw err;
         });
 
         return promise;
