@@ -125,7 +125,7 @@ Collection of criteria used to filter process instances, which may be customized
 #### Properties
 
 | Name | Type | Description |
-| --- | --- | --- | --- |
+| --- | --- | --- |
 | filterParam | [FilterParamsModel](#filterparamsmodel) | The params to filter the task filter. If there is no match the default one (first filter of the list) is selected |
 | appId | string | Display filters available to the current user for the application with the specified ID. |
 | appName | string | Display filters available to the current user for the application with the specified name. |
