@@ -1,0 +1,38 @@
+@mixin mat-accordion-theme($theme) {
+    $primary: map-get($theme, primary);
+
+    .adf-panel-heading {
+        float: left;
+        font-size: 14px;
+        font-weight: bold;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        text-align: left;
+        width: 100%;
+    }
+
+    .adf-panel-heading-selected {
+        color: mat-color($primary);
+    }
+
+    .adf-panel-heading-icon {
+        float: left;
+    }
+
+    .adf-panel-heading-text {
+        float: left;
+        padding-left: 20px;
+        padding-top: 4px;
+    }
+
+    .adf-panel-heading-toggle {
+        float: right;
+        cursor: pointer;
+    }
+
+    .adf-panel-heading-toggle:hover {
+        opacity: 0.4;
+    }
+}

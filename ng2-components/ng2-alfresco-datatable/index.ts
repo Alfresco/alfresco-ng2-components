@@ -16,7 +16,8 @@
  */
 
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { CoreModule } from 'ng2-alfresco-core';
+import { RouterModule } from '@angular/router';
+import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { MaterialModule } from './src/material.module';
 
 export * from './src/data/index';
@@ -24,14 +25,13 @@ export * from './src/data/index';
 export { DataTableCellComponent } from './src/components/datatable/datatable-cell.component';
 export { DataTableComponent } from './src/components/datatable/datatable.component';
 export { EmptyListComponent } from './src/components/datatable/empty-list.component';
-export { PaginationComponent } from './src/components/pagination/pagination.component';
 export { DataCellEvent, DataCellEventModel } from './src/components/datatable/data-cell.event';
 export { DataRowActionEvent, DataRowActionModel } from './src/components/datatable/data-row-action.event';
 
 import { DataTableCellComponent } from './src/components/datatable/datatable-cell.component';
 import { DataTableComponent } from './src/components/datatable/datatable.component';
 import { EmptyListComponent } from './src/components/datatable/empty-list.component';
-import { PaginationComponent } from './src/components/pagination/pagination.component';
+import { LocationCellComponent } from './src/components/datatable/location-cell.component';
 import { LoadingContentTemplateDirective } from './src/directives/loading-template.directive';
 import { NoContentTemplateDirective } from './src/directives/no-content-template.directive';
 
@@ -40,21 +40,33 @@ export function directives() {
         DataTableComponent,
         EmptyListComponent,
         DataTableCellComponent,
+        LocationCellComponent,
         NoContentTemplateDirective,
-        LoadingContentTemplateDirective,
-        PaginationComponent
+        LoadingContentTemplateDirective
     ];
 }
 
 @NgModule({
     imports: [
+        RouterModule,
         CoreModule,
         MaterialModule
     ],
     declarations: directives(),
+    providers: [
+        {
+            provide: TRANSLATION_PROVIDER,
+            multi: true,
+            useValue: {
+                name: 'ng2-alfresco-datatable',
+                source: 'assets/ng2-alfresco-datatable'
+            }
+        }
+    ],
     exports: [
         ...directives(),
-        MaterialModule
+        MaterialModule,
+        RouterModule
     ]
 })
 export class DataTableModule {

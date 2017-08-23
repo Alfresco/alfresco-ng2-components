@@ -15,14 +15,19 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Inject, Input, Optional, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Optional, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
 import { MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
-import { AlfrescoTranslationService, SearchOptions, SearchService, SiteModel } from 'ng2-alfresco-core';
+import { AlfrescoContentService, HighlightDirective, SearchOptions, SearchService, SiteModel } from 'ng2-alfresco-core';
+import { ImageResolver, RowFilter } from '../../data/share-datatable-adapter';
+import { DocumentListComponent } from '../document-list.component';
 
 export interface ContentNodeSelectorComponentData {
     title: string;
-    select: EventEmitter<MinimalNodeEntryEntity>;
+    currentFolderId?: string;
+    rowFilter?: RowFilter;
+    imageResolver?: ImageResolver;
+    select: EventEmitter<MinimalNodeEntryEntity[]>;
 }
 
 @Component({
@@ -31,38 +36,56 @@ export interface ContentNodeSelectorComponentData {
     templateUrl: './content-node-selector.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class ContentNodeSelectorComponent {
+export class ContentNodeSelectorComponent implements OnInit {
 
-    nodes: NodePaging|Array<any>;
-    siteId: null|string;
+    nodes: NodePaging | Array<any>;
+    siteId: null | string;
     searchTerm: string = '';
-    searched: boolean = false;
+    showingSearchResults: boolean = false;
     inDialog: boolean = false;
     chosenNode: MinimalNodeEntryEntity | null = null;
+    folderIdToShow: string | null = null;
 
     @Input()
     title: string;
 
+    @Input()
+    currentFolderId: string | null = null;
+
+    @Input()
+    rowFilter: RowFilter = null;
+
+    @Input()
+    imageResolver: ImageResolver = null;
+
     @Output()
-    select: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter<MinimalNodeEntryEntity>();
+    select: EventEmitter<MinimalNodeEntryEntity[]> = new EventEmitter<MinimalNodeEntryEntity[]>();
+
+    @ViewChild(DocumentListComponent)
+    documentList: DocumentListComponent;
+
+    @ViewChild(HighlightDirective)
+    highlighter: HighlightDirective;
 
     constructor(private searchService: SearchService,
-                @Optional() private translateService: AlfrescoTranslationService,
-                @Optional() @Inject(MD_DIALOG_DATA) public data?: ContentNodeSelectorComponentData,
+                private contentService: AlfrescoContentService,
+                @Optional() @Inject(MD_DIALOG_DATA) data?: ContentNodeSelectorComponentData,
                 @Optional() private containingDialog?: MdDialogRef<ContentNodeSelectorComponent>) {
-
-        if (translateService) {
-            translateService.addTranslationFolder('ng2-alfresco-documentlist', 'assets/ng2-alfresco-documentlist');
-        }
-
         if (data) {
             this.title = data.title;
             this.select = data.select;
+            this.currentFolderId = data.currentFolderId;
+            this.rowFilter = data.rowFilter;
+            this.imageResolver = data.imageResolver;
         }
 
-        if (containingDialog) {
+        if (this.containingDialog) {
             this.inDialog = true;
         }
+    }
+
+    ngOnInit() {
+        this.folderIdToShow = this.currentFolderId;
     }
 
     /**
@@ -72,7 +95,7 @@ export class ContentNodeSelectorComponent {
      */
     siteChanged(chosenSite: SiteModel): void {
         this.siteId = chosenSite.guid;
-        this.querySearch();
+        this.updateResults();
     }
 
     /**
@@ -82,17 +105,50 @@ export class ContentNodeSelectorComponent {
      */
     search(searchTerm: string): void {
         this.searchTerm = searchTerm;
-        this.querySearch();
+        this.updateResults();
+    }
+
+    /**
+     * Returns whether breadcrumb has to be shown or not
+     */
+    needBreadcrumbs() {
+        const whenInFolderNavigation = !this.showingSearchResults,
+            whenInSelectingSearchResult = this.showingSearchResults && this.chosenNode;
+
+        return whenInFolderNavigation || whenInSelectingSearchResult;
+    }
+
+    /**
+     * Returns the actually selected|entered folder node or null in case of searching for the breadcrumb
+     */
+    get breadcrumbFolderNode(): MinimalNodeEntryEntity|null {
+        if (this.showingSearchResults && this.chosenNode) {
+            return this.chosenNode;
+        } else {
+            return this.documentList.folderNode;
+        }
     }
 
     /**
      * Clear the search input
      */
     clear(): void {
-        this.searched = false;
         this.searchTerm = '';
         this.nodes = [];
         this.chosenNode = null;
+        this.showingSearchResults = false;
+        this.folderIdToShow = this.currentFolderId;
+    }
+
+    /**
+     * Update the result list depending on the criterias
+     */
+    private updateResults() {
+        if (this.searchTerm.length === 0) {
+            this.folderIdToShow = this.siteId || this.currentFolderId;
+        } else {
+        this.querySearch();
+        }
     }
 
     /**
@@ -100,24 +156,36 @@ export class ContentNodeSelectorComponent {
      */
     private querySearch(): void {
         if (this.searchTerm.length > 3) {
+            this.chosenNode = null;
+
             const searchTerm = this.searchTerm + '*';
             let searchOpts: SearchOptions = {
-                include: ['path'],
+                include: ['path', 'allowableOperations'],
                 skipCount: 0,
                 rootNodeId: this.siteId,
                 nodeType: 'cm:folder',
-                maxItems: 40,
+                maxItems: 200,
                 orderBy: null
             };
-            this.searchService
-                .getNodeQueryResults(searchTerm, searchOpts)
+            this.searchService.getNodeQueryResults(searchTerm, searchOpts)
                 .subscribe(
                     results => {
-                        this.searched = true;
+                        this.showingSearchResults = true;
+                        this.folderIdToShow = null;
                         this.nodes = results;
+                        this.highlight();
                     }
                 );
         }
+    }
+
+    /**
+     * Hightlight the actual searchterm in the next frame
+     */
+    highlight() {
+        setTimeout(() => {
+            this.highlighter.highlight(this.searchTerm);
+        }, 0);
     }
 
     /**
@@ -126,13 +194,40 @@ export class ContentNodeSelectorComponent {
      * @param event CustomEvent for node-select
      */
     onNodeSelect(event: any): void {
-        this.chosenNode = event.detail.node.entry;
+        this.attemptNodeSelection(event.detail.node.entry);
     }
 
     /**
-     * * Invoked when user unselects a node
+     * Sets showingSearchResults state to be able to differentiate between search results or folder results
      */
-    onNodeUnselect(): void {
+    onFolderChange() {
+        this.showingSearchResults = false;
+    }
+
+    /**
+     * Attempts to set the currently loaded node
+     */
+    onFolderLoaded() {
+        this.attemptNodeSelection(this.documentList.folderNode);
+    }
+
+    /**
+     * Selects node as choosen if it has the right permission, clears the selection otherwise
+     *
+     * @param entry
+     */
+    private attemptNodeSelection(entry: MinimalNodeEntryEntity): void {
+        if (this.contentService.hasPermission(entry, 'update')) {
+            this.chosenNode = entry;
+        } else {
+            this.resetChosenNode();
+        }
+    }
+
+    /**
+     * Clears the chosen node
+     */
+    resetChosenNode(): void {
         this.chosenNode = null;
     }
 
@@ -140,7 +235,7 @@ export class ContentNodeSelectorComponent {
      * Emit event with the chosen node
      */
     choose(): void {
-        this.select.next(this.chosenNode);
+        this.select.next([this.chosenNode]);
     }
 
     /**

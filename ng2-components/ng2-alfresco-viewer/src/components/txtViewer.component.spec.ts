@@ -64,7 +64,7 @@ describe('Test ng2-alfresco-viewer Text View component', () => {
             component.ngOnChanges({ 'urlFile': change }).then(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
-                    expect(element.querySelector('#adf-viewer-text-container').textContent).toContain('example');
+                    expect(element.querySelector('.adf-txt-viewer-content').textContent).toContain('example');
                     done();
                 });
             });
@@ -78,7 +78,7 @@ describe('Test ng2-alfresco-viewer Text View component', () => {
             component.ngOnChanges({ 'blobFile': change }).then(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
-                    expect(element.querySelector('#adf-viewer-text-container').textContent).toContain('example');
+                    expect(element.querySelector('.adf-txt-viewer-content').textContent).toContain('example');
                     done();
                 });
             });

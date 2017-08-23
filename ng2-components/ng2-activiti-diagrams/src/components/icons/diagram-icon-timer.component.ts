@@ -18,7 +18,6 @@
  /* tslint:disable:component-selector  */
 
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DiagramColorService } from '../../services/diagram-color.service';
 
 @Component({
     selector: 'diagram-icon-timer',
@@ -39,8 +38,7 @@ export class DiagramIconTimerComponent implements OnInit {
     circleOptions: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: ''};
     timerOptions: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: ''};
 
-    constructor(public elementRef: ElementRef,
-                private diagramColorService: DiagramColorService) {}
+    constructor(public elementRef: ElementRef) {}
 
     ngOnInit() {
         this.center.x = this.data.x + (this.data.width / 2);

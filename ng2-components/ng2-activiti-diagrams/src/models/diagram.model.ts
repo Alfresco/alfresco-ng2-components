@@ -67,8 +67,8 @@ export class DiagramElementModel {
 
     constructor(obj?: any) {
         if (obj) {
-            this.completed = obj.completed || false;
-            this.current = obj.current || false;
+            this.completed = !!obj.completed;
+            this.current = !!obj.current;
             this.height = obj.height || '';
             this.id = obj.id || '';
             this.name = obj.name || '';
@@ -117,8 +117,8 @@ export class DiagramFlowElementModel {
 
     constructor(obj?: any) {
         if (obj) {
-            this.completed = obj.completed || false;
-            this.current = obj.current || false;
+            this.completed = !!obj.completed;
+            this.current = !!obj.current;
             this.id = obj.id;
             this.properties = obj.properties;
             this.sourceRef = obj.sourceRef;

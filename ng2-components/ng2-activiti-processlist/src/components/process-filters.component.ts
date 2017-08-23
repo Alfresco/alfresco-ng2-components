@@ -16,17 +16,14 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { Observable, Observer } from 'rxjs/Rx';
 import { FilterParamsModel, FilterProcessRepresentationModel } from './../models/filter-process.model';
 import { ProcessService } from './../services/process.service';
 
-declare let componentHandler: any;
-
 @Component({
     selector: 'adf-process-instance-filters, activiti-process-instance-filters',
     templateUrl: './process-filters.component.html',
-    styleUrls: ['process-filters.component.css']
+    styleUrls: ['process-filters.component.scss']
 })
 export class ProcessFiltersComponent implements OnInit, OnChanges {
 
@@ -58,14 +55,8 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
 
     filters: FilterProcessRepresentationModel [] = [];
 
-    constructor(private translate: AlfrescoTranslationService,
-                private activiti: ProcessService,
-                private logService: LogService) {
+    constructor(private activiti: ProcessService) {
         this.filter$ = new Observable<FilterProcessRepresentationModel>(observer => this.filterObserver = observer).share();
-
-        if (translate) {
-            translate.addTranslationFolder('ng2-activiti-processlist', 'assets/ng2-activiti-processlist');
-        }
     }
 
     ngOnInit() {

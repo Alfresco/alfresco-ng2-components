@@ -11,8 +11,10 @@
   * [DataColumn Properties](#datacolumn-properties)
   * [DataTable Events](#datatable-events)
   * [DataTable DOM Events](#datatable-dom-events)
+  * [Automatic column header translation](#automatic-column-header-translation)
+  * [Custom tooltips](#custom-tooltips)
   * [Custom Empty content template](#custom-empty-content-template)
-  * [Default Empty content template](#default-empty-content-template)
+  * [Custom Empty content template](#custom-empty-content-template-1)
   * [Loading content template](#loading-content-template)
   * [Column Templates](#column-templates)
   * [Events](#events)
@@ -173,10 +175,11 @@ Here's the list of available properties you can define for a Data Column definit
 | type | string (text\|image\|date) | text | Value type |
 | format | string | | Value format (if supported by components), for example format of the date |
 | sortable | boolean | true | Toggles ability to sort by this column, for example by clicking the column header |
-| title | string | | Display title of the column, typically used for column headers |
+| title | string | | Display title of the column, typically used for column headers. You can use the i18n resouce key to get it translated automatically. |
 | template | `TemplateRef` | | Custom column template |
 | sr-title | string | | Screen reader title, used for accessibility purposes |
 | class | string | | Additional CSS class to be applied to column (header and cells) |
+| formatTooltip | Function | | Custom tooltip formatter function. |
 
 ### DataTable Events
 
@@ -218,6 +221,53 @@ onRowClick(event) {
 
 ![](docs/assets/datatable-dom-events.png)
 
+### Automatic column header translation
+
+You can also use i18n resource keys with DataColumn `title` property. 
+The component will automatically check the corresponding i18n resources and fetch corresponding value.
+
+```html
+<data-column
+    key="name"
+    title="MY.RESOURCE.KEY">
+</data-column>
+```
+
+This feature is optional. Regular text either plain or converted via the `translate` pipe will still be working as it was before.
+
+### Custom tooltips
+
+You can create custom tooltips for the table cells by providing a `formatTooltip` property with a tooltip formatter function when declaring a data column.
+
+```html
+<data-column
+    title="Name"
+    key="name"
+    [formatTooltip]="getNodeNameTooltip"
+    class="full-width ellipsis-cell">
+</data-column>
+```
+
+And the code in this case will be similar to the following:
+
+```ts
+import { DataColumn, DataRow } from 'ng2-alfresco-datatable';
+
+@Component({...})
+export class MyComponent {
+    ...
+
+    getNodeNameTooltip(row: DataRow, col: DataColumn): string {
+        if (row) {
+            return row.getValue('name');
+        }
+        return null;
+    }
+}
+```
+
+To disable the tooltip your function can return `null` or an empty string.
+
 ### Custom Empty content template
 
 You can add a template that will be shown when there are no results in your datatable:
@@ -244,9 +294,11 @@ You can add a template that will be shown when there are no results in your data
 </adf-datatable>
 ```
 
-### Default Empty content template
+### Custom Empty content template
 
 You can use the empty list component if you want to show the default ADF empty template:
+
+You can use any HTML layout or Angular component as a content of the empty template section by using the special `<adf-empty-list-header>, <adf-empty-list-body>, <adf-empty-list-footer>` elements:
 
 ```html
 <adf-datatable
@@ -259,11 +311,11 @@ You can use the empty list component if you want to show the default ADF empty t
     (rowClick)="onRowClick($event)"
     (rowDblClick)="onRowDblClick($event)">
         
-        <adf-empty-list 
-            [emptyListImageUrl]="'my-background-image.svg'"
-            [emptyMsg]="'My custom msg'"
-            [dragDropMsg]="'My drag and drop msg'"
-            [additionalMsg]="'My additional msg'">
+        <adf-empty-list>
+            <adf-empty-list-header>"'My custom Header'"</adf-empty-list-header>
+            <adf-empty-list-body>"'My custom body'"</adf-empty-list-body>
+            <adf-empty-list-footer>"'My custom footer'"</adf-empty-list-footer>
+            <ng-content>"'HTML Layout'"</ng-content>
         </adf-empty-list>
         
 </adf-datatable>

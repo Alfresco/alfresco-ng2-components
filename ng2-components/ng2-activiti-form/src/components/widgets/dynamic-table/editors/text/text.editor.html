@@ -1,11 +1,12 @@
-<div alfresco-mdl-textfield class="text-editor">
-    <input
-        class="mdl-textfield__input"
+<div class="adf-text-editor">
+    <md-input-container>
+    <label [attr.for]="column.id">{{displayName}}</label>
+    <input mdInput
         type="text"
         [value]="table.getCellValue(row, column)"
         (keyup)="onValueChanged(row, column, $event)"
         [required]="column.required"
         [disabled]="!column.editable"
-        [attr.id]="column.id">
-    <label class="mdl-textfield__label" [attr.for]="column.id">{{displayName}}</label>
+        [id]="column.id">
+    </md-input-container>
 </div>

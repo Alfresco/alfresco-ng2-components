@@ -1,0 +1,28 @@
+@mixin mat-filters-process-theme($theme) {
+    $primary: map-get($theme, primary);
+
+    .mdl-list__item {
+        cursor: pointer;
+    }
+
+    .activiti-filters__entry {
+        cursor: pointer;
+    }
+
+    .activiti-filters__entry-icon {
+        margin-right: 12px !important;
+    }
+
+    .activiti-filters__entry.active {
+        color: mat-color($primary);
+    }
+
+    .activiti-filters__entry:hover {
+        opacity: 0.8;
+    }
+
+    .activiti-filters__entry.active .activiti-filters__entry-icon {
+        color: mat-color($primary);
+    }
+
+}

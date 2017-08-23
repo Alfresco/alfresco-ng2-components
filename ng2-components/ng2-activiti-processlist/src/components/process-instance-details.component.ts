@@ -18,14 +18,12 @@
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { TaskDetailsEvent } from 'ng2-activiti-tasklist';
-import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
+import { LogService } from 'ng2-alfresco-core';
 
 import { ProcessInstance } from '../models/process-instance.model';
 import { ProcessService } from './../services/process.service';
 import { ProcessInstanceHeaderComponent } from './process-instance-header.component';
 import { ProcessInstanceTasksComponent } from './process-instance-tasks.component';
-
-declare let dialogPolyfill: any;
 
 @Component({
     selector: 'adf-process-instance-details, activiti-process-instance-details',
@@ -68,13 +66,8 @@ export class ProcessInstanceDetailsComponent implements OnChanges {
      * @param translate Translation service
      * @param activitiProcess   Process service
      */
-    constructor(private translate: AlfrescoTranslationService,
-                private activitiProcess: ProcessService,
+    constructor(private activitiProcess: ProcessService,
                 private logService: LogService) {
-
-        if (translate) {
-            translate.addTranslationFolder('ng2-activiti-processlist', 'assets/ng2-activiti-processlist');
-        }
     }
 
     ngOnChanges(changes: SimpleChanges) {

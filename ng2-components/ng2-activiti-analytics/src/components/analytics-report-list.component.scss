@@ -1,0 +1,62 @@
+@mixin mat-analytics-report-list-theme($theme) {
+    $primary: map-get($theme, primary);
+
+    .adf-analytics-report-list {
+
+        .mdl-list__item {
+            cursor: pointer;
+        }
+
+        .activiti-filters__entry {
+            cursor: pointer;
+        }
+
+        .activiti-filters__entry-icon {
+            margin-right: 12px !important;
+        }
+
+        .activiti-filters__entry.active {
+            color:  mat-color($primary);
+        }
+
+        .activiti-filters__entry.active .activiti-filters__entry-icon {
+            color:  mat-color($primary);
+        }
+
+        .application-title {
+            z-index: 7;
+        }
+
+        .logo {
+            position: absolute;
+            right: 20px;
+            top: 35px;
+            z-index: 6;
+        }
+
+        .logo i {
+            font-size: 70px;
+        }
+
+        .theme-1 {
+            background-color: #269abc;
+        }
+
+        .theme-1 .logo i {
+            color: #168aac;
+        }
+
+        .theme-1 .mdl-card__actions i {
+            color: #168aac;
+        }
+
+        .theme-1 .mdl-card__actions i:hover {
+            color: #b7dfea;
+        }
+
+        .selectedIcon {
+            color: #e9f1f3 !important;
+        }
+    }
+
+}

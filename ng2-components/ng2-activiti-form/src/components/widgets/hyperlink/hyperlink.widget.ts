@@ -17,15 +17,16 @@
 
  /* tslint:disable:component-selector  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormService } from './../../../services/form.service';
 import { baseHost , WidgetComponent } from './../widget.component';
 
 @Component({
     selector: 'hyperlink-widget',
     templateUrl: './hyperlink.widget.html',
-    styleUrls: ['./hyperlink.widget.css'],
-    host: baseHost
+    styleUrls: ['./hyperlink.widget.scss'],
+    host: baseHost,
+    encapsulation: ViewEncapsulation.None
 })
 export class HyperlinkWidgetComponent extends WidgetComponent implements OnInit {
 

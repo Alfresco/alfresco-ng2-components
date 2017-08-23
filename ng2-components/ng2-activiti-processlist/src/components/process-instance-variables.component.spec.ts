@@ -164,14 +164,6 @@ describe('ProcessInstanceVariablesComponent', () => {
             component.ngOnChanges({ 'processInstanceId': nullChange });
             expect(getVariablesSpy).not.toHaveBeenCalled();
         });
-
-        it('should set a placeholder message when processInstanceId changed to null', () => {
-            component.ngOnChanges({ 'processInstanceId': nullChange });
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(fixture.nativeElement.querySelector('adf-empty-list .empty-list__this-space-is-empty').innerHTML).toEqual('This list is empty');
-            });
-        });
     });
 
     describe('Add variable', () => {

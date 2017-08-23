@@ -1,0 +1,69 @@
+$adf-viewer-background-color: #515151;
+
+@mixin full-screen() {
+    width: 100%;
+    height: 100%;
+    background-color: $adf-viewer-background-color;
+}
+
+.adf-viewer {
+
+    &-container {
+        .adf-viewer-layout-content {
+            @include full-screen();
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+            z-index: 1;
+
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            flex: 1;
+
+            & > div {
+                display: flex;
+                flex-flow: row wrap;
+                margin: 0 auto;
+                align-items: stretch;
+            }
+        }
+
+        .adf-viewer-layout {
+            @include full-screen();
+
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .adf-viewer-content {
+            @include full-screen();
+        }
+    }
+
+    &-overlay-container {
+        .adf-viewer-content {
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            z-index: 1000;
+        }
+    }
+
+    &-inline-container {
+        @include full-screen();
+    }
+
+    &-content-container {
+        display: flex;
+        justify-content: center;
+    }
+
+    &-unknown-content {
+        align-items: center;
+        display: flex;
+    }
+}

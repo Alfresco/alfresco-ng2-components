@@ -18,8 +18,6 @@
 import { ReflectiveInjector } from '@angular/core';
 import { RenderingQueueServices } from './rendering-queue.services';
 
-declare let jasmine: any;
-
 describe('RenderingQueueServices', () => {
 
     let service, injector;

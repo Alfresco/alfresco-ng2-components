@@ -1,12 +1,14 @@
 <div class="search-results-container">
     <h1>Search results</h1>
-    <alfresco-search (preview)="showFile($event)"></alfresco-search>
+    <alfresco-search
+        [navigate]="false"
+        (nodeDbClick)="nodeDbClick($event)"></alfresco-search>
 </div>
 
 <div *ngIf="fileShowed">
     <alfresco-viewer [(showViewer)]="fileShowed"
                      [fileNodeId]="fileNodeId"
                      [overlayMode]="true">
-        <div class="mdl-spinner mdl-js-spinner is-active"></div>
+        <md-spinner></md-spinner>
     </alfresco-viewer>
 </div>

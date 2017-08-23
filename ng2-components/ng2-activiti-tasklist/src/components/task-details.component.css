@@ -28,3 +28,13 @@
 adf-people >>> .assignment-top-container{
     background-color: #fff;
 }
+
+.assignment-container {
+    background: #fff;
+    border: 1px solid #e1e1e1;
+    padding: 10px 20px;
+}
+
+adf-task-header.assign-edit-view >>> adf-card-view >>> .adf-property[data-automation-id="header-assignee"] {
+    display: none;
+}

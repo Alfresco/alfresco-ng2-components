@@ -43,7 +43,6 @@ export const ANALYTICS_PROVIDERS: any[] = [
 ];
 
 declare let jasmine: any;
-declare let mdDateTimePicker: any;
 
 describe('AnalyticsComponent', () => {
 

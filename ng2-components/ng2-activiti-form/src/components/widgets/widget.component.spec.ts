@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { ElementRef } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
 import { ActivitiAlfrescoContentService } from '../../services/activiti-alfresco.service';
@@ -30,12 +29,9 @@ describe('WidgetComponent', () => {
     let widget: WidgetComponent;
     let fixture: ComponentFixture<WidgetComponent>;
     let element: HTMLElement;
-    let componentHandler;
     let formService: FormService;
 
     beforeEach(async(() => {
-        componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
-        window['componentHandler'] = componentHandler;
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot()
@@ -69,16 +65,6 @@ describe('WidgetComponent', () => {
             element.click();
         });
 
-    });
-
-    it('should upgrade MDL content on view init', () => {
-        widget.ngAfterViewInit();
-        expect(componentHandler.upgradeAllRegistered).toHaveBeenCalled();
-    });
-
-    it('should setup MDL content only if component handler available', () => {
-        expect(widget.setupMaterialComponents(componentHandler)).toBeTruthy();
-        expect(widget.setupMaterialComponents()).toBeFalsy();
     });
 
     it('should check field', () => {
@@ -126,37 +112,6 @@ describe('WidgetComponent', () => {
 
         widget.field = new FormFieldModel(null, {required: true});
         expect(widget.isRequired()).toBeTruthy();
-    });
-
-    it('should require element reference to setup textfield', () => {
-        expect(widget.setupMaterialTextField(null, {}, 'value')).toBeFalsy();
-    });
-
-    it('should require component handler to setup textfield', () => {
-        let elementRef = new ElementRef(null);
-        expect(widget.setupMaterialTextField(elementRef, null, 'value')).toBeFalsy();
-    });
-
-    it('should require field value to setup textfield', () => {
-        let elementRef = new ElementRef(null);
-        expect(widget.setupMaterialTextField(elementRef, {}, null)).toBeFalsy();
-    });
-
-    it('should setup textfield', () => {
-        let changeCalled = false;
-        let elementRef = new ElementRef({
-            querySelector: function () {
-                return {
-                    MaterialTextfield: {
-                        change: function () {
-                            changeCalled = true;
-                        }
-                    }
-                };
-            }
-        });
-        expect(widget.setupMaterialTextField(elementRef, {}, 'value')).toBeTruthy();
-        expect(changeCalled).toBeTruthy();
     });
 
 });

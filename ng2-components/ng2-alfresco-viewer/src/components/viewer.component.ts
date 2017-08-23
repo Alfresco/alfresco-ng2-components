@@ -15,15 +15,16 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, HostListener, Inject, Input, OnChanges, OnDestroy, Output, TemplateRef } from '@angular/core';
-import { DOCUMENT } from '@angular/platform-browser';
+import { Component, EventEmitter, HostListener, Input, OnChanges, OnDestroy, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'adf-viewer, alfresco-viewer',
     templateUrl: './viewer.component.html',
-    styleUrls: ['./viewer.component.css']
+    styleUrls: ['./viewer.component.scss'],
+    host: { 'class': 'adf-viewer' },
+    encapsulation: ViewEncapsulation.None
 })
 export class ViewerComponent implements OnDestroy, OnChanges {
 
@@ -65,17 +66,11 @@ export class ViewerComponent implements OnDestroy, OnChanges {
     loaded: boolean = false;
 
     constructor(private apiService: AlfrescoApiService,
-                private element: ElementRef,
-                @Inject(DOCUMENT) private document,
                 private logService: LogService) {
     }
 
     ngOnChanges(changes) {
         if (this.showViewer) {
-            if (this.overlayMode) {
-                this.hideOtherHeaderBar();
-                this.blockOtherScrollBar();
-            }
             if (!this.urlFile && !this.blobFile && !this.fileNodeId) {
                 throw new Error('Attribute urlFile or fileNodeId or blobFile is required');
             }
@@ -93,18 +88,21 @@ export class ViewerComponent implements OnDestroy, OnChanges {
                     this.urlFileContent = this.urlFile;
                     resolve();
                 } else if (this.fileNodeId) {
-                    this.apiService.getInstance().nodes.getNodeInfo(this.fileNodeId).then((data: MinimalNodeEntryEntity) => {
-                        this.mimeType = data.content.mimeType;
-                        this.displayName = data.name;
-                        this.urlFileContent = this.apiService.getInstance().content.getContentUrl(data.id);
-                        this.extension = this.getFileExtension(data.name);
-                        this.extensionChange.emit(this.extension);
-                        this.loaded = true;
-                        resolve();
-                    },                                                                    function (error) {
-                        reject(error);
-                        this.logService.error('This node does not exist');
-                    });
+                    this.apiService.getInstance().nodes.getNodeInfo(this.fileNodeId).then(
+                        (data: MinimalNodeEntryEntity) => {
+                            this.mimeType = data.content.mimeType;
+                            this.displayName = data.name;
+                            this.urlFileContent = this.apiService.getInstance().content.getContentUrl(data.id);
+                            this.extension = this.getFileExtension(data.name);
+                            this.extensionChange.emit(this.extension);
+                            this.loaded = true;
+                            resolve();
+                        },
+                        (error) => {
+                            reject(error);
+                            this.logService.error('This node does not exist');
+                        }
+                    );
                 }
             });
         }
@@ -114,7 +112,6 @@ export class ViewerComponent implements OnDestroy, OnChanges {
      * close the viewer
      */
     close() {
-        this.unblockOtherScrollBar();
         if (this.otherMenu) {
             this.otherMenu.hidden = false;
         }
@@ -278,68 +275,6 @@ export class ViewerComponent implements OnDestroy, OnChanges {
         let key = event.keyCode;
         if (key === 27 && this.overlayMode) { // esc
             this.close();
-        }
-    }
-
-    /**
-     * Check if in the document there are scrollable main area and disable it
-     */
-    private blockOtherScrollBar() {
-        let mainElements: any = document.getElementsByTagName('main');
-
-        for (let i = 0; i < mainElements.length; i++) {
-            mainElements[i].style.overflow = 'hidden';
-        }
-    }
-
-    /**
-     * Check if in the document there are scrollable main area and re-enable it
-     */
-    private unblockOtherScrollBar() {
-        let mainElements: any = document.getElementsByTagName('main');
-
-        for (let i = 0; i < mainElements.length; i++) {
-            mainElements[i].style.overflow = '';
-        }
-    }
-
-    /**
-     * Check if the viewer is used inside and header element
-     *
-     * @returns {boolean}
-     */
-    private isParentElementHeaderBar(): boolean {
-        return !!this.closestElement(this.element.nativeElement, 'header');
-    }
-
-    /**
-     * Check if the viewer is used inside and header element
-     * @param {HTMLElement} elelemnt
-     * @param {string} nodeName
-     * @returns {HTMLElement}
-     */
-    private closestElement(element: HTMLElement, nodeName: string): HTMLElement {
-        let parent = element.parentElement;
-        if (parent) {
-            if (parent.nodeName.toLowerCase() === nodeName) {
-                return parent;
-            } else {
-                return this.closestElement(parent, nodeName);
-            }
-        } else {
-            return null;
-        }
-    }
-
-    /**
-     * Hide the other possible menu in the application
-     */
-    private hideOtherHeaderBar() {
-        if (this.overlayMode && !this.isParentElementHeaderBar()) {
-            this.otherMenu = document.querySelector('header');
-            if (this.otherMenu) {
-                this.otherMenu.hidden = true;
-            }
         }
     }
 

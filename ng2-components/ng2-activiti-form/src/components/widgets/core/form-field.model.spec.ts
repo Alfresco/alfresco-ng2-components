@@ -356,4 +356,23 @@ describe('FormFieldModel', () => {
         expect(field.hasOptions()).toBeFalsy();
     });
 
+    it('should calculate the columns in case of container type', () => {
+        let form = new FormModel();
+        let field = new FormFieldModel(form, {
+            type: FormFieldTypes.CONTAINER,
+            numberOfColumns: 888
+        });
+
+        expect(field.numberOfColumns).toBe(888);
+    });
+
+    it('should calculate the columns in case of group type', () => {
+        let form = new FormModel();
+        let field = new FormFieldModel(form, {
+            type: FormFieldTypes.GROUP,
+            numberOfColumns: 999
+        });
+
+        expect(field.numberOfColumns).toBe(999);
+    });
 });

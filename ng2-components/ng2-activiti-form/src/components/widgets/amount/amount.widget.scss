@@ -1,0 +1,40 @@
+@import 'theming';
+@import '../form';
+
+.adf {
+    &-amount-widget {
+        width: 100%;
+        vertical-align: baseline !important;
+
+        .mat-input-element {
+            margin-left: 11px;
+        }
+    }
+
+    &-amount-widget__container {
+        max-width: 100%;
+
+        .mat-input-placeholder-wrapper {
+            top: -6px !important;
+        }
+
+        .mat-input-placeholder-wrapper {
+            top: 0 !important;
+            left: 13px;
+        }
+    }
+
+    &-amount-widget__input .mat-focused {
+        transition: none;
+    }
+
+    &-amount-widget__prefix-spacing {
+        padding-right: 5px;
+    }
+
+}
+
+.mat-input-prefix {
+    position: absolute;
+    margin-top: 42px;
+}

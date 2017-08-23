@@ -19,6 +19,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MdInputModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
+import { ErrorWidgetComponent } from '../error/error.component';
 import { EcmModelService } from './../../../services/ecm-model.service';
 import { FormService } from './../../../services/form.service';
 import { FormFieldModel } from './../core/form-field.model';
@@ -36,7 +37,8 @@ describe('AmountWidgetComponent', () => {
                 MdInputModule
             ],
             declarations: [
-                AmountWidgetComponent
+                AmountWidgetComponent,
+                ErrorWidgetComponent
             ],
             providers: [
                 FormService,

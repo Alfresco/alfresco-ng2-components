@@ -23,6 +23,7 @@ import { Observable } from 'rxjs/Rx';
 import {
     CommentListComponent,
     CommentsComponent,
+    PeopleService,
     TaskListService
 } from 'ng2-activiti-tasklist';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
@@ -55,7 +56,8 @@ describe('ActivitiProcessInstanceComments', () => {
             providers: [
                 { provide: AlfrescoTranslationService, useClass: TranslationMock },
                 { provide: TaskListService, useClass: ProcessService },
-                DatePipe
+                DatePipe,
+                PeopleService
             ]
         }).compileComponents();
     }));

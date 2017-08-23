@@ -15,27 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core';
-
-declare var require: any;
+import { Component } from '@angular/core';
 
 @Component({
     selector: 'adf-empty-list',
-    styleUrls: ['./empty-list.component.css'],
+    styleUrls: ['./empty-list.component.scss'],
     templateUrl: './empty-list.component.html'
 })
-export class EmptyListComponent {
-
-    @Input()
-    emptyListImageUrl: string = require('../../assets/images/empty_doc_lib.svg');
-
-    @Input()
-    emptyMsg: string = 'ADF-DATATABLE.EMPTY.HEADER';
-
-    @Input()
-    dragDropMsg: string = 'ADF-DATATABLE.EMPTY.DRAG-AND-DROP.TITLE';
-
-    @Input()
-    additionalMsg: string = 'ADF-DATATABLE.EMPTY.DRAG-AND-DROP.SUBTITLE';
-
-}
+export class EmptyListComponent {}

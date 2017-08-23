@@ -2,6 +2,7 @@
     [rows]="users"
     [actions]="hasActions()"
     (rowClick)="selectUser($event)"
+    (rowDblClick)="selectUser($event)"
     (showRowActionsMenu)="onShowRowActionsMenu($event)"
     (executeRowAction)="onExecuteRowAction($event)">
 </adf-datatable>
