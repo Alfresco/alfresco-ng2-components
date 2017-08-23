@@ -110,8 +110,9 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
                 this.selectTask(this.landingTaskId);
                 this.onSuccess.emit(tasks);
                 this.isLoading = false;
-        }, (err) => {
-
+        }, (error) => {
+            this.onError.emit(error);
+            this.isLoading = false;
         });
     }
 
