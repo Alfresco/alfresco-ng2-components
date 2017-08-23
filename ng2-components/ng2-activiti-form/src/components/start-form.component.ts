@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
+import { LogService } from 'ng2-alfresco-core';
 import { FormService } from './../services/form.service';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
 import { FormComponent } from './form.component';
@@ -43,7 +43,8 @@ import { FormOutcomeModel } from './widgets/core/index';
 @Component({
     selector: 'adf-start-form, activiti-start-form',
     templateUrl: './start-form.component.html',
-    styleUrls: ['./form.component.css']
+    styleUrls: ['./form.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class StartFormComponent extends FormComponent implements OnChanges, OnInit {
 
@@ -71,16 +72,10 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
     @ViewChild('outcomesContainer', {})
     outcomesContainer: ElementRef = null;
 
-    constructor(private translate: AlfrescoTranslationService,
-                formService: FormService,
+    constructor(formService: FormService,
                 visibilityService: WidgetVisibilityService,
                 logService: LogService) {
-        super(formService, visibilityService, null, null, logService);
-
-        if (this.translate) {
-            this.translate.addTranslationFolder('ng2-activiti-form', 'assets/ng2-activiti-form');
-        }
-
+        super(formService, visibilityService, null, null);
         this.showTitle = false;
     }
 

@@ -17,15 +17,16 @@
 
  /* tslint:disable:component-selector  */
 
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { FormService } from './../../../services/form.service';
 import { baseHost , WidgetComponent } from './../widget.component';
 
 @Component({
     selector: 'display-text-widget',
     templateUrl: './display-text.widget.html',
-    styleUrls: ['./display-text.widget.css'],
-    host: baseHost
+    styleUrls: ['./display-text.widget.scss'],
+    host: baseHost,
+    encapsulation: ViewEncapsulation.None
 })
 export class DisplayTextWidgetComponentComponent extends WidgetComponent {
 

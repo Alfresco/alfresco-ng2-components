@@ -16,11 +16,11 @@
  */
 
 import { DatePipe } from '@angular/common';
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { MdAutocompleteModule, MdButtonModule, MdCardModule, MdDatepickerModule, MdGridListModule,
     MdIconModule, MdInputModule, MdNativeDateModule, MdProgressSpinnerModule, MdSelectModule } from '@angular/material';
 import { ActivitiFormModule } from 'ng2-activiti-form';
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { PeopleService } from './src/services/people.service';
 import { ProcessUploadService } from './src/services/process-upload.service';
@@ -37,6 +37,7 @@ import { PeopleSearchComponent } from './src/components/people-search.component'
 import { PeopleComponent } from './src/components/people.component';
 import { StartTaskComponent } from './src/components/start-task.component';
 import { TaskAttachmentListComponent } from './src/components/task-attachment-list.component';
+import { TaskAuditDirective } from './src/components/task-audit.directive';
 import { TaskDetailsComponent } from './src/components/task-details.component';
 import { TaskFiltersComponent } from './src/components/task-filters.component';
 import { TaskHeaderComponent } from './src/components/task-header.component';
@@ -52,6 +53,7 @@ export {TaskHeaderComponent } from './src/components/task-header.component';
 export {NoTaskDetailsTemplateDirective } from './src/components/no-task-detail-template.directive';
 export {TaskFiltersComponent } from './src/components/task-filters.component';
 export {TaskDetailsComponent } from './src/components/task-details.component';
+export {TaskAuditDirective } from './src/components/task-audit.directive';
 export {StartTaskComponent } from './src/components/start-task.component';
 export {PeopleSearchComponent } from './src/components/people-search.component';
 export {AttachmentComponent } from './src/components/create-task-attachment.component';
@@ -109,6 +111,7 @@ export const ACTIVITI_TASKLIST_DIRECTIVES: any[] = [
     TaskFiltersComponent,
     TaskListComponent,
     TaskDetailsComponent,
+    TaskAuditDirective,
     ChecklistComponent,
     CommentsComponent,
     PeopleComponent,
@@ -167,13 +170,22 @@ export const ACTIVITI_TASKLIST_PROVIDERS: any[] = [
     ],
     providers: [
         ...ACTIVITI_TASKLIST_PROVIDERS,
-        DatePipe
+        DatePipe,
+        {
+            provide: TRANSLATION_PROVIDER,
+            multi: true,
+            useValue: {
+                name: 'ng2-activiti-tasklist',
+                source: 'assets/ng2-activiti-tasklist'
+            }
+        }
     ],
     exports: [
         ...ACTIVITI_TASKLIST_DIRECTIVES,
         MdIconModule,
         MdButtonModule
-    ]
+    ],
+    schemas: [ NO_ERRORS_SCHEMA ]
 })
 export class ActivitiTaskListModule {
     static forRoot(): ModuleWithProviders {

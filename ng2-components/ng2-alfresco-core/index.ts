@@ -24,10 +24,14 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { CollapsableModule } from './src/components/collapsable/collapsable.module';
 import { ContextMenuModule } from './src/components/context-menu/context-menu.module';
+import { PaginationModule } from './src/components/pagination/pagination.module';
 import { ToolbarModule } from './src/components/toolbar/toolbar.module';
 import { CardViewModule } from './src/components/view/card-view.module';
 import { MaterialModule } from './src/material.module';
 import { AppConfigModule } from './src/services/app-config.service';
+
+import { CreateFolderDialogComponent } from './src/dialogs/create-folder.dialog';
+import { DownloadZipDialogComponent } from './src/dialogs/download-zip.dialog';
 
 import { AlfrescoApiService } from './src/services/alfresco-api.service';
 import { AlfrescoContentService } from './src/services/alfresco-content.service';
@@ -47,18 +51,27 @@ import { RenditionsService } from './src/services/renditions.service';
 import { StorageService } from './src/services/storage.service';
 import { ThumbnailService } from './src/services/thumbnail.service';
 import { AlfrescoTranslateLoader } from './src/services/translate-loader.service';
-import { TranslationService } from './src/services/translation.service';
+import { TRANSLATION_PROVIDER, TranslationService } from './src/services/translation.service';
 import { UploadService } from './src/services/upload.service';
 import { UserPreferencesService } from './src/services/user-preferences.service';
 
+import { HighlightDirective } from './src/directives/highlight.directive';
 import { DeletedNodesApiService } from './src/services/deleted-nodes-api.service';
 import { DiscoveryApiService } from './src/services/discovery-api.service';
 import { FavoritesApiService } from './src/services/favorites-api.service';
+import { HighlightTransformService } from './src/services/highlight-transform.service';
 import { NodesApiService } from './src/services/nodes-api.service';
 import { PeopleApiService } from './src/services/people-api.service';
 import { SearchApiService } from './src/services/search-api.service';
+import { SearchService } from './src/services/search.service';
 import { SharedLinksApiService } from './src/services/shared-links-api.service';
 import { SitesApiService } from './src/services/sites-api.service';
+
+export { MomentDateAdapter, MOMENT_DATE_FORMATS } from './src/utils/momentDateAdapter';
+import { MomentDateAdapter } from './src/utils/momentDateAdapter';
+
+export { CreateFolderDialogComponent } from './src/dialogs/create-folder.dialog';
+export { DownloadZipDialogComponent } from './src/dialogs/download-zip.dialog';
 
 export { ContentService } from './src/services/content.service';
 export { StorageService } from './src/services/storage.service';
@@ -74,7 +87,7 @@ export { NotificationService } from './src/services/notification.service';
 export { LogService } from './src/services/log.service';
 export { LogServiceMock } from './src/services/log.service';
 export { AuthenticationService } from './src/services/authentication.service';
-export { TranslationService } from './src/services/translation.service';
+export { TranslationService, TRANSLATION_PROVIDER, TranslationProvider } from './src/services/translation.service';
 export { AlfrescoTranslateLoader } from './src/services/translate-loader.service';
 export { AppConfigService } from './src/services/app-config.service';
 export { InitAppConfigServiceProvider } from './src/services/app-config.service';
@@ -85,7 +98,7 @@ export { UpdateNotification } from './src/services/card-view-update.service';
 export { ClickNotification } from './src/services/card-view-update.service';
 export { AppConfigModule } from './src/services/app-config.service';
 export { UserPreferencesService } from './src/services/user-preferences.service';
-import { SearchService } from './src/services/search.service';
+export { HighlightTransformService, HightlightTransformResult } from './src/services/highlight-transform.service';
 
 export { DeletedNodesApiService } from './src/services/deleted-nodes-api.service';
 export { FavoritesApiService } from './src/services/favorites-api.service';
@@ -98,9 +111,12 @@ export { DiscoveryApiService } from './src/services/discovery-api.service';
 
 import { DataColumnListComponent } from './src/components/data-column/data-column-list.component';
 import { DataColumnComponent } from './src/components/data-column/data-column.component';
+import { NodePermissionDirective } from './src/directives/node-permission.directive';
 import { UploadDirective } from './src/directives/upload.directive';
+
 import { FileSizePipe } from './src/pipes/file-size.pipe';
 import { HighlightPipe } from './src/pipes/text-highlight.pipe';
+import { TimeAgoPipe } from './src/pipes/time-ago.pipe';
 
 import { AlfrescoMdlMenuDirective } from './src/components/material/mdl-menu.directive';
 import { AlfrescoMdlTextFieldDirective } from './src/components/material/mdl-textfield.directive';
@@ -110,10 +126,14 @@ export { ContextMenuModule } from './src/components/context-menu/context-menu.mo
 export { CardViewModule } from './src/components/view/card-view.module';
 export { CollapsableModule } from './src/components/collapsable/collapsable.module';
 export { CardViewItem } from './src/interface/card-view-item.interface';
+export { TimeAgoPipe } from './src/pipes/time-ago.pipe';
+export { EXTENDIBLE_COMPONENT } from './src/interface/injection.tokens';
 
 export * from './src/components/data-column/data-column.component';
 export * from './src/components/data-column/data-column-list.component';
 export * from './src/directives/upload.directive';
+export * from './src/directives/highlight.directive';
+export * from './src/directives/node-permission.directive';
 export * from './src/utils/index';
 export * from './src/events/base.event';
 export * from './src/events/base-ui.event';
@@ -157,7 +177,6 @@ export function providers() {
         ThumbnailService,
         UploadService,
         SearchService,
-
         DeletedNodesApiService,
         FavoritesApiService,
         NodesApiService,
@@ -166,8 +185,12 @@ export function providers() {
         SharedLinksApiService,
         SitesApiService,
         DiscoveryApiService,
+        HighlightTransformService
+    ];
+}
 
-        // Old deprecated import
+export function deprecatedProviders() {
+    return [
         AlfrescoTranslationService,
         AlfrescoAuthenticationService
     ];
@@ -201,6 +224,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         }),
         MaterialModule,
         AppConfigModule,
+        PaginationModule,
         ToolbarModule,
         ContextMenuModule,
         CardViewModule,
@@ -209,12 +233,29 @@ export function createTranslateLoader(http: Http, logService: LogService) {
     declarations: [
         ...obsoleteMdlDirectives(),
         UploadDirective,
+        NodePermissionDirective,
+        HighlightDirective,
         DataColumnComponent,
         DataColumnListComponent,
         FileSizePipe,
-        HighlightPipe
+        HighlightPipe,
+        TimeAgoPipe,
+        CreateFolderDialogComponent,
+        DownloadZipDialogComponent
     ],
-    providers: providers(),
+    providers: [
+        ...providers(),
+        ...deprecatedProviders(),
+        MomentDateAdapter,
+        {
+            provide: TRANSLATION_PROVIDER,
+            multi: true,
+            useValue: {
+                name: 'ng2-alfresco-core',
+                source: 'assets/ng2-alfresco-core'
+            }
+        }
+    ],
     exports: [
         BrowserAnimationsModule,
         CommonModule,
@@ -226,13 +267,23 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         ContextMenuModule,
         CardViewModule,
         CollapsableModule,
+        PaginationModule,
         ToolbarModule,
         ...obsoleteMdlDirectives(),
         UploadDirective,
+        NodePermissionDirective,
+        HighlightDirective,
         DataColumnComponent,
         DataColumnListComponent,
         FileSizePipe,
-        HighlightPipe
+        HighlightPipe,
+        TimeAgoPipe,
+        CreateFolderDialogComponent,
+        DownloadZipDialogComponent
+    ],
+    entryComponents: [
+        CreateFolderDialogComponent,
+        DownloadZipDialogComponent
     ]
 })
 export class CoreModule {

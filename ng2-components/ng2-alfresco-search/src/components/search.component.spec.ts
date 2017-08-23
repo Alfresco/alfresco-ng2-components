@@ -32,6 +32,12 @@ describe('SearchComponent', () => {
 
     let result = {
         list: {
+            pagination: {
+                hasMoreItems: false,
+                maxItems: 25,
+                skipCount: 0,
+                totalItems: 1
+            },
             entries: [
                 {
                     entry: {
@@ -55,6 +61,12 @@ describe('SearchComponent', () => {
 
     let folderResult = {
         list: {
+            pagination: {
+                hasMoreItems: false,
+                maxItems: 25,
+                skipCount: 0,
+                totalItems: 1
+            },
             entries: [
                 {
                     entry: {
@@ -76,6 +88,12 @@ describe('SearchComponent', () => {
 
     let noResult = {
         list: {
+            pagination: {
+                hasMoreItems: false,
+                maxItems: 25,
+                skipCount: 0,
+                totalItems: 0
+            },
             entries: []
         }
     };
@@ -132,15 +150,6 @@ describe('SearchComponent', () => {
         search.ngOnInit();
 
         expect(search.searchTerm).toBe('exampleTerm692');
-    });
-
-    it('should setup i18n folder', () => {
-        let translationService = TestBed.get(AlfrescoTranslationService);
-        spyOn(translationService, 'addTranslationFolder');
-
-        fixture.detectChanges();
-
-        expect(translationService.addTranslationFolder).toHaveBeenCalledWith('ng2-alfresco-search', 'assets/ng2-alfresco-search');
     });
 
     it('should show the Notification snackbar on permission error', () => {

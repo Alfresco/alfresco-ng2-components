@@ -15,22 +15,18 @@
  * limitations under the License.
  */
 
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Observable';
 import { User } from '../models/user.model';
-
-declare let componentHandler: any;
-declare var require: any;
 
 @Component({
     selector: 'adf-people-search, activiti-people-search',
     templateUrl: './people-search.component.html',
-    styleUrls: ['./people-search.component.css']
+    styleUrls: ['./people-search.component.scss']
 })
 
-export class PeopleSearchComponent implements OnInit, AfterViewInit {
+export class PeopleSearchComponent implements OnInit {
 
     @Input()
     results: Observable<User[]>;
@@ -50,11 +46,7 @@ export class PeopleSearchComponent implements OnInit, AfterViewInit {
 
     selectedUser: User;
 
-    constructor(private translateService: AlfrescoTranslationService) {
-        if (translateService) {
-            translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
-        }
-
+    constructor() {
         this.searchUser
             .valueChanges
             .debounceTime(200)
@@ -73,20 +65,6 @@ export class PeopleSearchComponent implements OnInit, AfterViewInit {
         });
     }
 
-    ngAfterViewInit() {
-        this.setupMaterialComponents(componentHandler);
-    }
-
-    setupMaterialComponents(handler?: any): boolean {
-        // workaround for MDL issues with dynamic components
-        let isUpgraded: boolean = false;
-        if (handler) {
-            handler.upgradeAllRegistered();
-            isUpgraded = true;
-        }
-        return isUpgraded;
-    }
-
     onRowClick(user: User) {
         this.selectedUser = user;
     }
@@ -95,7 +73,12 @@ export class PeopleSearchComponent implements OnInit, AfterViewInit {
         this.closeSearch.emit();
     }
 
-    addInvolvedUser() {
+    involveUserAndClose() {
+        this.involveUser();
+        this.closeSearchList();
+    }
+
+    involveUser() {
         if (this.selectedUser === undefined) {
             return;
         }
@@ -120,5 +103,9 @@ export class PeopleSearchComponent implements OnInit, AfterViewInit {
 
     hasUsers() {
         return (this.users && this.users.length > 0);
+    }
+
+    onErrorImageLoad(user: User) {
+        user.userImage = null;
     }
 }

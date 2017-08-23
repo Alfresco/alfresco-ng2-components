@@ -1,52 +1,51 @@
-<div>
-    <div *ngIf="!hasForm()">
-        <h3 class="activiti-task-title">Please select a Task</h3>
-    </div>
-    <div *ngIf="hasForm()" class="{{form.className}}">
-        <md-card>
-            <md-card-header>
-                <md-card-title>
-                    <h4 *ngIf="isTitleEnabled()">
-                        <div *ngIf="showRefreshButton" class="activiti-form-reload-button">
-                            <button md-icon-button (click)="onRefreshClicked()">
-                                <md-icon>refresh</md-icon>
-                            </button>
-                        </div>
-                        <md-icon>{{ form.isValid ? 'event_available' : 'event_busy' }}</md-icon>
-                        <span>{{form.taskName}}</span>
-
-                    </h4>
-                </md-card-title>
-            </md-card-header>
-            <md-card-content>
-                <div *ngIf="form.hasTabs()">
-                    <tabs-widget [tabs]="form.tabs" (formTabChanged)="checkVisibility($event);"></tabs-widget>
-                </div>
-
-                <div *ngIf="!form.hasTabs() && form.hasFields()">
-                    <div *ngFor="let field of form.fields">
-                        <form-field [field]="field.field"></form-field>
+<div *ngIf="!hasForm()">
+    <ng-content select="[empty-form]">
+    </ng-content>
+</div>
+<div *ngIf="hasForm()" class="{{form.className}}">
+    <md-card>
+        <md-card-header>
+            <md-card-title>
+                <h4 *ngIf="isTitleEnabled()">
+                    <div *ngIf="showRefreshButton" class="adf-form-reload-button">
+                        <button md-icon-button (click)="onRefreshClicked()">
+                            <md-icon>refresh</md-icon>
+                        </button>
                     </div>
+                    <md-icon>{{ form.isValid ? 'event_available' : 'event_busy' }}</md-icon>
+                    <span>{{form.taskName}}</span>
+
+                </h4>
+            </md-card-title>
+        </md-card-header>
+        <md-card-content>
+            <div *ngIf="form.hasTabs()">
+                <tabs-widget [tabs]="form.tabs" (formTabChanged)="checkVisibility($event);"></tabs-widget>
+            </div>
+
+            <div *ngIf="!form.hasTabs() && form.hasFields()">
+                <div *ngFor="let field of form.fields">
+                    <form-field [field]="field.field"></form-field>
                 </div>
-            </md-card-content>
-            <md-card-actions *ngIf="form.hasOutcomes()">
-                <!--[class.mdl-button--colored]="!outcome.isSystem"-->
-                <button *ngFor="let outcome of form.outcomes"
-                        md-button
-                        [disabled]="!isOutcomeButtonEnabled(outcome)"
-                        [class.activiti-form-hide-button]="!isOutcomeButtonVisible(outcome, form.readOnly)"
-                        (click)="onOutcomeClicked(outcome, $event)">
-                    {{outcome.name | uppercase}}
-                </button>
-            </md-card-actions>
-        </md-card>
-    </div>
+            </div>
+        </md-card-content>
+        <md-card-actions *ngIf="form.hasOutcomes()">
+            <!--[class.mdl-button--colored]="!outcome.isSystem"-->
+            <button *ngFor="let outcome of form.outcomes"
+                    md-button
+                    [disabled]="!isOutcomeButtonEnabled(outcome)"
+                    [class.adf-form-hide-button]="!isOutcomeButtonVisible(outcome, form.readOnly)"
+                    (click)="onOutcomeClicked(outcome, $event)">
+                {{outcome.name | uppercase}}
+            </button>
+        </md-card-actions>
+    </md-card>
 </div>
 <!--
 For debugging and data visualisation purposes,
 will be removed during future revisions
 -->
-<div *ngIf="showDebugButton" class="activiti-form-debug-container">
+<div *ngIf="showDebugButton" class="adf-form-debug-container">
     <md-slide-toggle [(ngModel)]="debugMode">Debug mode</md-slide-toggle>
     <div *ngIf="debugMode && hasForm()">
         <h4>Values</h4>

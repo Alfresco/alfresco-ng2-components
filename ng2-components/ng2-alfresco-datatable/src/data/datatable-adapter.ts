@@ -47,6 +47,7 @@ export interface DataColumn {
     srTitle?: string;
     cssClass?: string;
     template?: TemplateRef<any>;
+    formatTooltip?: Function;
 }
 
 export class DataSorting {

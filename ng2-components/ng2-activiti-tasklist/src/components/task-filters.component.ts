@@ -16,17 +16,14 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { Observable, Observer } from 'rxjs/Rx';
 import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
 import { TaskListService } from './../services/tasklist.service';
 
-declare let componentHandler: any;
-
 @Component({
     selector: 'adf-filters, activiti-filters',
     templateUrl: './task-filters.component.html',
-    styleUrls: ['task-filters.component.css'],
+    styleUrls: ['task-filters.component.scss'],
     providers: [TaskListService]
 })
 export class TaskFiltersComponent implements OnInit, OnChanges {
@@ -59,14 +56,8 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
 
     filters: FilterRepresentationModel [] = [];
 
-    constructor(private translateService: AlfrescoTranslationService,
-                private activiti: TaskListService,
-                private logService: LogService) {
+    constructor(private activiti: TaskListService) {
         this.filter$ = new Observable<FilterRepresentationModel>(observer => this.filterObserver = observer).share();
-
-        if (translateService) {
-            translateService.addTranslationFolder('ng2-activiti-tasklist', 'assets/ng2-activiti-tasklist');
-        }
     }
 
     ngOnInit() {
@@ -234,9 +225,5 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
     private resetFilter() {
         this.filters = [];
         this.currentFilter = undefined;
-    }
-
-    private isCurrentFilterEmpty(): boolean {
-        return this.currentFilter === undefined || null ? true : false;
     }
 }

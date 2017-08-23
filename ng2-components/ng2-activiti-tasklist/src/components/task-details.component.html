@@ -13,7 +13,18 @@
             <md-icon *ngIf="showHeaderContent">expand_less</md-icon>
             <span>{{taskDetails.name || 'No name'}}</span>
         </h2>
+        <div class="assignment-container" *ngIf="showAssignee">
+            <adf-people-search
+            (searchPeople)="searchUser($event)"
+            (success)="assignTaskToUser($event)"
+            (closeSearch)="onCloseSearch()"
+            [results]="peopleSearch$">
+                <header-title>{{ 'TASK_DETAILS.LABELS.ADD_ASSIGNEE' | translate }}</header-title>
+                <action-button-label>{{ 'PEOPLE.ADD_ASSIGNEE' | translate }}</action-button-label>
+            </adf-people-search>
+        </div>
         <adf-task-header *ngIf="showHeaderContent"
+            [class]="getTaskHeaderViewClass()"
             [taskDetails]="taskDetails"
             [formName]="taskFormName"
             (claim)="onClaimTask($event)">
@@ -40,12 +51,15 @@
             [disableCompleteButton]="!isAssignedToMe()"
             [showSaveButton]="showFormSaveButton"
             [readOnly]="readOnlyForm"
+            [fieldValidators]="fieldValidators"
             (formSaved)='onFormSaved($event)'
             (formCompleted)='onFormCompleted($event)'
             (formContentClicked)='onFormContentClick($event)'
             (formLoaded)='onFormLoaded($event)'
             (onError)='onFormError($event)'
             (executeOutcome)='onFormExecuteOutcome($event)'>
+            <div empty-form ><h3 class="adf-task-title">Please select a Task</h3></div>
+
         </adf-form>
     </div>
     <div *ngIf="!isAssigned()">
@@ -62,7 +76,7 @@
         </div>
     </dialog>
     <br /><br />
-    <adf-people *ngIf="showInvolvePeople"
+    <adf-people *ngIf="showInvolvePeople" #people
                 [iconImageUrl]="peopleIconImageUrl"
                 [people]="taskPeople"
                 [readOnly]="readOnlyForm"

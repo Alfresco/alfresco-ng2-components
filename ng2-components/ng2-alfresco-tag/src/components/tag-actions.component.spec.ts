@@ -17,10 +17,10 @@
 
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdInputModule } from '@angular/material';
 import { AppConfigModule, CoreModule } from 'ng2-alfresco-core';
 import { TagActionsComponent } from '../components/tag-actions.component';
 import { TagService } from '../services/tag.service';
+import { MaterialModule } from './material.module';
 
 declare let jasmine: any;
 
@@ -34,7 +34,7 @@ describe('TagActionsComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                MdInputModule,
+                MaterialModule,
                 CoreModule.forRoot(),
                 AppConfigModule.forRoot('app.config.json', {
                     ecmHost: 'http://localhost:9876/ecm'
@@ -91,9 +91,9 @@ describe('TagActionsComponent', () => {
             component.result.subscribe(() => {
                 fixture.detectChanges();
 
-                expect(element.querySelector('#tag_name_0').innerHTML).toBe('test1');
-                expect(element.querySelector('#tag_name_1').innerHTML).toBe('test2');
-                expect(element.querySelector('#tag_name_2').innerHTML).toBe('test3');
+                expect(element.querySelector('#tag_name_0').innerHTML.trim()).toBe('test1');
+                expect(element.querySelector('#tag_name_1').innerHTML.trim()).toBe('test2');
+                expect(element.querySelector('#tag_name_2').innerHTML.trim()).toBe('test3');
 
                 expect(element.querySelector('#tag_delete_0')).not.toBe(null);
                 expect(element.querySelector('#tag_delete_1')).not.toBe(null);

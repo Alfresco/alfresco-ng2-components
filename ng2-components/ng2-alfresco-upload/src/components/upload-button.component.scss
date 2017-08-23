@@ -1,0 +1,12 @@
+.adf {
+    &-upload-button-file-container input {
+        cursor: pointer;
+        height: 100%;
+        right: 0;
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        width: 300px;
+        z-index: 4;
+    }
+}

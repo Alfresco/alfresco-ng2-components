@@ -63,13 +63,6 @@ describe('SearchAutocompleteComponent', () => {
         });
     }));
 
-    it('should setup i18n folder', () => {
-        let translationService = fixture.debugElement.injector.get(AlfrescoTranslationService);
-        spyOn(translationService, 'addTranslationFolder');
-        fixture.detectChanges();
-        expect(translationService.addTranslationFolder).toHaveBeenCalledWith('ng2-alfresco-search', 'assets/ng2-alfresco-search');
-    });
-
     describe('search results', () => {
 
         let searchService;

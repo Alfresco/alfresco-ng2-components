@@ -20,6 +20,7 @@ import { CoreModule } from 'ng2-alfresco-core';
 
 import { LikeComponent } from './src/components/like.component';
 import { RatingComponent } from './src/components/rating.component';
+import { MaterialModule } from './src/material.module';
 import { RatingService } from './src/services/rating.service';
 
 export * from './src/components/rating.component';
@@ -37,7 +38,8 @@ export const RATING_PROVIDERS: any[] = [
 
 @NgModule({
     imports: [
-        CoreModule
+        CoreModule,
+        MaterialModule
     ],
     declarations: [
         ...RATING_DIRECTIVES

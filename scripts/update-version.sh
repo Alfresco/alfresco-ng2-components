@@ -100,7 +100,7 @@ update_total_build_dependency_version(){
 
 update_total_build_dependency_js_version(){
     echo "====== UPDATE DEPENDENCY VERSION of total build to ~${1} in ${DESTDIR}======"
-c    DESTDIR="$DIR/../ng2-components/"
+    DESTDIR="$DIR/../ng2-components/"
     PACKAGETOCHANGE="alfresco-js-api"
 
     sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
@@ -226,6 +226,7 @@ DESTDIR="$DIR/../demo-shell-ng2/"
 sed "${sedi[@]}" "s/\"version\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"version\": \"${VERSION}\"/g"  ${DIR}/../demo-shell-ng2/package.json
 
 if $EXEC_COMPONENT == true; then
+    rm ${DIR}/../ng2-components/package-lock.json
     sed "${sedi[@]}" "s/\"version\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"version\": \"${VERSION}\"/g"  ${DIR}/../ng2-components/package.json
     sed "${sedi[@]}" "s/\"version\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"version\": \"${VERSION}\"/g"  ${DIR}/../ng2-components/package-base.json
 fi

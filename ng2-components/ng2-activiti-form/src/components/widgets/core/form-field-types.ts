@@ -47,4 +47,8 @@ export class FormFieldTypes {
     static isReadOnlyType(type: string) {
         return FormFieldTypes.READONLY_TYPES.indexOf(type) > -1;
     }
+
+    static isContainerType(type: string) {
+        return type === FormFieldTypes.CONTAINER || type === FormFieldTypes.GROUP;
+    }
 }

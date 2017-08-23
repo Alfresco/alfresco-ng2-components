@@ -20,14 +20,12 @@ import {
     IterableDiffers, OnChanges, Output, SimpleChange, SimpleChanges, TemplateRef
 } from '@angular/core';
 import { MdCheckboxChange } from '@angular/material';
-import { AlfrescoTranslationService, DataColumnListComponent } from 'ng2-alfresco-core';
+import { DataColumnListComponent } from 'ng2-alfresco-core';
 import { Observable, Observer, Subscription } from 'rxjs/Rx';
 import { DataColumn, DataRow, DataRowEvent, DataSorting, DataTableAdapter } from '../../data/datatable-adapter';
 import { ObjectDataRow, ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 import { DataCellEvent } from './data-cell.event';
 import { DataRowActionEvent } from './data-row-action.event';
-
-declare var componentHandler;
 
 @Component({
     selector: 'adf-datatable, alfresco-datatable',
@@ -108,17 +106,11 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     private singleClickStreamSub: Subscription;
     private multiClickStreamSub: Subscription;
 
-    constructor(translateService: AlfrescoTranslationService,
-                private elementRef: ElementRef,
-                private differs: IterableDiffers) {
+    constructor(private elementRef: ElementRef, differs: IterableDiffers) {
         if (differs) {
             this.differ = differs.find([]).create(null);
         }
         this.click$ = new Observable<DataRowEvent>(observer => this.clickObserver = observer).share();
-
-        if (translateService) {
-            translateService.addTranslationFolder('ng2-alfresco-datatable', 'assets/ng2-alfresco-datatable');
-        }
     }
 
     ngAfterContentInit() {
@@ -245,17 +237,17 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
 
         if (row) {
             if (this.data) {
-                const newValue = !row.isSelected;
-                const domEventName = newValue ? 'row-select' : 'row-unselect';
-
                 if (this.isSingleSelectionMode()) {
                     this.resetSelection();
-                    this.selectRow(row, newValue);
-                    this.emitRowSelectionEvent(domEventName, row);
+                    this.selectRow(row, true);
+                    this.emitRowSelectionEvent('row-select', row);
                 }
 
                 if (this.isMultiSelectionMode()) {
-                    const modifier = e.metaKey || e.ctrlKey;
+                    const modifier = e && (e.metaKey || e.ctrlKey);
+                    const newValue = modifier ? !row.isSelected : true;
+                    const domEventName = newValue ? 'row-select' : 'row-unselect';
+
                     if (!modifier) {
                         this.resetSelection();
                     }
@@ -418,6 +410,16 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
                 }
             }
         }
+    }
+
+    getCellTooltip(row: DataRow, col: DataColumn): string {
+        if (row && col && col.formatTooltip) {
+            const result: string = col.formatTooltip(row, col);
+            if (result) {
+                return result;
+            }
+        }
+        return null;
     }
 
     private emitRowSelectionEvent(name: string, row: DataRow) {

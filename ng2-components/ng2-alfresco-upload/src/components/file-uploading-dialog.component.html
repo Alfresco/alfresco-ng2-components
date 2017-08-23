@@ -11,33 +11,43 @@
             {{ isDialogMinimized ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
         </md-icon>
 
-         <span
+        <span
             class="upload-dialog__title"
-            *ngIf="!uploadList.isUploadCompleted()">
-            {{ 'FILE_UPLOAD.MESSAGES.UPLOAD_PROGRESS' | translate: { completed: totalCompleted, total: filesUploadingList.length } }}
+            *ngIf="!uploadList.isUploadCompleted() && !uploadList.isUploadCancelled()">
+            {{ 'FILE_UPLOAD.MESSAGES.UPLOAD_PROGRESS'
+                | translate: {
+                    completed: totalCompleted,
+                    total: filesUploadingList.length
+                }
+            }}
         </span>
 
-         <span
+        <span
             class="upload-dialog__title"
-            *ngIf="uploadList.isUploadCompleted() && !uploadList.isUploadCancelled()">
-            {{ 'FILE_UPLOAD.MESSAGES.UPLOAD_COMPLETED' | translate: { completed: totalCompleted, total: filesUploadingList.length } }}
+            *ngIf="uploadList.isUploadCompleted()">
+            {{ 'FILE_UPLOAD.MESSAGES.UPLOAD_COMPLETED'
+                | translate: {
+                    completed: (totalCompleted - uploadList.uploadCancelledFiles.length),
+                    total: filesUploadingList.length
+                }
+            }}
         </span>
 
-         <span
+        <span
             class="upload-dialog__title"
             *ngIf="uploadList.isUploadCancelled()">
             {{ 'FILE_UPLOAD.MESSAGES.UPLOAD_CANCELED' | translate }}
         </span>
     </header>
 
-      <section
+    <section
         class="upload-dialog__info"
-        *ngIf="uploadList.totalErrorFiles()">
+        *ngIf="uploadList.uploadErrorFiles.length">
         {{
-            (uploadList.totalErrorFiles() > 1
+            (uploadList.uploadErrorFiles.length > 1
                  ? 'FILE_UPLOAD.MESSAGES.UPLOAD_ERRORS'
                  : 'FILE_UPLOAD.MESSAGES.UPLOAD_ERROR')
-                 | translate: { total: uploadList.totalErrorFiles() }
+                 | translate: { total: uploadList.uploadErrorFiles.length }
         }}
     </section>
 
@@ -56,16 +66,18 @@
     </section>
 
     <footer class="upload-dialog__actions">
-          <button
-            *ngIf="!uploadList.isUploadCompleted()"
+        <button
+            color="primary"
+            *ngIf="!uploadList.isUploadCompleted() && !uploadList.isUploadCancelled()"
             md-button
             (click)="uploadList.cancelAllFiles($event)">
             {{ 'ADF_FILE_UPLOAD.BUTTON.CANCEL_ALL' | translate }}
         </button>
 
         <button
-            *ngIf="uploadList.isUploadCompleted()"
+            *ngIf="uploadList.isUploadCompleted() || uploadList.isUploadCancelled()"
             md-button
+            color="primary"
             (click)="close($event)">
             {{ 'ADF_FILE_UPLOAD.BUTTON.CLOSE' | translate }}
         </button>

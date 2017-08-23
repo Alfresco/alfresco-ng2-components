@@ -19,19 +19,8 @@ import { Component } from '@angular/core';
 
 @Component({
     selector: 'alfresco-social-demo',
-    template: `
-                <label for="nodeId"><b>Insert Node Id</b></label><br>
-                <input id="nodeId" type="text" size="48"  [(ngModel)]="nodeId"><br>
-                    <div class="mdl-grid">
-                      <div class="mdl-cell mdl-cell--4-col">
-                        Like component
-                        <adf-like [nodeId]="nodeId"></adf-like></div>
-                      <div class="mdl-cell mdl-cell--4-col">
-                        Rating component
-                        <adf-rating [nodeId]="nodeId"></adf-rating>
-                     </div>
-                    </div>
-    `
+    templateUrl: 'social.component.html',
+    styleUrls: ['social.component.scss']
 })
 export class SocialComponent {
 

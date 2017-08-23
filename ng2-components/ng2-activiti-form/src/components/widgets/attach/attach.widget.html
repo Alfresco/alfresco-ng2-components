@@ -2,7 +2,7 @@
     <label [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
     <div>
         <span *ngIf="hasFile()" class="attach-widget__file mdl-chip"><span class="mdl-chip__text">{{getLinkedFileName()}}</span></span>
-        <button #browseFile [disabled]="field.readOnly" (click)="showDialog();" class="mdl-button mdl-js-button mdl-js-ripple-effect attach-widget__browser">
+        <button #browseFile [disabled]="field.readOnly" (click)="showDialog();" class="mdl-button mdl-jsm-button mdl-js-ripple-effect attach-widget__browser">
             <i class="material-icons">image</i>
             Browse {{selectedFolderSiteName}}
         </button>

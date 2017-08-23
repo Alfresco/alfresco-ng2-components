@@ -35,6 +35,9 @@
 - [Create Process Attachment component](#create-process-attachment-component)
   * [Properties](#properties-8)
   * [Events](#events-7)
+- [Process Audit Directive](#process-audit-directive)
+  * [Properties](#properties-9)
+    + [Events](#events-8)
 - [Build from sources](#build-from-sources)
 - [NPM scripts](#npm-scripts)
 - [Demo](#demo)
@@ -297,10 +300,10 @@ Displays comments associated with a particular process instance and allows the u
 This component displays attached documents on a specified process instance
 
 ```html
-<process-attachment-list 
+<adf-process-attachment-list 
     [processInstanceId]="YOUR_PROCESS_INSTANCE_ID"
-    (attachmentClick="YOUR_ATTACHMENT_CLICK_EMITTER_HANDLER">
-</process-attachment-list>
+    (attachmentClick)="YOUR_ATTACHMENT_CLICK_EMITTER_HANDLER">
+</adf-process-attachment-list>
 ```
 ![process-attachment-list-sample](docs/assets/process-attachment-list.png)
 
@@ -309,6 +312,7 @@ This component displays attached documents on a specified process instance
 | Name | Type | Description |
 | --- | --- | -- |
 | processInstanceId | string | (**required**): The ID of the process instance to display |
+| disabled | boolean | false | Disable/Enable read only mode for attachement list |
 
 ### Events
 
@@ -344,6 +348,39 @@ This component displays Upload Component(Drag and Click) to upload the attachmen
 | --- | --- |
 | error | Raised when the error occurred while creating/uploading the attachment by the user from within the component |
 | success | Raised when the attachment created/uploaded successfully from within the component |
+
+## Process Audit Directive
+
+This directive provide a way to fetch the Process Audit information in the pdf or json format.
+
+```html
+<button 
+    adf-process-audit
+    [process-id]="processId"
+    [format]="'pdf'"
+    [download]="true"
+    md-icon-button (clicked)="onAuditClick($event)" (error)="onAuditError($event)" >
+    <md-icon>assignment_ind</md-icon>
+</button>
+```
+
+![adf-process-audit-directive](docs/assets/adf-process-audit-directive.png)
+
+### Properties
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| taskId | string | | (**required**) The id of the task. |
+| format | string | pdf | In whitch format you want the task audit information (pdf or json). |
+| download | boolean | false | True If you want download the file on the click event. |
+| fileName | string | Audit | Represent the name of the file to download in case the format is pdf. |
+
+#### Events
+
+| Name | Description |
+| --- | --- |
+| clicked | Raised when the task audit info is ready |
+| error | Raised if there is an error during fetching task information |
 
 ## Build from sources
 

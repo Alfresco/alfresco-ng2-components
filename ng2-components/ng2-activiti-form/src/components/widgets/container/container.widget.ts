@@ -17,18 +17,18 @@
 
  /* tslint:disable:component-selector  */
 
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormService } from './../../../services/form.service';
+import { FormFieldModel } from './../core/form-field.model';
 import { baseHost , WidgetComponent } from './../widget.component';
 import { ContainerWidgetComponentModel } from './container.widget.model';
-
-declare var componentHandler: any;
 
 @Component({
     selector: 'container-widget',
     templateUrl: './container.widget.html',
-    styleUrls: ['./container.widget.css'],
-    host: baseHost
+    styleUrls: ['./container.widget.scss'],
+    host: baseHost,
+    encapsulation: ViewEncapsulation.None
 })
 export class ContainerWidgetComponent extends WidgetComponent implements OnInit, AfterViewInit {
 
@@ -50,16 +50,38 @@ export class ContainerWidgetComponent extends WidgetComponent implements OnInit,
         }
     }
 
-    ngAfterViewInit() {
-        this.setupMaterialComponents();
+    /**
+     * Serializes column fields
+     */
+    get fields(): FormFieldModel[] {
+        const fields = [];
+
+        let rowContainsElement = true,
+            rowIndex = 0;
+
+        while (rowContainsElement) {
+            rowContainsElement = false;
+            for (let i = 0; i < this.content.columns.length; i++ ) {
+                let field = this.content.columns[i].fields[rowIndex];
+                if (field) {
+                    rowContainsElement = true;
+                }
+
+                fields.push(field);
+            }
+            rowIndex++;
+        }
+
+        return fields;
     }
 
-    setupMaterialComponents(): boolean {
-        // workaround for MDL issues with dynamic components
-        if (componentHandler) {
-            componentHandler.upgradeAllRegistered();
-            return true;
-        }
-        return false;
+    /**
+     * Calculate the column width based on the numberOfColumns and current field's colspan property
+     *
+     * @param field
+     */
+    getColumnWith(field: FormFieldModel): string {
+        const colspan = field ? field.colspan : 1;
+        return (100 / this.content.json.numberOfColumns) * colspan + '%';
     }
 }

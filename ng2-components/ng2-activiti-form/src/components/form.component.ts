@@ -16,25 +16,23 @@
  */
 
 /* tslint:disable */
-import { AfterViewChecked, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { LogService } from 'ng2-alfresco-core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { FormErrorEvent, FormEvent } from './../events/index';
 import { EcmModelService } from './../services/ecm-model.service';
 import { FormService } from './../services/form.service';
 import { NodeService } from './../services/node.service';
 import { ContentLinkModel } from './widgets/core/content-link.model';
-import { FormFieldModel, FormModel, FormOutcomeEvent, FormOutcomeModel, FormValues } from './widgets/core/index';
+import { FormFieldModel, FormModel, FormOutcomeEvent, FormOutcomeModel, FormValues, FormFieldValidator } from './widgets/core/index';
 
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
-
-declare var componentHandler: any;
 
 @Component({
     selector: 'adf-form, activiti-form',
     templateUrl: './form.component.html',
-    styleUrls: ['./form.component.css']
+    styleUrls: ['./form.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
-export class FormComponent implements OnInit, AfterViewChecked, OnChanges {
+export class FormComponent implements OnInit, OnChanges {
 
     static SAVE_OUTCOME_ID: string = '$save';
     static COMPLETE_OUTCOME_ID: string = '$complete';
@@ -92,6 +90,9 @@ export class FormComponent implements OnInit, AfterViewChecked, OnChanges {
     @Input()
     showValidationIcon: boolean = true;
 
+    @Input()
+    fieldValidators: FormFieldValidator[] = [];
+
     @Output()
     formSaved: EventEmitter<FormModel> = new EventEmitter<FormModel>();
 
@@ -118,8 +119,7 @@ export class FormComponent implements OnInit, AfterViewChecked, OnChanges {
     constructor(protected formService: FormService,
                 protected visibilityService: WidgetVisibilityService,
                 private ecmModelService: EcmModelService,
-                private nodeService: NodeService,
-                private logService: LogService) {
+                private nodeService: NodeService) {
     }
 
     hasForm(): boolean {
@@ -176,10 +176,6 @@ export class FormComponent implements OnInit, AfterViewChecked, OnChanges {
         this.formService.formContentClicked.subscribe((content: ContentLinkModel) => {
             this.formContentClicked.emit(content);
         });
-    }
-
-    ngAfterViewChecked() {
-        this.setupMaterialComponents();
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -308,31 +304,22 @@ export class FormComponent implements OnInit, AfterViewChecked, OnChanges {
         return taskRepresentation.processDefinitionId && taskRepresentation.processDefinitionDeploymentId !== 'null';
     }
 
-    setupMaterialComponents(): boolean {
-        // workaround for MDL issues with dynamic components
-        if (componentHandler) {
-            componentHandler.upgradeAllRegistered();
-            return true;
-        }
-        return false;
-    }
-
     getFormByTaskId(taskId: string): Promise<FormModel> {
         return new Promise<FormModel>((resolve, reject) => {
             this.loadFormProcessVariables(this.taskId).then(_ => {
                 this.formService
                     .getTaskForm(taskId)
                     .subscribe(
-                    form => {
-                        this.form = new FormModel(form, this.data, this.readOnly, this.formService);
-                        this.onFormLoaded(this.form);
-                        resolve(this.form);
-                    },
-                    error => {
-                        this.handleError(error);
-                        // reject(error);
-                        resolve(null);
-                    }
+                        form => {
+                            this.form = this.parseForm(form);
+                            this.onFormLoaded(this.form);
+                            resolve(this.form);
+                        },
+                        error => {
+                            this.handleError(error);
+                            // reject(error);
+                            resolve(null);
+                        }
                     );
             });
         });
@@ -412,6 +399,10 @@ export class FormComponent implements OnInit, AfterViewChecked, OnChanges {
             if (!json.fields) {
                 form.outcomes = this.getFormDefinitionOutcomes(form);
             }
+            if (this.fieldValidators && this.fieldValidators.length > 0) {
+                console.log('Applying custom field validators');
+                form.fieldValidators = this.fieldValidators;
+            }
             return form;
         }
         return null;
@@ -435,7 +426,7 @@ export class FormComponent implements OnInit, AfterViewChecked, OnChanges {
     }
 
     private refreshFormData() {
-        this.form = new FormModel(this.form.json, this.data, this.readOnly, this.formService);
+        this.form = this.parseForm(this.form.json);
         this.onFormLoaded(this.form);
         this.onFormDataRefreshed(this.form);
     }

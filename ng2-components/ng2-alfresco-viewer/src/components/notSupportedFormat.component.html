@@ -1,39 +1,47 @@
-<section *ngIf="!isConversionFinished" class="unsupported-container">
-    <div class="viewer-margin mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone mdl-shadow--2dp">
-        <div *ngIf="!isConversionStarted" class="viewer-download-text mdl-card__supporting-text">
-            <h4>File '<span>{{nameFile}}</span>' is of an unsupported format</h4>
-        </div>
-        
-        <md-spinner *ngIf="isConversionStarted" 
-            id="conversion-spinner" 
-            class="adf-conversion-spinner" 
-            color="primary"
-            data-automation-id="viewer-conversion-spinner"></md-spinner>
+<md-card *ngIf="!isConversionFinished">
+    <md-card-title>
+        Unknown format
+    </md-card-title>
+    <md-card-content>
+        <h4>File '<span>{{nameFile}}</span>' is of an unsupported format</h4>
+        <md-progress-bar
+            *ngIf="isConversionStarted"
+            mode="indeterminate"
+            data-automation-id="viewer-conversion-spinner">
+        </md-progress-bar>
+    </md-card-content>
+    <md-card-actions>
+        <button
+            md-button
+            data-automation-id="viewer-download-button"
+            (click)="download()">
+            <md-icon>cloud_download</md-icon>
+            Download
+        </button>
+        <button
+            md-button
+            *ngIf="convertible"
+            [disabled]="isConversionStarted"
+            data-automation-id="viewer-convert-button"
+            (click)="convertToPdf()">
+            <md-icon>insert_drive_file</md-icon>
+            Convert to PDF
+        </button>
+        <button
+            md-button
+            *ngIf="displayable"
+            data-automation-id="viewer-display-button"
+            (click)="showPDF()">
+            <md-icon>insert_drive_file</md-icon>
+            Show PDF
+        </button>
+    </md-card-actions>
+</md-card>
 
-        <div class="button-container mdl-card__actions">
-            <button md-button id="viewer-download-button" aria-label="Download" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" (click)="download()">
-                <md-icon class="viewer-button-icon">cloud_download</md-icon>   Download
-            </button>
-            <button *ngIf="convertible"
-                md-button
-                id="viewer-convert-button"
-                aria-label="Convert to PDF"
-                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary"
-                [disabled]="isConversionStarted"
-                (click)="convertToPdf()"
-                data-automation-id="viewer-convert-button">
-                <md-icon class="viewer-button-icon">insert_drive_file</md-icon>   Convert to PDF
-            </button>
-            <button md-button *ngIf="displayable" id="viewer-display-button" aria-label="Show PDF" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary" (click)="showPDF()">
-                <md-icon class="viewer-button-icon">insert_drive_file</md-icon>   Show PDF
-            </button>
-        </div>
-    </div>
-</section>
-
-<pdf-viewer *ngIf="isConversionFinished" 
-    id="pdf-rendition-viewer" 
-    [showToolbar]="showToolbar" 
-    [urlFile]="renditionUrl" 
+<adf-pdf-viewer
+    *ngIf="isConversionFinished"
+    [showToolbar]="showToolbar"
+    [urlFile]="renditionUrl"
     [nameFile]="nameFile"
-    data-automation-id="pdf-rendition-viewer"></pdf-viewer>
+    data-automation-id="pdf-rendition-viewer">
+</adf-pdf-viewer>

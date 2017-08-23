@@ -1,28 +1,30 @@
-@import 'theming';
+@mixin mat-header-theme($theme) {
+    $primary: map-get($theme, primary);
 
-.#{$ADF} {
-    &-controls {
-        display: flex;
-        justify-content: space-between;
-    }
+    .adf {
+        &-controls {
+            display: flex;
+            justify-content: space-between;
+        }
 
-    &-edit-controls {
-        display: flex;
-        justify-content: flex-end;
-        margin-left: auto;
-    }
+        &-edit-controls {
+            display: flex;
+            justify-content: flex-end;
+            margin-left: auto;
+        }
 
-    &-switch-to-edit-mode,
-    &-save-edit-mode {
-        color: rgb(255, 152, 0);
-    }
+        &-switch-to-edit-mode,
+        &-save-edit-mode {
+            color: mat-color($primary);
+        }
 
-    &-cancel-edit-mode,
-    &-claim-controls {
-        color: rgb(131, 131, 131);
-    }
+        &-cancel-edit-mode,
+        &-claim-controls {
+            color: rgb(131, 131, 131);
+        }
 
-    &-card-container {
-        font-family: inherit;
+        &-card-container {
+            font-family: inherit;
+        }
     }
 }

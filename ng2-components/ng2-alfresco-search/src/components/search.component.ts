@@ -23,7 +23,7 @@ import { PermissionModel } from 'ng2-alfresco-documentlist';
 
 @Component({
     selector: 'adf-search, alfresco-search',
-    styleUrls: ['./search.component.css'],
+    styleUrls: ['./search.component.scss'],
     templateUrl: './search.component.html'
 })
 export class SearchComponent implements OnChanges, OnInit {
@@ -50,6 +50,9 @@ export class SearchComponent implements OnChanges, OnInit {
     navigationMode: string = SearchComponent.DOUBLE_CLICK_NAVIGATION; // click|dblclick
 
     @Input()
+    navigate: boolean = true;
+
+    @Input()
     emptyFolderImageUrl: string = require('../assets/images/empty_doc_lib.svg');
 
     @Output()
@@ -57,6 +60,9 @@ export class SearchComponent implements OnChanges, OnInit {
 
     @Output()
     preview: EventEmitter<any> = new EventEmitter<any>();
+
+    @Output()
+    nodeDbClick: EventEmitter<any> = new EventEmitter<any>();
 
     pagination: Pagination;
     errorMessage;
@@ -71,10 +77,6 @@ export class SearchComponent implements OnChanges, OnInit {
     }
 
     ngOnInit() {
-        if (this.translateService !== null) {
-            this.translateService.addTranslationFolder('ng2-alfresco-search', 'assets/ng2-alfresco-search');
-        }
-
         if (this.route) {
             this.route.params.forEach((params: Params) => {
                 this.searchTerm = params.hasOwnProperty(this.queryParamName) ? params[this.queryParamName] : null;
@@ -93,11 +95,15 @@ export class SearchComponent implements OnChanges, OnInit {
         }
     }
 
+    onDoubleClick($event: any) {
+        if (!this.navigate && $event.value) {
+            this.nodeDbClick.emit({ value: $event.value });
+        }
+    }
+
     onPreviewFile(event: any) {
         if (event.value) {
-            this.preview.emit({
-                value: event.value
-            });
+            this.preview.emit({ value: event.value });
         }
     }
 
