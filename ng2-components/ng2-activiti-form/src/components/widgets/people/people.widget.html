@@ -7,7 +7,7 @@
                class="adf-input"
                type="text"
                [id]="field.id"
-               [(ngModel)]="field.value"
+               [(ngModel)]="value"
                (ngModelChange)="checkVisibility(field)"
                (keyup)="onKeyUp($event)"
                (blur)="onBlur()"

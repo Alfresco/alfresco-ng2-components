@@ -16,10 +16,10 @@
     </md-input-container>
     <error-widget [error]="field.validationSummary"></error-widget>
 </div>
-<div class="adf-typeahead-autocomplete mat-elevation-z2" *ngIf="popupVisible && users.length > 0">
+<div class="adf-typeahead-autocomplete mat-elevation-z2" *ngIf="popupVisible">
     <md-option *ngFor="let item of groups"
                [id]="field.id +'-'+item.id"
                (click)="onItemClick(item, $event)">
-        <span>{{item.name}}}</span>
+        <span>{{item.name}}</span>
     </md-option>
 </div>
