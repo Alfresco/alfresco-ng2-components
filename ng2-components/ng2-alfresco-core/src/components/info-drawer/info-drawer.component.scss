@@ -1,45 +1,42 @@
 .adf {
     &-info-drawer {
-        width: 350px;
         display: block;
-        padding: 8px 0;
-        background-color: #FAFAFA;
-        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.27);
 
-        &-header {
-            padding: 8px 24px 24px 24px;
-            display: flex;
-            justify-content: space-between;
-            font-size: 20px;
+        &-layout {
 
-            &-buttons {
-                md-icon {
-                    cursor: pointer;
+            &-content {
+
+                & > :not(.adf-info-drawer-tabs) {
+                    padding: 10px;
+
+                    > * {
+                        margin-bottom: 20px;
+                        display: block;
+                    }
                 }
-            }
-        }
 
-        &-content {
+                .adf-info-drawer-tabs {
+                    & .mat-tab-body-content > * {
+                        margin-bottom: 20px;
+                        display: block;
+                    }
 
-            & .mat-tab-body-content > * {
-                margin-bottom: 20px;
-                display: block;
-            }
+                    .mat-tab-label {
+                        flex-grow: 1;
+                    }
 
-            .mat-tab-label {
-                flex-grow: 1;
-            }
+                    .mat-ink-bar {
+                        height: 4px;
+                    }
 
-            .mat-ink-bar {
-                height: 4px;
-            }
+                    .mat-tab-body {
+                        padding: 10px;
+                    }
 
-            .mat-tab-body {
-                padding: 10px;
-            }
-
-            .mat-tab-body-content {
-                overflow: initial;
+                    .mat-tab-body-content {
+                        overflow: initial;
+                    }
+                }
             }
         }
     }

@@ -15,19 +15,31 @@
  * limitations under the License.
  */
 
-import { Component, Directive, ViewEncapsulation } from '@angular/core';
+import { Component, ContentChildren, Input, QueryList, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
+@Component({
+    selector: 'adf-info-drawer-tab',
+    template: '<ng-template><ng-content></ng-content></ng-template>'
+})
+export class InfoDrawerTabComponent {
+    @Input('label') label: string;
+    @ViewChild(TemplateRef) content: TemplateRef<any>;
+}
 
 @Component({
     selector: 'adf-info-drawer',
     templateUrl: './info-drawer.component.html',
     styleUrls: ['./info-drawer.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    host: {
-        'class': 'adf-info-drawer'
-    }
+    host: { 'class': 'adf-info-drawer' }
 })
-export class InfoDrawerComponent {}
+export class InfoDrawerComponent {
+    @Input()
+    title: string|null = null;
 
-@Directive({ selector: '[info-drawer-title]' }) export class InfoDrawerTitleDirective {}
-@Directive({ selector: '[info-drawer-buttons]' }) export class InfoDrawerButtonsDirective {}
-@Directive({ selector: '[info-drawer-content]' }) export class InfoDrawerContentDirective {}
+    @ContentChildren(InfoDrawerTabComponent)
+    contentBlocks: QueryList<InfoDrawerTabComponent>;
+
+    showTabLayout(): boolean {
+        return this.contentBlocks.length > 0;
+    }
+}
