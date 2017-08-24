@@ -26,7 +26,6 @@ import { FileUploadingListComponent } from './src/components/file-uploading-list
 import { UploadButtonComponent } from './src/components/upload-button.component';
 import { UploadDragAreaComponent } from './src/components/upload-drag-area.component';
 import { FileDraggableDirective } from './src/directives/file-draggable.directive';
-import { FileUploadService } from './src/services/file-uploading.service';
 
 export * from './src/components/upload-button.component';
 export * from './src/components/file-uploading-dialog.component';
@@ -35,7 +34,6 @@ export * from './src/directives/file-draggable.directive';
 export * from './src/components/file-uploading-list.component';
 export * from './src/components/file-uploading-list-row.component';
 export * from './src/models/permissions.model';
-export * from './src/services/file-uploading.service';
 
 export const UPLOAD_DIRECTIVES: any[] = [
     FileDraggableDirective,
@@ -44,10 +42,6 @@ export const UPLOAD_DIRECTIVES: any[] = [
     FileUploadingDialogComponent,
     FileUploadingListComponent,
     FileUploadingListRowComponent
-];
-
-export const UPLOAD_PROVIDERS: any[] = [
-    FileUploadService
 ];
 
 @NgModule({
@@ -59,7 +53,6 @@ export const UPLOAD_PROVIDERS: any[] = [
         ...UPLOAD_DIRECTIVES
     ],
     providers: [
-        ...UPLOAD_PROVIDERS,
         {
             provide: TRANSLATION_PROVIDER,
             multi: true,
@@ -76,10 +69,7 @@ export const UPLOAD_PROVIDERS: any[] = [
 export class UploadModule {
     static forRoot(): ModuleWithProviders {
         return {
-            ngModule: UploadModule,
-            providers: [
-                ...UPLOAD_PROVIDERS
-            ]
+            ngModule: UploadModule
         };
     }
 }

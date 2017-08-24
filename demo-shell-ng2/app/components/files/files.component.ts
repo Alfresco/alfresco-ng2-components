@@ -21,7 +21,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MinimalNodeEntity } from 'alfresco-js-api';
 import {
     AlfrescoApiService, AlfrescoContentService, AlfrescoTranslationService, CreateFolderDialogComponent,
-    DownloadZipDialogComponent, FileUploadCompleteEvent, FolderCreatedEvent, NotificationService,
+    DownloadZipDialogComponent, FileUploadEvent, FolderCreatedEvent, NotificationService,
     SiteModel, UploadService
 } from 'ng2-alfresco-core';
 import { DataColumn, DataRow } from 'ng2-alfresco-datatable';
@@ -136,7 +136,8 @@ export class FilesComponent implements OnInit {
             });
         }
 
-        this.uploadService.fileUploadComplete.debounceTime(300).subscribe(value => this.onFileUploadComplete(value));
+        this.uploadService.fileUploadComplete.debounceTime(300).subscribe(value => this.onFileUploadEvent(value));
+        this.uploadService.fileUploadDeleted.subscribe((value) => this.onFileUploadEvent(value));
         this.contentService.folderCreated.subscribe(value => this.onFolderCreated(value));
 
         // this.permissionsStyle.push(new PermissionStyleModel('document-list__create', PermissionsEnum.CREATE));
@@ -161,7 +162,7 @@ export class FilesComponent implements OnInit {
         this.errorMessage = null;
     }
 
-    onFileUploadComplete(event: FileUploadCompleteEvent) {
+    onFileUploadEvent(event: FileUploadEvent) {
         if (event && event.file.options.parentId === this.documentList.currentFolderId) {
             this.documentList.reload();
         }
