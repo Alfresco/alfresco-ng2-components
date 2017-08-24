@@ -31,8 +31,8 @@ describe('TimeAgoPipe', () => {
     });
 
     it('should return exact date if given date is more than seven days ', () => {
-        let date = new Date('1990-11-03T15:25:42.749+0000');
-        expect(pipe.transform(date)).toBe('03/11/1990 20:55');
+        let date = new Date('1990-11-03T15:25:42.749');
+        expect(pipe.transform(date)).toBe('03/11/1990 15:25');
     });
 
     it('should return empty string if given date is empty', () => {
