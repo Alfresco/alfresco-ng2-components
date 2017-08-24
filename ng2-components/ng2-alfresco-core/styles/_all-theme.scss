@@ -43,7 +43,7 @@
     @include mat-comment-list-theme($theme);
     @include mat-start-task-theme($theme);
     @include mat-people-search-theme($theme);
-    @include mat-file-uploading-list-theme($theme);
+    @include mat-file-uploading-row-theme($theme);
     @include mat-people-theme($theme);
     @include mat-login-theme($theme);
     @include mat-accordion-theme($theme);
