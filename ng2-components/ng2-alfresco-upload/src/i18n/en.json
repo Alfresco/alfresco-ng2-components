@@ -26,7 +26,8 @@
             "PROGRESS": "Upload in progress...",
             "FOLDER_ALREADY_EXIST": "The folder {0} already exist",
             "FOLDER_NOT_SUPPORTED": "Folder upload isn't supported by your browser",
-            "REMOVE_FILE_ERROR": "Error removing file {{ fileName }}"
+            "REMOVE_FILE_ERROR": "Error removing file {{ fileName }}",
+            "REMOVE_FILES_ERROR": "Error removing {{ total }} files"
         },
         "ACTION": {
             "UNDO": "Undo"

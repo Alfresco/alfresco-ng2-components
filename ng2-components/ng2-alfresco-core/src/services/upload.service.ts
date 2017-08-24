@@ -18,7 +18,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import * as minimatch from 'minimatch';
 import { Subject } from 'rxjs/Rx';
-import { FileUploadCompleteEvent, FileUploadEvent } from '../events/file.event';
+import { FileUploadCompleteEvent, FileUploadDeleteEvent, FileUploadErrorEvent, FileUploadEvent } from '../events/file.event';
 import { FileModel, FileUploadProgress, FileUploadStatus } from '../models/file.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AppConfigService } from './app-config.service';
@@ -30,6 +30,7 @@ export class UploadService {
     private cache: { [key: string]: any } = {};
     private totalComplete: number = 0;
     private totalAborted: number = 0;
+    private totalError: number = 0;
     private activeTask: Promise<any> = null;
     private excludedFileList: String[] = [];
 
@@ -39,8 +40,9 @@ export class UploadService {
     fileUploadCancelled: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
     fileUploadProgress: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
     fileUploadAborted: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
-    fileUploadError: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
+    fileUploadError: Subject<FileUploadErrorEvent> = new Subject<FileUploadErrorEvent>();
     fileUploadComplete: Subject<FileUploadCompleteEvent> = new Subject<FileUploadCompleteEvent>();
+    fileUploadDeleted: Subject<FileUploadDeleteEvent> = new Subject<FileUploadDeleteEvent>();
 
     constructor(private apiService: AlfrescoApiService, private appConfigService: AppConfigService) {
         this.excludedFileList = <String[]> this.appConfigService.get('files.excluded');
@@ -123,17 +125,15 @@ export class UploadService {
 
     cancelUpload(...files: FileModel[]) {
         files.forEach(file => {
-            file.status = FileUploadStatus.Cancelled;
-
             const promise = this.cache[file.id];
+
             if (promise) {
                 promise.abort();
                 delete this.cache[file.id];
+            } else {
+                const performAction = this.getAction(file);
+                performAction();
             }
-
-            const event = new FileUploadEvent(file, FileUploadStatus.Cancelled);
-            this.fileUpload.next(event);
-            this.fileUploadCancelled.next(event);
         });
     }
 
@@ -141,6 +141,7 @@ export class UploadService {
         this.queue = [];
         this.totalComplete = 0;
         this.totalAborted = 0;
+        this.totalError = 0;
     }
 
     getUploadPromise(file: FileModel) {
@@ -183,7 +184,7 @@ export class UploadService {
             emitter.emit({ value: data });
         })
         .catch(err => {
-            this.onUploadError(file, err);
+            throw err;
         });
 
         return promise;
@@ -212,13 +213,14 @@ export class UploadService {
     private onUploadError(file: FileModel, error: any): void {
         if (file) {
             file.status = FileUploadStatus.Error;
+            this.totalError++;
 
             const promise = this.cache[file.id];
             if (promise) {
                 delete this.cache[file.id];
             }
 
-            const event = new FileUploadEvent(file, FileUploadStatus.Error, error);
+            const event = new FileUploadErrorEvent(file, error, this.totalError);
             this.fileUpload.next(event);
             this.fileUploadError.next(event);
         }
@@ -256,5 +258,36 @@ export class UploadService {
             this.fileUploadAborted.next(event);
             promise.next();
         }
+    }
+
+    private onUploadCancelled(file: FileModel): void {
+        if (file) {
+            file.status = FileUploadStatus.Cancelled;
+
+            const event = new FileUploadEvent(file, FileUploadStatus.Cancelled);
+            this.fileUpload.next(event);
+            this.fileUploadCancelled.next(event);
+        }
+    }
+
+    private onUploadDeleted(file: FileModel): void {
+        if (file) {
+            file.status = FileUploadStatus.Deleted;
+            this.totalComplete--;
+
+            const event = new FileUploadDeleteEvent(file, this.totalComplete);
+            this.fileUpload.next(event);
+            this.fileUploadDeleted.next(event);
+        }
+    }
+
+    private getAction(file) {
+        const actions = {
+            [FileUploadStatus.Pending]: () => this.onUploadCancelled(file),
+            [FileUploadStatus.Deleted]: () => this.onUploadDeleted(file),
+            [FileUploadStatus.Error]: () => this.onUploadError(file, null)
+        };
+
+        return actions[file.status];
     }
 }

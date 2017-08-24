@@ -17,7 +17,7 @@
 
 import { Component, ContentChild, Input, TemplateRef } from '@angular/core';
 import { AlfrescoTranslationService, FileModel, FileUploadStatus, NodesApiService, NotificationService, UploadService } from 'ng2-alfresco-core';
-import { FileUploadService } from '../services/file-uploading.service';
+import { Observable } from 'rxjs/Rx';
 
 @Component({
     selector: 'adf-file-uploading-list, alfresco-file-uploading-list',
@@ -35,7 +35,6 @@ export class FileUploadingListComponent {
     files: FileModel[] = [];
 
     constructor(
-        private fileUploadService: FileUploadService,
         private uploadService: UploadService,
         private nodesApi: NodesApiService,
         private notificationService: NotificationService,
@@ -49,41 +48,43 @@ export class FileUploadingListComponent {
      *
      * @memberOf FileUploadingListComponent
      */
-    cancelFileUpload(file: FileModel): void {
+    cancelFile(file: FileModel): void {
         this.uploadService.cancelUpload(file);
     }
 
     removeFile(file: FileModel): void {
-        const { id } = file.data.entry;
-        this.nodesApi
-            .deleteNode(id, { permanent: true })
-            .subscribe(
-                () => this.onRemoveSuccess(file),
-                () => this.onRemoveFail(file)
-            );
+        this.deleteNode(file)
+            .subscribe(() => {
+                if ( file.status === FileUploadStatus.Error) {
+                    this.notifyError(file);
+                }
+
+                this.uploadService.cancelUpload(file);
+            });
     }
 
     /**
-     * Call the abort method for each file
+     * Call the appropriate method for each file, depending on state
      */
-    cancelAllFiles(event: Event): void {
-        if (event) {
-            event.preventDefault();
-        }
+    cancelAllFiles(): void {
+        this.getUploadingFiles()
+            .forEach((file) => this.uploadService.cancelUpload(file));
 
-        this.files.forEach((file) => {
-            const { status } = file;
-            const { Complete, Progress, Pending } = FileUploadStatus;
+        const deletedFiles = this.files
+            .filter((file) => file.status === FileUploadStatus.Complete)
+            .map((file) => this.deleteNode(file));
 
-            if (status === Complete) {
-                this.removeFile(file);
-            }
+        Observable.forkJoin(...deletedFiles)
+            .subscribe((files: FileModel[]) => {
+                const errors = files
+                    .filter((file) => file.status === FileUploadStatus.Error);
 
-            if (status === Progress || status === Pending) {
-               this.cancelFileUpload(file);
-            }
+                if (errors.length) {
+                    this.notifyError(...errors);
+                }
 
-        });
+                this.uploadService.cancelUpload(...files);
+            });
     }
 
     /**
@@ -92,7 +93,7 @@ export class FileUploadingListComponent {
      */
     isUploadCompleted(): boolean {
          return !this.isUploadCancelled() &&
-            !!this.files.length &&
+            Boolean(this.files.length) &&
             !this.files
                 .some(({status}) =>
                     status === FileUploadStatus.Starting ||
@@ -111,38 +112,55 @@ export class FileUploadingListComponent {
                 .every(({status}) =>
                     status === FileUploadStatus.Aborted ||
                     status === FileUploadStatus.Cancelled ||
-                    status === FileUploadStatus.Error
+                    status === FileUploadStatus.Deleted
                 );
     }
 
-    /**
-     * Gets all the files with status Error.
-     * @returns {boolean} - false if there is none
-     */
-    get uploadErrorFiles(): FileModel[] {
-        return this.files.filter(({status}) => status === FileUploadStatus.Error);
-    }
+    private deleteNode(file: FileModel): Observable<FileModel> {
+        const { id } = file.data.entry;
 
-    /**
-     * Gets all the files with status Cancelled.
-     * @returns {boolean} - false if there is none
-     */
-    get uploadCancelledFiles(): FileModel[] {
-        return this.files.filter(({status}) => status === FileUploadStatus.Cancelled);
-    }
-
-    private onRemoveSuccess(file: FileModel): void {
-        const { uploadService, fileUploadService } = this;
-
-        uploadService.cancelUpload(file);
-        fileUploadService.emitFileRemoved(file);
-    }
-
-    private onRemoveFail(file: FileModel): void {
-        this.translateService
-            .get('FILE_UPLOAD.MESSAGES.REMOVE_FILE_ERROR', { fileName: file.name})
-            .subscribe((message) =>  {
-                this.notificationService.openSnackMessage(message, 4000);
+        return this.nodesApi
+            .deleteNode(id, { permanent: true })
+            .map(() => {
+                file.status = FileUploadStatus.Deleted;
+                return file;
+            })
+            .catch((error) => {
+                file.status = FileUploadStatus.Error;
+                return Observable.of(file);
             });
+    }
+
+    private notifyError(...files: FileModel[]) {
+        let translateSubscription = null;
+
+        if (files.length === 1) {
+            translateSubscription = this.translateService
+                .get(
+                    'FILE_UPLOAD.MESSAGES.REMOVE_FILE_ERROR',
+                    { fileName: files[0].name}
+                );
+        } else {
+            translateSubscription = this.translateService
+                .get(
+                    'FILE_UPLOAD.MESSAGES.REMOVE_FILES_ERROR',
+                    { total: files.length }
+                );
+        }
+
+        translateSubscription
+            .subscribe(message => this.notificationService.openSnackMessage(message, 4000));
+    }
+
+    private getUploadingFiles() {
+        return this.files.filter((item) => {
+            if (
+                item.status === FileUploadStatus.Pending ||
+                item.status === FileUploadStatus.Progress ||
+                item.status === FileUploadStatus.Starting
+            ) {
+                return item;
+            }
+        });
     }
 }
