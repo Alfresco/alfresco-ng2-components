@@ -1,7 +1,8 @@
 <md-toolbar color="primary" *ngIf="!isAPageWithHeaderBar()">
     <ng2-alfresco-userinfo
         class="user-profile"
-        [menuOpenType]="left">
+        [menuPositionX]="'before'"
+        [menuPositionY]="'above'">
     </ng2-alfresco-userinfo>
 
     <span>ADF Demo Application</span>
