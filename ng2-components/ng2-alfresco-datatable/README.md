@@ -1,4 +1,5 @@
 # DataTable library
+
 Contains the DataTable component and other related components and classes.
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
@@ -42,10 +43,8 @@ Contains the DataTable component and other related components and classes.
 
 <!-- markdown-toc end -->
 
-
-
-
 ## DataTable component
+
 Displays data as a table with customizable columns and presentation.
 
 ![DataTable demo](docs/assets/datatable-demo.png)
@@ -98,7 +97,6 @@ export class DataTableDemo {
     }
 }
 ```
-
 
 You can also use HTML-based schema declaration like shown below:
 
@@ -175,6 +173,7 @@ export class DataTableDemo {
 | [executeRowAction](#executerowaction-event) | Emitted when row action is executed by user |
 
 ### Details
+
 #### DataColumn Properties
 
 | Name | Type | Default | Description |
@@ -188,8 +187,6 @@ export class DataTableDemo {
 | sr-title | string | | Screen reader title, used for accessibility purposes |
 | class | string | | Additional CSS class to be applied to column (header and cells) |
 | formatTooltip | Function | | Custom tooltip formatter function. |
-
-
 
 #### DataTable DOM Events
 
@@ -664,6 +661,7 @@ let schema = ObjectDataTableAdapter.generateSchema(data);
 ```
 
 ## Pagination Component
+
 Adds pagination to the component it is used with.
 
 ![](docs/assets/basic.png)
@@ -708,9 +706,6 @@ Each event helps to detect the certain action that user have made using the comp
 For `change` event, a [PaginationQueryParams](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-alfresco-core/src/components/pagination/pagination-query-params.ts) (including the query params supported by the REST API, `skipCount` and `maxItems`) is returned.
 
 For all events other than `change`, a new [Pagination object](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/Pagination.md) is returned as in the folowing example, with updated properties to be used to query further.
-
-
-
 
 ## Project Information
 

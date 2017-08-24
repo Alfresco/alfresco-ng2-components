@@ -29,8 +29,8 @@ Contains the Login component.
 
 <!-- markdown-toc end -->
 
-
 ## Login component
+
 Authenticates to Alfresco Content Services and Alfresco Process Services.
 
 ### Basic usage

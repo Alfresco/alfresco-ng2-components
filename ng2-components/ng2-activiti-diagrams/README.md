@@ -1,4 +1,5 @@
 # Activiti Diagrams library
+
 Contains the Activiti Diagram component.
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
@@ -20,7 +21,6 @@ Contains the Activiti Diagram component.
 <!-- tocstop -->
 
 <!-- markdown-toc end -->
-
 
 ## Activiti Diagram Component
 
@@ -74,7 +74,6 @@ necessary configurations, see this [page](https://github.com/Alfresco/alfresco-n
 ```sh
 npm install ng2-activiti-diagrams
 ```
-
 
 ### Build from sources
 

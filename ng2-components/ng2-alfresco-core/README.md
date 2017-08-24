@@ -1,4 +1,5 @@
 # Alfresco Core Library
+
 Contains a variety of components, directives and services used throughout ADF
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
@@ -81,13 +82,11 @@ Contains a variety of components, directives and services used throughout ADF
 
 <!-- markdown-toc end -->
 
-
 ## Toolbar Component
 
 Simple container for headers, titles, actions and breadcrumbs.
 
 ![](docs/adf-toolbar-01.png)
-
 
 ### Basic Usage
 
@@ -101,7 +100,6 @@ Simple container for headers, titles, actions and breadcrumbs.
     </button>
 </adf-toolbar>
 ```
-
 
 #### Properties
 
@@ -192,8 +190,6 @@ For example:
 
 ![](docs/adf-toolbar-07.png)
 
-
-
 ## Accordion Component
 
 Creates an accordion menu, optionally with a custom header and icon.
@@ -232,7 +228,6 @@ export class MyComponent implements OnInit {
 | headingIcon | string | The material design icon. |
 | hasAccordionIcon | boolean | Define if the accordion (expand) icon needs to be shown or not, the default value is true |
 
-
 ## Card View component
 
 Displays a configurable property list renderer.
@@ -240,6 +235,7 @@ Displays a configurable property list renderer.
 ![adf-custom-view](docs/assets/adf-custom-view.png)
 
 ### Basic Usage
+
 ```html
 <adf-card-view
     [properties]="[{label: 'My Label', value: 'My value'}]"
@@ -451,8 +447,8 @@ export class MyModule {}
 ```
 
 ## Node Permission directive
-Selectively disables an HTML element or Angular component 
 
+Selectively disables an HTML element or Angular component 
 
 ### Basic Usage
 
@@ -464,6 +460,7 @@ Selectively disables an HTML element or Angular component
 | adf-nodes | MinimalNodeEntity[] | [] | Nodes to check permission for |
 
 ### Details
+
 The `NodePermissionDirective` allows you to disable an HTML element or Angular component 
 by taking a collection of the `MinimalNodeEntity` instances and checking the particular permission.
 
@@ -543,7 +540,6 @@ export class UploadDragAreaComponent implements NodePermissionSubject { ... }
 
 Allows your components or common HTML elements reacting on File drag and drop in order to upload content.
 
-
 ### Basic usage
 
 The directive itself does not do any file management process,
@@ -574,6 +570,7 @@ You can decorate any element including buttons, for example:
 ```
 
 ### Details
+
 Used by attaching to an element or component.
 
 #### Modes
@@ -703,7 +700,6 @@ for example you may want drawing a dashed border around the table row on drag:
 
 ## Context Menu directive
 
-
 ### Basic Usage
 
 ```html
@@ -739,8 +735,8 @@ export class MyComponent implements OnInit {
 ```
 
 ### Details
-See **Demo Shell** or **DocumentList** implementation for more details and use cases.
 
+See **Demo Shell** or **DocumentList** implementation for more details and use cases.
 
 ## Alfresco Api Service
 
@@ -764,7 +760,8 @@ export class MyComponent implements OnInit {
 }
 ```
 
-### Details 
+### Details
+
 **Note for developers**: _the TypeScript declaration files for Alfresco JS API
 are still under development and some Alfresco APIs may not be accessed
 via your favourite IDE's intellisense or TypeScript compiler. 
@@ -777,10 +774,11 @@ api.nodes.addNode('-root-', body, {});
 ```
 
 ## AppConfigService
+
 Supports app configuration settings, stored server side.
 
-
 ### Details
+
 The `AppConfigService` service provides support for loading and accessing global application configuration settings that you store on the server side in the form of a JSON file.
 
 You may need this service when deploying your ADF-based application to production servers.
@@ -972,6 +970,7 @@ Known properties:
 - paginationSize (number) - gets or sets the preferred pagination size
 
 ## Notification Service
+
 Shows a notification message with optional feedback.
 
 ### Details
@@ -1012,6 +1011,7 @@ export class MyComponent implements OnInit {
 ```
 
 ## Authentication Service
+
 Provides authentication for use with the Login component.
 
 ### Basic Usage
@@ -1044,10 +1044,11 @@ export class AppComponent {
 | onLogout | Raised when user logs out |
 
 ### Details
+
 The authentication service is used inside the [login component](../ng2-alfresco-login) and is possible to find there an example of how to use it.
 
-
 ## Translation service
+
 Supports localisation.
 
 ### Details
@@ -1111,7 +1112,6 @@ class MyComponent {
 * createRendition(nodeId: string, encoding: string)
 * getRendition(nodeId: string, encoding: string)
 * isRenditionAvailable(nodeId: string, encoding: string)
-
 
 ## Project Information
 

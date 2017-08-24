@@ -1,4 +1,5 @@
 # APS Form library
+
 Contains the Activiti Form component and other related components and services.
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
@@ -47,8 +48,6 @@ Contains the Activiti Form component and other related components and services.
 
 <!-- markdown-toc end -->
 
-
-
 ## Library Contents
 
 ### Components
@@ -64,7 +63,6 @@ Contains the Activiti Form component and other related components and services.
 - FormRenderingService
 - NodeService
 - WidgetVisibilityService
-
 
 ## Activiti Form component
 
@@ -149,7 +147,6 @@ and store the form field as metadata. The param nameNode is optional.
 
 #### Properties
 
-
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | taskId | string | | Task id to fetch corresponding form and values. |
@@ -167,7 +164,6 @@ and store the form field as metadata. The param nameNode is optional.
 | path | string |  |  Path of the folder where to store the metadata. |
 | nameNode | string | true | Name to assign to the new node where the metadata are stored. |
 | fieldValidators | FormFieldValidator[] | See [Form Field Validators](#form-field-validators) section below | Contains a list of form field validator instances. |
-
 
 #### Advanced properties
  
@@ -190,8 +186,8 @@ and store the form field as metadata. The param nameNode is optional.
 | executeOutcome | [FormOutcomeEvent](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-activiti-form/src/components/widgets/core/form-outcome-event.model.ts) | Invoked when any outcome is executed, default behaviour can be prevented via `event.preventDefault()` |
 | onError | any | Invoked at any error |
 
-
 ### Details
+
 All `form*` events receive an instance of the `FormModel` as event argument for ease of development:
 
 **MyView.component.html**
@@ -408,8 +404,6 @@ Now if you run the application and try to enter "admin" in one of the text field
 
 ![](docs/assets/demo-validator.png)
 
-
-
 ## Activiti Content Component
 
 The component shows the content preview.
@@ -441,6 +435,7 @@ The recommended set of properties can be found in the following table:
 The component shows the activiti forms as a list.
 
 ### Basic Usage
+
 ```html
 <adf-form-list
 [forms]="[{ name: 'My Name', lastUpdatedByFullName: 'My User Name', lastUpdated: '2017-06-01'}]">
@@ -454,7 +449,6 @@ The recommended set of properties can be found in the following table:
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | forms | any |  | The array that contains the information to show inside the list. |
-
 
 ## FormService Service
 
@@ -584,7 +578,6 @@ necessary configuration, see this [page](https://github.com/Alfresco/alfresco-ng
 ```sh
 npm install ng2-activiti-form
 ```
-
 
 ### Build from sources
 

@@ -1,4 +1,5 @@
 # Alfresco User Info library
+
 Contains the Alfresco User Info component.
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
@@ -58,6 +59,7 @@ necessary configuration [prerequisites](https://github.com/Alfresco/alfresco-ng2
 ```sh
 npm install ng2-alfresco-userinfo
 ```
+
 ### Build from sources
 
 You can build component from sources with the following commands:

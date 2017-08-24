@@ -1,4 +1,5 @@
 # Activiti Task List library
+
 Contains the Activiti Task List component and other related components and classes.
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
@@ -88,8 +89,6 @@ Contains the Activiti Task List component and other related components and class
 
 <!-- markdown-toc end -->
 
-
-
 ## Activiti Task List component
 
 Renders a list containing all the tasks matched by the parameters specified.
@@ -137,6 +136,7 @@ You can also use HTML-based schema declaration like shown below:
 | rowClick | Raised when the task in the list is clicked |
 
 ### Details
+
 This component displays lists of process instances both active and completed, using any defined process filter, and
 render details of any chosen instance.
 
@@ -209,6 +209,7 @@ Shows the details of the task id passed in input
 | onError | Raised at any error |
 
 ### Details
+
 #### Custom 'empty Activiti Task Details' template
 
 By default the Activiti Task Details provides the following message for the empty task details:
@@ -477,6 +478,7 @@ Shows all the information related to a task.
 | claim | Raised when the task is claimed. |
 
 ### Details
+
 The purpose of the component is to populate the local variable called `properties` (array of CardViewModel), with all the information that we want to display.
 
 
@@ -710,7 +712,6 @@ Provides a way to fetch the Task Audit information in the pdf or json format.
 | --- | --- |
 | clicked | Raised when the task audit info is ready |
 | error | Raised if there is an error during fetching task information |
-
 
 ## Project Information
 

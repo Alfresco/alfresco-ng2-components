@@ -1,4 +1,5 @@
 # Search library
+
 Contains the Search and Search Results components.
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
@@ -26,7 +27,6 @@ Contains the Search and Search Results components.
 <!-- tocstop -->
 
 <!-- markdown-toc end -->
-
 
 ## Search component
 
@@ -91,7 +91,6 @@ results component embedded inside the same component.
     [searchTerm]="searchTerm">
 </adf-search>
 ```
-
 
 #### Properties
 

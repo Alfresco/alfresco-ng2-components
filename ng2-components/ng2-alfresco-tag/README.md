@@ -1,4 +1,5 @@
 # Alfresco Tag Component
+
 Contains the Alfresco Tag Node Actions list, Tag List and Node List components.
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
@@ -24,8 +25,8 @@ Contains the Alfresco Tag Node Actions list, Tag List and Node List components.
 
 <!-- markdown-toc end -->
 
-
 ## Alfresco Tag Node Actions List component
+
 ![Custom columns](docs/assets/tag3.png)
 
 ### Basic Usage
@@ -41,8 +42,6 @@ Contains the Alfresco Tag Node Actions list, Tag List and Node List components.
 | Attribute | Type | Default | Description |
 | --- | --- | --- | --- |
 | nodeId | string | | The identifier of a node |
-
-                         
 
 ## Alfresco Tag Node List component
 

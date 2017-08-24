@@ -66,9 +66,6 @@ Contains the Document List component and other related components and classes.
 
 <!-- markdown-toc end -->
 
-
-
-
 ## Document List component
 
 Displays the documents from a repository.
@@ -112,8 +109,6 @@ The properties currentFolderId, folderNode and node are the entry initialization
 | allowDropFiles | boolean | false | Toggle file drop support for rows (see **ng2-alfresco-core/UploadDirective** for more details) |
 | sorting | string[] | | Defines default sorting. The format is an array of 2 strings `[key, direction]` i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want to override default sorting detected by the component based on columns. |
 | locationFormat | string | '/' | The default route for all the location-based columns (if declared). |
-
-
 
 #### Events
 
@@ -169,7 +164,6 @@ Below is a basic example of handling DOM events in the parent elements.
     </div>
 </div>
 ```
-
 
 #### Data Sources
 
@@ -472,8 +466,6 @@ console.log(documentList.folderNode);
 It is important accessing child components at least at the `AfterViewInit` state. 
 Any UI click (buttons, links, etc.) event handlers are absolutely fine. This cannot be `ngOnInit` event though.
 You can get more details in [Component lifecycle hooks](https://angular.io/docs/ts/latest/guide/lifecycle-hooks.html) article.
-
-
 
 #### Custom columns
 
@@ -1057,8 +1049,6 @@ Indicates the current position within a navigation hierarchy.
 
 ***Note:*** the `<adf-document-list-breadcrumb>` and `<adf-breadcrumb>` are the same component - you can still use the old tag name.
 
-
-
 #### Properties
 
 | Name | Type | Description |
@@ -1449,7 +1439,6 @@ by means of custom application service.
 ## See also
 
 - [Walkthrough: adding indicators to clearly highlight information about a node](docs/metadata-indicators.md)
-
 
 ## Project Information
 

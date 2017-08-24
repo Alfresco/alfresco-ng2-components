@@ -1,4 +1,5 @@
 # Activiti Process List library
+
 Contains the Activiti Process Instance List component and other related components and classes.
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
@@ -63,7 +64,6 @@ Contains the Activiti Process Instance List component and other related componen
 
 <!-- Displays lists of process instances both active and completed, using any defined process filter, and renders details for any chosen instance.-->
 
-
 ## Activiti Process Instance List
 
 This component renders a list containing all the process instances matched by the parameters specified.
@@ -88,8 +88,6 @@ This component renders a list containing all the process instances matched by th
 | state | Define state of the processes. Possible values are `running`, `completed` and `all` |
 | sort | Define sort of the processes. Possible values are `created-desc`, `created-asc`, `ended-desc`, `ended-asc` |
 | schemaColumn | List of columns to display in the process instances datatable (see the [Details](#details) section below) |
-
-
 
 #### Events
 
@@ -142,6 +140,7 @@ If both `appId` and `appName` are specified then `appName` will take precedence 
 | filterClick | Raised when the user selects a filter from the list |
 
 ### Details
+
 This component displays a list of available filters and allows the user to select any given
 filter as the active filter.
 
@@ -224,7 +223,6 @@ Displays Start Process, allowing the user to specify some basic details needed t
 | cancel | Raised when the process canceled |
 | error | Raised when the start process fail |
 
-
 ## Process Details component
 
 Displays detailed information on a specified process instance
@@ -274,7 +272,6 @@ Sub-component of the process details component, which renders some general infor
 
 This component does not define any events.
 
-
 ## Process Instance Tasks component
 
 Lists both the active and completed tasks associated with a particular process instance
@@ -300,7 +297,6 @@ Lists both the active and completed tasks associated with a particular process i
 | Name | Description |
 | --- | --- |
 | taskFormCompletedEmitter | Raised when the form associated with an active task is completed from within the component |
-
 
 ## Process Instance Comments component
 

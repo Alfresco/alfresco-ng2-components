@@ -1,6 +1,6 @@
 # Alfresco File Viewer library
-Contains the Alfresco Viewer component.
 
+Contains the Alfresco Viewer component.
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
 
@@ -25,11 +25,6 @@ Contains the Alfresco Viewer component.
 <!-- tocstop -->
 
 <!-- markdown-toc end -->
-
-
-
-
-
 
 ## Alfresco Viewer component
 

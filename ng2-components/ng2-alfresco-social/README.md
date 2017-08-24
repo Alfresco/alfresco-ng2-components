@@ -1,4 +1,5 @@
 # Alfresco Social library
+
 Contains the ADF Like and ADF Rating components.
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
@@ -25,8 +26,8 @@ Contains the ADF Like and ADF Rating components.
 
 <!-- markdown-toc end -->
 
-
 ## ADF Like component
+
 ![Custom columns](docs/assets/social1.png)  
 
 ### Basic Usage
@@ -47,9 +48,8 @@ Contains the ADF Like and ADF Rating components.
 | --- | --- |
 | changeVote | Raised when vote gets changed |
 
-                       
-
 ## ADF Rating component
+
 ![Custom columns](docs/assets/social2.png) 
 
 ### Basic Usage
@@ -71,8 +71,6 @@ Contains the ADF Like and ADF Rating components.
 | Name | Description |
 | --- | --- |
 | changeVote | Raised when vote gets changed |
-
-                        
 
 ## Project Information
 

@@ -1,4 +1,5 @@
 # Activiti Analytics library
+
 Contains the Activiti Analytics component and other related components.
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
@@ -28,7 +29,6 @@ Contains the Activiti Analytics component and other related components.
 <!-- tocstop -->
 
 <!-- markdown-toc end -->
-
 
 ## Activiti Analytics Component
 
@@ -72,7 +72,6 @@ You can also hide chart parameters UI by setting the `hideParameters` to `true`:
 | reportSaved | The event is emitted when a report is saved |
 | reportDeleted | The event is emitted when a report is deleted |
 
-
 ## Activiti Analytics List Component
 
 The component shows the list of all the available reports
@@ -101,7 +100,6 @@ The component shows the list of all the available reports
 | onError | The event is emitted when an error occurs during the loading |
 | reportClick | The event is emitted when the report in the list is selected |
 
-
 ## Analytics Generator Component
 
 The component generates and shows the charts
@@ -128,7 +126,6 @@ The component generates and shows the charts
 | --- | --- |
 | onSuccess | Raised when the charts are loaded |
 | onError | Raised when an error occurs during the loading |
-
 
 ## Project Information
 
