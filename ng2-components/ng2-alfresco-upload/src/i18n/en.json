@@ -10,6 +10,16 @@
         },
         "STATUS": {
             "FILE_CANCELED_STATUS": "Cancelled"
+        },
+        "CONFIRMATION": {
+            "BUTTON": {
+                "CANCEL": "Yes, cancel uploads",
+                "CONTINUE": "No, continue uploads"
+            },
+            "MESSAGE": {
+                "TITLE": "Are you sure ?",
+                "TEXT": "Cancel remaining uploads and remove files already uploaded"
+            }
         }
     },
     "FILE_UPLOAD": {

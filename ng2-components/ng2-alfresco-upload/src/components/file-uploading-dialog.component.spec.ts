@@ -17,7 +17,7 @@
 
 import { EventEmitter } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FileModel, FileUploadCompleteEvent, UploadService } from 'ng2-alfresco-core';
+import { FileModel, FileUploadCompleteEvent, FileUploadErrorEvent, UploadService } from 'ng2-alfresco-core';
 import { UploadModule } from '../../index';
 import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
 
@@ -55,45 +55,109 @@ describe('FileUploadingDialogComponent', () => {
     });
 
     describe('upload service subscribers', () => {
-        it('does not render when uploading list is empty', () => {
+        it('should not render dialog when uploading list is empty', () => {
             uploadService.addToQueue();
             uploadService.uploadFilesInTheQueue(emitter);
 
             expect(component.isDialogActive).toBe(false);
         });
 
-        it('opens when uploading list is not empty', () => {
+        it('should open dialog when uploading list is not empty', () => {
             uploadService.addToQueue(...filelist);
             uploadService.uploadFilesInTheQueue(emitter);
 
             expect(component.isDialogActive).toBe(true);
         });
 
-        it('updates uploading file list', () => {
+        it('should update uploading file list', () => {
             uploadService.addToQueue(...filelist);
             uploadService.uploadFilesInTheQueue(emitter);
 
             expect(component.filesUploadingList.length).toBe(2);
         });
 
-        it('updates completed uploaded files', () => {
+        it('should update completed uploaded files count', () => {
             const completedFiles = 2;
             const completeEvent = new FileUploadCompleteEvent(null, completedFiles, null, null);
             uploadService.fileUploadComplete.next(completeEvent);
 
             expect(component.totalCompleted).toEqual(completedFiles);
         });
+
+        it('should update error files count', () => {
+            const totalErrors = 2;
+            const errorEvent = new FileUploadErrorEvent(null, null, totalErrors);
+            uploadService.fileUploadError.next(errorEvent);
+
+            expect(component.totalErrors).toEqual(totalErrors);
+        });
+    });
+
+    describe('toggleConfirmation()', () => {
+        it('should change state to true when false', () => {
+            component.isConfirmation = false;
+
+            component.toggleConfirmation();
+
+            expect(component.isConfirmation).toBe(true);
+        });
+
+        it('should change state to false when true', () => {
+            component.isConfirmation = true;
+
+            component.toggleConfirmation();
+
+            expect(component.isConfirmation).toBe(false);
+        });
+
+        it('should change dialog minimize state to false', () => {
+            component.isDialogMinimized = true;
+
+            component.toggleConfirmation();
+
+            expect(component.isDialogMinimized).toBe(false);
+        });
+
+        it('should not change dialog minimize state', () => {
+            component.isDialogMinimized = false;
+
+            component.toggleConfirmation();
+
+            expect(component.isDialogMinimized).toBe(false);
+        });
+    });
+
+    describe('cancelAllUploads()', () => {
+        beforeEach(() => {
+            (<any> component).uploadList = {
+                cancelAllFiles: jasmine.createSpy('cancelAllFiles')
+            };
+        });
+
+        it('should toggle confirmation dialog', () => {
+            spyOn(component, 'toggleConfirmation');
+
+            component.cancelAllUploads();
+
+            expect(component.toggleConfirmation).toHaveBeenCalled();
+        });
+
+        it('should call upload list cancel method', () => {
+            component.cancelAllUploads();
+
+            expect(component.uploadList.cancelAllFiles).toHaveBeenCalled();
+        });
     });
 
     describe('toggleMinimized()', () => {
-        it('minimzes the dialog', () => {
+        it('should minimze the dialog', () => {
             component.isDialogMinimized = true;
             component.toggleMinimized();
 
             expect(component.isDialogMinimized).toBe(false);
         });
 
-        it('maximizes the dialog', () => {
+        it('should maximize the dialog', () => {
             component.isDialogMinimized = false;
             component.toggleMinimized();
 
@@ -102,21 +166,42 @@ describe('FileUploadingDialogComponent', () => {
     });
 
     describe('close()', () => {
-        it('closes the dialog', () => {
+        it('should reset confirmation state', () => {
+            component.isConfirmation = true;
+            component.close();
+
+            expect(component.isConfirmation).toBe(false);
+        });
+
+        it('should reset total files count', () => {
+            component.totalCompleted = 1;
+            component.close();
+
+            expect(component.totalCompleted).toBe(0);
+        });
+
+        it('should reset total errors count', () => {
+            component.totalErrors = 1;
+            component.close();
+
+            expect(component.totalErrors).toBe(0);
+        });
+
+        it('should closes the dialog', () => {
             component.isDialogActive = true;
             component.close();
 
             expect(component.isDialogActive).toBe(false);
         });
 
-        it('resets dialog minimize state', () => {
+        it('should reset dialog minimize state', () => {
             component.isDialogMinimized = true;
             component.close();
 
             expect(component.isDialogMinimized).toBe(false);
         });
 
-        it('resets upload queue', () => {
+        it('should reset upload queue', () => {
             uploadService.addToQueue(...filelist);
             uploadService.uploadFilesInTheQueue(emitter);
             component.close();
