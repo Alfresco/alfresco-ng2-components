@@ -16,7 +16,7 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { AlfrescoAuthenticationService, AlfrescoContentService, CoreModule} from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoContentService, CoreModule } from 'ng2-alfresco-core';
 import { fakeEcmUser } from '../assets/fake-ecm-user.service.mock';
 import { EcmUserService } from '../services/ecm-user.service';
 
