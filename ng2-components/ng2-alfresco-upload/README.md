@@ -177,15 +177,17 @@ Shows a dialog listing all the files uploaded with the Upload Button or Drag Are
 | --- | --- | --- | --- |
 | position | string | 'right' | Dialog position. Accepted values are 'left' or 'right' |
 
-## Details
+### Details
 
 This component should be used in combination with upload button or drag & drop area.
 
-## UploadService
+## Upload Service
 
 Provides access to various APIs related to file upload features.
 
-### Events
+### Basic Usage
+
+#### Events
 
 | Name | Type | Description |
 | --- | --- | --- |
