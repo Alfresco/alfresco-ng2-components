@@ -1,0 +1,153 @@
+@mixin mat-userinfo-theme($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+
+    .adf {
+
+        &-userinfo-profile-image {
+            text-align: center;
+            border-radius: 90%;
+            width: 40px;
+            height: 40px;
+            margin-right: 0%;
+            cursor: pointer;
+            vertical-align: middle;
+        }
+
+        &-userinfo-menu_button.mat-button {
+            margin-right: 0%;
+            border-radius: 90%;
+            padding: 0px;
+            min-width: 40px;
+            height: 40px;
+        }
+
+        &-userinfo-tab /deep/ .mat-tab-header {
+            align-self: center;
+            width: 100%;
+        }
+
+        &-userinfo-tab /deep/ .mat-tab-label {
+            flex: auto;
+            font-weight: 500;
+            font-size: 14px;
+            text-transform: uppercase;
+            line-height: 48px;
+            text-align: center;
+        }
+
+        &-userinfo-card-header {
+            align-items: center;
+            display: flex;
+            justify-content: stretch;
+            line-height: normal;
+            height: 100px;
+            box-sizing: border-box;
+        }
+
+        &-userinfo-card.mat-card {
+            padding: 0px;
+        }
+
+        &-userinfo-supporting-text {
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: 0;
+            line-height: 18px;
+            display: block;
+            overflow: hidden;
+            padding: 32px;
+            -webkit-column-count: 2;
+            -moz-column-count: 2;
+            column-count: 2;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        &-userinfo-title {
+            font: 500 20px/32px Roboto,"Helvetica Neue",sans-serif;
+            margin: 0;
+            align-self: flex-end;
+            display: flex;
+            -webkit-align-self: flex-end;
+            overflow: hidden;
+            transform-origin: 149px 48px;
+            padding: 0;
+            -webkit-margin-before: 0.83em;
+            -webkit-margin-after: 0.83em;
+            -webkit-margin-start: 0px;
+            -webkit-margin-end: 0px;
+        }
+
+        &-userinfo__detail-profile {
+            align-items: flex-start;
+            font-size: 14px;
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: 0;
+            line-height: 18px;
+            display: block;
+            padding: 0;
+            align-items: flex-start;
+            margin: 0px;
+            color: mat-color($primary, A100);
+        }
+
+        &-userinfo__detail-title {
+            text-overflow: ellipsis;
+            font-size: 16px;
+            font-weight: 400;
+            letter-spacing: .04em;
+            line-height: 20px;
+            align-items: flex-start
+        }
+
+        &-userinfo__secondary-info {
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: 0;
+            line-height: 18px;
+            align-items: flex-end;
+        }
+
+        &-userinfo-profile-picture {
+            background-size: cover;
+            border-radius: 50%;
+            height: 80px;
+            width: 80px;
+            z-index: 3;
+            margin-left: 0px;
+            margin-right: 8px;
+        }
+
+        &-userinfo-button-profile {
+            display: inline-block;
+            border: 0px;
+            vertical-align: middle;
+        }
+
+        &-userinfo-detail {
+            text-align: left
+        }
+
+        &-hide-tab /deep/ .mat-tab-label-active {
+            display: none !important;
+        }
+
+    }
+
+    @media only screen and (min-device-width: 480px) {
+        .mat-menu-panel.adf-userinfo-menu {
+        max-height: 450px;
+        min-width: 450px;
+        overflow: auto;
+        padding: 0px;
+        }
+    }
+
+    .mat-menu-panel.adf-userinfo-menu /deep/ .mat-menu-content{
+        padding: 0px;
+    }
+
+}

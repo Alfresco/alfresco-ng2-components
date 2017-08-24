@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { BpmUserModel } from './../models/bpm-user.model';
 import { EcmUserModel } from './../models/ecm-user.model';
@@ -26,8 +26,9 @@ declare var require: any;
 
 @Component({
     selector: 'adf-userinfo, ng2-alfresco-userinfo',
-    styleUrls: ['./user-info.component.css'],
-    templateUrl: './user-info.component.html'
+    styleUrls: ['./user-info.component.scss'],
+    templateUrl: './user-info.component.html',
+    encapsulation: ViewEncapsulation.None
 })
 export class UserInfoComponent implements OnInit {
 
@@ -38,7 +39,10 @@ export class UserInfoComponent implements OnInit {
     bpmBackgroundImage: string = require('../assets/images/bpm-background.png');
 
     @Input()
-    menuOpenType: string = 'right';
+    menuPositionX: string = 'after';
+
+    @Input()
+    menuPositionY: string = 'below';
 
     @Input()
     fallBackThumbnailImage: string;
