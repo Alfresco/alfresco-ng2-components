@@ -13,12 +13,12 @@
         },
         "CONFIRMATION": {
             "BUTTON": {
-                "CANCEL": "Yes, cancel uploads",
-                "CONTINUE": "No, continue uploads"
+                "CANCEL": "Yes",
+                "CONTINUE": "No"
             },
             "MESSAGE": {
-                "TITLE": "Are you sure ?",
-                "TEXT": "Cancel remaining uploads and remove files already uploaded"
+                "TITLE": "Cancel Upload",
+                "TEXT": "Stop uploading and remove files already uploaded."
             }
         }
     },
