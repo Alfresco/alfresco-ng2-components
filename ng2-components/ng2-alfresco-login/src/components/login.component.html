@@ -61,10 +61,10 @@
                                data-automation-id="password"
                                tabindex="2">
                         <md-icon *ngIf="isPasswordShow" mdSuffix class="adf-login-password-icon"
-                                 data-automation-id="show_password" (click)="toggleShowPassword()">visibility
+                                 data-automation-id="hide_password" (click)="toggleShowPassword()">visibility
                         </md-icon>
                         <md-icon *ngIf="!isPasswordShow" mdSuffix class="adf-login-password-icon"
-                                 data-automation-id="hide_password" (click)="toggleShowPassword()">visibility_off
+                                 data-automation-id="show_password" (click)="toggleShowPassword()">visibility_off
                         </md-icon>
                     </md-input-container>
                     <span class="adf-login-validation" for="password" *ngIf="formError.password">
