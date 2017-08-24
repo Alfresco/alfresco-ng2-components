@@ -137,7 +137,6 @@ do
 
   echo "====== PUBLISHING: ${DESTDIR} ===== npm publish ${OPTIONS}"
   npm publish ${OPTIONS} || exit 1
-  rm -rf node_modules
 
   if $EXEC_CHANGE_REGISTRY == true; then
       npm run rimraf .npmrc
