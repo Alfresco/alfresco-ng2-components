@@ -59,7 +59,7 @@ export class StartTaskComponent implements OnInit {
 
     forms: Form[];
 
-    assignee: any;
+    assigneeId: number;
 
     formKey: number;
 
@@ -90,7 +90,7 @@ export class StartTaskComponent implements OnInit {
                 .switchMap((createRes: any) =>
                     this.attachForm(createRes.id, this.formKey).defaultIfEmpty(createRes)
                         .switchMap((attachRes: any) =>
-                            this.assignTaskByUserId(createRes.id, this.assignee.id).defaultIfEmpty(attachRes ? attachRes : createRes)
+                            this.assignTaskByUserId(createRes.id, this.assigneeId).defaultIfEmpty(attachRes ? attachRes : createRes)
                         )
                 )
                 .subscribe(
