@@ -27,7 +27,7 @@
             *ngIf="uploadList.isUploadCompleted()">
             {{ 'FILE_UPLOAD.MESSAGES.UPLOAD_COMPLETED'
                 | translate: {
-                    completed: (totalCompleted - uploadList.uploadCancelledFiles.length),
+                    completed: totalCompleted,
                     total: filesUploadingList.length
                 }
             }}
@@ -42,12 +42,12 @@
 
     <section
         class="upload-dialog__info"
-        *ngIf="uploadList.uploadErrorFiles.length">
+        *ngIf="totalErrors">
         {{
-            (uploadList.uploadErrorFiles.length > 1
+            (totalErrors > 1
                  ? 'FILE_UPLOAD.MESSAGES.UPLOAD_ERRORS'
                  : 'FILE_UPLOAD.MESSAGES.UPLOAD_ERROR')
-                 | translate: { total: uploadList.uploadErrorFiles.length }
+                 | translate: { total: totalErrors }
         }}
     </section>
 
@@ -59,7 +59,7 @@
                      <adf-file-uploading-list-row
                         [file]="file"
                         (remove)="uploadList.removeFile(file)"
-                        (cancel)="uploadList.cancelFileUpload(file)">
+                        (cancel)="uploadList.cancelFile(file)">
                     </adf-file-uploading-list-row>
                 </ng-template>
         </adf-file-uploading-list>
@@ -70,7 +70,7 @@
             color="primary"
             *ngIf="!uploadList.isUploadCompleted() && !uploadList.isUploadCancelled()"
             md-button
-            (click)="uploadList.cancelAllFiles($event)">
+            (click)="uploadList.cancelAllFiles()">
             {{ 'ADF_FILE_UPLOAD.BUTTON.CANCEL_ALL' | translate }}
         </button>
 

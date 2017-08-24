@@ -16,8 +16,9 @@
  */
 
 import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { FileModel, FileUploadCompleteEvent, UploadService } from 'ng2-alfresco-core';
-import { Subscription } from 'rxjs/Rx';
+import { FileModel, FileUploadCompleteEvent, FileUploadDeleteEvent,
+         FileUploadErrorEvent, UploadService } from 'ng2-alfresco-core';
+import { Observable, Subscription } from 'rxjs/Rx';
 
 @Component({
     selector: 'adf-file-uploading-dialog, file-uploading-dialog',
@@ -31,35 +32,47 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     filesUploadingList: FileModel[] = [];
     isDialogActive: boolean = false;
     totalCompleted: number = 0;
+    totalErrors: number = 0;
     isDialogMinimized: boolean = false;
-    uploadFilesCompleted: boolean = false;
 
     private listSubscription: Subscription;
     private counterSubscription: Subscription;
     private fileUploadSubscription: Subscription;
+    private errorSubscription: Subscription;
 
     constructor(
         private uploadService: UploadService,
-        private changeDetecor: ChangeDetectorRef) {
-    }
+        private changeDetecor: ChangeDetectorRef) {}
 
     ngOnInit() {
         this.listSubscription = this.uploadService
             .queueChanged.subscribe((fileList: FileModel[]) => {
                 this.filesUploadingList = fileList;
 
-                if (this.filesUploadingList.length > 0) {
+                if (this.filesUploadingList.length) {
                     this.isDialogActive = true;
                 }
         });
 
-        this.counterSubscription = this.uploadService
-            .fileUploadComplete.subscribe((event: FileUploadCompleteEvent) => {
+        this.counterSubscription = Observable
+            .merge(
+                this.uploadService.fileUploadComplete,
+                this.uploadService.fileUploadDeleted
+            )
+            .subscribe((event: (FileUploadDeleteEvent|FileUploadCompleteEvent)) => {
                 this.totalCompleted = event.totalComplete;
             });
 
+        this.errorSubscription = this.uploadService.fileUploadError
+            .subscribe((event: FileUploadErrorEvent) => {
+                this.totalErrors = event.totalError;
+                this.changeDetecor.detectChanges();
+            });
+
         this.fileUploadSubscription = this.uploadService
-            .fileUpload.subscribe(() => this.changeDetecor.detectChanges());
+            .fileUpload.subscribe(() => {
+                this.changeDetecor.detectChanges();
+            });
     }
 
     /**
@@ -75,6 +88,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
      */
     close(): void {
         this.totalCompleted = 0;
+        this.totalErrors = 0;
         this.filesUploadingList = [];
         this.isDialogActive = false;
         this.isDialogMinimized = false;
@@ -87,5 +101,6 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
         this.listSubscription.unsubscribe();
         this.counterSubscription.unsubscribe();
         this.fileUploadSubscription.unsubscribe();
+        this.errorSubscription.unsubscribe();
     }
 }

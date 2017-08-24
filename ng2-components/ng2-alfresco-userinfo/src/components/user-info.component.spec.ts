@@ -16,6 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import {
     AlfrescoAuthenticationService,
     AlfrescoContentService,
@@ -25,6 +26,7 @@ import {
 import { fakeBpmUser } from '../assets/fake-bpm-user.service.mock';
 import { fakeEcmEditedUser, fakeEcmUser, fakeEcmUserNoImage } from '../assets/fake-ecm-user.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
+import { MaterialModule } from '../material.module';
 import { BpmUserService } from '../services/bpm-user.service';
 import { EcmUserService } from '../services/ecm-user.service';
 import { BpmUserModel } from './../models/bpm-user.model';
@@ -46,7 +48,8 @@ describe('User info component', () => {
         window['componentHandler'] = componentHandler;
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule.forRoot(),
+                MaterialModule
             ],
             declarations: [
                 UserInfoComponent
@@ -110,11 +113,15 @@ describe('User info component', () => {
             });
 
             fixture.whenStable().then(() => {
+                let imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#logged-user-img');
+                imageButton.click();
                 fixture.detectChanges();
                 expect(element.querySelector('#userinfo_container')).toBeDefined();
-                expect(element.querySelector('#ecm-username')).toBeDefined();
-                expect(element.querySelector('#ecm-username').textContent).not.toContain('fake-ecm-first-name');
-                expect(element.querySelector('#ecm-username').textContent).not.toContain('null');
+                let ecmUsername = fixture.debugElement.query(By.css('#ecm-username'));
+                expect(ecmUsername).toBeDefined();
+                expect(ecmUsername).not.toBeNull();
+                expect(ecmUsername.nativeElement.textContent).not.toContain('fake-ecm-first-name');
+                expect(ecmUsername.nativeElement.textContent).not.toContain('null');
             });
         }));
 
@@ -132,23 +139,32 @@ describe('User info component', () => {
 
             it('should get the ecm current user image from the service', async(() => {
                 fixture.whenStable().then(() => {
+                    let imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#logged-user-img');
+                    imageButton.click();
                     fixture.detectChanges();
-                    expect(element.querySelector('#userinfo_container')).toBeDefined();
-                    expect(element.querySelector('#logged-user-img')).toBeDefined();
-                    expect(element.querySelector('#logged-user-img').getAttribute('src')).toContain('assets/images/ecmImg.gif');
+                    let loggedImage = fixture.debugElement.query(By.css('#logged-user-img'));
+
+                    expect(element.querySelector('#userinfo_container')).not.toBeNull();
+                    expect(loggedImage).not.toBeNull();
+                    expect(loggedImage.properties.src).toContain('assets/images/ecmImg.gif');
                 });
             }));
 
             it('should get the ecm user informations from the service', () => {
                 fixture.whenStable().then(() => {
+                    let imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#logged-user-img');
+                    imageButton.click();
                     fixture.detectChanges();
-                    expect(element.querySelector('#userinfo_container')).toBeDefined();
-                    expect(element.querySelector('#ecm_username')).toBeDefined();
-                    expect(element.querySelector('#ecm_title')).toBeDefined();
-                    expect(element.querySelector('#ecm-user-detail-image')).toBeDefined();
-                    expect(element.querySelector('#ecm-user-detail-image').getAttribute('src')).toContain('assets/images/ecmImg.gif');
-                    expect(element.querySelector('#ecm-full-name').textContent).toContain('fake-ecm-first-name fake-ecm-last-name');
-                    expect(element.querySelector('#ecm-job-title').textContent).toContain('USER_PROFILE.LABELS.ECM.JOB_TITLE');
+                    let ecmImage = fixture.debugElement.query(By.css('#ecm-user-detail-image'));
+                    let ecmFullName = fixture.debugElement.query(By.css('#ecm-full-name'));
+                    let ecmJobTitle = fixture.debugElement.query(By.css('#ecm-job-title-label'));
+
+                    expect(element.querySelector('#userinfo_container')).not.toBeNull();
+                    expect(fixture.debugElement.query(By.css('#ecm-username'))).not.toBeNull();
+                    expect(ecmImage).not.toBeNull();
+                    expect(ecmImage.properties.src).toContain('assets/images/ecmImg.gif');
+                    expect(ecmFullName.nativeElement.textContent).toContain('fake-ecm-first-name fake-ecm-last-name');
+                    expect(ecmJobTitle.nativeElement.textContent).toContain('USER_PROFILE.LABELS.ECM.JOB_TITLE');
                 });
             });
         });
@@ -166,15 +182,22 @@ describe('User info component', () => {
             }));
 
             it('should show N/A when the job title is null', async(() => {
+                let imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#logged-user-img');
+                imageButton.click();
                 fixture.detectChanges();
-                expect(element.querySelector('#userinfo_container')).toBeDefined();
-                expect(element.querySelector('#ecm-job-title')).toBeDefined();
-                expect(element.querySelector('#ecm-job-title').textContent).toContain('N/A');
+                expect(element.querySelector('#userinfo_container')).not.toBeNull();
+                let ecmJobTitle = fixture.debugElement.query(By.css('#ecm-job-title'));
+                expect(ecmJobTitle).not.toBeNull();
+                expect(ecmJobTitle).not.toBeNull();
+                expect(ecmJobTitle.nativeElement.textContent).toContain('N/A');
             }));
 
             it('should not show the tabs', () => {
+                let imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#logged-user-img');
+                imageButton.click();
                 fixture.detectChanges();
-                expect(element.querySelector('#tab-bar-env').getAttribute('hidden')).not.toBeNull();
+                let tabHeader = fixture.debugElement.query(By.css('#tab-group-env'));
+                expect(tabHeader.classes['adf-hide-tab']).toBeTruthy();
             });
         });
 
@@ -203,10 +226,14 @@ describe('User info component', () => {
             });
 
             fixture.whenStable().then(() => {
+                let imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#logged-user-img');
+                imageButton.click();
                 fixture.detectChanges();
-                expect(element.querySelector('#userinfo_container')).toBeDefined();
-                expect(element.querySelector('#bpm-username')).toBeDefined();
-                expect(element.querySelector('#bpm-username').innerHTML).toContain('fake-bpm-first-name fake-bpm-last-name');
+                let bpmUserName = fixture.debugElement.query(By.css('#bpm-username'));
+                expect(element.querySelector('#userinfo_container')).not.toBeNull();
+                expect(bpmUserName).toBeDefined();
+                expect(bpmUserName).not.toBeNull();
+                expect(bpmUserName.nativeElement.innerHTML).toContain('fake-bpm-first-name fake-bpm-last-name');
             });
         });
 
@@ -220,8 +247,8 @@ describe('User info component', () => {
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(element.querySelector('#userinfo_container')).toBeDefined();
-                expect(element.querySelector('#logged-user-img')).toBeDefined();
+                expect(element.querySelector('#userinfo_container')).not.toBeNull();
+                expect(element.querySelector('#logged-user-img')).not.toBeNull();
                 expect(element.querySelector('#logged-user-img').getAttribute('src'))
                     .toContain('activiti-app/app/rest/admin/profile-picture');
             });
@@ -315,6 +342,8 @@ describe('User info component', () => {
         }));
 
         beforeEach(() => {
+            let imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#logged-user-img');
+            imageButton.click();
             fixture.detectChanges();
         });
 
@@ -323,24 +352,30 @@ describe('User info component', () => {
         });
 
         it('should get the bpm user informations from the service', () => {
-            expect(element.querySelector('#userinfo_container')).toBeDefined();
-            expect(element.querySelector('#bpm_username')).toBeDefined();
-            expect(element.querySelector('#bpm_title')).toBeDefined();
-            expect(element.querySelector('#bpm-user-detail-image')).toBeDefined();
-            expect(element.querySelector('#bpm-user-detail-image').getAttribute('src'))
-                .toContain('app/rest/admin/profile-picture');
-            expect(element.querySelector('#bpm-full-name').textContent).toContain('fake-bpm-first-name fake-bpm-last-name');
-            expect(element.querySelector('#bpm-tenant').textContent).toContain('fake-tenant-name');
+            let bpmTab = fixture.debugElement.queryAll(By.css('#tab-group-env .mat-tab-labels .mat-tab-label'))[1];
+            bpmTab.triggerEventHandler('click', null);
+            fixture.detectChanges();
+            let bpmUsername = fixture.debugElement.query(By.css('#bpm-username'));
+            let bpmImage = fixture.debugElement.query(By.css('#bpm-user-detail-image'));
+
+            expect(element.querySelector('#userinfo_container')).not.toBeNull();
+            expect(bpmUsername).not.toBeNull();
+            expect(bpmImage).not.toBeNull();
+            expect(bpmImage.properties.src).toContain('app/rest/admin/profile-picture');
+            expect(bpmUsername.nativeElement.textContent).toContain('fake-bpm-first-name fake-bpm-last-name');
+            expect(fixture.debugElement.query(By.css('#bpm-tenant')).nativeElement.textContent).toContain('fake-tenant-name');
         });
 
         it('should get the ecm user informations from the service', () => {
+            let ecmUsername = fixture.debugElement.query(By.css('#ecm-username'));
+            let ecmImage = fixture.debugElement.query(By.css('#ecm-user-detail-image'));
+
             expect(element.querySelector('#userinfo_container')).toBeDefined();
-            expect(element.querySelector('#ecm_username')).toBeDefined();
-            expect(element.querySelector('#ecm_title')).toBeDefined();
-            expect(element.querySelector('#ecm-user-detail-image')).toBeDefined();
-            expect(element.querySelector('#ecm-user-detail-image').getAttribute('src')).toContain('assets/images/ecmImg.gif');
-            expect(element.querySelector('#ecm-full-name').textContent).toContain('fake-ecm-first-name fake-ecm-last-name');
-            expect(element.querySelector('#ecm-job-title').textContent).toContain('job-ecm-test');
+            expect(ecmUsername).not.toBeNull();
+            expect(ecmImage).not.toBeNull();
+            expect(ecmImage.properties.src).toContain('assets/images/ecmImg.gif');
+            expect(fixture.debugElement.query(By.css('#ecm-full-name')).nativeElement.textContent).toContain('fake-ecm-first-name fake-ecm-last-name');
+            expect(fixture.debugElement.query(By.css('#ecm-job-title')).nativeElement.textContent).toContain('job-ecm-test');
         });
 
         it('should show the ecm image if exists', () => {
@@ -358,20 +393,22 @@ describe('User info component', () => {
         });
 
         it('should show the tabs for the env', () => {
-            expect(element.querySelector('#tab-bar-env')).toBeDefined();
-            expect(element.querySelector('#tab-bar-env')).not.toBeNull();
-            expect(element.querySelector('#tab-bar-env').getAttribute('hidden')).toBeNull();
-            expect(element.querySelector('#ecm-tab')).not.toBeNull();
-            expect(element.querySelector('#bpm-tab')).not.toBeNull();
+            let tabGroup = fixture.debugElement.query(By.css('#tab-group-env'));
+            let tabs = fixture.debugElement.queryAll(By.css('#tab-group-env .mat-tab-labels .mat-tab-label'));
+
+            expect(tabGroup).not.toBeNull();
+            expect(tabGroup.classes['adf-hide-tab']).toBeFalsy();
+            expect(tabs.length).toBe(2);
         });
 
         it('should not close the menu when a tab is clicked', () => {
-            expect(element.querySelector('#tab-bar-env')).toBeDefined();
-            expect(element.querySelector('#tab-bar-env')).not.toBeNull();
-            expect(element.querySelector('#tab-bar-env').getAttribute('hidden')).toBeNull();
-            let bpmTab = <HTMLElement>element.querySelector('#bpm-tab');
-            bpmTab.click();
-            expect(element.querySelector('#user-profile-lists')).not.toBeNull();
+            let tabGroup = fixture.debugElement.query(By.css('#tab-group-env'));
+            let tabs = fixture.debugElement.queryAll(By.css('#tab-group-env .mat-tab-labels .mat-tab-label'));
+
+            expect(tabGroup).not.toBeNull();
+            tabs[1].triggerEventHandler('click', null);
+            fixture.detectChanges();
+            expect(fixture.debugElement.query(By.css('#user-profile-lists'))).not.toBeNull();
         });
     });
 });
