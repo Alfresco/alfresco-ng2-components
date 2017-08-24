@@ -1,74 +1,71 @@
 @import 'colors';
 
-@mixin mat-file-uploading-list-theme($theme) {
+@mixin mat-file-uploading-row-theme($theme) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
     $warn: map-get($theme, warn);
 
 
-    .adf-file-uploading-list {
+    .adf-file-uploading-row {
         display: flex;
         align-items: center;
         padding: 0.5em 1em 0.5em 1em;
+        cursor: default;
 
         &:not(:first-child) {
             border-top: 1px solid ;
         }
 
-        .list-row {
-            cursor: default;
+        &__name {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex: 1 1 auto;
+            padding: 0 1em 0 0.5em;
+        }
 
-            &__name {
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                flex: 1 1 auto;
-                padding: 0 1em 0 0.5em;
-            }
+        &__group, &__block {
+            min-width: 200px;
+            display: flex;
+            justify-content: flex-end;
+        }
 
-            &__group, &__block {
-                min-width: 200px;
+        &__group--toggle {
+            cursor: pointer;
+
+            .adf-file-uploading-row__status {
                 display: flex;
-                justify-content: flex-end;
             }
 
-            &__group--toggle {
-                cursor: pointer;
+            .adf-file-uploading-row__action {
+                display: none;
+            }
 
-                .list-row__status {
-                    display: flex;
-                }
-
-                .list-row__action {
+            &:hover {
+                .adf-file-uploading-row__status {
                     display: none;
                 }
 
-                &:hover {
-                    .list-row__status {
-                        display: none;
-                    }
-
-                    .list-row__action {
-                        display: flex;
-                    }
+                .adf-file-uploading-row__action {
+                    display: flex;
                 }
             }
+        }
 
-            &__status--done {
-                color: mat-color($accent);
-            }
+        &__status--done {
+            color: mat-color($accent);
+        }
 
-            &__status--error {
-                color: mat-color($warn);
-            }
+        &__status--error {
+            color: mat-color($warn);
+        }
 
-            &__action--cancel {
-                color: mat-color($warn);
-            }
+        &__action--cancel {
+            color: mat-color($warn);
+        }
 
-            &__action--remove {
-                color: mat-color($accent);
-            }
+        &__action--remove {
+            color: mat-color($accent);
         }
     }
 }

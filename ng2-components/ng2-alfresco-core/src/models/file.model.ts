@@ -34,7 +34,8 @@ export enum FileUploadStatus {
     Progress = 3,
     Cancelled = 4,
     Aborted = 5,
-    Error = 6
+    Error = 6,
+    Deleted = 7
 }
 
 export class FileModel {
