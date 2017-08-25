@@ -4,12 +4,17 @@
      [class.upload-dialog--position-left]="position === 'left'"
      [class.upload-dialog--position-right]="position === 'right'">
     <header class="upload-dialog__header">
-        <md-icon
-            md-list-icon
-            (click)="toggleMinimized()"
-            title="{{ (isDialogMinimized ? 'ADF_FILE_UPLOAD.BUTTON.MAXIMIZE': 'ADF_FILE_UPLOAD.BUTTON.MINIMIZE') | translate }}">
-            {{ isDialogMinimized ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
-        </md-icon>
+        <button
+            md-button
+            color="secondary"
+            [disabled]="isConfirmation"
+            (click)="toggleMinimized()">
+            <md-icon
+                md-list-icon
+                title="{{ (isDialogMinimized ? 'ADF_FILE_UPLOAD.BUTTON.MAXIMIZE': 'ADF_FILE_UPLOAD.BUTTON.MINIMIZE') | translate }}">
+                    {{ isDialogMinimized ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
+            </md-icon>
+        </button>
 
         <span
             class="upload-dialog__title"
@@ -51,8 +56,11 @@
         }}
     </section>
 
-    <section class="upload-dialog__content">
+    <section
+        class="upload-dialog__content"
+        [class.upload-dialog--padding]="isConfirmation">
         <adf-file-uploading-list
+            [class.upload-dialog--hide]="isConfirmation"
             #uploadList
             [files]="filesUploadingList">
                 <ng-template let-file="$implicit">
@@ -63,14 +71,28 @@
                     </adf-file-uploading-list-row>
                 </ng-template>
         </adf-file-uploading-list>
+
+        <div
+            class="upload-dialog__confirmation"
+            [class.upload-dialog--hide]="!isConfirmation">
+                <p class="upload-dialog__confirmation--title">
+                    {{ 'ADF_FILE_UPLOAD.CONFIRMATION.MESSAGE.TITLE' | translate }}
+                </p>
+
+                <p class="upload-dialog__confirmation--text">
+                    {{ 'ADF_FILE_UPLOAD.CONFIRMATION.MESSAGE.TEXT' | translate }}
+                </p>
+        </div>
     </section>
 
-    <footer class="upload-dialog__actions">
+    <footer
+        class="upload-dialog__actions"
+        [class.upload-dialog--hide]="isConfirmation">
         <button
             color="primary"
-            *ngIf="!uploadList.isUploadCompleted() && !uploadList.isUploadCancelled()"
             md-button
-            (click)="uploadList.cancelAllFiles()">
+            *ngIf="!uploadList.isUploadCompleted() && !uploadList.isUploadCancelled()"
+            (click)="toggleConfirmation()">
             {{ 'ADF_FILE_UPLOAD.BUTTON.CANCEL_ALL' | translate }}
         </button>
 
@@ -80,6 +102,24 @@
             color="primary"
             (click)="close($event)">
             {{ 'ADF_FILE_UPLOAD.BUTTON.CLOSE' | translate }}
+        </button>
+    </footer>
+
+    <footer
+        class="upload-dialog__actions"
+        [class.upload-dialog--hide]="!isConfirmation">
+        <button
+            color="secondary"
+            md-button
+            (click)="cancelAllUploads()">
+            {{ 'ADF_FILE_UPLOAD.CONFIRMATION.BUTTON.CANCEL' | translate }}
+        </button>
+
+        <button
+            md-button
+            color="primary"
+            (click)="toggleConfirmation()">
+            {{ 'ADF_FILE_UPLOAD.CONFIRMATION.BUTTON.CONTINUE' | translate }}
         </button>
     </footer>
 </div>

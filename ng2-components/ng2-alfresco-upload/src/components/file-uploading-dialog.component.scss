@@ -12,6 +12,14 @@
         width: 40%;
         box-shadow: 1px 5px 15px #888888;
 
+        &--padding {
+            padding: 1em;
+        }
+
+        &--hide {
+            display: none !important;
+        }
+
         &--position-left {
             left: 25px;
         }
@@ -32,6 +40,12 @@
             padding: 1em;
             display: flex;
             align-items: center;
+
+            button {
+                min-width: 0;
+                padding: 0;
+                line-height: 0;
+            }
         }
 
         &__title {
@@ -45,9 +59,24 @@
 
         &__content {
             overflow: auto;
-            max-height: 195px;
+            max-height: 194px;
             border-top: 1px solid mat-color($foreground, text, 0.14);
             border-bottom: 1px solid mat-color($foreground, text, 0.14);
+        }
+
+        &__confirmation {
+            padding: 0 0.5em 0 0.5em;
+        }
+
+        &__confirmation--title {
+            font-size: 16px;
+            line-height: 1.5;
+            letter-spacing: -0.4px;
+            color: $black-87-opacity;
+        }
+
+        &__confirmation--text {
+            margin-bottom: 0;
         }
 
         &__actions {
