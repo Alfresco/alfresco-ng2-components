@@ -60,7 +60,7 @@
     height: 100%;
 }
 
-adf-empty-list-header >>>>div {
+adf-empty-list-header >>> div {
     height: 32px;
     opacity: 0.26 !important;
     font-family: Muli, Helvetica, Arial, sans-serif;
@@ -68,4 +68,12 @@ adf-empty-list-header >>>>div {
     line-height: 1.33;
     letter-spacing: -1px;
     color: #000000;
+}
+
+.adf-documentlist-pagination {
+    color: black;
+
+    .adf-pagination__block {
+        border-right: none;
+    }
 }
