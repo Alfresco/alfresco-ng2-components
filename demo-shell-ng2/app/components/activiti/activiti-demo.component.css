@@ -34,3 +34,73 @@
     background: #fff;
     text-align: left;
 }
+
+.activiti-demo-grid {
+    display: flex;
+}
+
+.activiti-demo-grid-item {
+    margin: 8px;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+    background-color: #f5f5f5;
+    padding: 10px 10px 10px 10px;
+}
+
+.activiti-demo-list-buttons {
+    margin-bottom: 24px;
+}
+
+.activiti-demo-list-buttons-start {
+    width: 100%;
+}
+
+.activiti-demo-tasks-menu {
+    min-width: 170px;
+}
+
+.activiti-demo-tasks-list {
+    min-width: 300px;
+    padding: 0;
+}
+
+.activiti-demo-tasks-details,
+.activiti-demo-tasks-start {
+    flex-grow: 1;
+    min-width: 730px;
+}
+
+.activiti-demo-tasks-menu >>> .mat-list .mat-list-item .mat-list-item-content {
+    height: 32px;
+    cursor: pointer;
+    padding: 0 16px 0 24px;
+}
+
+.activiti-demo-tasks-menu >>> .adf-panel-heading {
+    margin-bottom: 10px;
+}
+
+.activiti-demo-tasks-list >>> .adf-data-table {
+    border: none;
+}
+
+.activiti-demo-tasks-list >>> .adf-data-table tr,
+.activiti-demo-tasks-list >>> .adf-data-table td {
+    height: 36px;
+    font-size: 14px;
+}
+
+.activiti-demo-tasks-list >>> .adf-data-table td {
+    padding-top: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.activiti-demo-tasks-list >>> .adf-data-table th {
+    padding-top: 0;
+    padding-bottom: 0;
+    height: 40px;
+    color: rgb(0,0,0);
+    vertical-align: middle;
+    font-size: 14px;
+    background-color: rgba(0,0,0,.05);
+}

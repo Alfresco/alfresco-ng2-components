@@ -1,0 +1,22 @@
+<adf-info-drawer-layout>
+    <div *ngIf="title" info-drawer-title>Activities</div>
+    <ng-content *ngIf="!title" info-drawer-title select="[info-drawer-title]"></ng-content>
+
+    <ng-content info-drawer-buttons select="[info-drawer-buttons]"></ng-content>
+
+    <ng-container info-drawer-content *ngIf="showTabLayout(); then tabLayout else singleLayout"></ng-container>
+
+    <ng-template #tabLayout>
+        <md-tab-group class="adf-info-drawer-tabs">
+            <ng-container *ngFor="let contentBlock of contentBlocks">
+                <md-tab [label]="contentBlock.label" class="adf-info-drawer-tab">
+                    <ng-container *ngTemplateOutlet="contentBlock.content"></ng-container>
+                </md-tab>
+            </ng-container>
+        </md-tab-group>
+    </ng-template>
+
+    <ng-template #singleLayout>
+        <ng-content select="[info-drawer-content]"></ng-content>
+    </ng-template>
+</adf-info-drawer-layout>

@@ -1,0 +1,35 @@
+.adf {
+    &-info-drawer-layout {
+        width: 350px;
+        display: block;
+        padding: 8px 0;
+        background-color: #FAFAFA;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.27);
+
+        &-header {
+            padding: 8px 24px 24px 24px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 20px;
+
+            &-buttons {
+                md-icon {
+                    cursor: pointer;
+                }
+            }
+        }
+
+        &-content {
+            padding: 10px;
+
+            > * {
+                margin-bottom: 20px;
+                display: block;
+            }
+
+            > *:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+}
