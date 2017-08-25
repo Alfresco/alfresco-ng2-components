@@ -1,0 +1,48 @@
+.adf {
+    &-info-drawer {
+        display: block;
+
+        & &-layout {
+
+            &-content {
+                padding: 0;
+
+                & > :not(.adf-info-drawer-tabs) {
+                    padding: 10px;
+
+                    > * {
+                        margin-bottom: 20px;
+                        display: block;
+                    }
+                }
+
+                .adf-info-drawer-tabs {
+                    & .mat-tab-body-content > * {
+                        margin-bottom: 20px;
+                        display: block;
+                    }
+
+                    & .mat-tab-body-content > *:last-child {
+                        margin-bottom: 0;
+                    }
+
+                    .mat-tab-label {
+                        flex-grow: 1;
+                    }
+
+                    .mat-ink-bar {
+                        height: 4px;
+                    }
+
+                    .mat-tab-body {
+                        padding: 10px;
+                    }
+
+                    .mat-tab-body-content {
+                        overflow: initial;
+                    }
+                }
+            }
+        }
+    }
+}
