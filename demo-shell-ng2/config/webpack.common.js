@@ -46,6 +46,7 @@ module.exports = {
             },
             {
                 test: /\.html$/,
+                include: [helpers.root('app'), helpers.root('../ng2-components')],
                 loader: 'html-loader',
                 exclude: [/node_modules/, /public/, /resources/, /dist/]
             },
@@ -64,16 +65,7 @@ module.exports = {
             },
             {
                 test: /\.component.scss$/,
-                use: [{
-                    loader: "to-string-loader"
-                }, {
-                    loader: "raw-loader"
-                }, {
-                    loader: "sass-loader",
-                    options: {
-                        includePaths: [path.resolve(__dirname, '../../ng2-components/ng2-alfresco-core/styles')]
-                    }
-                }]
+                use: ['to-string-loader', 'raw-loader', 'sass-loader']
             },
             {
                 test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
