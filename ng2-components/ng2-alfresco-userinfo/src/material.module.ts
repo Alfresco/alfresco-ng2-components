@@ -15,14 +15,25 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs/Rx';
+import { NgModule } from '@angular/core';
+import {
+    MdButtonModule,
+    MdCardModule,
+    MdMenuModule,
+    MdTabsModule
+} from '@angular/material';
 
-@Injectable()
-export class FileUploadService {
-    remove = new Subject<string>();
-
-    emitFileRemoved(item: any) {
-        this.remove.next(item);
-    }
+export function modules() {
+    return [
+        MdButtonModule,
+        MdMenuModule,
+        MdTabsModule,
+        MdCardModule
+    ];
 }
+
+@NgModule({
+    imports: modules(),
+    exports: modules()
+})
+export class MaterialModule {}

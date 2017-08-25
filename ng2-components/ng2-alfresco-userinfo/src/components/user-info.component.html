@@ -1,79 +1,66 @@
 <div id="userinfo_container" *ngIf="isLoggedIn()">
-    <div *ngIf="ecmUser || bpmUser">
-        <div class="button-profile" id="user-profile" data-automation-id="user-profile">
-            <img id="logged-user-img"
-                 [src]="getUserAvatar()"
-                 alt="user-info-profile-button"
-                 (error)="onImageLoadingError($event)"
-                 class="profile-image"/>
-        </div>
-        <div mdl id="user-profile-lists" class="user-profile-list-mdl mdl-menu mdl-js-menu mdl-js-ripple-effect"
-             [class.mdl-menu--bottom-left]="menuOpenType === 'left'"
-             [class.mdl-menu--bottom-right]="menuOpenType === 'right'"
-             for="user-profile" (click)="stopClosing($event)">
-            <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect menu-container__items">
-                <div id="tab-bar-env" class="mdl-tabs__tab-bar" [hidden]="!(ecmUser && bpmUser)">
-                    <a href="#ecm-panel" id="ecm-tab" class="mdl-tabs__tab is-active">Content Services</a>
-                    <a href="#bpm-panel" id="bpm-tab" class="mdl-tabs__tab">Process Services</a>
-                </div>
-                <div class="mdl-tabs__panel" [class.is-active]="ecmUser" id="ecm-panel">
-                    <div class="detail-user-profile-list-mdl mdl-list" *ngIf="ecmUser">
-                        <div class="demo-card-wide mdl-card">
-                            <div class="card-title__option mdl-card__title"
-                                 id="ecm-background-image"
-                                 [style.background-image]="'url(' + ecmBackgroundImage + ')'">
-                                <img class="profile-picture"
-                                     id="ecm-user-detail-image"
-                                     alt="ecm-profile-image"
-                                     (error)="onImageLoadingError($event)"
-                                     [src]="getEcmUserAvatar()"/>
-                                <h2 class="mdl-card__title-text" id="ecm-username">{{ecmUser.fullNameDisplay}}</h2>
-                            </div>
-                            <div class="mdl-card__supporting-text">
-                                <li class="mdl-list__item mdl-list__item--two-line">
-                                    <span class="mdl-list__item-primary-content">
-                                        <span id="ecm-full-name" class="truncate-long-names">{{ecmUser.fullNameDisplay}}</span>
-                                        <span id="ecm-email" class="mdl-list__item-sub-title">{{ecmUser.email}}</span>
-                                    </span>
-                                    <span id="ecm-job-title" class="mdl-list__item-secondary-content user-info__job-title">
-                                        <span class="role-label-user">{{ 'USER_PROFILE.LABELS.ECM.JOB_TITLE' | translate }}</span>
-                                        {{ ecmUser.jobTitle ? ecmUser.jobTitle : 'N/A' }}
-                                    </span>
-                                </li>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="mdl-tabs__panel" [class.is-active]="bpmUser && !ecmUser" id="bpm-panel">
-                    <div class="detail-user-profile-list-mdl mdl-list" *ngIf="bpmUser">
-                        <div class="demo-card-wide mdl-card">
-                            <div class="card-title__option mdl-card__title"
-                                 id="bpm-background-image"
-                                 [style.background-image]="'url(' + bpmBackgroundImage + ')'">
-                                <img class="profile-picture"
-                                     id="bpm-user-detail-image"
-                                     alt="bpm-profile-image"
-                                     (error)="onImageLoadingError($event)"
-                                     [src]="getBpmUserAvatar()"/>
-                                <h2 class="mdl-card__title-text" id="bpm-username">{{bpmUser.fullNameDisplay}}</h2>
-                            </div>
-                            <div class="mdl-card__supporting-text">
-                                <li class="mdl-list__item mdl-list__item--two-line">
-                                    <span class="mdl-list__item-primary-content">
-                                        <span id="bpm-full-name" class="truncate-long-names">{{ bpmUser.fullNameDisplay }}</span>
-                                        <span id="bpm-email" class="mdl-list__item-sub-title">{{bpmUser.email}}</span>
-                                    </span>
-                                    <span id="bpm-tenant" class="mdl-list__item-secondary-content user-info__job-title">
-                                        <span class="role-label-user">{{ 'USER_PROFILE.LABELS.BPM.TENANT' | translate }}</span>
-                                        {{ bpmUser.tenantName }}
-                                    </span>
-                                </li>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+    <button md-button [mdMenuTriggerFor]="menu" class="adf-userinfo-menu_button">
+    <div class="adf-userinfo-button-profile" id="user-profile" data-automation-id="user-profile">
+        <img id="logged-user-img" [src]="getUserAvatar()"
+             alt="user-info-profile-button"
+             (error)="onImageLoadingError($event)" class="adf-userinfo-profile-image"/>
     </div>
+</button>
+    <md-menu #menu="mdMenu" id="user-profile-lists" [xPosition]="menuPositionX" [yPosition]="menuPositionY" [overlapTrigger]="false" class="adf-userinfo-menu">
+        <md-tab-group id="tab-group-env" (click)="stopClosing($event)"
+            class="adf-userinfo-tab" [class.adf-hide-tab]="!bpmUser || !ecmUser">
+            <md-tab id="ecm-panel" label="Content Services" *ngIf="ecmUser">
+                <md-card class="adf-userinfo-card">
+                    <md-card-header class="adf-userinfo-card-header" [style.background-image]="'url(' + ecmBackgroundImage + ')'">
+                        <img class="adf-userinfo-profile-picture"
+                            id="ecm-user-detail-image"
+                            alt="ecm-profile-image"
+                            (error)="onImageLoadingError($event)"
+                            [src]="getEcmUserAvatar()" />
+                       <h2 class="adf-userinfo-title" id="ecm-username">{{ecmUser.fullNameDisplay}}</h2>
+                    </md-card-header>
+                    <md-card-content>
+                        <div class="adf-userinfo-supporting-text">
+                                <div class="adf-userinfo-detail">
+                                    <span id="ecm-full-name" class="adf-userinfo__detail-title">{{ecmUser.fullNameDisplay}}</span>
+                                    <span class="adf-userinfo__detail-profile" id="ecm-email"> {{ecmUser.email}} </span>
+                                </div>
+                                <div class="adf-userinfo-detail">
+                                    <span class="adf-userinfo__secondary-info">
+                                        {{ 'USER_PROFILE.LABELS.ECM.JOB_TITLE' | translate }}
+                                        <span id="ecm-job-title" class="adf-userinfo__detail-profile"> {{ ecmUser.jobTitle ? ecmUser.jobTitle : 'N/A' }} </span>
+                                    </span>
+                                </div>
+                        </div>
+                    </md-card-content>
+                </md-card>
+            </md-tab>
+            <md-tab label="Process Services" id="bpm-panel" *ngIf="bpmUser">
+            <md-card class="adf-userinfo-card">
+                <md-card-header class="adf-userinfo-card-header" [style.background-image]="'url(' + bpmBackgroundImage + ')'">
+                    <img class="adf-userinfo-profile-picture"
+                        id="bpm-user-detail-image"
+                        alt="bpm-profile-image"
+                        (error)="onImageLoadingError($event)"
+                        [src]="getBpmUserAvatar()"/>
+                   <h2 class="adf-userinfo-title" id="bpm-username">{{bpmUser.fullNameDisplay}}</h2>
+                </md-card-header>
+                <md-card-content>
+                    <div class="adf-userinfo-supporting-text">
+                            <div class="adf-userinfo-detail">
+                                <span id="bpm-full-name" class="adf-userinfo__detail-title">{{ bpmUser.fullNameDisplay }}</span>
+                                <span class="adf-userinfo__detail-profile" id="bpm-email"> {{bpmUser.email}} </span>
+                            </div>
+                            <div class="adf-userinfo-detail">
+                                <span id="bpm-tenant" class="adf-userinfo__secondary-info">
+                                    {{ 'USER_PROFILE.LABELS.BPM.TENANT' | translate }}
+                                    <span class="adf-userinfo__detail-profile">{{ bpmUser.tenantName ? bpmUser.tenantName : 'N/A' }}</span>
+                                </span>
+                            </div>
+                    </div>
+                </md-card-content>
+            </md-card>
+            </md-tab>
+        </md-tab-group>
+    </md-menu>
 </div>

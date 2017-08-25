@@ -34,3 +34,19 @@ export class FileUploadCompleteEvent extends FileUploadEvent {
     }
 
 }
+
+export class FileUploadDeleteEvent extends FileUploadEvent {
+
+    constructor(file: FileModel, public totalComplete: number = 0) {
+        super(file, FileUploadStatus.Deleted);
+    }
+
+}
+
+export class FileUploadErrorEvent extends FileUploadEvent {
+
+    constructor(file: FileModel, public error: any, public totalError: number = 0) {
+        super(file, FileUploadStatus.Error);
+    }
+
+}

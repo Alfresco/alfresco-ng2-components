@@ -15,29 +15,28 @@
  * limitations under the License.
  */
 
-import { FileModel } from 'ng2-alfresco-core';
-import { FileUploadService } from './file-uploading.service';
+import { TimeAgoPipe } from './time-ago.pipe';
 
-describe('FileUploadService', () => {
-    let service: FileUploadService;
-    let file = new FileModel(<File> { name: 'fake-name' });
+describe('TimeAgoPipe', () => {
+
+    let pipe: TimeAgoPipe;
 
     beforeEach(() => {
-        service = new FileUploadService();
+        pipe = new TimeAgoPipe();
     });
 
-    it('emits file remove event', () => {
-        spyOn(service.remove, 'next');
-        service.emitFileRemoved(file);
-
-        expect(service.remove.next).toHaveBeenCalledWith(file);
+    it('should return time difference for a given date', () => {
+        let date = new Date();
+        expect(pipe.transform(date)).toBe('a few seconds ago');
     });
 
-    it('passes removed file data', () => {
-        service.emitFileRemoved(file);
+    it('should return exact date if given date is more than seven days ', () => {
+        let date = new Date('1990-11-03T15:25:42.749');
+        expect(pipe.transform(date)).toBe('03/11/1990 15:25');
+    });
 
-        service.remove.subscribe((data) => {
-            expect(data).toEqual(file);
-        });
+    it('should return empty string if given date is empty', () => {
+        expect(pipe.transform(null)).toBe('');
+        expect(pipe.transform(undefined)).toBe('');
     });
 });
