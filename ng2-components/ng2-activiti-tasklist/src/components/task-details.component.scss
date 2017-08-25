@@ -1,0 +1,134 @@
+:host {
+    width: 100%;
+}
+
+.error-dialog h3 {
+    margin: 16px 0;
+}
+
+.activiti-task-details__header {
+    align-self: flex-end;
+    display: flex;
+    font-size: 24px;
+    font-weight: 300;
+    line-height: normal;
+    overflow: hidden;
+    margin: 8px 0 16px 0;
+    cursor: pointer;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+.activiti-task-details__action-button {
+    text-transform: uppercase;
+}
+
+adf-people >>> .assignment-top-container{
+    background-color: #fff;
+}
+
+.assignment-container {
+    background: #fff;
+    border: 1px solid #e1e1e1;
+    padding: 10px 20px;
+    width: auto;
+}
+
+adf-task-header.assign-edit-view /deep/ adf-card-view /deep/ .adf-property[data-automation-id="header-assignee"] {
+    display: none;
+}
+
+.adf-task-details {
+    &-header {
+        display: flex;
+        justify-content: space-between;
+
+        &-toggle {
+            position: relative;
+            top: 10px;
+            margin-right: 2px;
+            height: 23px;
+            cursor: pointer;
+            user-select: none;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+    }
+
+    &-core {
+        display: flex;
+        justify-content: space-between;
+
+        &-sidebar {
+            &-drawer {
+                margin-left: 10px;
+            }
+
+            &-checklist {
+                margin-top: 30px;
+                padding-left: 20px;
+                padding-right: 20px;
+
+                & /deep/ #checklist-none-message {
+                    margin-top: 10px;
+                    color: rgba(0, 0, 0, .5);
+                }
+
+                & /deep/ .activiti-label.mdl-badge[data-badge]:after {
+                    margin-top: 9px;
+                    right: -29px;
+                }
+
+                & /deep/ .activiti-label.mdl-badge[data-badge] + div.icon {
+                    float: right;
+                }
+
+                & /deep/ .menu-container li.mdl-list {
+                    padding: 0;
+                }
+
+                & /deep/ .menu-container li.mdl-list__item {
+                    padding: 0;
+                    min-height: auto;
+
+                    .mdl-chip {
+                        width: 100%;
+
+                        button {
+                            float: right;
+                            position: relative;
+                            top: 4px;
+                        }
+                    }
+                }
+            }
+        }
+
+        &-form {
+            flex-grow: 1;
+
+            & /deep/ .adf-form-debug-container {
+                padding: 20px 0 0 0;
+
+                .mat-slide-toggle {
+                    float: right;
+
+                    & + div {
+                        background-color: black;
+                        padding: 20px;
+                        clear: both;
+                        margin-top: 30px;
+                        color: white;
+                    }
+                }
+            }
+
+            & /deep/ .mat-tab-label {
+                flex-grow: 1;
+            }
+        }
+    }
+}
