@@ -54,6 +54,7 @@ export * from './src/data/share-datatable-adapter';
 export * from './src/services/folder-actions.service';
 export * from './src/services/document-actions.service';
 export * from './src/services/document-list.service';
+export * from './src/services/node-actions.service';
 
 // models
 export * from './src/models/content-action.model';
