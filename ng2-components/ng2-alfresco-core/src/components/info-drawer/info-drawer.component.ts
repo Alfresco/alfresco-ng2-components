@@ -21,7 +21,7 @@ import { Component, ContentChildren, Input, QueryList, TemplateRef, ViewChild, V
     template: '<ng-template><ng-content></ng-content></ng-template>'
 })
 export class InfoDrawerTabComponent {
-    @Input('label') label: string;
+    @Input('label') label: string = 'Main tab';
     @ViewChild(TemplateRef) content: TemplateRef<any>;
 }
 

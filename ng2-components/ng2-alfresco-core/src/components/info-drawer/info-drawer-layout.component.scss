@@ -18,5 +18,18 @@
                 }
             }
         }
+
+        &-content {
+            padding: 10px;
+
+            > * {
+                margin-bottom: 20px;
+                display: block;
+            }
+
+            > *:last-child {
+                margin-bottom: 0;
+            }
+        }                    
     }
 }
