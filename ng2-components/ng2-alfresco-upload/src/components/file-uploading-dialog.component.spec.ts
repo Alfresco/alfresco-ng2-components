@@ -15,52 +15,37 @@
  * limitations under the License.
  */
 
-import { DebugElement } from '@angular/core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { CoreModule } from 'ng2-alfresco-core';
+import { EventEmitter } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FileModel, FileUploadCompleteEvent, FileUploadErrorEvent, UploadService } from 'ng2-alfresco-core';
+import { UploadModule } from '../../index';
 import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
-import { FileUploadingListComponent } from './file-uploading-list.component';
-import { UploadService } from '../services/upload.service';
-import { FileModel } from '../models/file.model';
 
 describe('FileUploadingDialogComponent', () => {
-
-    let component: FileUploadingDialogComponent;
     let fixture: ComponentFixture<FileUploadingDialogComponent>;
-    let debug: DebugElement;
-    let element: any;
-    let file: FileModel;
     let uploadService: UploadService;
+    let component: FileUploadingDialogComponent;
+    let emitter: EventEmitter<any>;
+    let filelist: FileModel[];
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
-            ],
-            declarations: [
-                FileUploadingDialogComponent,
-                FileUploadingListComponent
-            ],
-            providers: [
-                UploadService
+                UploadModule
             ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
-        window['componentHandler'] = null;
-
-        const fileFake = new File([''], 'fake-name');
-        file = new FileModel(fileFake);
-
         fixture = TestBed.createComponent(FileUploadingDialogComponent);
-        uploadService = TestBed.get(UploadService);
-
-        debug = fixture.debugElement;
-        element = fixture.nativeElement;
         component = fixture.componentInstance;
+        uploadService = TestBed.get(UploadService);
+        emitter = new EventEmitter();
+        filelist = [
+            new FileModel(<File> { name: 'fake-name', size: 10 }),
+            new FileModel(<File> { name: 'fake-name2', size: 10 })
+        ];
 
-        component.filesUploadingList = [file];
         fixture.detectChanges();
     });
 
@@ -69,44 +54,159 @@ describe('FileUploadingDialogComponent', () => {
         TestBed.resetTestingModule();
     });
 
-    it('should render completed upload 1 when an element is added to Observer', () => {
-        uploadService.updateFileCounterStream(1);
-        fixture.detectChanges();
+    describe('upload service subscribers', () => {
+        it('should not render dialog when uploading list is empty', () => {
+            uploadService.addToQueue();
+            uploadService.uploadFilesInTheQueue(emitter);
 
-        expect(element.querySelector('#total-upload-completed').innerText).toEqual('1');
+            expect(component.isDialogActive).toBe(false);
+        });
+
+        it('should open dialog when uploading list is not empty', () => {
+            uploadService.addToQueue(...filelist);
+            uploadService.uploadFilesInTheQueue(emitter);
+
+            expect(component.isDialogActive).toBe(true);
+        });
+
+        it('should update uploading file list', () => {
+            uploadService.addToQueue(...filelist);
+            uploadService.uploadFilesInTheQueue(emitter);
+
+            expect(component.filesUploadingList.length).toBe(2);
+        });
+
+        it('should update completed uploaded files count', () => {
+            const completedFiles = 2;
+            const completeEvent = new FileUploadCompleteEvent(null, completedFiles, null, null);
+            uploadService.fileUploadComplete.next(completeEvent);
+
+            expect(component.totalCompleted).toEqual(completedFiles);
+        });
+
+        it('should update error files count', () => {
+            const totalErrors = 2;
+            const errorEvent = new FileUploadErrorEvent(null, null, totalErrors);
+            uploadService.fileUploadError.next(errorEvent);
+
+            expect(component.totalErrors).toEqual(totalErrors);
+        });
     });
 
-    it('should render dialog box with css class show when an element is added to Observer', () => {
-        uploadService.addToQueue(new FileModel(<File> { name: 'file' }));
-        component.filesUploadingList = [file];
+    describe('toggleConfirmation()', () => {
+        it('should change state to true when false', () => {
+            component.isConfirmation = false;
 
-        fixture.detectChanges();
+            component.toggleConfirmation();
 
-        expect(element.querySelector('.file-dialog').getAttribute('class')).toEqual('file-dialog show');
+            expect(component.isConfirmation).toBe(true);
+        });
+
+        it('should change state to false when true', () => {
+            component.isConfirmation = true;
+
+            component.toggleConfirmation();
+
+            expect(component.isConfirmation).toBe(false);
+        });
+
+        it('should change dialog minimize state to false', () => {
+            component.isDialogMinimized = true;
+
+            component.toggleConfirmation();
+
+            expect(component.isDialogMinimized).toBe(false);
+        });
+
+        it('should not change dialog minimize state', () => {
+            component.isDialogMinimized = false;
+
+            component.toggleConfirmation();
+
+            expect(component.isDialogMinimized).toBe(false);
+        });
     });
 
-    it('should render dialog box with css class show when the toggleVisible is called', () => {
-        component.toggleVisible();
-        fixture.detectChanges();
+    describe('cancelAllUploads()', () => {
+        beforeEach(() => {
+            (<any> component).uploadList = {
+                cancelAllFiles: jasmine.createSpy('cancelAllFiles')
+            };
+        });
 
-        expect(element.querySelector('.file-dialog').getAttribute('class')).toEqual('file-dialog show');
+        it('should toggle confirmation dialog', () => {
+            spyOn(component, 'toggleConfirmation');
+
+            component.cancelAllUploads();
+
+            expect(component.toggleConfirmation).toHaveBeenCalled();
+        });
+
+        it('should call upload list cancel method', () => {
+            component.cancelAllUploads();
+
+            expect(component.uploadList.cancelAllFiles).toHaveBeenCalled();
+        });
     });
 
-    it('should render dialog box with css class hide', () => {
-        component.isDialogActive = true;
+    describe('toggleMinimized()', () => {
+        it('should minimze the dialog', () => {
+            component.isDialogMinimized = true;
+            component.toggleMinimized();
 
-        component.toggleVisible();
-        fixture.detectChanges();
+            expect(component.isDialogMinimized).toBe(false);
+        });
 
-        expect(element.querySelector('.file-dialog').getAttribute('class')).toEqual('file-dialog');
+        it('should maximize the dialog', () => {
+            component.isDialogMinimized = false;
+            component.toggleMinimized();
+
+            expect(component.isDialogMinimized).toBe(true);
+        });
     });
 
-    it('should render minimize dialog as default', () => {
-        component.isDialogActive = true;
+    describe('close()', () => {
+        it('should reset confirmation state', () => {
+            component.isConfirmation = true;
+            component.close();
 
-        component.toggleMinimized();
-        fixture.detectChanges();
+            expect(component.isConfirmation).toBe(false);
+        });
 
-        expect(element.querySelector('.minimize-button').getAttribute('class')).toEqual('minimize-button active');
+        it('should reset total files count', () => {
+            component.totalCompleted = 1;
+            component.close();
+
+            expect(component.totalCompleted).toBe(0);
+        });
+
+        it('should reset total errors count', () => {
+            component.totalErrors = 1;
+            component.close();
+
+            expect(component.totalErrors).toBe(0);
+        });
+
+        it('should closes the dialog', () => {
+            component.isDialogActive = true;
+            component.close();
+
+            expect(component.isDialogActive).toBe(false);
+        });
+
+        it('should reset dialog minimize state', () => {
+            component.isDialogMinimized = true;
+            component.close();
+
+            expect(component.isDialogMinimized).toBe(false);
+        });
+
+        it('should reset upload queue', () => {
+            uploadService.addToQueue(...filelist);
+            uploadService.uploadFilesInTheQueue(emitter);
+            component.close();
+
+            expect(uploadService.getQueue().length).toBe(0);
+        });
     });
 });

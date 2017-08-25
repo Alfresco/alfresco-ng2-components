@@ -1,10 +1,18 @@
 @import 'colors';
 
 @mixin mat-file-uploading-row-theme($theme) {
+    $background: map-get($theme, background);
+    $foreground: map-get($theme, foreground);
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
     $warn: map-get($theme, warn);
 
+    $file-uploading-row-hover-color: #eeeeee !default;
+
+    adf-file-uploading-list-row:not(:first-child) {
+        display: block;
+        border-top: 1px solid mat-color($foreground, text, 0.14);
+    }
 
     .adf-file-uploading-row {
         display: flex;
@@ -12,8 +20,8 @@
         padding: 0.5em 1em 0.5em 1em;
         cursor: default;
 
-        &:not(:first-child) {
-            border-top: 1px solid ;
+        &:hover {
+            background: $file-uploading-row-hover-color;
         }
 
         &__name {
