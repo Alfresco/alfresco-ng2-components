@@ -40,7 +40,7 @@ declare var require: any;
 @Component({
     selector: 'adf-task-details, activiti-task-details',
     templateUrl: './task-details.component.html',
-    styleUrls: ['./task-details.component.css'],
+    styleUrls: ['./task-details.component.scss'],
     providers: [
         CardViewUpdateService
     ]
