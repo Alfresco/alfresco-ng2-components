@@ -1,90 +1,99 @@
-# APS Task List Component
+# Activiti Task List library
+
+Contains the Activiti Task List component and other related components and classes.
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
 
 <!-- toc -->
 
-- [Prerequisites](#prerequisites)
-- [Install](#install)
-- [Activiti Task List](#activiti-task-list)
-  * [DataColumn Properties](#datacolumn-properties)
-  * [Events](#events)
-  * [Properties](#properties)
-- [Activiti Task Details](#activiti-task-details)
-  * [Properties](#properties-1)
-  * [Events](#events-1)
-  * [Custom 'empty Activiti Task Details' template](#custom-empty-activiti-task-details-template)
+- [Activiti Task List component](#activiti-task-list-component)
+  * [Basic Usage](#basic-usage)
+    + [Properties](#properties)
+    + [Events](#events)
+  * [Details](#details)
+    + [DataTableAdapter example](#datatableadapter-example)
+    + [DataColumn Properties](#datacolumn-properties)
+- [Activiti Task Details component](#activiti-task-details-component)
+  * [Basic Usage](#basic-usage-1)
+    + [Properties](#properties-1)
+    + [Events](#events-1)
+  * [Details](#details-1)
+    + [Custom 'empty Activiti Task Details' template](#custom-empty-activiti-task-details-template)
 - [Activiti Apps Component](#activiti-apps-component)
-  * [Properties](#properties-2)
-  * [Events](#events-2)
-  * [How filter the activiti apps](#how-filter-the-activiti-apps)
-- [Activiti Filter](#activiti-filter)
-  * [Properties](#properties-3)
-  * [Events](#events-3)
-  * [How filter the activiti task filters](#how-filter-the-activiti-task-filters)
-  * [FilterParamsModel](#filterparamsmodel)
-  * [How to create an accordion menu with the task filter](#how-to-create-an-accordion-menu-with-the-task-filter)
+  * [Basic Usage](#basic-usage-2)
+    + [Properties](#properties-2)
+    + [Events](#events-2)
+  * [Details](#details-2)
+    + [How filter the activiti apps](#how-filter-the-activiti-apps)
+- [Activiti Filter component](#activiti-filter-component)
+  * [Basic Usage](#basic-usage-3)
+    + [Properties](#properties-3)
+    + [Events](#events-3)
+  * [Details](#details-3)
+    + [How filter the activiti task filters](#how-filter-the-activiti-task-filters)
+    + [FilterParamsModel](#filterparamsmodel)
+    + [How to create an accordion menu with the task filter](#how-to-create-an-accordion-menu-with-the-task-filter)
 - [Activiti Checklist Component](#activiti-checklist-component)
-  * [Properties](#properties-4)
+  * [Basic Usage](#basic-usage-4)
+    + [Properties](#properties-4)
 - [Task Attachment List Component](#task-attachment-list-component)
-  * [Properties](#properties-5)
-  * [Events](#events-4)
+  * [Basic Usage](#basic-usage-5)
+    + [Properties](#properties-5)
+    + [Events](#events-4)
 - [Create Task Attachment Component](#create-task-attachment-component)
-  * [Properties](#properties-6)
+  * [Basic Usage](#basic-usage-6)
+    + [Properties](#properties-6)
     + [Events](#events-5)
-- [Activiti Task Header](#activiti-task-header)
-  * [Properties](#properties-7)
-  * [Events](#events-6)
-- [TaskDetailsModel](#taskdetailsmodel)
+- [Activiti Task Header component](#activiti-task-header-component)
+  * [Basic Usage](#basic-usage-7)
+    + [Properties](#properties-7)
+    + [Events](#events-6)
+  * [Details](#details-4)
+    + [TaskDetailsModel](#taskdetailsmodel)
 - [Task People Component](#task-people-component)
-  * [Properties](#properties-8)
+  * [Basic Usage](#basic-usage-8)
+    + [Properties](#properties-8)
     + [Events](#events-7)
+  * [Details](#details-5)
     + [How to customize the people component behavior](#how-to-customize-the-people-component-behavior)
     + [Involve People single click and close search](#involve-people-single-click-and-close-search)
     + [Involve People single click without close search](#involve-people-single-click-without-close-search)
     + [Involve People double click and close search](#involve-people-double-click-and-close-search)
     + [Involve People double double without close search](#involve-people-double-double-without-close-search)
 - [ADF Comments Component](#adf-comments-component)
-  * [Properties](#properties-9)
+  * [Basic Usage](#basic-usage-9)
+    + [Properties](#properties-9)
     + [Events](#events-8)
 - [Start Task Component](#start-task-component)
-  * [Properties](#properties-10)
+  * [Basic Usage](#basic-usage-10)
+    + [Properties](#properties-10)
     + [Events](#events-9)
-- [Task Audit Directive](#task-audit-directive)
-  * [Properties](#properties-11)
+- [People Search component](#people-search-component)
+  * [Basic Usage](#basic-usage-11)
+    + [Properties](#properties-11)
     + [Events](#events-10)
-- [People Search](#people-search)
-  * [Properties](#properties-12)
-  * [Events](#events-11)
-  * [How to use](#how-to-use)
-- [Build from sources](#build-from-sources)
-- [NPM scripts](#npm-scripts)
-- [Demo](#demo)
-- [License](#license)
+  * [Details](#details-6)
+- [Task Audit Directive](#task-audit-directive)
+  * [Basic Usage](#basic-usage-12)
+    + [Properties](#properties-12)
+    + [Events](#events-11)
+- [Project Information](#project-information)
+  * [Prerequisites](#prerequisites)
+  * [Install](#install)
+  * [Build from sources](#build-from-sources)
+  * [NPM scripts](#npm-scripts)
+  * [Demo](#demo)
+  * [License](#license)
 
 <!-- tocstop -->
 
 <!-- markdown-toc end -->
 
-Displays lists of process instances both active and completed, using any defined process filter, and
-render details of any chosen instance.
+## Activiti Task List component
 
-## Prerequisites
+Renders a list containing all the tasks matched by the parameters specified.
 
-Before you start using this development framework, make sure you have installed all required software and done all the
-necessary configuration [prerequisites](https://github.com/Alfresco/alfresco-ng2-components/blob/master/PREREQUISITES.md).
-
-> If you plan using this component with projects generated by Angular CLI, please refer to the following article: [Using ADF with Angular CLI](https://github.com/Alfresco/alfresco-ng2-components/wiki/Angular-CLI)
-
-## Install
-
-```sh
-npm install ng2-activiti-tasklist
-```
-
-## Activiti Task List
-
-This component renders a list containing all the tasks matched by the parameters specified.
+### Basic Usage
 
 ```html
 <adf-tasklist 
@@ -105,7 +114,44 @@ You can also use HTML-based schema declaration like shown below:
 </adf-tasklist>
 ```
 
-### DataColumn Properties
+#### Properties
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| appId | string || The id of the app. |
+| processDefinitionKey | string || The processDefinitionKey of the process. |
+| processInstanceId | string || The processInstanceId of the process. |
+| assignment | string || The assignment of the process. <ul>Possible values are: <li>assignee : where the current user is the assignee</li> <li>candidate: where the current user is a task candidate </li><li>group_x: where the task is assigned to a group where the current user is a member of.</li> <li>no value: where the current user is involved</li> </ul> |
+| state | string || Define state of the processes. Possible values are: `completed`, `active` |
+| hasIcon | boolean | true | Toggle the icon on the left . |
+| landingTaskId | string | | Define which task id should be selected after the reloading. If the task id doesn't exist or nothing is passed it will select the first task |
+| sort | string | | Define the sort of the processes. Possible values are : `created-desc`, `created-asc`, `due-desc`, `due-asc` |
+| data | DataTableAdapter | | JSON object that represent the number and the type of the columns that you want show (see the [example](#datatableadapter-example) section below) |
+
+#### Events
+
+| Name | Description |
+| --- | --- |
+| onSuccess | Raised when the task list is loaded |
+| rowClick | Raised when the task in the list is clicked |
+
+### Details
+
+This component displays lists of process instances both active and completed, using any defined process filter, and
+render details of any chosen instance.
+
+#### DataTableAdapter example
+
+```json
+[
+ {"type": "text", "key": "id", "title": "Id"},
+ {"type": "text", "key": "name", "title": "Name", "cssClass": "full-width name-column", "sortable": true},
+ {"type": "text", "key": "formKey", "title": "Form Key", "sortable": true},
+ {"type": "text", "key": "created", "title": "Created", "sortable": true}
+]
+```
+
+#### DataColumn Properties
 
 Here's the list of available properties you can define for a Data Column definition.
 
@@ -120,41 +166,11 @@ Here's the list of available properties you can define for a Data Column definit
 | sr-title | string | | Screen reader title, used for accessibility purposes |
 | class | string | | Additional CSS class to be applied to column (header and cells) |
 
-### Events
+## Activiti Task Details component
 
-| Name | Description |
-| --- | --- |
-| onSuccess | Raised when the task list is loaded |
-| rowClick | Raised when the task in the list is clicked |
+Shows the details of the task id passed in input
 
-### Properties
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| appId | string || The id of the app. |
-| processDefinitionKey | string || The processDefinitionKey of the process. |
-| processInstanceId | string || The processInstanceId of the process. |
-| assignment | string || The assignment of the process. <ul>Possible values are: <li>assignee : where the current user is the assignee</li> <li>candidate: where the current user is a task candidate </li><li>group_x: where the task is assigned to a group where the current user is a member of.</li> <li>no value: where the current user is involved</li> </ul> |
-| state | string || Define state of the processes. Possible values are: `completed`, `active` |
-| hasIcon | boolean | true | Toggle the icon on the left . |
-| landingTaskId | string | | Define which task id should be selected after the reloading. If the task id doesn't exist or nothing is passed it will select the first task |
-| sort | string | | Define the sort of the processes. Possible values are : `created-desc`, `created-asc`, `due-desc`, `due-asc` |
-| data | DataTableAdapter | | JSON object that represent the number and the type of the columns that you want show |
-
-Example:
-
-```json
-[
- {"type": "text", "key": "id", "title": "Id"},
- {"type": "text", "key": "name", "title": "Name", "cssClass": "full-width name-column", "sortable": true},
- {"type": "text", "key": "formKey", "title": "Form Key", "sortable": true},
- {"type": "text", "key": "created", "title": "Created", "sortable": true}
-]
-```
-
-## Activiti Task Details
-
-The component shows the details of the task id passed in input
+### Basic Usage
 
 ```html
 <adf-task-details 
@@ -162,7 +178,7 @@ The component shows the details of the task id passed in input
 </adf-task-details>
 ```
 
-### Properties
+#### Properties
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -181,7 +197,7 @@ The component shows the details of the task id passed in input
 | showChecklist | boolean | true | Toggle `Checklist` feature for Header component |
 | fieldValidators | FormFieldValidator[] | [] | Field validators for use with the form. |
 
-### Events
+#### Events
 
 | Name | Description |
 | --- | --- |
@@ -192,7 +208,9 @@ The component shows the details of the task id passed in input
 | executeOutcome | Raised when any outcome is executed, default behaviour can be prevented via `event.preventDefault()` |
 | onError | Raised at any error |
 
-### Custom 'empty Activiti Task Details' template
+### Details
+
+#### Custom 'empty Activiti Task Details' template
 
 By default the Activiti Task Details provides the following message for the empty task details:
 
@@ -217,7 +235,9 @@ Note that can put any HTML content as part of the template, including other Angu
 
 ## Activiti Apps Component
 
-The component shows all the available apps.
+Shows all available apps.
+
+### Basic Usage
 
 ```html
 <adf-apps 
@@ -225,20 +245,22 @@ The component shows all the available apps.
 </adf-apps>
 ```
 
-### Properties
+#### Properties
 
 | Name | Type | Description |
 | --- | --- | --- |
 | layoutType | string | (**required**) Define the layout of the apps. There are two possible values: GRID or LIST. |
 | filtersAppId | Object | Provide a way to filter the apps to show. |
 
-### Events
+#### Events
 
 | Name | Description |
 | --- | --- |
 | appClick | Raised when an app entry is clicked |
 
-### How filter the activiti apps 
+### Details
+
+#### How filter the activiti apps
 
 If you want to show some specific apps you can specify them through the filtersAppId parameters
 
@@ -267,15 +289,17 @@ You can use inside the filter one of the following property
 }
 ```
 
-## Activiti Filter
+## Activiti Filter component
 
-The component shows all the available filters.
+Shows all available filters.
+
+### Basic Usage
 
 ```html
 <adf-filters></adf-filters>
 ```
 
-### Properties
+#### Properties
 
 | Name | Type | Description |
 | --- | --- | --- |
@@ -286,7 +310,7 @@ The component shows all the available filters.
 
 If both `appId` and `appName` are specified then `appName` will take precedence and `appId` will be ignored.
 
-### Events
+#### Events
 
 | Name | Description |
 | --- | --- |
@@ -294,7 +318,9 @@ If both `appId` and `appName` are specified then `appName` will take precedence 
 | onSuccess | Raised when the list is loaded  |
 | onError | Raised if there is an error during the loading  |
 
-### How filter the activiti task filters
+### Details
+
+#### How filter the activiti task filters
 
  ```html
 <adf-filters 
@@ -304,9 +330,9 @@ If both `appId` and `appName` are specified then `appName` will take precedence 
 ```
 
 
-You can use inside the filterParam one of the following property.
+You can use inside the filterParam one of the properties from [FilterParamsModel](#filterparamsmodel) (see below).
 
-### FilterParamsModel
+#### FilterParamsModel
 
 ```json
 {
@@ -322,7 +348,7 @@ You can use inside the filterParam one of the following property.
 | name | string | The name of the task filter, lowercase is checked |
 | index | string | The zero-based position of the filter in the array. |
 
-### How to create an accordion menu with the task filter
+#### How to create an accordion menu with the task filter
 
 You can create an accordion menu using the AccordionComponent that wrap the activiti task filter.
 The AccordionComponent is exposed by the alfresco-core.
@@ -345,7 +371,9 @@ The AccordionComponent is exposed by the alfresco-core.
 
 ## Activiti Checklist Component
 
-The component shows the checklist task functionality.
+Shows the checklist task functionality.
+
+### Basic Usage
 
 ```html
 <adf-checklist 
@@ -355,7 +383,7 @@ The component shows the checklist task functionality.
 </adf-checklist>
 ```
 
-### Properties
+#### Properties
 
 | Name | Type | Description |
 | --- | --- | --- |
@@ -363,9 +391,12 @@ The component shows the checklist task functionality.
 | readOnlyForm | boolean | Toggle readonly state of the form. Enforces all form widgets render readonly if enabled. |
 | assignee | string | (**required**) The assignee id where the subtasks are assigned to. |
 
+
 ## Task Attachment List Component
 
-This component displays attached documents on a specified task
+Displays attached documents on a specified task
+
+### Basic Usage
 
 ```html
 <adf-task-attachment-list 
@@ -375,14 +406,14 @@ This component displays attached documents on a specified task
 ```
 ![task-attachment-list-sample](docs/assets/task-attachment-list.png)
 
-### Properties
+#### Properties
 
 | Name | Type | Description |
 | --- | --- | --- |
 | taskId | string | (**required**): The ID of the task to display |
 | disabled | boolean | false | Disable/Enable read only mode for attachement list |
 
-### Events
+#### Events
 
 | Name | Description |
 | --- | --- |
@@ -392,7 +423,9 @@ This component displays attached documents on a specified task
 
 ## Create Task Attachment Component
 
-This component displays Upload Component(Drag and Click) to upload the attachment to a specified task
+Displays Upload Component(Drag and Click) to upload the attachment to a specified task
+
+### Basic Usage
 
 ```html
 <adf-create-task-attachment 
@@ -404,7 +437,7 @@ This component displays Upload Component(Drag and Click) to upload the attachmen
 
 ![task-create-attachment](docs/assets/task-create-attachment.png)
 
-### Properties
+#### Properties
 
 | Name | Type | Description |
 | --- | --- | --- |
@@ -417,10 +450,11 @@ This component displays Upload Component(Drag and Click) to upload the attachmen
 | error | Raised when the error occurred while creating/uploading the attachment by the user from within the component |
 | success | Raised when the attachment created/uploaded successfully from within the component |
 
-## Activiti Task Header
+## Activiti Task Header component
 
-The component shows all the information related to a task. 
-The purpose of the component is to populate the local variable called `properties` (array of CardViewModel), with all the information that we want to display.
+Shows all the information related to a task.
+
+### Basic Usage
 
 ```html
 <adf-task-header
@@ -428,7 +462,7 @@ The purpose of the component is to populate the local variable called `propertie
 </adf-task-header>
 ```
 
-### Properties
+#### Properties
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -437,13 +471,18 @@ The purpose of the component is to populate the local variable called `propertie
 
 ![adf-task-header](docs/assets/adf-task-header.png)
 
-### Events
+#### Events
 
 | Name | Description |
 | --- | --- |
 | claim | Raised when the task is claimed. |
 
-## TaskDetailsModel
+### Details
+
+The purpose of the component is to populate the local variable called `properties` (array of CardViewModel), with all the information that we want to display.
+
+
+#### TaskDetailsModel
 
 ```json
 { 
@@ -457,7 +496,9 @@ The purpose of the component is to populate the local variable called `propertie
 
 ## Task People Component
 
-This component displays involved users to a specified task
+Displays involved users to a specified task
+
+### Basic Usage
 
 ```html
 <adf-people 
@@ -469,7 +510,7 @@ This component displays involved users to a specified task
 
 ![activiti-people](docs/assets/activiti_people.png)
 
-### Properties
+#### Properties
 
 | Name | Type | Description |
 | --- | --- | --- |
@@ -480,6 +521,8 @@ This component displays involved users to a specified task
 #### Events
 
 No Events
+
+### Details
 
 #### How to customize the people component behavior
 
@@ -543,7 +586,9 @@ In this way will be easy customize the people component to involve the user with
 
 ## ADF Comments Component
 
-This component displays comments entered by involved users to a specified task. It also allows an involved user to add his/her comment to the task.
+Displays comments from users involved in a specified task and allows an involved user to add a comment to the task.
+
+### Basic Usage
 
 ```html
 <adf-comments
@@ -554,7 +599,7 @@ This component displays comments entered by involved users to a specified task. 
 
 ![adf-comments](docs/assets/adf-comments.png)
 
-### Properties
+#### Properties
 
 | Name | Type | Description |
 | --- | --- | --- |
@@ -569,7 +614,9 @@ This component displays comments entered by involved users to a specified task. 
 
 ## Start Task Component
 
-This component Creates/Starts new task for the specified app
+Creates/Starts new task for the specified app
+
+### Basic Usage
 
 ```html
 <adf-start-task
@@ -579,7 +626,7 @@ This component Creates/Starts new task for the specified app
 
 ![adf-start-task](docs/assets/adf-start-task.png)
 
-### Properties
+#### Properties
 
 | Name | Type | Description |
 | --- | --- | --- |
@@ -593,9 +640,50 @@ This component Creates/Starts new task for the specified app
 | cancel | Raised when the cancel button is pressed by the user |
 | error | Raised if there is an error during task creation |
 
+
+## People Search component
+
+Searches users/people.
+
+### Basic Usage
+
+```html
+<adf-people-search></adf-people-search>
+```
+
+#### Properties
+
+| Name | Type | Description |
+| --- | --- | --- |
+| results | Observable<User[]> | The params to show people list |
+
+#### Events
+
+| Name | Description |
+| --- | --- |
+| searchPeople | Raised when the search people with new keyword  |
+| success | Raised when select the user and click action button  |
+| closeSearch | Raised when click the clse button  |
+
+### Details
+
+ ```html
+<adf-people-search
+        (searchPeople)="searchUser($event)"
+        (success)="involveUser($event)"
+        (closeSearch)="onCloseSearch()"
+        [results]="peopleSearch$">
+            <header-title>{{ 'TASK_DETAILS.LABELS.ADD_PEOPLE' | translate }}</header-title>
+            <action-button-label>{{ 'PEOPLE.ADD_USER' | translate }}</action-button-label>
+        </adf-people-search>
+
+```
+
 ## Task Audit Directive
 
-This directive provide a way to fetch the Task Audit information in the pdf or json format.
+Provides a way to fetch the Task Audit information in the pdf or json format.
+
+### Basic Usage
 
 ```html
 <button
@@ -609,7 +697,7 @@ This directive provide a way to fetch the Task Audit information in the pdf or j
 
 ![adf-task-audit-directive](docs/assets/adf-task-audit-directive.png)
 
-### Properties
+#### Properties
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -625,43 +713,22 @@ This directive provide a way to fetch the Task Audit information in the pdf or j
 | clicked | Raised when the task audit info is ready |
 | error | Raised if there is an error during fetching task information |
 
-## People Search
+## Project Information
 
-The component used to search users/people.
+### Prerequisites
 
-```html
-<adf-people-search></adf-people-search>
+Before you start using this development framework, make sure you have installed all required software and done all the
+necessary configuration [prerequisites](https://github.com/Alfresco/alfresco-ng2-components/blob/master/PREREQUISITES.md).
+
+> If you plan using this component with projects generated by Angular CLI, please refer to the following article: [Using ADF with Angular CLI](https://github.com/Alfresco/alfresco-ng2-components/wiki/Angular-CLI)
+
+### Install
+
+```sh
+npm install ng2-activiti-tasklist
 ```
 
-### Properties
-
-| Name | Type | Description |
-| --- | --- | --- |
-| results | Observable<User[]> | The params to show people list |
-
-### Events
-
-| Name | Description |
-| --- | --- |
-| searchPeople | Raised when the search people with new keyword  |
-| success | Raised when select the user and click action button  |
-| closeSearch | Raised when click the clse button  |
-
-### How to use
-
- ```html
-<adf-people-search
-        (searchPeople)="searchUser($event)"
-        (success)="involveUser($event)"
-        (closeSearch)="onCloseSearch()"
-        [results]="peopleSearch$">
-            <header-title>{{ 'TASK_DETAILS.LABELS.ADD_PEOPLE' | translate }}</header-title>
-            <action-button-label>{{ 'PEOPLE.ADD_USER' | translate }}</action-button-label>
-        </adf-people-search>
-
-```
-
-## Build from sources
+### Build from sources
 
 You can build component from sources with the following commands:
 ```sh
@@ -673,7 +740,7 @@ npm run build
 > The `build` task rebuilds all the code, runs tslint, license checks 
 > and other quality check tools before performing unit testing.
 
-## NPM scripts
+### NPM scripts
 
 | Command | Description |
 | --- | --- |
@@ -682,7 +749,7 @@ npm run build
 | npm run test-browser | Run unit tests in the browser
 | npm run coverage | Run unit tests and display code coverage report |
 
-## Demo
+### Demo
 
 Please check the demo folder for a demo project
 
@@ -692,6 +759,6 @@ npm install
 npm start
 ```
 
-## License
+### License
 
 [Apache Version 2.0](https://github.com/Alfresco/alfresco-ng2-components/blob/master/LICENSE)
