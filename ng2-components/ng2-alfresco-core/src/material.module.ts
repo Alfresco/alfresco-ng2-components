@@ -22,6 +22,7 @@ import {
     MdInputModule,
     MdProgressBarModule,
     MdSnackBarModule,
+    MdTabsModule,
     MdToolbarModule
 } from '@angular/material';
 
@@ -32,7 +33,8 @@ export function modules() {
         MdInputModule,
         MdProgressBarModule,
         MdSnackBarModule,
-        MdToolbarModule
+        MdToolbarModule,
+        MdTabsModule
     ];
 }
 
