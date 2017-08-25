@@ -15,69 +15,75 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, forwardRef, Input, Output, ViewEncapsulation } from '@angular/core';
-import {
-    AlfrescoTranslationService,
-    EXTENDIBLE_COMPONENT,
-    FileInfo,
-    FileModel,
-    FileUtils,
-    NodePermissionSubject,
-    NotificationService,
-    UploadService
-} from 'ng2-alfresco-core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { AlfrescoTranslationService, LogService, NotificationService } from 'ng2-alfresco-core';
+import { UploadService } from '../services/upload.service';
+import { FileModel } from '../models/file.model';
 
+declare let componentHandler: any;
+
+const ERROR_FOLDER_ALREADY_EXIST = 409;
+
+/**
+ * <alfresco-upload-drag-area (onSuccess)="customMethod($event)></alfresco-upload-drag-area>
+ *
+ * This component, provide a drag and drop are to upload files to alfresco.
+ *
+ * @Output - onSuccess - The event is emitted when the file is uploaded
+ *
+ * @returns {UploadDragAreaComponent} .
+ */
 @Component({
-    selector: 'adf-upload-drag-area, alfresco-upload-drag-area',
+    selector: 'alfresco-upload-drag-area',
     templateUrl: './upload-drag-area.component.html',
-    styleUrls: ['./upload-drag-area.component.css'],
-    providers: [
-        { provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadDragAreaComponent)}
-    ],
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./upload-drag-area.component.css']
 })
-export class UploadDragAreaComponent implements NodePermissionSubject {
+export class UploadDragAreaComponent {
 
-    /** @deprecated Deprecated in favor of disabled input property */
-    @Input()
-    set enabled(enabled: boolean) {
-        console.warn('Deprecated: enabled input property should not be used for UploadDragAreaComponent. Please use disabled instead.');
-        this.disabled = !enabled;
-    }
+    private static DEFAULT_ROOT_ID: string = '-root-';
 
-    /** @deprecated Deprecated in favor of disabled input property */
-    get enabled(): boolean {
-        console.warn('Deprecated: enabled input property should not be used for UploadDragAreaComponent. Please use disabled instead.');
-        return !this.disabled;
-    }
-
-    /** @deprecated Deprecated in 1.6.0, you can use UploadService events and NotificationService api instead. */
     @Input()
     showNotificationBar: boolean = true;
-
-    /** @deprecated Deprecated in 1.6.0, this property is not used for couple of releases already. Use rootFolderId instead. */
-    @Input()
-    currentFolderPath: string = '/';
-
-    /** @deprecated Deprecated in 1.6.2, this property is not used for couple of releases already. Use parentId instead. */
-    @Input()
-    rootFolderId: string = '-root-';
-
-    @Input()
-    disabled: boolean = false;
 
     @Input()
     versioning: boolean = false;
 
     @Input()
-    parentId: string;
+    currentFolderPath: string = '/';
+
+    @Input()
+    rootFolderId: string = UploadDragAreaComponent.DEFAULT_ROOT_ID;
 
     @Output()
     onSuccess = new EventEmitter();
 
     constructor(private uploadService: UploadService,
                 private translateService: AlfrescoTranslationService,
+                private logService: LogService,
                 private notificationService: NotificationService) {
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-alfresco-upload', 'node_modules/ng2-alfresco-upload/src');
+        }
+    }
+
+    /**
+     * Handles 'upload-files' events raised by child components.
+     * @param e DOM event
+     */
+    onUploadFiles(e: CustomEvent) {
+        e.stopPropagation();
+        e.preventDefault();
+
+        let files: File[] = e.detail.files;
+        if (files && files.length > 0) {
+            const fileModels = files.map(f => new FileModel(f, { newVersion: this.versioning }));
+            if (e.detail.data.obj.entry.isFolder) {
+                let id = e.detail.data.obj.entry.id;
+                this.onFilesDropped(fileModels, id, '/');
+            } else {
+                this.onFilesDropped(fileModels);
+            }
+        }
     }
 
     /**
@@ -85,15 +91,10 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
      *
      * @param {File[]} files - files dropped in the drag area.
      */
-    onFilesDropped(files: File[]): void {
-        if (!this.disabled && files.length) {
-            const fileModels = files.map(file => new FileModel(file, {
-                newVersion: this.versioning,
-                path: '/',
-                parentId: this.parentId || this.rootFolderId
-            }));
-            this.uploadService.addToQueue(...fileModels);
-            this.uploadService.uploadFilesInTheQueue(this.onSuccess);
+    onFilesDropped(files: FileModel[], rootId?: string, directory?: string): void {
+        if (files.length) {
+            this.uploadService.addToQueue(...files);
+            this.uploadService.uploadFilesInTheQueue(rootId || this.rootFolderId, directory || this.currentFolderPath, this.onSuccess);
             let latestFilesAdded = this.uploadService.getQueue();
             if (this.showNotificationBar) {
                 this.showUndoNotificationBar(latestFilesAdded);
@@ -103,49 +104,70 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
 
     /**
      * Called when the file are dropped in the drag area
-     *
      * @param item - FileEntity
      */
     onFilesEntityDropped(item: any): void {
-        if (!this.disabled) {
-            item.file((file: File) => {
-                const fileModel = new FileModel(file, {
-                    newVersion: this.versioning,
-                    parentId: this.parentId || this.rootFolderId,
-                    path: item.fullPath.replace(item.name, '')
-                });
-                this.uploadService.addToQueue(fileModel);
-                this.uploadService.uploadFilesInTheQueue(this.onSuccess);
-            });
-            if (this.showNotificationBar) {
-                this.showUndoNotificationBar(item);
-            }
-        }
+        item.file((file: File) => {
+            const fileModel = new FileModel(file, { newVersion: this.versioning });
+            this.uploadService.addToQueue(fileModel);
+            let path = item.fullPath.replace(item.name, '');
+            let filePath = this.currentFolderPath + path;
+            this.uploadService.uploadFilesInTheQueue(this.rootFolderId, filePath, this.onSuccess);
+        });
     }
 
     /**
      * Called when a folder are dropped in the drag area
-     *
      * @param folder - name of the dropped folder
      */
     onFolderEntityDropped(folder: any): void {
-        if (!this.disabled && folder.isDirectory) {
-            FileUtils.flattern(folder).then(entries => {
-                let files = entries.map(entry => {
-                    return new FileModel(entry.file, {
-                        newVersion: this.versioning,
-                        parentId: this.parentId || this.rootFolderId,
-                        path: entry.relativeFolder
-                    });
-                });
-                this.uploadService.addToQueue(...files);
-                /* @deprecated in 1.6.0 */
-                if (this.showNotificationBar) {
-                    let latestFilesAdded = this.uploadService.getQueue();
-                    this.showUndoNotificationBar(latestFilesAdded);
-                }
-                this.uploadService.uploadFilesInTheQueue(this.onSuccess);
-            });
+        if (folder.isDirectory) {
+            let relativePath = folder.fullPath.replace(folder.name, '');
+            relativePath = this.currentFolderPath + relativePath;
+
+            this.uploadService.createFolder(relativePath, folder.name, this.rootFolderId)
+                .subscribe(
+                    message => {
+                        this.onSuccess.emit({
+                            value: 'Created folder'
+                        });
+                        let dirReader = folder.createReader();
+                        dirReader.readEntries((entries: any) => {
+                            for (let i = 0; i < entries.length; i++) {
+                                this._traverseFileTree(entries[i]);
+                            }
+                            if (this.showNotificationBar) {
+                                let latestFilesAdded = this.uploadService.getQueue();
+                                this.showUndoNotificationBar(latestFilesAdded);
+                            }
+                        });
+                    },
+                    error => {
+                        let errorMessagePlaceholder = this.getErrorMessage(error.response);
+                        let errorMessage = this.formatString(errorMessagePlaceholder, [folder.name]);
+                        if (this.showNotificationBar) {
+                            this.showErrorNotificationBar(errorMessage);
+                        } else {
+                            this.logService.error(errorMessage);
+                        }
+
+                    }
+                );
+        }
+    }
+
+    /**
+     * Travers all the files and folders, and create it on the alfresco.
+     *
+     * @param {Object} item - can contains files or folders.
+     */
+    private _traverseFileTree(item: any): void {
+        if (item.isFile) {
+            this.onFilesEntityDropped(item);
+        } else {
+            if (item.isDirectory) {
+                this.onFolderEntityDropped(item);
+            }
         }
     }
 
@@ -160,13 +182,14 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
         actionTranslate = this.translateService.get('FILE_UPLOAD.ACTION.UNDO');
 
         this.notificationService.openSnackMessageAction(messageTranslate.value, actionTranslate.value, 3000).onAction().subscribe(() => {
-            this.uploadService.cancelUpload(...latestFilesAdded);
+            latestFilesAdded.forEach((uploadingFileModel: FileModel) => {
+                uploadingFileModel.emitAbort();
+            });
         });
     }
 
     /**
      * Show the error inside Notification bar
-     *
      * @param Error message
      * @private
      */
@@ -174,64 +197,32 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
         this.notificationService.openSnackMessage(errorMessage, 3000);
     }
 
-    /** Returns true or false considering the component options and node permissions */
-    isDroppable(): boolean {
-        return !this.disabled;
+    /**
+     * Retrive the error message using the error status code
+     * @param response - object that contain the HTTP response
+     * @returns {string}
+     */
+    private getErrorMessage(response: any): string {
+        if (response.body.error.statusCode === ERROR_FOLDER_ALREADY_EXIST) {
+            let errorMessage: any;
+            errorMessage = this.translateService.get('FILE_UPLOAD.MESSAGES.FOLDER_ALREADY_EXIST');
+            return errorMessage.value;
+        }
     }
 
     /**
-     * Handles 'upload-files' events raised by child components.
-     *
-     * @param event DOM event
+     * Replace a placeholder {0} in a message with the input keys
+     * @param message - the message that conains the placeholder
+     * @param keys - array of value
+     * @returns {string} - The message without placeholder
      */
-    onUploadFiles(event: CustomEvent) {
-        event.stopPropagation();
-        event.preventDefault();
-        let isAllowed: boolean = this.hasCreatePermission(event.detail.data.obj.entry);
-        if (isAllowed) {
-            let files: FileInfo[] = event.detail.files;
-            if (files && files.length > 0) {
-                let parentId = this.parentId || this.rootFolderId;
-                if (event.detail.data && event.detail.data.obj.entry.isFolder) {
-                    parentId = event.detail.data.obj.entry.id || this.parentId || this.rootFolderId;
-                }
-                const fileModels = files.map(fileInfo => new FileModel(fileInfo.file, {
-                    newVersion: this.versioning,
-                    path: fileInfo.relativeFolder,
-                    parentId: parentId
-                }));
-                this.uploadFiles(fileModels);
+    private formatString(message: string, keys: any []) {
+        if (message) {
+            let i = keys.length;
+            while (i--) {
+                message = message.replace(new RegExp('\\{' + i + '\\}', 'gm'), keys[i]);
             }
         }
-    }
-
-    /**
-     * Does the actual file uploading and show the notification
-     *
-     * @param files
-     */
-    private uploadFiles(files: FileModel[]): void {
-        if (files.length) {
-            this.uploadService.addToQueue(...files);
-            this.uploadService.uploadFilesInTheQueue(this.onSuccess);
-            let latestFilesAdded = this.uploadService.getQueue();
-            if (this.showNotificationBar) {
-                this.showUndoNotificationBar(latestFilesAdded);
-            }
-        }
-    }
-
-    /**
-     * Check if "create" permission is present on the given node
-     *
-     * @param node
-     */
-    private hasCreatePermission(node: any): boolean {
-        let isPermitted = false;
-        if (node && node['allowableOperations']) {
-            let permFound = node['allowableOperations'].find(element => element === 'create');
-            isPermitted = permFound ? true : false;
-        }
-        return isPermitted;
+        return message;
     }
 }
