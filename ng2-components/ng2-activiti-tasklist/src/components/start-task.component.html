@@ -43,10 +43,10 @@
             </md-grid-tile>
             <md-grid-tile>
                 <md-select placeholder="{{'START_TASK.FORM.LABEL.ASSIGNEE'|translate}}" id="assignee_id"
-                           class="adf-start-task-input-container" [(ngModel)]="assignee">
+                           class="adf-start-task-input-container" [(ngModel)]="assigneeId">
                     <md-option>{{'START_TASK.FORM.LABEL.NONE'|translate}}</md-option>
 					<span *ngFor="let user of people">
-						<md-option [value]="user" *ngIf="!isUserNameEmpty(user)">{{ getDisplayUser(user.firstName,
+						<md-option [value]="user.id" *ngIf="!isUserNameEmpty(user)">{{ getDisplayUser(user.firstName,
                             user.lastName, ' ')}}
                         </md-option>
 					</span>
