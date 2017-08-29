@@ -94,6 +94,34 @@ describe('TaskFiltersComponent', () => {
         activitiService = TestBed.get(TaskListService);
     });
 
+    it('should emit an error with a bad response', (done) => {
+        spyOn(activitiService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeErrorFilterPromise));
+
+        const appId = '1';
+        let change = new SimpleChange(null, appId, true);
+        component.ngOnChanges({ 'appId': change });
+
+        component.onError.subscribe((err) => {
+            expect(err).toBeDefined();
+            done();
+        });
+
+    });
+
+    it('should emit an error with a bad response', (done) => {
+        spyOn(activitiService, 'getDeployedApplications').and.returnValue(Observable.fromPromise(fakeErrorFilterPromise));
+
+        const appId = 'fake-app';
+        let change = new SimpleChange(null, appId, true);
+        component.ngOnChanges({ 'appName': change });
+
+        component.onError.subscribe((err) => {
+            expect(err).toBeDefined();
+            done();
+        });
+
+    });
+
     it('should return the filter task list', (done) => {
         spyOn(activitiService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
         const appId = '1';
