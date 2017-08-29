@@ -84,7 +84,7 @@ export let fakeTaskList = {
 };
 
 export let fakeTaskListDifferentProcessDefinitionKey = {
-    size: 1, total: 1, start: 0,
+    size: 2, total: 1, start: 0,
     data: [
         {
             id: '1', name: 'FakeNameTask', description: null, category: null,

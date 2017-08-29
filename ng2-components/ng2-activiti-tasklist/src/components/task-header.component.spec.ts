@@ -18,8 +18,9 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AlfrescoTranslationService, CardViewUpdateService, CoreModule } from 'ng2-alfresco-core';
-import { Observable } from 'rxjs/Rx';
+import { AppConfigService, CardViewUpdateService, CoreModule, TranslationService } from 'ng2-alfresco-core';
+import { AppConfigServiceMock } from '../assets/app-config.service.mock';
+import { TranslationMock } from '../assets/translation.service.mock';
 
 import { TaskDetailsModel } from '../models/task-details.model';
 import { taskDetailsMock } from './../assets/task-details.mock';
@@ -44,13 +45,12 @@ describe('TaskHeaderComponent', () => {
             ],
             providers: [
                 TaskListService,
-                CardViewUpdateService
+                CardViewUpdateService,
+                { provide: AppConfigService, useClass: AppConfigServiceMock },
+                { provide: TranslationService, useClass: TranslationMock }
             ]
         }).compileComponents();
 
-        let translateService = TestBed.get(AlfrescoTranslationService);
-        spyOn(translateService, 'addTranslationFolder').and.stub();
-        spyOn(translateService.translate, 'get').and.callFake((key) => { return Observable.of(key); });
     }));
 
     beforeEach(() => {

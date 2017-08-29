@@ -18,9 +18,10 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MdButtonModule, MdInputModule } from '@angular/material';
-import { AlfrescoTranslationService, CoreModule, LogService } from 'ng2-alfresco-core';
+import { AppConfigService, CoreModule, LogService, TranslationService } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
-import { Observable } from 'rxjs/Observable';
+import { AppConfigServiceMock } from '../assets/app-config.service.mock';
+import { TranslationMock } from '../assets/translation.service.mock';
 import { User } from '../models/user.model';
 import { PeopleService } from '../services/people.service';
 import { PeopleListComponent } from './people-list.component';
@@ -66,17 +67,14 @@ describe('PeopleComponent', () => {
                 PeopleComponent
             ],
             providers: [
-                PeopleService
+                PeopleService,
+                { provide: TranslationService, useClass: TranslationMock },
+                { provide: AppConfigService, useClass: AppConfigServiceMock }
             ],
             schemas: [ NO_ERRORS_SCHEMA ]
         }).compileComponents().then(() => {
 
             logService = TestBed.get(LogService);
-
-            let translateService = TestBed.get(AlfrescoTranslationService);
-            spyOn(translateService, 'addTranslationFolder').and.stub();
-            spyOn(translateService.translate, 'get').and.callFake((key) => { return Observable.of(key); });
-
             fixture = TestBed.createComponent(PeopleComponent);
             activitiPeopleComponent = fixture.componentInstance;
             element = fixture.nativeElement;

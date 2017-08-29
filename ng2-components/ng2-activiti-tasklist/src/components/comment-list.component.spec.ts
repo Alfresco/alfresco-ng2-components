@@ -17,10 +17,12 @@
 
 import { DatePipe } from '@angular/common';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreModule } from 'ng2-alfresco-core';
+import { AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
 import { DataRowEvent, DataTableModule, ObjectDataRow } from 'ng2-alfresco-datatable';
+import { AppConfigServiceMock } from '../assets/app-config.service.mock';
+import { TranslationMock } from '../assets/translation.service.mock';
 import { Comment  } from '../models/comment.model';
-import { User  } from '../models/user.model';
+import { User } from '../models/user.model';
 import { CommentListComponent } from './comment-list.component';
 
 declare let jasmine: any;
@@ -51,7 +53,9 @@ describe('CommentListComponent', () => {
                 CommentListComponent
             ],
             providers: [
-                DatePipe
+                DatePipe,
+                { provide: AppConfigService, useClass: AppConfigServiceMock },
+                { provide: TranslationService, useClass: TranslationMock }
             ]
         }).compileComponents().then(() => {
 
