@@ -18,9 +18,10 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { CoreModule, TranslationService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 
+import { TranslationMock } from '../assets/translation.service.mock';
 import { defaultApp, deployedApps, nonDeployedApps } from './../assets/apps-list.mock';
 import { TaskListService } from './../services/tasklist.service';
 import { AppsListComponent } from './apps-list.component';
@@ -43,13 +44,11 @@ describe('AppsListComponent', () => {
                 AppsListComponent
             ],
             providers: [
-                TaskListService
+                TaskListService,
+                { provide: TranslationService, useClass: TranslationMock }
             ]
         }).compileComponents();
 
-        let translateService = TestBed.get(AlfrescoTranslationService);
-        spyOn(translateService, 'addTranslationFolder').and.stub();
-        spyOn(translateService, 'get').and.callFake((key) => { return Observable.of(key); });
     }));
 
     beforeEach(() => {

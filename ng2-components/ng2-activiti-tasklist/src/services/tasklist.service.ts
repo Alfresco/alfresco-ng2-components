@@ -157,7 +157,8 @@ export class TaskListService {
         return Observable.fromPromise(this.callApiTasksFiltered(requestNode))
             .map((res: any) => {
                 this.tasksListSubject.next(res);
-            }).catch(err => this.handleError(err));
+                return res;
+            }).catch(err => this.handleTasksError(err));
     }
 
     /**
@@ -198,9 +199,9 @@ export class TaskListService {
                 this.findTasksByState(requestNode, 'open'),
                 this.findAllTaskByState(requestNode, 'completed'),
                 (activeTasks: TaskListModel, completedTasks: TaskListModel) => {
-                    const tasks = activeTasks;
+                    const tasks = Object.assign({}, activeTasks);
                     tasks.total += completedTasks.total;
-                    tasks.data.concat(completedTasks.data);
+                    tasks.data = tasks.data.concat(completedTasks.data);
                     return tasks;
                 }
             );
@@ -522,7 +523,13 @@ export class TaskListService {
 
     private handleError(error: any) {
         this.logService.error(error);
+        this.tasksListSubject.error(error);
         return Observable.throw(error || 'Server error');
+    }
+
+    private handleTasksError(error: any) {
+        this.tasksListSubject.error(error.response.body);
+        return this.handleError(error);
     }
 
     /**

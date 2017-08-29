@@ -10,14 +10,9 @@ module.exports = function (config) {
       './node_modules/hammerjs/hammer.js',
       {pattern: './node_modules/@angular/material/prebuilt-themes/indigo-pink.css', included: true, watched: false},
 
-      //diagrams
-      './node_modules/chart.js/dist/Chart.js',
       './node_modules/alfresco-js-api/dist/alfresco-js-api.js',
-      './node_modules/raphael/raphael.js',
       './node_modules/moment/min/moment.min.js',
 
-      {pattern: './node_modules/ng2-translate/**/*.js', included: false, watched: false},
-      {pattern: './node_modules/ng2-charts/**/*.js', included: false, served: true, watched: false},
       {pattern: './node_modules/moment/**/*.js', included: false, served: true, watched: false},
 
       {pattern: 'karma-test-shim.js', watched: false},
