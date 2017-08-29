@@ -19,11 +19,12 @@ import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MdProgressSpinnerModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
-import { TranslateService } from '@ngx-translate/core';
 import { ActivitiContentService } from 'ng2-activiti-form';
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { Observable } from 'rxjs/Rx';
+import { AppConfigServiceMock } from '../assets/app-config.service.mock';
+import { TranslationMock } from '../assets/translation.service.mock';
 import { TaskAttachmentListComponent } from './task-attachment-list.component';
 
 declare let jasmine: any;
@@ -50,21 +51,13 @@ describe('TaskAttachmentList', () => {
                 TaskAttachmentListComponent
             ],
             providers: [
-                ActivitiContentService
+                ActivitiContentService,
+                { provide: AppConfigService, useClass: AppConfigServiceMock },
+                { provide: TranslationService, useClass: TranslationMock }
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         }).compileComponents();
 
-        let translateService: AlfrescoTranslationService = TestBed.get(AlfrescoTranslationService);
-        spyOn(translateService, 'addTranslationFolder').and.stub();
-        spyOn(translateService, 'get').and.callFake((key) => {
-            return Observable.of(key);
-        });
-
-        let nativeTranslateService: TranslateService = TestBed.get(TranslateService);
-        spyOn(nativeTranslateService, 'get').and.callFake((key) => {
-            return Observable.of(key);
-        });
     }));
 
     beforeEach(() => {

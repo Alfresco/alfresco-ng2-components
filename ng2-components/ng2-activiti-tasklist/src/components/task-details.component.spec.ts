@@ -22,8 +22,10 @@ import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
 import { ActivitiFormModule, FormModel, FormOutcomeEvent, FormOutcomeModel, FormService } from 'ng2-activiti-form';
-import { AlfrescoTranslationService, CoreModule, LogService } from 'ng2-alfresco-core';
+import { AppConfigService, CoreModule, LogService, TranslationService } from 'ng2-alfresco-core';
 
+import { AppConfigServiceMock } from '../assets/app-config.service.mock';
+import { TranslationMock } from '../assets/translation.service.mock';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { User } from '../models/user.model';
 import { noDataMock, taskDetailsMock, taskFormMock, tasksMock } from './../assets/task-details.mock';
@@ -70,15 +72,15 @@ describe('TaskDetailsComponent', () => {
             ],
             providers: [
                 TaskListService,
-                PeopleService
+                PeopleService,
+                { provide: TranslationService, useClass: TranslationMock },
+                { provide: AppConfigService, useClass: AppConfigServiceMock }
             ],
             schemas: [ NO_ERRORS_SCHEMA ]
         }).compileComponents();
 
         logService = TestBed.get(LogService);
-        let translateService = TestBed.get(AlfrescoTranslationService);
-        spyOn(translateService, 'addTranslationFolder').and.stub();
-        spyOn(translateService.translate, 'get').and.callFake((key) => { return Observable.of(key); });
+
     }));
 
     beforeEach(() => {

@@ -20,7 +20,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
 
 import { ActivitiFormModule } from 'ng2-activiti-form';
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
+import { AppConfigServiceMock } from '../assets/app-config.service.mock';
+import { TranslationMock } from '../assets/translation.service.mock';
 
 import { DatePipe } from '@angular/common';
 import { MdInputModule } from '@angular/material';
@@ -54,13 +56,12 @@ describe('CommentsComponent', () => {
             providers: [
                 TaskListService,
                 DatePipe,
-                PeopleService
+                PeopleService,
+                { provide: TranslationService, useClass: TranslationMock },
+                { provide: AppConfigService, useClass: AppConfigServiceMock }
             ]
         }).compileComponents();
 
-        let translateService = TestBed.get(AlfrescoTranslationService);
-        spyOn(translateService, 'addTranslationFolder').and.stub();
-        spyOn(translateService, 'get').and.callFake((key) => { return Observable.of(key); });
     }));
 
     beforeEach(() => {

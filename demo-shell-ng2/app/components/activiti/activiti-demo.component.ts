@@ -18,6 +18,7 @@
 // tslint:disable-next-line:adf-file-name
 import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Pagination } from 'alfresco-js-api';
 import { AnalyticsReportListComponent } from 'ng2-activiti-analytics';
 import { FORM_FIELD_VALIDATORS, FormEvent, FormFieldEvent, FormRenderingService, FormService } from 'ng2-activiti-form';
 import {
@@ -34,7 +35,8 @@ import {
     TaskDetailsComponent,
     TaskDetailsEvent,
     TaskFiltersComponent,
-    TaskListComponent
+    TaskListComponent,
+    TaskListService
 } from 'ng2-activiti-tasklist';
 import { AlfrescoApiService } from 'ng2-alfresco-core';
 import {
@@ -96,6 +98,12 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     currentProcessInstanceId: string;
 
     taskSchemaColumns: any [] = [];
+    taskPagination: Pagination = {
+        skipCount: 0,
+        maxItems: 2,
+        totalItems: 0
+    };
+    taskPage: number = 0;
     processSchemaColumns: any [] = [];
 
     activeTab: string = 'tasks'; // tasks|processes|reports
@@ -119,6 +127,7 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     constructor(private elementRef: ElementRef,
                 private route: ActivatedRoute,
                 private router: Router,
+                private taskListService: TaskListService,
                 private apiService: AlfrescoApiService,
                 formRenderingService: FormRenderingService,
                 formService: FormService) {
@@ -157,7 +166,43 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
         */
     }
 
+    onPrevPage(pagination: Pagination): void {
+        this.taskPagination.skipCount = pagination.skipCount;
+        this.taskPage--;
+    }
+
+    onNextPage(pagination: Pagination): void {
+        this.taskPagination.skipCount = pagination.skipCount;
+        this.taskPage++;
+    }
+
+    onChangePageSize(pagination: Pagination): void {
+        const { skipCount, maxItems } = pagination;
+        this.taskPage = this.currentPage(skipCount, maxItems);
+        this.taskPagination.maxItems = maxItems;
+        this.taskPagination.skipCount = skipCount;
+    }
+
+    onChangePageNumber(pagination: Pagination): void {
+        const { maxItems, skipCount } = pagination;
+        this.taskPage = this.currentPage(skipCount, maxItems);
+        this.taskPagination.maxItems = maxItems;
+        this.taskPagination.skipCount = skipCount;
+    }
+
+    currentPage(skipCount: number, maxItems: number): number {
+        return (skipCount && maxItems) ? Math.floor(skipCount / maxItems) : 0;
+    }
+
     ngOnInit() {
+        this.taskListService.tasksList$.subscribe(
+            (tasks) => {
+                this.taskPagination = {count: tasks.data.length, maxItems: this.taskPagination.maxItems, skipCount: this.taskPagination.skipCount, totalItems: tasks.total};
+                console.log({count: tasks.data.length, maxItems: this.taskPagination.maxItems, skipCount: this.taskPagination.skipCount, totalItems: tasks.total});
+            }, (err) => {
+            console.log('err');
+        });
+
         if (this.router.url.includes('processes') ) {
             this.activeTab = 'processes';
         }
@@ -288,8 +333,14 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     }
 
     onFormCompleted(form): void {
-        this.taskList.reload();
         this.currentTaskId = null;
+        this.taskPagination.totalItems--;
+        const { skipCount, maxItems, totalItems } = this.taskPagination;
+        if (totalItems > 0 && (skipCount >= totalItems)) {
+            this.taskPagination.skipCount -= maxItems;
+        }
+        this.taskPage = this.currentPage(this.taskPagination.skipCount, maxItems);
+        this.taskList.reload();
     }
 
     onFormContentClick(content: any): void {
