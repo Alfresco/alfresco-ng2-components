@@ -207,8 +207,7 @@ export class FilesComponent implements OnInit {
     }
 
     onDeleteActionSuccess(message) {
-        console.log('DELETE NODE : ' + message);
-        this.uploadService.fileUploadDeleted(message);
+        this.uploadService.fileDeleted.next(message);
     }
 
     onCreateFolderClicked(event: Event) {
