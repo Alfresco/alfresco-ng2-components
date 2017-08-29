@@ -143,6 +143,7 @@ export class TaskQueryRequestRepresentationModel {
     text: string;
     assignment: string;
     state: string;
+    start: string;
     sort: string;
     page: number;
     size: number;
@@ -157,6 +158,7 @@ export class TaskQueryRequestRepresentationModel {
             this.text = obj.text || null;
             this.assignment = obj.assignment || null;
             this.state = obj.state || null;
+            this.start = obj.start || null;
             this.sort = obj.sort || null;
             this.page = obj.page || 0;
             this.size = obj.size || 25;

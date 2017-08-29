@@ -288,7 +288,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
     onFormCompleted(form: FormModel): void {
         this.formCompleted.emit(form);
-        if (this.showNextTask) {
+        if (this.showNextTask && (this.taskDetails.processInstanceId || this.taskDetails.processDefinitionId)) {
             this.loadNextTask(this.taskDetails.processInstanceId, this.taskDetails.processDefinitionId);
         }
     }
