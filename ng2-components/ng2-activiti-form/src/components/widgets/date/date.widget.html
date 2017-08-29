@@ -14,6 +14,9 @@
         <button class="adf-date-widget-button" mdSuffix [mdDatepickerToggle]="datePicker"  [disabled]="field.readOnly"></button>
     </md-input-container>
     <error-widget [error]="field.validationSummary" ></error-widget>
+    <div *ngIf="(!field.isValid && !field.validationSummary)">
+        <error-widget *ngIf="isRequired()" [required]="'*Required'"></error-widget>
+    </div>
     <md-datepicker #datePicker [touchUi]="true" [startAt]="startAt" (selectedChanged)="onDateChanged($event)"></md-datepicker>
 </div>
 

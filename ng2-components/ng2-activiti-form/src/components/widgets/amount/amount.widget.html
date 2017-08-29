@@ -14,5 +14,8 @@
                 placeholder="{{field.placeholder}}">
     </md-input-container>
     <error-widget [error]="field.validationSummary" ></error-widget>
+    <div *ngIf="(!field.isValid && !field.validationSummary)">
+       <error-widget *ngIf="isRequired()" [required]="'*Required'"></error-widget>
+    </div>
 </div>
 

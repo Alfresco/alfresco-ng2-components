@@ -1,6 +1,6 @@
 <div class="adf-group-widget {{field.className}}"
      [class.is-dirty]="value"
-     [class.adf-invalid]="!field.isValid" [class.adf-readonly]="field.readOnly" id="typehead-div" *ngIf="field.isVisible">
+     [class.adf-invalid]="!field.isValid" [class.adf-readonly]="field.readOnly" id="funcitonal-group-div" *ngIf="field.isVisible">
     <md-input-container>
         <label class="adf-label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
         <input mdInput
@@ -16,7 +16,7 @@
     </md-input-container>
     <error-widget [error]="field.validationSummary"></error-widget>
 </div>
-<div class="adf-typeahead-autocomplete mat-elevation-z2" *ngIf="popupVisible">
+<div class="adf-group-autocomplete mat-elevation-z2" *ngIf="popupVisible">
     <md-option *ngFor="let item of groups"
                [id]="field.id +'-'+item.id"
                (click)="onItemClick(item, $event)">

@@ -79,7 +79,9 @@ export class CommentListComponent {
     }
 
     onErrorImageLoad(user: User) {
-        user.userImage = null;
+        if (user.userImage) {
+            user.userImage = null;
+        }
     }
 
 }

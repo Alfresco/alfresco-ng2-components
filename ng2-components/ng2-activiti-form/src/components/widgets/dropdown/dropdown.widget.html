@@ -11,4 +11,8 @@
                    [id]="opt.id">{{opt.name}}</md-option>
     </md-select>
     <error-widget [error]="field.validationSummary" ></error-widget>
+    <div *ngIf="(!field.isValid && !field.validationSummary)">
+        <error-widget class="adf-dropdown-required-message"
+            *ngIf="isRequired()" [required]="'*Required'"></error-widget>
+    </div>
 </div>
