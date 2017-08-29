@@ -173,6 +173,7 @@
                     [disableWithNoPermission]="true"
                     title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.DELETE' | translate}}"
                     (permissionEvent)="handlePermissionError($event)"
+                    (success)="onDeleteActionSuccess($event)"
                     handler="delete">
                 </content-action>
                 <!-- document actions -->
@@ -203,6 +204,7 @@
                     [disableWithNoPermission]="true"
                     (permissionEvent)="handlePermissionError($event)"
                     title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DELETE' | translate}}"
+                    (success)="onDeleteActionSuccess($event)"
                     handler="delete">
                 </content-action>
             </content-actions>
