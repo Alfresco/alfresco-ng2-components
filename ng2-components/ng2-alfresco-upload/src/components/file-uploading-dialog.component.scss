@@ -1,4 +1,3 @@
-@import 'colors';
 
 @mixin mat-upload-dialog-theme($theme) {
     $foreground: map-get($theme, foreground);
