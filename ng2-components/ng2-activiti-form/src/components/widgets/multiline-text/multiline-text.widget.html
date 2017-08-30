@@ -6,6 +6,7 @@
                   md-autosize
                   type="text"
                   rows="3"
+                  [maxlength]="field.maxLength"
                   [id]="field.id"
                   [required]="isRequired()"
                   [(ngModel)]="field.value"
@@ -14,6 +15,10 @@
                   placeholder="{{field.placeholder}}">
         </textarea>
     </md-input-container>
+    <div *ngIf="field.maxLength > 0" class="adf-multiline-word-counter">
+        <span>{{field?.value?.length || 0}}/{{field.maxLength}}</span>
+    </div>
     <error-widget [error]="field.validationSummary"></error-widget>
+    <error-widget class="adf-dropdown-required-message" *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
 </div>
 

@@ -18,7 +18,7 @@
 /* tslint:disable:component-selector  */
 
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { AfterViewInit, Component, Input, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { FormService } from './../../../services/form.service';
 import { baseHost , WidgetComponent } from './../widget.component';
 
@@ -38,10 +38,13 @@ import { baseHost , WidgetComponent } from './../widget.component';
     host: baseHost,
     encapsulation: ViewEncapsulation.None
 })
-export class ErrorWidgetComponent extends WidgetComponent implements AfterViewInit {
+export class ErrorWidgetComponent extends WidgetComponent implements AfterViewInit, OnChanges {
 
     @Input()
     error: string;
+
+    @Input()
+    required: string;
 
     _subscriptAnimationState: string = '';
 
@@ -51,6 +54,13 @@ export class ErrorWidgetComponent extends WidgetComponent implements AfterViewIn
 
     ngAfterViewInit() {
         this._subscriptAnimationState = 'enter';
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['required']) {
+            this.required = changes.required.currentValue;
+            this._subscriptAnimationState = 'enter';
+        }
     }
 
 }
