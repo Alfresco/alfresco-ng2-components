@@ -5,6 +5,9 @@
     },
     "PREVIEW": {
       "IMAGE_NOT_AVAILABLE": "The preview image is not available."
+    },
+    "FIELD": {
+        "REQUIRED" : "*Required"
     }
   }
 }

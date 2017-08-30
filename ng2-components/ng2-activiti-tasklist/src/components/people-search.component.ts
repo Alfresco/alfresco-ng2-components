@@ -106,6 +106,8 @@ export class PeopleSearchComponent implements OnInit {
     }
 
     onErrorImageLoad(user: User) {
-        user.userImage = null;
+        if (user.userImage) {
+            user.userImage = null;
+        }
     }
 }
