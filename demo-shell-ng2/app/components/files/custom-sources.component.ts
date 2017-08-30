@@ -15,11 +15,25 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
-    selector: 'adf-sites-demo',
-    templateUrl: 'sites.component.html'
+    selector: 'adf-custom-sources-demo',
+    templateUrl: 'custom-sources.component.html'
 })
-export class SitesComponent {
+export class CustomSourcesComponent {
+
+    @Input()
+    selectedSource = '-recent-';
+
+    sources = [
+        { title: 'Favorites', value: '-favorites-' },
+        { title: 'Recent', value: '-recent-' },
+        { title: 'Shared Links', value: '-sharedlinks-' },
+        { title: 'Sites', value: '-sites-' },
+        { title: 'Trashcan', value: '-trashcan-' },
+        { title: 'Root', value: '-root-' },
+        { title: 'My', value: '-my-' },
+        { title: 'Shared', value: '-shared-' }
+    ];
 }
