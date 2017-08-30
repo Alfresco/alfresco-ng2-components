@@ -24,6 +24,7 @@ export class GroupUserModel {
     firstName: string;
     id: string;
     lastName: string;
+    userImageUrl: string;
 
     constructor(json?: any) {
         if (json) {

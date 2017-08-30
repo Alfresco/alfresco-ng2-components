@@ -85,12 +85,18 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         }, 200);
     }
 
+    onErrorImageLoad(user) {
+        if (user.userImage) {
+            user.userImage = null;
+        }
+    }
+
     flushValue() {
         this.popupVisible = false;
 
         let option = this.users.find(item => {
             let fullName = this.getDisplayName(item).toLocaleLowerCase();
-            return fullName === this.value.toLocaleLowerCase();
+            return (this.value && fullName === this.value.toLocaleLowerCase());
         });
 
         if (option) {

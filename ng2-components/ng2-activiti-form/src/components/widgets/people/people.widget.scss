@@ -9,25 +9,58 @@
 
     &-people-autocomplete {
         background-color: #fff;
-        position:absolute;
+        position:inherit;
         max-height: 200px;
+        width: 100%;
         overflow-y: auto;
         z-index: 5;
         color: #555;
         margin: -15px 0 0 0;
-        > ul {
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+        > md-option {
             list-style-type: none;
             position: static;
             height: auto;
             width: auto;
             min-width: 124px;
-            padding: 8px 0;
+            padding: 8px 0 0 20px;
             margin: 0;
-            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
             border-radius: 2px;
-            > li {
+            > span {
                 opacity: 1;
             }
         }
+    }
+
+    &-people-widget-pic {
+        background: #ff9800;
+        display: inline-block;
+        width: 30px;
+        padding: 0px 9px;
+        border-radius: 100px;
+        color: #fff;
+        text-align: center;
+        font-weight: bolder;
+        font-size: 18px;
+        font-family: Muli;
+        text-transform: uppercase;
+        vertical-align: middle;
+    }
+
+    &-people-widget-row {
+        padding: 5px 5px;
+    }
+
+    &-people-widget-image {
+        border-radius: 100px;
+        width: 50px;
+        height: 50px;
+        vertical-align: middle;
+        display: inline-block;
+        padding: 0px 0px;
+    }
+
+    &-people-widget-image-row {
+        display: inline-block;
     }
 }

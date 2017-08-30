@@ -7,4 +7,21 @@
         width: 100%;
     }
 
+    &-multiline-word-counter {
+        float: right;
+        margin-top: -20px !important;
+        min-height: 24px;
+        min-width: 1px;
+        font-size: 12px;
+        line-height: 14px;
+        overflow: hidden;
+        transition: all .3s cubic-bezier(.55,0,.55,.2);
+        opacity: 1;
+        margin-top: 0;
+        padding-top: 5px;
+        text-align: right;
+        padding-right: 2px;
+        padding-left: 0;
+    }
+
 }
