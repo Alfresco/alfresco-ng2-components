@@ -17,9 +17,7 @@
         </md-radio-group>
     </div>
     <error-widget [error]="field.validationSummary" ></error-widget>
-    <div *ngIf="(!field.isValid && !field.validationSummary)">
-        <error-widget *ngIf="isRequired()" [required]="'*Required'"></error-widget>
-    </div>
+    <error-widget class="adf-dropdown-required-message" *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
 </div>
 
 
