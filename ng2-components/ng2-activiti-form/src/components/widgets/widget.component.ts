@@ -83,6 +83,10 @@ export class WidgetComponent implements AfterViewInit {
             this.field.value !== undefined;
     }
 
+    isInvalidFieldRequired() {
+        return !this.field.isValid && !this.field.validationSummary && this.isRequired();
+    }
+
     ngAfterViewInit() {
         this.fieldChanged.emit(this.field);
     }

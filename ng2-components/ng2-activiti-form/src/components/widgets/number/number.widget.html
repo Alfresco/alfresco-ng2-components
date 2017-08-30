@@ -15,4 +15,5 @@
                placeholder="{{field.placeholder}}">
     </md-input-container>
     <error-widget [error]="field.validationSummary" ></error-widget>
+    <error-widget class="adf-dropdown-required-message" *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
 </div>
