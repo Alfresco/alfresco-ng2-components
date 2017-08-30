@@ -35,3 +35,6 @@
     }
 }
 
+.settings >>> .mat-slide-toggle-thumb-container {
+    cursor: pointer;
+}
