@@ -48,6 +48,7 @@
 
 <adf-pagination
     *ngIf="isPaginationEnabled()"
+    class="adf-documentlist-pagination"
     (changePageSize)="onChangePageSize($event)"
     (nextPage)="onNextPage($event)"
     (prevPage)="onPrevPage($event)"

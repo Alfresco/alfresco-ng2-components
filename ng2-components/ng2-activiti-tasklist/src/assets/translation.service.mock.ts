@@ -15,24 +15,14 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+import { Observable } from 'rxjs/Rx';
 
-export class GroupUserModel {
+export class TranslationMock {
 
-    company: string;
-    email: string;
-    firstName: string;
-    id: string;
-    lastName: string;
-    userImageUrl: string;
+    public get(key: string|Array<string>, interpolateParams?: Object): Observable<string|any> {
+        return Observable.of(key);
+    }
 
-    constructor(json?: any) {
-        if (json) {
-            this.company = json.company;
-            this.email = json.email;
-            this.firstName = json.firstName;
-            this.id = json.id;
-            this.lastName = json.lastName;
-        }
+    addTranslationFolder() {
     }
 }

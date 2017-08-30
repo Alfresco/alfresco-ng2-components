@@ -17,7 +17,7 @@
 
 import {
     AfterContentInit, Component, ContentChild, ElementRef, EventEmitter, HostListener, Input, NgZone,
-    OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild
+    OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild, ViewEncapsulation
 } from '@angular/core';
 import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, Pagination, PersonEntry } from 'alfresco-js-api';
 import { AlfrescoApiService, DataColumnListComponent } from 'ng2-alfresco-core';
@@ -33,8 +33,9 @@ declare var require: any;
 
 @Component({
     selector: 'adf-document-list, alfresco-document-list',
-    styleUrls: ['./document-list.component.css'],
-    templateUrl: './document-list.component.html'
+    styleUrls: ['./document-list.component.scss'],
+    templateUrl: './document-list.component.html',
+    encapsulation: ViewEncapsulation.None
 })
 export class DocumentListComponent implements OnInit, OnChanges, AfterContentInit {
 

@@ -16,7 +16,8 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { CoreModule } from 'ng2-alfresco-core';
+import { AppConfigService, CoreModule } from 'ng2-alfresco-core';
+import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { User } from '../models/user.model';
 import { PeopleService } from './people.service';
 
@@ -48,7 +49,8 @@ describe('PeopleService', () => {
                 CoreModule.forRoot()
             ],
             providers: [
-                PeopleService
+                PeopleService,
+                { provide: AppConfigService, useClass: AppConfigServiceMock }
             ]
         });
         service = TestBed.get(PeopleService);

@@ -15,24 +15,16 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+import { Injectable } from '@angular/core';
 
-export class GroupUserModel {
+@Injectable()
+export class AppConfigServiceMock {
 
-    company: string;
-    email: string;
-    firstName: string;
-    id: string;
-    lastName: string;
-    userImageUrl: string;
+    constructor() { }
 
-    constructor(json?: any) {
-        if (json) {
-            this.company = json.company;
-            this.email = json.email;
-            this.firstName = json.firstName;
-            this.id = json.id;
-            this.lastName = json.lastName;
-        }
-    }
+    /** @override */
+    get(key: string) { }
+
+    load(resource: string, values?: {}) { }
+
 }

@@ -15,24 +15,13 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+import { TaskDetailsModel } from './task-details.model';
 
-export class GroupUserModel {
+export interface TaskListModel {
+    size: number;
+    total: number;
+    start: number;
+    length: number;
+    data: TaskDetailsModel [];
 
-    company: string;
-    email: string;
-    firstName: string;
-    id: string;
-    lastName: string;
-    userImageUrl: string;
-
-    constructor(json?: any) {
-        if (json) {
-            this.company = json.company;
-            this.email = json.email;
-            this.firstName = json.firstName;
-            this.id = json.id;
-            this.lastName = json.lastName;
-        }
-    }
 }

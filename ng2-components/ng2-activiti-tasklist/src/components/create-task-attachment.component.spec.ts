@@ -20,8 +20,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
 
 import { ActivitiContentService } from 'ng2-activiti-form';
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
-
+import { AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
+import { AppConfigServiceMock } from '../assets/app-config.service.mock';
+import { TranslationMock } from '../assets/translation.service.mock';
 import { AttachmentComponent } from './create-task-attachment.component';
 
 describe('Activiti Task Create Attachment', () => {
@@ -41,7 +42,8 @@ describe('Activiti Task Create Attachment', () => {
                 AttachmentComponent
             ],
             providers: [
-                {provide: AlfrescoTranslationService},
+                { provide: AppConfigService, useClass: AppConfigServiceMock },
+                { provide: TranslationService, useClass: TranslationMock },
                 ActivitiContentService
             ]
         }).compileComponents();
