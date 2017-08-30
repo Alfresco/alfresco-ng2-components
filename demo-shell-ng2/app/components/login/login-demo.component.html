@@ -5,7 +5,7 @@
         <md-slide-toggle
             id="switch1"
             [color]="'primary'"
-            (click)="toggleECM()"
+            (change)="toggleECM()"
             [checked]="isECM">
             Content Services
         </md-slide-toggle>
@@ -14,7 +14,7 @@
         <md-slide-toggle
             id="switch2"
             [color]="'primary'"
-            (click)="toggleBPM()"
+            (change)="toggleBPM()"
             [checked]="isBPM">
             Process Services
         </md-slide-toggle>
@@ -23,7 +23,7 @@
         <md-slide-toggle
             id="switch3"
             [color]="'primary'"
-            (click)="toggleCSRF()"
+            (change)="toggleCSRF()"
             [checked]="!disableCsrf">
             CSRF
         </md-slide-toggle>
@@ -32,7 +32,7 @@
         <md-slide-toggle
             id="switch4"
             [color]="'primary'"
-            (click)="toggleFooter()"
+            (change)="toggleFooter()"
             [checked]="showFooter">
             Login footer
         </md-slide-toggle>
