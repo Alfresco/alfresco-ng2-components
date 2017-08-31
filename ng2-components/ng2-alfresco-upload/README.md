@@ -201,6 +201,7 @@ Provides access to various APIs related to file upload features.
 | fileUploadError | FileUploadEvent | Raised when an error occurs to file upload. |
 | fileUploadComplete | FileUploadCompleteEvent | Raised when file upload is complete. |
 | fileUploadDelete | FileUploadDeleteEvent | Raised when uploaded file is removed from server. |
+| fileDeleted | string | This can be invoked when a file is deleted from an external source to upload the file dialog status. |
 
 ### Details
 

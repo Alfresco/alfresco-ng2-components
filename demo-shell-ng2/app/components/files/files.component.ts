@@ -206,6 +206,10 @@ export class FilesComponent implements OnInit {
         this.notificationService.openSnackMessage(translatedMessage.value, 4000);
     }
 
+    onDeleteActionSuccess(message) {
+        this.uploadService.fileDeleted.next(message);
+    }
+
     onCreateFolderClicked(event: Event) {
         let dialogRef = this.dialog.open(CreateFolderDialogComponent);
         dialogRef.afterClosed().subscribe(folderName => {
