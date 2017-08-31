@@ -1,14 +1,12 @@
-@import '../../ng2-alfresco-documentlist/src/components/breadcrumb/breadcrumb.component';
-@import '../../ng2-alfresco-documentlist/src/components/breadcrumb/dropdown-breadcrumb.component';
-@import '../../ng2-alfresco-documentlist/src/components/content-node-selector/content-node-selector.component';
+// @import '../../ng2-activiti-analytics/src/components/analytics-report-list.component';
+
+@import '../../ng2-activiti-diagrams/src/components/tooltip/diagram-tooltip.component';
 
 @import '../../ng2-activiti-form/src/components/widgets/form';
 @import '../../ng2-activiti-form/src/components/widgets/container/container.widget';
 @import '../../ng2-activiti-form/src/components/widgets/dynamic-table/dynamic-table.widget.scss';
 
-@import '../../ng2-activiti-diagrams/src/components/tooltip/diagram-tooltip.component';
-
-@import '../../ng2-activiti-analytics/src/components/analytics-report-list.component';
+@import '../../ng2-activiti-processlist/src/components/process-filters.component';
 
 @import '../../ng2-activiti-tasklist/src/components/comment-list.component';
 @import '../../ng2-activiti-tasklist/src/components/start-task.component';
@@ -17,22 +15,25 @@
 @import '../../ng2-activiti-tasklist/src/components/task-filters.component';
 @import '../../ng2-activiti-tasklist/src/components/task-header.component';
 
-@import '../../ng2-activiti-processlist/src/components/process-filters.component';
+// @import '../../ng2-alfresco-core/src/components/collapsable/accordion-group.component';
+// @import '../../ng2-alfresco-core/src/components/view/card-view-textitem.component';
+// @import '../../ng2-alfresco-core/src/components/view/card-view-dateitem.component';
+// @import '../../ng2-alfresco-core/src/components/view/card-view.component';
+// @import '../../ng2-alfresco-core/src/components/toolbar/toolbar.component';
+// @import '../../ng2-alfresco-core/src/components/pagination/pagination.component';
+// @import '../../ng2-alfresco-core/styles/theme-colors';
+
+@import '../../ng2-alfresco-datatable/src/components/datatable/datatable.component.scss';
+
+@import '../../ng2-alfresco-documentlist/src/components/breadcrumb/breadcrumb.component';
+@import '../../ng2-alfresco-documentlist/src/components/breadcrumb/dropdown-breadcrumb.component';
+@import '../../ng2-alfresco-documentlist/src/components/content-node-selector/content-node-selector.component';
+
+@import '../../ng2-alfresco-login/src/components/login.component';
 
 @import '../../ng2-alfresco-upload/src/components/file-uploading-list-row.component';
 @import '../../ng2-alfresco-upload/src/components/file-uploading-dialog.component';
 
-@import '../../ng2-alfresco-login/src/components/login.component';
-
-@import '../../ng2-alfresco-core/src/components/collapsable/accordion-group.component';
-@import '../../ng2-alfresco-core/src/components/view/card-view-textitem.component';
-@import '../../ng2-alfresco-core/src/components/view/card-view-dateitem.component';
-@import '../../ng2-alfresco-core/src/components/view/card-view.component';
-@import '../../ng2-alfresco-core/src/components/toolbar/toolbar.component';
-@import '../../ng2-alfresco-core/src/components/pagination/pagination.component';
-@import '../../ng2-alfresco-core/styles/theme-colors';
-
-@import '../../ng2-alfresco-datatable/src/components/datatable/datatable.component.scss';
 @import '../../ng2-alfresco-userinfo/src/components/user-info.component.scss';
 
 

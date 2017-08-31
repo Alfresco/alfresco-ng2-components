@@ -1,0 +1,6 @@
+@import 'ng2-alfresco-core/styles/index';
+@import 'ng2-activiti-analytics/styles/index';
+
+@mixin alfresco-material-theme($theme) {
+    @include alfresco-core-theme($theme);
+}
