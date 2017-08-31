@@ -1,7 +1,7 @@
 <md-card class="example-card" class="adf-content-container" *ngIf="content">
     <md-card-content *ngIf="showDocumentContent">
         <div *ngIf="content.isThumbnailSupported()" >
-            <img id="thumbnailPreview" class="adf-img-upload-widget" [src]="content.thumbnailUrl">
+            <img id="thumbnailPreview" class="adf-img-upload-widget" [src]="content.thumbnailUrl" alt="{{content.name}}">
         </div>
         <div *ngIf="!content.isThumbnailSupported()">
             <i class="material-icons">image</i>
