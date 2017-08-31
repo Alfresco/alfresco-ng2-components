@@ -729,7 +729,7 @@ Events:
 | --- | --- | --- |
 | `execute` | All | Emitted when user clicks on the action. For combined handlers see below |
 | `permissionEvent` | All | Emitted when a permission error happens |
-| `success` | copy, move | Emitted on successful action with the success string message |
+| `success` | copy, move, delete | Emitted on successful action with the success string message |
 | `error` | copy, move | Emitted on unsuccessful action with the error event |
 
 DocumentList supports declarative actions for Documents and Folders.

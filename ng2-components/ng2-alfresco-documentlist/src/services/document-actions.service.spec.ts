@@ -267,4 +267,19 @@ describe('DocumentActionsService', () => {
         expect(documentListService.deleteNode).toHaveBeenCalled();
         expect(target.reload).toHaveBeenCalled();
     });
+
+    fit('should emit success event upon node deletion', (done) => {
+        service.success.subscribe((nodeId) => {
+            done();
+        });
+        spyOn(documentListService, 'deleteNode').and.callThrough();
+
+        let target = jasmine.createSpyObj('obj', ['reload']);
+        let permission = 'delete';
+        let file = new FileNode();
+        let fileWithPermission: any = file;
+        fileWithPermission.entry.allowableOperations = [permission];
+        service.getHandler('delete')(fileWithPermission, target, permission);
+
+    });
 });
