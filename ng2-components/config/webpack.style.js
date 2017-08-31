@@ -6,15 +6,15 @@ const extractScss = new ExtractTextPlugin('./ng2-alfresco-core/prebuilt-themes/[
 module.exports = {
 
     entry: {
-        'adf-blue-orange': './ng2-alfresco-core/styles/prebuilt/adf-blue-orange.scss',
-        'adf-blue-purple': './ng2-alfresco-core/styles/prebuilt/adf-blue-purple.scss',
-        'adf-cyan-orange': './ng2-alfresco-core/styles/prebuilt/adf-cyan-orange.scss',
-        'adf-cyan-purple': './ng2-alfresco-core/styles/prebuilt/adf-cyan-purple.scss',
-        'adf-green-purple': './ng2-alfresco-core/styles/prebuilt/adf-green-purple.scss',
-        'adf-green-orange': './ng2-alfresco-core/styles/prebuilt/adf-green-orange.scss',
-        'adf-pink-bluegrey': './ng2-alfresco-core/styles/prebuilt/adf-pink-bluegrey.scss',
-        'adf-indigo-pink': './ng2-alfresco-core/styles/prebuilt/adf-indigo-pink.scss',
-        'adf-purple-green': './ng2-alfresco-core/styles/prebuilt/adf-purple-green.scss'
+        'adf-blue-orange': './config/prebuilt/adf-blue-orange.scss',
+        'adf-blue-purple': './config/prebuilt/adf-blue-purple.scss',
+        'adf-cyan-orange': './config/prebuilt/adf-cyan-orange.scss',
+        'adf-cyan-purple': './config/prebuilt/adf-cyan-purple.scss',
+        'adf-green-purple': './config/prebuilt/adf-green-purple.scss',
+        'adf-green-orange': './config/prebuilt/adf-green-orange.scss',
+        'adf-pink-bluegrey': './config/prebuilt/adf-pink-bluegrey.scss',
+        'adf-indigo-pink': './config/prebuilt/adf-indigo-pink.scss',
+        'adf-purple-green': './config/prebuilt/adf-purple-green.scss'
     },
 
     output: {
