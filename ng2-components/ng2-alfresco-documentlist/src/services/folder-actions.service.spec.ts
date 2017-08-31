@@ -249,4 +249,26 @@ describe('FolderActionsService', () => {
 
         expect(documentListService.deleteNode).toHaveBeenCalled();
     });
+
+    it('should emit success event upon node deletion', (done) => {
+        spyOn(documentListService, 'deleteNode').and.callFake(() => {
+            return new Observable<any>(observer => {
+                observer.next();
+                observer.complete();
+            });
+        });
+
+        service.success.subscribe((nodeId) => {
+            expect(nodeId).not.toBeNull();
+            done();
+        });
+
+        let permission = 'delete';
+        let target = jasmine.createSpyObj('obj', ['reload']);
+        let folder = new FolderNode();
+        let folderWithPermission: any = folder;
+        folderWithPermission.entry.allowableOperations = [permission];
+
+        service.getHandler('delete')(folderWithPermission, target, permission);
+    });
 });

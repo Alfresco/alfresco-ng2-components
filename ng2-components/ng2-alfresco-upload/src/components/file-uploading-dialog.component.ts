@@ -17,7 +17,7 @@
 
 import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FileModel, FileUploadCompleteEvent, FileUploadDeleteEvent,
-         FileUploadErrorEvent, UploadService } from 'ng2-alfresco-core';
+         FileUploadErrorEvent, FileUploadStatus, UploadService } from 'ng2-alfresco-core';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { FileUploadingListComponent } from './file-uploading-list.component';
 
@@ -78,6 +78,18 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
             .fileUpload.subscribe(() => {
                 this.changeDetecor.detectChanges();
             });
+
+        this.uploadService.fileDeleted.subscribe((objId) => {
+            if (this.filesUploadingList) {
+                let file = this.filesUploadingList.find((item) => {
+                    return item.data.entry.id === objId;
+                });
+                if (file) {
+                    file.status = FileUploadStatus.Cancelled;
+                    this.changeDetecor.detectChanges();
+                }
+            }
+        });
     }
 
     /**
