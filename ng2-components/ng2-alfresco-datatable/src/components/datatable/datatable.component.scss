@@ -62,6 +62,12 @@
                     outline-color: rgb(68, 138, 255);
                     outline-style: solid;
                 }
+
+                &:last-child {
+                    & > td {
+                        border-bottom: $data-table-dividers;
+                    }
+                }
             }
         }
 
@@ -84,7 +90,6 @@
             vertical-align: middle;
             height: $data-table-row-height;
             border-top: $data-table-dividers;
-            border-bottom: $data-table-dividers;
             padding-top: $data-table-cell-top;
             box-sizing: border-box;
 
@@ -228,14 +233,6 @@
 
     .hidden {
         display: none;
-    }
-
-    /* small desktop */
-    @media all and (max-width: 1200px) {
-    }
-
-    /* tablet */
-    @media all and (max-width: 1024px) {
     }
 
     /* mobile phone */
