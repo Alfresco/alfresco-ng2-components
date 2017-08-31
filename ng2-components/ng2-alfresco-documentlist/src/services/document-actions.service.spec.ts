@@ -268,8 +268,9 @@ describe('DocumentActionsService', () => {
         expect(target.reload).toHaveBeenCalled();
     });
 
-    fit('should emit success event upon node deletion', (done) => {
+    it('should emit success event upon node deletion', (done) => {
         service.success.subscribe((nodeId) => {
+            expect(nodeId).not.toBeNull();
             done();
         });
         spyOn(documentListService, 'deleteNode').and.callThrough();
