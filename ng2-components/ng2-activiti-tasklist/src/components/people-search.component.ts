@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Directive, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { User } from '../models/user.model';
@@ -111,3 +111,6 @@ export class PeopleSearchComponent implements OnInit {
         }
     }
 }
+
+@Directive({ selector: 'people-search-title' }) export class PeopleSearchTitleDirective { }
+@Directive({ selector: 'people-search-action-label' }) export class PeopleSearchActionLabelDirective { }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
+import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MdProgressSpinnerModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
@@ -54,8 +54,7 @@ describe('TaskAttachmentList', () => {
                 ActivitiContentService,
                 { provide: AppConfigService, useClass: AppConfigServiceMock },
                 { provide: TranslationService, useClass: TranslationMock }
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            ]
         }).compileComponents();
 
     }));
@@ -203,7 +202,7 @@ describe('TaskAttachmentList', () => {
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('adf-empty-list-header').innerText.trim()).toEqual('TASK-ATTACHMENT.EMPTY.HEADER');
+            expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual('TASK-ATTACHMENT.EMPTY.HEADER');
         });
     }));
 
@@ -236,7 +235,7 @@ describe('TaskAttachmentList', () => {
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('adf-empty-list-header').innerText.trim()).toEqual('TASK-ATTACHMENT.EMPTY-LIST.HEADER');
+            expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual('TASK-ATTACHMENT.EMPTY.HEADER');
         });
     }));
 

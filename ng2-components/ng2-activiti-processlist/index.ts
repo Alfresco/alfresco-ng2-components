@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA, ModuleWithProviders, NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import {
     MdButtonModule,
     MdCardModule,
@@ -148,8 +148,7 @@ export const ACTIVITI_PROCESSLIST_PROVIDERS: [any] = [
     ],
     exports: [
         ...ACTIVITI_PROCESSLIST_DIRECTIVES
-    ],
-    schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+    ]
 })
 export class ActivitiProcessListModule {
     static forRoot(): ModuleWithProviders {

@@ -16,7 +16,7 @@
  */
 
 import { DatePipe } from '@angular/common';
-import { ModuleWithProviders, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { MdAutocompleteModule, MdButtonModule, MdCardModule, MdDatepickerModule, MdGridListModule,
     MdIconModule, MdInputModule, MdNativeDateModule, MdProgressSpinnerModule, MdRippleModule, MdSelectModule } from '@angular/material';
 import { ActivitiFormModule } from 'ng2-activiti-form';
@@ -33,7 +33,7 @@ import { CommentsComponent } from './src/components/comments.component';
 import { AttachmentComponent } from './src/components/create-task-attachment.component';
 import { NoTaskDetailsTemplateDirective } from './src/components/no-task-detail-template.directive';
 import { PeopleListComponent } from './src/components/people-list.component';
-import { PeopleSearchComponent } from './src/components/people-search.component';
+import { PeopleSearchActionLabelDirective, PeopleSearchComponent, PeopleSearchTitleDirective } from './src/components/people-search.component';
 import { PeopleComponent } from './src/components/people.component';
 import { StartTaskComponent } from './src/components/start-task.component';
 import { TaskAttachmentListComponent } from './src/components/task-attachment-list.component';
@@ -55,7 +55,7 @@ export {TaskFiltersComponent } from './src/components/task-filters.component';
 export {TaskDetailsComponent } from './src/components/task-details.component';
 export {TaskAuditDirective } from './src/components/task-audit.directive';
 export {StartTaskComponent } from './src/components/start-task.component';
-export {PeopleSearchComponent } from './src/components/people-search.component';
+export {PeopleSearchComponent, PeopleSearchTitleDirective } from './src/components/people-search.component';
 export {AttachmentComponent } from './src/components/create-task-attachment.component';
 export {PeopleListComponent } from './src/components/people-list.component';
 export {CommentListComponent } from './src/components/comment-list.component';
@@ -118,6 +118,8 @@ export const ACTIVITI_TASKLIST_DIRECTIVES: any[] = [
     TaskHeaderComponent,
     StartTaskComponent,
     PeopleSearchComponent,
+    PeopleSearchTitleDirective,
+    PeopleSearchActionLabelDirective,
     TaskAttachmentListComponent,
     AttachmentComponent,
     PeopleListComponent,
@@ -185,8 +187,7 @@ export const ACTIVITI_TASKLIST_PROVIDERS: any[] = [
         ...ACTIVITI_TASKLIST_DIRECTIVES,
         MdIconModule,
         MdButtonModule
-    ],
-    schemas: [ NO_ERRORS_SCHEMA ]
+    ]
 })
 export class ActivitiTaskListModule {
     static forRoot(): ModuleWithProviders {

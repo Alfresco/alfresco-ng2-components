@@ -1,5 +1,5 @@
 <div class="search-text-header">
-    <ng-content select="header-title"></ng-content>
+    <ng-content select="[people-search-title]"></ng-content>
 </div>
 <md-input-container class="search-text-container">
 	<input mdInput placeholder="{{'PEOPLE.SEARCH_USER'|translate}}" type="text" id="userSearchText" [value]="" [formControl]="searchUser">
@@ -33,6 +33,6 @@
         {{'PEOPLE.DIALOG_CLOSE' | translate }}
     </button>
     <button md-button type="button" id="add-people" (click)="involveUserAndClose()">
-        <ng-content select="action-button-label"></ng-content>
+        <ng-content select="[people-search-action-label]"></ng-content>
     </button>
 </div>

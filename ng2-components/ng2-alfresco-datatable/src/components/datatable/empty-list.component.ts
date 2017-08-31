@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, Directive } from '@angular/core';
 
 @Component({
     selector: 'adf-empty-list',
@@ -23,3 +23,7 @@ import { Component } from '@angular/core';
     templateUrl: './empty-list.component.html'
 })
 export class EmptyListComponent {}
+
+@Directive({ selector: '[adf-empty-list-header]' }) export class EmptyListHeaderDirective {}
+@Directive({ selector: '[adf-empty-list-body]' }) export class EmptyListBodyDirective {}
+@Directive({ selector: '[adf-empty-list-footer]' }) export class EmptyListFooterDirective {}
