@@ -17,10 +17,8 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MdButtonModule, MdDatepickerModule, MdGridListModule, MdIconModule, MdInputModule, MdNativeDateModule, MdSelectModule } from '@angular/material';
-import { AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
-import { AppConfigServiceMock } from '../assets/app-config.service.mock';
-import { TranslationMock } from '../assets/translation.service.mock';
 import { StartTaskModel } from '../models/start-task.model';
 import { PeopleService } from '../services/people.service';
 import { TaskListService } from '../services/tasklist.service';
@@ -67,11 +65,12 @@ describe('StartTaskComponent', () => {
             ],
             providers: [
                 TaskListService,
-                PeopleService,
-                { provide: AppConfigService, useClass: AppConfigServiceMock },
-                { provide: TranslationService, useClass: TranslationMock }
+                PeopleService
             ]
         }).compileComponents().then(() => {
+            let translateService = TestBed.get(AlfrescoTranslationService);
+            spyOn(translateService, 'addTranslationFolder').and.stub();
+            spyOn(translateService.translate, 'get').and.callFake((key) => { return Observable.of(key); });
 
             fixture = TestBed.createComponent(StartTaskComponent);
             component = fixture.componentInstance;

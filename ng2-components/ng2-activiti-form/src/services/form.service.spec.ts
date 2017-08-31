@@ -477,7 +477,6 @@ describe('Form service', () => {
         });
 
         it('should return list of people', (done) => {
-            spyOn(service, 'getUserProfileImageApi').and.returnValue('/app/rest/users/2002/picture');
             let fakeFilter: string = 'whatever';
 
             service.getWorkflowUsers(fakeFilter).subscribe(result => {

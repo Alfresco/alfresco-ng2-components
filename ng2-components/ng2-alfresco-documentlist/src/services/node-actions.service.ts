@@ -92,7 +92,7 @@ export class NodeActionsService {
                 select: new EventEmitter<MinimalNodeEntryEntity[]>()
             };
 
-            this.dialog.open(ContentNodeSelectorComponent, { data, panelClass: 'adf-content-node-selector-dialog', width: '630px' });
+            this.dialog.open(ContentNodeSelectorComponent, { data, panelClass: 'adf-content-node-selector-dialog', width: '576px' });
 
             data.select.subscribe((selections: MinimalNodeEntryEntity[]) => {
                 const selection = selections[0];

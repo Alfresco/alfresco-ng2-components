@@ -18,67 +18,64 @@
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MdProgressSpinnerModule } from '@angular/material';
-import { AppConfigModule, AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { DataRowEvent, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
-import { AppConfigServiceMock } from '../assets/app-config.service.mock';
-import { TranslationMock } from '../assets/translation.service.mock';
+import { Observable } from 'rxjs/Rx';
 import { TaskListService } from '../services/tasklist.service';
 import { TaskListComponent } from './tasklist.component';
 
-declare let jasmine: any;
-
 describe('TaskListComponent', () => {
 
-    let fakeGlobalTask = {
-        size: 2,
-        start: 0,
-        total: 2,
-        data: [
-            {
-                id: 14, name: 'nameFake1',
-                description: 'descriptionFake1',
-                category: 'categoryFake1',
-                assignee: {
-                    id: 2, firstName: 'firstNameFake1', lastName: 'lastNameFake1', email: 'emailFake1'
-                },
-                created: '2017-03-01T12:25:17.189+0000',
-                dueDate: '2017-04-02T12:25:17.189+0000',
-                endDate: '2017-05-03T12:25:31.129+0000',
-                duration: 13940,
-                priority: 50,
-                parentTaskId: 1,
-                parentTaskName: 'parentTaskNameFake',
-                processInstanceId: 2511,
-                processInstanceName: 'processInstanceNameFake',
-                processDefinitionId: 'myprocess:1:4',
-                processDefinitionName: 'processDefinitionNameFake',
-                processDefinitionDescription: 'processDefinitionDescriptionFake',
-                processDefinitionKey: 'myprocess',
-                processDefinitionCategory: 'http://www.activiti.org/processdef',
-                processDefinitionVersion: 1,
-                processDefinitionDeploymentId: '1',
-                formKey: 1,
-                processInstanceStartUserId: null,
-                initiatorCanCompleteTask: false,
-                adhocTaskCanBeReassigned: false,
-                taskDefinitionKey: 'sid-B6813AF5-8ACD-4481-A4D5-8BAAD1CB1416',
-                executionId: 2511,
-                memberOfCandidateGroup: false,
-                memberOfCandidateUsers: false,
-                managerOfCandidateGroup: false
+    let fakeGlobalTask = [
+        {
+            id: 14, name: 'nameFake1',
+            description: 'descriptionFake1',
+            category: 'categoryFake1',
+            assignee: {
+                id: 2, firstName: 'firstNameFake1', lastName: 'lastNameFake1', email: 'emailFake1'
             },
+            created: '2017-03-01T12:25:17.189+0000',
+            dueDate: '2017-04-02T12:25:17.189+0000',
+            endDate: '2017-05-03T12:25:31.129+0000',
+            duration: 13940,
+            priority: 50,
+            parentTaskId: 1,
+            parentTaskName: 'parentTaskNameFake',
+            processInstanceId: 2511,
+            processInstanceName: 'processInstanceNameFake',
+            processDefinitionId: 'myprocess:1:4',
+            processDefinitionName: 'processDefinitionNameFake',
+            processDefinitionDescription: 'processDefinitionDescriptionFake',
+            processDefinitionKey: 'myprocess',
+            processDefinitionCategory: 'http://www.activiti.org/processdef',
+            processDefinitionVersion: 1,
+            processDefinitionDeploymentId: '1',
+            formKey: 1,
+            processInstanceStartUserId: null,
+            initiatorCanCompleteTask: false,
+            adhocTaskCanBeReassigned: false,
+            taskDefinitionKey: 'sid-B6813AF5-8ACD-4481-A4D5-8BAAD1CB1416',
+            executionId: 2511,
+            memberOfCandidateGroup: false,
+            memberOfCandidateUsers: false,
+            managerOfCandidateGroup: false
+        },
 
-            {
-                id: 2, name: '', description: 'descriptionFake2', category: null,
-                assignee: {
-                    id: 1, firstName: 'fistNameFake2', lastName: 'Administrator2', email: 'admin'
-                },
-                created: '2017-03-01T12:25:17.189+0000',
-                dueDate: '2017-04-02T12:25:17.189+0000',
-                endDate: null
-            }
-        ]
+        {
+            id: 2, name: '', description: 'descriptionFake2', category: null,
+            assignee: {
+                id: 1, firstName: 'fistNameFake2', lastName: 'Administrator2', email: 'admin'
+            },
+            created: '2017-03-01T12:25:17.189+0000',
+            dueDate: '2017-04-02T12:25:17.189+0000',
+            endDate: null
+        }
+    ];
+
+    let fakeGlobalTotalTasks = {
+        size: 2, total: 2, start: 0,
+        data: []
     };
 
     let fakeErrorTaskList = {
@@ -94,9 +91,6 @@ describe('TaskListComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
-                AppConfigModule.forRoot('app.config.json', {
-                    bpmHost: 'http://localhost:9876/bpm'
-                }),
                 DataTableModule,
                 MdProgressSpinnerModule
             ],
@@ -104,12 +98,13 @@ describe('TaskListComponent', () => {
                 TaskListComponent
             ],
             providers: [
-                TaskListService,
-                {provide: TranslationService, useClass: TranslationMock},
-                {provide: AppConfigService, useClass: AppConfigServiceMock}
+                TaskListService
             ]
         }).compileComponents();
 
+        let translateService = TestBed.get(AlfrescoTranslationService);
+        spyOn(translateService, 'addTranslationFolder').and.stub();
+        spyOn(translateService, 'get').and.callFake((key) => { return Observable.of(key); });
     }));
 
     beforeEach(() => {
@@ -124,14 +119,6 @@ describe('TaskListComponent', () => {
             'upgradeElement'
         ]);
         window['componentHandler'] = componentHandler;
-    });
-
-    beforeEach(() => {
-        jasmine.Ajax.install();
-    });
-
-    afterEach(() => {
-        jasmine.Ajax.uninstall();
     });
 
     it('should use the default schemaColumn as default', () => {
@@ -160,6 +147,9 @@ describe('TaskListComponent', () => {
     });
 
     it('should return the filtered task list when the input parameters are passed', (done) => {
+        spyOn(taskListService, 'getTotalTasks').and.returnValue(Observable.of(fakeGlobalTotalTasks));
+        spyOn(taskListService, 'getTasks').and.returnValue(Observable.of(fakeGlobalTask));
+
         let state = new SimpleChange(null, 'open', true);
         let processDefinitionKey = new SimpleChange(null, null, true);
         let assignment = new SimpleChange(null, 'fake-assignee', true);
@@ -195,15 +185,12 @@ describe('TaskListComponent', () => {
         component.ngAfterContentInit();
         component.ngOnChanges({'state': state, 'processDefinitionKey': processDefinitionKey, 'assignment': assignment});
         fixture.detectChanges();
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fakeGlobalTask)
-        });
     });
 
     it('should return the filtered task list by processDefinitionKey', (done) => {
+        spyOn(taskListService, 'getTotalTasks').and.returnValue(Observable.of(fakeGlobalTotalTasks));
+        spyOn(taskListService, 'getTasks').and.returnValue(Observable.of(fakeGlobalTask));
+
         let state = new SimpleChange(null, 'open', true);
         let processDefinitionKey = new SimpleChange(null, 'fakeprocess', true);
         let assignment = new SimpleChange(null, 'fake-assignee', true);
@@ -220,15 +207,12 @@ describe('TaskListComponent', () => {
         component.ngAfterContentInit();
         component.ngOnChanges({'state': state, 'processDefinitionKey': processDefinitionKey, 'assignment': assignment});
         fixture.detectChanges();
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fakeGlobalTask)
-        });
     });
 
     it('should return the filtered task list by processInstanceId', (done) => {
+        spyOn(taskListService, 'getTotalTasks').and.returnValue(Observable.of(fakeGlobalTotalTasks));
+        spyOn(taskListService, 'getTasks').and.returnValue(Observable.of(fakeGlobalTask));
+
         let state = new SimpleChange(null, 'open', true);
         let processInstanceId = new SimpleChange(null, 'fakeprocessId', true);
         let assignment = new SimpleChange(null, 'fake-assignee', true);
@@ -246,15 +230,12 @@ describe('TaskListComponent', () => {
         component.ngAfterContentInit();
         component.ngOnChanges({'state': state, 'processInstanceId': processInstanceId, 'assignment': assignment});
         fixture.detectChanges();
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fakeGlobalTask)
-        });
     });
 
     it('should return the filtered task list for all state', (done) => {
+        spyOn(taskListService, 'getTotalTasks').and.returnValue(Observable.of(fakeGlobalTotalTasks));
+        spyOn(taskListService, 'getTasks').and.returnValue(Observable.of(fakeGlobalTask));
+
         let state = new SimpleChange(null, 'all', true);
         let processInstanceId = new SimpleChange(null, 'fakeprocessId', true);
 
@@ -274,12 +255,6 @@ describe('TaskListComponent', () => {
         component.ngAfterContentInit();
         component.ngOnChanges({'state': state, 'processInstanceId': processInstanceId});
         fixture.detectChanges();
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fakeGlobalTask)
-        });
     });
 
     it('should return a currentId null when the taskList is empty', () => {
@@ -288,6 +263,8 @@ describe('TaskListComponent', () => {
     });
 
     it('should throw an exception when the response is wrong', (done) => {
+        spyOn(taskListService, 'getTotalTasks').and.returnValue(Observable.throw(fakeErrorTaskList));
+
         let state = new SimpleChange(null, 'open', true);
         let assignment = new SimpleChange(null, 'fake-assignee', true);
 
@@ -298,17 +275,13 @@ describe('TaskListComponent', () => {
         });
 
         component.ngAfterContentInit();
-        fixture.detectChanges();
         component.ngOnChanges({'state': state, 'assignment': assignment});
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 404,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fakeErrorTaskList)
-        });
+        fixture.detectChanges();
     });
 
     it('should reload tasks when reload() is called', (done) => {
+        spyOn(taskListService, 'getTotalTasks').and.returnValue(Observable.of(fakeGlobalTotalTasks));
+        spyOn(taskListService, 'getTasks').and.returnValue(Observable.of(fakeGlobalTask));
         component.state = 'open';
         component.assignment = 'fake-assignee';
         component.ngAfterContentInit();
@@ -320,14 +293,7 @@ describe('TaskListComponent', () => {
             expect(component.data.getRows()[0].getValue('name')).toEqual('nameFake1');
             done();
         });
-        fixture.detectChanges();
         component.reload();
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fakeGlobalTask)
-        });
     });
 
     it('should emit row click event', (done) => {
@@ -348,14 +314,15 @@ describe('TaskListComponent', () => {
     describe('component changes', () => {
 
         beforeEach(() => {
+            spyOn(taskListService, 'getTotalTasks').and.returnValue(Observable.of(fakeGlobalTotalTasks));
+            spyOn(taskListService, 'getTasks').and.returnValue(Observable.of(fakeGlobalTask));
+
             component.data = new ObjectDataTableAdapter(
                 [],
                 [
                     {type: 'text', key: 'fake-id', title: 'Name'}
                 ]
             );
-
-            fixture.detectChanges();
         });
 
         it('should NOT reload the tasks if the loadingTaskId is the same of the current task', () => {
@@ -374,6 +341,7 @@ describe('TaskListComponent', () => {
 
             const landingTaskId = '999';
             let change = new SimpleChange(null, landingTaskId, true);
+
             component.ngOnChanges({'landingTaskId': change});
             expect(component.reload).not.toHaveBeenCalled();
             expect(component.data.getRows().length).toEqual(1);
@@ -403,12 +371,6 @@ describe('TaskListComponent', () => {
             });
 
             component.ngOnChanges({'landingTaskId': change});
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeGlobalTask)
-            });
         });
 
         it('should NOT reload the process list when no parameters changed', () => {
@@ -429,13 +391,8 @@ describe('TaskListComponent', () => {
                 expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
                 done();
             });
-            component.ngOnChanges({'appId': change});
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeGlobalTask)
-            });
+            component.ngOnChanges({'appId': change});
         });
 
         it('should reload the list when the processDefinitionKey parameter changes', (done) => {
@@ -452,12 +409,6 @@ describe('TaskListComponent', () => {
             });
 
             component.ngOnChanges({'processDefinitionKey': change});
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeGlobalTask)
-            });
         });
 
         it('should reload the list when the state parameter changes', (done) => {
@@ -474,12 +425,6 @@ describe('TaskListComponent', () => {
             });
 
             component.ngOnChanges({'state': change});
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeGlobalTask)
-            });
         });
 
         it('should reload the list when the sort parameter changes', (done) => {
@@ -496,12 +441,6 @@ describe('TaskListComponent', () => {
             });
 
             component.ngOnChanges({'sort': change});
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeGlobalTask)
-            });
         });
 
         it('should reload the process list when the name parameter changes', (done) => {
@@ -518,12 +457,6 @@ describe('TaskListComponent', () => {
             });
 
             component.ngOnChanges({'name': change});
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeGlobalTask)
-            });
         });
 
         it('should reload the list when the assignment parameter changes', (done) => {
@@ -540,12 +473,6 @@ describe('TaskListComponent', () => {
             });
 
             component.ngOnChanges({'assignment': change});
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fakeGlobalTask)
-            });
         });
     });
 });

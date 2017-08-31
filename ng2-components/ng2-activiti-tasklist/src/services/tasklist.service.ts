@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
-import { Observable, Subject } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 import { Comment } from '../models/comment.model';
 import {
     FilterRepresentationModel,
@@ -25,14 +25,10 @@ import {
 } from '../models/filter.model';
 import { Form } from '../models/form.model';
 import { TaskDetailsModel } from '../models/task-details.model';
-import { TaskListModel } from '../models/task-list.model';
 import { User } from '../models/user.model';
 
 @Injectable()
 export class TaskListService {
-    private tasksListSubject = new Subject<TaskListModel>();
-
-    public tasksList$: Observable<TaskListModel> = this.tasksListSubject.asObservable();
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
@@ -153,12 +149,15 @@ export class TaskListService {
      * @param filter - TaskFilterRepresentationModel
      * @returns {any}
      */
-    getTasks(requestNode: TaskQueryRequestRepresentationModel): Observable<TaskListModel> {
+    getTasks(requestNode: TaskQueryRequestRepresentationModel): Observable<TaskDetailsModel[]> {
         return Observable.fromPromise(this.callApiTasksFiltered(requestNode))
             .map((res: any) => {
-                this.tasksListSubject.next(res);
-                return res;
-            }).catch(err => this.handleTasksError(err));
+                if (requestNode.processDefinitionKey) {
+                    return res.data.filter(p => p.processDefinitionKey === requestNode.processDefinitionKey);
+                } else {
+                    return res.data;
+                }
+            }).catch(err => this.handleError(err));
     }
 
     /**
@@ -166,7 +165,7 @@ export class TaskListService {
      * @param filter - TaskFilterRepresentationModel
      * @returns {any}
      */
-    findTasksByState(requestNode: TaskQueryRequestRepresentationModel, state?: string): Observable<TaskListModel> {
+    findTasksByState(requestNode: TaskQueryRequestRepresentationModel, state?: string): Observable<TaskDetailsModel[]> {
         if (state) {
             requestNode.state = state;
         }
@@ -178,7 +177,7 @@ export class TaskListService {
      * @param filter - TaskFilterRepresentationModel
      * @returns {any}
      */
-    findAllTaskByState(requestNode: TaskQueryRequestRepresentationModel, state?: string): Observable<TaskListModel> {
+    findAllTaskByState(requestNode: TaskQueryRequestRepresentationModel, state?: string): Observable<TaskDetailsModel[]> {
         if (state) {
             requestNode.state = state;
         }
@@ -194,15 +193,12 @@ export class TaskListService {
      * @param filter - TaskFilterRepresentationModel
      * @returns {any}
      */
-    findAllTasksWhitoutState(requestNode: TaskQueryRequestRepresentationModel): Observable<TaskListModel> {
+    findAllTasksWhitoutState(requestNode: TaskQueryRequestRepresentationModel): Observable<TaskDetailsModel[]> {
         return Observable.forkJoin(
                 this.findTasksByState(requestNode, 'open'),
                 this.findAllTaskByState(requestNode, 'completed'),
-                (activeTasks: TaskListModel, completedTasks: TaskListModel) => {
-                    const tasks = Object.assign({}, activeTasks);
-                    tasks.total += completedTasks.total;
-                    tasks.data = tasks.data.concat(completedTasks.data);
-                    return tasks;
+                (activeTasks: any, completedTasks: any) => {
+                    return activeTasks.concat(completedTasks);
                 }
             );
     }
@@ -523,13 +519,7 @@ export class TaskListService {
 
     private handleError(error: any) {
         this.logService.error(error);
-        this.tasksListSubject.error(error);
         return Observable.throw(error || 'Server error');
-    }
-
-    private handleTasksError(error: any) {
-        this.tasksListSubject.error(error.response.body);
-        return this.handleError(error);
     }
 
     /**

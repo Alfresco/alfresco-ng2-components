@@ -15,21 +15,20 @@
  * limitations under the License.
  */
 
-import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { DataColumnListComponent } from 'ng2-alfresco-core';
 import { DataColumn, DataRowEvent, DataTableAdapter, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 import { Observable } from 'rxjs/Rx';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
-import { TaskListModel } from '../models/task-list.model';
+import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 
-const DEFAULT_SIZE = 5;
 @Component({
     selector: 'adf-tasklist, activiti-tasklist',
     templateUrl: './tasklist.component.html',
     styleUrls: ['./tasklist.component.css']
 })
-export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
+export class TaskListComponent implements OnChanges, AfterContentInit {
 
     requestNode: TaskQueryRequestRepresentationModel;
 
@@ -73,12 +72,6 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
 
     currentInstanceId: string;
 
-    @Input()
-    page: number = 0;
-
-    @Input()
-    size: number = DEFAULT_SIZE;
-
     isLoading: boolean = true;
 
     /**
@@ -97,23 +90,6 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
     ];
 
     constructor(private taskListService: TaskListService) {
-    }
-
-    ngOnInit() {
-        if (this.data === undefined) {
-            this.data = new ObjectDataTableAdapter();
-        }
-        this.taskListService.tasksList$.subscribe(
-            (tasks) => {
-                let instancesRow = this.createDataRow(tasks.data);
-                this.renderInstances(instancesRow);
-                this.selectTask(this.landingTaskId);
-                this.onSuccess.emit(tasks);
-                this.isLoading = false;
-        }, (error) => {
-            this.onError.emit(error);
-            this.isLoading = false;
-        });
     }
 
     ngAfterContentInit() {
@@ -156,11 +132,32 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
     }
 
     private isPropertyChanged(changes: SimpleChanges): boolean {
-        let changed: boolean = true;
+        let changed: boolean = false;
 
+        let appId = changes['appId'];
+        let processInstanceId = changes['processInstanceId'];
+        let processDefinitionKey = changes['processDefinitionKey'];
+        let state = changes['state'];
+        let sort = changes['sort'];
+        let name = changes['name'];
+        let assignment = changes['assignment'];
         let landingTaskId = changes['landingTaskId'];
-        if (landingTaskId && landingTaskId.currentValue && this.isEqualToCurrentId(landingTaskId.currentValue)) {
-            changed = false;
+        if (appId && appId.currentValue) {
+            changed = true;
+        } else if (processInstanceId && processInstanceId.currentValue) {
+            changed = true;
+        } else if (processDefinitionKey && processDefinitionKey.currentValue) {
+            changed = true;
+        } else if (state && state.currentValue) {
+            changed = true;
+        } else if (sort && sort.currentValue) {
+            changed = true;
+        } else if (name && name.currentValue) {
+            changed = true;
+        } else if (assignment && assignment.currentValue) {
+            changed = true;
+        } else if (landingTaskId && landingTaskId.currentValue && !this.isEqualToCurrentId(landingTaskId.currentValue)) {
+            changed = true;
         }
         return changed;
     }
@@ -174,15 +171,24 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
 
     private load(requestNode: TaskQueryRequestRepresentationModel) {
         this.isLoading = true;
-        this.loadTasksByState().subscribe();
+        this.loadTasksByState().subscribe(
+            (response) => {
+                let instancesRow = this.createDataRow(response);
+                this.renderInstances(instancesRow);
+                this.selectTask(requestNode.landingTaskId);
+                this.onSuccess.emit(response);
+                this.isLoading = false;
+            }, (error) => {
+                this.onError.emit(error);
+                this.isLoading = false;
+            });
     }
 
-    private loadTasksByState(): Observable<TaskListModel> {
+    private loadTasksByState(): Observable<TaskDetailsModel[]> {
         return this.requestNode.state === 'all'
                ? this.taskListService.findAllTasksWhitoutState(this.requestNode)
-               : this.taskListService.findTasksByState(this.requestNode);
+               : this.taskListService.findAllTaskByState(this.requestNode);
     }
-
     /**
      * Create an array of ObjectDataRow
      * @param instances
@@ -275,7 +281,6 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
     }
 
     private createRequestNode() {
-
         let requestNode = {
             appDefinitionId: this.appId,
             processInstanceId: this.processInstanceId,
@@ -284,10 +289,7 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
             assignment: this.assignment,
             state: this.state,
             sort: this.sort,
-            landingTaskId: this.landingTaskId,
-            page: this.page,
-            size: this.size,
-            start: 0
+            landingTaskId: this.landingTaskId
         };
         return new TaskQueryRequestRepresentationModel(requestNode);
     }

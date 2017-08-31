@@ -156,8 +156,6 @@ export class PeopleComponent implements OnInit, AfterViewInit {
     }
 
     onErrorImageLoad(user: User) {
-        if (user.userImage) {
-            user.userImage = null;
-        }
+        user.userImage = null;
     }
 }
