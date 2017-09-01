@@ -18,7 +18,11 @@
             [attr.data-automation-id]="'auto_id_' + col.key"
             [class.adf-data-table__header--sorted-asc]="isColumnSorted(col, 'asc')"
             [class.adf-data-table__header--sorted-desc]="isColumnSorted(col, 'desc')"
-            (click)="onColumnHeaderClick(col)">
+            (click)="onColumnHeaderClick(col)"
+            (keyup.enter)="onColumnHeaderClick(col)"
+            role="button"
+            tabindex="0"
+            title="{{ col.title }}">
             <span *ngIf="col.srTitle" class="sr-only">{{col.srTitle}}</span>
             <span *ngIf="col.title">{{ col.title | translate}}</span>
         </th>
@@ -31,11 +35,14 @@
 
     <tbody>
     <ng-container *ngIf="!loading">
-        <tr *ngFor="let row of data.getRows(); let idx = index" tabindex="0"
+        <tr *ngFor="let row of data.getRows(); let idx = index"
+            tabindex="0"
+            role="button"
             [class.is-selected]="row.isSelected"
             [adf-upload]="allowDropFiles && rowAllowsDrop(row)" [adf-upload-data]="row"
             [ngStyle]="rowStyle"
-            [ngClass]="getRowStyle(row)">
+            [ngClass]="getRowStyle(row)"
+            (keyup.enter)="onKeyboardNavigate(row, $event)">
 
             <!-- Actions (left) -->
             <td *ngIf="actions && actionsPosition === 'left'">
@@ -62,6 +69,7 @@
             </td>
             <td *ngFor="let col of data.getColumns()"
                 class="adf-data-table-cell adf-data-table-cell--{{col.type || 'text'}} {{col.cssClass}}"
+                tabindex="0"
                 (click)="onRowClick(row, $event)"
                 [context-menu]="getContextMenuActions(row, col)"
                 [context-menu-enabled]="contextMenu">
