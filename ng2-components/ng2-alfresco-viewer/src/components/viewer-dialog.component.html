@@ -61,11 +61,15 @@
         </button>
     </md-menu>
 
-    <adf-toolbar-divider></adf-toolbar-divider>
+    <ng-container *ngIf="allowInfoDrawer">
+        <adf-toolbar-divider></adf-toolbar-divider>
 
-    <button md-icon-button mdTooltip="Info">
-        <md-icon>info_outline</md-icon>
-    </button>
+        <button md-icon-button mdTooltip="Info"
+            [color]="showInfoDrawer ? 'accent' : 'default'"
+            (click)="showInfoDrawer = !showInfoDrawer">
+            <md-icon>info_outline</md-icon>
+        </button>
+    </ng-container>
 
 </adf-toolbar>
 
@@ -117,4 +121,22 @@
         </ng-container>
 
     </ng-container>
+
+    <ng-container *ngIf="showInfoDrawer">
+        <div class="adf-viewer-dialog__info-drawer">
+            <md-tab-group md-stretch-tabs>
+                <md-tab label="Details">
+                    <md-card>
+                        DETAILS
+                    </md-card>
+                </md-tab>
+                <md-tab label="Activity">
+                    <md-card>
+                        Activity
+                    </md-card>
+                </md-tab>
+            </md-tab-group>
+        </div>
+    </ng-container>
+
  </md-dialog-content>
