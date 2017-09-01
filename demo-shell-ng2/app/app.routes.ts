@@ -39,11 +39,7 @@ import {
 } from './components/index';
 
 import { UploadButtonComponent } from 'ng2-alfresco-upload';
-import { FavoritesComponent } from './components/files/favorites.component';
-import { RecentComponent } from './components/files/recent.component';
-import { SharedLinksComponent } from './components/files/shared-links.component';
-import { SitesComponent } from './components/files/sites.component';
-import { TrashcanComponent } from './components/files/trashcan.component';
+import { CustomSourcesComponent } from './components/files/custom-sources.component';
 import { FormListDemoComponent } from './components/form/form-list-demo.component';
 
 export const appRoutes: Routes = [
@@ -69,28 +65,8 @@ export const appRoutes: Routes = [
         canActivate: [AuthGuardEcm]
     },
     {
-        path: 'trashcan',
-        component: TrashcanComponent,
-        canActivate: [AuthGuardEcm]
-    },
-    {
-        path: 'shared-links',
-        component: SharedLinksComponent,
-        canActivate: [AuthGuardEcm]
-    },
-    {
-        path: 'sites',
-        component: SitesComponent,
-        canActivate: [AuthGuardEcm]
-    },
-    {
-        path: 'favorites',
-        component: FavoritesComponent,
-        canActivate: [AuthGuardEcm]
-    },
-    {
-        path: 'recent',
-        component: RecentComponent,
+        path: 'dl-custom-sources',
+        component: CustomSourcesComponent,
         canActivate: [AuthGuardEcm]
     },
     {

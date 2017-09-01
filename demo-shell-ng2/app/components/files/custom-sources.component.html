@@ -1,0 +1,13 @@
+<adf-toolbar>
+    <adf-toolbar-title>
+        <md-select [(ngModel)]="selectedSource">
+            <md-option *ngFor="let source of sources" [value]="source.value">
+                {{ source.title }}
+            </md-option>
+        </md-select>
+    </adf-toolbar-title>
+</adf-toolbar>
+<adf-document-list
+    [currentFolderId]="selectedSource"
+    locationFormat="/files">
+</adf-document-list>
