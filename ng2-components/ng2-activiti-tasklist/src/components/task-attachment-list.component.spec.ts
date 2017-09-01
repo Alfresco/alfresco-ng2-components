@@ -239,6 +239,18 @@ describe('TaskAttachmentList', () => {
         });
     }));
 
+    it('should not show the empty list component when the attachments list is not empty for completed task', async(() => {
+        getTaskRelatedContentSpy.and.returnValue(Observable.of(mockAttachment));
+        let change = new SimpleChange(null, '123', true);
+        component.ngOnChanges({'taskId': change});
+        component.disabled = true;
+
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]')).toBeNull();
+        });
+    }));
+
     describe('change detection', () => {
 
         let change = new SimpleChange('123', '456', true);
