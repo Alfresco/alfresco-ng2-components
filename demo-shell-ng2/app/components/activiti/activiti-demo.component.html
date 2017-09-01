@@ -1,4 +1,4 @@
-<md-tab-group>
+<md-tab-group [(selectedIndex)]="activeTab">
     <md-tab id="tasks-header" href="#tasks" (click)="activeTab = 'tasks'" label="{{'PS-TAB.TASKS-TAB' | translate}}">
         <div class="page-content">
             <div class="activiti-demo-grid">
