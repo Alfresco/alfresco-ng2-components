@@ -21,7 +21,7 @@ import { EXTENDIBLE_COMPONENT } from './../interface/injection.tokens';
 import { AlfrescoContentService } from './../services/alfresco-content.service';
 
 export interface NodePermissionSubject {
-    disabled: boolean;
+    disable: boolean;
 }
 
 @Directive({
@@ -74,7 +74,7 @@ export class NodePermissionDirective implements OnChanges, AfterViewInit {
 
     private enable(): void {
         if (this.parentComponent) {
-            this.parentComponent.disabled = false;
+            this.parentComponent.disable = false;
         } else {
             this.enableElement();
         }
@@ -82,7 +82,7 @@ export class NodePermissionDirective implements OnChanges, AfterViewInit {
 
     private disable(): void {
         if (this.parentComponent) {
-            this.parentComponent.disabled = true;
+            this.parentComponent.disable = true;
         } else {
             this.disableElement();
         }
