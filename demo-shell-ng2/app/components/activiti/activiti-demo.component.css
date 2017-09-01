@@ -69,16 +69,6 @@
     min-width: 680px;
 }
 
-.activiti-demo-tasks-menu >>> .mat-list .mat-list-item .mat-list-item-content {
-    height: 32px;
-    cursor: pointer;
-    padding: 0 16px 0 24px;
-}
-
-.activiti-demo-tasks-menu >>> .adf-panel-heading {
-    margin-bottom: 10px;
-}
-
 .activiti-demo-tasks-list >>> .adf-data-table {
     border: none;
 }
