@@ -1,5 +1,5 @@
-@import '../all-theme';
-@import '~@angular/material/theming';
+@import '~ng2-alfresco-core/styles/theming';
+@import './all-theme';
 
 @include mat-core();
 

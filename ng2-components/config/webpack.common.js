@@ -40,7 +40,8 @@ module.exports = {
 
     resolve: {
         alias: {
-            "ng2-alfresco-core": path.resolve(__dirname, '../ng2-alfresco-core/index.ts'),
+            "ng2-alfresco-core$": path.resolve(__dirname, '../ng2-alfresco-core/index.ts'),
+            "ng2-alfresco-core": path.resolve(__dirname, '../ng2-alfresco-core'),
             "ng2-alfresco-datatable": path.resolve(__dirname, '../ng2-alfresco-datatable/index.ts'),
             "ng2-activiti-diagrams": path.resolve(__dirname, '../ng2-activiti-diagrams/index.ts'),
             "ng2-activiti-analytics": path.resolve(__dirname, '../ng2-activiti-analytics/index.ts'),
@@ -57,7 +58,7 @@ module.exports = {
             "ng2-alfresco-webscript": path.resolve(__dirname, '../ng2-alfresco-webscript/index.ts'),
             "ng2-alfresco-userinfo": path.resolve(__dirname, '../ng2-alfresco-userinfo/index.ts')
         },
-        extensions: ['.ts', '.js'],
+        extensions: ['.ts', '.js', '.scss'],
         modules: [helpers.root('node_modules')]
     },
 
@@ -109,10 +110,7 @@ module.exports = {
                 }, {
                     loader: "raw-loader"
                 }, {
-                    loader: "sass-loader",
-                    options: {
-                        includePaths: [ path.resolve(__dirname, '../../ng2-components/ng2-alfresco-core/styles')]
-                    }
+                    loader: "sass-loader"
                 }]
             },
             {

@@ -19,7 +19,8 @@ module.exports = {
 
     resolve: {
         alias: {
-            "ng2-alfresco-core": helpers.root('../ng2-alfresco-core/index.ts'),
+            "ng2-alfresco-core$": helpers.root('../ng2-alfresco-core/index.ts'),
+            "ng2-alfresco-core": helpers.root('../ng2-alfresco-core'),
             "ng2-alfresco-datatable": helpers.root('../ng2-alfresco-datatable/index.ts')
         },
         extensions: ['.ts', '.js'],
@@ -68,10 +69,7 @@ module.exports = {
                 }, {
                     loader: "raw-loader"
                 }, {
-                    loader: "sass-loader",
-                    options: {
-                        includePaths: [ path.resolve(__dirname, '../../ng2-alfresco-core/styles')]
-                    }
+                    loader: "sass-loader"
                 }],
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
             },

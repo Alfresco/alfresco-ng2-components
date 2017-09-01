@@ -1,0 +1,17 @@
+@import './theme-colors';
+@import '../src/components/collapsable/accordion-group.component';
+@import '../src/components/view/card-view-textitem.component';
+@import '../src/components/view/card-view-dateitem.component';
+@import '../src/components/view/card-view.component';
+@import '../src/components/toolbar/toolbar.component';
+@import '../src/components/pagination/pagination.component';
+
+@mixin alfresco-core-theme($theme) {
+    @include mat-accordion-theme($theme);
+    @include mat-card-view-textitem-theme($theme);
+    @include mat-card-view-dateitem-theme($theme);
+    @include mat-card-view-theme($theme);
+    @include mat-adf-toolbar-theme($theme);
+    @include mat-pagination-theme($theme);
+    @include mat-colors-theme($theme);
+}
