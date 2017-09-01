@@ -21,6 +21,7 @@ import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 
 declare let dialogPolyfill: any;
+let componentHandler: any;
 
 @Component({
     selector: 'adf-checklist, activiti-checklist',
@@ -79,6 +80,19 @@ export class ChecklistComponent implements OnInit, OnChanges {
             this.getTaskChecklist(taskId.currentValue);
             return;
         }
+    }
+
+    ngAfterViewInit() {
+        this.setupMaterialComponents(componentHandler);
+    }
+
+    setupMaterialComponents(handler?: any): boolean {
+        // workaround for MDL issues with dynamic components
+        if (handler) {
+            handler.upgradeAllRegistered();
+            return true;
+        }
+        return false;
     }
 
     public getTaskChecklist(taskId: string) {
