@@ -47,7 +47,7 @@ function eraseContentList() {
 function generateListComponent(currentFileContent, webpackInstance) {
     if (!isFileEmpty(currentFileContent)) {
 
-        var componentReg = /(@Component)(\s?)\((\s?){(\s?)((.|\n)*)}(\s?)\)/gm;
+        var componentReg = /(@Component)(\s?)\((\s?){(\s?)((.|[\n\r])*)}(\s?)\)/gm;
         var componentSection = componentReg.exec(currentFileContent);
 
         if (componentSection) {
@@ -56,9 +56,9 @@ function generateListComponent(currentFileContent, webpackInstance) {
             var selector = selectorReg.exec(componentSection[0]);
 
                 if (selector) {
-                    var removeRoot = webpackInstance.resourcePath.substr(webpackInstance.resourcePath.indexOf('/ng2-components') + 16, webpackInstance.resourcePath.length);
+                    var rawPath = webpackInstance.resourcePath.replace(/\\/g, "/");
+                    var removeRoot = rawPath.substr(rawPath.indexOf('/ng2-components') + 16, rawPath.length);
                     var url = removeRoot.substr(0, removeRoot.indexOf('src')) + 'README.md';
-
 
                     var link = '- [' + selector[0] + '](' + url + ')';
 
@@ -74,7 +74,7 @@ function generateListComponent(currentFileContent, webpackInstance) {
 
 
 
-        var directiveReg = /(@Directive)(\s?)\((\s?){(\s?)((.|\n)*)}(\s?)\)/gm;
+        var directiveReg = /(@Directive)(\s?)\((\s?){(\s?)((.|[\r\n])*)}(\s?)\)/gm;
         var directiveSection = directiveReg.exec(currentFileContent);
 
         if (directiveSection) {
@@ -83,7 +83,9 @@ function generateListComponent(currentFileContent, webpackInstance) {
 
             if (selector) {
                 var selector = selector[0].replace("selector: '[", "").replace("']", '').replace("]", '').replace("selector: '", "").replace("'", '');
-                var removeRoot = webpackInstance.resourcePath.substr(webpackInstance.resourcePath.indexOf('/ng2-components') + 16, webpackInstance.resourcePath.length);
+
+                var rawPath = webpackInstance.resourcePath.replace(/\\/g, "/");
+                var removeRoot = rawPath.substr(rawPath.indexOf('/ng2-components') + 16, rawPath.length);
                 var url = removeRoot.substr(0, removeRoot.indexOf('src')) + 'README.md';
 
                 var link = '- [' + selector + '](' + url + ')';
@@ -109,7 +111,7 @@ function generateListComponent(currentFileContent, webpackInstance) {
 function generateListservices(currentFileContent, webpackInstance) {
     if (!isFileEmpty(currentFileContent)) {
 
-        var servicesReg = /(@Injectable\(\))(([a-zA-Z ]|\n)*)/gm;
+        var servicesReg = /(@Injectable\(\))(([a-zA-Z ]|[\r\n])*)/gm;
         var servicesSection = servicesReg.exec(currentFileContent);
 
         if (servicesSection) {
@@ -118,7 +120,8 @@ function generateListservices(currentFileContent, webpackInstance) {
             var selector = selectorReg.exec(servicesSection[0]);
 
             if (selector) {
-                var url = webpackInstance.resourcePath.substr(webpackInstance.resourcePath.indexOf('/ng2-components') + 16, webpackInstance.resourcePath.length);
+                var rawPath = webpackInstance.resourcePath.replace(/\\/g, "/");
+                var url = rawPath.substr(rawPath.indexOf('/ng2-components') + 16, rawPath.length);
 
                 var link = '- [' + selector[0] + '](' + url + ')';
 
@@ -150,4 +153,3 @@ module.exports = function (input, map) {
     }
     callback(null, input, map);
 }
-
