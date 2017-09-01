@@ -1,0 +1,5 @@
+@import '../src/components/user-info.component';
+
+@mixin alfresco-userinfo-theme($theme) {
+    @include mat-userinfo-theme($theme);
+}
