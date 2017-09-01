@@ -22,7 +22,13 @@
         <no-content-template>
             <ng-template>
                 <adf-empty-list>
-                        <div adf-empty-list-header class="adf-empty-list-header"> {{'ADF-DOCUMENT-LIST.EMPTY.HEADER' | translate}} </div>
+                    <div class="adf-empty-list_template adf-empty-folder">
+                        <div class="adf-empty-folder-this-space-is-empty">{{'ADF-DOCUMENT-LIST.EMPTY.HEADER' | translate}}</div>
+                        <div class="adf-empty-folder-drag-drop">{{ 'ADF-DATATABLE.EMPTY.DRAG-AND-DROP.TITLE' | translate }}</div>
+                        <div class="adf-empty-folder-any-files-here-to-add">{{ 'ADF-DATATABLE.EMPTY.DRAG-AND-DROP.SUBTITLE' | translate }}</div>
+                        <img class="adf-empty-folder-image" [src]="emptyFolderImageUrl">
+                    </div>
+                    <!-- <div adf-empty-list-header class="adf-empty-list-header"> {{'ADF-DOCUMENT-LIST.EMPTY.HEADER' | translate}} </div> -->
                 </adf-empty-list>
             </ng-template>
         </no-content-template>
