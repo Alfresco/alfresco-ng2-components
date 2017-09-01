@@ -63,7 +63,7 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
     @Input()
     rootFolderId: string = '-root-';
 
-    @Input()
+    @Input('disabled')
     disabled: boolean = false;
 
     @Input()
