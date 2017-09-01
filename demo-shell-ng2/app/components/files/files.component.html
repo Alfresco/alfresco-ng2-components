@@ -268,10 +268,10 @@
         </md-input-container>
     </section>
     <div *ngIf="!acceptedFilesTypeShow">
-        <alfresco-upload-button
+        <adf-upload-button
             #uploadButton
             tooltip="Custom tooltip"
-            [disabled]="!enableUpload"
+            [disable]="!enableUpload"
             data-automation-id="multiple-file-upload"
             [rootFolderId]="documentList.currentFolderId"
             [multipleFiles]="multipleFileUpload"
@@ -280,13 +280,13 @@
             [adf-node-permission]="'create'"
             [adf-nodes]="getCurrentDocumentListNode()"
             (permissionEvent)="handlePermissionError($event)">
-        </alfresco-upload-button>
+        </adf-upload-button>
     </div>
     <div *ngIf="acceptedFilesTypeShow">
         <alfresco-upload-button
             #uploadButton
             tooltip="Custom tooltip"
-            [disabled]="!enableUpload"
+            [disable]="!enableUpload"
             data-automation-id="multiple-file-upload"
             [rootFolderId]="documentList.currentFolderId"
             [acceptedFilesType]="acceptedFilesType"

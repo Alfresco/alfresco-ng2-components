@@ -23,7 +23,7 @@ import { NodePermissionDirective, NodePermissionSubject } from './node-permissio
     selector: 'adf-text-subject'
 })
 class TestComponent implements NodePermissionSubject {
-    disabled: boolean = false;
+    disable: boolean = false;
 }
 
 describe('NodePermissionDirective', () => {
@@ -126,13 +126,13 @@ describe('NodePermissionDirective', () => {
             spyOn(contentService, 'hasPermission').and.returnValue(false);
 
             let testComponent = new TestComponent();
-            testComponent.disabled = false;
+            testComponent.disable = false;
             const directive = new NodePermissionDirective(null, null, contentService, testComponent);
             directive.nodes = <any> [{}, {}];
 
             directive.updateElement();
 
-            expect(testComponent.disabled).toBeTruthy();
+            expect(testComponent.disable).toBeTruthy();
         });
 
         it('enables decorated component', () => {
@@ -140,13 +140,13 @@ describe('NodePermissionDirective', () => {
             spyOn(contentService, 'hasPermission').and.returnValue(true);
 
             let testComponent = new TestComponent();
-            testComponent.disabled = true;
+            testComponent.disable = true;
             const directive = new NodePermissionDirective(null, null, contentService, testComponent);
             directive.nodes = <any> [{}, {}];
 
             directive.updateElement();
 
-            expect(testComponent.disabled).toBeFalsy();
+            expect(testComponent.disable).toBeFalsy();
         });
     });
 });
