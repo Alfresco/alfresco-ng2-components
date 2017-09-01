@@ -40,7 +40,8 @@ module.exports = {
 
     resolve: {
         alias: {
-            "ng2-alfresco-core": path.resolve(__dirname, '../ng2-alfresco-core/index.ts'),
+            "ng2-alfresco-core$": path.resolve(__dirname, '../ng2-alfresco-core/index.ts'),
+            "ng2-alfresco-core": path.resolve(__dirname, '../ng2-alfresco-core'),
             "ng2-alfresco-datatable": path.resolve(__dirname, '../ng2-alfresco-datatable/index.ts'),
             "ng2-activiti-diagrams": path.resolve(__dirname, '../ng2-activiti-diagrams/index.ts'),
             "ng2-activiti-analytics": path.resolve(__dirname, '../ng2-activiti-analytics/index.ts'),
