@@ -48,10 +48,7 @@ module.exports = {
             use: extractScss.extract([{
                 loader: "raw-loader"
             }, {
-                loader: "sass-loader",
-                options: {
-                    includePaths: [path.resolve(__dirname, '../../ng2-components/ng2-alfresco-core/styles')]
-                }
+                loader: "sass-loader"
             }])
         }]
     },

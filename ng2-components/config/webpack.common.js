@@ -58,7 +58,7 @@ module.exports = {
             "ng2-alfresco-webscript": path.resolve(__dirname, '../ng2-alfresco-webscript/index.ts'),
             "ng2-alfresco-userinfo": path.resolve(__dirname, '../ng2-alfresco-userinfo/index.ts')
         },
-        extensions: ['.ts', '.js'],
+        extensions: ['.ts', '.js', '.scss'],
         modules: [helpers.root('node_modules')]
     },
 
@@ -110,10 +110,7 @@ module.exports = {
                 }, {
                     loader: "raw-loader"
                 }, {
-                    loader: "sass-loader",
-                    options: {
-                        includePaths: [ path.resolve(__dirname, '../../ng2-components/ng2-alfresco-core/styles')]
-                    }
+                    loader: "sass-loader"
                 }]
             },
             {
