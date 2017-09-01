@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { Observable, Observer } from 'rxjs/Rx';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
@@ -29,7 +29,7 @@ let componentHandler: any;
     styleUrls: ['./checklist.component.css'],
     providers: [TaskListService]
 })
-export class ChecklistComponent implements OnInit, OnChanges {
+export class ChecklistComponent implements OnInit, OnChanges, AfterViewInit {
 
     @Input()
     taskId: string;
