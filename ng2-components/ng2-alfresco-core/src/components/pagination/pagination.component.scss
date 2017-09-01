@@ -11,7 +11,7 @@
         border-top: $adf-pagination--border;
         height: $adf-pagination--height;
         line-height: $adf-pagination--height;
-        color: mat-color($primary, default-contrast);
+        color: mat-color($foreground, text);
 
         &__block {
             display: flex;
