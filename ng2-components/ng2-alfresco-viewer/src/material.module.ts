@@ -24,6 +24,7 @@ import {
     MdMenuModule,
     MdProgressBarModule,
     MdProgressSpinnerModule,
+    MdTabsModule,
     MdTooltipModule
 } from '@angular/material';
 
@@ -36,6 +37,7 @@ export function modules() {
         MdMenuModule,
         MdProgressBarModule,
         MdProgressSpinnerModule,
+        MdTabsModule,
         MdTooltipModule
     ];
 }

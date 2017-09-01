@@ -36,6 +36,9 @@ export class ViewerDialogComponent implements OnInit {
     fileMimeType: string = null;
     downloadUrl: string = null;
 
+    allowInfoDrawer = false;
+    showInfoDrawer = false;
+
     unknownFormatIcon = 'wifi_tethering';
     unknownFormatText = 'Document preview could not be loaded.';
 
@@ -54,12 +57,15 @@ export class ViewerDialogComponent implements OnInit {
         this.fileName = settings.fileName;
         this.fileMimeType = settings.fileMimeType;
         this.downloadUrl = settings.downloadUrl;
-        // console.log(settings);
     }
 
     ngOnInit() {
         this.viewerType = this.detectViewerType(this.fileMimeType);
         this.asText = this.getAsText();
+
+        if (this.viewerType !== 'unknown') {
+            this.allowInfoDrawer = true;
+        }
     }
 
     private detectViewerType(mimeType: string) {
