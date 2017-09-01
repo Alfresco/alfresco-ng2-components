@@ -23,7 +23,7 @@
             role="button"
             tabindex="0"
             title="{{ col.title }}">
-            <span *ngIf="col.srTitle" class="sr-only">{{col.srTitle}}</span>
+            <span *ngIf="col.srTitle" class="sr-only">{{ col.srTitle | translate }}</span>
             <span *ngIf="col.title">{{ col.title | translate}}</span>
         </th>
         <!-- Actions (right) -->
