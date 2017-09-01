@@ -60,7 +60,6 @@ function generateListComponent(currentFileContent, webpackInstance) {
                     var removeRoot = rawPath.substr(rawPath.indexOf('/ng2-components') + 16, rawPath.length);
                     var url = removeRoot.substr(0, removeRoot.indexOf('src')) + 'README.md';
 
-
                     var link = '- [' + selector[0] + '](' + url + ')';
 
                     if (webpackInstance.resourcePath.match('ng2-alfresco-core')) {
