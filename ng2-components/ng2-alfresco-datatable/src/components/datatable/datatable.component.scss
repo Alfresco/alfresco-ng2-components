@@ -82,6 +82,13 @@
             &:last-of-type {
                 padding-right: 24px;
             }
+
+            &:focus {
+                outline-offset: -1px;
+                outline-width: 1px;
+                outline-color: rgb(68, 138, 255);
+                outline-style: solid;
+            }
         }
 
         td {
