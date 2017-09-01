@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { MdDialog } from '@angular/material';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AlfrescoApiService } from 'ng2-alfresco-core';
 
 import { ViewerDialogComponent } from './../components/viewer-dialog.component';
@@ -32,6 +32,10 @@ export class ViewerService {
 
     private get contentApi() {
         return this.apiService.getInstance().content;
+    }
+
+    private get nodesApi() {
+        return this.apiService.getInstance().nodes;
     }
 
     showViewerForNode(node: MinimalNodeEntryEntity): Promise<boolean> {
@@ -51,6 +55,20 @@ export class ViewerService {
             dialogRef.afterClosed().subscribe(result => {
                 resolve(result);
             });
+        });
+    }
+
+    showViewerForNodeId(nodeId: string): Promise<boolean> {
+        return new Promise<boolean>((resolve, reject) => {
+            this.nodesApi.getNode(nodeId).then(
+                (node: MinimalNodeEntity) => {
+                    if (node && node.entry && node.entry.isFile) {
+                        return this.showViewerForNode(node.entry);
+                    } else {
+                        resolve(false);
+                    }
+                }
+            );
         });
     }
 }
