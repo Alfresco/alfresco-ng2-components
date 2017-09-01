@@ -1,29 +1,29 @@
 @mixin mat-filters-task-theme($theme) {
     $primary: map-get($theme, primary);
 
-    .mdl-list__item {
-        cursor: pointer;
-    }
-
     .adf {
 
         &-filters__entry {
             cursor: pointer;
+            font-size: 14px!important;
+            font-weight: bold;
+            opacity: .54;
+            padding-left: 30px;
+
+            .mat-list-item-content {
+                height: 34px;
+            }
         }
 
         &-filters__entry-icon {
-            margin-right: 12px !important;
+            padding-right: 12px !important;
+            padding-left: 0px !important;
         }
 
         &-filters__entry {
-            &.active {
+            &.active, &:hover {
                 color: mat-color($primary);
-            }
-            &:hover {
-                opacity: 0.8;
-            }
-            &.active .adf-filters__entry-icon {
-                color: mat-color($primary);
+                opacity: 1;
             }
         }
 
