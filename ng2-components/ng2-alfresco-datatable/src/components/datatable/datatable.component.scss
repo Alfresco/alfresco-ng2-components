@@ -6,7 +6,7 @@
     $data-table-font-size: 14px !default;
     $data-table-header-font-size: 12px !default;
     $data-table-header-sort-icon-size: 16px !default;
-    $data-table-header-color: mat-color($primary, default-contrast) !default;
+    $data-table-header-color: mat-color($foreground, text) !default;
     $data-table-header-sorted-color: mat-color($foreground, text) !default;
     $data-table-header-sorted-icon-hover-color: mat-color($foreground, disabled-text) !default;
     $data-table-divider-color: mat-color($foreground, text, .07) !default;

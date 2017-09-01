@@ -1,5 +1,5 @@
 @import './hyperlink/hyperlink.widget';
-@import 'colors';
+@import '~ng2-alfresco-core/styles/colors';
 
 @mixin mat-form-theme($theme) {
     $primary: map-get($theme, primary);

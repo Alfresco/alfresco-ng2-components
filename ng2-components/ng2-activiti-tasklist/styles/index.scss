@@ -1,0 +1,15 @@
+@import '../src/components/comment-list.component';
+@import '../src/components/start-task.component';
+@import '../src/components/people-search.component';
+@import '../src/components/people.component';
+@import '../src/components/task-filters.component';
+@import '../src/components/task-header.component';
+
+@mixin alfresco-activity-tasklist-theme($theme) {
+    @include mat-comment-list-theme($theme);
+    @include mat-start-task-theme($theme);
+    @include mat-people-search-theme($theme);
+    @include mat-people-theme($theme);
+    @include mat-filters-task-theme($theme);
+    @include mat-header-theme($theme);
+}

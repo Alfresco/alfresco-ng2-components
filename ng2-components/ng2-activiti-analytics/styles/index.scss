@@ -1,0 +1,5 @@
+@import '../src/components/analytics-report-list.component';
+
+@mixin alfresco-activity-analytics-theme($theme) {
+    @include mat-analytics-report-list-theme($theme);
+}

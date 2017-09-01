@@ -1,0 +1,5 @@
+@import '../src/components/datatable/datatable.component';
+
+@mixin alfresco-datatable-theme($theme) {
+    @include mat-datatable-theme($theme);
+}

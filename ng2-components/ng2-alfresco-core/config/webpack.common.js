@@ -64,10 +64,7 @@ module.exports = {
                 }, {
                     loader: "raw-loader"
                 }, {
-                    loader: "sass-loader",
-                    options: {
-                        includePaths: [ path.resolve(__dirname, '../styles')]
-                    }
+                    loader: "sass-loader"
                 }],
                 exclude: [/node_modules/, /bundles/, /dist/, /demo/]
             },
