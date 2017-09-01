@@ -280,6 +280,21 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
         this.clickObserver.next(dataRowEvent);
     }
 
+    onKeyboardNavigate(row: DataRow, e: KeyboardEvent) {
+        if (e) {
+            e.preventDefault();
+        }
+        const event = new DataRowEvent(row, e, this);
+
+        this.rowDblClick.emit(event);
+        this.elementRef.nativeElement.dispatchEvent(
+            new CustomEvent('row-dblclick', {
+                detail: event,
+                bubbles: true
+            })
+        );
+    }
+
     onColumnHeaderClick(column: DataColumn) {
         if (column && column.sortable) {
             let current = this.data.getSorting();
