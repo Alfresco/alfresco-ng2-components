@@ -6,7 +6,7 @@
                     <adf-toolbar>
                         <adf-toolbar-title class="adf-report-title-container">
                             <div *ngIf="isEditable">
-                                <md-input-container>
+                                <md-input-container class="adf-full-width-input">
                                     <input
                                         mdInput
                                         type="text"
@@ -21,9 +21,9 @@
                                     />
                                 </md-input-container>
                             </div>
-                            <div *ngIf="!isEditable" (click)="editEnable()">
+                            <div class="adf-report-title" *ngIf="!isEditable" (click)="editEnable()">
                                 <md-icon class="adf-report-icon" >mode_edit</md-icon>
-                                <h4 class="adf-report-title" >{{reportParameters.name}}</h4>
+                                <h4>{{reportParameters.name}}</h4>
                             </div>
                         </adf-toolbar-title>
                         <div *ngIf="!isEditable">
