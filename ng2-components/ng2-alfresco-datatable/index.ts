@@ -30,7 +30,10 @@ export { DataRowActionEvent, DataRowActionModel } from './src/components/datatab
 
 import { DataTableCellComponent } from './src/components/datatable/datatable-cell.component';
 import { DataTableComponent } from './src/components/datatable/datatable.component';
-import { EmptyListComponent } from './src/components/datatable/empty-list.component';
+import { EmptyListBodyDirective,
+    EmptyListComponent,
+    EmptyListFooterDirective,
+    EmptyListHeaderDirective } from './src/components/datatable/empty-list.component';
 import { LocationCellComponent } from './src/components/datatable/location-cell.component';
 import { LoadingContentTemplateDirective } from './src/directives/loading-template.directive';
 import { NoContentTemplateDirective } from './src/directives/no-content-template.directive';
@@ -39,6 +42,9 @@ export function directives() {
     return [
         DataTableComponent,
         EmptyListComponent,
+        EmptyListHeaderDirective,
+        EmptyListBodyDirective,
+        EmptyListFooterDirective,
         DataTableCellComponent,
         LocationCellComponent,
         NoContentTemplateDirective,
