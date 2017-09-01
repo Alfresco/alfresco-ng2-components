@@ -222,36 +222,35 @@
                 display: block;
             }
         }
-    }
 
-    /* Utils */
+        /* [Accessibility] For screen reader only */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
 
-    /* [Accessibility] For screen reader only */
-    :host .sr-only {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        border: 0;
-    }
-
-    .hidden {
-        display: none;
-    }
-
-    /* mobile phone */
-    @media all and (max-width: 768px) {
-        .desktop-only {
+        /* Utils */
+        .hidden {
             display: none;
         }
-    }
 
-    @media (max-device-width: 768px) {
-        .desktop-only {
-            display: none;
+        /* mobile phone */
+        @media all and (max-width: 768px) {
+            .desktop-only {
+                display: none;
+            }
+        }
+
+        @media (max-device-width: 768px) {
+            .desktop-only {
+                display: none;
+            }
         }
     }
 
