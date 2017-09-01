@@ -1,5 +1,5 @@
-<md-tab-group>
-    <md-tab id="tasks-header" href="#tasks" (click)="activeTab = 'tasks'" label="{{'PS-TAB.TASKS-TAB' | translate}}">
+<md-tab-group [(selectedIndex)]="activeTab">
+    <md-tab id="tasks-header" href="#tasks" label="{{'PS-TAB.TASKS-TAB' | translate}}">
         <div class="page-content">
             <div class="activiti-demo-grid">
                 <div class="activiti-demo-grid-item activiti-demo-tasks-menu">
@@ -102,7 +102,7 @@
             </div>
         </div>
     </md-tab>
-    <md-tab id="processes-header" href="#processes" (click)="activeTab = 'processes'"
+    <md-tab id="processes-header" href="#processes"
             label="{{'PS-TAB.PROCESSES-TAB' | translate}}">
         <div class="page-content">
             <div class="mdl-grid">
@@ -189,7 +189,7 @@
             </div>
         </div>
     </md-tab>
-    <md-tab id="report-header" href="#report" (click)="activeTab = 'reports'"
+    <md-tab id="report-header" href="#report"
             label="{{'PS-TAB.REPORTS-TAB' | translate}}">
         <div class="mdl-grid">
             <div class="mdl-cell mdl-cell--4-col task-column mdl-shadow--2dp">
