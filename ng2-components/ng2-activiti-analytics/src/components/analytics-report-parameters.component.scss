@@ -24,26 +24,34 @@
 
 .adf-edit-report-title {
     float: left;
-    font-size: 20px;
-    padding-left: 38px;
-    padding-top: 10px;
+    font-size: 20px!important;
+    padding-top: 19px;
 }
 
 .adf-report-icon {
     float: left;
-    margin-right: 5px;
-    padding: 4px 0 0 9px;
+    padding: 5px 5px 0 0;
     visibility: hidden;
 }
 
 .adf-report-title-container {
     cursor: pointer;
+    width: 100%;
+    margin-bottom: 12px;
 
     :hover .adf-report-icon {
         color: rgb(68, 138, 255);
         visibility: visible;
     }
 
+}
+
+.adf-report-title {
+    padding-top: 10px;
+}
+
+.adf-full-width-input {
+    width: 100%;
 }
 
 .is-hide {
@@ -54,10 +62,11 @@
 
 .adf-report-report-container {
     border-bottom: solid 1px rgb(212, 212, 212);
-    padding: 10px 10px 10px 10px;
+    padding-top: 10px;
 
     .mat-toolbar {
         border: 0 !important;
+        padding: 0 !important;
     }
 }
 
