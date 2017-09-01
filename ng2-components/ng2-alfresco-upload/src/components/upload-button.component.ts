@@ -54,8 +54,8 @@ export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionS
     @Input()
     disableWithNoPermission: boolean = false;
 
-    @Input('disabled')
-    disabled: boolean = false;
+    @Input()
+    disable: boolean = false;
 
     @Input()
     uploadFolders: boolean = false;
@@ -119,7 +119,7 @@ export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionS
     }
 
     isForceDisable(): boolean {
-        return this.disabled ? true : undefined;
+        return this.disable ? true : undefined;
     }
 
     /** @deprecated Deprecated in 1.8.0, use the button with combination of adf-node-permission directive */
