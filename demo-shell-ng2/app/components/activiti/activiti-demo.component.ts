@@ -90,6 +90,8 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     fileShowed: boolean = false;
     selectFirstReport: boolean = false;
 
+    private tabs = { tasks : 0 , processes : 1, reports: 2};
+
     content: Blob;
     contentName: string;
 
@@ -106,7 +108,7 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     taskPage: number = 0;
     processSchemaColumns: any [] = [];
 
-    activeTab: string = 'tasks'; // tasks|processes|reports
+    activeTab: number = this.tabs.tasks; // tasks|processes|reports
 
     taskFilter: FilterRepresentationModel;
     report: any;
@@ -204,7 +206,7 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
         });
 
         if (this.router.url.includes('processes') ) {
-            this.activeTab = 'processes';
+            this.activeTab = this.tabs.processes;
         }
         this.sub = this.route.params.subscribe(params => {
             let applicationId = params['appId'];
@@ -392,7 +394,7 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
 
     onProcessDetailsTaskClick(event: TaskDetailsEvent): void {
         event.preventDefault();
-        this.activeTab = 'tasks';
+        this.activeTab = this.tabs.tasks;
 
         const taskId = event.value.id;
         const processTaskDataRow = new ObjectDataRow({
