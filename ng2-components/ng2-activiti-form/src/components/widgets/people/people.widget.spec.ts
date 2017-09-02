@@ -58,16 +58,6 @@ describe('PeopleWidgetComponent', () => {
         expect(widget.getDisplayName(model)).toBe('John');
     });
 
-    it('should flush value on blur', (done) => {
-        spyOn(widget, 'flushValue').and.stub();
-        widget.onBlur();
-
-        setTimeout(() => {
-            expect(widget.flushValue).toHaveBeenCalled();
-            done();
-        }, 200);
-    });
-
     it('should init value from the field', () => {
         widget.field.value = new GroupUserModel({
             firstName: 'John',
