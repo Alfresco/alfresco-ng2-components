@@ -59,7 +59,7 @@ export const ALFRESCO_SEARCH_PROVIDERS: [any] = [
 
 @NgModule({
     imports: [
-        DocumentListModule.forRoot(),
+        DocumentListModule,
         CoreModule,
         FormsModule,
         ReactiveFormsModule
