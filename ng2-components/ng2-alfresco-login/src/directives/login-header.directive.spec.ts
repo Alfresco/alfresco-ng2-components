@@ -15,29 +15,40 @@
  * limitations under the License.
  */
 
-import { Injector } from '@angular/core';
-import { getTestBed, TestBed } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
+import { MaterialModule } from '../material.module';
+
 import { LoginComponent } from '../components/login.component';
 import { LoginHeaderDirective } from './login-header.directive';
 
 describe('LoginHeaderDirective', () => {
-    let injector: Injector;
-    let loginHeaderDirective: LoginHeaderDirective;
+    let component: LoginComponent;
+    let directive: LoginHeaderDirective;
 
-    beforeEach(() => {
+    beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [CoreModule.forRoot()],
-            providers: [
+            imports: [
+                CoreModule,
+                MaterialModule
+            ],
+            declarations: [
                 LoginHeaderDirective,
                 LoginComponent
             ]
-        });
-        injector = getTestBed();
-        loginHeaderDirective = injector.get(LoginHeaderDirective);
+        }).compileComponents();
+    }));
+
+    beforeEach(() => {
+        let fixture = TestBed.createComponent(LoginComponent);
+        component = fixture.componentInstance;
+        directive = new LoginHeaderDirective(component);
     });
 
-    it('is defined', () => {
-        expect(loginHeaderDirective).toBeDefined();
+    it('applies tempalate to Login component', () => {
+        const template = {};
+        directive.template = template;
+        directive.ngAfterContentInit();
+        expect(component.headerTemplate).toBe(template);
     });
 });
