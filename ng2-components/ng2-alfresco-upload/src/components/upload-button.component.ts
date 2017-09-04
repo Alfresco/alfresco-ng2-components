@@ -55,7 +55,7 @@ export class UploadButtonComponent implements OnInit, OnChanges, NodePermissionS
     disableWithNoPermission: boolean = false;
 
     @Input()
-    disabled: boolean;
+    disabled: boolean = false;
 
     @Input()
     uploadFolders: boolean = false;
