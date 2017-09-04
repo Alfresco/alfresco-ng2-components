@@ -19,6 +19,8 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import { ActivitiContentService } from 'ng2-activiti-form';
 import { ContentService, ThumbnailService } from 'ng2-alfresco-core';
 
+declare var require: any;
+
 @Component({
     selector: 'adf-task-attachment-list',
     styleUrls: ['./task-attachment-list.component.scss'],

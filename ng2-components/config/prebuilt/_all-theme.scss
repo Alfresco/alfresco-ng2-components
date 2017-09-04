@@ -1,0 +1,25 @@
+@import 'ng2-alfresco-core/styles/index';
+@import 'ng2-activiti-analytics/styles/index';
+@import 'ng2-activiti-diagrams/styles/index';
+@import 'ng2-activiti-form/styles/index';
+@import 'ng2-activiti-processlist/styles/index';
+@import 'ng2-activiti-tasklist/styles/index';
+@import 'ng2-alfresco-datatable/styles/index';
+@import 'ng2-alfresco-documentlist/styles/index';
+@import 'ng2-alfresco-login/styles/index';
+@import 'ng2-alfresco-upload/styles/index';
+@import 'ng2-alfresco-userinfo/styles/index';
+
+@mixin alfresco-material-theme($theme) {
+    @include alfresco-core-theme($theme);
+    @include alfresco-activity-analytics-theme($theme);
+    @include alfresco-activity-diagrams-theme($theme);
+    @include alfresco-activity-form-theme($theme);
+    @include alfresco-activity-processlist-theme($theme);
+    @include alfresco-activity-tasklist-theme($theme);
+    @include alfresco-datatable-theme($theme);
+    @include alfresco-documentlist-theme($theme);
+    @include alfresco-login-theme($theme);
+    @include alfresco-upload-theme($theme);
+    @include alfresco-userinfo-theme($theme);
+}

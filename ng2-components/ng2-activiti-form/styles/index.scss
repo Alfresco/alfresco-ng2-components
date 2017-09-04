@@ -1,0 +1,9 @@
+@import '../src/components/widgets/form';
+@import '../src/components/widgets/container/container.widget';
+@import '../src/components/widgets/dynamic-table/dynamic-table.widget';
+
+@mixin alfresco-activity-form-theme($theme) {
+    @include mat-form-theme($theme);
+    @include mat-container-widget-theme($theme);
+    @include mat-dynamic-table-theme($theme);
+}

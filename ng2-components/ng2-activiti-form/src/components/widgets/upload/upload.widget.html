@@ -28,5 +28,5 @@
                (change)="onFileChanged($event)">
     </div>
     <error-widget [error]="field.validationSummary" ></error-widget>
-
+    <error-widget class="adf-dropdown-required-message" *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
 </div>

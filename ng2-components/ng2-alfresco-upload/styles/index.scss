@@ -1,0 +1,7 @@
+@import '../src/components/file-uploading-list-row.component';
+@import '../src/components/file-uploading-dialog.component';
+
+@mixin alfresco-upload-theme($theme) {
+    @include mat-file-uploading-row-theme($theme);
+    @include mat-upload-dialog-theme($theme);
+}

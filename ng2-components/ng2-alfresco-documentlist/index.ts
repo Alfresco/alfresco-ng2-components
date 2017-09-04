@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA, ModuleWithProviders, NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 
@@ -54,6 +54,7 @@ export * from './src/data/share-datatable-adapter';
 export * from './src/services/folder-actions.service';
 export * from './src/services/document-actions.service';
 export * from './src/services/document-list.service';
+export * from './src/services/node-actions.service';
 
 // models
 export * from './src/models/content-action.model';
@@ -109,8 +110,7 @@ export const DOCUMENT_LIST_PROVIDERS: any[] = [
         DataTableModule,
         ...DOCUMENT_LIST_DIRECTIVES,
         MaterialModule
-    ],
-    schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+    ]
 })
 export class DocumentListModule {
     /** @deprecated in 1.8.0 */

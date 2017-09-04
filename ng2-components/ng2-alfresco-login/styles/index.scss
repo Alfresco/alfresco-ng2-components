@@ -1,0 +1,5 @@
+@import '../src/components/login.component';
+
+@mixin alfresco-login-theme($theme) {
+    @include mat-login-theme($theme);
+}

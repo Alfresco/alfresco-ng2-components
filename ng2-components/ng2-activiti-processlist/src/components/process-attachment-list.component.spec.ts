@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
+import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MdProgressSpinnerModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
@@ -52,8 +52,7 @@ describe('ProcessAttachmentListComponent', () => {
             providers: [
                 { provide: AlfrescoTranslationService, useClass: TranslationMock },
                 ActivitiContentService
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            ]
         }).compileComponents();
     }));
 
@@ -213,7 +212,7 @@ describe('ProcessAttachmentListComponent', () => {
         component.ngOnChanges({'processInstanceId': change});
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('adf-empty-list-header').innerText.trim()).toEqual('PROCESS-ATTACHMENT.EMPTY.HEADER');
+            expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual('PROCESS-ATTACHMENT.EMPTY.HEADER');
         });
     }));
 
@@ -245,7 +244,19 @@ describe('ProcessAttachmentListComponent', () => {
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('adf-empty-list-header').innerText.trim()).toEqual('PROCESS-ATTACHMENT.EMPTY-LIST.HEADER');
+            expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual('PROCESS-ATTACHMENT.EMPTY.HEADER');
+        });
+    }));
+
+    it('should not show the empty list component when the attachments list is not empty for completed process', async(() => {
+        getProcessRelatedContentSpy.and.returnValue(Observable.of(mockAttachment));
+        let change = new SimpleChange(null, '123', true);
+        component.ngOnChanges({'processInstanceId': change});
+        component.disabled = true;
+
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]')).toBeNull();
         });
     }));
 

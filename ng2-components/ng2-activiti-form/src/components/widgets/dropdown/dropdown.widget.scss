@@ -1,4 +1,4 @@
-@import 'theming';
+@import '~ng2-alfresco-core/styles/theming';
 @import '../form';
 
 .adf {
@@ -9,6 +9,10 @@
 
     &-select {
         width: 100%;
+    }
+
+    &-dropdown-required-message .adf-error-text-container{
+        margin-top: -2px !important;
     }
 
 }

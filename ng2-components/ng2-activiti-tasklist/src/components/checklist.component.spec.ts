@@ -17,8 +17,9 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
-import { Observable } from 'rxjs/Rx';
+import { AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
+import { AppConfigServiceMock } from '../assets/app-config.service.mock';
+import { TranslationMock } from '../assets/translation.service.mock';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from '../services/tasklist.service';
 import { ChecklistComponent } from './checklist.component';
@@ -46,15 +47,11 @@ describe('ChecklistComponent', () => {
                 ChecklistComponent
             ],
             providers: [
-                TaskListService
+                TaskListService,
+                { provide: AppConfigService, useClass: AppConfigServiceMock },
+                { provide: TranslationService, useClass: TranslationMock }
             ]
         }).compileComponents().then(() => {
-            let translateService = TestBed.get(AlfrescoTranslationService);
-            spyOn(translateService, 'addTranslationFolder').and.stub();
-            spyOn(translateService.translate, 'get').and.callFake((key) => {
-                return Observable.of(key);
-            });
-
             fixture = TestBed.createComponent(ChecklistComponent);
             checklistComponent = fixture.componentInstance;
             element = fixture.nativeElement;

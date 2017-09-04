@@ -8,10 +8,27 @@
 }
 
 .adf-viewer-dialog {
+
     .mat-dialog-content {
         display: flex;
         max-height: 90vh;
         justify-content: center;
+    }
+
+    &__info-drawer {
+        width: 350px;
+        display: block;
+        padding: 8px 0;
+        background-color: #FAFAFA;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.27);
+
+        .mat-tab-label {
+            text-transform: uppercase;
+        }
+
+        .mat-card {
+            margin: 6px;
+        }
     }
 
     &-unknown-view {
@@ -31,6 +48,7 @@
         justify-content: center;
         height: 90vh;
         img {
+            max-width: 100%;
             object-fit: contain;
         }
     }

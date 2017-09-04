@@ -1,0 +1,5 @@
+@import '../src/components/process-filters.component';
+
+@mixin alfresco-activity-processlist-theme($theme) {
+    @include mat-filters-process-theme($theme);
+}

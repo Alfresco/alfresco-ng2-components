@@ -16,8 +16,9 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { CoreModule } from 'ng2-alfresco-core';
+import { AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
+import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import {
     fakeAppFilter,
     fakeAppPromise,
@@ -38,6 +39,7 @@ import {
     fakeUser2,
     secondFakeTaskList
 } from '../assets/tasklist-service.mock';
+import { TranslationMock } from '../assets/translation.service.mock';
 import { Comment } from '../models/comment.model';
 import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
@@ -56,7 +58,9 @@ describe('Activiti TaskList Service', () => {
                 CoreModule.forRoot()
             ],
             providers: [
-                TaskListService
+                TaskListService,
+                { provide: AppConfigService, useClass: AppConfigServiceMock },
+                { provide: TranslationService, useClass: TranslationMock }
             ]
         }).compileComponents();
     }));
@@ -167,11 +171,14 @@ describe('Activiti TaskList Service', () => {
             service.getTasks(<TaskQueryRequestRepresentationModel> fakeFilter).subscribe(
                 res => {
                     expect(res).toBeDefined();
-                    expect(res.length).toEqual(1);
-                    expect(res[0].name).toEqual('FakeNameTask');
-                    expect(res[0].assignee.email).toEqual('fake-email@dom.com');
-                    expect(res[0].assignee.firstName).toEqual('firstName');
-                    expect(res[0].assignee.lastName).toEqual('lastName');
+                    expect(res.size).toEqual(1);
+                    expect(res.start).toEqual(0);
+                    expect(res.data).toBeDefined();
+                    expect(res.data.length).toEqual(1);
+                    expect(res.data[0].name).toEqual('FakeNameTask');
+                    expect(res.data[0].assignee.email).toEqual('fake-email@dom.com');
+                    expect(res.data[0].assignee.firstName).toEqual('firstName');
+                    expect(res.data[0].assignee.lastName).toEqual('lastName');
                     done();
                 }
             );
@@ -187,12 +194,15 @@ describe('Activiti TaskList Service', () => {
             service.getTasks(<TaskQueryRequestRepresentationModel> fakeFilterWithProcessDefinitionKey).subscribe(
                 res => {
                     expect(res).toBeDefined();
-                    expect(res.length).toEqual(1);
-                    expect(res[0].name).toEqual('FakeNameTask');
-                    expect(res[0].assignee.email).toEqual('fake-email@dom.com');
-                    expect(res[0].assignee.firstName).toEqual('firstName');
-                    expect(res[0].assignee.lastName).toEqual('lastName');
-                    expect(res[0].processDefinitionKey).toEqual('1');
+                    expect(res.size).toEqual(2);
+                    expect(res.start).toEqual(0);
+                    expect(res.data).toBeDefined();
+                    expect(res.data.length).toEqual(2);
+                    expect(res.data[0].name).toEqual('FakeNameTask');
+                    expect(res.data[0].assignee.email).toEqual('fake-email@dom.com');
+                    expect(res.data[0].assignee.firstName).toEqual('firstName');
+                    expect(res.data[0].assignee.lastName).toEqual('lastName');
+                    expect(res.data[0].processDefinitionKey).toEqual('1');
                     done();
                 }
             );
@@ -221,34 +231,41 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should return the task list with all tasks filtered by state', (done) => {
-            spyOn(service, 'getTasks').and.returnValue(Observable.of(fakeTaskList.data));
+            spyOn(service, 'getTasks').and.returnValue(Observable.of(fakeTaskList));
             spyOn(service, 'getTotalTasks').and.returnValue(Observable.of(fakeTaskList));
 
             service.findAllTaskByState(<TaskQueryRequestRepresentationModel> fakeFilter, 'open').subscribe(
                 res => {
+
                     expect(res).toBeDefined();
-                    expect(res.length).toEqual(1);
-                    expect(res[0].name).toEqual('FakeNameTask');
-                    expect(res[0].assignee.email).toEqual('fake-email@dom.com');
-                    expect(res[0].assignee.firstName).toEqual('firstName');
-                    expect(res[0].assignee.lastName).toEqual('lastName');
+                    expect(res.size).toEqual(1);
+                    expect(res.start).toEqual(0);
+                    expect(res.data).toBeDefined();
+                    expect(res.data.length).toEqual(1);
+                    expect(res.data[0].name).toEqual('FakeNameTask');
+                    expect(res.data[0].assignee.email).toEqual('fake-email@dom.com');
+                    expect(res.data[0].assignee.firstName).toEqual('firstName');
+                    expect(res.data[0].assignee.lastName).toEqual('lastName');
                     done();
                 }
             );
         });
 
         it('should return the task list with all tasks filtered', (done) => {
-            spyOn(service, 'getTasks').and.returnValue(Observable.of(fakeTaskList.data));
+            spyOn(service, 'getTasks').and.returnValue(Observable.of(fakeTaskList));
             spyOn(service, 'getTotalTasks').and.returnValue(Observable.of(fakeTaskList));
 
             service.findAllTaskByState(<TaskQueryRequestRepresentationModel> fakeFilter).subscribe(
                 res => {
                     expect(res).toBeDefined();
-                    expect(res.length).toEqual(1);
-                    expect(res[0].name).toEqual('FakeNameTask');
-                    expect(res[0].assignee.email).toEqual('fake-email@dom.com');
-                    expect(res[0].assignee.firstName).toEqual('firstName');
-                    expect(res[0].assignee.lastName).toEqual('lastName');
+                    expect(res.size).toEqual(1);
+                    expect(res.start).toEqual(0);
+                    expect(res.data).toBeDefined();
+                    expect(res.data.length).toEqual(1);
+                    expect(res.data[0].name).toEqual('FakeNameTask');
+                    expect(res.data[0].assignee.email).toEqual('fake-email@dom.com');
+                    expect(res.data[0].assignee.firstName).toEqual('firstName');
+                    expect(res.data[0].assignee.lastName).toEqual('lastName');
                     done();
                 }
             );
@@ -258,11 +275,14 @@ describe('Activiti TaskList Service', () => {
             service.findTasksByState(<TaskQueryRequestRepresentationModel> fakeFilter, 'open').subscribe(
                 res => {
                     expect(res).toBeDefined();
-                    expect(res.length).toEqual(1);
-                    expect(res[0].name).toEqual('FakeNameTask');
-                    expect(res[0].assignee.email).toEqual('fake-email@dom.com');
-                    expect(res[0].assignee.firstName).toEqual('firstName');
-                    expect(res[0].assignee.lastName).toEqual('lastName');
+                    expect(res.size).toEqual(1);
+                    expect(res.start).toEqual(0);
+                    expect(res.data).toBeDefined();
+                    expect(res.data.length).toEqual(1);
+                    expect(res.data[0].name).toEqual('FakeNameTask');
+                    expect(res.data[0].assignee.email).toEqual('fake-email@dom.com');
+                    expect(res.data[0].assignee.firstName).toEqual('firstName');
+                    expect(res.data[0].assignee.lastName).toEqual('lastName');
                     done();
                 }
             );
@@ -277,12 +297,14 @@ describe('Activiti TaskList Service', () => {
         it('should return the task list filtered', (done) => {
             service.findTasksByState(<TaskQueryRequestRepresentationModel> fakeFilter).subscribe(
                 res => {
-                    expect(res).toBeDefined();
-                    expect(res.length).toEqual(1);
-                    expect(res[0].name).toEqual('FakeNameTask');
-                    expect(res[0].assignee.email).toEqual('fake-email@dom.com');
-                    expect(res[0].assignee.firstName).toEqual('firstName');
-                    expect(res[0].assignee.lastName).toEqual('lastName');
+                    expect(res.size).toEqual(1);
+                    expect(res.start).toEqual(0);
+                    expect(res.data).toBeDefined();
+                    expect(res.data.length).toEqual(1);
+                    expect(res.data[0].name).toEqual('FakeNameTask');
+                    expect(res.data[0].assignee.email).toEqual('fake-email@dom.com');
+                    expect(res.data[0].assignee.firstName).toEqual('firstName');
+                    expect(res.data[0].assignee.lastName).toEqual('lastName');
                     done();
                 }
             );
@@ -295,22 +317,23 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should return the task list with all tasks filtered without state', (done) => {
-            spyOn(service, 'getTasks').and.returnValue(Observable.of(fakeTaskList.data));
+            spyOn(service, 'getTasks').and.returnValue(Observable.of(fakeTaskList));
             spyOn(service, 'getTotalTasks').and.returnValue(Observable.of(fakeTaskList));
 
             service.findAllTasksWhitoutState(<TaskQueryRequestRepresentationModel> fakeFilter).subscribe(
                 res => {
                     expect(res).toBeDefined();
-                    expect(res.length).toEqual(2);
-                    expect(res[0].name).toEqual('FakeNameTask');
-                    expect(res[0].assignee.email).toEqual('fake-email@dom.com');
-                    expect(res[0].assignee.firstName).toEqual('firstName');
-                    expect(res[0].assignee.lastName).toEqual('lastName');
+                    expect(res.data).toBeDefined();
+                    expect(res.data.length).toEqual(2);
+                    expect(res.data[0].name).toEqual('FakeNameTask');
+                    expect(res.data[0].assignee.email).toEqual('fake-email@dom.com');
+                    expect(res.data[0].assignee.firstName).toEqual('firstName');
+                    expect(res.data[0].assignee.lastName).toEqual('lastName');
 
-                    expect(res[1].name).toEqual('FakeNameTask');
-                    expect(res[1].assignee.email).toEqual('fake-email@dom.com');
-                    expect(res[1].assignee.firstName).toEqual('firstName');
-                    expect(res[1].assignee.lastName).toEqual('lastName');
+                    expect(res.data[1].name).toEqual('FakeNameTask');
+                    expect(res.data[1].assignee.email).toEqual('fake-email@dom.com');
+                    expect(res.data[1].assignee.firstName).toEqual('firstName');
+                    expect(res.data[1].assignee.lastName).toEqual('lastName');
                     done();
                 }
             );

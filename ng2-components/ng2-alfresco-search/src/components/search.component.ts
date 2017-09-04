@@ -21,6 +21,8 @@ import { NodePaging, Pagination } from 'alfresco-js-api';
 import { AlfrescoTranslationService, NotificationService, SearchOptions, SearchService } from 'ng2-alfresco-core';
 import { PermissionModel } from 'ng2-alfresco-documentlist';
 
+declare var require: any;
+
 @Component({
     selector: 'adf-search, alfresco-search',
     styleUrls: ['./search.component.scss'],

@@ -1,10 +1,10 @@
-<md-tab-group>
-    <md-tab id="tasks-header" href="#tasks" (click)="activeTab = 'tasks'" label="{{'PS-TAB.TASKS-TAB' | translate}}">
+<md-tab-group [(selectedIndex)]="activeTab">
+    <md-tab id="tasks-header" href="#tasks" label="{{'PS-TAB.TASKS-TAB' | translate}}">
         <div class="page-content">
-            <div class="mdl-grid">
-                <div class="mdl-cell mdl-cell--2-col task-column mdl-shadow--2dp">
-                    <div class="list-buttons">
-                        <button md-raised-button data-automation-id="btn-start-task" (click)="navigateStartTask()">
+            <div class="activiti-demo-grid">
+                <div class="activiti-demo-grid-item activiti-demo-tasks-menu">
+                    <div class="activiti-demo-list-buttons">
+                        <button color="primary" md-raised-button data-automation-id="btn-start-task" class="activiti-demo-list-buttons-start" (click)="navigateStartTask()">
                             <md-icon>add</md-icon>
                             <span>{{'PS-TAB.START-TASK' | translate}}</span>
                         </button>
@@ -23,10 +23,12 @@
                         </adf-accordion-group>
                     </adf-accordion>
                 </div>
-                <div class="mdl-cell mdl-cell--3-col task-column mdl-shadow--2dp"
+                <div class="activiti-demo-grid-item activiti-demo-tasks-list"
                      *ngIf="taskFilter && !isStartTaskMode()">
                     <activiti-tasklist
                         [appId]="taskFilter?.appId"
+                        [page]="taskPage"
+                        [size]="taskPagination.maxItems"
                         [processDefinitionKey]="taskFilter?.filter?.processDefinitionKey"
                         [name]="taskFilter?.filter?.name"
                         [assignment]="taskFilter?.filter?.assignment"
@@ -47,8 +49,17 @@
                         </data-columns>
                         -->
                     </activiti-tasklist>
+
+                    <adf-pagination
+                        (changePageNumber)="onChangePageNumber($event)"
+                        (changePageSize)="onChangePageSize($event)"
+                        (nextPage)="onNextPage($event)"
+                        (prevPage)="onPrevPage($event)"
+                        [pagination]="taskPagination"
+                        [supportedPageSizes]="[2, 4, 6, 8, 10, 12]">
+                    </adf-pagination>
                 </div>
-                <div class="mdl-cell mdl-cell--7-col task-column mdl-shadow--2dp" *ngIf="!isStartTaskMode()"
+                <div class="activiti-demo-grid-item activiti-demo-tasks-details" *ngIf="!isStartTaskMode()"
                      [class.mdl-cell--7-col]="taskFilter && !isStartTaskMode()"
                      [class.mdl-cell--10-col]="!taskFilter || isStartTaskMode()">
                     <activiti-task-details #activitidetails
@@ -81,7 +92,7 @@
                         </md-card-content>
                     </md-card>
                 </div>
-                <div class="mdl-cell mdl-cell--10-col task-column mdl-shadow--2dp" *ngIf="isStartTaskMode()">
+                <div class="activiti-demo-grid-item activiti-demo-tasks-start" *ngIf="isStartTaskMode()">
                     <adf-start-task
                         [appId]="appId"
                         (success)="onStartTaskSuccess($event)"
@@ -91,7 +102,7 @@
             </div>
         </div>
     </md-tab>
-    <md-tab id="processes-header" href="#processes" (click)="activeTab = 'processes'"
+    <md-tab id="processes-header" href="#processes"
             label="{{'PS-TAB.PROCESSES-TAB' | translate}}">
         <div class="page-content">
             <div class="mdl-grid">
@@ -178,7 +189,7 @@
             </div>
         </div>
     </md-tab>
-    <md-tab id="report-header" href="#report" (click)="activeTab = 'reports'"
+    <md-tab id="report-header" href="#report"
             label="{{'PS-TAB.REPORTS-TAB' | translate}}">
         <div class="mdl-grid">
             <div class="mdl-cell mdl-cell--4-col task-column mdl-shadow--2dp">

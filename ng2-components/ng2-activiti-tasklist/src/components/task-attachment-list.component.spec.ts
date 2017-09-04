@@ -15,15 +15,16 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
+import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MdProgressSpinnerModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
-import { TranslateService } from '@ngx-translate/core';
 import { ActivitiContentService } from 'ng2-activiti-form';
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { Observable } from 'rxjs/Rx';
+import { AppConfigServiceMock } from '../assets/app-config.service.mock';
+import { TranslationMock } from '../assets/translation.service.mock';
 import { TaskAttachmentListComponent } from './task-attachment-list.component';
 
 declare let jasmine: any;
@@ -50,21 +51,12 @@ describe('TaskAttachmentList', () => {
                 TaskAttachmentListComponent
             ],
             providers: [
-                ActivitiContentService
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+                ActivitiContentService,
+                { provide: AppConfigService, useClass: AppConfigServiceMock },
+                { provide: TranslationService, useClass: TranslationMock }
+            ]
         }).compileComponents();
 
-        let translateService: AlfrescoTranslationService = TestBed.get(AlfrescoTranslationService);
-        spyOn(translateService, 'addTranslationFolder').and.stub();
-        spyOn(translateService, 'get').and.callFake((key) => {
-            return Observable.of(key);
-        });
-
-        let nativeTranslateService: TranslateService = TestBed.get(TranslateService);
-        spyOn(nativeTranslateService, 'get').and.callFake((key) => {
-            return Observable.of(key);
-        });
     }));
 
     beforeEach(() => {
@@ -210,7 +202,7 @@ describe('TaskAttachmentList', () => {
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('adf-empty-list-header').innerText.trim()).toEqual('TASK-ATTACHMENT.EMPTY.HEADER');
+            expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual('TASK-ATTACHMENT.EMPTY.HEADER');
         });
     }));
 
@@ -243,7 +235,19 @@ describe('TaskAttachmentList', () => {
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('adf-empty-list-header').innerText.trim()).toEqual('TASK-ATTACHMENT.EMPTY-LIST.HEADER');
+            expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual('TASK-ATTACHMENT.EMPTY.HEADER');
+        });
+    }));
+
+    it('should not show the empty list component when the attachments list is not empty for completed task', async(() => {
+        getTaskRelatedContentSpy.and.returnValue(Observable.of(mockAttachment));
+        let change = new SimpleChange(null, '123', true);
+        component.ngOnChanges({'taskId': change});
+        component.disabled = true;
+
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]')).toBeNull();
         });
     }));
 

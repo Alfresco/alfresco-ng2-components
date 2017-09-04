@@ -352,13 +352,22 @@ export class FormService {
         return Observable.fromPromise(this.taskApi.getRestFieldValuesColumn(taskId, field, column)).catch(err => this.handleError(err));
     }
 
+    private getUserProfileImageApi(userId: string): string {
+        return this.apiService.getInstance().activiti.userApi.getUserProfilePictureUrl(userId);
+    }
+
     getWorkflowUsers(filter: string, groupId?: string): Observable<GroupUserModel[]> {
         let option: any = {filter: filter};
         if (groupId) {
             option.groupId = groupId;
         }
         return Observable.fromPromise(this.usersWorkflowApi.getUsers(option))
-            .map((response: any) => <GroupUserModel[]> response.data || [])
+            .switchMap((response: any) => <GroupUserModel[]> response.data || [])
+            .map((user: any) => {
+                    user.userImage = this.getUserProfileImageApi(user.id);
+                    return Observable.of(user);
+                })
+            .combineAll()
             .catch(err => this.handleError(err));
     }
 

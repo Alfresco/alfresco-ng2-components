@@ -111,6 +111,13 @@ export { DiscoveryApiService } from './src/services/discovery-api.service';
 
 import { DataColumnListComponent } from './src/components/data-column/data-column-list.component';
 import { DataColumnComponent } from './src/components/data-column/data-column.component';
+import {
+    InfoDrawerButtonsDirective,
+    InfoDrawerContentDirective,
+    InfoDrawerLayoutComponent,
+    InfoDrawerTitleDirective
+} from './src/components/info-drawer/info-drawer-layout.component';
+import { InfoDrawerComponent, InfoDrawerTabComponent } from './src/components/info-drawer/info-drawer.component';
 import { NodePermissionDirective } from './src/directives/node-permission.directive';
 import { UploadDirective } from './src/directives/upload.directive';
 
@@ -131,6 +138,7 @@ export { EXTENDIBLE_COMPONENT } from './src/interface/injection.tokens';
 
 export * from './src/components/data-column/data-column.component';
 export * from './src/components/data-column/data-column-list.component';
+export * from './src/components/info-drawer/info-drawer.component';
 export * from './src/directives/upload.directive';
 export * from './src/directives/highlight.directive';
 export * from './src/directives/node-permission.directive';
@@ -237,6 +245,12 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         HighlightDirective,
         DataColumnComponent,
         DataColumnListComponent,
+        InfoDrawerComponent,
+        InfoDrawerTabComponent,
+        InfoDrawerLayoutComponent,
+        InfoDrawerTitleDirective,
+        InfoDrawerButtonsDirective,
+        InfoDrawerContentDirective,
         FileSizePipe,
         HighlightPipe,
         TimeAgoPipe,
@@ -279,7 +293,13 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         HighlightPipe,
         TimeAgoPipe,
         CreateFolderDialogComponent,
-        DownloadZipDialogComponent
+        DownloadZipDialogComponent,
+        InfoDrawerComponent,
+        InfoDrawerTabComponent,
+        InfoDrawerLayoutComponent,
+        InfoDrawerTitleDirective,
+        InfoDrawerButtonsDirective,
+        InfoDrawerContentDirective
     ],
     entryComponents: [
         CreateFolderDialogComponent,

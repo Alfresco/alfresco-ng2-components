@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FileModel, FileUploadCompleteEvent, FileUploadDeleteEvent,
-         FileUploadErrorEvent, UploadService } from 'ng2-alfresco-core';
+         FileUploadErrorEvent, FileUploadStatus, UploadService } from 'ng2-alfresco-core';
 import { Observable, Subscription } from 'rxjs/Rx';
+import { FileUploadingListComponent } from './file-uploading-list.component';
 
 @Component({
     selector: 'adf-file-uploading-dialog, file-uploading-dialog',
@@ -26,6 +27,9 @@ import { Observable, Subscription } from 'rxjs/Rx';
     styleUrls: ['./file-uploading-dialog.component.scss']
 })
 export class FileUploadingDialogComponent implements OnInit, OnDestroy {
+    @ViewChild(FileUploadingListComponent)
+    uploadList: FileUploadingListComponent;
+
     @Input()
     position: string = 'right';
 
@@ -34,6 +38,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     totalCompleted: number = 0;
     totalErrors: number = 0;
     isDialogMinimized: boolean = false;
+    isConfirmation: boolean = false;
 
     private listSubscription: Subscription;
     private counterSubscription: Subscription;
@@ -73,6 +78,38 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
             .fileUpload.subscribe(() => {
                 this.changeDetecor.detectChanges();
             });
+
+        this.uploadService.fileDeleted.subscribe((objId) => {
+            if (this.filesUploadingList) {
+                let file = this.filesUploadingList.find((item) => {
+                    return item.data.entry.id === objId;
+                });
+                if (file) {
+                    file.status = FileUploadStatus.Cancelled;
+                    this.changeDetecor.detectChanges();
+                }
+            }
+        });
+    }
+
+    /**
+     * Toggle confirmation message.
+     */
+    toggleConfirmation() {
+        this.isConfirmation = !this.isConfirmation;
+
+        if (this.isDialogMinimized) {
+            this.isDialogMinimized = false;
+        }
+    }
+
+    /**
+     * Cancel uploads and hide confiramtion
+     */
+    cancelAllUploads() {
+        this.toggleConfirmation();
+
+        this.uploadList.cancelAllFiles();
     }
 
     /**
@@ -87,6 +124,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
      * Dismiss dialog
      */
     close(): void {
+        this.isConfirmation = false;
         this.totalCompleted = 0;
         this.totalErrors = 0;
         this.filesUploadingList = [];

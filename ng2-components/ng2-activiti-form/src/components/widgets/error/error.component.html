@@ -3,4 +3,7 @@
         <div class="adf-error-text">{{error}}</div>
         <i class="material-icons adf-error-icon">warning</i>
     </div>
+    <div *ngIf="required" [@transitionMessages]="_subscriptAnimationState">
+            <div class="adf-error-text">{{required}}</div>
+    </div>
 </div>

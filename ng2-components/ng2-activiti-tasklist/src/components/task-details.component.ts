@@ -40,7 +40,7 @@ declare var require: any;
 @Component({
     selector: 'adf-task-details, activiti-task-details',
     templateUrl: './task-details.component.html',
-    styleUrls: ['./task-details.component.css'],
+    styleUrls: ['./task-details.component.scss'],
     providers: [
         CardViewUpdateService
     ]
@@ -288,7 +288,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
     onFormCompleted(form: FormModel): void {
         this.formCompleted.emit(form);
-        if (this.showNextTask) {
+        if (this.showNextTask && (this.taskDetails.processInstanceId || this.taskDetails.processDefinitionId)) {
             this.loadNextTask(this.taskDetails.processInstanceId, this.taskDetails.processDefinitionId);
         }
     }

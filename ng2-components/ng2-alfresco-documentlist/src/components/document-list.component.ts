@@ -17,7 +17,7 @@
 
 import {
     AfterContentInit, Component, ContentChild, ElementRef, EventEmitter, HostListener, Input, NgZone,
-    OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild
+    OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild, ViewEncapsulation
 } from '@angular/core';
 import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, Pagination, PersonEntry } from 'alfresco-js-api';
 import { AlfrescoApiService, DataColumnListComponent } from 'ng2-alfresco-core';
@@ -33,8 +33,9 @@ declare var require: any;
 
 @Component({
     selector: 'adf-document-list, alfresco-document-list',
-    styleUrls: ['./document-list.component.css'],
-    templateUrl: './document-list.component.html'
+    styleUrls: ['./document-list.component.scss'],
+    templateUrl: './document-list.component.html',
+    encapsulation: ViewEncapsulation.None
 })
 export class DocumentListComponent implements OnInit, OnChanges, AfterContentInit {
 
@@ -200,6 +201,10 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         }
     }
 
+    get hasCustomLayout(): boolean {
+        return this.columnList && this.columnList.columns && this.columnList.columns.length > 0;
+    }
+
     ngOnInit() {
         this.data = new ShareDataTableAdapter(this.documentListService, null, this.getDefaultSorting());
         this.data.thumbnails = this.thumbnails;
@@ -221,7 +226,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     ngAfterContentInit() {
         let schema: DataColumn[] = [];
 
-        if (this.columnList && this.columnList.columns && this.columnList.columns.length > 0) {
+        if (this.hasCustomLayout) {
             schema = this.columnList.columns.map(c => <DataColumn> c);
         }
 
@@ -238,20 +243,23 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['folderNode'] && changes['folderNode'].currentValue) {
+        if (changes.folderNode && changes.folderNode.currentValue) {
             this.loadFolder();
-        } else if (changes['currentFolderId'] && changes['currentFolderId'].currentValue) {
-            this.loadFolderByNodeId(changes['currentFolderId'].currentValue);
+        } else if (changes.currentFolderId && changes.currentFolderId.currentValue) {
+            if (!this.hasCustomLayout) {
+                this.setupDefaultColumns(changes.currentFolderId.currentValue);
+            }
+            this.loadFolderByNodeId(changes.currentFolderId.currentValue);
         } else if (this.data) {
-            if (changes['node'] && changes['node'].currentValue) {
-                this.data.loadPage(changes['node'].currentValue);
-            } else if (changes['rowFilter']) {
-                this.data.setFilter(changes['rowFilter'].currentValue);
+            if (changes.node && changes.node.currentValue) {
+                this.data.loadPage(changes.node.currentValue);
+            } else if (changes.rowFilter) {
+                this.data.setFilter(changes.rowFilter.currentValue);
                 if (this.currentFolderId) {
                     this.loadFolderNodesByFolderNodeId(this.currentFolderId, this.pageSize, this.skipCount);
                 }
-            } else if (changes['imageResolver']) {
-                this.data.setImageResolver(changes['imageResolver'].currentValue);
+            } else if (changes.imageResolver) {
+                this.data.setImageResolver(changes.imageResolver.currentValue);
             }
         }
     }
@@ -560,8 +568,10 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
      * Creates a set of predefined columns.
      */
     setupDefaultColumns(preset: string = 'default'): void {
-        const columns = this.getLayoutPreset(preset);
-        this.data.setColumns(columns);
+        if (this.data) {
+            const columns = this.getLayoutPreset(preset);
+            this.data.setColumns(columns);
+        }
     }
 
     onPreviewFile(node: MinimalNodeEntity) {
@@ -710,13 +720,21 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     canNavigateFolder(node: MinimalNodeEntity): boolean {
-        const restricted = ['-trashcan-', '-sharedlinks-', '-sites-', '-favorites-', '-recent-'];
-
-        if (restricted.indexOf(this.currentFolderId) > -1) {
+        if (this.isCustomSource(this.currentFolderId)) {
             return false;
         }
 
         if (node && node.entry && node.entry.isFolder) {
+            return true;
+        }
+
+        return false;
+    }
+
+    isCustomSource(folderId: string): boolean {
+        const sources = ['-trashcan-', '-sharedlinks-', '-sites-', '-favorites-', '-recent-'];
+
+        if (sources.indexOf(folderId) > -1) {
             return true;
         }
 

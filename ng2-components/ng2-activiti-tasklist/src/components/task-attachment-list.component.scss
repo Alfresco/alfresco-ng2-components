@@ -1,6 +1,5 @@
-adf-datatable  /deep/ .column-header {
+adf-datatable  /deep/ th span {
     color: #232323;
-    font-size: 15px;
 }
 
 adf-datatable  /deep/ .data-cell {
@@ -12,7 +11,7 @@ adf-datatable  /deep/ .data-cell {
     margin-right: calc((100% - 100px) / 2);
 }
 
-adf-empty-list-header /deep/ div {
+.adf-empty-list-header {
     height: 32px;
     opacity: 0.26;
     font-family: Muli, Helvetica, Arial, sans-serif;

@@ -161,7 +161,7 @@ describe('AlfrescoLogin', () => {
 
         it('should render the default copyright text', () => {
             expect(element.querySelector('[data-automation-id="login-copyright"]')).toBeDefined();
-            expect(element.querySelector('[data-automation-id="login-copyright"]').innerText).toEqual('© 2016 Alfresco Software, Inc. All Rights Reserved.');
+            expect(element.querySelector('[data-automation-id="login-copyright"]').innerText).toEqual('&#169; 2016 Alfresco Software, Inc. All Rights Reserved.');
         });
 
         it('should render the customised copyright text', () => {

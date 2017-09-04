@@ -115,6 +115,7 @@ export class DocumentActionsService {
                     if (target && typeof target.reload === 'function') {
                         target.reload();
                     }
+                    this.success.next(obj.entry.id);
                 });
                 return handlerObservable;
             } else {

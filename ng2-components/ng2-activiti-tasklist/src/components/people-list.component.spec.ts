@@ -16,9 +16,10 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
 import { DataRowActionEvent, DataRowEvent, DataTableModule, ObjectDataRow } from 'ng2-alfresco-datatable';
-import { Observable } from 'rxjs/Observable';
+import { AppConfigServiceMock } from '../assets/app-config.service.mock';
+import { TranslationMock } from '../assets/translation.service.mock';
 import { UserEventModel } from '../models/user-event.model';
 import { User } from '../models/user.model';
 import { PeopleListComponent } from './people-list.component';
@@ -47,14 +48,12 @@ describe('PeopleListComponent', () => {
             ],
             declarations: [
                 PeopleListComponent
+            ],
+            providers: [
+                { provide: AppConfigService, useClass: AppConfigServiceMock },
+                { provide: TranslationService, useClass: TranslationMock }
             ]
         }).compileComponents().then(() => {
-
-            let translateService = TestBed.get(AlfrescoTranslationService);
-            spyOn(translateService, 'addTranslationFolder').and.stub();
-            spyOn(translateService.translate, 'get').and.callFake((key) => {
-                return Observable.of(key);
-            });
 
             fixture = TestBed.createComponent(PeopleListComponent);
             peopleListComponent = fixture.componentInstance;

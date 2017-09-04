@@ -45,11 +45,7 @@ import { ThemePickerModule } from './components/theme-picker/theme-picker';
 import { MaterialModule } from './material.module';
 import { DebugAppConfigService } from './services/debug-app-config.service';
 
-import { FavoritesComponent } from './components/files/favorites.component';
-import { RecentComponent } from './components/files/recent.component';
-import { SharedLinksComponent } from './components/files/shared-links.component';
-import { SitesComponent } from './components/files/sites.component';
-import { TrashcanComponent } from './components/files/trashcan.component';
+import { CustomSourcesComponent } from './components/files/custom-sources.component';
 
 import {
     AboutComponent,
@@ -128,11 +124,7 @@ if (process.env.ENV === 'production') {
         SettingsComponent,
         FormDemoComponent,
         FormListDemoComponent,
-        TrashcanComponent,
-        SharedLinksComponent,
-        SitesComponent,
-        FavoritesComponent,
-        RecentComponent
+        CustomSourcesComponent
     ],
     providers: [
         { provide: AppConfigService, useClass: DebugAppConfigService },
