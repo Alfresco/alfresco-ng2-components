@@ -16,9 +16,9 @@
                    placeholder="{{field.placeholder}}">
         </md-input-container>
         <error-widget [error]="field.validationSummary"></error-widget>
-        <error-widget class="adf-dropdown-required-message" *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
+        <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
     </div>
-    <div class="adf-typeahead-autocomplete mat-elevation-z2" *ngIf="options.length > 0 && popupVisible">
+    <div class="adf-typeahead-autocomplete mat-elevation-z2" [hidden]="options.length <= 0 || !popupVisible">
         <md-option *ngFor="let item of options" (click)="onItemClick(item, $event)">
             <span>{{item.name}}</span>
         </md-option>

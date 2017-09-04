@@ -1,23 +1,26 @@
 <div class="adf-people-widget {{field.className}}"
      [class.is-dirty]="value"
-     [class.adf-invalid]="!field.isValid" [class.adf-readonly]="field.readOnly" id="people-widget-content" *ngIf="field.isVisible">
+     [class.adf-invalid]="!field.isValid"
+     [class.adf-readonly]="field.readOnly"
+     id="people-widget-content"
+     *ngIf="field.isVisible">
     <md-input-container>
         <label class="adf-label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
-        <input mdInput
+        <input #inputValue
+               mdInput
                class="adf-input"
                type="text"
                [id]="field.id"
                [(ngModel)]="value"
                (ngModelChange)="checkVisibility(field)"
                (keyup)="onKeyUp($event)"
-               (blur)="onBlur()"
                [disabled]="field.readOnly"
                placeholder="{{field.placeholder}}">
     </md-input-container>
     <error-widget [error]="field.validationSummary"></error-widget>
-    <error-widget class="adf-dropdown-required-message" *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
+    <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
 </div>
-<div class="adf-people-autocomplete mat-elevation-z2" *ngIf="popupVisible && users.length > 0">
+<div class="adf-people-autocomplete mat-elevation-z2" [hidden]="!popupVisible || users.length === 0">
     <md-option *ngFor="let user of users"
                [id]="field.id +'-'+user.id"
                (click)="onItemClick(user, $event)">
@@ -30,7 +33,7 @@
                     [src]="user.userImage"
                     (error)="onErrorImageLoad(user)"/>
             </div>
-            <span>{{getDisplayName(user)}}</span>
+            <span class="adf-people-label-name">{{getDisplayName(user)}}</span>
         </div>
     </md-option>
 </div>
