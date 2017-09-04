@@ -42,13 +42,13 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
     @Input()
     set enabled(enabled: boolean) {
         console.warn('Deprecated: enabled input property should not be used for UploadDragAreaComponent. Please use disabled instead.');
-        this.disable = !enabled;
+        this.disabled = !enabled;
     }
 
     /** @deprecated Deprecated in favor of disabled input property */
     get enabled(): boolean {
         console.warn('Deprecated: enabled input property should not be used for UploadDragAreaComponent. Please use disabled instead.');
-        return !this.disable;
+        return !this.disabled;
     }
 
     /** @deprecated Deprecated in 1.6.0, you can use UploadService events and NotificationService api instead. */
@@ -64,7 +64,7 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
     rootFolderId: string = '-root-';
 
     @Input()
-    disable: boolean = false;
+    disabled: boolean = false;
 
     @Input()
     versioning: boolean = false;
@@ -86,7 +86,7 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
      * @param {File[]} files - files dropped in the drag area.
      */
     onFilesDropped(files: File[]): void {
-        if (!this.disable && files.length) {
+        if (!this.disabled && files.length) {
             const fileModels = files.map(file => new FileModel(file, {
                 newVersion: this.versioning,
                 path: '/',
@@ -107,7 +107,7 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
      * @param item - FileEntity
      */
     onFilesEntityDropped(item: any): void {
-        if (!this.disable) {
+        if (!this.disabled) {
             item.file((file: File) => {
                 const fileModel = new FileModel(file, {
                     newVersion: this.versioning,
@@ -129,7 +129,7 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
      * @param folder - name of the dropped folder
      */
     onFolderEntityDropped(folder: any): void {
-        if (!this.disable && folder.isDirectory) {
+        if (!this.disabled && folder.isDirectory) {
             FileUtils.flattern(folder).then(entries => {
                 let files = entries.map(entry => {
                     return new FileModel(entry.file, {
@@ -176,7 +176,7 @@ export class UploadDragAreaComponent implements NodePermissionSubject {
 
     /** Returns true or false considering the component options and node permissions */
     isDroppable(): boolean {
-        return !this.disable;
+        return !this.disabled;
     }
 
     /**
