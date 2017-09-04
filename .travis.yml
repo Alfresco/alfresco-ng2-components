@@ -38,6 +38,30 @@ script:
        fi
       fi
 
+# jobs:
+#   include:
+#     - stage: Publish alpha to NPM
+#       before_install: skip
+#       install: skip
+#       script: skip
+#       deploy:
+#         provider: script
+#         script: (./scripts/update-version.sh -v $(./scripts/next_version.sh)-$(git rev-parse HEAD) -vj $(npm view alfresco-js-api@alpha version) -gnu) && (./scripts/npm-publish.sh -r $NPM_REGISTRY_ADDRESS -token $NPM_REGISTRY_TOKEN -t alpha --sleep 20 || exit 1;);
+#         on:
+#           branch: development
+#         skip_cleanup: true
+#     - stage: Publish beta to NPM
+#       before_install: skip
+#       install: skip
+#       script: skip
+#       deploy:
+#         provider: script
+#         script: (./scripts/update-version.sh -v $TRAVIS_TAG -gnu) && (./scripts/npm-publish.sh -r $NPM_REGISTRY_ADDRESS -token $NPM_REGISTRY_TOKEN -t beta --sleep 20 || exit 1;);
+#         on:
+#           tags: true
+#         skip_cleanup: true
+
+
 # Send coverage data to codecov
 after_success:
   bash <(curl -s https://codecov.io/bash) -X gcov
