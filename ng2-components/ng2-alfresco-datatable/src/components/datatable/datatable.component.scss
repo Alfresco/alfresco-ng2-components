@@ -43,6 +43,7 @@
 
         tbody {
             tr {
+                cursor: pointer;
                 position: relative;
                 height: $data-table-row-height;
                 @include material-animation-default(0.28s);
@@ -101,7 +102,6 @@
             box-sizing: border-box;
 
             @include no-select;
-            cursor: default;
         }
 
         th {
@@ -151,7 +151,6 @@
 
         .adf-data-table-cell {
             text-align: left;
-            cursor: default;
 
             &--text {
                 text-align: left;

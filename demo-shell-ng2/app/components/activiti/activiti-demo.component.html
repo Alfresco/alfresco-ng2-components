@@ -109,11 +109,12 @@
                 <div class="mdl-cell mdl-cell--2-col task-column  mdl-shadow--2dp">
                     <div class="list-buttons">
                         <button
+                            color="primary"
                             md-raised-button
                             data-automation-id="btn-start-process"
                             (click)="navigateStartProcess()">
                             <md-icon>add</md-icon>
-                            <span>START PROCESS</span>
+                            <span>{{'PS-TAB.START-PROCESS' | translate}}</span>
                         </button>
                     </div>
                     <adf-accordion>

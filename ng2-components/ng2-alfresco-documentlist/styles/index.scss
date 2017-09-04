@@ -1,9 +1,11 @@
 @import '../src/components/breadcrumb/breadcrumb.component';
 @import '../src/components/breadcrumb/dropdown-breadcrumb.component';
 @import '../src/components/content-node-selector/content-node-selector.component';
+@import '../src/components/document-list.component';
 
 @mixin alfresco-documentlist-theme($theme) {
     @include mat-breadcrumb-theme($theme);
     @include mat-breadcrumb-dropdown-theme($theme);
     @include mat-content-node-selector-theme($theme) ;
+    @include mat-document-list-theme($theme) ;
 }
