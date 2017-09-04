@@ -22,19 +22,19 @@ install:
               if %APPVEYOR_REPO_BRANCH EQU master
                 (cd scripts && sh npm-build-all.sh -t "ng2-activiti*"  || exit 1)
               else
-                (cd scripts && sh npm-build-all.sh -t "ng2-activiti*" -gitjsapi development|| exit 1)
+                (cd scripts && sh npm-build-all.sh -t "ng2-activiti*" -vjsapi alpha|| exit 1)
     )
   - if %COMPONENT_NAME% EQU ng2-components-alfresco (
               if %APPVEYOR_REPO_BRANCH EQU master
                 (cd scripts && sh npm-build-all.sh -t "ng2-alfresco*"  || exit 1)
               else
-                (cd scripts && sh npm-build-all.sh -t "ng2-alfresco*" -gitjsapi development|| exit 1)
+                (cd scripts && sh npm-build-all.sh -t "ng2-alfresco*" -vjsapi alpha|| exit 1)
     )
   - if %COMPONENT_NAME% EQU ng2-demo-shell (
               if %APPVEYOR_REPO_BRANCH EQU master
                 (cd scripts && sh start.sh -t -ss || exit 1)
               else
-                (cd scripts && sh start.sh -dev -t -ss -gitjsapi development|| exit 1)
+                (cd scripts && sh start.sh -dev -t -ss -vjsapi alpha || exit 1)
     )
 
 # Don't actually build.
