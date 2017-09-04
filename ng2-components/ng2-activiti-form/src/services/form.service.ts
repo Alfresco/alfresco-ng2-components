@@ -82,7 +82,7 @@ export class FormService {
 
     parseForm(json: any, data?: FormValues, readOnly: boolean = false): FormModel {
         if (json) {
-            let form = new FormModel(json, data, readOnly, this);
+            let form = new FormModel(json.formDefinition, data, readOnly, this);
             if (!json.fields) {
                 form.outcomes = [
                     new FormOutcomeModel(form, {

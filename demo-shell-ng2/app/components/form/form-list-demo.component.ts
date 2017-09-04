@@ -25,8 +25,8 @@ import { ActivitiForm } from 'ng2-activiti-form';
         <adf-form-list [forms]="formList" (row-dblclick)="onRowDblClick($event)">
         </adf-form-list>
         <div class="form-container" *ngIf="!isEmptyForm()">
-            <activiti-form [form]="form" [data]="restoredData">
-            </activiti-form>
+            <adf-form [form]="form" [data]="restoredData">
+            </adf-form>
         </div>
         <button md-button (click)="store()" color="primary">{{'FORM-LIST.STORE' | translate }}</button>
         <button md-button (click)="restore()" color="primary">{{'FORM-LIST.RESTORE' | translate }}</button>
