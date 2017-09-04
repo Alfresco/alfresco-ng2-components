@@ -23,7 +23,7 @@ import { NodePermissionDirective, NodePermissionSubject } from './node-permissio
     selector: 'adf-text-subject'
 })
 class TestComponent implements NodePermissionSubject {
-    disable: boolean = false;
+    disabled: boolean = false;
 }
 
 describe('NodePermissionDirective', () => {
