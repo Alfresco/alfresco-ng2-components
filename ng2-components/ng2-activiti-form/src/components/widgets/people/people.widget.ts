@@ -17,7 +17,8 @@
 
  /* tslint:disable:component-selector  */
 
-import { Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { FormService } from '../../../services/form.service';
 import { GroupUserModel } from '../core/group-user.model';
 import { GroupModel } from '../core/group.model';
@@ -30,7 +31,10 @@ import { baseHost , WidgetComponent } from './../widget.component';
     host: baseHost,
     encapsulation: ViewEncapsulation.None
 })
-export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
+export class PeopleWidgetComponent extends WidgetComponent implements OnInit, AfterViewInit {
+
+    @ViewChild('inputValue')
+    input: ElementRef;
 
     popupVisible: boolean = false;
     minTermLength: number = 1;
@@ -67,6 +71,13 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         }
     }
 
+    ngAfterViewInit() {
+        let onBlurInputEvent = Observable.fromEvent(this.input.nativeElement, 'blur');
+        onBlurInputEvent.debounceTime(200).subscribe((event) => {
+            this.flushValue();
+        });
+    }
+
     onKeyUp(event: KeyboardEvent) {
         if (this.value && this.value.length >= this.minTermLength) {
             this.formService.getWorkflowUsers(this.value, this.groupId)
@@ -77,12 +88,6 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         } else {
             this.popupVisible = false;
         }
-    }
-
-    onBlur() {
-        setTimeout(() => {
-            this.flushValue();
-        }, 200);
     }
 
     onErrorImageLoad(user) {
@@ -119,7 +124,6 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         return '';
     }
 
-    // TODO: still causes onBlur execution
     onItemClick(item: GroupUserModel, event: Event) {
         if (item) {
             this.field.value = item;

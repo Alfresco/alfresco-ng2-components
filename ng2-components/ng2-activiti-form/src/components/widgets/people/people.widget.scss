@@ -14,8 +14,8 @@
         width: 100%;
         overflow-y: auto;
         z-index: 5;
+        border-radius: 3%;
         color: #555;
-        margin: -15px 0 0 0;
         box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
         > md-option {
             list-style-type: none;
@@ -48,7 +48,7 @@
     }
 
     &-people-widget-row {
-        padding: 5px 5px;
+        padding-bottom: 10px;
     }
 
     &-people-widget-image {
@@ -62,5 +62,9 @@
 
     &-people-widget-image-row {
         display: inline-block;
+    }
+
+    &-people-label-name {
+        padding-left: 10px;
     }
 }
