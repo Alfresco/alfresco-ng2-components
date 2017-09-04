@@ -17,3 +17,7 @@
 .material-icons {
     cursor: pointer;
 }
+
+.mat-input-container {
+    width: 100%;
+}
