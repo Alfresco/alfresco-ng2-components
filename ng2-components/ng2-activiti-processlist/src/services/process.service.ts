@@ -113,7 +113,7 @@ export class ProcessService extends TaskListService {
      * @param appId
      * @returns {FilterProcessRepresentationModel[]}
      */
-    public createDefaultFilters(appId: string): Observable<FilterProcessRepresentationModel[]> {
+    public createDefaultFilters(appId: string): Observable<any[]> {
         let runnintFilter = this.getRunningFilterInstance(appId);
         let runnintObservable = this.addProcessFilter(runnintFilter);
 

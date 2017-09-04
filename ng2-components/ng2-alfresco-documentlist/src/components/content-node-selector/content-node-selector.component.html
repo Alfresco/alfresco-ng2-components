@@ -49,14 +49,13 @@
                     [node]="nodes"
                     [rowFilter]="rowFilter"
                     [imageResolver]="imageResolver"
-                    [permissionsStyle]="permissionsStyle"
                     [currentFolderId]="folderIdToShow"
-                    [selectionMode]="'single'"
+                    selectionMode="single"
                     [contextMenuActions]="false"
                     [contentActions]="false"
                     [allowDropFiles]="false"
                     [enablePagination]="!showingSearchResults"
-                    (folderChange)="onFolderChange($event)"
+                    (folderChange)="onFolderChange()"
                     (ready)="onFolderLoaded()"
                     data-automation-id="content-node-selector-document-list">
             <empty-folder-content>

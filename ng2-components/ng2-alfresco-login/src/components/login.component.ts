@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { FormSubmitEvent } from '../models/form-submit-event.model';
 
-declare let componentHandler: any;
 declare var require: any;
 
 enum LoginSteps {
@@ -59,7 +58,7 @@ export class LoginComponent implements OnInit {
     backgroundImageUrl: string = require('../assets/images/background.svg');
 
     @Input()
-    copyrightText: string = '© 2016 Alfresco Software, Inc. All Rights Reserved.';
+    copyrightText: string = '&#169; 2016 Alfresco Software, Inc. All Rights Reserved.';
 
     @Input()
     providers: string;
@@ -105,7 +104,8 @@ export class LoginComponent implements OnInit {
                 private authService: AlfrescoAuthenticationService,
                 private settingsService: AlfrescoSettingsService,
                 private translateService: AlfrescoTranslationService,
-                private logService: LogService) {
+                private logService: LogService,
+                private elementRef: ElementRef) {
         this.initFormError();
         this.initFormFieldsMessages();
     }
@@ -258,11 +258,7 @@ export class LoginComponent implements OnInit {
      */
     toggleShowPassword() {
         this.isPasswordShow = !this.isPasswordShow;
-        if (this.isPasswordShow) {
-            (<HTMLInputElement> document.getElementById('password')).type = 'text';
-        } else {
-            (<HTMLInputElement> document.getElementById('password')).type = 'password';
-        }
+        this.elementRef.nativeElement.querySelector('#password').type = this.isPasswordShow ? 'text' : 'password';
     }
 
     /**
@@ -270,10 +266,7 @@ export class LoginComponent implements OnInit {
      * @param field
      * @returns {boolean}
      */
-    isErrorStyle(field: FormGroup) {
-        if (typeof componentHandler !== 'undefined') {
-            componentHandler.upgradeAllRegistered();
-        }
+    isErrorStyle(field: AbstractControl) {
         return !field.valid && field.dirty && !field.pristine;
     }
 

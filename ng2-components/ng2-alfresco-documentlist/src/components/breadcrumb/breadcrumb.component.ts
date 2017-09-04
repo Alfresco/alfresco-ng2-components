@@ -41,6 +41,10 @@ export class BreadcrumbComponent implements OnChanges {
 
     route: PathElementEntity[] = [];
 
+    get hasRoot(): boolean {
+        return !!this.root;
+    }
+
     @Output()
     navigate: EventEmitter<PathElementEntity> = new EventEmitter<PathElementEntity>();
 

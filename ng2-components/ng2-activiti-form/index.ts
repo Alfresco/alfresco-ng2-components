@@ -26,6 +26,7 @@ import { MaterialModule } from './src/components/material.module';
 import { StartFormComponent } from './src/components/start-form.component';
 import { ContentWidgetComponent } from './src/components/widgets/content/content.widget';
 import { MASK_DIRECTIVE, WIDGET_DIRECTIVES } from './src/components/widgets/index';
+import { WidgetComponent } from './src/components/widgets/widget.component';
 import { ActivitiAlfrescoContentService } from './src/services/activiti-alfresco.service';
 import { ActivitiContentService } from './src/services/activiti-content-service';
 import { EcmModelService } from './src/services/ecm-model.service';
@@ -90,7 +91,8 @@ export const ACTIVITI_FORM_PROVIDERS: any[] = [
     declarations: [
         ...ACTIVITI_FORM_DIRECTIVES,
         ...DEPRECATED_FORM_DIRECTIVES,
-        ...MASK_DIRECTIVE
+        ...MASK_DIRECTIVE,
+        WidgetComponent
     ],
     entryComponents: [
         ...WIDGET_DIRECTIVES
