@@ -1,28 +1,29 @@
 @mixin mat-filters-process-theme($theme) {
     $primary: map-get($theme, primary);
 
-    .mdl-list__item {
-        cursor: pointer;
-    }
+    .adf {
 
-    .activiti-filters__entry {
-        cursor: pointer;
-    }
+        &-filters__entry {
+            cursor: pointer;
+            font-size: 14px!important;
+            font-weight: bold;
+            opacity: .54;
+            padding-left: 30px;
 
-    .activiti-filters__entry-icon {
-        margin-right: 12px !important;
-    }
+            .mat-list-item-content {
+                height: 34px;
+            }
+            &.active, &:hover {
+                color: mat-color($primary);
+                opacity: 1;
+            }
+        }
 
-    .activiti-filters__entry.active {
-        color: mat-color($primary);
-    }
+        &-filters__entry-icon {
+            padding-right: 12px !important;
+            padding-left: 0px !important;
+        }
 
-    .activiti-filters__entry:hover {
-        opacity: 0.8;
-    }
-
-    .activiti-filters__entry.active .activiti-filters__entry-icon {
-        color: mat-color($primary);
     }
 
 }
