@@ -9,6 +9,12 @@
         .mat-input-element {
             margin-left: 11px;
         }
+
+        .mat-input-prefix {
+            position: absolute;
+            margin-top: 42px;
+        }
+
     }
 
     &-amount-widget__container {
@@ -34,7 +40,3 @@
 
 }
 
-.mat-input-prefix {
-    position: absolute;
-    margin-top: 42px;
-}
