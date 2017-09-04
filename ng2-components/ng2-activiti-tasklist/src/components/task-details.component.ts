@@ -164,6 +164,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
         if (taskId && !taskId.currentValue) {
             this.reset();
         } else if (taskId && taskId.currentValue) {
+            this.taskFormName = null;
             this.loadDetails(taskId.currentValue);
         }
     }
@@ -197,7 +198,9 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     private updateTaskDetails(updateNotification: UpdateNotification) {
         this.activitiTaskList.updateTask(this.taskId, updateNotification.changed)
             .subscribe(
-                () => { this.loadDetails(this.taskId); }
+                () => {
+                    this.loadDetails(this.taskId);
+                }
             );
     }
 
@@ -214,7 +217,6 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
      */
     private loadDetails(taskId: string) {
         this.taskPeople = [];
-        this.taskFormName = null;
         this.readOnlyForm = false;
 
         if (taskId) {
@@ -242,7 +244,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     }
 
     isAssignedToMe(): boolean {
-        return this.taskDetails.assignee.email === this.authService.getBpmUsername() ? true : false;
+        return this.taskDetails.assignee.email === this.authService.getBpmUsername();
     }
 
     /**
@@ -294,10 +296,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     }
 
     onFormLoaded(form: FormModel): void {
-        this.taskFormName = null;
-        if (form && form.name) {
-            this.taskFormName = form.name;
-        }
+        this.taskFormName = (form && form.name ? form.name : null);
         this.formLoaded.emit(form);
     }
 
@@ -339,7 +338,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
             .subscribe((users) => {
                 users = users.filter((user) => user.id !== this.taskDetails.assignee.id);
                 this.peopleSearchObserver.next(users);
-            },         error => this.logService.error('Could not load users'));
+            }, error => this.logService.error('Could not load users'));
     }
 
     onCloseSearch() {
