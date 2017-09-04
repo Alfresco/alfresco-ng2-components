@@ -5,6 +5,7 @@
 @import '../src/components/view/card-view.component';
 @import '../src/components/toolbar/toolbar.component';
 @import '../src/components/pagination/pagination.component';
+@import '../src/components/info-drawer/info-drawer-layout.component';
 
 @mixin alfresco-core-theme($theme) {
     @include mat-accordion-theme($theme);
@@ -12,6 +13,7 @@
     @include mat-card-view-dateitem-theme($theme);
     @include mat-card-view-theme($theme);
     @include mat-adf-toolbar-theme($theme);
+    @include mat-info-drawer-theme($theme);
     @include mat-pagination-theme($theme);
     @include mat-colors-theme($theme);
 }
