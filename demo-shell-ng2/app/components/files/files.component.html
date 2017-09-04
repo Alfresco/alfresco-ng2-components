@@ -268,10 +268,10 @@
         </md-input-container>
     </section>
     <div *ngIf="!acceptedFilesTypeShow">
-        <adf-upload-button
+        <alfresco-upload-button
             #uploadButton
             tooltip="Custom tooltip"
-            [disable]="!enableUpload"
+            [disabled]="!enableUpload"
             data-automation-id="multiple-file-upload"
             [rootFolderId]="documentList.currentFolderId"
             [multipleFiles]="multipleFileUpload"
@@ -280,13 +280,13 @@
             [adf-node-permission]="'create'"
             [adf-nodes]="getCurrentDocumentListNode()"
             (permissionEvent)="handlePermissionError($event)">
-        </adf-upload-button>
+        </alfresco-upload-button>
     </div>
     <div *ngIf="acceptedFilesTypeShow">
         <alfresco-upload-button
             #uploadButton
             tooltip="Custom tooltip"
-            [disable]="!enableUpload"
+            [disabled]="!enableUpload"
             data-automation-id="multiple-file-upload"
             [rootFolderId]="documentList.currentFolderId"
             [acceptedFilesType]="acceptedFilesType"
@@ -299,7 +299,7 @@
         </alfresco-upload-button>
     </div>
     <section>
-        <md-checkbox [(ngModel)]="enableUpload">Enable upload (demoing enabled/disabled state)</md-checkbox>
+        <md-checkbox [(ngModel)]="enableUpload">Enable upload (demoing enabled/disabled state only if the permission are not checked dynamically)</md-checkbox>
     </section>
 </div>
 

@@ -58,7 +58,7 @@ Contains components for handling uploads to Content Services.
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| disable | boolean | false | Toggle component disabled state |
+| disabled | boolean | false | Toggle component disabled state if there is no node permission checking |
 | **(deprecated)** showNotificationBar | boolean | true | Hide/show notification bar. **Deprecated in 1.6.0: use UploadService events and NotificationService api instead.** |
 | uploadFolders | boolean | false | Allow/disallow upload folders (only for Chrome) |
 | multipleFiles | boolean | false | Allow/disallow multiple files |
