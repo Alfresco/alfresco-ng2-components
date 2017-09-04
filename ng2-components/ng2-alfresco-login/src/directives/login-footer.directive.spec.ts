@@ -15,29 +15,40 @@
  * limitations under the License.
  */
 
-import { Injector } from '@angular/core';
-import { getTestBed, TestBed } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
+import { MaterialModule } from '../material.module';
+
 import { LoginComponent } from '../components/login.component';
 import { LoginFooterDirective } from './login-footer.directive';
 
 describe('LoginFooterDirective', () => {
-    let injector: Injector;
-    let loginFooterDirective: LoginFooterDirective;
+    let component: LoginComponent;
+    let directive: LoginFooterDirective;
 
-    beforeEach(() => {
+    beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [CoreModule.forRoot()],
-            providers: [
+            imports: [
+                CoreModule,
+                MaterialModule
+            ],
+            declarations: [
                 LoginFooterDirective,
                 LoginComponent
             ]
-        });
-        injector = getTestBed();
-        loginFooterDirective = injector.get(LoginFooterDirective);
+        }).compileComponents();
+    }));
+
+    beforeEach(() => {
+        let fixture = TestBed.createComponent(LoginComponent);
+        component = fixture.componentInstance;
+        directive = new LoginFooterDirective(component);
     });
 
-    it('is defined', () => {
-        expect(loginFooterDirective).toBeDefined();
+    it('applies tempalate to Login component', () => {
+        const template = {};
+        directive.template = template;
+        directive.ngAfterContentInit();
+        expect(component.footerTemplate).toBe(template);
     });
 });
