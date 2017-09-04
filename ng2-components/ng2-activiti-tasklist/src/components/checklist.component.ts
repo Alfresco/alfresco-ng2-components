@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { Observable, Observer } from 'rxjs/Rx';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 
 declare let dialogPolyfill: any;
-let componentHandler: any;
 
 @Component({
     selector: 'adf-checklist, activiti-checklist',
@@ -29,7 +28,7 @@ let componentHandler: any;
     styleUrls: ['./checklist.component.css'],
     providers: [TaskListService]
 })
-export class ChecklistComponent implements OnInit, OnChanges, AfterViewInit {
+export class ChecklistComponent implements OnInit, OnChanges {
 
     @Input()
     taskId: string;
@@ -80,19 +79,6 @@ export class ChecklistComponent implements OnInit, OnChanges, AfterViewInit {
             this.getTaskChecklist(taskId.currentValue);
             return;
         }
-    }
-
-    ngAfterViewInit() {
-        this.setupMaterialComponents(componentHandler);
-    }
-
-    setupMaterialComponents(handler?: any): boolean {
-        // workaround for MDL issues with dynamic components
-        if (handler) {
-            handler.upgradeAllRegistered();
-            return true;
-        }
-        return false;
     }
 
     public getTaskChecklist(taskId: string) {
