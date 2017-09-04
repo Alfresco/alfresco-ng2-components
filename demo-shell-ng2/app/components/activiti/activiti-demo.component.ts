@@ -102,7 +102,7 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     taskSchemaColumns: any [] = [];
     taskPagination: Pagination = {
         skipCount: 0,
-        maxItems: 2,
+        maxItems: 10,
         totalItems: 0
     };
     taskPage: number = 0;
