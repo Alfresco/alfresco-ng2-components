@@ -10,7 +10,7 @@
         display: flex;
         border-top: $adf-pagination--border;
         height: $adf-pagination--height;
-        line-height: $adf-pagination--height;
+        line-height: 20px;
         color: mat-color($foreground, text);
 
         &__block {
