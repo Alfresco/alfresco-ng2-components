@@ -13,18 +13,15 @@
             .mat-list-item-content {
                 height: 34px;
             }
+            &.active, &:hover {
+                color: mat-color($primary);
+                opacity: 1;
+            }
         }
 
         &-filters__entry-icon {
             padding-right: 12px !important;
             padding-left: 0px !important;
-        }
-
-        &-filters__entry {
-            &.active, &:hover {
-                color: mat-color($primary);
-                opacity: 1;
-            }
         }
 
     }
