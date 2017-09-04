@@ -23,10 +23,9 @@
 <dialog class="mdl-dialog" id="checklist-dialog" #dialog>
     <h4 class="mdl-dialog__title" id="add-checklist-title">New Check</h4>
     <div class="mdl-dialog__content">
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input" type="text" [(ngModel)]="taskName" id="checklist-name"/>
-            <label class="mdl-textfield__label" for="checklist-name">Name</label>
-        </div>
+        <md-input-container>
+            <input mdInput placeholder="Name" [(ngModel)]="taskName" id="checklist-name"  data-automation-id="checklist-name">
+        </md-input-container>
     </div>
     <div class="mdl-dialog__actions">
         <button type="button" id="add-check" (click)="add()" class="mdl-button">Add Checklist</button>
