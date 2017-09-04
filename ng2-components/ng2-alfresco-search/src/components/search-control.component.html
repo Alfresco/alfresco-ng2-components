@@ -4,33 +4,37 @@
             <i mdl-upgrade class="material-icons">search</i>
         </label>
         <div [class]="getTextFieldHolderClassName()">
-            <input mdl
-                   class="mdl-textfield__input"
-                   [type]="inputType"
-                   [autocomplete]="getAutoComplete()"
-                   data-automation-id="search_input"
-                   #searchInput
-                   id="searchControl"
-                   [formControl]="searchControl"
-                   [(ngModel)]="searchTerm"
-                   (focus)="onFocus($event)"
-                   (blur)="onBlur($event)"
-                   (keyup.escape)="onEscape($event)"
-                   (keyup.arrowdown)="onArrowDown($event)"
-                   aria-labelledby="searchLabel">
+            <input
+                mdl
+                class="mdl-textfield__input"
+                [type]="inputType"
+                [autocomplete]="getAutoComplete()"
+                data-automation-id="search_input"
+                #searchInput
+                id="searchControl"
+                [formControl]="searchControl"
+                [(ngModel)]="searchTerm"
+                (focus)="onFocus($event)"
+                (blur)="onBlur($event)"
+                (keyup.escape)="onEscape()"
+                (keyup.arrowdown)="onArrowDown()"
+                aria-labelledby="searchLabel">
             <label id="searchLabel" class="mdl-textfield__label" for="searchControl">{{'SEARCH.CONTROL.LABEL' | translate}}</label>
         </div>
     </div>
 </form>
-<adf-search-autocomplete #autocomplete *ngIf="liveSearchEnabled"
-                              [searchTerm]="liveSearchTerm"
-                              [rootNodeId]="liveSearchRoot"
-                              [resultType]="liveSearchResultType"
-                              [resultSort]="liveSearchResultSort"
-                              [maxResults]="liveSearchMaxResults"
-                              [highlight]="highlight"
-                              [ngClass]="{active: searchActive, valid: searchValid}"
-                              (fileSelect)="onFileClicked($event)"
-                              (searchFocus)="onAutoCompleteFocus($event)"
-                              (scrollBack)="onAutoCompleteReturn($event)"
-                              (cancel)="onAutoCompleteCancel($event)"></adf-search-autocomplete>
+<adf-search-autocomplete
+    #autocomplete
+    *ngIf="liveSearchEnabled"
+    [searchTerm]="liveSearchTerm"
+    [rootNodeId]="liveSearchRoot"
+    [resultType]="liveSearchResultType"
+    [resultSort]="liveSearchResultSort"
+    [maxResults]="liveSearchMaxResults"
+    [highlight]="highlight"
+    [ngClass]="{active: searchActive, valid: searchValid}"
+    (fileSelect)="onFileClicked($event)"
+    (searchFocus)="onAutoCompleteFocus($event)"
+    (scrollBack)="onAutoCompleteReturn($event)"
+    (cancel)="onAutoCompleteCancel($event)">
+</adf-search-autocomplete>

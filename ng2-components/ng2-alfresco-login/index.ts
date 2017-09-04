@@ -16,12 +16,12 @@
  */
 
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { MdCheckboxModule, MdIconModule, MdInputModule, MdProgressSpinnerModule } from '@angular/material';
 import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 
 import { LoginComponent } from './src/components/login.component';
 import { LoginFooterDirective } from './src/directives/login-footer.directive';
 import { LoginHeaderDirective } from './src/directives/login-header.directive';
+import { MaterialModule } from './src/material.module';
 
 export { LoginHeaderDirective } from './src/directives/login-header.directive';
 export { LoginFooterDirective } from './src/directives/login-footer.directive';
@@ -43,10 +43,7 @@ export const ALFRESCO_LOGIN_DIRECTIVES: any[] = [
 @NgModule({
     imports: [
         CoreModule,
-        MdInputModule,
-        MdIconModule,
-        MdCheckboxModule,
-        MdProgressSpinnerModule
+        MaterialModule
     ],
     declarations: [
         ...ALFRESCO_LOGIN_DIRECTIVES
@@ -63,9 +60,7 @@ export const ALFRESCO_LOGIN_DIRECTIVES: any[] = [
     ],
     exports: [
         ...ALFRESCO_LOGIN_DIRECTIVES,
-        MdInputModule,
-        MdIconModule,
-        MdCheckboxModule
+        MaterialModule
     ]
 })
 export class LoginModule {
