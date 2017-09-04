@@ -6,7 +6,7 @@
     $dynamic-table-font-size: 14px !default;
     $dynamic-table-header-font-size: 12px !default;
     $dynamic-table-header-sort-icon-size: 16px !default;
-    $dynamic-table-header-color: mat-color($primary, default-contrast) !default;
+    $dynamic-table-header-color: mat-color($foreground, text) !default;
     $dynamic-table-header-sorted-color: mat-color($foreground, text) !default;
     $dynamic-table-header-sorted-icon-hover-color: mat-color($foreground, disabled-text) !default;
     $dynamic-table-divider-color: mat-color($foreground, text, .07) !default;
