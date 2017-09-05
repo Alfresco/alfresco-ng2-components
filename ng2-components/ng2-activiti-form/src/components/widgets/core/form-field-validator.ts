@@ -150,7 +150,7 @@ export class DateFieldValidator implements FormFieldValidator {
             if (DateFieldValidator.isValidDate(field.value, field.dateDisplayFormat)) {
                 return true;
             }
-            field.validationSummary = 'Invalid date format';
+            field.validationSummary = field.dateDisplayFormat;
             return false;
         }
         return true;
