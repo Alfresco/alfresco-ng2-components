@@ -1,121 +1,122 @@
-.document-list_empty_template {
-    text-align: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
+@mixin mat-document-list-theme($theme) {
+    $foreground: map-get($theme, foreground);
 
-.document-list__this-space-is-empty {
-    height: 32px;
-    opacity: 0.26;
-    font-family: Muli, Helvetica, Arial, sans-serif;
-    font-size: 24px;
-    line-height: 1.33;
-    letter-spacing: -1px;
-    color: #000000;
-}
-
-.document-list__drag-drop {
-    height: 56px;
-    opacity: 0.54;
-    font-family: Muli, Helvetica, Arial, sans-serif;
-    font-size: 56px;
-    line-height: 1;
-    letter-spacing: -2px;
-    color: #000000;
-    margin-top: 40px;
-}
-
-.document-list__any-files-here-to-add {
-    height: 24px;
-    opacity: 0.54;
-    font-family: Muli, Helvetica, Arial, sans-serif;
-    font-size: 16px;
-    line-height: 1.5;
-    letter-spacing: -0.4px;
-    color: #000000;
-    margin-top: 17px;
-}
-
-.document-list__empty_doc_lib {
-    width: 565px;
-    height: 161px;
-    object-fit: contain;
-    margin-top: 17px;
-}
-
-.adf-document-list-loading-margin {
-    margin: auto;
-}
-
-.adf-document-list-loading-container {
-    min-height: 300px;
-    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */
-    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */
-    display: -webkit-flex; /* NEW - Chrome */
-    display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
-    -webkit-box-flex-direction: row;
-    -moz-box-flex-direction: row;
-    -webkit-flex-direction: row;
-    flex-direction: row;
-    height: 100%;
-}
-
-.adf-empty-list-header {
-    height: 32px;
-    opacity: 0.26 !important;
-    font-family: Muli, Helvetica, Arial, sans-serif;
-    font-size: 24px;
-    line-height: 1.33;
-    letter-spacing: -1px;
-    color: #000000;
-}
-
-.adf-documentlist-pagination {
-    color: black;
-
-    .adf-pagination__block {
-        border-right: none;
+    .document-list_empty_template {
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
     }
-}
 
-.adf-empty-folder {
-
-    &-this-space-is-empty {
+    .document-list__this-space-is-empty {
         height: 32px;
         opacity: 0.26;
-        font-family: Muli, Helvetica, Arial, sans-serif;
         font-size: 24px;
         line-height: 1.33;
         letter-spacing: -1px;
-        color: #000000;
+        color: mat-color($foreground, text);
     }
 
-    &-drag-drop {
+    .document-list__drag-drop {
         height: 56px;
         opacity: 0.54;
-        font-family: Muli, Helvetica, Arial, sans-serif;
         font-size: 56px;
         line-height: 1;
         letter-spacing: -2px;
-        color: #000000;
+        color: mat-color($foreground, text);
         margin-top: 40px;
     }
 
-    &-any-files-here-to-add {
+    .document-list__any-files-here-to-add {
         height: 24px;
         opacity: 0.54;
-        font-family: Muli, Helvetica, Arial, sans-serif;
         font-size: 16px;
         line-height: 1.5;
         letter-spacing: -0.4px;
-        color: #000000;
+        color: mat-color($foreground, text)0;
         margin-top: 17px;
     }
 
-    &-image {
+    .document-list__empty_doc_lib {
         width: 565px;
         height: 161px;
         object-fit: contain;
         margin-top: 17px;
+    }
+
+    .adf-document-list-loading-margin {
+        margin: auto;
+    }
+
+    .adf-document-list-loading-container {
+        min-height: 300px;
+        display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */
+        display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */
+        display: -webkit-flex; /* NEW - Chrome */
+        display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+        -webkit-box-flex-direction: row;
+        -moz-box-flex-direction: row;
+        -webkit-flex-direction: row;
+        flex-direction: row;
+        height: 100%;
+    }
+
+    .adf-empty-list-header {
+        height: 32px;
+        opacity: 0.26 !important;
+        font-family: Muli, Helvetica, Arial, sans-serif;
+        font-size: 24px;
+        line-height: 1.33;
+        letter-spacing: -1px;
+        color: mat-color($foreground, text);
+    }
+
+    .adf-documentlist-pagination {
+        color: mat-color($foreground, text);
+
+        .adf-pagination__block {
+            border-right: none;
+        }
+    }
+
+    .adf-empty-folder {
+
+        &-this-space-is-empty {
+            height: 32px;
+            opacity: 0.26;
+            font-family: Muli, Helvetica, Arial, sans-serif;
+            font-size: 24px;
+            line-height: 1.33;
+            letter-spacing: -1px;
+            color: mat-color($foreground, text);
+        }
+
+        &-drag-drop {
+            height: 56px;
+            opacity: 0.54;
+            font-family: Muli, Helvetica, Arial, sans-serif;
+            font-size: 56px;
+            line-height: 1;
+            letter-spacing: -2px;
+            color: mat-color($foreground, text);
+            margin-top: 40px;
+        }
+
+        &-any-files-here-to-add {
+            height: 24px;
+            opacity: 0.54;
+            font-family: Muli, Helvetica, Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+            letter-spacing: -0.4px;
+            color: mat-color($foreground, text);
+            margin-top: 17px;
+        }
+
+        &-image {
+            width: 565px;
+            height: 161px;
+            object-fit: contain;
+            margin-top: 17px;
+        }
     }
 }
