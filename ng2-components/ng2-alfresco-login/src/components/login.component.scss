@@ -4,23 +4,6 @@
     $warn: map-get($theme, warn);
     $background: map-get($theme, background);
 
-    .show {
-        display: block !important;
-    }
-
-    .hide {
-        display: none !important;
-    }
-
-    .icon-inline {
-        position: absolute;
-        display: block;
-        top: 31%;
-        left: 82%;
-        width: 30px;
-        overflow: hidden;
-    }
-
     .adf-login-content {
         display: -webkit-flex;
         display: -ms-flexbox;
@@ -46,224 +29,229 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-    }
 
-    .adf-login-card-wide {
-        border-radius: 8px;
-        background-color: mat-color($background, dialog);
-        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12);
-        width: 450px;
-        min-width: 350px;
-        padding: 21px 64px 34px 64px;
-        box-sizing: border-box;
-    }
-
-    @media (max-width: 482px) {
-        .adf-login-card-wide {
-            width: calc(100% - 32px);
+        .show {
+            display: block !important;
         }
-    }
 
-    .error {
-        display: -webkit-box;
-        display: -moz-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
+        .hide {
+            display: none !important;
+        }
 
-        -webkit-box-orient: horizontal;
-        -moz-box-orient: horizontal;
-        box-orient: horizontal;
-        flex-direction: row;
+        .icon-inline {
+            position: absolute;
+            display: block;
+            top: 31%;
+            left: 82%;
+            width: 30px;
+            overflow: hidden;
+        }
 
-        -webkit-box-pack: flex-start;
-        -moz-box-pack: flex-start;
-        box-pack: flex-start;
-        justify-content: flex-start;
+        .adf-login-card-wide {
+            border-radius: 8px;
+            background-color: mat-color($background, dialog);
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12);
+            width: 450px;
+            min-width: 350px;
+            padding: 21px 64px 34px 64px;
+            box-sizing: border-box;
+        }
 
-        color: mat-color($warn);
-        padding: 0px;
-        margin-bottom: 4px;
-        font-size: 13px;
-    }
+        @media (max-width: 482px) {
+            .adf-login-card-wide {
+                width: calc(100% - 32px);
+            }
+        }
 
-    .error .error-icon {
-        margin-right: 10px;
-    }
+        .adf-error-message {
+            display: flex;
+            box-orient: horizontal;
+            flex-direction: row;
+            justify-content: flex-start;
 
-    .adf-img-logo {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-    }
+            color: mat-color($warn);
+            padding: 0px;
+            margin-bottom: 4px;
+            font-size: 13px;
+        }
 
-    .adf-alfresco-logo {
-        padding: 24px 16px 24px 16px;
-    }
+        .adf-error-message .error-icon {
+            margin-right: 10px;
+        }
 
-    .adf-alfresco-logo img {
-        max-height: 43px;
-    }
+        .adf-img-logo {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
-    .adf-login-button {
-        width: 100%;
-        height: 36px;
-        line-height: 38px;
-        box-shadow: none;
-    }
+        .adf-alfresco-logo {
+            padding: 24px 16px 24px 16px;
+        }
 
-    .adf-login-button-label {
-        color: rgb(255, 255, 255);
-    }
+        .adf-alfresco-logo img {
+            max-height: 43px;
+        }
 
-    .adf-login-button.isChecking {
-        background-color: #e0f7fa;
-    }
+        .adf-login-button {
+            width: 100%;
+            height: 36px;
+            line-height: 38px;
+            box-shadow: none;
+        }
 
-    .adf-login-button.isChecking .adf-login-button-label {
-        color: #00bcd4;
-    }
+        .adf-login-button-label {
+            color: rgb(255, 255, 255);
+        }
 
-    .adf-login-button.isWelcome {
-        background-color: #00bcd4;
-        color: #ffffff;
-    }
+        .adf-login-button.isChecking {
+            background-color: #e0f7fa;
+        }
 
-    .adf-login-button.isWelcome .welcome-icon {
-        margin: 5px 0 0 10px;
-    }
+        .adf-login-button.isChecking .adf-login-button-label {
+            color: #00bcd4;
+        }
 
-    .adf-interactive-login-label {
-        display: -webkit-box;
-        display: -moz-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
+        .adf-login-button.isWelcome {
+            background-color: #00bcd4;
+            color: #ffffff;
+        }
 
-        -webkit-box-orient: horizontal;
-        -moz-box-orient: horizontal;
-        box-orient: horizontal;
-        flex-direction: row;
+        .adf-login-button.isWelcome .welcome-icon {
+            margin: 5px 0 0 10px;
+        }
 
-        -webkit-box-pack: center;
-        -moz-box-pack: center;
-        box-pack: center;
-        justify-content: center;
-    }
+        .adf-interactive-login-label {
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
 
-    .adf-login-checking-spinner {
-        height: 30px !important;
-        width: 20px !important;
-        margin-left: 10px;
-    }
+            -webkit-box-orient: horizontal;
+            -moz-box-orient: horizontal;
+            box-orient: horizontal;
+            flex-direction: row;
 
-    .adf-login-controls {
-        padding: 0 0 26px 0;
-        overflow: visible;
-        width: 100%;
-    }
+            -webkit-box-pack: center;
+            -moz-box-pack: center;
+            box-pack: center;
+            justify-content: center;
+        }
 
-    .adf-login-action {
-        margin-top: 20px;
-        display: -webkit-box;
-        display: -moz-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
+        .adf-login-checking-spinner {
+            height: 30px !important;
+            width: 20px !important;
+            margin-left: 10px;
+        }
 
-        -webkit-box-orient: horizontal;
-        -moz-box-orient: horizontal;
-        box-orient: horizontal;
-        flex-direction: row;
+        .adf-login-controls {
+            padding: 0 0 26px 0;
+            overflow: visible;
+            width: 100%;
+        }
 
-        -webkit-box-pack: space-between;
-        -moz-box-pack: space-between;
-        box-pack: space-between;
-        justify-content: space-between;
-    }
+        .adf-login-action {
+            margin-top: 20px;
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
 
-    .adf-login-action-left a, .adf-login-action-right a {
-        text-decoration: none;
-    }
+            -webkit-box-orient: horizontal;
+            -moz-box-orient: horizontal;
+            box-orient: horizontal;
+            flex-direction: row;
 
-    /* Known issue in angular material design module in betas */
-    > > > .rememberme-cb label > div {
-        margin-right: 8px;
-    }
+            -webkit-box-pack: space-between;
+            -moz-box-pack: space-between;
+            box-pack: space-between;
+            justify-content: space-between;
+        }
 
-    .is-active {
-        background-color: transparent;
-        font-size: 12px;
-        font-weight: normal;
-        line-height: 1.33;
-        color: mat-color($warn);
-    }
+        .adf-login-action-left a, .adf-login-action-right a {
+            text-decoration: none;
+        }
 
-    .copyright {
-        width: 450px;
-        text-align: center;
-        padding-top: 16px;
-        font-size: 12px;
-        opacity: 0.54;
-    }
+        .is-active {
+            background-color: transparent;
+            font-size: 12px;
+            font-weight: normal;
+            line-height: 1.33;
+            color: mat-color($warn);
+        }
 
-    .mat-input-container .adf-login-password-icon.mat-icon {
-        font-size: 24px;
-        cursor: pointer;
-        user-select: none;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        -ms-user-select: none;
-        position: relative;
-        top: -6px;
-        height: 20px;
-        opacity: 0.54;
-    }
+        .copyright {
+            width: 450px;
+            text-align: center;
+            padding-top: 16px;
+            font-size: 12px;
+            opacity: 0.54;
+        }
 
-    .adf-login__field > > > .mat-input-wrapper {
-        margin: 1em 0 0 0;
-        font-size: 16px;
-    }
+        .mat-input-container .adf-login-password-icon.mat-icon {
+            font-size: 24px;
+            cursor: pointer;
+            user-select: none;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            position: relative;
+            top: -6px;
+            height: 20px;
+            opacity: 0.54;
+        }
 
-    .adf-login-validation {
-        background-color: transparent;
-        color: mat-color($warn);
-        font-size: 12px;
-    }
+        .adf-login__field .mat-input-wrapper {
+            margin: 1em 0 0 0;
+            font-size: 16px;
+        }
 
-    .adf-login-error {
-        color: mat-color($warn);
-        position: absolute;
-        font-size: 12px;
-        margin-top: 5px;
-        display: block;
-    }
+        .adf-login__field input:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0px 1000px white inset;
+        }
 
-    .adf-login-message {
-        color: blue;
-    }
+        .adf-login-validation {
+            background-color: transparent;
+            color: mat-color($warn);
+            font-size: 12px;
+        }
 
-    .adf-full-width {
-        width: 100%;
-    }
+        .adf-login-error {
+            color: mat-color($warn);
+            position: absolute;
+            font-size: 12px;
+            margin-top: -12px;
+            display: block;
+        }
 
-    .adf-login__remember-me {
-        padding-top: 22px;
-    }
+        .adf-login-message {
+            color: blue;
+        }
 
-    .adf-login__remember-me > > > .mat-checkbox-label {
-        opacity: 0.87;
-    }
+        .adf-full-width {
+            width: 100%;
+        }
 
-    .adf-login__field {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        padding-bottom: 18px;
-    }
+        .adf-login__remember-me {
+            padding-top: 22px;
+        }
 
-    .adf-login-action-container {
-        border-top: 1px solid rgba(0, 0, 0, .1);
-        margin-top: 23px;
+        .adf-login__remember-me .mat-checkbox-label {
+            opacity: 0.87;
+        }
+
+        .adf-login__field {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            padding-bottom: 18px;
+        }
+
+        .adf-login-action-container {
+            border-top: 1px solid rgba(0, 0, 0, .1);
+            margin-top: 23px;
+        }
     }
 }
