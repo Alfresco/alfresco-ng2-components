@@ -324,16 +324,12 @@ export class FormFieldModel extends FormWidgetModel {
                 }
                 break;
             case FormFieldTypes.DATE:
-                let dateValue;
-                if (NumberFieldValidator.isNumber(this.value)) {
-                    dateValue = moment(this.value);
-                } else {
-                    dateValue = moment(this.value, this.dateDisplayFormat);
-                }
+                let dateValue = moment(this.value, this.dateDisplayFormat, true);
                 if (dateValue && dateValue.isValid()) {
                     this.form.values[this.id] = `${dateValue.format('YYYY-MM-DD')}T00:00:00.000Z`;
                 } else {
                     this.form.values[this.id] = null;
+                    this._value = this.value;
                 }
                 break;
             case FormFieldTypes.NUMBER:
