@@ -1,7 +1,7 @@
 {
   "name": "ng2-activiti-diagrams",
   "description": "Activiti Angular2 Diagrams Component",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "clean": "rimraf dist node_modules typings bundles coverage .npmrc",
@@ -43,7 +43,7 @@
     "alfresco-js-api": "^1.8.0-beta1",
     "core-js": "2.4.1",
     "hammerjs": "2.0.8",
-    "ng2-alfresco-core": "1.7.0",
+    "ng2-alfresco-core": "1.8.0",
     "raphael": "2.2.6",
     "reflect-metadata": "0.1.10",
     "rxjs": "5.1.0",
