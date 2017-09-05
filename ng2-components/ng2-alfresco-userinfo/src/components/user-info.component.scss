@@ -23,12 +23,12 @@
             height: 40px;
         }
 
-        &-userinfo-tab /deep/ .mat-tab-header {
+        &-userinfo-tab .mat-tab-header {
             align-self: center;
             width: 100%;
         }
 
-        &-userinfo-tab /deep/ .mat-tab-label {
+        &-userinfo-tab .mat-tab-label {
             flex: auto;
             font-weight: 500;
             font-size: 14px;
@@ -131,7 +131,7 @@
             text-align: left
         }
 
-        &-hide-tab /deep/ .mat-tab-label-active {
+        &-hide-tab .mat-tab-label-active {
             display: none !important;
         }
 
@@ -146,8 +146,8 @@
         }
     }
 
-    .mat-menu-panel.adf-userinfo-menu /deep/ .mat-menu-content{
+    .mat-menu-panel.adf-userinfo-menu .mat-menu-content{
         padding: 0px;
     }
-
 }
+
