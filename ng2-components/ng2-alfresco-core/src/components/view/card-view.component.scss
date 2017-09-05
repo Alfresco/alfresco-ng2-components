@@ -13,7 +13,7 @@
             display: table-row;
         }
 
-        &-property /deep/ &-property-label {
+        &-property &-property-label {
             display: table-cell;
             min-width: 100px;
             padding-right: 30px;
@@ -23,7 +23,7 @@
             padding-bottom: 20px;
         }
 
-        &-property /deep/ &-property-value {
+        &-property &-property-value {
             width: 100%;
             display: table-cell;
             color: rgb(101, 101, 101);

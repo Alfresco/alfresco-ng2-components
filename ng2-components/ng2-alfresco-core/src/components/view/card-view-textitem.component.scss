@@ -46,46 +46,46 @@
             }
         }
 
-        &-textitem-editable /deep/ .mat-input-wrapper {
+        &-textitem-editable .mat-input-wrapper {
             margin: 0;
             padding-bottom: 0;
         }
 
-        &-textitem-editable /deep/ .mat-input-underline {
+        &-textitem-editable .mat-input-underline {
             display: none;
         }
 
-        &-textitem-editable /deep/ .mat-input-infix {
+        &-textitem-editable .mat-input-infix {
             padding: 0;
             border-top: none;
         }
 
-        &-textitem-editable /deep/ .mat-input-placeholder-wrapper {
+        &-textitem-editable .mat-input-placeholder-wrapper {
             padding-top: 2em;
             position: static;
         }
 
-        &-textitem-editable /deep/ .mat-input-placeholder {
+        &-textitem-editable .mat-input-placeholder {
             top: 0;
         }
 
-        &-textitem-editable /deep/ .mat-input-element {
+        &-textitem-editable .mat-input-element {
             font-family: inherit;
             position: relative;
             padding-top: 3px;
         }
 
-        &-textitem-editable /deep/ .mat-input-element:focus {
+        &-textitem-editable .mat-input-element:focus {
             padding: 5px;
             left: -6px;
             top: -6px;
         }
 
-        &-textitem-editable /deep/ input.mat-input-element {
+        &-textitem-editable input.mat-input-element {
             margin-bottom: 2px;
         }
 
-        &-textitem-editable /deep/ input.mat-input-element:focus {
+        &-textitem-editable input.mat-input-element:focus {
             margin-bottom: -8px;
         }
     }
