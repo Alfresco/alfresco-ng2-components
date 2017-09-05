@@ -150,7 +150,7 @@ export class DateFieldValidator implements FormFieldValidator {
             if (DateFieldValidator.isValidDate(field.value, field.dateDisplayFormat)) {
                 return true;
             }
-            field.validationSummary = 'Invalid date format';
+            field.validationSummary = field.dateDisplayFormat;
             return false;
         }
         return true;
@@ -178,7 +178,12 @@ export class MinDateFieldValidator implements FormFieldValidator {
             }
 
             // remove time and timezone info
-            let d = moment(field.value.split('T')[0], dateFormat);
+            let d;
+            if (typeof field.value === 'string') {
+                d = moment(field.value.split('T')[0], dateFormat);
+            } else {
+                d = field.value;
+            }
             let min = moment(field.minValue, dateFormat);
 
             if (d.isBefore(min)) {
@@ -211,7 +216,12 @@ export class MaxDateFieldValidator implements FormFieldValidator {
             }
 
             // remove time and timezone info
-            let d = moment(field.value.split('T')[0], dateFormat);
+            let d;
+            if (typeof field.value === 'string') {
+                d = moment(field.value.split('T')[0], dateFormat);
+            } else {
+                d = field.value;
+            }
             let max = moment(field.maxValue, dateFormat);
 
             if (d.isAfter(max)) {
