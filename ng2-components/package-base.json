@@ -1,7 +1,7 @@
 {
     "name": "ng2-alfresco-components",
     "description": "Alfresco ng2 components",
-    "version": "1.7.0",
+    "version": "1.8.0",
     "author": "Alfresco Software, Ltd.",
     "scripts": {
         "clean": "rimraf node_modules",
