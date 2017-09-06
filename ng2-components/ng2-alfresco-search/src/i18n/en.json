@@ -4,9 +4,9 @@
             "LABEL": "Search content"
         },
         "RESULTS": {
-            "SUMMARY": "Found {{numResults}} results for {{searchTerm}}",
-            "NONE": "No results found searching for {{searchTerm}}",
-            "ERROR": "An error occurred while running the search",
+            "SUMMARY": "{{numResults}} result found for {{searchTerm}}",
+            "NONE": "No results found for {{searchTerm}}",
+            "ERROR": "We hit a problem during the search - try again.",
             "COLUMNS": {
                 "NAME": "Display name",
                 "MODIFIED_BY": "Modified by",
@@ -22,7 +22,7 @@
             "ft_ic_video": "Video file",
             "ft_ic_document": "Document file",
             "ft_ic_website": "Web resource",
-            "ft_ic_archive": "Acrchive file",
+            "ft_ic_archive": "Archive file",
             "ft_ic_presentation": "Presentation file",
             "ft_ic_spreadsheet": "Spreadsheet file"
         },
@@ -30,7 +30,7 @@
             "COLUMNS": {
                 "DISPLAY_NAME": "Display name",
                 "CREATED_BY": "Created by",
-                "CREATED_ON": "Created on"
+                "CREATED_ON": "Created"
             },
             "ACTIONS": {
                 "FOLDER": {
