@@ -10,13 +10,13 @@
             [attr.data-automation-id]="'datepicker-label-toggle-' + property.key"
             (click)="showDatePicker($event)">{{ property.displayValue }}
         </span>
-        <button
+        <md-datepicker-toggle
             [attr.data-automation-id]="'datepickertoggle-' + property.key"
-            [mdDatepickerToggle]="picker">
-        </button>
+            [for]="picker">
+        </md-datepicker-toggle>
         <md-datepicker #picker
             [attr.data-automation-id]="'datepicker-' + property.key"
-            (selectedChanged)="dateChanged($event)"
+            (onDateChanged)="dateChanged($event)"
             [startAt]="property.value"
             [touchUi]="true">
         </md-datepicker>

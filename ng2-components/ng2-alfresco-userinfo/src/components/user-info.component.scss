@@ -10,15 +10,15 @@
             border-radius: 90%;
             width: 40px;
             height: 40px;
-            margin-right: 0%;
+            margin-right: 0;
             cursor: pointer;
             vertical-align: middle;
         }
 
         &-userinfo-menu_button.mat-button {
-            margin-right: 0%;
+            margin-right: 0;
             border-radius: 90%;
-            padding: 0px;
+            padding: 0;
             min-width: 40px;
             height: 40px;
         }
@@ -47,7 +47,7 @@
         }
 
         &-userinfo-card.mat-card {
-            padding: 0px;
+            padding: 0;
         }
 
         &-userinfo-supporting-text {
@@ -55,7 +55,6 @@
             font-weight: 400;
             letter-spacing: 0;
             line-height: 18px;
-            display: block;
             overflow: hidden;
             padding: 32px;
             -webkit-column-count: 2;
@@ -66,7 +65,7 @@
         }
 
         &-userinfo-title {
-            font: 500 20px/32px Roboto,"Helvetica Neue",sans-serif;
+            font: 500 20px/32px Roboto, "Helvetica Neue", sans-serif;
             margin: 0;
             align-self: flex-end;
             display: flex;
@@ -76,21 +75,19 @@
             padding: 0;
             -webkit-margin-before: 0.83em;
             -webkit-margin-after: 0.83em;
-            -webkit-margin-start: 0px;
-            -webkit-margin-end: 0px;
+            -webkit-margin-start: 0;
+            -webkit-margin-end: 0;
         }
 
         &-userinfo__detail-profile {
             align-items: flex-start;
-            font-size: 14px;
             font-size: 14px;
             font-weight: 400;
             letter-spacing: 0;
             line-height: 18px;
             display: block;
             padding: 0;
-            align-items: flex-start;
-            margin: 0px;
+            margin: 0;
             color: mat-color($primary, A100);
         }
 
@@ -117,13 +114,13 @@
             height: 80px;
             width: 80px;
             z-index: 3;
-            margin-left: 0px;
+            margin-left: 0;
             margin-right: 8px;
         }
 
         &-userinfo-button-profile {
             display: inline-block;
-            border: 0px;
+            border: 0;
             vertical-align: middle;
         }
 
@@ -139,15 +136,15 @@
 
     @media only screen and (min-device-width: 480px) {
         .mat-menu-panel.adf-userinfo-menu {
-        max-height: 450px;
-        min-width: 450px;
-        overflow: auto;
-        padding: 0px;
+            max-height: 450px;
+            min-width: 450px;
+            overflow: auto;
+            padding: 0;
         }
     }
 
-    .mat-menu-panel.adf-userinfo-menu .mat-menu-content{
-        padding: 0px;
+    .mat-menu-panel.adf-userinfo-menu .mat-menu-content {
+        padding: 0;
     }
 }
 

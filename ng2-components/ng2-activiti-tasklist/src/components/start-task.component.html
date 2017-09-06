@@ -30,10 +30,10 @@
                            (focusout)="onDateChanged($event.srcElement.value)"
                            placeholder="{{'START_TASK.FORM.LABEL.DATE'|translate}}"
                            [(ngModel)]="startTaskmodel.dueDate" id="date_id">
-                    <button mdSuffix [mdDatepickerToggle]="taskDatePicker"></button>
+                    <md-datepicker-toggle mdSuffix [for]="taskDatePicker"></md-datepicker-toggle>
                 </md-input-container>
                 <md-datepicker #taskDatePicker [touchUi]="true"
-                               (selectedChanged)="onDateChanged($event)"></md-datepicker>
+                               (onDateChanged)="onDateChanged($event)"></md-datepicker>
                 <div class="adf-error-text-container">
                     <div *ngIf="dateError">
                         <div class="adf-error-text">{{'START_TASK.FORM.DATE.ERROR'|translate}}</div>

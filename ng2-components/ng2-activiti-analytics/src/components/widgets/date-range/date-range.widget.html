@@ -21,12 +21,12 @@
                             placeholder="{{'DATE-WIDGET.START-DATE' | translate}}"
                             id="startDate_id"
                             required>
-                        <button mdSuffix [mdDatepickerToggle]="startDatePicker"></button>
+                        <md-datepicker-toggle mdSuffix [for]="startDatePicker" ></md-datepicker-toggle>
                     </md-input-container>
                     <md-datepicker
                         #startDatePicker
                         [touchUi]="true"
-                        (selectedChanged)="onGroupValueChanged()">
+                        (onDateChanged)="onGroupValueChanged()">
                     </md-datepicker>
                 </md-grid-tile>
                 <md-grid-tile>
@@ -42,12 +42,12 @@
                             placeholder="{{'DATE-WIDGET.END-DATE' | translate}}"
                             id="endDate_id"
                             required>
-                        <button mdSuffix [mdDatepickerToggle]="endDatePicker"></button>
+                        <md-datepicker-toggle mdSuffix [for]="endDatePicker" ></md-datepicker-toggle>
                     </md-input-container>
                     <md-datepicker
                         #endDatePicker
                         [touchUi]="true"
-                        (selectedChanged)="onGroupValueChanged()">
+                        (onDateChanged)="onGroupValueChanged()">
                     </md-datepicker>
                 </md-grid-tile>
             </md-grid-list>

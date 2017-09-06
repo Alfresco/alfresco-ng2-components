@@ -11,10 +11,10 @@
                [max]="maxDate"
                (focusout)="onDateChanged($event.srcElement.value)"
                placeholder="{{field.placeholder}}">
-        <button class="adf-date-widget-button" mdSuffix [mdDatepickerToggle]="datePicker"  [disabled]="field.readOnly"></button>
+        <md-datepicker-toggle class="adf-date-widget-button"  mdSuffix [for]="datePicker" [disabled]="field.readOnly" ></md-datepicker-toggle>
     </md-input-container>
     <error-widget [error]="field.validationSummary" ></error-widget>
     <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
-    <md-datepicker #datePicker [touchUi]="true" [startAt]="startAt" (selectedChanged)="onDateChanged($event)"></md-datepicker>
+    <md-datepicker #datePicker [touchUi]="true" [startAt]="startAt" (onDateChanged)="onDateChanged($event)"></md-datepicker>
 </div>
 
