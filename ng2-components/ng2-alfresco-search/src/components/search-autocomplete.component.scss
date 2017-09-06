@@ -12,10 +12,10 @@
 :host table {
     width: 300px;
 }
-:host .mdl-data-table tbody tr {
+:host .adf-data-table tbody tr {
     height: 32px;
 }
-:host .mdl-data-table td {
+:host .adf-data-table td {
     height: 32px;
     padding: 8px;
     text-align: left;
@@ -48,4 +48,8 @@
     .truncate{
         width: 200px;
     }
+}
+
+.adf-data-table {
+    background-color: white;
 }

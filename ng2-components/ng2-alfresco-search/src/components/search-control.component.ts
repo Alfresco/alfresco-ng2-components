@@ -15,16 +15,29 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Observable, Subject } from 'rxjs/Rx';
 import { SearchTermValidator } from './../forms/search-term-validator';
 import { SearchAutocompleteComponent } from './search-autocomplete.component';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
     selector: 'adf-search-control, alfresco-search-control',
     templateUrl: './search-control.component.html',
-    styleUrls: ['./search-control.component.scss']
+    styleUrls: ['./search-control.component.scss'],
+    animations: [
+        trigger('transitionMessages', [
+            state('active', style({ transform: 'translateX(0%)'})),
+            state('inactive', style({ transform: 'translateX(89%)'})),
+            transition('void => active, inactive => active',
+                animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)')),
+            transition('active => inactive, void => inactive',
+                animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)'))
+        ])
+    ],
+    encapsulation: ViewEncapsulation.None
+
 })
 export class SearchControlComponent implements OnInit, OnDestroy {
 
@@ -33,6 +46,8 @@ export class SearchControlComponent implements OnInit, OnDestroy {
 
     @Input()
     inputType = 'text';
+
+// style({ transform: 'translateX(0%)'}) style({ transform: 'translateX(89%)'}),
 
     @Input()
     autocomplete: boolean = false;
@@ -87,6 +102,8 @@ export class SearchControlComponent implements OnInit, OnDestroy {
 
     private focusSubject = new Subject<FocusEvent>();
 
+    _subscriptAnimationState: string = 'inactive';
+
     constructor() {
         this.searchControl = new FormControl(
             this.searchTerm,
@@ -130,14 +147,6 @@ export class SearchControlComponent implements OnInit, OnDestroy {
         }).subscribe(($event) => {
             this.onSearchBlur($event);
         });
-    }
-
-    getTextFieldClassName(): string {
-        return 'mdl-textfield mdl-js-textfield' + (this.expandable ? ' mdl-textfield--expandable' : '');
-    }
-
-    getTextFieldHolderClassName(): string {
-        return this.expandable ? 'search-field mdl-textfield__expandable-holder' : 'search-field';
     }
 
     getAutoComplete(): string {
@@ -225,6 +234,11 @@ export class SearchControlComponent implements OnInit, OnDestroy {
             (<any> this.searchInput.nativeElement).focus();
         }
         this.setAutoCompleteDisplayed(false);
+    }
+
+    onClickSearch(){
+        this.searchActive = !this.searchActive;
+        this._subscriptAnimationState = this.searchActive ? 'active' : 'inactive';
     }
 
 }
