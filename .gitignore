@@ -17,3 +17,4 @@ src/environments/
 .happypack/
 .happypack/
 .history
+package-lock.*
