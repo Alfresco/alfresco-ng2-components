@@ -1,0 +1,74 @@
+
+.adf-no-form-container {
+    text-align: center;
+    font-weight: 600;
+    font-size: 18px;
+    font-family: Muli;
+    padding: 16px;
+}
+
+.activiti-demo-grid {
+    display: flex;
+    align-items: stretch;
+
+    .activiti-demo-grid-item {
+        margin: 4px;
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+        padding: 10px 10px 10px 10px;
+    }
+
+    .activiti-demo-list-buttons {
+        margin-bottom: 24px;
+    }
+
+    .activiti-demo-list-buttons-start {
+        width: 100%;
+    }
+
+    .activiti-demo-tasks-menu,
+    .activiti-demo-processes-menu,
+    .activiti-demo-reports-menu {
+        min-width: 170px;
+    }
+
+    .activiti-demo-tasks-list,
+    .activiti-demo-processes-list {
+        min-width: 510px;
+        padding: 0;
+    }
+
+    .activiti-demo-tasks-details,
+    .activiti-demo-tasks-start,
+    .activiti-demo-processes-details,
+    .activiti-demo-processes-start,
+    .activiti-demo-reports-details {
+        flex-grow: 1;
+        min-width: 680px;
+    }
+
+    .activiti-demo-list {
+        .adf-data-table {
+            border: none;
+        }
+
+        .adf-data-table tr,
+        .adf-data-table td {
+            height: 36px;
+            font-size: 14px;
+        }
+
+        .adf-data-table td {
+            padding-top: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .adf-data-table th {
+            padding-top: 0;
+            padding-bottom: 0;
+            height: 40px;
+            vertical-align: middle;
+            font-size: 14px;
+        }
+    }
+}
