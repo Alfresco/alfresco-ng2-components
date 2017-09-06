@@ -16,7 +16,7 @@
  */
 
 // tslint:disable-next-line:adf-file-name
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Pagination } from 'alfresco-js-api';
 import { AnalyticsReportListComponent } from 'ng2-activiti-analytics';
@@ -56,7 +56,8 @@ const currentTaskIdNew = '__NEW__';
 @Component({
     selector: 'activiti-demo',
     templateUrl: './activiti-demo.component.html',
-    styleUrls: ['./activiti-demo.component.css']
+    styleUrls: ['./activiti-demo.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
 

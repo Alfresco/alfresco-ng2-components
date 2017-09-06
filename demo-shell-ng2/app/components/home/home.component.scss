@@ -5,6 +5,13 @@
     display: block;
     overflow-y: auto;
     height: 400px;
+
+    h2 {
+        line-height: 30px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 }
 
 .adf-home-card-title {
