@@ -24,6 +24,7 @@ import { AttachWidgetComponent } from './attach/attach.widget';
 import { CheckboxWidgetComponent } from './checkbox/checkbox.widget';
 import { DateWidgetComponent } from './date/date.widget';
 import { DisplayTextWidgetComponentComponent } from './display-text/display-text.widget';
+import { DocumentWidgetComponent } from './document/document.widget';
 import { DropdownWidgetComponent } from './dropdown/dropdown.widget';
 import { DynamicTableWidgetComponent } from './dynamic-table/dynamic-table.widget';
 import { BooleanEditorComponent } from './dynamic-table/editors/boolean/boolean.editor';
@@ -70,6 +71,7 @@ export * from './date/date.widget';
 export * from './amount/amount.widget';
 export * from './dynamic-table/dynamic-table.widget';
 export * from './error/error.component';
+export { DocumentWidgetComponent } from './document/document.widget';
 
 // editors (dynamic table)
 export * from './dynamic-table/editors/row.editor';
@@ -104,7 +106,8 @@ export const WIDGET_DIRECTIVES: any[] = [
     BooleanEditorComponent,
     TextEditorComponent,
     RowEditorComponent,
-    ErrorWidgetComponent
+    ErrorWidgetComponent,
+    DocumentWidgetComponent
 ];
 
 export const MASK_DIRECTIVE: any[] = [
