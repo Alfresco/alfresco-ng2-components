@@ -18,6 +18,8 @@
  /* tslint:disable:component-selector  */
 
 import * as moment from 'moment';
+import { ValidateDynamicTableRowEvent } from '../../../events/validate-dynamic-table-row.event';
+import { FormService } from './../../../services/form.service';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormWidgetModel } from './../core/form-widget.model';
 
@@ -51,7 +53,7 @@ export class DynamicTableModel extends FormWidgetModel {
         }
     }
 
-    constructor(field: FormFieldModel) {
+    constructor(field: FormFieldModel, private formService: FormService) {
         super(field.form, field.json);
         this.field = field;
 
@@ -136,10 +138,17 @@ export class DynamicTableModel extends FormWidgetModel {
     }
 
     validateRow(row: DynamicTableRow): DynamicRowValidationSummary {
-        let summary = <DynamicRowValidationSummary> {
+        const summary = <DynamicRowValidationSummary> {
             isValid: true,
             text: null
         };
+
+        const event = new ValidateDynamicTableRowEvent(this.form, this.field, row, summary);
+        this.formService.validateDynamicTableRow.next(event);
+
+        if (event.defaultPrevented || !summary.isValid) {
+            return summary;
+        }
 
         if (row) {
             for (let col of this.columns) {

@@ -23,7 +23,10 @@ import { ContentLinkModel } from './../components/widgets/core/content-link.mode
 import { GroupUserModel } from './../components/widgets/core/group-user.model';
 import { GroupModel } from './../components/widgets/core/group.model';
 import { FormModel, FormOutcomeEvent, FormOutcomeModel, FormValues } from './../components/widgets/core/index';
-import { FormErrorEvent, FormEvent, FormFieldEvent, ValidateFormEvent, ValidateFormFieldEvent } from './../events/index';
+import {
+    FormErrorEvent, FormEvent, FormFieldEvent,
+    ValidateDynamicTableRowEvent, ValidateFormEvent, ValidateFormFieldEvent
+} from './../events/index';
 import { EcmModelService } from './ecm-model.service';
 
 @Injectable()
@@ -44,6 +47,7 @@ export class FormService {
 
     validateForm = new Subject<ValidateFormEvent>();
     validateFormField = new Subject<ValidateFormFieldEvent>();
+    validateDynamicTableRow = new Subject<ValidateDynamicTableRowEvent>();
 
     executeOutcome = new Subject<FormOutcomeEvent>();
 
