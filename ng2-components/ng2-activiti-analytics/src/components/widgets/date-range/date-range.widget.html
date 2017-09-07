@@ -18,6 +18,7 @@
                             [mdDatepicker]="startDatePicker"
                             [value]="startDatePicker"
                             (keydown)="true"
+                            (dateChange)="onGroupValueChanged()"
                             placeholder="{{'DATE-WIDGET.START-DATE' | translate}}"
                             id="startDate_id"
                             required>
@@ -25,8 +26,7 @@
                     </md-input-container>
                     <md-datepicker
                         #startDatePicker
-                        [touchUi]="true"
-                        (onDateChanged)="onGroupValueChanged()">
+                        [touchUi]="true">
                     </md-datepicker>
                 </md-grid-tile>
                 <md-grid-tile>
@@ -39,6 +39,7 @@
                             [mdDatepicker]="endDatePicker"
                             [value]="endDatePicker"
                             (keydown)="true"
+                            (dateChange)="onGroupValueChanged()"
                             placeholder="{{'DATE-WIDGET.END-DATE' | translate}}"
                             id="endDate_id"
                             required>
@@ -46,8 +47,7 @@
                     </md-input-container>
                     <md-datepicker
                         #endDatePicker
-                        [touchUi]="true"
-                        (onDateChanged)="onGroupValueChanged()">
+                        [touchUi]="true">
                     </md-datepicker>
                 </md-grid-tile>
             </md-grid-list>
