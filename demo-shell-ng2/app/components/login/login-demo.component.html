@@ -45,15 +45,16 @@
     <md-icon>settings</md-icon>
 </a>
 
-<alfresco-login #alfrescologin
-                [providers]="providers"
-                [fieldsValidation]="customValidation"
-                [disableCsrf]="disableCsrf"
-                [showLoginActions]="showFooter"
-                [showRememberMe]="showFooter"
-                copyrightText="© 2016 Alfresco Software, Inc. All Rights Reserved. (customised text)"
-                (onSuccess)="onLogin($event)"
-                (onError)="onError($event)">
+<alfresco-login
+    #alfrescologin
+    [providers]="providers"
+    [fieldsValidation]="customValidation"
+    [disableCsrf]="disableCsrf"
+    [showLoginActions]="showFooter"
+    [showRememberMe]="showFooter"
+    copyrightText="© 2016 Alfresco Software, Inc. All Rights Reserved. (customised text)"
+    (onSuccess)="onLogin($event)"
+    (onError)="onError($event)">
     <div class="mobile-settings">
         <p>
             <md-slide-toggle

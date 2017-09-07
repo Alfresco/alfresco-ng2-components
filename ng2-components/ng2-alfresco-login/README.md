@@ -35,11 +35,46 @@ Authenticates to Alfresco Content Services and Alfresco Process Services.
 
 ### Basic usage
 
+```html
+<adf-login 
+    providers="ECM"
+    successRoute="/home">
+</adf-login>
+```
+
+#### Properties
+
+| Name | Type | Default Value | Description |
+| --- | --- | --- | --- |
+| providers | string | | Possible valid values are ECM, BPM or ALL. The default behaviour of this component will log in only in the ECM . If you want to log in in both systems the correct value to use is ALL. |
+| successRoute | string | | Route to redirect to upon successful login. |
+| disableCsrf | boolean | false | To prevent the CSRF Token from being submitted. Only for Alfresco Process Services call |
+| needHelpLink | string | | It will change the url of the NEED HELP link in the footer  |
+| registerLink | string | | It will change the url of the REGISTER link in the footer |
+| logoImageUrl | string | \<ADF logo image> | To change the logo image with a customised image |
+| copyrightText | string | \<ADF copyright string> | The copyright text below the login box |
+| backgroundImageUrl | string | \<ADF background image> | To change the background image with a customised image |
+| fieldsValidation | { [key: string]: any; }, extra?: { [key: string]: any; } |  | Use it to customise the validation rules of the login form |
+| showRememberMe | boolean | false | Toggle `Remember me` checkbox visibility |
+| showLoginActions | boolean | false | Toggle extra actions visibility (`Need Help`, `Register`, etc.) |
+
+#### Events
+
+| Name | Description |
+| --- | --- |
+| onSuccess | Raised when the login is done |
+| onError | Raised when the login fails |
+| executeSubmit | Raised when the form is submitted |
+
+### Details
+
+#### Handling events
+
 **app.component.html**
 
 ```html
 <adf-login 
-    [providers]="'ALL'"
+    providers="ALL"
     (onSuccess)="mySuccessMethod($event)"
     (onError)="myErrorMethod($event)">
 </adf-login>
@@ -59,31 +94,6 @@ export class AppComponent {
     }
 }
 ```
-
-#### Properties
-
-| Name | Type | Default Value | Description |
-| --- | --- | --- | --- |
-| providers | string | ECM | Possible valid values are ECM, BPM or ALL. The default behaviour of this component will log in only in the ECM . If you want to log in in both systems the correct value to use is ALL |
-| disableCsrf | boolean | false | To prevent the CSRF Token from being submitted. Only for Alfresco Process Services call |
-| needHelpLink | string | | It will change the url of the NEED HELP link in the footer  |
-| registerLink | string | | It will change the url of the REGISTER link in the footer |
-| logoImageUrl | string | Alfresco logo image | To change the logo image with a customised image |
-| copyrightText | string | © 2017 Alfresco Software, Inc. All Rights Reserved. | The copyright text below the login box |
-| backgroundImageUrl | string | Alfresco background image | To change the background image with a customised image |
-| fieldsValidation | { [key: string]: any; }, extra?: { [key: string]: any; } |  | Use it to customise the validation rules of the login form |
-| showRememberMe | boolean | false | Toggle `Remember me` checkbox visibility |
-| showLoginActions | boolean | false | Toggle extra actions visibility (`Need Help`, `Register`, etc.) |
-
-#### Events
-
-| Name | Description |
-| --- | --- |
-| onSuccess | Raised when the login is done |
-| onError | Raised when the login fails |
-| executeSubmit | Raised when the form is submitted |
-
-### Details
 
 #### Change footer content
 
