@@ -192,7 +192,7 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
     }
 
     isDateInstance(obj: any) {
-        return obj instanceof Date;
+        return obj && obj._isAMomentObject;
     }
 
     isValid(date: Moment): boolean {
