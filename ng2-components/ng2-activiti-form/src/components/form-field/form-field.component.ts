@@ -104,8 +104,14 @@ export class FormFieldComponent implements OnInit, OnDestroy {
         }
     }
 
-    private getField() {
-        return (this.field.params && this.field.params.field) ? this.field.params.field : this.field;
+    private getField(): FormFieldModel {
+        if (this.field && this.field.params) {
+            const wrappedField = this.field.params.field;
+            if (wrappedField && wrappedField.type) {
+                return wrappedField;
+            }
+        }
+        return this.field;
     }
 
     private hasController(type: string): boolean {
