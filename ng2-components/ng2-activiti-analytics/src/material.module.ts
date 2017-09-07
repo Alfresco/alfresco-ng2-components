@@ -16,8 +16,16 @@
  */
 
 import { NgModule } from '@angular/core';
-import { MdButtonModule, MdDatepickerModule, MdGridListModule,
-    MdIconModule, MdInputModule, MdNativeDateModule, MdTooltipModule } from '@angular/material';
+import {
+    MdButtonModule,
+    MdCheckboxModule,
+    MdDatepickerModule,
+    MdGridListModule,
+    MdIconModule,
+    MdInputModule,
+    MdNativeDateModule,
+    MdTooltipModule
+} from '@angular/material';
 
 export function modules() {
     return [
@@ -27,6 +35,7 @@ export function modules() {
         MdTooltipModule,
         MdNativeDateModule,
         MdDatepickerModule,
+        MdCheckboxModule,
         MdGridListModule
     ];
 }
