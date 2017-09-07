@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Observable, Subject } from 'rxjs/Rx';
 import { SearchTermValidator } from './../forms/search-term-validator';
 import { SearchAutocompleteComponent } from './search-autocomplete.component';
-import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
     selector: 'adf-search-control, alfresco-search-control',
@@ -236,7 +236,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
         this.setAutoCompleteDisplayed(false);
     }
 
-    onClickSearch(){
+    onClickSearch() {
         this.searchActive = !this.searchActive;
         this._subscriptAnimationState = this.searchActive ? 'active' : 'inactive';
     }

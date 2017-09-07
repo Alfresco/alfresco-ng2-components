@@ -10,6 +10,7 @@
 @import '~ng2-alfresco-login/styles/index';
 @import '~ng2-alfresco-upload/styles/index';
 @import '~ng2-alfresco-userinfo/styles/index';
+@import '~ng2-alfresco-search/styles/index';
 
 
 @include mat-core();
@@ -32,3 +33,4 @@ $theme:   mat-light-theme($primary, $accent, $warn);
 @include alfresco-login-theme($theme);
 @include alfresco-upload-theme($theme);
 @include alfresco-userinfo-theme($theme);
+@include alfresco-search-theme($theme);
