@@ -16,6 +16,7 @@
  */
 
 import { ModuleWithProviders, NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 
 import { LoginComponent } from './src/components/login.component';
@@ -42,6 +43,7 @@ export const ALFRESCO_LOGIN_DIRECTIVES: any[] = [
 
 @NgModule({
     imports: [
+        RouterModule,
         CoreModule,
         MaterialModule
     ],
