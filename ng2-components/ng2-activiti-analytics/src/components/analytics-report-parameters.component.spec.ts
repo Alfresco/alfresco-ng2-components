@@ -513,9 +513,10 @@ describe('AnalyticsReportParametersComponent', () => {
 
             it('Should show a dialog to allowing report save', async(() => {
                 component.saveReportSuccess.subscribe((repId) => {
-                    let reportDialogTitle: HTMLElement = <HTMLElement> element.querySelector('#report-dialog');
-                    expect(reportDialogTitle.getAttribute('open')).toBeNull();
-                    expect(repId).toBe('1');
+                    fixture.detectChanges();
+                    fixture.whenStable().then(() => {
+                        expect(repId).toBe('1');
+                    });
                 });
 
                 component.submit(values);
@@ -529,16 +530,16 @@ describe('AnalyticsReportParametersComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let reportDialogTitle: HTMLElement = <HTMLElement> element.querySelector('#report-dialog-title');
-                    let saveTitleSubMessage: HTMLElement = <HTMLElement> element.querySelector('#save-title-submessage');
-                    let inputSaveName: HTMLInputElement = <HTMLInputElement> element.querySelector('#repName');
-                    let performActionButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#action-dialog-button');
+                    let reportDialogTitle: HTMLElement = <HTMLElement> window.document.querySelector('#report-dialog-title');
+                    let saveTitleSubMessage: HTMLElement = <HTMLElement> window.document.querySelector('#save-title-submessage');
+                    let inputSaveName: HTMLInputElement = <HTMLInputElement> window.document.querySelector('#repName');
+                    let performActionButton: HTMLButtonElement = <HTMLButtonElement> window.document.querySelector('#action-dialog-button');
                     let todayDate = component.getTodayDate();
 
-                    expect(reportDialogTitle).not.toBeNull();
-                    expect(saveTitleSubMessage).not.toBeNull();
+                    expect(reportDialogTitle).not.toBeNull('Dialog title should not be null');
+                    expect(saveTitleSubMessage).not.toBeNull('Dialog save title submessage should not be null');
                     expect(inputSaveName.value.trim()).toEqual(analyticParamsMock.reportDefParamStatus.name + ' ( ' + todayDate + ' )');
-                    expect(performActionButton).not.toBeNull();
+                    expect(performActionButton).not.toBeNull('Dialog action button should not be null');
 
                     performActionButton.click();
 
@@ -562,9 +563,9 @@ describe('AnalyticsReportParametersComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let reportDialogTitle: HTMLElement = <HTMLElement> element.querySelector('#report-dialog-title');
-                    let inputSaveName: HTMLInputElement = <HTMLInputElement> element.querySelector('#repName');
-                    let performActionButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#action-dialog-button');
+                    let reportDialogTitle: HTMLElement = <HTMLElement> window.document.querySelector('#report-dialog-title');
+                    let inputSaveName: HTMLInputElement = <HTMLInputElement> window.document.querySelector('#repName');
+                    let performActionButton: HTMLButtonElement = <HTMLButtonElement> window.document.querySelector('#action-dialog-button');
                     let todayDate = component.getTodayDate();
 
                     expect(reportDialogTitle).not.toBeNull();

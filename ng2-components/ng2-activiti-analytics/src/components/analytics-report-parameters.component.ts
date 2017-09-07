@@ -30,13 +30,13 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MdDialog } from '@angular/material';
 import * as moment from 'moment';
 import { ParameterValueModel, ReportParameterDetailsModel, ReportParametersModel, ReportQuery } from 'ng2-activiti-diagrams';
 import { ContentService, LogService } from 'ng2-alfresco-core';
 import { AnalyticsService } from '../services/analytics.service';
 
 declare var componentHandler;
-declare let dialogPolyfill: any;
 
 @Component({
     selector: 'adf-analytics-report-parameters, analytics-report-parameters',
@@ -104,7 +104,8 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     constructor(private analyticsService: AnalyticsService,
                 private formBuilder: FormBuilder,
                 private logService: LogService,
-                private contentService: ContentService) {
+                private contentService: ContentService,
+                private dialog: MdDialog) {
     }
 
     ngOnInit() {
@@ -317,18 +318,13 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     }
 
     public showDialog(event: string) {
-        if (!this.reportNameDialog.nativeElement.showModal) {
-            dialogPolyfill.registerDialog(this.reportNameDialog.nativeElement);
-        }
-        this.reportNameDialog.nativeElement.showModal();
+        this.dialog.open(this.reportNameDialog, { width: '500px' });
         this.action = event;
         this.reportName = this.reportParameters.name + ' ( ' + this.getTodayDate() + ' )';
     }
 
     closeDialog() {
-        if (this.reportNameDialog) {
-            this.reportNameDialog.nativeElement.close();
-        }
+        this.dialog.closeAll();
     }
 
     performAction(action: string, reportParamQuery: ReportQuery) {

@@ -101,33 +101,39 @@
                             </div>
                         </div>
                     </div>
-                    <dialog id="report-dialog" class="mdl-dialog options-name-dialog" #reportNameDialog>
-                        <h5 id="report-dialog-title" class="mdl-dialog__title">{{action}} report</h5>
-                        <div class="mdl-dialog__content">
-                            <div *ngIf="isSaveAction()" id="save-title-submessage" class="export-message">
-                                {{'DIALOG.SAVE_MESSAGE' | translate}}
+                    <ng-template #reportNameDialog>
+                        <div id="report-dialog" class="adf-report-dialog">
+                            <h5 md-dialog-title id="report-dialog-title">{{action}} report</h5>
+                            <div md-dialog-content>
+                                <div *ngIf="isSaveAction()" id="save-title-submessage" class="export-message">
+                                    {{'DIALOG.SAVE_MESSAGE' | translate}}
+                                </div>
+                                <div class="save-export-input">
+                                    <md-input-container class="example-full-width" floatPlaceholder="always">
+                                        <input mdInput
+                                            type="text"
+                                            id="repName"
+                                            placeholder="Report Name"
+                                            [value]="reportName"
+                                            [(ngModel)]="reportName"
+                                            [ngModelOptions]="{standalone: true}">
+                                    </md-input-container>
+                                </div>
                             </div>
-                            <div class="mdl-textfield mdl-js-textfield save-export-input">
-                                <label id="report-name-label" [attr.for]="reportName">Report Name</label>
-                                <input class="mdl-textfield__input"
-                                       type="text"
-                                       id="repName"
-                                       [attr.value]="reportName"
-                                       [(ngModel)]="reportName"
-                                       [ngModelOptions]="{standalone: true}"
-                                       placeholder="report name">
+                            <div md-dialog-actions>
+                                <button md-button
+                                    color="accent"
+                                    type="button"
+                                    id="close-dialog-button"
+                                    (click)="closeDialog()">Close</button>
+                                <button md-button
+                                    color="primary"
+                                    type="button"
+                                    id="action-dialog-button"
+                                    (click)="performAction(action, reportParamQuery)">{{action}}</button>
                             </div>
                         </div>
-                        <div class="mdl-dialog__actions">
-                            <button type="button" id="close-dialog-button" (click)="closeDialog()"
-                                    class="mdl-button close">Close
-                            </button>
-                            <button type="button" id="action-dialog-button"
-                                    (click)="performAction(action, reportParamQuery)"
-                                    class="mdl-button close">{{action}}
-                            </button>
-                        </div>
-                    </dialog>
+                    </ng-template>
                 </form>
             </div>
         </div>
