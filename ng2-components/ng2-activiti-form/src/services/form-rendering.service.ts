@@ -24,6 +24,7 @@ import {
     ContainerWidgetComponent,
     DateWidgetComponent,
     DisplayTextWidgetComponentComponent,
+    DocumentWidgetComponent,
     DropdownWidgetComponent,
     DynamicTableWidgetComponent,
     FormFieldModel,
@@ -58,7 +59,8 @@ export class FormRenderingService {
         'functional-group': DefaultTypeResolver.fromType(FunctionalGroupWidgetComponent),
         'dynamic-table': DefaultTypeResolver.fromType(DynamicTableWidgetComponent),
         'container': DefaultTypeResolver.fromType(ContainerWidgetComponent),
-        'group': DefaultTypeResolver.fromType(ContainerWidgetComponent)
+        'group': DefaultTypeResolver.fromType(ContainerWidgetComponent),
+        'document': DefaultTypeResolver.fromType(DocumentWidgetComponent)
     };
 
     constructor() {

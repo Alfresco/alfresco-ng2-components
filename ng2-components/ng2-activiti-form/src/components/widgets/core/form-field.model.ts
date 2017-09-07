@@ -168,7 +168,10 @@ export class FormFieldModel extends FormWidgetModel {
 
             if (FormFieldTypes.isReadOnlyType(json.type)) {
                 if (json.params && json.params.field && json.params.field.responseVariable) {
-                    this.value = this.getVariablesValue(json.params.field.name, form);
+                    const value = this.getVariablesValue(json.params.field.name, form);
+                    if (value) {
+                        this.value = value;
+                    }
                 }
             }
 
@@ -189,11 +192,15 @@ export class FormFieldModel extends FormWidgetModel {
             return currentVariable.name === variableName;
         });
 
-        if (variable.type === 'boolean') {
-            return JSON.parse(variable.value);
+        if (variable) {
+            if (variable.type === 'boolean') {
+                return JSON.parse(variable.value);
+            }
+
+            return variable.value;
         }
 
-        return variable.value;
+        return null;
     }
 
     private containerFactory(json: any, form: FormModel): void {
