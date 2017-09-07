@@ -12,6 +12,11 @@
         text-overflow: ellipsis;
         white-space: nowrap;
     }
+
+    .material-icons {
+        position: relative;
+        top: 6px;
+    }
 }
 
 .adf-home-card-title {
