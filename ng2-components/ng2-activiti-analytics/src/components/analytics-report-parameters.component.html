@@ -1,141 +1,139 @@
 <div [class.hide]="hideComponent">
     <div class="adf-report-report-container">
-        <div class="col-md-6">
-            <div *ngIf="reportParameters">
-                <form [formGroup]="reportForm" novalidate>
-                    <adf-toolbar>
-                        <adf-toolbar-title class="adf-report-title-container">
-                            <div *ngIf="isEditable">
-                                <md-input-container class="adf-full-width-input">
-                                    <input
-                                        mdInput
-                                        type="text"
-                                        class="adf-edit-report-title"
-                                        id="reportName"
-                                        autofocus
-                                        data-automation-id="reportName"
-                                        [value]="reportParameters.name"
-                                        (input)="reportParameters.name=$event.target.value"
-                                        (blur)="editTitle($event)"
-                                        (keyup.enter)="editTitle($event)"
-                                    />
-                                </md-input-container>
-                            </div>
-                            <div class="adf-report-title" *ngIf="!isEditable" (click)="editEnable()">
-                                <md-icon class="adf-report-icon" >mode_edit</md-icon>
-                                <h4>{{reportParameters.name}}</h4>
-                            </div>
-                        </adf-toolbar-title>
-                        <div *ngIf="!isEditable">
-                            <button md-button mdTooltip="{{'ANALYTICS.MESSAGES.ICON-SETTING' | translate}}"
-                                    (click)="toggleParameters()">
-                                <md-icon>settings</md-icon>
-                            </button>
-                            <button md-button id="delete-button" (click)="deleteReport(reportId)"
-                                    mdTooltip="{{'ANALYTICS.MESSAGES.ICON-DELETE' | translate}}">
-                                <md-icon>delete</md-icon>
-                            </button>
-                            <span *ngIf="isFormValid()">
-                                <button md-button id="export-button" (click)="showDialog('Export')"
-                                        mdTooltip="{{'ANALYTICS.MESSAGES.ICON-EXPORT-CSV' | translate}}">
-                                    <md-icon>file_download</md-icon>
-                                </button>
-                                <button md-button id="save-button" (click)="showDialog('Save')"
-                                        mdTooltip="{{'ANALYTICS.MESSAGES.ICON-SAVE' | translate}}">
-                                    <md-icon>save</md-icon>
-                                </button>
-                            </span>
+        <div *ngIf="reportParameters">
+            <form [formGroup]="reportForm" novalidate>
+                <adf-toolbar>
+                    <adf-toolbar-title class="adf-report-title-container">
+                        <div *ngIf="isEditable">
+                            <md-input-container class="adf-full-width-input">
+                                <input
+                                    mdInput
+                                    type="text"
+                                    class="adf-edit-report-title"
+                                    id="reportName"
+                                    autofocus
+                                    data-automation-id="reportName"
+                                    [value]="reportParameters.name"
+                                    (input)="reportParameters.name=$event.target.value"
+                                    (blur)="editTitle($event)"
+                                    (keyup.enter)="editTitle($event)"
+                                />
+                            </md-input-container>
                         </div>
-                    </adf-toolbar>
-                    <div *ngFor="let field of reportParameters.definition.parameters"
-                         [class.is-hide]="isParametersHide()">
-                        <div [ngSwitch]="field.type">
-                            <div *ngSwitchCase="'integer'">
-                                <br>
-                                <number-widget [field]="field" [group]="reportForm.controls.processInstanceGroup"
-                                               [controllerName]="'slowProcessInstanceInteger'"
-                                               [required]="true"></number-widget>
-                            </div>
-                            <div *ngSwitchCase="'duration'">
-                                <br>
-                                <duration-widget [field]="field" [group]="reportForm.controls.durationGroup"
-                                                 [controllerName]="'duration'"></duration-widget>
-                            </div>
-                            <div *ngSwitchCase="'boolean'">
-                                <br>
-                                <checkbox-widget [field]="field" [group]="reportForm.controls.typeFilteringGroup"
-                                                 [controllerName]="'typeFiltering'"></checkbox-widget>
-                            </div>
-                            <div *ngSwitchCase="'status'">
-                                <br>
-                                <dropdown-widget [field]="field" [group]="reportForm.controls.statusGroup"
-                                                 [controllerName]="'status'"
-                                                 [required]="true"></dropdown-widget>
-                            </div>
-                            <div *ngSwitchCase="'processDefinition'">
-                                <br>
-                                <dropdown-widget [field]="field" [group]="reportForm.controls.processDefGroup"
-                                                 [controllerName]="'processDefinitionId'"
-                                                 [required]="true"
-                                                 (fieldChanged)="onProcessDefinitionChanges(field)"></dropdown-widget>
-                            </div>
-                            <div *ngSwitchCase="'task'">
-                                <br>
-                                <dropdown-widget [field]="field" [group]="reportForm.controls.taskGroup"
-                                                 [controllerName]="'taskName'"
-                                                 [required]="true"></dropdown-widget>
-                            </div>
-                            <div *ngSwitchCase="'dateRange'">
-                                <br>
-                                <adf-date-range-widget [field]="field"
-                                                       [group]="reportForm.controls.dateRange"></adf-date-range-widget>
-                            </div>
-                            <div *ngSwitchCase="'dateInterval'">
-                                <br>
-                                <dropdown-widget [field]="field" [group]="reportForm.controls.dateIntervalGroup"
-                                                 [controllerName]="'dateRangeInterval'"
-                                                 [required]="true" [showDefaultOption]="false"></dropdown-widget>
-                            </div>
-                            <div *ngSwitchDefault>
-                                <span>{{'ANALYTICS.MESSAGES.UNKNOWN-WIDGET-TYPE' | translate}}: {{field.type}}</span>
-                            </div>
+                        <div class="adf-report-title" *ngIf="!isEditable" (click)="editEnable()">
+                            <md-icon class="adf-report-icon" >mode_edit</md-icon>
+                            <h4>{{reportParameters.name}}</h4>
+                        </div>
+                    </adf-toolbar-title>
+                    <div *ngIf="!isEditable">
+                        <button md-button mdTooltip="{{'ANALYTICS.MESSAGES.ICON-SETTING' | translate}}"
+                                (click)="toggleParameters()">
+                            <md-icon>settings</md-icon>
+                        </button>
+                        <button md-button id="delete-button" (click)="deleteReport(reportId)"
+                                mdTooltip="{{'ANALYTICS.MESSAGES.ICON-DELETE' | translate}}">
+                            <md-icon>delete</md-icon>
+                        </button>
+                        <span *ngIf="isFormValid()">
+                            <button md-button id="export-button" (click)="showDialog('Export')"
+                                    mdTooltip="{{'ANALYTICS.MESSAGES.ICON-EXPORT-CSV' | translate}}">
+                                <md-icon>file_download</md-icon>
+                            </button>
+                            <button md-button id="save-button" (click)="showDialog('Save')"
+                                    mdTooltip="{{'ANALYTICS.MESSAGES.ICON-SAVE' | translate}}">
+                                <md-icon>save</md-icon>
+                            </button>
+                        </span>
+                    </div>
+                </adf-toolbar>
+                <div *ngFor="let field of reportParameters.definition.parameters"
+                        [class.is-hide]="isParametersHide()">
+                    <div [ngSwitch]="field.type">
+                        <div *ngSwitchCase="'integer'">
+                            <br>
+                            <number-widget [field]="field" [group]="reportForm.controls.processInstanceGroup"
+                                            [controllerName]="'slowProcessInstanceInteger'"
+                                            [required]="true"></number-widget>
+                        </div>
+                        <div *ngSwitchCase="'duration'">
+                            <br>
+                            <duration-widget [field]="field" [group]="reportForm.controls.durationGroup"
+                                                [controllerName]="'duration'"></duration-widget>
+                        </div>
+                        <div *ngSwitchCase="'boolean'">
+                            <br>
+                            <checkbox-widget [field]="field" [group]="reportForm.controls.typeFilteringGroup"
+                                                [controllerName]="'typeFiltering'"></checkbox-widget>
+                        </div>
+                        <div *ngSwitchCase="'status'">
+                            <br>
+                            <dropdown-widget [field]="field" [group]="reportForm.controls.statusGroup"
+                                                [controllerName]="'status'"
+                                                [required]="true"></dropdown-widget>
+                        </div>
+                        <div *ngSwitchCase="'processDefinition'">
+                            <br>
+                            <dropdown-widget [field]="field" [group]="reportForm.controls.processDefGroup"
+                                                [controllerName]="'processDefinitionId'"
+                                                [required]="true"
+                                                (fieldChanged)="onProcessDefinitionChanges(field)"></dropdown-widget>
+                        </div>
+                        <div *ngSwitchCase="'task'">
+                            <br>
+                            <dropdown-widget [field]="field" [group]="reportForm.controls.taskGroup"
+                                                [controllerName]="'taskName'"
+                                                [required]="true"></dropdown-widget>
+                        </div>
+                        <div *ngSwitchCase="'dateRange'">
+                            <br>
+                            <adf-date-range-widget [field]="field"
+                                                    [group]="reportForm.controls.dateRange"></adf-date-range-widget>
+                        </div>
+                        <div *ngSwitchCase="'dateInterval'">
+                            <br>
+                            <dropdown-widget [field]="field" [group]="reportForm.controls.dateIntervalGroup"
+                                                [controllerName]="'dateRangeInterval'"
+                                                [required]="true" [showDefaultOption]="false"></dropdown-widget>
+                        </div>
+                        <div *ngSwitchDefault>
+                            <span>{{'ANALYTICS.MESSAGES.UNKNOWN-WIDGET-TYPE' | translate}}: {{field.type}}</span>
                         </div>
                     </div>
-                    <ng-template #reportNameDialog>
-                        <div id="report-dialog" class="adf-report-dialog">
-                            <h5 md-dialog-title id="report-dialog-title">{{action}} report</h5>
-                            <div md-dialog-content>
-                                <div *ngIf="isSaveAction()" id="save-title-submessage" class="export-message">
-                                    {{'DIALOG.SAVE_MESSAGE' | translate}}
-                                </div>
-                                <div class="save-export-input">
-                                    <md-input-container class="example-full-width" floatPlaceholder="always">
-                                        <input mdInput
-                                            type="text"
-                                            id="repName"
-                                            placeholder="Report Name"
-                                            [value]="reportName"
-                                            [(ngModel)]="reportName"
-                                            [ngModelOptions]="{standalone: true}">
-                                    </md-input-container>
-                                </div>
+                </div>
+                <ng-template #reportNameDialog>
+                    <div id="report-dialog" class="adf-report-dialog">
+                        <h5 md-dialog-title id="report-dialog-title">{{action}} report</h5>
+                        <div md-dialog-content>
+                            <div *ngIf="isSaveAction()" id="save-title-submessage" class="export-message">
+                                {{'DIALOG.SAVE_MESSAGE' | translate}}
                             </div>
-                            <div md-dialog-actions>
-                                <button md-button
-                                    color="accent"
-                                    type="button"
-                                    id="close-dialog-button"
-                                    (click)="closeDialog()">Close</button>
-                                <button md-button
-                                    color="primary"
-                                    type="button"
-                                    id="action-dialog-button"
-                                    (click)="performAction(action, reportParamQuery)">{{action}}</button>
+                            <div class="save-export-input">
+                                <md-input-container class="example-full-width" floatPlaceholder="always">
+                                    <input mdInput
+                                        type="text"
+                                        id="repName"
+                                        placeholder="Report Name"
+                                        [value]="reportName"
+                                        [(ngModel)]="reportName"
+                                        [ngModelOptions]="{standalone: true}">
+                                </md-input-container>
                             </div>
                         </div>
-                    </ng-template>
-                </form>
-            </div>
+                        <div md-dialog-actions>
+                            <button md-button
+                                color="accent"
+                                type="button"
+                                id="close-dialog-button"
+                                (click)="closeDialog()">Close</button>
+                            <button md-button
+                                color="primary"
+                                type="button"
+                                id="action-dialog-button"
+                                (click)="performAction(action, reportParamQuery)">{{action}}</button>
+                        </div>
+                    </div>
+                </ng-template>
+            </form>
         </div>
     </div>
 </div>
