@@ -15,9 +15,19 @@
  * limitations under the License.
  */
 
-export { FormEvent } from './form.event';
-export { FormErrorEvent } from './form-error.event';
-export { FormFieldEvent } from './form-field.event';
-export { ValidateFormFieldEvent } from './validate-form-field.event';
-export { ValidateFormEvent } from './validate-form.event';
-export { ValidateDynamicTableRowEvent } from './validate-dynamic-table-row.event';
+import { DynamicRowValidationSummary, DynamicTableRow } from '../components/widgets/dynamic-table/dynamic-table.widget.model';
+import { FormFieldModel, FormModel } from './../components/widgets/core/index';
+import { FormFieldEvent } from './form-field.event';
+
+export class ValidateDynamicTableRowEvent extends FormFieldEvent {
+
+    isValid = true;
+
+    constructor(form: FormModel,
+                field: FormFieldModel,
+                public row: DynamicTableRow,
+                public summary: DynamicRowValidationSummary) {
+        super(form, field);
+    }
+
+}

@@ -74,6 +74,7 @@ export * from './error/error.component';
 export { DocumentWidgetComponent } from './document/document.widget';
 
 // editors (dynamic table)
+export * from './dynamic-table/dynamic-table.widget.model';
 export * from './dynamic-table/editors/row.editor';
 export * from './dynamic-table/editors/date/date.editor';
 export * from './dynamic-table/editors/dropdown/dropdown.editor';

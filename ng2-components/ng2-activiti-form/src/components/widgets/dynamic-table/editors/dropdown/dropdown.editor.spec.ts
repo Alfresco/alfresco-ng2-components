@@ -53,7 +53,7 @@ describe('DropdownEditorComponent', () => {
         };
 
         form = new FormModel({taskId: '<task-id>'});
-        table = new DynamicTableModel(new FormFieldModel(form, {id: '<field-id>'}));
+        table = new DynamicTableModel(new FormFieldModel(form, {id: '<field-id>'}), formService);
         table.rows.push(row);
         table.columns.push(column);
 
@@ -151,7 +151,7 @@ describe('DropdownEditorComponent', () => {
     it('should handle REST error getting option with processDefinitionId', () => {
         column.optionType = 'rest';
         let procForm = new FormModel({processDefinitionId: '<process-definition-id>'});
-        let procTable = new DynamicTableModel(new FormFieldModel(procForm, {id: '<field-id>'}));
+        let procTable = new DynamicTableModel(new FormFieldModel(procForm, {id: '<field-id>'}), formService);
         component.table = procTable;
         const error = 'error';
 
@@ -223,7 +223,7 @@ describe('DropdownEditorComponent', () => {
                     ]
                 };
                 form = new FormModel({taskId: '<task-id>'});
-                dynamicTable = new DynamicTableModel(new FormFieldModel(form, {id: '<field-id>'}));
+                dynamicTable = new DynamicTableModel(new FormFieldModel(form, {id: '<field-id>'}), formService);
                 dynamicTable.rows.push(row);
                 dynamicTable.columns.push(column);
                 dropDownEditorComponent.table = dynamicTable;
@@ -271,7 +271,7 @@ describe('DropdownEditorComponent', () => {
                     ]
                 };
                 form = new FormModel({processDefinitionId: '<proc-id>'});
-                dynamicTable = new DynamicTableModel(new FormFieldModel(form, {id: '<field-id>'}));
+                dynamicTable = new DynamicTableModel(new FormFieldModel(form, {id: '<field-id>'}), formService);
                 dynamicTable.rows.push(row);
                 dynamicTable.columns.push(column);
                 dropDownEditorComponent.table = dynamicTable;

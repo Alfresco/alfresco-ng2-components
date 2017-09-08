@@ -28,28 +28,28 @@
             <button md-button
                     [disabled]="!hasSelection()"
                     (click)="moveSelectionUp()">
-                <i class="material-icons">arrow_upward</i>
+                <md-icon>arrow_upward</md-icon>
             </button>
             <button md-button
                     [disabled]="!hasSelection()"
                     (click)="moveSelectionDown()">
-                <i class="material-icons">arrow_downward</i>
+                <md-icon>arrow_downward</md-icon>
             </button>
             <button md-button
                     [disabled]="field.readOnly"
                     id="{{content.id}}-add-row"
                     (click)="addNewRow()">
-                <i class="material-icons">add_circle_outline</i>
+                <md-icon>add_circle_outline</md-icon>
             </button>
             <button md-button
                     [disabled]="!hasSelection()"
                     (click)="deleteSelection()">
-                <i class="material-icons">remove_circle_outline</i>
+                <md-icon>remove_circle_outline</md-icon>
             </button>
             <button md-button
                     [disabled]="!hasSelection()"
                     (click)="editSelection()">
-                <i class="material-icons">edit</i>
+                <md-icon>edit</md-icon>
             </button>
         </div>
      </div>
