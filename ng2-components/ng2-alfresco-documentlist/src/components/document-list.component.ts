@@ -20,7 +20,7 @@ import {
     OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild, ViewEncapsulation
 } from '@angular/core';
 import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, Pagination, PersonEntry } from 'alfresco-js-api';
-import { AlfrescoApiService, DataColumnListComponent } from 'ng2-alfresco-core';
+import { AlfrescoApiService, AppConfigService, DataColumnListComponent } from 'ng2-alfresco-core';
 import { DataCellEvent, DataColumn, DataRowActionEvent, DataSorting, DataTableComponent, ObjectDataColumn } from 'ng2-alfresco-datatable';
 import { Observable, Subject } from 'rxjs/Rx';
 import { ImageResolver, RowFilter, ShareDataRow, ShareDataTableAdapter } from './../data/share-datatable-adapter';
@@ -146,13 +146,15 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     contextActionHandler: Subject<any> = new Subject();
     data: ShareDataTableAdapter;
 
+    private layoutPresets = {};
     private currentNodeAllowableOperations: string[] = [];
     private CREATE_PERMISSION = 'create';
 
     constructor(private documentListService: DocumentListService,
                 private ngZone: NgZone,
                 private elementRef: ElementRef,
-                private apiService: AlfrescoApiService) {
+                private apiService: AlfrescoApiService,
+                private appConfig: AppConfigService) {
     }
 
     private get nodesApi() {
@@ -206,6 +208,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     ngOnInit() {
+        this.loadLayoutPresets();
         this.data = new ShareDataTableAdapter(this.documentListService, null, this.getDefaultSorting());
         this.data.thumbnails = this.thumbnails;
         this.data.permissionsStyle = this.permissionsStyle;
@@ -758,8 +761,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         return this.hasCurrentNodePermission(this.CREATE_PERMISSION);
     }
 
-    private getLayoutPreset(name: string = 'default'): DataColumn[] {
-        const presets = {
+    private loadLayoutPresets(): void {
+        let presets = {
             '-trashcan-': [
                 {
                     key: '$thumbnail',
@@ -983,6 +986,15 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             ]
         };
 
-        return (presets[name] || presets['default']).map(col => new ObjectDataColumn(col));
+        const externalSettings = this.appConfig.get('document-list.presets', null);
+        if (externalSettings) {
+            presets = Object.assign({}, presets, externalSettings);
+        }
+
+        this.layoutPresets = presets;
+    }
+
+    private getLayoutPreset(name: string = 'default'): DataColumn[] {
+        return (this.layoutPresets[name] || this.layoutPresets['default']).map(col => new ObjectDataColumn(col));
     }
 }
