@@ -103,10 +103,10 @@
         </ng-container>
 
         <ng-container *ngSwitchCase="'pdf'">
-            <adf-pdf-viewer class="adf-viewer-dialog__pdf-view"
-                [showToolbar]="true"
-                [urlFile]="fileUrl">
-            </adf-pdf-viewer>
+            <adf-pdf-view
+                class="adf-viewer-dialog__pdf-view"
+                [fileUrl]="fileUrl">
+            </adf-pdf-view>
         </ng-container>
 
         <ng-container *ngSwitchCase="'video'">

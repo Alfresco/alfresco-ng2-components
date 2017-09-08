@@ -26,6 +26,7 @@ import { MediaPlayerComponent } from './src/components/mediaPlayer.component';
 import { NotSupportedFormatComponent } from './src/components/notSupportedFormat.component';
 import { PdfViewerComponent } from './src/components/pdfViewer.component';
 import { TxtViewerComponent } from './src/components/txtViewer.component';
+import { PdfViewComponent } from './src/components/viewer-dialog/pdf-view/pdf-view.component';
 import { ViewerDialogComponent } from './src/components/viewer-dialog/viewer-dialog.component';
 import { ViewerComponent } from './src/components/viewer.component';
 import { ExtensionViewerDirective } from './src/directives/extension-viewer.directive';
@@ -45,7 +46,8 @@ export const VIEWER_DIRECTIVES: any[] = [
     NotSupportedFormatComponent,
     PdfViewerComponent,
     ExtensionViewerDirective,
-    ViewerDialogComponent
+    ViewerDialogComponent,
+    PdfViewComponent
 ];
 
 @NgModule({
