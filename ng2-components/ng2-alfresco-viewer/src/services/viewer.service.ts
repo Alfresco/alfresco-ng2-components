@@ -20,8 +20,8 @@ import { MdDialog } from '@angular/material';
 import { MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AlfrescoApiService } from 'ng2-alfresco-core';
 
-import { ViewerDialogComponent } from './../components/viewer-dialog.component';
-import { ViewerDialogSettings } from './../components/viewer-dialog.settings';
+import { ViewerDialogComponent } from './../components/viewer-dialog/viewer-dialog.component';
+import { ViewerDialogSettings } from './../components/viewer-dialog/viewer-dialog.settings';
 
 @Injectable()
 export class ViewerService {

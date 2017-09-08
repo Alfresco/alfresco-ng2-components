@@ -26,15 +26,15 @@ import { MediaPlayerComponent } from './src/components/mediaPlayer.component';
 import { NotSupportedFormatComponent } from './src/components/notSupportedFormat.component';
 import { PdfViewerComponent } from './src/components/pdfViewer.component';
 import { TxtViewerComponent } from './src/components/txtViewer.component';
-import { ViewerDialogComponent } from './src/components/viewer-dialog.component';
+import { ViewerDialogComponent } from './src/components/viewer-dialog/viewer-dialog.component';
 import { ViewerComponent } from './src/components/viewer.component';
 import { ExtensionViewerDirective } from './src/directives/extension-viewer.directive';
 
 import { RenderingQueueServices } from './src/services/rendering-queue.services';
 import { ViewerService } from './src/services/viewer.service';
 
-export { ViewerDialogComponent } from './src/components/viewer-dialog.component';
-export { ViewerDialogSettings } from './src/components/viewer-dialog.settings';
+export { ViewerDialogComponent } from './src/components/viewer-dialog/viewer-dialog.component';
+export { ViewerDialogSettings } from './src/components/viewer-dialog/viewer-dialog.settings';
 export { ViewerService } from './src/services/viewer.service';
 
 export const VIEWER_DIRECTIVES: any[] = [
