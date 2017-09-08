@@ -41,8 +41,9 @@
     &-search-form{
         overflow: hidden;
     }
-}
 
-.active .valid {
-    display: block;
+    &-active-search,
+    &-valid-search {
+        display: block;
+    }
 }

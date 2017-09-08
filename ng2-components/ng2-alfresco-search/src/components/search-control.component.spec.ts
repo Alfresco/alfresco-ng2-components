@@ -165,7 +165,7 @@ describe('SearchControlComponent', () => {
             window.setTimeout(() => { // wait for debounce() to complete
                 fixture.detectChanges();
                 let autocomplete: Element = element.querySelector('adf-search-autocomplete');
-                expect(autocomplete.classList.contains('active')).toBe(true);
+                expect(autocomplete.classList.contains('adf-active-search')).toBe(true);
                 done();
             }, 100);
         });
@@ -195,7 +195,7 @@ describe('SearchControlComponent', () => {
             window.setTimeout(() => { // wait for debounce() to complete
                 fixture.detectChanges();
                 let autocomplete: Element = element.querySelector('adf-search-autocomplete');
-                expect(autocomplete.classList.contains('active')).toBe(true);
+                expect(autocomplete.classList.contains('adf-active-search')).toBe(true);
                 done();
             }, 100);
         });
@@ -222,7 +222,7 @@ describe('SearchControlComponent', () => {
             }));
             fixture.detectChanges();
             let autocomplete: Element = element.querySelector('adf-search-autocomplete');
-            expect(autocomplete.classList.contains('active')).toBe(true);
+            expect(autocomplete.classList.contains('adf-active-search')).toBe(true);
         });
 
         it('should select the first result in find-as-you-type when down arrow is pressed and FAYT is visible', (done) => {
