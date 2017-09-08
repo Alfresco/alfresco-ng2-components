@@ -23,6 +23,7 @@ import {
     MdGridListModule,
     MdIconModule,
     MdInputModule,
+    MdListModule,
     MdNativeDateModule,
     MdTooltipModule
 } from '@angular/material';
@@ -36,6 +37,7 @@ export function modules() {
         MdNativeDateModule,
         MdDatepickerModule,
         MdCheckboxModule,
+        MdListModule,
         MdGridListModule
     ];
 }

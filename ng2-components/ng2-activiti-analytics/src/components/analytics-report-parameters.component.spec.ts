@@ -215,7 +215,7 @@ describe('AnalyticsReportParametersComponent', () => {
         it('Should render a checkbox with the value true when the definition parameter type is \'boolean\' ', (done) => {
             component.onSuccessReportParams.subscribe(() => {
                 fixture.detectChanges();
-                let checkElement: any = element.querySelector('#typeFiltering');
+                let checkElement: any = element.querySelector('#input-typeFiltering');
                 expect(checkElement.checked).toBeTruthy();
                 done();
             });

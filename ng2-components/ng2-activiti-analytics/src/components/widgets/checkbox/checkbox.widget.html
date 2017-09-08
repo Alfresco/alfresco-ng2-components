@@ -2,7 +2,7 @@
         <md-checkbox
         color="primary"
         formControlName="{{controllerName}}"
-        [attr.id]="field.id"
+        [id]="field.id"
         [checked]="field.value"
         [(ngModel)]="field.value"
         (ngModelChange)="changeValue(field)">{{field.nameKey | translate}}</md-checkbox>

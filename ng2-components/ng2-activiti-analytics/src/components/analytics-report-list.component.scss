@@ -3,16 +3,17 @@
 
     .adf-analytics-report-list {
 
-        .mdl-list__item {
-            cursor: pointer;
-        }
-
         .activiti-filters__entry {
             cursor: pointer;
         }
 
         .activiti-filters__entry-icon {
-            margin-right: 12px !important;
+            position: relative;
+            top: 5px;
+        }
+
+        .mat-nav-list .mat-list-item .mat-list-item-content {
+            line-height: 48px;
         }
 
         .activiti-filters__entry.active {
@@ -23,39 +24,69 @@
             color:  mat-color($primary);
         }
 
-        .application-title {
-            z-index: 7;
+        .adf-report-card-grids {
+            display: flex;
+            padding: 8px;
+            flex-flow: row wrap;
+            margin: 0 auto;
+            align-items: stretch;
         }
 
-        .logo {
-            position: absolute;
-            right: 20px;
-            top: 35px;
-            z-index: 6;
-        }
-
-        .logo i {
-            font-size: 70px;
-        }
-
-        .theme-1 {
+        .adf-report-card {
+            margin: 8px;
+            width: calc(33.3333333333% - 16px);
+            position: relative;
+            min-height: 200px;
+            overflow: hidden;
             background-color: #269abc;
-        }
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
 
-        .theme-1 .logo i {
-            color: #168aac;
-        }
+            &-logo {
+                position: absolute;
+                right: 20px;
+                top: 35px;
+                z-index: 6;
 
-        .theme-1 .mdl-card__actions i {
-            color: #168aac;
-        }
+                &-icon {
+                    font-size: 70px;
+                    color: #168aac;
+                    width: 1em;
+                    height: 1em;
+                    display: inline-block;
+                }
+            }
 
-        .theme-1 .mdl-card__actions i:hover {
-            color: #b7dfea;
-        }
+            &-title {
+                padding: 16px;
+                z-index: 7;
 
-        .selectedIcon {
-            color: #e9f1f3 !important;
+                .application-title {
+                    font-size: 24px;
+                    margin: 0;
+                }
+            }
+
+            &-content {
+                padding: 16px;
+                flex-grow: 1;
+            }
+
+            &-actions {
+                border-top: 1px solid rgba(0,0,0,.1);
+                padding: 8px;
+                box-sizing: border-box;
+                height: 40px;
+
+                &-icon {
+                    color: #e9f1f3;
+
+                    &:hover {
+                        color: #b7dfea;
+                    }
+                }
+            }
         }
     }
 
