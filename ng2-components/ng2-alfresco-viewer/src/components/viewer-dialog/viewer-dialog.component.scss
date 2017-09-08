@@ -15,6 +15,11 @@
         justify-content: center;
     }
 
+    &__mimetype-icon {
+        width: 24px;
+        height: 24px;
+    }
+
     &__loading-screen {
 
         display: flex;

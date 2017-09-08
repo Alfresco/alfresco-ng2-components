@@ -3,7 +3,10 @@
         <button md-icon-button [md-dialog-close]="true" mdTooltip="Close and go back">
             <md-icon>arrow_back</md-icon>
         </button>
-        <span>{{ fileName }}</span>
+        <span>
+            <img class="adf-viewer-dialog__mimetype-icon" [src]="fileMimeType | adfMimeTypeIcon">
+            <span>{{ fileName }}</span>
+        </span>
     </adf-toolbar-title>
 
     <button md-button [mdMenuTriggerFor]="mnuOpenWith">
