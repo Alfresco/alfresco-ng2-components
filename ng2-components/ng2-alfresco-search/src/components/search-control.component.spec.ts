@@ -128,15 +128,6 @@ describe('SearchControlComponent', () => {
             fixture.detectChanges();
             expect(element.querySelectorAll('input[type="text"]')[0].getAttribute('autocomplete')).toBe('on');
         });
-
-        xit('should show a normal non-expanding control when configured', () => {
-            fixture.detectChanges();
-            fixture.componentInstance.expandable = false;
-            fixture.detectChanges();
-            expect(element.querySelectorAll('div.mdl-textfield--expandable').length).toBe(0);
-            expect(element.querySelectorAll('div.mdl-textfield__expandable-holder').length).toBe(0);
-            expect(element.querySelectorAll('label.mdl-button--icon').length).toBe(0);
-        });
     });
 
     describe('Find as you type', () => {

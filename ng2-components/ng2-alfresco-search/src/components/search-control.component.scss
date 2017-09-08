@@ -1,49 +1,64 @@
+@mixin mat-search-control-theme($theme) {
+    $background: map-get($theme, background);
 
-.adf {
+    .adf {
 
-    &-search-button {
-        border-radius: 50%;
-        height: 32px;
-        min-width: 20px;
-        width: 32px;
-        padding: 0;
-        overflow: hidden;
-        color: inherit;
-        line-height: normal;
-        border: none;
-    }
-
-    &-search-container {
-        display: flex;
-        align-items: center;
-
-        .search-field {
-            width: 260px;
-            padding-top: 6px;
+        &-search-button.mat-button {
+            border-radius: 50%;
+            height: 32px;
+            min-width: 20px;
+            width: 32px;
+            padding: 0;
+            overflow: hidden;
+            color: inherit;
+            line-height: normal;
+            border: none;
         }
 
-        .search-field .mat-input-infix {
-            padding: 0px;
-        }
+        &-search-container {
+            display: flex;
+            align-items: center;
 
-        @media only screen and (max-width: 400px) {
             .search-field {
-                width: 200px;
+                width: 260px;
+                padding-top: 6px;
+
+                .mat-input-container {
+                    width: 100%;
+                }
+
+                .mat-input-underline .mat-input-ripple {
+                    background-color: mat-color($background, card);
+                }
+
+                .mat-input-element {
+                    font-size: 16px;
+                }
+            }
+
+            .search-field .mat-input-infix {
+                padding: 0px;
+            }
+
+            @media only screen and (max-width: 400px) {
+                .search-field {
+                    width: 200px;
+                }
+            }
+            @media only screen and (max-width: 320px) {
+                .search-field {
+                    width: 160px;
+                }
             }
         }
-        @media only screen and (max-width: 320px) {
-            .search-field {
-                width: 160px;
-            }
+
+        &-search-form{
+            overflow: hidden;
         }
-    }
 
-    &-search-form{
-        overflow: hidden;
-    }
-
-    &-active-search,
-    &-valid-search {
-        display: block;
+        &-active-search,
+        &-valid-search {
+            display: block;
+        }
     }
 }
