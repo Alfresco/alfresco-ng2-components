@@ -17,7 +17,6 @@
 
 import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { ContentService, RenditionsService } from 'ng2-alfresco-core';
-import { AlfrescoApiService } from 'ng2-alfresco-core';
 
 const DEFAULT_CONVERSION_ENCODING = 'pdf';
 
@@ -54,9 +53,7 @@ export class NotSupportedFormatComponent implements OnInit, OnDestroy {
 
     constructor(
         private contentService: ContentService,
-        private renditionsService: RenditionsService,
-        private apiService: AlfrescoApiService
-    ) {}
+        private renditionsService: RenditionsService) {}
 
     /**
      * Checks for available renditions if the nodeId is present
@@ -86,11 +83,12 @@ export class NotSupportedFormatComponent implements OnInit, OnDestroy {
     checkRendition(encoding: string = DEFAULT_CONVERSION_ENCODING): void {
         this.renditionsService.getRendition(this.nodeId, encoding)
             .subscribe(
-                (response: any) => {
-                    if (response.entry.status === 'NOT_CREATED') {
+                (response) => {
+                    const status = response.entry.status.toString();
+                    if (status === 'NOT_CREATED') {
                         this.convertible = true;
                         this.displayable = false;
-                    } else if (response.entry.status === 'CREATED') {
+                    } else if (status === 'CREATED') {
                         this.convertible = false;
                         this.displayable = true;
                     }
@@ -119,7 +117,7 @@ export class NotSupportedFormatComponent implements OnInit, OnDestroy {
      * Show the PDF rendition of the node
      */
     showPDF(): void {
-        this.renditionUrl = this.apiService.getInstance().content.getRenditionUrl(this.nodeId, DEFAULT_CONVERSION_ENCODING);
+        this.renditionUrl = this.renditionsService.getRenditionUrl(this.nodeId, DEFAULT_CONVERSION_ENCODING);
         this.isConversionStarted = false;
         this.isConversionFinished = true;
     }

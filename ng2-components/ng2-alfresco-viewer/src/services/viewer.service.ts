@@ -30,21 +30,14 @@ export class ViewerService {
                 private apiService: AlfrescoApiService) {
     }
 
-    private get contentApi() {
-        return this.apiService.getInstance().content;
-    }
-
-    private get nodesApi() {
-        return this.apiService.getInstance().nodes;
-    }
-
     showViewerForNode(node: MinimalNodeEntryEntity): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
             const settings: ViewerDialogSettings = {
                 fileName: node.name,
                 fileMimeType: node.content.mimeType,
-                fileUrl: this.contentApi.getContentUrl(node.id, false),
-                downloadUrl: this.contentApi.getContentUrl(node.id, true)
+                fileUrl: this.apiService.contentApi.getContentUrl(node.id, false),
+                downloadUrl: this.apiService.contentApi.getContentUrl(node.id, true),
+                nodeId: node.id
             };
 
             const dialogRef = this.dialog.open(ViewerDialogComponent, {
@@ -60,7 +53,7 @@ export class ViewerService {
 
     showViewerForNodeId(nodeId: string): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
-            this.nodesApi.getNode(nodeId).then(
+            this.apiService.nodesApi.getNode(nodeId).then(
                 (node: MinimalNodeEntity) => {
                     if (node && node.entry && node.entry.isFile) {
                         return this.showViewerForNode(node.entry);

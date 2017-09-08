@@ -20,4 +20,6 @@ export interface ViewerDialogSettings {
     fileMimeType?: string;
     fileName?: string;
     downloadUrl?: string;
+
+    nodeId?: string;
 }

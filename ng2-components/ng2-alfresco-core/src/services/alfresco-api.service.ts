@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApi } from 'alfresco-js-api';
+import { AlfrescoApi, ContentApi, NodesApi, RenditionsApi } from 'alfresco-js-api';
 import * as alfrescoApi from 'alfresco-js-api';
 import { AppConfigService } from './app-config.service';
 import { StorageService } from './storage.service';
@@ -26,8 +26,20 @@ export class AlfrescoApiService {
 
     private alfrescoApi: AlfrescoApi;
 
-    public getInstance(): AlfrescoApi {
+    getInstance(): AlfrescoApi {
         return this.alfrescoApi;
+    }
+
+    get contentApi(): ContentApi {
+        return this.getInstance().content;
+    }
+
+    get nodesApi(): NodesApi {
+        return this.getInstance().nodes;
+    }
+
+    get renditionsApi(): RenditionsApi {
+        return this.getInstance().core.renditionsApi;
     }
 
     constructor(private appConfig: AppConfigService,

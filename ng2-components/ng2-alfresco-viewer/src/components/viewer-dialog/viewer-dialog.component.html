@@ -74,7 +74,18 @@
 </adf-toolbar>
 
  <md-dialog-content>
-    <ng-container [ngSwitch]="viewerType">
+
+    <ng-container *ngIf="isLoading">
+        <div class="adf-viewer-dialog__loading-screen">
+            <h2>Loading</h2>
+            <div>
+                <md-spinner></md-spinner>
+            </div>
+        </div>
+
+    </ng-container>
+
+    <ng-container *ngIf="!isLoading" [ngSwitch]="viewerType">
 
         <ng-container *ngSwitchCase="'image'">
             <div class="adf-viewer-dialog__image-view">

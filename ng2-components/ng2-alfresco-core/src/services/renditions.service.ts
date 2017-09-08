@@ -16,9 +16,9 @@
  */
 
 import { Injectable } from '@angular/core';
+import { RenditionEntry, RenditionPaging } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Rx';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { LogService } from './log.service';
 
 /**
  * RenditionsService
@@ -28,52 +28,57 @@ import { LogService } from './log.service';
 @Injectable()
 export class RenditionsService {
 
-    constructor(private apiService: AlfrescoApiService,
-                private logService: LogService) {
-
+    constructor(private apiService: AlfrescoApiService) {
     }
 
-    isRenditionAvailable(nodeId: string, encoding: string) {
+    isRenditionAvailable(nodeId: string, encoding: string): Observable<boolean> {
         return Observable.create((observer) => {
-            this.getRendition(nodeId, encoding).subscribe((res) => {
-                let isAvailable = true;
-                if (res.entry.status === 'NOT_CREATED') {
-                    isAvailable = false;
+            this.getRendition(nodeId, encoding).subscribe(
+                (res) => {
+                    let isAvailable = true;
+                    if (res.entry.status.toString() === 'NOT_CREATED') {
+                        isAvailable = false;
+                    }
+                    observer.next(isAvailable);
+                    observer.complete();
+                },
+                () => {
+                    observer.next(false);
+                    observer.complete();
                 }
-                observer.next(isAvailable);
-                observer.complete();
-            },                                            () => {
-                observer.next(false);
-                observer.complete();
-            });
+            );
         });
     }
 
-    isConversionPossible(nodeId: string, encoding: string) {
+    isConversionPossible(nodeId: string, encoding: string): Observable<boolean> {
         return Observable.create((observer) => {
-            this.getRendition(nodeId, encoding).subscribe(() => {
-                observer.next(true);
-                observer.complete();
-            },                                            () => {
-                observer.next(false);
-                observer.complete();
-            });
+            this.getRendition(nodeId, encoding).subscribe(
+                () => {
+                    observer.next(true);
+                    observer.complete();
+                },
+                () => {
+                    observer.next(false);
+                    observer.complete();
+                }
+            );
         });
     }
 
-    getRendition(nodeId: string, encoding: string) {
-        return Observable.fromPromise(this.apiService.getInstance().core.renditionsApi.getRendition(nodeId, encoding))
-            .catch(err => this.handleError(err));
+    getRenditionUrl(nodeId: string, encoding: string): string {
+        return this.apiService.contentApi.getRenditionUrl(nodeId, 'pdf');
     }
 
-    getRenditionsListByNodeId(nodeId: string) {
-        return Observable.fromPromise(this.apiService.getInstance().core.renditionsApi.getRenditions(nodeId))
-            .catch(err => this.handleError(err));
+    getRendition(nodeId: string, encoding: string): Observable<RenditionEntry> {
+        return Observable.fromPromise(this.apiService.renditionsApi.getRendition(nodeId, encoding));
     }
 
-    createRendition(nodeId: string, encoding: string) {
-        return Observable.fromPromise(this.apiService.getInstance().core.renditionsApi.createRendition(nodeId, {id: encoding}))
-            .catch(err => this.handleError(err));
+    getRenditionsListByNodeId(nodeId: string): Observable<RenditionPaging> {
+        return Observable.fromPromise(this.apiService.renditionsApi.getRenditions(nodeId));
+    }
+
+    createRendition(nodeId: string, encoding: string): Observable<{}> {
+        return Observable.fromPromise(this.apiService.renditionsApi.createRendition(nodeId, {id: encoding}));
     }
 
     convert(nodeId: string, encoding: string, pollingInterval: number = 1000) {
@@ -85,12 +90,7 @@ export class RenditionsService {
         return Observable.interval(interval)
             .switchMap(() => this.getRendition(nodeId, encoding))
             .takeWhile((data) => {
-                return (data.entry.status !== 'CREATED');
+                return (data.entry.status.toString() !== 'CREATED');
             });
-    }
-
-    private handleError(error: any): Observable<any> {
-        this.logService.error(error);
-        return Observable.throw(error || 'Server error');
     }
 }

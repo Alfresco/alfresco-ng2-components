@@ -15,6 +15,19 @@
         justify-content: center;
     }
 
+    &__loading-screen {
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        height: 85vh;
+
+        .md-spinner {
+            margin: 0 auto;
+        }
+    }
+
     &__info-drawer {
         width: 350px;
         display: block;
