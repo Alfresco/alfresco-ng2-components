@@ -18,6 +18,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MdDatepickerModule, MdInputModule, MdNativeDateModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
+import * as moment from 'moment';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewDateItemComponent } from './card-view-dateitem.component';
@@ -46,7 +47,7 @@ describe('CardViewDateItemComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(CardViewDateItemComponent);
         component = fixture.componentInstance;
-        component.property = new CardViewDateItemModel ({
+        component.property = new CardViewDateItemModel({
             label: 'Date label',
             value: new Date('07/10/2017'),
             key: 'datekey',
@@ -131,17 +132,17 @@ describe('CardViewDateItemComponent', () => {
         component.editable = true;
         component.property.editable = true;
         const cardViewUpdateService = TestBed.get(CardViewUpdateService);
-        const expectedDate = new Date('11/11/2017');
+        const expectedDate = moment('Jul 10 2017', 'MMM DD YY');
         fixture.detectChanges();
 
         cardViewUpdateService.itemUpdated$.subscribe(
             (updateNotification) => {
                 expect(updateNotification.target).toBe(component.property);
-                expect(updateNotification.changed).toEqual({ datekey: expectedDate });
+                expect(updateNotification.changed).toEqual({datekey: expectedDate.toDate()});
                 done();
             }
         );
 
-        component.datepicker.selectedChanged.next(expectedDate);
+        component.onDateChanged({value: expectedDate});
     });
 });
