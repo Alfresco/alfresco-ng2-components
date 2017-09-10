@@ -51,19 +51,4 @@ export class NumberWidgetComponent extends WidgetComponent implements OnInit {
             this.formGroup.get(this.controllerName).setValidators(Validators.required);
         }
     }
-
-    setupMaterialComponents(handler: any): boolean {
-        // workaround for MDL issues with dynamic components
-        if (handler) {
-            handler.upgradeAllRegistered();
-            if (this.elementRef && this.hasValue()) {
-                let container = this.elementRef.nativeElement.querySelector('.mdl-textfield');
-                if (container && container.MaterialTextfield) {
-                    container.MaterialTextfield.change(this.field.value.toString());
-                }
-            }
-            return true;
-        }
-        return false;
-    }
 }
