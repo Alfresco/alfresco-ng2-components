@@ -25,8 +25,6 @@ import {
     StorageService
 } from 'ng2-alfresco-core';
 
-declare var document: any;
-
 @Component({
     selector: 'adf-app',
     templateUrl: './app.component.html',
