@@ -30,19 +30,19 @@ export class ViewerService {
                 private apiService: AlfrescoApiService) {
     }
 
-    showViewerForNode(node: MinimalNodeEntryEntity): Promise<boolean> {
+    showViewerForNode(node: MinimalNodeEntryEntity, settings: ViewerDialogSettings = {}): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
-            const settings: ViewerDialogSettings = {
+            const dialogSettings = Object.assign({}, settings, {
                 fileName: node.name,
                 fileMimeType: node.content.mimeType,
                 fileUrl: this.apiService.contentApi.getContentUrl(node.id, false),
                 downloadUrl: this.apiService.contentApi.getContentUrl(node.id, true),
                 nodeId: node.id
-            };
+            });
 
             const dialogRef = this.dialog.open(ViewerDialogComponent, {
                 panelClass: 'adf-viewer-dialog-panel',
-                data: settings
+                data: dialogSettings
             });
 
             dialogRef.afterClosed().subscribe(result => {
@@ -51,12 +51,12 @@ export class ViewerService {
         });
     }
 
-    showViewerForNodeId(nodeId: string): Promise<boolean> {
+    showViewerForNodeId(nodeId: string, settings: ViewerDialogSettings = {}): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
             this.apiService.nodesApi.getNode(nodeId).then(
                 (node: MinimalNodeEntity) => {
                     if (node && node.entry && node.entry.isFile) {
-                        return this.showViewerForNode(node.entry);
+                        return this.showViewerForNode(node.entry, settings);
                     } else {
                         resolve(false);
                     }
