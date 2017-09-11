@@ -23,7 +23,7 @@ import { FormService } from './../services/form.service';
 import { NodeService } from './../services/node.service';
 import { ContentLinkModel } from './widgets/core/content-link.model';
 import { FormFieldModel, FormModel, FormOutcomeEvent, FormOutcomeModel, FormValues, FormFieldValidator } from './widgets/core/index';
-
+import { Observable } from 'rxjs/Rx';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
 
 @Component({
@@ -280,23 +280,14 @@ export class FormComponent implements OnInit, OnChanges {
         }
     }
 
-    loadFormProcessVariables(taskId: string): Promise<boolean> {
-        return new Promise((resolve, reject) => {
-            this.formService.getTask(taskId).subscribe(
-                task => {
-                    if (this.isAProcessTask(task)) {
-                        this.visibilityService.getTaskProcessVariable(taskId).subscribe(_ => {
-                            resolve(true);
-                        });
-                    } else {
-                        resolve(true);
-                    }
-                },
-                error => {
-                    this.handleError(error);
-                    resolve(false);
-                }
-            );
+    findProcessVariablesByTaskId(taskId: string): Observable<any> {
+        return this.formService.getTask(taskId).
+        switchMap((task: any) => {
+            if (this.isAProcessTask(task)) {
+                return this.visibilityService.getTaskProcessVariable(taskId);
+            } else {
+                return Observable.of({});
+            }
         });
     }
 
@@ -306,7 +297,7 @@ export class FormComponent implements OnInit, OnChanges {
 
     getFormByTaskId(taskId: string): Promise<FormModel> {
         return new Promise<FormModel>((resolve, reject) => {
-            this.loadFormProcessVariables(this.taskId).then(_ => {
+            this.findProcessVariablesByTaskId(this.taskId).subscribe( (processVariables) => {
                 this.formService
                     .getTaskForm(taskId)
                     .subscribe(
