@@ -90,6 +90,7 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
      * @memberOf TaskListComponent
      */
     hasCustomDataSource: boolean = false;
+    isStreamLoaded = false;
 
     private defaultSchemaColumn: DataColumn[] = [
         { type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true },
@@ -99,21 +100,29 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
     constructor(private taskListService: TaskListService) {
     }
 
+    initStream() {
+        if (!this.isStreamLoaded) {
+            this.isStreamLoaded = true;
+            this.taskListService.tasksList$.subscribe(
+                (tasks) => {
+                    let instancesRow = this.createDataRow(tasks.data);
+                    this.renderInstances(instancesRow);
+                    this.selectTask(this.landingTaskId);
+                    this.onSuccess.emit(tasks);
+                    this.isLoading = false;
+                }, (error) => {
+                    this.onError.emit(error);
+                    this.isLoading = false;
+                });
+        }
+    }
+
+
     ngOnInit() {
         if (this.data === undefined) {
             this.data = new ObjectDataTableAdapter();
         }
-        this.taskListService.tasksList$.subscribe(
-            (tasks) => {
-                let instancesRow = this.createDataRow(tasks.data);
-                this.renderInstances(instancesRow);
-                this.selectTask(this.landingTaskId);
-                this.onSuccess.emit(tasks);
-                this.isLoading = false;
-        }, (error) => {
-            this.onError.emit(error);
-            this.isLoading = false;
-        });
+        this.initStream();
     }
 
     ngAfterContentInit() {
@@ -143,6 +152,7 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
     }
 
     ngOnChanges(changes: SimpleChanges) {
+        this.initStream();
         if (this.isPropertyChanged(changes)) {
             this.reload();
         }
