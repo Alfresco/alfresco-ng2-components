@@ -5,16 +5,16 @@
     Add a checklist
 </div>
 <div class="menu-container" *ngIf="checklist?.length > 0">
-    <ul class='mdl-list'>
-        <li class="mdl-list__item" *ngFor="let check of checklist">
-            <span class="mdl-chip mdl-chip--deletable" id="check-{{check.id}}">
-                <span class="mdl-chip__text">{{check.name}}</span>
-                <button type="button" class="mdl-chip__action" (click)="delete(check.id)">
-                    <i id="remove-{{check.id}}" class="material-icons">cancel</i>
-                </button>
-            </span>
-        </li>
-    </ul>
+
+    <md-chip-list class="mat-chip-list-stacked">
+        <md-chip id="check-{{check.id}}" *ngFor="let check of checklist">
+            <span>{{check.name}}</span>
+            <button type="button" class="mdl-chip__action" (click)="delete(check.id)">
+                <md-icon *ngIf="!readOnly" id="remove-{{check.id}}" mdChipRemove >cancel</md-icon>
+            </button>
+        </md-chip>
+    </md-chip-list>
+
 </div>
 <div *ngIf="checklist?.length === 0" id="checklist-none-message">
     {{ 'TASK_DETAILS.CHECKLIST.NONE' | translate }}

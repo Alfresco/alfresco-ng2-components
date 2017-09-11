@@ -117,7 +117,6 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
         }
     }
 
-
     ngOnInit() {
         if (this.data === undefined) {
             this.data = new ObjectDataTableAdapter();
