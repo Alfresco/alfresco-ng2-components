@@ -4,12 +4,11 @@
 <div *ngIf="!readOnly" class="mdl-tooltip" for="add-checklist">
     Add a checklist
 </div>
-<div class="menu-container" *ngIf="checklist?.length > 0">
-
+<div class="adf-checklist-menu-container" *ngIf="checklist?.length > 0">
     <md-chip-list class="mat-chip-list-stacked">
         <md-chip id="check-{{check.id}}" *ngFor="let check of checklist">
             <span>{{check.name}}</span>
-            <button type="button" class="mdl-chip__action" (click)="delete(check.id)">
+            <button type="button" class="mdl-chip__action adf-checklist-cancel-button" (click)="delete(check.id)">
                 <md-icon *ngIf="!readOnly" id="remove-{{check.id}}" mdChipRemove >cancel</md-icon>
             </button>
         </md-chip>
