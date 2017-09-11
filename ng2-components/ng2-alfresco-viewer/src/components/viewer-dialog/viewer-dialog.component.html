@@ -3,7 +3,10 @@
         <button md-icon-button [md-dialog-close]="true" mdTooltip="Close and go back">
             <md-icon>arrow_back</md-icon>
         </button>
-        <span>{{ fileName }}</span>
+        <span>
+            <img class="adf-viewer-dialog__mimetype-icon" [src]="fileMimeType | adfMimeTypeIcon">
+            <span>{{ fileName }}</span>
+        </span>
     </adf-toolbar-title>
 
     <button md-button [mdMenuTriggerFor]="mnuOpenWith">
@@ -74,7 +77,18 @@
 </adf-toolbar>
 
  <md-dialog-content>
-    <ng-container [ngSwitch]="viewerType">
+
+    <ng-container *ngIf="isLoading">
+        <div class="adf-viewer-dialog__loading-screen">
+            <h2>Loading</h2>
+            <div>
+                <md-spinner></md-spinner>
+            </div>
+        </div>
+
+    </ng-container>
+
+    <ng-container *ngIf="!isLoading" [ngSwitch]="viewerType">
 
         <ng-container *ngSwitchCase="'image'">
             <div class="adf-viewer-dialog__image-view">
@@ -89,10 +103,10 @@
         </ng-container>
 
         <ng-container *ngSwitchCase="'pdf'">
-            <adf-pdf-viewer class="adf-viewer-dialog__pdf-view"
-                [showToolbar]="true"
-                [urlFile]="fileUrl">
-            </adf-pdf-viewer>
+            <adf-pdf-view
+                class="adf-viewer-dialog__pdf-view"
+                [fileUrl]="fileUrl">
+            </adf-pdf-view>
         </ng-container>
 
         <ng-container *ngSwitchCase="'video'">

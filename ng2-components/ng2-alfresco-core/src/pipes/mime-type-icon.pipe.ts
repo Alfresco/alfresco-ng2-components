@@ -15,9 +15,17 @@
  * limitations under the License.
  */
 
-export interface ViewerDialogSettings {
-    fileUrl?: string;
-    fileMimeType?: string;
-    fileName?: string;
-    downloadUrl?: string;
+import { Pipe, PipeTransform } from '@angular/core';
+import { ThumbnailService } from '../services/thumbnail.service';
+
+@Pipe({
+    name: 'adfMimeTypeIcon'
+})
+export class MimeTypeIconPipe implements PipeTransform {
+
+    constructor(private thumbnailService: ThumbnailService) { }
+
+    transform(text: string): string {
+        return this.thumbnailService.getMimeTypeIcon(text);
+    }
 }

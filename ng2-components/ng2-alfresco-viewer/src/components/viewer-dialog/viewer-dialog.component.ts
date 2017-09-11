@@ -18,6 +18,7 @@
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
+import { RenditionsService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 
 import { ViewerDialogSettings } from './viewer-dialog.settings';
@@ -42,8 +43,12 @@ export class ViewerDialogComponent implements OnInit {
     unknownFormatIcon = 'wifi_tethering';
     unknownFormatText = 'Document preview could not be loaded.';
 
+    isLoading: boolean = false;
+
     viewerType: string = null;
     asText: Observable<string>;
+
+    private nodeId: string;
 
     private types = [
         { mimeType: 'application/x-javascript', type: 'text' },
@@ -52,11 +57,13 @@ export class ViewerDialogComponent implements OnInit {
 
     constructor(private dialogRef: MdDialogRef<ViewerDialogComponent>,
                 @Inject(MD_DIALOG_DATA) settings: ViewerDialogSettings,
-                private http: Http) {
+                private http: Http,
+                private renditionService: RenditionsService) {
         this.fileUrl = settings.fileUrl;
         this.fileName = settings.fileName;
         this.fileMimeType = settings.fileMimeType;
         this.downloadUrl = settings.downloadUrl;
+        this.nodeId = settings.nodeId;
     }
 
     ngOnInit() {
@@ -65,6 +72,10 @@ export class ViewerDialogComponent implements OnInit {
 
         if (this.viewerType !== 'unknown') {
             this.allowInfoDrawer = true;
+        } else {
+            if (this.nodeId) {
+                this.displayAsPdf(this.nodeId);
+            }
         }
     }
 
@@ -116,5 +127,44 @@ export class ViewerDialogComponent implements OnInit {
 
     close() {
         this.dialogRef.close(true);
+    }
+
+    private displayAsPdf(nodeId: string) {
+        this.isLoading = true;
+
+        this.renditionService.getRendition(nodeId, 'pdf').subscribe(
+            (response) => {
+                const status = response.entry.status.toString();
+
+                if (status === 'CREATED') {
+                    this.isLoading = false;
+                    this.showRenditionPdf(nodeId);
+                } else if (status === 'NOT_CREATED') {
+                    this.renditionService.convert(nodeId, 'pdf').subscribe({
+                        complete: () => {
+                            this.isLoading = false;
+                            this.showRenditionPdf(nodeId);
+                        },
+                        error: (error) => {
+                            this.isLoading = false;
+                            console.log(error);
+                        }
+                    });
+                } else {
+                    this.isLoading = false;
+                }
+            },
+            (err) => {
+                this.isLoading = false;
+                console.log(err);
+            }
+        );
+    }
+
+    private showRenditionPdf(nodeId: string) {
+        if (nodeId) {
+            this.viewerType = 'pdf';
+            this.fileUrl = this.renditionService.getRenditionUrl(nodeId, 'pdf');
+        }
     }
 }

@@ -1,0 +1,69 @@
+<div id="viewer-pdf-container" class="viewer-pdf-container" (window:resize)="onResize()">
+    <div id="viewer-viewerPdf" class="pdfViewer">
+        <div *ngIf="isLoading" class="adf-pdf-view__loading-screen">
+            <h2>Loading</h2>
+            <div>
+                <md-spinner></md-spinner>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-container *ngIf="showToolbar">
+    <div class="viewer-toolbar-pagination">
+        <div
+            id="viewer-previous-page-button"
+            aria-label="arrow left"
+            class="button-page left"
+            tabindex="0"
+            (click)="previousPage()">
+            <md-icon>keyboard_arrow_left</md-icon>
+        </div>
+
+        <div class="viewer-page-counter left" >
+            <input #page
+                class="viewer-pagenumber-input left"
+                type="text"
+                pattern="-?[0-9]*(\.[0-9]+)?"
+                value="{{ displayPage }}"
+                (keyup.enter)="inputPage(page.value)">
+            <div class="left viewer-total-pages">/ {{ totalPages }}</div>
+        </div>
+
+        <div
+            id="viewer-next-page-button"
+            aria-label="arrow right"
+            class="button-page left"
+            tabindex="0"
+            (click)="nextPage()">
+            <md-icon>keyboard_arrow_right</md-icon>
+        </div>
+    </div>
+
+    <div class="viewer-toolbar-command">
+        <div
+            id="viewer-scale-page-button"
+            aria-label="zoom out map"
+            class="button-page left"
+            tabindex="0"
+            (click)="pageFit()">
+            <md-icon>zoom_out_map</md-icon>
+        </div>
+        <div
+            id="viewer-zoom-in-button"
+            aria-label="zoom in"
+            class="button-page left"
+            tabindex="0"
+            (click)="zoomIn()">
+            <md-icon>zoom_in</md-icon>
+        </div>
+        <div
+            id="viewer-zoom-out-button"
+            aria-label="zoom out"
+            class="button-page left"
+            tabindex="0"
+            (click)="zoomOut()">
+            <md-icon>zoom_out</md-icon>
+        </div>
+    </div>
+</ng-container>

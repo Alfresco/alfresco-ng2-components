@@ -122,6 +122,7 @@ import { NodePermissionDirective } from './src/directives/node-permission.direct
 import { UploadDirective } from './src/directives/upload.directive';
 
 import { FileSizePipe } from './src/pipes/file-size.pipe';
+import { MimeTypeIconPipe } from './src/pipes/mime-type-icon.pipe';
 import { HighlightPipe } from './src/pipes/text-highlight.pipe';
 import { TimeAgoPipe } from './src/pipes/time-ago.pipe';
 
@@ -193,7 +194,8 @@ export function providers() {
         SharedLinksApiService,
         SitesApiService,
         DiscoveryApiService,
-        HighlightTransformService
+        HighlightTransformService,
+        MomentDateAdapter
     ];
 }
 
@@ -209,6 +211,15 @@ export function obsoleteMdlDirectives() {
         MDLDirective,
         AlfrescoMdlMenuDirective,
         AlfrescoMdlTextFieldDirective
+    ];
+}
+
+export function pipes() {
+    return [
+        FileSizePipe,
+        HighlightPipe,
+        TimeAgoPipe,
+        MimeTypeIconPipe
     ];
 }
 
@@ -240,6 +251,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
     ],
     declarations: [
         ...obsoleteMdlDirectives(),
+        ...pipes(),
         UploadDirective,
         NodePermissionDirective,
         HighlightDirective,
@@ -251,16 +263,12 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         InfoDrawerTitleDirective,
         InfoDrawerButtonsDirective,
         InfoDrawerContentDirective,
-        FileSizePipe,
-        HighlightPipe,
-        TimeAgoPipe,
         CreateFolderDialogComponent,
         DownloadZipDialogComponent
     ],
     providers: [
         ...providers(),
         ...deprecatedProviders(),
-        MomentDateAdapter,
         {
             provide: TRANSLATION_PROVIDER,
             multi: true,
@@ -284,14 +292,12 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         PaginationModule,
         ToolbarModule,
         ...obsoleteMdlDirectives(),
+        ...pipes(),
         UploadDirective,
         NodePermissionDirective,
         HighlightDirective,
         DataColumnComponent,
         DataColumnListComponent,
-        FileSizePipe,
-        HighlightPipe,
-        TimeAgoPipe,
         CreateFolderDialogComponent,
         DownloadZipDialogComponent,
         InfoDrawerComponent,

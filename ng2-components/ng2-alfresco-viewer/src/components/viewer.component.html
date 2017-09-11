@@ -52,8 +52,8 @@
                             </adf-media-player>
                         </ng-container>
 
-                        <ng-container *ngIf="isText()">
-                            <adf-txt-viewer [urlFile]="urlFileContent" [blobFile]="blobFile" ></adf-txt-viewer>
+                        <ng-container *ngIf="isText() && !isExternalSupportedExtension()">
+                            <adf-txt-viewer [urlFile]="urlFileContent" [blobFile]="blobFile"></adf-txt-viewer>
                         </ng-container>
 
                          <span *ngFor="let extensionTemplate of extensionTemplates">
