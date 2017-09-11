@@ -29,6 +29,48 @@
             }
         }
 
+        @media (max-width: 500px) {
+
+            & {
+                flex-wrap: wrap;
+                padding-bottom: 24px;
+                padding-top: 8px;
+            }
+
+            &__range-block.adf-pagination__block:first-child {
+                order: 1;
+                width: 50%;
+                flex: 0 0 auto;
+                box-sizing: border-box;
+                padding-left: 16px;
+                justify-content: flex-start;
+            }
+    
+            &__perpage-block {
+                order: 3;
+                width: 50%;
+                box-sizing: border-box;
+                padding-left: 16px;
+                justify-content: flex-start;
+            }
+    
+            &__actualinfo-block {
+                order: 2;
+                width: 50%;
+                box-sizing: border-box;
+                padding-right: 16px;
+                justify-content: flex-end;
+            }
+    
+            &__controls-block {
+                order: 4;
+                width: 50%;
+                box-sizing: border-box;
+                padding-right: 16px;
+                justify-content: flex-end;
+            }                
+        }
+
         &__max-items {
             margin-left: 10px;
         }
