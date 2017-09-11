@@ -122,7 +122,7 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
         if (this.data === undefined) {
             this.data = new ObjectDataTableAdapter();
         }
-
+        this.initStream();
     }
 
     ngAfterContentInit() {
