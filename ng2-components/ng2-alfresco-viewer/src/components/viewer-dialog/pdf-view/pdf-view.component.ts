@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, HostListener, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, HostListener, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
 import { RenderingQueueServices } from '../../../services/rendering-queue.services';
 
@@ -29,7 +29,7 @@ declare let PDFJS: any;
     host: { 'class': 'adf-pdf-view' },
     encapsulation: ViewEncapsulation.None
 })
-export class PdfViewComponent implements OnInit {
+export class PdfViewComponent implements OnInit, OnDestroy {
 
     @Input()
     fileUrl: string;
@@ -53,12 +53,18 @@ export class PdfViewComponent implements OnInit {
 
     constructor(private renderingQueueServices: RenderingQueueServices,
                 private logService: LogService) {
+        // needed to preserve "this" context when setting as a global document event listener
+        this.onDocumentScroll = this.onDocumentScroll.bind(this);
     }
 
     ngOnInit() {
         if (this.fileUrl) {
             this.render(this.fileUrl);
         }
+    }
+
+    ngOnDestroy() {
+        window.document.removeEventListener('scroll', this.onDocumentScroll, true);
     }
 
     private render(src) {
@@ -113,9 +119,7 @@ export class PdfViewComponent implements OnInit {
         let documentContainer = document.getElementById('viewer-pdf-container');
         let viewer: any = document.getElementById('viewer-viewerPdf');
 
-        window.document.addEventListener('scroll', (event) => {
-            this.watchScroll(event.target);
-        }, true);
+        window.document.addEventListener('scroll', this.onDocumentScroll, true);
 
         this.pdfViewer = new PDFJS.PDFViewer({
             container: documentContainer,
@@ -126,6 +130,17 @@ export class PdfViewComponent implements OnInit {
         this.renderingQueueServices.setViewer(this.pdfViewer);
 
         this.pdfViewer.setDocument(pdfDocument);
+    }
+
+    private onDocumentScroll(event: Event) {
+        if (event && event.target) {
+            const outputPage = this.getVisibleElement(event.target);
+
+            if (outputPage) {
+                this.page = outputPage.id;
+                this.displayPage = this.page;
+            }
+        }
     }
 
     /**
@@ -320,20 +335,6 @@ export class PdfViewComponent implements OnInit {
             this.displayPage = this.page;
             this.pdfViewer.currentPageNumber = this.page;
         } else {
-            this.displayPage = this.page;
-        }
-    }
-
-    /**
-     * Litener Scroll Event
-     *
-     * @param {any} target
-     */
-    watchScroll(target) {
-        let outputPage = this.getVisibleElement(target);
-
-        if (outputPage) {
-            this.page = outputPage.id;
             this.displayPage = this.page;
         }
     }
