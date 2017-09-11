@@ -8,13 +8,11 @@
 }
 
 .activiti-demo-grid {
-    display: flex;
-    align-items: stretch;
 
     .activiti-demo-grid-item {
         margin: 4px;
         box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
-        padding: 10px 10px 10px 10px;
+        padding: 10px;
     }
 
     .activiti-demo-list-buttons {
@@ -25,25 +23,51 @@
         width: 100%;
     }
 
-    .activiti-demo-tasks-menu,
-    .activiti-demo-processes-menu,
-    .activiti-demo-reports-menu {
-        min-width: 170px;
-    }
+    .activiti-demo-tasks-list.small-pagination,
+    .activiti-demo-processes-list.small-pagination {
+        .adf-pagination {
 
-    .activiti-demo-tasks-list,
-    .activiti-demo-processes-list {
-        min-width: 510px;
-        padding: 0;
-    }
+            flex-wrap: wrap;
+            padding-bottom: 24px;
+            padding-top: 8px;
 
-    .activiti-demo-tasks-details,
-    .activiti-demo-tasks-start,
-    .activiti-demo-processes-details,
-    .activiti-demo-processes-start,
-    .activiti-demo-reports-details {
-        flex-grow: 1;
-        min-width: 680px;
+            &__block {
+                border-right: none;
+            }
+
+            &__range-block.adf-pagination__block:first-child {
+                order: 1;
+                width: 60%;
+                flex: 0 0 auto;
+                box-sizing: border-box;
+                padding-left: 2px;
+                justify-content: flex-start;
+            }
+
+            &__perpage-block {
+                order: 3;
+                width: 60%;
+                box-sizing: border-box;
+                padding-left: 2px;
+                justify-content: flex-start;
+            }
+
+            &__actualinfo-block {
+                order: 2;
+                width: 40%;
+                box-sizing: border-box;
+                padding-right: 2px;
+                justify-content: flex-end;
+            }
+
+            &__controls-block {
+                order: 4;
+                width: 40%;
+                box-sizing: border-box;
+                padding-right: 2px;
+                justify-content: flex-end;
+            }
+        }
     }
 
     .activiti-demo-list {
@@ -69,6 +93,16 @@
             height: 40px;
             vertical-align: middle;
             font-size: 14px;
+        }
+    }
+
+    @media screen and (max-width: 1279px) {
+        container-widget .grid-list {
+            flex-direction: column;
+
+            .grid-list-item {
+                width: 100% !important;
+            }
         }
     }
 }
