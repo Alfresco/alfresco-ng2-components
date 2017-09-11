@@ -1,51 +1,78 @@
-:host {
-    position: absolute;
-    z-index: 5;
-    display: none;
-    color: #555;
-    margin: -21px 0px 0px 0px;
-}
-:host a {
-    color: #555;
-    text-decoration: none;
-}
-:host table {
-    width: 300px;
-}
-:host .mdl-data-table tbody tr {
-    height: 32px;
-}
-:host .mdl-data-table td {
-    height: 32px;
-    padding: 8px;
-    text-align: left;
-    border-top: none;
-    border-bottom: none;
-}
-:host.active.valid {
-    display: block;
-}
+@mixin mat-search-autocomplete-theme($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+    $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
 
-.img-td{
-    width: 30px;
-}
+    .adf {
 
-.truncate{
-    width: 240px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+        &-search-result {
+            position: absolute;
+            z-index: 5;
+            display: none;
+            color: mat-color($foreground, text);
+            background-color: mat-color($background, card);
+            margin: -21px 0px 0px 0px;
+            border: 1px solid mat-color($primary);
+            border-collapse: collapse;
+            white-space: nowrap;
+            font-size: 14px;
 
-:host /deep/ .highlight {
-    color: #33afdf;
-}
+            a {
+                color: mat-color($foreground, text);
+                text-decoration: none;
+            }
 
-@media screen and (max-width: 400px) {
-    :host {
-        right: 0;
-    }
-    .truncate{
-        width: 200px;
+            table {
+                width: 300px;
+            }
+
+            tbody tr {
+                height: 32px;
+
+                &:hover {
+                    background-color: mat-color($background, hover);
+                }
+            }
+
+            td {
+                height: 32px;
+                padding: 8px;
+                text-align: left;
+                border-top: none;
+                border-bottom: none;
+            }
+
+            .highlight {
+                color: mat-color($primary, 900);
+            }
+
+            .img-td{
+                width: 30px;
+            }
+
+            .truncate{
+                width: 240px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            @media screen and (max-width: 400px) {
+                :host {
+                    right: 0;
+                }
+                .truncate{
+                    width: 200px;
+                }
+            }
+        }
+
+        &-valid-search {
+            .adf-search-result {
+                display: block;
+            }
+        }
     }
 }

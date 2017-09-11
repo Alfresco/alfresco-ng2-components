@@ -71,16 +71,6 @@ export class AppComponent {
         this.router.navigate(['/login']);
     }
 
-    onToggleSearch(event) {
-        let expandedHeaderClass = 'header-search-expanded',
-            header = document.querySelector('header');
-        if (event.expanded) {
-            header.classList.add(expandedHeaderClass);
-        } else {
-            header.classList.remove(expandedHeaderClass);
-        }
-    }
-
     changeLanguage(lang: string) {
         this.translateService.use(lang);
     }
