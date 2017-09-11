@@ -35,20 +35,23 @@ export class ViewerDialogComponent implements OnInit {
     fileName: string = 'Unknown file';
     fileUrl: string = null;
     fileMimeType: string = null;
-    downloadUrl: string = null;
-
-    allowInfoDrawer = false;
-    showInfoDrawer = false;
 
     unknownFormatIcon = 'wifi_tethering';
     unknownFormatText = 'Document preview could not be loaded.';
 
     isLoading: boolean = false;
-
+    showInfoDrawer = false;
     viewerType: string = null;
     asText: Observable<string>;
 
-    private nodeId: string;
+    settings: ViewerDialogSettings = {
+        allowDownload: true,
+        allowPrint: true,
+        allowShare: true,
+        allowOpenWith: true,
+        allowMoreMenu: true,
+        allowInfoDrawer: true
+    };
 
     private types = [
         { mimeType: 'application/x-javascript', type: 'text' },
@@ -59,22 +62,25 @@ export class ViewerDialogComponent implements OnInit {
                 @Inject(MD_DIALOG_DATA) settings: ViewerDialogSettings,
                 private http: Http,
                 private renditionService: RenditionsService) {
+        this.settings = Object.assign({}, this.settings, settings);
+        this.setupDialog(this.settings);
+    }
+
+    private setupDialog(settings: ViewerDialogSettings) {
         this.fileUrl = settings.fileUrl;
         this.fileName = settings.fileName;
         this.fileMimeType = settings.fileMimeType;
-        this.downloadUrl = settings.downloadUrl;
-        this.nodeId = settings.nodeId;
     }
 
     ngOnInit() {
         this.viewerType = this.detectViewerType(this.fileMimeType);
         this.asText = this.getAsText();
 
-        if (this.viewerType !== 'unknown') {
-            this.allowInfoDrawer = true;
-        } else {
-            if (this.nodeId) {
-                this.displayAsPdf(this.nodeId);
+        if (this.viewerType === 'unknown') {
+            this.settings.allowInfoDrawer = false;
+
+            if (this.settings.nodeId) {
+                this.displayAsPdf(this.settings.nodeId);
             }
         }
     }
@@ -108,12 +114,12 @@ export class ViewerDialogComponent implements OnInit {
     }
 
     download() {
-        if (this.downloadUrl && this.fileName) {
+        if (this.settings.downloadUrl && this.fileName) {
             const link = document.createElement('a');
 
             link.style.display = 'none';
             link.download = this.fileName;
-            link.href = this.downloadUrl;
+            link.href = this.settings.downloadUrl;
 
             document.body.appendChild(link);
             link.click();

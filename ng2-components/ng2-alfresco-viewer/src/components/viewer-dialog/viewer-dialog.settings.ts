@@ -20,6 +20,12 @@ export interface ViewerDialogSettings {
     fileMimeType?: string;
     fileName?: string;
     downloadUrl?: string;
-
     nodeId?: string;
+
+    allowDownload?: boolean;
+    allowPrint?: boolean;
+    allowShare?: boolean;
+    allowOpenWith?: boolean;
+    allowMoreMenu?: boolean;
+    allowInfoDrawer?: boolean;
 }
