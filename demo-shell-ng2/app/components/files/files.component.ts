@@ -63,9 +63,6 @@ export class FilesComponent implements OnInit {
     multipleFileUpload: boolean = false;
 
     @Input()
-    disableWithNoPermission: boolean = false;
-
-    @Input()
     folderUpload: boolean = false;
 
     @Input()
