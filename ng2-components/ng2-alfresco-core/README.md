@@ -808,22 +808,6 @@ Example of the default settings file content:
 Please note that settings above are default ones coming with the server. 
 You can override the values in your custom `app.config.json` file if needed. 
 
-You can also change the path or name of the configuration file when importing the CoreModule in your main application.
-
-```ts
-...
-@NgModule({
-    imports: [
-        ...
-        CoreModule.forRoot({
-            appConfigFile: 'app.production.config.json'
-        })
-    ],
-    ...
-}
-export class AppModule { }
-```
-
 Below is a simple example of using the AppConfigService in practice. 
 
 **app.component.ts**
@@ -849,28 +833,6 @@ export class AppComponent {
 Your custom components can also benefit from the `AppConfigService`,
 you can put an unlimited number of settings and optionally a nested JSON hierarchy.
 
-#### Different configurations based on environment settings
-
-The CoreModule allows you to provide custom application configuration path.
-That means you can evaluate the final file name based on conditions, for example environment settings:
-
-```ts
-let appConfigFile = 'app.config-dev.json';
-if (process.env.ENV === 'production') {
-    appConfigFile = 'app.config-prod.json';
-}
-
-@NgModule({
-    imports: [
-        ...
-        CoreModule.forRoot({
-            appConfigFile: appConfigFile
-        }),
-        ...
-    ]
-})
-```
-
 #### Variable substitution in configuration strings
 
 The `AppConfigService` also supports a limited set of variable substitutions to greatly simplify certain scenarios.
@@ -891,31 +853,6 @@ The supported variables are:
 | --- | --- |
 | hostname | `location.hostname` |
 | port | `location.port` |
-
-#### Unit testing
-
-You can also provide custom values for the entire service.
-This might become handy when creating unit tests.
-
-```ts
-describe('MyTest', () => {
-
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                CoreModule.forRoot(),
-                AppConfigModule.forRoot('app.config.json', {
-                    ecmHost: 'http://localhost:9876/ecm'
-                })
-            ]
-        });
-    });
-
-});
-```
-
-In the example above custom values are applied on the top of all the values the `AppConfigService` has previously loaded.
-If there is an 'app.config.json' file loaded at unit test run time then your custom values will overwrite exiting values with the same keys if present.
 
 ## User Preferences Service
 

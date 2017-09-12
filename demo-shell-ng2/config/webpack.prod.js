@@ -100,6 +100,10 @@ module.exports = webpackMerge(commonConfig, {
                 context: `node_modules/ng2-alfresco-core/prebuilt-themes/`,
                 from: '**/*.css',
                 to: 'prebuilt-themes'
+            },
+            {
+                from: 'app.config-prod.json',
+                to: 'app.config.json'
             }
         ]),
         new webpack.NoEmitOnErrorsPlugin(),

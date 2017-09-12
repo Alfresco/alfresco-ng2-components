@@ -17,7 +17,7 @@
 
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigModule, CoreModule } from 'ng2-alfresco-core';
+import { AppConfigService, CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { WebscriptComponent } from '../src/webscript.component';
 
@@ -33,10 +33,7 @@ describe('WebscriptComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
-                AppConfigModule.forRoot('app.config.json', {
-                    ecmHost: 'http://localhost:9876/ecm'
-                }),
+                CoreModule,
                 DataTableModule
             ],
             declarations: [
@@ -46,6 +43,9 @@ describe('WebscriptComponent', () => {
     }));
 
     beforeEach(() => {
+        let appConfig: AppConfigService = TestBed.get(AppConfigService);
+        appConfig.config.ecmHost = 'http://localhost:9876/ecm';
+
         fixture = TestBed.createComponent(WebscriptComponent);
         component = fixture.componentInstance;
 

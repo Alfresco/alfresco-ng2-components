@@ -16,7 +16,7 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { AlfrescoTranslationService, AppConfigModule, CoreModule, NotificationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, AppConfigService, CoreModule, NotificationService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { FileNode, FolderNode } from '../assets/document-library.model.mock';
 import { ContentActionHandler } from '../models/content-action.model';
@@ -32,10 +32,7 @@ describe('FolderActionsService', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
-                AppConfigModule.forRoot('app.config.json', {
-                    ecmHost: 'http://localhost:9876/ecm'
-                })
+                CoreModule
             ],
             providers: [
                 DocumentListService,
@@ -48,6 +45,9 @@ describe('FolderActionsService', () => {
     }));
 
     beforeEach(() => {
+        let appConfig: AppConfigService = TestBed.get(AppConfigService);
+        appConfig.config.ecmHost = 'http://localhost:9876/ecm';
+
         service = TestBed.get(FolderActionsService);
         documentListService = TestBed.get(DocumentListService);
     });
