@@ -35,6 +35,7 @@ import { UserInfoComponentModule } from 'ng2-alfresco-userinfo';
 import { ViewerModule } from 'ng2-alfresco-viewer';
 import { WebScriptModule } from 'ng2-alfresco-webscript';
 
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { Editor3DModule } from 'ng2-3d-editor';
 import { ChartsModule } from 'ng2-charts';
 import { AppComponent } from './app.component';
@@ -100,7 +101,8 @@ if (process.env.ENV === 'production') {
         CustomEditorsModule,
         Editor3DModule.forRoot(),
         ChartsModule,
-        ThemePickerModule
+        ThemePickerModule,
+        FlexLayoutModule
     ],
     declarations: [
         AppComponent,
