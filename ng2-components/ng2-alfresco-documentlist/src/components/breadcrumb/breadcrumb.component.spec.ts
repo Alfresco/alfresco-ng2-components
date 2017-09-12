@@ -61,7 +61,7 @@ describe('Breadcrumb', () => {
         element = fixture.nativeElement;
         component = fixture.componentInstance;
 
-        documentList = TestBed.createComponent(DocumentListComponent).componentInstance;
+        documentList = TestBed.createComponent<DocumentListComponent>(DocumentListComponent).componentInstance;
     });
 
     it('should prevent default click behavior', () => {
@@ -100,5 +100,116 @@ describe('Breadcrumb', () => {
             expect(documentList.loadFolderByNodeId).toHaveBeenCalledWith(node.id);
             done();
         }, 0);
+    });
+
+    it('should not parse the route when node not provided', () => {
+        expect(component.parseRoute(null)).toEqual([]);
+    });
+
+    it('should not parase the route when node has no path', () => {
+        const node: any = {};
+        expect(component.parseRoute(node)).toEqual([]);
+    });
+
+    it('should append the node to the route', () => {
+        const node: any = {
+            id: 'test-id',
+            name: 'test-name',
+            path: {
+                elements: [
+                    { id: 'element-id', name: 'element-name' }
+                ]
+            }
+        };
+        const route = component.parseRoute(node);
+
+        expect(route.length).toBe(2);
+        expect(route[1].id).toBe(node.id);
+        expect(route[1].name).toBe(node.name);
+    });
+
+    it('should trim the route if custom root id provided', () => {
+        const node: any = {
+            id: 'test-id',
+            name: 'test-name',
+            path: {
+                elements: [
+                    { id: 'element-1-id', name: 'element-1-name' },
+                    { id: 'element-2-id', name: 'element-2-name' },
+                    { id: 'element-3-id', name: 'element-3-name' }
+                ]
+            }
+        };
+        component.rootId = 'element-2-id';
+        const route = component.parseRoute(node);
+
+        expect(route.length).toBe(3);
+
+        expect(route[0].id).toBe('element-2-id');
+        expect(route[0].name).toBe('element-2-name');
+
+        expect(route[2].id).toBe(node.id);
+        expect(route[2].name).toBe(node.name);
+    });
+
+    it('should rename root node if custom name provided', () => {
+        const node: any = {
+            id: 'test-id',
+            name: 'test-name',
+            path: {
+                elements: [
+                    { id: 'element-1-id', name: 'element-1-name' },
+                    { id: 'element-2-id', name: 'element-2-name' },
+                    { id: 'element-3-id', name: 'element-3-name' }
+                ]
+            }
+        };
+        component.root = 'custom root';
+        const route = component.parseRoute(node);
+
+        expect(route.length).toBe(4);
+        expect(route[0].id).toBe('element-1-id');
+        expect(route[0].name).toBe('custom root');
+    });
+
+    it('should replace root id if nothing to trim in the path', () => {
+        const node: any = {
+            id: 'test-id',
+            name: 'test-name',
+            path: {
+                elements: [
+                    { id: 'element-1-id', name: 'element-1-name' },
+                    { id: 'element-2-id', name: 'element-2-name' },
+                    { id: 'element-3-id', name: 'element-3-name' }
+                ]
+            }
+        };
+        component.rootId = 'custom-id';
+        const route = component.parseRoute(node);
+
+        expect(route.length).toBe(4);
+        expect(route[0].id).toBe('custom-id');
+        expect(route[0].name).toBe('element-1-name');
+    });
+
+    it('should replace both id and name of the root element', () => {
+        const node: any = {
+            id: 'test-id',
+            name: 'test-name',
+            path: {
+                elements: [
+                    { id: 'element-1-id', name: 'element-1-name' },
+                    { id: 'element-2-id', name: 'element-2-name' },
+                    { id: 'element-3-id', name: 'element-3-name' }
+                ]
+            }
+        };
+        component.root = 'custom-name';
+        component.rootId = 'custom-id';
+        const route = component.parseRoute(node);
+
+        expect(route.length).toBe(4);
+        expect(route[0].id).toBe('custom-id');
+        expect(route[0].name).toBe('custom-name');
     });
 });
