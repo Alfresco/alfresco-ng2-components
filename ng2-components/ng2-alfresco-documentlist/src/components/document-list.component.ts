@@ -694,6 +694,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     onChangePageSize(event: Pagination): void {
         this.pageSize = event.maxItems;
+        this.skipCount = 0;
         this.reload();
     }
 
