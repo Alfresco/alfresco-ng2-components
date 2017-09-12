@@ -25,7 +25,7 @@ declare let dialogPolyfill: any;
 @Component({
     selector: 'adf-checklist, activiti-checklist',
     templateUrl: './checklist.component.html',
-    styleUrls: ['./checklist.component.css'],
+    styleUrls: ['./checklist.component.scss'],
     providers: [TaskListService]
 })
 export class ChecklistComponent implements OnInit, OnChanges {
