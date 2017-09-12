@@ -69,15 +69,17 @@
     {{ 'DETAILS.TASKS.NO_COMPLETED' | translate }}
 </div>
 
-<dialog *ngIf="hasStartFormDefined()" class="mdl-dialog task-details-dialog" #startDialog>
-    <h4 class="mdl-dialog__title">{{ 'DETAILS.LABELS.START_FORM'|translate }}</h4>
-    <div class="mdl-dialog__content form__size">
-        <adf-start-form [processId]="processId" [processDefinitionId]="processInstanceDetails?.processDefinitionId"
-                             [showRefreshButton]="false" [readOnlyForm]="true"
-                             (formContentClicked)='onFormContentClick($event)'>
-        </adf-start-form>
+<ng-template *ngIf="hasStartFormDefined()" #startDialog>
+    <div id="adf-start-process-dialog" class="adf-start-process-dialog">
+        <h4 md-dialog-title>{{ 'DETAILS.LABELS.START_FORM'|translate }}</h4>
+        <div md-dialog-content class="adf-start-process-dialog-content">
+            <adf-start-form [processId]="processId" [processDefinitionId]="processInstanceDetails?.processDefinitionId"
+                                 [showRefreshButton]="false" [readOnlyForm]="true"
+                                 (formContentClicked)='onFormContentClick($event)'>
+            </adf-start-form>
+        </div>
+        <div md-dialog-actions class="adf-start-process-dialog-actions">
+            <button md-button type="button" (click)="closeSartDialog()">{{ 'DETAILS.TASKS.TASK_CLOSE' | translate }}</button>
+        </div>
     </div>
-    <div class="mdl-dialog__actions">
-        <button type="button" (click)="closeSartDialog()" class="mdl-button close">{{ 'DETAILS.TASKS.TASK_CLOSE' | translate }}</button>
-    </div>
-</dialog>
+</ng-template>

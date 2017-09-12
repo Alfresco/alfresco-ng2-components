@@ -17,13 +17,12 @@
 
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { MdDialog } from '@angular/material';
 import { TaskDetailsEvent, TaskDetailsModel } from 'ng2-activiti-tasklist';
 import { LogService } from 'ng2-alfresco-core';
 import { Observable, Observer } from 'rxjs/Rx';
 import { ProcessInstance } from '../models/process-instance.model';
 import { ProcessService } from './../services/process.service';
-
-declare let dialogPolyfill: any;
 
 @Component({
     selector: 'adf-process-instance-tasks, activiti-process-instance-tasks',
@@ -53,8 +52,8 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges {
     message: string;
     processId: string;
 
-    @ViewChild('dialog')
-    dialog: any;
+    // @ViewChild('dialog')
+    // dialog: any;
 
     @ViewChild('startDialog')
     startDialog: any;
@@ -66,7 +65,8 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges {
     taskClick: EventEmitter<TaskDetailsEvent> = new EventEmitter<TaskDetailsEvent>();
 
     constructor(private activitiProcess: ProcessService,
-                private logService: LogService) {
+                private logService: LogService,
+                private dialog: MdDialog) {
         this.task$ = new Observable<TaskDetailsModel>(observer => this.taskObserver = observer).share();
         this.completedTask$ = new Observable<TaskDetailsModel>(observer => this.completedTaskObserver = observer).share();
     }
@@ -161,19 +161,11 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges {
     }
 
     showStartDialog() {
-        if (!this.startDialog.nativeElement.showModal) {
-            dialogPolyfill.registerDialog(this.startDialog.nativeElement);
-        }
-
-        if (this.startDialog) {
-            this.startDialog.nativeElement.showModal();
-        }
+        this.dialog.open(this.startDialog, { height: '500px', width: '700px' });
     }
 
     closeSartDialog() {
-        if (this.startDialog) {
-            this.startDialog.nativeElement.close();
-        }
+        this.dialog.closeAll();
     }
 
     onRefreshClicked() {
@@ -181,8 +173,6 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges {
     }
 
     onFormContentClick() {
-        if (this.startDialog) {
-            this.startDialog.nativeElement.close();
-        }
+        this.closeSartDialog();
     }
 }
