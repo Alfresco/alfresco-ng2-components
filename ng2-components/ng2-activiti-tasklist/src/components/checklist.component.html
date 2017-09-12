@@ -1,6 +1,6 @@
 <span class="activiti-label mdl-badge" id="checklist-label"
       [attr.data-badge]="checklist?.length">{{ 'TASK_DETAILS.LABELS.CHECKLIST' | translate }}</span>
-<div *ngIf="!readOnly" id="addChecklist" (click)="showDialog()" id="add-checklist" class="icon material-icons">add</div>
+<div *ngIf="!readOnly"  id="add-checklist" (click)="showDialog()"  class="icon material-icons">add</div>
 <div *ngIf="!readOnly" class="mdl-tooltip" for="add-checklist">
     Add a checklist
 </div>
@@ -8,7 +8,7 @@
     <md-chip-list class="mat-chip-list-stacked">
         <md-chip id="check-{{check.id}}" *ngFor="let check of checklist">
             <span>{{check.name}}</span>
-            <button type="button" class="mdl-chip__action adf-checklist-cancel-button" (click)="delete(check.id)">
+            <button type="button" class="adf-checklist-cancel-button" (click)="delete(check.id)">
                 <md-icon *ngIf="!readOnly" id="remove-{{check.id}}" mdChipRemove >cancel</md-icon>
             </button>
         </md-chip>

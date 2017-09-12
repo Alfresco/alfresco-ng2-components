@@ -17,18 +17,18 @@
 
 import { NgModule } from '@angular/core';
 import {
-    MdIconModule,
-    MdButtonModule,
-    MdInputModule,
-    MdCardModule,
-    MdProgressSpinnerModule,
-    MdDatepickerModule,
-    MdNativeDateModule,
-    MdSelectModule,
     MdAutocompleteModule,
+    MdButtonModule,
+    MdCardModule,
+    MdChipsModule,
+    MdDatepickerModule,
     MdGridListModule,
+    MdIconModule,
+    MdInputModule,
+    MdNativeDateModule,
+    MdProgressSpinnerModule,
     MdRippleModule,
-    MdChipsModule
+    MdSelectModule
 } from '@angular/material';
 
 export function modules() {

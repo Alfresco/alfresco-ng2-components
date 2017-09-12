@@ -24,7 +24,7 @@ module.exports = {
             "ng2-alfresco-datatable": helpers.root('../ng2-alfresco-datatable/index.ts'),
             "ng2-activiti-form": helpers.root('../ng2-activiti-form/index.ts')
         },
-        extensions: ['.ts', '.js'],
+        extensions: ['.ts', '.js', '.scss'],
         symlinks: false,
         modules: [helpers.root('../../ng2-components'), helpers.root('node_modules')]
     },
