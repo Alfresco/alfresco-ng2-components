@@ -75,7 +75,7 @@ describe('DropdownBreadcrumb', () => {
         element = fixture.nativeElement;
         component = fixture.componentInstance;
 
-        documentList = TestBed.createComponent(DocumentListComponent).componentInstance;
+        documentList = TestBed.createComponent<DocumentListComponent>(DocumentListComponent).componentInstance;
     });
 
     function openSelect() {
