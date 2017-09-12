@@ -19,9 +19,11 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import {
     MdButtonModule,
     MdCardModule,
+    MdChipsModule,
     MdInputModule,
     MdProgressSpinnerModule,
-    MdSelectModule } from '@angular/material';
+    MdSelectModule
+} from '@angular/material';
 import { ActivitiFormModule } from 'ng2-activiti-form';
 import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
 import { CardViewUpdateService, CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
@@ -130,6 +132,7 @@ export const ACTIVITI_PROCESSLIST_PROVIDERS: [any] = [
         MdButtonModule,
         MdCardModule,
         MdInputModule,
+        MdChipsModule,
         MdSelectModule
     ],
     declarations: [

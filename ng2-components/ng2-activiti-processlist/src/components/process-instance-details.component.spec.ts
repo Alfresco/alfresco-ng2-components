@@ -88,7 +88,7 @@ describe('ProcessInstanceDetailsComponent', () => {
         component.ngOnChanges({ 'processInstanceId': new SimpleChange(null, '123', true) });
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            let headerEl: DebugElement = fixture.debugElement.query(By.css('h2'));
+            let headerEl: DebugElement = fixture.debugElement.query(By.css('.mat-card-title '));
             expect(headerEl).not.toBeNull();
             expect(headerEl.nativeElement.innerText).toBe('Process 123');
         });
@@ -100,7 +100,7 @@ describe('ProcessInstanceDetailsComponent', () => {
         component.ngOnChanges({ 'processInstanceId': new SimpleChange(null, '123', true) });
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            let headerEl: DebugElement = fixture.debugElement.query(By.css('h2'));
+            let headerEl: DebugElement = fixture.debugElement.query(By.css('.mat-card-title '));
             expect(headerEl).not.toBeNull();
             expect(headerEl.nativeElement.innerText).toBe('My Process - Nov 10, 2016, 3:37:30 AM');
         });

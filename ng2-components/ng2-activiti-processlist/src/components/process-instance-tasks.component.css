@@ -7,9 +7,20 @@
     vertical-align: top;
 }
 
-.activiti-label.mdl-badge[data-badge]:after {
-    right: -27px;
-    top: -2px;
+.adf-process-badge {
+    pointer-events: none;
+    outline: none;
+}
+
+.adf-chip-label {
+    position: relative;
+    top: 5px;
+    margin-right: 8px;
+    font-weight: bold;
+}
+
+.menu-container {
+    margin-bottom: 32px;
 }
 
 .activiti-label + .icon {
