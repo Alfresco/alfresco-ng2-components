@@ -36,18 +36,18 @@
     "OPERATION": {
         "SUCCES": {
             "CONTENT": {
-                "COPY": "Copy successful.",
-                "MOVE": "Move successful."
+                "COPY": "Copy successful",
+                "MOVE": "Move successful"
             },
             "FOLDER": {
-                "COPY": "Copy successful.",
-                "MOVE": "Move successful."
+                "COPY": "Copy successful",
+                "MOVE": "Move successful"
             }
         },
         "ERROR": {
             "CONFLICT": "This name is already in use, try a different name.",
             "UNKNOWN": "The action was unsuccessful. Try again or contact your IT Team.",
-            "PERMISSION": "You don't have the permissions to do this."
+            "PERMISSION": "You don't have access to do this."
         }
     }
 }
