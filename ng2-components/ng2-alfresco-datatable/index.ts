@@ -30,10 +30,12 @@ export { DataRowActionEvent, DataRowActionModel } from './src/components/datatab
 
 import { DataTableCellComponent } from './src/components/datatable/datatable-cell.component';
 import { DataTableComponent } from './src/components/datatable/datatable.component';
+import { DateCellComponent } from './src/components/datatable/date-cell.component';
 import { EmptyListBodyDirective,
     EmptyListComponent,
     EmptyListFooterDirective,
     EmptyListHeaderDirective } from './src/components/datatable/empty-list.component';
+import { FileSizeCellComponent } from './src/components/datatable/filesize-cell.component';
 import { LocationCellComponent } from './src/components/datatable/location-cell.component';
 import { LoadingContentTemplateDirective } from './src/directives/loading-template.directive';
 import { NoContentTemplateDirective } from './src/directives/no-content-template.directive';
@@ -46,6 +48,8 @@ export function directives() {
         EmptyListBodyDirective,
         EmptyListFooterDirective,
         DataTableCellComponent,
+        DateCellComponent,
+        FileSizeCellComponent,
         LocationCellComponent,
         NoContentTemplateDirective,
         LoadingContentTemplateDirective
@@ -76,7 +80,9 @@ export function directives() {
     ]
 })
 export class DataTableModule {
+    /** @deprecated in 1.9.0 */
     static forRoot(): ModuleWithProviders {
+        console.log('DataTableModule.forRoot is deprecated and will be removed in future versions');
         return {
             ngModule: DataTableModule
         };
