@@ -59,6 +59,19 @@ export const USER_INFO_PROVIDERS: any[] = [
         ...USER_INFO_DIRECTIVES
     ]
 })
+
+export class UserInfoModule {
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: UserInfoModule,
+            providers: [
+                ...USER_INFO_PROVIDERS
+            ]
+        };
+    }
+}
+
+/** @deprecated in 1.9.0 */
 export class UserInfoComponentModule {
     static forRoot(): ModuleWithProviders {
         return {
