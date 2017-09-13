@@ -11,6 +11,7 @@ Contains the Login component.
     + [Properties](#properties)
     + [Events](#events)
   * [Details](#details)
+    + [Handling events](#handling-events)
     + [Change footer content](#change-footer-content)
     + [Change header content](#change-header-content)
     + [Extra content](#extra-content)

@@ -1370,6 +1370,36 @@ input.mat-input-element:-webkit-autofill + .mat-input-placeholder .mat-placehold
       padding-left: 24px; }
     .adf-pagination__block:last-child {
       border-right-width: 0; }
+  @media (max-width: 500px) {
+    .adf-pagination {
+      flex-wrap: wrap;
+      padding-bottom: 24px;
+      padding-top: 8px; }
+    .adf-pagination__range-block.adf-pagination__block:first-child {
+      order: 1;
+      width: 50%;
+      flex: 0 0 auto;
+      box-sizing: border-box;
+      padding-left: 16px;
+      justify-content: flex-start; }
+    .adf-pagination__perpage-block {
+      order: 3;
+      width: 50%;
+      box-sizing: border-box;
+      padding-left: 16px;
+      justify-content: flex-start; }
+    .adf-pagination__actualinfo-block {
+      order: 2;
+      width: 50%;
+      box-sizing: border-box;
+      padding-right: 16px;
+      justify-content: flex-end; }
+    .adf-pagination__controls-block {
+      order: 4;
+      width: 50%;
+      box-sizing: border-box;
+      padding-right: 16px;
+      justify-content: flex-end; } }
   .adf-pagination__max-items {
     margin-left: 10px; }
   .adf-pagination__max-items, .adf-pagination__current-page {
@@ -1411,14 +1441,15 @@ input.mat-input-element:-webkit-autofill + .mat-input-placeholder .mat-placehold
 .adf-accent-contrast-text-color {
   color: rgba(0, 0, 0, 0.87) !important; }
 
-.adf-analytics-report-list .mdl-list__item {
-  cursor: pointer; }
-
 .adf-analytics-report-list .activiti-filters__entry {
   cursor: pointer; }
 
 .adf-analytics-report-list .activiti-filters__entry-icon {
-  margin-right: 12px !important; }
+  position: relative;
+  top: 5px; }
+
+.adf-analytics-report-list .mat-nav-list .mat-list-item .mat-list-item-content {
+  line-height: 48px; }
 
 .adf-analytics-report-list .activiti-filters__entry.active {
   color: #7b1fa2; }
@@ -1426,32 +1457,52 @@ input.mat-input-element:-webkit-autofill + .mat-input-placeholder .mat-placehold
 .adf-analytics-report-list .activiti-filters__entry.active .activiti-filters__entry-icon {
   color: #7b1fa2; }
 
-.adf-analytics-report-list .application-title {
-  z-index: 7; }
+.adf-analytics-report-list .adf-report-card-grids {
+  display: flex;
+  padding: 8px;
+  flex-flow: row wrap;
+  margin: 0 auto;
+  align-items: stretch; }
 
-.adf-analytics-report-list .logo {
-  position: absolute;
-  right: 20px;
-  top: 35px;
-  z-index: 6; }
-
-.adf-analytics-report-list .logo i {
-  font-size: 70px; }
-
-.adf-analytics-report-list .theme-1 {
-  background-color: #269abc; }
-
-.adf-analytics-report-list .theme-1 .logo i {
-  color: #168aac; }
-
-.adf-analytics-report-list .theme-1 .mdl-card__actions i {
-  color: #168aac; }
-
-.adf-analytics-report-list .theme-1 .mdl-card__actions i:hover {
-  color: #b7dfea; }
-
-.adf-analytics-report-list .selectedIcon {
-  color: #e9f1f3 !important; }
+.adf-analytics-report-list .adf-report-card {
+  margin: 8px;
+  width: calc(33.3333333333% - 16px);
+  position: relative;
+  min-height: 200px;
+  overflow: hidden;
+  background-color: #269abc;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer; }
+  .adf-analytics-report-list .adf-report-card-logo {
+    position: absolute;
+    right: 20px;
+    top: 35px;
+    z-index: 6; }
+    .adf-analytics-report-list .adf-report-card-logo-icon {
+      font-size: 70px;
+      color: #168aac;
+      width: 1em;
+      height: 1em;
+      display: inline-block; }
+  .adf-analytics-report-list .adf-report-card-title {
+    padding: 16px;
+    z-index: 7; }
+    .adf-analytics-report-list .adf-report-card-title .application-title {
+      font-size: 24px;
+      margin: 0; }
+  .adf-analytics-report-list .adf-report-card-content {
+    padding: 16px;
+    flex-grow: 1; }
+  .adf-analytics-report-list .adf-report-card-actions {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 8px;
+    box-sizing: border-box;
+    height: 40px; }
+    .adf-analytics-report-list .adf-report-card-actions-icon {
+      color: #e9f1f3; }
+      .adf-analytics-report-list .adf-report-card-actions-icon:hover {
+        color: #b7dfea; }
 
 .adf-diagram-tooltip {
   transform: scale(0);
@@ -2205,7 +2256,7 @@ adf-people-list /deep/ adf-datatable /deep/ td.mdl-data-table__cell--non-numeric
       overflow: hidden;
       text-overflow: ellipsis;
       /* for vertical align of text */
-      line-height: 1em; }
+      line-height: 1.12em; }
     .adf-data-table .ellipsis-cell > div:after {
       content: attr(title);
       overflow: hidden;

@@ -7,9 +7,20 @@
     vertical-align: top;
 }
 
-.activiti-label.mdl-badge[data-badge]:after {
-    right: -27px;
-    top: -2px;
+.adf-process-badge {
+    pointer-events: none;
+    outline: none;
+}
+
+.adf-chip-label {
+    position: relative;
+    top: 5px;
+    margin-right: 8px;
+    font-weight: bold;
+}
+
+.menu-container {
+    margin-bottom: 32px;
 }
 
 .activiti-label + .icon {
@@ -32,9 +43,20 @@
     float: right;
 }
 
-.mdl-dialog__content.form__size {
-    height: 400px;
-    overflow-y: auto;
+.adf-start-process-dialog {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.adf-start-process-dialog-content {
+    flex-grow: 1;
+}
+
+.adf-start-process-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
 }
 
 .no-results {

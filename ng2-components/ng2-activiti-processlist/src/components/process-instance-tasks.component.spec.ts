@@ -112,7 +112,7 @@ describe('ProcessInstanceTasksComponent', () => {
             component.ngOnChanges({ 'processInstanceDetails': change });
             let listEl = fixture.debugElement.query(By.css('[data-automation-id="active-tasks"]'));
             expect(listEl).not.toBeNull();
-            expect(listEl.queryAll(By.css('li')).length).toBe(1);
+            expect(listEl.queryAll(By.css('md-list-item')).length).toBe(1);
         });
     });
 
@@ -124,7 +124,7 @@ describe('ProcessInstanceTasksComponent', () => {
             fixture.detectChanges();
             let listEl = fixture.debugElement.query(By.css('[data-automation-id="completed-tasks"]'));
             expect(listEl).not.toBeNull();
-            expect(listEl.queryAll(By.css('li')).length).toBe(1);
+            expect(listEl.queryAll(By.css('md-list-item')).length).toBe(1);
         });
     });
 
