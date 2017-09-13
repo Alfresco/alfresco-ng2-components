@@ -1,5 +1,6 @@
 <adf-datatable [rows]="attachments" [actions]="true" [loading]="isLoading" (rowDblClick)="openContent($event)" (showRowActionsMenu)="onShowRowActionsMenu($event)"
     (executeRowAction)="onExecuteRowAction($event)">
+
     <adf-empty-list *ngIf="isEmpty()">
         <div adf-empty-list-header class="adf-empty-list-header"> {{'PROCESS-ATTACHMENT.EMPTY.HEADER' | translate}} </div>
         <div adf-empty-list-body *ngIf="!isDisabled()">
@@ -10,11 +11,13 @@
             <img class="adf-empty-list__empty_doc_lib" [src]="emptyListImageUrl">
         </div>
     </adf-empty-list>
+
     <data-columns>
         <data-column key="icon" type="icon" srTitle="Thumbnail" [sortable]="false"></data-column>
         <data-column key="name" type="text" title="Name" class="full-width ellipsis-cell" [sortable]="true"></data-column>
         <data-column key="created" type="date" format="shortDate" title="Created On"></data-column>
     </data-columns>
+
     <loading-content-template>
         <ng-template>
             <!--Add your custom loading template here-->
@@ -22,4 +25,5 @@
             </md-progress-spinner>
         </ng-template>
     </loading-content-template>
+
 </adf-datatable>

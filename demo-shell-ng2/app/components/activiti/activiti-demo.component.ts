@@ -20,7 +20,10 @@ import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChi
 import { ActivatedRoute, Router } from '@angular/router';
 import { Pagination } from 'alfresco-js-api';
 import { AnalyticsReportListComponent } from 'ng2-activiti-analytics';
-import { FORM_FIELD_VALIDATORS, FormEvent, FormFieldEvent, FormRenderingService, FormService } from 'ng2-activiti-form';
+import {
+    DynamicTableRow, FORM_FIELD_VALIDATORS, FormEvent, FormFieldEvent, FormRenderingService,
+    FormService, ValidateDynamicTableRowEvent
+} from 'ng2-activiti-form';
 import {
     FilterProcessRepresentationModel,
     ProcessFiltersComponent,
@@ -54,7 +57,7 @@ const currentProcessIdNew = '__NEW__';
 const currentTaskIdNew = '__NEW__';
 
 @Component({
-    selector: 'activiti-demo',
+    selector: 'adf-activiti-demo',
     templateUrl: './activiti-demo.component.html',
     styleUrls: ['./activiti-demo.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -159,6 +162,17 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
         formService.formFieldValueChanged.subscribe((e: FormFieldEvent) => {
             console.log(`Field value changed. Form: ${e.form.id}, Field: ${e.field.id}, Value: ${e.field.value}`);
         });
+
+        formService.validateDynamicTableRow.subscribe(
+            (e: ValidateDynamicTableRowEvent) => {
+                const row: DynamicTableRow = e.row;
+                if (row && row.value && row.value.name === 'admin') {
+                    e.summary.isValid = false;
+                    e.summary.text = 'Sorry, wrong value. You cannot use "admin".';
+                    e.preventDefault();
+                }
+            }
+        );
 
         // Uncomment this block to see form event handling in action
         /*

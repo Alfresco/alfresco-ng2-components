@@ -3,7 +3,7 @@
         <adf-sites-dropdown (change)="getSiteContent($event)">
         </adf-sites-dropdown>
     </div>
-    <alfresco-upload-drag-area
+    <adf-upload-drag-area
         [parentId]="documentList.currentFolderId"
         [versioning]="versioning"
         [adf-node-permission]="'create'"
@@ -208,7 +208,7 @@
                 </content-action>
             </content-actions>
         </adf-document-list>
-    </alfresco-upload-drag-area>
+    </adf-upload-drag-area>
 </div>
 
 <context-menu-holder></context-menu-holder>
@@ -257,10 +257,6 @@
         <md-slide-toggle [color]="'primary'" [(ngModel)]="versioning">Enable versioning</md-slide-toggle>
     </section>
 
-    <section>
-        <md-slide-toggle [color]="'primary'" [(ngModel)]="disableWithNoPermission">Disable upload button when user has no permissions</md-slide-toggle>
-    </section>
-
     <h5>Upload</h5>
     <section *ngIf="acceptedFilesTypeShow">
         <md-input-container>
@@ -268,7 +264,7 @@
         </md-input-container>
     </section>
     <div *ngIf="!acceptedFilesTypeShow">
-        <alfresco-upload-button
+        <adf-upload-button
             #uploadButton
             tooltip="Custom tooltip"
             [disabled]="!enableUpload"
@@ -280,10 +276,10 @@
             [adf-node-permission]="'create'"
             [adf-nodes]="getCurrentDocumentListNode()"
             (permissionEvent)="handlePermissionError($event)">
-        </alfresco-upload-button>
+        </adf-upload-button>
     </div>
     <div *ngIf="acceptedFilesTypeShow">
-        <alfresco-upload-button
+        <adf-upload-button
             #uploadButton
             tooltip="Custom tooltip"
             [disabled]="!enableUpload"
@@ -296,7 +292,7 @@
             [adf-node-permission]="'create'"
             [adf-nodes]="getCurrentDocumentListNode()"
             (permissionEvent)="handlePermissionError($event)">
-        </alfresco-upload-button>
+        </adf-upload-button>
     </div>
     <section>
         <md-checkbox [(ngModel)]="enableUpload">Enable upload (demoing enabled/disabled state only if the permission are not checked dynamically)</md-checkbox>
@@ -316,7 +312,7 @@
 
 <div *ngIf="showViewer">
     <ng-container *ngIf="!useInlineViewer">
-        <alfresco-viewer
+        <adf-viewer
             [(showViewer)]="showViewer"
             [fileNodeId]="fileNodeId"
             [overlayMode]="true">
@@ -327,15 +323,15 @@
                 </ng-template>
             </extension-viewer>
 
-        </alfresco-viewer>
+        </adf-viewer>
     </ng-container>
 
     <ng-container *ngIf="useInlineViewer">
         <div class="adf-not-overlay-viewer">
-            <alfresco-viewer
+            <adf-viewer
                 [(showViewer)]="showViewer"
                 [fileNodeId]="fileNodeId">
-            </alfresco-viewer>
+            </adf-viewer>
         </div>
     </ng-container>
 </div>

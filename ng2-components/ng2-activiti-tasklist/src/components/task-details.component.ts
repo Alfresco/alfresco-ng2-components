@@ -16,7 +16,6 @@
  */
 
 import { Component,
-    DebugElement,
     EventEmitter,
     Input,
     OnChanges,
@@ -26,6 +25,7 @@ import { Component,
     TemplateRef,
     ViewChild
 } from '@angular/core';
+import { MdDialog, MdDialogRef } from '@angular/material';
 import { ContentLinkModel, FormFieldValidator, FormModel, FormOutcomeEvent } from 'ng2-activiti-form';
 import { AlfrescoAuthenticationService, CardViewUpdateService, ClickNotification, LogService, UpdateNotification } from 'ng2-alfresco-core';
 import { Observable, Observer } from 'rxjs/Rx';
@@ -54,7 +54,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     activitichecklist: any;
 
     @ViewChild('errorDialog')
-    errorDialog: DebugElement;
+    errorDialog: TemplateRef<any>;
 
     @Input()
     debugMode: boolean = false;
@@ -138,13 +138,16 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     showAssignee: boolean = false;
 
     private peopleSearchObserver: Observer<User[]>;
+    public errorDialogRef: MdDialogRef<TemplateRef<any>>;
+
     peopleSearch$: Observable<User[]>;
 
     constructor(private activitiTaskList: TaskListService,
                 private authService: AlfrescoAuthenticationService,
                 private peopleService: PeopleService,
                 private logService: LogService,
-                private cardViewUpdateService: CardViewUpdateService) {
+                private cardViewUpdateService: CardViewUpdateService,
+                private dialog: MdDialog) {
         this.peopleSearch$ = new Observable<User[]>(observer => this.peopleSearchObserver = observer).share();
     }
 
@@ -309,7 +312,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     }
 
     onFormError(error: any): void {
-        this.errorDialog.nativeElement.showModal();
+        this.errorDialogRef = this.dialog.open(this.errorDialog, { width: '500px' });
         this.onError.emit(error);
     }
 
@@ -318,7 +321,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     }
 
     closeErrorDialog(): void {
-        this.errorDialog.nativeElement.close();
+        this.dialog.closeAll();
     }
 
     onClaimTask(taskId: string): void {

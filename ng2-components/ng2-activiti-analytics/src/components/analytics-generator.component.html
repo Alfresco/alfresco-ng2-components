@@ -12,7 +12,7 @@
     <div *ngFor="let report of reports; let idx = index">
         <div [ngSwitch]="report.type">
             <div *ngSwitchCase="'pie'">
-                <div class="col-md-6" *ngIf="isCurrent(idx)">
+                <div *ngIf="isCurrent(idx)">
                     <h4>{{report.title}}</h4>
                     <div *ngIf="!report.hasData()">{{'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate}}</div>
                     <div *ngIf="report.hasData()">
@@ -68,7 +68,7 @@
                 </div>
             </div>
             <div *ngSwitchCase="'bar'">
-                <div class="col-md-6" *ngIf="isCurrent(idx)">
+                <div *ngIf="isCurrent(idx)">
                     <h4>{{report.title}}</h4>
                     <div *ngIf="!report.hasDatasets()">{{'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate}}</div>
                     <canvas baseChart *ngIf="report.hasDatasets()" class="chart"
@@ -80,17 +80,17 @@
                 </div>
             </div>
             <div *ngSwitchCase="'multiBar'">
-                <div class="col-md-6" *ngIf="isCurrent(idx)">
+                <div *ngIf="isCurrent(idx)">
                     <h4>{{report.title}}</h4>
                     <div *ngIf="!report.hasDatasets()">{{'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate}}</div>
                     <div *ngIf="report.hasDatasets()">
-                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" [attr.for]="'stacked-id'">
-                            <input type="checkbox" [attr.id]="'stacked-id'" class="mdl-checkbox__input"
-                                   [checked]="report.options.scales.xAxes[0].stacked"
-                                   [(ngModel)]="report.options.scales.xAxes[0].stacked"
-                                   (change)="refresh(report)">
-                            <span class="mdl-checkbox__label">Stacked</span>
-                        </label>
+                        <md-checkbox
+                            color="primary"
+                            [id]="'stacked-id'"
+                            [checked]="report.options.scales.xAxes[0].stacked"
+                            [(ngModel)]="report.options.scales.xAxes[0].stacked"
+                            (change)="refresh(report)">Stacked</md-checkbox>
+
                         <canvas baseChart class="chart"
                                 [datasets]="report.datasets"
                                 [labels]="report.labels"

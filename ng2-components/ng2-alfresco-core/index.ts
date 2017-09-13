@@ -36,8 +36,6 @@ import { DownloadZipDialogComponent } from './src/dialogs/download-zip.dialog';
 import { AlfrescoApiService } from './src/services/alfresco-api.service';
 import { AlfrescoContentService } from './src/services/alfresco-content.service';
 import { AlfrescoSettingsService } from './src/services/alfresco-settings.service';
-import { AppConfigService } from './src/services/app-config.service';
-import { InitAppConfigServiceProvider } from './src/services/app-config.service';
 import { AuthGuardBpm } from './src/services/auth-guard-bpm.service';
 import { AuthGuardEcm } from './src/services/auth-guard-ecm.service';
 import { AuthGuard } from './src/services/auth-guard.service';
@@ -90,7 +88,6 @@ export { AuthenticationService } from './src/services/authentication.service';
 export { TranslationService, TRANSLATION_PROVIDER, TranslationProvider } from './src/services/translation.service';
 export { AlfrescoTranslateLoader } from './src/services/translate-loader.service';
 export { AppConfigService } from './src/services/app-config.service';
-export { InitAppConfigServiceProvider } from './src/services/app-config.service';
 export { ThumbnailService } from './src/services/thumbnail.service';
 export { UploadService } from './src/services/upload.service';
 export { CardViewUpdateService } from './src/services/card-view-update.service';
@@ -122,6 +119,7 @@ import { NodePermissionDirective } from './src/directives/node-permission.direct
 import { UploadDirective } from './src/directives/upload.directive';
 
 import { FileSizePipe } from './src/pipes/file-size.pipe';
+import { MimeTypeIconPipe } from './src/pipes/mime-type-icon.pipe';
 import { HighlightPipe } from './src/pipes/text-highlight.pipe';
 import { TimeAgoPipe } from './src/pipes/time-ago.pipe';
 
@@ -193,7 +191,8 @@ export function providers() {
         SharedLinksApiService,
         SitesApiService,
         DiscoveryApiService,
-        HighlightTransformService
+        HighlightTransformService,
+        MomentDateAdapter
     ];
 }
 
@@ -209,6 +208,15 @@ export function obsoleteMdlDirectives() {
         MDLDirective,
         AlfrescoMdlMenuDirective,
         AlfrescoMdlTextFieldDirective
+    ];
+}
+
+export function pipes() {
+    return [
+        FileSizePipe,
+        HighlightPipe,
+        TimeAgoPipe,
+        MimeTypeIconPipe
     ];
 }
 
@@ -240,6 +248,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
     ],
     declarations: [
         ...obsoleteMdlDirectives(),
+        ...pipes(),
         UploadDirective,
         NodePermissionDirective,
         HighlightDirective,
@@ -251,16 +260,12 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         InfoDrawerTitleDirective,
         InfoDrawerButtonsDirective,
         InfoDrawerContentDirective,
-        FileSizePipe,
-        HighlightPipe,
-        TimeAgoPipe,
         CreateFolderDialogComponent,
         DownloadZipDialogComponent
     ],
     providers: [
         ...providers(),
         ...deprecatedProviders(),
-        MomentDateAdapter,
         {
             provide: TRANSLATION_PROVIDER,
             multi: true,
@@ -271,6 +276,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         }
     ],
     exports: [
+        AppConfigModule,
         BrowserAnimationsModule,
         CommonModule,
         FormsModule,
@@ -284,14 +290,12 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         PaginationModule,
         ToolbarModule,
         ...obsoleteMdlDirectives(),
+        ...pipes(),
         UploadDirective,
         NodePermissionDirective,
         HighlightDirective,
         DataColumnComponent,
         DataColumnListComponent,
-        FileSizePipe,
-        HighlightPipe,
-        TimeAgoPipe,
         CreateFolderDialogComponent,
         DownloadZipDialogComponent,
         InfoDrawerComponent,
@@ -307,16 +311,13 @@ export function createTranslateLoader(http: Http, logService: LogService) {
     ]
 })
 export class CoreModule {
+    /** @deprecated in 1.9.0 */
     static forRoot(opts: any = {}): ModuleWithProviders {
-
-        const appConfigFile = opts.appConfigFile || 'app.config.json';
-
+        console.log('CoreModule.forRoot is deprecated and will be removed in future versions');
         return {
             ngModule: CoreModule,
             providers: [
-                ...providers(),
-                AppConfigService,
-                InitAppConfigServiceProvider(appConfigFile)
+                ...providers()
             ]
         };
     }

@@ -25,8 +25,6 @@ import {
     StorageService
 } from 'ng2-alfresco-core';
 
-declare var document: any;
-
 @Component({
     selector: 'adf-app',
     templateUrl: './app.component.html',
@@ -69,16 +67,6 @@ export class AppComponent {
 
     navigateToLogin() {
         this.router.navigate(['/login']);
-    }
-
-    onToggleSearch(event) {
-        let expandedHeaderClass = 'header-search-expanded',
-            header = document.querySelector('header');
-        if (event.expanded) {
-            header.classList.add(expandedHeaderClass);
-        } else {
-            header.classList.remove(expandedHeaderClass);
-        }
     }
 
     changeLanguage(lang: string) {

@@ -2,8 +2,8 @@
     .mat-dialog-container {
         padding: 0;
         max-width: none;
-        width: 99vw;
-        height: 99vh;
+        width: 100vw;
+        height: 100vh;
     }
 }
 
@@ -11,8 +11,26 @@
 
     .mat-dialog-content {
         display: flex;
-        max-height: 90vh;
+        max-height: 100vh;
         justify-content: center;
+    }
+
+    &__mimetype-icon {
+        width: 24px;
+        height: 24px;
+    }
+
+    &__loading-screen {
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        height: 85vh;
+
+        .md-spinner {
+            margin: 0 auto;
+        }
     }
 
     &__info-drawer {
@@ -46,7 +64,7 @@
         text-align: center;
         flex-direction: row;
         justify-content: center;
-        height: 90vh;
+        height: 95vh;
         img {
             max-width: 100%;
             object-fit: contain;
@@ -83,9 +101,7 @@
 
     &__pdf-view {
         .viewer-pdf-container {
-            top: 52px;
-            left: 7px;
-            right: 7px;
+            top: 50px;
             border: 1px solid lightgray;
             background-color: lightgray;
         }

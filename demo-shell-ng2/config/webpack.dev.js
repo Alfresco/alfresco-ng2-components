@@ -5,7 +5,7 @@ const commonConfig = require('./webpack.common.js');
 const helpers = require('./helpers');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-var HappyPack = require('happypack');
+const HappyPack = require('happypack');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const alfrescoLibs = [
@@ -131,7 +131,11 @@ module.exports = webpackMerge(commonConfig, {
                     from: '**/*',
                     to: `assets/${lib}/i18n/`
                 }
-            })
+            }),
+            {
+                from: 'app.config-dev.json',
+                to: 'app.config.json'
+            }
         ]),
         new CopyWebpackPlugin([
             {

@@ -16,6 +16,7 @@
  */
 
 import { FormFieldModel, FormModel } from '../../index';
+import { FormService } from './../../../../services/form.service';
 import { DynamicRowValidationSummary, DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './../dynamic-table.widget.model';
 import { RowEditorComponent } from './row.editor';
 
@@ -26,7 +27,7 @@ describe('RowEditorComponent', () => {
     beforeEach(() => {
         component = new RowEditorComponent();
         const field = new FormFieldModel(new FormModel());
-        component.table = new DynamicTableModel(field);
+        component.table = new DynamicTableModel(field, new FormService(null, null, null));
         component.row =  <DynamicTableRow> {};
         component.column = <DynamicTableColumn> {};
     });

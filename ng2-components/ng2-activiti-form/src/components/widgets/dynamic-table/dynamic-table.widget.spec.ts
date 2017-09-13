@@ -81,6 +81,7 @@ describe('DynamicTableWidgetComponent', () => {
     let element: HTMLElement;
     let table: DynamicTableModel;
     let logService: LogService;
+    let formService: FormService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -104,7 +105,8 @@ describe('DynamicTableWidgetComponent', () => {
     beforeEach(() => {
         const field = new FormFieldModel(new FormModel());
         logService = TestBed.get(LogService);
-        table = new DynamicTableModel(field);
+        formService = TestBed.get(FormService);
+        table = new DynamicTableModel(field, formService);
         let changeDetectorSpy = jasmine.createSpyObj('cd', ['detectChanges']);
         let nativeElementSpy = jasmine.createSpyObj('nativeElement', ['querySelector']);
         changeDetectorSpy.nativeElement = nativeElementSpy;
@@ -310,7 +312,7 @@ describe('DynamicTableWidgetComponent', () => {
             required: true,
             value: null
         });
-        widget.content = new DynamicTableModel(field);
+        widget.content = new DynamicTableModel(field, formService);
 
         expect(widget.content.field.validate()).toBeFalsy();
         expect(widget.isValid()).toBe(widget.content.field.isValid);

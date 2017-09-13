@@ -1,20 +1,18 @@
-.adf-number-widget {
-    width: 100%;
+.adf-duration-widget-grid {
+    display: flex;
+    justify-content: space-between;
 }
 
-.adf-number-widget__invalid {
-.mdl-textfield__input {
-    border-color: #d50000;
+.adf-duration-widget-cell {
+    width: 49%;
 }
-.mdl-textfield__label {
-    color: #d50000;
-&:after {
-     background-color: #d50000;
- }
-}
-.mdl-textfield__error {
-    visibility: visible !important;
-}
+
+.adf-number-widget {
+    width: 100%;
+
+    .mat-input-container {
+        width: 100%;
+    }
 }
 
 .dropdown-container {

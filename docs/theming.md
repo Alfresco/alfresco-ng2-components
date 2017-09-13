@@ -1,9 +1,9 @@
 # Theming your Alfresco ADF app
 
 ### Using a pre-built theme
-Angular Material comes prepackaged with several pre-built theme css files. These theme files also
+Alfresco ADF comes prepackaged with several pre-built theme css files. These theme files also
 include all of the styles for core (styles common to all components), so you only have to include a
-single css file for Angular Material in your app.
+single css file for Alfresco ADF in your app.
 
 You can include a theme file directly into your application from
 `ng2-alfresco-core/prebuilt-themes`

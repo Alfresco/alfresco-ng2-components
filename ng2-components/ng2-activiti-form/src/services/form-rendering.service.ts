@@ -45,6 +45,7 @@ export class FormRenderingService {
 
     private types: { [key: string]: ComponentTypeResolver } = {
         'text': DefaultTypeResolver.fromType(TextWidgetComponent),
+        'string': DefaultTypeResolver.fromType(TextWidgetComponent),
         'integer': DefaultTypeResolver.fromType(NumberWidgetComponent),
         'multi-line-text': DefaultTypeResolver.fromType(MultilineTextWidgetComponentComponent),
         'boolean': DefaultTypeResolver.fromType(CheckboxWidgetComponent),

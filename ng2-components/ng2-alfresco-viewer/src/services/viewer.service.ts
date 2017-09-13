@@ -20,8 +20,8 @@ import { MdDialog } from '@angular/material';
 import { MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AlfrescoApiService } from 'ng2-alfresco-core';
 
-import { ViewerDialogComponent } from './../components/viewer-dialog.component';
-import { ViewerDialogSettings } from './../components/viewer-dialog.settings';
+import { ViewerDialogComponent } from './../components/viewer-dialog/viewer-dialog.component';
+import { ViewerDialogSettings } from './../components/viewer-dialog/viewer-dialog.settings';
 
 @Injectable()
 export class ViewerService {
@@ -30,26 +30,19 @@ export class ViewerService {
                 private apiService: AlfrescoApiService) {
     }
 
-    private get contentApi() {
-        return this.apiService.getInstance().content;
-    }
-
-    private get nodesApi() {
-        return this.apiService.getInstance().nodes;
-    }
-
-    showViewerForNode(node: MinimalNodeEntryEntity): Promise<boolean> {
+    showViewerForNode(node: MinimalNodeEntryEntity, settings: ViewerDialogSettings = {}): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
-            const settings: ViewerDialogSettings = {
+            const dialogSettings = Object.assign({}, settings, {
                 fileName: node.name,
                 fileMimeType: node.content.mimeType,
-                fileUrl: this.contentApi.getContentUrl(node.id, false),
-                downloadUrl: this.contentApi.getContentUrl(node.id, true)
-            };
+                fileUrl: this.apiService.contentApi.getContentUrl(node.id, false),
+                downloadUrl: this.apiService.contentApi.getContentUrl(node.id, true),
+                nodeId: node.id
+            });
 
             const dialogRef = this.dialog.open(ViewerDialogComponent, {
                 panelClass: 'adf-viewer-dialog-panel',
-                data: settings
+                data: dialogSettings
             });
 
             dialogRef.afterClosed().subscribe(result => {
@@ -58,12 +51,12 @@ export class ViewerService {
         });
     }
 
-    showViewerForNodeId(nodeId: string): Promise<boolean> {
+    showViewerForNodeId(nodeId: string, settings: ViewerDialogSettings = {}): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
-            this.nodesApi.getNode(nodeId).then(
+            this.apiService.nodesApi.getNode(nodeId).then(
                 (node: MinimalNodeEntity) => {
                     if (node && node.entry && node.entry.isFile) {
-                        return this.showViewerForNode(node.entry);
+                        return this.showViewerForNode(node.entry, settings);
                     } else {
                         resolve(false);
                     }

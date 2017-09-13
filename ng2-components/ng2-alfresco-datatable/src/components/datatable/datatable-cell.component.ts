@@ -15,13 +15,18 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { DataColumn, DataRow, DataTableAdapter } from '../../data/datatable-adapter';
 
 @Component({
     selector: 'adf-datatable-cell, alfresco-datatable-cell',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    template: '<ng-container>{{value}}</ng-container>'
+    template: `
+        <ng-container>
+            <span [title]="tooltip">{{value}}</span>
+        </ng-container>`,
+    encapsulation: ViewEncapsulation.None,
+    host: { class: 'adf-datatable-cell' }
 })
 export class DataTableCellComponent implements OnInit {
 
@@ -37,9 +42,16 @@ export class DataTableCellComponent implements OnInit {
     @Input()
     value: any;
 
+    @Input()
+    tooltip: string;
+
     ngOnInit() {
         if (!this.value && this.column && this.column.key && this.row && this.data) {
             this.value = this.data.getValue(this.row, this.column);
+
+            if (!this.tooltip) {
+                this.tooltip = this.value;
+            }
         }
     }
 

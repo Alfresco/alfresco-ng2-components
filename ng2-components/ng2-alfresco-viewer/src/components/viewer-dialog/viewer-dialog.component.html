@@ -3,10 +3,16 @@
         <button md-icon-button [md-dialog-close]="true" mdTooltip="Close and go back">
             <md-icon>arrow_back</md-icon>
         </button>
-        <span>{{ fileName }}</span>
+        <span>
+            <img class="adf-viewer-dialog__mimetype-icon" [src]="fileMimeType | adfMimeTypeIcon">
+            <span>{{ fileName }}</span>
+        </span>
     </adf-toolbar-title>
 
-    <button md-button [mdMenuTriggerFor]="mnuOpenWith">
+    <button
+        *ngIf="settings.allowOpenWith"
+        md-button
+        [mdMenuTriggerFor]="mnuOpenWith">
         Open with
         <md-icon>arrow_drop_down</md-icon>
     </button>
@@ -28,22 +34,31 @@
     <adf-toolbar-divider></adf-toolbar-divider>
 
     <button
-        *ngIf="downloadUrl"
+        *ngIf="settings.allowDownload && settings.downloadUrl"
         md-icon-button
         mdTooltip="Download"
         (click)="download()">
         <md-icon>file_download</md-icon>
     </button>
 
-    <button md-icon-button mdTooltip="Print">
+    <button
+        *ngIf="settings.allowPrint"
+        md-icon-button
+        mdTooltip="Print">
         <md-icon>print</md-icon>
     </button>
 
-    <button md-icon-button mdTooltip="Share">
+    <button
+        *ngIf="settings.allowShare"
+        md-icon-button
+        mdTooltip="Share">
         <md-icon>share</md-icon>
     </button>
 
-    <button md-icon-button [mdMenuTriggerFor]="menu">
+    <button
+        *ngIf="settings.allowMoreMenu"
+        md-icon-button
+        [mdMenuTriggerFor]="menu">
         <md-icon>more_vert</md-icon>
     </button>
     <md-menu #menu="mdMenu">
@@ -61,7 +76,7 @@
         </button>
     </md-menu>
 
-    <ng-container *ngIf="allowInfoDrawer">
+    <ng-container *ngIf="settings.allowInfoDrawer">
         <adf-toolbar-divider></adf-toolbar-divider>
 
         <button md-icon-button mdTooltip="Info"
@@ -74,7 +89,18 @@
 </adf-toolbar>
 
  <md-dialog-content>
-    <ng-container [ngSwitch]="viewerType">
+
+    <ng-container *ngIf="isLoading">
+        <div class="adf-viewer-dialog__loading-screen">
+            <h2>Loading</h2>
+            <div>
+                <md-spinner></md-spinner>
+            </div>
+        </div>
+
+    </ng-container>
+
+    <ng-container *ngIf="!isLoading" [ngSwitch]="viewerType">
 
         <ng-container *ngSwitchCase="'image'">
             <div class="adf-viewer-dialog__image-view">
@@ -89,10 +115,10 @@
         </ng-container>
 
         <ng-container *ngSwitchCase="'pdf'">
-            <adf-pdf-viewer class="adf-viewer-dialog__pdf-view"
-                [showToolbar]="true"
-                [urlFile]="fileUrl">
-            </adf-pdf-viewer>
+            <adf-pdf-view
+                class="adf-viewer-dialog__pdf-view"
+                [fileUrl]="fileUrl">
+            </adf-pdf-view>
         </ng-container>
 
         <ng-container *ngSwitchCase="'video'">

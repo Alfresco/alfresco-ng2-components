@@ -21,7 +21,7 @@ import { AlfrescoAuthenticationService, AppConfigService, BpmProductVersionModel
 import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 
 @Component({
-    selector: 'about-page',
+    selector: 'adf-about-page',
     templateUrl: './about.component.html',
     styleUrls: ['./about.component.css']
 })
@@ -30,7 +30,7 @@ export class AboutComponent implements OnInit {
     data: ObjectDataTableAdapter;
     githubUrlCommitAlpha: string = 'https://github.com/Alfresco/alfresco-ng2-components/commits/';
 
-    configFile: string = '';
+    configFile: string = 'app.config.json';
     ecmHost: string = '';
     bpmHost: string = '';
 
@@ -85,7 +85,6 @@ export class AboutComponent implements OnInit {
             ]);
         });
 
-        this.configFile = this.appConfig.configFile;
         this.ecmHost = this.appConfig.get<string>('ecmHost');
         this.bpmHost = this.appConfig.get<string>('bpmHost');
     }

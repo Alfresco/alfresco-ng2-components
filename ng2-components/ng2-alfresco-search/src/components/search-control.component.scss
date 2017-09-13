@@ -1,13 +1,54 @@
-.search-field {
-    width: 267px;
-}
-@media only screen and (max-width: 400px) {
-    .search-field {
-        width: 200px;
-    }
-}
-@media only screen and (max-width: 320px) {
-    .search-field {
-        width: 160px;
+@mixin mat-search-control-theme($theme) {
+    $background: map-get($theme, background);
+
+    .adf {
+
+        &-search-button.mat-button {
+            border-radius: 50%;
+            height: 32px;
+            min-width: 20px;
+            width: 32px;
+            padding: 0;
+            overflow: hidden;
+            color: inherit;
+            line-height: normal;
+            border: none;
+        }
+
+        &-search-container {
+            display: flex;
+            align-items: center;
+
+            .adf-search-field {
+                max-width: 260px;
+                padding-top: 6px;
+
+                .mat-input-container {
+                    width: 100%;
+                }
+
+                .mat-input-underline .mat-input-ripple {
+                    background-color: mat-color($background, card);
+                }
+
+                .mat-input-element {
+                    font-size: 16px;
+                }
+            }
+
+            .adf-search-field .mat-input-infix {
+                padding: 0;
+            }
+
+        }
+
+        &-search-form{
+            overflow: hidden;
+        }
+
+        &-active-search,
+        &-valid-search {
+            display: block;
+        }
     }
 }

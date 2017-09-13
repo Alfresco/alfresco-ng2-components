@@ -72,10 +72,12 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit, Af
     }
 
     ngAfterViewInit() {
-        let onBlurInputEvent = Observable.fromEvent(this.input.nativeElement, 'blur');
-        onBlurInputEvent.debounceTime(200).subscribe((event) => {
-            this.flushValue();
-        });
+        if (this.input) {
+            let onBlurInputEvent = Observable.fromEvent(this.input.nativeElement, 'blur');
+            onBlurInputEvent.debounceTime(200).subscribe((event) => {
+                this.flushValue();
+            });
+        }
     }
 
     onKeyUp(event: KeyboardEvent) {

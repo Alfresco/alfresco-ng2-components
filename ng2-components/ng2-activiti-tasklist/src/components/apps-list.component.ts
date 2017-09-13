@@ -25,7 +25,7 @@ import { TaskListService } from './../services/tasklist.service';
 @Component({
     selector: 'adf-apps, activiti-apps',
     templateUrl: 'apps-list.component.html',
-    styleUrls: ['./apps-list.component.css', './apps-grid.component.css'],
+    styleUrls: ['./apps-list.component.scss', './apps-grid.component.scss'],
     providers: [TaskListService]
 })
 export class AppsListComponent implements OnInit {

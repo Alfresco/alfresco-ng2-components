@@ -37,7 +37,7 @@ describe('DateEditorComponent', () => {
         row = <DynamicTableRow> { value: { date: '1879-03-14T00:00:00.000Z' } };
         column = <DynamicTableColumn> { id: 'date', type: 'Date' };
         const field = new FormFieldModel(new FormModel());
-        table = new DynamicTableModel(field);
+        table = new DynamicTableModel(field, null);
         table.rows.push(row);
         table.columns.push(column);
         component = new DateEditorComponent(new MomentDateAdapter());

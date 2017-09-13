@@ -18,10 +18,9 @@
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MdProgressSpinnerModule } from '@angular/material';
-import { AppConfigModule, AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
+import { AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { DataRowEvent, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
-import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { TaskListService } from '../services/tasklist.service';
 import { TaskListComponent } from './tasklist.component';
@@ -93,10 +92,7 @@ describe('TaskListComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
-                AppConfigModule.forRoot('app.config.json', {
-                    bpmHost: 'http://localhost:9876/bpm'
-                }),
+                CoreModule,
                 DataTableModule,
                 MdProgressSpinnerModule
             ],
@@ -105,14 +101,15 @@ describe('TaskListComponent', () => {
             ],
             providers: [
                 TaskListService,
-                {provide: TranslationService, useClass: TranslationMock},
-                {provide: AppConfigService, useClass: AppConfigServiceMock}
+                {provide: TranslationService, useClass: TranslationMock}
             ]
         }).compileComponents();
 
     }));
 
     beforeEach(() => {
+        let appConfig: AppConfigService = TestBed.get(AppConfigService);
+        appConfig.config.bpmHost = 'http://localhost:9876/bpm';
 
         fixture = TestBed.createComponent(TaskListComponent);
         component = fixture.componentInstance;

@@ -9,7 +9,7 @@
             "REMOVE_FILE": "Remove uploaded file"
         },
         "STATUS": {
-            "FILE_CANCELED_STATUS": "Cancelled"
+            "FILE_CANCELED_STATUS": "Canceled"
         },
         "CONFIRMATION": {
             "BUTTON": {
@@ -28,16 +28,16 @@
             "UPLOAD_FOLDER": "Upload folder"
         },
         "MESSAGES": {
-            "UPLOAD_CANCELED": "Upload cancelled",
+            "UPLOAD_CANCELED": "Upload canceled",
             "UPLOAD_COMPLETED": "Uploaded {{ completed }} / {{ total }}",
             "UPLOAD_PROGRESS": "Uploading {{ completed }} / {{ total }}",
-            "UPLOAD_ERROR": "{{ total }} error",
-            "UPLOAD_ERRORS": "{{ total }} errors",
+            "UPLOAD_ERROR": "{{ total }} upload unsuccessful",
+            "UPLOAD_ERRORS": "{{ total }} uploads unsuccessful",
             "PROGRESS": "Upload in progress...",
-            "FOLDER_ALREADY_EXIST": "The folder {0} already exist",
-            "FOLDER_NOT_SUPPORTED": "Folder upload isn't supported by your browser",
-            "REMOVE_FILE_ERROR": "Error removing file {{ fileName }}",
-            "REMOVE_FILES_ERROR": "Error removing {{ total }} files"
+            "FOLDER_ALREADY_EXIST": "The folder {0} already exists",
+            "FOLDER_NOT_SUPPORTED": "Folder upload isn't supported by your browser, try a different browser",
+            "REMOVE_FILE_ERROR": "{{ fileName }} couldn't be removed, try again or check with your IT Team.",
+            "REMOVE_FILES_ERROR": "{{ total }} files couldn't be removed, try again or check with your IT Team."
         },
         "ACTION": {
             "UNDO": "Undo"

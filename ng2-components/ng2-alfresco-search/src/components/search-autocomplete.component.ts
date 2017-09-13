@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
 import { SearchOptions, SearchService } from 'ng2-alfresco-core';
 import { ThumbnailService } from 'ng2-alfresco-core';
@@ -23,7 +23,8 @@ import { ThumbnailService } from 'ng2-alfresco-core';
 @Component({
     selector: 'adf-search-autocomplete, alfresco-search-autocomplete',
     templateUrl: './search-autocomplete.component.html',
-    styleUrls: ['./search-autocomplete.component.scss']
+    styleUrls: ['./search-autocomplete.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class SearchAutocompleteComponent implements OnChanges {
 

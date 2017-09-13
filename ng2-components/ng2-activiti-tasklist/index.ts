@@ -17,11 +17,12 @@
 
 import { DatePipe } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { MdAutocompleteModule, MdButtonModule, MdCardModule, MdDatepickerModule, MdGridListModule,
-    MdIconModule, MdInputModule, MdNativeDateModule, MdProgressSpinnerModule, MdRippleModule, MdSelectModule } from '@angular/material';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { ActivitiFormModule } from 'ng2-activiti-form';
+
 import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
+import { MaterialModule } from './src/components/material.module';
 import { PeopleService } from './src/services/people.service';
 import { ProcessUploadService } from './src/services/process-upload.service';
 import { TaskListService } from './src/services/tasklist.service';
@@ -156,17 +157,8 @@ export const ACTIVITI_TASKLIST_PROVIDERS: any[] = [
         CoreModule,
         DataTableModule,
         ActivitiFormModule,
-        MdIconModule,
-        MdButtonModule,
-        MdInputModule,
-        MdCardModule,
-        MdProgressSpinnerModule,
-        MdDatepickerModule,
-        MdNativeDateModule,
-        MdSelectModule,
-        MdAutocompleteModule,
-        MdGridListModule,
-        MdRippleModule
+        FlexLayoutModule,
+        MaterialModule
     ],
     declarations: [
         ...ACTIVITI_TASKLIST_DIRECTIVES
@@ -185,8 +177,7 @@ export const ACTIVITI_TASKLIST_PROVIDERS: any[] = [
     ],
     exports: [
         ...ACTIVITI_TASKLIST_DIRECTIVES,
-        MdIconModule,
-        MdButtonModule
+        MaterialModule
     ]
 })
 export class ActivitiTaskListModule {

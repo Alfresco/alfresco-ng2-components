@@ -31,10 +31,13 @@ import { DocumentListComponent } from '../document-list.component';
 export class BreadcrumbComponent implements OnChanges {
 
     @Input()
-    folderNode: MinimalNodeEntryEntity;
+    folderNode: MinimalNodeEntryEntity = null;
 
     @Input()
-    root: string;
+    root: string = null;
+
+    @Input()
+    rootId: string = null;
 
     @Input()
     target: DocumentListComponent;
@@ -50,24 +53,47 @@ export class BreadcrumbComponent implements OnChanges {
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.folderNode) {
-
             const node: MinimalNodeEntryEntity = changes.folderNode.currentValue;
-
-            if (node && node.path) {
-                const route = <PathElementEntity[]> (node.path.elements || []).slice();
-
-                route.push(<PathElementEntity> {
-                    id: node.id,
-                    name: node.name
-                });
-
-                if (this.root && route.length > 0) {
-                    route[0].name = this.root;
-                }
-
-                this.route = route;
-            }
+            this.route = this.parseRoute(node);
         }
+    }
+
+    parseRoute(node: MinimalNodeEntryEntity): PathElementEntity[] {
+        if (node && node.path) {
+            const route = <PathElementEntity[]> (node.path.elements || []).slice();
+
+            route.push(<PathElementEntity> {
+                id: node.id,
+                name: node.name
+            });
+
+            const rootPos = this.getElementPosition(route, this.rootId);
+            if (rootPos > 0) {
+                route.splice(0, rootPos);
+            }
+
+            if (rootPos === -1 && this.rootId) {
+                route[0].id = this.rootId;
+            }
+
+            if (this.root) {
+                route[0].name = this.root;
+            }
+
+            return route;
+        }
+
+        return [];
+    }
+
+    private getElementPosition(route: PathElementEntity[], nodeId: string): number {
+        let result: number = -1;
+
+        if (route && route.length > 0 && nodeId) {
+            result = route.findIndex(el => el.id === nodeId);
+        }
+
+        return result;
     }
 
     onRoutePathClick(route: PathElementEntity, event?: Event): void {

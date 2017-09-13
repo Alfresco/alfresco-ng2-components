@@ -23,6 +23,7 @@ import { TranslationMock } from '../assets/translation.service.mock';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from '../services/tasklist.service';
 import { ChecklistComponent } from './checklist.component';
+import { MaterialModule } from './material.module';
 
 declare let jasmine: any;
 
@@ -41,7 +42,8 @@ describe('ChecklistComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule.forRoot(),
+                MaterialModule
             ],
             declarations: [
                 ChecklistComponent
@@ -60,7 +62,7 @@ describe('ChecklistComponent', () => {
         });
     }));
 
-    it('should show people component title', () => {
+    it('should show checklist component title', () => {
         expect(element.querySelector('#checklist-label')).toBeDefined();
         expect(element.querySelector('#checklist-label')).not.toBeNull();
     });
@@ -70,11 +72,54 @@ describe('ChecklistComponent', () => {
         expect(element.querySelector('#checklist-none-message').textContent).toContain('TASK_DETAILS.CHECKLIST.NONE');
     });
 
-    describe('when interact with people dialog', () => {
+    describe('when is readonly mode', () => {
+
+        beforeEach(() => {
+            checklistComponent.taskId = 'fake-task-id';
+            checklistComponent.checklist.push(fakeTaskDetail);
+            checklistComponent.readOnly = true;
+
+            fixture.detectChanges();
+            showChecklistDialog = <HTMLElement> element.querySelector('#add-checklist');
+            closeCheckDialogButton = <HTMLElement> element.querySelector('#close-check-dialog');
+        });
+
+        it('should NOT show add checklist button', () => {
+            expect(element.querySelector('#add-checklist')).toBeNull();
+        });
+
+        it('should NOT show cancel checklist button', () => {
+            expect(element.querySelector('#remove-fake-check-id')).toBeNull();
+        });
+    });
+
+    describe('when is not in readonly mode', () => {
+
+        beforeEach(() => {
+            checklistComponent.taskId = 'fake-task-id';
+            checklistComponent.readOnly = false;
+            checklistComponent.checklist.push(fakeTaskDetail);
+
+            fixture.detectChanges();
+            showChecklistDialog = <HTMLElement> element.querySelector('#add-checklist');
+            closeCheckDialogButton = <HTMLElement> element.querySelector('#close-check-dialog');
+        });
+
+        it('should show add checklist button', () => {
+            expect(element.querySelector('#add-checklist')).not.toBeNull();
+        });
+
+        it('should show cancel checklist button', () => {
+            expect(element.querySelector('#remove-fake-check-id')).not.toBeNull();
+        });
+    });
+
+    describe('when interact with checklist dialog', () => {
 
         beforeEach(() => {
             checklistComponent.taskId = 'fake-task-id';
             checklistComponent.checklist = [];
+
             fixture.detectChanges();
             showChecklistDialog = <HTMLElement> element.querySelector('#add-checklist');
             closeCheckDialogButton = <HTMLElement> element.querySelector('#close-check-dialog');
@@ -84,16 +129,9 @@ describe('ChecklistComponent', () => {
             expect(showChecklistDialog).not.toBeNull();
             showChecklistDialog.click();
 
-            expect(element.querySelector('#checklist-dialog')).not.toBeNull();
-            expect(element.querySelector('#add-checklist-title')).not.toBeNull();
-            expect(element.querySelector('#add-checklist-title').textContent).toContain('New Check');
-        });
-
-        it('should close dialog when clicked on cancel', () => {
-            showChecklistDialog.click();
-            expect(element.querySelector('#checklist-dialog').getAttribute('open')).not.toBeNull();
-            closeCheckDialogButton.click();
-            expect(element.querySelector('#checklist-dialog').getAttribute('open')).toBeNull();
+            expect(window.document.querySelector('#checklist-dialog')).not.toBeNull();
+            expect(window.document.querySelector('#add-checklist-title')).not.toBeNull();
+            expect(window.document.querySelector('#add-checklist-title').textContent).toContain('New Check');
         });
     });
 
@@ -112,6 +150,10 @@ describe('ChecklistComponent', () => {
 
         afterEach(() => {
             jasmine.Ajax.uninstall();
+            const overlayContainers = <any> window.document.querySelectorAll('.cdk-overlay-container');
+            overlayContainers.forEach((overlayContainer) => {
+                overlayContainer.innerHTML = '';
+            });
         });
 
         it('should show task checklist', () => {
@@ -123,7 +165,7 @@ describe('ChecklistComponent', () => {
 
         it('should add checklist', async(() => {
             showChecklistDialog.click();
-            let addButtonDialog = <HTMLElement> element.querySelector('#add-check');
+            let addButtonDialog = <HTMLElement> window.document.querySelector('#add-check');
             addButtonDialog.click();
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -219,7 +261,7 @@ describe('ChecklistComponent', () => {
                 done();
             });
             showChecklistDialog.click();
-            let addButtonDialog = <HTMLElement> element.querySelector('#add-check');
+            let addButtonDialog = <HTMLElement> window.document.querySelector('#add-check');
             addButtonDialog.click();
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,

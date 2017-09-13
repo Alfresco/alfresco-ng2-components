@@ -15,9 +15,18 @@
  * limitations under the License.
  */
 
-export interface ViewerDialogSettings {
-    fileUrl?: string;
-    fileMimeType?: string;
-    fileName?: string;
-    downloadUrl?: string;
-}
+import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+import { DataTableCellComponent } from './datatable-cell.component';
+
+@Component({
+    selector: 'adf-date-cell',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
+        <ng-container>
+            <span [title]="tooltip">{{value}}</span>
+        </ng-container>
+    `,
+    encapsulation: ViewEncapsulation.None,
+    host: { class: 'adf-date-cell' }
+})
+export class DateCellComponent extends DataTableCellComponent {}

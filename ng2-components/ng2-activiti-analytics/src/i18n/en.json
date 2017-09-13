@@ -3,13 +3,13 @@
     "TITLE": "ANALYTICS",
     "MESSAGES": {
       "UNKNOWN-WIDGET-TYPE": "UNKNOWN WIDGET TYPE",
-      "FILL-PARAMETER": "Fill in the parameters to generate your report",
+      "FILL-PARAMETER": "Choose from the report options",
       "NO-DATA-FOUND": "No data found",
       "ZERO-DATA-FOUND": "There are only zero values",
       "ICON-SETTING": "Settings",
       "ICON-SAVE": "Save",
       "ICON-DELETE": "Delete",
-      "ICON-EXPORT-CSV": "Export to CSV"
+      "ICON-EXPORT-CSV": "Export"
     }
   },
   "__KEY_REPORTING": {
@@ -25,7 +25,7 @@
   "REPORTING": {
     "DEFAULT-REPORTS": {
       "PROCESS-HEAT-MAP": {
-        "TYPE-FILTERING": "Include all process steps (Unchecking this, will remove pass through steps like start events, gateways, etc.)?"
+        "TYPE-FILTERING": "Include pass through steps such as start events and gateways"
       },
       "PROCESS-INSTANCES-OVERVIEW": {
         "PROCESS-DEFINITION": "Process definition",
@@ -35,20 +35,20 @@
       "TASK-OVERVIEW": {
         "PROCESS-DEFINITION": "Process definition",
         "DATE-RANGE": "Date range",
-        "DATE-RANGE-INTERVAL": "Aggregate dates by"
+        "DATE-RANGE-INTERVAL": "Group dates by"
       },
       "TASK-SLA": {
         "TASK": "Task",
         "PROCESS-DEFINITION": "Process definition",
         "DATE-RANGE": "Date range",
-        "SLA-DURATION": "What is the time this task needs to be completed in to be within the SLA?"
+        "SLA-DURATION": "SLA required completion time"
       }
     },
     "PROCESS-STATUS": "Process status",
     "TASK-STATUS": "Task status"
   },
   "DIALOG":{
-      "SAVE_MESSAGE" : "The current parameter settings will be stored, and a new report will be shown in the reports list. When that particular report is clicked, the report will be generated using these saved parameter values.",
+      "SAVE_MESSAGE" : "Click Save to add a report with the current settings to your reports list.",
       "EXPORT_MESSAGE":""
   },
   "DATE-WIDGET":{
@@ -56,7 +56,7 @@
       "END-DATE": "End date",
       "MESSAGES":{
         "START-DATE-REQUIRED": "Start date is required",
-        "START-LESS-THAN-END-DATE":"Start date must be less than End date"
+        "START-LESS-THAN-END-DATE":"Start date must be before end date"
       }
   }
 }

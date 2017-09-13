@@ -17,7 +17,7 @@
 
 import { async, TestBed } from '@angular/core/testing';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { AppConfigModule } from './app-config.service';
+import { AppConfigModule, AppConfigService } from './app-config.service';
 import { StorageService } from './storage.service';
 import { UserPreferencesService } from './user-preferences.service';
 
@@ -30,11 +30,7 @@ describe('UserPreferencesService', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                AppConfigModule.forRoot('app.config.json', {
-                    'pagination': {
-                        'size': defaultPaginationSize
-                    }
-                })
+                AppConfigModule
             ],
             providers: [
                 AlfrescoApiService,
@@ -45,6 +41,10 @@ describe('UserPreferencesService', () => {
     }));
 
     beforeEach(() => {
+        let appConfig: AppConfigService = TestBed.get(AppConfigService);
+        appConfig.config.pagination = {
+            size: 10
+        };
         preferences = TestBed.get(UserPreferencesService);
         storage = TestBed.get(StorageService);
     });

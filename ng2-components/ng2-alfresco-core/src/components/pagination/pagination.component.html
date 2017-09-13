@@ -1,4 +1,4 @@
-<div class="adf-pagination__block">
+<div class="adf-pagination__block adf-pagination__range-block">
     <span class="adf-pagination__range">
         {{
             'CORE.PAGINATION.ITEMS_RANGE' | translate: {
@@ -9,7 +9,7 @@
     </span>
 </div>
 
-<div class="adf-pagination__block">
+<div class="adf-pagination__block adf-pagination__perpage-block">
     <span>
         {{ 'CORE.PAGINATION.ITEMS_PER_PAGE' | translate }}
     </span>
@@ -32,7 +32,7 @@
     </md-menu>
 </div>
 
-<div class="adf-pagination__block">
+<div class="adf-pagination__block adf-pagination__actualinfo-block">
     <span class="adf-pagination__current-page">
         {{ 'CORE.PAGINATION.CURRENT_PAGE' | translate: { number: current } }}
     </span>
@@ -58,7 +58,7 @@
     </md-menu>
 </div>
 
-<div class="adf-pagination__block">
+<div class="adf-pagination__block adf-pagination__controls-block">
     <button
         class="adf-pagination__previous-button"
         md-icon-button

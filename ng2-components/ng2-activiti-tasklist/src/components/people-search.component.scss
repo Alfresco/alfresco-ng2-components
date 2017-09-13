@@ -11,10 +11,6 @@
         font-weight: bolder;
     }
 
-    .material-icons.people-search__icon:hover {
-        color: mat-color($primary);
-    }
-
     .fix-element-user-list {
         padding-top: 0px;
         padding-right: 0px;
@@ -55,10 +51,6 @@
         }
     }
 
-    adf-people-list /deep/ adf-datatable /deep/ .people-full-name {
-        font-family: 'Muli';
-    }
-
     .people-pic {
         background: mat-color($primary);
         width: 30px;
@@ -68,7 +60,6 @@
         text-align: center;
         font-weight: bolder;
         font-size: 18px;
-        font-family: Muli;
         text-transform: uppercase;
         vertical-align: text-bottom;
     }
@@ -78,9 +69,5 @@
         width: 40px;
         height: 40px;
         vertical-align: middle;
-    }
-
-    adf-people-list /deep/ alfresco-datatable /deep/ td.mdl-data-table__cell--non-numeric.non-selectable.data-cell {
-        padding: 4px 12px;
     }
 }

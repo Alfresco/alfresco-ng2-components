@@ -1,30 +1,37 @@
 <div *ngIf="!processInstanceDetails">{{ 'DETAILS.MESSAGES.NONE'|translate }}</div>
-<div *ngIf="processInstanceDetails">
-    <h2 class="mdl-card__title-text">{{ getProcessNameOrDescription('medium') }}</h2>
-    <adf-process-instance-header
-        [processInstance]="processInstanceDetails"
-        (showProcessDiagram)="onShowProcessDiagram($event)">
-    </adf-process-instance-header>
-    <div class="mdl-cell mdl-cell--4-col">
-        <button id="show-diagram-button" type="button" md-button md-raised-button [disabled]="isDiagramDisabled()" (click)="onShowProcessDiagram(processInstanceId)">{{ 'DETAILS.BUTTON.SHOW_DIAGRAM' | translate }}</button>
-    </div>
-    <div class="mdl-card mdl-shadow--2dp activiti-process-container">
-        <div class="mdl-cell mdl-cell--12-col">
-            <adf-process-instance-tasks
-                [processInstanceDetails]="processInstanceDetails"
-                (taskClick)="onTaskClicked($event)">
-            </adf-process-instance-tasks>
+<md-card *ngIf="processInstanceDetails">
+    <md-card-header>
+        <md-card-title>{{ getProcessNameOrDescription('medium') }}</md-card-title>
+    </md-card-header>
+    <md-card-content>
+        <adf-process-instance-header
+            [processInstance]="processInstanceDetails"
+            (showProcessDiagram)="onShowProcessDiagram($event)">
+        </adf-process-instance-header>
+
+        <button class="adf-in-medias-res-button" md-button id="show-diagram-button" type="button" md-button md-raised-button [disabled]="isDiagramDisabled()" (click)="onShowProcessDiagram(processInstanceId)">{{ 'DETAILS.BUTTON.SHOW_DIAGRAM' | translate }}</button>
+
+        <md-card>
+            <md-card-content>
+                <adf-process-instance-tasks
+                    [processInstanceDetails]="processInstanceDetails"
+                    (taskClick)="onTaskClicked($event)">
+                </adf-process-instance-tasks>
+            </md-card-content>
+        </md-card>
+
+        <div data-automation-id="header-status" *ngIf="isRunning()" class="adf-in-medias-res-button">
+            <button md-button type="button" (click)="cancelProcess()">{{ 'DETAILS.BUTTON.CANCEL' | translate }}</button>
         </div>
-    </div>
-    <div class="mdl-cell mdl-cell--4-col" data-automation-id="header-status" *ngIf="isRunning()">
-        <button type="button" (click)="cancelProcess()" class="mdl-button">{{ 'DETAILS.BUTTON.CANCEL' | translate }}</button>
-    </div>
-    <md-card>
-        <md-card-content>
-            <adf-process-instance-comments #activiticomments
-                [readOnly]="!isRunning()"
-                [processInstanceId]="processInstanceDetails.id">
-            </adf-process-instance-comments>
-        </md-card-content>
-    </md-card>
-</div>
+
+        <md-card>
+            <md-card-content>
+                <adf-process-instance-comments #activiticomments
+                    [readOnly]="!isRunning()"
+                    [processInstanceId]="processInstanceDetails.id">
+                </adf-process-instance-comments>
+            </md-card-content>
+        </md-card>
+
+    </md-card-content>
+</md-card>
