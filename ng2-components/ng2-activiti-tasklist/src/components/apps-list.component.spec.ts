@@ -209,15 +209,15 @@ describe('AppsListComponent', () => {
         it('should have one app shown as selected after app selected', () => {
             component.selectApp(deployedApps[1]);
             fixture.detectChanges();
-            let selectedEls = debugElement.queryAll(By.css('.selectedIcon'));
+            let selectedEls = debugElement.queryAll(By.css('.adf-app-listgrid-item-card-actions-icon'));
             expect(selectedEls.length).toBe(1);
         });
 
         it('should have the correct app shown as selected after app selected', () => {
             component.selectApp(deployedApps[1]);
             fixture.detectChanges();
-            let appEls = debugElement.queryAll(By.css('.mdl-grid > div'));
-            expect(appEls[1].query(By.css('.selectedIcon'))).not.toBeNull();
+            let appEls = debugElement.queryAll(By.css('.adf-app-listgrid > div'));
+            expect(appEls[1].query(By.css('.adf-app-listgrid-item-card-actions-icon'))).not.toBeNull();
         });
 
     });

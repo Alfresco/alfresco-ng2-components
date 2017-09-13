@@ -17,6 +17,7 @@
 
 import { DatePipe } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { ActivitiFormModule } from 'ng2-activiti-form';
 
 import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
@@ -156,6 +157,7 @@ export const ACTIVITI_TASKLIST_PROVIDERS: any[] = [
         CoreModule,
         DataTableModule,
         ActivitiFormModule,
+        FlexLayoutModule,
         MaterialModule
     ],
     declarations: [
