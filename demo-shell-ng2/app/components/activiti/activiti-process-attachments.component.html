@@ -12,6 +12,7 @@
         </adf-upload-drag-area>
 
         <adf-create-process-attachment
+            *ngIf="isRunning()"
             [processInstanceId]="processId"
             (success)="onFileUploadComplete($event)">
         </adf-create-process-attachment>
