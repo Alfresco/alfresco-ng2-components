@@ -31,7 +31,7 @@ import { SearchModule } from 'ng2-alfresco-search';
 import { SocialModule } from 'ng2-alfresco-social';
 import { TagModule } from 'ng2-alfresco-tag';
 import { UploadModule } from 'ng2-alfresco-upload';
-import { UserInfoComponentModule } from 'ng2-alfresco-userinfo';
+import { UserInfoModule } from 'ng2-alfresco-userinfo';
 import { ViewerModule } from 'ng2-alfresco-viewer';
 import { WebScriptModule } from 'ng2-alfresco-webscript';
 
@@ -95,7 +95,7 @@ if (process.env.ENV === 'production') {
         ActivitiFormModule.forRoot(),
         ActivitiTaskListModule.forRoot(),
         ActivitiProcessListModule.forRoot(),
-        UserInfoComponentModule.forRoot(),
+        UserInfoModule.forRoot(),
         AnalyticsModule.forRoot(),
         DiagramsModule.forRoot(),
         CustomEditorsModule,
