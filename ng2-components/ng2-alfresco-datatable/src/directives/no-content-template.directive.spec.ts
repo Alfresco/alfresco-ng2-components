@@ -20,6 +20,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableCellComponent } from '../components/datatable/datatable-cell.component';
 import { DataTableComponent } from '../components/datatable/datatable.component';
+import { DateCellComponent } from '../components/datatable/date-cell.component';
+import { FileSizeCellComponent } from '../components/datatable/filesize-cell.component';
 import { LocationCellComponent } from '../components/datatable/location-cell.component';
 import { MaterialModule } from '../material.module';
 import { NoContentTemplateDirective } from './no-content-template.directive';
@@ -39,8 +41,10 @@ describe('NoContentTemplateDirective', () => {
             declarations: [
                 DataTableComponent,
                 DataTableCellComponent,
+                DateCellComponent,
                 NoContentTemplateDirective,
-                LocationCellComponent
+                LocationCellComponent,
+                FileSizeCellComponent
             ]
         }).compileComponents();
     }));
