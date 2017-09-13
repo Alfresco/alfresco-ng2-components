@@ -1,7 +1,6 @@
 {
     "SEARCH": {
         "CONTROL": {
-            "LABEL": "Search content"
         },
         "RESULTS": {
             "SUMMARY": "{{numResults}} result found for {{searchTerm}}",
