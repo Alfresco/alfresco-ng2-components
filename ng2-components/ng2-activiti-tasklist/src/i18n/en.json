@@ -15,7 +15,7 @@
             "PEOPLE": "People this task is shared with",
             "COMMENTS": "Comments",
             "CHECKLIST": "Checklist",
-            "INVOLVED_PEOPLE": "Involved people",
+            "INVOLVED_PEOPLE": "People Involved",
             "ADD_PEOPLE": "Add people and groups",
             "ADD_ASSIGNEE": "Add new assignee"
         },
@@ -39,7 +39,7 @@
             "NONE": "No assignee."
         },
         "PEOPLE": {
-            "NONE": "No people involved."
+            "NONE": "Nobody involved."
         },
         "COMMENTS": {
             "NONE": "No comments",
@@ -98,7 +98,7 @@
         "ADD_ASSIGNEE": "ASSIGN",
         "SEARCH_USER": "Search user",
         "SEARCH": {
-            "NO_USERS": "No user found to involve"
+            "NO_USERS": "Nobody found to involve"
         }
     },
     "TASK-ATTACHMENT": {
