@@ -55,19 +55,6 @@
                 }
             }
         },
-        "VARIABLES": {
-            "NONE": "No variables set",
-            "BUTTON": {
-                "ADD": "Set a variable"
-            },
-            "DIALOG": {
-                "BUTTON": {
-                    "SET": "Set",
-                    "OK": "OK",
-                    "CANCEL": "Cancel",
-                    "CLOSE": "Close"
-                }
-            },
             "ADD_DIALOG": {
                 "TITLE": "Set process variable",
                 "LABEL": {
