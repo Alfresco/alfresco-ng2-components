@@ -11,7 +11,6 @@
         float: left;
         padding: 10px 0px;
         font-weight: bolder;
-        font-family: Muli;
         opacity: 0.54;
     }
 
@@ -47,15 +46,8 @@
         thead {
             display: none;
         }
-        .people-full-name {
-            font-family: 'Muli';
-        }
         .people-email {
-            font-family: 'Muli';
             opacity: 0.54;
-        }
-        .people-edit-label {
-            font-family: 'Muli';
         }
         .people-pic {
             background: mat-color($primary);
@@ -66,7 +58,6 @@
             text-align: center;
             font-weight: bolder;
             font-size: 18px;
-            font-family: Muli;
             text-transform: uppercase;
             vertical-align: text-bottom;
         }

@@ -1,6 +1,11 @@
 @import '~ng2-alfresco-core/styles/theming';
 @import './all-theme';
 
+$custom-typography: mat-typography-config(
+    $font-family: 'Muli, Roboto, "Helvetica Neue", sans-serif'
+);
+@include angular-material-typography($custom-typography);
+
 @include mat-core();
 
 $primary: mat-palette($mat-purple, 700, 500, 800);
