@@ -51,8 +51,6 @@ export class AppConfigService {
                     resolve(this.config);
                 },
                 () => {
-                    const errorMessage = `Error loading app.config.json`;
-                    console.log(errorMessage);
                     resolve(this.config);
                 }
             );
