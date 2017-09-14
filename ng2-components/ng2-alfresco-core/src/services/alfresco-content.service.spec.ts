@@ -20,7 +20,7 @@ import { CookieServiceMock } from './../assets/cookie.service.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AlfrescoContentService } from './alfresco-content.service';
 import { AlfrescoSettingsService } from './alfresco-settings.service';
-import { AppConfigModule } from './app-config.service';
+import { AppConfigModule, AppConfigService } from './app-config.service';
 import { AuthenticationService } from './authentication.service';
 import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
@@ -72,6 +72,11 @@ describe('AlfrescoContentService', () => {
         };
 
         jasmine.Ajax.install();
+
+        let appConfig: AppConfigService = TestBed.get(AppConfigService);
+        appConfig.config = {
+            ecmHost: 'http://localhost:9876/ecm'
+        };
     });
 
     afterEach(() => {

@@ -18,7 +18,7 @@
 import { async, TestBed } from '@angular/core/testing';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AlfrescoSettingsService } from './alfresco-settings.service';
-import { AppConfigModule } from './app-config.service';
+import { AppConfigModule, AppConfigService } from './app-config.service';
 import { AuthenticationService } from './authentication.service';
 import { SitesApiService } from './sites-api.service';
 import { StorageService } from './storage.service';
@@ -33,12 +33,7 @@ describe('Sites service', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                AppConfigModule.forRoot('app.config.json', {
-                    ecmHost: 'http://localhost:9876/ecm',
-                    files: {
-                        excluded: ['.DS_Store', 'desktop.ini', '.git', '*.git']
-                    }
-                })
+                AppConfigModule
             ],
             providers: [
                 SitesApiService,
@@ -52,6 +47,14 @@ describe('Sites service', () => {
     }));
 
     beforeEach(() => {
+        let appConfig: AppConfigService = TestBed.get(AppConfigService);
+        appConfig.config = {
+            ecmHost: 'http://localhost:9876/ecm',
+            files: {
+                excluded: ['.DS_Store', 'desktop.ini', '.git', '*.git']
+            }
+        };
+
         service = TestBed.get(SitesApiService);
         jasmine.Ajax.install();
     });

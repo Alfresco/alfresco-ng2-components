@@ -24,12 +24,12 @@ describe('AppConfigService', () => {
 
     let appConfigService: AppConfigService;
     const mockResponse = {
-        'ecmHost': 'http://localhost:4000/ecm',
-        'bpmHost': 'http://localhost:4000/ecm',
-        'application': {
-            'name': 'Custom Name'
+        ecmHost: 'http://localhost:4000/ecm',
+        bpmHost: 'http://localhost:4000/ecm',
+        application: {
+            name: 'Custom Name'
         },
-        'files': {
+        files: {
             'excluded': ['exluded']
         }
     };
@@ -76,27 +76,8 @@ describe('AppConfigService', () => {
         });
     });
 
-    it('should use default config file', () => {
-        expect(appConfigService.configFile).toBeNull();
-        appConfigService.load().then(() => {
-            expect(appConfigService.configFile).toBe('app.config.json');
-        });
-    });
-
-    it('should take custom config file', () => {
-        expect(appConfigService.configFile).toBeNull();
-
-        const name = 'custom.config.json';
-        appConfigService.load(name).then(() => {
-            expect(appConfigService.configFile).toBe(name);
-        });
-    });
-
     it('should take excluded file list', () => {
-        expect(appConfigService.configFile).toBeNull();
-
-        const name = 'custom.config.json';
-        appConfigService.load(name).then(() => {
+        appConfigService.load().then(() => {
             expect(appConfigService.get('files.excluded')[0]).toBe('exluded');
         });
     });

@@ -19,7 +19,7 @@ import { async, TestBed } from '@angular/core/testing';
 import { BpmProductVersionModel, EcmProductVersionModel } from '../models/product-version.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AlfrescoSettingsService } from './alfresco-settings.service';
-import { AppConfigModule } from './app-config.service';
+import { AppConfigModule, AppConfigService } from './app-config.service';
 import { AuthenticationService } from './authentication.service';
 import { DiscoveryApiService } from './discovery-api.service';
 import { StorageService } from './storage.service';
@@ -97,9 +97,7 @@ describe('Discovery Api Service', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                AppConfigModule.forRoot('app.config.json', {
-                    ecmHost: 'http://localhost:9876/ecm'
-                })
+                AppConfigModule
             ],
             providers: [
                 DiscoveryApiService,
@@ -113,6 +111,10 @@ describe('Discovery Api Service', () => {
     }));
 
     beforeEach(() => {
+        let appConfig: AppConfigService = TestBed.get(AppConfigService);
+        appConfig.config = {
+            ecmHost: 'http://localhost:9876/ecm'
+        };
         service = TestBed.get(DiscoveryApiService);
         jasmine.Ajax.install();
     });

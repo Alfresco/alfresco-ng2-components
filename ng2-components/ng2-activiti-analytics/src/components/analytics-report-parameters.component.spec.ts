@@ -18,7 +18,7 @@
 import { DebugElement, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReportParametersModel } from 'ng2-activiti-diagrams';
-import { AlfrescoTranslationService, AppConfigModule, CoreModule } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, AppConfigService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import * as analyticParamsMock from '../assets/analyticsParamsReportComponent.mock';
 import { AnalyticsReportParametersComponent } from '../components/analytics-report-parameters.component';
@@ -41,10 +41,7 @@ describe('AnalyticsReportParametersComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
-                AppConfigModule.forRoot('app.config.json', {
-                    bpmHost: 'http://localhost:9876/bpm'
-                }),
+                CoreModule,
                 MaterialModule
             ],
             declarations: [
@@ -70,6 +67,9 @@ describe('AnalyticsReportParametersComponent', () => {
     }));
 
     beforeEach(() => {
+        let appConfig: AppConfigService = TestBed.get(AppConfigService);
+        appConfig.config.bpmHost = 'http://localhost:9876/bpm';
+
         fixture = TestBed.createComponent(AnalyticsReportParametersComponent);
         component = fixture.componentInstance;
         debug = fixture.debugElement;
