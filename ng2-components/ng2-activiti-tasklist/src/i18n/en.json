@@ -1,10 +1,10 @@
 {
     "APPS": {
-        "NONE": "No apps found."
+        "NONE": "No apps found"
     },
     "TASK_LIST": {
         "MESSAGES": {
-            "NONE": "No tasks list found."
+            "NONE": "No tasks list found"
         }
     },
     "TASK_DETAILS": {
@@ -15,8 +15,8 @@
             "PEOPLE": "People this task is shared with",
             "COMMENTS": "Comments",
             "CHECKLIST": "Checklist",
-            "INVOLVED_PEOPLE": "Involved people",
-            "ADD_PEOPLE": "Add people & groups",
+            "INVOLVED_PEOPLE": "People Involved",
+            "ADD_PEOPLE": "Add people and groups",
             "ADD_ASSIGNEE": "Add new assignee"
         },
         "BUTTON": {
@@ -26,8 +26,8 @@
             "UPLOAD-ATTACHMENT": "Upload Attachment"
         },
         "MESSAGES": {
-            "NONE": "No task details found.",
-            "CLAIM": "To work on this task, you need to claim it first. You can do that by pressing the Claim button above."
+            "NONE": "No task details found",
+            "CLAIM": "To work on this task click Claim."
         },
         "FORM": {
             "NONE": "No form."
@@ -39,10 +39,10 @@
             "NONE": "No assignee."
         },
         "PEOPLE": {
-            "NONE": "No people involved."
+            "NONE": "Nobody involved."
         },
         "COMMENTS": {
-            "NONE": "No comments.",
+            "NONE": "No comments",
             "ADD": "Add a comment",
             "HEADER": "Comments",
             "DIALOG": {
@@ -57,11 +57,11 @@
             }
         },
         "CHECKLIST": {
-            "NONE": "No checklist."
+            "NONE": "No checklist"
         },
         "ERROR": {
-            "TITLE": "Something went wrong",
-            "DESCRIPTION": "Could not complete the specified action. Please try again or check that you have permission.",
+            "TITLE": "Couldn't complete the action",
+            "DESCRIPTION": "Try again or check that you have access.",
             "CLOSE": "Close"
         }
     },
@@ -78,10 +78,10 @@
                 "NONE": "None",
                 "NAME": "Name",
                 "DESCRIPTION": "Description",
-                "ATTACHFORM": "Attach a Form",
+                "ATTACHFORM": "Attach Form",
                 "ASSIGNEE": "Assignee",
                 "FORM": "Form",
-                "DATE": "Choose a Date"
+                "DATE": "Choose Date"
             },
             "ACTION": {
                 "START": "Start",
@@ -98,7 +98,7 @@
         "ADD_ASSIGNEE": "ASSIGN",
         "SEARCH_USER": "Search user",
         "SEARCH": {
-            "NO_USERS": "No user found to involve"
+            "NO_USERS": "Nobody found to involve"
         }
     },
     "TASK-ATTACHMENT": {
@@ -106,11 +106,11 @@
             "HEADER": "This list is empty",
             "DRAG-AND-DROP": {
                 "TITLE": "Drag and drop",
-                "SUBTITLE": "any files here to add"
+                "SUBTITLE": "to upload files"
             }
         },
         "EMPTY-LIST": {
-            "HEADER": "No documents are available"
+            "HEADER": "No files are available"
         }
     }
 }

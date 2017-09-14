@@ -4,7 +4,7 @@
       "TITLE": "Start Form"
     },
     "PREVIEW": {
-      "IMAGE_NOT_AVAILABLE": "The preview image is not available."
+      "IMAGE_NOT_AVAILABLE": "Preview not available"
     },
     "FIELD": {
         "REQUIRED" : "*Required"
