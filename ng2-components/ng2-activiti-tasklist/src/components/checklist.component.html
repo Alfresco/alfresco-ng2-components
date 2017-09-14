@@ -1,15 +1,21 @@
-<span class="activiti-label mdl-badge" id="checklist-label"
-      [attr.data-badge]="checklist?.length">{{ 'TASK_DETAILS.LABELS.CHECKLIST' | translate }}</span>
-<div *ngIf="!readOnly"  id="add-checklist" (click)="showDialog()"  class="icon material-icons">add</div>
-<div *ngIf="!readOnly" class="mdl-tooltip" for="add-checklist">
-    Add a checklist
+<div class="adf-checklist-control">
+    <md-chip-list id="checklist-label">
+        <span class="activiti-label">{{ 'TASK_DETAILS.LABELS.CHECKLIST' | translate }}</span>
+        <md-chip class="adf-process-badge" color="accent" selected="true">{{checklist?.length}}</md-chip>
+    </md-chip-list>
+
+
+    <button md-icon-button *ngIf="!readOnly" mdTooltip="Add a checklist" id="add-checklist" class="adf-add-to-checklist-button" (click)="showDialog()">
+        <md-icon>add</md-icon>
+    </button>
 </div>
+
 <div class="adf-checklist-menu-container" *ngIf="checklist?.length > 0">
     <md-chip-list class="mat-chip-list-stacked">
-        <md-chip id="check-{{check.id}}" *ngFor="let check of checklist">
+        <md-chip id="check-{{check.id}}" class="adf-checklist-chip" *ngFor="let check of checklist">
             <span>{{check.name}}</span>
-            <button type="button" class="adf-checklist-cancel-button" (click)="delete(check.id)">
-                <md-icon *ngIf="!readOnly" id="remove-{{check.id}}" mdChipRemove >cancel</md-icon>
+            <button md-icon-button type="button" class="adf-checklist-cancel-button" (click)="delete(check.id)">
+                <md-icon *ngIf="!readOnly" id="remove-{{check.id}}" mdChipRemove>cancel</md-icon>
             </button>
         </md-chip>
     </md-chip-list>
