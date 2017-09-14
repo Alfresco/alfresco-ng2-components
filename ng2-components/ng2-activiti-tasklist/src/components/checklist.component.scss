@@ -6,14 +6,6 @@
     font-weight: bolder;
 }
 
-.material-icons:hover {
-    color: rgb(255, 152, 0);
-}
-
-.material-icons {
-    cursor: pointer;
-}
-
 .mat-input-container {
     width: 100%;
 }
@@ -49,4 +41,9 @@
     .adf-add-to-checklist-button {
         float: right;
     }
+}
+
+.adf-checklist-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
 }

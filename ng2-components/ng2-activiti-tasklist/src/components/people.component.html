@@ -8,7 +8,7 @@
                     {{ 'TASK_DETAILS.PEOPLE.NONE' | translate }}
                 </div>
                 <div *ngIf="isEditMode()" class="add-people" (click)="onAddAssignement()">
-                    <i class="material-icons">person_add</i>
+                    <md-icon class="adf-add-person-icon">person_add</md-icon>
                 </div>
             </div>
             <div class="assignment-container" *ngIf="showAssignment">
