@@ -2,7 +2,6 @@
     $primary: map-get($theme, primary);
 
     .assignment-header {
-        width: 100%;
         border-bottom: 1px solid #eee;
         padding: 6px 20px;
     }
@@ -25,21 +24,31 @@
         }
     }
 
-    .assignment-top-container {
+    .assignment-top-container.mat-card {
         border-top: 2px solid #eee;
         margin: 0px;
         padding: 0px;
+        display: flex;
+        flex-flow: row wrap;
+        align-items: stretch;
+    }
+
+    .assignment-top-container-content {
+        display: flex;
+        flex-flow: column;
+        align-items: stretch;
+        flex: 1 0 auto;
+        max-width: 100%;
     }
 
     .assignment-container {
         padding: 10px 20px;
         border-bottom: 1px solid #eee;
-        width: 100%;
+        max-width: 100%;
     }
 
     .assignment-list-container {
         padding: 0px;
-        width: 100%;
     }
 
     adf-people-list /deep/ adf-datatable /deep/ {
@@ -68,9 +77,5 @@
         width: 40px;
         height: 40px;
         vertical-align: middle;
-    }
-
-    adf-people-list /deep/ adf-datatable /deep/ td.mdl-data-table__cell--non-numeric.non-selectable.data-cell {
-        padding: 10px;
     }
 }

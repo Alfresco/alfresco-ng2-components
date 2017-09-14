@@ -28,7 +28,8 @@ import {
     MdNativeDateModule,
     MdProgressSpinnerModule,
     MdRippleModule,
-    MdSelectModule
+    MdSelectModule,
+    MdTooltipModule
 } from '@angular/material';
 
 export function modules() {
@@ -44,6 +45,7 @@ export function modules() {
         MdAutocompleteModule,
         MdGridListModule,
         MdRippleModule,
+        MdTooltipModule,
         MdChipsModule
     ];
 }

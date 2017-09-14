@@ -16,11 +16,10 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { MdDialog } from '@angular/material';
 import { Observable, Observer } from 'rxjs/Rx';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
-
-declare let dialogPolyfill: any;
 
 @Component({
     selector: 'adf-checklist, activiti-checklist',
@@ -49,7 +48,7 @@ export class ChecklistComponent implements OnInit, OnChanges {
     error: EventEmitter<any> = new EventEmitter<any>();
 
     @ViewChild('dialog')
-    dialog: any;
+    addNewDialog: any;
 
     taskName: string;
 
@@ -63,7 +62,10 @@ export class ChecklistComponent implements OnInit, OnChanges {
      * @param auth
      * @param translate
      */
-    constructor(private activitiTaskList: TaskListService) {
+    constructor(
+        private activitiTaskList: TaskListService,
+        private dialog: MdDialog
+    ) {
         this.task$ = new Observable<TaskDetailsModel>(observer => this.taskObserver = observer).share();
     }
 
@@ -100,12 +102,13 @@ export class ChecklistComponent implements OnInit, OnChanges {
     }
 
     public showDialog() {
-        if (this.dialog) {
-            if (!this.dialog.nativeElement.showModal) {
-                dialogPolyfill.registerDialog(this.dialog.nativeElement);
-            }
-            this.dialog.nativeElement.showModal();
-        }
+        this.dialog.open(this.addNewDialog, { width: '350px' });
+        // if (this.addNewDialog) {
+        //     if (!this.addNewDialog.nativeElement.showModal) {
+        //         dialogPolyfill.registerDialog(this.addNewDialog.nativeElement);
+        //     }
+        //     this.addNewDialog.nativeElement.showModal();
+        // }
     }
 
     public add() {
@@ -139,9 +142,10 @@ export class ChecklistComponent implements OnInit, OnChanges {
     }
 
     public cancel() {
-        if (this.dialog) {
-            this.dialog.nativeElement.close();
-        }
+        this.dialog.closeAll();
+        // if (this.addNewDialog) {
+        //     this.addNewDialog.nativeElement.close();
+        // }
         this.taskName = '';
     }
 }

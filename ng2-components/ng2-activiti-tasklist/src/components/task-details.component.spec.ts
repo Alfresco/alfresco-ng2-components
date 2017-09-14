@@ -186,6 +186,14 @@ describe('TaskDetailsComponent', () => {
             fixture.whenStable();
         }));
 
+        afterEach(() => {
+            const overlayContainers = <any> window.document.querySelectorAll('.cdk-overlay-container');
+
+            overlayContainers.forEach((overlayContainer) => {
+                overlayContainer.innerHTML = '';
+            });
+        });
+
         it('should emit a save event when form saved', () => {
             let emitSpy: jasmine.Spy = spyOn(component.formSaved, 'emit');
             component.onFormSaved(new FormModel());
@@ -258,18 +266,14 @@ describe('TaskDetailsComponent', () => {
         });
 
         it('should display a dialog to the user when a form error occurs', () => {
-            let dialogEl = fixture.debugElement.query(By.css('.error-dialog')).nativeElement;
-            let showSpy: jasmine.Spy = spyOn(dialogEl, 'showModal');
-            component.onFormError({});
-            expect(showSpy).toHaveBeenCalled();
-        });
+            let dialogEl = window.document.querySelector('md-dialog-content');
+            expect(dialogEl).toBeNull();
 
-        it('should close error dialog when close button clicked', () => {
-            let dialogEl = fixture.debugElement.query(By.css('.error-dialog')).nativeElement;
-            let closeSpy: jasmine.Spy = spyOn(dialogEl, 'close');
             component.onFormError({});
-            component.closeErrorDialog();
-            expect(closeSpy).toHaveBeenCalled();
+            fixture.detectChanges();
+
+            dialogEl = window.document.querySelector('md-dialog-content');
+            expect(dialogEl).not.toBeNull();
         });
 
         it('should emit a task created event when checklist task is created', () => {

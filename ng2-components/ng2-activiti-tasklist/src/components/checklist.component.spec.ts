@@ -129,16 +129,9 @@ describe('ChecklistComponent', () => {
             expect(showChecklistDialog).not.toBeNull();
             showChecklistDialog.click();
 
-            expect(element.querySelector('#checklist-dialog')).not.toBeNull();
-            expect(element.querySelector('#add-checklist-title')).not.toBeNull();
-            expect(element.querySelector('#add-checklist-title').textContent).toContain('New Check');
-        });
-
-        it('should close dialog when clicked on cancel', () => {
-            showChecklistDialog.click();
-            expect(element.querySelector('#checklist-dialog').getAttribute('open')).not.toBeNull();
-            closeCheckDialogButton.click();
-            expect(element.querySelector('#checklist-dialog').getAttribute('open')).toBeNull();
+            expect(window.document.querySelector('#checklist-dialog')).not.toBeNull();
+            expect(window.document.querySelector('#add-checklist-title')).not.toBeNull();
+            expect(window.document.querySelector('#add-checklist-title').textContent).toContain('New Check');
         });
     });
 
@@ -157,6 +150,10 @@ describe('ChecklistComponent', () => {
 
         afterEach(() => {
             jasmine.Ajax.uninstall();
+            const overlayContainers = <any> window.document.querySelectorAll('.cdk-overlay-container');
+            overlayContainers.forEach((overlayContainer) => {
+                overlayContainer.innerHTML = '';
+            });
         });
 
         it('should show task checklist', () => {
@@ -168,7 +165,7 @@ describe('ChecklistComponent', () => {
 
         it('should add checklist', async(() => {
             showChecklistDialog.click();
-            let addButtonDialog = <HTMLElement> element.querySelector('#add-check');
+            let addButtonDialog = <HTMLElement> window.document.querySelector('#add-check');
             addButtonDialog.click();
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -264,7 +261,7 @@ describe('ChecklistComponent', () => {
                 done();
             });
             showChecklistDialog.click();
-            let addButtonDialog = <HTMLElement> element.querySelector('#add-check');
+            let addButtonDialog = <HTMLElement> window.document.querySelector('#add-check');
             addButtonDialog.click();
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,

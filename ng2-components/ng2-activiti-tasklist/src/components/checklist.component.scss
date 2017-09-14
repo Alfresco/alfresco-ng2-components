@@ -6,27 +6,44 @@
     font-weight: bolder;
 }
 
-.material-icons:hover {
-    color: rgb(255, 152, 0);
-}
-
-.mdl-tooltip {
-    will-change: unset;
-}
-
-.material-icons {
-    cursor: pointer;
-}
-
 .mat-input-container {
     width: 100%;
 }
 
 .adf-checklist-cancel-button {
-    margin: -3px;
+    margin-top: -13px;
+    margin-right: -13px;
     float: right;
+}
+
+.adf-checklist-chip {
+    outline: none;
 }
 
 .adf-checklist-menu-container{
     margin-top: 10px;
+}
+
+#checklist-none-message {
+    margin-top: 10px;
+    color: rgba(0, 0, 0, .5);
+}
+
+.adf-checklist-control {
+    display: flex;
+    justify-content: space-between;
+
+    .activiti-label {
+        margin-top: 6px;
+        margin-right: 10px;
+    }
+
+    .adf-add-to-checklist-button {
+        float: right;
+    }
+}
+
+.adf-checklist-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
 }
