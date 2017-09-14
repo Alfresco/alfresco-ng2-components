@@ -60,7 +60,7 @@
             <md-slide-toggle
                 id="switch1-mobile"
                 [color]="'primary'"
-                (click)="toggleECM()"
+                (change)="toggleECM()"
                 [checked]="isECM">
                 Content Services
             </md-slide-toggle>
@@ -69,7 +69,7 @@
             <md-slide-toggle
                 id="switch2-mobile"
                 [color]="'primary'"
-                (click)="toggleBPM()"
+                (change)="toggleBPM()"
                 [checked]="isBPM">
                 Process Services
             </md-slide-toggle>
@@ -78,7 +78,7 @@
             <md-slide-toggle
                 id="switch3-mobile"
                 [color]="'primary'"
-                (click)="toggleCSRF()"
+                (change)="toggleCSRF()"
                 [checked]="!disableCsrf">
                 CSRF
             </md-slide-toggle>
@@ -87,7 +87,7 @@
             <md-slide-toggle
                 id="switch4-mobile"
                 [color]="'primary'"
-                (click)="toggleFooter()"
+                (change)="toggleFooter()"
                 [checked]="showFooter">
                 Login footer
             </md-slide-toggle>

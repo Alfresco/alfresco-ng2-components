@@ -19,8 +19,8 @@
             display: flex;
             align-items: center;
 
-            .search-field {
-                width: 260px;
+            .adf-search-field {
+                max-width: 260px;
                 padding-top: 6px;
 
                 .mat-input-container {
@@ -36,20 +36,10 @@
                 }
             }
 
-            .search-field .mat-input-infix {
-                padding: 0px;
+            .adf-search-field .mat-input-infix {
+                padding: 0;
             }
 
-            @media only screen and (max-width: 400px) {
-                .search-field {
-                    width: 200px;
-                }
-            }
-            @media only screen and (max-width: 320px) {
-                .search-field {
-                    width: 160px;
-                }
-            }
         }
 
         &-search-form{
