@@ -403,20 +403,22 @@ Contains the Document List component and other related items. See the library's
 [README file](ng2-alfresco-documentlist/README.md)
 for more information about installing and using the source code.
 
-<!-- xxxng2-alfresco-documentlist start -->
+<!-- ng2-alfresco-documentlist start -->
+**Documented**
+
+- [Breadcrumb component](docs/breadcrumb.component.md)
+- [Document list component](docs/document-list.component.md)
+- [Sites dropdown component](docs/sites-dropdown.component.md)
 
 **Undocumented**
 
-- [Breadcrumb component](/ng2-components/ng2-alfresco-documentlist/src/components/breadcrumb/breadcrumb.component.ts)
 - [Dropdown breadcrumb component](/ng2-components/ng2-alfresco-documentlist/src/components/breadcrumb/dropdown-breadcrumb.component.ts)
 - [Content action list component](/ng2-components/ng2-alfresco-documentlist/src/components/content-action/content-action-list.component.ts)
 - [Content action component](/ng2-components/ng2-alfresco-documentlist/src/components/content-action/content-action.component.ts)
 - [Content column list component](/ng2-components/ng2-alfresco-documentlist/src/components/content-column/content-column-list.component.ts)
 - [Content column component](/ng2-components/ng2-alfresco-documentlist/src/components/content-column/content-column.component.ts)
 - [Content node selector component](/ng2-components/ng2-alfresco-documentlist/src/components/content-node-selector/content-node-selector.component.ts)
-- [Document list component](/ng2-components/ng2-alfresco-documentlist/src/components/document-list.component.ts)
 - [Empty folder content directive](/ng2-components/ng2-alfresco-documentlist/src/components/empty-folder/empty-folder-content.directive.ts)
-- [Sites dropdown component](/ng2-components/ng2-alfresco-documentlist/src/components/site-dropdown/sites-dropdown.component.ts)
 - [Content action model](/ng2-components/ng2-alfresco-documentlist/src/models/content-action.model.ts)
 - [Document library model](/ng2-components/ng2-alfresco-documentlist/src/models/document-library.model.ts)
 - [Permissions style model](/ng2-components/ng2-alfresco-documentlist/src/models/permissions-style.model.ts)
