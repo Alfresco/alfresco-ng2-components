@@ -75,7 +75,6 @@
     "dialog-polyfill": "0.4.7",
     "element.scrollintoviewifneeded-polyfill": "1.0.1",
     "intl": "1.2.5",
-    "material-design-icons": "2.2.3",
     "material-design-lite": "1.2.1",
     "minimatch": "3.0.4",
     "moment": "2.15.1",
