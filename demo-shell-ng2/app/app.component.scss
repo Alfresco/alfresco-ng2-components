@@ -1,24 +1,29 @@
-.user-profile {
+@import '~@angular/material/theming';
+
+
+.adf-app-user-profile {
     margin-right: 10px;
 }
 
-.app-menu--spacer {
+.adf-app-menu-spacer {
     flex: 1 1 auto;
 }
 
-.p-10 {
-    padding: 10px;
+.adf-app-toolbar {
+    overflow: hidden;
 }
 
-.m-10 {
-    margin: 10px;
-}
+@media ($mat-small) {
 
-._dialog_overlay {
-    position: static !important;
-}
+    .adf-app-hide-small{
+        display: none !important;
+    }
 
-.md-simple-snackbar-action {
-    border: 0px;
-    cursor: pointer;
+}
+@media ($mat-xsmall) {
+
+    .adf-app-hide-xsmall{
+        display: none !important;
+    }
+
 }

@@ -1,20 +1,20 @@
-<md-toolbar color="primary" *ngIf="!isAPageWithHeaderBar()">
-    <ng2-alfresco-userinfo
-        class="user-profile"
+<md-toolbar color="primary" *ngIf="!isAPageWithHeaderBar()" class="adf-app-toolbar" >
+    <adf-userinfo
+        class="adf-app-user-profile"
         [menuPositionX]="'before'"
         [menuPositionY]="'above'">
-    </ng2-alfresco-userinfo>
+    </adf-userinfo>
 
-    <span>ADF Demo Application</span>
+    <span  class="adf-app-hide-xsmall" >ADF Demo Application</span>
 
-    <div class="app-menu--spacer"></div>
+    <div class="adf-app-menu-spacer"></div>
 
     <search-bar></search-bar>
 
-    <a md-button data-automation-id="home" href="" routerLink="/">Home</a>
-    <a md-button data-automation-id="files" href="" routerLink="/files">Content Services</a>
-    <a md-button data-automation-id="activiti" href="" routerLink="/activiti">Process Services</a>
-    <a md-button data-automation-id="login" href="" routerLink="/login">Login</a>
+    <a class="adf-app-hide-xsmall adf-app-hide-small" md-button data-automation-id="home" href="" routerLink="/">Home</a>
+    <a class="adf-app-hide-xsmall adf-app-hide-small" md-button data-automation-id="files" href="" routerLink="/files">Content Services</a>
+    <a class="adf-app-hide-xsmall adf-app-hide-small"  md-button data-automation-id="activiti" href="" routerLink="/activiti">Process Services</a>
+    <a class="adf-app-hide-xsmall adf-app-hide-small" md-button data-automation-id="login" href="" routerLink="/login">Login</a>
 
     <theme-picker></theme-picker>
     <button md-icon-button [mdMenuTriggerFor]="langMenu">
@@ -29,7 +29,24 @@
     <button md-icon-button [mdMenuTriggerFor]="appMenu">
         <md-icon>more_vert</md-icon>
     </button>
+
     <md-menu #appMenu="mdMenu">
+        <a md-menu-item href="" routerLink="/">
+            <md-icon>home</md-icon>
+            <span>Home</span>
+        </a>
+        <a md-menu-item href="" routerLink="/files">
+            <md-icon>folder_open</md-icon>
+            <span>Content Services</span>
+        </a>
+        <a md-menu-item href="" routerLink="/activiti">
+            <md-icon>device_hub</md-icon>
+            <span>Process Services</span>
+        </a>
+        <a md-menu-item href="" routerLink="/login">
+            <md-icon>vpn_key</md-icon>
+            <span>Login</span>
+        </a>
         <a md-menu-item href="" routerLink="/dl-custom-sources">
             <md-icon>extension</md-icon>
             <span>DL: Custom Sources</span>

@@ -12,20 +12,20 @@
                     <adf-accordion>
                         <adf-accordion-group [heading]="'Tasks'" [isSelected]="true" [isOpen]="true"
                                              [headingIcon]="'assignment'">
-                            <activiti-filters
+                            <adf-filters
                                 [filterParam]="{name:'MY tasks'}"
                                 [appId]="appId"
                                 [hasIcon]="false"
                                 (filterClick)="onTaskFilterClick($event)"
                                 (onSuccess)="onSuccessTaskFilterList($event)"
                                 #activitifilter>
-                            </activiti-filters>
+                            </adf-filters>
                         </adf-accordion-group>
                     </adf-accordion>
                 </div>
                 <div class="activiti-demo-grid-item activiti-demo-tasks-list" fxFlex.gt-md="335px" [ngClass.gt-md]="{'small-pagination': true}"
                      *ngIf="taskFilter && !isStartTaskMode()">
-                    <activiti-tasklist
+                    <adf-tasklist
                         [appId]="taskFilter?.appId"
                         [page]="taskPage"
                         [size]="taskPagination.maxItems"
@@ -48,7 +48,7 @@
                             <data-column key="created" title="Created" class="hidden"></data-column>
                         </data-columns>
                         -->
-                    </activiti-tasklist>
+                    </adf-tasklist>
 
                     <adf-pagination
                         (changePageNumber)="onChangePageNumber($event)"
@@ -60,7 +60,7 @@
                     </adf-pagination>
                 </div>
                 <div class="activiti-demo-grid-item activiti-demo-tasks-details" *ngIf="!isStartTaskMode()" fxFlex.gt-md="1 1 auto">
-                    <activiti-task-details #activitidetails
+                    <adf-task-details #activitidetails
                                            [debugMode]="true"
                                            [taskId]="currentTaskId"
                                            [fieldValidators]="fieldValidators"
@@ -69,7 +69,7 @@
                                            (taskCreated)="onTaskCreated($event)"
                                            (assignTask)="onAssignTask()"
                                            (taskDeleted)="onTaskDeleted($event)">
-                    </activiti-task-details>
+                    </adf-task-details>
                     <hr>
                     <div *ngIf="currentTaskId">
                         {{'PS-TAB.AUDIT-LOG' | translate}}
@@ -119,18 +119,18 @@
                     <adf-accordion>
                         <adf-accordion-group [heading]="'Processes'" [isSelected]="true" [isOpen]="true"
                                              [headingIcon]="'assessment'">
-                            <activiti-process-instance-filters
+                            <adf-process-instance-filters
                                 [filterParam]="{index: 0}"
                                 [appId]="appId"
                                 (filterClick)="onProcessFilterClick($event)"
                                 (onSuccess)="onSuccessProcessFilterList($event)">
-                            </activiti-process-instance-filters>
+                            </adf-process-instance-filters>
                         </adf-accordion-group>
                     </adf-accordion>
                 </div>
                 <div class="activiti-demo-grid-item activiti-demo-processes-list activiti-demo-list" fxFlex.gt-md="335px" [ngClass.gt-md]="{'small-pagination': true}"
                      *ngIf="processFilter && !isStartProcessMode()">
-                    <activiti-process-instance-list
+                    <adf-process-instance-list
                         *ngIf="processFilter?.hasFilter()" [appId]="processFilter.appId"
                         [processDefinitionKey]="processFilter.filter.processDefinitionKey"
                         [name]="processFilter.filter.name"
@@ -146,15 +146,15 @@
                             <data-column key="created" title="Created" class="hidden"></data-column>
                         </data-columns>
                         -->
-                    </activiti-process-instance-list>
+                    </adf-process-instance-list>
                 </div>
                 <div class="activiti-demo-grid-item activiti-demo-processes-details" *ngIf="!isStartProcessMode()" fxFlex.gt-md="1 1 auto">
-                    <activiti-process-instance-details
+                    <adf-process-instance-details
                         [processInstanceId]="currentProcessInstanceId"
                         (processCancelled)="processCancelled()"
                         (showProcessDiagram)="onShowProcessDiagram($event)"
                         (taskClick)="onProcessDetailsTaskClick($event)">
-                    </activiti-process-instance-details>
+                    </adf-process-instance-details>
                     <hr>
                     <div *ngIf="currentProcessInstanceId">
                         {{'PS-TAB.START-PROCESS' | translate}}
@@ -201,7 +201,7 @@
                 </analytics-report-list>
             </div>
             <div class="activiti-demo-grid-item activiti-demo-reports-details" fxFlex.gt-md="1 1 auto">
-                <activiti-analytics
+                <adf-analytics
                     *ngIf="report"
                     [appId]="appId"
                     [reportId]="report.id"
@@ -209,7 +209,7 @@
                     (editReport)="onEditReport($event)"
                     (reportSaved)="onReportSaved($event)"
                     (reportDeleted)="onReportDeleted()">
-                </activiti-analytics>
+                </adf-analytics>
                 <div *ngIf="!report">
                     <span>{{'ANALYTICS_REPORT.NO_REPORT_MESSAGE' | translate}}</span>
                 </div>
