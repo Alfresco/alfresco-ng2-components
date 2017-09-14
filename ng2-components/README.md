@@ -1,5 +1,10 @@
 # Alfresco Angular Components
 
+**NOTE:** We are in the process of transferring docs from the component library
+README files to a new system. This file list all the docs currently in the
+READMEs but the complete index for the docs can now be found in the
+[Component Doc Index](docIndex.md).
+
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
 
 <!-- toc -->
