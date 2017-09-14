@@ -1,4 +1,4 @@
-# Dropdown Site Component
+# Sites Dropdown component
 
 Displays a dropdown menu to show and interact with the sites of the current user.
 

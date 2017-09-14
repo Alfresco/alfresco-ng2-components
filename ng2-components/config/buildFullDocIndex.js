@@ -113,7 +113,7 @@ for (var i = 0; i < libNames.length; i++) {
             var libFileName = path.basename(libFilePath, '.ts');
             var nameSections = libFileName.split('.');
             var visibleName = tidyName(nameSections[0]) + ' ' + nameSections[1];
-            var relPath = libFilePath.substr(libFilePath.indexOf('/ng2-'));
+            var relPath = libFilePath.substr(libFilePath.lastIndexOf('/ng2-') + 1);
             var mdListItem = '- [' + visibleName + '](' + relPath + ')';
             listItems.push(mdListItem);
         }
