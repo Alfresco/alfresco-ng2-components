@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { AfterViewInit, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 
 let componentHandler: any;
 
 /**
  * Base widget component.
  */
-export class WidgetComponent implements AfterViewInit, OnChanges {
+export class WidgetComponent implements OnChanges {
 
     @Input()
     field: any;
@@ -50,19 +50,6 @@ export class WidgetComponent implements AfterViewInit, OnChanges {
 
     changeValue(field: any) {
         this.fieldChanged.emit(field);
-    }
-
-    ngAfterViewInit() {
-        this.setupMaterialComponents(componentHandler);
-    }
-
-    setupMaterialComponents(handler?: any): boolean {
-        // workaround for MDL issues with dynamic components
-        if (handler) {
-            handler.upgradeAllRegistered();
-            return true;
-        }
-        return false;
     }
 
 }

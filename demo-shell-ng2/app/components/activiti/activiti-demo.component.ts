@@ -51,8 +51,6 @@ import { Subscription } from 'rxjs/Rx';
 import { /*CustomEditorComponent*/ CustomStencil01 } from './custom-editor/custom-editor.component';
 import { DemoFieldValidator } from './demo-field-validator';
 
-declare var componentHandler;
-
 const currentProcessIdNew = '__NEW__';
 const currentTaskIdNew = '__NEW__';
 
@@ -384,11 +382,6 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     }
 
     ngAfterViewInit() {
-        // workaround for MDL issues with dynamic components
-        if (componentHandler) {
-            componentHandler.upgradeAllRegistered();
-        }
-
         this.loadStencilScriptsInPageFromActiviti();
     }
 
