@@ -1,5 +1,7 @@
 @import '../src/components/analytics-report-list.component';
+@import '../src/components/widgets/date-range/date-range.widget';
 
 @mixin alfresco-activity-analytics-theme($theme) {
     @include mat-analytics-report-list-theme($theme);
+    @include mat-analytics-date-range-widget-theme($theme);
 }

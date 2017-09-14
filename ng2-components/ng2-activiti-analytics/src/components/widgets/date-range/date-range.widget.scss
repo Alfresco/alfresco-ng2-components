@@ -1,7 +1,7 @@
-.adf-text-danger {
-    color: #D8000C;
+@mixin mat-analytics-date-range-widget-theme($theme) {
+    $warn: map-get($theme, warn);
 
-    .mat-input-container {
-        width: 80% !important;
+    .adf-date-range-analytics-text-danger {
+        color: mat-color($warn);
     }
 }
