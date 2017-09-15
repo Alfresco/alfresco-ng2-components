@@ -3,7 +3,7 @@
 **NOTE:** We are in the process of transferring docs from the component library
 README files to a new system. This file lists all the docs currently in the
 READMEs but the complete index for the docs can now be found in the
-[Component Docs Index file](docIndex.md).
+[Component Docs Index file](../docIndex.md).
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
 

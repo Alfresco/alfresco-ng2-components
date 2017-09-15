@@ -1,9 +1,10 @@
 # Theming your Alfresco ADF app
 
-### Using a pre-built theme
-Alfresco ADF comes prepackaged with several pre-built theme css files. These theme files also
+## Using a pre-built theme
+
+Angular Material comes prepackaged with several pre-built theme css files. These theme files also
 include all of the styles for core (styles common to all components), so you only have to include a
-single css file for Alfresco ADF in your app.
+single css file for Angular Material in your app.
 
 You can include a theme file directly into your application from
 `ng2-alfresco-core/prebuilt-themes`
@@ -29,7 +30,7 @@ Or you can add it directly in your index.html
 <link href="node_modules/ng2-alfresco-core/prebuilt-themes/adf-blue-orange.css" rel="stylesheet">
 ```
 
-### Defining a custom theme
+## Defining a custom theme
 
 When you want more customization than a pre-built theme offers, you can create your own theme file. You need to include the packages only what you really use in your application.
 
@@ -76,10 +77,11 @@ $theme:   mat-light-theme($primary, $accent, $warn);
 
 Notes: if you are using the Generator or the demo shell you need only to change the`/app/theme.scss` with your set of colors
 
-#### Multiple themes
+### Multiple themes
+
 You can create multiple themes for your application:
 
-##### Example of defining multiple themes:
+#### Example of defining multiple themes
 
 ```scss
 @import '~@angular/material/theming';

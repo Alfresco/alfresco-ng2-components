@@ -3,8 +3,8 @@ var path = require('path');
 
 var angFilenameRegex = /([a-zA-Z0-9\-]+)\.((component)|(directive)|(model)|(service)|(widget))\.ts/;
 
-var indexFileName = 'docIndex.md';
-var summaryFileName = path.resolve('docs', 'summary.json');
+var indexFileName = '../docIndex.md';
+var summaryFileName = path.resolve('..', 'docs', 'summary.json');
 
 
 function searchFolderRecursive(folderPath) {
@@ -34,7 +34,7 @@ function getDocFolderItems(docFolderPath) {
     
     for (var i = 0; i < items.length; i++) {
         if (items[i].endsWith('.md')) {
-            var nameNoSuffix = path.basename(items[i], '.md');//items[i].substring(0, items[i].length - 4);
+            var nameNoSuffix = path.basename(items[i], '.md');
             result[nameNoSuffix] = 1;
         }
     }
@@ -63,7 +63,7 @@ function makeSummaryIndex() {
 }
 
 
-var docDict = getDocFolderItems('docs');
+var docDict = getDocFolderItems(path.resolve('..', 'docs'));
 
 var rootItems = fs.readdirSync(path.resolve('.'));
 
@@ -113,7 +113,7 @@ for (var i = 0; i < libNames.length; i++) {
             var libFileName = path.basename(libFilePath, '.ts');
             var nameSections = libFileName.split('.');
             var visibleName = tidyName(nameSections[0]) + ' ' + nameSections[1];
-            var relPath = libFilePath.substr(libFilePath.lastIndexOf('/ng2-') + 1);
+            var relPath = libFilePath.substr(libFilePath.indexOf('/ng2-') + 1);
             var mdListItem = '- [' + visibleName + '](' + relPath + ')';
             listItems.push(mdListItem);
         }
