@@ -255,6 +255,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             this.loadFolderByNodeId(changes.currentFolderId.currentValue);
         } else if (this.data) {
             if (changes.node && changes.node.currentValue) {
+                this.resetSelection();
                 this.data.loadPage(changes.node.currentValue);
             } else if (changes.rowFilter) {
                 this.data.setFilter(changes.rowFilter.currentValue);
@@ -269,6 +270,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     reload() {
         this.ngZone.run(() => {
+            this.resetSelection();
+
             if (this.folderNode) {
                 this.loadFolder();
             } else if (this.currentFolderId) {
@@ -399,6 +402,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     // gets folder node and its content
     loadFolderByNodeId(nodeId: string) {
         this.loading = true;
+        this.resetSelection();
 
         if (nodeId === '-trashcan-') {
             this.loadTrashcan();
@@ -425,6 +429,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     loadFolderNodesByFolderNodeId(id: string, maxItems: number, skipCount: number): Promise<any> {
         return new Promise((resolve, reject) => {
+            this.resetSelection();
             this.documentListService
                 .getFolder(null, {
                     maxItems: maxItems,
@@ -452,6 +457,10 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                     });
         });
 
+    }
+
+    resetSelection() {
+        this.selection = [];
     }
 
     private loadTrashcan(): void {
