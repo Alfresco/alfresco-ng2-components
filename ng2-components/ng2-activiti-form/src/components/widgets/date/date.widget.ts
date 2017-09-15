@@ -40,6 +40,8 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit {
     minDate: Moment;
     maxDate: Moment;
 
+    displayDate: Moment;
+
     constructor(public formService: FormService, public dateAdapter: DateAdapter<Moment>) {
         super(formService);
     }
@@ -57,6 +59,9 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit {
                 this.maxDate = moment(this.field.maxValue, this.field.dateDisplayFormat);
             }
         }
+
+        this.displayDate = moment(this.field.value, this.field.dateDisplayFormat, true);
+
     }
 
     onDateChanged(newDateValue) {
@@ -67,10 +72,11 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit {
             if (!momentDate.isValid()) {
                 this.field.validationSummary = this.field.dateDisplayFormat;
                 this.field.value = null;
-            }else {
+            } else {
                 this.field.value = newDateValue;
+                this.displayDate = moment(this.field.value, this.field.dateDisplayFormat, true);
             }
-        }else {
+        } else {
             this.field.value = null;
         }
         this.checkVisibility(this.field);

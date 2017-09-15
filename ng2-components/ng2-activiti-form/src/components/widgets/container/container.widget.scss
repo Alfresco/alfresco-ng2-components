@@ -47,6 +47,10 @@
             padding-right: 1%;
         }
 
+        .mat-form-field {
+            width: 100%;
+        }
+
         md-input-container {
             width: 100%;
         }
@@ -56,7 +60,7 @@
         }
 
         .mat-input-placeholder {
-            top: 2.2em !important;
+            top: 1.8em !important;
         }
 
         .mat-focused {
