@@ -37,7 +37,7 @@ import { DocumentListComponent } from './document-list.component';
 
 declare let jasmine: any;
 
-describe('DocumentList', () => {
+fdescribe('DocumentList', () => {
 
     let documentList: DocumentListComponent;
     let documentListService: DocumentListService;
@@ -181,6 +181,21 @@ describe('DocumentList', () => {
             expect(element.querySelector('#adf-document-list-loading')).toBeDefined();
             done();
         });
+    });
+
+    it('should reset selection upon reload', () => {
+        spyOn(documentList, 'resetSelection').and.callThrough();
+
+        documentList.reload();
+        fixture.detectChanges();
+
+        expect(documentList.resetSelection).toHaveBeenCalled();
+    });
+
+    it('should reset selection on loading folder by node id', () => {
+        spyOn(documentList, 'resetSelection').and.callThrough();
+        documentList.loadFolderByNodeId('-trashcan-');
+        expect(documentList.resetSelection).toHaveBeenCalled();
     });
 
     it('should empty template be present when no element are present', (done) => {
