@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AnimationEvent, animate, state, style, transition, trigger } from '@angular/animations';
+import { animate, AnimationEvent, state, style, transition, trigger } from '@angular/animations';
 import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
 import { SearchOptions, SearchService } from 'ng2-alfresco-core';

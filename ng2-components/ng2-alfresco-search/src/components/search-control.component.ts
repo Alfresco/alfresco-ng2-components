@@ -167,7 +167,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
         this.hideAutocomplete();
         this.toggleSearchBar();
         this.fileSelect.emit(event);
-        this.searchTerm= '';
+        this.searchTerm = '';
     }
 
     onSearchBlur(): void {
@@ -196,7 +196,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     onEscape(): void {
         this.hideAutocomplete();
         this.toggleSearchBar();
-        this.searchTerm= '';
+        this.searchTerm = '';
     }
 
     onArrowDown(): void {

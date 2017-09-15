@@ -27,7 +27,7 @@ declare var require: any;
     selector: 'adf-search, alfresco-search',
     styleUrls: ['./search.component.scss'],
     templateUrl: './search.component.html',
-    encapsulation: ViewEncapsulation.None,
+    encapsulation: ViewEncapsulation.None
 })
 export class SearchComponent implements OnChanges, OnInit {
 
