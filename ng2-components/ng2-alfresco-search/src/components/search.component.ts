@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, OnInit, Optional, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Optional, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { NodePaging, Pagination } from 'alfresco-js-api';
 import { AlfrescoTranslationService, NotificationService, SearchOptions, SearchService } from 'ng2-alfresco-core';
@@ -26,7 +26,8 @@ declare var require: any;
 @Component({
     selector: 'adf-search, alfresco-search',
     styleUrls: ['./search.component.scss'],
-    templateUrl: './search.component.html'
+    templateUrl: './search.component.html',
+    encapsulation: ViewEncapsulation.None,
 })
 export class SearchComponent implements OnChanges, OnInit {
 

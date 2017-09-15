@@ -19,7 +19,7 @@ install:
         if ([ "$TRAVIS_BRANCH" = "master" ]); then
             (./scripts/npm-build-all.sh  || exit 1;);
         else
-            (./scripts/npm-build-all.sh  -gitjsapi development || exit 1;);
+            (./scripts/npm-build-all.sh  -vjsapi alpha || exit 1;);
         fi
       fi
 
@@ -34,7 +34,7 @@ script:
        if ([ "$TRAVIS_BRANCH" = "master" ]); then
             (./scripts/start.sh -t -ss || exit 1;);
        else
-            (./scripts/start.sh -dev -t -ss -gitjsapi development || exit 1;);
+            (./scripts/start.sh -dev -t -ss -vjsapi alpha || exit 1;);
        fi
       fi
 
