@@ -20,7 +20,7 @@ import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
 import { MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
 import { AlfrescoContentService, HighlightDirective, SearchOptions, SearchService, SiteModel } from 'ng2-alfresco-core';
 import { ImageResolver, RowFilter } from '../../data/share-datatable-adapter';
-import { DocumentListComponent } from '../document-list.component';
+import { DocumentListComponent, PaginationStrategy } from '../document-list.component';
 
 export interface ContentNodeSelectorComponentData {
     title: string;
@@ -45,6 +45,7 @@ export class ContentNodeSelectorComponent implements OnInit {
     inDialog: boolean = false;
     chosenNode: MinimalNodeEntryEntity | null = null;
     folderIdToShow: string | null = null;
+    paginationStrategy: PaginationStrategy;
 
     @Input()
     title: string;
@@ -57,6 +58,9 @@ export class ContentNodeSelectorComponent implements OnInit {
 
     @Input()
     imageResolver: ImageResolver = null;
+
+    @Input()
+    pageSize: number = 10;
 
     @Output()
     select: EventEmitter<MinimalNodeEntryEntity[]> = new EventEmitter<MinimalNodeEntryEntity[]>();
@@ -86,6 +90,7 @@ export class ContentNodeSelectorComponent implements OnInit {
 
     ngOnInit() {
         this.folderIdToShow = this.currentFolderId;
+        this.paginationStrategy = PaginationStrategy.Infinite;
     }
 
     /**
