@@ -66,7 +66,7 @@ describe('ContentWidgetComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 MdTabsModule,
-                CoreModule.forRoot()
+                CoreModule
             ],
             declarations: [
                 ContentWidgetComponent

@@ -47,7 +47,7 @@ describe('Test ng2-activiti-diagrams ', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule
             ],
             declarations: [
                 ...DIAGRAM_DIRECTIVES,

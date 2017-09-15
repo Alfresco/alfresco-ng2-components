@@ -30,7 +30,7 @@ describe('NodeService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule
             ],
             providers: [
                 NodeService,

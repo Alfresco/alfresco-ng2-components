@@ -35,7 +35,7 @@ describe('ExtensionViewerComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [CoreModule.forRoot()],
+            imports: [CoreModule],
             providers: [
                 ExtensionViewerDirective,
                 {provide: ElementRef, useClass: MockElementRef},

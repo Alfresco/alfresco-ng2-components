@@ -69,8 +69,8 @@ describe('ContentNodeSelectorComponent', () => {
     function setupTestbed(plusProviders) {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
-                DataTableModule.forRoot(),
+                CoreModule,
+                DataTableModule,
                 MaterialModule
             ],
             declarations: [

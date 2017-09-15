@@ -34,7 +34,7 @@ describe('SearchControlComponent', () => {
         window['componentHandler'] = componentHandler;
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule
             ],
             declarations: [
                 SearchControlComponent,

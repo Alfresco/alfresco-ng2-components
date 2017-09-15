@@ -28,7 +28,7 @@ describe('ActivitiContentService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule
             ],
             providers: [
                 ActivitiContentService

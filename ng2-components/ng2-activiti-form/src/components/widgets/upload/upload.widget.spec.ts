@@ -116,7 +116,7 @@ describe('UploadWidgetComponent', () => {
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-                imports: [CoreModule.forRoot(), MaterialModule],
+                imports: [CoreModule, MaterialModule],
                 declarations: [UploadWidgetComponent, ErrorWidgetComponent],
                 providers: [FormService, EcmModelService]
             }).compileComponents().then(() => {

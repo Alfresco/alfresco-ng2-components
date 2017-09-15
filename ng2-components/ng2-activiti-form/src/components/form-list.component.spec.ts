@@ -34,7 +34,7 @@ describe('TaskAttachmentList', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
+                CoreModule,
                 DataTableModule,
                 MaterialModule
             ],

@@ -61,7 +61,7 @@ describe('TaskDetailsComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
+                CoreModule,
                 ActivitiFormModule.forRoot(),
                 MdButtonModule,
                 MdInputModule

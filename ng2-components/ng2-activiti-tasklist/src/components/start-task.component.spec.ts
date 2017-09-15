@@ -53,7 +53,7 @@ describe('StartTaskComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
+                CoreModule,
                 MdInputModule,
                 MdIconModule,
                 MdButtonModule,

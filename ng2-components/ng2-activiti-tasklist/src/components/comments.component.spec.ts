@@ -44,7 +44,7 @@ describe('CommentsComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
+                CoreModule,
                 ActivitiFormModule.forRoot(),
                 DataTableModule,
                 MdInputModule
