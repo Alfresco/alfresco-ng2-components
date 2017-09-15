@@ -17,11 +17,6 @@
 
 import { EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 
-let componentHandler: any;
-
-/**
- * Base widget component.
- */
 export class WidgetComponent implements OnChanges {
 
     @Input()
