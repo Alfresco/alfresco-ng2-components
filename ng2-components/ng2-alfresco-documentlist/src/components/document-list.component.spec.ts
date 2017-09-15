@@ -183,6 +183,21 @@ describe('DocumentList', () => {
         });
     });
 
+    it('should reset selection upon reload', () => {
+        spyOn(documentList, 'resetSelection').and.callThrough();
+
+        documentList.reload();
+        fixture.detectChanges();
+
+        expect(documentList.resetSelection).toHaveBeenCalled();
+    });
+
+    it('should reset selection on loading folder by node id', () => {
+        spyOn(documentList, 'resetSelection').and.callThrough();
+        documentList.loadFolderByNodeId('-trashcan-');
+        expect(documentList.resetSelection).toHaveBeenCalled();
+    });
+
     it('should empty template be present when no element are present', (done) => {
         documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
         documentList.folderNode = new NodeMinimal();
