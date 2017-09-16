@@ -36,7 +36,8 @@ module.exports = function (config) {
 
             {pattern: config.component + '/karma-test-shim.js', watched: false},
             {pattern: './ng2-**/src/assets/**/*.*', included: false, served: true, watched: false},
-            {pattern: './ng2-**/src/**/*.ts', included: false, served: true, watched: false}
+            {pattern: './ng2-**/src/**/*.ts', included: false, served: true, watched: false},
+            {pattern: './config/app.config.json', included: false, served: true, watched: false}
         ],
 
         webpack: webpackCoverage(config),
@@ -49,6 +50,10 @@ module.exports = function (config) {
         },
 
         port: 9876,
+
+        proxies: {
+            '/app.config.json': '/base/config/app.config.json'
+        },
 
         // level of logging
         // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
