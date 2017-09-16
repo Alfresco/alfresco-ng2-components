@@ -15,7 +15,7 @@
         }
 
         &-search-result {
-            @include mat-menu-base();
+            @include mat-menu-base(2);
             transform-origin: top left;
             position: absolute;
             z-index: 5;
