@@ -116,10 +116,10 @@ describe('SearchComponent', () => {
 
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
-                DocumentListModule.forRoot()
+                CoreModule,
+                DocumentListModule
             ],
-            declarations: [SearchComponent], // declare the test component
+            declarations: [SearchComponent],
             providers: [
                 SearchService,
                 {provide: AlfrescoTranslationService, useClass: TranslationMock},

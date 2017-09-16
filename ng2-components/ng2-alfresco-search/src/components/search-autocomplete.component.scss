@@ -10,11 +10,13 @@
 
     .adf {
 
+        &--search-result-container{
+            z-index: 5;
+        }
+
         &-search-result {
             @include mat-menu-base();
-
             transform-origin: top left;
-
             position: absolute;
             z-index: 5;
             color: mat-color($foreground, text);

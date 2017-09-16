@@ -52,7 +52,7 @@ export class SearchAutocompleteComponent implements OnChanges {
 
     results: any = null;
 
-    errorMessage;
+    errorMessage: string = null;
 
     @Input()
     ngClass: any;

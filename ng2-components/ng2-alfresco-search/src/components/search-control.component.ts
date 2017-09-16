@@ -78,7 +78,6 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     @Input()
     liveSearchEnabled: boolean = true;
 
-    @Input()
     liveSearchTerm: string = '';
 
     @Input()
@@ -97,7 +96,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
 
     private focusSubject = new Subject<FocusEvent>();
 
-    _subscriptAnimationState: string = 'inactive';
+    subscriptAnimationState: string = 'inactive';
 
     constructor() {
         this.searchControl = new FormControl(
@@ -149,7 +148,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
      *
      * @param event Submit event that was fired
      */
-    onSearch(event): void {
+    onSearch(): void {
         this.searchControl.setValue(this.searchTerm);
         if (this.searchControl.valid) {
             this.searchSubmit.emit({
@@ -160,7 +159,9 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     }
 
     hideAutocomplete(): void {
-        this.liveSearchComponent.resetAnimation();
+        if (this.liveSearchComponent) {
+            this.liveSearchComponent.resetAnimation();
+        }
     }
 
     onFileClicked(event): void {
@@ -221,10 +222,10 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     }
 
     onClickSearch() {
-        this._subscriptAnimationState = 'active';
+        this.subscriptAnimationState = 'active';
     }
 
     toggleSearchBar() {
-        this._subscriptAnimationState = this._subscriptAnimationState === 'inactive' ? 'active' : 'inactive';
+        this.subscriptAnimationState = this.subscriptAnimationState === 'inactive' ? 'active' : 'inactive';
     }
 }

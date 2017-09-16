@@ -84,7 +84,7 @@ describe('SearchAutocompleteComponent', () => {
                 component.searchTerm = 'searchTerm2';
                 component.ngOnChanges({searchTerm: { currentValue: 'searchTerm2', previousValue: 'searchTerm'} });
                 fixture.detectChanges();
-                expect(element.querySelectorAll('table[data-automation-id="autocomplete_results"] tbody tr').length).toBe(0);
+                expect(element.querySelectorAll('tbody[data-automation-id="autocomplete_results"] tr').length).toBe(0);
             });
         }));
 
@@ -110,7 +110,7 @@ describe('SearchAutocompleteComponent', () => {
 
             component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
-                let el: any = element.querySelectorAll('table[data-automation-id="autocomplete_results"] tbody tr')[1].children[1].children[0];
+                let el: any = element.querySelectorAll('tbody[data-automation-id="autocomplete_results"] tr')[1].children[1].children[0];
                 expect(el.innerText).toEqual('MyDoc');
                 let spanHighlight = el.children[0];
                 expect(spanHighlight.classList[0]).toEqual('highlight');
@@ -129,7 +129,7 @@ describe('SearchAutocompleteComponent', () => {
 
             component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
-                expect(element.querySelectorAll('table[data-automation-id="autocomplete_results"] tbody tr').length).toBe(2);
+                expect(element.querySelectorAll('tbody[data-automation-id="autocomplete_results"] tr').length).toBe(2);
                 done();
             });
 
