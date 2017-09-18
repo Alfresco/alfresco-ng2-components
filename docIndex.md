@@ -321,6 +321,7 @@ for more information about installing and using the source code.
 - [Accordion component](docs/accordion.component.md)
 - [Context menu directive](docs/context-menu.directive.md)
 - [Data column component](docs/data-column.component.md)
+- [Pagination component](docs/pagination.component.md)
 - [Toolbar component](docs/toolbar.component.md)
 - [Card view component](docs/card-view.component.md)
 - [Node permission directive](docs/node-permission.directive.md)
@@ -344,7 +345,6 @@ for more information about installing and using the source code.
 - [Mdl menu directive](ng2-components/ng2-alfresco-core/src/components/material/mdl-menu.directive.ts)
 - [Mdl textfield directive](ng2-components/ng2-alfresco-core/src/components/material/mdl-textfield.directive.ts)
 - [Mdl upgrade element directive](ng2-components/ng2-alfresco-core/src/components/material/mdl-upgrade-element.directive.ts)
-- [Pagination component](ng2-components/ng2-alfresco-core/src/components/pagination/pagination.component.ts)
 - [Toolbar divider component](ng2-components/ng2-alfresco-core/src/components/toolbar/toolbar-divider.component.ts)
 - [Toolbar title component](ng2-components/ng2-alfresco-core/src/components/toolbar/toolbar-title.component.ts)
 - [Card view content proxy directive](ng2-components/ng2-alfresco-core/src/components/view/card-view-content-proxy.directive.ts)
@@ -394,11 +394,10 @@ Contains the Datatable component and other related items. See the library's
 [README file](ng2-components/ng2-alfresco-datatable/README.md)
 for more information about installing and using the source code.
 
-<!-- xxxng2-alfresco-datatable start -->
+<!-- ng2-alfresco-datatable start -->
 **Documented**
 
-- [Datatable component](ng2-components/ng2-alfresco-datatable/README.md)
-- [Pagination component](ng2-components/ng2-alfresco-datatable/README.md)
+- [Datatable component](docs/datatable.component.md)
 
 **Undocumented**
 
