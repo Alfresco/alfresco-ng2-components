@@ -19,30 +19,29 @@
                     </div>
                 </ng-template>
             </empty-folder-content>
-
-            <content-columns>
-                <content-column key="$thumbnail" type="image"></content-column>
-                <content-column
+            <data-columns>
+                <data-column key="$thumbnail" type="image"></data-column>
+                <data-column
                     title="{{'SEARCH.DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
                     key="name"
                     sortable="true"
                     class="full-width ellipsis-cell">
-                </content-column>
-                <content-column
+                </data-column>
+                <data-column
                     title="{{'SEARCH.DOCUMENT_LIST.COLUMNS.CREATED_BY' | translate}}"
                     key="createdByUser.displayName"
                     sortable="true"
                     class="desktop-only">
-                </content-column>
-                <content-column
+                </data-column>
+                <data-column
                     title="{{'SEARCH.DOCUMENT_LIST.COLUMNS.CREATED_ON' | translate}}"
                     key="createdAt"
                     type="date"
                     format="medium"
                     sortable="true"
                     class="desktop-only">
-                </content-column>
-            </content-columns>
+                </data-column>
+            </data-columns>
 
             <content-actions>
                 <!-- folder actions -->

@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { animate, AnimationEvent, state, style, transition, trigger } from '@angular/animations';
 import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
 import { SearchOptions, SearchService } from 'ng2-alfresco-core';
@@ -24,6 +25,24 @@ import { ThumbnailService } from 'ng2-alfresco-core';
     selector: 'adf-search-autocomplete, alfresco-search-autocomplete',
     templateUrl: './search-autocomplete.component.html',
     styleUrls: ['./search-autocomplete.component.scss'],
+    animations: [
+        trigger('transformAutocomplete', [
+            state('void', style({
+                opacity: 0,
+                transform: 'scale(0.01, 0.01)'
+            })),
+            state('enter-start', style({
+                opacity: 1,
+                transform: 'scale(1, 0.5)'
+            })),
+            state('enter', style({
+                transform: 'scale(1, 1)'
+            })),
+            transition('void => enter-start', animate('100ms linear')),
+            transition('enter-start => enter', animate('300ms cubic-bezier(0.25, 0.8, 0.25, 1)')),
+            transition('* => void', animate('150ms 50ms linear', style({opacity: 0})))
+        ])
+    ],
     encapsulation: ViewEncapsulation.None
 })
 export class SearchAutocompleteComponent implements OnChanges {
@@ -33,7 +52,7 @@ export class SearchAutocompleteComponent implements OnChanges {
 
     results: any = null;
 
-    errorMessage;
+    errorMessage: string = null;
 
     @Input()
     ngClass: any;
@@ -70,6 +89,8 @@ export class SearchAutocompleteComponent implements OnChanges {
 
     @ViewChild('resultsTableBody', {}) resultsTableBody: ElementRef;
 
+    panelAnimationState: 'void' | 'enter-start' | 'enter' = 'void';
+
     constructor(private searchService: SearchService,
                 private thumbnailService: ThumbnailService) {
     }
@@ -101,6 +122,11 @@ export class SearchAutocompleteComponent implements OnChanges {
                 .subscribe(
                     results => {
                         this.results = results.list.entries.slice(0, this.maxResults);
+
+                        if (results && results.list && results.list.entries.length > 0) {
+                            this.startAnimation();
+                        }
+
                         this.errorMessage = null;
                         this.resultsLoad.emit(this.results);
                     },
@@ -136,6 +162,14 @@ export class SearchAutocompleteComponent implements OnChanges {
         firstResult.focus();
     }
 
+    private getNextElementSibling(node: Element): Element {
+        return node.nextElementSibling;
+    }
+
+    private getPreviousElementSibling(node: Element): Element {
+        return node.previousElementSibling;
+    }
+
     onItemClick(node: MinimalNodeEntity): void {
         if (node && node.entry) {
             this.fileSelect.emit(node);
@@ -158,14 +192,6 @@ export class SearchAutocompleteComponent implements OnChanges {
         }
     }
 
-    private getNextElementSibling(node: Element): Element {
-        return node.nextElementSibling;
-    }
-
-    private getPreviousElementSibling(node: Element): Element {
-        return node.previousElementSibling;
-    }
-
     onRowArrowDown($event: KeyboardEvent): void {
         let nextElement: any = this.getNextElementSibling(<Element> $event.target);
         if (nextElement) {
@@ -184,6 +210,20 @@ export class SearchAutocompleteComponent implements OnChanges {
 
     onRowEscape($event: KeyboardEvent): void {
         this.cancel.emit($event);
+    }
+
+    startAnimation() {
+        this.panelAnimationState = 'enter-start';
+    }
+
+    resetAnimation() {
+        this.panelAnimationState = 'void';
+    }
+
+    onAnimationDone(event: AnimationEvent) {
+        if (event.toState === 'enter-start') {
+            this.panelAnimationState = 'enter';
+        }
     }
 
 }

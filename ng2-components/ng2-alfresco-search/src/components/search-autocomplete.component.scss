@@ -1,20 +1,28 @@
+@import '~@angular/material/theming';
+
 @mixin mat-search-autocomplete-theme($theme) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
     $warn: map-get($theme, warn);
     $foreground: map-get($theme, foreground);
     $background: map-get($theme, background);
+    $mat-menu-border-radius: 2px !default;
 
     .adf {
 
+        &--search-result-container{
+            z-index: 5;
+        }
+
         &-search-result {
+            @include mat-menu-base(2);
+            transform-origin: top left;
             position: absolute;
             z-index: 5;
-            display: none;
             color: mat-color($foreground, text);
             background-color: mat-color($background, card);
-            margin: -21px 0px 0px 0px;
-            border: 1px solid mat-color($primary);
+            margin: -21px 0 0 0;
+            border-radius: $mat-menu-border-radius;
             border-collapse: collapse;
             white-space: nowrap;
             font-size: 14px;
@@ -48,11 +56,11 @@
                 color: mat-color($primary, 900);
             }
 
-            .img-td{
+            .img-td {
                 width: 30px;
             }
 
-            .truncate{
+            .truncate {
                 width: 240px;
                 white-space: nowrap;
                 overflow: hidden;
@@ -63,15 +71,9 @@
                 :host {
                     right: 0;
                 }
-                .truncate{
+                .truncate {
                     width: 200px;
                 }
-            }
-        }
-
-        &-valid-search {
-            .adf-search-result {
-                display: block;
             }
         }
     }
