@@ -70,8 +70,8 @@
                 "TITLE": "Couldn't complete that action",
                 "DESCRIPTION": "You might not have the required access level, check with your IT Team."
             }
-        }
     },
+    
     "START_PROCESS": {
         "BUTTON": "Start Process",
         "NO_PROCESS_DEFINITIONS": "You can't start a process as there are no process definitions available",
