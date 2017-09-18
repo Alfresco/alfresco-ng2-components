@@ -106,6 +106,22 @@ module.exports = {
                 to: 'pdf.worker.js'
             },
             {
+                from: 'node_modules/web-animations-js/web-animations.min.js',
+                to: 'js/web-animations.min.js'
+            },
+            {
+                from: 'node_modules/core-js/client/core.min.js',
+                to: 'js/core.min.js'
+            },
+            {
+                from: 'node_modules/custom-event-polyfill/custom-event-polyfill.js',
+                to: 'js/custom-event-polyfill.js'
+            },
+            {
+                from: 'node_modules/intl/dist/Intl.min.js',
+                to: 'js/Intl.min.js'
+            },
+            {
                 context: 'public',
                 from: '',
                 to: ''
