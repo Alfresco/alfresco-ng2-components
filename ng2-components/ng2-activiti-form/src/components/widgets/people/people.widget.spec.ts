@@ -15,25 +15,52 @@
  * limitations under the License.
  */
 
-import { ElementRef } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
+import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 import { FormService } from '../../../services/form.service';
+import { MaterialModule } from '../../material.module';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { GroupUserModel } from '../core/group-user.model';
+import { ErrorWidgetComponent } from '../error/error.component';
+import { EcmModelService } from './../../../services/ecm-model.service';
 import { PeopleWidgetComponent } from './people.widget';
 
 describe('PeopleWidgetComponent', () => {
 
-    let elementRef: ElementRef;
-    let formService: FormService;
     let widget: PeopleWidgetComponent;
+    let fixture: ComponentFixture<PeopleWidgetComponent>;
+    let element: HTMLElement;
+    let formService: FormService;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule,
+                MaterialModule
+            ],
+            declarations: [
+                PeopleWidgetComponent,
+                ErrorWidgetComponent
+            ],
+            providers: [
+                FormService,
+                EcmModelService,
+                ActivitiAlfrescoContentService
+            ]
+        }).compileComponents();
+    }));
 
     beforeEach(() => {
-        formService = new FormService(null, null, null);
-        elementRef = new ElementRef(null);
-        widget = new PeopleWidgetComponent(formService, elementRef);
+        fixture = TestBed.createComponent(PeopleWidgetComponent);
+        formService = TestBed.get(FormService);
+
+        element = fixture.nativeElement;
+        widget = fixture.componentInstance;
         widget.field = new FormFieldModel(new FormModel());
+        fixture.detectChanges();
     });
 
     it('should return empty display name for missing model', () => {
@@ -49,12 +76,12 @@ describe('PeopleWidgetComponent', () => {
     });
 
     it('should skip first name for display name', () => {
-        let model = new GroupUserModel({ firstName: null, lastName: 'Doe' });
+        let model = new GroupUserModel({firstName: null, lastName: 'Doe'});
         expect(widget.getDisplayName(model)).toBe('Doe');
     });
 
     it('should skip last name for display name', () => {
-        let model = new GroupUserModel({ firstName: 'John', lastName: null });
+        let model = new GroupUserModel({firstName: 'John', lastName: null});
         expect(widget.getDisplayName(model)).toBe('John');
     });
 
@@ -82,7 +109,7 @@ describe('PeopleWidgetComponent', () => {
     });
 
     it('should update values on item click', () => {
-        let item = new GroupUserModel({ firstName: 'John', lastName: 'Doe' });
+        let item = new GroupUserModel({firstName: 'John', lastName: 'Doe'});
 
         widget.onItemClick(item, null);
         expect(widget.field.value).toBe(item);
@@ -101,7 +128,7 @@ describe('PeopleWidgetComponent', () => {
         widget.ngOnInit();
         expect(widget.groupId).toBeUndefined();
 
-        widget.field.params = { restrictWithGroup: { id: '<id>' } };
+        widget.field.params = {restrictWithGroup: {id: '<id>'}};
         widget.ngOnInit();
         expect(widget.groupId).toBe('<id>');
     });
@@ -190,8 +217,8 @@ describe('PeopleWidgetComponent', () => {
 
     it('should flush value and update field', () => {
         widget.users = [
-            new GroupUserModel({ firstName: 'Tony', lastName: 'Stark' }),
-            new GroupUserModel({ firstName: 'John', lastName: 'Doe' })
+            new GroupUserModel({firstName: 'Tony', lastName: 'Stark'}),
+            new GroupUserModel({firstName: 'John', lastName: 'Doe'})
         ];
         widget.value = 'John Doe';
         widget.flushValue();
@@ -202,8 +229,8 @@ describe('PeopleWidgetComponent', () => {
 
     it('should be case insensitive when flushing field', () => {
         widget.users = [
-            new GroupUserModel({ firstName: 'Tony', lastName: 'Stark' }),
-            new GroupUserModel({ firstName: 'John', lastName: 'Doe' })
+            new GroupUserModel({firstName: 'Tony', lastName: 'Stark'}),
+            new GroupUserModel({firstName: 'John', lastName: 'Doe'})
         ];
         widget.value = 'TONY sTaRk';
         widget.flushValue();
@@ -219,5 +246,32 @@ describe('PeopleWidgetComponent', () => {
 
         expect(widget.value).toBeNull();
         expect(widget.field.value).toBeNull();
+    });
+
+    describe('Image', () => {
+
+        it('should show the initial in the image', () => {
+            widget.users = [
+                new GroupUserModel({firstName: 'Tony', lastName: 'Stark'}),
+                new GroupUserModel({firstName: 'John', lastName: 'Doe'})
+            ];
+
+            fixture.detectChanges();
+
+            expect(element.querySelector('#adf-people-widget-initial-0').innerHTML.trim()).toBe('TS');
+            expect(element.querySelector('#adf-people-widget-initial-1').innerHTML.trim()).toBe('JD');
+        });
+
+        it('should show the the image if user has an image', () => {
+            widget.users = [
+                new GroupUserModel({firstName: 'Tony', lastName: 'Stark', userImage: 'testUrl0'}),
+                new GroupUserModel({firstName: 'John', lastName: 'Doe', userImage: 'testUrl1'})
+            ];
+
+            fixture.detectChanges();
+
+            expect((element.querySelector('#adf-people-widget-pic-0') as any).src).toContain('testUrl0');
+            expect((element.querySelector('#adf-people-widget-pic-1') as any).src).toContain('testUrl1');
+        });
     });
 });
