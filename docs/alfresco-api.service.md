@@ -6,6 +6,9 @@ Provides access to initialized **AlfrescoJSApi** instance.
 
 <!-- toc -->
 
+- [Basic Usage](#basic-usage)
+- [Details](#details)
+
 <!-- tocstop -->
 
 <!-- markdown-toc end -->

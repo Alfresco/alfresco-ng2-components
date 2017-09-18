@@ -6,6 +6,8 @@ Stores preferences for components.
 
 <!-- toc -->
 
+- [Details](#details)
+
 <!-- tocstop -->
 
 <!-- markdown-toc end -->

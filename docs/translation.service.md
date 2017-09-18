@@ -6,6 +6,10 @@ Supports localisation.
 
 <!-- toc -->
 
+- [Details](#details)
+  * [Registering translation sources](#registering-translation-sources)
+  * [Switching languages](#switching-languages)
+
 <!-- tocstop -->
 
 <!-- markdown-toc end -->

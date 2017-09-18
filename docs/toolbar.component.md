@@ -8,6 +8,14 @@ Simple container for headers, titles, actions and breadcrumbs.
 
 <!-- toc -->
 
+- [Basic Usage](#basic-usage)
+  * [Properties](#properties)
+- [Details](#details)
+  * [Custom title](#custom-title)
+  * [Divider](#divider)
+  * [Dropdown menu](#dropdown-menu)
+  * [Custom color](#custom-color)
+
 <!-- tocstop -->
 
 <!-- markdown-toc end -->

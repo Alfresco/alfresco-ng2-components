@@ -8,6 +8,19 @@ Displays a configurable property list renderer.
 
 <!-- toc -->
 
+- [Basic Usage](#basic-usage)
+  * [Properties](#properties)
+- [Details](#details)
+  * [Editing](#editing)
+  * [Defining properties](#defining-properties)
+    + [Card Text Item](#card-text-item)
+    + [Card Map Item](#card-map-item)
+    + [Card Date Item](#card-date-item)
+  * [Defining your custom card Item](#defining-your-custom-card-item)
+    + [1. Define the model for the custom type](#1-define-the-model-for-the-custom-type)
+    + [2. Define the component for the custom type](#2-define-the-component-for-the-custom-type)
+    + [3. Add you custom component to your module's entryComponents list](#3-add-you-custom-component-to-your-modules-entrycomponents-list)
+
 <!-- tocstop -->
 
 <!-- markdown-toc end -->

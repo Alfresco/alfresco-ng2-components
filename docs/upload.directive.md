@@ -6,6 +6,14 @@ Allows your components or common HTML elements reacting on File drag and drop in
 
 <!-- toc -->
 
+- [Basic usage](#basic-usage)
+- [Details](#details)
+  * [Modes](#modes)
+    + [Click mode](#click-mode)
+    + [Drop mode](#drop-mode)
+  * [Events](#events)
+  * [Styling](#styling)
+
 <!-- tocstop -->
 
 <!-- markdown-toc end -->

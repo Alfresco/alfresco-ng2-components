@@ -6,6 +6,10 @@ Provides authentication for use with the Login component.
 
 <!-- toc -->
 
+- [Basic Usage](#basic-usage)
+  * [Events](#events)
+- [Details](#details)
+
 <!-- tocstop -->
 
 <!-- markdown-toc end -->

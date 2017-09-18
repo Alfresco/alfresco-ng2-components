@@ -4,6 +4,9 @@
 
 <!-- toc -->
 
+- [Basic Usage](#basic-usage)
+- [Details](#details)
+
 <!-- tocstop -->
 
 <!-- markdown-toc end -->

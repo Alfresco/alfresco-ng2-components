@@ -6,6 +6,14 @@ Selectively disables an HTML element or Angular component
 
 <!-- toc -->
 
+- [Basic Usage](#basic-usage)
+  * [Properties](#properties)
+- [Details](#details)
+  * [HTML element example](#html-element-example)
+  * [Angular component example](#angular-component-example)
+  * [Implementing the NodePermissionSubject interface](#implementing-the-nodepermissionsubject-interface)
+  * [Defining your components as an EXTENDIBLE_COMPONENT parent component](#defining-your-components-as-an-extendible_component-parent-component)
+
 <!-- tocstop -->
 
 <!-- markdown-toc end -->

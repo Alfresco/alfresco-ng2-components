@@ -6,6 +6,8 @@ Shows a notification message with optional feedback.
 
 <!-- toc -->
 
+- [Details](#details)
+
 <!-- tocstop -->
 
 <!-- markdown-toc end -->

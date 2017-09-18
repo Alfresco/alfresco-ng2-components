@@ -6,6 +6,9 @@ Creates an accordion menu, optionally with a custom header and icon.
 
 <!-- toc -->
 
+- [Basic Usage](#basic-usage)
+  * [Properties](#properties)
+
 <!-- tocstop -->
 
 <!-- markdown-toc end -->

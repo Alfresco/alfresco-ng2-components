@@ -6,6 +6,9 @@ Supports app configuration settings, stored server side.
 
 <!-- toc -->
 
+- [Details](#details)
+  * [Variable substitution in configuration strings](#variable-substitution-in-configuration-strings)
+
 <!-- tocstop -->
 
 <!-- markdown-toc end -->
