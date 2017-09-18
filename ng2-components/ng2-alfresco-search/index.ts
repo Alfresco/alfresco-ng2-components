@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule, SearchService, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { DocumentListModule } from 'ng2-alfresco-documentlist';
@@ -82,13 +82,4 @@ export const ALFRESCO_SEARCH_PROVIDERS: [any] = [
         ...ALFRESCO_SEARCH_DIRECTIVES
     ]
 })
-export class SearchModule {
-    static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: SearchModule,
-            providers: [
-                ...ALFRESCO_SEARCH_PROVIDERS
-            ]
-        };
-    }
-}
+export class SearchModule {}

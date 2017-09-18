@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import {
     MdButtonModule,
     MdCardModule,
@@ -147,13 +147,4 @@ export const ACTIVITI_PROCESSLIST_PROVIDERS: [any] = [
         ...ACTIVITI_PROCESSLIST_DIRECTIVES
     ]
 })
-export class ActivitiProcessListModule {
-    static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: ActivitiProcessListModule,
-            providers: [
-                ...ACTIVITI_PROCESSLIST_PROVIDERS
-            ]
-        };
-    }
-}
+export class ActivitiProcessListModule {}

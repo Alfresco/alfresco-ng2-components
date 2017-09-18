@@ -62,7 +62,7 @@ describe('TaskDetailsComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule,
-                ActivitiFormModule.forRoot(),
+                ActivitiFormModule,
                 MdButtonModule,
                 MdInputModule
             ],

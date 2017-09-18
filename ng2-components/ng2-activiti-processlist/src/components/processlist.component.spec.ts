@@ -40,7 +40,7 @@ describe('ProcessInstanceListComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule,
-                DataTableModule.forRoot(),
+                DataTableModule,
                 MdProgressSpinnerModule
             ],
             declarations: [ ProcessInstanceListComponent ],

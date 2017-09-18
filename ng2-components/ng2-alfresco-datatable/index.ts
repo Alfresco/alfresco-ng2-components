@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { MaterialModule } from './src/material.module';
@@ -79,12 +79,4 @@ export function directives() {
         RouterModule
     ]
 })
-export class DataTableModule {
-    /** @deprecated in 1.9.0 */
-    static forRoot(): ModuleWithProviders {
-        console.log('DataTableModule.forRoot is deprecated and will be removed in future versions');
-        return {
-            ngModule: DataTableModule
-        };
-    }
-}
+export class DataTableModule {}

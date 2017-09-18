@@ -49,7 +49,7 @@ describe('StartProcessInstanceComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule,
-                ActivitiFormModule.forRoot(),
+                ActivitiFormModule,
                 MdButtonModule,
                 MdCardModule,
                 MdInputModule,

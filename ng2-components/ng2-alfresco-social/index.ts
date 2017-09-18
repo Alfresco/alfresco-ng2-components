@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CoreModule } from 'ng2-alfresco-core';
 
 import { LikeComponent } from './src/components/like.component';
@@ -51,13 +51,4 @@ export const RATING_PROVIDERS: any[] = [
         ...RATING_DIRECTIVES
     ]
 })
-export class SocialModule {
-    static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: SocialModule,
-            providers: [
-                ...RATING_DIRECTIVES
-            ]
-        };
-    }
-}
+export class SocialModule {}

@@ -114,13 +114,4 @@ export const ACTIVITI_FORM_PROVIDERS: any[] = [
         MaterialModule
     ]
 })
-export class ActivitiFormModule {
-    static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: ActivitiFormModule,
-            providers: [
-                ...ACTIVITI_FORM_PROVIDERS
-            ]
-        };
-    }
-}
+export class ActivitiFormModule {}

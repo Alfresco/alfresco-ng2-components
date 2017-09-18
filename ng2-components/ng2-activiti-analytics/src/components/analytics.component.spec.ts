@@ -58,7 +58,7 @@ describe('AnalyticsComponent', () => {
             imports: [
                 CoreModule,
                 ChartsModule,
-                DiagramsModule.forRoot()
+                DiagramsModule
             ],
             declarations: [
                 ...ANALYTICS_DIRECTIVES

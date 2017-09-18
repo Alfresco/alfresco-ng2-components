@@ -61,7 +61,7 @@ describe('AnalyticsGeneratorComponent', () => {
                 CoreModule,
                 MaterialModule,
                 ChartsModule,
-                DiagramsModule.forRoot()
+                DiagramsModule
             ],
             declarations: [
                 ...ANALYTICS_DIRECTIVES
