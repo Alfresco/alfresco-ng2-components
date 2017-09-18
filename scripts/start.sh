@@ -190,7 +190,7 @@ fi
 
 if $EXEC_VERSION_JSAPI == true; then
   echo "====== Use the alfresco JS-API '$JSAPI_VERSION'====="
-  npm install alfresco-js-api@${JSAPI_VERSION} --no-save
+  npm install alfresco-js-api@${JSAPI_VERSION}
   if $EXEC_DEVELOP == true; then
    echo "====== Install node_modules ng2-components ====="
    cd "$DIR/../ng2-components/"
