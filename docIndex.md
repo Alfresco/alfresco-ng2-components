@@ -315,22 +315,23 @@ Contains a variety of components, directives and other classes used throughout A
 [README file](ng2-components/ng2-alfresco-core/README.md)
 for more information about installing and using the source code.
 
-<!-- xxxng2-alfresco-core start -->
+<!-- ng2-alfresco-core start -->
 **Documented**
 
-- [Toolbar component](ng2-components/ng2-alfresco-core/README.md)
-- [Accordion component](ng2-components/ng2-alfresco-core/README.md)
-- [Card view component](ng2-components/ng2-alfresco-core/README.md)
-- [Node permission directive](ng2-components/ng2-alfresco-core/README.md)
-- [Upload directive](ng2-components/ng2-alfresco-core/README.md)
-- [Context menu directive](ng2-components/ng2-alfresco-core/README.md)
-- [Alfresco api service](ng2-components/ng2-alfresco-core/README.md)
-- [App config service](ng2-components/ng2-alfresco-core/README.md)
-- [User preferences service](ng2-components/ng2-alfresco-core/README.md)
-- [Authentication service](ng2-components/ng2-alfresco-core/README.md)
-- [Notification service](ng2-components/ng2-alfresco-core/README.md)
-- [Translation service](ng2-components/ng2-alfresco-core/README.md)
-- [Renditions service](ng2-components/ng2-alfresco-core/README.md)
+- [Accordion component](docs/accordion.component.md)
+- [Context menu directive](docs/context-menu.directive.md)
+- [Data column component](docs/data-column.component.md)
+- [Toolbar component](docs/toolbar.component.md)
+- [Card view component](docs/card-view.component.md)
+- [Node permission directive](docs/node-permission.directive.md)
+- [Upload directive](docs/upload.directive.md)
+- [Alfresco api service](docs/alfresco-api.service.md)
+- [App config service](docs/app-config.service.md)
+- [Authentication service](docs/authentication.service.md)
+- [Notification service](docs/notification.service.md)
+- [Renditions service](docs/renditions.service.md)
+- [Translation service](docs/translation.service.md)
+- [User preferences service](docs/user-preferences.service.md)
 
 **Undocumented**
 
@@ -338,7 +339,6 @@ for more information about installing and using the source code.
 - [Context menu holder component](ng2-components/ng2-alfresco-core/src/components/context-menu/context-menu-holder.component.ts)
 - [Context menu service](ng2-components/ng2-alfresco-core/src/components/context-menu/context-menu.service.ts)
 - [Data column list component](ng2-components/ng2-alfresco-core/src/components/data-column/data-column-list.component.ts)
-- [Data column component](ng2-components/ng2-alfresco-core/src/components/data-column/data-column.component.ts)
 - [Info drawer layout component](ng2-components/ng2-alfresco-core/src/components/info-drawer/info-drawer-layout.component.ts)
 - [Info drawer component](ng2-components/ng2-alfresco-core/src/components/info-drawer/info-drawer.component.ts)
 - [Mdl menu directive](ng2-components/ng2-alfresco-core/src/components/material/mdl-menu.directive.ts)

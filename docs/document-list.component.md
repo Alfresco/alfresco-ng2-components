@@ -319,7 +319,7 @@ It helps examining other valuable information you can have access to if needed:
 
 ### Custom icons for selected rows
 
-You can use the "class" property of the "DataColumn" component to apply your custom css. 
+You can use the "class" property of the [DataColumn component](data-column.component.md)  to apply your custom css. 
 
 As an example, this feature can be used to change the look and feel of the icon for the selected rows.
 
