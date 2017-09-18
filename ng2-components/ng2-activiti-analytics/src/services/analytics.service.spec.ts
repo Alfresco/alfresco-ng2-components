@@ -30,7 +30,7 @@ describe('Activiti Analytics Service', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule
             ],
             providers: [
                 AnalyticsService

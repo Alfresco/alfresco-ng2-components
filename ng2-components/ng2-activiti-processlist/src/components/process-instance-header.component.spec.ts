@@ -34,7 +34,7 @@ describe('ProcessInstanceHeaderComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule
             ],
             declarations: [
                 ProcessInstanceHeaderComponent

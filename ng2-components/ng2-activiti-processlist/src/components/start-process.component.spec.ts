@@ -48,8 +48,8 @@ describe('StartProcessInstanceComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
-                ActivitiFormModule.forRoot(),
+                CoreModule,
+                ActivitiFormModule,
                 MdButtonModule,
                 MdCardModule,
                 MdInputModule,

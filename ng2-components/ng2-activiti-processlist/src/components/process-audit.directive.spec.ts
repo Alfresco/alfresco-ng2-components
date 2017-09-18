@@ -55,7 +55,7 @@ describe('ProcessAuditDirective', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [CoreModule.forRoot()],
+            imports: [CoreModule],
             declarations: [BasicButtonComponent, ProcessAuditDirective],
             providers: [ProcessService]
         });

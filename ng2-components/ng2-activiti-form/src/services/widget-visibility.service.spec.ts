@@ -39,7 +39,7 @@ describe('WidgetVisibilityService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule
             ],
             providers: [
                 WidgetVisibilityService

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 
@@ -113,15 +113,4 @@ export const DOCUMENT_LIST_PROVIDERS: any[] = [
         MaterialModule
     ]
 })
-export class DocumentListModule {
-    /** @deprecated in 1.8.0 */
-    static forRoot(): ModuleWithProviders {
-        console.log('DocumentListModule.forRoot is deprecated and will be removed in future versions');
-        return {
-            ngModule: DocumentListModule,
-            providers: [
-                ...DOCUMENT_LIST_PROVIDERS
-            ]
-        };
-    }
-}
+export class DocumentListModule {}

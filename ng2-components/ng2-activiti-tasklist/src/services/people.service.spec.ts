@@ -46,7 +46,7 @@ describe('PeopleService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule
             ],
             providers: [
                 PeopleService,

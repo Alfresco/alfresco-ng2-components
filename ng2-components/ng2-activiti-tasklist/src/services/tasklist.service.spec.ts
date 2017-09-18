@@ -55,7 +55,7 @@ describe('Activiti TaskList Service', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule
             ],
             providers: [
                 TaskListService,

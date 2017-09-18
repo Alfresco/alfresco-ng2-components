@@ -46,8 +46,8 @@ describe('AnalyticsReportHeatMapComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
-                DiagramsModule.forRoot(),
+                CoreModule,
+                DiagramsModule,
                 MaterialModule
             ],
             declarations: [

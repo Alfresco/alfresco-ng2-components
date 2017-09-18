@@ -36,7 +36,7 @@ describe('Activiti Task Create Attachment', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule
             ],
             declarations: [
                 AttachmentComponent

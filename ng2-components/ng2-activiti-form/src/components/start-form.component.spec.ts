@@ -44,7 +44,8 @@ describe('ActivitiStartForm', () => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                CoreModule.forRoot()],
+                CoreModule
+            ],
             declarations: [
                 StartFormComponent,
                 FormFieldComponent,

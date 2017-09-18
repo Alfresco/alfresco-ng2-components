@@ -38,7 +38,7 @@ describe('TaskHeaderComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule
             ],
             declarations: [
                 TaskHeaderComponent

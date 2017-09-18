@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CoreModule } from 'ng2-alfresco-core';
 
 import { MaterialModule } from './src/material.module';
@@ -63,22 +63,11 @@ export const VIEWER_DIRECTIVES: any[] = [
         ViewerService
     ],
     exports: [
+        MaterialModule,
         ...VIEWER_DIRECTIVES
     ],
     entryComponents: [
         ViewerDialogComponent
     ]
 })
-export class ViewerModule {
-    /** @deprecated in 1.8.0 */
-    static forRoot(): ModuleWithProviders {
-        console.log('ViewerModule.forRoot is deprecated and will be removed in future versions');
-        return {
-            ngModule: ViewerModule,
-            providers: [
-                RenderingQueueServices,
-                ViewerService
-            ]
-        };
-    }
-}
+export class ViewerModule {}

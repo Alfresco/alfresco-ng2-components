@@ -44,7 +44,7 @@ class TestConfig {
     constructor() {
         this.testBed = TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
+                CoreModule,
                 MaterialModule
             ],
             schemas: [ NO_ERRORS_SCHEMA ]

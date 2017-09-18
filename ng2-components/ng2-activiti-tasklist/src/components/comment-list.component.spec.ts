@@ -46,7 +46,7 @@ describe('CommentListComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
+                CoreModule,
                 DataTableModule
             ],
             declarations: [

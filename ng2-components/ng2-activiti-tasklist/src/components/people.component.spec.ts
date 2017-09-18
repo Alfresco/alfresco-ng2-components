@@ -56,7 +56,7 @@ describe('PeopleComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
+                CoreModule,
                 DataTableModule,
                 MdButtonModule,
                 MdInputModule

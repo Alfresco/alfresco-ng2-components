@@ -39,8 +39,8 @@ describe('ProcessInstanceListComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
-                DataTableModule.forRoot(),
+                CoreModule,
+                DataTableModule,
                 MdProgressSpinnerModule
             ],
             declarations: [ ProcessInstanceListComponent ],

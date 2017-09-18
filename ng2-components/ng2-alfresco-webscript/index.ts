@@ -15,21 +15,12 @@
  * limitations under the License.
  */
 
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 
 import { WebscriptComponent } from './src/webscript.component';
-
-/**
- * ng2-alfresco-webscript, provide components get data from webscript and visualize in a table.
- */
-
-export * from './src/webscript.component';
-
-export const WEBSCRIPT_DIRECTIVES: any[] = [
-    WebscriptComponent
-];
+export { WebscriptComponent } from './src/webscript.component';
 
 @NgModule({
     imports: [
@@ -37,16 +28,10 @@ export const WEBSCRIPT_DIRECTIVES: any[] = [
         DataTableModule
     ],
     declarations: [
-        ...WEBSCRIPT_DIRECTIVES
+        WebscriptComponent
     ],
     exports: [
-        ...WEBSCRIPT_DIRECTIVES
+        WebscriptComponent
     ]
 })
-export class WebScriptModule {
-    static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: WebScriptModule
-        };
-    }
-}
+export class WebScriptModule {}

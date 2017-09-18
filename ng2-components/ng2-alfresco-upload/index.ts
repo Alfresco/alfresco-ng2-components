@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 
 import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { MaterialModule } from './src/material.module';
@@ -66,10 +66,4 @@ export const UPLOAD_DIRECTIVES: any[] = [
         ...UPLOAD_DIRECTIVES
     ]
 })
-export class UploadModule {
-    static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: UploadModule
-        };
-    }
-}
+export class UploadModule {}

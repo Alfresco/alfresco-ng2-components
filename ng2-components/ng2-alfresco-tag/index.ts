@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { MaterialModule } from './src/components/material.module';
 
@@ -69,13 +69,4 @@ export const TAG_PROVIDERS: any[] = [
         MaterialModule
     ]
 })
-export class TagModule {
-    static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: TagModule,
-            providers: [
-                ...TAG_DIRECTIVES
-            ]
-        };
-    }
-}
+export class TagModule {}

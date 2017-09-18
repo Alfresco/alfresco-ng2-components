@@ -16,7 +16,7 @@
  */
 
 import { DatePipe } from '@angular/common';
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ActivitiFormModule } from 'ng2-activiti-form';
 
@@ -180,13 +180,4 @@ export const ACTIVITI_TASKLIST_PROVIDERS: any[] = [
         MaterialModule
     ]
 })
-export class ActivitiTaskListModule {
-    static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: ActivitiTaskListModule,
-            providers: [
-                ...ACTIVITI_TASKLIST_PROVIDERS
-            ]
-        };
-    }
-}
+export class ActivitiTaskListModule {}

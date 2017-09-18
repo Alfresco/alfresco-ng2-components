@@ -16,7 +16,7 @@
  */
 
 import { CommonModule } from '@angular/common';
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Http, HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -310,15 +310,4 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         DownloadZipDialogComponent
     ]
 })
-export class CoreModule {
-    /** @deprecated in 1.9.0 */
-    static forRoot(opts: any = {}): ModuleWithProviders {
-        console.log('CoreModule.forRoot is deprecated and will be removed in future versions');
-        return {
-            ngModule: CoreModule,
-            providers: [
-                ...providers()
-            ]
-        };
-    }
-}
+export class CoreModule {}

@@ -71,7 +71,7 @@ describe('DropdownSitesComponent', () => {
 
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
+                CoreModule,
                 MaterialModule
             ],
             declarations: [

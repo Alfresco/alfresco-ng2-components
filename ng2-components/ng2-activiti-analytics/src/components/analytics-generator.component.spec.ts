@@ -58,10 +58,10 @@ describe('AnalyticsGeneratorComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
+                CoreModule,
                 MaterialModule,
                 ChartsModule,
-                DiagramsModule.forRoot()
+                DiagramsModule
             ],
             declarations: [
                 ...ANALYTICS_DIRECTIVES
