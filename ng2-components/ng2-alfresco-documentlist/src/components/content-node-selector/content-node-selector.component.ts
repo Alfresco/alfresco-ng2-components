@@ -17,10 +17,11 @@
 
 import { Component, EventEmitter, Inject, Input, OnInit, Optional, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
-import { MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
-import { AlfrescoContentService, HighlightDirective, SearchOptions, SearchService, SiteModel } from 'ng2-alfresco-core';
+import { MinimalNodeEntryEntity, NodePaging, Pagination } from 'alfresco-js-api';
+import { AlfrescoContentService, HighlightDirective, SiteModel } from 'ng2-alfresco-core';
 import { ImageResolver, RowFilter } from '../../data/share-datatable-adapter';
 import { DocumentListComponent, PaginationStrategy } from '../document-list.component';
+import { ContentNodeSelectorService } from './content-node-selector.service';
 
 export interface ContentNodeSelectorComponentData {
     title: string;
@@ -38,14 +39,17 @@ export interface ContentNodeSelectorComponentData {
 })
 export class ContentNodeSelectorComponent implements OnInit {
 
-    nodes: NodePaging | Array<any>;
+    nodes: NodePaging | null = null;
     siteId: null | string;
     searchTerm: string = '';
     showingSearchResults: boolean = false;
+    loadingSearchResults: boolean = false;
     inDialog: boolean = false;
     chosenNode: MinimalNodeEntryEntity | null = null;
     folderIdToShow: string | null = null;
     paginationStrategy: PaginationStrategy;
+    pagination: Pagination;
+    skipCount: number = 0;
 
     @Input()
     title: string;
@@ -71,7 +75,7 @@ export class ContentNodeSelectorComponent implements OnInit {
     @ViewChild(HighlightDirective)
     highlighter: HighlightDirective;
 
-    constructor(private searchService: SearchService,
+    constructor(private contentNodeSelectorService: ContentNodeSelectorService,
                 private contentService: AlfrescoContentService,
                 @Optional() @Inject(MD_DIALOG_DATA) data?: ContentNodeSelectorComponentData,
                 @Optional() private containingDialog?: MdDialogRef<ContentNodeSelectorComponent>) {
@@ -139,7 +143,8 @@ export class ContentNodeSelectorComponent implements OnInit {
      */
     clear(): void {
         this.searchTerm = '';
-        this.nodes = [];
+        this.nodes = null;
+        this.skipCount = 0;
         this.chosenNode = null;
         this.showingSearchResults = false;
         this.folderIdToShow = this.currentFolderId;
@@ -148,46 +153,78 @@ export class ContentNodeSelectorComponent implements OnInit {
     /**
      * Update the result list depending on the criterias
      */
-    private updateResults() {
+    private updateResults(): void {
         if (this.searchTerm.length === 0) {
             this.folderIdToShow = this.siteId || this.currentFolderId;
         } else {
-        this.querySearch();
+            this.startNewSearch();
         }
+    }
+
+    /**
+     * Load the first page of a new search result
+     */
+    private startNewSearch(): void {
+        this.nodes = null;
+        this.skipCount = 0;
+        this.chosenNode = null;
+        this.folderIdToShow = null;
+        this.querySearch();
+    }
+
+    /**
+     * Loads the next batch of search results
+     *
+     * @param event Pagination object
+     */
+    getNextPageOfSearch(event: Pagination): void {
+        this.skipCount = event.skipCount;
+        this.querySearch();
     }
 
     /**
      * Perform the call to searchService with the proper parameters
      */
     private querySearch(): void {
-        if (this.searchTerm.length > 3) {
-            this.chosenNode = null;
+        if (this.isSearchTermLongEnough()) {
+            this.loadingSearchResults = true;
 
-            const searchTerm = this.searchTerm + '*';
-            let searchOpts: SearchOptions = {
-                include: ['path', 'allowableOperations'],
-                skipCount: 0,
-                rootNodeId: this.siteId,
-                nodeType: 'cm:folder',
-                maxItems: 200,
-                orderBy: null
-            };
-            this.searchService.getNodeQueryResults(searchTerm, searchOpts)
-                .subscribe(
-                    results => {
-                        this.showingSearchResults = true;
-                        this.folderIdToShow = null;
-                        this.nodes = results;
-                        this.highlight();
-                    }
-                );
+            this.contentNodeSelectorService.search(this.searchTerm, this.siteId, this.skipCount, this.pageSize)
+                .subscribe(this.showSearchResults.bind(this));
         }
+    }
+
+    /**
+     * Show the results of the search
+     *
+     * @param results Search results
+     */
+    private showSearchResults(results: NodePaging): void {
+        this.showingSearchResults = true;
+        this.loadingSearchResults = false;
+
+        // Documentlist hack, since data displaying for preloaded nodes is a little bit messy there
+        if (!this.nodes) {
+            this.nodes = results;
+        } else {
+            this.documentList.data.loadPage(results, true);
+        }
+
+        this.pagination = results.list.pagination;
+        this.highlight();
+    }
+
+    /**
+     * Predicate method to decide whether searchTerm fulfills the necessary criteria
+     */
+    isSearchTermLongEnough(): boolean {
+        return this.searchTerm.length > 3;
     }
 
     /**
      * Hightlight the actual searchterm in the next frame
      */
-    highlight() {
+    highlight(): void {
         setTimeout(() => {
             this.highlighter.highlight(this.searchTerm);
         }, 0);
@@ -205,14 +242,14 @@ export class ContentNodeSelectorComponent implements OnInit {
     /**
      * Sets showingSearchResults state to be able to differentiate between search results or folder results
      */
-    onFolderChange() {
+    onFolderChange(): void {
         this.showingSearchResults = false;
     }
 
     /**
      * Attempts to set the currently loaded node
      */
-    onFolderLoaded() {
+    onFolderLoaded(): void {
         this.attemptNodeSelection(this.documentList.folderNode);
     }
 

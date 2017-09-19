@@ -29,6 +29,7 @@ import { DocumentListComponent } from '../document-list.component';
 import { EmptyFolderContentDirective } from '../empty-folder/empty-folder-content.directive';
 import { DropdownSitesComponent } from '../site-dropdown/sites-dropdown.component';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
+import { ContentNodeSelectorService } from './content-node-selector.service';
 
 const ONE_FOLDER_RESULT = {
     list: {
@@ -40,7 +41,10 @@ const ONE_FOLDER_RESULT = {
                     modifiedByUser: { displayName: 'John Doe' }
                 }
             }
-        ]
+        ],
+        pagination: {
+            hasMoreItems: true
+        }
     }
 };
 
@@ -85,6 +89,7 @@ describe('ContentNodeSelectorComponent', () => {
                 AlfrescoTranslationService,
                 DocumentListService,
                 SearchService,
+                ContentNodeSelectorService,
                 ...plusProviders
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -324,13 +329,13 @@ describe('ContentNodeSelectorComponent', () => {
 
         describe('Search functionality', () => {
 
-            function defaultSearchOptions(rootNodeId = undefined) {
+            function defaultSearchOptions(rootNodeId = undefined, skipCount = 0) {
                 return {
                     include: ['path', 'allowableOperations'],
-                    skipCount: 0,
+                    skipCount,
                     rootNodeId,
                     nodeType: 'cm:folder',
-                    maxItems: 200,
+                    maxItems: 10,
                     orderBy: null
                 };
             }
@@ -397,14 +402,16 @@ describe('ContentNodeSelectorComponent', () => {
 
             it('should clear the search field, nodes and chosenNode when clicking on the X (clear) icon', () => {
                 component.chosenNode = <MinimalNodeEntryEntity> {};
-                component.nodes = [ component.chosenNode ];
+                component.nodes = { list: {
+                    entries: [ { entry: component.chosenNode } ]
+                } };
                 component.searchTerm = 'piccolo';
                 component.showingSearchResults = true;
 
                 component.clear();
 
                 expect(component.searchTerm).toBe('');
-                expect(component.nodes).toEqual([]);
+                expect(component.nodes).toEqual(null);
                 expect(component.chosenNode).toBeNull();
                 expect(component.showingSearchResults).toBeFalsy();
             });
@@ -503,8 +510,74 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(documentList.componentInstance.currentFolderId).toBe('cat-girl-nuku-nuku');
             });
 
-            xit('should do something with pagination or with many results', () => {
+            describe('Pagination "Load more" button', () => {
 
+                it('should NOT be shown by default', () => {
+                    fixture.detectChanges();
+                    const pagination = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-pagination"]'));
+                    expect(pagination).toBeNull();
+                });
+
+                it('should be shown when diplaying search results', async(() => {
+                    typeToSearchBox('shenron');
+                    respondWithSearchResults(ONE_FOLDER_RESULT);
+
+                    fixture.whenStable().then(() => {
+                        fixture.detectChanges();
+                        const pagination = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-pagination"]'));
+                        expect(pagination).not.toBeNull();
+                    });
+                }));
+
+                it('should NOT be shown when modifying searchTerm to be less then 4 characters after search results have been diplayed', async(() => {
+                    typeToSearchBox('shenron');
+                    respondWithSearchResults(ONE_FOLDER_RESULT);
+
+                    fixture.whenStable().then(() => {
+                        typeToSearchBox('sh');
+                        fixture.detectChanges();
+
+                        const pagination = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-search-pagination"]'));
+                        expect(pagination).toBeNull();
+                    });
+                }));
+
+                it('button\'s callback should load the next batch of results by calling the search api', () => {
+                    const skipCount = 8;
+                    component.searchTerm = 'kakarot';
+
+                    component.getNextPageOfSearch({skipCount});
+
+                    expect(searchSpy).toHaveBeenCalledWith('kakarot*', defaultSearchOptions(undefined, skipCount));
+                });
+
+                it('should set its loading state to true after search was started', () => {
+                    component.showingSearchResults = true;
+                    component.pagination = { hasMoreItems: true };
+
+                    typeToSearchBox('shenron');
+                    fixture.detectChanges();
+
+                    const spinnerSelector = By.css('[data-automation-id="content-node-selector-search-pagination"] [data-automation-id="adf-infinite-pagination-spinner"]');
+                    const paginationLoading = fixture.debugElement.query(spinnerSelector);
+                    expect(paginationLoading).not.toBeNull();
+                });
+
+                it('should set its loading state to true after search was performed', async(() => {
+                    component.showingSearchResults = true;
+                    component.pagination = { hasMoreItems: true };
+
+                    typeToSearchBox('shenron');
+                    fixture.detectChanges();
+                    respondWithSearchResults(ONE_FOLDER_RESULT);
+
+                    fixture.whenStable().then(() => {
+                        fixture.detectChanges();
+                        const spinnerSelector = By.css('[data-automation-id="content-node-selector-search-pagination"] [data-automation-id="adf-infinite-pagination-spinner"]');
+                        const paginationLoading = fixture.debugElement.query(spinnerSelector);
+                        expect(paginationLoading).toBeNull();
+                    });
+                }));
             });
 
             xit('should trigger some kind of error when error happened during search', () => {
@@ -602,13 +675,5 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(chooseButton.nativeElement.disabled).toBe(true);
             });
         });
-
-        describe('Mini integration test', () => {
-
-            xit('should trigger the select event properly when search results are loaded, one element is selected and choose button is clicked', () => {
-
-            });
-        });
-
     });
 });

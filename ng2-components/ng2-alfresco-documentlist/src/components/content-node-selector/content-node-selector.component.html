@@ -66,6 +66,16 @@
                 </ng-template>
             </empty-folder-content>
         </adf-document-list>
+
+        <adf-infinite-pagination
+            *ngIf="showingSearchResults && isSearchTermLongEnough()"
+            [pagination]="pagination"
+            [pageSize]="pageSize"
+            [loading]="loadingSearchResults"
+            (loadMore)="getNextPageOfSearch($event)"
+            data-automation-id="content-node-selector-search-pagination">
+            {{ 'ADF-DOCUMENT-LIST.LAYOUT.LOAD_MORE' | translate }}
+        </adf-infinite-pagination>
     </div>
 
 </section>
