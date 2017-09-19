@@ -21,15 +21,15 @@
     <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
 </div>
 <div class="adf-people-autocomplete mat-elevation-z2" [hidden]="!popupVisible || users.length === 0">
-    <md-option *ngFor="let user of users"
+    <md-option *ngFor="let user of users; let i = index"
                [id]="field.id +'-'+user.id"
                (click)="onItemClick(user, $event)">
         <div class="adf-people-widget-row">
-            <div *ngIf="!user.userImage" class="adf-people-widget-pic">
-                {{user.firstName[0]}} {{user.lastName[0]}}
+            <div id="adf-people-widget-initial-{{i}}" *ngIf="!user.userImage" class="adf-people-widget-pic">
+                {{getInitialUserName(user.firstName, user.lastName)}}
             </div>
             <div *ngIf="user.userImage" class="adf-people-widget-image-row">
-                <img class="adf-people-widget-image"
+                <img id="adf-people-widget-pic-{{i}}" class="adf-people-widget-image"
                     [src]="user.userImage"
                     (error)="onErrorImageLoad(user)"/>
             </div>

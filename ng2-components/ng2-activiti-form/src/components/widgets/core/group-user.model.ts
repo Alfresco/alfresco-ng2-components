@@ -24,7 +24,7 @@ export class GroupUserModel {
     firstName: string;
     id: string;
     lastName: string;
-    userImageUrl: string;
+    userImage: string;
 
     constructor(json?: any) {
         if (json) {
@@ -33,6 +33,7 @@ export class GroupUserModel {
             this.firstName = json.firstName;
             this.id = json.id;
             this.lastName = json.lastName;
+            this.userImage = json.userImage;
         }
     }
 }
