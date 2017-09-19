@@ -267,25 +267,25 @@ for more information about installing and using the source code.
 
 ## ng2-activiti-tasklist
 
-Contains the Tasklist omponent and other related items. See the library's
+Contains the Tasklist component and other related items. See the library's
 [README file](ng2-components/ng2-activiti-tasklist/README.md)
 for more information about installing and using the source code.
 
-<!-- xxxng2-activiti-tasklist start -->
+<!-- ng2-activiti-tasklist start -->
 **Documented**
 
-- [Tasklist component](ng2-components/ng2-activiti-tasklist/README.md)
-- [Task details component](ng2-components/ng2-activiti-tasklist/README.md)
-- [Apps list component](ng2-components/ng2-activiti-tasklist/README.md)
-- [Task filters component](ng2-components/ng2-activiti-tasklist/README.md)
-- [Checklist component](ng2-components/ng2-activiti-tasklist/README.md)
-- [Task attachment list component](ng2-components/ng2-activiti-tasklist/README.md)
-- [Create task attachment component](ng2-components/ng2-activiti-tasklist/README.md)
-- [Task header component](ng2-components/ng2-activiti-tasklist/README.md)
-- [People component](ng2-components/ng2-activiti-tasklist/README.md)
-- [Comments component](ng2-components/ng2-activiti-tasklist/README.md)
-- [People search component](ng2-components/ng2-activiti-tasklist/README.md)
-- [Task audit directive](ng2-components/ng2-activiti-tasklist/README.md)
+- [Apps list component](docs/apps-list.component.md)
+- [Checklist component](docs/checklist.component.md)
+- [Comments component](docs/comments.component.md)
+- [Create task attachment component](docs/create-task-attachment.component.md)
+- [People search component](docs/people-search.component.md)
+- [People component](docs/people.component.md)
+- [Task attachment list component](docs/task-attachment-list.component.md)
+- [Task audit directive](docs/task-audit.directive.md)
+- [Task details component](docs/task-details.component.md)
+- [Task filters component](docs/task-filters.component.md)
+- [Task header component](docs/task-header.component.md)
+- [Tasklist component](docs/tasklist.component.md)
 
 **Undocumented**
 
