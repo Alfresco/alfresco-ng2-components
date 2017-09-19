@@ -238,22 +238,22 @@ Contains the Processlist component and other related items. See the library's
 [README file](ng2-components/ng2-activiti-processlist/README.md)
 for more information about installing and using the source code.
 
-<!-- xxxng2-activiti-processlist start -->
+<!-- ng2-activiti-processlist start -->
 **Documented**
 
-- [Processlist component](ng2-components/ng2-activiti-processlist/README.md)
-- [Process filters component](ng2-components/ng2-activiti-processlist/README.md)
-- [Start process component](ng2-components/ng2-activiti-processlist/README.md)
-- [Process instance details component](ng2-components/ng2-activiti-processlist/README.md)
-- [Process instance tasks component](ng2-components/ng2-activiti-processlist/README.md)
-- [Process comments component](ng2-components/ng2-activiti-processlist/README.md)
-- [Process attachment list component](ng2-components/ng2-activiti-processlist/README.md)
-- [Create process attachment component](ng2-components/ng2-activiti-processlist/README.md)
-- [Process audit directive](ng2-components/ng2-activiti-processlist/README.md)
+- [Create process attachment component](docs/create-process-attachment.component.md)
+- [Process attachment list component](docs/process-attachment-list.component.md)
+- [Process audit directive](docs/process-audit.directive.md)
+- [Process comments component](docs/process-comments.component.md)
+- [Process filters component](docs/process-filters.component.md)
+- [Process instance details component](docs/process-instance-details.component.md)
+- [Process instance header component](docs/process-instance-header.component.md)
+- [Process instance tasks component](docs/process-instance-tasks.component.md)
+- [Processlist component](docs/processlist.component.md)
+- [Start process component](docs/start-process.component.md)
 
 **Undocumented**
 
-- [Process instance header component](ng2-components/ng2-activiti-processlist/src/components/process-instance-header.component.ts)
 - [Filter process model](ng2-components/ng2-activiti-processlist/src/models/filter-process.model.ts)
 - [Process definition model](ng2-components/ng2-activiti-processlist/src/models/process-definition.model.ts)
 - [Process instance filter model](ng2-components/ng2-activiti-processlist/src/models/process-instance-filter.model.ts)
