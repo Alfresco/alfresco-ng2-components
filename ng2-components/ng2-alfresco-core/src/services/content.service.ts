@@ -42,12 +42,17 @@ export class ContentService {
                 }
 
                 if (blob) {
-                    let url = window.URL.createObjectURL(blob);
-                    a.href = url;
-                    a.download = fileName;
-                    a.click();
 
-                    window.URL.revokeObjectURL(url);
+                    if (typeof window.navigator !== 'undefined' && window.navigator.msSaveOrOpenBlob) {
+                         navigator.msSaveOrOpenBlob(blob, fileName);
+                    }else {
+                        let url = window.URL.createObjectURL(blob);
+                        a.href = url;
+                        a.download = fileName;
+                        a.click();
+
+                        window.URL.revokeObjectURL(url);
+                    }
                 }
             };
         }());
