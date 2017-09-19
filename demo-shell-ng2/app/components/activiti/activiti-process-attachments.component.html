@@ -6,13 +6,14 @@
             [showNotificationBar]="false">
             <adf-process-attachment-list #processAttachList
                 *ngIf="processId"
+                [disabled]="isCompletedProcess()"
                 [processInstanceId]="processId"
                 (attachmentClick)="onAttachmentClick($event)">
             </adf-process-attachment-list>
         </adf-upload-drag-area>
 
         <adf-create-process-attachment
-            *ngIf="isRunning()"
+            *ngIf="!isCompletedProcess()"
             [processInstanceId]="processId"
             (success)="onFileUploadComplete($event)">
         </adf-create-process-attachment>

@@ -67,8 +67,8 @@ export class ActivitiProcessAttachmentsComponent implements OnInit, OnChanges {
         this.contentName = content.name;
     }
 
-    isRunning(): boolean {
-        return this.processInstance && !this.processInstance.ended;
+    isCompletedProcess(): boolean {
+        return this.processInstance && this.processInstance.ended !== undefined && this.processInstance.ended !== null;
     }
 
 }

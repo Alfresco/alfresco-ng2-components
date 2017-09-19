@@ -231,6 +231,24 @@ describe('ProcessAttachmentListComponent', () => {
         });
     }));
 
+    it('should not show the empty list drag and drop component when is disabled', async(() => {
+        getProcessRelatedContentSpy.and.returnValue(Observable.of({
+            'size': 0,
+            'total': 0,
+            'start': 0,
+            'data': []
+        }));
+        let change = new SimpleChange(null, '123', true);
+        component.ngOnChanges({'processInstanceId': change});
+        component.disabled = true;
+
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(fixture.nativeElement.querySelector('adf-empty-list .adf-empty-list-drag_drop')).toBeNull();
+            expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual('PROCESS-ATTACHMENT.EMPTY.HEADER');
+        });
+    }));
+
     it('should show the empty list component when the attachments list is empty for completed process', async(() => {
         getProcessRelatedContentSpy.and.returnValue(Observable.of({
             'size': 0,
