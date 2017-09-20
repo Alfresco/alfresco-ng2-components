@@ -17,6 +17,7 @@
 
  /* tslint:disable:component-selector  */
 
+import { ENTER, ESCAPE } from '@angular/cdk/keycodes';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
@@ -33,9 +34,9 @@ import { baseHost , WidgetComponent } from './../widget.component';
 })
 export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit {
 
-    popupVisible: boolean = false;
     minTermLength: number = 1;
     value: string;
+    oldValue: string;
     options: FormFieldOption[] = [];
 
     constructor(public formService: FormService,
@@ -111,24 +112,17 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
     }
 
     onKeyUp(event: KeyboardEvent) {
-        if (this.value && this.value.length >= this.minTermLength) {
-            this.options = this.getOptions();
-            this.popupVisible = this.options.length > 0;
-        } else {
-            this.popupVisible = false;
+        if (this.value && this.value.length >= this.minTermLength  && this.oldValue !== this.value) {
+            if (event.keyCode !== ESCAPE && event.keyCode !== ENTER) {
+                if (this.value.length >= this.minTermLength) {
+                    this.options = this.getOptions();
+                    this.oldValue = this.value;
+                }
+            }
         }
     }
 
-    onBlur() {
-        setTimeout(() => {
-            this.flushValue();
-            this.checkVisibility();
-        }, 200);
-    }
-
     flushValue() {
-        this.popupVisible = false;
-
         let options = this.field.options || [];
         let lValue = this.value ? this.value.toLocaleLowerCase() : null;
 
@@ -141,11 +135,9 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
             this.value = null;
         }
 
-        // TODO: seems to be not needed as field.value setter calls it
         this.field.updateForm();
     }
 
-    // TODO: still causes onBlur execution
     onItemClick(item: FormFieldOption, event: Event) {
         if (item) {
             this.field.value = item.id;
@@ -154,6 +146,14 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
         }
         if (event) {
             event.preventDefault();
+        }
+    }
+
+    onItemSelect(item: FormFieldOption) {
+        if (item) {
+            this.field.value = item.id;
+            this.value = item.name;
+            this.checkVisibility();
         }
     }
 

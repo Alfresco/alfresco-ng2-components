@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+/* tslint:disable:component-selector  */
 
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { ENTER, ESCAPE } from '@angular/cdk/keycodes';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { MdAutocompleteTrigger } from '@angular/material';
 import { FormService } from '../../../services/form.service';
 import { GroupUserModel } from '../core/group-user.model';
 import { GroupModel } from '../core/group.model';
@@ -31,24 +32,21 @@ import { baseHost , WidgetComponent } from './../widget.component';
     host: baseHost,
     encapsulation: ViewEncapsulation.None
 })
-export class PeopleWidgetComponent extends WidgetComponent implements OnInit, AfterViewInit {
+export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
 
-    @ViewChild('inputValue')
-    input: ElementRef;
+    @ViewChild(MdAutocompleteTrigger)
+    input: MdAutocompleteTrigger;
 
-    popupVisible: boolean = false;
     minTermLength: number = 1;
     value: string;
+    oldValue: string;
     users: GroupUserModel[] = [];
     groupId: string;
 
-    constructor(public formService: FormService,
-                public elementRef: ElementRef) {
-         super(formService);
+    constructor(public formService: FormService) {
+        super(formService);
     }
 
-    // TODO: investigate, called 2 times
-    // https://github.com/angular/angular/issues/6782
     ngOnInit() {
         if (this.field) {
             let user: GroupUserModel = this.field.value;
@@ -61,35 +59,25 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit, Af
                 let restrictWithGroup = <GroupModel> params['restrictWithGroup'];
                 this.groupId = restrictWithGroup.id;
             }
-
-            // Load auto-completion for previously saved value
-            if (this.value) {
-                this.formService
-                    .getWorkflowUsers(this.value, this.groupId)
-                    .subscribe((result: GroupUserModel[]) => this.users = result || []);
-            }
-        }
-    }
-
-    ngAfterViewInit() {
-        if (this.input) {
-            let onBlurInputEvent = Observable.fromEvent(this.input.nativeElement, 'blur');
-            onBlurInputEvent.debounceTime(200).subscribe((event) => {
-                this.flushValue();
-            });
         }
     }
 
     onKeyUp(event: KeyboardEvent) {
-        if (this.value && this.value.length >= this.minTermLength) {
-            this.formService.getWorkflowUsers(this.value, this.groupId)
-                .subscribe((result: GroupUserModel[]) => {
-                    this.users = result || [];
-                    this.popupVisible = this.users.length > 0;
-                });
-        } else {
-            this.popupVisible = false;
+        if (this.value && this.value.length >= this.minTermLength  && this.oldValue !== this.value) {
+            if (event.keyCode !== ESCAPE && event.keyCode !== ENTER) {
+                if (this.value.length >= this.minTermLength) {
+                    this.oldValue = this.value;
+                    this.searchUsers();
+                }
+            }
         }
+    }
+
+    searchUsers() {
+        this.formService.getWorkflowUsers(this.value, this.groupId)
+            .subscribe((result: GroupUserModel[]) => {
+                this.users = result || [];
+            });
     }
 
     onErrorImageLoad(user) {
@@ -99,8 +87,6 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit, Af
     }
 
     flushValue() {
-        this.popupVisible = false;
-
         let option = this.users.find(item => {
             let fullName = this.getDisplayName(item).toLocaleLowerCase();
             return (this.value && fullName === this.value.toLocaleLowerCase());
@@ -133,6 +119,13 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit, Af
         }
         if (event) {
             event.preventDefault();
+        }
+    }
+
+    onItemSelect(item: GroupUserModel) {
+        if (item) {
+            this.field.value = item;
+            this.value = this.getDisplayName(item);
         }
     }
 

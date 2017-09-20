@@ -11,16 +11,19 @@
                    [id]="field.id"
                    [(ngModel)]="value"
                    (keyup)="onKeyUp($event)"
-                   (blur)="onBlur()"
                    [disabled]="field.readOnly"
-                   placeholder="{{field.placeholder}}">
+                   placeholder="{{field.placeholder}}"
+                   [mdAutocomplete]="auto">
+            <md-autocomplete #auto="mdAutocomplete" (optionSelected)="onItemSelect($event.option.value)">
+
+                <md-option *ngFor="let item of options" (click)="onItemClick(item, $event)"  [value]="item">
+                    <span>{{item.name}}</span>
+                </md-option>
+            </md-autocomplete>
+
         </md-input-container>
+
         <error-widget [error]="field.validationSummary"></error-widget>
         <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
-    </div>
-    <div class="adf-typeahead-autocomplete mat-elevation-z2" [hidden]="options.length <= 0 || !popupVisible">
-        <md-option *ngFor="let item of options" (click)="onItemClick(item, $event)">
-            <span>{{item.name}}</span>
-        </md-option>
     </div>
 </div>

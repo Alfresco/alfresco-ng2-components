@@ -17,6 +17,7 @@
 
  /* tslint:disable:component-selector  */
 
+import { ENTER, ESCAPE } from '@angular/cdk/keycodes';
 import { Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormService } from '../../../services/form.service';
 import { GroupModel } from './../core/group.model';
@@ -32,7 +33,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
 export class FunctionalGroupWidgetComponent extends WidgetComponent implements OnInit {
 
     value: string;
-    popupVisible: boolean = false;
+    oldValue: string;
     groups: GroupModel[] = [];
     minTermLength: number = 1;
     groupId: string;
@@ -42,8 +43,6 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
          super(formService);
     }
 
-    // TODO: investigate, called 2 times
-    // https://github.com/angular/angular/issues/6782
     ngOnInit() {
         if (this.field) {
             let group = this.field.value;
@@ -67,26 +66,18 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
     }
 
     onKeyUp(event: KeyboardEvent) {
-        if (this.value && this.value.length >= this.minTermLength) {
-            this.formService.getWorkflowGroups(this.value, this.groupId)
-                .subscribe((result: GroupModel[]) => {
-                    this.groups = result || [];
-                    this.popupVisible = this.groups.length > 0;
-                });
-        } else {
-            this.popupVisible = false;
+        if (this.value && this.value.length >= this.minTermLength  && this.oldValue !== this.value) {
+            if (event.keyCode !== ESCAPE && event.keyCode !== ENTER) {
+                this.oldValue = this.value;
+                this.formService.getWorkflowGroups(this.value, this.groupId)
+                    .subscribe((result: GroupModel[]) => {
+                        this.groups = result || [];
+                    });
+            }
         }
     }
 
-    onBlur() {
-        setTimeout(() => {
-            this.flushValue();
-        }, 200);
-    }
-
     flushValue() {
-        this.popupVisible = false;
-
         let option = this.groups.find(item => item.name.toLocaleLowerCase() === this.value.toLocaleLowerCase());
 
         if (option) {
@@ -100,7 +91,6 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
         this.field.updateForm();
     }
 
-    // TODO: still causes onBlur execution
     onItemClick(item: GroupModel, event: Event) {
         if (item) {
             this.field.value = item;
@@ -108,6 +98,13 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
         }
         if (event) {
             event.preventDefault();
+        }
+    }
+
+    onItemSelect(item: GroupModel) {
+        if (item) {
+            this.field.value = item;
+            this.value = item.name;
         }
     }
 }

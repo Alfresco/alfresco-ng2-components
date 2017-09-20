@@ -28,7 +28,7 @@ export class User {
     email: string;
     firstName: string;
     lastName: string;
-    userImage: string;
+    userImage: string = null;
 
     constructor(obj?: any) {
         if (obj) {
