@@ -280,25 +280,25 @@ for more information about installing and using the source code.
 - [Create task attachment component](docs/create-task-attachment.component.md)
 - [People search component](docs/people-search.component.md)
 - [People component](docs/people.component.md)
+- [Start task component](docs/start-task.component.md)
 - [Task attachment list component](docs/task-attachment-list.component.md)
 - [Task audit directive](docs/task-audit.directive.md)
 - [Task details component](docs/task-details.component.md)
 - [Task filters component](docs/task-filters.component.md)
 - [Task header component](docs/task-header.component.md)
 - [Tasklist component](docs/tasklist.component.md)
+- [Task details model](docs/task-details.model.md)
 
 **Undocumented**
 
 - [Comment list component](ng2-components/ng2-activiti-tasklist/src/components/comment-list.component.ts)
 - [No task detail template directive](ng2-components/ng2-activiti-tasklist/src/components/no-task-detail-template.directive.ts)
 - [People list component](ng2-components/ng2-activiti-tasklist/src/components/people-list.component.ts)
-- [Start task component](ng2-components/ng2-activiti-tasklist/src/components/start-task.component.ts)
 - [Comment model](ng2-components/ng2-activiti-tasklist/src/models/comment.model.ts)
 - [Filter model](ng2-components/ng2-activiti-tasklist/src/models/filter.model.ts)
 - [Form model](ng2-components/ng2-activiti-tasklist/src/models/form.model.ts)
 - [Icon model](ng2-components/ng2-activiti-tasklist/src/models/icon.model.ts)
 - [Start task model](ng2-components/ng2-activiti-tasklist/src/models/start-task.model.ts)
-- [Task details model](ng2-components/ng2-activiti-tasklist/src/models/task-details.model.ts)
 - [Task list model](ng2-components/ng2-activiti-tasklist/src/models/task-list.model.ts)
 - [User event model](ng2-components/ng2-activiti-tasklist/src/models/user-event.model.ts)
 - [User model](ng2-components/ng2-activiti-tasklist/src/models/user.model.ts)
@@ -322,6 +322,8 @@ for more information about installing and using the source code.
 - [Context menu directive](docs/context-menu.directive.md)
 - [Data column component](docs/data-column.component.md)
 - [Pagination component](docs/pagination.component.md)
+- [Toolbar divider component](docs/toolbar-divider.component.md)
+- [Toolbar title component](docs/toolbar-title.component.md)
 - [Toolbar component](docs/toolbar.component.md)
 - [Card view component](docs/card-view.component.md)
 - [Node permission directive](docs/node-permission.directive.md)
@@ -332,6 +334,7 @@ for more information about installing and using the source code.
 - [Notification service](docs/notification.service.md)
 - [Renditions service](docs/renditions.service.md)
 - [Translation service](docs/translation.service.md)
+- [Upload service](docs/upload.service.md)
 - [User preferences service](docs/user-preferences.service.md)
 
 **Undocumented**
@@ -345,8 +348,6 @@ for more information about installing and using the source code.
 - [Mdl menu directive](ng2-components/ng2-alfresco-core/src/components/material/mdl-menu.directive.ts)
 - [Mdl textfield directive](ng2-components/ng2-alfresco-core/src/components/material/mdl-textfield.directive.ts)
 - [Mdl upgrade element directive](ng2-components/ng2-alfresco-core/src/components/material/mdl-upgrade-element.directive.ts)
-- [Toolbar divider component](ng2-components/ng2-alfresco-core/src/components/toolbar/toolbar-divider.component.ts)
-- [Toolbar title component](ng2-components/ng2-alfresco-core/src/components/toolbar/toolbar-title.component.ts)
 - [Card view content proxy directive](ng2-components/ng2-alfresco-core/src/components/view/card-view-content-proxy.directive.ts)
 - [Card view dateitem component](ng2-components/ng2-alfresco-core/src/components/view/card-view-dateitem.component.ts)
 - [Card view item dispatcher component](ng2-components/ng2-alfresco-core/src/components/view/card-view-item-dispatcher.component.ts)
@@ -383,7 +384,6 @@ for more information about installing and using the source code.
 - [Storage service](ng2-components/ng2-alfresco-core/src/services/storage.service.ts)
 - [Thumbnail service](ng2-components/ng2-alfresco-core/src/services/thumbnail.service.ts)
 - [Translate loader service](ng2-components/ng2-alfresco-core/src/services/translate-loader.service.ts)
-- [Upload service](ng2-components/ng2-alfresco-core/src/services/upload.service.ts)
 <!-- ng2-alfresco-core end -->  
 
 [(Back to Contents)](#contents)
@@ -530,13 +530,12 @@ Contains components for uploading files to Content Services. See the library's
 [README file](ng2-components/ng2-alfresco-upload/README.md)
 for more information about installing and using the source code.
 
-<!-- xxxng2-alfresco-upload start -->
+<!-- ng2-alfresco-upload start -->
 **Documented**
 
-- [Upload button component](ng2-components/ng2-alfresco-upload/README.md)
-- [Upload drag area component](ng2-components/ng2-alfresco-upload/README.md)
-- [File uploading dialog component](ng2-components/ng2-alfresco-upload/README.md)
-- [Upload service](ng2-components/ng2-alfresco-upload/README.md)
+- [File uploading dialog component](docs/file-uploading-dialog.component.md)
+- [Upload button component](docs/upload-button.component.md)
+- [Upload drag area component](docs/upload-drag-area.component.md)
 
 **Undocumented**
 
@@ -554,10 +553,10 @@ Contains the User Info component and other related items. See the library's
 [README file](ng2-components/ng2-alfresco-userinfo/README.md)
 for more information about installing and using the source code.
 
-<!-- xxxng2-alfresco-userinfo start -->
+<!-- ng2-alfresco-userinfo start -->
 **Documented**
 
-- [User info component](ng2-components/ng2-alfresco-userinfo/README.md)
+- [User info component](docs/user-info.component.md)
 
 **Undocumented**
 
@@ -576,10 +575,10 @@ Contains the Viewer component and other related items. See the library's
 [README file](ng2-components/ng2-alfresco-viewer/README.md)
 for more information about installing and using the source code.
 
-<!-- xxxng2-alfresco-viewer start -->
+<!-- ng2-alfresco-viewer start -->
 **Documented**
 
-- [Viewer component](ng2-components/ng2-alfresco-viewer/README.md)
+- [Viewer component](docs/viewer.component.md)
 
 **Undocumented**
 
@@ -602,8 +601,8 @@ Contains the Webscript component. See the library's
 [README file](ng2-components/ng2-alfresco-webscript/README.md)
 for more information about installing and using the source code.
 
-<!-- xxxng2-alfresco-webscript start -->
+<!-- ng2-alfresco-webscript start -->
 **Documented**
 
-- [Webscript component](ng2-components/ng2-alfresco-webscript/README.md)
+- [Webscript component](docs/webscript.component.md)
 <!-- ng2-alfresco-webscript end -->
