@@ -18,7 +18,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ThumbnailService } from 'ng2-alfresco-core';
 import { AlfrescoTranslationService, CoreModule, SearchService } from 'ng2-alfresco-core';
-import { results } from './../assets/search.component.mock';
+import { noResult, results } from './../assets/search.component.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
 import { SearchAutocompleteComponent } from './search-autocomplete.component';
 import { SearchControlComponent } from './search-control.component';
@@ -159,6 +159,25 @@ describe('SearchControlComponent', () => {
             window.setTimeout(() => {
                 fixture.detectChanges();
                 expect(component.liveSearchComponent.panelAnimationState).not.toBe('void');
+                let resultElement: Element = element.querySelector('#adf-search-results');
+                expect(resultElement).not.toBe(null);
+                done();
+            }, 100);
+        });
+
+        it('should show autocomplete list noe results cwhen search box has focus and there is search result with length 0', (done) => {
+            spyOn(searchService, 'getQueryNodesPromise')
+                .and.returnValue(Promise.resolve(noResult));
+
+            component.liveSearchTerm = 'test';
+
+            fixture.detectChanges();
+            inputEl.dispatchEvent(new FocusEvent('focus'));
+            window.setTimeout(() => {
+                fixture.detectChanges();
+                expect(component.liveSearchComponent.panelAnimationState).not.toBe('void');
+                let noResultElement: Element = element.querySelector('#search_no_result');
+                expect(noResultElement).not.toBe(null);
                 done();
             }, 100);
         });

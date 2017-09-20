@@ -1,7 +1,7 @@
 <table class="full-width adf-search-result"
        [@transformAutocomplete]="panelAnimationState"
        (@transformAutocomplete.done)="onAnimationDone($event)">
-    <tbody #resultsTableBody data-automation-id="autocomplete_results" *ngIf="results && results.length && searchTerm">
+    <tbody id="adf-search-results" #resultsTableBody data-automation-id="autocomplete_results" *ngIf="results && results.length && searchTerm">
     <tr id="result_row_{{idx}}" *ngFor="let result of results; let idx = index" tabindex="0"
         (blur)="onRowBlur($event)" (focus)="onRowFocus($event)"
         (click)="onItemClick(result)"

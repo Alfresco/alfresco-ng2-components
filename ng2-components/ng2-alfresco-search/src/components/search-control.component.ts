@@ -96,6 +96,8 @@ export class SearchControlComponent implements OnInit, OnDestroy {
 
     private focusSubject = new Subject<FocusEvent>();
 
+    private toggleSearch = new Subject<string>();
+
     subscriptAnimationState: string = 'inactive';
 
     constructor() {
@@ -111,6 +113,10 @@ export class SearchControlComponent implements OnInit, OnDestroy {
                     this.onSearchTermChange(value);
                 }
             );
+
+        this.toggleSearch.debounceTime(300).subscribe(() => {
+            this.subscriptAnimationState = this.subscriptAnimationState === 'inactive' ? 'active' : 'inactive';
+        });
 
         this.setupFocusEventHandlers();
     }
@@ -221,11 +227,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
         this.hideAutocomplete();
     }
 
-    onClickSearch() {
-        this.subscriptAnimationState = 'active';
-    }
-
     toggleSearchBar() {
-        this.subscriptAnimationState = this.subscriptAnimationState === 'inactive' ? 'active' : 'inactive';
+        this.toggleSearch.next();
     }
 }
