@@ -2,8 +2,8 @@
     <div class="adf-search-container"
         [@transitionMessages]="subscriptAnimationState">
         <button md-button
+                id="adf-search-button"
             (click)="toggleSearchBar()"
-            *ngIf="expandable"
             class="adf-search-button">
             <md-icon aria-label="search button">search</md-icon>
         </button>

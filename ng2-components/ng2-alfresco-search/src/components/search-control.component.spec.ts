@@ -306,18 +306,6 @@ describe('SearchControlComponent', () => {
 
     describe('component focus', () => {
 
-        it('should fire an event when the search box receives focus', (done) => {
-            spyOn(component.expand, 'emit');
-            let inputEl: HTMLElement = element.querySelector('input');
-            inputEl.dispatchEvent(new FocusEvent('focus'));
-            window.setTimeout(() => {
-                expect(component.expand.emit).toHaveBeenCalledWith({
-                    expanded: true
-                });
-                done();
-            }, 100);
-        });
-
         it('should fire an event when the search box loses focus', (done) => {
             spyOn(component.expand, 'emit');
             let inputEl: HTMLElement = element.querySelector('input');
@@ -329,20 +317,50 @@ describe('SearchControlComponent', () => {
                 done();
             }, 100);
         });
+    });
 
-        it('should NOT fire an event when the search box receives/loses focus but the component is not expandable',
-            (done) => {
-                spyOn(component.expand, 'emit');
-                component.expandable = false;
-                let inputEl: HTMLElement = element.querySelector('input');
-                inputEl.dispatchEvent(new FocusEvent('focus'));
-                inputEl.dispatchEvent(new FocusEvent('blur'));
-                window.setTimeout(() => {
-                    expect(component.expand.emit).not.toHaveBeenCalled();
-                    done();
-                }, 100);
-            });
+    describe('Search Button', () => {
 
+        it('click on the search button should close the input box when is open', (done) => {
+            component.subscriptAnimationState = 'active';
+            fixture.detectChanges();
+
+            let searchButton: any = element.querySelector('#adf-search-button');
+            searchButton.click();
+
+            setTimeout(() => {
+                expect(component.subscriptAnimationState).toBe('inactive');
+                done();
+            }, 300);
+        });
+
+        it('click on the search button should open the input box when is close', (done) => {
+            component.subscriptAnimationState = 'inactive';
+            fixture.detectChanges();
+
+            let searchButton: any = element.querySelector('#adf-search-button');
+            searchButton.click();
+
+            setTimeout(() => {
+                expect(component.subscriptAnimationState).toBe('active');
+                done();
+            }, 300);
+        });
+
+        it('Search button should not change the input state too often', (done) => {
+            component.subscriptAnimationState = 'active';
+            fixture.detectChanges();
+
+            let searchButton: any = element.querySelector('#adf-search-button');
+            searchButton.click();
+            searchButton.click();
+
+            setTimeout(() => {
+                expect(component.subscriptAnimationState).toBe('inactive');
+                done();
+            }, 300);
+
+        });
     });
 
     describe('file preview', () => {
@@ -357,13 +375,17 @@ describe('SearchControlComponent', () => {
             });
         });
 
-        it('should set deactivate the search after file/folder is clicked', () => {
+        it('should set deactivate the search after file/folder is clicked', (done) => {
             component.subscriptAnimationState = 'active';
             component.onFileClicked({
                 value: 'node12345'
             });
 
-            expect(component.subscriptAnimationState).toBe('inactive');
+            setTimeout(() => {
+                expect(component.subscriptAnimationState).toBe('inactive');
+                done();
+            }, 300);
+
         });
 
         it('should NOT reset the search term after file/folder is clicked', () => {

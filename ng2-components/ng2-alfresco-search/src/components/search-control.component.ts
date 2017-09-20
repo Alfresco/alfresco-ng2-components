@@ -50,9 +50,6 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     autocomplete: boolean = false;
 
     @Input()
-    expandable: boolean = true;
-
-    @Input()
     highlight: boolean = false;
 
     @Output()
@@ -105,6 +102,10 @@ export class SearchControlComponent implements OnInit, OnDestroy {
             this.searchTerm,
             Validators.compose([Validators.required, SearchTermValidator.minAlphanumericChars(3)])
         );
+
+        this.toggleSearch.debounceTime(200).subscribe(() => {
+            this.subscriptAnimationState = this.subscriptAnimationState === 'inactive' ? 'active' : 'inactive';
+        });
     }
 
     ngOnInit(): void {
@@ -113,10 +114,6 @@ export class SearchControlComponent implements OnInit, OnDestroy {
                     this.onSearchTermChange(value);
                 }
             );
-
-        this.toggleSearch.debounceTime(300).subscribe(() => {
-            this.subscriptAnimationState = this.subscriptAnimationState === 'inactive' ? 'active' : 'inactive';
-        });
 
         this.setupFocusEventHandlers();
     }
@@ -183,20 +180,10 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     }
 
     onFocus($event): void {
-        if (this.expandable) {
-            this.expand.emit({
-                expanded: true
-            });
-        }
         this.focusSubject.next($event);
     }
 
     onBlur($event): void {
-        if (this.expandable && (this.searchControl.value === '' || this.searchControl.value === undefined)) {
-            this.expand.emit({
-                expanded: false
-            });
-        }
         this.focusSubject.next($event);
     }
 
