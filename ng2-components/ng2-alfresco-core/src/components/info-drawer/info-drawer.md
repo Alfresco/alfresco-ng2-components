@@ -53,19 +53,19 @@ The InfoDrawerLayoutComponent (as the name says) is basically just a layout with
 
 ## InfoDrawerComponent
 
-The InfoDrawerComponent is on top of the InfoDrawerLayoutComponent. This version of the info drawer is supposed to be used if you need tabbing behaviour. Additionally you can set a title (if it only contains a string) with the **title** input property.
-This component has the same 3 regions as described above, but if you want to leverage the tabbing functionality, you have to use the **adf-info-drawer-tab** component to organize your content. The only input paramter of the adf-info-drawer-tab component is the **"label"**, with you can specify the tab label with.
+The InfoDrawerComponent is on top of the InfoDrawerLayoutComponent. This version of the info drawer is supposed to be used if you need tabbing behaviour. You can set a title (if it only contains a string) with the **title** input property. Additionally, It also provides a **currentTab** output property. This component has the same 3 regions as described above, but if you want to leverage the tabbing functionality, you have to use the **adf-info-drawer-tab** component to organize your content. The only input paramter of the adf-info-drawer-tab component is the **"label"**, with you can specify the tab label with.
 
 ### Properties
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | title | string | null | The title of the info drawer component|
+| currentTab | any | null | The current active tab |
 
 ### Example
 
 ```html
-<adf-info-drawer title="Activities">
+<adf-info-drawer title="Activities" (currentTab)="getActiveTab($event)">
     <div info-drawer-buttons>
         <md-icon (click)="close()">clear</md-icon>
     </div>

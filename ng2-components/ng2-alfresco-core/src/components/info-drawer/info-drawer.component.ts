@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ContentChildren, Input, QueryList, TemplateRef, ViewChild, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
+import { Component, ContentChildren, EventEmitter, Input, Output, QueryList, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 @Component({
     selector: 'adf-info-drawer-tab',
     template: '<ng-template><ng-content></ng-content></ng-template>'
@@ -37,7 +37,7 @@ export class InfoDrawerComponent {
     title: string|null = null;
 
     @Output()
-    tabChangeEvent: EventEmitter<any> =new EventEmitter<any>();
+    currentTab: EventEmitter<any> = new EventEmitter<any>();
 
     @ContentChildren(InfoDrawerTabComponent)
     contentBlocks: QueryList<InfoDrawerTabComponent>;
@@ -47,7 +47,7 @@ export class InfoDrawerComponent {
     }
 
     onTabChange(event: any) {
-        let tab = event.tab;
-        this.tabChangeEvent.emit(tab.textLabel);
+        const tab = event.tab;
+        this.currentTab.emit(tab.textLabel);
     }
 }
