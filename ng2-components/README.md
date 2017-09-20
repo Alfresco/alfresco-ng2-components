@@ -13,9 +13,9 @@ READMEs but the complete index for the docs can now be found in the
 - [Core](#core)
   * [Components](#components)
   * [Directives](#directives)
-- [Content service](#content-service)
+- [Content services](#content-services)
   * [Components](#components-1)
-- [Business service](#business-service)
+- [Process services](#process-services)
   * [components](#components)
 - [Services](#services)
 
@@ -61,7 +61,7 @@ READMEs but the complete index for the docs can now be found in the
 - [adf-node-permission](ng2-alfresco-core/README.md)
 - [adf-highlight](ng2-alfresco-core/README.md)<!-- CORE DIRECTIVE END-->
 
-## Content service
+## Content services
 
 ### Components
 
@@ -102,7 +102,7 @@ READMEs but the complete index for the docs can now be found in the
 
 <!-- CONTENT DIRECTIVE START--><!-- CONTENT DIRECTIVE END-->
 
-## Business service
+## Process services
 
 ### components
 

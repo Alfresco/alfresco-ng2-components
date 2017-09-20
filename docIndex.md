@@ -8,22 +8,22 @@ the links lead to the appropriate code source file.
 ## Contents
 
 - [User Guide](#user-guide)
-- [ng2-activiti-analytics](#ng2-activiti-analytics)
-- [ng2-activiti-diagrams](#ng2-activiti-diagrams)
-- [ng2-activiti-form](#ng2-activiti-form)    
-- [ng2-activiti-processlist](#ng2-activiti-processlist)
-- [ng2-activiti-tasklist](#ng2-activiti-tasklist)
-- [ng2-alfresco-core](#ng2-alfresco-core)  
-- [ng2-alfresco-datatable](#ng2-alfresco-datatable)
-- [ng2-alfresco-documentlist](#ng2-alfresco-documentlist)
-- [ng2-alfresco-login](#ng2-alfresco-login)
-- [ng2-alfresco-search](#ng2-alfresco-search)
-- [ng2-alfresco-social](#ng2-alfresco-social)
-- [ng2-alfresco-tag](#ng2-alfresco-tag)
-- [ng2-alfresco-upload](#ng2-alfresco-upload)
-- [ng2-alfresco-userinfo](#ng2-alfresco-userinfo)
-- [ng2-alfresco-viewer](#ng2-alfresco-viewer)
-- [ng2-alfresco-webscript](#ng2-alfresco-webscript)
+- [ADF Analytics](#adf-analytics)
+- [ADF Diagrams](#adf-diagrams)
+- [ADF Form](#adf-form)
+- [ADF Processlist](#adf-processlist)
+- [ADF Tasklist](#adf-tasklist)
+- [ADF Core](#adf-core)
+- [ADF Datatable](#adf-datatable)
+- [ADF Documentlist](#adf-documentlist)
+- [ADF Login](#adf-login)
+- [ADF Search](#adf-search)
+- [ADF Social](#adf-social)
+- [ADF Tag](#adf-tag)
+- [ADF Upload](#adf-upload)
+- [ADF Userinfo](#adf-userinfo)
+- [ADF Viewer](#adf-viewer)
+- [ADF Webscript](#adf-webscript)
 
 ## User guide
 
@@ -36,7 +36,7 @@ the links lead to the appropriate code source file.
 <!-- guide end -->
 [(Back to Contents)](#contents)
 
-## ng2-activiti-analytics
+## ADF Analytics
 
 Contains the Analytics component and other related items. See the library's
 [README file](ng2-components/ng2-activiti-analytics/README.md)
@@ -64,7 +64,7 @@ for more information about installing and using the source code.
 
 [(Back to Contents)](#contents)
 
-## ng2-activiti-diagrams
+## ADF Diagrams
 
 Contains the Diagram component and other related items. See the library's
 [README file](ng2-components/ng2-activiti-diagrams/README.md)
@@ -165,7 +165,7 @@ for more information about installing and using the source code.
 
 [(Back to Contents)](#contents)
 
-## ng2-activiti-form
+## ADF Form
 
 Contains the Form component and other related items. See the library's
 [README file](ng2-components/ng2-activiti-form/README.md)
@@ -232,7 +232,7 @@ for more information about installing and using the source code.
 
 [(Back to Contents)](#contents)
 
-## ng2-activiti-processlist
+## ADF Processlist
 
 Contains the Processlist component and other related items. See the library's
 [README file](ng2-components/ng2-activiti-processlist/README.md)
@@ -265,7 +265,7 @@ for more information about installing and using the source code.
 
 [(Back to Contents)](#contents)
 
-## ng2-activiti-tasklist
+## ADF Tasklist
 
 Contains the Tasklist component and other related items. See the library's
 [README file](ng2-components/ng2-activiti-tasklist/README.md)
@@ -309,7 +309,7 @@ for more information about installing and using the source code.
 
 [(Back to Contents)](#contents)
 
-## ng2-alfresco-core
+## ADF Core
 
 Contains a variety of components, directives and other classes used throughout ADF. See the library's
 [README file](ng2-components/ng2-alfresco-core/README.md)
@@ -388,7 +388,7 @@ for more information about installing and using the source code.
 
 [(Back to Contents)](#contents)
 
-## ng2-alfresco-datatable
+## ADF Datatable
 
 Contains the Datatable component and other related items. See the library's
 [README file](ng2-components/ng2-alfresco-datatable/README.md)
@@ -412,7 +412,7 @@ for more information about installing and using the source code.
 
 [(Back to Contents)](#contents)
 
-## ng2-alfresco-documentlist
+## ADF Documentlist
 
 Contains the Document List component and other related items. See the library's
 [README file](ng2-components/ng2-alfresco-documentlist/README.md)
@@ -446,16 +446,16 @@ for more information about installing and using the source code.
 
 [(Back to Contents)](#contents)
 
-### ng2-alfresco-login
+## ADF Login
 
 Contains the Login component and other related items. See the library's
 [README file](ng2-components/ng2-alfresco-login/README.md)
 for more information about installing and using the source code.
 
-<!-- xxxng2-alfresco-login start -->
+<!-- ng2-alfresco-login start -->
 **Documented**
 
-- [Login component](ng2-components/ng2-alfresco-login/README.md)
+- [Login component](docs/login.component.md)
 
 **Undocumented**
 
@@ -466,17 +466,17 @@ for more information about installing and using the source code.
 
 [(Back to Contents)](#contents)
 
-## ng2-alfresco-search
+## ADF Search
 
 Contains the Search component and other related items. See the library's
 [README file](ng2-components/ng2-alfresco-search/README.md)
 for more information about installing and using the source code.
 
-<!-- xxxng2-alfresco-search start -->
+<!-- ng2-alfresco-search start -->
 **Documented**
 
-- [Search control component](ng2-components/ng2-alfresco-search/README.md)
-- [Search component](ng2-components/ng2-alfresco-search/README.md)
+- [Search control component](docs/search-control.component.md)
+- [Search component](docs/search.component.md)
 
 **Undocumented**
 
@@ -485,17 +485,17 @@ for more information about installing and using the source code.
 
 [(Back to Contents)](#contents)
 
-## ng2-alfresco-social
+## ADF Social
 
 Contains components for adding likes and ratings to items. See the library's
 [README file](ng2-components/ng2-alfresco-social/README.md)
 for more information about installing and using the source code.
 
-<!-- xxxng2-alfresco-social start -->
+<!-- ng2-alfresco-social start -->
 **Documented**
 
-- [Like component](ng2-components/ng2-alfresco-social/README.md)
-- [Rating component](ng2-components/ng2-alfresco-social/README.md)
+- [Like component](docs/like.component.md)
+- [Rating component](docs/rating.component.md)
 
 **Undocumented**
 
@@ -504,18 +504,18 @@ for more information about installing and using the source code.
 
 [(Back to Contents)](#contents)
 
-## ng2-alfresco-tag
+## ADF Tag
 
 Contains components for adding tags to documents. See the library's
 [README file](ng2-components/ng2-alfresco-tag/README.md)
 for more information about installing and using the source code.
 
-<!-- xxxng2-alfresco-tag start -->
+<!-- ng2-alfresco-tag start -->
 **Documented**
 
-- [Tag actions component](ng2-components/ng2-alfresco-tag/README.md)
-- [Tag list component](ng2-components/ng2-alfresco-tag/README.md)
-- [Tag node list component](ng2-components/ng2-alfresco-tag/README.md)
+- [Tag actions component](docs/tag-actions.component.md)
+- [Tag list component](docs/tag-list.component.md)
+- [Tag node list component](docs/tag-node-list.component.md)
 
 **Undocumented**
 
@@ -524,7 +524,7 @@ for more information about installing and using the source code.
 
 [(Back to Contents)](#contents)
 
-## ng2-alfresco-upload
+## ADF Upload
 
 Contains components for uploading files to Content Services. See the library's
 [README file](ng2-components/ng2-alfresco-upload/README.md)
@@ -548,7 +548,7 @@ for more information about installing and using the source code.
 
 [(Back to Contents)](#contents)
 
-## ng2-alfresco-userinfo
+## ADF Userinfo
 
 Contains the User Info component and other related items. See the library's
 [README file](ng2-components/ng2-alfresco-userinfo/README.md)
@@ -570,7 +570,7 @@ for more information about installing and using the source code.
 
 [(Back to Contents)](#contents)
 
-## ng2-alfresco-viewer
+## ADF Viewer
 
 Contains the Viewer component and other related items. See the library's
 [README file](ng2-components/ng2-alfresco-viewer/README.md)
@@ -596,7 +596,7 @@ for more information about installing and using the source code.
 
 [(Back to Contents)](#contents)
 
-## ng2-alfresco-webscript
+## ADF Webscript
 
 Contains the Webscript component. See the library's
 [README file](ng2-components/ng2-alfresco-webscript/README.md)
