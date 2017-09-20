@@ -123,7 +123,7 @@ export class SearchAutocompleteComponent implements OnChanges {
                     results => {
                         this.results = results.list.entries.slice(0, this.maxResults);
 
-                        if (results && results.list && results.list.entries.length > 0) {
+                        if (results && results.list) {
                             this.startAnimation();
                         }
 

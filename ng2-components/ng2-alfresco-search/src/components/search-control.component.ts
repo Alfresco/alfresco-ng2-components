@@ -29,10 +29,10 @@ import { SearchAutocompleteComponent } from './search-autocomplete.component';
     animations: [
         trigger('transitionMessages', [
             state('active', style({transform: 'translateX(0%)'})),
-            state('inactive', style({transform: 'translateX(89%)'})),
-            transition('void => active, inactive => active',
+            state('inactive', style({transform: 'translateX(86%)'})),
+            transition('inactive => active',
                 animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)')),
-            transition('active => inactive, void => inactive',
+            transition('active => inactive',
                 animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)'))
         ])
     ],
