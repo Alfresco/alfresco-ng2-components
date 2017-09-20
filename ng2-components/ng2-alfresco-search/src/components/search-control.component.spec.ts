@@ -304,21 +304,6 @@ describe('SearchControlComponent', () => {
 
     });
 
-    describe('component focus', () => {
-
-        it('should fire an event when the search box loses focus', (done) => {
-            spyOn(component.expand, 'emit');
-            let inputEl: HTMLElement = element.querySelector('input');
-            inputEl.dispatchEvent(new FocusEvent('blur'));
-            window.setTimeout(() => {
-                expect(component.expand.emit).toHaveBeenCalledWith({
-                    expanded: false
-                });
-                done();
-            }, 100);
-        });
-    });
-
     describe('Search Button', () => {
 
         it('click on the search button should close the input box when is open', (done) => {
