@@ -42,12 +42,12 @@ Contains the Analytics component and other related items. See the library's
 [README file](ng2-components/ng2-activiti-analytics/README.md)
 for more information about installing and using the source code.
 
-<!-- xxxng2-activiti-analytics start -->
+<!-- ng2-activiti-analytics start -->
 **Documented**
 
-- [Analytics component](ng2-components/ng2-activiti-analytics/README.md)
-- [Analytics report list component](ng2-components/ng2-activiti-analytics/README.md)
-- [Analytics generator component](ng2-components/ng2-activiti-analytics/README.md)
+- [Analytics generator component](docs/analytics-generator.component.md)
+- [Analytics report list component](docs/analytics-report-list.component.md)
+- [Analytics component](docs/analytics.component.md)
 
 **Undocumented**
 
@@ -70,10 +70,10 @@ Contains the Diagram component and other related items. See the library's
 [README file](ng2-components/ng2-activiti-diagrams/README.md)
 for more information about installing and using the source code.
 
-<!-- xxxng2-activiti-diagrams start -->
+<!-- ng2-activiti-diagrams start -->
 **Documented**
 
-- [Diagram component](ng2-components/ng2-activiti-diagrams/README.md)
+- [Diagram component](docs/diagram.component.md)
 
 **Undocumented**
 
@@ -171,13 +171,13 @@ Contains the Form component and other related items. See the library's
 [README file](ng2-components/ng2-activiti-form/README.md)
 for more information about installing and using the source code.
 
-<!-- xxxng2-activiti-form start -->
+<!-- ng2-activiti-form start -->
 **Documented**
 
-- [Form component](ng2-components/ng2-activiti-form/README.md)
-- [Form list component](ng2-components/ng2-activiti-form/README.md)
-- [Form service](ng2-components/ng2-activiti-form/README.md)
-- [Content widget](ng2-components/ng2-activiti-form/README.md)
+- [Form list component](docs/form-list.component.md)
+- [Form component](docs/form.component.md)
+- [Content widget](docs/content.widget.md)
+- [Form service](docs/form.service.md)
 
 **Undocumented**
 
