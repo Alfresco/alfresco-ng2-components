@@ -631,4 +631,31 @@ describe('DataTable', () => {
         expect(dataTable.getCellTooltip(row, col)).toBeNull();
     });
 
+    it('should cache the rows menu', () => {
+        let emitted = 0;
+        dataTable.showRowActionsMenu.subscribe(() => { emitted++; });
+
+        const column = <DataColumn> {};
+        const row = <DataRow>  { getValue: function (key: string) { return 'id'; } };
+
+        dataTable.getRowActions(row, column);
+        dataTable.getRowActions(row, column);
+        dataTable.getRowActions(row, column);
+
+        expect(emitted).toBe(1);
+    });
+
+    it('should reset the menu cache after rows change', () => {
+        let emitted = 0;
+        dataTable.showRowActionsMenu.subscribe(() => { emitted++; });
+
+        const column = <DataColumn> {};
+        const row = <DataRow>  { getValue: function (key: string) { return 'id'; } };
+
+        dataTable.getRowActions(row, column);
+        dataTable.ngOnChanges({'data': new SimpleChange('123', {}, true)});
+        dataTable.getRowActions(row, column);
+
+        expect(emitted).toBe(2);
+    });
 });

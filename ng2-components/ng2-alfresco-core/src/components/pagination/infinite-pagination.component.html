@@ -2,7 +2,8 @@
     <button md-button
         *ngIf="!isLoading"
         class="adf-infinite-pagination-load-more"
-        (click)="onLoadMore($event)">
+        (click)="onLoadMore($event)"
+        data-automation-id="adf-infinite-pagination-button">
             <ng-content></ng-content>
     </button>
 
