@@ -3,6 +3,7 @@
     <div class="adf-no-form-container">
         <adf-upload-drag-area
             [parentId]="processId"
+            [disabled]="isCompletedProcess()"
             [showNotificationBar]="false">
             <adf-process-attachment-list #processAttachList
                 *ngIf="processId"
