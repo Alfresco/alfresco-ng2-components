@@ -23,7 +23,7 @@ import { DataColumn, DataRow, DataTableAdapter } from '../../data/datatable-adap
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <ng-container>
-            <span [title]="tooltip">{{value}}</span>
+            <span [title]="tooltip" class="adf-datatable-cell-value">{{value}}</span>
         </ng-container>`,
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-datatable-cell' }
