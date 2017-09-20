@@ -39,7 +39,15 @@
         width: 90%;
     }
 
+    .adf-md-select {
+        padding-top: 0px;
+    }
+
     .adf {
+
+        &-start-task-input-container .mat-input-wrapper {
+            padding-top: 8px;
+        }
 
         &-error-text-container {
             position: absolute;
