@@ -1,5 +1,6 @@
 @mixin mat-content-node-selector-theme($theme) {
     $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
 
     .adf-content-node-selector-dialog {
 
@@ -60,7 +61,7 @@
                     border: 1px solid rgba(0, 0, 0, 0.07);
 
                     .adf-highlight {
-                        color: #33afdfnpm np;
+                        color: mat-color($accent);;
                     }
 
                     .adf-data-table {

@@ -13,7 +13,8 @@
             "STATUS": "Status",
             "MODIFIED_ON": "Modified",
             "MODIFIED_BY": "Modified by",
-            "SHARED_BY": "Shared by"
+            "SHARED_BY": "Shared by",
+            "LOAD_MORE": "Load more"
         }
     },
     "ALFRESCO_DOCUMENT_LIST": {

@@ -21,6 +21,7 @@ import { MaterialModule } from '@angular/material';
 
 import { TranslateModule } from '@ngx-translate/core';
 
+import { InfinitePaginationComponent } from './infinite-pagination.component';
 import { PaginationComponent } from './pagination.component';
 
 @NgModule({
@@ -30,10 +31,12 @@ import { PaginationComponent } from './pagination.component';
         MaterialModule
     ],
     declarations: [
-        PaginationComponent
+        PaginationComponent,
+        InfinitePaginationComponent
     ],
     exports: [
-        PaginationComponent
+        PaginationComponent,
+        InfinitePaginationComponent
     ]
 })
 export class PaginationModule {}

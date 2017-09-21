@@ -102,6 +102,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     private schema: DataColumn[] = [];
 
     private differ: any;
+    private rowMenuCache: object = {};
 
     private singleClickStreamSub: Subscription;
     private multiClickStreamSub: Subscription;
@@ -208,6 +209,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
 
     private initTable() {
         this.data = new ObjectDataTableAdapter(this.rows, this.schema);
+        this.rowMenuCache = {};
     }
 
     isTableEmpty() {
@@ -375,9 +377,15 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     }
 
     getRowActions(row: DataRow, col: DataColumn): any[] {
-        let event = new DataCellEvent(row, col, []);
-        this.showRowActionsMenu.emit(event);
-        return event.value.actions;
+        const id = row.getValue('id');
+
+        if (!this.rowMenuCache[id]) {
+            let event = new DataCellEvent(row, col, []);
+            this.showRowActionsMenu.emit(event);
+            this.rowMenuCache[id] = event.value.actions;
+        }
+
+        return this.rowMenuCache[id];
     }
 
     onExecuteRowAction(row: DataRow, action: any) {

@@ -31,6 +31,11 @@ import { NodeEntityEvent, NodeEntryEvent } from './node.event';
 
 declare var require: any;
 
+export enum PaginationStrategy {
+    Finite,
+    Infinite
+}
+
 @Component({
     selector: 'adf-document-list, alfresco-document-list',
     styleUrls: ['./document-list.component.scss'],
@@ -98,6 +103,11 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     @Input()
     loading: boolean = false;
+
+    @Input()
+    paginationStrategy: PaginationStrategy = PaginationStrategy.Finite;
+
+    infiniteLoading: boolean = false;
 
     selection = new Array<MinimalNodeEntity>();
     skipCount: number = 0;
@@ -268,12 +278,12 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         }
     }
 
-    reload() {
+    reload(merge: boolean = false) {
         this.ngZone.run(() => {
             this.resetSelection();
 
             if (this.folderNode) {
-                this.loadFolder();
+                this.loadFolder(merge);
             } else if (this.currentFolderId) {
                 this.loadFolderByNodeId(this.currentFolderId);
             } else if (this.node) {
@@ -302,6 +312,10 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     isPaginationEnabled() {
         return this.enablePagination && !this.isEmpty();
+    }
+
+    isPaginationNeeded() {
+        return this.paginationStrategy === PaginationStrategy.Finite;
     }
 
     getNodeActions(node: MinimalNodeEntity | any): ContentActionModel[] {
@@ -391,11 +405,16 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         }
     }
 
-    loadFolder() {
-        this.loading = true;
+    loadFolder(merge: boolean = false) {
+        if (merge) {
+            this.infiniteLoading = true;
+        } else {
+            this.loading = true;
+        }
+
         let nodeId = this.folderNode ? this.folderNode.id : this.currentFolderId;
         if (nodeId) {
-            this.loadFolderNodesByFolderNodeId(nodeId, this.pageSize, this.skipCount).catch(err => this.error.emit(err));
+            this.loadFolderNodesByFolderNodeId(nodeId, this.pageSize, this.skipCount, merge).catch(err => this.error.emit(err));
         }
     }
 
@@ -427,7 +446,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         }
     }
 
-    loadFolderNodesByFolderNodeId(id: string, maxItems: number, skipCount: number): Promise<any> {
+    loadFolderNodesByFolderNodeId(id: string, maxItems: number, skipCount: number, merge: boolean = false): Promise<any> {
         return new Promise((resolve, reject) => {
             this.resetSelection();
             this.documentListService
@@ -445,9 +464,10 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                                 error => reject(error)
                             );
                         } else {
-                            this.data.loadPage(<NodePaging> val);
+                            this.data.loadPage(<NodePaging> val, merge);
                             this.pagination = val.list.pagination;
                             this.loading = false;
+                            this.infiniteLoading = false;
                             this.ready.emit();
                             resolve(true);
                         }
@@ -710,6 +730,11 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     onNextPage(event: Pagination): void {
         this.skipCount = event.skipCount;
         this.reload();
+    }
+
+    loadNextBatch(event: Pagination) {
+        this.skipCount = event.skipCount;
+        this.reload(true);
     }
 
     onPrevPage(event: Pagination): void {
