@@ -17,7 +17,23 @@
  * This mixin contains shared option styles between the select and
  * autocomplete components.
  */
-/* ANIMATION */
+/**
+ * Applies styles for users in high contrast mode. Note that this only applies
+ * to Microsoft browsers. Chrome can be included by checking for the `html[hc]`
+ * attribute, however Chrome handles high contrast differently.
+ */
+/* Theme for the ripple elements.*/
+/** The mixins below are shared between md-menu and md-select */
+/**
+ * This mixin adds the correct panel transform styles based
+ * on the direction that the menu panel opens.
+ */
+/* stylelint-disable material/no-prefixes */
+/* stylelint-enable */
+/**
+ * This mixin contains shared option styles between the select and
+ * autocomplete components.
+ */
 /**
  * Applies styles for users in high contrast mode. Note that this only applies
  * to Microsoft browsers. Chrome can be included by checking for the `html[hc]`
@@ -2207,122 +2223,41 @@ container-widget .mat-focused .mat-input-prefix {
 container-widget .mat-grid-tile {
   overflow: visible; }
 
-.adf-dynamic-table {
-  width: 100%;
-  position: relative;
-  border: 1px solid rgba(0, 0, 0, 0.07);
-  white-space: nowrap;
-  font-size: 14px;
-  /* Firefox fixes */
-  border-collapse: unset;
-  border-spacing: 0; }
-  .adf-dynamic-table thead {
-    padding-bottom: 3px; }
-  .adf-dynamic-table tbody tr {
-    position: relative;
-    height: 56px;
-    transition-duration: 0.28s;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-property: background-color; }
-    .adf-dynamic-table tbody tr:hover {
-      background-color: #eeeeee; }
-    .adf-dynamic-table tbody tr.is-selected, .adf-dynamic-table tbody tr.is-selected:hover {
-      background-color: #e0f7fa; }
-    .adf-dynamic-table tbody tr:focus {
-      outline-offset: -1px;
-      outline-width: 1px;
-      outline-color: #448aff;
-      outline-style: solid; }
-  .adf-dynamic-table td, .adf-dynamic-table th {
-    padding: 0 18px 12px 18px;
-    text-align: center; }
-    .adf-dynamic-table td:first-of-type, .adf-dynamic-table th:first-of-type {
-      padding-left: 24px; }
-    .adf-dynamic-table td:last-of-type, .adf-dynamic-table th:last-of-type {
-      padding-right: 24px; }
-  .adf-dynamic-table td {
-    color: rgba(0, 0, 0, 0.87);
-    position: relative;
-    vertical-align: middle;
-    height: 56px;
-    border-top: 1px solid rgba(0, 0, 0, 0.07);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
-    padding-top: 12px;
-    box-sizing: border-box;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    cursor: default; }
-  .adf-dynamic-table th {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    cursor: pointer;
-    position: relative;
-    vertical-align: bottom;
-    text-overflow: ellipsis;
-    font-weight: bold;
-    line-height: 24px;
-    letter-spacing: 0;
-    height: 56px;
-    font-size: 12px;
-    color: rgba(0, 0, 0, 0.87);
-    padding-bottom: 8px;
-    box-sizing: border-box; }
-    .adf-dynamic-table th.sortable {
-      -webkit-touch-callout: none;
-      -webkit-user-select: none;
-      -khtml-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none; }
-      .adf-dynamic-table th.sortable:hover {
-        cursor: pointer; }
-    .adf-dynamic-table th.adf-dynamic-table__header--sorted-asc, .adf-dynamic-table th.adf-dynamic-table__header--sorted-desc {
-      color: rgba(0, 0, 0, 0.87); }
-      .adf-dynamic-table th.adf-dynamic-table__header--sorted-asc:before, .adf-dynamic-table th.adf-dynamic-table__header--sorted-desc:before {
-        font-family: 'Material Icons';
-        font-weight: normal;
-        font-style: normal;
-        font-size: 24px;
-        line-height: 1;
-        letter-spacing: normal;
-        text-transform: none;
-        display: inline-block;
-        word-wrap: normal;
-        font-feature-settings: 'liga';
-        -webkit-font-feature-settings: 'liga';
-        -webkit-font-smoothing: antialiased;
-        font-size: 16px;
-        content: "\e5d8";
-        margin-right: 5px;
-        vertical-align: sub; }
-      .adf-dynamic-table th.adf-dynamic-table__header--sorted-asc:hover, .adf-dynamic-table th.adf-dynamic-table__header--sorted-desc:hover {
-        cursor: pointer; }
-        .adf-dynamic-table th.adf-dynamic-table__header--sorted-asc:hover:before, .adf-dynamic-table th.adf-dynamic-table__header--sorted-desc:hover:before {
-          color: rgba(0, 0, 0, 0.38); }
-    .adf-dynamic-table th.adf-dynamic-table__header--sorted-desc:before {
-      content: "\e5db"; }
-  .adf-dynamic-table .adf-dynamic-table-cell {
-    text-align: left;
-    cursor: default; }
-    .adf-dynamic-table .adf-dynamic-table-cell--text {
-      text-align: left; }
-    .adf-dynamic-table .adf-dynamic-table-cell--number {
-      text-align: right; }
-    .adf-dynamic-table .adf-dynamic-table-cell--image {
-      text-align: left; }
-      .adf-dynamic-table .adf-dynamic-table-cell--image img {
-        width: 24px;
-        height: 24px; }
-  .adf-dynamic-table .full-width {
-    width: 100%; }
+.adf-people-widget {
+  width: 100%; }
+
+.adf-people-widget-pic {
+  background: #00bcd4;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border-radius: 100px;
+  color: rgba(0, 0, 0, 0.87);
+  text-align: center;
+  font-weight: bolder;
+  font-size: 18px;
+  text-transform: uppercase;
+  vertical-align: middle; }
+
+.adf-people-widget-row {
+  padding-bottom: 10px; }
+
+.adf-people-widget-image {
+  margin-left: -45px;
+  left: 21px;
+  background: white;
+  border-radius: 100px;
+  width: 40px;
+  height: 40px;
+  vertical-align: middle;
+  display: inline-block;
+  padding: 0; }
+
+.adf-people-widget-image-row {
+  display: inline-block; }
+
+.adf-people-label-name {
+  padding-left: 10px; }
 
 .adf-filters__entry {
   cursor: pointer;

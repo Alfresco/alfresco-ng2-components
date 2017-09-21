@@ -122,7 +122,6 @@ export class WidgetComponent implements AfterViewInit {
     }
 
     protected event(event: Event): void {
-        console.log(event);
         this.formService.formEvents.next(event);
     }
 }

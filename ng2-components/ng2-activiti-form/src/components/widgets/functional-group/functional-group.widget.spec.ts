@@ -74,16 +74,6 @@ describe('FunctionalGroupWidgetComponent', () => {
         expect(widget.groupId).toBe('<id>');
     });
 
-    it('should flush value on blur', (done) => {
-        spyOn(widget, 'flushValue').and.stub();
-        widget.onBlur();
-
-        setTimeout(() => {
-            expect(widget.flushValue).toHaveBeenCalled();
-            done();
-        }, 200);
-    });
-
     it('should prevent default behaviour on option item click', () => {
         let event = jasmine.createSpyObj('event', ['preventDefault']);
         widget.onItemClick(null, event);
@@ -96,12 +86,6 @@ describe('FunctionalGroupWidgetComponent', () => {
         widget.onItemClick(item, null);
         expect(widget.field.value).toBe(item);
         expect(widget.value).toBe(item.name);
-    });
-
-    it('should hide popup on flush', () => {
-        widget.popupVisible = true;
-        widget.flushValue();
-        expect(widget.popupVisible).toBeFalsy();
     });
 
     it('should update form on value flush', () => {
@@ -138,12 +122,6 @@ describe('FunctionalGroupWidgetComponent', () => {
         expect(widget.field.value).toBe(groups[1]);
     });
 
-    it('should hide popup on key up', () => {
-        widget.popupVisible = true;
-        widget.onKeyUp(null);
-        expect(widget.popupVisible).toBeFalsy();
-    });
-
     it('should fetch groups and show popup on key up', () => {
         let groups: GroupModel[] = [
             new GroupModel(),
@@ -156,12 +134,12 @@ describe('FunctionalGroupWidgetComponent', () => {
             })
         );
 
+        let keyboardEvent = new KeyboardEvent('keypress');
         widget.value = 'group';
-        widget.onKeyUp(null);
+        widget.onKeyUp(keyboardEvent);
 
         expect(formService.getWorkflowGroups).toHaveBeenCalledWith('group', undefined);
         expect(widget.groups).toBe(groups);
-        expect(widget.popupVisible).toBeTruthy();
     });
 
     it('should fetch groups with a group filter', () => {
@@ -176,13 +154,13 @@ describe('FunctionalGroupWidgetComponent', () => {
             })
         );
 
+        let keyboardEvent = new KeyboardEvent('keypress');
         widget.groupId = 'parentGroup';
         widget.value = 'group';
-        widget.onKeyUp(null);
+        widget.onKeyUp(keyboardEvent);
 
         expect(formService.getWorkflowGroups).toHaveBeenCalledWith('group', 'parentGroup');
         expect(widget.groups).toBe(groups);
-        expect(widget.popupVisible).toBeTruthy();
     });
 
     it('should hide popup when fetching empty group list', () => {
@@ -193,32 +171,32 @@ describe('FunctionalGroupWidgetComponent', () => {
             })
         );
 
+        let keyboardEvent = new KeyboardEvent('keypress');
         widget.value = 'group';
-        widget.onKeyUp(null);
+        widget.onKeyUp(keyboardEvent);
 
         expect(formService.getWorkflowGroups).toHaveBeenCalledWith('group', undefined);
         expect(widget.groups.length).toBe(0);
-        expect(widget.popupVisible).toBeFalsy();
     });
 
     it('should not fetch groups when value is missing', () => {
         spyOn(formService, 'getWorkflowGroups').and.stub();
 
+        let keyboardEvent = new KeyboardEvent('keypress');
         widget.value = null;
-        widget.onKeyUp(null);
+        widget.onKeyUp(keyboardEvent);
 
         expect(formService.getWorkflowGroups).not.toHaveBeenCalled();
-        expect(widget.popupVisible).toBeFalsy();
     });
 
     it('should not fetch groups when value violates constraints', () => {
         spyOn(formService, 'getWorkflowGroups').and.stub();
 
+        let keyboardEvent = new KeyboardEvent('keypress');
         widget.minTermLength = 4;
         widget.value = '123';
-        widget.onKeyUp(null);
+        widget.onKeyUp(keyboardEvent);
 
         expect(formService.getWorkflowGroups).not.toHaveBeenCalled();
-        expect(widget.popupVisible).toBeFalsy();
     });
 });

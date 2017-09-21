@@ -142,12 +142,12 @@ describe('PeopleWidgetComponent', () => {
             })
         );
 
+        let keyboardEvent = new KeyboardEvent('keypress');
         widget.value = 'user1';
-        widget.onKeyUp(null);
+        widget.onKeyUp(keyboardEvent);
 
         expect(formService.getWorkflowUsers).toHaveBeenCalledWith(widget.value, widget.groupId);
         expect(widget.users).toBe(users);
-        expect(widget.popupVisible).toBeTruthy();
     });
 
     it('should fetch users by search term and group id', () => {
@@ -159,13 +159,13 @@ describe('PeopleWidgetComponent', () => {
             })
         );
 
+        let keyboardEvent = new KeyboardEvent('keypress');
         widget.value = 'user1';
         widget.groupId = '1001';
-        widget.onKeyUp(null);
+        widget.onKeyUp(keyboardEvent);
 
         expect(formService.getWorkflowUsers).toHaveBeenCalledWith(widget.value, widget.groupId);
         expect(widget.users).toBe(users);
-        expect(widget.popupVisible).toBeTruthy();
     });
 
     it('should fetch users and show no popup', () => {
@@ -176,19 +176,20 @@ describe('PeopleWidgetComponent', () => {
             })
         );
 
+        let keyboardEvent = new KeyboardEvent('keypress');
         widget.value = 'user1';
-        widget.onKeyUp(null);
+        widget.onKeyUp(keyboardEvent);
 
         expect(formService.getWorkflowUsers).toHaveBeenCalledWith(widget.value, widget.groupId);
         expect(widget.users).toEqual([]);
-        expect(widget.popupVisible).toBeFalsy();
     });
 
     it('should require search term to fetch users', () => {
         spyOn(formService, 'getWorkflowUsers').and.stub();
 
+        let keyboardEvent = new KeyboardEvent('keypress');
         widget.value = null;
-        widget.onKeyUp(null);
+        widget.onKeyUp(keyboardEvent);
 
         expect(formService.getWorkflowUsers).not.toHaveBeenCalled();
     });
@@ -196,17 +197,12 @@ describe('PeopleWidgetComponent', () => {
     it('should not fetch users due to constraint violation', () => {
         spyOn(formService, 'getWorkflowUsers').and.stub();
 
+        let keyboardEvent = new KeyboardEvent('keypress');
         widget.value = '123';
         widget.minTermLength = 4;
-        widget.onKeyUp(null);
+        widget.onKeyUp(keyboardEvent);
 
         expect(formService.getWorkflowUsers).not.toHaveBeenCalled();
-    });
-
-    it('should hide popup on value flush', () => {
-        widget.popupVisible = true;
-        widget.flushValue();
-        expect(widget.popupVisible).toBeFalsy();
     });
 
     it('should update form on value flush', () => {
@@ -246,32 +242,5 @@ describe('PeopleWidgetComponent', () => {
 
         expect(widget.value).toBeNull();
         expect(widget.field.value).toBeNull();
-    });
-
-    describe('Image', () => {
-
-        it('should show the initial in the image', () => {
-            widget.users = [
-                new GroupUserModel({firstName: 'Tony', lastName: 'Stark'}),
-                new GroupUserModel({firstName: 'John', lastName: 'Doe'})
-            ];
-
-            fixture.detectChanges();
-
-            expect(element.querySelector('#adf-people-widget-initial-0').innerHTML.trim()).toBe('TS');
-            expect(element.querySelector('#adf-people-widget-initial-1').innerHTML.trim()).toBe('JD');
-        });
-
-        it('should show the the image if user has an image', () => {
-            widget.users = [
-                new GroupUserModel({firstName: 'Tony', lastName: 'Stark', userImage: 'testUrl0'}),
-                new GroupUserModel({firstName: 'John', lastName: 'Doe', userImage: 'testUrl1'})
-            ];
-
-            fixture.detectChanges();
-
-            expect((element.querySelector('#adf-people-widget-pic-0') as any).src).toContain('testUrl0');
-            expect((element.querySelector('#adf-people-widget-pic-1') as any).src).toContain('testUrl1');
-        });
     });
 });

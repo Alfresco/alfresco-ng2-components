@@ -108,68 +108,6 @@ describe('TypeaheadWidgetComponent', () => {
         expect(widget.handleError).toHaveBeenCalledWith(err);
     });
 
-    it('should show popup on key up', () => {
-
-        spyOn(widget, 'getOptions').and.returnValue([{}, {}]);
-
-        widget.minTermLength = 1;
-        widget.value = 'some value';
-
-        widget.popupVisible = false;
-        widget.onKeyUp(null);
-        expect(widget.popupVisible).toBeTruthy();
-    });
-
-    it('should require items to show popup', () => {
-        widget.minTermLength = 1;
-        widget.value = 'some value';
-
-        widget.popupVisible = false;
-        widget.onKeyUp(null);
-        expect(widget.popupVisible).toBeFalsy();
-    });
-
-    it('should require value to show popup', () => {
-        widget.minTermLength = 1;
-        widget.value = '';
-
-        widget.popupVisible = false;
-        widget.onKeyUp(null);
-        expect(widget.popupVisible).toBeFalsy();
-    });
-
-    it('should require value to be of min length to show popup', () => {
-        spyOn(widget, 'getOptions').and.returnValue([{}, {}]);
-
-        widget.minTermLength = 3;
-        widget.value = 'v';
-
-        // value less than constraint
-        widget.popupVisible = false;
-        widget.onKeyUp(null);
-        expect(widget.popupVisible).toBeFalsy();
-
-        // value satisfies constraint
-        widget.value = 'value';
-        widget.onKeyUp(null);
-        expect(widget.popupVisible).toBeTruthy();
-
-        // value gets less than allowed again
-        widget.value = 'va';
-        widget.onKeyUp(null);
-        expect(widget.popupVisible).toBeFalsy();
-    });
-
-    it('should flush value on blur', (done) => {
-        spyOn(widget, 'flushValue').and.stub();
-        widget.onBlur();
-
-        setTimeout(() => {
-            expect(widget.flushValue).toHaveBeenCalled();
-            done();
-        }, 200);
-    });
-
     it('should prevent default behaviour on option item click', () => {
         let event = jasmine.createSpyObj('event', ['preventDefault']);
         widget.onItemClick(null, event);
@@ -270,12 +208,6 @@ describe('TypeaheadWidgetComponent', () => {
         expect(filtered[0]).toEqual(options[1]);
     });
 
-    it('should hide popup on flush', () => {
-        widget.popupVisible = true;
-        widget.flushValue();
-        expect(widget.popupVisible).toBeFalsy();
-    });
-
     it('should update form on value flush', () => {
         spyOn(widget.field, 'updateForm').and.callThrough();
         widget.flushValue();
@@ -359,22 +291,6 @@ describe('TypeaheadWidgetComponent', () => {
         });
     });
 
-    it('should emit field change event on blur', (done) => {
-        spyOn(widget, 'flushValue').and.stub();
-        let fakeField = new FormFieldModel(new FormModel(), { id: 'fakeField', value: 'fakeValue' });
-        widget.field = fakeField;
-        widget.onBlur();
-
-        setTimeout(() => {
-            widget.fieldChanged.subscribe((field) => {
-                expect(field).toBeDefined();
-                expect(field.id).toEqual('field-id');
-                expect(field.value).toEqual('field-value');
-            });
-            done();
-        }, 200);
-    });
-
     describe('when template is ready', () => {
         let typeaheadWidgetComponent: TypeaheadWidgetComponent;
         let fixture: ComponentFixture<TypeaheadWidgetComponent>;
@@ -428,8 +344,9 @@ describe('TypeaheadWidgetComponent', () => {
             }));
 
             it('should show typeahead options', async(() => {
+                let keyboardEvent = new KeyboardEvent('keypress');
                 typeaheadWidgetComponent.value = 'F';
-                typeaheadWidgetComponent.onKeyUp(null);
+                typeaheadWidgetComponent.onKeyUp(keyboardEvent);
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(fixture.debugElement.queryAll(By.css('[id="md-option-1"]'))).toBeDefined();
@@ -472,8 +389,9 @@ describe('TypeaheadWidgetComponent', () => {
             }));
 
             it('should show typeahead options', async(() => {
+                let keyboardEvent = new KeyboardEvent('keypress');
                 typeaheadWidgetComponent.value = 'F';
-                typeaheadWidgetComponent.onKeyUp(null);
+                typeaheadWidgetComponent.onKeyUp(keyboardEvent);
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(fixture.debugElement.queryAll(By.css('[id="md-option-1"]'))).toBeDefined();
