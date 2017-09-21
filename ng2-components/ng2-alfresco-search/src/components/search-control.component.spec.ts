@@ -103,7 +103,28 @@ describe('SearchControlComponent', () => {
         fixture.detectChanges();
     });
 
-    describe('Component rendering', () => {
+    describe('expandable option false', () => {
+
+        beforeEach(() => {
+            component.expandable = false;
+        });
+
+        afterEach(() => {
+            component.expandable = true;
+        });
+
+        it('search button should be hide', () => {
+            let searchButton: any = element.querySelector('#adf-search-button');
+            expect(searchButton).toBe(null);
+        });
+
+        it('should not have animation', () => {
+            component.ngOnInit();
+            expect(component.subscriptAnimationState).toBe('no-animation');
+        });
+    });
+
+    describe('component rendering', () => {
 
         it('should display a text input field by default', () => {
             fixture.detectChanges();
@@ -129,7 +150,7 @@ describe('SearchControlComponent', () => {
         });
     });
 
-    describe('Autocomplete list', () => {
+    describe('autocomplete list', () => {
 
         let inputEl: HTMLInputElement;
 
@@ -304,17 +325,11 @@ describe('SearchControlComponent', () => {
 
     });
 
-    describe('Search Button', () => {
-
-        it('should be hide if expandable option is false', () => {
-            component.expandable = false;
-            let searchButton: any = element.querySelector('#adf-search-button');
-            expect(searchButton).toBe(null);
-        });
+    describe('search button', () => {
 
         it('click on the search button should close the input box when is open', (done) => {
-            component.subscriptAnimationState = 'active';
             fixture.detectChanges();
+            component.subscriptAnimationState = 'active';
 
             let searchButton: any = element.querySelector('#adf-search-button');
             searchButton.click();
@@ -322,12 +337,12 @@ describe('SearchControlComponent', () => {
             setTimeout(() => {
                 expect(component.subscriptAnimationState).toBe('inactive');
                 done();
-            }, 300);
+            }, 500);
         });
 
         it('click on the search button should open the input box when is close', (done) => {
-            component.subscriptAnimationState = 'inactive';
             fixture.detectChanges();
+            component.subscriptAnimationState = 'inactive';
 
             let searchButton: any = element.querySelector('#adf-search-button');
             searchButton.click();
@@ -339,8 +354,8 @@ describe('SearchControlComponent', () => {
         });
 
         it('Search button should not change the input state too often', (done) => {
-            component.subscriptAnimationState = 'active';
             fixture.detectChanges();
+            component.subscriptAnimationState = 'active';
 
             let searchButton: any = element.querySelector('#adf-search-button');
             searchButton.click();
@@ -349,7 +364,7 @@ describe('SearchControlComponent', () => {
             setTimeout(() => {
                 expect(component.subscriptAnimationState).toBe('inactive');
                 done();
-            }, 300);
+            }, 400);
 
         });
     });

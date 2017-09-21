@@ -96,7 +96,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
 
     private toggleSearch = new Subject<string>();
 
-    subscriptAnimationState: string
+    subscriptAnimationState: string;
 
     constructor() {
         this.searchControl = new FormControl(
@@ -104,9 +104,13 @@ export class SearchControlComponent implements OnInit, OnDestroy {
             Validators.compose([Validators.required, SearchTermValidator.minAlphanumericChars(3)])
         );
 
-        this.toggleSearch.debounceTime(100).subscribe(() => {
+        this.toggleSearch.debounceTime(200).subscribe(() => {
             if (this.expandable) {
                 this.subscriptAnimationState = this.subscriptAnimationState === 'inactive' ? 'active' : 'inactive';
+
+                if (this.subscriptAnimationState === 'inactive') {
+                    this.searchTerm = '';
+                }
             }
         });
     }
@@ -195,7 +199,6 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     onEscape(): void {
         this.hideAutocomplete();
         this.toggleSearchBar();
-        this.searchTerm = '';
     }
 
     onArrowDown(): void {
