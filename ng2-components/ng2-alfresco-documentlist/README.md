@@ -94,6 +94,7 @@ The properties currentFolderId, folderNode and node are the entry initialization
 | currentFolderId | string | null | The ID of the folder node to display or a reserved string alias for special sources (see **Data Sources**) |
 | folderNode | [MinimalNodeEntryEntity](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md) | null | Currently displayed folder node | 
 | permissionsStyle | [PermissionStyleModel[]](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-documentlist/src/models/permissions-style.model.ts) | null | with this array you can define different styles depending on the permission of the user on that node. The PermissionStyleModel allows you to select also if you want to apply the style only on the file or folder nodes. PermissionStyleModel.permission accepts the following values [Permissions](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-core/src/models/permissions.enum.ts)   [see more](#custom-row-permissions-style). | 
+| paginationStrategy | PaginationStrategy | PaginationStrategy.Finite | The pagination type to be shown, can be Finite or Infinite |
 | node | [NodePaging](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodePaging.md) | null | Document list will show all the nodes contained in the NodePaging entity  | 
 | navigate | boolean | true | Toggles navigation to folder content or file preview |
 | loading | boolean | false | Toggles the loading state and animated spinners for the component. Used in combination with `navigate=false` to perform custom navigation and loading state indication. |
@@ -164,6 +165,13 @@ Below is a basic example of handling DOM events in the parent elements.
     </div>
 </div>
 ```
+
+#### Pagination strategy
+
+The Document List by default supports 2 type of pagination, the **finite** and the **infinite** pagination. 
+
+- With the **finite** pagination you got a normal pagination ui with information about the result's count, pages, and stepper arrows. On every pagination event the results will replace the previous list.
+- With the **infinite** pagination there is only a "Load more" button at the end of your document list, and on every click (pagination event), the new results will be appended to the previous list.
 
 #### Data Sources
 
