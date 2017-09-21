@@ -450,7 +450,7 @@ export class TaskListService {
      * Unclaim a task
      * @param id - taskId
      */
-    unclaimTask(taskId: string)/*: Observable<TaskDetailsModel>*/ {
+    unclaimTask(taskId: string): Observable<TaskDetailsModel> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.unclaimTask(taskId))
             .catch(err => this.handleError(err));
     }
