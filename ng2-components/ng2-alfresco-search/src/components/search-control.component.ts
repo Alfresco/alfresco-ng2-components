@@ -29,10 +29,11 @@ import { SearchAutocompleteComponent } from './search-autocomplete.component';
     animations: [
         trigger('transitionMessages', [
             state('active', style({transform: 'translateX(0%)'})),
-            state('inactive', style({transform: 'translateX(89%)'})),
-            transition('void => active, inactive => active',
+            state('inactive', style({transform: 'translateX(86%)'})),
+            state('no-animation', style({transform: 'translateX(0%)', width: '100%'})),
+            transition('inactive => active',
                 animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)')),
-            transition('active => inactive, void => inactive',
+            transition('active => inactive',
                 animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)'))
         ])
     ],
@@ -64,9 +65,6 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     @Output()
     fileSelect = new EventEmitter();
 
-    @Output()
-    expand = new EventEmitter();
-
     searchControl: FormControl;
 
     @ViewChild('searchInput', {})
@@ -96,16 +94,30 @@ export class SearchControlComponent implements OnInit, OnDestroy {
 
     private focusSubject = new Subject<FocusEvent>();
 
-    subscriptAnimationState: string = 'inactive';
+    private toggleSearch = new Subject<string>();
+
+    subscriptAnimationState: string;
 
     constructor() {
         this.searchControl = new FormControl(
             this.searchTerm,
             Validators.compose([Validators.required, SearchTermValidator.minAlphanumericChars(3)])
         );
+
+        this.toggleSearch.debounceTime(200).subscribe(() => {
+            if (this.expandable) {
+                this.subscriptAnimationState = this.subscriptAnimationState === 'inactive' ? 'active' : 'inactive';
+
+                if (this.subscriptAnimationState === 'inactive') {
+                    this.searchTerm = '';
+                }
+            }
+        });
     }
 
     ngOnInit(): void {
+        this.subscriptAnimationState = this.expandable ? 'inactive' : 'no-animation';
+
         this.searchControl.valueChanges.debounceTime(400).distinctUntilChanged()
             .subscribe((value: string) => {
                     this.onSearchTermChange(value);
@@ -177,27 +189,16 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     }
 
     onFocus($event): void {
-        if (this.expandable) {
-            this.expand.emit({
-                expanded: true
-            });
-        }
         this.focusSubject.next($event);
     }
 
     onBlur($event): void {
-        if (this.expandable && (this.searchControl.value === '' || this.searchControl.value === undefined)) {
-            this.expand.emit({
-                expanded: false
-            });
-        }
         this.focusSubject.next($event);
     }
 
     onEscape(): void {
         this.hideAutocomplete();
         this.toggleSearchBar();
-        this.searchTerm = '';
     }
 
     onArrowDown(): void {
@@ -221,11 +222,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
         this.hideAutocomplete();
     }
 
-    onClickSearch() {
-        this.subscriptAnimationState = 'active';
-    }
-
     toggleSearchBar() {
-        this.subscriptAnimationState = this.subscriptAnimationState === 'inactive' ? 'active' : 'inactive';
+        this.toggleSearch.next();
     }
 }

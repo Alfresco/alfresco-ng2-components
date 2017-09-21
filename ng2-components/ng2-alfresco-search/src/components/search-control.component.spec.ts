@@ -18,7 +18,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ThumbnailService } from 'ng2-alfresco-core';
 import { AlfrescoTranslationService, CoreModule, SearchService } from 'ng2-alfresco-core';
-import { results } from './../assets/search.component.mock';
+import { noResult, results } from './../assets/search.component.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
 import { SearchAutocompleteComponent } from './search-autocomplete.component';
 import { SearchControlComponent } from './search-control.component';
@@ -103,7 +103,28 @@ describe('SearchControlComponent', () => {
         fixture.detectChanges();
     });
 
-    describe('Component rendering', () => {
+    describe('expandable option false', () => {
+
+        beforeEach(() => {
+            component.expandable = false;
+        });
+
+        afterEach(() => {
+            component.expandable = true;
+        });
+
+        it('search button should be hide', () => {
+            let searchButton: any = element.querySelector('#adf-search-button');
+            expect(searchButton).toBe(null);
+        });
+
+        it('should not have animation', () => {
+            component.ngOnInit();
+            expect(component.subscriptAnimationState).toBe('no-animation');
+        });
+    });
+
+    describe('component rendering', () => {
 
         it('should display a text input field by default', () => {
             fixture.detectChanges();
@@ -129,7 +150,7 @@ describe('SearchControlComponent', () => {
         });
     });
 
-    describe('Autocomplete list', () => {
+    describe('autocomplete list', () => {
 
         let inputEl: HTMLInputElement;
 
@@ -159,6 +180,25 @@ describe('SearchControlComponent', () => {
             window.setTimeout(() => {
                 fixture.detectChanges();
                 expect(component.liveSearchComponent.panelAnimationState).not.toBe('void');
+                let resultElement: Element = element.querySelector('#adf-search-results');
+                expect(resultElement).not.toBe(null);
+                done();
+            }, 100);
+        });
+
+        it('should show autocomplete list noe results cwhen search box has focus and there is search result with length 0', (done) => {
+            spyOn(searchService, 'getQueryNodesPromise')
+                .and.returnValue(Promise.resolve(noResult));
+
+            component.liveSearchTerm = 'test';
+
+            fixture.detectChanges();
+            inputEl.dispatchEvent(new FocusEvent('focus'));
+            window.setTimeout(() => {
+                fixture.detectChanges();
+                expect(component.liveSearchComponent.panelAnimationState).not.toBe('void');
+                let noResultElement: Element = element.querySelector('#search_no_result');
+                expect(noResultElement).not.toBe(null);
                 done();
             }, 100);
         });
@@ -285,45 +325,48 @@ describe('SearchControlComponent', () => {
 
     });
 
-    describe('component focus', () => {
+    describe('search button', () => {
 
-        it('should fire an event when the search box receives focus', (done) => {
-            spyOn(component.expand, 'emit');
-            let inputEl: HTMLElement = element.querySelector('input');
-            inputEl.dispatchEvent(new FocusEvent('focus'));
-            window.setTimeout(() => {
-                expect(component.expand.emit).toHaveBeenCalledWith({
-                    expanded: true
-                });
+        it('click on the search button should close the input box when is open', (done) => {
+            fixture.detectChanges();
+            component.subscriptAnimationState = 'active';
+
+            let searchButton: any = element.querySelector('#adf-search-button');
+            searchButton.click();
+
+            setTimeout(() => {
+                expect(component.subscriptAnimationState).toBe('inactive');
                 done();
-            }, 100);
+            }, 500);
         });
 
-        it('should fire an event when the search box loses focus', (done) => {
-            spyOn(component.expand, 'emit');
-            let inputEl: HTMLElement = element.querySelector('input');
-            inputEl.dispatchEvent(new FocusEvent('blur'));
-            window.setTimeout(() => {
-                expect(component.expand.emit).toHaveBeenCalledWith({
-                    expanded: false
-                });
+        it('click on the search button should open the input box when is close', (done) => {
+            fixture.detectChanges();
+            component.subscriptAnimationState = 'inactive';
+
+            let searchButton: any = element.querySelector('#adf-search-button');
+            searchButton.click();
+
+            setTimeout(() => {
+                expect(component.subscriptAnimationState).toBe('active');
                 done();
-            }, 100);
+            }, 300);
         });
 
-        it('should NOT fire an event when the search box receives/loses focus but the component is not expandable',
-            (done) => {
-                spyOn(component.expand, 'emit');
-                component.expandable = false;
-                let inputEl: HTMLElement = element.querySelector('input');
-                inputEl.dispatchEvent(new FocusEvent('focus'));
-                inputEl.dispatchEvent(new FocusEvent('blur'));
-                window.setTimeout(() => {
-                    expect(component.expand.emit).not.toHaveBeenCalled();
-                    done();
-                }, 100);
-            });
+        it('Search button should not change the input state too often', (done) => {
+            fixture.detectChanges();
+            component.subscriptAnimationState = 'active';
 
+            let searchButton: any = element.querySelector('#adf-search-button');
+            searchButton.click();
+            searchButton.click();
+
+            setTimeout(() => {
+                expect(component.subscriptAnimationState).toBe('inactive');
+                done();
+            }, 400);
+
+        });
     });
 
     describe('file preview', () => {
@@ -338,13 +381,17 @@ describe('SearchControlComponent', () => {
             });
         });
 
-        it('should set deactivate the search after file/folder is clicked', () => {
+        it('should set deactivate the search after file/folder is clicked', (done) => {
             component.subscriptAnimationState = 'active';
             component.onFileClicked({
                 value: 'node12345'
             });
 
-            expect(component.subscriptAnimationState).toBe('inactive');
+            setTimeout(() => {
+                expect(component.subscriptAnimationState).toBe('inactive');
+                done();
+            }, 300);
+
         });
 
         it('should NOT reset the search term after file/folder is clicked', () => {

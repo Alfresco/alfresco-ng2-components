@@ -31,11 +31,11 @@ import { EmptyFolderContentDirective } from './src/components/empty-folder/empty
 import { DropdownSitesComponent } from './src/components/site-dropdown/sites-dropdown.component';
 import { MaterialModule } from './src/material.module';
 
+import { ContentNodeSelectorService } from './src/components/content-node-selector/content-node-selector.service';
 import { DocumentActionsService } from './src/services/document-actions.service';
 import { DocumentListService } from './src/services/document-list.service';
 import { FolderActionsService } from './src/services/folder-actions.service';
 import { NodeActionsService } from './src/services/node-actions.service';
-import { ContentNodeSelectorService } from './src/components/content-node-selector/content-node-selector.service';
 
 // components
 export * from './src/components/document-list.component';

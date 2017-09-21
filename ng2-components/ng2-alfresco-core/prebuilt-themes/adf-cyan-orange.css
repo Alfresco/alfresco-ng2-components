@@ -3157,6 +3157,7 @@ adf-file-uploading-list-row:not(:first-child) {
   padding: 0; }
 
 .adf-search-button.mat-button {
+  margin-right: 10px;
   border-radius: 50%;
   height: 32px;
   min-width: 20px;
