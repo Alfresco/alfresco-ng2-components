@@ -30,6 +30,7 @@ import { SearchAutocompleteComponent } from './search-autocomplete.component';
         trigger('transitionMessages', [
             state('active', style({transform: 'translateX(0%)'})),
             state('inactive', style({transform: 'translateX(86%)'})),
+            state('no-animation', style({transform: 'translateX(0%)', width: '100%'})),
             transition('inactive => active',
                 animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)')),
             transition('active => inactive',
@@ -50,6 +51,9 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     autocomplete: boolean = false;
 
     @Input()
+    expandable: boolean = true;
+
+    @Input()
     highlight: boolean = false;
 
     @Output()
@@ -60,9 +64,6 @@ export class SearchControlComponent implements OnInit, OnDestroy {
 
     @Output()
     fileSelect = new EventEmitter();
-
-    @Output()
-    expand = new EventEmitter();
 
     searchControl: FormControl;
 
@@ -95,7 +96,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
 
     private toggleSearch = new Subject<string>();
 
-    subscriptAnimationState: string = 'inactive';
+    subscriptAnimationState: string
 
     constructor() {
         this.searchControl = new FormControl(
@@ -103,12 +104,16 @@ export class SearchControlComponent implements OnInit, OnDestroy {
             Validators.compose([Validators.required, SearchTermValidator.minAlphanumericChars(3)])
         );
 
-        this.toggleSearch.debounceTime(200).subscribe(() => {
-            this.subscriptAnimationState = this.subscriptAnimationState === 'inactive' ? 'active' : 'inactive';
+        this.toggleSearch.debounceTime(100).subscribe(() => {
+            if (this.expandable) {
+                this.subscriptAnimationState = this.subscriptAnimationState === 'inactive' ? 'active' : 'inactive';
+            }
         });
     }
 
     ngOnInit(): void {
+        this.subscriptAnimationState = this.expandable ? 'inactive' : 'no-animation';
+
         this.searchControl.valueChanges.debounceTime(400).distinctUntilChanged()
             .subscribe((value: string) => {
                     this.onSearchTermChange(value);

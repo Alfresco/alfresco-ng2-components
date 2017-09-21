@@ -7,8 +7,8 @@
             margin-right: 10px;
             border-radius: 50%;
             height: 32px;
-            min-width: 20px;
             width: 32px;
+            min-width: 20px;
             padding: 0;
             overflow: hidden;
             color: inherit;
@@ -29,6 +29,10 @@
                 }
 
                 .mat-input-underline .mat-input-ripple {
+                    background-color: mat-color($background, card);
+                }
+
+                .mat-form-field-underline {
                     background-color: mat-color($background, card);
                 }
 

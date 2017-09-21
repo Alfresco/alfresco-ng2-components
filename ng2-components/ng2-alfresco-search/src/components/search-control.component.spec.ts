@@ -306,6 +306,12 @@ describe('SearchControlComponent', () => {
 
     describe('Search Button', () => {
 
+        it('should be hide if expandable option is false', () => {
+            component.expandable = false;
+            let searchButton: any = element.querySelector('#adf-search-button');
+            expect(searchButton).toBe(null);
+        });
+
         it('click on the search button should close the input box when is open', (done) => {
             component.subscriptAnimationState = 'active';
             fixture.detectChanges();

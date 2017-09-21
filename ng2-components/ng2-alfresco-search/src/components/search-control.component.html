@@ -2,6 +2,7 @@
     <div class="adf-search-container"
         [@transitionMessages]="subscriptAnimationState">
         <button md-button
+                *ngIf="expandable"
                 id="adf-search-button"
             (click)="toggleSearchBar()"
             class="adf-search-button">

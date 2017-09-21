@@ -50,6 +50,7 @@ Contains the Search and Search Results components.
 | inputType | string  | "text" | Type of the input field to render, e.g. "search" or "text" (default) |
 | autocomplete | boolean | true  | Whether the browser should offer field auto-completion for the input field to the user. |
 | highlight | boolean | false  | Use the true value if you want to see the searched word highlighted. |
+| expandable | boolean |  true  | Whether to use an expanding search control, if false then a regular input is used. |
 | liveSearchEnabled | boolean | true  | Whether find-as-you-type suggestions should be offered for matching content items. Set to false to disable. |
 | liveSearchRoot | string | "-root-" | NodeRef or node name where the search should start. |
 | liveSearchResultType | string | |  Node type to filter live search results by, e.g. 'cm:content'. |
