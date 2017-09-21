@@ -22,6 +22,7 @@
         "BUTTON": {
             "COMPLETE": "Complete",
             "CLAIM": "Claim",
+            "UNCLAIM": "Requeue",
             "DRAG-ATTACHMENT": "Drop Files Here...",
             "UPLOAD-ATTACHMENT": "Upload Attachment"
         },

@@ -324,7 +324,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
         this.dialog.closeAll();
     }
 
-    onClaimTask(taskId: string): void {
+    onClaimAction(taskId: string): void {
         this.loadDetails(taskId);
     }
 

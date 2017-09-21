@@ -69,7 +69,8 @@
                         [class]="getTaskHeaderViewClass()"
                         [taskDetails]="taskDetails"
                         [formName]="taskFormName"
-                        (claim)="onClaimTask($event)">
+                        (claim)="onClaimAction($event)"
+                        (unclaim)="onClaimAction($event)">
                     </adf-task-header>
                     <adf-people *ngIf="showInvolvePeople" #people
                         [iconImageUrl]="peopleIconImageUrl"

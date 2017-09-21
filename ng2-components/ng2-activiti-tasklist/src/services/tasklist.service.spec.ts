@@ -750,6 +750,22 @@ describe('Activiti TaskList Service', () => {
             });
         });
 
+        it('should unclaim a task', (done) => {
+            let taskId = '111';
+
+            service.unclaimTask(taskId).subscribe(
+                (res: any) => {
+                    done();
+                }
+            );
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 200,
+                contentType: 'application/json',
+                responseText: JSON.stringify({})
+            });
+        });
+
         it('should update a task', (done) => {
             let taskId = '111';
 

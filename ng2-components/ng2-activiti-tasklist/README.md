@@ -478,6 +478,7 @@ Shows all the information related to a task.
 | Name | Description |
 | --- | --- |
 | claim | Raised when the task is claimed. |
+| unclaim | Raised when the task is unclaimed (requeued). |
 
 ### Details
 
