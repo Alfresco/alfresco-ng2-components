@@ -36,6 +36,9 @@ export class TaskHeaderComponent implements OnChanges {
     @Output()
     claim: EventEmitter<any> = new EventEmitter<any>();
 
+    @Output()
+    unclaim: EventEmitter<any> = new EventEmitter<any>();
+
     properties: CardViewItem [];
     inEdit: boolean = false;
 
@@ -47,6 +50,9 @@ export class TaskHeaderComponent implements OnChanges {
         this.refreshData();
     }
 
+    /**
+     * Refresh the card data
+     */
     refreshData() {
         if (this.taskDetails) {
             let valueMap = new Map([[this.taskDetails.processInstanceId, this.taskDetails.processDefinitionName]]);
@@ -72,18 +78,32 @@ export class TaskHeaderComponent implements OnChanges {
         }
     }
 
+    /**
+     * Does the task have an assignee
+     */
     public hasAssignee(): boolean {
         return (this.taskDetails && this.taskDetails.assignee) ? true : false;
     }
 
+    /**
+     * Is the task assigned to the currently loggedin user
+     */
     isAssignedToMe(): boolean {
         return this.taskDetails.assignee ? true : false;
     }
 
+    /**
+     * Returns task's status
+     */
     getTaskStatus(): string {
         return this.isCompleted() ? 'Completed' : 'Running';
     }
 
+    /**
+     * Claim task
+     *
+     * @param taskId
+     */
     claimTask(taskId: string) {
         this.activitiTaskService.claimTask(taskId).subscribe(
             (res: any) => {
@@ -92,6 +112,22 @@ export class TaskHeaderComponent implements OnChanges {
             });
     }
 
+    /**
+     * Unclaim task
+     *
+     * @param taskId
+     */
+    unclaimTask(taskId: string) {
+        this.activitiTaskService.unclaimTask(taskId).subscribe(
+            (res: any) => {
+                this.logService.info('Task unclaimed');
+                this.unclaim.emit(taskId);
+            });
+    }
+
+    /**
+     * Returns true if the task is completed
+     */
     isCompleted() {
         return !!this.taskDetails.endDate;
     }
