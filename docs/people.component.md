@@ -30,7 +30,7 @@ Displays involved users to a specified task
 </adf-people>
 ```
 
-![activiti-people](../docassets/images/activiti_people.png)
+![activiti-people](docassets/images/activiti_people.png)
 
 ### Properties
 
@@ -65,7 +65,7 @@ In this way will be easy customize the people component to involve the user with
 </adf-people>
 ```
 
-![involve-people-single-click-and-close-search](../docassets/images/involve-people-single-click-and-close-search.gif)
+![involve-people-single-click-and-close-search](docassets/images/involve-people-single-click-and-close-search.gif)
 
 ### Involve People single click without close search
 
@@ -78,7 +78,7 @@ In this way will be easy customize the people component to involve the user with
 </adf-people>
 ```
 
-![involve-people-single-click-without-close-search](../docassets/images/involve-people-single-click-without-close-search.gif)
+![involve-people-single-click-without-close-search](docassets/images/involve-people-single-click-without-close-search.gif)
 
 ### Involve People double click and close search
 
@@ -91,7 +91,7 @@ In this way will be easy customize the people component to involve the user with
 </adf-people>
 ```
 
-![involve-people-double-click-and-close-search](../docassets/images/involve-people-double-click-and-close-search.gif)
+![involve-people-double-click-and-close-search](docassets/images/involve-people-double-click-and-close-search.gif)
 
 ### Involve People double double without close search
 
@@ -104,4 +104,4 @@ In this way will be easy customize the people component to involve the user with
 </adf-people>
 ```
 
-![involve-people-double-click-without-close-search](../docassets/images/involve-people-double-click-without-close-search.gif)
+![involve-people-double-click-without-close-search](docassets/images/involve-people-double-click-without-close-search.gif)

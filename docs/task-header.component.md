@@ -2,7 +2,7 @@
 
 Shows all the information related to a task.
 
-![adf-task-header](../docassets/images/adf-task-header.png)
+![adf-task-header](docassets/images/adf-task-header.png)
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
 

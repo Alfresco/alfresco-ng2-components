@@ -2,7 +2,7 @@
 
 Indicates the current position within a navigation hierarchy.
 
-![Breadcrumb](../docassets/images/breadcrumb.png)
+![Breadcrumb](docassets/images/breadcrumb.png)
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
 

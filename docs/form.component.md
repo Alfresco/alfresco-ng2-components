@@ -360,7 +360,7 @@ You can now use the 'fieldValidators' property with the Form or Task Details com
 
 Now if you run the application and try to enter "admin" in one of the text fields (either optional or required), you should see the following error:
 
-![](../docassets/images/demo-validator.png)
+![](docassets/images/demo-validator.png)
 
 ## Other documentation
 
@@ -387,7 +387,7 @@ You subscribe to the `formFieldValueChanged` event and check whether event is ra
 
 The result should be as following:
 
-![](../docassets/images/form-service-sample-01.png)
+![](docassets/images/form-service-sample-01.png)
 
 #### Listen all form Events
 

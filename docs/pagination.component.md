@@ -2,7 +2,7 @@
 
 Adds pagination to the component it is used with.
 
-![](../docassets/images/basic.png)
+![](docassets/images/basic.png)
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
 

@@ -2,7 +2,7 @@
 
 Displays Start Process, allowing the user to specify some basic details needed to start a new process instance.
 
-![adf-start-process ](../docassets/images/startProcess.png)
+![adf-start-process ](docassets/images/startProcess.png)
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
 

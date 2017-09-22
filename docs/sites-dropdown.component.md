@@ -2,7 +2,7 @@
 
 Displays a dropdown menu to show and interact with the sites of the current user.
 
-![Dropdown sites](../docassets/images/document-list-dropdown-list.png)
+![Dropdown sites](docassets/images/document-list-dropdown-list.png)
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
 

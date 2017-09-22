@@ -2,7 +2,7 @@
 
 Sub-component of the process details component, which renders some general information about the selected process.
 
-![adf-process-instance-header](../docassets/images/adf-process-instance-header-attachment.png)
+![adf-process-instance-header](docassets/images/adf-process-instance-header-attachment.png)
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
 

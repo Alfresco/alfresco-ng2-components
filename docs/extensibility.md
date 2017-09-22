@@ -91,7 +91,7 @@ rendered within `<activiti-form>` component.
 
 First let's create a simple Alfresco Activiti form with `Text` widgets:
 
-![default text widget](../docassets/images/text-default-widget.png)
+![default text widget](docassets/images/text-default-widget.png)
 
 Every custom widget must inherit `WidgetComponent` class in order to function properly:
 
@@ -158,7 +158,7 @@ export class MyView {
 
 At runtime it should look similar to the following:
 
-![custom text widget](../docassets/images/text-custom-widget.png)
+![custom text widget](docassets/images/text-custom-widget.png)
 
 ## Replacing custom stencils with custom components
 
@@ -168,7 +168,7 @@ This is a short walkthrough on rendering custom Alfresco Activiti stencils by me
 
 First let's create a basic stencil and call it `Custom Stencil 01`:
 
-![custom stencil](../docassets/images/activiti-stencil-01.png)
+![custom stencil](docassets/images/activiti-stencil-01.png)
 
 _Note the `internal identifier` value as it will become a `field type` value when corresponding form is rendered._
 
@@ -180,17 +180,17 @@ Next put some simple html layout for `Form runtime template` and `Form editor te
 
 Now you are ready to design a test form based on your custom stencil:
 
-![custom stencil form](../docassets/images/activiti-stencil-02.png)
+![custom stencil form](docassets/images/activiti-stencil-02.png)
 
 Once wired with a new task it should look like the following within Alfresco Activiti web application:
 
-![custom stencil task](../docassets/images/activiti-stencil-03.png)
+![custom stencil task](docassets/images/activiti-stencil-03.png)
 
 ### Creating custom widget
 
 If you load previously created task into ADF `<activiti-form>` component you will see something like the following:
 
-![adf stencil](../docassets/images/adf-stencil-01.png)
+![adf stencil](docassets/images/adf-stencil-01.png)
 
 Let's create an Angular 2 component to render missing content:
 
@@ -252,4 +252,4 @@ export class MyView {
 
 At runtime you should now see your custom Angular 2 component rendered in place of the stencils:
 
-![adf stencil runtime](../docassets/images/adf-stencil-02.png)
+![adf stencil runtime](docassets/images/adf-stencil-02.png)

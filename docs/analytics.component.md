@@ -41,7 +41,7 @@ You can also hide chart parameters UI by setting the `hideParameters` to `true`:
 </adf-analytics>
 ```
 
-![Analytics-without-parameters](../docassets/images/analytics-without-parameters.png)
+![Analytics-without-parameters](docassets/images/analytics-without-parameters.png)
 
 ### Events
 

@@ -2,7 +2,7 @@
 
 Displays data as a table with customizable columns and presentation.
 
-![DataTable demo](../docassets/images/datatable-demo.png)
+![DataTable demo](docassets/images/datatable-demo.png)
 
 See it live: [DataTable Quickstart](https://embed.plnkr.co/80qr4YFBeHjLMdAV0F6l/)
 
@@ -186,7 +186,7 @@ onRowClick(event) {
 }
 ```
 
-![](../docassets/images/datatable-dom-events.png)
+![](docassets/images/datatable-dom-events.png)
 
 ### Custom Empty content template
 
@@ -246,7 +246,7 @@ You can use any HTML layout or Angular component as a content of the empty templ
 | dragDropMsg | String | Drag and drop | The default drag and drop message |
 | additionalMsg | String | Drag and drop | The default additional message |
 
-![](../docassets/images/adf-empty-list.png)
+![](docassets/images/adf-empty-list.png)
 
 ### Loading content template
 
@@ -427,9 +427,9 @@ onExecuteRowAction(event: DataRowActionEvent) {
 }
 ```
 
-![](../docassets/images/datatable-actions-ui.png)
+![](docassets/images/datatable-actions-ui.png)
 
-![](../docassets/images/datatable-actions-console.png)
+![](docassets/images/datatable-actions-console.png)
 
 Developers are allowed to use any payloads as row actions.
 The only requirement for the objects is having `title` property.

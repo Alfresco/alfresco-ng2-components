@@ -1,6 +1,6 @@
 # Alfresco Tag Node Actions List component
 
-![Custom columns](../docassets/images/tag3.png)
+![Custom columns](docassets/images/tag3.png)
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
 

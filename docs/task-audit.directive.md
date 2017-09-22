@@ -2,7 +2,7 @@
 
 Provides a way to fetch the Task Audit information in the pdf or json format.
 
-![adf-task-audit-directive](../docassets/images/adf-task-audit-directive.png)
+![adf-task-audit-directive](docassets/images/adf-task-audit-directive.png)
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
 

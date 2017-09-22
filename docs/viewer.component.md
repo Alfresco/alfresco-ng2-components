@@ -63,7 +63,7 @@ Using with file url:
 
 ### PDF Conversion
 
-![Rendition](../docassets/images/renditions.png)                         
+![Rendition](docassets/images/renditions.png)                         
 
 Note for unsupported extensions the viewer will offer the possibility to convert to PDF if that kind of extension is supported by the [content service renditions service](https://community.alfresco.com/docs/DOC-5879-rendition-service)
 
