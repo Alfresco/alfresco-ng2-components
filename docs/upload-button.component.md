@@ -79,7 +79,7 @@ export class MyComponent {
 }
 ```
 
-![Upload notification message](../docassets/images/upload-notification-message.png)
+![Upload notification message](docassets/images/upload-notification-message.png)
 
 ### How to disable the button when the delete permission is missing
 
@@ -93,4 +93,4 @@ The UploadButtonComponent provides the property disableWithNoPermission that can
 </adf-upload-button>
 ```
 
-![Upload disable button](../docassets/images/upload-disable-button.png)
+![Upload disable button](docassets/images/upload-disable-button.png)

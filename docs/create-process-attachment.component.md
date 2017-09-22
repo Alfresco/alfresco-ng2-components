@@ -2,7 +2,7 @@
 
 Displays Upload Component(Drag and Click) to upload the attachment to a specified process instance
 
-![process-create-attachment](../docassets/images/process-create-attachment.png)
+![process-create-attachment](docassets/images/process-create-attachment.png)
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
 

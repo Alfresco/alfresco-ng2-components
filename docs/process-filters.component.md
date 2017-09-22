@@ -99,4 +99,4 @@ The AccordionComponent is exposed by the alfresco-core.
 </adf-accordion>
 ```
 
-![how-create-accordion-menu](../docassets/images/how-to-create-accordion-menu.png)
+![how-create-accordion-menu](docassets/images/how-to-create-accordion-menu.png)

@@ -321,7 +321,7 @@ export class FilesComponent implements OnInit {
 We've added `console.log(node)` for the `getNodeInfo` callback just for study and debug purposes. 
 It helps examining other valuable information you can have access to if needed:
 
-![documentLibrary](../docassets/images/documentLibrary.png)
+![documentLibrary](docassets/images/documentLibrary.png)
 
 **Important note**: for this particular scenario you must also trigger `changeDetector.detectChanges()` as in the example above. 
 
@@ -377,7 +377,7 @@ adf-document-list >>> adf-datatable tr.is-selected .image-table-cell::before {
 
 Once your application starts you should see the following icon for each selected row:
 
-![view-child](../docassets/images/document-list-custom-icon.png)
+![view-child](docassets/images/document-list-custom-icon.png)
 
 ### Calling DocumentList api directly
 
@@ -436,7 +436,7 @@ export class MyAppComponent implements AfterViewInit {
 
 Example above should produce the following browser console output:
 
-![view-child](../docassets/images/viewchild.png)
+![view-child](docassets/images/viewchild.png)
 
 Now you are able to access DocumentList properties or to call methods directly.
 
@@ -485,7 +485,7 @@ A custom set of columns can look like the following:
 </adf-document-list>
 ```
 
-![Custom columns](../docassets/images/custom-columns.png)
+![Custom columns](docassets/images/custom-columns.png)
 
 You can also use HTML-based schema declaration used by DataTable, TaskList and other components:
 
@@ -669,7 +669,7 @@ In the Example below we will add the [ng2-alfresco-tag](https://www.npmjs.com/pa
 </data-column>
 ```
 
-![Tag component in document List](../docassets/images/document-list-tag-template.png)
+![Tag component in document List](docassets/images/document-list-tag-template.png)
 
 ### Actions
 
@@ -749,7 +749,7 @@ export class MyView {
 
 All document actions are rendered as a dropdown menu as on the picture below:
 
-![Document Actions](../docassets/images/document-actions.png)
+![Document Actions](docassets/images/document-actions.png)
 
 ### Default action handlers
 
@@ -799,7 +799,7 @@ export class MyComponent {
 }
 ```
 
-![Delete show notification message](../docassets/images/content-action-notification-message.png)
+![Delete show notification message](docassets/images/content-action-notification-message.png)
 
 #### Delete - Disable button checking the permission
 
@@ -823,7 +823,7 @@ The ContentActionComponent provides the property permission that must contain th
 </adf-document-list>
 ```
 
-![Delete disable action button](../docassets/images/content-action-disable-delete-button.png)
+![Delete disable action button](docassets/images/content-action-disable-delete-button.png)
 
 #### Download
 
@@ -843,13 +843,13 @@ Initiates download of the corresponding document file.
 </adf-document-list>
 ```
 
-![Download document action](../docassets/images/document-action-download.png)
+![Download document action](docassets/images/document-action-download.png)
 
 #### Copy and move
 
 Shows the destination chooser dialog for copy and move actions. By default the destination chooser lists all the folders of the subject item's parent (except the selected item which is about to be copied/moved if it was a folder itself also).
 
-![Copy/move dialog](../docassets/images/document-action-copymovedialog.png)
+![Copy/move dialog](docassets/images/document-action-copymovedialog.png)
 
 ```html
 <adf-document-list ...>
@@ -891,7 +891,7 @@ Defining error, permission and success callbacks are pretty much the same as doi
 - The success callback's only parameter is the translatable success message string (could be used for showing in snackbar for example)
 - The permissionEvent callback is the same as described above with the delete action
 
-![Copy/move document action](../docassets/images/document-action-copymove.png)
+![Copy/move document action](docassets/images/document-action-copymove.png)
 
 ### Folder actions
 
@@ -943,7 +943,7 @@ export class MyView {
 }
 ```
 
-![Folder Actions](../docassets/images/folder-actions.png)
+![Folder Actions](docassets/images/folder-actions.png)
 
 ### Context Menu
 
@@ -953,7 +953,7 @@ DocumentList also provides integration for 'Context Menu Service' from the
 You can automatically turn all menu actions (for the files and folders) 
 into context menu items like shown below:
 
-![Folder context menu](../docassets/images/folder-context-menu.png)
+![Folder context menu](docassets/images/folder-context-menu.png)
 
 Enabling context menu is very simple:
 
@@ -1159,11 +1159,11 @@ Now you can declare columns and assign `desktop-only` class where needed:
 
 **Desktop View**
 
-![Responsive Desktop](../docassets/images/responsive-desktop.png)
+![Responsive Desktop](docassets/images/responsive-desktop.png)
 
 **Mobile View**
 
-![Responsive Mobile](../docassets/images/responsive-mobile.png)
+![Responsive Mobile](docassets/images/responsive-mobile.png)
 
 ### Custom row permissions style
 
@@ -1225,7 +1225,7 @@ adf-document-list >>> adf-datatable tr.document-list__disable {
 
 By default DocumentList provides the following content for the empty folder:
 
-![Default empty folder](../docassets/images/empty-folder-template-default.png)
+![Default empty folder](docassets/images/empty-folder-template-default.png)
 
 This can be changed by means of the custom html template:
 
@@ -1241,7 +1241,7 @@ This can be changed by means of the custom html template:
 
 That will give the following output:
 
-![Custom empty folder](../docassets/images/empty-folder-template-custom.png)
+![Custom empty folder](docassets/images/empty-folder-template-custom.png)
 
 ### Customizing default actions
 

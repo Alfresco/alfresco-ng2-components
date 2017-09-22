@@ -5,7 +5,7 @@ All metadata is stored inside `properties` property.
 
 Here's an example of basic image-related metadata fetched from the server:
 
-![](../docassets/images/metadata-01.png)
+![](docassets/images/metadata-01.png)
 
 ## Custom column template
 
@@ -90,12 +90,12 @@ You will need to enable `versioning` feature for the Document List to be able to
 
 Drag and drop any image file to upload it and ensure it has `1.0` displayed in the column:
 
-![](../docassets/images/metadata-02.png)
+![](docassets/images/metadata-02.png)
 
 Now drop the same file again to upload a new version of the file. 
 You should now see icons instead of version label. 
 
-![](../docassets/images/metadata-03.png)
+![](docassets/images/metadata-03.png)
 
 You can see on the screenshot above that only files with version `2.0` got extra icons.
 

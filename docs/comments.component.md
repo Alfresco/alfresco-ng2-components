@@ -2,7 +2,7 @@
 
 Displays comments from users involved in a specified task and allows an involved user to add a comment to the task.
 
-![adf-comments](../docassets/images/adf-comments.png)
+![adf-comments](docassets/images/adf-comments.png)
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
 

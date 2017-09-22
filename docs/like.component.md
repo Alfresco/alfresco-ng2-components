@@ -1,6 +1,6 @@
 # ADF Like component
 
-![Custom columns](../docassets/images/social1.png)
+![Custom columns](docassets/images/social1.png)
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
 

@@ -2,7 +2,7 @@
 
 Creates/Starts new task for the specified app
 
-![adf-start-task](../docassets/images/adf-start-task.png)
+![adf-start-task](docassets/images/adf-start-task.png)
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
 

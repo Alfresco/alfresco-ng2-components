@@ -2,7 +2,7 @@
 
 Provide a way to fetch the Process Audit information in the pdf or json format.
 
-![adf-process-audit-directive](../docassets/images/adf-process-audit-directive.png)
+![adf-process-audit-directive](docassets/images/adf-process-audit-directive.png)
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
 

@@ -1,6 +1,6 @@
 # ADF Rating component
 
-![Custom columns](../docassets/images/social2.png)
+![Custom columns](docassets/images/social2.png)
 
 ## Basic Usage
 

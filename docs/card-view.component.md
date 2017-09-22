@@ -2,7 +2,7 @@
 
 Displays a configurable property list renderer.
 
-![adf-custom-view](../docassets/images/adf-custom-view.png)
+![adf-custom-view](docassets/images/adf-custom-view.png)
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
 

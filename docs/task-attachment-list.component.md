@@ -2,7 +2,7 @@
 
 Displays attached documents on a specified task
 
-![task-attachment-list-sample](../docassets/images/task-attachment-list.png)
+![task-attachment-list-sample](docassets/images/task-attachment-list.png)
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
 
