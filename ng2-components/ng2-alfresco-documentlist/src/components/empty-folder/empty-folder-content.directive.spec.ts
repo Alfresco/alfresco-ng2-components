@@ -50,7 +50,7 @@ describe('EmptyFolderContent', () => {
     }));
 
     beforeEach(() => {
-        documentList = TestBed.createComponent(DocumentListComponent).componentInstance;
+        documentList = (TestBed.createComponent(DocumentListComponent).componentInstance as DocumentListComponent);
         documentList.dataTable = new DataTableComponent(null, null);
         emptyFolderContent = new EmptyFolderContentDirective(documentList);
     });

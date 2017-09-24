@@ -12,6 +12,7 @@ Contains the Document List component and other related components and classes.
     + [Events](#events)
   * [Details](#details)
     + [DOM Events](#dom-events)
+    + [Pagination strategy](#pagination-strategy)
     + [Data Sources](#data-sources)
       - [Node ID](#node-id)
       - [Repository aliases](#repository-aliases)
