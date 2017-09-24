@@ -50,7 +50,7 @@ describe('ContentColumn', () => {
     }));
 
     beforeEach(() => {
-        documentList = TestBed.createComponent(DocumentListComponent).componentInstance;
+        documentList = (TestBed.createComponent(DocumentListComponent).componentInstance as DocumentListComponent);
         columnList = new ContentColumnListComponent(documentList);
 
         documentList.ngOnInit();
