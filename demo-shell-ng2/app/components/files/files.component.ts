@@ -133,7 +133,7 @@ export class FilesComponent implements OnInit {
             });
         }
 
-        this.uploadService.fileUploadComplete.debounceTime(300).subscribe(value => this.onFileUploadEvent(value));
+        this.uploadService.fileUploadComplete.asObservable().debounceTime(300).subscribe(value => this.onFileUploadEvent(value));
         this.uploadService.fileUploadDeleted.subscribe((value) => this.onFileUploadEvent(value));
         this.contentService.folderCreated.subscribe(value => this.onFolderCreated(value));
 
