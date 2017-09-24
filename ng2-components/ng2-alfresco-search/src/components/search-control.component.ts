@@ -94,7 +94,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
 
     private focusSubject = new Subject<FocusEvent>();
 
-    private toggleSearch = new Subject<string>();
+    private toggleSearch = new Subject<any>();
 
     subscriptAnimationState: string;
 
@@ -104,7 +104,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
             Validators.compose([Validators.required, SearchTermValidator.minAlphanumericChars(3)])
         );
 
-        this.toggleSearch.debounceTime(200).subscribe(() => {
+        this.toggleSearch.asObservable().debounceTime(200).subscribe(() => {
             if (this.expandable) {
                 this.subscriptAnimationState = this.subscriptAnimationState === 'inactive' ? 'active' : 'inactive';
 
