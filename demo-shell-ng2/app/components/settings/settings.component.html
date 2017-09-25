@@ -51,7 +51,7 @@
                 {{'SETTINGS.BACK' | translate }}
             </button>
 
-            <button md-button onclick="window.location.href = '/'" color="primary">
+            <button md-button (click)="save($event)" [disabled]="urlFormControlBpm.hasError('pattern') || urlFormControlEcm.hasError('pattern')" color="primary">
                 {{'SETTINGS.APPLY' | translate }}
             </button>
 
