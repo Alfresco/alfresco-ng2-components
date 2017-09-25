@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npm run server-versions && rimraf dist && npm run webpack -- --config  config/webpack.prod.js --progress --profile --bail",
     "build:dev": "npm run server-versions && rimraf dist && npm run webpack -- --config  config/webpack.dev.js --progress --profile --bail",
-    "start:dist": "npm run server-versions && wsrv -s dist/ -p 3000 -a 0.0.0.0",
+    "start:dist": "npm run server-versions && wsrv",
     "start": "npm run server-versions && npm run webpack-dev-server -- --config config/webpack.prod.js --progress  --content-base app/",
     "start:dev": "npm run server-versions && npm run webpack-dev-server -- --config config/webpack.dev.js --progress --content-base app/",
     "test": "rimraf coverage && karma start --single-run",
@@ -147,6 +147,6 @@
     "webpack": "2.2.1",
     "webpack-dev-server": "2.3.0",
     "webpack-merge": "2.6.1",
-    "wsrv": "0.1.7"
+    "wsrv": "0.2.2"
   }
 }
