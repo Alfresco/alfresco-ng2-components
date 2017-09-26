@@ -2351,9 +2351,9 @@ adf-people-list /deep/ adf-datatable /deep/ .people-pic {
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-property: background-color; }
     .adf-data-table tbody tr:hover {
-      background-color: #eeeeee; }
+      background-color: rgba(0, 0, 0, 0.04); }
     .adf-data-table tbody tr.is-selected, .adf-data-table tbody tr.is-selected:hover {
-      background-color: #e0f7fa; }
+      background-color: #e0e0e0; }
     .adf-data-table tbody tr:focus {
       outline-offset: -1px;
       outline-width: 1px;
