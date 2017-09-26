@@ -92,7 +92,7 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     fileShowed: boolean = false;
     selectFirstReport: boolean = false;
 
-    private tabs = { tasks : 0 , processes : 1, reports: 2};
+    private tabs = { tasks: 0, processes: 1, reports: 2 };
 
     content: Blob;
     contentName: string;
@@ -101,14 +101,14 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     currentTaskId: string;
     currentProcessInstanceId: string;
 
-    taskSchemaColumns: any [] = [];
+    taskSchemaColumns: any[] = [];
     taskPagination: Pagination = {
         skipCount: 0,
         maxItems: 10,
         totalItems: 0
     };
     taskPage: number = 0;
-    processSchemaColumns: any [] = [];
+    processSchemaColumns: any[] = [];
 
     activeTab: number = this.tabs.tasks; // tasks|processes|reports
 
@@ -212,13 +212,13 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     ngOnInit() {
         this.taskListService.tasksList$.subscribe(
             (tasks) => {
-                this.taskPagination = {count: tasks.data.length, maxItems: this.taskPagination.maxItems, skipCount: this.taskPagination.skipCount, totalItems: tasks.total};
-                console.log({count: tasks.data.length, maxItems: this.taskPagination.maxItems, skipCount: this.taskPagination.skipCount, totalItems: tasks.total});
+                this.taskPagination = { count: tasks.data.length, maxItems: this.taskPagination.maxItems, skipCount: this.taskPagination.skipCount, totalItems: tasks.total };
+                console.log({ count: tasks.data.length, maxItems: this.taskPagination.maxItems, skipCount: this.taskPagination.skipCount, totalItems: tasks.total });
             }, (err) => {
-            console.log('err');
-        });
+                console.log('err');
+            });
 
-        if (this.router.url.includes('processes') ) {
+        if (this.router.url.includes('processes')) {
             this.activeTab = this.tabs.processes;
         }
         this.sub = this.route.params.subscribe(params => {
@@ -411,8 +411,10 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
             created: event.value.created
         });
         this.activitifilter.selectFilter(null);
-        this.taskList.setCustomDataSource([processTaskDataRow]);
-        this.taskList.selectTask(taskId);
+        if (this.taskList) {
+            this.taskList.setCustomDataSource([processTaskDataRow]);
+            this.taskList.selectTask(taskId);
+        }
         this.currentTaskId = taskId;
     }
 

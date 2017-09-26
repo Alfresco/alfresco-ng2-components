@@ -1,6 +1,7 @@
 
 @mixin mat-datatable-theme($theme) {
     $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
     $primary: map-get($theme, primary);
 
     $data-table-font-size: 14px !default;
@@ -10,8 +11,8 @@
     $data-table-header-sorted-color: mat-color($foreground, text) !default;
     $data-table-header-sorted-icon-hover-color: mat-color($foreground, disabled-text) !default;
     $data-table-divider-color: mat-color($foreground, text, .07) !default;
-    $data-table-hover-color: #eeeeee !default;
-    $data-table-selection-color: #e0f7fa !default;
+    $data-table-hover-color: mat-color($background, 'hover') !default;
+    $data-table-selection-color: mat-color($background, 'selected-button') !default;
     $data-table-dividers: 1px solid $data-table-divider-color !default;
     $data-table-row-height: 56px !default;
     // $data-table-last-row-height: 56px !default;

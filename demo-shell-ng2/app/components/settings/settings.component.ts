@@ -29,23 +29,24 @@ export class SettingsComponent {
     HOST_REGEX: string = '^(http|https):\/\/.*[^/]$';
 
     ecmHost: string;
+    ecmHostTmp: string;
     bpmHost: string;
+    bpmHostTmp: string;
     urlFormControlEcm = new FormControl('', [Validators.required, Validators.pattern(this.HOST_REGEX)]);
     urlFormControlBpm = new FormControl('', [Validators.required, Validators.pattern(this.HOST_REGEX)]);
 
     constructor(private settingsService: AlfrescoSettingsService,
                 private storage: StorageService,
                 private logService: LogService) {
-        this.ecmHost = storage.getItem('ecmHost') || this.settingsService.ecmHost;
-        this.bpmHost = storage.getItem('bpmHost') || this.settingsService.bpmHost;
+        this.ecmHostTmp = this.ecmHost = storage.getItem('ecmHost') || this.settingsService.ecmHost;
+        this.bpmHostTmp = this.bpmHost = storage.getItem('bpmHost') || this.settingsService.bpmHost;
     }
 
     public onChangeECMHost(event: KeyboardEvent): void {
         let value = (<HTMLInputElement>event.target).value.trim();
         if (value && this.isValidUrl(value)) {
             this.logService.info(`ECM host: ${value}`);
-            this.ecmHost = value;
-            this.storage.setItem(`ecmHost`, value);
+            this.ecmHostTmp = value;
         } else {
             console.error('Ecm address does not match the pattern');
         }
@@ -55,11 +56,20 @@ export class SettingsComponent {
         let value = (<HTMLInputElement>event.target).value.trim();
         if (value && this.isValidUrl(value)) {
             this.logService.info(`BPM host: ${value}`);
-            this.bpmHost = value;
-            this.storage.setItem(`bpmHost`, value);
+            this.bpmHostTmp = value;
         } else {
             console.error('Bpm address does not match the pattern');
         }
+    }
+
+    public save(event: KeyboardEvent): void {
+        if (this.bpmHost !== this.bpmHostTmp) {
+            this.storage.setItem(`bpmHost`, this.bpmHostTmp);
+        }
+        if (this.ecmHost !== this.ecmHostTmp) {
+            this.storage.setItem(`ecmHost`, this.ecmHostTmp);
+        }
+        window.location.href = '/';
     }
 
     isValidUrl(url: string) {
