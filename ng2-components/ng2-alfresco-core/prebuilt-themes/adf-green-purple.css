@@ -1501,7 +1501,8 @@ input.mat-input-element:-webkit-autofill + .mat-input-placeholder .mat-placehold
   line-height: normal;
   letter-spacing: normal;
   text-align: left;
-  width: 100%; }
+  width: 100%;
+  cursor: pointer; }
 
 .adf-panel-heading-selected {
   color: #8bc34a; }
