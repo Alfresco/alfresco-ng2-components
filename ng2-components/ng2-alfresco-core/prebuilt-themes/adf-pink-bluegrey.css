@@ -1964,7 +1964,7 @@ container-widget md-input-container {
   width: 100%; }
 
 container-widget .mat-input-placeholder-wrapper {
-  top: 5px !important; }
+  top: 0 !important; }
 
 container-widget .mat-input-placeholder {
   top: 1.8em !important; }
@@ -2126,16 +2126,16 @@ container-widget .mat-grid-tile {
 .adf-md-select {
   padding-top: 0px; }
 
-adf-start-task .adf-start-task-input-container .mat-input-wrapper {
+.adf-start-task-input-container .mat-input-wrapper {
   padding-top: 8px; }
 
-adf-start-task .adf-error-text-container {
+.adf-error-text-container {
   position: absolute;
   width: 81%;
   height: 20px;
   margin-top: 30px; }
 
-adf-start-task .adf-error-text {
+.adf-error-text {
   padding: 1px;
   height: 16px;
   font-size: 12px;
@@ -2143,29 +2143,29 @@ adf-start-task .adf-error-text {
   float: left;
   color: #f44336; }
 
-adf-start-task .adf-error-icon {
+.adf-error-icon {
   float: right;
   font-size: 17px;
   color: #f44336; }
 
-adf-start-task .adf-label {
+.adf-label {
   color: #bababa; }
 
-adf-start-task .adf-invalid .mat-input-underline {
+.adf-invalid .mat-input-underline {
   background-color: #f44336 !important; }
 
-adf-start-task .adf-invalid .adf-file {
+.adf-invalid .adf-file {
   border-color: #f44336; }
 
-adf-start-task .adf-invalid .mat-input-prefix {
+.adf-invalid .mat-input-prefix {
   color: #f44336; }
 
-adf-start-task .adf-invalid .adf-input {
+.adf-invalid .adf-input {
   border-color: #f44336; }
 
-adf-start-task .adf-invalid .adf-label {
+.adf-invalid .adf-label {
   color: #f44336; }
-  adf-start-task .adf-invalid .adf-label:after {
+  .adf-invalid .adf-label:after {
     background-color: #f44336; }
 
 :host {
@@ -2350,9 +2350,9 @@ adf-people-list /deep/ adf-datatable /deep/ .people-pic {
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-property: background-color; }
     .adf-data-table tbody tr:hover {
-      background-color: #eeeeee; }
+      background-color: rgba(255, 255, 255, 0.04); }
     .adf-data-table tbody tr.is-selected, .adf-data-table tbody tr.is-selected:hover {
-      background-color: #e0f7fa; }
+      background-color: #212121; }
     .adf-data-table tbody tr:focus {
       outline-offset: -1px;
       outline-width: 1px;
