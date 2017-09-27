@@ -81,22 +81,5 @@ You can use inside the filterParam one of the properties defined by [FilterParam
 
 ### How to create an accordion menu with the processes filter
 
-You can create an accordion menu using the AccordionComponent that wrap the activiti task filter.
-The AccordionComponent is exposed by the alfresco-core.
-
-```html
-<adf-accordion>
-    <adf-accordion-group 
-        [heading]="'Processes'" 
-        [isSelected]="true" 
-        [headingIcon]="'assessment'">
-        <adf-process-instance-filters
-            [appId]="appId"
-            (filterClick)="onProcessFilterClick($event)"
-            (onSuccess)="onSuccessProcessFilterList($event)">
-        </adf-process-instance-filters>
-    </adf-accordion-group>
-</adf-accordion>
-```
-
-![how-create-accordion-menu](docassets/images/how-to-create-accordion-menu.png)
+The process filter often works well as an item in an accordion menu. See the [Accordion component](accordion.component.md)
+page for an example of how to do set this up.

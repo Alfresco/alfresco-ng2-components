@@ -20,6 +20,7 @@ Displays a configurable property list renderer.
     + [1. Define the model for the custom type](#1-define-the-model-for-the-custom-type)
     + [2. Define the component for the custom type](#2-define-the-component-for-the-custom-type)
     + [3. Add you custom component to your module's entryComponents list](#3-add-you-custom-component-to-your-modules-entrycomponents-list)
+- [See also](#see-also)
 
 <!-- tocstop -->
 
@@ -53,6 +54,10 @@ The card view can optionally allow its properties to be edited. You can control 
 - **property level** -  *in each property via the editable attribute*
 
 If you set the global editable parameter to false, no properties can be edited regardless of what is set inside the property.
+
+See the [Card View Update service](card-view-update.service.md) page for details on how to use the service
+to respond to clicks and edits in a card view. You can use this, for example, to save the edits within your
+application or to highlight a clicked item.
 
 ### Defining properties
 
@@ -236,3 +241,10 @@ For Angular to be able to load your custom component dynamically, you have to re
 })
 export class MyModule {}
 ```
+
+<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
+<!-- seealso start -->
+## See also
+
+- [Card view update service](card-view-update.service.md)
+<!-- seealso end -->
