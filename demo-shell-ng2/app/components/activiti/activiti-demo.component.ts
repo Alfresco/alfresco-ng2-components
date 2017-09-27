@@ -322,7 +322,7 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     onStartProcessInstance(instance: ProcessInstance): void {
         this.currentProcessInstanceId = instance.id;
         this.activitiStartProcess.reset();
-        this.resetProcessFilters();
+        this.reloadProcessFilters();
     }
 
     onCancelProcessInstance() {
