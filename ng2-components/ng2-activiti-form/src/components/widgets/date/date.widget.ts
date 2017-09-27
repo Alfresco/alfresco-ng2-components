@@ -60,7 +60,7 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit {
             }
         }
 
-        this.displayDate = moment(this.field.value, this.field.dateDisplayFormat, true);
+        this.displayDate = moment(this.field.value, this.field.dateDisplayFormat);
 
     }
 
@@ -68,13 +68,13 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit {
         this.field.validationSummary = '';
 
         if (newDateValue) {
-            let momentDate = moment(newDateValue, this.field.dateDisplayFormat, true);
+            let momentDate = newDateValue.value;
             if (!momentDate.isValid()) {
                 this.field.validationSummary = this.field.dateDisplayFormat;
                 this.field.value = null;
             } else {
-                this.field.value = newDateValue;
-                this.displayDate = moment(this.field.value, this.field.dateDisplayFormat, true);
+                this.field.value = momentDate;
+                this.displayDate = moment(this.field.value, this.field.dateDisplayFormat);
             }
         } else {
             this.field.value = null;
