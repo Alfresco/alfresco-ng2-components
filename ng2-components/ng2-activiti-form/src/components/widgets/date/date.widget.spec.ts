@@ -114,7 +114,7 @@ describe('DateWidgetComponent', () => {
 
         widget.field = field;
 
-        widget.onDateChanged('12/12/2012');
+        widget.onDateChanged({ value: moment('12/12/2012') });
         expect(widget.checkVisibility).toHaveBeenCalledWith(field);
     });
 
