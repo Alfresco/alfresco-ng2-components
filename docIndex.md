@@ -300,22 +300,17 @@ for more information about installing and using the source code.
 
 ### Components
 
+- [Accordion group component](docs/accordion-group.component.md)
 - [Accordion component](docs/accordion.component.md)
 - [Data column component](docs/data-column.component.md)
+- [Info drawer layout component](docs/info-drawer-layout.component.md)
+- [Info drawer component](docs/info-drawer.component.md)
 - [Pagination component](docs/pagination.component.md)
 - [Toolbar divider component](docs/toolbar-divider.component.md)
 - [Toolbar title component](docs/toolbar-title.component.md)
 - [Toolbar component](docs/toolbar.component.md)
 - [Card view component](docs/card-view.component.md)
-- [*Accordion group component](ng2-components/ng2-alfresco-core/src/components/collapsable/accordion-group.component.ts)
-- [*Context menu holder component](ng2-components/ng2-alfresco-core/src/components/context-menu/context-menu-holder.component.ts)
-- [*Data column list component](ng2-components/ng2-alfresco-core/src/components/data-column/data-column-list.component.ts)
-- [*Info drawer layout component](ng2-components/ng2-alfresco-core/src/components/info-drawer/info-drawer-layout.component.ts)
-- [*Info drawer component](ng2-components/ng2-alfresco-core/src/components/info-drawer/info-drawer.component.ts)
-- [*Card view dateitem component](ng2-components/ng2-alfresco-core/src/components/view/card-view-dateitem.component.ts)
-- [*Card view item dispatcher component](ng2-components/ng2-alfresco-core/src/components/view/card-view-item-dispatcher.component.ts)
-- [*Card view mapitem component](ng2-components/ng2-alfresco-core/src/components/view/card-view-mapitem.component.ts)
-- [*Card view textitem component](ng2-components/ng2-alfresco-core/src/components/view/card-view-textitem.component.ts)
+- [*Infinite pagination component](ng2-components/ng2-alfresco-core/src/components/pagination/infinite-pagination.component.ts)
 
 ### Directives
 
@@ -333,6 +328,7 @@ for more information about installing and using the source code.
 - [Alfresco api service](docs/alfresco-api.service.md)
 - [App config service](docs/app-config.service.md)
 - [Authentication service](docs/authentication.service.md)
+- [Card view update service](docs/card-view-update.service.md)
 - [Notification service](docs/notification.service.md)
 - [Renditions service](docs/renditions.service.md)
 - [Translation service](docs/translation.service.md)
@@ -344,7 +340,6 @@ for more information about installing and using the source code.
 - [*Auth guard bpm service](ng2-components/ng2-alfresco-core/src/services/auth-guard-bpm.service.ts)
 - [*Auth guard ecm service](ng2-components/ng2-alfresco-core/src/services/auth-guard-ecm.service.ts)
 - [*Auth guard service](ng2-components/ng2-alfresco-core/src/services/auth-guard.service.ts)
-- [*Card view update service](ng2-components/ng2-alfresco-core/src/services/card-view-update.service.ts)
 - [*Content service](ng2-components/ng2-alfresco-core/src/services/content.service.ts)
 - [*Cookie service](ng2-components/ng2-alfresco-core/src/services/cookie.service.ts)
 - [*Deleted nodes api service](ng2-components/ng2-alfresco-core/src/services/deleted-nodes-api.service.ts)
@@ -414,6 +409,7 @@ for more information about installing and using the source code.
 
 ### Services
 
+- [*Content node selector service](ng2-components/ng2-alfresco-documentlist/src/components/content-node-selector/content-node-selector.service.ts)
 - [*Document actions service](ng2-components/ng2-alfresco-documentlist/src/services/document-actions.service.ts)
 - [*Document list service](ng2-components/ng2-alfresco-documentlist/src/services/document-list.service.ts)
 - [*Folder actions service](ng2-components/ng2-alfresco-documentlist/src/services/folder-actions.service.ts)
