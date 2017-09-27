@@ -288,6 +288,26 @@ describe('DropdownWidgetComponent', () => {
                         expect(dropDownElement.getAttribute('aria-disabled')).toBe('true');
                     });
             }));
+
+            it('should show the option value when the field is readonly', () => {
+                widget.field = new FormFieldModel(new FormModel({processDefinitionId: 'fake-process-id'}), {
+                    id: 'dropdown-id',
+                    name: 'date-name',
+                    type: 'dropdown',
+                    value: 'FakeValue',
+                    readOnly: true
+                });
+                const trigger = fixture.debugElement.query(By.css('.mat-select-trigger')).nativeElement;
+                trigger.click();
+                fixture.detectChanges();
+                fixture.whenStable()
+                    .then(() => {
+                        fixture.detectChanges();
+                        expect(element.querySelector('#dropdown-id')).not.toBeNull();
+                        const option = fixture.debugElement.query(By.css('.mat-option')).nativeElement;
+                        expect(option.innerText).toEqual('FakeValue');
+                    });
+            });
         });
     });
 });
