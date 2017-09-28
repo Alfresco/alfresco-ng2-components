@@ -363,6 +363,26 @@ describe('TypeaheadWidgetComponent', () => {
                 });
             }));
 
+            it('should show typeahead value when the type is readonly', async(() => {
+                typeaheadWidgetComponent.field = new FormFieldModel(
+                    new FormModel({ taskId: 'fake-task-id', processVariables: [{ name: 'typeahead-name_LABEL', value: 'FakeProcessValue' }] }), {
+                    id: 'typeahead-id',
+                    name: 'typeahead-name',
+                    type: 'readonly',
+                    value: '9',
+                    params: { field: { name: 'typeahead-name', type: 'typeahead' } }
+                });
+                fixture.detectChanges();
+                const trigger = fixture.debugElement.query(By.css('.mat-select-trigger')).nativeElement;
+                trigger.click();
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(element.querySelector('#typeahead-id')).not.toBeNull();
+                    let optionElement: HTMLElement = <HTMLElement> document.body.querySelector('.mat-option');
+                    expect(optionElement.innerText).toEqual('FakeProcessValue');
+                });
+            }));
+
         });
 
         describe('and typeahead is populated via processDefinitionId', () => {
