@@ -53,9 +53,6 @@
         }
 
         &-datatable /deep/ table {
-            thead {
-                display: none;
-            }
             border: none !important;
             tbody td {
                 padding: 0px !important;
