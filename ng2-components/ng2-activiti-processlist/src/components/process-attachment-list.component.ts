@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, NgZone, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ActivitiContentService } from 'ng2-activiti-form';
 import { ContentService, ThumbnailService } from 'ng2-alfresco-core';
 
@@ -51,7 +51,8 @@ export class ProcessAttachmentListComponent implements OnChanges {
 
     constructor(private activitiContentService: ActivitiContentService,
                 private contentService: ContentService,
-                private thumbnailService: ThumbnailService) {
+                private thumbnailService: ThumbnailService,
+                private ngZone: NgZone) {
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -65,16 +66,20 @@ export class ProcessAttachmentListComponent implements OnChanges {
     }
 
     reload(): void {
-        this.loadAttachmentsByProcessInstanceId(this.processInstanceId);
+        this.ngZone.run(() => {
+            this.loadAttachmentsByProcessInstanceId(this.processInstanceId);
+        });
     }
 
     add(content: any): void {
-        this.attachments.push({
-            id: content.id,
-            name: content.name,
-            created: content.created,
-            createdBy: content.createdBy.firstName + ' ' + content.createdBy.lastName,
-            icon: this.thumbnailService.getMimeTypeIcon(content.mimeType)
+        this.ngZone.run(() => {
+            this.attachments.push({
+                id: content.id,
+                name: content.name,
+                created: content.created,
+                createdBy: content.createdBy.firstName + ' ' + content.createdBy.lastName,
+                icon: this.thumbnailService.getMimeTypeIcon(content.mimeType)
+            });
         });
     }
 
