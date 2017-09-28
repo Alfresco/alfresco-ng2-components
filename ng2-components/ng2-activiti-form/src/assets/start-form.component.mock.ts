@@ -15,6 +15,170 @@
  * limitations under the License.
  */
 
+export let startFormDateWidgetMock = {
+    id: 4,
+    name: 'Claim Review Process',
+    processDefinitionId: 'ClaimReviewProcess:2: 93',
+    fields: [
+        {
+            fieldType: 'ContainerRepresentation',
+            id: 1497953253784,
+            name: 'Label',
+            type: 'container',
+            value: null,
+            readOnly: false,
+            fields: {
+                1: [{
+                        fieldType: 'FormFieldRepresentation',
+                        id: 'date',
+                        name: 'date',
+                        type: 'date',
+                        value: null
+                    }]}
+        }]
+};
+
+export let startFormNumberWidgetMock = {
+    id: 4,
+    name: 'Claim Review Process',
+    processDefinitionId: 'ClaimReviewProcess:2: 93',
+    fields: [
+        {
+            fieldType: 'ContainerRepresentation',
+            id: 1497953253784,
+            name: 'Label',
+            type: 'container',
+            value: null,
+            readOnly: false,
+            fields: {
+                1: [{
+                        fieldType: 'FormFieldRepresentation',
+                        id: 'number',
+                        name: 'number widget',
+                        type: 'integer',
+                        value: null
+                    }]}
+        }]
+};
+
+export let startFormAmountWidgetMock = {
+    id: 4,
+    name: 'Claim Review Process',
+    processDefinitionId: 'ClaimReviewProcess:2: 93',
+    fields: [
+        {
+            fieldType: 'ContainerRepresentation',
+            id: 1497953253784,
+            name: 'Label',
+            type: 'container',
+            value: null,
+            readOnly: false,
+            fields: {
+                1: [{
+                        fieldType: 'FormFieldRepresentation',
+                        id: 'amount',
+                        name: 'amount widget',
+                        type: 'amount',
+                        value: null
+                    }]}
+        }]
+};
+
+export let startFormRadioButtonWidgetMock = {
+    id: 4,
+    name: 'Claim Review Process',
+    processDefinitionId: 'ClaimReviewProcess:2: 93',
+    fields: [
+        {
+            fieldType: 'ContainerRepresentation',
+            id: 1497953253784,
+            name: 'Label',
+            type: 'container',
+            value: null,
+            readOnly: false,
+            fields: {
+                1: [{
+                        fieldType: 'RestFieldRepresentation',
+                        id: 'radio-but',
+                        name: 'radio-buttons',
+                        type: 'radio-buttons',
+                        value: null
+                    }]}
+        }]
+};
+
+export let startFormTextDefinitionMock = {
+    id: 4,
+    name: 'Claim Review Process',
+    processDefinitionId: 'ClaimReviewProcess:2: 93',
+    fields: [
+        {
+            fieldType: 'ContainerRepresentation',
+            id: 1497953253784,
+            name: 'Label',
+            type: 'container',
+            value: null,
+            readOnly: false,
+            fields: {
+                1: [{
+                        fieldType: 'FormFieldRepresentation',
+                        id: 'mocktext',
+                        name: 'mockText',
+                        type: 'text',
+                        value: null
+                    }]}
+        }]
+};
+
+export let startFormDropdownDefinitionMock = {
+    id: 4,
+    name: 'Claim Review Process',
+    processDefinitionId: 'ClaimReviewProcess:2: 93',
+    fields: [
+        {
+            fieldType: 'ContainerRepresentation',
+            id: 1497953253784,
+            name: 'Label',
+            type: 'container',
+            value: null,
+            readOnly: false,
+            fields: {
+                1: [{
+
+                        fieldType: 'RestFieldRepresentation',
+                        id: 'mockTypeDropDown',
+                        name: 'mock DropDown',
+                        type: 'dropdown',
+                        value: 'Chooseone...',
+                        required: false,
+                        readOnly: false,
+                        overrideId: false,
+                        options: [
+                            {
+                                id: 'empty',
+                                name: 'Chooseone...'
+                            },
+                            {
+                                id: 'opt1',
+                                name: 'Option-1'
+                            },
+                            {
+                                id: 'opt2',
+                                name: 'Option-2'
+                            },
+                            {
+                                id: 'opt3',
+                                name: 'Option-3'
+                            },
+                            {
+                                id: 'opt2',
+                                name: 'Option-3'
+                            }
+                        ]
+                    }]}
+        }]
+};
+
 export let startMockForm = {
     id: 4,
     name: 'Claim Review Process',
@@ -432,15 +596,15 @@ export let startMockFormWithTab = {
     processDefinitionName: 'ClaimReviewProcess',
     processDefinitionKey: 'ClaimReviewProcess',
     tabs: [
-            {
-                id: 'form1',
-                name: 'Tab 1'
-            },
-            {
-                id: 'form2',
-                name: 'Tab 2'
-            }
-        ],
+        {
+            id: 'form1',
+            name: 'Tab 1'
+        },
+        {
+            id: 'form2',
+            name: 'Tab 2'
+        }
+    ],
     fields: [
         {
             fieldType: 'ContainerRepresentation',

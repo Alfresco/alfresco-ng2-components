@@ -16,7 +16,15 @@
  */
 
 import { NgModule } from '@angular/core';
-import { ContainerWidgetComponent, DateWidgetComponent, DropdownWidgetComponent, NumberWidgetComponent, TextWidgetComponent } from '../components/widgets/index';
+import {
+AmountWidgetComponent,
+ContainerWidgetComponent,
+DateWidgetComponent,
+DropdownWidgetComponent,
+NumberWidgetComponent,
+RadioButtonsWidgetComponent,
+TextWidgetComponent
+} from '../components/widgets/index';
 
 @NgModule({
   declarations: [],
@@ -25,7 +33,9 @@ import { ContainerWidgetComponent, DateWidgetComponent, DropdownWidgetComponent,
     TextWidgetComponent,
     NumberWidgetComponent,
     DateWidgetComponent,
-    DropdownWidgetComponent
+    DropdownWidgetComponent,
+    RadioButtonsWidgetComponent,
+    AmountWidgetComponent
   ]
 })
 
