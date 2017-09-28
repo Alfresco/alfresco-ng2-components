@@ -22,7 +22,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Observable } from 'rxjs/Rx';
 
 import { AuthenticationService, CoreModule } from 'ng2-alfresco-core';
-import { LogoutDirective } from './logout.directive';
 
 describe('LogoutDirective', () => {
 
@@ -43,7 +42,6 @@ describe('LogoutDirective', () => {
                 CoreModule
             ],
             declarations: [
-                LogoutDirective,
                 TestComponent
             ]
         }).compileComponents();
