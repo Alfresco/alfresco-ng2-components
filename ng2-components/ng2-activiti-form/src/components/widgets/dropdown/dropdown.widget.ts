@@ -105,4 +105,8 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
         this.logService.error(error);
     }
 
+    isReadOnlyType(): boolean {
+        return this.field.type === 'readonly' ? true : false;
+    }
+
 }

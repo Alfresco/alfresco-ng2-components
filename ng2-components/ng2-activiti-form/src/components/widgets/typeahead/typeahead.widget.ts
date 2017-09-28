@@ -48,7 +48,7 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
     ngOnInit() {
         if (this.field.form.taskId) {
             this.getValuesByTaskId();
-        } else {
+        } else if (this.field.form.processDefinitionId) {
             this.getValuesByProcessDefinitionId();
         }
     }
@@ -163,6 +163,10 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
 
     checkVisibility() {
         this.visibilityService.refreshVisibility(this.field.form);
+    }
+
+    isReadOnlyType(): boolean {
+        return this.field.type === 'readonly' ? true : false;
     }
 
 }
