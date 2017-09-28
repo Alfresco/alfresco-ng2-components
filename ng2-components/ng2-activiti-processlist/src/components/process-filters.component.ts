@@ -158,6 +158,13 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
     }
 
     /**
+     * Select the Running filter
+     */
+    public selectRunningFilter() {
+        this.selectTaskFilter(this.activiti.getRunningFilterInstance(null));
+    }
+
+    /**
      * Select as default task filter the first in the list
      */
     public selectDefaultTaskFilter() {
