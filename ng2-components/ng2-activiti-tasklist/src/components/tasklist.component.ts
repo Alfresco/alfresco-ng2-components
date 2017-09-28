@@ -62,8 +62,17 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
     @Input()
     data: DataTableAdapter;
 
+    @Input()
+    selectionMode: string = 'none'; // none|single|multiple
+
+    @Input()
+    multiselect: boolean = false;
+
     @Output()
     rowClick: EventEmitter<string> = new EventEmitter<string>();
+
+    @Output()
+    rowsSelected: EventEmitter<any[]> = new EventEmitter<any[]>();
 
     @Output()
     onSuccess: EventEmitter<any> = new EventEmitter<any>();
@@ -72,6 +81,7 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
     onError: EventEmitter<any> = new EventEmitter<any>();
 
     currentInstanceId: string;
+    selectedInstances: any[];
 
     @Input()
     page: number = 0;
@@ -265,9 +275,19 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
      * @param event
      */
     onRowClick(event: DataRowEvent) {
-        let item = event;
+        const item = event;
         this.currentInstanceId = item.value.getValue('id');
         this.rowClick.emit(this.currentInstanceId);
+    }
+
+    onRowSelect(event: CustomEvent) {
+        this.selectedInstances = [...event.detail.selection];
+        this.rowsSelected.emit(this.selectedInstances);
+    }
+
+    onRowUnselect(event: CustomEvent) {
+        this.selectedInstances = [...event.detail.selection];
+        this.rowsSelected.emit(this.selectedInstances);
     }
 
     /**
