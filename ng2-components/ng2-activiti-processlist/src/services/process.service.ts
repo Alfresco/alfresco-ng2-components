@@ -149,7 +149,7 @@ export class ProcessService extends TaskListService {
         });
     }
 
-    private getRunningFilterInstance(appId: string): FilterProcessRepresentationModel {
+    public getRunningFilterInstance(appId: string): FilterProcessRepresentationModel {
         return new FilterProcessRepresentationModel({
             'name': 'Running',
             'appId': appId,
