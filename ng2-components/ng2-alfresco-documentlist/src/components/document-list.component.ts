@@ -107,6 +107,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     @Input()
     paginationStrategy: PaginationStrategy = PaginationStrategy.Finite;
 
+    @Input()
+    supportedPageSizes: number[];
+
     infiniteLoading: boolean = false;
 
     selection = new Array<MinimalNodeEntity>();
@@ -165,6 +168,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                 private elementRef: ElementRef,
                 private apiService: AlfrescoApiService,
                 private appConfig: AppConfigService) {
+        this.supportedPageSizes = appConfig.get('document-list.supportedPageSizes', [5, 10, 15, 20]);
     }
 
     private get nodesApi() {
