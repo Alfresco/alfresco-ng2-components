@@ -5,6 +5,14 @@
             "ITEMS_PER_PAGE": "Items per page",
             "CURRENT_PAGE": "Page {{ number }}",
             "TOTAL_PAGES": "of {{ total }}"
+        },
+        "DIALOG": {
+            "DOWNLOAD_ZIP": {
+                "ACTIONS": {
+                    "CANCEL": "Cancel"
+                },
+                "TITLE": "Adding files to zip, this could take a few minutes"
+            }
         }
     }
 }
