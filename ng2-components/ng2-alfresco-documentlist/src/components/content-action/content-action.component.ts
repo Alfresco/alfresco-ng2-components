@@ -27,7 +27,11 @@ import { ContentActionListComponent } from './content-action-list.component';
 
 @Component({
     selector: 'content-action',
-    template: ''
+    template: '',
+    providers: [
+        DocumentActionsService,
+        FolderActionsService
+    ]
 })
 export class ContentActionComponent implements OnInit, OnChanges {
 
