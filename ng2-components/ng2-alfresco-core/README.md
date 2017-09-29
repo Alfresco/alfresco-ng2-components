@@ -30,6 +30,7 @@ Contains a variety of components, directives and services used throughout ADF
       - [1. Define the model for the custom type](#1-define-the-model-for-the-custom-type)
       - [2. Define the component for the custom type](#2-define-the-component-for-the-custom-type)
       - [3. Add you custom component to your module's entryComponents list](#3-add-you-custom-component-to-your-modules-entrycomponents-list)
+- [Logout directive](#logout-directive)
 - [Node Permission directive](#node-permission-directive)
   * [Basic Usage](#basic-usage-3)
     + [Properties](#properties-3)
