@@ -24,13 +24,15 @@ import { AlfrescoApiService } from './../services/alfresco-api.service';
 @Component({
     selector: 'adf-download-zip-dialog',
     template: `
-        <h1 md-dialog-title>Download as ZIP</h1>
+        <h1 md-dialog-title>{{ 'CORE.DIALOG.DOWNLOAD_ZIP.TITLE' | translate }}</h1>
         <div md-dialog-content>
             <md-progress-bar color="primary" mode="indeterminate"></md-progress-bar>
         </div>
         <div md-dialog-actions>
             <span class="spacer"></span>
-            <button md-button color="primary" (click)="cancelDownload()">Cancel</button>
+            <button md-button color="primary" (click)="cancelDownload()">
+                {{ 'CORE.DIALOG.DOWNLOAD_ZIP.ACTIONS.CANCEL' | translate }}
+            </button>
         </div>
     `,
     styles: [`
