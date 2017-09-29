@@ -111,6 +111,7 @@ The properties currentFolderId, folderNode and node are the entry initialization
 | allowDropFiles | boolean | false | Toggle file drop support for rows (see **ng2-alfresco-core/UploadDirective** for more details) |
 | sorting | string[] | | Defines default sorting. The format is an array of 2 strings `[key, direction]` i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want to override default sorting detected by the component based on columns. |
 | locationFormat | string | '/' | The default route for all the location-based columns (if declared). |
+| supportedPageSizes | number[] | [5, 10, 15, 20] | Supported page sizes for the pagination component. You can also use application configuration file to set it as a global setting using `document-list.supportedPageSizes` key. |
 
 #### Events
 
