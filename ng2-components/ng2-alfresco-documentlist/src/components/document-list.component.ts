@@ -124,7 +124,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
     @Input()
-    currentFolderId: string = null;
+    currentFolderId: string = '-my-';
 
     @Input()
     folderNode: MinimalNodeEntryEntity = null;

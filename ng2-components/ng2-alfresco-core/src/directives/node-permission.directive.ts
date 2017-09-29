@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AfterViewInit, Directive, ElementRef, Host, Inject, Input, OnChanges, Optional, Renderer2, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Directive, ElementRef, Host, Inject, Input, OnChanges, Optional, Renderer2, SimpleChanges } from '@angular/core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
 import { EXTENDIBLE_COMPONENT } from './../interface/injection.tokens';
 import { AlfrescoContentService } from './../services/alfresco-content.service';
@@ -27,7 +27,7 @@ export interface NodePermissionSubject {
 @Directive({
     selector: '[adf-node-permission]'
 })
-export class NodePermissionDirective implements OnChanges, AfterViewInit {
+export class NodePermissionDirective implements OnChanges {
 
     @Input('adf-node-permission')
     permission: string  = null;
@@ -38,14 +38,11 @@ export class NodePermissionDirective implements OnChanges, AfterViewInit {
     constructor(private elementRef: ElementRef,
                 private renderer: Renderer2,
                 private contentService: AlfrescoContentService,
+                private changeDetector: ChangeDetectorRef,
 
                 @Host()
                 @Optional()
                 @Inject(EXTENDIBLE_COMPONENT) private parentComponent?: NodePermissionSubject) {
-    }
-
-    ngAfterViewInit() {
-        this.updateElement();
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -75,6 +72,7 @@ export class NodePermissionDirective implements OnChanges, AfterViewInit {
     private enable(): void {
         if (this.parentComponent) {
             this.parentComponent.disabled = false;
+            this.changeDetector.detectChanges();
         } else {
             this.enableElement();
         }
@@ -83,6 +81,7 @@ export class NodePermissionDirective implements OnChanges, AfterViewInit {
     private disable(): void {
         if (this.parentComponent) {
             this.parentComponent.disabled = true;
+            this.changeDetector.detectChanges();
         } else {
             this.disableElement();
         }
