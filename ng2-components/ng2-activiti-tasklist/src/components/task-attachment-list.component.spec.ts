@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SimpleChange } from '@angular/core';
+import { NgZone, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MdProgressSpinnerModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
@@ -41,6 +41,7 @@ describe('TaskAttachmentList', () => {
     let mockAttachment: any;
 
     beforeEach(async(() => {
+        let zone = new NgZone({enableLongStackTrace: false});
         TestBed.configureTestingModule({
             imports: [
                 CoreModule,
@@ -53,7 +54,8 @@ describe('TaskAttachmentList', () => {
             providers: [
                 ActivitiContentService,
                 { provide: AppConfigService, useClass: AppConfigServiceMock },
-                { provide: TranslationService, useClass: TranslationMock }
+                { provide: TranslationService, useClass: TranslationMock },
+                { provide: NgZone, useValue: zone }
             ]
         }).compileComponents();
 

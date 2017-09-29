@@ -27,6 +27,7 @@
         }
     },
     "document-list": {
+        "supportedPageSizes": [5, 10, 15, 20],
         "presets": {
             "-trashcan-": [
                 {

@@ -289,17 +289,18 @@ describe('DropdownWidgetComponent', () => {
                     });
             }));
 
-            it('should show the option value when the field is readonly', () => {
-                widget.field = new FormFieldModel(new FormModel({processDefinitionId: 'fake-process-id'}), {
+            it('should show the option value when the field is readonly', async(() => {
+                widget.field = new FormFieldModel(new FormModel({ processDefinitionId: 'fake-process-id' }), {
                     id: 'dropdown-id',
                     name: 'date-name',
-                    type: 'dropdown',
+                    type: 'readonly',
                     value: 'FakeValue',
-                    readOnly: true
+                    readOnly: true,
+                    params: { field: { name: 'date-name', type: 'dropdown' } }
                 });
-                const trigger = fixture.debugElement.query(By.css('.mat-select-trigger')).nativeElement;
-                trigger.click();
-                fixture.detectChanges();
+
+                openSelect();
+
                 fixture.whenStable()
                     .then(() => {
                         fixture.detectChanges();
@@ -307,7 +308,7 @@ describe('DropdownWidgetComponent', () => {
                         const option = fixture.debugElement.query(By.css('.mat-option')).nativeElement;
                         expect(option.innerText).toEqual('FakeValue');
                     });
-            });
+            }));
         });
     });
 });

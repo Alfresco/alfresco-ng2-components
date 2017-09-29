@@ -1,4 +1,4 @@
-@import '~ng2-alfresco-core/styles/theming';
+@import '../theming';
 @import './all-theme';
 
 $custom-typography: mat-typography-config(
@@ -8,10 +8,9 @@ $custom-typography: mat-typography-config(
 
 @include mat-core();
 
-$primary: mat-palette($alfresco-bpm-green);
-$accent:  mat-palette($alfresco-accent-purple);
-$warn:    mat-palette($alfresco-warn);
-$theme:   mat-light-theme($primary, $accent, $warn);
+$primary: mat-palette($mat-indigo);
+$accent:  mat-palette($mat-pink, A200, A100, A400);
+$theme: mat-light-theme($primary, $accent);
 
 @include angular-material-theme($theme);
 @include alfresco-material-theme($theme);

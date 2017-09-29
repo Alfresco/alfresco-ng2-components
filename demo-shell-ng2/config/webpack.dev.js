@@ -58,7 +58,7 @@ module.exports = webpackMerge(commonConfig, {
                         includePaths: [path.resolve(__dirname, '../../ng2-components/ng2-alfresco-core/styles')]
                     }
                 }]
-            },
+            }
         ]
     },
 

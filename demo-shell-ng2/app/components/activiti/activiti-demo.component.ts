@@ -25,6 +25,7 @@ import {
     FormService, ValidateDynamicTableRowEvent
 } from 'ng2-activiti-form';
 import {
+    FilterParamsModel,
     FilterProcessRepresentationModel,
     ProcessFiltersComponent,
     ProcessInstance,
@@ -322,7 +323,7 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     onStartProcessInstance(instance: ProcessInstance): void {
         this.currentProcessInstanceId = instance.id;
         this.activitiStartProcess.reset();
-        this.reloadProcessFilters();
+        this.activitiprocessfilter.selectRunningFilter();
     }
 
     onCancelProcessInstance() {

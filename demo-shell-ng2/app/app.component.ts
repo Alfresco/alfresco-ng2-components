@@ -16,14 +16,7 @@
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
-import {
-    AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
-    AlfrescoTranslationService,
-    LogService,
-    StorageService
-} from 'ng2-alfresco-core';
+import { AlfrescoSettingsService, AlfrescoTranslationService, StorageService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'adf-app',
@@ -34,39 +27,14 @@ import {
 export class AppComponent {
     searchTerm: string = '';
 
-    constructor(private authService: AlfrescoAuthenticationService,
-                private router: Router,
-                private settingsService: AlfrescoSettingsService,
+    constructor(private settingsService: AlfrescoSettingsService,
                 private translateService: AlfrescoTranslationService,
-                private storage: StorageService,
-                private logService: LogService) {
+                private storage: StorageService) {
         this.setProvider();
     }
 
     isAPageWithHeaderBar(): boolean {
         return location.pathname === '/login' || location.pathname === '/settings';
-    }
-
-    onLogout(event) {
-        event.preventDefault();
-        this.authService.logout()
-            .subscribe(
-                () => {
-                    this.navigateToLogin();
-                },
-                (error: any) => {
-                    if (error && error.response && error.response.status === 401) {
-                        this.navigateToLogin();
-                    } else {
-                        this.logService.error('An unknown error occurred while logging out', error);
-                        this.navigateToLogin();
-                    }
-                }
-            );
-    }
-
-    navigateToLogin() {
-        this.router.navigate(['/login']);
     }
 
     changeLanguage(lang: string) {

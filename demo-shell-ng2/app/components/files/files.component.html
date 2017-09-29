@@ -4,7 +4,7 @@
         </adf-sites-dropdown>
     </div>
     <adf-upload-drag-area
-        [parentId]="documentList.currentFolderId"
+        [parentId]="getDocumentListCurrentFolderId()"
         [versioning]="versioning"
         [adf-node-permission]="'create'"
         [adf-nodes]="getCurrentDocumentListNode()">

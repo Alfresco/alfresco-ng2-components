@@ -1,5 +1,4 @@
 @import '../form';
-@import '~ng2-alfresco-core/styles/mixins';
 
 @mixin mat-dynamic-table-theme($theme) {
     $foreground: map-get($theme, foreground);

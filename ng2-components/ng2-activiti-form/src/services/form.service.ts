@@ -76,6 +76,10 @@ export class FormService {
         return this.apiService.getInstance().activiti.processApi;
     }
 
+    private get processInstanceVariablesApi(): any {
+        return this.apiService.getInstance().activiti.processInstanceVariablesApi;
+    }
+
     private get usersWorkflowApi(): any {
         return this.apiService.getInstance().activiti.usersWorkflowApi;
     }
@@ -197,6 +201,12 @@ export class FormService {
     getProcessDefinitions(): Observable<any> {
         return Observable.fromPromise(this.processApi.getProcessDefinitions({}))
             .map(this.toJsonArray)
+            .catch(err => this.handleError(err));
+    }
+
+    getProcessVarablesById(processInstanceId: string): Observable<any[]> {
+        return Observable.fromPromise(this.processInstanceVariablesApi.getProcessInstanceVariables(processInstanceId))
+            .map(this.toJson)
             .catch(err => this.handleError(err));
     }
 

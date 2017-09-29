@@ -9,7 +9,7 @@
         <md-option *ngFor="let opt of field.options"
                    [value]="getOptionValue(opt, field.value)"
                    [id]="opt.id">{{opt.name}}</md-option>
-        <md-option id="readonlyOption" *ngIf="field.readOnly" [value]="field.value">{{field.value}}</md-option>
+        <md-option id="readonlyOption" *ngIf="isReadOnlyType()" [value]="field.value">{{field.value}}</md-option>
     </md-select>
     <error-widget [error]="field.validationSummary" ></error-widget>
     <error-widget class="adf-dropdown-required-message" *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>

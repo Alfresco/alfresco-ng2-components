@@ -38,6 +38,11 @@ describe('ActivitiFilters', () => {
         filter: { state: 'open', assignment: 'fake-assignee' }
     }));
 
+    fakeGlobalFilter.push(new FilterProcessRepresentationModel({
+        name: 'Running',
+        filter: { state: 'open', assignment: 'fake-running' }
+    }));
+
     let fakeGlobalFilterPromise = new Promise(function (resolve, reject) {
         resolve(fakeGlobalFilter);
     });
@@ -65,9 +70,27 @@ describe('ActivitiFilters', () => {
         filterList.onSuccess.subscribe((res) => {
             expect(res).toBeDefined();
             expect(filterList.filters).toBeDefined();
-            expect(filterList.filters.length).toEqual(2);
+            expect(filterList.filters.length).toEqual(3);
             expect(filterList.filters[0].name).toEqual('FakeInvolvedTasks');
             expect(filterList.filters[1].name).toEqual('FakeMyTasks');
+            expect(filterList.filters[2].name).toEqual('Running');
+            done();
+        });
+
+        filterList.ngOnInit();
+    });
+
+    it('should select the Running process filter', (done) => {
+        spyOn(activitiService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+        const appId = '1';
+        let change = new SimpleChange(null, appId, true);
+        filterList.ngOnChanges({ 'appId': change });
+
+        expect(filterList.currentFilter).toBeUndefined();
+
+        filterList.onSuccess.subscribe((res) => {
+            filterList.selectRunningFilter();
+            expect(filterList.currentFilter.name).toEqual('Running');
             done();
         });
 
