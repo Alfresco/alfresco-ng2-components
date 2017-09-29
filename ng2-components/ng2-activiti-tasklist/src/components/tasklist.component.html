@@ -4,6 +4,10 @@
         <adf-datatable
             [data]="data"
             [loading]="isLoading"
+            [multiselect]="multiselect"
+            [selectionMode]="selectionMode"
+            (row-select)="onRowSelect($event)"
+            (row-unselect)="onRowUnselect($event)"
             (rowClick)="onRowClick($event)">
             <loading-content-template>
                 <ng-template>
