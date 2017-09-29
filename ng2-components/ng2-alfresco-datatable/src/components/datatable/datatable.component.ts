@@ -73,19 +73,19 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     showHeader: boolean = true;
 
     @Output()
-    rowClick: EventEmitter<DataRowEvent> = new EventEmitter<DataRowEvent>();
+    rowClick = new EventEmitter<DataRowEvent>();
 
     @Output()
-    rowDblClick: EventEmitter<DataRowEvent> = new EventEmitter<DataRowEvent>();
+    rowDblClick = new EventEmitter<DataRowEvent>();
 
     @Output()
-    showRowContextMenu: EventEmitter<DataCellEvent> = new EventEmitter<DataCellEvent>();
+    showRowContextMenu = new EventEmitter<DataCellEvent>();
 
     @Output()
-    showRowActionsMenu: EventEmitter<DataCellEvent> = new EventEmitter<DataCellEvent>();
+    showRowActionsMenu = new EventEmitter<DataCellEvent>();
 
     @Output()
-    executeRowAction: EventEmitter<DataRowActionEvent> = new EventEmitter<DataRowActionEvent>();
+    executeRowAction = new EventEmitter<DataRowActionEvent>();
 
     @Input()
     loading: boolean = false;
@@ -282,10 +282,32 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
         this.clickObserver.next(dataRowEvent);
     }
 
-    onKeyboardNavigate(row: DataRow, e: KeyboardEvent) {
+    onRowKeyUp(row: DataRow, e: KeyboardEvent) {
+        const event = new CustomEvent('row-keyup', {
+            detail: {
+                row: row,
+                keyboardEvent: e,
+                sender: this
+            },
+            bubbles: true
+        });
+
+        this.elementRef.nativeElement.dispatchEvent(event);
+
+        if (event.defaultPrevented) {
+            e.preventDefault();
+        } else {
+            if (e.key === 'Enter') {
+                this.onKeyboardNavigate(row, e);
+            }
+        }
+    }
+
+    private onKeyboardNavigate(row: DataRow, e: KeyboardEvent) {
         if (e) {
             e.preventDefault();
         }
+
         const event = new DataRowEvent(row, e, this);
 
         this.rowDblClick.emit(event);
