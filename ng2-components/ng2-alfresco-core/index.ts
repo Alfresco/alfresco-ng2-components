@@ -54,6 +54,7 @@ import { UploadService } from './src/services/upload.service';
 import { UserPreferencesService } from './src/services/user-preferences.service';
 
 import { HighlightDirective } from './src/directives/highlight.directive';
+import { LogoutDirective } from './src/directives/logout.directive';
 import { DeletedNodesApiService } from './src/services/deleted-nodes-api.service';
 import { DiscoveryApiService } from './src/services/discovery-api.service';
 import { FavoritesApiService } from './src/services/favorites-api.service';
@@ -249,6 +250,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
     declarations: [
         ...obsoleteMdlDirectives(),
         ...pipes(),
+        LogoutDirective,
         UploadDirective,
         NodePermissionDirective,
         HighlightDirective,
@@ -291,6 +293,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         ToolbarModule,
         ...obsoleteMdlDirectives(),
         ...pipes(),
+        LogoutDirective,
         UploadDirective,
         NodePermissionDirective,
         HighlightDirective,

@@ -444,6 +444,14 @@ For Angular to be able to load your custom component dynamically, you have to re
 export class MyModule {}
 ```
 
+## Logout directive
+
+Upon the dectorated element click, logs out and automatically redirects to `/`login` route:
+
+```html
+<button adf-logout>Logout</button>
+```
+
 ## Node Permission directive
 
 Selectively disables an HTML element or Angular component
