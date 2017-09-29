@@ -12,6 +12,11 @@
             top: 5px;
         }
 
+        .activiti-filters__label {
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
         .mat-nav-list .mat-list-item .mat-list-item-content {
             line-height: 48px;
         }

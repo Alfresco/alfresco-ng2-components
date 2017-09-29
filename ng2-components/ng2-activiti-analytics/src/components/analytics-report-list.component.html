@@ -1,12 +1,15 @@
 <div class="adf-analytics-report-list menu-container">
     <md-nav-list *ngIf="isList()">
-        <md-list-item class="activiti-filters__entry" (click)="selectReport(report)" *ngFor="let report of reports; let idx = index"
+        <md-list-item
+            class="activiti-filters__entry"
+            (click)="selectReport(report)"
+            *ngFor="let report of reports; let idx = index"
             [class.active]="currentReport === report">
-            <span [attr.id]="'report-list-' + idx">
-            <md-icon md-list-icon
-                [attr.data-automation-id]="report.name + '_filter'"
-                class="activiti-filters__entry-icon">assignment</md-icon>
-            <span class="text">{{report.name}}</span>
+            <span [attr.id]="'report-list-' + idx" class="activiti-filters__label">
+                <md-icon md-list-icon
+                    [attr.data-automation-id]="report.name + '_filter'"
+                    class="activiti-filters__entry-icon">assignment</md-icon>
+                <span class="text">{{report.name}}</span>
             </span>
         </md-list-item>
     </md-nav-list>
