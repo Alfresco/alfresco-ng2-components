@@ -29,6 +29,8 @@ import { DocumentListComponent, PermissionStyleModel } from 'ng2-alfresco-docume
 
 import { ViewerService } from 'ng2-alfresco-viewer';
 
+const DEFAULT_FOLDER_TO_SHOW = '-my-';
+
 @Component({
     selector: 'adf-files-component',
     templateUrl: './files.component.html',
@@ -36,7 +38,7 @@ import { ViewerService } from 'ng2-alfresco-viewer';
 })
 export class FilesComponent implements OnInit {
     // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
-    currentFolderId: string = '-my-';
+    currentFolderId: string = DEFAULT_FOLDER_TO_SHOW;
 
     errorMessage: string = null;
     fileNodeId: any;
@@ -114,6 +116,7 @@ export class FilesComponent implements OnInit {
     }
 
     onFolderChange($event) {
+        this.currentFolderId = $event.value.id;
         this.router.navigate(['/files', $event.value.id]);
     }
 
@@ -220,7 +223,11 @@ export class FilesComponent implements OnInit {
     }
 
     getSiteContent(site: SiteModel) {
-        this.currentFolderId = site && site.guid ? site.guid : '-my-';
+        this.currentFolderId = site && site.guid ? site.guid : DEFAULT_FOLDER_TO_SHOW;
+    }
+
+    getDocumentListCurrentFolderId() {
+        return this.documentList.currentFolderId || DEFAULT_FOLDER_TO_SHOW;
     }
 
     hasSelection(selection: Array<MinimalNodeEntity>): boolean {
