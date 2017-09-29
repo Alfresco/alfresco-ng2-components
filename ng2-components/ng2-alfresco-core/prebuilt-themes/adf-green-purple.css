@@ -2002,6 +2002,10 @@ input.mat-input-element {
   position: relative;
   top: 5px; }
 
+.adf-analytics-report-list .activiti-filters__label {
+  white-space: nowrap;
+  overflow: hidden; }
+
 .adf-analytics-report-list .mat-nav-list .mat-list-item .mat-list-item-content {
   line-height: 48px; }
 
@@ -2324,8 +2328,6 @@ container-widget .mat-grid-tile {
 
 .adf-datatable /deep/ table {
   border: none !important; }
-  .adf-datatable /deep/ table thead {
-    display: none; }
   .adf-datatable /deep/ table tbody td {
     padding: 0px !important;
     border-top: none !important; }
@@ -2712,14 +2714,21 @@ adf-people-list /deep/ adf-datatable /deep/ .people-pic {
     /* cell stretching content */ }
     .adf-data-table .ellipsis-cell .cell-container {
       height: 1em; }
-    .adf-data-table .ellipsis-cell .cell-value {
+    .adf-data-table .ellipsis-cell .cell-container > * {
       display: block;
       position: absolute;
-      max-width: 100%;
+      max-width: calc(100% - 2em);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      /* for vertical align of text */
+      line-height: 1.12em; }
+    .adf-data-table .ellipsis-cell .cell-value {
+      display: block;
+      position: absolute;
+      max-width: calc(100% - 2em);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
       line-height: 1.12em; }
     .adf-data-table .ellipsis-cell > div:after {
       content: attr(title);
