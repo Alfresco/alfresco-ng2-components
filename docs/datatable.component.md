@@ -169,6 +169,7 @@ These events bubble up the component tree and can be handled by any parent compo
 | row-dblclick | Raised when user double-clicks a row |
 | row-select | Raised after user selects a row |
 | row-unselect | Raised after user unselects a row |
+| row-keyup | Raised on the 'keyup' event for the focused row.  |
 
 For example:
 
@@ -287,6 +288,18 @@ You can add a template that will be shown during the loading of your data:
 Note: the `<loading-content-template>` and `<no-content-template>` can be used together
 
 ### Events
+
+#### row-keyup DOM event
+
+Raised on the 'keyup' event for the focused row. 
+
+This is an instance of the `CustomEvent` with the `details` property containing the following object:
+
+```ts
+row: DataRow,
+keyboardEvent: KeyboardEvent,
+sender: any
+```
 
 #### rowClick event
 

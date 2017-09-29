@@ -270,12 +270,7 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
             (this.data && this.data.getRows() && this.data.getRows().length === 0);
     }
 
-    /**
-     * Emit the event rowClick passing the current task id when the row is clicked
-     * @param event
-     */
-    onRowClick(event: DataRowEvent) {
-        const item = event;
+    onRowClick(item: DataRowEvent) {
         this.currentInstanceId = item.value.getValue('id');
         this.rowClick.emit(this.currentInstanceId);
     }
@@ -288,6 +283,14 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
     onRowUnselect(event: CustomEvent) {
         this.selectedInstances = [...event.detail.selection];
         this.rowsSelected.emit(this.selectedInstances);
+    }
+
+    onRowKeyUp(event: CustomEvent) {
+        if (event.detail.keyboardEvent.key === 'Enter') {
+            event.preventDefault();
+            this.currentInstanceId = event.detail.row.getValue('id');
+            this.rowClick.emit(this.currentInstanceId);
+        }
     }
 
     /**

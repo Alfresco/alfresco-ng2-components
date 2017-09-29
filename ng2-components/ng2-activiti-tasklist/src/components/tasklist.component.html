@@ -8,7 +8,8 @@
             [selectionMode]="selectionMode"
             (row-select)="onRowSelect($event)"
             (row-unselect)="onRowUnselect($event)"
-            (rowClick)="onRowClick($event)">
+            (rowClick)="onRowClick($event)"
+            (row-keyup)="onRowKeyUp($event)">
             <loading-content-template>
                 <ng-template>
                     <!--Add your custom loading template here-->
