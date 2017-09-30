@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { AlfrescoSettingsService, AlfrescoTranslationService, StorageService } from 'ng2-alfresco-core';
+import { AlfrescoSettingsService, AlfrescoTranslationService, PageTitle, StorageService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'adf-app',
@@ -29,8 +29,10 @@ export class AppComponent {
 
     constructor(private settingsService: AlfrescoSettingsService,
                 private translateService: AlfrescoTranslationService,
-                private storage: StorageService) {
+                private storage: StorageService,
+                pageTitle: PageTitle) {
         this.setProvider();
+        pageTitle.setTitle();
     }
 
     isAPageWithHeaderBar(): boolean {

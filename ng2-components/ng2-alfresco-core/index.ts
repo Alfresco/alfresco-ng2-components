@@ -45,6 +45,7 @@ import { CookieService } from './src/services/cookie.service';
 import { LogService } from './src/services/log.service';
 import { LogServiceMock } from './src/services/log.service';
 import { NotificationService } from './src/services/notification.service';
+import { PageTitle } from './src/services/page-title.service';
 import { RenditionsService } from './src/services/renditions.service';
 import { StorageService } from './src/services/storage.service';
 import { ThumbnailService } from './src/services/thumbnail.service';
@@ -72,6 +73,7 @@ import { MomentDateAdapter } from './src/utils/momentDateAdapter';
 export { CreateFolderDialogComponent } from './src/dialogs/create-folder.dialog';
 export { DownloadZipDialogComponent } from './src/dialogs/download-zip.dialog';
 
+export { PageTitle } from './src/services/page-title.service';
 export { ContentService } from './src/services/content.service';
 export { StorageService } from './src/services/storage.service';
 export { CookieService } from './src/services/cookie.service';
@@ -164,6 +166,7 @@ export * from './src/services/search.service';
 
 export function providers() {
     return [
+        PageTitle,
         UserPreferencesService,
         NotificationService,
         LogService,
