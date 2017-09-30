@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
+import { Location } from '@angular/common';
 import { Component, EventEmitter, HostListener, Input, OnChanges, OnDestroy, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoApiService, BaseEvent, LogService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'adf-viewer, alfresco-viewer',
@@ -71,13 +72,13 @@ export class ViewerComponent implements OnDestroy, OnChanges {
     showInfoDrawer = false;
 
     @Output()
-    goBack = new EventEmitter();
+    goBack = new EventEmitter<BaseEvent<any>>();
 
     @Output()
     showViewerChange = new EventEmitter<boolean>();
 
     @Output()
-    extensionChange = new EventEmitter<String>();
+    extensionChange = new EventEmitter<string>();
 
     extensionTemplates: { template: TemplateRef<any>, isVisible: boolean }[] = [];
 
@@ -90,8 +91,8 @@ export class ViewerComponent implements OnDestroy, OnChanges {
     loaded: boolean = false;
 
     constructor(private apiService: AlfrescoApiService,
-                private logService: LogService) {
-    }
+                private logService: LogService,
+                private location: Location) {}
 
     ngOnChanges(changes) {
         if (this.showViewer) {
@@ -136,7 +137,12 @@ export class ViewerComponent implements OnDestroy, OnChanges {
         if (this.overlayMode) {
             this.close();
         } else {
-            this.goBack.next();
+            const event = new BaseEvent<any>();
+            this.goBack.next(event);
+
+            if (!event.defaultPrevented) {
+                this.location.back();
+            }
         }
     }
 
