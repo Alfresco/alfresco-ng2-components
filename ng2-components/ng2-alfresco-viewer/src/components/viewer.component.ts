@@ -44,16 +44,40 @@ export class ViewerComponent implements OnDestroy, OnChanges {
     showViewer: boolean = true;
 
     @Input()
-    showToolbar: boolean = true;
+    showToolbar = true;
 
     @Input()
     displayName: string;
 
-    @Output()
-    showViewerChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Input()
+    allowGoBack = true;
+
+    @Input()
+    allowOpenWith = true;
+
+    @Input()
+    allowDownload = true;
+
+    @Input()
+    allowPrint = true;
+
+    @Input()
+    allowShare = true;
+
+    @Input()
+    allowInfoDrawer = true;
+
+    @Input()
+    showInfoDrawer = false;
 
     @Output()
-    extensionChange: EventEmitter<String> = new EventEmitter<String>();
+    goBack = new EventEmitter();
+
+    @Output()
+    showViewerChange = new EventEmitter<boolean>();
+
+    @Output()
+    extensionChange = new EventEmitter<String>();
 
     extensionTemplates: { template: TemplateRef<any>, isVisible: boolean }[] = [];
 
@@ -105,6 +129,14 @@ export class ViewerComponent implements OnDestroy, OnChanges {
                     );
                 }
             });
+        }
+    }
+
+    onBackButtonClick() {
+        if (this.overlayMode) {
+            this.close();
+        } else {
+            this.goBack.next();
         }
     }
 

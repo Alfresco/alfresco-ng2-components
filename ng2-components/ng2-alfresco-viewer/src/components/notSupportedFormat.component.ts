@@ -41,9 +41,6 @@ export class NotSupportedFormatComponent implements OnInit, OnDestroy {
     @Input()
     nodeId: string|null = null;
 
-    @Input()
-    showToolbar: boolean = true;
-
     convertible: boolean = false;
     displayable: boolean = false;
     isConversionStarted: boolean = false;
