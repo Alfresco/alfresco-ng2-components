@@ -128,10 +128,6 @@ describe('ViewerComponent', () => {
                 expect(element.querySelector('header')).toBeNull();
             });
 
-            it('should Close button be not present if is not overlay mode', () => {
-                expect(element.querySelector('.adf-viewer-close-button')).toBeNull();
-            });
-
             it('should Esc button not hide the viewer if is not overlay mode', () => {
                 EventMock.keyDown(27);
                 fixture.detectChanges();

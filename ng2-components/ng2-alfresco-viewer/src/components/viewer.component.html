@@ -8,7 +8,11 @@
             <adf-toolbar color="default" class="adf-viewer-toolbar">
 
                 <adf-toolbar-title>
-                    <button *ngIf="allowGoBack" md-icon-button mdTooltip="Back" (click)="onBackButtonClick()">
+                    <button *ngIf="allowGoBack"
+                        class="adf-viewer-close-button"
+                        md-icon-button
+                        mdTooltip="Back"
+                        (click)="onBackButtonClick()">
                         <md-icon>arrow_back</md-icon>
                     </button>
                     <img [src]="mimeType | adfMimeTypeIcon">

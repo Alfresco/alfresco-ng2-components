@@ -41,6 +41,7 @@ import { ChartsModule } from 'ng2-charts';
 import { AppComponent } from './app.component';
 import { routing } from './app.routes';
 import { CustomEditorsModule } from './components/activiti/custom-editor/custom-editor.component';
+import { AppMenuComponent } from './components/app-menu/app-menu.component';
 import { FileViewComponent } from './components/file-view/file-view.component';
 import { FormListDemoComponent } from './components/form/form-list-demo.component';
 import { ThemePickerModule } from './components/theme-picker/theme-picker';
@@ -121,7 +122,8 @@ import {
         FormDemoComponent,
         FormListDemoComponent,
         CustomSourcesComponent,
-        FileViewComponent
+        FileViewComponent,
+        AppMenuComponent
     ],
     providers: [
         { provide: AppConfigService, useClass: DebugAppConfigService },

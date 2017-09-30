@@ -16,23 +16,19 @@
  */
 
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { AppDefinitionRepresentationModel } from 'ng2-activiti-tasklist';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 
 @Component({
-    selector: 'activiti-apps-view',
-    template: `
-        <adf-app-menu></adf-app-menu>
-        <activiti-apps (appClick)="onAppClicked($event)"></activiti-apps>
-    `
+    selector: 'adf-app-menu',
+    templateUrl: 'app-menu.component.html',
+    styleUrls: ['app-menu.component.scss']
 })
-export class ActivitiAppsViewComponent {
+export class AppMenuComponent {
 
-    constructor(private router: Router) {
+    constructor(private translateService: AlfrescoTranslationService) {
     }
 
-     onAppClicked(app: AppDefinitionRepresentationModel) {
-         this.router.navigate(['/activiti/apps', app.id || 0, 'tasks']);
-     }
-
+    changeLanguage(lang: string) {
+        this.translateService.use(lang);
+    }
 }

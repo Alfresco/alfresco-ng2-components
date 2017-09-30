@@ -17,7 +17,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
-import { AlfrescoAuthenticationService, AppConfigService, BpmProductVersionModel, DiscoveryApiService, EcmProductVersionModel, LogService  } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AppConfigService, BpmProductVersionModel, DiscoveryApiService, EcmProductVersionModel  } from 'ng2-alfresco-core';
 import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 
 @Component({
@@ -40,7 +40,6 @@ export class AboutComponent implements OnInit {
     constructor(private http: Http,
                 private appConfig: AppConfigService,
                 private authService: AlfrescoAuthenticationService,
-                private logService: LogService,
                 private discovery: DiscoveryApiService) {
     }
 
@@ -62,13 +61,11 @@ export class AboutComponent implements OnInit {
             let regexp = new RegExp('^(ng2-activiti|ng2-alfresco|alfresco-)');
 
             let alfrescoPackages = Object.keys(response.json().dependencies).filter((val) => {
-                this.logService.log(val);
                 return regexp.test(val);
             });
 
             let alfrescoPackagesTableRepresentation = [];
             alfrescoPackages.forEach((val) => {
-                this.logService.log(response.json().dependencies[val]);
                 alfrescoPackagesTableRepresentation.push({
                     name: val,
                     version: response.json().dependencies[val].version
@@ -76,8 +73,6 @@ export class AboutComponent implements OnInit {
             });
 
             this.gitHubLinkCreation(alfrescoPackagesTableRepresentation);
-
-            this.logService.log(alfrescoPackagesTableRepresentation);
 
             this.data = new ObjectDataTableAdapter(alfrescoPackagesTableRepresentation, [
                 {type: 'text', key: 'name', title: 'Name', sortable: true},
