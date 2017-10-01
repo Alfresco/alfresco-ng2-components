@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { Location } from '@angular/common';
+import { SpyLocation } from '@angular/common/testing';
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
@@ -54,7 +56,8 @@ describe('ViewerComponent', () => {
                 ImgViewerComponent
             ],
             providers: [
-                RenderingQueueServices
+                RenderingQueueServices,
+                { provide: Location, useClass: SpyLocation }
             ]
         }).compileComponents();
     }));
