@@ -30,6 +30,7 @@ import { MediaPlayerComponent } from './mediaPlayer.component';
 import { NotSupportedFormatComponent } from './notSupportedFormat.component';
 import { PdfViewerComponent } from './pdfViewer.component';
 import { TxtViewerComponent } from './txtViewer.component';
+import { UnknownFormatComponent } from './unknown-format/unknown-format.component';
 import { ViewerComponent } from './viewer.component';
 
 declare let jasmine: any;
@@ -53,7 +54,8 @@ describe('ViewerComponent', () => {
                 TxtViewerComponent,
                 NotSupportedFormatComponent,
                 MediaPlayerComponent,
-                ImgViewerComponent
+                ImgViewerComponent,
+                UnknownFormatComponent
             ],
             providers: [
                 RenderingQueueServices,
@@ -181,7 +183,7 @@ describe('ViewerComponent', () => {
         });
     });
 
-    describe('Exteznsion Type Test', () => {
+    describe('Extension Type Test', () => {
         it('should  extension file pdf  be loaded', (done) => {
             component.urlFile = 'base/src/assets/fake-test-file.pdf';
 
@@ -242,13 +244,13 @@ describe('ViewerComponent', () => {
             });
         });
 
-        it('should the not supported div be loaded if the file is a not supported extension', (done) => {
+        it('should display [unknown format] for unsupported extensions', (done) => {
             component.urlFile = 'fake-url-file.unsupported';
             component.mimeType = '';
 
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
-                expect(element.querySelector('adf-not-supported-format')).not.toBeNull();
+                expect(element.querySelector('adf-viewer-unknown-format')).toBeDefined();
                 done();
             });
         });
@@ -329,17 +331,6 @@ describe('ViewerComponent', () => {
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('adf-media-player')).not.toBeNull();
-                done();
-            });
-        });
-
-        it('should not display the media player if the file identified by mimetype is a media but with not supported extension', (done) => {
-            component.urlFile = 'content';
-            component.mimeType = 'video/avi';
-
-            component.ngOnChanges(null).then(() => {
-                fixture.detectChanges();
-                expect(element.querySelector('adf-media-player')).toBeNull();
                 done();
             });
         });

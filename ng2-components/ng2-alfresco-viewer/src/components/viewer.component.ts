@@ -80,15 +80,26 @@ export class ViewerComponent implements OnDestroy, OnChanges {
     @Output()
     extensionChange = new EventEmitter<string>();
 
+    viewerType: string = 'unknown';
     extensionTemplates: { template: TemplateRef<any>, isVisible: boolean }[] = [];
-
     externalExtensions: string[] = [];
-
     urlFileContent: string;
     otherMenu: any;
     extension: string;
     mimeType: string;
     loaded: boolean = false;
+
+    private extensions = {
+        image: ['png', 'jpg', 'jpeg', 'gif', 'bpm'],
+        media: ['wav', 'mp4', 'mp3', 'webm', 'ogg'],
+        text: ['txt', 'xml', 'js', 'html'],
+        pdf: ['pdf']
+    };
+
+    private mimeTypes = [
+        { mimeType: 'application/x-javascript', type: 'text' },
+        { mimeType: 'application/pdf', type: 'pdf' }
+    ];
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService,
@@ -104,6 +115,8 @@ export class ViewerComponent implements OnDestroy, OnChanges {
                 if (this.blobFile) {
                     this.mimeType = this.blobFile.type;
                     this.extensionChange.emit(this.mimeType);
+
+                    this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
                     resolve();
                 } else if (this.urlFile) {
                     let filenameFromUrl = this.getFilenameFromUrl(this.urlFile);
@@ -111,6 +124,11 @@ export class ViewerComponent implements OnDestroy, OnChanges {
                     this.extension = this.getFileExtension(filenameFromUrl);
                     this.extensionChange.emit(this.extension);
                     this.urlFileContent = this.urlFile;
+
+                    this.viewerType = this.getViewerTypeByExtension(this.extension);
+                    if (this.viewerType === 'unknown') {
+                        this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
+                    }
                     resolve();
                 } else if (this.fileNodeId) {
                     this.apiService.getInstance().nodes.getNodeInfo(this.fileNodeId).then(
@@ -121,6 +139,11 @@ export class ViewerComponent implements OnDestroy, OnChanges {
                             this.extension = this.getFileExtension(data.name);
                             this.extensionChange.emit(this.extension);
                             this.loaded = true;
+
+                            this.viewerType = this.getViewerTypeByExtension(this.extension);
+                            if (this.viewerType === 'unknown') {
+                                this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
+                            }
                             resolve();
                         },
                         (error) => {
@@ -131,6 +154,62 @@ export class ViewerComponent implements OnDestroy, OnChanges {
                 }
             });
         }
+    }
+
+    getViewerTypeByMimeType(mimeType: string) {
+        if (mimeType) {
+            mimeType = mimeType.toLowerCase();
+
+            if (mimeType.startsWith('image/')) {
+                return 'image';
+            }
+
+            if (mimeType.startsWith('text/')) {
+                return 'text';
+            }
+
+            if (mimeType.startsWith('video/')) {
+                return 'media';
+            }
+
+            if (mimeType.startsWith('audio/')) {
+                return 'media';
+            }
+
+            const registered = this.mimeTypes.find(t => t.mimeType === mimeType);
+            if (registered) {
+                return registered.type;
+            }
+        }
+        return 'unknown';
+    }
+
+    getViewerTypeByExtension(extension: string) {
+        if (extension) {
+            extension = extension.toLowerCase();
+        }
+
+        if (this.isCustomViewerExtension(extension)) {
+            return 'custom';
+        }
+
+        if (this.extensions.image.indexOf(extension) >= 0) {
+            return 'image';
+        }
+
+        if (this.extensions.media.indexOf(extension) >= 0) {
+            return 'media';
+        }
+
+        if (this.extensions.text.indexOf(extension) >= 0) {
+            return 'text';
+        }
+
+        if (this.extensions.pdf.indexOf(extension) >= 0) {
+            return 'pdf';
+        }
+
+        return 'unknown';
     }
 
     onBackButtonClick() {
@@ -195,113 +274,19 @@ export class ViewerComponent implements OnDestroy, OnChanges {
      * @param {string} fileName - file name
      * @returns {string} file name extension
      */
-    private getFileExtension(fileName: string): string {
+    getFileExtension(fileName: string): string {
         return fileName.split('.').pop().toLowerCase();
     }
 
-    /**
-     * Check if the content is an image through the extension or mime type
-     *
-     * @returns {boolean}
-     */
-    public isImage(): boolean {
-        return this.isImageExtension() || this.isImageMimeType();
-    }
+    isCustomViewerExtension(extension: string): boolean {
+        const extensions = this.externalExtensions || [];
 
-    /**
-     * Check if the content is a media through the extension or mime type
-     *
-     * @returns {boolean}
-     */
-    public isMedia(): boolean {
-        return this.isMediaExtension(this.extension) || this.isMediaMimeType();
-    }
-
-    /**
-     * check if the current file is a supported image extension
-     *
-     * @returns {boolean}
-     */
-    private isImageExtension(): boolean {
-        return this.extension === 'png' || this.extension === 'jpg' ||
-            this.extension === 'jpeg' || this.extension === 'gif' || this.extension === 'bmp';
-    }
-
-    /**
-     * check if the current file has an image-based mimetype
-     *
-     * @returns {boolean}
-     */
-    private isMediaMimeType(): boolean {
-        let mimeExtension;
-        if (this.mimeType && this.mimeType.indexOf('/')) {
-            mimeExtension = this.mimeType.substr(this.mimeType.indexOf('/') + 1, this.mimeType.length);
-        }
-        return (this.mimeType && (this.mimeType.indexOf('video/') === 0 || this.mimeType.indexOf('audio/') === 0)) && this.isMediaExtension(mimeExtension);
-    }
-
-    /**
-     * check if the current file is a supported media extension
-     * @param {string} extension
-     *
-     * @returns {boolean}
-     */
-    private isMediaExtension(extension: string): boolean {
-        return extension === 'wav' || extension === 'mp4' || extension === 'mp3' || extension === 'WebM' || extension === 'Ogg';
-    }
-
-    /**
-     * check if the current file has an image-based mimetype
-     *
-     * @returns {boolean}
-     */
-    private isImageMimeType(): boolean {
-        return this.mimeType && this.mimeType.indexOf('image/') === 0;
-    }
-
-    /**
-     * check if the current file is a supported pdf extension
-     *
-     * @returns {boolean}
-     */
-    public isPdf(): boolean {
-        return this.extension === 'pdf' || this.mimeType === 'application/pdf';
-    }
-
-    /**
-     * check if the current file is a supported txt extension
-     *
-     * @returns {boolean}
-     */
-    public isText(): boolean {
-        return this.extension === 'txt' || this.mimeType === 'text/txt' || this.mimeType === 'text/plain';
-    }
-
-    /**
-     * check if the current file is  a supported extension
-     *
-     * @returns {boolean}
-     */
-    supportedExtension(): boolean {
-        return this.isImage() || this.isPdf() || this.isMedia() || this.isText() || this.isExternalSupportedExtension();
-    }
-
-    /**
-     * Check if the file is compatible with one of the extension
-     *
-     * @returns {boolean}
-     */
-    isExternalSupportedExtension(): boolean {
-        let externalType: string;
-
-        if (this.externalExtensions && (this.externalExtensions instanceof Array)) {
-            externalType = this.externalExtensions.find((externalExtension) => {
-                return externalExtension.toLowerCase() === this.extension;
-
-            });
+        if (extension && extensions.length > 0) {
+            extension = extension.toLowerCase();
+            return extensions.indexOf(extension) >= 0;
         }
 
-        return !!externalType;
+        return false;
     }
 
     /**

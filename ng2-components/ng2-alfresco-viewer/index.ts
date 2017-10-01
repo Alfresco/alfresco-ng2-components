@@ -29,6 +29,9 @@ import { TxtViewerComponent } from './src/components/txtViewer.component';
 import { PdfViewComponent } from './src/components/viewer-dialog/pdf-view/pdf-view.component';
 import { ViewerDialogComponent } from './src/components/viewer-dialog/viewer-dialog.component';
 import { ViewerComponent } from './src/components/viewer.component';
+
+import { UnknownFormatComponent } from './src/components/unknown-format/unknown-format.component';
+
 import { ExtensionViewerDirective } from './src/directives/extension-viewer.directive';
 
 import { RenderingQueueServices } from './src/services/rendering-queue.services';
@@ -56,7 +59,8 @@ export const VIEWER_DIRECTIVES: any[] = [
         MaterialModule
     ],
     declarations: [
-        ...VIEWER_DIRECTIVES
+        ...VIEWER_DIRECTIVES,
+        UnknownFormatComponent
     ],
     providers: [
         RenderingQueueServices,

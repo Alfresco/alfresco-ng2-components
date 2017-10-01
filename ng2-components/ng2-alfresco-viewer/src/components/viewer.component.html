@@ -89,54 +89,38 @@
         <div class="adf-viewer-layout">
             <div class="adf-viewer-layout-content">
                 <div *ngIf="isLoaded()">
-                    <div class="adf-viewer-content-container">
+                    <div class="adf-viewer-content-container" [ngSwitch]="viewerType">
 
-                        <ng-container *ngIf="isPdf()">
-                            <adf-pdf-viewer
-                                [blobFile]="blobFile"
-                                [urlFile]="urlFileContent"
-                                [nameFile]="displayName">
-                            </adf-pdf-viewer>
+                        <ng-container *ngSwitchCase="'pdf'">
+                            <adf-pdf-viewer [blobFile]="blobFile" [urlFile]="urlFileContent" [nameFile]="displayName"></adf-pdf-viewer>
                         </ng-container>
 
-                        <ng-container *ngIf="isImage()">
-                            <adf-img-viewer
-                                [urlFile]="urlFileContent"
-                                [nameFile]="displayName"
-                                [blobFile]="blobFile">
-                            </adf-img-viewer>
+                        <ng-container *ngSwitchCase="'image'">
+                            <adf-img-viewer [urlFile]="urlFileContent" [nameFile]="displayName" [blobFile]="blobFile"></adf-img-viewer>
                         </ng-container>
 
-                        <ng-container *ngIf="isMedia()">
-                            <adf-media-player
-                                [urlFile]="urlFileContent"
-                                [mimeType]="mimeType"
-                                [blobFile]="blobFile"
-                                [nameFile]="displayName">
-                            </adf-media-player>
+                        <ng-container *ngSwitchCase="'media'">
+                            <adf-media-player [urlFile]="urlFileContent" [mimeType]="mimeType" [blobFile]="blobFile" [nameFile]="displayName"></adf-media-player>
                         </ng-container>
 
-                        <ng-container *ngIf="isText() && !isExternalSupportedExtension()">
+                        <ng-container *ngSwitchCase="'text'">
                             <adf-txt-viewer [urlFile]="urlFileContent" [blobFile]="blobFile"></adf-txt-viewer>
                         </ng-container>
 
-                         <span *ngFor="let extensionTemplate of extensionTemplates">
-                            <ng-template
-                                *ngIf="extensionTemplate.isVisible"
-                                [ngTemplateOutlet]="extensionTemplate.template"
-                                [ngOutletContext]="{ urlFileContent: urlFileContent, extension:extension }">
-                            </ng-template>
-                         </span>
+                        <ng-container *ngSwitchCase="'custom'">
+                            <span *ngFor="let extensionTemplate of extensionTemplates">
+                                <ng-template
+                                    *ngIf="extensionTemplate.isVisible"
+                                    [ngTemplateOutlet]="extensionTemplate.template"
+                                    [ngOutletContext]="{ urlFileContent: urlFileContent, extension:extension }">
+                                </ng-template>
+                            </span>
+                        </ng-container>
 
-                        <div *ngIf="!supportedExtension()" class="adf-viewer-unknown-content">
-                            <adf-not-supported-format
-                                *ngIf="!extensionTemplate"
-                                [urlFile]="urlFileContent"
-                                [blobFile]="blobFile"
-                                [nameFile]="displayName"
-                                [nodeId]="fileNodeId">
-                            </adf-not-supported-format>
-                        </div>
+                        <ng-container *ngSwitchDefault>
+                            <adf-viewer-unknown-format></adf-viewer-unknown-format>
+                        </ng-container>
+
                     </div>
                 </div>
             </div>
