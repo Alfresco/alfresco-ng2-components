@@ -131,7 +131,24 @@
 
                     </div>
                 </div>
+
             </div>
+            <ng-container *ngIf="showInfoDrawer">
+                <div class="adf-viewer__info-drawer">
+                    <md-tab-group md-stretch-tabs>
+                        <md-tab label="Details">
+                            <md-card>
+                                DETAILS
+                            </md-card>
+                        </md-tab>
+                        <md-tab label="Activity">
+                            <md-card>
+                                Activity
+                            </md-card>
+                        </md-tab>
+                    </md-tab-group>
+                </div>
+            </ng-container>
         </div>
     </div>
 </div>
