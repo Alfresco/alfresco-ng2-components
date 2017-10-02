@@ -16,38 +16,39 @@
  */
 
 import { Injectable } from '@angular/core';
-import {
-  ActivatedRouteSnapshot, CanActivate, CanActivateChild,
-  Router,
-  RouterStateSnapshot
-} from '@angular/router';
+import { CanActivate, Router } from '@angular/router';
 
-import { AuthenticationService } from './authentication.service';
+import { AlfrescoApiService } from './alfresco-api.service';
 
 @Injectable()
-export class AuthGuardEcm implements CanActivate, CanActivateChild {
-    constructor(private authService: AuthenticationService, private router: Router) {}
-
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        // let url: string = state.url;
-
-        return this.checkLogin();
+export class AuthGuardEcm implements CanActivate {
+    constructor(
+        private apiService: AlfrescoApiService,
+        private router: Router) {
     }
 
-    canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        return this.canActivate(route, state);
+    private get authApi() {
+        return this.apiService.getInstance().ecmAuth;
     }
 
-    checkLogin(): boolean {
-        if (this.authService.isEcmLoggedIn()) {
-            return true;
+    private isLoggedIn(): Promise<boolean> {
+        if (!this.authApi.isLoggedIn()) {
+            return Promise.resolve(false);
         }
 
-        // Store the attempted URL for redirecting
-        // this.authService.redirectUrl = url;
+        return this.authApi
+            .validateTicket()
+            .then(() => true, () => false)
+            .catch(() => false);
+    }
 
-        // Navigate to the login page with extras
-        this.router.navigate(['/login']);
-        return false;
+    canActivate(): Promise<boolean> {
+        return this.isLoggedIn().then(isLoggedIn => {
+            if (!isLoggedIn) {
+                this.router.navigate([ '/login' ]);
+            }
+
+            return isLoggedIn;
+        });
     }
 }
