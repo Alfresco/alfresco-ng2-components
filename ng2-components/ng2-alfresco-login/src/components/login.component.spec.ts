@@ -17,6 +17,8 @@
 
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Validators } from '@angular/forms';
+
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AlfrescoAuthenticationService, CoreModule } from 'ng2-alfresco-core';
@@ -214,7 +216,27 @@ describe('AlfrescoLogin', () => {
         expect(element.querySelector('#login-action-register')).toBe(null);
     });
 
-    it('should render validation min-length error when the username is just 1 character', () => {
+    it('should not render a validation min-length as default', () => {
+        usernameInput.value = '1';
+        usernameInput.dispatchEvent(new Event('input'));
+
+        fixture.detectChanges();
+
+        expect(component.formError).toBeDefined();
+        expect(component.formError.username).toBeDefined();
+        expect(component.formError.username).toBe('');
+        expect(element.querySelector('#username-error')).toBeNull();
+    });
+
+    it('should render validation min-length error when the username is just 1 character with a custom validation Validators.minLength(3)', () => {
+        component.fieldsValidation = {
+            username: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+            password: ['', Validators.required]
+        };
+        component.addCustomValidationError('username', 'minlength', 'LOGIN.MESSAGES.USERNAME-MIN');
+        component.ngOnInit();
+        fixture.detectChanges();
+
         usernameInput.value = '1';
         usernameInput.dispatchEvent(new Event('input'));
 
@@ -227,8 +249,16 @@ describe('AlfrescoLogin', () => {
         expect(element.querySelector('#username-error').innerText).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
     });
 
-    it('should render validation min-length error when the username is lower than 2 characters', () => {
-        usernameInput.value = '1';
+    it('should render validation min-length error when the username is lower than 3 characters with a custom validation Validators.minLength(3)', () => {
+        component.fieldsValidation = {
+            username: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+            password: ['', Validators.required]
+        };
+        component.addCustomValidationError('username', 'minlength', 'LOGIN.MESSAGES.USERNAME-MIN');
+        component.ngOnInit();
+        fixture.detectChanges();
+
+        usernameInput.value = '12';
         usernameInput.dispatchEvent(new Event('input'));
 
         fixture.detectChanges();
