@@ -325,7 +325,7 @@ export class LoginComponent implements OnInit {
 
     private initFormFieldsDefault() {
         this.form = this._fb.group({
-            username: ['', Validators.compose([Validators.required, Validators.minLength(this.minLength)])],
+            username: ['', Validators.required],
             password: ['', Validators.required]
         });
     }
