@@ -1,29 +1,72 @@
 @import '~@angular/material/theming';
 
+@mixin adf-app-theme($theme) {
+    $primary: map-get($theme, primary);
+    $minimumAppWidth: 320px;
+    $toolbarHeight: 64px;
 
-.adf-app-user-profile {
-    margin-right: 10px;
-}
+    .adf-app {
+        display: block;
+        min-width: $minimumAppWidth;
+        height: 100%;
 
-.adf-app-menu-spacer {
-    flex: 1 1 auto;
-}
+        .adf-nav-container {
+            display: block;
+            min-width: $minimumAppWidth;
+            height: 100%;
+        }
 
-.adf-app-toolbar {
-    overflow: hidden;
-}
+        .adf-sidenav-link {
+            &.active {
+                color: mat-color($primary);
+            }
+        }
 
-@media ($mat-small) {
+        &-user-profile {
+            margin-right: 10px;
+        }
 
-    .adf-app-hide-small{
-        display: none !important;
+        &-menu-spacer {
+            flex: 1 1 auto;
+        }
+
+        &-toolbar {
+            height: $toolbarHeight;
+            line-height: $toolbarHeight;
+            overflow: hidden;
+
+            md-toolbar-row {
+                align-items: stretch;
+                justify-content: space-between;
+            }
+
+            .adf-toolbar-link {
+                min-width: 0;
+                line-height: $toolbarHeight;
+
+                &.active {
+                    background-color: rgba(0,0,0,.12);
+                }
+            }
+        }
     }
 
-}
-@media ($mat-xsmall) {
+    @media (max-width: $minimumAppWidth) {
+        adf-datatable & /deep/  {
+            max-width: $minimumAppWidth;
 
-    .adf-app-hide-xsmall{
-        display: none !important;
+            .adf-data-table-cell--fileSize {
+                display: none;
+            }
+
+            .adf-empty-folder-drag-drop {
+                font-size: 46px;
+            }
+
+            .adf-empty-folder-image {
+                width: $minimumAppWidth - 10px;
+                height: auto;
+            }
+        }
     }
-
 }

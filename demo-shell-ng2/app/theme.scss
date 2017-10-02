@@ -11,6 +11,7 @@
 @import '~ng2-alfresco-upload/styles/index';
 @import '~ng2-alfresco-userinfo/styles/index';
 @import '~ng2-alfresco-search/styles/index';
+@import './app.component.scss';
 
 
 @include mat-core();
@@ -27,6 +28,7 @@ $theme:   mat-light-theme($primary, $accent, $warn);
 
 @include angular-material-theme($theme);
 
+@include adf-app-theme($theme);
 @include alfresco-core-theme($theme);
 @include alfresco-activity-analytics-theme($theme);
 @include alfresco-activity-diagrams-theme($theme);
