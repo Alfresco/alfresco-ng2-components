@@ -1,4 +1,4 @@
-$adf-viewer-background-color: #515151;
+$adf-viewer-background-color: #f5f5f5;
 
 @mixin full-screen() {
     width: 100%;
@@ -65,5 +65,17 @@ $adf-viewer-background-color: #515151;
     &-unknown-content {
         align-items: center;
         display: flex;
+    }
+
+    &__loading-screen {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        height: 85vh;
+
+        .md-spinner {
+            margin: 0 auto;
+        }
     }
 }

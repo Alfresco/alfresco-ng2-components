@@ -27,7 +27,6 @@ import { EventMock } from '../assets/event.mock';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { ImgViewerComponent } from './imgViewer.component';
 import { MediaPlayerComponent } from './mediaPlayer.component';
-import { NotSupportedFormatComponent } from './notSupportedFormat.component';
 import { PdfViewerComponent } from './pdfViewer.component';
 import { TxtViewerComponent } from './txtViewer.component';
 import { UnknownFormatComponent } from './unknown-format/unknown-format.component';
@@ -52,7 +51,6 @@ describe('ViewerComponent', () => {
                 ViewerComponent,
                 PdfViewerComponent,
                 TxtViewerComponent,
-                NotSupportedFormatComponent,
                 MediaPlayerComponent,
                 ImgViewerComponent,
                 UnknownFormatComponent

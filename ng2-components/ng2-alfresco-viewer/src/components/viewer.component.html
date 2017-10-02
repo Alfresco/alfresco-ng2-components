@@ -85,10 +85,18 @@
             </adf-toolbar>
         </ng-container>
 
+        <ng-container *ngIf="isLoading">
+            <div class="adf-viewer__loading-screen">
+                <h2>Loading</h2>
+                <div>
+                    <md-spinner></md-spinner>
+                </div>
+            </div>
+        </ng-container>
 
-        <div class="adf-viewer-layout">
+        <div *ngIf="!isLoading" class="adf-viewer-layout">
             <div class="adf-viewer-layout-content">
-                <div *ngIf="isLoaded()">
+                <div>
                     <div class="adf-viewer-content-container" [ngSwitch]="viewerType">
 
                         <ng-container *ngSwitchCase="'pdf'">

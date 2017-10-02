@@ -18,7 +18,7 @@
 import { Location } from '@angular/common';
 import { Component, EventEmitter, HostListener, Input, OnChanges, OnDestroy, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { AlfrescoApiService, BaseEvent, LogService } from 'ng2-alfresco-core';
+import { AlfrescoApiService, BaseEvent, LogService, RenditionsService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'adf-viewer, alfresco-viewer',
@@ -48,7 +48,7 @@ export class ViewerComponent implements OnDestroy, OnChanges {
     showToolbar = true;
 
     @Input()
-    displayName: string;
+    displayName: string = 'Unknown';
 
     @Input()
     allowGoBack = true;
@@ -83,6 +83,7 @@ export class ViewerComponent implements OnDestroy, OnChanges {
     viewerType: string = 'unknown';
     downloadUrl: string = null;
     fileName: string = 'document';
+    isLoading: boolean = false;
 
     extensionTemplates: { template: TemplateRef<any>, isVisible: boolean }[] = [];
     externalExtensions: string[] = [];
@@ -90,7 +91,6 @@ export class ViewerComponent implements OnDestroy, OnChanges {
     otherMenu: any;
     extension: string;
     mimeType: string;
-    loaded: boolean = false;
 
     private extensions = {
         image: ['png', 'jpg', 'jpeg', 'gif', 'bpm'],
@@ -104,9 +104,11 @@ export class ViewerComponent implements OnDestroy, OnChanges {
         { mimeType: 'application/pdf', type: 'pdf' }
     ];
 
-    constructor(private apiService: AlfrescoApiService,
-                private logService: LogService,
-                private location: Location) {}
+    constructor(
+        private apiService: AlfrescoApiService,
+        private logService: LogService,
+        private location: Location,
+        private renditionService: RenditionsService) {}
 
     ngOnChanges(changes) {
         if (this.showViewer) {
@@ -116,6 +118,8 @@ export class ViewerComponent implements OnDestroy, OnChanges {
 
             return new Promise((resolve, reject) => {
                 if (this.blobFile) {
+                    this.isLoading = true;
+
                     this.mimeType = this.blobFile.type;
                     this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
 
@@ -123,10 +127,12 @@ export class ViewerComponent implements OnDestroy, OnChanges {
                     // TODO: wrap blob into the data url and allow downloading
 
                     this.extensionChange.emit(this.mimeType);
+                    this.isLoading = false;
                     resolve();
                 } else if (this.urlFile) {
+                    this.isLoading = true;
                     let filenameFromUrl = this.getFilenameFromUrl(this.urlFile);
-                    this.displayName = filenameFromUrl ? filenameFromUrl : '';
+                    this.displayName = filenameFromUrl || 'Unknown';
                     this.extension = this.getFileExtension(filenameFromUrl);
                     this.urlFileContent = this.urlFile;
 
@@ -139,8 +145,10 @@ export class ViewerComponent implements OnDestroy, OnChanges {
                     }
 
                     this.extensionChange.emit(this.extension);
+                    this.isLoading = false;
                     resolve();
                 } else if (this.fileNodeId) {
+                    this.isLoading = true;
                     this.apiService.getInstance().nodes.getNodeInfo(this.fileNodeId).then(
                         (data: MinimalNodeEntryEntity) => {
                             this.mimeType = data.content.mimeType;
@@ -156,11 +164,17 @@ export class ViewerComponent implements OnDestroy, OnChanges {
                                 this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
                             }
 
-                            this.loaded = true;
+                            if (this.viewerType === 'unknown') {
+                                this.displayAsPdf(data.id);
+                            } else {
+                                this.isLoading = false;
+                            }
+
                             this.extensionChange.emit(this.extension);
                             resolve();
                         },
                         (error) => {
+                            this.isLoading = false;
                             reject(error);
                             this.logService.error('This node does not exist');
                         }
@@ -258,7 +272,6 @@ export class ViewerComponent implements OnDestroy, OnChanges {
         this.urlFileContent = '';
         this.displayName = '';
         this.fileNodeId = null;
-        this.loaded = false;
         this.extension = null;
         this.mimeType = null;
     }
@@ -315,15 +328,6 @@ export class ViewerComponent implements OnDestroy, OnChanges {
         }
     }
 
-    /**
-     * return true if the data about the node in the ecm are loaded
-     *
-     * @returns {boolean}
-     */
-    isLoaded(): boolean {
-        return this.fileNodeId ? this.loaded : true;
-    }
-
     download() {
         if (this.allowDownload && this.downloadUrl && this.fileName) {
             const link = document.createElement('a');
@@ -335,6 +339,45 @@ export class ViewerComponent implements OnDestroy, OnChanges {
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+        }
+    }
+
+    private displayAsPdf(nodeId: string) {
+        this.isLoading = true;
+
+        this.renditionService.getRendition(nodeId, 'pdf').subscribe(
+            (response) => {
+                const status = response.entry.status.toString();
+
+                if (status === 'CREATED') {
+                    this.isLoading = false;
+                    this.showPdfRendition(nodeId);
+                } else if (status === 'NOT_CREATED') {
+                    this.renditionService.convert(nodeId, 'pdf').subscribe({
+                        complete: () => {
+                            this.isLoading = false;
+                            this.showPdfRendition(nodeId);
+                        },
+                        error: (error) => {
+                            this.isLoading = false;
+                            console.log(error);
+                        }
+                    });
+                } else {
+                    this.isLoading = false;
+                }
+            },
+            (err) => {
+                this.isLoading = false;
+                console.log(err);
+            }
+        );
+    }
+
+    private showPdfRendition(nodeId: string) {
+        if (nodeId) {
+            this.viewerType = 'pdf';
+            this.urlFileContent = this.renditionService.getRenditionUrl(nodeId, 'pdf');
         }
     }
 }
