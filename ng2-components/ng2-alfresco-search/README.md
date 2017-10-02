@@ -6,139 +6,37 @@ Contains the Search and Search Results components.
 
 <!-- toc -->
 
-- [Search component](#search-component)
-  * [Basic usage](#basic-usage)
-    + [Properties](#properties)
-    + [Events](#events)
-  * [Details](#details)
-- [Search Results component](#search-results-component)
-  * [Basic usage](#basic-usage-1)
-    + [Properties](#properties-1)
-    + [Events](#events-1)
-  * [Details](#details-1)
-- [Project Information](#project-information)
-  * [Prerequisites](#prerequisites)
-  * [Install](#install)
-  * [Build from sources](#build-from-sources)
-  * [NPM scripts](#npm-scripts)
-  * [Demo](#demo)
-  * [License](#license)
+- [Documentation](#documentation)
+- [Prerequisites](#prerequisites)
+- [Install](#install)
+- [Build from sources](#build-from-sources)
+- [NPM scripts](#npm-scripts)
+- [Demo](#demo)
+- [License](#license)
 
 <!-- tocstop -->
 
 <!-- markdown-toc end -->
 
-## Search component
+## Documentation
 
-### Basic usage
+See the [ADF Search](../../docIndex.md#adf-search) section of the [docs index](../../docIndex.md)
+for all available documentation on this library.
 
-```html
-<adf-search-control 
-    [searchTerm]="searchTerm"
-    inputType="search"
-    (searchChange)="onSearchChange($event);"
-    (searchSubmit)="onSearchSubmit($event);"
-    (fileSelect)="onSearchResultSelect($event);">
-</adf-search-control>
-```
-
-#### Properties
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| searchTerm | string  | |  Search term to pre-populate the field with |
-| inputType | string  | "text" | Type of the input field to render, e.g. "search" or "text" (default) |
-| autocomplete | boolean | true  | Whether the browser should offer field auto-completion for the input field to the user. |
-| highlight | boolean | false  | Use the true value if you want to see the searched word highlighted. |
-| expandable | boolean |  true  | Whether to use an expanding search control, if false then a regular input is used. |
-| liveSearchEnabled | boolean | true  | Whether find-as-you-type suggestions should be offered for matching content items. Set to false to disable. |
-| liveSearchRoot | string | "-root-" | NodeRef or node name where the search should start. |
-| liveSearchResultType | string | |  Node type to filter live search results by, e.g. 'cm:content'. |
-| liveSearchMaxResults | number | 5 |  Maximum number of results to show in the live search. |
-| liveSearchResultSort | string | |  Criteria to sort live search results by, must be one of "name" ,  "modifiedAt" or "createdAt" |
-
-#### Events
-
-| Name | Description |
-| --- | --- |
-| searchChange | Emitted when the search term is changed. The search term is provided in the 'value' property of the returned object.  If the term is less than three characters in length then the term is truncated to an empty string. |
-| searchSubmit | Emitted when the search form is submitted. The search term is provided in the 'value' property of the returned object. |
-| fileSelect | Emitted when a file item from the list of find-as-you-type results is selected |
-
-### Details
-
-```html
-<adf-search-control
-    [searchTerm]="searchTerm"
-    inputType="search"
-    (searchChange)="onSearchChange($event);"
-    (searchSubmit)="onSearchSubmit($event);"
-    (fileSelect)="onSearchResultSelect($event);">
-</adf-search-control>
-```
-
-Example of a component that uses the search control. In this example the search term is simply logged to the console
-but instead the component could emit an event to be consumed upstream, or it could trigger a change inside a search
-results component embedded inside the same component.
-
-## Search Results component
-
-### Basic usage
-
-```html
-<adf-search 
-    [searchTerm]="searchTerm">
-</adf-search>
-```
-
-#### Properties
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| searchTerm | string | | Search term to use when executing the search. Updating this value will run a new search and update the results  |
-| rootNodeId | string | "-root-" | NodeRef or node name where the search should start. |
-| resultType | string | | Node type to filter search results by, e.g. 'cm:content', 'cm:folder' if you want only the files. |
-| maxResults | number  | 20 | Maximum number of results to show in the search. |
-| resultSort | string  | | Criteria to sort search results by, must be one of "name" , "modifiedAt" or "createdAt" |
-| navigationMode | string | "dblclick" | Event used to initiate a navigation action to a specific result, one of "click" or "dblclick" |
-| navigate | boolean | true | Allow documentlist to navigate or not. For more information see documentlist component's documentation |
-
-#### Events
-
-| Name | Description |
-| --- | --- |
-| preview | Emitted when user acts upon files with either single or double click (depends on `navigation-mode`), recommended for Viewer components integration  |
-| nodeDbClick | Emitted when user acts upon files or folders with double click **only when `navigation-mode` is set to false**, giving more freedom then just simply previewing the file |
-| resultsLoad | Emitted when search results have fully loaded |
-
-### Details
-
-```html
-<adf-search
-    [searchTerm]="searchTerm">
-</adf-search>
-```
-
-Example of a component that displays search results, using the Angular2 router to supply a 'q' parameter containing the
-search term. If no router is present on the page or if the router does not provide such parameter then an empty
-results page will be shown.
-
-## Project Information
-
-### Prerequisites
+## Prerequisites
 
 Before you start using this development framework, make sure you have installed all required software and done all the
 necessary configuration, see this [page](https://github.com/Alfresco/alfresco-ng2-components/blob/master/PREREQUISITES.md).
 
 > If you plan using this component with projects generated by Angular CLI, please refer to the following article: [Using ADF with Angular CLI](https://github.com/Alfresco/alfresco-ng2-components/wiki/Angular-CLI)
 
-### Install
+## Install
 
 ```sh
 npm install ng2-alfresco-search
 ```
 
-### Build from sources
+## Build from sources
 
 You can build component from sources with the following commands:
 
@@ -150,7 +48,7 @@ npm run build
 > The `build` task rebuilds all the code, runs tslint, license checks 
 > and other quality check tools before performing unit testing.
 
-### NPM scripts
+## NPM scripts
 
 | Command | Description |
 | --- | --- |
@@ -159,7 +57,7 @@ npm run build
 | npm run test-browser | Run unit tests in the browser
 | npm run coverage | Run unit tests and display code coverage report |
 
-### Demo
+## Demo
 
 Please check the demo folder for a demo project
 
@@ -169,6 +67,6 @@ npm install
 npm start
 ```
 
-### License
+## License
 
 [Apache Version 2.0](https://github.com/Alfresco/alfresco-ng2-components/blob/master/LICENSE)
