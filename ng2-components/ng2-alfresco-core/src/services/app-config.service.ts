@@ -23,6 +23,9 @@ import { ObjectUtils } from '../utils/object-utils';
 export class AppConfigService {
 
     config: any = {
+        application: {
+            name: 'Alfresco ADF Application'
+        },
         ecmHost: 'http://{hostname}:{port}/ecm',
         bpmHost: 'http://{hostname}:{port}/bpm'
     };

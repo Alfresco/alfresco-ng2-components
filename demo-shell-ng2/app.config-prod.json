@@ -2,7 +2,7 @@
     "ecmHost": "http://{hostname}",
     "bpmHost": "http://{hostname}",
     "application": {
-        "name": "Alfresco"
+        "name": "Alfresco ADF Appplication"
     },
     "pagination": {
         "size": 25
