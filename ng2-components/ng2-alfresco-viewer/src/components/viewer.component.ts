@@ -81,6 +81,9 @@ export class ViewerComponent implements OnDestroy, OnChanges {
     extensionChange = new EventEmitter<string>();
 
     viewerType: string = 'unknown';
+    downloadUrl: string = null;
+    fileName: string = 'document';
+
     extensionTemplates: { template: TemplateRef<any>, isVisible: boolean }[] = [];
     externalExtensions: string[] = [];
     urlFileContent: string;
@@ -114,21 +117,28 @@ export class ViewerComponent implements OnDestroy, OnChanges {
             return new Promise((resolve, reject) => {
                 if (this.blobFile) {
                     this.mimeType = this.blobFile.type;
-                    this.extensionChange.emit(this.mimeType);
-
                     this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
+
+                    this.allowDownload = false;
+                    // TODO: wrap blob into the data url and allow downloading
+
+                    this.extensionChange.emit(this.mimeType);
                     resolve();
                 } else if (this.urlFile) {
                     let filenameFromUrl = this.getFilenameFromUrl(this.urlFile);
                     this.displayName = filenameFromUrl ? filenameFromUrl : '';
                     this.extension = this.getFileExtension(filenameFromUrl);
-                    this.extensionChange.emit(this.extension);
                     this.urlFileContent = this.urlFile;
+
+                    this.downloadUrl = this.urlFile;
+                    this.fileName = this.displayName;
 
                     this.viewerType = this.getViewerTypeByExtension(this.extension);
                     if (this.viewerType === 'unknown') {
                         this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
                     }
+
+                    this.extensionChange.emit(this.extension);
                     resolve();
                 } else if (this.fileNodeId) {
                     this.apiService.getInstance().nodes.getNodeInfo(this.fileNodeId).then(
@@ -137,13 +147,17 @@ export class ViewerComponent implements OnDestroy, OnChanges {
                             this.displayName = data.name;
                             this.urlFileContent = this.apiService.getInstance().content.getContentUrl(data.id);
                             this.extension = this.getFileExtension(data.name);
-                            this.extensionChange.emit(this.extension);
-                            this.loaded = true;
+
+                            this.fileName = data.name;
+                            this.downloadUrl = this.apiService.getInstance().content.getContentUrl(data.id, true);
 
                             this.viewerType = this.getViewerTypeByExtension(this.extension);
                             if (this.viewerType === 'unknown') {
                                 this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
                             }
+
+                            this.loaded = true;
+                            this.extensionChange.emit(this.extension);
                             resolve();
                         },
                         (error) => {
@@ -308,5 +322,19 @@ export class ViewerComponent implements OnDestroy, OnChanges {
      */
     isLoaded(): boolean {
         return this.fileNodeId ? this.loaded : true;
+    }
+
+    download() {
+        if (this.allowDownload && this.downloadUrl && this.fileName) {
+            const link = document.createElement('a');
+
+            link.style.display = 'none';
+            link.download = this.fileName;
+            link.href = this.downloadUrl;
+
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
     }
 }
