@@ -128,6 +128,7 @@ export class ViewerComponent implements OnDestroy, OnChanges {
 
                     this.extensionChange.emit(this.mimeType);
                     this.isLoading = false;
+                    this.scrollTop();
                     resolve();
                 } else if (this.urlFile) {
                     this.isLoading = true;
@@ -146,6 +147,7 @@ export class ViewerComponent implements OnDestroy, OnChanges {
 
                     this.extensionChange.emit(this.extension);
                     this.isLoading = false;
+                    this.scrollTop();
                     resolve();
                 } else if (this.fileNodeId) {
                     this.isLoading = true;
@@ -171,6 +173,7 @@ export class ViewerComponent implements OnDestroy, OnChanges {
                             }
 
                             this.extensionChange.emit(this.extension);
+                            this.scrollTop();
                             resolve();
                         },
                         (error) => {
@@ -182,6 +185,10 @@ export class ViewerComponent implements OnDestroy, OnChanges {
                 }
             });
         }
+    }
+
+    scrollTop() {
+        window.scrollTo(0, 1);
     }
 
     getViewerTypeByMimeType(mimeType: string) {
