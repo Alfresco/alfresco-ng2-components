@@ -7,7 +7,7 @@ See it live: [Viewer Quickstart](https://embed.plnkr.co/iTuG1lFIXfsP95l6bDW6/)
 <!-- toc -->
 
 - [Basic usage](#basic-usage)
-  * [Properties](#properties)
+- [Properties](#properties)
 - [Details](#details)
   * [Supported file formats](#supported-file-formats)
   * [PDF Conversion](#pdf-conversion)
@@ -39,9 +39,9 @@ Using with file url:
 </adf-viewer>
 ```
 
-### Properties
+## Properties
 
-| Attribute | Options | Default | Description |
+| Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | fileNodeId | string | | Node Id of the file to load |
 | urlFile | string | | If you want to load an external file that does not come from ECM you can use this Url where to load the file |
@@ -50,6 +50,13 @@ Using with file url:
 | showViewer | boolean | true | Hide or show the viewer |
 | showToolbar | boolean | true | Hide or show the toolbars |
 | displayName | string | | You can specify the name of the file |
+| allowGoBack | boolean | true | Allow `back` navigation |
+| allowOpenWith | boolean | true | Toggle `Open With` options |
+| allowDownload | boolean | true | Toggle download feature |
+| allowPrint | boolean | true | Toggle printing feature |
+| allowShare | boolean | true | Toggle sharing feature |
+| allowInfoDrawer | boolean | true | Toogle info drawer feature |
+| showInfoDrawer | boolean | false | Toggles info drawer visibility. Requires `allowInfoDrawer` to be set to `true`. |
 
 ## Details
 
@@ -63,9 +70,7 @@ Using with file url:
 
 ### PDF Conversion
 
-![Rendition](docassets/images/renditions.png)                         
-
-Note for unsupported extensions the viewer will offer the possibility to convert to PDF if that kind of extension is supported by the [content service renditions service](https://community.alfresco.com/docs/DOC-5879-rendition-service)
+For unsupported extensions or mime types the viewer will try to fetch PDF rendition utilising the [renditions service api](https://community.alfresco.com/docs/DOC-5879-rendition-service)
 
 ### Configuring PDF.js library
 
