@@ -25,7 +25,6 @@ import {
     FormService, ValidateDynamicTableRowEvent
 } from 'ng2-activiti-form';
 import {
-    FilterParamsModel,
     FilterProcessRepresentationModel,
     ProcessFiltersComponent,
     ProcessInstance,
