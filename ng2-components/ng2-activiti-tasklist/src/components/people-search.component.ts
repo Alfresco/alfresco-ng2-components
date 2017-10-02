@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Directive, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Directive, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { User } from '../models/user.model';
@@ -23,7 +23,11 @@ import { User } from '../models/user.model';
 @Component({
     selector: 'adf-people-search, activiti-people-search',
     templateUrl: './people-search.component.html',
-    styleUrls: ['./people-search.component.scss']
+    styleUrls: ['./people-search.component.scss'],
+    host: {
+        'class': 'adf-people-search'
+    },
+    encapsulation: ViewEncapsulation.None
 })
 
 export class PeopleSearchComponent implements OnInit {
