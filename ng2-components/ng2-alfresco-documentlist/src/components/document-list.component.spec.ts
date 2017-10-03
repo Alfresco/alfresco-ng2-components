@@ -198,6 +198,12 @@ describe('DocumentList', () => {
         expect(documentList.resetSelection).toHaveBeenCalled();
     });
 
+    it('should reset selection in the datatable also', () => {
+        spyOn(documentList.dataTable, 'resetSelection').and.callThrough();
+        documentList.loadFolderByNodeId('-trashcan-');
+        expect(documentList.dataTable.resetSelection).toHaveBeenCalled();
+    });
+
     it('should empty template be present when no element are present', (done) => {
         documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
         documentList.folderNode = new NodeMinimal();

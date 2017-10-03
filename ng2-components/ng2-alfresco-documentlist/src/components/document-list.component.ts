@@ -484,6 +484,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     resetSelection() {
+        this.dataTable.resetSelection();
         this.selection = [];
     }
 
