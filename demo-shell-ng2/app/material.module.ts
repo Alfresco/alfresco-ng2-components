@@ -21,7 +21,6 @@ import {
     MdInputModule,
     MdProgressBarModule,
     MdSelectModule,
-    MdSidenavModule,
     MdSlideToggleModule
 } from '@angular/material';
 
@@ -30,7 +29,6 @@ const MATERIAL_MODULES = [
     MdInputModule,
     MdSelectModule,
     MdDialogModule,
-    MdSidenavModule,
     MdProgressBarModule
 ];
 

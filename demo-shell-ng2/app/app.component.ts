@@ -22,30 +22,10 @@ import { AlfrescoSettingsService, AlfrescoTranslationService, PageTitle, Storage
     selector: 'adf-app',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss', './theme.scss'],
-    host: {
-        'class': 'adf-app'
-    },
     encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
     searchTerm: string = '';
-
-    links: Array<any> = [
-        { href: '/home', icon: 'home', title: 'Home' },
-        { href: '/files', icon: 'folder_open', title: 'Content Services' },
-        { href: '/activiti', icon: 'device_hub', title: 'Process Services' },
-        { href: '/login', icon: 'vpn_key', title: 'Login' },
-        { href: '/dl-custom-sources', icon: 'extension', title: 'DL: Custom Sources' },
-        { href: '/datatable', icon: 'view_module', title: 'DataTable' },
-        { href: '/form', icon: 'poll', title: 'Form' },
-        { href: '/form-list', icon: 'library_books', title: 'Form List' },
-        { href: '/uploader', icon: 'file_upload', title: 'Uploader' },
-        { href: '/webscript', icon: 'extension', title: 'Webscript' },
-        { href: '/tag', icon: 'local_offer', title: 'Tag' },
-        { href: '/social', icon: 'thumb_up', title: 'Social' },
-        { href: '/settings', icon: 'settings', title: 'Settings' },
-        { href: '/about', icon: 'info_outline', title: 'About' }
-    ];
 
     constructor(private settingsService: AlfrescoSettingsService,
                 private translateService: AlfrescoTranslationService,

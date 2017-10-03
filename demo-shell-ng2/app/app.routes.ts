@@ -45,6 +45,11 @@ import { FormListDemoComponent } from './components/form/form-list-demo.componen
 export const appRoutes: Routes = [
     { path: 'login', component: LoginDemoComponent },
     {
+        path: '',
+        component: HomeComponent,
+        canActivate: [AuthGuard]
+    },
+    {
         path: 'home',
         component: HomeComponent,
         canActivate: [AuthGuard]
@@ -140,12 +145,7 @@ export const appRoutes: Routes = [
     { path: 'about', component: AboutComponent },
     { path: 'settings', component: SettingsComponent },
     { path: 'form', component: FormDemoComponent },
-    { path: 'form-list', component: FormListDemoComponent },
-    {
-        path: '',
-        component: HomeComponent,
-        canActivate: [AuthGuard]
-    }
+    { path: 'form-list', component: FormListDemoComponent }
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);
