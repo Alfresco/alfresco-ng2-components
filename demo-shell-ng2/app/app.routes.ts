@@ -44,7 +44,13 @@ import { CustomSourcesComponent } from './components/files/custom-sources.compon
 import { FormListDemoComponent } from './components/form/form-list-demo.component';
 
 export const appRoutes: Routes = [
-    { path: 'login', component: LoginDemoComponent },
+    {
+        path: 'login',
+        component: LoginDemoComponent,
+        data: {
+            showAppMenu: false
+        }
+    },
     {
         path: '',
         component: HomeComponent,
@@ -68,7 +74,10 @@ export const appRoutes: Routes = [
     {
         path: 'files/:nodeId/view',
         component: FileViewComponent,
-        canActivate: [ AuthGuardEcm ]
+        canActivate: [ AuthGuardEcm ],
+        data: {
+            showAppMenu: false
+        }
     },
     {
         path: 'dl-custom-sources',
