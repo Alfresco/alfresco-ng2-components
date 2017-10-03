@@ -78,6 +78,9 @@ export class TaskHeaderComponent implements OnChanges {
         }
     }
 
+    /**
+     * Return the process parent information
+     */
     getParentInfo() {
         if (this.taskDetails.processInstanceId && this.taskDetails.processDefinitionName) {
             return new Map([[this.taskDetails.processInstanceId, this.taskDetails.processDefinitionName]]);
