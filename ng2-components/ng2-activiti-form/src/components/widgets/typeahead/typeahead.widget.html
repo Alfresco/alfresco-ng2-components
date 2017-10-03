@@ -11,6 +11,7 @@
                    [id]="field.id"
                    [(ngModel)]="value"
                    (keyup)="onKeyUp($event)"
+                   (blur)="onBlur()"
                    [disabled]="field.readOnly"
                    placeholder="{{field.placeholder}}"
                    [mdAutocomplete]="auto">
@@ -19,9 +20,6 @@
                     <span>{{item.name}}</span>
                 </md-option>
             </md-autocomplete>
-            <md-select class="adf-select" [id]="field.id" [(ngModel)]="field.value">
-                <md-option id="readonlyOption" *ngIf="isReadOnlyType()" [value]="field.value">{{field.value}}</md-option>
-            </md-select>
         </md-input-container>
 
         <error-widget [error]="field.validationSummary"></error-widget>

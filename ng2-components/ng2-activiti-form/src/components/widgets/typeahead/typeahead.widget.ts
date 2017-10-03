@@ -104,7 +104,7 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
     }
 
     getOptions(): FormFieldOption[] {
-        let val = this.value.toLocaleLowerCase();
+        let val = this.value.trim().toLocaleLowerCase();
         return this.field.options.filter(item => {
             let name = item.name.toLocaleLowerCase();
             return name.indexOf(val) > -1;
@@ -112,14 +112,23 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
     }
 
     onKeyUp(event: KeyboardEvent) {
-        if (this.value && this.value.length >= this.minTermLength  && this.oldValue !== this.value) {
+        if (this.value && this.value.trim().length >= this.minTermLength  && this.oldValue !== this.value) {
             if (event.keyCode !== ESCAPE && event.keyCode !== ENTER) {
                 if (this.value.length >= this.minTermLength) {
                     this.options = this.getOptions();
                     this.oldValue = this.value;
                 }
             }
+        }else {
+            this.options = [];
         }
+    }
+
+    onBlur() {
+        setTimeout(() => {
+            this.flushValue();
+            this.checkVisibility();
+        }, 200);
     }
 
     flushValue() {
@@ -133,9 +142,8 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
         } else {
             this.field.value = null;
             this.value = null;
+            this.options = [];
         }
-
-        this.field.updateForm();
     }
 
     onItemClick(item: FormFieldOption, event: Event) {
