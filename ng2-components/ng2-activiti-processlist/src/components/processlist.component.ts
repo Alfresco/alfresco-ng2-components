@@ -236,6 +236,18 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     }
 
     /**
+     * Emit the event rowClick passing the current task id when pressed the Enter key on the selected row
+     * @param event
+     */
+    onRowKeyUp(event: CustomEvent) {
+        if (event.detail.keyboardEvent.key === 'Enter') {
+            event.preventDefault();
+            this.currentInstanceId = event.detail.row.getValue('id');
+            this.rowClick.emit(this.currentInstanceId);
+        }
+    }
+
+    /**
      * Optimize name field
      * @param instances
      * @returns {any[]}

@@ -3,7 +3,8 @@
     <adf-datatable
         [data]="data"
         [loading]="isLoading"
-        (rowClick)="onRowClick($event)">
+        (rowClick)="onRowClick($event)"
+        (row-keyup)="onRowKeyUp($event)">
         <loading-content-template>
             <ng-template>
                 <!--Add your custom loading template here-->
