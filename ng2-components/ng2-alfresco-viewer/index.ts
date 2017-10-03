@@ -23,12 +23,13 @@ import { MaterialModule } from './src/material.module';
 export { ViewerComponent } from './src/components/viewer.component';
 import { ImgViewerComponent } from './src/components/imgViewer.component';
 import { MediaPlayerComponent } from './src/components/mediaPlayer.component';
-import { NotSupportedFormatComponent } from './src/components/notSupportedFormat.component';
 import { PdfViewerComponent } from './src/components/pdfViewer.component';
 import { TxtViewerComponent } from './src/components/txtViewer.component';
+import { UnknownFormatComponent } from './src/components/unknown-format/unknown-format.component';
 import { PdfViewComponent } from './src/components/viewer-dialog/pdf-view/pdf-view.component';
 import { ViewerDialogComponent } from './src/components/viewer-dialog/viewer-dialog.component';
 import { ViewerComponent } from './src/components/viewer.component';
+
 import { ExtensionViewerDirective } from './src/directives/extension-viewer.directive';
 
 import { RenderingQueueServices } from './src/services/rendering-queue.services';
@@ -38,33 +39,33 @@ export { ViewerDialogComponent } from './src/components/viewer-dialog/viewer-dia
 export { ViewerDialogSettings } from './src/components/viewer-dialog/viewer-dialog.settings';
 export { ViewerService } from './src/services/viewer.service';
 
-export const VIEWER_DIRECTIVES: any[] = [
-    ViewerComponent,
-    ImgViewerComponent,
-    TxtViewerComponent,
-    MediaPlayerComponent,
-    NotSupportedFormatComponent,
-    PdfViewerComponent,
-    ExtensionViewerDirective,
-    ViewerDialogComponent,
-    PdfViewComponent
-];
+export function declarations() {
+    return [
+        ViewerComponent,
+        ImgViewerComponent,
+        TxtViewerComponent,
+        MediaPlayerComponent,
+        PdfViewerComponent,
+        ExtensionViewerDirective,
+        ViewerDialogComponent,
+        PdfViewComponent,
+        UnknownFormatComponent
+    ];
+}
 
 @NgModule({
     imports: [
         CoreModule,
         MaterialModule
     ],
-    declarations: [
-        ...VIEWER_DIRECTIVES
-    ],
+    declarations: declarations(),
     providers: [
         RenderingQueueServices,
         ViewerService
     ],
     exports: [
         MaterialModule,
-        ...VIEWER_DIRECTIVES
+        ...declarations()
     ],
     entryComponents: [
         ViewerDialogComponent

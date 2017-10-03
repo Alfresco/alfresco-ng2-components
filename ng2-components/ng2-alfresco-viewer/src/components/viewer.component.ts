@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
+import { Location } from '@angular/common';
 import { Component, EventEmitter, HostListener, Input, OnChanges, OnDestroy, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoApiService, BaseEvent, LogService, RenditionsService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'adf-viewer, alfresco-viewer',
@@ -44,30 +45,70 @@ export class ViewerComponent implements OnDestroy, OnChanges {
     showViewer: boolean = true;
 
     @Input()
-    showToolbar: boolean = true;
+    showToolbar = true;
 
     @Input()
-    displayName: string;
+    displayName: string = 'Unknown';
+
+    @Input()
+    allowGoBack = true;
+
+    @Input()
+    allowOpenWith = true;
+
+    @Input()
+    allowDownload = true;
+
+    @Input()
+    allowPrint = true;
+
+    @Input()
+    allowShare = true;
+
+    @Input()
+    allowInfoDrawer = true;
+
+    @Input()
+    showInfoDrawer = false;
 
     @Output()
-    showViewerChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+    goBack = new EventEmitter<BaseEvent<any>>();
 
     @Output()
-    extensionChange: EventEmitter<String> = new EventEmitter<String>();
+    showViewerChange = new EventEmitter<boolean>();
+
+    @Output()
+    extensionChange = new EventEmitter<string>();
+
+    viewerType: string = 'unknown';
+    downloadUrl: string = null;
+    fileName: string = 'document';
+    isLoading: boolean = false;
 
     extensionTemplates: { template: TemplateRef<any>, isVisible: boolean }[] = [];
-
     externalExtensions: string[] = [];
-
     urlFileContent: string;
     otherMenu: any;
     extension: string;
     mimeType: string;
-    loaded: boolean = false;
 
-    constructor(private apiService: AlfrescoApiService,
-                private logService: LogService) {
-    }
+    private extensions = {
+        image: ['png', 'jpg', 'jpeg', 'gif', 'bpm'],
+        media: ['wav', 'mp4', 'mp3', 'webm', 'ogg'],
+        text: ['txt', 'xml', 'js', 'html'],
+        pdf: ['pdf']
+    };
+
+    private mimeTypes = [
+        { mimeType: 'application/x-javascript', type: 'text' },
+        { mimeType: 'application/pdf', type: 'pdf' }
+    ];
+
+    constructor(
+        private apiService: AlfrescoApiService,
+        private logService: LogService,
+        private location: Location,
+        private renditionService: RenditionsService) {}
 
     ngOnChanges(changes) {
         if (this.showViewer) {
@@ -77,34 +118,145 @@ export class ViewerComponent implements OnDestroy, OnChanges {
 
             return new Promise((resolve, reject) => {
                 if (this.blobFile) {
+                    this.isLoading = true;
+
                     this.mimeType = this.blobFile.type;
+                    this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
+
+                    this.allowDownload = false;
+                    // TODO: wrap blob into the data url and allow downloading
+
                     this.extensionChange.emit(this.mimeType);
+                    this.isLoading = false;
+                    this.scrollTop();
                     resolve();
                 } else if (this.urlFile) {
+                    this.isLoading = true;
                     let filenameFromUrl = this.getFilenameFromUrl(this.urlFile);
-                    this.displayName = filenameFromUrl ? filenameFromUrl : '';
+                    this.displayName = filenameFromUrl || 'Unknown';
                     this.extension = this.getFileExtension(filenameFromUrl);
-                    this.extensionChange.emit(this.extension);
                     this.urlFileContent = this.urlFile;
+
+                    this.downloadUrl = this.urlFile;
+                    this.fileName = this.displayName;
+
+                    this.viewerType = this.getViewerTypeByExtension(this.extension);
+                    if (this.viewerType === 'unknown') {
+                        this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
+                    }
+
+                    this.extensionChange.emit(this.extension);
+                    this.isLoading = false;
+                    this.scrollTop();
                     resolve();
                 } else if (this.fileNodeId) {
+                    this.isLoading = true;
                     this.apiService.getInstance().nodes.getNodeInfo(this.fileNodeId).then(
                         (data: MinimalNodeEntryEntity) => {
                             this.mimeType = data.content.mimeType;
                             this.displayName = data.name;
                             this.urlFileContent = this.apiService.getInstance().content.getContentUrl(data.id);
                             this.extension = this.getFileExtension(data.name);
+
+                            this.fileName = data.name;
+                            this.downloadUrl = this.apiService.getInstance().content.getContentUrl(data.id, true);
+
+                            this.viewerType = this.getViewerTypeByExtension(this.extension);
+                            if (this.viewerType === 'unknown') {
+                                this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
+                            }
+
+                            if (this.viewerType === 'unknown') {
+                                this.displayAsPdf(data.id);
+                            } else {
+                                this.isLoading = false;
+                            }
+
                             this.extensionChange.emit(this.extension);
-                            this.loaded = true;
+                            this.scrollTop();
                             resolve();
                         },
                         (error) => {
+                            this.isLoading = false;
                             reject(error);
                             this.logService.error('This node does not exist');
                         }
                     );
                 }
             });
+        }
+    }
+
+    scrollTop() {
+        window.scrollTo(0, 1);
+    }
+
+    getViewerTypeByMimeType(mimeType: string) {
+        if (mimeType) {
+            mimeType = mimeType.toLowerCase();
+
+            if (mimeType.startsWith('image/')) {
+                return 'image';
+            }
+
+            if (mimeType.startsWith('text/')) {
+                return 'text';
+            }
+
+            if (mimeType.startsWith('video/')) {
+                return 'media';
+            }
+
+            if (mimeType.startsWith('audio/')) {
+                return 'media';
+            }
+
+            const registered = this.mimeTypes.find(t => t.mimeType === mimeType);
+            if (registered) {
+                return registered.type;
+            }
+        }
+        return 'unknown';
+    }
+
+    getViewerTypeByExtension(extension: string) {
+        if (extension) {
+            extension = extension.toLowerCase();
+        }
+
+        if (this.isCustomViewerExtension(extension)) {
+            return 'custom';
+        }
+
+        if (this.extensions.image.indexOf(extension) >= 0) {
+            return 'image';
+        }
+
+        if (this.extensions.media.indexOf(extension) >= 0) {
+            return 'media';
+        }
+
+        if (this.extensions.text.indexOf(extension) >= 0) {
+            return 'text';
+        }
+
+        if (this.extensions.pdf.indexOf(extension) >= 0) {
+            return 'pdf';
+        }
+
+        return 'unknown';
+    }
+
+    onBackButtonClick() {
+        if (this.overlayMode) {
+            this.close();
+        } else {
+            const event = new BaseEvent<any>();
+            this.goBack.next(event);
+
+            if (!event.defaultPrevented) {
+                this.location.back();
+            }
         }
     }
 
@@ -127,7 +279,6 @@ export class ViewerComponent implements OnDestroy, OnChanges {
         this.urlFileContent = '';
         this.displayName = '';
         this.fileNodeId = null;
-        this.loaded = false;
         this.extension = null;
         this.mimeType = null;
     }
@@ -157,113 +308,19 @@ export class ViewerComponent implements OnDestroy, OnChanges {
      * @param {string} fileName - file name
      * @returns {string} file name extension
      */
-    private getFileExtension(fileName: string): string {
+    getFileExtension(fileName: string): string {
         return fileName.split('.').pop().toLowerCase();
     }
 
-    /**
-     * Check if the content is an image through the extension or mime type
-     *
-     * @returns {boolean}
-     */
-    public isImage(): boolean {
-        return this.isImageExtension() || this.isImageMimeType();
-    }
+    isCustomViewerExtension(extension: string): boolean {
+        const extensions = this.externalExtensions || [];
 
-    /**
-     * Check if the content is a media through the extension or mime type
-     *
-     * @returns {boolean}
-     */
-    public isMedia(): boolean {
-        return this.isMediaExtension(this.extension) || this.isMediaMimeType();
-    }
-
-    /**
-     * check if the current file is a supported image extension
-     *
-     * @returns {boolean}
-     */
-    private isImageExtension(): boolean {
-        return this.extension === 'png' || this.extension === 'jpg' ||
-            this.extension === 'jpeg' || this.extension === 'gif' || this.extension === 'bmp';
-    }
-
-    /**
-     * check if the current file has an image-based mimetype
-     *
-     * @returns {boolean}
-     */
-    private isMediaMimeType(): boolean {
-        let mimeExtension;
-        if (this.mimeType && this.mimeType.indexOf('/')) {
-            mimeExtension = this.mimeType.substr(this.mimeType.indexOf('/') + 1, this.mimeType.length);
-        }
-        return (this.mimeType && (this.mimeType.indexOf('video/') === 0 || this.mimeType.indexOf('audio/') === 0)) && this.isMediaExtension(mimeExtension);
-    }
-
-    /**
-     * check if the current file is a supported media extension
-     * @param {string} extension
-     *
-     * @returns {boolean}
-     */
-    private isMediaExtension(extension: string): boolean {
-        return extension === 'wav' || extension === 'mp4' || extension === 'mp3' || extension === 'WebM' || extension === 'Ogg';
-    }
-
-    /**
-     * check if the current file has an image-based mimetype
-     *
-     * @returns {boolean}
-     */
-    private isImageMimeType(): boolean {
-        return this.mimeType && this.mimeType.indexOf('image/') === 0;
-    }
-
-    /**
-     * check if the current file is a supported pdf extension
-     *
-     * @returns {boolean}
-     */
-    public isPdf(): boolean {
-        return this.extension === 'pdf' || this.mimeType === 'application/pdf';
-    }
-
-    /**
-     * check if the current file is a supported txt extension
-     *
-     * @returns {boolean}
-     */
-    public isText(): boolean {
-        return this.extension === 'txt' || this.mimeType === 'text/txt' || this.mimeType === 'text/plain';
-    }
-
-    /**
-     * check if the current file is  a supported extension
-     *
-     * @returns {boolean}
-     */
-    supportedExtension(): boolean {
-        return this.isImage() || this.isPdf() || this.isMedia() || this.isText() || this.isExternalSupportedExtension();
-    }
-
-    /**
-     * Check if the file is compatible with one of the extension
-     *
-     * @returns {boolean}
-     */
-    isExternalSupportedExtension(): boolean {
-        let externalType: string;
-
-        if (this.externalExtensions && (this.externalExtensions instanceof Array)) {
-            externalType = this.externalExtensions.find((externalExtension) => {
-                return externalExtension.toLowerCase() === this.extension;
-
-            });
+        if (extension && extensions.length > 0) {
+            extension = extension.toLowerCase();
+            return extensions.indexOf(extension) >= 0;
         }
 
-        return !!externalType;
+        return false;
     }
 
     /**
@@ -278,12 +335,56 @@ export class ViewerComponent implements OnDestroy, OnChanges {
         }
     }
 
-    /**
-     * return true if the data about the node in the ecm are loaded
-     *
-     * @returns {boolean}
-     */
-    isLoaded(): boolean {
-        return this.fileNodeId ? this.loaded : true;
+    download() {
+        if (this.allowDownload && this.downloadUrl && this.fileName) {
+            const link = document.createElement('a');
+
+            link.style.display = 'none';
+            link.download = this.fileName;
+            link.href = this.downloadUrl;
+
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    }
+
+    private displayAsPdf(nodeId: string) {
+        this.isLoading = true;
+
+        this.renditionService.getRendition(nodeId, 'pdf').subscribe(
+            (response) => {
+                const status = response.entry.status.toString();
+
+                if (status === 'CREATED') {
+                    this.isLoading = false;
+                    this.showPdfRendition(nodeId);
+                } else if (status === 'NOT_CREATED') {
+                    this.renditionService.convert(nodeId, 'pdf').subscribe({
+                        complete: () => {
+                            this.isLoading = false;
+                            this.showPdfRendition(nodeId);
+                        },
+                        error: (error) => {
+                            this.isLoading = false;
+                            console.log(error);
+                        }
+                    });
+                } else {
+                    this.isLoading = false;
+                }
+            },
+            (err) => {
+                this.isLoading = false;
+                console.log(err);
+            }
+        );
+    }
+
+    private showPdfRendition(nodeId: string) {
+        if (nodeId) {
+            this.viewerType = 'pdf';
+            this.urlFileContent = this.renditionService.getRenditionUrl(nodeId, 'pdf');
+        }
     }
 }

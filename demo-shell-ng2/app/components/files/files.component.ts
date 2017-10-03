@@ -27,8 +27,6 @@ import {
 import { DataColumn, DataRow } from 'ng2-alfresco-datatable';
 import { DocumentListComponent, PermissionStyleModel } from 'ng2-alfresco-documentlist';
 
-import { ViewerService } from 'ng2-alfresco-viewer';
-
 const DEFAULT_FOLDER_TO_SHOW = '-my-';
 
 @Component({
@@ -46,8 +44,6 @@ export class FilesComponent implements OnInit {
 
     toolbarColor = 'default';
     useDropdownBreadcrumb = false;
-    useViewerDialog = true;
-    useInlineViewer = false;
 
     selectionModes = [
         { value: 'none', viewValue: 'None' },
@@ -91,27 +87,14 @@ export class FilesComponent implements OnInit {
                 private contentService: AlfrescoContentService,
                 private dialog: MdDialog,
                 private translateService: AlfrescoTranslationService,
-                private viewerService: ViewerService,
                 private router: Router,
                 @Optional() private route: ActivatedRoute) {
     }
 
     showFile(event) {
-        if (this.useViewerDialog) {
-            if (event.value.entry.isFile) {
-                this.viewerService
-                    .showViewerForNode(event.value.entry)
-                    .then(result => {
-                        console.log(result);
-                    });
-            }
-        } else {
-            if (event.value.entry.isFile) {
-                this.fileNodeId = event.value.entry.id;
-                this.showViewer = true;
-            } else {
-                this.showViewer = false;
-            }
+        const entry = event.value.entry;
+        if (entry && entry.isFile) {
+            this.router.navigate(['/files', entry.id, 'view']);
         }
     }
 

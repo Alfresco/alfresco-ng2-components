@@ -16,31 +16,22 @@
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { AlfrescoSettingsService, AlfrescoTranslationService, PageTitle, StorageService } from 'ng2-alfresco-core';
+import { AlfrescoSettingsService, PageTitle, StorageService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'adf-app',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss', './theme.scss'],
+    styleUrls: ['./theme.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
     searchTerm: string = '';
 
     constructor(private settingsService: AlfrescoSettingsService,
-                private translateService: AlfrescoTranslationService,
                 private storage: StorageService,
                 pageTitle: PageTitle) {
         this.setProvider();
         pageTitle.setTitle();
-    }
-
-    isAPageWithHeaderBar(): boolean {
-        return location.pathname === '/login' || location.pathname === '/settings';
-    }
-
-    changeLanguage(lang: string) {
-        this.translateService.use(lang);
     }
 
     private setProvider() {

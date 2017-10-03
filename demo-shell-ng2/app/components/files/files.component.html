@@ -1,3 +1,5 @@
+<adf-app-menu></adf-app-menu>
+
 <div class="container">
     <div class="adf-demo-site-container-style" id="demo-container">
         <adf-sites-dropdown (change)="getSiteContent($event)">
@@ -225,14 +227,6 @@
 </div>
 
 <div class="container">
-    <section *ngIf="!useViewerDialog">
-        <md-slide-toggle [color]="'primary'" [(ngModel)]="useInlineViewer">Use inline viewer (no overlay)</md-slide-toggle>
-    </section>
-
-    <section>
-        <md-slide-toggle [color]="'primary'" [(ngModel)]="useViewerDialog">Use File Viewer dialog</md-slide-toggle>
-    </section>
-
     <section>
         <md-slide-toggle [color]="'primary'" [(ngModel)]="multiselect">Multiselect (with checkboxes)</md-slide-toggle>
     </section>
@@ -309,29 +303,3 @@
 </div>
 
 <file-uploading-dialog #fileDialog></file-uploading-dialog>
-
-<div *ngIf="showViewer">
-    <ng-container *ngIf="!useInlineViewer">
-        <adf-viewer
-            [(showViewer)]="showViewer"
-            [fileNodeId]="fileNodeId"
-            [overlayMode]="true">
-
-            <extension-viewer [supportedExtensions]="['obj','3DS']" #extension>
-                <ng-template let-urlFileContent="urlFileContent" let-extension="extension" >
-                    <threed-viewer [urlFile]="urlFileContent" [extension]="extension" ></threed-viewer>
-                </ng-template>
-            </extension-viewer>
-
-        </adf-viewer>
-    </ng-container>
-
-    <ng-container *ngIf="useInlineViewer">
-        <div class="adf-not-overlay-viewer">
-            <adf-viewer
-                [(showViewer)]="showViewer"
-                [fileNodeId]="fileNodeId">
-            </adf-viewer>
-        </div>
-    </ng-container>
-</div>

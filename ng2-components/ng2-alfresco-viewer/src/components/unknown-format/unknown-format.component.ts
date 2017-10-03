@@ -16,23 +16,11 @@
  */
 
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { AppDefinitionRepresentationModel } from 'ng2-activiti-tasklist';
 
 @Component({
-    selector: 'activiti-apps-view',
-    template: `
-        <adf-app-menu></adf-app-menu>
-        <activiti-apps (appClick)="onAppClicked($event)"></activiti-apps>
-    `
+    selector: 'adf-viewer-unknown-format',
+    templateUrl: 'unknown-format.component.html',
+    styleUrls: ['unknown-format.component.scss']
 })
-export class ActivitiAppsViewComponent {
-
-    constructor(private router: Router) {
-    }
-
-     onAppClicked(app: AppDefinitionRepresentationModel) {
-         this.router.navigate(['/activiti/apps', app.id || 0, 'tasks']);
-     }
-
+export class UnknownFormatComponent {
 }

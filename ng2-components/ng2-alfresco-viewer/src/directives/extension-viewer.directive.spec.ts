@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { Location } from '@angular/common';
+import { SpyLocation } from '@angular/common/testing';
 import { ElementRef } from '@angular/core';
 import { Injector } from '@angular/core';
 import { async, getTestBed, TestBed } from '@angular/core/testing';
@@ -28,7 +30,7 @@ export class MockElementRef extends ElementRef {
     }
 }
 
-describe('ExtensionViewerComponent', () => {
+describe('ExtensionViewerDirective', () => {
     let injector: Injector;
     let extensionViewerDirective: ExtensionViewerDirective;
     let viewerComponent: ViewerComponent;
@@ -37,6 +39,7 @@ describe('ExtensionViewerComponent', () => {
         TestBed.configureTestingModule({
             imports: [CoreModule],
             providers: [
+                { provide: Location, useClass: SpyLocation },
                 ExtensionViewerDirective,
                 {provide: ElementRef, useClass: MockElementRef},
                 ViewerComponent

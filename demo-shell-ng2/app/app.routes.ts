@@ -39,6 +39,7 @@ import {
 } from './components/index';
 
 import { UploadButtonComponent } from 'ng2-alfresco-upload';
+import { FileViewComponent } from './components/file-view/file-view.component';
 import { CustomSourcesComponent } from './components/files/custom-sources.component';
 import { FormListDemoComponent } from './components/form/form-list-demo.component';
 
@@ -63,6 +64,11 @@ export const appRoutes: Routes = [
         path: 'files/:id',
         component: FilesComponent,
         canActivate: [AuthGuardEcm]
+    },
+    {
+        path: 'files/:nodeId/view',
+        component: FileViewComponent,
+        canActivate: [ AuthGuardEcm ]
     },
     {
         path: 'dl-custom-sources',
