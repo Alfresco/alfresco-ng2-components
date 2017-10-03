@@ -22,7 +22,6 @@ import { AppDefinitionRepresentationModel } from 'ng2-activiti-tasklist';
 @Component({
     selector: 'activiti-apps-view',
     template: `
-        <adf-app-menu></adf-app-menu>
         <activiti-apps (appClick)="onAppClicked($event)"></activiti-apps>
     `
 })
