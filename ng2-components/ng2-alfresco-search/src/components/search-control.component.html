@@ -1,13 +1,13 @@
 <form #f="ngForm" (ngSubmit)="onSearch(f.value)" class="adf-search-form">
     <div class="adf-search-container"
         [@transitionMessages]="subscriptAnimationState">
-        <button md-button
+        <a md-button
                 *ngIf="expandable"
                 id="adf-search-button"
             (click)="toggleSearchBar()"
             class="adf-search-button">
             <md-icon aria-label="search button">search</md-icon>
-        </button>
+        </a>
         <div class="adf-search-field">
             <md-input-container>
                 <input
