@@ -340,6 +340,28 @@ describe('SearchControlComponent', () => {
             }, 500);
         });
 
+        it('click on the search button should not trigger the search when you click on it to close the search bar', (done) => {
+            spyOn(searchService, 'getQueryNodesPromise')
+                .and.returnValue(Promise.resolve(results));
+
+            component.liveSearchTerm = 'test';
+
+            fixture.detectChanges();
+            component.subscriptAnimationState = 'active';
+
+            let searchButton: any = element.querySelector('#adf-search-button');
+            searchButton.click();
+
+            setTimeout(() => {
+                fixture.detectChanges();
+                expect(component.liveSearchComponent.panelAnimationState).not.toBe('void');
+                let resultElement: Element = element.querySelector('#adf-search-results');
+                expect(resultElement).toBe(null);
+                done();
+                done();
+            }, 500);
+        });
+
         it('click on the search button should open the input box when is close', (done) => {
             fixture.detectChanges();
             component.subscriptAnimationState = 'inactive';
