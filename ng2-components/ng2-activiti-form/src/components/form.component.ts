@@ -391,7 +391,6 @@ export class FormComponent implements OnInit, OnChanges {
                 form.outcomes = this.getFormDefinitionOutcomes(form);
             }
             if (this.fieldValidators && this.fieldValidators.length > 0) {
-                console.log('Applying custom field validators');
                 form.fieldValidators = this.fieldValidators;
             }
             return form;

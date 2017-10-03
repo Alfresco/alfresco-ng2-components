@@ -367,7 +367,6 @@ export class ViewerComponent implements OnDestroy, OnChanges {
                         },
                         error: (error) => {
                             this.isLoading = false;
-                            console.log(error);
                         }
                     });
                 } else {
@@ -376,7 +375,6 @@ export class ViewerComponent implements OnDestroy, OnChanges {
             },
             (err) => {
                 this.isLoading = false;
-                console.log(err);
             }
         );
     }
