@@ -45,6 +45,7 @@ export class FilesComponent implements OnInit {
     showViewer: boolean = false;
 
     toolbarColor = 'default';
+    useDropdownBreadcrumb = false;
     useViewerDialog = true;
     useInlineViewer = false;
 

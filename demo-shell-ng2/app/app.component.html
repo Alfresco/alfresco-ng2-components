@@ -1,50 +1,97 @@
-<md-sidenav-container class="adf-nav-container">
-    <md-sidenav #sidenav class="adf-sidenav" position="end" mode="push">
-        <md-nav-list>
-            <a md-list-item *ngFor="let link of links" [routerLink]="link.href" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="sidenav.close()" class="adf-sidenav-link">
-                <md-icon mdListIcon>{{link.icon}}</md-icon>
-                <span>{{link.title}}</span>
-            </a>
-                <a md-list-item adf-logout (click)="sidenav.close()">
-                    <md-icon mdListIcon>exit_to_app</md-icon>
-                    <span>Logout</span>
-                </a>
-        </md-nav-list>
-    </md-sidenav>
+<md-toolbar color="primary" *ngIf="!isAPageWithHeaderBar()" class="adf-app-toolbar" >
+    <adf-userinfo
+        class="adf-app-user-profile"
+        [menuPositionX]="'before'"
+        [menuPositionY]="'above'">
+    </adf-userinfo>
 
-    <md-toolbar color="primary" *ngIf="!isAPageWithHeaderBar()" class="adf-app-toolbar" md-no-ink>
-        <adf-userinfo
-            class="adf-app-user-profile"
-            [menuPositionX]="'before'"
-            [menuPositionY]="'above'">
-        </adf-userinfo>
+    <span  class="adf-app-hide-xsmall" >ADF Demo Application</span>
 
-        <span fxFlex="1 1 auto" fxShow fxHide.lt-sm="true">ADF Demo Application</span>
+    <div class="adf-app-menu-spacer"></div>
 
-        <div class="adf-app-menu-spacer"></div>
+    <search-bar></search-bar>
 
-        <search-bar></search-bar>
+    <a class="adf-app-hide-xsmall adf-app-hide-small" md-button data-automation-id="home" href="" routerLink="/">Home</a>
+    <a class="adf-app-hide-xsmall adf-app-hide-small" md-button data-automation-id="files" href="" routerLink="/files">Content Services</a>
+    <a class="adf-app-hide-xsmall adf-app-hide-small"  md-button data-automation-id="activiti" href="" routerLink="/activiti">Process Services</a>
+    <a class="adf-app-hide-xsmall adf-app-hide-small" md-button data-automation-id="login" href="" routerLink="/login">Login</a>
 
-        <a md-ink-ripple class="adf-toolbar-link" fxShow fxHide.lt-md="true" md-button data-automation-id="home" href="" routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
-        <a md-ink-ripple class="adf-toolbar-link" fxShow fxHide.lt-md="true" md-button data-automation-id="files" href="" routerLink="/files" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Content Services</a>
-        <a class="adf-toolbar-link" fxShow fxHide.lt-md="true"  md-button data-automation-id="activiti" href="" routerLink="/activiti" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Process Services</a>
-        <a class="adf-toolbar-link" fxShow fxHide.lt-md="true" md-button data-automation-id="login" href="" routerLink="/login">Login</a>
+    <theme-picker></theme-picker>
+    <button md-icon-button [mdMenuTriggerFor]="langMenu">
+        <md-icon>language</md-icon>
+    </button>
+    <md-menu #langMenu="mdMenu">
+        <button md-menu-item (click)="changeLanguage('en')">English</button>
+        <button md-menu-item (click)="changeLanguage('it')">Italian</button>
+        <button md-menu-item (click)="changeLanguage('ru')">Russian</button>
+    </md-menu>
 
-        <theme-picker></theme-picker>
-        <button md-icon-button [mdMenuTriggerFor]="langMenu">
-            <md-icon>language</md-icon>
+    <button md-icon-button [mdMenuTriggerFor]="appMenu">
+        <md-icon>more_vert</md-icon>
+    </button>
+
+    <md-menu #appMenu="mdMenu">
+        <a md-menu-item href="" routerLink="/">
+            <md-icon>home</md-icon>
+            <span>Home</span>
+        </a>
+        <a md-menu-item href="" routerLink="/files">
+            <md-icon>folder_open</md-icon>
+            <span>Content Services</span>
+        </a>
+        <a md-menu-item href="" routerLink="/activiti">
+            <md-icon>device_hub</md-icon>
+            <span>Process Services</span>
+        </a>
+        <a md-menu-item href="" routerLink="/login">
+            <md-icon>vpn_key</md-icon>
+            <span>Login</span>
+        </a>
+        <a md-menu-item href="" routerLink="/dl-custom-sources">
+            <md-icon>extension</md-icon>
+            <span>DL: Custom Sources</span>
+        </a>
+        <a md-menu-item href="" routerLink="/datatable">
+            <md-icon>view_module</md-icon>
+            <span>DataTable</span>
+        </a>
+        <a md-menu-item href="" routerLink="/form">
+            <md-icon>poll</md-icon>
+            <span>Form</span>
+        </a>
+        <a md-menu-item href="" routerLink="/form-list">
+            <md-icon>library_books</md-icon>
+            <span>Form List</span>
+        </a>
+        <a md-menu-item href="" routerLink="/uploader">
+            <md-icon>file_upload</md-icon>
+            <span>Uploader</span>
+        </a>
+        <a md-menu-item href="" routerLink="/webscript">
+            <md-icon>extension</md-icon>
+            <span>Webscript</span>
+        </a>
+        <a md-menu-item href="" routerLink="/tag">
+            <md-icon>local_offer</md-icon>
+            <span>Tag</span>
+        </a>
+        <a md-menu-item href="" routerLink="/social">
+            <md-icon>thumb_up</md-icon>
+            <span>Social</span>
+        </a>
+        <a md-menu-item href="" routerLink="/settings">
+            <md-icon>settings</md-icon>
+            <span>Settings</span>
+        </a>
+        <a md-menu-item href="" routerLink="/about">
+            <md-icon>info_outline</md-icon>
+            <span>About</span>
+        </a>
+        <button md-menu-item adf-logout>
+            <md-icon>exit_to_app</md-icon>
+            <span>Logout</span>
         </button>
-        <md-menu #langMenu="mdMenu">
-            <button md-menu-item (click)="changeLanguage('en')">English</button>
-            <button md-menu-item (click)="changeLanguage('it')">Italian</button>
-            <button md-menu-item (click)="changeLanguage('ru')">Russian</button>
-        </md-menu>
+    </md-menu>
+</md-toolbar>
 
-        <button md-icon-button (click)="sidenav.open()">
-            <md-icon>menu</md-icon>
-        </button>
-    </md-toolbar>
-    <router-outlet></router-outlet>
-</md-sidenav-container>
-
-
+<router-outlet></router-outlet>
