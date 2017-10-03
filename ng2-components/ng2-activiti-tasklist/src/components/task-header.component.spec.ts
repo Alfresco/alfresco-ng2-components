@@ -203,7 +203,7 @@ describe('TaskHeaderComponent', () => {
         component.ngOnChanges({});
         fixture.detectChanges();
         let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-parentName"] .adf-property-value'));
-        expect(valueEl.nativeElement.innerText).toBe('None');
+        expect(valueEl.nativeElement.innerText.trim()).toEqual('None');
     });
 
     it('should display the Parent name value', () => {
@@ -212,7 +212,7 @@ describe('TaskHeaderComponent', () => {
         component.ngOnChanges({});
         fixture.detectChanges();
         let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-parentName"] .adf-property-value'));
-        expect(valueEl.nativeElement.innerText).toBe('Parent Name');
+        expect(valueEl.nativeElement.innerText.trim()).toEqual('Parent Name');
     });
 
     it('should not display form name if no form name provided', () => {
