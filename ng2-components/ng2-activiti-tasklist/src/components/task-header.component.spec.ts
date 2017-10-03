@@ -198,6 +198,23 @@ describe('TaskHeaderComponent', () => {
         expect(valueEl.nativeElement.innerText).toBe('test form');
     });
 
+    it('should display the default parent value if is undefined', () => {
+        component.taskDetails.processInstanceId = null;
+        component.ngOnChanges({});
+        fixture.detectChanges();
+        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-parentName"] .adf-property-value'));
+        expect(valueEl.nativeElement.innerText).toBe('None');
+    });
+
+    it('should display the Parent name value', () => {
+        component.taskDetails.processInstanceId = '1';
+        component.taskDetails.processDefinitionName = 'Parent Name';
+        component.ngOnChanges({});
+        fixture.detectChanges();
+        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-parentName"] .adf-property-value'));
+        expect(valueEl.nativeElement.innerText).toBe('Parent Name');
+    });
+
     it('should not display form name if no form name provided', () => {
         component.ngOnChanges({});
         fixture.detectChanges();
