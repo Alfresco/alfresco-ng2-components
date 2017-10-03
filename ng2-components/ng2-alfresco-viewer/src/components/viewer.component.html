@@ -96,43 +96,41 @@
 
         <div *ngIf="!isLoading" class="adf-viewer-layout">
             <div class="adf-viewer-layout-content">
-                <div>
-                    <div class="adf-viewer-content-container" [ngSwitch]="viewerType">
+                <div class="adf-viewer-content-container" [ngSwitch]="viewerType">
 
-                        <ng-container *ngSwitchCase="'pdf'">
-                            <adf-pdf-viewer [blobFile]="blobFile" [urlFile]="urlFileContent" [nameFile]="displayName"></adf-pdf-viewer>
-                        </ng-container>
+                    <ng-container *ngSwitchCase="'pdf'">
+                        <adf-pdf-viewer [blobFile]="blobFile" [urlFile]="urlFileContent" [nameFile]="displayName"></adf-pdf-viewer>
+                    </ng-container>
 
-                        <ng-container *ngSwitchCase="'image'">
-                            <adf-img-viewer [urlFile]="urlFileContent" [nameFile]="displayName" [blobFile]="blobFile"></adf-img-viewer>
-                        </ng-container>
+                    <ng-container *ngSwitchCase="'image'">
+                        <adf-img-viewer [urlFile]="urlFileContent" [nameFile]="displayName" [blobFile]="blobFile"></adf-img-viewer>
+                    </ng-container>
 
-                        <ng-container *ngSwitchCase="'media'">
-                            <adf-media-player [urlFile]="urlFileContent" [mimeType]="mimeType" [blobFile]="blobFile" [nameFile]="displayName"></adf-media-player>
-                        </ng-container>
+                    <ng-container *ngSwitchCase="'media'">
+                        <adf-media-player [urlFile]="urlFileContent" [mimeType]="mimeType" [blobFile]="blobFile" [nameFile]="displayName"></adf-media-player>
+                    </ng-container>
 
-                        <ng-container *ngSwitchCase="'text'">
-                            <adf-txt-viewer [urlFile]="urlFileContent" [blobFile]="blobFile"></adf-txt-viewer>
-                        </ng-container>
+                    <ng-container *ngSwitchCase="'text'">
+                        <adf-txt-viewer [urlFile]="urlFileContent" [blobFile]="blobFile"></adf-txt-viewer>
+                    </ng-container>
 
-                        <ng-container *ngSwitchCase="'custom'">
-                            <span *ngFor="let extensionTemplate of extensionTemplates">
-                                <ng-template
-                                    *ngIf="extensionTemplate.isVisible"
-                                    [ngTemplateOutlet]="extensionTemplate.template"
-                                    [ngOutletContext]="{ urlFileContent: urlFileContent, extension:extension }">
-                                </ng-template>
-                            </span>
-                        </ng-container>
+                    <ng-container *ngSwitchCase="'custom'">
+                        <span *ngFor="let extensionTemplate of extensionTemplates">
+                            <ng-template
+                                *ngIf="extensionTemplate.isVisible"
+                                [ngTemplateOutlet]="extensionTemplate.template"
+                                [ngOutletContext]="{ urlFileContent: urlFileContent, extension:extension }">
+                            </ng-template>
+                        </span>
+                    </ng-container>
 
-                        <ng-container *ngSwitchDefault>
-                            <adf-viewer-unknown-format></adf-viewer-unknown-format>
-                        </ng-container>
+                    <ng-container *ngSwitchDefault>
+                        <adf-viewer-unknown-format></adf-viewer-unknown-format>
+                    </ng-container>
 
-                    </div>
                 </div>
-
             </div>
+
             <ng-container *ngIf="showInfoDrawer">
                 <div class="adf-viewer__info-drawer">
                     <md-tab-group md-stretch-tabs>
