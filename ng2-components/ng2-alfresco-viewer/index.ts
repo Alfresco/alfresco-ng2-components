@@ -26,18 +26,9 @@ import { MediaPlayerComponent } from './src/components/mediaPlayer.component';
 import { PdfViewerComponent } from './src/components/pdfViewer.component';
 import { TxtViewerComponent } from './src/components/txtViewer.component';
 import { UnknownFormatComponent } from './src/components/unknown-format/unknown-format.component';
-import { PdfViewComponent } from './src/components/viewer-dialog/pdf-view/pdf-view.component';
-import { ViewerDialogComponent } from './src/components/viewer-dialog/viewer-dialog.component';
 import { ViewerComponent } from './src/components/viewer.component';
-
 import { ExtensionViewerDirective } from './src/directives/extension-viewer.directive';
-
 import { RenderingQueueServices } from './src/services/rendering-queue.services';
-import { ViewerService } from './src/services/viewer.service';
-
-export { ViewerDialogComponent } from './src/components/viewer-dialog/viewer-dialog.component';
-export { ViewerDialogSettings } from './src/components/viewer-dialog/viewer-dialog.settings';
-export { ViewerService } from './src/services/viewer.service';
 
 export function declarations() {
     return [
@@ -47,8 +38,6 @@ export function declarations() {
         MediaPlayerComponent,
         PdfViewerComponent,
         ExtensionViewerDirective,
-        ViewerDialogComponent,
-        PdfViewComponent,
         UnknownFormatComponent
     ];
 }
@@ -60,15 +49,11 @@ export function declarations() {
     ],
     declarations: declarations(),
     providers: [
-        RenderingQueueServices,
-        ViewerService
+        RenderingQueueServices
     ],
     exports: [
         MaterialModule,
         ...declarations()
-    ],
-    entryComponents: [
-        ViewerDialogComponent
     ]
 })
 export class ViewerModule {}

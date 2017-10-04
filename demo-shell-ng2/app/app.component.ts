@@ -16,6 +16,7 @@
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AlfrescoSettingsService, PageTitleService, StorageService } from 'ng2-alfresco-core';
 
 @Component({
@@ -26,12 +27,34 @@ import { AlfrescoSettingsService, PageTitleService, StorageService } from 'ng2-a
 })
 export class AppComponent {
     searchTerm: string = '';
+    showAppMenu = true;
 
     constructor(private settingsService: AlfrescoSettingsService,
                 private storage: StorageService,
-                pageTitleService: PageTitleService) {
+                pageTitleService: PageTitleService,
+                route: ActivatedRoute,
+                router: Router) {
         this.setProvider();
         pageTitleService.setTitle();
+
+        router.events
+            .filter(event => event instanceof NavigationEnd)
+            .subscribe(() => {
+                let currentRoute = route.root;
+
+                while (currentRoute.firstChild) {
+                    currentRoute = currentRoute.firstChild;
+                }
+
+                const snapshot: any = currentRoute.snapshot || {};
+                const data: any = snapshot.data || {};
+
+                if (data && data['showAppMenu'] !== undefined) {
+                    this.showAppMenu = data && data.showAppMenu;
+                } else {
+                    this.showAppMenu = true;
+                }
+            });
     }
 
     private setProvider() {

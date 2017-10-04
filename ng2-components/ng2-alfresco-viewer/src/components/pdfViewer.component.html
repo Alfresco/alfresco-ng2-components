@@ -1,4 +1,3 @@
-<!-- Start Pdf Canvas -->
 <div id="viewer-pdf-container" class="viewer-pdf-container" (window:resize)="onResize()">
     <div id="viewer-viewerPdf" class="pdfViewer">
         <div id="loader-container" class="loader-container">
@@ -8,66 +7,68 @@
         </div>
     </div>
 </div>
-<!-- End Pdf Canvas -->
 
+<div class="adf-pdf-viewer__toolbar">
+    <adf-toolbar>
 
-<!-- Pagination toolbar start -->
-<div *ngIf="showToolbar" class="viewer-toolbar-pagination">
-    <div
-        id="viewer-previous-page-button"
-        aria-label="arrow left"
-        class="button-page left"
-        tabindex="0"
-        (click)="previousPage()">
-        <md-icon>keyboard_arrow_left</md-icon>
-    </div>
+        <button md-icon-button>
+            <md-icon>dashboard</md-icon>
+        </button>
 
-    <div class="viewer-page-counter left" >
-        <input #page
-            class="viewer-pagenumber-input left"
-            type="text"
-            pattern="-?[0-9]*(\.[0-9]+)?"
-            value="{{ displayPage }}"
-            (keyup.enter)="inputPage(page.value)">
-        <div class="left viewer-total-pages">/ {{ totalPages }}</div>
-    </div>
+        <adf-toolbar-divider></adf-toolbar-divider>
 
-    <div
-        id="viewer-next-page-button"
-        aria-label="arrow right"
-        class="button-page left"
-        tabindex="0"
-        (click)="nextPage()">
-        <md-icon>keyboard_arrow_right</md-icon>
-    </div>
+        <button
+            id="viewer-previous-page-button"
+            aria-label="previous page"
+            md-icon-button
+            (click)="previousPage()">
+            <md-icon>keyboard_arrow_up</md-icon>
+        </button>
+
+        <button
+            id="viewer-next-page-button"
+            aria-label="arrow right"
+            md-icon-button
+            (click)="nextPage()">
+            <md-icon>keyboard_arrow_down</md-icon>
+        </button>
+
+        <div>
+            Showing
+            <input #page
+                class="adf-pdf-viewer__toolbar-page-selector"
+                type="text"
+                pattern="-?[0-9]*(\.[0-9]+)?"
+                value="{{ displayPage }}"
+                (keyup.enter)="inputPage(page.value)">
+            of {{ totalPages }}
+        </div>
+
+        <adf-toolbar-divider></adf-toolbar-divider>
+
+        <button
+            id="viewer-zoom-in-button"
+            aria-label="zoom in"
+            md-icon-button
+            (click)="zoomIn()">
+            <md-icon>zoom_in</md-icon>
+        </button>
+
+        <button
+            id="viewer-zoom-out-button"
+            aria-label="zoom out"
+            md-icon-button
+            (click)="zoomOut()">
+            <md-icon>zoom_out</md-icon>
+        </button>
+
+        <button
+            id="viewer-scale-page-button"
+            aria-label="zoom out map"
+            md-icon-button
+            (click)="pageFit()">
+            <md-icon>zoom_out_map</md-icon>
+        </button>
+
+    </adf-toolbar>
 </div>
-<!-- Pagination toolbar end -->
-
-<!-- Command toolbar start -->
-<div *ngIf="showToolbar" class="viewer-toolbar-command">
-    <div
-        id="viewer-scale-page-button"
-        aria-label="zoom out map"
-        class="button-page left"
-        tabindex="0"
-        (click)="pageFit()">
-        <md-icon>zoom_out_map</md-icon>
-    </div>
-    <div
-        id="viewer-zoom-in-button"
-        aria-label="zoom in"
-        class="button-page left"
-        tabindex="0"
-        (click)="zoomIn()">
-        <md-icon>zoom_in</md-icon>
-    </div>
-    <div
-        id="viewer-zoom-out-button"
-        aria-label="zoom out"
-        class="button-page left"
-        tabindex="0"
-        (click)="zoomOut()">
-        <md-icon>zoom_out</md-icon>
-    </div>
-</div>
-<!-- Command toolbar end -->
