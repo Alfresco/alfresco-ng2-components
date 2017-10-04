@@ -94,7 +94,7 @@ You can replace the entire content in the footer of the login component with you
 
 ```html
 <adf-login ...>
-    <login-footer><template>My custom HTML for the footer</template></login-footer>
+    <login-footer><ng-template>My custom HTML for the footer</ng-template></login-footer>
 </adf-login>`
 ```
 
@@ -106,7 +106,7 @@ You can replace the entire content in the header of the login component with you
 
 ```html
 <adf-login ...>
-    <login-header><template>My custom HTML for the header</template></login-header>
+    <login-header><ng-template>My custom HTML for the header</ng-template></login-header>
 </adf-login>`
 ```
 

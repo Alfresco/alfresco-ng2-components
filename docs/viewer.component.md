@@ -122,12 +122,12 @@ Below you can find an example with the use of `extension-viewer` if you can hand
     [overlayMode]="true">
     
     <extension-viewer [supportedExtensions]="['obj','3ds']" #extension>
-        <template let-urlFileContent="urlFileContent" let-extension="extension">
+        <ng-template let-urlFileContent="urlFileContent" let-extension="extension">
             <threed-viewer 
                 [urlFile]="urlFileContent" 
                 [extension]="extension">
             </threed-viewer>
-        </template>
+        </ng-template>
     </extension-viewer>
 
 </adf-viewer> 
@@ -144,19 +144,19 @@ It is possible to define multiple `extension-viewer` templates:
     [overlayMode]="true">
 
     <extension-viewer [supportedExtensions]="['xls','xlsx']" #extension>
-        <template let-urlFileContent="urlFileContent"  >
+        <ng-template let-urlFileContent="urlFileContent"  >
             <my-custom-xls-component 
                 urlFileContent="urlFileContent">
             </my-custom-xls-component>
-        </template>
+        </ng-template>
     </extension-viewer>
 
     <extension-viewer [supportedExtensions]="['txt']" #extension>
-        <template  let-urlFileContent="urlFileContent" >               
+        <ng-template  let-urlFileContent="urlFileContent" >               
             <my-custom-txt-component 
                 urlFileContent="urlFileContent">
             </my-custom-txt-component>
-        </template>
+        </ng-template>
     </extension-viewer>
 </adf-viewer> 
 ```

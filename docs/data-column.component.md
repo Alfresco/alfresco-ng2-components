@@ -102,9 +102,9 @@ It is possible to assign a custom column template like the following:
 <adf-datatable ...>
     <data-columns>
         <data-column title="Version" key="properties.cm:versionLabel">
-            <template let-value="value">
+            <ng-template let-value="value">
                 <span>V. {{value}}</span>
-            </template>
+            </ng-template>
         </data-column>
     </data-columns>
 </adf-datatable>
@@ -113,21 +113,21 @@ It is possible to assign a custom column template like the following:
 Example above shows access to the underlying cell value by binding `value` property to the underlying context `value`:
 
 ```html
-<template let-value="value">
+<ng-template let-value="value">
 ```
 
 Alternatively you can get access to the entire data context using the following syntax:
 
 ```html
-<template let-entry="$implicit">
+<ng-template let-entry="$implicit">
 ```
 
 That means you are going to create local variable `entry` that is bound to the data context via Angular's special `$implicit` keyword.
 
 ```html
-<template let-entry="$implicit">
+<ng-template let-entry="$implicit">
     <span>V. {{entry.data.getValue(entry.row, entry.col)}}</span>
-</template>
+</ng-template>
 ```
 
 In the second case `entry` variable is holding a reference to the following data context:

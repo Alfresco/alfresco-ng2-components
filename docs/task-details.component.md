@@ -69,10 +69,10 @@ This can be changed by adding the following custom html template:
 ```html
 <adf-task-details [taskId]="taskId">
     <no-task-details-template>
-        <template>
+        <ng-template>
              <h1>Sorry, no tasks here</h1>
              <img src="example.jpg">
-        </template>
+        </ng-template>
     </no-task-details-template>
 </adf-task-details>    
 ```
