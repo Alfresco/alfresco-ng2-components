@@ -43,7 +43,6 @@ export class FilesComponent implements OnInit {
     showViewer: boolean = false;
 
     toolbarColor = 'default';
-    useDropdownBreadcrumb = false;
 
     selectionModes = [
         { value: 'none', viewValue: 'None' },

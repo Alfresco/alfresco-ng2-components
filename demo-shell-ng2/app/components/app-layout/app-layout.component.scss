@@ -1,0 +1,70 @@
+@mixin adf-app-layout-theme($theme) {
+    $primary: map-get($theme, primary);
+    $minimumAppWidth: 320px;
+    $toolbarHeight: 64px;
+
+    .adf-app-layout {
+        display: block;
+        min-width: $minimumAppWidth;
+        height: 100%;
+
+        .adf-nav-container {
+            display: block;
+            min-width: $minimumAppWidth;
+            height: 100%;
+        }
+
+        .adf-sidenav-link {
+            &.active {
+                color: mat-color($primary);
+            }
+        }
+
+        &-user-profile {
+            margin-right: 10px;
+        }
+
+        &-menu-spacer {
+            flex: 1 1 auto;
+        }
+
+        &-toolbar {
+            height: $toolbarHeight;
+            line-height: $toolbarHeight;
+            overflow: hidden;
+
+            md-toolbar-row {
+                align-items: stretch;
+                justify-content: space-between;
+            }
+
+            .adf-toolbar-link {
+                min-width: 0;
+                line-height: $toolbarHeight;
+
+                &.active {
+                    background-color: rgba(0,0,0,.12);
+                }
+            }
+        }
+    }
+
+    @media (max-width: $minimumAppWidth) {
+        adf-datatable & /deep/  {
+            max-width: $minimumAppWidth;
+
+            .adf-data-table-cell--fileSize {
+                display: none;
+            }
+
+            .adf-empty-folder-drag-drop {
+                font-size: 46px;
+            }
+
+            .adf-empty-folder-image {
+                width: $minimumAppWidth - 10px;
+                height: auto;
+            }
+        }
+    }
+}

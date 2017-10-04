@@ -22,7 +22,6 @@ import { ActivitiForm } from 'ng2-activiti-form';
 @Component({
     selector: 'form-list-demo',
     template: `
-        <adf-app-menu></adf-app-menu>
         <adf-form-list [forms]="formList" (row-dblclick)="onRowDblClick($event)">
         </adf-form-list>
         <div class="form-container" *ngIf="!isEmptyForm()">
