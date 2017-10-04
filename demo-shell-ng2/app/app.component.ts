@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { AlfrescoSettingsService, PageTitle, StorageService } from 'ng2-alfresco-core';
+import { AlfrescoSettingsService, PageTitleService, StorageService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'adf-app',
@@ -29,9 +29,9 @@ export class AppComponent {
 
     constructor(private settingsService: AlfrescoSettingsService,
                 private storage: StorageService,
-                pageTitle: PageTitle) {
+                pageTitleService: PageTitleService) {
         this.setProvider();
-        pageTitle.setTitle();
+        pageTitleService.setTitle();
     }
 
     private setProvider() {

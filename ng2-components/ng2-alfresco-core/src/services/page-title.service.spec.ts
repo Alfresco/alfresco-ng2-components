@@ -19,7 +19,7 @@ import { inject, TestBed } from '@angular/core/testing';
 import { Title } from '@angular/platform-browser';
 
 import { AppConfigService } from './app-config.service';
-import { PageTitle } from './page-title.service';
+import { PageTitleService } from './page-title.service';
 
 class TestConfig {
     private setup: any = {
@@ -27,7 +27,7 @@ class TestConfig {
     };
 
     titleService: Title = null;
-    appTitleService: PageTitle = null;
+    appTitleService: PageTitleService = null;
 
     constructor(setup: any = {}) {
         Object.assign(this.setup, setup);
@@ -55,11 +55,11 @@ class TestConfig {
             providers: [
                 titleServiceProvider,
                 appConfigProvider,
-                PageTitle
+                PageTitleService
             ]
         });
 
-        inject([ Title, PageTitle ], (titleService, appTitleService) => {
+        inject([ Title, PageTitleService ], (titleService, appTitleService) => {
             this.titleService = titleService;
             this.appTitleService = appTitleService;
         })();

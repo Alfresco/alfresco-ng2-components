@@ -20,7 +20,7 @@ import { Title } from '@angular/platform-browser';
 import { AppConfigService } from './app-config.service';
 
 @Injectable()
-export class PageTitle {
+export class PageTitleService {
 
     constructor(
         private titleService: Title,
