@@ -208,7 +208,6 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     }
 
     private clickTaskDetails(clickNotification: ClickNotification) {
-        console.log(clickNotification.target);
         if (clickNotification.target.key === 'assignee') {
             this.showAssignee = true;
         }
@@ -346,7 +345,6 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
     onCloseSearch() {
         this.showAssignee = false;
-        console.log(this.taskDetails.assignee);
     }
 
     assignTaskToUser(selectedUser: User) {
