@@ -221,87 +221,90 @@
 
 <context-menu-holder></context-menu-holder>
 
-<p>Current folder ID: {{ documentList.currentFolderId }}</p>
+<div class="adf-content-service-settings">
 
-<div class="p-10">
-    Selected Nodes:
-    <ul>
-        <li *ngFor="let node of documentList.selection">
-            {{ node.entry.name }}
-        </li>
-    </ul>
-</div>
-
-<div class="container">
-    <section>
-        <md-slide-toggle [color]="'primary'" [(ngModel)]="multiselect">Multiselect (with checkboxes)</md-slide-toggle>
-    </section>
-
-    <section>
-        <md-slide-toggle [color]="'primary'" [(ngModel)]="multipleFileUpload">Multiple File Upload</md-slide-toggle>
-    </section>
-
-    <section>
-        <md-slide-toggle [color]="'primary'" [(ngModel)]="folderUpload">Folder upload</md-slide-toggle>
-    </section>
-
-    <section>
-        <md-slide-toggle [color]="'primary'" [(ngModel)]="acceptedFilesTypeShow">Custom extensions filter</md-slide-toggle>
-    </section>
-
-    <section>
-        <md-slide-toggle [color]="'primary'" [(ngModel)]="versioning">Enable versioning</md-slide-toggle>
-    </section>
-
-    <h5>Upload</h5>
-    <section *ngIf="acceptedFilesTypeShow">
-        <md-input-container>
-            <input mdInput placeholder="Extension accepted" [(ngModel)]="acceptedFilesType"  data-automation-id="accepted-files-type">
-        </md-input-container>
-    </section>
-    <div *ngIf="!acceptedFilesTypeShow">
-        <adf-upload-button
-            #uploadButton
-            tooltip="Custom tooltip"
-            [disabled]="!enableUpload"
-            data-automation-id="multiple-file-upload"
-            [rootFolderId]="documentList.currentFolderId"
-            [multipleFiles]="multipleFileUpload"
-            [uploadFolders]="folderUpload"
-            [versioning]="versioning"
-            [adf-node-permission]="'create'"
-            [adf-nodes]="getCurrentDocumentListNode()"
-            (permissionEvent)="handlePermissionError($event)">
-        </adf-upload-button>
+    <p>Current folder ID: {{ documentList.currentFolderId }}</p>
+    
+    <div class="p-10">
+        Selected Nodes:
+        <ul>
+            <li *ngFor="let node of documentList.selection">
+                {{ node.entry.name }}
+            </li>
+        </ul>
     </div>
-    <div *ngIf="acceptedFilesTypeShow">
-        <adf-upload-button
-            #uploadButton
-            tooltip="Custom tooltip"
-            [disabled]="!enableUpload"
-            data-automation-id="multiple-file-upload"
-            [rootFolderId]="documentList.currentFolderId"
-            [acceptedFilesType]="acceptedFilesType"
-            [multipleFiles]="multipleFileUpload"
-            [uploadFolders]="folderUpload"
-            [versioning]="versioning"
-            [adf-node-permission]="'create'"
-            [adf-nodes]="getCurrentDocumentListNode()"
-            (permissionEvent)="handlePermissionError($event)">
-        </adf-upload-button>
+    
+    <div class="container">
+        <section>
+            <md-slide-toggle [color]="'primary'" [(ngModel)]="multiselect">Multiselect (with checkboxes)</md-slide-toggle>
+        </section>
+    
+        <section>
+            <md-slide-toggle [color]="'primary'" [(ngModel)]="multipleFileUpload">Multiple File Upload</md-slide-toggle>
+        </section>
+    
+        <section>
+            <md-slide-toggle [color]="'primary'" [(ngModel)]="folderUpload">Folder upload</md-slide-toggle>
+        </section>
+    
+        <section>
+            <md-slide-toggle [color]="'primary'" [(ngModel)]="acceptedFilesTypeShow">Custom extensions filter</md-slide-toggle>
+        </section>
+    
+        <section>
+            <md-slide-toggle [color]="'primary'" [(ngModel)]="versioning">Enable versioning</md-slide-toggle>
+        </section>
+    
+        <h5>Upload</h5>
+        <section *ngIf="acceptedFilesTypeShow">
+            <md-input-container>
+                <input mdInput placeholder="Extension accepted" [(ngModel)]="acceptedFilesType"  data-automation-id="accepted-files-type">
+            </md-input-container>
+        </section>
+        <div *ngIf="!acceptedFilesTypeShow">
+            <adf-upload-button
+                #uploadButton
+                tooltip="Custom tooltip"
+                [disabled]="!enableUpload"
+                data-automation-id="multiple-file-upload"
+                [rootFolderId]="documentList.currentFolderId"
+                [multipleFiles]="multipleFileUpload"
+                [uploadFolders]="folderUpload"
+                [versioning]="versioning"
+                [adf-node-permission]="'create'"
+                [adf-nodes]="getCurrentDocumentListNode()"
+                (permissionEvent)="handlePermissionError($event)">
+            </adf-upload-button>
+        </div>
+        <div *ngIf="acceptedFilesTypeShow">
+            <adf-upload-button
+                #uploadButton
+                tooltip="Custom tooltip"
+                [disabled]="!enableUpload"
+                data-automation-id="multiple-file-upload"
+                [rootFolderId]="documentList.currentFolderId"
+                [acceptedFilesType]="acceptedFilesType"
+                [multipleFiles]="multipleFileUpload"
+                [uploadFolders]="folderUpload"
+                [versioning]="versioning"
+                [adf-node-permission]="'create'"
+                [adf-nodes]="getCurrentDocumentListNode()"
+                (permissionEvent)="handlePermissionError($event)">
+            </adf-upload-button>
+        </div>
+        <section>
+            <md-checkbox [(ngModel)]="enableUpload">Enable upload (demoing enabled/disabled state only if the permission are not checked dynamically)</md-checkbox>
+        </section>
     </div>
-    <section>
-        <md-checkbox [(ngModel)]="enableUpload">Enable upload (demoing enabled/disabled state only if the permission are not checked dynamically)</md-checkbox>
-    </section>
-</div>
-
-<div class="p-10">
-    <p>For 'Multiple' selection mode use Cmd (macOS) or Ctrl (Win) to toggle selection of multiple items.</p>
-    <md-select placeholder="Selection Mode" [(ngModel)]="selectionMode" name="food">
-        <md-option *ngFor="let mode of selectionModes" [value]="mode.value">
-            {{mode.viewValue}}
-        </md-option>
-    </md-select>
+    
+    <div class="p-10">
+        <p>For 'Multiple' selection mode use Cmd (macOS) or Ctrl (Win) to toggle selection of multiple items.</p>
+        <md-select placeholder="Selection Mode" [(ngModel)]="selectionMode" name="food">
+            <md-option *ngFor="let mode of selectionModes" [value]="mode.value">
+                {{mode.viewValue}}
+            </md-option>
+        </md-select>
+    </div>            
 </div>
 
 <file-uploading-dialog #fileDialog></file-uploading-dialog>

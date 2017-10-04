@@ -91,7 +91,7 @@
         &-drag-drop {
             height: 56px;
             opacity: 0.54;
-            font-size: 56px;
+            font-size: 53px;
             line-height: 1;
             letter-spacing: -2px;
             color: mat-color($foreground, text);
@@ -110,7 +110,7 @@
 
         &-image {
             width: 565px;
-            height: 161px;
+            max-width: 100%;
             object-fit: contain;
             margin-top: 17px;
         }

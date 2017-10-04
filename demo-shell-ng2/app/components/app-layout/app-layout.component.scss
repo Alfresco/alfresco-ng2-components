@@ -49,23 +49,4 @@
             }
         }
     }
-
-    @media (max-width: $minimumAppWidth) {
-        adf-datatable & /deep/  {
-            max-width: $minimumAppWidth;
-
-            .adf-data-table-cell--fileSize {
-                display: none;
-            }
-
-            .adf-empty-folder-drag-drop {
-                font-size: 46px;
-            }
-
-            .adf-empty-folder-image {
-                width: $minimumAppWidth - 10px;
-                height: auto;
-            }
-        }
-    }
 }
