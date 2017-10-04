@@ -14,8 +14,8 @@
             </button>
             <span class="error-message--text">{{errorMessage}}</span>
         </div>
-        <adf-toolbar [color]="toolbarColor">
-            <adf-toolbar-title>
+        <adf-toolbar [color]="toolbarColor" class="adf-files-toolbar">
+            <adf-toolbar-title fxFlex="0 1 auto">
                 <adf-breadcrumb fxShow fxHide.lt-sm="true"
                     class="files-breadcrumb"
                     root="Personal Files"
@@ -29,9 +29,9 @@
                 </adf-dropdown-breadcrumb>
             </adf-toolbar-title>
 
-            <adf-toolbar-divider></adf-toolbar-divider>
+            <adf-toolbar-divider fxFlex="0 0 auto"></adf-toolbar-divider>
 
-            <div class="adf-document-action-buttons" fxShow fxHide.lt-sm="true">
+            <div fxFlex="0 0 auto" class="adf-document-action-buttons" fxShow fxHide.lt-sm="true">
                 <button md-icon-button
                     (click)="onCreateFolderClicked($event)">
                     <md-icon>create_new_folder</md-icon>
@@ -49,7 +49,7 @@
                 </button>
             </div>
 
-            <button md-icon-button [mdMenuTriggerFor]="themePicker">
+            <button fxFlex="0 0 auto" md-icon-button [mdMenuTriggerFor]="themePicker">
                 <md-icon>format_color_fill</md-icon>
             </button>
 
@@ -60,9 +60,9 @@
                 <button md-menu-item (click)="toolbarColor = 'warn'">Warn</button>
             </md-menu>
 
-            <adf-toolbar-divider fxHide fxShow.lt-sm="true"></adf-toolbar-divider>
+            <adf-toolbar-divider fxFlex="0 0 auto" fxHide fxShow.lt-sm="true"></adf-toolbar-divider>
 
-            <button md-icon-button [mdMenuTriggerFor]="menu" fxHide fxShow.lt-sm="true">
+            <button fxFlex="0 0 auto" md-icon-button [mdMenuTriggerFor]="menu" fxHide fxShow.lt-sm="true">
                 <md-icon>more_vert</md-icon>
             </button>
             <md-menu #menu="mdMenu">
@@ -84,7 +84,7 @@
                     <md-icon>delete</md-icon>
                     <span>Delete</span>
                 </button>
-            </md-menu>
+            </md-menu>                    
         </adf-toolbar>
         <adf-document-list
                 #documentList
