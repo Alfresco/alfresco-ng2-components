@@ -365,7 +365,7 @@ describe('TypeaheadWidgetComponent', () => {
 
             it('should show typeahead value when the type is readonly', async(() => {
                 typeaheadWidgetComponent.field = new FormFieldModel(
-                    new FormModel({ taskId: 'fake-task-id', processVariables: [{ name: 'typeahead-name_LABEL', value: 'FakeProcessValue' }] }), {
+                    new FormModel({ taskId: 'fake-task-id', processVariables: [{ name: 'typeahead-id_LABEL', value: 'FakeProcessValue' }] }), {
                     id: 'typeahead-id',
                     name: 'typeahead-name',
                     type: 'readonly',
