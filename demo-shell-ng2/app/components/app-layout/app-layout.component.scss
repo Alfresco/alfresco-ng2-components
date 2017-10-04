@@ -34,6 +34,7 @@
             overflow: hidden;
 
             md-toolbar-row {
+                height: $toolbarHeight;
                 align-items: stretch;
                 justify-content: space-between;
             }
