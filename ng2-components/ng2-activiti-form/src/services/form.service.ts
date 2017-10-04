@@ -313,6 +313,12 @@ export class FormService {
             .catch(err => this.handleError(err));
     }
 
+    getProcessIntance(processId: string): Observable<any> {
+        return Observable.fromPromise(this.processApi.getProcessInstance(processId))
+            .map(this.toJson)
+            .catch(err => this.handleError(err));
+    }
+
     /**
      * Get start form definition for a given process
      * @param processId Process definition ID
