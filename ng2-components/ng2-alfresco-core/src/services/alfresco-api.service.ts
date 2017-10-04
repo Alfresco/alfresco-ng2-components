@@ -16,7 +16,10 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApi, ContentApi, NodesApi, RenditionsApi } from 'alfresco-js-api';
+import {
+    AlfrescoApi, ContentApi, FavoritesApi, NodesApi,
+    PeopleApi, RenditionsApi, SharedlinksApi, SitesApi
+} from 'alfresco-js-api';
 import * as alfrescoApi from 'alfresco-js-api';
 import { AppConfigService } from './app-config.service';
 import { StorageService } from './storage.service';
@@ -40,6 +43,26 @@ export class AlfrescoApiService {
 
     get renditionsApi(): RenditionsApi {
         return this.getInstance().core.renditionsApi;
+    }
+
+    get sharedLinksApi(): SharedlinksApi {
+        return this.getInstance().core.sharedlinksApi;
+    }
+
+    get sitesApi(): SitesApi {
+        return this.getInstance().core.sitesApi;
+    }
+
+    get favoritesApi(): FavoritesApi {
+        return this.getInstance().core.favoritesApi;
+    }
+
+    get peopleApi(): PeopleApi {
+        return this.getInstance().core.peopleApi;
+    }
+
+    get searchApi() {
+        return this.getInstance().search.searchApi;
     }
 
     constructor(private appConfig: AppConfigService,
