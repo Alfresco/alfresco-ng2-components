@@ -15,14 +15,18 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { AlfrescoSettingsService, LogService, StorageService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'app-settings',
     templateUrl: 'settings.component.html',
-    styleUrls: ['settings.component.css']
+    host: {
+        'class': 'adf-app-settings'
+    },
+    styleUrls: ['settings.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class SettingsComponent {
 

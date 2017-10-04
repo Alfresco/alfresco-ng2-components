@@ -1,3 +1,5 @@
+$minimumDocumentListWidth: 425px;
+
 .container {
     margin: 10px;
 }
@@ -55,6 +57,27 @@ adf-document-list >>> adf-datatable tr.is-selected .image-table-cell::before {
     margin-bottom: 10px;
     width: 100%;
     min-width: 200px;
+}
+
+.adf-content-service-settings {
+    padding: 16px;
+}
+
+@media (max-width: $minimumDocumentListWidth) {
+    adf-document-list /deep/ adf-datatable  {
+        & /deep/ .adf-data-table-cell--fileSize {
+            display: none;
+        }
+    }
+
+    .adf-demo-site-container-style {
+        width: 100%;
+        display: block;
+
+        & /deep/ .adf-site-dropdown-list-element {
+            width: 100%;
+        }
+    }
 }
 
 

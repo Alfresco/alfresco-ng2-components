@@ -32,7 +32,7 @@ const DEFAULT_FOLDER_TO_SHOW = '-my-';
 @Component({
     selector: 'adf-files-component',
     templateUrl: './files.component.html',
-    styleUrls: ['./files.component.css']
+    styleUrls: ['./files.component.scss']
 })
 export class FilesComponent implements OnInit {
     // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
@@ -43,7 +43,6 @@ export class FilesComponent implements OnInit {
     showViewer: boolean = false;
 
     toolbarColor = 'default';
-    useDropdownBreadcrumb = false;
 
     selectionModes = [
         { value: 'none', viewValue: 'None' },

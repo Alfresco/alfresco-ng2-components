@@ -1,19 +1,11 @@
 @mixin mat-search-control-theme($theme) {
     $background: map-get($theme, background);
+    $foreground: map-get($theme, foreground);
 
     .adf {
 
-        &-search-button.mat-button {
-            margin-right: 10px;
-            border-radius: 50%;
-            height: 32px;
-            width: 32px;
-            min-width: 20px;
-            padding: 0;
-            overflow: hidden;
-            color: inherit;
-            line-height: normal;
-            border: none;
+        &-search-button.mat-icon-button {
+            margin-right: 5px;
         }
 
         &-search-container {
