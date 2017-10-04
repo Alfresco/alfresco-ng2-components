@@ -14,14 +14,20 @@
 				{{ processDef.name }}
 			</md-option>
 		</md-select>
-		<activiti-start-form *ngIf="hasStartForm()" [processDefinitionId]="currentProcessDef.id" (outcomeClick)="onOutcomeClick($event)"></activiti-start-form>
+		<activiti-start-form *ngIf="hasStartForm()" 
+			[processDefinitionId]="currentProcessDef.id" 
+			(outcomeClick)="onOutcomeClick($event)" 
+			[showRefreshButton]="false"
+			[showEventIcon]="false">
+			<button form-custom-button md-button (click)="cancelStartProcess()" id="cancle_process" class=""> {{'START_PROCESS.FORM.ACTION.CANCEL'| translate}} </button>
+		</activiti-start-form>
 	</md-card-content>
 	<md-card-content *ngIf="hasErrorMessage()">
 		<md-card-subtitle class="error-message" id="no-process-message">
 			{{'START_PROCESS.NO_PROCESS_DEFINITIONS' | translate}}
 		</md-card-subtitle>
 	</md-card-content>
-	<md-card-actions *ngIf="isProcessDefinitionEmpty()">
-		<button md-button (click)="cancelStartProcess()" id="cancle_process" class=""> {{'START_PROCESS.FORM.ACTION.CANCEL'| translate}} </button>
+	<md-card-actions *ngIf="!hasStartForm()">
+		<button md-button *ngIf="!hasStartForm()" (click)="cancelStartProcess()" id="cancle_process" class=""> {{'START_PROCESS.FORM.ACTION.CANCEL'| translate}} </button>
 		<button md-button *ngIf="!hasStartForm()" [disabled]="!validateForm()" (click)="startProcess()" data-automation-id="btn-start" id="button-start" class="btn-start"> {{'START_PROCESS.FORM.ACTION.START' | translate}} </button>
 	</md-card-actions>

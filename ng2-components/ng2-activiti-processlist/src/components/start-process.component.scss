@@ -17,3 +17,16 @@ md-select {
 md-card-actions {
     text-align: right;
 }
+
+activiti-start-form /deep/ md-card {
+    box-shadow: none !important;
+    padding: 0px !important;
+}
+
+activiti-start-form /deep/ .mat-card-content {
+    margin-bottom: 0px !important;
+}
+
+activiti-start-form /deep/ .adf-start-actions {
+     text-align: right !important;
+}

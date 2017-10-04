@@ -83,7 +83,7 @@
             },
             "TYPE_PLACEHOLDER": "Choose one...",
             "ACTION": {
-                "START": "Start",
+                "START": "Start Process",
                 "CANCEL": "Cancel"
             }
         },

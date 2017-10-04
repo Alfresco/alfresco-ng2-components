@@ -2,7 +2,7 @@
     <md-card>
         <md-card-header>
             <md-card-title>
-                <md-icon>{{ form.isValid ? 'event_available' : 'event_busy' }}</md-icon>
+                <md-icon *ngIf="showEventIcon">{{ form.isValid ? 'event_available' : 'event_busy' }}</md-icon>
                 <h2 *ngIf="isTitleEnabled()" class="mdl-card__title-text">{{form.taskName}}</h2>
             </md-card-title>
         </md-card-header>
@@ -17,7 +17,8 @@
                 </div>
             </div>
         </md-card-content>
-        <md-card-content *ngIf="showOutcomeButtons && form.hasOutcomes()" #outcomesContainer>
+        <md-card-content class="adf-start-actions" *ngIf="showOutcomeButtons && form.hasOutcomes()" #outcomesContainer>
+             <ng-content select="[form-custom-button]"></ng-content>
             <button *ngFor="let outcome of form.outcomes"
                     md-button
                     [disabled]="!isOutcomeButtonEnabled(outcome)"

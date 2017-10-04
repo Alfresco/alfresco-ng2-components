@@ -61,6 +61,9 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
     showRefreshButton: boolean = true;
 
     @Input()
+    showEventIcon: boolean = true;
+
+    @Input()
     readOnlyForm: boolean = false;
 
     @Output()
