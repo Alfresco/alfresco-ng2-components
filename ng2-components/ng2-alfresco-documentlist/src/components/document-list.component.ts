@@ -172,30 +172,6 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         this.supportedPageSizes = appConfig.get('document-list.supportedPageSizes', [5, 10, 15, 20]);
     }
 
-    private get nodesApi() {
-        return this.apiService.getInstance().core.nodesApi;
-    }
-
-    private get sharedLinksApi() {
-        return this.apiService.getInstance().core.sharedlinksApi;
-    }
-
-    private get sitesApi() {
-        return this.apiService.getInstance().core.sitesApi;
-    }
-
-    private get favoritesApi() {
-        return this.apiService.getInstance().core.favoritesApi;
-    }
-
-    private get peopleApi() {
-        return this.apiService.getInstance().core.peopleApi;
-    }
-
-    private get searchApi() {
-        return this.apiService.getInstance().search.searchApi;
-    }
-
     getContextActions(node: MinimalNodeEntity) {
         if (node && node.entry) {
             let actions = this.getNodeActions(node);
@@ -495,7 +471,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             maxItems: this.pageSize,
             skipCount: this.skipCount
         };
-        this.nodesApi.getDeletedNodes(options).then((page: NodePaging) => {
+        this.apiService.nodesApi.getDeletedNodes(options).then((page: NodePaging) => {
             this.onPageLoaded(page);
         });
     }
@@ -506,7 +482,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             maxItems: this.pageSize,
             skipCount: this.skipCount
         };
-        this.sharedLinksApi.findSharedLinks(options).then((page: NodePaging) => {
+        this.apiService.sharedLinksApi.findSharedLinks(options).then((page: NodePaging) => {
            this.onPageLoaded(page);
         });
     }
@@ -518,7 +494,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             skipCount: this.skipCount
         };
 
-        this.sitesApi.getSites(options).then((page: NodePaging) => {
+        this.apiService.sitesApi.getSites(options).then((page: NodePaging) => {
             this.onPageLoaded(page);
         });
     }
@@ -531,7 +507,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             include: [ 'properties', 'allowableOperations', 'path' ]
         };
 
-        this.favoritesApi.getFavorites('-me-', options).then((result: NodePaging) => {
+        this.apiService.favoritesApi.getFavorites('-me-', options).then((result: NodePaging) => {
             let page: NodePaging = {
                 list: {
                     entries: result.list.entries
@@ -553,7 +529,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     private loadRecent(): void {
-        this.peopleApi.getPerson('-me-').then((person: PersonEntry) => {
+        this.apiService.peopleApi.getPerson('-me-').then((person: PersonEntry) => {
             const username = person.entry.id;
             const query = {
                 query: {
@@ -577,7 +553,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                 }
             };
 
-            this.searchApi.search(query).then(page => this.onPageLoaded(page));
+            this.apiService.searchApi.search(query).then(page => this.onPageLoaded(page));
         });
     }
 
@@ -730,6 +706,12 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     onChangePageSize(event: Pagination): void {
         this.pageSize = event.maxItems;
         this.skipCount = 0;
+        this.reload();
+    }
+
+    onChangePageNumber(page: Pagination): void {
+        this.pageSize = page.maxItems;
+        this.skipCount = page.skipCount;
         this.reload();
     }
 

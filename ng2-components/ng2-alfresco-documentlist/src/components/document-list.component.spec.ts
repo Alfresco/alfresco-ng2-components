@@ -17,6 +17,7 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA, NgZone, SimpleChange, TemplateRef } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Pagination } from 'alfresco-js-api';
 import { AlfrescoApiService, AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { DataColumn, DataTableComponent } from 'ng2-alfresco-datatable';
 import { DataTableModule } from 'ng2-alfresco-datatable';
@@ -76,7 +77,6 @@ describe('DocumentList', () => {
         fixture = TestBed.createComponent(DocumentListComponent);
 
         let translateService = TestBed.get(AlfrescoTranslationService);
-        // spyOn(translateService, 'addTranslationFolder').and.stub();
         spyOn(translateService, 'get').and.callFake((key) => {
             return Observable.of(key);
         });
@@ -905,11 +905,10 @@ describe('DocumentList', () => {
     });
 
     it('should fetch trashcan', () => {
-        const nodesApi = apiService.getInstance().core.nodesApi;
-        spyOn(nodesApi, 'getDeletedNodes').and.returnValue(Promise.resolve(null));
+        spyOn(apiService.nodesApi, 'getDeletedNodes').and.returnValue(Promise.resolve(null));
 
         documentList.loadFolderByNodeId('-trashcan-');
-        expect(nodesApi.getDeletedNodes).toHaveBeenCalled();
+        expect(apiService.nodesApi.getDeletedNodes).toHaveBeenCalled();
     });
 
     it('should fetch shared links', () => {
@@ -937,20 +936,40 @@ describe('DocumentList', () => {
     });
 
     it('should fetch recent', (done) => {
-
         const person = { entry: { id: 'person '} };
-        const peopleApi = apiService.getInstance().core.peopleApi;
-        const searchApi = apiService.getInstance().search.searchApi;
 
-        spyOn(peopleApi, 'getPerson').and.returnValue(Promise.resolve(person));
-        spyOn(searchApi, 'search').and.returnValue(Promise.resolve(null));
+        spyOn(apiService.peopleApi, 'getPerson').and.returnValue(Promise.resolve(person));
+        spyOn(apiService.searchApi, 'search').and.returnValue(Promise.resolve(null));
 
         documentList.loadFolderByNodeId('-recent-');
 
         setTimeout(function() {
-            expect(peopleApi.getPerson).toHaveBeenCalledWith('-me-');
-            expect(searchApi.search).toHaveBeenCalled();
+            expect(apiService.peopleApi.getPerson).toHaveBeenCalledWith('-me-');
+            expect(apiService.searchApi.search).toHaveBeenCalled();
             done();
         }, 100);
+    });
+
+    it('should switch to another page', () => {
+        spyOn(documentList, 'reload').and.stub();
+
+        const page1: Pagination = {
+            maxItems: 5,
+            skipCount: 0
+        };
+        const page2: Pagination = {
+            maxItems: 5,
+            skipCount: 10
+        };
+
+        documentList.onChangePageNumber(page1);
+        expect(documentList.pageSize).toBe(page1.maxItems);
+        expect(documentList.skipCount).toBe(page1.skipCount);
+
+        documentList.onChangePageNumber(page2);
+        expect(documentList.pageSize).toBe(page2.maxItems);
+        expect(documentList.skipCount).toBe(page2.skipCount);
+
+        expect(documentList.reload).toHaveBeenCalledTimes(2);
     });
 });
