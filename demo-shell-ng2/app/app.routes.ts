@@ -45,15 +45,9 @@ import { CustomSourcesComponent } from './components/files/custom-sources.compon
 import { FormListDemoComponent } from './components/form/form-list-demo.component';
 
 export const appRoutes: Routes = [
-    {
-        path: 'login',
-        component: LoginDemoComponent
-    },
-    {
-        path: 'files/:nodeId/view',
-        component: FileViewComponent,
-        canActivate: [ AuthGuardEcm ]
-    },
+    { path: 'login', component: LoginDemoComponent },
+    { path: 'settings', component: SettingsComponent },
+    { path: 'files/:nodeId/view', component: FileViewComponent, canActivate: [ AuthGuardEcm ] },
     {
         path: '',
         component: AppLayoutComponent,
@@ -155,7 +149,6 @@ export const appRoutes: Routes = [
                 canActivate: [AuthGuardEcm]
             },
             { path: 'about', component: AboutComponent },
-            { path: 'settings', component: SettingsComponent },
             { path: 'form', component: FormDemoComponent },
             { path: 'form-list', component: FormListDemoComponent }
         ]
