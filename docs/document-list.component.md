@@ -11,6 +11,7 @@ Displays the documents from a repository.
   * [Events](#events)
 - [Details](#details)
   * [DOM Events](#dom-events)
+  * [Pagination strategy](#pagination-strategy)
   * [Data Sources](#data-sources)
     + [Node ID](#node-id)
     + [Repository aliases](#repository-aliases)
@@ -24,16 +25,6 @@ Displays the documents from a repository.
   * [Location Column](#location-column)
   * [Column Template](#column-template)
   * [Actions](#actions)
-  * [Menu actions](#menu-actions)
-  * [Default action handlers](#default-action-handlers)
-    + [Delete - System handler combined with custom handler](#delete---system-handler-combined-with-custom-handler)
-    + [Delete - Show notification message with no permission](#delete---show-notification-message-with-no-permission)
-    + [Delete - Disable button checking the permission](#delete---disable-button-checking-the-permission)
-    + [Download](#download)
-    + [Copy and move](#copy-and-move)
-    + [Error, Permission and success callback](#error-permission-and-success-callback)
-  * [Folder actions](#folder-actions)
-  * [Context Menu](#context-menu)
   * [Navigation mode](#navigation-mode)
 - [Advanced usage and customization](#advanced-usage-and-customization)
   * [Custom row filter](#custom-row-filter)
@@ -42,8 +33,6 @@ Displays the documents from a repository.
   * [Custom row permissions style](#custom-row-permissions-style)
     + [Examples](#examples)
   * [Custom 'empty folder' template](#custom-empty-folder-template)
-  * [Customizing default actions](#customizing-default-actions)
-- [See also](#see-also)
 
 <!-- tocstop -->
 
@@ -674,289 +663,14 @@ In the Example below we will add the [ng2-alfresco-tag](https://www.npmjs.com/pa
 
 ### Actions
 
-Properties:
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `target` | string | | "document" or "folder" |
-| `title` | string | | The title of the action as shown in the menu |
-| `handler` | string | | System type actions. Can be "delete", "download", "copy" or "move" |
-| `permission` | string | | The name of the permission |
-
-Events:
-
-| Name | Handler | Description |
-| --- | --- | --- |
-| `execute` | All | Emitted when user clicks on the action. For combined handlers see below |
-| `permissionEvent` | All | Emitted when a permission error happens |
-| `success` | copy, move, delete | Emitted on successful action with the success string message |
-| `error` | copy, move | Emitted on unsuccessful action with the error event |
-
-DocumentList supports declarative actions for Documents and Folders.
-Each action can be bound to either default out-of-the-box handler, to a custom behaviour or to both.
-You can define both folder and document actions at the same time.
-
-### Menu actions
-
-```html
-<adf-document-list ...>
-    <content-actions>
-
-        <!-- system handler -->
-        <content-action
-            icon="content_copy"
-            target="document"
-            title="copy"
-            permission="update"
-            [disableWithNoPermission]="true"
-            handler="copy">
-        </content-action>
-
-        <!-- custom handler -->
-        <content-action
-            target="document"
-            title="Custom action"
-            (execute)="myCustomAction1($event)">
-        </content-action>
-
-        <!-- combined handler -->
-        <content-action
-            target="document"
-            title="Delete with additional custom callback"
-            handler="delete"
-            permission="delete"
-            (execute)="myCustomActionAfterDelete($event)">
-        </content-action>
-
-    </content-actions>
-</adf-document-list>
-```
-
-```ts
-export class MyView {
-    // ...
-
-    myCustomAction1(event) {
-        let entry = event.value.entry;
-        alert(`Custom document action for ${entry.name}`);
-    }
-
-    myCustomActionAfterDelete(event) {
-        let entry = event.value.entry;
-        alert(`Custom callback after delete system action for ${entry.name}`);
-    }
-}
-```
-
-All document actions are rendered as a dropdown menu as on the picture below:
-
-![Document Actions](docassets/images/document-actions.png)
-
-### Default action handlers
-
-The following action handlers are provided out-of-box:
-
-- **Download** (document)
-- **Copy** (document, folder)
-- **Move** (document, folder)
-- **Delete** (document, folder)
-
-All system handler names are case-insensitive, `handler="download"` and `handler="DOWNLOAD"`
-will trigger the same `download` action.
-
-#### Delete - System handler combined with custom handler
-
-If you specify both **handler="delete"** and your custom **(execute)="myCustomActionAfterDelete($event)"**, your callback will be invoked after a successful delete happened. A successful delete operation happens if there is neither permission error, nor other network related error for the delete operation request. For handling permission errors see the section below.
-
-#### Delete - Show notification message with no permission
-
-You can show a notification error when the user doesn't have the right permission to perform the action.
-The ContentActionComponent provides the event permissionEvent that is raised when the permission specified in the permission property is missing
-You can subscribe to this event from your component and use the NotificationService to show a message.
-
-```html
-<adf-document-list ...>
-    <content-actions>
-
-        <content-action
-            target="document"
-            title="Delete"
-            permission="delete"
-            (permissionEvent)="onPermissionsFailed($event)"
-            handler="delete">
-        </content-action>
-
-    </content-actions>
-</adf-document-list>
-```
-
-```ts
-export class MyComponent {
-
-    onPermissionsFailed(event: any) {
-        this.notificationService.openSnackMessage(`you don't have the ${event.permission} permission to ${event.action} the ${event.type} `, 4000);
-    }
-
-}
-```
-
-![Delete show notification message](docassets/images/content-action-notification-message.png)
-
-#### Delete - Disable button checking the permission
-
-You can easily disable a button when the user doesn't own the permission to perform the action related to the button.
-The ContentActionComponent provides the property permission that must contain the permission to check and a property disableWithNoPermission that can be true if
- you want to see the button disabled.
-
-```html
-<adf-document-list ...>
-    <content-actions>
-
-        <content-action
-            target="document"
-            title="Delete"
-            permission="delete"
-            disableWithNoPermission="true"
-            handler="delete">
-        </content-action>
-
-    </content-actions>
-</adf-document-list>
-```
-
-![Delete disable action button](docassets/images/content-action-disable-delete-button.png)
-
-#### Download
-
-Initiates download of the corresponding document file.
-
-```html
-<adf-document-list ...>
-    <content-actions>
-
-        <content-action
-            target="document"
-            title="Download"
-            handler="download">
-        </content-action>
-
-    </content-actions>
-</adf-document-list>
-```
-
-![Download document action](docassets/images/document-action-download.png)
-
-#### Copy and move
-
-Shows the destination chooser dialog for copy and move actions. By default the destination chooser lists all the folders of the subject item's parent (except the selected item which is about to be copied/moved if it was a folder itself also).
-
-![Copy/move dialog](docassets/images/document-action-copymovedialog.png)
-
-```html
-<adf-document-list ...>
-    <content-actions>
-
-        <content-action
-            icon="content_copy"
-            target="document"
-            title="copy"
-            permission="update"
-            [disableWithNoPermission]="true"
-            (error)="onContentActionError($event)"
-            (success)="onContentActionSuccess($event)"
-            (permissionEvent)="onPermissionsFailed($event)"
-            handler="copy">
-        </content-action>
-
-        <content-action
-            icon="redo"
-            target="folder"
-            title="move"
-            permission="update"
-            [disableWithNoPermission]="true"
-            (error)="onContentActionError($event)"
-            (success)="onContentActionSuccess($event)"
-            (permissionEvent)="onPermissionsFailed($event)"
-            handler="move">
-        </content-action>
-
-    </content-actions>
-</adf-document-list>
-```
-
-#### Error, Permission and success callback
-
-Defining error, permission and success callbacks are pretty much the same as doing it for the delete permission handling.
-
-- The error handler callback gets the error object which was raised
-- The success callback's only parameter is the translatable success message string (could be used for showing in snackbar for example)
-- The permissionEvent callback is the same as described above with the delete action
-
-![Copy/move document action](docassets/images/document-action-copymove.png)
-
-### Folder actions
-
-Folder actions have the same declaration as document actions except ```target="folder"``` attribute value. You can define system, custom or combined handlers as well just as with the document actions.
-
-```html
-<adf-document-list ...>
-    <content-actions>
-
-        <!-- system handler -->
-        <content-action
-            target="folder"
-            title="Default folder action 1"
-            handler="system1">
-        </content-action>
-
-        <!-- custom handler -->
-        <content-action
-            target="folder"
-            title="Custom folder action"
-            (execute)="myFolderAction1($event)">
-        </content-action>
-
-        <!-- combined handler -->
-        <content-action
-            target="folder"
-            title="Delete with additional custom callback"
-            handler="delete"
-            (execute)="myCustomActionAfterDelete($event)">
-        </content-action>
-
-    </content-actions>
-</adf-document-list>
-```
-
-```ts
-export class MyView {
-    // ...
-
-    myFolderAction1(event) {
-        let entry = event.value.entry;
-        alert(`Custom folder action for ${entry.name}`);
-    }
-
-    myCustomActionAfterDelete(event) {
-        let entry = event.value.entry;
-        alert(`Custom callback after delete system action for ${entry.name}`);
-    }
-}
-```
-
-![Folder Actions](docassets/images/folder-actions.png)
-
-### Context Menu
-
-DocumentList also provides integration for 'Context Menu Service' from the 
-[ng2-alfresco-core](https://www.npmjs.com/package/ng2-alfresco-core) library.
-
-You can automatically turn all menu actions (for the files and folders) 
-into context menu items like shown below:
-
-![Folder context menu](docassets/images/folder-context-menu.png)
-
-Enabling context menu is very simple:
+You can add actions to a dropdown menu for each item shown in a Document List. Several
+built-in actions are available (**delete**, **download**, **copy** and **move**) but
+you can also define your own actions. See the [Content Action component](content-action.component.md)
+for more information and examples.
+
+You can also use the [Context Menu directive](context-menu.directive.md) from the 
+[ADF Core](https://www.npmjs.com/package/ng2-alfresco-core) library to show the
+actions you have defined in a context menu:
 
 ```ts
 @Component({
@@ -970,7 +684,9 @@ export class MyView {
 }
 ```
 
-This enables context menu items for documents and folders.
+![Folder context menu](docassets/images/folder-context-menu.png)
+
+This single extra line in the template enables context menu items for documents and folders.
 
 ### Navigation mode
 
@@ -1066,10 +782,9 @@ _Note that for the sake of simplicity the example code below was reduced to the 
 <adf-document-list 
     [imageResolver]="folderImageResolver">
     
-    <content-columns>
-        <content-column key="name" type="image"></content-column>
-    </content-columns>
-    
+    <data-columns>
+        <data-column key="name" type="image"></data-column>
+    </data-columns>
     
 </adf-document-list>
 ```
@@ -1129,32 +844,32 @@ Now you can declare columns and assign `desktop-only` class where needed:
 
 ```html
 <adf-document-list ...>
-    <content-columns>
+    <data-columns>
         
         <!-- always visible columns -->
         
-        <content-column key="$thumbnail" type="image"></content-column>
-        <content-column 
+        <data-column key="$thumbnail" type="image"></data-column>
+        <data-column 
                 title="Name" 
                 key="name" 
                 class="full-width ellipsis-cell">
-        </content-column>
+        </data-column>
         
         <!-- desktop-only columns -->
         
-        <content-column
+        <data-column
                 title="Created by"
                 key="createdByUser.displayName"
                 class="desktop-only">
-        </content-column>
-        <content-column
+        </data-column>
+        <data-column
                 title="Created on"
                 key="createdAt"
                 type="date"
                 format="medium"
                 class="desktop-only">
-        </content-column>
-    </content-columns>
+        </data-column>
+    </data-columns>
 </adf-document-list>
 ```
 
@@ -1244,74 +959,16 @@ That will give the following output:
 
 ![Custom empty folder](docassets/images/empty-folder-template-custom.png)
 
-### Customizing default actions
-
-It is possible extending or replacing the list of available system actions for documents and folders.
-Actions for the documents and folders can be accessed via the following services:
-
-- `DocumentActionsService`, document action menu and quick document actions
-- `FolderActionsService`, folder action menu and quick folder actions
-
-Example below demonstrates how a new action handler can be registered with the
-`DocumentActionsService`.
-
-```html
-<adf-document-list ...>
-    <content-actions>
-
-        <content-action
-            target="document"
-            title="My action"
-            handler="my-handler">
-        </content-action>
-
-    </content-actions>
-</adf-document-list>
-```
-
-You register custom handler called `my-handler` that will be executing `myDocumentActionHandler`
-function each time upon being invoked.
-
-```ts
-import { DocumentActionsService } from 'ng2-alfresco-documentlist';
-
-export class MyView {
-
-    constructor(documentActions: DocumentActionsService) {
-        documentActions.setHandler(
-            'my-handler',
-            this.myDocumentActionHandler.bind(this)
-        );
-    }
-
-    myDocumentActionHandler(obj: any) {
-        window.alert('my custom action handler');
-    }
-}
-```
-
-The same approach allows changing the way out-of-box action handlers behave.
-Registering custom action with the name `download` replaces default one:
-
-```ts
-export class MyView {
-
-    constructor(documentActions: DocumentActionsService) {
-        documentActions.setHandler(
-            'download',
-            this.customDownloadBehavior.bind(this)
-        );
-    }
-
-    customDownloadBehavior(obj: any) {
-        window.alert('my custom download behavior');
-    }
-}
-```
-
-Typically you may want populating all your custom actions at the application root level or
-by means of custom application service.
-
+<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
+<!-- seealso start -->
 ## See also
 
-- [Walkthrough: adding indicators to clearly highlight information about a node](metadata-indicators.md)
+- [Datatable component](datatable.component.md)
+- [Data column component](data-column.component.md)
+- [Pagination component](pagination.component.md)
+- [Sites dropdown component](sites-dropdown.component.md)
+- [Metadata indicators](metadata-indicators.md)
+- [Breadcrumb component](breadcrumb.component.md)
+- [Content action component](content-action.component.md)
+- [Dropdown breadcrumb component](dropdown-breadcrumb.component.md)
+<!-- seealso end -->
