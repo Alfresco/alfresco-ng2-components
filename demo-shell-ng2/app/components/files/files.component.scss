@@ -63,6 +63,16 @@ adf-document-list >>> adf-datatable tr.is-selected .image-table-cell::before {
     padding: 16px;
 }
 
+.adf-files-toolbar {
+    & /deep/ md-toolbar-row {
+        white-space: initial;
+
+        & /deep/ a.adf-breadcrumb-item-anchor {
+            white-space: initial;
+        }
+    }
+}
+
 @media (max-width: $minimumDocumentListWidth) {
     adf-document-list /deep/ adf-datatable  {
         & /deep/ .adf-data-table-cell--fileSize {

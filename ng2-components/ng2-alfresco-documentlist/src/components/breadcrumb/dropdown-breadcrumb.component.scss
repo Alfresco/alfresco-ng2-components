@@ -32,6 +32,9 @@
         &-current-folder {
             margin-left: $dropdownHorizontalOffset;
             line-height: 26px;
+            white-space: pre-wrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         &-current-folder.isRoot {
