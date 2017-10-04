@@ -297,12 +297,14 @@ export class FormComponent implements OnInit, OnChanges {
 
     getFormByTaskId(taskId: string): Promise<FormModel> {
         return new Promise<FormModel>((resolve, reject) => {
-            this.findProcessVariablesByTaskId(this.taskId).subscribe( (processVariables) => {
+            this.findProcessVariablesByTaskId(taskId).subscribe( (processVariables) => {
                 this.formService
                     .getTaskForm(taskId)
                     .subscribe(
                         form => {
-                            this.form = this.parseForm(form);
+                            const parsedForm =  this.parseForm(form);
+                            this.visibilityService.refreshVisibility(parsedForm);
+                            this.form = parsedForm;
                             this.onFormLoaded(this.form);
                             resolve(this.form);
                         },
