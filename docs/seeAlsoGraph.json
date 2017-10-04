@@ -13,6 +13,7 @@
     "card-view-update.service": [],
     "checklist.component": [],
     "comments.component": [],
+    "content-action.component": ["document-list.component", "document-actions.service", "folder-actions.service"],
     "content.widget": [],
     "context-menu.directive": [],
     "create-process-attachment.component": [],
@@ -23,14 +24,18 @@
         "pagination.component"
     ],
     "diagram.component": [],
+    "document-actions.service": [],
     "document-list.component": [
         "datatable.component",
         "data-column.component",
         "pagination.component",
+        "sites-dropdown.component",
         "metadata-indicators"
     ],
+    "dropdown-breadcrumb.component": ["document-list.component", "breadcrumb.component"],
     "extensibility": [],
     "file-uploading-dialog.component": [],
+    "folder-actions.service": ["document-actions.service"],
     "form-list.component": [],
     "form.component": [],
     "form.service": [],

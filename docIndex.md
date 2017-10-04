@@ -349,6 +349,7 @@ for more information about installing and using the source code.
 - [*Highlight transform service](ng2-components/ng2-alfresco-core/src/services/highlight-transform.service.ts)
 - [*Log service](ng2-components/ng2-alfresco-core/src/services/log.service.ts)
 - [*Nodes api service](ng2-components/ng2-alfresco-core/src/services/nodes-api.service.ts)
+- [*Page title service](ng2-components/ng2-alfresco-core/src/services/page-title.service.ts)
 - [*People api service](ng2-components/ng2-alfresco-core/src/services/people-api.service.ts)
 - [*Search api service](ng2-components/ng2-alfresco-core/src/services/search-api.service.ts)
 - [*Search service](ng2-components/ng2-alfresco-core/src/services/search.service.ts)
@@ -395,25 +396,18 @@ for more information about installing and using the source code.
 ### Components
 
 - [Breadcrumb component](docs/breadcrumb.component.md)
+- [Dropdown breadcrumb component](docs/dropdown-breadcrumb.component.md)
+- [Content action component](docs/content-action.component.md)
 - [Document list component](docs/document-list.component.md)
 - [Sites dropdown component](docs/sites-dropdown.component.md)
-- [*Dropdown breadcrumb component](ng2-components/ng2-alfresco-documentlist/src/components/breadcrumb/dropdown-breadcrumb.component.ts)
-- [*Content action list component](ng2-components/ng2-alfresco-documentlist/src/components/content-action/content-action-list.component.ts)
-- [*Content action component](ng2-components/ng2-alfresco-documentlist/src/components/content-action/content-action.component.ts)
-- [*Content column list component](ng2-components/ng2-alfresco-documentlist/src/components/content-column/content-column-list.component.ts)
-- [*Content column component](ng2-components/ng2-alfresco-documentlist/src/components/content-column/content-column.component.ts)
 - [*Content node selector component](ng2-components/ng2-alfresco-documentlist/src/components/content-node-selector/content-node-selector.component.ts)
-
-### Directives
-
-- [*Empty folder content directive](ng2-components/ng2-alfresco-documentlist/src/components/empty-folder/empty-folder-content.directive.ts)
 
 ### Services
 
+- [Document actions service](docs/document-actions.service.md)
+- [Folder actions service](docs/folder-actions.service.md)
 - [*Content node selector service](ng2-components/ng2-alfresco-documentlist/src/components/content-node-selector/content-node-selector.service.ts)
-- [*Document actions service](ng2-components/ng2-alfresco-documentlist/src/services/document-actions.service.ts)
 - [*Document list service](ng2-components/ng2-alfresco-documentlist/src/services/document-list.service.ts)
-- [*Folder actions service](ng2-components/ng2-alfresco-documentlist/src/services/folder-actions.service.ts)
 - [*Node actions service](ng2-components/ng2-alfresco-documentlist/src/services/node-actions.service.ts)
 <!-- ng2-alfresco-documentlist end -->
 
@@ -546,19 +540,13 @@ for more information about installing and using the source code.
 - [Viewer component](docs/viewer.component.md)
 - [*ImgViewer component](ng2-components/ng2-alfresco-viewer/src/components/imgViewer.component.ts)
 - [*MediaPlayer component](ng2-components/ng2-alfresco-viewer/src/components/mediaPlayer.component.ts)
-- [*NotSupportedFormat component](ng2-components/ng2-alfresco-viewer/src/components/notSupportedFormat.component.ts)
 - [*PdfViewer component](ng2-components/ng2-alfresco-viewer/src/components/pdfViewer.component.ts)
 - [*TxtViewer component](ng2-components/ng2-alfresco-viewer/src/components/txtViewer.component.ts)
-- [*Pdf view component](ng2-components/ng2-alfresco-viewer/src/components/viewer-dialog/pdf-view/pdf-view.component.ts)
-- [*Viewer dialog component](ng2-components/ng2-alfresco-viewer/src/components/viewer-dialog/viewer-dialog.component.ts)
+- [*Unknown format component](ng2-components/ng2-alfresco-viewer/src/components/unknown-format/unknown-format.component.ts)
 
 ### Directives
 
 - [*Extension viewer directive](ng2-components/ng2-alfresco-viewer/src/directives/extension-viewer.directive.ts)
-
-### Services
-
-- [*Viewer service](ng2-components/ng2-alfresco-viewer/src/services/viewer.service.ts)
 <!-- ng2-alfresco-viewer end -->
 
 [(Back to Contents)](#contents)

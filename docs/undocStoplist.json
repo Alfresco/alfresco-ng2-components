@@ -3,5 +3,8 @@
     "context-menu-holder",
     "data-column-list",
     "card-view-[a-z]+item",
-    "card-view-item-dispatcher"
+    "card-view-item-dispatcher",
+    "content-column",
+    "content-action-list",
+    "empty-folder-content"
 ]

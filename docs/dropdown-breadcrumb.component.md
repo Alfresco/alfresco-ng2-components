@@ -1,16 +1,16 @@
-# Breadcrumb Component
+# Dropdown Breadcrumb Component
 
-Indicates the current position within a navigation hierarchy.
+Indicates the current position within a navigation hierarchy using a dropdown menu.
 
-![Breadcrumb](docassets/images/breadcrumb.png)
+![Dropdown Breadcrumb screenshot](docassets/images/DropdownBreadcrumb.png)
 
 ## Basic Usage
 
 ```html
-<adf-breadcrumb
+<adf-dropdown-breadcrumb  *ngIf="useDropdownBreadcrumb"
     [target]="documentList"
     [folderNode]="documentList.folderNode">
-</adf-breadcrumb>
+</adf-dropdown-breadcrumb>
 ```
 
 ### Properties
@@ -33,5 +33,5 @@ Indicates the current position within a navigation hierarchy.
 ## See also
 
 - [Document list component](document-list.component.md)
-- [Dropdown breadcrumb component](dropdown-breadcrumb.component.md)
+- [Breadcrumb component](breadcrumb.component.md)
 <!-- seealso end -->
