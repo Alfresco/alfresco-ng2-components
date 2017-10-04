@@ -30,7 +30,7 @@ import {
 import { FormFieldModel } from './form-field.model';
 import { FormModel } from './form.model';
 
-fdescribe('FormFieldValidator', () => {
+describe('FormFieldValidator', () => {
 
     describe('RequiredFieldValidator', () => {
 
