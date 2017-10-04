@@ -10,7 +10,6 @@
                    type="text"
                    [id]="field.id"
                    [(ngModel)]="value"
-                   (ngModelChange)="flushValue()"
                    (keyup)="onKeyUp($event)"
                    [disabled]="field.readOnly"
                    placeholder="{{field.placeholder}}"

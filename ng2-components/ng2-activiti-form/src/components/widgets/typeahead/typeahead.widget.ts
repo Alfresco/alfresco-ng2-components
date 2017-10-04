@@ -112,28 +112,15 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
     }
 
     onKeyUp(event: KeyboardEvent) {
-        if (this.value && this.value.trim().length >= this.minTermLength  && this.oldValue !== this.value) {
+        if (this.value && this.value.trim().length >= this.minTermLength && this.oldValue !== this.value) {
             if (event.keyCode !== ESCAPE && event.keyCode !== ENTER) {
                 if (this.value.length >= this.minTermLength) {
                     this.options = this.getOptions();
                     this.oldValue = this.value;
+                    this.field.value = this.value;
                 }
             }
-        }else {
-            this.options = [];
-        }
-    }
-
-    flushValue() {
-        let options = this.field.options || [];
-        let lValue = this.value && this.value ? this.value.toLocaleLowerCase() : null;
-
-        let field = options.find(item => item.name && item.name.toLocaleLowerCase() === lValue);
-        if (field) {
-            this.field.value = field.id;
-            this.value = field.name;
         } else {
-            this.field.value = this.value;
             this.options = [];
         }
     }
