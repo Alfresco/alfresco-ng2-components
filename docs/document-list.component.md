@@ -1233,9 +1233,9 @@ This can be changed by means of the custom html template:
 ```html
 <adf-document-list ...>
     <empty-folder-content>
-        <template>
+        <ng-template>
             <h1>Sorry, no content here</h1>
-        </template>
+        </ng-template>
     </empty-folder-content>
 </adf-document-list>
 ```

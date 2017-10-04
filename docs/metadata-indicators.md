@@ -13,10 +13,10 @@ Here's an example of basic image-related metadata fetched from the server:
 <alfresco-document-list ...>
     <data-columns>
         <data-column key="properties" [sortable]="false">
-            <template let-value="value">
+            <ng-template let-value="value">
                 <adf-metadata-icons [metadata]="value">
                 </adf-metadata-icons>
-            </template>
+            </ng-template>
         </data-column>
         ...
     </data-columns>
@@ -59,9 +59,9 @@ Next we propagate the `value` reference to the `<adf-metadata-icons>` component 
 
 ```html
 <data-column key="properties" [sortable]="false">
-    <template let-value="value">
+    <ng-template let-value="value">
         <adf-metadata-icons [metadata]="value"></adf-metadata-icons>
-    </template>
+    </ng-template>
 </data-column>
 ```
 
