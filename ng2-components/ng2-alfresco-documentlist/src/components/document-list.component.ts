@@ -20,7 +20,7 @@ import {
     OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild, ViewEncapsulation
 } from '@angular/core';
 import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, Pagination, PersonEntry } from 'alfresco-js-api';
-import { AlfrescoApiService, AppConfigService, DataColumnListComponent } from 'ng2-alfresco-core';
+import { AlfrescoApiService, AppConfigService, DataColumnListComponent, UserPreferencesService } from 'ng2-alfresco-core';
 import { DataCellEvent, DataColumn, DataRowActionEvent, DataSorting, DataTableComponent, ObjectDataColumn } from 'ng2-alfresco-datatable';
 import { Observable, Subject } from 'rxjs/Rx';
 import { presetsDefaultModel } from '../models/preset.model';
@@ -168,7 +168,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                 private ngZone: NgZone,
                 private elementRef: ElementRef,
                 private apiService: AlfrescoApiService,
-                private appConfig: AppConfigService) {
+                private appConfig: AppConfigService,
+                private preferences: UserPreferencesService) {
         this.supportedPageSizes = appConfig.get('document-list.supportedPageSizes', [5, 10, 15, 20]);
     }
 
@@ -199,6 +200,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     ngOnInit() {
+        this.pageSize = this.preferences.paginationSize;
         this.loadLayoutPresets();
         this.data = new ShareDataTableAdapter(this.documentListService, null, this.getDefaultSorting());
         this.data.thumbnails = this.thumbnails;
@@ -704,6 +706,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     onChangePageSize(event: Pagination): void {
+        this.preferences.paginationSize = event.maxItems;
         this.pageSize = event.maxItems;
         this.skipCount = 0;
         this.reload();
