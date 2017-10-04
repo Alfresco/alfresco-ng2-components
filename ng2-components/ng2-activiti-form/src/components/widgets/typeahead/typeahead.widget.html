@@ -10,8 +10,8 @@
                    type="text"
                    [id]="field.id"
                    [(ngModel)]="value"
+                   (ngModelChange)="flushValue()"
                    (keyup)="onKeyUp($event)"
-                   (blur)="onBlur()"
                    [disabled]="field.readOnly"
                    placeholder="{{field.placeholder}}"
                    [mdAutocomplete]="auto">

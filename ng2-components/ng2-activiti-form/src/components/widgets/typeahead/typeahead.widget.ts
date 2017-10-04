@@ -124,24 +124,16 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
         }
     }
 
-    onBlur() {
-        setTimeout(() => {
-            this.flushValue();
-            this.checkVisibility();
-        }, 200);
-    }
-
     flushValue() {
         let options = this.field.options || [];
-        let lValue = this.value ? this.value.toLocaleLowerCase() : null;
+        let lValue = this.value && this.value ? this.value.toLocaleLowerCase() : null;
 
         let field = options.find(item => item.name && item.name.toLocaleLowerCase() === lValue);
         if (field) {
             this.field.value = field.id;
             this.value = field.name;
         } else {
-            this.field.value = null;
-            this.value = null;
+            this.field.value = this.value;
             this.options = [];
         }
     }

@@ -18,6 +18,7 @@
 import { FormFieldOption } from './form-field-option';
 import { FormFieldTypes } from './form-field-types';
 import {
+    FixedValueFieldValidator,
     MaxLengthFieldValidator,
     MaxValueFieldValidator,
     MinLengthFieldValidator,
@@ -29,7 +30,7 @@ import {
 import { FormFieldModel } from './form-field.model';
 import { FormModel } from './form.model';
 
-describe('FormFieldValidator', () => {
+fdescribe('FormFieldValidator', () => {
 
     describe('RequiredFieldValidator', () => {
 
@@ -527,6 +528,59 @@ describe('FormFieldValidator', () => {
                 type: FormFieldTypes.TEXT,
                 value: 'some value',
                 regexPattern: 'pattern'
+            });
+
+            expect(validator.validate(field)).toBeFalsy();
+        });
+
+    });
+
+    describe('FixedValueFieldValidator', () => {
+
+        let validator: FixedValueFieldValidator;
+
+        beforeEach(() => {
+            validator = new FixedValueFieldValidator();
+        });
+
+        it('should support only typeahead field', () => {
+            let field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.TEXT
+            });
+            expect(validator.isSupported(field)).toBeFalsy();
+
+            field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.TYPEAHEAD
+            });
+
+            expect(validator.isSupported(field)).toBeTruthy();
+        });
+
+        it('should allow empty values', () => {
+            let field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.TYPEAHEAD,
+                value: null,
+                regexPattern: 'pattern'
+            });
+
+            expect(validator.validate(field)).toBeTruthy();
+        });
+
+        it('should succeed for a valid input value in options', () => {
+            let field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.TYPEAHEAD,
+                value: '1',
+                options: [{id: '1', name: 'Leanne Graham'}, {id: '2', name: 'Ervin Howell'}]
+            });
+
+            expect(validator.validate(field)).toBeTruthy();
+        });
+
+        it('should fail for an invalid input value in options', () => {
+            let field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.TYPEAHEAD,
+                value: 'Lean',
+                options: [{id: '1', name: 'Leanne Graham'}, {id: '2', name: 'Ervin Howell'}]
             });
 
             expect(validator.validate(field)).toBeFalsy();

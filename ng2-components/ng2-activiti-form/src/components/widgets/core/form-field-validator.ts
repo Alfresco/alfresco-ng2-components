@@ -366,6 +366,41 @@ export class RegExFieldValidator implements FormFieldValidator {
 
 }
 
+export class FixedValueFieldValidator implements FormFieldValidator {
+
+    private supportedTypes = [
+        FormFieldTypes.TYPEAHEAD
+    ];
+
+    isSupported(field: FormFieldModel): boolean {
+        return field && this.supportedTypes.indexOf(field.type) > -1;
+    }
+
+    hasValidNameOrValidId(field: FormFieldModel): boolean {
+        return this.hasValidName(field) || this.hasValidId(field);
+    }
+
+    hasValidName(field: FormFieldModel) {
+        return field.options.find(item => item.name && item.name.toLocaleLowerCase() === field.value) ? true : false;
+    }
+
+    hasValidId(field: FormFieldModel) {
+        return field.options[field.value] ? true : false;
+    }
+
+    validate(field: FormFieldModel): boolean {
+        if (this.isSupported(field)) {
+            if (!field.value || this.hasValidNameOrValidId(field)) {
+                return true;
+            } else {
+                field.validationSummary = 'Invalid value';
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
 export const FORM_FIELD_VALIDATORS = [
     new RequiredFieldValidator(),
     new NumberFieldValidator(),
@@ -376,5 +411,6 @@ export const FORM_FIELD_VALIDATORS = [
     new RegExFieldValidator(),
     new DateFieldValidator(),
     new MinDateFieldValidator(),
-    new MaxDateFieldValidator()
+    new MaxDateFieldValidator(),
+    new FixedValueFieldValidator()
 ];

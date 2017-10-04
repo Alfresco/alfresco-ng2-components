@@ -275,6 +275,7 @@ describe('TypeaheadWidgetComponent', () => {
 
         expect(widget.value).toBeNull();
         expect(widget.field.value).toBeNull();
+        expect(widget.options.length).toBe(0);
     });
 
     it('should emit field change event on item click', () => {
@@ -355,6 +356,21 @@ describe('TypeaheadWidgetComponent', () => {
                 });
             }));
 
+            it('should show error message when the value is not valid', async(() => {
+                typeaheadWidgetComponent.value = 'Fake Name';
+                typeaheadWidgetComponent.field.value = 'Fake Name';
+                typeaheadWidgetComponent.field.options = fakeOptionList;
+                expect(element.querySelector('.adf-error-text')).toBeNull();
+                let keyboardEvent = new KeyboardEvent('keypress');
+                typeaheadWidgetComponent.onKeyUp(keyboardEvent);
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    expect(element.querySelector('.adf-error-text')).not.toBeNull();
+                    expect(element.querySelector('.adf-error-text').textContent).toContain('Invalid value');
+                });
+            }));
+
             it('should hide not visible typeahead', async(() => {
                 typeaheadWidgetComponent.field.isVisible = false;
                 fixture.detectChanges();
@@ -368,10 +384,12 @@ describe('TypeaheadWidgetComponent', () => {
                     new FormModel({ taskId: 'fake-task-id', processVariables: [{ name: 'typeahead-id_LABEL', value: 'FakeProcessValue' }] }), {
                     id: 'typeahead-id',
                     name: 'typeahead-name',
+                    options: fakeOptionList,
                     type: 'readonly',
                     value: '9',
                     params: { field: { id: 'typeahead-id', name: 'typeahead-name', type: 'typeahead' } }
                 });
+                typeaheadWidgetComponent.value = 'Fake Name 2';
                 fixture.detectChanges();
                 const trigger = fixture.debugElement.query(By.css('.mat-select-trigger')).nativeElement;
                 trigger.click();
