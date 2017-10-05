@@ -370,7 +370,7 @@ describe('TypeaheadWidgetComponent', () => {
                     name: 'typeahead-name',
                     type: 'readonly',
                     value: '9',
-                    params: { field: { name: 'typeahead-name', type: 'typeahead' } }
+                    params: { field: { id: 'typeahead-id', name: 'typeahead-name', type: 'typeahead' } }
                 });
                 fixture.detectChanges();
                 const trigger = fixture.debugElement.query(By.css('.mat-select-trigger')).nativeElement;
