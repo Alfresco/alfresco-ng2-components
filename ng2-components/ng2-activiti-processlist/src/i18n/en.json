@@ -78,8 +78,8 @@
         "FORM": {
             "TITLE": "Start Process",
             "LABEL": {
-                "TYPE": "Type",
-                "NAME": "Name"
+                "TYPE": "Select Process",
+                "NAME": "Process Name"
             },
             "TYPE_PLACEHOLDER": "Choose one...",
             "ACTION": {

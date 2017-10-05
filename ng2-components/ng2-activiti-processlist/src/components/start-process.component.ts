@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges,  ViewChild, ViewEncapsulation } from '@angular/core';
 import { RestVariable } from 'alfresco-js-api';
 import { StartFormComponent } from 'ng2-activiti-form';
 import { ProcessDefinitionRepresentation } from './../models/process-definition.model';
@@ -25,7 +25,8 @@ import { ProcessService } from './../services/process.service';
 @Component({
     selector: 'adf-start-process, activiti-start-process',
     templateUrl: './start-process.component.html',
-    styleUrls: ['./start-process.component.scss']
+    styleUrls: ['./start-process.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class StartProcessInstanceComponent implements OnChanges {
 
