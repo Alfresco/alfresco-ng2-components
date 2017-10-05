@@ -402,6 +402,10 @@ for more information about installing and using the source code.
 - [Sites dropdown component](docs/sites-dropdown.component.md)
 - [*Content node selector component](ng2-components/ng2-alfresco-documentlist/src/components/content-node-selector/content-node-selector.component.ts)
 
+### Models
+
+- [Permissions style model](docs/permissions-style.model.md)
+
 ### Services
 
 - [Document actions service](docs/document-actions.service.md)

@@ -17,22 +17,18 @@ Displays the documents from a repository.
     + [Repository aliases](#repository-aliases)
     + [DocumentList aliases](#documentlist-aliases)
   * [Setting default folder](#setting-default-folder)
-  * [Custom icons for selected rows](#custom-icons-for-selected-rows)
   * [Calling DocumentList api directly](#calling-documentlist-api-directly)
-  * [Custom columns](#custom-columns)
   * [Underlying node object](#underlying-node-object)
+  * [Custom columns](#custom-columns)
   * [Date Column](#date-column)
   * [Location Column](#location-column)
-  * [Column Template](#column-template)
   * [Actions](#actions)
   * [Navigation mode](#navigation-mode)
 - [Advanced usage and customization](#advanced-usage-and-customization)
   * [Custom row filter](#custom-row-filter)
   * [Custom image resolver](#custom-image-resolver)
-  * [Hiding columns on small screens](#hiding-columns-on-small-screens)
-  * [Custom row permissions style](#custom-row-permissions-style)
-    + [Examples](#examples)
   * [Custom 'empty folder' template](#custom-empty-folder-template)
+- [See also](#see-also)
 
 <!-- tocstop -->
 
@@ -61,7 +57,7 @@ The properties currentFolderId, folderNode and node are the entry initialization
 | rowStyleClass | string | | The CSS class to apply to every row |
 | currentFolderId | string | null | The ID of the folder node to display or a reserved string alias for special sources (see **Data Sources**) |
 | folderNode | [MinimalNodeEntryEntity](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md) | null | Currently displayed folder node | 
-| permissionsStyle | [PermissionStyleModel[]](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-documentlist/src/models/permissions-style.model.ts) | null | with this array you can define different styles depending on the permission of the user on that node. The PermissionStyleModel allows you to select also if you want to apply the style only on the file or folder nodes. PermissionStyleModel.permission accepts the following values [Permissions](https://github.com/Alfresco/alfresco-ng2-components/blob/development/ng2-components/ng2-alfresco-core/src/models/permissions.enum.ts)   [see more](#custom-row-permissions-style). | 
+| permissionsStyle | [PermissionStyleModel[]](permission-style.model.md) | null | Define a set of CSS styles styles to apply depending on the permission of the user on that node. See the [Permission Style model](permission-style.model.md) page for further details and examples. | 
 | paginationStrategy | PaginationStrategy | PaginationStrategy.Finite | The pagination type to be shown, can be Finite or Infinite |
 | node | [NodePaging](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodePaging.md) | null | Document list will show all the nodes contained in the NodePaging entity  | 
 | navigate | boolean | true | Toggles navigation to folder content or file preview |
@@ -114,7 +110,7 @@ Every event is represented by a [CustomEvent](https://developer.mozilla.org/en/d
 }
 ```
 
-Please refer to the DataTable documentation to find details about additional DOM events the DocumentList component bubbles up from the DataTable.
+Please refer to the [DataTable](datatable.component.md) documentation to find details about additional DOM events the DocumentList component bubbles up from the DataTable.
 
 Below is a basic example of handling DOM events in the parent elements.
 
@@ -315,60 +311,6 @@ It helps examining other valuable information you can have access to if needed:
 
 **Important note**: for this particular scenario you must also trigger `changeDetector.detectChanges()` as in the example above. 
 
-### Custom icons for selected rows
-
-You can use the "class" property of the [DataColumn component](data-column.component.md)  to apply your custom css. 
-
-As an example, this feature can be used to change the look and feel of the icon for the selected rows.
-
-Let's start by assigning an "image-table-cell" class to the thumbnail column:
-
-```html
-<adf-document-list ...>
-    <data-columns>
-        
-        <data-column
-            key="$thumbnail"
-            type="image"
-            [sortable]="false"
-            class="image-table-cell">
-        </data-column>
-        
-        ...
-    </data-columns>
-</adf-document-list>
-```
-
-Now your application can define custom styles to change the content of the column based on some other conditions, like selection state:
-
-```css
-adf-document-list >>> adf-datatable tr.is-selected .image-table-cell {
-    position: relative;
-}
-
-adf-document-list >>> adf-datatable tr.is-selected .image-table-cell::before {
-    content: "\E876"; /* "done" */
-    font-family: "Material Icons";
-    font-size: 24px;
-    line-height: 32px;
-    text-align: center;
-    color: white;
-    position: absolute;
-    width: 32px;
-    height: 32px;
-    top: 50%;
-    left: 50%;
-    margin-top: -16px;
-    margin-left: -14px;
-    border-radius: 100%;
-    background: #00bcd4;
-}
-```
-
-Once your application starts you should see the following icon for each selected row:
-
-![view-child](docassets/images/document-list-custom-icon.png)
-
 ### Calling DocumentList api directly
 
 Typically you will be binding DocumentList properties to your application/component class properties:
@@ -440,10 +382,55 @@ It is important accessing child components at least at the `AfterViewInit` state
 Any UI click (buttons, links, etc.) event handlers are absolutely fine. This cannot be `ngOnInit` event though.
 You can get more details in [Component lifecycle hooks](https://angular.io/docs/ts/latest/guide/lifecycle-hooks.html) article.
 
+### Underlying node object
+
+DocumentList component assigns an instance of `MinimalNode` type (`alfresco-js-api`) as a data context of each row.
+
+```js
+export interface MinimalNode {
+    id: string;
+    parentId: string;
+    name: string;
+    nodeType: string;
+    isFolder: boolean;
+    isFile: boolean;
+    modifiedAt: Date;
+    modifiedByUser: UserInfo;
+    createdAt: Date;
+    createdByUser: UserInfo;
+    content: ContentInfo;
+    path: PathInfoEntity;
+    properties: NodeProperties;
+}
+```
+
+_See more details in [alfresco-js-api](https://github.com/Alfresco/alfresco-js-api/blob/master/index.d.ts) repository._
+
+Binding to nested properties is also supported. You can define a column key as a property path similar to the following:
+
+```text
+createdByUser.displayName
+```
+
+Here's a short example:
+
+```html
+<adf-document-list ...>
+    <data-columns>
+        <data-column key="$thumbnail" type="image"></data-column>
+        <data-column title="Name" key="name" class="full-width ellipsis-cell"></data-column>
+        <data-column
+            title="Created By" 
+            key="createdByUser.displayName">
+        </data-column>
+    </data-columns>
+</adf-document-list>
+```
+
 ### Custom columns
 
 It is possible to reorder, extend or completely redefine data columns displayed by the component.
-By default special `$thumbnail` and `displayName` columns are rendered.
+By default, special `$thumbnail` and `displayName` columns are rendered.
 
 A custom set of columns can look like the following:
 
@@ -491,52 +478,7 @@ You can also use HTML-based schema declaration used by DataTable, TaskList and o
 </adf-datatable>
 ```
 
-You can also add tooltips, automatic column title translation and other features. See the [DataColumn component page](data-column.component.md) for more information about specifying and customizing columns.
-
-### Underlying node object
-
-DocumentList component assigns an instance of `MinimalNode` type (`alfresco-js-api`) as a data context of each row.
-
-```js
-export interface MinimalNode {
-    id: string;
-    parentId: string;
-    name: string;
-    nodeType: string;
-    isFolder: boolean;
-    isFile: boolean;
-    modifiedAt: Date;
-    modifiedByUser: UserInfo;
-    createdAt: Date;
-    createdByUser: UserInfo;
-    content: ContentInfo;
-    path: PathInfoEntity;
-    properties: NodeProperties;
-}
-```
-
-_See more details in [alfresco-js-api](https://github.com/Alfresco/alfresco-js-api/blob/master/index.d.ts) repository._
-
-Binding to nested properties is also supported. You can define a column key as a property path similar to the following:
-
-```text
-createdByUser.displayName
-```
-
-Here's a short example:
-
-```html
-<adf-document-list ...>
-    <data-columns>
-        <data-column key="$thumbnail" type="image"></data-column>
-        <data-column title="Name" key="name" class="full-width ellipsis-cell"></data-column>
-        <data-column
-            title="Created By" 
-            key="createdByUser.displayName">
-        </data-column>
-    </data-columns>
-</adf-document-list>
-```
+You can also add tooltips, styling, automatic column title translation and other features. See the [DataColumn component page](data-column.component.md) for more information about specifying and customizing columns.
 
 ### Date Column
 
@@ -585,81 +527,6 @@ All links rendered in the column above will have an address mapped to `/files`:
 /files/node-2-id
 ...
 ```
-
-### Column Template
-
-It is possible to provide custom column/cell template that may contain other Angular components or HTML elements:
-
-Every cell in the DataTable component is bound to the dynamic data context containing the following properties:
-
-| Name | Type | Description |
-| --- | --- | --- |
-| data | [DataTableAdapter](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-alfresco-datatable#data-sources) | Data adapter instance. |
-| row | [DataRow](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-alfresco-datatable#data-sources) | Current data row instance.  |
-| col | [DataColumn](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-alfresco-datatable#data-sources) | Current data column instance. |
-
-You can use all three properties to gain full access to underlying data from within your custom templates. 
-In order to wire HTML templates with the data context you will need defining a variable that is bound to `$implicit` like shown below:
-
-```html
-<ng-template let-context="$implicit">
-    <!-- template body -->
-</ng-template>
-```
-
-The format of naming is `let-VARIABLE_NAME="$implicit"` where `VARIABLE_NAME` is the name of the variable you want to bind template data context to.
-
-Getting a cell value from the underlying DataTableAdapter:
-
-```ts
-context.data.getValue(entry.row, entry.col);
-```
-
-You can retrieve all property values for underlying node, including nested properties (via property paths):
-
-```ts
-context.row.getValue('name')
-context.row.getValue('createdByUser.displayName')
-```
-
-You may want using **row** api to get raw value access.
-
-```html
-<data-column title="Name" key="name" sortable="true" class="full-width ellipsis-cell">
-    <ng-template let-context="$implicit">
-        <span>Hi! {{context.row.getValue('createdByUser.displayName')}}</span>
-        <span>Hi! {{context.row.getValue('name')}}</span>
-    </ng-template>
-</data-column>
-```
-
-Use **data** api to get values with post-processing, like datetime/icon conversion._
-
-In the Example below we will prepend `Hi!` to each file and folder name in the list: 
-
-```html
-<data-column title="Name" key="name" sortable="true" class="full-width ellipsis-cell">
-    <ng-template let-entry="$implicit">
-        <span>Hi! {{entry.data.getValue(entry.row, entry.col)}}</span>
-    </ng-template>
-</data-column>
-```
-
-In the Example below we will add the [ng2-alfresco-tag](https://www.npmjs.com/package/ng2-alfresco-tag) component is integrate in the document list.
-
-```html
-<data-column
-    title="{{'DOCUMENT_LIST.COLUMNS.TAG' | translate}}"
-    key="id"
-    sortable="true"
-    class="full-width ellipsis-cell">
-    <ng-template let-entry="$implicit">
-        <adf-tag-node-list  [nodeId]="entry.data.getValue(entry.row, entry.col)"></adf-tag-node-list>
-    </ng-template>
-</data-column>
-```
-
-![Tag component in document List](docassets/images/document-list-tag-template.png)
 
 ### Actions
 
@@ -823,120 +690,6 @@ export class View1 {
 }
 ```
 
-### Hiding columns on small screens
-
-You can hide columns on small screens by means of custom CSS rules:
-
-```css
-@media all and (max-width: 768px) {
-
-    alfresco-document-list >>> th.desktop-only .cell-value {
-        display: none;
-    }
-
-    alfresco-document-list >>> td.desktop-only .cell-value {
-        display: none;
-    }
-}
-```
-
-Now you can declare columns and assign `desktop-only` class where needed:
-
-```html
-<adf-document-list ...>
-    <data-columns>
-        
-        <!-- always visible columns -->
-        
-        <data-column key="$thumbnail" type="image"></data-column>
-        <data-column 
-                title="Name" 
-                key="name" 
-                class="full-width ellipsis-cell">
-        </data-column>
-        
-        <!-- desktop-only columns -->
-        
-        <data-column
-                title="Created by"
-                key="createdByUser.displayName"
-                class="desktop-only">
-        </data-column>
-        <data-column
-                title="Created on"
-                key="createdAt"
-                type="date"
-                format="medium"
-                class="desktop-only">
-        </data-column>
-    </data-columns>
-</adf-document-list>
-```
-
-**Desktop View**
-
-![Responsive Desktop](docassets/images/responsive-desktop.png)
-
-**Mobile View**
-
-![Responsive Mobile](docassets/images/responsive-mobile.png)
-
-### Custom row permissions style
-
-You can customize the style of the row based on the permissions.
-The property to use is permissionsStyle[]:[PermissionStyleModel[]](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-documentlist/src/models/permissions-style.model.ts).
-The permissionsStyle array can define different styles depending on the permission of the user on that node.
-
-[PermissionStyleModel](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-documentlist/src/models/permissions-style.model.ts)
-
-| Property | Description |
-| --- | --- |
-| isFile/isFolder | allow you to select if you want apply the style to file/folder nodes |
-| permission | is an enum value [Permissions](https://github.com/Alfresco/alfresco-ng2-components/blob/development/ng2-components/ng2-alfresco-core/src/models/permissions.enum.ts) | 
-| css| the name of the class to add | 
-
-#### Examples
-
-If you want to change the style on rows where the user can create content: 
-
-```ts
-let permissionsStyle: PermissionStyleModel[] = [];
-
-this.permissionsStyle.push(new PermissionStyleModel('document-list__create', PermissionsEnum.CREATE));        
-```
-
-```html
-<adf-document-list [permissionsStyle]="permissionsStyle">
-</adf-document-list>
-```
-
-```css
-adf-document-list >>> adf-datatable tr.document-list__create {
-    background: green !important;
-}
-```
-
-If you want to change the style on the folders where the user doesn't have the permission to update: 
-
-```ts
-
-let permissionsStyle: PermissionStyleModel[] = [];
-
-this.permissionsStyle.push(new PermissionStyleModel('document-list__disable', PermissionsEnum.NOT_CREATE, false, true));
-
-```
-
-```html
-<adf-document-list [permissionsStyle]="permissionsStyle">
-</adf-document-list>
-```
-
-```css
-adf-document-list >>> adf-datatable tr.document-list__disable {
-    background: red !important;
-}
-```
-
 ### Custom 'empty folder' template
 
 By default DocumentList provides the following content for the empty folder:
@@ -971,4 +724,5 @@ That will give the following output:
 - [Breadcrumb component](breadcrumb.component.md)
 - [Content action component](content-action.component.md)
 - [Dropdown breadcrumb component](dropdown-breadcrumb.component.md)
+- [Permission style model](permission-style.model.md)
 <!-- seealso end -->
