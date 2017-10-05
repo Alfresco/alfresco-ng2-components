@@ -48,7 +48,7 @@
         {{ 'CORE.PAGINATION.TOTAL_PAGES' | translate: { total: pages.length } }}
     </span>
 
-    <md-menu #pagesMenu="mdMenu">
+    <md-menu #pagesMenu="mdMenu" class="adf-pagination__page-selector">
         <button
             md-menu-item
             *ngFor="let pageNumber of pages"
