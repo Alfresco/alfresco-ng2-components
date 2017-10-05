@@ -205,7 +205,7 @@ export class FormFieldModel extends FormWidgetModel {
     private getProcessVariableValue(field: any, form: FormModel) {
         let fieldName = field.name;
         if (this.isTypeaHeadFieldType(field.type)) {
-            fieldName = this.getFieldNameWithLabel(field.name);
+            fieldName = this.getFieldNameWithLabel(field.id);
         }
         return this.findProcessVariableValue(fieldName, form);
     }

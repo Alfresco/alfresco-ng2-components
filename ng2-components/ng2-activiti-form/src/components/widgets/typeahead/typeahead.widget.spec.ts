@@ -365,12 +365,12 @@ describe('TypeaheadWidgetComponent', () => {
 
             it('should show typeahead value when the type is readonly', async(() => {
                 typeaheadWidgetComponent.field = new FormFieldModel(
-                    new FormModel({ taskId: 'fake-task-id', processVariables: [{ name: 'typeahead-name_LABEL', value: 'FakeProcessValue' }] }), {
+                    new FormModel({ taskId: 'fake-task-id', processVariables: [{ name: 'typeahead-id_LABEL', value: 'FakeProcessValue' }] }), {
                     id: 'typeahead-id',
                     name: 'typeahead-name',
                     type: 'readonly',
                     value: '9',
-                    params: { field: { name: 'typeahead-name', type: 'typeahead' } }
+                    params: { field: { id: 'typeahead-id', name: 'typeahead-name', type: 'typeahead' } }
                 });
                 fixture.detectChanges();
                 const trigger = fixture.debugElement.query(By.css('.mat-select-trigger')).nativeElement;
