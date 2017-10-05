@@ -10,12 +10,13 @@
                    type="text"
                    [id]="field.id"
                    [(ngModel)]="value"
+                   (ngModelChange)="validate()"
                    (keyup)="onKeyUp($event)"
                    [disabled]="field.readOnly"
                    placeholder="{{field.placeholder}}"
                    [mdAutocomplete]="auto">
             <md-autocomplete #auto="mdAutocomplete" (optionSelected)="onItemSelect($event.option.value)">
-                <md-option *ngFor="let item of options" (click)="onItemClick(item, $event)"  [value]="item">
+                <md-option *ngFor="let item of options" [value]="item">
                     <span>{{item.name}}</span>
                 </md-option>
             </md-autocomplete>

@@ -381,19 +381,25 @@ export class FixedValueFieldValidator implements FormFieldValidator {
     }
 
     hasValidName(field: FormFieldModel) {
-        return field.options.find(item => item.name && item.name.toLocaleLowerCase() === field.value) ? true : false;
+        return field.options.find(item => item.name && item.name.toLocaleLowerCase() === field.value.toLocaleLowerCase()) ? true : false;
     }
 
     hasValidId(field: FormFieldModel) {
-        return field.options[field.value] ? true : false;
+        return field.options[field.value - 1] ? true : false;
+    }
+
+    hasStringValue(field: FormFieldModel) {
+        return field.value && typeof field.value === 'string';
+    }
+
+    hasOptions(field: FormFieldModel) {
+        return field.options && field.options.length > 0;
     }
 
     validate(field: FormFieldModel): boolean {
         if (this.isSupported(field)) {
-            if (!field.value || this.hasValidNameOrValidId(field)) {
-                return true;
-            } else {
-                field.validationSummary = 'Invalid value';
+            if (this.hasStringValue(field) && this.hasOptions(field) && !this.hasValidNameOrValidId(field)) {
+                field.validationSummary = 'Invalid data inserted';
                 return false;
             }
         }

@@ -108,23 +108,6 @@ describe('TypeaheadWidgetComponent', () => {
         expect(widget.handleError).toHaveBeenCalledWith(err);
     });
 
-    it('should prevent default behaviour on option item click', () => {
-        let event = jasmine.createSpyObj('event', ['preventDefault']);
-        widget.onItemClick(null, event);
-        expect(event.preventDefault).toHaveBeenCalled();
-    });
-
-    it('should update values on option item click', () => {
-        let option: FormFieldOption = <FormFieldOption> {
-            id: '1',
-            name: 'name'
-        };
-        spyOn(visibilityService, 'refreshVisibility').and.stub();
-        widget.onItemClick(option, null);
-        expect(widget.field.value).toBe(option.id);
-        expect(widget.value).toBe(option.name);
-    });
-
     it('should setup initial value', () => {
         spyOn(formService, 'getRestFieldValues').and.returnValue(Observable.create(observer => {
             observer.next([
@@ -208,90 +191,6 @@ describe('TypeaheadWidgetComponent', () => {
         expect(filtered[0]).toEqual(options[1]);
     });
 
-    it('should update form on value flush', () => {
-        spyOn(widget.field, 'updateForm').and.callThrough();
-        widget.flushValue();
-        expect(widget.field.updateForm).toHaveBeenCalled();
-    });
-
-    it('should flush selected value', () => {
-        let options: FormFieldOption[] = [
-            { id: '1', name: 'Item one' },
-            { id: '2', name: 'Item Two' }
-        ];
-
-        widget.field.options = options;
-        widget.value = 'Item Two';
-        widget.flushValue();
-
-        expect(widget.value).toBe(options[1].name);
-        expect(widget.field.value).toBe(options[1].id);
-    });
-
-    it('should be case insensitive when flushing value', () => {
-        let options: FormFieldOption[] = [
-            { id: '1', name: 'Item one' },
-            { id: '2', name: 'iTEM TWo' }
-        ];
-
-        widget.field.options = options;
-        widget.value = 'ITEM TWO';
-        widget.flushValue();
-
-        expect(widget.value).toBe(options[1].name);
-        expect(widget.field.value).toBe(options[1].id);
-    });
-
-    it('should reset fields when flushing missing option value', () => {
-        widget.field.options = [
-            { id: '1', name: 'Item one' },
-            { id: '2', name: 'Item two' }
-        ];
-        widget.value = 'Missing item';
-        widget.flushValue();
-
-        expect(widget.value).toBeNull();
-        expect(widget.field.value).toBeNull();
-    });
-
-    it('should reset fields when flushing incorrect value', () => {
-        widget.field.options = [
-            { id: '1', name: 'Item one' },
-            { id: '2', name: 'Item two' }
-        ];
-        widget.field.value = 'Item two';
-        widget.value = 'Item two!';
-        widget.flushValue();
-
-        expect(widget.value).toBeNull();
-        expect(widget.field.value).toBeNull();
-    });
-
-    it('should reset fields when flushing value having no options', () => {
-        widget.field.options = null;
-        widget.field.value = 'item 1';
-        widget.value = 'new item';
-        widget.flushValue();
-
-        expect(widget.value).toBeNull();
-        expect(widget.field.value).toBeNull();
-        expect(widget.options.length).toBe(0);
-    });
-
-    it('should emit field change event on item click', () => {
-        let event = jasmine.createSpyObj('event', ['preventDefault']);
-        let fakeField = new FormFieldModel(new FormModel(), { id: 'fakeField', value: 'fakeValue' });
-        widget.field = fakeField;
-        let item = { id: 'fake-id-opt', name: 'fake-name-opt' };
-        widget.onItemClick(item, event);
-
-        widget.fieldChanged.subscribe((field) => {
-            expect(field).toBeDefined();
-            expect(field.id).toEqual('fakeField');
-            expect(field.value).toEqual('fake-id-opt');
-        });
-    });
-
     describe('when template is ready', () => {
         let typeaheadWidgetComponent: TypeaheadWidgetComponent;
         let fixture: ComponentFixture<TypeaheadWidgetComponent>;
@@ -322,6 +221,33 @@ describe('TypeaheadWidgetComponent', () => {
             TestBed.resetTestingModule();
         });
 
+        describe ('and typeahead is in readonly mode', () => {
+
+            it('should show typeahead value with input disabled', async(() => {
+                typeaheadWidgetComponent.field = new FormFieldModel(
+                    new FormModel({ processVariables: [{ name: 'typeahead-id_LABEL', value: 'FakeProcessValue' }] }), {
+                    id: 'typeahead-id',
+                    name: 'typeahead-name',
+                    type: 'readonly',
+                    params: { field: { id: 'typeahead-id', name: 'typeahead-name', type: 'typeahead' } }
+                });
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    let readonlyInput: HTMLInputElement = <HTMLInputElement> element.querySelector('#typeahead-id');
+                    expect(readonlyInput.disabled).toBeTruthy();
+                    expect(readonlyInput).not.toBeNull();
+                    expect(readonlyInput.value).toBe('FakeProcessValue');
+                });
+            }));
+
+            afterEach(() => {
+                fixture.destroy();
+                TestBed.resetTestingModule();
+            });
+
+        });
+
         describe('and typeahead is populated via taskId', () => {
 
             beforeEach(async(() => {
@@ -344,15 +270,31 @@ describe('TypeaheadWidgetComponent', () => {
                 expect(element.querySelector('#typeahead-id')).not.toBeNull();
             }));
 
-            it('should show typeahead options', async(() => {
-                let keyboardEvent = new KeyboardEvent('keypress');
+            fit('should show typeahead options', async(() => {
+                let typeahedElement = fixture.debugElement.query(By.css('#typeahead-id'));
                 typeaheadWidgetComponent.value = 'F';
-                typeaheadWidgetComponent.onKeyUp(keyboardEvent);
+                typeahedElement.triggerEventHandler('keypress', {});
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(fixture.debugElement.queryAll(By.css('[id="md-option-1"]'))).toBeDefined();
                     expect(fixture.debugElement.queryAll(By.css('[id="md-option-2"]'))).toBeDefined();
                     expect(fixture.debugElement.queryAll(By.css('[id="md-option-3"]'))).toBeDefined();
+                });
+            }));
+
+            fit('should hide the option when the value is empty', async(() => {
+                let keyboardEvent = new KeyboardEvent('keypress');
+                typeaheadWidgetComponent.value = 'F';
+                typeaheadWidgetComponent.onKeyUp(keyboardEvent);
+                fixture.detectChanges();
+                expect(fixture.debugElement.queryAll(By.css('[id="md-option-1"]'))).toBeDefined();
+                fixture.whenStable().then(() => {
+                    typeaheadWidgetComponent.value = '';
+                    typeaheadWidgetComponent.onKeyUp(keyboardEvent);
+                    fixture.detectChanges();
+                    fixture.whenStable().then(() => {
+                        expect(fixture.debugElement.queryAll(By.css('[id="md-option-1"]'))).not.toBeDefined();
+                    });
                 });
             }));
 
@@ -367,7 +309,7 @@ describe('TypeaheadWidgetComponent', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(element.querySelector('.adf-error-text')).not.toBeNull();
-                    expect(element.querySelector('.adf-error-text').textContent).toContain('Invalid value');
+                    expect(element.querySelector('.adf-error-text').textContent).toContain('Invalid data inserted');
                 });
             }));
 
@@ -378,29 +320,6 @@ describe('TypeaheadWidgetComponent', () => {
                     expect(element.querySelector('#typeahead-id')).toBeNull();
                 });
             }));
-
-            it('should show typeahead value when the type is readonly', async(() => {
-                typeaheadWidgetComponent.field = new FormFieldModel(
-                    new FormModel({ taskId: 'fake-task-id', processVariables: [{ name: 'typeahead-id_LABEL', value: 'FakeProcessValue' }] }), {
-                    id: 'typeahead-id',
-                    name: 'typeahead-name',
-                    options: fakeOptionList,
-                    type: 'readonly',
-                    value: '9',
-                    params: { field: { id: 'typeahead-id', name: 'typeahead-name', type: 'typeahead' } }
-                });
-                typeaheadWidgetComponent.value = 'Fake Name 2';
-                fixture.detectChanges();
-                const trigger = fixture.debugElement.query(By.css('.mat-select-trigger')).nativeElement;
-                trigger.click();
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    expect(element.querySelector('#typeahead-id')).not.toBeNull();
-                    let optionElement: HTMLElement = <HTMLElement> document.body.querySelector('.mat-option');
-                    expect(optionElement.innerText).toEqual('FakeProcessValue');
-                });
-            }));
-
         });
 
         describe('and typeahead is populated via processDefinitionId', () => {
