@@ -18,7 +18,7 @@
     "context-menu.directive": [],
     "create-process-attachment.component": [],
     "create-task-attachment.component": [],
-    "data-column.component": ["document-list.component", "datatable.component"],
+    "data-column.component": ["document-list.component", "datatable.component", "tasklist.component"],
     "datatable.component": [
         "data-column.component",
         "pagination.component"
@@ -48,6 +48,7 @@
     "node-permission.directive": [],
     "notification.service": [],
     "pagination.component": [],
+    "permission-style.model": ["document-list.component"],
     "people-search.component": [],
     "people.component": [],
     "process-attachment-list.component": [],
