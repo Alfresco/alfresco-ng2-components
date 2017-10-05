@@ -45,7 +45,7 @@
                 padding-left: 16px;
                 justify-content: flex-start;
             }
-    
+
             &__perpage-block {
                 order: 3;
                 width: 50%;
@@ -53,7 +53,7 @@
                 padding-left: 16px;
                 justify-content: flex-start;
             }
-    
+
             &__actualinfo-block {
                 order: 2;
                 width: 50%;
@@ -61,14 +61,14 @@
                 padding-right: 16px;
                 justify-content: flex-end;
             }
-    
+
             &__controls-block {
                 order: 4;
                 width: 50%;
                 box-sizing: border-box;
                 padding-right: 16px;
                 justify-content: flex-end;
-            }                
+            }
         }
 
         &__max-items {
@@ -89,6 +89,10 @@
 
         &__previous-button, &__next-button {
             margin: 0 5px;
+        }
+
+        &__page-selector {
+            max-height: 250px !important;
         }
 
         button[md-icon-button] {
