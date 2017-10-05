@@ -39,7 +39,7 @@
                         (rowClick)="onTaskRowClick($event)"
                         (onSuccess)="onSuccessTaskList($event)"
                         (row-click)="onRowClick($event)"
-                        (row-dblclick)="onRowDblClick($event)"
+                        (row-dblclick)="onTaskRowDblClick($event)"
                         #activititasklist>
                         <!-- Custom column definition demo -->
                         <!--
@@ -138,6 +138,7 @@
                         [sort]="processFilter.filter.sort"
                         [data]="dataProcesses"
                         (rowClick)="onProcessRowClick($event)"
+                        (row-dblclick)="onProcessRowDblClick($event)"
                         (onSuccess)="onSuccessProcessList($event)">
                         <!-- Custom column definition demo -->
                         <!--

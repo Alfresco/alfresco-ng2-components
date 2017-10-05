@@ -290,6 +290,16 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
         this.currentTaskId = taskId;
     }
 
+    onTaskRowDblClick(event: CustomEvent) {
+        const taskId = event.detail.value.obj.id;
+        this.currentTaskId = taskId;
+    }
+
+    onProcessRowDblClick(event: CustomEvent) {
+        const processInstanceId = event.detail.value.obj.id;
+        this.currentProcessInstanceId = processInstanceId;
+    }
+
     onProcessRowClick(processInstanceId): void {
         this.currentProcessInstanceId = processInstanceId;
     }
