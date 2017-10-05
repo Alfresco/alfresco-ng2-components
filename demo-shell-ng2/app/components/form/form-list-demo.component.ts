@@ -66,8 +66,8 @@ export class FormListDemoComponent {
     onRowDblClick(event: CustomEvent) {
         let rowForm = event.detail.value.obj;
 
-        this.formService.getFormDefinitionById(rowForm.id).subscribe((definition) => {
-            let form = this.formService.parseForm(definition);
+        this.formService.getFormDefinitionById(rowForm.id).subscribe((formModel) => {
+            let form = this.formService.parseForm(formModel.formDefinition);
             this.form = form;
         });
 
