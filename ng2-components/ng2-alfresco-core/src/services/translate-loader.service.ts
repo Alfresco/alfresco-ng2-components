@@ -20,6 +20,7 @@ import { Http, Response } from '@angular/http';
 import { TranslateLoader } from '@ngx-translate/core';
 import { Observable } from 'rxjs/Rx';
 import { ComponentTranslationModel } from '../models/component.model';
+import { ObjectUtils } from '../utils/object-utils';
 import { LogService } from './log.service';
 
 @Injectable()
@@ -78,17 +79,27 @@ export class AlfrescoTranslateLoader implements TranslateLoader {
         return (this.queue[lang] || []).find(x => x === name) ? true : false;
     }
 
-    getFullTranslationJSON(lang: string) {
-        let fullTranslation: string = '';
-        let cloneList = this.providers.slice(0);
-        cloneList.reverse().forEach((component) => {
-            if (component.json && component.json[lang]) {
-                fullTranslation += JSON.stringify(component.json[lang]);
-            }
-        });
-        if (fullTranslation !== '') {
-            return JSON.parse(fullTranslation.replace(/}{/g, ','));
-        }
+    getFullTranslationJSON(lang: string): any {
+        let result = {};
+
+        this.providers
+            .slice(0)
+            .sort((a, b) => {
+                if (a.name === 'app') {
+                    return 1;
+                }
+                if (b.name === 'app') {
+                    return -1;
+                }
+                return a.name.localeCompare(b.name);
+            })
+            .forEach(model => {
+                if (model.json && model.json[lang]) {
+                    result = ObjectUtils.merge(result, model.json[lang]);
+                }
+            });
+
+        return result;
     }
 
     getTranslation(lang: string): Observable<any> {
