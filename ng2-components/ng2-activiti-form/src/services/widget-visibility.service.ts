@@ -98,43 +98,47 @@ export class WidgetVisibilityService {
         return valueFound;
     }
 
-    getFormValue(form: FormModel, field: string) {
-        let value = this.getFieldValue(form.values, field);
-        return value ? value : this.searchForm(form, field);
+    getFormValue(form: FormModel, fieldId: string) {
+        let value = this.getFieldValue(form.values, fieldId);
+
+        if (!value) {
+            value = this.searchValueInForm(form, fieldId);
+        }
+
+        return value;
     }
 
-    getFieldValue(valueList: any, fieldName: string) {
-        let dropDownFilterByName, valueFound = '';
-        if (fieldName && fieldName.indexOf('_LABEL') > 0) {
-            dropDownFilterByName = fieldName.substring(0, fieldName.length - 6);
+    getFieldValue(valueList: any, fieldId: string) {
+        let dropDownFilterByName, valueFound;
+        if (fieldId && fieldId.indexOf('_LABEL') > 0) {
+            dropDownFilterByName = fieldId.substring(0, fieldId.length - 6);
             if (valueList[dropDownFilterByName]) {
                 valueFound = valueList[dropDownFilterByName].name;
             }
-        } else if (valueList[fieldName] && valueList[fieldName].id) {
-            valueFound = valueList[fieldName].id;
+        } else if (valueList[fieldId] && valueList[fieldId].id) {
+            valueFound = valueList[fieldId].id;
         } else {
-            valueFound = valueList[fieldName];
+            valueFound = valueList[fieldId];
         }
         return valueFound;
     }
 
-    searchForm(form: FormModel, name: string) {
+    searchValueInForm(form: FormModel, fieldId: string) {
         let fieldValue = '';
-        form.fields.forEach((containerModel: ContainerModel) => {
-            containerModel.field.columns.forEach((containerColumnModel: ContainerColumnModel) => {
-                let fieldFound = containerColumnModel.fields.find(field => this.isSearchedField(field, name));
-                if (fieldFound) {
-                    fieldValue = this.getObjectValue(fieldFound);
-                    if (!fieldValue) {
-                        if (fieldFound.value && fieldFound.value.id) {
-                            fieldValue = fieldFound.value.id;
-                        } else {
-                            fieldValue = fieldFound.value;
-                        }
+        form.getFormFields().forEach((formField: FormFieldModel) => {
+            let fieldFound = this.isSearchedField(formField, fieldId);
+            if (fieldFound) {
+                fieldValue = this.getObjectValue(formField);
+                if (!fieldValue) {
+                    if (fieldFound.value && fieldFound.value.id) {
+                        fieldValue = fieldFound.value.id;
+                    } else {
+                        fieldValue = fieldFound.value;
                     }
                 }
-            });
+            }
         });
+
         return fieldValue;
     }
 
@@ -154,8 +158,8 @@ export class WidgetVisibilityService {
     }
 
     private isSearchedField(field: FormFieldModel, fieldToFind: string) {
-        let forrmattedFieldName = this.removeLabel(field, fieldToFind);
-        return field.name ? field.name.toUpperCase() === forrmattedFieldName.toUpperCase() : false;
+        let formattedFieldName = this.removeLabel(field, fieldToFind);
+        return field.id ? field.id.toUpperCase() === formattedFieldName.toUpperCase() : false;
     }
 
     private removeLabel(field: FormFieldModel, fieldToFind) {
