@@ -4,7 +4,7 @@
     },
     "TASK_LIST": {
         "MESSAGES": {
-            "NONE": "No tasks list found"
+            "NONE": "No task lists found"
         }
     },
     "TASK_DETAILS": {
@@ -23,12 +23,12 @@
             "COMPLETE": "Complete",
             "CLAIM": "Claim",
             "UNCLAIM": "Requeue",
-            "DRAG-ATTACHMENT": "Drop Files Here...",
+            "DRAG-ATTACHMENT": "Drop files to upload",
             "UPLOAD-ATTACHMENT": "Upload Attachment"
         },
         "MESSAGES": {
             "NONE": "No task details found",
-            "CLAIM": "To work on this task click Claim."
+            "CLAIM": "Click Claim to work on this task."
         },
         "FORM": {
             "NONE": "No form."
