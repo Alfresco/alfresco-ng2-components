@@ -23,10 +23,9 @@ import { Observable } from 'rxjs/Rx';
 import {
     CommentListComponent,
     CommentsComponent,
-    PeopleService,
     TaskListService
 } from 'ng2-activiti-tasklist';
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, CoreModule, PeopleProcessService } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 
 import { TranslationMock } from './../assets/translation.service.mock';
@@ -57,7 +56,7 @@ describe('ActivitiProcessInstanceComments', () => {
                 { provide: AlfrescoTranslationService, useClass: TranslationMock },
                 { provide: TaskListService, useClass: ProcessService },
                 DatePipe,
-                PeopleService
+                PeopleProcessService
             ]
         }).compileComponents();
     }));

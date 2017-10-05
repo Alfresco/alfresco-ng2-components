@@ -11,12 +11,11 @@
         <data-columns>
             <data-column key="firstName">
                 <ng-template let-entry="$implicit">
-                        <div *ngIf="!entry.row.obj.userImage" class="people-pic">
+                        <div *ngIf="!entry.row.obj.pictureId" class="people-pic">
                             {{getInitialUserName(entry.row.obj.firstName, entry.row.obj.lastName)}}</div>
                         <div>
-                            <img *ngIf="entry.row.obj.userImage" class="people-img"
-                                [src]="entry.row.obj.userImage"
-                                (error)="onErrorImageLoad(entry.row.obj)"/>
+                            <img *ngIf="entry.row.obj.pictureId" class="people-img"
+                                [src]="peopleProcessService.getUserImage(entry.row.obj)"/>
                         </div>
                 </ng-template>
             </data-column>

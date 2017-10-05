@@ -20,8 +20,8 @@
 import { ENTER, ESCAPE } from '@angular/cdk/keycodes';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MdAutocompleteTrigger } from '@angular/material';
+import { LightUserRepresentation, PeopleProcessService } from 'ng2-alfresco-core';
 import { FormService } from '../../../services/form.service';
-import { GroupUserModel } from '../core/group-user.model';
 import { GroupModel } from '../core/group.model';
 import { baseHost , WidgetComponent } from './../widget.component';
 
@@ -40,16 +40,16 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
     minTermLength: number = 1;
     value: string;
     oldValue: string;
-    users: GroupUserModel[] = [];
+    users: LightUserRepresentation[] = [];
     groupId: string;
 
-    constructor(public formService: FormService) {
+    constructor(public formService: FormService, public peopleProcessService: PeopleProcessService) {
         super(formService);
     }
 
     ngOnInit() {
         if (this.field) {
-            let user: GroupUserModel = this.field.value;
+            let user: LightUserRepresentation = this.field.value;
             if (user) {
                 this.value = this.getDisplayName(user);
             }
@@ -75,15 +75,9 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
 
     searchUsers() {
         this.formService.getWorkflowUsers(this.value, this.groupId)
-            .subscribe((result: GroupUserModel[]) => {
+            .subscribe((result: LightUserRepresentation[]) => {
                 this.users = result || [];
             });
-    }
-
-    onErrorImageLoad(user) {
-        if (user.userImage) {
-            user.userImage = null;
-        }
     }
 
     flushValue() {
@@ -103,7 +97,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         this.field.updateForm();
     }
 
-    getDisplayName(model: GroupUserModel) {
+    getDisplayName(model: LightUserRepresentation) {
         if (model) {
             let displayName = `${model.firstName || ''} ${model.lastName || ''}`;
             return displayName.trim();
@@ -112,7 +106,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         return '';
     }
 
-    onItemClick(item: GroupUserModel, event: Event) {
+    onItemClick(item: LightUserRepresentation, event: Event) {
         if (item) {
             this.field.value = item;
             this.value = this.getDisplayName(item);
@@ -122,7 +116,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         }
     }
 
-    onItemSelect(item: GroupUserModel) {
+    onItemSelect(item: LightUserRepresentation) {
         if (item) {
             this.field.value = item;
             this.value = this.getDisplayName(item);

@@ -17,12 +17,10 @@
 
 import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
+import { LightUserRepresentation, PeopleProcessService } from 'ng2-alfresco-core';
 import { Observable, Observer } from 'rxjs/Rx';
 import { UserEventModel } from '../models/user-event.model';
-import { User } from '../models/user.model';
 import { PeopleSearchComponent } from './people-search.component';
-
-import { PeopleService } from '../services/people.service';
 
 declare let componentHandler: any;
 declare var require: any;
@@ -38,7 +36,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
     iconImageUrl: string = require('../assets/images/user.jpg');
 
     @Input()
-    people: User[] = [];
+    people: LightUserRepresentation[] = [];
 
     @Input()
     taskId: string = '';
@@ -51,25 +49,14 @@ export class PeopleComponent implements OnInit, AfterViewInit {
 
     showAssignment: boolean = false;
 
-    private peopleSearchObserver: Observer<User[]>;
-    peopleSearch$: Observable<User[]>;
+    private peopleSearchObserver: Observer<LightUserRepresentation[]>;
+    peopleSearch$: Observable<LightUserRepresentation[]>;
 
-    /**
-     * Constructor
-     * @param translate
-     * @param people service
-     */
-    constructor(private peopleService: PeopleService,
-                private logService: LogService) {
-        this.peopleSearch$ = new Observable<User[]>(observer => this.peopleSearchObserver = observer).share();
+    constructor(private logService: LogService, public peopleProcessService: PeopleProcessService) {
+        this.peopleSearch$ = new Observable<LightUserRepresentation[]>(observer => this.peopleSearchObserver = observer).share();
     }
 
     ngOnInit() {
-        if (this.people && this.people.length > 0) {
-            this.people.forEach((person) => {
-                person.userImage = this.peopleService.getUserImage(person);
-            });
-        }
     }
 
     ngAfterViewInit() {
@@ -99,21 +86,21 @@ export class PeopleComponent implements OnInit, AfterViewInit {
     }
 
     searchUser(searchedWord: string) {
-        this.peopleService.getWorkflowUsersWithImages(this.taskId, searchedWord)
+        this.peopleProcessService.getWorkflowUsers(this.taskId, searchedWord)
             .subscribe((users) => {
                 this.peopleSearchObserver.next(users);
             }, error => this.logService.error(error));
     }
 
-    involveUser(user: User) {
-        this.peopleService.involveUserWithTask(this.taskId, user.id.toString())
+    involveUser(user: LightUserRepresentation) {
+        this.peopleProcessService.involveUserWithTask(this.taskId, user.id.toString())
             .subscribe(() => {
                 this.people = [...this.people, user];
             }, error => this.logService.error('Impossible to involve user with task'));
     }
 
-    removeInvolvedUser(user: User) {
-        this.peopleService.removeInvolvedUser(this.taskId, user.id.toString())
+    removeInvolvedUser(user: LightUserRepresentation) {
+        this.peopleProcessService.removeInvolvedUser(this.taskId, user.id.toString())
             .subscribe(() => {
                 this.people = this.people.filter((involvedUser) => {
                     return involvedUser.id !== user.id;
@@ -153,11 +140,5 @@ export class PeopleComponent implements OnInit, AfterViewInit {
 
     onCloseSearch() {
         this.showAssignment = false;
-    }
-
-    onErrorImageLoad(user: User) {
-        if (user.userImage) {
-            user.userImage = null;
-        }
     }
 }

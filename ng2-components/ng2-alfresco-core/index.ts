@@ -61,7 +61,8 @@ import { DiscoveryApiService } from './src/services/discovery-api.service';
 import { FavoritesApiService } from './src/services/favorites-api.service';
 import { HighlightTransformService } from './src/services/highlight-transform.service';
 import { NodesApiService } from './src/services/nodes-api.service';
-import { PeopleApiService } from './src/services/people-api.service';
+import { PeopleContentService } from './src/services/people-content.service';
+import { PeopleProcessService } from './src/services/people-process.service';
 import { SearchApiService } from './src/services/search-api.service';
 import { SearchService } from './src/services/search.service';
 import { SharedLinksApiService } from './src/services/shared-links-api.service';
@@ -103,7 +104,8 @@ export { HighlightTransformService, HightlightTransformResult } from './src/serv
 export { DeletedNodesApiService } from './src/services/deleted-nodes-api.service';
 export { FavoritesApiService } from './src/services/favorites-api.service';
 export { NodesApiService } from './src/services/nodes-api.service';
-export { PeopleApiService } from './src/services/people-api.service';
+export { PeopleContentService } from './src/services/people-content.service';
+export { PeopleProcessService } from './src/services/people-process.service';
 export { SearchApiService } from './src/services/search-api.service';
 export { SharedLinksApiService } from './src/services/shared-links-api.service';
 export { SitesApiService } from './src/services/sites-api.service';
@@ -156,6 +158,7 @@ export * from './src/models/file.model';
 export * from './src/models/permissions.enum';
 export * from './src/models/site.model';
 export * from './src/models/product-version.model';
+export * from './src/models/user-process.model';
 
 // Old deprecated import
 import { AuthenticationService as AlfrescoAuthenticationService } from './src/services/authentication.service';
@@ -190,13 +193,14 @@ export function providers() {
         DeletedNodesApiService,
         FavoritesApiService,
         NodesApiService,
-        PeopleApiService,
+        PeopleContentService,
         SearchApiService,
         SharedLinksApiService,
         SitesApiService,
         DiscoveryApiService,
         HighlightTransformService,
-        MomentDateAdapter
+        MomentDateAdapter,
+        PeopleProcessService
     ];
 }
 

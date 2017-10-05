@@ -18,14 +18,12 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { DateAdapter, MD_DATE_FORMATS } from '@angular/material';
 import * as moment from 'moment';
-import { MOMENT_DATE_FORMATS, MomentDateAdapter } from 'ng2-alfresco-core';
-import { LogService } from 'ng2-alfresco-core';
+import { LightUserRepresentation, LogService, MOMENT_DATE_FORMATS,
+    MomentDateAdapter, PeopleProcessService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { Form } from '../models/form.model';
 import { StartTaskModel } from '../models/start-task.model';
 import { TaskDetailsModel } from '../models/task-details.model';
-import { User } from '../models/user.model';
-import { PeopleService } from '../services/people.service';
 import { TaskListService } from './../services/tasklist.service';
 
 @Component({
@@ -53,7 +51,7 @@ export class StartTaskComponent implements OnInit {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    people: User[] = [];
+    people: LightUserRepresentation[] = [];
 
     startTaskmodel: StartTaskModel = new StartTaskModel();
 
@@ -74,7 +72,7 @@ export class StartTaskComponent implements OnInit {
      * @param taskService
      */
     constructor(private taskService: TaskListService,
-                private peopleService: PeopleService,
+                private peopleService: PeopleProcessService,
                 private logService: LogService) {
     }
 
@@ -143,7 +141,7 @@ export class StartTaskComponent implements OnInit {
         });
     }
 
-    public isUserNameEmpty(user: any): boolean {
+    public isUserNameEmpty(user: LightUserRepresentation): boolean {
         return !user || (this.isEmpty(user.firstName) && this.isEmpty(user.lastName));
     }
 

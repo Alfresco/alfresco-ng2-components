@@ -8,12 +8,11 @@
                 <div id="comment-user-icon"
                 class="adf-comment-img-container">
                     <div
-                        *ngIf="!entry.row.obj.createdBy.userImage" class="adf-comment-user-icon">
+                        *ngIf="!entry.row.obj.createdBy.pictureId" class="adf-comment-user-icon">
                             {{getUserShortName(entry.row.obj.createdBy)}}</div>
                     <div>
-                        <img *ngIf="entry.row.obj.createdBy.userImage" class="adf-people-img"
-                            [src]="entry.row.obj.createdBy.userImage"
-                            (error)="onErrorImageLoad(entry.row.obj.createdBy)"/>
+                        <img *ngIf="entry.row.obj.createdBy.pictureId" class="adf-people-img"
+                            [src]="peopleProcessService.getUserImage(entry.row.obj.createdBy)"/>
                     </div>
                 </div>
             </ng-template>

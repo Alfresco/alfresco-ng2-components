@@ -17,9 +17,9 @@
 
 import { AfterContentInit, AfterViewInit, Component, ContentChild, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { DataColumnListComponent } from 'ng2-alfresco-core';
+import { LightUserRepresentation } from 'ng2-alfresco-core';
 import { DataTableComponent } from 'ng2-alfresco-datatable';
 import { UserEventModel } from '../models/user-event.model';
-import { User } from '../models/user.model';
 
 declare let componentHandler: any;
 
@@ -37,18 +37,18 @@ export class PeopleListComponent implements AfterViewInit, AfterContentInit {
     peopleDataTable: DataTableComponent;
 
     @Input()
-    users: User[];
+    users: LightUserRepresentation[];
 
     @Input()
     actions: boolean = false;
 
     @Output()
-    clickRow: EventEmitter<User> = new EventEmitter<User>();
+    clickRow: EventEmitter<LightUserRepresentation> = new EventEmitter<LightUserRepresentation>();
 
     @Output()
     clickAction: EventEmitter<UserEventModel> = new EventEmitter<UserEventModel>();
 
-    user: User;
+    user: LightUserRepresentation;
 
     ngAfterContentInit() {
         this.peopleDataTable.columnList = this.columnList;

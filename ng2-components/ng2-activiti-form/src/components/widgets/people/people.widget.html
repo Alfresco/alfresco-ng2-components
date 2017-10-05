@@ -23,10 +23,9 @@
                     <div class="adf-people-widget-pic">
                         {{getInitialUserName(user.firstName, user.lastName)}}
                     </div>
-                    <div *ngIf="user.userImage" class="adf-people-widget-image-row">
+                    <div *ngIf="user.pictureId" class="adf-people-widget-image-row">
                         <img id="adf-people-widget-pic-{{i}}" class="adf-people-widget-image"
-                             [src]="user.userImage"
-                             (error)="onErrorImageLoad(user)"/>
+                             [src]="peopleProcessService.getUserImage(user)"/>
                     </div>
                     <span class="adf-people-label-name">{{getDisplayName(user)}}</span>
                 </div>

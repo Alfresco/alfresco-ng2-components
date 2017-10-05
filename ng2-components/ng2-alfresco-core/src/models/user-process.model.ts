@@ -15,25 +15,25 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+/**
+ * This object represent the process service user.*
+ */
 
-export class GroupUserModel {
-
-    company: string;
+export class LightUserRepresentation {
+    id: number;
     email: string;
     firstName: string;
-    id: string;
     lastName: string;
-    userImage: string;
+    pictureId: number = null;
 
-    constructor(json?: any) {
-        if (json) {
-            this.company = json.company;
-            this.email = json.email;
-            this.firstName = json.firstName;
-            this.id = json.id;
-            this.lastName = json.lastName;
-            this.userImage = json.userImage;
+    constructor(obj?: any) {
+        if (obj) {
+            this.id = obj.id;
+            this.email = obj.email || null;
+            this.firstName = obj.firstName || null;
+            this.lastName = obj.lastName || null;
+            this.pictureId = obj.pictureId || null;
         }
     }
+
 }

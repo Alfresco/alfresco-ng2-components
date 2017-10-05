@@ -17,9 +17,9 @@
 
 import { async, inject, TestBed } from '@angular/core/testing';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { PeopleApiService } from './people-api.service';
+import { PeopleContentService } from './people-content.service';
 
-class PeopleApiServiceTest {
+class PeopleContentServiceTest {
     service: any = null;
     setup: any = {
         rejectGetPerson: false
@@ -38,11 +38,11 @@ class PeopleApiServiceTest {
         TestBed.configureTestingModule({
             providers: [
                 alfrescoApiServiceProvider,
-                PeopleApiService
+                PeopleContentService
             ]
         });
 
-        inject([ PeopleApiService ], (service) => {
+        inject([ PeopleContentService ], (service) => {
             this.service = service;
         })();
     }
@@ -81,7 +81,7 @@ class PeopleApiServiceTest {
 describe('PeopleAPI', () => {
     describe('Get persons', () => {
         it('calls method by an id', async(() => {
-            const test = new PeopleApiServiceTest();
+            const test = new PeopleContentServiceTest();
 
             test.service.getPerson('person-1').subscribe(() => {
                 expect(test.peopleApiGetPersonArguments[0])
@@ -90,7 +90,7 @@ describe('PeopleAPI', () => {
         }));
 
         it('calls method with "-me-"', async(() => {
-            const test = new PeopleApiServiceTest();
+            const test = new PeopleContentServiceTest();
 
             test.service.getCurrentPerson().subscribe(() => {
                 expect(test.peopleApiGetPersonArguments[0])
@@ -99,7 +99,7 @@ describe('PeopleAPI', () => {
         }));
 
         it('handles the error when it fails', async(() => {
-            const test = new PeopleApiServiceTest({
+            const test = new PeopleContentServiceTest({
                 rejectGetPerson: true
             });
 

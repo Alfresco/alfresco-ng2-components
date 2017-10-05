@@ -16,44 +16,47 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { AppConfigService, CoreModule } from 'ng2-alfresco-core';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
-import { User } from '../models/user.model';
-import { PeopleService } from './people.service';
+import { LightUserRepresentation } from '../models/user-process.model';
+import { AlfrescoApiService } from './alfresco-api.service';
+import { AppConfigService } from './app-config.service';
+import { LogService } from './log.service';
+import { PeopleProcessService } from './people-process.service';
+import { StorageService } from './storage.service';
 
 declare let jasmine: any;
 
-const firstInvolvedUser: User = new User({
+const firstInvolvedUser: LightUserRepresentation = new LightUserRepresentation({
     id: '1',
     email: 'fake-user1@fake.com',
     firstName: 'fakeName1',
     lastName: 'fakeLast1'
 });
 
-const secondInvolvedUser: User = new User({
+const secondInvolvedUser: LightUserRepresentation = new LightUserRepresentation({
     id: '2',
     email: 'fake-user2@fake.com',
     firstName: 'fakeName2',
     lastName: 'fakeLast2'
 });
 
-const fakeInvolveUserList: User[] = [firstInvolvedUser, secondInvolvedUser];
+const fakeInvolveUserList: LightUserRepresentation[] = [firstInvolvedUser, secondInvolvedUser];
 
-describe('PeopleService', () => {
+describe('PeopleProcessService', () => {
 
-    let service: PeopleService;
+    let service: PeopleProcessService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                CoreModule
-            ],
             providers: [
-                PeopleService,
+                PeopleProcessService,
+                AlfrescoApiService,
+                StorageService,
+                LogService,
                 { provide: AppConfigService, useClass: AppConfigServiceMock }
             ]
         });
-        service = TestBed.get(PeopleService);
+        service = TestBed.get(PeopleProcessService);
     });
 
     describe('when user is logged in', () => {
@@ -68,7 +71,7 @@ describe('PeopleService', () => {
 
         it('should be able to retrieve people to involve in the task', (done) => {
             service.getWorkflowUsers('fake-task-id', 'fake-filter').subscribe(
-                (users: User[]) => {
+                (users: LightUserRepresentation[]) => {
                     expect(users).toBeDefined();
                     expect(users.length).toBe(2);
                     expect(users[0].id).toEqual('1');
@@ -85,12 +88,12 @@ describe('PeopleService', () => {
         });
 
         it('should be able to get people images for people retrieved', (done) => {
-            service.getWorkflowUsersWithImages('fake-task-id', 'fake-filter').subscribe(
-                (users: User[]) => {
+            service.getWorkflowUsers('fake-task-id', 'fake-filter').subscribe(
+                (users: LightUserRepresentation[]) => {
                     expect(users).toBeDefined();
                     expect(users.length).toBe(2);
-                    expect(users[0].userImage).toContain('/users/' + users[0].id + '/picture');
-                    expect(users[1].userImage).toContain('/users/' + users[1].id + '/picture');
+                    expect(service.getUserImage(users[0])).toContain('/users/' + users[0].id + '/picture');
+                    expect(service.getUserImage(users[1])).toContain('/users/' + users[1].id + '/picture');
                     done();
                 });
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -98,16 +101,6 @@ describe('PeopleService', () => {
                 contentType: 'json',
                 responseText: {data: fakeInvolveUserList}
             });
-        });
-
-        it('should be able to return user with image url', (done) => {
-            service.addImageToUser(firstInvolvedUser).subscribe(
-                (user: User) => {
-                    expect(user).toBeDefined();
-                    expect(user.userImage).toContain('/users/' + user.id + '/picture');
-                    expect(user.id).toBe('1');
-                    done();
-                });
         });
 
         it('should return user image url', () => {
@@ -118,7 +111,7 @@ describe('PeopleService', () => {
 
         it('should return empty list when there are no users to involve', (done) => {
             service.getWorkflowUsers('fake-task-id', 'fake-filter').subscribe(
-                (users: User[]) => {
+                (users: LightUserRepresentation[]) => {
                     expect(users).toBeDefined();
                     expect(users.length).toBe(0);
                     done();
