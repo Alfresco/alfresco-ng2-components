@@ -133,16 +133,16 @@ describe('AlfrescoLogin', () => {
     describe('Remember me', () => {
 
         it('should be checked by default', () => {
-            expect(element.querySelector('.rememberme-cb input[type="checkbox"]').checked).toBe(true);
+            expect(element.querySelector('#adf-login-remember input[type="checkbox"]').checked).toBe(true);
         });
 
         it('should set the component\'s rememberMe property properly', () => {
-            element.querySelector('.rememberme-cb').dispatchEvent(new Event('change'));
+            element.querySelector('#adf-login-remember').dispatchEvent(new Event('change'));
             fixture.detectChanges();
 
             expect(component.rememberMe).toBe(false);
 
-            element.querySelector('.rememberme-cb').dispatchEvent(new Event('change'));
+            element.querySelector('#adf-login-remember').dispatchEvent(new Event('change'));
             fixture.detectChanges();
 
             expect(component.rememberMe).toBe(true);
@@ -162,8 +162,8 @@ describe('AlfrescoLogin', () => {
         expect(element.querySelector('[for="username"]')).toBeDefined();
         expect(element.querySelector('[for="username"]').innerText).toEqual('LOGIN.LABEL.USERNAME');
 
-        expect(element.querySelector('#login-remember')).toBeDefined();
-        expect(element.querySelector('#login-remember').innerText).toContain('LOGIN.LABEL.REMEMBER');
+        expect(element.querySelector('#adf-login-remember')).toBeDefined();
+        expect(element.querySelector('#adf-login-remember').innerText).toContain('LOGIN.LABEL.REMEMBER');
 
         expect(element.querySelector('[for="password"]')).toBeDefined();
         expect(element.querySelector('[for="password"]').innerText).toEqual('LOGIN.LABEL.PASSWORD');
