@@ -65,18 +65,7 @@
         }
 
         &-userinfo-title {
-            font: 500 20px/32px Roboto, "Helvetica Neue", sans-serif;
-            margin: 0;
-            align-self: flex-end;
-            display: flex;
-            -webkit-align-self: flex-end;
-            overflow: hidden;
-            transform-origin: 149px 48px;
-            padding: 0;
-            -webkit-margin-before: 0.83em;
-            -webkit-margin-after: 0.83em;
-            -webkit-margin-start: 0;
-            -webkit-margin-end: 0;
+            font-size: 21px;
         }
 
         &-userinfo__detail-profile {

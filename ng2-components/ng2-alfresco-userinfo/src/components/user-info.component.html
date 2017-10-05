@@ -17,7 +17,7 @@
                             alt="ecm-profile-image"
                             (error)="onImageLoadingError($event)"
                             [src]="getEcmUserAvatar()" />
-                       <h2 class="adf-userinfo-title" id="ecm-username">{{ecmUser.fullNameDisplay}}</h2>
+                       <div class="adf-userinfo-title" id="ecm-username">{{ecmUser.fullNameDisplay}}</div>
                     </md-card-header>
                     <md-card-content>
                         <div class="adf-userinfo-supporting-text">
@@ -43,7 +43,7 @@
                         alt="bpm-profile-image"
                         (error)="onImageLoadingError($event)"
                         [src]="getBpmUserAvatar()"/>
-                   <h2 class="adf-userinfo-title" id="bpm-username">{{bpmUser.fullNameDisplay}}</h2>
+                   <div class="adf-userinfo-title" id="bpm-username">{{bpmUser.fullNameDisplay}}</div>
                 </md-card-header>
                 <md-card-content>
                     <div class="adf-userinfo-supporting-text">
