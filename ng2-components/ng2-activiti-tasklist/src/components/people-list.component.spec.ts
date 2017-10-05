@@ -17,16 +17,16 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
+import { LightUserRepresentation } from 'ng2-alfresco-core';
 import { DataRowActionEvent, DataRowEvent, DataTableModule, ObjectDataRow } from 'ng2-alfresco-datatable';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { UserEventModel } from '../models/user-event.model';
-import { User } from '../models/user.model';
 import { PeopleListComponent } from './people-list.component';
 
 declare let jasmine: any;
 
-const fakeUser: User = new User({
+const fakeUser: LightUserRepresentation = new LightUserRepresentation({
     id: '1',
     firstName: 'fake-name',
     lastName: 'fake-last',

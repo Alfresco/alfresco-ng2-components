@@ -16,14 +16,13 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule, LightUserRepresentation } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 import { FormService } from '../../../services/form.service';
 import { MaterialModule } from '../../material.module';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
-import { GroupUserModel } from '../core/group-user.model';
 import { ErrorWidgetComponent } from '../error/error.component';
 import { EcmModelService } from './../../../services/ecm-model.service';
 import { PeopleWidgetComponent } from './people.widget';
@@ -68,7 +67,7 @@ describe('PeopleWidgetComponent', () => {
     });
 
     it('should return full name for a given model', () => {
-        let model = new GroupUserModel({
+        let model = new LightUserRepresentation({
             firstName: 'John',
             lastName: 'Doe'
         });
@@ -76,17 +75,17 @@ describe('PeopleWidgetComponent', () => {
     });
 
     it('should skip first name for display name', () => {
-        let model = new GroupUserModel({firstName: null, lastName: 'Doe'});
+        let model = new LightUserRepresentation({firstName: null, lastName: 'Doe'});
         expect(widget.getDisplayName(model)).toBe('Doe');
     });
 
     it('should skip last name for display name', () => {
-        let model = new GroupUserModel({firstName: 'John', lastName: null});
+        let model = new LightUserRepresentation({firstName: 'John', lastName: null});
         expect(widget.getDisplayName(model)).toBe('John');
     });
 
     it('should init value from the field', () => {
-        widget.field.value = new GroupUserModel({
+        widget.field.value = new LightUserRepresentation({
             firstName: 'John',
             lastName: 'Doe'
         });
@@ -109,7 +108,7 @@ describe('PeopleWidgetComponent', () => {
     });
 
     it('should update values on item click', () => {
-        let item = new GroupUserModel({firstName: 'John', lastName: 'Doe'});
+        let item = new LightUserRepresentation({firstName: 'John', lastName: 'Doe'});
 
         widget.onItemClick(item, null);
         expect(widget.field.value).toBe(item);
@@ -213,8 +212,8 @@ describe('PeopleWidgetComponent', () => {
 
     it('should flush value and update field', () => {
         widget.users = [
-            new GroupUserModel({firstName: 'Tony', lastName: 'Stark'}),
-            new GroupUserModel({firstName: 'John', lastName: 'Doe'})
+            new LightUserRepresentation({firstName: 'Tony', lastName: 'Stark'}),
+            new LightUserRepresentation({firstName: 'John', lastName: 'Doe'})
         ];
         widget.value = 'John Doe';
         widget.flushValue();
@@ -225,8 +224,8 @@ describe('PeopleWidgetComponent', () => {
 
     it('should be case insensitive when flushing field', () => {
         widget.users = [
-            new GroupUserModel({firstName: 'Tony', lastName: 'Stark'}),
-            new GroupUserModel({firstName: 'John', lastName: 'Doe'})
+            new LightUserRepresentation({firstName: 'Tony', lastName: 'Stark'}),
+            new LightUserRepresentation({firstName: 'John', lastName: 'Doe'})
         ];
         widget.value = 'TONY sTaRk';
         widget.flushValue();

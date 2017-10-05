@@ -17,8 +17,8 @@
 
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { LightUserRepresentation, PeopleProcessService } from 'ng2-alfresco-core';
 import { Comment } from '../models/comment.model';
-import { User } from '../models/user.model';
 
 @Component({
     selector: 'adf-comment-list',
@@ -36,7 +36,7 @@ export class CommentListComponent {
 
     selectedComment: Comment;
 
-    constructor(private datePipe: DatePipe) {
+    constructor(private datePipe: DatePipe, public peopleProcessService: PeopleProcessService) {
     }
 
     selectComment(event: any): void {
@@ -44,7 +44,7 @@ export class CommentListComponent {
         this.clickRow.emit(this.selectedComment);
     }
 
-    getUserShortName(user: User): string {
+    getUserShortName(user: LightUserRepresentation): string {
         let shortName = '';
         if (user) {
             if (user.firstName) {
@@ -76,12 +76,6 @@ export class CommentListComponent {
 
     hasComments(): boolean {
         return this.comments && this.comments.length && true;
-    }
-
-    onErrorImageLoad(user: User) {
-        if (user.userImage) {
-            user.userImage = null;
-        }
     }
 
 }

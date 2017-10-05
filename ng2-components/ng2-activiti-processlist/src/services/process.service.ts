@@ -20,9 +20,8 @@ import { RestVariable } from 'alfresco-js-api';
 import {
     Comment,
     TaskDetailsModel,
-    TaskListService,
-    User } from 'ng2-activiti-tasklist';
-import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
+    TaskListService } from 'ng2-activiti-tasklist';
+import { AlfrescoApiService, LightUserRepresentation, LogService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Observable';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessDefinitionRepresentation } from '../models/process-definition.model';
@@ -234,7 +233,7 @@ export class ProcessService extends TaskListService {
             .map((response: any) => {
                 let comments: Comment[] = [];
                 response.data.forEach((comment) => {
-                    let user = new User({
+                    let user = new LightUserRepresentation({
                         id: comment.createdBy.id,
                         email: comment.createdBy.email,
                         firstName: comment.createdBy.firstName,

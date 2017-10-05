@@ -17,49 +17,36 @@
 
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
-import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
-import { User } from '../models/user.model';
+import { LightUserRepresentation } from '../models/user-process.model';
+import { AlfrescoApiService } from './alfresco-api.service';
+import { LogService } from './log.service';
 
 @Injectable()
-export class PeopleService {
+export class PeopleProcessService {
 
     constructor(private alfrescoJsApi: AlfrescoApiService,
                 private logService: LogService) {
     }
 
-    getWorkflowUsers(taskId?: string, searchWord?: string): Observable<User[]> {
+    getWorkflowUsers(taskId?: string, searchWord?: string): Observable<LightUserRepresentation[]> {
         let option = { excludeTaskId: taskId, filter: searchWord };
         return Observable.fromPromise(this.getWorkflowUserApi(option))
-            .map((response: any) => <User[]> response.data || [])
+            .map((response: any) => <LightUserRepresentation[]> response.data || [])
             .catch(err => this.handleError(err));
     }
 
-    getWorkflowUsersWithImages(taskId?: string, searchWord?: string): Observable<User[]> {
-        let option = { excludeTaskId: taskId, filter: searchWord };
-        return Observable.fromPromise(this.getWorkflowUserApi(option))
-            .switchMap((response: any) => <User[]> response.data || [])
-            .map((user: User) => this.addImageToUser(user))
-            .combineAll()
-            .catch(err => this.handleError(err));
-    }
-
-    getUserImage(user: User): string {
+    getUserImage(user: LightUserRepresentation): string {
         return this.getUserProfileImageApi(user.id + '');
     }
 
-    addImageToUser(user: User): Observable<User> {
-        user.userImage = this.getUserImage(user);
-        return Observable.of(user);
-    }
-
-    involveUserWithTask(taskId: string, idToInvolve: string): Observable<User[]> {
+    involveUserWithTask(taskId: string, idToInvolve: string): Observable<LightUserRepresentation[]> {
         let node = {userId: idToInvolve};
         return Observable.fromPromise(this.involveUserToTaskApi(taskId, node))
             .catch(err => this.handleError(err));
     }
 
-    removeInvolvedUser(taskId: string, idToRemove: string): Observable<User[]> {
+    removeInvolvedUser(taskId: string, idToRemove: string): Observable<LightUserRepresentation[]> {
         let node = {userId: idToRemove};
         return Observable.fromPromise(this.removeInvolvedUserFromTaskApi(taskId, node))
             .catch(err => this.handleError(err));

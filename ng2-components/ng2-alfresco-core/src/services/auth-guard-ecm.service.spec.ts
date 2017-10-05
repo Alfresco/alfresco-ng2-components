@@ -17,8 +17,7 @@
 
 import { async, inject, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { AlfrescoApiService } from 'ng2-alfresco-core';
-
+import { AlfrescoApiService } from './alfresco-api.service';
 import { AuthGuardEcm } from './auth-guard-ecm.service';
 
 class RouterProvider {

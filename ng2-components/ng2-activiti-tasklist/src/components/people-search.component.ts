@@ -17,8 +17,9 @@
 
 import { Component, Directive, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { LightUserRepresentation } from 'ng2-alfresco-core';
+import { PeopleProcessService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Observable';
-import { User } from '../models/user.model';
 
 @Component({
     selector: 'adf-people-search, activiti-people-search',
@@ -33,24 +34,24 @@ import { User } from '../models/user.model';
 export class PeopleSearchComponent implements OnInit {
 
     @Input()
-    results: Observable<User[]>;
+    results: Observable<LightUserRepresentation[]>;
 
     @Output()
     searchPeople: EventEmitter<any> = new EventEmitter();
 
     @Output()
-    success: EventEmitter<User> = new EventEmitter<User>();
+    success: EventEmitter<LightUserRepresentation> = new EventEmitter<LightUserRepresentation>();
 
     @Output()
     closeSearch = new EventEmitter();
 
     searchUser: FormControl = new FormControl();
 
-    users: User[] = [];
+    users: LightUserRepresentation[] = [];
 
-    selectedUser: User;
+    selectedUser: LightUserRepresentation;
 
-    constructor() {
+    constructor(peopleProcessService: PeopleProcessService) {
         this.searchUser
             .valueChanges
             .debounceTime(200)
@@ -69,7 +70,7 @@ export class PeopleSearchComponent implements OnInit {
         });
     }
 
-    onRowClick(user: User) {
+    onRowClick(user: LightUserRepresentation) {
         this.selectedUser = user;
     }
 
@@ -107,12 +108,6 @@ export class PeopleSearchComponent implements OnInit {
 
     hasUsers() {
         return (this.users && this.users.length > 0);
-    }
-
-    onErrorImageLoad(user: User) {
-        if (user.userImage) {
-            user.userImage = null;
-        }
     }
 }
 

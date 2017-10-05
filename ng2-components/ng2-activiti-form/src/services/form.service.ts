@@ -16,11 +16,10 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoApiService, LightUserRepresentation, LogService } from 'ng2-alfresco-core';
 import { Observable, Subject } from 'rxjs/Rx';
 import { FormDefinitionModel } from '../models/form-definition.model';
 import { ContentLinkModel } from './../components/widgets/core/content-link.model';
-import { GroupUserModel } from './../components/widgets/core/group-user.model';
 import { GroupModel } from './../components/widgets/core/group.model';
 import { FormModel, FormOutcomeEvent, FormOutcomeModel, FormValues } from './../components/widgets/core/index';
 import {
@@ -370,13 +369,13 @@ export class FormService {
         return this.apiService.getInstance().activiti.userApi.getUserProfilePictureUrl(userId);
     }
 
-    getWorkflowUsers(filter: string, groupId?: string): Observable<GroupUserModel[]> {
+    getWorkflowUsers(filter: string, groupId?: string): Observable<LightUserRepresentation[]> {
         let option: any = {filter: filter};
         if (groupId) {
             option.groupId = groupId;
         }
         return Observable.fromPromise(this.usersWorkflowApi.getUsers(option))
-            .switchMap((response: any) => <GroupUserModel[]> response.data || [])
+            .switchMap((response: any) => <LightUserRepresentation[]> response.data || [])
             .map((user: any) => {
                     user.userImage = this.getUserProfileImageApi(user.id);
                     return Observable.of(user);

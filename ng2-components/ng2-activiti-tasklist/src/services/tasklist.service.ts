@@ -17,6 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
+import { LightUserRepresentation } from 'ng2-alfresco-core';
 import { Observable, Subject } from 'rxjs/Rx';
 import { Comment } from '../models/comment.model';
 import {
@@ -26,7 +27,6 @@ import {
 import { Form } from '../models/form.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListModel } from '../models/task-list.model';
-import { User } from '../models/user.model';
 
 @Injectable()
 export class TaskListService {
@@ -231,7 +231,7 @@ export class TaskListService {
             .map((response: any) => {
                 let comments: Comment[] = [];
                 response.data.forEach((comment) => {
-                    let user = new User(comment.createdBy);
+                    let user = new LightUserRepresentation(comment.createdBy);
                     comments.push(new Comment(comment.id, comment.message, comment.created, user));
                 });
                 return comments;

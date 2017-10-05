@@ -23,6 +23,7 @@ import { Observable } from 'rxjs/Rx';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
 
+import { LightUserRepresentation } from '../../../ng2-alfresco-core/src/models/user-process.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { taskDetailsMock } from './../assets/task-details.mock';
 import { TaskListService } from './../services/tasklist.service';
@@ -138,7 +139,7 @@ describe('TaskHeaderComponent', () => {
 
     describe('Unclaim', () => {
 
-        const batman = { id : 1, email: 'bruce.wayne@gotham.com', firstName: 'Bruce', lastName: 'Wayne', userImage: 'batman.jpg' };
+        const batman = new LightUserRepresentation({ id : 1, email: 'bruce.wayne@gotham.com', firstName: 'Bruce', lastName: 'Wayne', userImage: 'batman.jpg' });
         let taskListService;
 
         beforeEach(() => {

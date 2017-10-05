@@ -28,11 +28,11 @@ import { Component,
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { ContentLinkModel, FormFieldValidator, FormModel, FormOutcomeEvent } from 'ng2-activiti-form';
 import { AlfrescoAuthenticationService, CardViewUpdateService, ClickNotification, LogService, UpdateNotification } from 'ng2-alfresco-core';
+import { LightUserRepresentation } from 'ng2-alfresco-core';
+import { PeopleProcessService } from 'ng2-alfresco-core';
 import { Observable, Observer } from 'rxjs/Rx';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
-import { User } from '../models/user.model';
-import { PeopleService } from './../services/people.service';
 import { TaskListService } from './../services/tasklist.service';
 
 declare var require: any;
@@ -131,24 +131,24 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     taskDetails: TaskDetailsModel;
     taskFormName: string = null;
 
-    taskPeople: User[] = [];
+    taskPeople: LightUserRepresentation[] = [];
 
     noTaskDetailsTemplateComponent: TemplateRef<any>;
 
     showAssignee: boolean = false;
 
-    private peopleSearchObserver: Observer<User[]>;
+    private peopleSearchObserver: Observer<LightUserRepresentation[]>;
     public errorDialogRef: MdDialogRef<TemplateRef<any>>;
 
-    peopleSearch$: Observable<User[]>;
+    peopleSearch$: Observable<LightUserRepresentation[]>;
 
     constructor(private activitiTaskList: TaskListService,
                 private authService: AlfrescoAuthenticationService,
-                private peopleService: PeopleService,
+                private peopleProcessService: PeopleProcessService,
                 private logService: LogService,
                 private cardViewUpdateService: CardViewUpdateService,
                 private dialog: MdDialog) {
-        this.peopleSearch$ = new Observable<User[]>(observer => this.peopleSearchObserver = observer).share();
+        this.peopleSearch$ = new Observable<LightUserRepresentation[]>(observer => this.peopleSearchObserver = observer).share();
     }
 
     ngOnInit() {
@@ -234,7 +234,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
                     this.readOnlyForm = this.readOnlyForm ? this.readOnlyForm : !!(endDate && !isNaN(endDate.getTime()));
                     if (this.taskDetails && this.taskDetails.involvedPeople) {
                         this.taskDetails.involvedPeople.forEach((user) => {
-                            this.taskPeople.push(new User(user));
+                            this.taskPeople.push(new LightUserRepresentation(user));
                         });
                     }
                 });
@@ -336,7 +336,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     }
 
     searchUser(searchedWord: string) {
-        this.peopleService.getWorkflowUsers(null, searchedWord)
+        this.peopleProcessService.getWorkflowUsers(null, searchedWord)
             .subscribe((users) => {
                 users = users.filter((user) => user.id !== this.taskDetails.assignee.id);
                 this.peopleSearchObserver.next(users);
@@ -347,7 +347,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
         this.showAssignee = false;
     }
 
-    assignTaskToUser(selectedUser: User) {
+    assignTaskToUser(selectedUser: LightUserRepresentation) {
         this.activitiTaskList.assignTask(this.taskDetails.id, selectedUser).subscribe(
             (res: any) => {
                 this.logService.info('Task Assigned to ' + selectedUser.email);

@@ -24,19 +24,19 @@ import { Observable } from 'rxjs/Rx';
 import { ActivitiFormModule, FormModel, FormOutcomeEvent, FormOutcomeModel, FormService } from 'ng2-activiti-form';
 import { AppConfigService, CoreModule, LogService, TranslationService } from 'ng2-alfresco-core';
 
+import { LightUserRepresentation } from 'ng2-alfresco-core';
+import { PeopleProcessService } from 'ng2-alfresco-core';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { TaskDetailsModel } from '../models/task-details.model';
-import { User } from '../models/user.model';
 import { noDataMock, taskDetailsMock, taskFormMock, tasksMock } from './../assets/task-details.mock';
-import { PeopleService } from './../services/people.service';
 import { TaskListService } from './../services/tasklist.service';
 import { PeopleSearchComponent } from './people-search.component';
 import { TaskDetailsComponent } from './task-details.component';
 
 declare let jasmine: any;
 
-const fakeUser: User = new User({
+const fakeUser: LightUserRepresentation = new LightUserRepresentation({
     id: 'fake-id',
     firstName: 'fake-name',
     lastName: 'fake-last',
@@ -72,7 +72,7 @@ describe('TaskDetailsComponent', () => {
             ],
             providers: [
                 TaskListService,
-                PeopleService,
+                PeopleProcessService,
                 { provide: TranslationService, useClass: TranslationMock },
                 { provide: AppConfigService, useClass: AppConfigServiceMock }
             ],

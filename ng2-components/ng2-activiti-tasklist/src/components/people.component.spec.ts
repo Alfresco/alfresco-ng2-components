@@ -19,25 +19,25 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MdButtonModule, MdInputModule } from '@angular/material';
 import { AppConfigService, CoreModule, LogService, TranslationService } from 'ng2-alfresco-core';
+import { LightUserRepresentation } from 'ng2-alfresco-core';
+import { PeopleProcessService } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
-import { User } from '../models/user.model';
-import { PeopleService } from '../services/people.service';
 import { PeopleListComponent } from './people-list.component';
 import { PeopleSearchComponent } from './people-search.component';
 import { PeopleComponent } from './people.component';
 
 declare let jasmine: any;
 
-const fakeUser: User = new User({
+const fakeUser: LightUserRepresentation = new LightUserRepresentation({
     id: 'fake-id',
     firstName: 'fake-name',
     lastName: 'fake-last',
     email: 'fake@mail.com'
 });
 
-const fakeSecondUser: User = new User({
+const fakeSecondUser: LightUserRepresentation = new LightUserRepresentation({
     id: 'fake-involve-id',
     firstName: 'fake-involve-name',
     lastName: 'fake-involve-last',
@@ -67,7 +67,7 @@ describe('PeopleComponent', () => {
                 PeopleComponent
             ],
             providers: [
-                PeopleService,
+                PeopleProcessService,
                 { provide: TranslationService, useClass: TranslationMock },
                 { provide: AppConfigService, useClass: AppConfigServiceMock }
             ],

@@ -18,16 +18,16 @@
 import { DatePipe } from '@angular/common';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
+import {  LightUserRepresentation } from 'ng2-alfresco-core';
 import { DataRowEvent, DataTableModule, ObjectDataRow } from 'ng2-alfresco-datatable';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { Comment  } from '../models/comment.model';
-import { User } from '../models/user.model';
 import { CommentListComponent } from './comment-list.component';
 
 declare let jasmine: any;
 
-const testUser: User = new User({
+const testUser: LightUserRepresentation = new LightUserRepresentation({
     id: '1',
     firstName: 'Test',
     lastName: 'User',
@@ -54,8 +54,8 @@ describe('CommentListComponent', () => {
             ],
             providers: [
                 DatePipe,
-                { provide: AppConfigService, useClass: AppConfigServiceMock },
-                { provide: TranslationService, useClass: TranslationMock }
+                {provide: AppConfigService, useClass: AppConfigServiceMock},
+                {provide: TranslationService, useClass: TranslationMock}
             ]
         }).compileComponents().then(() => {
 

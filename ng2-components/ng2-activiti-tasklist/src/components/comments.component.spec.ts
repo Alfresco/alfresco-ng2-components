@@ -26,8 +26,8 @@ import { TranslationMock } from '../assets/translation.service.mock';
 
 import { DatePipe } from '@angular/common';
 import { MdInputModule } from '@angular/material';
+import { PeopleProcessService } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
-import { PeopleService } from '../services/people.service';
 import { TaskListService } from './../services/tasklist.service';
 import { CommentListComponent } from './comment-list.component';
 import { CommentsComponent } from './comments.component';
@@ -56,7 +56,7 @@ describe('CommentsComponent', () => {
             providers: [
                 TaskListService,
                 DatePipe,
-                PeopleService,
+                PeopleProcessService,
                 { provide: TranslationService, useClass: TranslationMock },
                 { provide: AppConfigService, useClass: AppConfigServiceMock }
             ]

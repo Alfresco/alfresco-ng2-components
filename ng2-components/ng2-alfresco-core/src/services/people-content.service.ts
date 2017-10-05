@@ -20,7 +20,7 @@ import { Observable } from 'rxjs/Rx';
 import { AlfrescoApiService } from './alfresco-api.service';
 
 @Injectable()
-export class PeopleApiService {
+export class PeopleContentService {
 
     constructor(private apiService: AlfrescoApiService) {}
 

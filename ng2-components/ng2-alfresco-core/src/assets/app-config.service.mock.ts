@@ -15,27 +15,16 @@
  * limitations under the License.
  */
 
-/**
- *
- * This object represent the user.
- *
- *
- * @returns {User} .
- */
+import { Injectable } from '@angular/core';
 
-export class User {
-    id: number;
-    email: string;
-    firstName: string;
-    lastName: string;
-    userImage: string = null;
+@Injectable()
+export class AppConfigServiceMock {
 
-    constructor(obj?: any) {
-        if (obj) {
-            this.id = obj.id;
-            this.email = obj.email || null;
-            this.firstName = obj.firstName || null;
-            this.lastName = obj.lastName || null;
-        }
-    }
+    constructor() { }
+
+    /** @override */
+    get(key: string) { }
+
+    load(resource: string, values?: {}) { }
+
 }

@@ -19,7 +19,6 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import { Observable, Observer } from 'rxjs/Rx';
 
 import { Comment } from '../models/comment.model';
-import { PeopleService } from '../services/people.service';
 import { TaskListService } from '../services/tasklist.service';
 
 @Component({
@@ -52,7 +51,7 @@ export class CommentsComponent implements OnChanges {
      * @param translate Translation service
      * @param activitiTaskList Task service
      */
-    constructor(private activitiTaskList: TaskListService, private peopleService: PeopleService) {
+    constructor(private activitiTaskList: TaskListService) {
         this.comment$ = new Observable<Comment>(observer =>  this.commentObserver = observer).share();
         this.comment$.subscribe((comment: Comment) => {
             this.comments.push(comment);
@@ -81,7 +80,6 @@ export class CommentsComponent implements OnChanges {
                         return date1 > date2 ? -1 : date1 < date2 ? 1 : 0;
                     });
                     res.forEach((comment) => {
-                        comment.createdBy.userImage = this.peopleService.getUserImage(comment.createdBy);
                         this.commentObserver.next(comment);
                     });
                     },
@@ -102,7 +100,6 @@ export class CommentsComponent implements OnChanges {
             this.activitiTaskList.addComment(this.taskId, this.message)
             .subscribe(
                 (res: Comment) => {
-                        res.createdBy.userImage = this.peopleService.getUserImage(res.createdBy);
                         this.comments.unshift(res);
                         this.message = '';
                         this.beingAdded = false;
