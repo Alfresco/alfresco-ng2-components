@@ -166,6 +166,10 @@ export class FormModel {
         return result;
     }
 
+    markAsInvalid() {
+        this._isValid = false;
+    }
+
     /**
      * Validates entire form and all form fields.
      *

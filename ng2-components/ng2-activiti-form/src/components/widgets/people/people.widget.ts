@@ -73,6 +73,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         }
         if (this.isValueDefined() && this.value.trim().length === 0) {
           this.oldValue = this.value;
+          this.field.validationSummary = '';
           this.users = [];
         }
     }
@@ -85,7 +86,26 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         this.formService.getWorkflowUsers(this.value, this.groupId)
             .subscribe((result: LightUserRepresentation[]) => {
                 this.users = result || [];
+                this.validateValue();
             });
+    }
+
+    validateValue() {
+        let validUserName = this.getUserFromValue();
+        if (validUserName) {
+            this.field.validationSummary = '';
+            this.field.value = validUserName;
+            this.value = this.getDisplayName(validUserName);
+        } else {
+            this.field.value = '';
+            this.field.validationSummary = 'Invalid value provided';
+            this.field.markAsInvalid();
+            this.field.form.markAsInvalid();
+          }
+    }
+
+    getUserFromValue() {
+        return this.users.find((user) => this.getDisplayName(user).toLocaleLowerCase() === this.value.toLocaleLowerCase());
     }
 
     getDisplayName(model: LightUserRepresentation) {
@@ -93,7 +113,6 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
             let displayName = `${model.firstName || ''} ${model.lastName || ''}`;
             return displayName.trim();
         }
-
         return '';
     }
 

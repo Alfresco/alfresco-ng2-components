@@ -15,12 +15,15 @@
  * limitations under the License.
  */
 
+import { OverlayContainer } from '@angular/cdk/overlay';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { CoreModule, LightUserRepresentation } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 import { FormService } from '../../../services/form.service';
 import { MaterialModule } from '../../material.module';
+import { FormFieldTypes } from '../core/form-field-types';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { ErrorWidgetComponent } from '../error/error.component';
@@ -33,6 +36,7 @@ describe('PeopleWidgetComponent', () => {
     let fixture: ComponentFixture<PeopleWidgetComponent>;
     let element: HTMLElement;
     let formService: FormService;
+    let overlayContainerElement: HTMLElement;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -47,7 +51,19 @@ describe('PeopleWidgetComponent', () => {
             providers: [
                 FormService,
                 EcmModelService,
-                ActivitiAlfrescoContentService
+                ActivitiAlfrescoContentService,
+                {provide: OverlayContainer, useFactory: () => {
+                    overlayContainerElement = document.createElement('div');
+                    overlayContainerElement.classList.add('cdk-overlay-container');
+
+                    document.body.appendChild(overlayContainerElement);
+
+                    // remove body padding to keep consistent cross-browser
+                    document.body.style.padding = '0';
+                    document.body.style.margin = '0';
+
+                    return {getContainerElement: () => overlayContainerElement};
+                }}
             ]
         }).compileComponents();
     }));
@@ -199,6 +215,67 @@ describe('PeopleWidgetComponent', () => {
         widget.onKeyUp(keyboardEvent);
 
         expect(widget.users).toEqual([]);
+    });
+
+    fdescribe('when template is ready', () => {
+
+        let fakeUserResult = [
+            { id: 1001, firstName: 'Test01', lastName: 'Test01', email: 'test' },
+            { id: 1002, firstName: 'Test02', lastName: 'Test02', email: 'test2' }];
+
+        beforeEach(async(() => {
+            spyOn(formService, 'getWorkflowUsers').and.returnValue(Observable.create(observer => {
+                observer.next(fakeUserResult);
+                observer.complete();
+            }));
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                id: 'people-id',
+                name: 'people-name',
+                type: FormFieldTypes.PEOPLE,
+                readOnly: false
+            });
+            fixture.detectChanges();
+            element = fixture.nativeElement;
+        }));
+
+        afterEach(() => {
+            fixture.destroy();
+            TestBed.resetTestingModule();
+        });
+
+        it('should render the people component', () => {
+            expect(element.querySelector('#people-widget-content')).not.toBeNull();
+        });
+
+        it('should show an error message if the user is invalid', async(() => {
+            let peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('#people-id');
+            peopleHTMLElement.focus();
+            widget.value = 'K';
+            peopleHTMLElement.value = 'K';
+            peopleHTMLElement.dispatchEvent(new Event('keyup'));
+            peopleHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(element.querySelector('.adf-error-text')).not.toBeNull();
+                expect(element.querySelector('.adf-error-text').textContent).toContain('Invalid value provided');
+            });
+        }));
+
+        it('should show the people if the typed result match', async(() => {
+            let peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('#people-id');
+            peopleHTMLElement.focus();
+            widget.value = 'T';
+            peopleHTMLElement.value = 'T';
+            peopleHTMLElement.dispatchEvent(new Event('keyup'));
+            peopleHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(fixture.debugElement.query(By.css('#adf-people-widget-user-0'))).not.toBeNull();
+                expect(fixture.debugElement.query(By.css('#adf-people-widget-user-1'))).not.toBeNull();
+            });
+        }));
+
     });
 
 });
