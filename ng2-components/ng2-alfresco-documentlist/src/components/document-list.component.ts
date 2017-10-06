@@ -242,6 +242,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         if (changes.folderNode && changes.folderNode.currentValue) {
             this.loadFolder();
         } else if (changes.currentFolderId && changes.currentFolderId.currentValue) {
+            if (changes.currentFolderId.previousValue !== changes.currentFolderId.currentValue) {
+                this.resetPagination();
+            }
             if (!this.hasCustomLayout) {
                 this.setupDefaultColumns(changes.currentFolderId.currentValue);
             }
@@ -404,9 +407,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     // gets folder node and its content
     loadFolderByNodeId(nodeId: string) {
         this.loading = true;
-
         this.resetSelection();
-        this.resetPagination();
 
         if (nodeId === '-trashcan-') {
             this.loadTrashcan();
@@ -423,6 +424,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                 .getFolderNode(nodeId).then(node => {
                     this.folderNode = node;
                     this.currentFolderId = node.id;
+                    this.skipCount = 0;
                     this.currentNodeAllowableOperations = node['allowableOperations'] ? node['allowableOperations'] : [];
                     this.loadFolderNodesByFolderNodeId(node.id, this.pageSize, this.skipCount).catch(err => this.error.emit(err));
                 })

@@ -975,8 +975,10 @@ describe('DocumentList', () => {
 
     it('should reset pagination when switching sources', () => {
         spyOn(documentList, 'resetPagination').and.callThrough();
-        documentList.loadFolderByNodeId('-trashcan-');
-        documentList.loadFolderByNodeId('-sites-');
+
+        documentList.ngOnChanges({currentFolderId: new SimpleChange(null, '-trashcan-', false)});
+        documentList.ngOnChanges({currentFolderId: new SimpleChange(null, '-sites-', false)});
+
         expect(documentList.resetPagination).toHaveBeenCalledTimes(2);
     });
 });
