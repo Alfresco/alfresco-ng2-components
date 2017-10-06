@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
-import { ContainerColumnModel, ContainerModel, FormFieldModel, FormModel, TabModel } from '../components/widgets/core/index';
+import { FormFieldModel, FormModel, TabModel } from '../components/widgets/core/index';
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
 import { WidgetVisibilityModel } from '../models/widget-visibility.model';
 
@@ -126,14 +126,13 @@ export class WidgetVisibilityService {
     searchValueInForm(form: FormModel, fieldId: string) {
         let fieldValue = '';
         form.getFormFields().forEach((formField: FormFieldModel) => {
-            let fieldFound = this.isSearchedField(formField, fieldId);
-            if (fieldFound) {
+            if (this.isSearchedField(formField, fieldId)) {
                 fieldValue = this.getObjectValue(formField);
                 if (!fieldValue) {
-                    if (fieldFound.value && fieldFound.value.id) {
-                        fieldValue = fieldFound.value.id;
+                    if (formField.value && formField.value.id) {
+                        fieldValue = formField.value.id;
                     } else {
-                        fieldValue = fieldFound.value;
+                        fieldValue = formField.value;
                     }
                 }
             }
@@ -151,18 +150,19 @@ export class WidgetVisibilityService {
             if (option) {
                 value = option.name;
             } else {
+
                 value = field.value;
             }
         }
         return value;
     }
 
-    private isSearchedField(field: FormFieldModel, fieldToFind: string) {
+    private isSearchedField(field: FormFieldModel, fieldToFind: string): boolean {
         let formattedFieldName = this.removeLabel(field, fieldToFind);
         return field.id ? field.id.toUpperCase() === formattedFieldName.toUpperCase() : false;
     }
 
-    private removeLabel(field: FormFieldModel, fieldToFind) {
+    private removeLabel(field: FormFieldModel, fieldToFind): string {
         let formattedFieldName = fieldToFind || '';
         if (field.fieldType === 'RestFieldRepresentation' && fieldToFind.indexOf('_LABEL') > 0) {
             formattedFieldName = fieldToFind.substring(0, fieldToFind.length - 6);
