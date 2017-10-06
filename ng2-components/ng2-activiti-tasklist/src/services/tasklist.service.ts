@@ -32,10 +32,11 @@ import { TaskListModel } from '../models/task-list.model';
 export class TaskListService {
     private tasksListSubject = new Subject<TaskListModel>();
 
-    public tasksList$: Observable<TaskListModel> = this.tasksListSubject.asObservable();
+    public tasksList$: Observable<TaskListModel>;
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
+        this.tasksList$ = this.tasksListSubject.asObservable();
     }
 
     /**

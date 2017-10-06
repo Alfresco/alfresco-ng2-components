@@ -215,7 +215,7 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
                 this.taskPagination = { count: tasks.data.length, maxItems: this.taskPagination.maxItems, skipCount: this.taskPagination.skipCount, totalItems: tasks.total };
                 console.log({ count: tasks.data.length, maxItems: this.taskPagination.maxItems, skipCount: this.taskPagination.skipCount, totalItems: tasks.total });
             }, (err) => {
-                console.log('err');
+                console.log('err' +  err);
             });
 
         if (this.router.url.includes('processes')) {
@@ -238,6 +238,7 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
 
     ngOnDestroy() {
         this.sub.unsubscribe();
+        this.taskListService.tasksList$.subscribe();
     }
 
     onTaskFilterClick(filter: FilterRepresentationModel): void {
