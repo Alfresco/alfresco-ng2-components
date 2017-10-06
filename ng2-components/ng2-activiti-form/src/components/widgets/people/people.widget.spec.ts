@@ -217,7 +217,7 @@ describe('PeopleWidgetComponent', () => {
         expect(widget.users).toEqual([]);
     });
 
-    fdescribe('when template is ready', () => {
+    describe('when template is ready', () => {
 
         let fakeUserResult = [
             { id: 1001, firstName: 'Test01', lastName: 'Test01', email: 'test' },
