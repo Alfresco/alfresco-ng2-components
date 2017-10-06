@@ -380,7 +380,7 @@ for more information about installing and using the source code.
 
 ### Other classes and interfaces
 
-- [DataTableAdapter](DataTableAdapter.md)
+- [DataTableAdapter interface](docs/DataTableAdapter.md)
 
 [(Back to Contents)](#contents)
 
