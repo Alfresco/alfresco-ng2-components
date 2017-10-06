@@ -10,18 +10,16 @@
                    type="text"
                    [id]="field.id"
                    [(ngModel)]="value"
+                   (ngModelChange)="validate()"
                    (keyup)="onKeyUp($event)"
                    [disabled]="field.readOnly"
                    placeholder="{{field.placeholder}}"
                    [mdAutocomplete]="auto">
             <md-autocomplete #auto="mdAutocomplete" (optionSelected)="onItemSelect($event.option.value)">
-                <md-option *ngFor="let item of options" (click)="onItemClick(item, $event)"  [value]="item">
-                    <span>{{item.name}}</span>
+                <md-option *ngFor="let item of options" [value]="item">
+                    <span [id]="field.name+'_option_'+item.id">{{item.name}}</span>
                 </md-option>
             </md-autocomplete>
-            <md-select class="adf-select" [id]="field.id" [(ngModel)]="field.value">
-                <md-option id="readonlyOption" *ngIf="isReadOnlyType()" [value]="field.value">{{field.value}}</md-option>
-            </md-select>
         </md-input-container>
 
         <error-widget [error]="field.validationSummary"></error-widget>
