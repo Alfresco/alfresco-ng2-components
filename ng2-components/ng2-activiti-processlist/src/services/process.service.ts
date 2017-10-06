@@ -233,12 +233,7 @@ export class ProcessService extends TaskListService {
             .map((response: any) => {
                 let comments: Comment[] = [];
                 response.data.forEach((comment) => {
-                    let user = new LightUserRepresentation({
-                        id: comment.createdBy.id,
-                        email: comment.createdBy.email,
-                        firstName: comment.createdBy.firstName,
-                        lastName: comment.createdBy.lastName
-                    });
+                    let user = new LightUserRepresentation(comment.createdBy);
                     comments.push(new Comment(comment.id, comment.message, comment.created, user));
                 });
                 return comments;
