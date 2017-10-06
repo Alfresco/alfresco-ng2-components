@@ -972,4 +972,11 @@ describe('DocumentList', () => {
 
         expect(documentList.reload).toHaveBeenCalledTimes(2);
     });
+
+    it('should reset pagination when switching sources', () => {
+        spyOn(documentList, 'resetPagination').and.callThrough();
+        documentList.loadFolderByNodeId('-trashcan-');
+        documentList.loadFolderByNodeId('-sites-');
+        expect(documentList.resetPagination).toHaveBeenCalledTimes(2);
+    });
 });
