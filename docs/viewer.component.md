@@ -51,12 +51,13 @@ Using with file url:
 | showToolbar | boolean | true | Hide or show the toolbars |
 | displayName | string | | You can specify the name of the file |
 | allowGoBack | boolean | true | Allow `back` navigation |
-| allowOpenWith | boolean | true | Toggle `Open With` options |
+| allowOpenWith | boolean | false | Toggle `Open With` options |
 | allowDownload | boolean | true | Toggle download feature |
-| allowPrint | boolean | true | Toggle printing feature |
-| allowShare | boolean | true | Toggle sharing feature |
-| allowInfoDrawer | boolean | true | Toogle info drawer feature |
+| allowPrint | boolean | false | Toggle printing feature |
+| allowShare | boolean | false | Toggle sharing feature |
+| allowInfoDrawer | boolean |false | Toogle info drawer feature |
 | showInfoDrawer | boolean | false | Toggles info drawer visibility. Requires `allowInfoDrawer` to be set to `true`. |
+| allowMoreActions | boolean | false | Toggles `More actions` feature |
 
 ## Details
 
