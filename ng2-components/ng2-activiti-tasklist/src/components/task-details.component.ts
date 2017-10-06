@@ -28,12 +28,12 @@ import { Component,
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { ContentLinkModel, FormFieldValidator, FormModel, FormOutcomeEvent } from 'ng2-activiti-form';
 import { AlfrescoAuthenticationService, CardViewUpdateService, ClickNotification, LogService, UpdateNotification } from 'ng2-alfresco-core';
-import { LightUserRepresentation } from 'ng2-alfresco-core';
-import { PeopleProcessService } from 'ng2-alfresco-core';
+import { LightUserRepresentation, PeopleProcessService } from 'ng2-alfresco-core';
 import { Observable, Observer } from 'rxjs/Rx';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
+import { CommentsComponent } from './comments.component';
 
 declare var require: any;
 
@@ -48,7 +48,7 @@ declare var require: any;
 export class TaskDetailsComponent implements OnInit, OnChanges {
 
     @ViewChild('activiticomments')
-    activiticomments: any;
+    activiticomments: CommentsComponent;
 
     @ViewChild('activitichecklist')
     activitichecklist: any;

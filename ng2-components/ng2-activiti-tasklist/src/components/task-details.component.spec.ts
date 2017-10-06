@@ -73,10 +73,10 @@ describe('TaskDetailsComponent', () => {
             providers: [
                 TaskListService,
                 PeopleProcessService,
-                { provide: TranslationService, useClass: TranslationMock },
-                { provide: AppConfigService, useClass: AppConfigServiceMock }
+                {provide: TranslationService, useClass: TranslationMock},
+                {provide: AppConfigService, useClass: AppConfigServiceMock}
             ],
-            schemas: [ NO_ERRORS_SCHEMA ]
+            schemas: [NO_ERRORS_SCHEMA]
         }).compileComponents();
 
         logService = TestBed.get(LogService);
@@ -157,7 +157,7 @@ describe('TaskDetailsComponent', () => {
         }));
 
         it('should fetch new task details when taskId changed', () => {
-            component.ngOnChanges({ 'taskId': change });
+            component.ngOnChanges({'taskId': change});
             expect(getTaskDetailsSpy).toHaveBeenCalledWith('456');
         });
 
@@ -167,12 +167,12 @@ describe('TaskDetailsComponent', () => {
         });
 
         it('should NOT fetch new task details when taskId changed to null', () => {
-            component.ngOnChanges({ 'taskId': nullChange });
+            component.ngOnChanges({'taskId': nullChange});
             expect(getTaskDetailsSpy).not.toHaveBeenCalled();
         });
 
         it('should set a placeholder message when taskId changed to null', () => {
-            component.ngOnChanges({ 'taskId': nullChange });
+            component.ngOnChanges({'taskId': nullChange});
             fixture.detectChanges();
             expect(fixture.nativeElement.innerText).toBe('TASK_DETAILS.MESSAGES.NONE');
         });
@@ -283,6 +283,48 @@ describe('TaskDetailsComponent', () => {
             expect(emitSpy).toHaveBeenCalled();
         });
 
+    });
+
+    describe('Comments', () => {
+
+        it('should comments NOT be readonly if is there are user involved', () => {
+            component.showComments = true;
+            component.showHeaderContent = true;
+            component.ngOnChanges({'taskId': new SimpleChange('123', '456', true)});
+            component.taskPeople = [fakeUser];
+
+            fixture.detectChanges();
+            expect((component.activiticomments as any).nativeElement.readOnly).toBe(false);
+        });
+
+        it('should comments be readonly if is there are no user involved', () => {
+            component.showComments = true;
+            component.showHeaderContent = true;
+            component.ngOnChanges({'taskId': new SimpleChange('123', '456', true)});
+            component.taskPeople = [];
+
+            fixture.detectChanges();
+            expect((component.activiticomments as any).nativeElement.readOnly).toBe(true);
+        });
+
+        it('should comments be present if showComments is true', () => {
+            component.showComments = true;
+            component.showHeaderContent = true;
+            component.taskPeople = [];
+            component.ngOnChanges({'taskId': new SimpleChange('123', '456', true)});
+
+            fixture.detectChanges();
+            expect(component.activiticomments).toBeDefined();
+        });
+
+        it('should comments NOT be present if showComments is false', () => {
+            component.showComments = false;
+            component.taskPeople = [];
+            component.ngOnChanges({'taskId': new SimpleChange('123', '456', true)});
+
+            fixture.detectChanges();
+            expect(component.activiticomments).not.toBeDefined();
+        });
     });
 
     describe('assign task to user', () => {
