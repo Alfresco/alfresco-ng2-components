@@ -23,6 +23,7 @@
         "data-column.component",
         "pagination.component"
     ],
+    "DataTableAdapter": ["datatable.component", "tasklist.component"],
     "diagram.component": [],
     "document-actions.service": [],
     "document-list.component": [
@@ -48,7 +49,7 @@
     "node-permission.directive": [],
     "notification.service": [],
     "pagination.component": [],
-    "permission-style.model": ["document-list.component"],
+    "permissions-style.model": ["document-list.component"],
     "people-search.component": [],
     "people.component": [],
     "process-attachment-list.component": [],

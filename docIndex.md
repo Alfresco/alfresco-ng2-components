@@ -284,7 +284,6 @@ for more information about installing and using the source code.
 
 ### Services
 
-- [*People service](ng2-components/ng2-activiti-tasklist/src/services/people.service.ts)
 - [*Process upload service](ng2-components/ng2-activiti-tasklist/src/services/process-upload.service.ts)
 - [*Tasklist service](ng2-components/ng2-activiti-tasklist/src/services/tasklist.service.ts)
 <!-- ng2-activiti-tasklist end -->
@@ -350,8 +349,8 @@ for more information about installing and using the source code.
 - [*Log service](ng2-components/ng2-alfresco-core/src/services/log.service.ts)
 - [*Nodes api service](ng2-components/ng2-alfresco-core/src/services/nodes-api.service.ts)
 - [*Page title service](ng2-components/ng2-alfresco-core/src/services/page-title.service.ts)
-- [*People content api service](ng2-components/ng2-alfresco-core/src/services/people-content.service.ts)
-- [*People process api service](ng2-components/ng2-alfresco-core/src/services/people-process.service.ts)
+- [*People content service](ng2-components/ng2-alfresco-core/src/services/people-content.service.ts)
+- [*People process service](ng2-components/ng2-alfresco-core/src/services/people-process.service.ts)
 - [*Search api service](ng2-components/ng2-alfresco-core/src/services/search-api.service.ts)
 - [*Search service](ng2-components/ng2-alfresco-core/src/services/search.service.ts)
 - [*Shared links api service](ng2-components/ng2-alfresco-core/src/services/shared-links-api.service.ts)
@@ -375,15 +374,13 @@ for more information about installing and using the source code.
 - [Datatable component](docs/datatable.component.md)
 - [*Datatable cell component](ng2-components/ng2-alfresco-datatable/src/components/datatable/datatable-cell.component.ts)
 - [*Date cell component](ng2-components/ng2-alfresco-datatable/src/components/datatable/date-cell.component.ts)
-- [*Empty list component](ng2-components/ng2-alfresco-datatable/src/components/datatable/empty-list.component.ts)
 - [*Filesize cell component](ng2-components/ng2-alfresco-datatable/src/components/datatable/filesize-cell.component.ts)
 - [*Location cell component](ng2-components/ng2-alfresco-datatable/src/components/datatable/location-cell.component.ts)
-
-### Directives
-
-- [*Loading template directive](ng2-components/ng2-alfresco-datatable/src/directives/loading-template.directive.ts)
-- [*No content template directive](ng2-components/ng2-alfresco-datatable/src/directives/no-content-template.directive.ts)
 <!-- ng2-alfresco-datatable end -->
+
+### Other classes and interfaces
+
+- [DataTableAdapter interface](docs/DataTableAdapter.md)
 
 [(Back to Contents)](#contents)
 
