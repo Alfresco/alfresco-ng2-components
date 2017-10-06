@@ -14,18 +14,19 @@ See it live: [DataTable Quickstart](https://embed.plnkr.co/80qr4YFBeHjLMdAV0F6l/
   * [Properties](#properties)
   * [Events](#events)
 - [Details](#details)
+  * [Supplying data for the table](#supplying-data-for-the-table)
   * [Customizing columns](#customizing-columns)
   * [DataTable DOM Events](#datatable-dom-events)
   * [Custom Empty content template](#custom-empty-content-template)
   * [Loading content template](#loading-content-template)
   * [Events](#events-1)
+    + [row-keyup DOM event](#row-keyup-dom-event)
     + [rowClick event](#rowclick-event)
     + [rowDblClick event](#rowdblclick-event)
     + [showRowContextMenu event](#showrowcontextmenu-event)
     + [showRowActionsMenu event](#showrowactionsmenu-event)
     + [executeRowAction event](#executerowaction-event)
-  * [Data sources](#data-sources)
-    + [Generate schema](#generate-schema)
+- [See also](#see-also)
 
 <!-- tocstop -->
 
@@ -153,6 +154,15 @@ export class DataTableDemo {
 | [executeRowAction](#executerowaction-event) | Emitted when row action is executed by user |
 
 ## Details
+
+### Supplying data for the table
+
+The column layout and row data are supplied to the table using an object that implements the
+DataTableAdapter interface. This interface hides the internal details of the class that provides
+the data, which gives a lot of flexibility in how the data can be stored and accessed. The DataTable
+library includes a standard adapter class called ObjectDataTableAdapter that is useful for many
+common uses. See the [DataTableAdapter](DataTableAdapter.md) for full details about the interface and
+the ObjectDataTableAdapter class.
 
 ### Customizing columns
 
@@ -451,101 +461,12 @@ Once corresponding action is clicked in the dropdown menu DataTable invokes `exe
 where you can handle the process, inspect the action payload and all custom properties defined earlier,
 and do corresponding actions.
 
-### Data sources
+<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
+<!-- seealso start -->
+## See also
 
-DataTable component gets data by means of data adapter. 
-It is possible having data retrieved from different kinds of sources by implementing
-a custom `DataTableAdapter` using the following interfaces:
-
-```ts
-interface DataTableAdapter {
-    selectedRow: DataRow;
-    getRows(): Array<DataRow>;
-    setRows(rows: Array<DataRow>): void;
-    getColumns(): Array<DataColumn>;
-    setColumns(columns: Array<DataColumn>): void;
-    getValue(row: DataRow, col: DataColumn): any;
-    getSorting(): DataSorting;
-    setSorting(sorting: DataSorting): void;
-    sort(key?: string, direction?: string): void;
-}
-
-interface DataRow {
-     isSelected: boolean;
-     isDropTarget?: boolean;
-     hasValue(key: string): boolean;
-     getValue(key: string): any;
-     cssClass?: string;
-}
-
-interface DataColumn {
-    key: string;
-    type: string; // text|image|date
-    format?: string;
-    sortable?: boolean;
-    title?: string;
-    srTitle?: string;
-    cssClass?: string;
-    template?: TemplateRef<any>;
-}
-```
-
-DataTable provides [ObjectDataTableAdapter](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-datatable/src/data/object-datatable-adapter.ts) out-of-the-box. 
-This is a simple data adapter implementation that binds to object arrays 
-and turns object fields into columns:
-
-```ts
-let data = new ObjectDataTableAdapter(
-    // data
-    [
-        { id: 1, name: 'Name 1' },
-        { id: 2, name: 'Name 2' }
-    ],
-    // schema
-    [
-        { 
-            type: 'text', 
-            key: 'id', 
-            title: 'Id', 
-            sortable: true 
-        },
-        {
-            type: 'text', 
-            key: 'name', 
-            title: 'Name', 
-            sortable: true
-        }
-    ]
-);
-```
-
-#### Generate schema
-
-It is possible to auto generate your schema if you have only the data row  
-
-```ts
-let data =  [
-    { id: 2, name: 'abs' },
-    { id: 1, name: 'xyz' }
-];
-
-let schema = ObjectDataTableAdapter.generateSchema(data);
-
-/*Auto generated schema value:
-[
-    { 
-        type: 'text', 
-        key: 'id', 
-        title: 'Id', 
-        sortable: false 
-    },
-    {
-        type: 'text', 
-        key: 'name', 
-        title: 'Name', 
-        sortable: false
-    }
-] 
-*/
-
-```
+- [Data column component](data-column.component.md)
+- [Pagination component](pagination.component.md)
+- [DataTableAdapter](DataTableAdapter.md)
+- [Document list component](document-list.component.md)
+<!-- seealso end -->

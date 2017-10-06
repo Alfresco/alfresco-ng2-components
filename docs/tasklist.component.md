@@ -2,21 +2,6 @@
 
 Renders a list containing all the tasks matched by the parameters specified.
 
-<!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
-
-<!-- toc -->
-
-- [Basic Usage](#basic-usage)
-  * [Properties](#properties)
-  * [Events](#events)
-- [Details](#details)
-  * [DataTableAdapter example](#datatableadapter-example)
-  * [DataColumn Features](#datacolumn-features)
-
-<!-- tocstop -->
-
-<!-- markdown-toc end -->
-
 ## Basic Usage
 
 ```html
@@ -54,7 +39,7 @@ You can also use HTML-based schema declaration like shown below:
 | hasIcon | boolean | true | Toggle the icon on the left . |
 | landingTaskId | string | | Define which task id should be selected after the reloading. If the task id doesn't exist or nothing is passed it will select the first task |
 | sort | string | | Define the sort of the processes. Possible values are : `created-desc`, `created-asc`, `due-desc`, `due-asc` |
-| data | DataTableAdapter | | JSON object that represent the number and the type of the columns that you want show (see the [example](#datatableadapter-example) section below) |
+| data | [DataTableAdapter](DataTableAdapter.md) | | JSON object that represent the number and the type of the columns that you want show (see the [example](#datatableadapter-example) section below) |
 
 ### Events
 
@@ -71,6 +56,10 @@ render details of any chosen instance.
 
 ### DataTableAdapter example
 
+See the [DataTableAdapter](DataTableAdapter.md) page for full details of the interface and its standard
+implementation, ObjectDataTableAdapter. Below is an example of how you can set up the adapter for a
+typical tasklist.
+
 ```json
 [
  {"type": "text", "key": "id", "title": "Id"},
@@ -82,4 +71,12 @@ render details of any chosen instance.
 
 ### DataColumn Features
 
-You can customize the styling of a column and also add features like tooltips and automatic translation of column titles. See the DataColumn docs for more information about these features.
+You can customize the styling of a column and also add features like tooltips and automatic translation of column titles. See the [DataColumn](data-column.component.md) page for more information about these features.
+
+<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
+<!-- seealso start -->
+## See also
+
+- [Data column component](data-column.component.md)
+- [DataTableAdapter](DataTableAdapter.md)
+<!-- seealso end -->

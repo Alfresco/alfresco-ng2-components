@@ -724,5 +724,5 @@ That will give the following output:
 - [Breadcrumb component](breadcrumb.component.md)
 - [Content action component](content-action.component.md)
 - [Dropdown breadcrumb component](dropdown-breadcrumb.component.md)
-- [Permission style model](permission-style.model.md)
+- [Permissions style model](permissions-style.model.md)
 <!-- seealso end -->
