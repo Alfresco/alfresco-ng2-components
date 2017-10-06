@@ -19,6 +19,7 @@
     </div>
 
     <div class="adf-task-details-core">
+
         <div class="adf-task-details-core-form">
             <div *ngIf="isAssigned()">
                 <adf-form *ngIf="hasFormKey()" #activitiForm
@@ -84,7 +85,7 @@
                     <md-card *ngIf="showComments">
                         <md-card-content>
                             <adf-comments #activiticomments
-                                [readOnly]="readOnlyForm"
+                                [readOnly]="taskPeople?.length === 0"
                                 [taskId]="taskDetails.id">
                             </adf-comments>
                             </md-card-content>

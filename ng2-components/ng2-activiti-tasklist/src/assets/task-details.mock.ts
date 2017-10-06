@@ -118,8 +118,7 @@ export let taskFormMock = {
                 'restLabelProperty': null,
                 'tab': null,
                 'className': null,
-                'params': {
-                },
+                'params': {},
                 'dateDisplayFormat': null,
                 'layout': {'row': -1, 'column': -1, 'colspan': 1},
                 'sizeX': 1,
@@ -188,5 +187,15 @@ export let tasksMock = {
 };
 
 export let noDataMock = {
-    data: []
+    data: [{
+        'size': 1,
+        'total': 1,
+        'start': 0,
+        'data': [{
+            'id': 1005,
+            'message': 'example-message',
+            'created': '2017-10-06T11:54:53.443+0000',
+            'createdBy': {'id': 4004, 'firstName': 'gadget', 'lastName': 'inspector', 'email': 'gadget@inspector.com'}
+        }]
+    }]
 };
