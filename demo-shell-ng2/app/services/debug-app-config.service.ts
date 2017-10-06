@@ -29,7 +29,7 @@ export class DebugAppConfigService extends AppConfigService {
     /** @override */
     get<T>(key: string): T {
         if (key === 'ecmHost' || key === 'bpmHost') {
-            return <T>(<any>this.storage.getItem(key) || super.get<T>(key));
+            return <T> (<any> this.storage.getItem(key) || super.get<T>(key));
         }
         return super.get<T>(key);
     }

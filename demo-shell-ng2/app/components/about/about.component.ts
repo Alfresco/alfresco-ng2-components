@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { DataSource } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
 import { AlfrescoAuthenticationService, AppConfigService, BpmProductVersionModel, DiscoveryApiService, EcmProductVersionModel  } from 'ng2-alfresco-core';

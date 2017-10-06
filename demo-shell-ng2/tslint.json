@@ -128,7 +128,10 @@
             "check-decl",
             "check-operator",
             "check-separator",
-            "check-type"
+            "check-typecast",
+            "check-type",
+            "check-typecast",
+            "check-module"
         ],
         "ordered-imports": true,
         "use-input-property-decorator": true,
@@ -136,10 +139,10 @@
         "use-host-property-decorator": false,
         "use-life-cycle-interface": true,
         "use-pipe-transform-interface": true,
-        "component-class-suffix": true,
-        "directive-class-suffix": true,
         "no-access-missing-member": false,
         "templates-use-public": true,
-        "invoke-injectable": true
+        "invoke-injectable": true,
+        "component-class-suffix": true,
+        "directive-class-suffix": true
     }
 }

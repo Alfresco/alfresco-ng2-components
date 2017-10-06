@@ -47,7 +47,7 @@ export class SettingsComponent {
     }
 
     public onChangeECMHost(event: KeyboardEvent): void {
-        let value = (<HTMLInputElement>event.target).value.trim();
+        let value = (<HTMLInputElement> event.target).value.trim();
         if (value && this.isValidUrl(value)) {
             this.logService.info(`ECM host: ${value}`);
             this.ecmHostTmp = value;
@@ -57,7 +57,7 @@ export class SettingsComponent {
     }
 
     public onChangeBPMHost(event: KeyboardEvent): void {
-        let value = (<HTMLInputElement>event.target).value.trim();
+        let value = (<HTMLInputElement> event.target).value.trim();
         if (value && this.isValidUrl(value)) {
             this.logService.info(`BPM host: ${value}`);
             this.bpmHostTmp = value;
