@@ -46,6 +46,9 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     @Input()
     showToolbar: boolean = true;
 
+    @Input()
+    allowThumbnails = false;
+
     currentPdfDocument: any;
     page: number;
     displayPage: number;
