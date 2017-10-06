@@ -112,6 +112,10 @@ export class FormFieldModel extends FormWidgetModel {
         return this._isValid;
     }
 
+    markAsInvalid() {
+        this._isValid = false;
+    }
+
     validate(): boolean {
         this.validationSummary = null;
 

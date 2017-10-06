@@ -71,30 +71,41 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
                 }
             }
         }
+        if (this.isValueDefined() && this.value.trim().length === 0) {
+          this.oldValue = this.value;
+          this.field.validationSummary = '';
+          this.users = [];
+        }
+    }
+
+    isValueDefined() {
+        return this.value !== null && this.value !== undefined;
     }
 
     searchUsers() {
         this.formService.getWorkflowUsers(this.value, this.groupId)
             .subscribe((result: LightUserRepresentation[]) => {
                 this.users = result || [];
+                this.validateValue();
             });
     }
 
-    flushValue() {
-        let option = this.users.find(item => {
-            let fullName = this.getDisplayName(item).toLocaleLowerCase();
-            return (this.value && fullName === this.value.toLocaleLowerCase());
-        });
-
-        if (option) {
-            this.field.value = option;
-            this.value = this.getDisplayName(option);
+    validateValue() {
+        let validUserName = this.getUserFromValue();
+        if (validUserName) {
+            this.field.validationSummary = '';
+            this.field.value = validUserName;
+            this.value = this.getDisplayName(validUserName);
         } else {
-            this.field.value = null;
-            this.value = null;
-        }
+            this.field.value = '';
+            this.field.validationSummary = 'Invalid value provided';
+            this.field.markAsInvalid();
+            this.field.form.markAsInvalid();
+          }
+    }
 
-        this.field.updateForm();
+    getUserFromValue() {
+        return this.users.find((user) => this.getDisplayName(user).toLocaleLowerCase() === this.value.toLocaleLowerCase());
     }
 
     getDisplayName(model: LightUserRepresentation) {
@@ -102,18 +113,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
             let displayName = `${model.firstName || ''} ${model.lastName || ''}`;
             return displayName.trim();
         }
-
         return '';
-    }
-
-    onItemClick(item: LightUserRepresentation, event: Event) {
-        if (item) {
-            this.field.value = item;
-            this.value = this.getDisplayName(item);
-        }
-        if (event) {
-            event.preventDefault();
-        }
     }
 
     onItemSelect(item: LightUserRepresentation) {

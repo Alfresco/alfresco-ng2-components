@@ -15,12 +15,15 @@
  * limitations under the License.
  */
 
+import { OverlayContainer } from '@angular/cdk/overlay';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { CoreModule, LightUserRepresentation } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 import { FormService } from '../../../services/form.service';
 import { MaterialModule } from '../../material.module';
+import { FormFieldTypes } from '../core/form-field-types';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { ErrorWidgetComponent } from '../error/error.component';
@@ -33,6 +36,7 @@ describe('PeopleWidgetComponent', () => {
     let fixture: ComponentFixture<PeopleWidgetComponent>;
     let element: HTMLElement;
     let formService: FormService;
+    let overlayContainerElement: HTMLElement;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -47,7 +51,19 @@ describe('PeopleWidgetComponent', () => {
             providers: [
                 FormService,
                 EcmModelService,
-                ActivitiAlfrescoContentService
+                ActivitiAlfrescoContentService,
+                {provide: OverlayContainer, useFactory: () => {
+                    overlayContainerElement = document.createElement('div');
+                    overlayContainerElement.classList.add('cdk-overlay-container');
+
+                    document.body.appendChild(overlayContainerElement);
+
+                    // remove body padding to keep consistent cross-browser
+                    document.body.style.padding = '0';
+                    document.body.style.margin = '0';
+
+                    return {getContainerElement: () => overlayContainerElement};
+                }}
             ]
         }).compileComponents();
     }));
@@ -98,20 +114,6 @@ describe('PeopleWidgetComponent', () => {
         );
 
         widget.ngOnInit();
-        expect(widget.value).toBe('John Doe');
-    });
-
-    it('should prevent default behaviour on option item click', () => {
-        let event = jasmine.createSpyObj('event', ['preventDefault']);
-        widget.onItemClick(null, event);
-        expect(event.preventDefault).toHaveBeenCalled();
-    });
-
-    it('should update values on item click', () => {
-        let item = new LightUserRepresentation({firstName: 'John', lastName: 'Doe'});
-
-        widget.onItemClick(item, null);
-        expect(widget.field.value).toBe(item);
         expect(widget.value).toBe('John Doe');
     });
 
@@ -204,42 +206,76 @@ describe('PeopleWidgetComponent', () => {
         expect(formService.getWorkflowUsers).not.toHaveBeenCalled();
     });
 
-    it('should update form on value flush', () => {
-        spyOn(widget.field, 'updateForm').and.callThrough();
-        widget.flushValue();
-        expect(widget.field.updateForm).toHaveBeenCalled();
+    it('should reset users when the input field is blank string', () => {
+        let fakeUser = new LightUserRepresentation({id: '1', email: 'ffff@fff'});
+        widget.users.push(fakeUser);
+
+        let keyboardEvent = new KeyboardEvent('keypress');
+        widget.value = '';
+        widget.onKeyUp(keyboardEvent);
+
+        expect(widget.users).toEqual([]);
     });
 
-    it('should flush value and update field', () => {
-        widget.users = [
-            new LightUserRepresentation({firstName: 'Tony', lastName: 'Stark'}),
-            new LightUserRepresentation({firstName: 'John', lastName: 'Doe'})
-        ];
-        widget.value = 'John Doe';
-        widget.flushValue();
+    describe('when template is ready', () => {
 
-        expect(widget.value).toBe('John Doe');
-        expect(widget.field.value).toBe(widget.users[1]);
+        let fakeUserResult = [
+            { id: 1001, firstName: 'Test01', lastName: 'Test01', email: 'test' },
+            { id: 1002, firstName: 'Test02', lastName: 'Test02', email: 'test2' }];
+
+        beforeEach(async(() => {
+            spyOn(formService, 'getWorkflowUsers').and.returnValue(Observable.create(observer => {
+                observer.next(fakeUserResult);
+                observer.complete();
+            }));
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                id: 'people-id',
+                name: 'people-name',
+                type: FormFieldTypes.PEOPLE,
+                readOnly: false
+            });
+            fixture.detectChanges();
+            element = fixture.nativeElement;
+        }));
+
+        afterEach(() => {
+            fixture.destroy();
+            TestBed.resetTestingModule();
+        });
+
+        it('should render the people component', () => {
+            expect(element.querySelector('#people-widget-content')).not.toBeNull();
+        });
+
+        it('should show an error message if the user is invalid', async(() => {
+            let peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('#people-id');
+            peopleHTMLElement.focus();
+            widget.value = 'K';
+            peopleHTMLElement.value = 'K';
+            peopleHTMLElement.dispatchEvent(new Event('keyup'));
+            peopleHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(element.querySelector('.adf-error-text')).not.toBeNull();
+                expect(element.querySelector('.adf-error-text').textContent).toContain('Invalid value provided');
+            });
+        }));
+
+        it('should show the people if the typed result match', async(() => {
+            let peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('#people-id');
+            peopleHTMLElement.focus();
+            widget.value = 'T';
+            peopleHTMLElement.value = 'T';
+            peopleHTMLElement.dispatchEvent(new Event('keyup'));
+            peopleHTMLElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(fixture.debugElement.query(By.css('#adf-people-widget-user-0'))).not.toBeNull();
+                expect(fixture.debugElement.query(By.css('#adf-people-widget-user-1'))).not.toBeNull();
+            });
+        }));
+
     });
 
-    it('should be case insensitive when flushing field', () => {
-        widget.users = [
-            new LightUserRepresentation({firstName: 'Tony', lastName: 'Stark'}),
-            new LightUserRepresentation({firstName: 'John', lastName: 'Doe'})
-        ];
-        widget.value = 'TONY sTaRk';
-        widget.flushValue();
-
-        expect(widget.value).toBe('Tony Stark');
-        expect(widget.field.value).toBe(widget.users[0]);
-    });
-
-    it('should reset value and field on flush', () => {
-        widget.value = 'Missing User';
-        widget.field.value = {};
-        widget.flushValue();
-
-        expect(widget.value).toBeNull();
-        expect(widget.field.value).toBeNull();
-    });
 });

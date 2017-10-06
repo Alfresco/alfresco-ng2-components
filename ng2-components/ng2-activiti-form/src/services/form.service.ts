@@ -387,6 +387,7 @@ export class FormService {
                     return Observable.of(user);
                 })
             .combineAll()
+            .defaultIfEmpty([])
             .catch(err => this.handleError(err));
     }
 
