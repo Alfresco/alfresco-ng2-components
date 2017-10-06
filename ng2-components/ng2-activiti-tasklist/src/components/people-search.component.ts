@@ -51,7 +51,7 @@ export class PeopleSearchComponent implements OnInit {
 
     selectedUser: LightUserRepresentation;
 
-    constructor(peopleProcessService: PeopleProcessService) {
+    constructor(public peopleProcessService: PeopleProcessService) {
         this.searchUser
             .valueChanges
             .debounceTime(200)
