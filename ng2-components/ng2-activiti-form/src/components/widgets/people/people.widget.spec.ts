@@ -27,7 +27,7 @@ import { ErrorWidgetComponent } from '../error/error.component';
 import { EcmModelService } from './../../../services/ecm-model.service';
 import { PeopleWidgetComponent } from './people.widget';
 
-fdescribe('PeopleWidgetComponent', () => {
+describe('PeopleWidgetComponent', () => {
 
     let widget: PeopleWidgetComponent;
     let fixture: ComponentFixture<PeopleWidgetComponent>;
