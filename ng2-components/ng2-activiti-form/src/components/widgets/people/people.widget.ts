@@ -71,6 +71,14 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
                 }
             }
         }
+        if (this.isValueDefined() && this.value.trim().length === 0) {
+          this.oldValue = this.value;
+          this.users = [];
+        }
+    }
+
+    isValueDefined() {
+        return this.value !== null && this.value !== undefined;
     }
 
     searchUsers() {
@@ -80,23 +88,6 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
             });
     }
 
-    flushValue() {
-        let option = this.users.find(item => {
-            let fullName = this.getDisplayName(item).toLocaleLowerCase();
-            return (this.value && fullName === this.value.toLocaleLowerCase());
-        });
-
-        if (option) {
-            this.field.value = option;
-            this.value = this.getDisplayName(option);
-        } else {
-            this.field.value = null;
-            this.value = null;
-        }
-
-        this.field.updateForm();
-    }
-
     getDisplayName(model: LightUserRepresentation) {
         if (model) {
             let displayName = `${model.firstName || ''} ${model.lastName || ''}`;
@@ -104,16 +95,6 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         }
 
         return '';
-    }
-
-    onItemClick(item: LightUserRepresentation, event: Event) {
-        if (item) {
-            this.field.value = item;
-            this.value = this.getDisplayName(item);
-        }
-        if (event) {
-            event.preventDefault();
-        }
     }
 
     onItemSelect(item: LightUserRepresentation) {
