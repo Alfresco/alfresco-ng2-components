@@ -981,4 +981,11 @@ describe('DocumentList', () => {
 
         expect(documentList.resetPagination).toHaveBeenCalledTimes(2);
     });
+
+    it('should reset folder node upon changing current folder id', () => {
+        documentList.folderNode = <any> {};
+        documentList.ngOnChanges({currentFolderId: new SimpleChange(null, '-sites-', false)});
+
+        expect(documentList.folderNode).toBeNull();
+    });
 });

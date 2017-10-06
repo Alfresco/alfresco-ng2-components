@@ -244,6 +244,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         } else if (changes.currentFolderId && changes.currentFolderId.currentValue) {
             if (changes.currentFolderId.previousValue !== changes.currentFolderId.currentValue) {
                 this.resetPagination();
+                this.folderNode = null;
             }
             if (!this.hasCustomLayout) {
                 this.setupDefaultColumns(changes.currentFolderId.currentValue);
