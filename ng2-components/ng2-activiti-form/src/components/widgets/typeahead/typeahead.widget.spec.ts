@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { OverlayContainer } from '@angular/cdk/overlay';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule, LogServiceMock } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
@@ -37,6 +38,7 @@ describe('TypeaheadWidgetComponent', () => {
     let widget: TypeaheadWidgetComponent;
     let visibilityService: WidgetVisibilityService;
     let logService: LogServiceMock;
+    let overlayContainerElement: HTMLElement;
 
     beforeEach(() => {
         logService = new LogServiceMock();
@@ -208,7 +210,19 @@ describe('TypeaheadWidgetComponent', () => {
             TestBed.configureTestingModule({
                 imports: [CoreModule, MaterialModule],
                 declarations: [TypeaheadWidgetComponent, ErrorWidgetComponent],
-                providers: [FormService, EcmModelService, WidgetVisibilityService]
+                providers: [
+                    {provide: OverlayContainer, useFactory: () => {
+                        overlayContainerElement = document.createElement('div');
+                        overlayContainerElement.classList.add('cdk-overlay-container');
+
+                        document.body.appendChild(overlayContainerElement);
+
+                        // remove body padding to keep consistent cross-browser
+                        document.body.style.padding = '0';
+                        document.body.style.margin = '0';
+
+                        return {getContainerElement: () => overlayContainerElement};
+                      }}, FormService, EcmModelService, WidgetVisibilityService]
             }).compileComponents().then(() => {
                 fixture = TestBed.createComponent(TypeaheadWidgetComponent);
                 typeaheadWidgetComponent = fixture.componentInstance;
@@ -270,30 +284,43 @@ describe('TypeaheadWidgetComponent', () => {
                 expect(element.querySelector('#typeahead-id')).not.toBeNull();
             }));
 
-            fit('should show typeahead options', async(() => {
+            it('should show typeahead options', async(() => {
                 let typeahedElement = fixture.debugElement.query(By.css('#typeahead-id'));
+                let typeahedHTMLElement: HTMLInputElement = <HTMLInputElement> typeahedElement.nativeElement;
+                typeahedHTMLElement.focus();
                 typeaheadWidgetComponent.value = 'F';
-                typeahedElement.triggerEventHandler('keypress', {});
+                typeahedHTMLElement.value = 'F';
+                typeahedHTMLElement.dispatchEvent(new Event('keyup'));
+                typeahedHTMLElement.dispatchEvent(new Event('input'));
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
-                    expect(fixture.debugElement.queryAll(By.css('[id="md-option-1"]'))).toBeDefined();
-                    expect(fixture.debugElement.queryAll(By.css('[id="md-option-2"]'))).toBeDefined();
-                    expect(fixture.debugElement.queryAll(By.css('[id="md-option-3"]'))).toBeDefined();
+                    fixture.detectChanges();
+                    expect(fixture.debugElement.query(By.css('[id="typeahead-name_option_1"]'))).not.toBeNull();
+                    expect(fixture.debugElement.query(By.css('[id="typeahead-name_option_2"]'))).not.toBeNull();
+                    expect(fixture.debugElement.query(By.css('[id="typeahead-name_option_3"]'))).not.toBeNull();
                 });
             }));
 
-            fit('should hide the option when the value is empty', async(() => {
-                let keyboardEvent = new KeyboardEvent('keypress');
+            it('should hide the option when the value is empty', async(() => {
+                let typeahedElement = fixture.debugElement.query(By.css('#typeahead-id'));
+                let typeahedHTMLElement: HTMLInputElement = <HTMLInputElement> typeahedElement.nativeElement;
+                typeahedHTMLElement.focus();
                 typeaheadWidgetComponent.value = 'F';
-                typeaheadWidgetComponent.onKeyUp(keyboardEvent);
+                typeahedHTMLElement.value = 'F';
+                typeahedHTMLElement.dispatchEvent(new Event('keyup'));
+                typeahedHTMLElement.dispatchEvent(new Event('input'));
                 fixture.detectChanges();
-                expect(fixture.debugElement.queryAll(By.css('[id="md-option-1"]'))).toBeDefined();
                 fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    expect(fixture.debugElement.query(By.css('[id="typeahead-name_option_1"]'))).not.toBeNull();
+                    typeahedHTMLElement.focus();
                     typeaheadWidgetComponent.value = '';
-                    typeaheadWidgetComponent.onKeyUp(keyboardEvent);
+                    typeahedHTMLElement.dispatchEvent(new Event('keyup'));
+                    typeahedHTMLElement.dispatchEvent(new Event('input'));
                     fixture.detectChanges();
                     fixture.whenStable().then(() => {
-                        expect(fixture.debugElement.queryAll(By.css('[id="md-option-1"]'))).not.toBeDefined();
+                        fixture.detectChanges();
+                        expect(fixture.debugElement.query(By.css('[id="typeahead-name_option_1"]'))).toBeNull();
                     });
                 });
             }));

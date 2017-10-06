@@ -17,7 +17,7 @@
                    [mdAutocomplete]="auto">
             <md-autocomplete #auto="mdAutocomplete" (optionSelected)="onItemSelect($event.option.value)">
                 <md-option *ngFor="let item of options" [value]="item">
-                    <span>{{item.name}}</span>
+                    <span [id]="field.name+'_option_'+item.id">{{item.name}}</span>
                 </md-option>
             </md-autocomplete>
         </md-input-container>
