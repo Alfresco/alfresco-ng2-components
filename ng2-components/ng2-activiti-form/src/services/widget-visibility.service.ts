@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
-import { ContainerColumnModel, ContainerModel, FormFieldModel, FormModel, TabModel } from '../components/widgets/core/index';
+import { FormFieldModel, FormModel, TabModel } from '../components/widgets/core/index';
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
 import { WidgetVisibilityModel } from '../models/widget-visibility.model';
 
@@ -98,43 +98,46 @@ export class WidgetVisibilityService {
         return valueFound;
     }
 
-    getFormValue(form: FormModel, field: string) {
-        let value = this.getFieldValue(form.values, field);
-        return value ? value : this.searchForm(form, field);
+    getFormValue(form: FormModel, fieldId: string) {
+        let value = this.getFieldValue(form.values, fieldId);
+
+        if (!value) {
+            value = this.searchValueInForm(form, fieldId);
+        }
+
+        return value;
     }
 
-    getFieldValue(valueList: any, fieldName: string) {
-        let dropDownFilterByName, valueFound = '';
-        if (fieldName && fieldName.indexOf('_LABEL') > 0) {
-            dropDownFilterByName = fieldName.substring(0, fieldName.length - 6);
+    getFieldValue(valueList: any, fieldId: string) {
+        let dropDownFilterByName, valueFound;
+        if (fieldId && fieldId.indexOf('_LABEL') > 0) {
+            dropDownFilterByName = fieldId.substring(0, fieldId.length - 6);
             if (valueList[dropDownFilterByName]) {
                 valueFound = valueList[dropDownFilterByName].name;
             }
-        } else if (valueList[fieldName] && valueList[fieldName].id) {
-            valueFound = valueList[fieldName].id;
+        } else if (valueList[fieldId] && valueList[fieldId].id) {
+            valueFound = valueList[fieldId].id;
         } else {
-            valueFound = valueList[fieldName];
+            valueFound = valueList[fieldId];
         }
         return valueFound;
     }
 
-    searchForm(form: FormModel, name: string) {
+    searchValueInForm(form: FormModel, fieldId: string) {
         let fieldValue = '';
-        form.fields.forEach((containerModel: ContainerModel) => {
-            containerModel.field.columns.forEach((containerColumnModel: ContainerColumnModel) => {
-                let fieldFound = containerColumnModel.fields.find(field => this.isSearchedField(field, name));
-                if (fieldFound) {
-                    fieldValue = this.getObjectValue(fieldFound);
-                    if (!fieldValue) {
-                        if (fieldFound.value && fieldFound.value.id) {
-                            fieldValue = fieldFound.value.id;
-                        } else {
-                            fieldValue = fieldFound.value;
-                        }
+        form.getFormFields().forEach((formField: FormFieldModel) => {
+            if (this.isSearchedField(formField, fieldId)) {
+                fieldValue = this.getObjectValue(formField);
+                if (!fieldValue) {
+                    if (formField.value && formField.value.id) {
+                        fieldValue = formField.value.id;
+                    } else {
+                        fieldValue = formField.value;
                     }
                 }
-            });
+            }
         });
+
         return fieldValue;
     }
 
@@ -147,18 +150,19 @@ export class WidgetVisibilityService {
             if (option) {
                 value = option.name;
             } else {
+
                 value = field.value;
             }
         }
         return value;
     }
 
-    private isSearchedField(field: FormFieldModel, fieldToFind: string) {
-        let forrmattedFieldName = this.removeLabel(field, fieldToFind);
-        return field.name ? field.name.toUpperCase() === forrmattedFieldName.toUpperCase() : false;
+    private isSearchedField(field: FormFieldModel, fieldToFind: string): boolean {
+        let formattedFieldName = this.removeLabel(field, fieldToFind);
+        return field.id ? field.id.toUpperCase() === formattedFieldName.toUpperCase() : false;
     }
 
-    private removeLabel(field: FormFieldModel, fieldToFind) {
+    private removeLabel(field: FormFieldModel, fieldToFind): string {
         let formattedFieldName = fieldToFind || '';
         if (field.fieldType === 'RestFieldRepresentation' && fieldToFind.indexOf('_LABEL') > 0) {
             formattedFieldName = fieldToFind.substring(0, fieldToFind.length - 6);
