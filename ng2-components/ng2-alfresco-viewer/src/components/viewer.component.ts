@@ -54,22 +54,25 @@ export class ViewerComponent implements OnDestroy, OnChanges {
     allowGoBack = true;
 
     @Input()
-    allowOpenWith = true;
+    allowOpenWith = false;
 
     @Input()
     allowDownload = true;
 
     @Input()
-    allowPrint = true;
+    allowPrint = false;
 
     @Input()
-    allowShare = true;
+    allowShare = false;
 
     @Input()
-    allowInfoDrawer = true;
+    allowInfoDrawer = false;
 
     @Input()
     showInfoDrawer = false;
+
+    @Input()
+    allowMoreActions = false;
 
     @Output()
     goBack = new EventEmitter<BaseEvent<any>>();

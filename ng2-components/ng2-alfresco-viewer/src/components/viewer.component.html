@@ -54,23 +54,25 @@
                     <md-icon>share</md-icon>
                 </button>
 
-                <button md-icon-button [mdMenuTriggerFor]="mnuMoreActions" mdTooltip="More actions">
-                    <md-icon>more_vert</md-icon>
-                </button>
-                <md-menu #mnuMoreActions="mdMenu">
-                    <button md-menu-item>
-                        <md-icon>dialpad</md-icon>
-                        <span>Action One</span>
+                <ng-container *ngIf="allowMoreActions">
+                    <button md-icon-button [mdMenuTriggerFor]="mnuMoreActions" mdTooltip="More actions">
+                        <md-icon>more_vert</md-icon>
                     </button>
-                    <button md-menu-item disabled>
-                        <md-icon>voicemail</md-icon>
-                        <span>Action Two</span>
-                    </button>
-                    <button md-menu-item>
-                        <md-icon>notifications_off</md-icon>
-                        <span>Action Three</span>
-                    </button>
-                </md-menu>
+                    <md-menu #mnuMoreActions="mdMenu">
+                        <button md-menu-item>
+                            <md-icon>dialpad</md-icon>
+                            <span>Action One</span>
+                        </button>
+                        <button md-menu-item disabled>
+                            <md-icon>voicemail</md-icon>
+                            <span>Action Two</span>
+                        </button>
+                        <button md-menu-item>
+                            <md-icon>notifications_off</md-icon>
+                            <span>Action Three</span>
+                        </button>
+                    </md-menu>
+                </ng-container>
 
                 <ng-container *ngIf="allowInfoDrawer">
                     <adf-toolbar-divider></adf-toolbar-divider>
