@@ -2,7 +2,6 @@
     <md-card>
         <md-card-header>
             <md-card-title>
-                <md-icon *ngIf="showEventIcon">{{ form.isValid ? 'event_available' : 'event_busy' }}</md-icon>
                 <h2 *ngIf="isTitleEnabled()" class="mdl-card__title-text">{{form.taskName}}</h2>
             </md-card-title>
         </md-card-header>

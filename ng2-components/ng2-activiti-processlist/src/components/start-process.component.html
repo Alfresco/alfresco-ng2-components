@@ -17,8 +17,7 @@
 		<activiti-start-form *ngIf="hasStartForm()" 
 			[processDefinitionId]="currentProcessDef.id" 
 			(outcomeClick)="onOutcomeClick($event)"
-		    [showRefreshButton]="false" 
-			[showEventIcon]="false">
+		    [showRefreshButton]="false">
 		<button form-custom-button md-button (click)="cancelStartProcess()" id="cancle_process" class=""> {{'START_PROCESS.FORM.ACTION.CANCEL'| translate}} </button>
 		</activiti-start-form>
 	</md-card-content>
