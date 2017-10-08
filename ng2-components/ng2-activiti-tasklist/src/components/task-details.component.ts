@@ -311,7 +311,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     }
 
     onFormError(error: any): void {
-        this.errorDialogRef = this.dialog.open(this.errorDialog, { width: '500px' });
+        this.errorDialogRef = this.dialog.open(this.errorDialog, {width: '500px'});
         this.onError.emit(error);
     }
 
@@ -356,11 +356,15 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
         this.showAssignee = false;
     }
 
-    getTaskHeaderViewClass() {
+    getTaskHeaderViewClass(): string {
         if (this.showAssignee) {
             return 'assign-edit-view';
         } else {
             return 'default-view';
         }
+    }
+
+    isReadOnlyComment(): boolean {
+        return (this.taskDetails && this.taskDetails.isCompleted()) && (this.taskPeople && this.taskPeople.length === 0);
     }
 }
