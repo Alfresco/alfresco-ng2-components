@@ -105,7 +105,7 @@ export class TaskDetailsModel {
         return fullName.trim();
     }
 
-    isCompleted() {
+    isCompleted(): boolean {
         return !!this.endDate;
     }
 }

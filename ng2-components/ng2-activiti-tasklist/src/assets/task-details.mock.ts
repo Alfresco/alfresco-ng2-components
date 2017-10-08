@@ -15,7 +15,9 @@
  * limitations under the License.
  */
 
-export let taskDetailsMock = {
+import { TaskDetailsModel } from '../models/task-details.model';
+
+export let taskDetailsMock = new TaskDetailsModel({
     'id': '91',
     'name': 'Request translation',
     'description': null,
@@ -47,9 +49,9 @@ export let taskDetailsMock = {
     'memberOfCandidateUsers': false,
     'managerOfCandidateGroup': false,
     'memberOfCandidateGroup': false
-};
+});
 
-export let taskFormMock = {
+export let taskFormMock = new TaskDetailsModel({
     'id': 4,
     'name': 'Translation request',
     'processDefinitionId': 'TranslationProcess:2:8',
@@ -178,15 +180,15 @@ export let taskFormMock = {
     'variables': [],
     'gridsterForm': false,
     'globalDateFormat': 'D-M-YYYY'
-};
+});
 
-export let tasksMock = {
+export let tasksMock  = new TaskDetailsModel({
     data: [
         taskDetailsMock
     ]
-};
+});
 
-export let noDataMock = {
+export let noDataMock  = new TaskDetailsModel({
     data: [{
         'size': 1,
         'total': 1,
@@ -198,4 +200,4 @@ export let noDataMock = {
             'createdBy': {'id': 4004, 'firstName': 'gadget', 'lastName': 'inspector', 'email': 'gadget@inspector.com'}
         }]
     }]
-};
+});

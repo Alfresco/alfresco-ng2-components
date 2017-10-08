@@ -105,7 +105,7 @@ export class TaskHeaderComponent implements OnChanges {
      * Returns task's status
      */
     getTaskStatus(): string {
-        return this.taskDetails.isCompleted() ? 'Completed' : 'Running';
+        return (this.taskDetails && this.taskDetails.isCompleted()) ? 'Completed' : 'Running';
     }
 
     /**

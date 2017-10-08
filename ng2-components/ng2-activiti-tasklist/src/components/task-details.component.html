@@ -89,7 +89,7 @@
                     <md-card *ngIf="showComments">
                         <md-card-content>
                             <adf-comments #activiticomments
-                                          [readOnly]="taskDetails?.isCompleted() && taskPeople?.length === 0"
+                                          [readOnly]="isReadOnlyComment()"
                                           [taskId]="taskDetails.id">
                             </adf-comments>
                         </md-card-content>
