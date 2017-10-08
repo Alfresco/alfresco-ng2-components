@@ -287,31 +287,60 @@ describe('TaskDetailsComponent', () => {
 
     describe('Comments', () => {
 
-        it('should comments NOT be readonly if is there are user involved', () => {
-            component.showComments = true;
-            component.showHeaderContent = true;
-            component.ngOnChanges({'taskId': new SimpleChange('123', '456', true)});
-            component.taskPeople = [fakeUser];
-
-            fixture.detectChanges();
-            expect((component.activiticomments as any).nativeElement.readOnly).toBe(false);
-        });
-
-        it('should comments be readonly if is there are no user involved', () => {
+        it('should comments be readonly if the task is complete and no user are involved', () => {
             component.showComments = true;
             component.showHeaderContent = true;
             component.ngOnChanges({'taskId': new SimpleChange('123', '456', true)});
             component.taskPeople = [];
+            component.taskDetails = new TaskDetailsModel(taskDetailsMock);
+            component.taskDetails.endDate = '2017-10-03T17:03:57.311+0000';
 
             fixture.detectChanges();
             expect((component.activiticomments as any).nativeElement.readOnly).toBe(true);
         });
 
+        it('should comments be readonly if the task is complete and user are NOT involved', () => {
+            component.showComments = true;
+            component.showHeaderContent = true;
+            component.ngOnChanges({'taskId': new SimpleChange('123', '456', true)});
+            component.taskPeople = [];
+            component.taskDetails = new TaskDetailsModel(taskDetailsMock);
+            component.taskDetails.endDate = '2017-10-03T17:03:57.311+0000';
+
+            fixture.detectChanges();
+            expect((component.activiticomments as any).nativeElement.readOnly).toBe(true);
+        });
+
+        it('should comments NOT be readonly if the task is NOT complete and user are NOT involved', () => {
+            component.showComments = true;
+            component.showHeaderContent = true;
+            component.ngOnChanges({'taskId': new SimpleChange('123', '456', true)});
+            component.taskPeople = [fakeUser];
+            component.taskDetails = new TaskDetailsModel(taskDetailsMock);
+            component.taskDetails.endDate = null;
+
+            fixture.detectChanges();
+            expect((component.activiticomments as any).nativeElement.readOnly).toBe(false);
+        });
+
+        it('should comments NOT be readonly if the task is complete and user are involved', () => {
+            component.showComments = true;
+            component.showHeaderContent = true;
+            component.ngOnChanges({'taskId': new SimpleChange('123', '456', true)});
+            component.taskPeople = [fakeUser];
+            component.taskDetails = new TaskDetailsModel(taskDetailsMock);
+            component.taskDetails.endDate = '2017-10-03T17:03:57.311+0000';
+
+            fixture.detectChanges();
+            expect((component.activiticomments as any).nativeElement.readOnly).toBe(false);
+        });
+
         it('should comments be present if showComments is true', () => {
             component.showComments = true;
             component.showHeaderContent = true;
-            component.taskPeople = [];
             component.ngOnChanges({'taskId': new SimpleChange('123', '456', true)});
+            component.taskPeople = [];
+            component.taskDetails = new TaskDetailsModel(taskDetailsMock);
 
             fixture.detectChanges();
             expect(component.activiticomments).toBeDefined();
@@ -319,8 +348,9 @@ describe('TaskDetailsComponent', () => {
 
         it('should comments NOT be present if showComments is false', () => {
             component.showComments = false;
-            component.taskPeople = [];
             component.ngOnChanges({'taskId': new SimpleChange('123', '456', true)});
+            component.taskPeople = [];
+            component.taskDetails = new TaskDetailsModel(taskDetailsMock);
 
             fixture.detectChanges();
             expect(component.activiticomments).not.toBeDefined();

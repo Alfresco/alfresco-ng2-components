@@ -104,4 +104,8 @@ export class TaskDetailsModel {
 
         return fullName.trim();
     }
+
+    isCompleted() {
+        return !!this.endDate;
+    }
 }
