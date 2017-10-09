@@ -34,7 +34,7 @@ describe('WidgetComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule
             ],
             declarations: [WidgetComponent],
             providers: [

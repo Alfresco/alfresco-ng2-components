@@ -17,9 +17,14 @@
 
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdCheckboxModule, MdInputModule } from '@angular/material';
+import { Validators } from '@angular/forms';
+
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { AlfrescoAuthenticationService, CoreModule } from 'ng2-alfresco-core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+
+import { MaterialModule } from '../material.module';
 import { AuthenticationMock } from './../assets/authentication.service.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
 import { LoginComponent } from './login.component';
@@ -29,6 +34,8 @@ describe('AlfrescoLogin', () => {
     let fixture: ComponentFixture<LoginComponent>;
     let debug: DebugElement;
     let element: any;
+    let authService: AlfrescoAuthenticationService;
+    let router: Router;
 
     let usernameInput, passwordInput;
 
@@ -38,14 +45,16 @@ describe('AlfrescoLogin', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                MdInputModule,
-                MdCheckboxModule,
-                CoreModule.forRoot()
+                RouterTestingModule,
+                MaterialModule,
+                CoreModule
             ],
-            declarations: [LoginComponent],
+            declarations: [
+                LoginComponent
+            ],
             providers: [
-                {provide: AlfrescoAuthenticationService, useClass: AuthenticationMock},
-                {provide: AlfrescoTranslationService, useClass: TranslationMock}
+                { provide: AlfrescoAuthenticationService, useClass: AuthenticationMock },
+                { provide: AlfrescoTranslationService, useClass: TranslationMock }
             ]
         }).compileComponents();
     }));
@@ -61,6 +70,9 @@ describe('AlfrescoLogin', () => {
 
         usernameInput = element.querySelector('#username');
         passwordInput = element.querySelector('#password');
+
+        authService = TestBed.get(AlfrescoAuthenticationService);
+        router = TestBed.get(Router);
 
         fixture.detectChanges();
     });
@@ -78,6 +90,14 @@ describe('AlfrescoLogin', () => {
         fixture.detectChanges();
     }
 
+    it('should redirect to route on successful login', () => {
+        const redirect = '/home';
+        component.successRoute = redirect;
+        spyOn(router, 'navigate');
+        loginWithCredentials('fake-username', 'fake-password');
+        expect(router.navigate).toHaveBeenCalledWith([redirect]);
+    });
+
     describe('Login button', () => {
 
         const getLoginButton = () => element.querySelector('#login-button');
@@ -89,7 +109,6 @@ describe('AlfrescoLogin', () => {
         });
 
         it('should be changed to the "checking key" after a login attempt', () => {
-            const authService = TestBed.get(AlfrescoAuthenticationService);
             spyOn(authService, 'login').and.returnValue({ subscribe: () => { } });
 
             loginWithCredentials('fake-username', 'fake-password');
@@ -114,23 +133,22 @@ describe('AlfrescoLogin', () => {
     describe('Remember me', () => {
 
         it('should be checked by default', () => {
-            expect(element.querySelector('.rememberme-cb input[type="checkbox"]').checked).toBe(true);
+            expect(element.querySelector('#adf-login-remember input[type="checkbox"]').checked).toBe(true);
         });
 
         it('should set the component\'s rememberMe property properly', () => {
-            element.querySelector('.rememberme-cb').dispatchEvent(new Event('change'));
+            element.querySelector('#adf-login-remember').dispatchEvent(new Event('change'));
             fixture.detectChanges();
 
             expect(component.rememberMe).toBe(false);
 
-            element.querySelector('.rememberme-cb').dispatchEvent(new Event('change'));
+            element.querySelector('#adf-login-remember').dispatchEvent(new Event('change'));
             fixture.detectChanges();
 
             expect(component.rememberMe).toBe(true);
         });
 
         it('should be taken into consideration during login attempt', () => {
-            const authService = TestBed.get(AlfrescoAuthenticationService);
             spyOn(authService, 'login').and.returnValue({ subscribe: () => { } });
             component.rememberMe = false;
 
@@ -144,8 +162,8 @@ describe('AlfrescoLogin', () => {
         expect(element.querySelector('[for="username"]')).toBeDefined();
         expect(element.querySelector('[for="username"]').innerText).toEqual('LOGIN.LABEL.USERNAME');
 
-        expect(element.querySelector('#login-remember')).toBeDefined();
-        expect(element.querySelector('#login-remember').innerText).toContain('LOGIN.LABEL.REMEMBER');
+        expect(element.querySelector('#adf-login-remember')).toBeDefined();
+        expect(element.querySelector('#adf-login-remember').innerText).toContain('LOGIN.LABEL.REMEMBER');
 
         expect(element.querySelector('[for="password"]')).toBeDefined();
         expect(element.querySelector('[for="password"]').innerText).toEqual('LOGIN.LABEL.PASSWORD');
@@ -161,7 +179,7 @@ describe('AlfrescoLogin', () => {
 
         it('should render the default copyright text', () => {
             expect(element.querySelector('[data-automation-id="login-copyright"]')).toBeDefined();
-            expect(element.querySelector('[data-automation-id="login-copyright"]').innerText).toEqual('&#169; 2016 Alfresco Software, Inc. All Rights Reserved.');
+            expect(element.querySelector('[data-automation-id="login-copyright"]').innerText).toEqual('\u00A9 2016 Alfresco Software, Inc. All Rights Reserved.');
         });
 
         it('should render the customised copyright text', () => {
@@ -198,7 +216,27 @@ describe('AlfrescoLogin', () => {
         expect(element.querySelector('#login-action-register')).toBe(null);
     });
 
-    it('should render validation min-length error when the username is just 1 character', () => {
+    it('should not render a validation min-length as default', () => {
+        usernameInput.value = '1';
+        usernameInput.dispatchEvent(new Event('input'));
+
+        fixture.detectChanges();
+
+        expect(component.formError).toBeDefined();
+        expect(component.formError.username).toBeDefined();
+        expect(component.formError.username).toBe('');
+        expect(element.querySelector('#username-error')).toBeNull();
+    });
+
+    it('should render validation min-length error when the username is just 1 character with a custom validation Validators.minLength(3)', () => {
+        component.fieldsValidation = {
+            username: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+            password: ['', Validators.required]
+        };
+        component.addCustomValidationError('username', 'minlength', 'LOGIN.MESSAGES.USERNAME-MIN');
+        component.ngOnInit();
+        fixture.detectChanges();
+
         usernameInput.value = '1';
         usernameInput.dispatchEvent(new Event('input'));
 
@@ -211,8 +249,16 @@ describe('AlfrescoLogin', () => {
         expect(element.querySelector('#username-error').innerText).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
     });
 
-    it('should render validation min-length error when the username is lower than 2 characters', () => {
-        usernameInput.value = '1';
+    it('should render validation min-length error when the username is lower than 3 characters with a custom validation Validators.minLength(3)', () => {
+        component.fieldsValidation = {
+            username: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+            password: ['', Validators.required]
+        };
+        component.addCustomValidationError('username', 'minlength', 'LOGIN.MESSAGES.USERNAME-MIN');
+        component.ngOnInit();
+        fixture.detectChanges();
+
+        usernameInput.value = '12';
         usernameInput.dispatchEvent(new Event('input'));
 
         fixture.detectChanges();

@@ -26,7 +26,7 @@ describe('EmptyListComponentComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule
             ],
             declarations: [
                 EmptyListComponent

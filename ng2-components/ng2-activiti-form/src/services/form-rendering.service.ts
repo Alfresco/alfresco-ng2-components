@@ -24,6 +24,7 @@ import {
     ContainerWidgetComponent,
     DateWidgetComponent,
     DisplayTextWidgetComponentComponent,
+    DocumentWidgetComponent,
     DropdownWidgetComponent,
     DynamicTableWidgetComponent,
     FormFieldModel,
@@ -44,6 +45,7 @@ export class FormRenderingService {
 
     private types: { [key: string]: ComponentTypeResolver } = {
         'text': DefaultTypeResolver.fromType(TextWidgetComponent),
+        'string': DefaultTypeResolver.fromType(TextWidgetComponent),
         'integer': DefaultTypeResolver.fromType(NumberWidgetComponent),
         'multi-line-text': DefaultTypeResolver.fromType(MultilineTextWidgetComponentComponent),
         'boolean': DefaultTypeResolver.fromType(CheckboxWidgetComponent),
@@ -58,7 +60,8 @@ export class FormRenderingService {
         'functional-group': DefaultTypeResolver.fromType(FunctionalGroupWidgetComponent),
         'dynamic-table': DefaultTypeResolver.fromType(DynamicTableWidgetComponent),
         'container': DefaultTypeResolver.fromType(ContainerWidgetComponent),
-        'group': DefaultTypeResolver.fromType(ContainerWidgetComponent)
+        'group': DefaultTypeResolver.fromType(ContainerWidgetComponent),
+        'document': DefaultTypeResolver.fromType(DocumentWidgetComponent)
     };
 
     constructor() {

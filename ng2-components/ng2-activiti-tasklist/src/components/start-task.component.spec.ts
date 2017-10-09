@@ -17,12 +17,11 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MdButtonModule, MdDatepickerModule, MdGridListModule, MdIconModule, MdInputModule, MdNativeDateModule, MdSelectModule } from '@angular/material';
-import { AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
+import { AppConfigService, CoreModule, PeopleProcessService, TranslationService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { StartTaskModel } from '../models/start-task.model';
-import { PeopleService } from '../services/people.service';
 import { TaskListService } from '../services/tasklist.service';
 import { startTaskMock } from './../assets/start-task.mock';
 import { StartTaskComponent } from './start-task.component';
@@ -32,7 +31,7 @@ describe('StartTaskComponent', () => {
     let component: StartTaskComponent;
     let fixture: ComponentFixture<StartTaskComponent>;
     let service: TaskListService;
-    let peopleService: PeopleService;
+    let peopleService: PeopleProcessService;
     let element: HTMLElement;
     let getFormlistSpy: jasmine.Spy;
     let getWorkflowUsersSpy: jasmine.Spy;
@@ -53,7 +52,7 @@ describe('StartTaskComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
+                CoreModule,
                 MdInputModule,
                 MdIconModule,
                 MdButtonModule,
@@ -67,7 +66,7 @@ describe('StartTaskComponent', () => {
             ],
             providers: [
                 TaskListService,
-                PeopleService,
+                PeopleProcessService,
                 { provide: AppConfigService, useClass: AppConfigServiceMock },
                 { provide: TranslationService, useClass: TranslationMock }
             ]
@@ -78,7 +77,7 @@ describe('StartTaskComponent', () => {
             element = fixture.nativeElement;
 
             service = fixture.debugElement.injector.get(TaskListService);
-            peopleService = fixture.debugElement.injector.get(PeopleService);
+            peopleService = fixture.debugElement.injector.get(PeopleProcessService);
             getFormlistSpy = spyOn(service, 'getFormList').and.returnValue(Observable.of(fakeForms));
             getWorkflowUsersSpy = spyOn(peopleService, 'getWorkflowUsers').and.returnValue(Observable.of([
                 {

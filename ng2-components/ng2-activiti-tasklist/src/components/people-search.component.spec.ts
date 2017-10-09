@@ -18,24 +18,24 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MdButtonModule, MdInputModule } from '@angular/material';
 import { AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
+import { LightUserRepresentation } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { Observable } from 'rxjs/Observable';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
-import { User } from '../models/user.model';
 import { PeopleListComponent } from './people-list.component';
 import { PeopleSearchComponent } from './people-search.component';
 
 declare let jasmine: any;
 
-const fakeUser: User = new User({
+const fakeUser: LightUserRepresentation = new LightUserRepresentation({
     id: '1',
     firstName: 'fake-name',
     lastName: 'fake-last',
     email: 'fake@mail.com'
 });
 
-const fakeSecondUser: User = new User({
+const fakeSecondUser: LightUserRepresentation = new LightUserRepresentation({
     id: '2',
     firstName: 'fake-involve-name',
     lastName: 'fake-involve-last',
@@ -54,7 +54,7 @@ describe('PeopleSearchComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
+                CoreModule,
                 DataTableModule,
                 MdButtonModule,
                 MdInputModule

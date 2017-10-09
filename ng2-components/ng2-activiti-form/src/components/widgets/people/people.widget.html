@@ -12,28 +12,25 @@
                type="text"
                [id]="field.id"
                [(ngModel)]="value"
-               (ngModelChange)="checkVisibility(field)"
                (keyup)="onKeyUp($event)"
                [disabled]="field.readOnly"
-               placeholder="{{field.placeholder}}">
+               placeholder="{{field.placeholder}}"
+               [mdAutocomplete]="auto">
+        <md-autocomplete #auto="mdAutocomplete" (optionSelected)="onItemSelect($event.option.value)">
+            <md-option *ngFor="let user of users; let i = index" [value]="user">
+                <div class="adf-people-widget-row" id="adf-people-widget-user-{{i}}">
+                    <div class="adf-people-widget-pic">
+                        {{getInitialUserName(user.firstName, user.lastName)}}
+                    </div>
+                    <div *ngIf="user.pictureId" class="adf-people-widget-image-row">
+                        <img id="adf-people-widget-pic-{{i}}" class="adf-people-widget-image"
+                             [src]="peopleProcessService.getUserImage(user)"/>
+                    </div>
+                    <span class="adf-people-label-name">{{getDisplayName(user)}}</span>
+                </div>
+            </md-option>
+        </md-autocomplete>
     </md-input-container>
     <error-widget [error]="field.validationSummary"></error-widget>
     <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
-</div>
-<div class="adf-people-autocomplete mat-elevation-z2" [hidden]="!popupVisible || users.length === 0">
-    <md-option *ngFor="let user of users"
-               [id]="field.id +'-'+user.id"
-               (click)="onItemClick(user, $event)">
-        <div class="adf-people-widget-row">
-            <div *ngIf="!user.userImage" class="adf-people-widget-pic">
-                {{user.firstName[0]}} {{user.lastName[0]}}
-            </div>
-            <div *ngIf="user.userImage" class="adf-people-widget-image-row">
-                <img class="adf-people-widget-image"
-                    [src]="user.userImage"
-                    (error)="onErrorImageLoad(user)"/>
-            </div>
-            <span class="adf-people-label-name">{{getDisplayName(user)}}</span>
-        </div>
-    </md-option>
 </div>

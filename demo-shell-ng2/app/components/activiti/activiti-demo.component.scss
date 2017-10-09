@@ -1,0 +1,106 @@
+
+.adf-no-form-container {
+    text-align: center;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.activiti-demo-grid {
+
+    .activiti-demo-grid-item {
+        margin: 4px;
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+        padding: 10px;
+    }
+
+    .activiti-demo-list-buttons {
+        margin-bottom: 24px;
+    }
+
+    .activiti-demo-list-buttons-start {
+        width: 100%;
+    }
+
+    .activiti-demo-tasks-list.small-pagination,
+    .activiti-demo-processes-list.small-pagination {
+        .adf-pagination {
+
+            flex-wrap: wrap;
+            padding-bottom: 24px;
+            padding-top: 8px;
+
+            &__block {
+                border-right: none;
+            }
+
+            &__range-block.adf-pagination__block:first-child {
+                order: 1;
+                width: 60%;
+                flex: 0 0 auto;
+                box-sizing: border-box;
+                padding-left: 2px;
+                justify-content: flex-start;
+            }
+
+            &__perpage-block {
+                order: 3;
+                width: 60%;
+                box-sizing: border-box;
+                padding-left: 2px;
+                justify-content: flex-start;
+            }
+
+            &__actualinfo-block {
+                order: 2;
+                width: 40%;
+                box-sizing: border-box;
+                padding-right: 2px;
+                justify-content: flex-end;
+            }
+
+            &__controls-block {
+                order: 4;
+                width: 40%;
+                box-sizing: border-box;
+                padding-right: 2px;
+                justify-content: flex-end;
+            }
+        }
+    }
+
+    .activiti-demo-list {
+        .adf-data-table {
+            border: none;
+        }
+
+        .adf-data-table tr,
+        .adf-data-table td {
+            height: 36px;
+            font-size: 14px;
+        }
+
+        .adf-data-table td {
+            padding-top: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .adf-data-table th {
+            padding-top: 0;
+            padding-bottom: 0;
+            height: 40px;
+            vertical-align: middle;
+            font-size: 14px;
+        }
+    }
+
+    @media screen and (max-width: 1279px) {
+        container-widget .grid-list {
+            flex-direction: column;
+
+            .grid-list-item {
+                width: 100% !important;
+            }
+        }
+    }
+}

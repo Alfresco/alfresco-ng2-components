@@ -1,0 +1,14 @@
+<div *ngIf="pagination.hasMoreItems" class="adf-infinite-pagination">
+    <button md-button
+        *ngIf="!isLoading"
+        class="adf-infinite-pagination-load-more"
+        (click)="onLoadMore($event)"
+        data-automation-id="adf-infinite-pagination-button">
+            <ng-content></ng-content>
+    </button>
+
+    <md-progress-bar *ngIf="isLoading"
+        mode="indeterminate"
+        class="adf-infinite-pagination-spinner"
+        data-automation-id="adf-infinite-pagination-spinner"></md-progress-bar>
+</div>

@@ -235,7 +235,7 @@ export class UploadDirective implements OnInit, OnDestroy {
      * Invoked when user selects files or folders by means of File Dialog
      * @param e DOM event
      */
-    protected onSelectFiles(e: Event) {
+    onSelectFiles(e: any): void {
         if (this.isClickMode()) {
             const input = (<HTMLInputElement> e.currentTarget);
             const files = FileUtils.toFileArray(input.files);
@@ -244,6 +244,7 @@ export class UploadDirective implements OnInit, OnDestroy {
                 file: file,
                 relativeFolder: '/'
             }));
+            e.target.value = '';
         }
     }
 }

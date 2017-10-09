@@ -16,14 +16,16 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoApiService, LightUserRepresentation, LogService } from 'ng2-alfresco-core';
 import { Observable, Subject } from 'rxjs/Rx';
 import { FormDefinitionModel } from '../models/form-definition.model';
 import { ContentLinkModel } from './../components/widgets/core/content-link.model';
-import { GroupUserModel } from './../components/widgets/core/group-user.model';
 import { GroupModel } from './../components/widgets/core/group.model';
 import { FormModel, FormOutcomeEvent, FormOutcomeModel, FormValues } from './../components/widgets/core/index';
-import { FormErrorEvent, FormEvent, FormFieldEvent, ValidateFormEvent, ValidateFormFieldEvent } from './../events/index';
+import {
+    FormErrorEvent, FormEvent, FormFieldEvent,
+    ValidateDynamicTableRowEvent, ValidateFormEvent, ValidateFormFieldEvent
+} from './../events/index';
 import { EcmModelService } from './ecm-model.service';
 
 @Injectable()
@@ -44,6 +46,7 @@ export class FormService {
 
     validateForm = new Subject<ValidateFormEvent>();
     validateFormField = new Subject<ValidateFormFieldEvent>();
+    validateDynamicTableRow = new Subject<ValidateDynamicTableRowEvent>();
 
     executeOutcome = new Subject<FormOutcomeEvent>();
 
@@ -72,6 +75,10 @@ export class FormService {
         return this.apiService.getInstance().activiti.processApi;
     }
 
+    private get processInstanceVariablesApi(): any {
+        return this.apiService.getInstance().activiti.processInstanceVariablesApi;
+    }
+
     private get usersWorkflowApi(): any {
         return this.apiService.getInstance().activiti.usersWorkflowApi;
     }
@@ -82,7 +89,7 @@ export class FormService {
 
     parseForm(json: any, data?: FormValues, readOnly: boolean = false): FormModel {
         if (json) {
-            let form = new FormModel(json.formDefinition, data, readOnly, this);
+            let form = new FormModel(json, data, readOnly, this);
             if (!json.fields) {
                 form.outcomes = [
                     new FormOutcomeModel(form, {
@@ -196,6 +203,12 @@ export class FormService {
             .catch(err => this.handleError(err));
     }
 
+    getProcessVarablesById(processInstanceId: string): Observable<any[]> {
+        return Observable.fromPromise(this.processInstanceVariablesApi.getProcessInstanceVariables(processInstanceId))
+            .map(this.toJson)
+            .catch(err => this.handleError(err));
+    }
+
     /**
      * Get All the Tasks
      * @returns {Observable<any>}
@@ -299,6 +312,12 @@ export class FormService {
             .catch(err => this.handleError(err));
     }
 
+    getProcessIntance(processId: string): Observable<any> {
+        return Observable.fromPromise(this.processApi.getProcessInstance(processId))
+            .map(this.toJson)
+            .catch(err => this.handleError(err));
+    }
+
     /**
      * Get start form definition for a given process
      * @param processId Process definition ID
@@ -356,18 +375,19 @@ export class FormService {
         return this.apiService.getInstance().activiti.userApi.getUserProfilePictureUrl(userId);
     }
 
-    getWorkflowUsers(filter: string, groupId?: string): Observable<GroupUserModel[]> {
+    getWorkflowUsers(filter: string, groupId?: string): Observable<LightUserRepresentation[]> {
         let option: any = {filter: filter};
         if (groupId) {
             option.groupId = groupId;
         }
         return Observable.fromPromise(this.usersWorkflowApi.getUsers(option))
-            .switchMap((response: any) => <GroupUserModel[]> response.data || [])
+            .switchMap((response: any) => <LightUserRepresentation[]> response.data || [])
             .map((user: any) => {
                     user.userImage = this.getUserProfileImageApi(user.id);
                     return Observable.of(user);
                 })
             .combineAll()
+            .defaultIfEmpty([])
             .catch(err => this.handleError(err));
     }
 

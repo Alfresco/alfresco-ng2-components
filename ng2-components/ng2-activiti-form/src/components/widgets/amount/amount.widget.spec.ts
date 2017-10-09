@@ -33,7 +33,7 @@ describe('AmountWidgetComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
+                CoreModule,
                 MdInputModule
             ],
             declarations: [

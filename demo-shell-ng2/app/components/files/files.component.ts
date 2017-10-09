@@ -27,25 +27,22 @@ import {
 import { DataColumn, DataRow } from 'ng2-alfresco-datatable';
 import { DocumentListComponent, PermissionStyleModel } from 'ng2-alfresco-documentlist';
 
-import { ViewerService } from 'ng2-alfresco-viewer';
+const DEFAULT_FOLDER_TO_SHOW = '-my-';
 
 @Component({
     selector: 'adf-files-component',
     templateUrl: './files.component.html',
-    styleUrls: ['./files.component.css']
+    styleUrls: ['./files.component.scss']
 })
 export class FilesComponent implements OnInit {
     // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
-    currentFolderId: string = '-my-';
+    currentFolderId: string = DEFAULT_FOLDER_TO_SHOW;
 
     errorMessage: string = null;
     fileNodeId: any;
     showViewer: boolean = false;
 
     toolbarColor = 'default';
-    useDropdownBreadcrumb = false;
-    useViewerDialog = true;
-    useInlineViewer = false;
 
     selectionModes = [
         { value: 'none', viewValue: 'None' },
@@ -61,9 +58,6 @@ export class FilesComponent implements OnInit {
 
     @Input()
     multipleFileUpload: boolean = false;
-
-    @Input()
-    disableWithNoPermission: boolean = false;
 
     @Input()
     folderUpload: boolean = false;
@@ -92,31 +86,19 @@ export class FilesComponent implements OnInit {
                 private contentService: AlfrescoContentService,
                 private dialog: MdDialog,
                 private translateService: AlfrescoTranslationService,
-                private viewerService: ViewerService,
                 private router: Router,
                 @Optional() private route: ActivatedRoute) {
     }
 
     showFile(event) {
-        if (this.useViewerDialog) {
-            if (event.value.entry.isFile) {
-                this.viewerService
-                    .showViewerForNode(event.value.entry)
-                    .then(result => {
-                        console.log(result);
-                    });
-            }
-        } else {
-            if (event.value.entry.isFile) {
-                this.fileNodeId = event.value.entry.id;
-                this.showViewer = true;
-            } else {
-                this.showViewer = false;
-            }
+        const entry = event.value.entry;
+        if (entry && entry.isFile) {
+            this.router.navigate(['/files', entry.id, 'view']);
         }
     }
 
     onFolderChange($event) {
+        this.currentFolderId = $event.value.id;
         this.router.navigate(['/files', $event.value.id]);
     }
 
@@ -136,7 +118,7 @@ export class FilesComponent implements OnInit {
             });
         }
 
-        this.uploadService.fileUploadComplete.debounceTime(300).subscribe(value => this.onFileUploadEvent(value));
+        this.uploadService.fileUploadComplete.asObservable().debounceTime(300).subscribe(value => this.onFileUploadEvent(value));
         this.uploadService.fileUploadDeleted.subscribe((value) => this.onFileUploadEvent(value));
         this.contentService.folderCreated.subscribe(value => this.onFolderCreated(value));
 
@@ -223,7 +205,11 @@ export class FilesComponent implements OnInit {
     }
 
     getSiteContent(site: SiteModel) {
-        this.currentFolderId = site && site.guid ? site.guid : '-my-';
+        this.currentFolderId = site && site.guid ? site.guid : DEFAULT_FOLDER_TO_SHOW;
+    }
+
+    getDocumentListCurrentFolderId() {
+        return this.documentList.currentFolderId || DEFAULT_FOLDER_TO_SHOW;
     }
 
     hasSelection(selection: Array<MinimalNodeEntity>): boolean {

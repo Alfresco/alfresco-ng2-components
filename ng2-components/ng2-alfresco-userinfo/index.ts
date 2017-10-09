@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { MaterialModule } from './src/material.module';
 
@@ -59,13 +59,7 @@ export const USER_INFO_PROVIDERS: any[] = [
         ...USER_INFO_DIRECTIVES
     ]
 })
-export class UserInfoComponentModule {
-    static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: UserInfoComponentModule,
-            providers: [
-                ...USER_INFO_PROVIDERS
-            ]
-        };
-    }
-}
+export class UserInfoModule {}
+
+/** @deprecated in 1.9.0 */
+export class UserInfoComponentModule {}

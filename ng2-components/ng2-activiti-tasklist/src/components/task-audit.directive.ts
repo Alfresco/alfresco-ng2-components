@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Directive, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ContentService } from 'ng2-alfresco-core';
 import { TaskListService } from './../services/tasklist.service';
 
@@ -29,7 +29,7 @@ const PDF_FORMAT: string = 'pdf';
         '(click)': 'onClickAudit()'
     }
 })
-export class TaskAuditDirective implements OnInit, OnChanges {
+export class TaskAuditDirective implements OnChanges {
 
     @Input('task-id')
     taskId: string;
@@ -60,9 +60,6 @@ export class TaskAuditDirective implements OnInit, OnChanges {
                 private taskListService: TaskListService) {
     }
 
-    ngOnInit() {
-        console.log('OnInit');
-    }
     ngOnChanges(changes: SimpleChanges): void {
         if (!this.isValidType()) {
             this.setDefaultFormatType();

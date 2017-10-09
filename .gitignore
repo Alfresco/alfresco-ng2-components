@@ -17,3 +17,5 @@ src/environments/
 .happypack/
 .happypack/
 .history
+package-lock.*
+/ng2-components/ng2-alfresco-core/prebuilt-themes/

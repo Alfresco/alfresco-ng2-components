@@ -31,15 +31,18 @@ import { SearchModule } from 'ng2-alfresco-search';
 import { SocialModule } from 'ng2-alfresco-social';
 import { TagModule } from 'ng2-alfresco-tag';
 import { UploadModule } from 'ng2-alfresco-upload';
-import { UserInfoComponentModule } from 'ng2-alfresco-userinfo';
+import { UserInfoModule } from 'ng2-alfresco-userinfo';
 import { ViewerModule } from 'ng2-alfresco-viewer';
 import { WebScriptModule } from 'ng2-alfresco-webscript';
 
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { Editor3DModule } from 'ng2-3d-editor';
 import { ChartsModule } from 'ng2-charts';
 import { AppComponent } from './app.component';
 import { routing } from './app.routes';
 import { CustomEditorsModule } from './components/activiti/custom-editor/custom-editor.component';
+import { AppLayoutComponent } from './components/app-layout/app-layout.component';
+import { FileViewComponent } from './components/file-view/file-view.component';
 import { FormListDemoComponent } from './components/form/form-list-demo.component';
 import { ThemePickerModule } from './components/theme-picker/theme-picker';
 import { MaterialModule } from './material.module';
@@ -69,38 +72,32 @@ import {
     WebscriptComponent
 } from './components/index';
 
-let appConfigFile = 'app.config-dev.json';
-if (process.env.ENV === 'production') {
-    appConfigFile = 'app.config-prod.json';
-}
-
 @NgModule({
     imports: [
         BrowserModule,
         routing,
-        CoreModule.forRoot({
-            appConfigFile: appConfigFile
-        }),
+        CoreModule,
         MaterialModule,
-        LoginModule.forRoot(),
-        SearchModule.forRoot(),
-        DataTableModule.forRoot(),
-        DocumentListModule.forRoot(),
-        UploadModule.forRoot(),
-        TagModule.forRoot(),
-        SocialModule.forRoot(),
-        WebScriptModule.forRoot(),
-        ViewerModule.forRoot(),
-        ActivitiFormModule.forRoot(),
-        ActivitiTaskListModule.forRoot(),
-        ActivitiProcessListModule.forRoot(),
-        UserInfoComponentModule.forRoot(),
-        AnalyticsModule.forRoot(),
-        DiagramsModule.forRoot(),
+        LoginModule,
+        SearchModule,
+        DataTableModule,
+        DocumentListModule,
+        UploadModule,
+        TagModule,
+        SocialModule,
+        WebScriptModule,
+        ViewerModule,
+        ActivitiFormModule,
+        ActivitiTaskListModule,
+        ActivitiProcessListModule,
+        UserInfoModule,
+        AnalyticsModule,
+        DiagramsModule,
         CustomEditorsModule,
-        Editor3DModule.forRoot(),
+        Editor3DModule,
         ChartsModule,
-        ThemePickerModule
+        ThemePickerModule,
+        FlexLayoutModule
     ],
     declarations: [
         AppComponent,
@@ -124,7 +121,9 @@ if (process.env.ENV === 'production') {
         SettingsComponent,
         FormDemoComponent,
         FormListDemoComponent,
-        CustomSourcesComponent
+        CustomSourcesComponent,
+        FileViewComponent,
+        AppLayoutComponent
     ],
     providers: [
         { provide: AppConfigService, useClass: DebugAppConfigService },

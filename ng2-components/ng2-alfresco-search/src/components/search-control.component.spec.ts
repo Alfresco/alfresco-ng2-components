@@ -18,7 +18,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ThumbnailService } from 'ng2-alfresco-core';
 import { AlfrescoTranslationService, CoreModule, SearchService } from 'ng2-alfresco-core';
-import { result } from './../assets/search.component.mock';
+import { noResult, results } from './../assets/search.component.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
 import { SearchAutocompleteComponent } from './search-autocomplete.component';
 import { SearchControlComponent } from './search-control.component';
@@ -27,14 +27,12 @@ describe('SearchControlComponent', () => {
 
     let fixture: ComponentFixture<SearchControlComponent>;
     let component: SearchControlComponent, element: HTMLElement;
-    let componentHandler;
+    let searchService: SearchService;
 
     beforeEach(async(() => {
-        componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
-        window['componentHandler'] = componentHandler;
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule
             ],
             declarations: [
                 SearchControlComponent,
@@ -47,6 +45,7 @@ describe('SearchControlComponent', () => {
             ]
         }).compileComponents().then(() => {
             fixture = TestBed.createComponent(SearchControlComponent);
+            searchService = TestBed.get(SearchService);
             component = fixture.componentInstance;
             element = fixture.nativeElement;
         });
@@ -104,7 +103,28 @@ describe('SearchControlComponent', () => {
         fixture.detectChanges();
     });
 
-    describe('Component rendering', () => {
+    describe('expandable option false', () => {
+
+        beforeEach(() => {
+            component.expandable = false;
+        });
+
+        afterEach(() => {
+            component.expandable = true;
+        });
+
+        it('search button should be hide', () => {
+            let searchButton: any = element.querySelector('#adf-search-button');
+            expect(searchButton).toBe(null);
+        });
+
+        it('should not have animation', () => {
+            component.ngOnInit();
+            expect(component.subscriptAnimationState).toBe('no-animation');
+        });
+    });
+
+    describe('component rendering', () => {
 
         it('should display a text input field by default', () => {
             fixture.detectChanges();
@@ -128,25 +148,9 @@ describe('SearchControlComponent', () => {
             fixture.detectChanges();
             expect(element.querySelectorAll('input[type="text"]')[0].getAttribute('autocomplete')).toBe('on');
         });
-
-        it('should show an expanding control by default', () => {
-            fixture.detectChanges();
-            expect(element.querySelectorAll('div.mdl-textfield--expandable').length).toBe(1);
-            expect(element.querySelectorAll('div.mdl-textfield__expandable-holder').length).toBe(1);
-            expect(element.querySelectorAll('label.mdl-button--icon').length).toBe(1);
-        });
-
-        it('should show a normal non-expanding control when configured', () => {
-            fixture.detectChanges();
-            fixture.componentInstance.expandable = false;
-            fixture.detectChanges();
-            expect(element.querySelectorAll('div.mdl-textfield--expandable').length).toBe(0);
-            expect(element.querySelectorAll('div.mdl-textfield__expandable-holder').length).toBe(0);
-            expect(element.querySelectorAll('label.mdl-button--icon').length).toBe(0);
-        });
     });
 
-    describe('Find as you type', () => {
+    describe('autocomplete list', () => {
 
         let inputEl: HTMLInputElement;
 
@@ -154,90 +158,105 @@ describe('SearchControlComponent', () => {
             inputEl = element.querySelector('input');
         });
 
-        it('should display a find-as-you-type control by default', () => {
+        it('should display a autocomplete list control by default', () => {
             fixture.detectChanges();
             let autocomplete: Element = element.querySelector('adf-search-autocomplete');
             expect(autocomplete).not.toBeNull();
         });
 
-        it('should make find-as-you-type control hidden initially', () => {
+        it('should make autocomplete list control hidden initially', () => {
             fixture.detectChanges();
-            let autocomplete: Element = element.querySelector('adf-search-autocomplete');
-            expect(autocomplete.classList.contains('active')).toBe(false);
+            expect(component.liveSearchComponent.panelAnimationState).toBe('void');
         });
 
-        it('should make find-as-you-type control visible when search box has focus', (done) => {
+        it('should make autocomplete list control visible when search box has focus and there is a search result', (done) => {
+            spyOn(searchService, 'getQueryNodesPromise')
+                .and.returnValue(Promise.resolve(results));
+
+            component.liveSearchTerm = 'test';
+
             fixture.detectChanges();
             inputEl.dispatchEvent(new FocusEvent('focus'));
-            window.setTimeout(() => { // wait for debounce() to complete
+            window.setTimeout(() => {
                 fixture.detectChanges();
-                let autocomplete: Element = element.querySelector('adf-search-autocomplete');
-                expect(autocomplete.classList.contains('active')).toBe(true);
+                expect(component.liveSearchComponent.panelAnimationState).not.toBe('void');
+                let resultElement: Element = element.querySelector('#adf-search-results');
+                expect(resultElement).not.toBe(null);
                 done();
             }, 100);
         });
 
-        it('should hide find-as-you-type results when the search box loses focus', (done) => {
+        it('should show autocomplete list noe results cwhen search box has focus and there is search result with length 0', (done) => {
+            spyOn(searchService, 'getQueryNodesPromise')
+                .and.returnValue(Promise.resolve(noResult));
+
+            component.liveSearchTerm = 'test';
+
+            fixture.detectChanges();
+            inputEl.dispatchEvent(new FocusEvent('focus'));
+            window.setTimeout(() => {
+                fixture.detectChanges();
+                expect(component.liveSearchComponent.panelAnimationState).not.toBe('void');
+                let noResultElement: Element = element.querySelector('#search_no_result');
+                expect(noResultElement).not.toBe(null);
+                done();
+            }, 100);
+        });
+
+        it('should hide autocomplete list results when the search box loses focus', (done) => {
+            spyOn(searchService, 'getQueryNodesPromise')
+                .and.returnValue(Promise.resolve(results));
+
+            component.liveSearchTerm = 'test';
+
             fixture.detectChanges();
             inputEl.dispatchEvent(new FocusEvent('focus'));
             inputEl.dispatchEvent(new FocusEvent('blur'));
             window.setTimeout(() => {
                 fixture.detectChanges();
-                let autocomplete: Element = element.querySelector('adf-search-autocomplete');
-                expect(autocomplete.classList.contains('active')).toBe(false);
+                expect(component.liveSearchComponent.panelAnimationState).toBe('void');
                 done();
             }, 100);
         });
 
-        it('should keep find-as-you-type control visible when user tabs into results', (done) => {
-            let searchService = TestBed.get(SearchService);
+        it('should keep autocomplete list control visible when user tabs into results', (done) => {
             spyOn(searchService, 'getQueryNodesPromise')
-                .and.returnValue(Promise.resolve(result));
+                .and.returnValue(Promise.resolve(results));
+
+            component.liveSearchTerm = 'test';
 
             fixture.detectChanges();
             inputEl.dispatchEvent(new FocusEvent('focus'));
             fixture.detectChanges();
-            inputEl.dispatchEvent(new FocusEvent('blur'));
             component.onAutoCompleteFocus(new FocusEvent('focus'));
-            window.setTimeout(() => { // wait for debounce() to complete
+            window.setTimeout(() => {
                 fixture.detectChanges();
-                let autocomplete: Element = element.querySelector('adf-search-autocomplete');
-                expect(autocomplete.classList.contains('active')).toBe(true);
+                expect(component.liveSearchComponent.panelAnimationState).not.toBe('void');
                 done();
             }, 100);
         });
 
-        it('should hide find-as-you-type results when escape key pressed', () => {
+        it('should hide autocomplete list results when escape key pressed', () => {
+            spyOn(searchService, 'getQueryNodesPromise')
+                .and.returnValue(Promise.resolve(results));
+
+            component.liveSearchTerm = 'test';
+
             fixture.detectChanges();
             inputEl.dispatchEvent(new Event('focus'));
             inputEl.dispatchEvent(new KeyboardEvent('keyup', {
                 key: 'Escape'
             }));
             fixture.detectChanges();
-            let autocomplete: Element = element.querySelector('adf-search-autocomplete');
-            expect(autocomplete.classList.contains('active')).toBe(false);
+            expect(component.liveSearchComponent.panelAnimationState).toBe('void');
         });
 
-        it('should make find-as-you-type control visible again when down arrow is pressed', () => {
-            fixture.detectChanges();
-            inputEl.dispatchEvent(new Event('focus'));
-            inputEl.dispatchEvent(new KeyboardEvent('keyup', {
-                key: 'Escape'
-            }));
-            inputEl.dispatchEvent(new KeyboardEvent('keyup', {
-                key: 'ArrowDown'
-            }));
-            fixture.detectChanges();
-            let autocomplete: Element = element.querySelector('adf-search-autocomplete');
-            expect(autocomplete.classList.contains('active')).toBe(true);
-        });
-
-        it('should select the first result in find-as-you-type when down arrow is pressed and FAYT is visible', (done) => {
+        it('should select the first result in autocomplete list when down arrow is pressed and autocomplete list is visible', (done) => {
             fixture.detectChanges();
             spyOn(component.liveSearchComponent, 'focusResult');
             fixture.detectChanges();
             inputEl.dispatchEvent(new Event('focus'));
-            window.setTimeout(() => { // wait for debounce() to complete
+            window.setTimeout(() => {
                 fixture.detectChanges();
                 inputEl.dispatchEvent(new KeyboardEvent('keyup', {
                     key: 'ArrowDown'
@@ -248,27 +267,23 @@ describe('SearchControlComponent', () => {
             }, 100);
         });
 
-        it('should focus input element when find-as-you-type returns control', () => {
+        it('should focus input element when autocomplete list returns control', () => {
             fixture.detectChanges();
             spyOn(inputEl, 'focus');
             fixture.detectChanges();
-            component.onAutoCompleteReturn(new KeyboardEvent('keyup', {
-                key: 'ArrowUp'
-            }));
+            component.onAutoCompleteReturn();
             expect(inputEl.focus).toHaveBeenCalled();
         });
 
-        it('should focus input element when find-as-you-type is cancelled', () => {
+        it('should focus input element when autocomplete list is cancelled', () => {
             fixture.detectChanges();
             spyOn(inputEl, 'focus');
             fixture.detectChanges();
-            component.onAutoCompleteCancel(new KeyboardEvent('keyup', {
-                key: 'ArrowUp'
-            }));
+            component.onAutoCompleteCancel();
             expect(inputEl.focus).toHaveBeenCalled();
         });
 
-        it('should NOT display a find-as-you-type control when configured not to', () => {
+        it('should NOT display a autocomplete list control when configured not to', () => {
             fixture.componentInstance.liveSearchEnabled = false;
             fixture.detectChanges();
             let autocomplete: Element = element.querySelector('adf-search-autocomplete');
@@ -310,45 +325,70 @@ describe('SearchControlComponent', () => {
 
     });
 
-    describe('component focus', () => {
+    describe('search button', () => {
 
-        it('should fire an event when the search box receives focus', (done) => {
-            spyOn(component.expand, 'emit');
-            let inputEl: HTMLElement = element.querySelector('input');
-            inputEl.dispatchEvent(new FocusEvent('focus'));
-            window.setTimeout(() => {
-                expect(component.expand.emit).toHaveBeenCalledWith({
-                    expanded: true
-                });
+        it('click on the search button should close the input box when is open', (done) => {
+            fixture.detectChanges();
+            component.subscriptAnimationState = 'active';
+
+            let searchButton: any = element.querySelector('#adf-search-button');
+            searchButton.click();
+
+            setTimeout(() => {
+                expect(component.subscriptAnimationState).toBe('inactive');
                 done();
-            }, 100);
+            }, 500);
         });
 
-        it('should fire an event when the search box loses focus', (done) => {
-            spyOn(component.expand, 'emit');
-            let inputEl: HTMLElement = element.querySelector('input');
-            inputEl.dispatchEvent(new FocusEvent('blur'));
-            window.setTimeout(() => {
-                expect(component.expand.emit).toHaveBeenCalledWith({
-                    expanded: false
-                });
+        it('click on the search button should not trigger the search when you click on it to close the search bar', (done) => {
+            spyOn(searchService, 'getQueryNodesPromise')
+                .and.returnValue(Promise.resolve(results));
+
+            component.liveSearchTerm = 'test';
+
+            fixture.detectChanges();
+            component.subscriptAnimationState = 'active';
+
+            let searchButton: any = element.querySelector('#adf-search-button');
+            searchButton.click();
+
+            setTimeout(() => {
+                fixture.detectChanges();
+                expect(component.liveSearchComponent.panelAnimationState).not.toBe('void');
+                let resultElement: Element = element.querySelector('#adf-search-results');
+                expect(resultElement).toBe(null);
                 done();
-            }, 100);
+                done();
+            }, 500);
         });
 
-        it('should NOT fire an event when the search box receives/loses focus but the component is not expandable',
-            (done) => {
-                spyOn(component.expand, 'emit');
-                component.expandable = false;
-                let inputEl: HTMLElement = element.querySelector('input');
-                inputEl.dispatchEvent(new FocusEvent('focus'));
-                inputEl.dispatchEvent(new FocusEvent('blur'));
-                window.setTimeout(() => {
-                    expect(component.expand.emit).not.toHaveBeenCalled();
-                    done();
-                }, 100);
-            });
+        it('click on the search button should open the input box when is close', (done) => {
+            fixture.detectChanges();
+            component.subscriptAnimationState = 'inactive';
 
+            let searchButton: any = element.querySelector('#adf-search-button');
+            searchButton.click();
+
+            setTimeout(() => {
+                expect(component.subscriptAnimationState).toBe('active');
+                done();
+            }, 300);
+        });
+
+        it('Search button should not change the input state too often', (done) => {
+            fixture.detectChanges();
+            component.subscriptAnimationState = 'active';
+
+            let searchButton: any = element.querySelector('#adf-search-button');
+            searchButton.click();
+            searchButton.click();
+
+            setTimeout(() => {
+                expect(component.subscriptAnimationState).toBe('inactive');
+                done();
+            }, 400);
+
+        });
     });
 
     describe('file preview', () => {
@@ -363,13 +403,17 @@ describe('SearchControlComponent', () => {
             });
         });
 
-        it('should set deactivate the search after file/folder is clicked', () => {
-            component.searchActive = true;
+        it('should set deactivate the search after file/folder is clicked', (done) => {
+            component.subscriptAnimationState = 'active';
             component.onFileClicked({
                 value: 'node12345'
             });
 
-            expect(component.searchActive).toBe(false);
+            setTimeout(() => {
+                expect(component.subscriptAnimationState).toBe('inactive');
+                done();
+            }, 300);
+
         });
 
         it('should NOT reset the search term after file/folder is clicked', () => {

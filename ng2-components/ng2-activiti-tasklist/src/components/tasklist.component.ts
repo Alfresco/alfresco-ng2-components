@@ -62,8 +62,17 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
     @Input()
     data: DataTableAdapter;
 
+    @Input()
+    selectionMode: string = 'none'; // none|single|multiple
+
+    @Input()
+    multiselect: boolean = false;
+
     @Output()
     rowClick: EventEmitter<string> = new EventEmitter<string>();
+
+    @Output()
+    rowsSelected: EventEmitter<any[]> = new EventEmitter<any[]>();
 
     @Output()
     onSuccess: EventEmitter<any> = new EventEmitter<any>();
@@ -72,6 +81,7 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
     onError: EventEmitter<any> = new EventEmitter<any>();
 
     currentInstanceId: string;
+    selectedInstances: any[];
 
     @Input()
     page: number = 0;
@@ -90,6 +100,7 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
      * @memberOf TaskListComponent
      */
     hasCustomDataSource: boolean = false;
+    isStreamLoaded = false;
 
     private defaultSchemaColumn: DataColumn[] = [
         { type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true },
@@ -99,21 +110,28 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
     constructor(private taskListService: TaskListService) {
     }
 
+    initStream() {
+        if (!this.isStreamLoaded) {
+            this.isStreamLoaded = true;
+            this.taskListService.tasksList$.subscribe(
+                (tasks) => {
+                    let instancesRow = this.createDataRow(tasks.data);
+                    this.renderInstances(instancesRow);
+                    this.selectTask(this.landingTaskId);
+                    this.onSuccess.emit(tasks);
+                    this.isLoading = false;
+                }, (error) => {
+                    this.onError.emit(error);
+                    this.isLoading = false;
+                });
+        }
+    }
+
     ngOnInit() {
         if (this.data === undefined) {
             this.data = new ObjectDataTableAdapter();
         }
-        this.taskListService.tasksList$.subscribe(
-            (tasks) => {
-                let instancesRow = this.createDataRow(tasks.data);
-                this.renderInstances(instancesRow);
-                this.selectTask(this.landingTaskId);
-                this.onSuccess.emit(tasks);
-                this.isLoading = false;
-        }, (error) => {
-            this.onError.emit(error);
-            this.isLoading = false;
-        });
+        this.initStream();
     }
 
     ngAfterContentInit() {
@@ -143,6 +161,7 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
     }
 
     ngOnChanges(changes: SimpleChanges) {
+        this.initStream();
         if (this.isPropertyChanged(changes)) {
             this.reload();
         }
@@ -251,14 +270,27 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
             (this.data && this.data.getRows() && this.data.getRows().length === 0);
     }
 
-    /**
-     * Emit the event rowClick passing the current task id when the row is clicked
-     * @param event
-     */
-    onRowClick(event: DataRowEvent) {
-        let item = event;
+    onRowClick(item: DataRowEvent) {
         this.currentInstanceId = item.value.getValue('id');
         this.rowClick.emit(this.currentInstanceId);
+    }
+
+    onRowSelect(event: CustomEvent) {
+        this.selectedInstances = [...event.detail.selection];
+        this.rowsSelected.emit(this.selectedInstances);
+    }
+
+    onRowUnselect(event: CustomEvent) {
+        this.selectedInstances = [...event.detail.selection];
+        this.rowsSelected.emit(this.selectedInstances);
+    }
+
+    onRowKeyUp(event: CustomEvent) {
+        if (event.detail.keyboardEvent.key === 'Enter') {
+            event.preventDefault();
+            this.currentInstanceId = event.detail.row.getValue('id');
+            this.rowClick.emit(this.currentInstanceId);
+        }
     }
 
     /**

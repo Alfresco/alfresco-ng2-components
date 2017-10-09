@@ -29,7 +29,7 @@ describe('ShareDataTableAdapter', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule
             ],
             providers: [
                 DocumentListService
@@ -352,7 +352,7 @@ describe('ShareDataRow', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule
             ],
             providers: [
                 DocumentListService

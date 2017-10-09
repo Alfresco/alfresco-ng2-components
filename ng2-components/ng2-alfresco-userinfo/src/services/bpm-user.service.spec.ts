@@ -29,7 +29,7 @@ describe('Bpm user service', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule
             ],
             providers: [
                 BpmUserService

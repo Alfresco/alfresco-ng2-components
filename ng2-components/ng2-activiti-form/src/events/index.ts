@@ -20,3 +20,4 @@ export { FormErrorEvent } from './form-error.event';
 export { FormFieldEvent } from './form-field.event';
 export { ValidateFormFieldEvent } from './validate-form-field.event';
 export { ValidateFormEvent } from './validate-form.event';
+export { ValidateDynamicTableRowEvent } from './validate-dynamic-table-row.event';

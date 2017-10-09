@@ -3,6 +3,8 @@
     $accent: map-get($theme, accent);
     $warn: map-get($theme, warn);
     $background: map-get($theme, background);
+    $foreground: map-get($theme, foreground);
+    $text-color-primary: mat-color($foreground, text);
 
     .adf-login-content {
         display: -webkit-flex;
@@ -61,6 +63,10 @@
             .adf-login-card-wide {
                 width: calc(100% - 32px);
             }
+        }
+
+        .adf-error-container {
+            height: 45px;
         }
 
         .adf-error-message {
@@ -191,16 +197,7 @@
         }
 
         .mat-input-container .adf-login-password-icon.mat-icon {
-            font-size: 24px;
-            cursor: pointer;
-            user-select: none;
-            -moz-user-select: none;
-            -webkit-user-select: none;
-            -ms-user-select: none;
-            position: relative;
-            top: -6px;
-            height: 20px;
-            opacity: 0.54;
+            color: $text-color-primary;
         }
 
         .adf-login__field .mat-input-wrapper {
@@ -209,7 +206,8 @@
         }
 
         .adf-login__field input:-webkit-autofill {
-            -webkit-box-shadow: 0 0 0px 1000px white inset;
+            -webkit-box-shadow: 0 0 0px 1000px mat-color($background, dialog) inset;
+            -webkit-text-fill-color: $text-color-primary !important;
         }
 
         .adf-login-validation {
@@ -247,6 +245,10 @@
             margin-left: auto;
             margin-right: auto;
             padding-bottom: 18px;
+        }
+
+        .adf-login-rememberme {
+            color: $text-color-primary !important;
         }
 
         .adf-login-action-container {

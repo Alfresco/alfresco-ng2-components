@@ -1,26 +1,26 @@
 <div  *ngIf="showRefreshButton" class="process-tasks-refresh" >
-    <button (click)="onRefreshClicked()" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-        <i class="material-icons">refresh</i>
+    <button md-icon-button (click)="onRefreshClicked()">
+        <md-icon class="md-24" aria-label="Refresh">refresh</md-icon>
     </button>
 </div>
 
 <!-- ACTIVE FORM -->
 
-<span class="activiti-label mdl-badge"
-      [attr.data-badge]="activeTasks?.length">{{ 'DETAILS.LABELS.TASKS_ACTIVE'|translate }}</span>
+<md-chip-list>
+    <span class="adf-chip-label">{{ 'DETAILS.LABELS.TASKS_ACTIVE'|translate }}</span>
+    <md-chip class="adf-process-badge" color="accent" selected="true">{{activeTasks?.length}}</md-chip>
+</md-chip-list>
 
 <div class="menu-container" *ngIf="activeTasks?.length > 0" data-automation-id="active-tasks">
-    <ul class='mdl-list'>
-        <li class="mdl-list__item mdl-list__item--two-line process-tasks__task-item" *ngFor="let task of activeTasks">
-            <span class="mdl-list__item-primary-content" (click)="clickTask($event, task)">
-                <i class="material-icons mdl-list__item-icon">assignment</i>
-                <span>{{task.name || 'Nameless task'}}</span>
-                <span class="mdl-list__item-sub-title">
+    <md-list>
+        <md-list-item class="process-tasks__task-item" *ngFor="let task of activeTasks" (click)="clickTask($event, task)">
+                <md-icon md-list-icon>assignment</md-icon>
+                <h3 md-line>{{task.name || 'Nameless task'}}</h3>
+                <span md-line>
                     {{ 'DETAILS.LABELS.TASK_SUBTITLE' | translate:{user: getUserFullName(task.assignee), created: getFormatDate(task.created, 'mediumDate') } }}
                 </span>
-            </span>
-        </li>
-    </ul>
+        </md-list-item>
+    </md-list>
 </div>
 
 <!-- START FORM -->
@@ -34,52 +34,52 @@
 
     <!--IF START TASK COMPLETED -->
     <div class="menu-container">
-        <ul class='mdl-list'>
-            <li class="mdl-list__item mdl-list__item--two-line process-tasks__task-item">
-                <span class="mdl-list__item-primary-content" (click)="clickStartTask($event)">
-                    <i class="material-icons mdl-list__item-icon">assignment</i>
-                    <span>{{ 'DETAILS.LABELS.START_FORM'|translate }}</span>
-                    <span class="mdl-list__item-sub-title">
-                        {{ 'DETAILS.LABELS.TASK_SUBTITLE' | translate:{user:getUserFullName(processInstanceDetails.startedBy), created: getFormatDate(processInstanceDetails.started, 'mediumDate') } }}
-                    </span>
+        <md-list>
+            <md-list-item class="process-tasks__task-item" (click)="clickStartTask($event)">
+                <md-icon md-list-icon>assignment</md-icon>
+                <h3 md-line>{{ 'DETAILS.LABELS.START_FORM'|translate }}</h3>
+                <span md-line>
+                    {{ 'DETAILS.LABELS.TASK_SUBTITLE' | translate:{user:getUserFullName(processInstanceDetails.startedBy), created: getFormatDate(processInstanceDetails.started, 'mediumDate') } }}
                 </span>
-            </li>
-        </ul>
+            </md-list-item>
+        </md-list>
     </div>
 
 </div>
 
 <!-- COMPLETED FORM -->
-<span class="activiti-label mdl-badge"
-      [attr.data-badge]="completedTasks?.length">{{ 'DETAILS.LABELS.TASKS_COMPLETED'|translate }}</span>
+<md-chip-list>
+        <span class="adf-chip-label">{{ 'DETAILS.LABELS.TASKS_COMPLETED'|translate }}</span>
+        <md-chip class="adf-process-badge" color="accent" selected="true">{{completedTasks?.length}}</md-chip>
+</md-chip-list>
 
 <div class="menu-container" *ngIf="completedTasks?.length > 0" data-automation-id="completed-tasks">
-    <ul class='mdl-list'>
-        <li class="mdl-list__item mdl-list__item--two-line process-tasks__task-item" *ngFor="let task of completedTasks">
-            <span class="mdl-list__item-primary-content" (click)="clickTask($event, task)">
-                <i class="material-icons mdl-list__item-icon">assignment</i>
-                <span>{{task.name || 'Nameless task'}}</span>
-                <span class="mdl-list__item-sub-title">
-                    {{ 'DETAILS.LABELS.TASK_SUBTITLE' | translate:{user:getUserFullName(task.assignee), created: getFormatDate(task.created, 'mediumDate') } }}
-                </span>
+    <md-list>
+        <md-list-item class="process-tasks__task-item" *ngFor="let task of completedTasks" (click)="clickTask($event, task)">
+            <md-icon md-list-icon>assignment</md-icon>
+            <h3 md-line>{{task.name || 'Nameless task'}}</h3>
+            <span md-line>
+                {{ 'DETAILS.LABELS.TASK_SUBTITLE' | translate:{user:getUserFullName(task.assignee), created: getFormatDate(task.created, 'mediumDate') } }}
             </span>
-        </li>
-    </ul>
+        </md-list-item>
+    </md-list>
 </div>
 
 <div *ngIf="completedTasks?.length === 0" data-automation-id="completed-tasks-none" class="no-results">
     {{ 'DETAILS.TASKS.NO_COMPLETED' | translate }}
 </div>
 
-<dialog *ngIf="hasStartFormDefined()" class="mdl-dialog task-details-dialog" #startDialog>
-    <h4 class="mdl-dialog__title">{{ 'DETAILS.LABELS.START_FORM'|translate }}</h4>
-    <div class="mdl-dialog__content form__size">
-        <adf-start-form [processId]="processId" [processDefinitionId]="processInstanceDetails?.processDefinitionId"
-                             [showRefreshButton]="false" [readOnlyForm]="true"
-                             (formContentClicked)='onFormContentClick($event)'>
-        </adf-start-form>
+<ng-template *ngIf="hasStartFormDefined()" #startDialog>
+    <div id="adf-start-process-dialog" class="adf-start-process-dialog">
+        <h4 md-dialog-title>{{ 'DETAILS.LABELS.START_FORM'|translate }}</h4>
+        <div md-dialog-content class="adf-start-process-dialog-content">
+            <adf-start-form [processId]="processId"
+                                 [showRefreshButton]="false" [readOnlyForm]="true"
+                                 (formContentClicked)='onFormContentClick($event)'>
+            </adf-start-form>
+        </div>
+        <div md-dialog-actions class="adf-start-process-dialog-actions">
+            <button md-button type="button" (click)="closeSartDialog()">{{ 'DETAILS.TASKS.TASK_CLOSE' | translate }}</button>
+        </div>
     </div>
-    <div class="mdl-dialog__actions">
-        <button type="button" (click)="closeSartDialog()" class="mdl-button close">{{ 'DETAILS.TASKS.TASK_CLOSE' | translate }}</button>
-    </div>
-</dialog>
+</ng-template>

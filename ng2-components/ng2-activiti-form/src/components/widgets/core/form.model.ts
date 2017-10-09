@@ -62,6 +62,7 @@ export class FormModel {
     readonly selectedOutcome: string;
 
     values: FormValues = {};
+    processVariables: any;
 
     readonly json: any;
 
@@ -93,6 +94,8 @@ export class FormModel {
             this.className = json.className || '';
 
             let tabCache: FormWidgetModelCache<TabModel> = {};
+
+            this.processVariables = json.processVariables;
 
             this.tabs = (json.tabs || []).map(t => {
                 let model = new TabModel(this, t);
@@ -161,6 +164,10 @@ export class FormModel {
         }
 
         return result;
+    }
+
+    markAsInvalid() {
+        this._isValid = false;
     }
 
     /**

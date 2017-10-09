@@ -1,8 +1,8 @@
 {
     "PROCESSLIST": {
-        "NONE": "No process instances were found",
-        "SUMMARY": "Found {{total}} process instances",
-        "ERROR": "An error occurred while loading the processes instances: {{errorMessage}}",
+        "NONE": "No process instances found",
+        "SUMMARY": "{{total}} process instances found",
+        "ERROR": "Couldn't load processes instances. Try again or share the following message with your IT Team: {{errorMessage}}",
         "COLUMN": {
             "NAME": "Name"
         }
@@ -27,20 +27,20 @@
             "CANCEL": "Cancel Process",
             "CLOSE": "Close",
             "SHOW_DIAGRAM": "Show Diagram",
-            "DRAG-ATTACHMENT": "Drop Files Here...",
+            "DRAG-ATTACHMENT": "Drop files to upload",
             "UPLOAD-ATTACHMENT": "Upload Attachment"
         },
         "MESSAGES": {
             "NONE": "No process details found."
         },
         "TASKS": {
-            "NO_ACTIVE": "No tasks are currently active",
-            "NO_COMPLETED": "No tasks have been completed yet",
+            "NO_ACTIVE": "No currently active tasks",
+            "NO_COMPLETED": "No tasks completed yet",
             "TASK_DETAILS": "Task details",
             "TASK_CLOSE": "Close"
         },
         "COMMENTS": {
-            "NONE": "No comments.",
+            "NONE": "No comments",
             "BUTTON": {
                 "ADD": "Add a comment"
             },
@@ -55,19 +55,6 @@
                 }
             }
         },
-        "VARIABLES": {
-            "NONE": "No variables set.",
-            "BUTTON": {
-                "ADD": "Set a variable"
-            },
-            "DIALOG": {
-                "BUTTON": {
-                    "SET": "Set",
-                    "OK": "OK",
-                    "CANCEL": "Cancel",
-                    "CLOSE": "Close"
-                }
-            },
             "ADD_DIALOG": {
                 "TITLE": "Set process variable",
                 "LABEL": {
@@ -80,14 +67,14 @@
                 "TITLE": "Edit process variable"
             },
             "ERROR_DIALOG": {
-                "TITLE": "Sorry, an error occurred",
-                "DESCRIPTION": "Could not perform the requested operation, please check that you have permission."
+                "TITLE": "Couldn't complete that action",
+                "DESCRIPTION": "You might not have the required access level, check with your IT Team."
             }
-        }
     },
+    
     "START_PROCESS": {
         "BUTTON": "Start Process",
-        "NO_PROCESS_DEFINITIONS": "You cannot start a process as there are no process definitions available",
+        "NO_PROCESS_DEFINITIONS": "You can't start a process as there are no process definitions available",
         "FORM": {
             "TITLE": "Start Process",
             "LABEL": {
@@ -101,8 +88,8 @@
             }
         },
         "ERROR": {
-          "LOAD_PROCESS_DEFS": "Could not load process definitions, please check you have access.",
-          "START": "Could not start new process instance, please check you have permission."
+          "LOAD_PROCESS_DEFS": "Couldn't load process definitions, check you have access.",
+          "START": "Couldn't start new process instance, check you have access."
         }
     },
     "PROCESS-ATTACHMENT": {
@@ -110,11 +97,11 @@
             "HEADER": "This list is empty",
             "DRAG-AND-DROP": {
                 "TITLE": "Drag and drop",
-                "SUBTITLE": "any files here to add"
+                "SUBTITLE": "to upload files"
             }
         },
         "EMPTY-LIST": {
-            "HEADER": "No documents are available"
+            "HEADER": "No files are available"
         }
     }
 }

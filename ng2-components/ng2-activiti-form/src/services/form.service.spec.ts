@@ -20,6 +20,7 @@ import { Response, ResponseOptions } from '@angular/http';
 import { AlfrescoApiService, CoreModule, LogService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { FormDefinitionModel } from '../models/form-definition.model';
+import { formModelTabs } from './assets/form.service.mock';
 import { EcmModelService } from './ecm-model.service';
 import { FormService } from './form.service';
 
@@ -511,6 +512,12 @@ describe('Form service', () => {
                 contentType: 'application/json',
                 responseText: JSON.stringify(fakeGroupResponse)
             });
+        });
+
+        it('should parse a Form Definition with tabs', () => {
+            expect(formModelTabs.formDefinition).toBeDefined();
+            const formParsed = service.parseForm(formModelTabs);
+            expect(formParsed).toBeDefined();
         });
 
         it('should create a Form form a Node', (done) => {

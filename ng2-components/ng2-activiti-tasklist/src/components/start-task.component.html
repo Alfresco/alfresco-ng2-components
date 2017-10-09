@@ -30,20 +30,20 @@
                            (focusout)="onDateChanged($event.srcElement.value)"
                            placeholder="{{'START_TASK.FORM.LABEL.DATE'|translate}}"
                            [(ngModel)]="startTaskmodel.dueDate" id="date_id">
-                    <button mdSuffix [mdDatepickerToggle]="taskDatePicker"></button>
+                    <md-datepicker-toggle mdSuffix [for]="taskDatePicker"></md-datepicker-toggle>
                 </md-input-container>
                 <md-datepicker #taskDatePicker [touchUi]="true"
-                               (selectedChanged)="onDateChanged($event)"></md-datepicker>
+                               (onDateChanged)="onDateChanged($event)"></md-datepicker>
                 <div class="adf-error-text-container">
                     <div *ngIf="dateError">
                         <div class="adf-error-text">{{'START_TASK.FORM.DATE.ERROR'|translate}}</div>
-                        <i class="material-icons adf-error-icon">warning</i>
+                        <md-icon class="adf-error-icon">warning</md-icon>
                     </div>
                 </div>
             </md-grid-tile>
             <md-grid-tile>
                 <md-select placeholder="{{'START_TASK.FORM.LABEL.ASSIGNEE'|translate}}" id="assignee_id"
-                           class="adf-start-task-input-container" [(ngModel)]="assigneeId">
+                           class="adf-start-task-input-container adf-md-select" [(ngModel)]="assigneeId">
                     <md-option>{{'START_TASK.FORM.LABEL.NONE'|translate}}</md-option>
 					<span *ngFor="let user of people">
 						<md-option [value]="user.id" *ngIf="!isUserNameEmpty(user)">{{ getDisplayUser(user.firstName,

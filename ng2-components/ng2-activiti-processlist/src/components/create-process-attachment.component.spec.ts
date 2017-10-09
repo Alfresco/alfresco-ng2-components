@@ -52,7 +52,7 @@ describe('Activiti Process Create Attachment', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule
             ],
             declarations: [
                 CreateProcessAttachmentComponent

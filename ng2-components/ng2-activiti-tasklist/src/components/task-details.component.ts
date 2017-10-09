@@ -16,7 +16,6 @@
  */
 
 import { Component,
-    DebugElement,
     EventEmitter,
     Input,
     OnChanges,
@@ -26,14 +25,15 @@ import { Component,
     TemplateRef,
     ViewChild
 } from '@angular/core';
+import { MdDialog, MdDialogRef } from '@angular/material';
 import { ContentLinkModel, FormFieldValidator, FormModel, FormOutcomeEvent } from 'ng2-activiti-form';
 import { AlfrescoAuthenticationService, CardViewUpdateService, ClickNotification, LogService, UpdateNotification } from 'ng2-alfresco-core';
+import { LightUserRepresentation, PeopleProcessService } from 'ng2-alfresco-core';
 import { Observable, Observer } from 'rxjs/Rx';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
-import { User } from '../models/user.model';
-import { PeopleService } from './../services/people.service';
 import { TaskListService } from './../services/tasklist.service';
+import { CommentsComponent } from './comments.component';
 
 declare var require: any;
 
@@ -48,13 +48,13 @@ declare var require: any;
 export class TaskDetailsComponent implements OnInit, OnChanges {
 
     @ViewChild('activiticomments')
-    activiticomments: any;
+    activiticomments: CommentsComponent;
 
     @ViewChild('activitichecklist')
     activitichecklist: any;
 
     @ViewChild('errorDialog')
-    errorDialog: DebugElement;
+    errorDialog: TemplateRef<any>;
 
     @Input()
     debugMode: boolean = false;
@@ -131,21 +131,24 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     taskDetails: TaskDetailsModel;
     taskFormName: string = null;
 
-    taskPeople: User[] = [];
+    taskPeople: LightUserRepresentation[] = [];
 
     noTaskDetailsTemplateComponent: TemplateRef<any>;
 
     showAssignee: boolean = false;
 
-    private peopleSearchObserver: Observer<User[]>;
-    peopleSearch$: Observable<User[]>;
+    private peopleSearchObserver: Observer<LightUserRepresentation[]>;
+    public errorDialogRef: MdDialogRef<TemplateRef<any>>;
+
+    peopleSearch$: Observable<LightUserRepresentation[]>;
 
     constructor(private activitiTaskList: TaskListService,
                 private authService: AlfrescoAuthenticationService,
-                private peopleService: PeopleService,
+                private peopleProcessService: PeopleProcessService,
                 private logService: LogService,
-                private cardViewUpdateService: CardViewUpdateService) {
-        this.peopleSearch$ = new Observable<User[]>(observer => this.peopleSearchObserver = observer).share();
+                private cardViewUpdateService: CardViewUpdateService,
+                private dialog: MdDialog) {
+        this.peopleSearch$ = new Observable<LightUserRepresentation[]>(observer => this.peopleSearchObserver = observer).share();
     }
 
     ngOnInit() {
@@ -205,7 +208,6 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     }
 
     private clickTaskDetails(clickNotification: ClickNotification) {
-        console.log(clickNotification.target);
         if (clickNotification.target.key === 'assignee') {
             this.showAssignee = true;
         }
@@ -232,7 +234,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
                     this.readOnlyForm = this.readOnlyForm ? this.readOnlyForm : !!(endDate && !isNaN(endDate.getTime()));
                     if (this.taskDetails && this.taskDetails.involvedPeople) {
                         this.taskDetails.involvedPeople.forEach((user) => {
-                            this.taskPeople.push(new User(user));
+                            this.taskPeople.push(new LightUserRepresentation(user));
                         });
                     }
                 });
@@ -309,7 +311,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     }
 
     onFormError(error: any): void {
-        this.errorDialog.nativeElement.showModal();
+        this.errorDialogRef = this.dialog.open(this.errorDialog, {width: '500px'});
         this.onError.emit(error);
     }
 
@@ -318,10 +320,10 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     }
 
     closeErrorDialog(): void {
-        this.errorDialog.nativeElement.close();
+        this.dialog.closeAll();
     }
 
-    onClaimTask(taskId: string): void {
+    onClaimAction(taskId: string): void {
         this.loadDetails(taskId);
     }
 
@@ -334,7 +336,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     }
 
     searchUser(searchedWord: string) {
-        this.peopleService.getWorkflowUsers(null, searchedWord)
+        this.peopleProcessService.getWorkflowUsers(null, searchedWord)
             .subscribe((users) => {
                 users = users.filter((user) => user.id !== this.taskDetails.assignee.id);
                 this.peopleSearchObserver.next(users);
@@ -343,10 +345,9 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
     onCloseSearch() {
         this.showAssignee = false;
-        console.log(this.taskDetails.assignee);
     }
 
-    assignTaskToUser(selectedUser: User) {
+    assignTaskToUser(selectedUser: LightUserRepresentation) {
         this.activitiTaskList.assignTask(this.taskDetails.id, selectedUser).subscribe(
             (res: any) => {
                 this.logService.info('Task Assigned to ' + selectedUser.email);
@@ -355,11 +356,15 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
         this.showAssignee = false;
     }
 
-    getTaskHeaderViewClass() {
+    getTaskHeaderViewClass(): string {
         if (this.showAssignee) {
             return 'assign-edit-view';
         } else {
             return 'default-view';
         }
+    }
+
+    isReadOnlyComment(): boolean {
+        return (this.taskDetails && this.taskDetails.isCompleted()) && (this.taskPeople && this.taskPeople.length === 0);
     }
 }

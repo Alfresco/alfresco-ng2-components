@@ -22,13 +22,13 @@
  *
  * @returns {StartTaskModel} .
  */
-import { User } from './user.model';
+import { LightUserRepresentation } from 'ng2-alfresco-core';
 
 export class StartTaskModel {
 
     name: string;
     description: string;
-    assignee: User;
+    assignee: LightUserRepresentation;
     dueDate: any;
     formKey: any;
     category: string;
@@ -36,7 +36,7 @@ export class StartTaskModel {
     constructor(obj?: any) {
         this.name = obj && obj.name || null;
         this.description = obj && obj.description || null;
-        this.assignee = obj && obj.assignee ? new User(obj.assignee) : null;
+        this.assignee = obj && obj.assignee ? new LightUserRepresentation(obj.assignee) : null;
         this.dueDate = obj && obj.dueDate || null;
         this.formKey = obj && obj.formKey || null;
         this.category = obj && obj.category || null;

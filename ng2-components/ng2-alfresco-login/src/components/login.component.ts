@@ -17,6 +17,7 @@
 
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { FormSubmitEvent } from '../models/form-submit-event.model';
 
@@ -58,7 +59,7 @@ export class LoginComponent implements OnInit {
     backgroundImageUrl: string = require('../assets/images/background.svg');
 
     @Input()
-    copyrightText: string = '&#169; 2016 Alfresco Software, Inc. All Rights Reserved.';
+    copyrightText: string = '\u00A9 2016 Alfresco Software, Inc. All Rights Reserved.';
 
     @Input()
     providers: string;
@@ -68,6 +69,9 @@ export class LoginComponent implements OnInit {
 
     @Input()
     disableCsrf: boolean;
+
+    @Input()
+    successRoute: string = null;
 
     @Output()
     onSuccess = new EventEmitter();
@@ -105,7 +109,8 @@ export class LoginComponent implements OnInit {
                 private settingsService: AlfrescoSettingsService,
                 private translateService: AlfrescoTranslationService,
                 private logService: LogService,
-                private elementRef: ElementRef) {
+                private elementRef: ElementRef,
+                private router: Router) {
         this.initFormError();
         this.initFormFieldsMessages();
     }
@@ -179,6 +184,9 @@ export class LoginComponent implements OnInit {
                     this.actualLoginStep = LoginSteps.Welcome;
                     this.success = true;
                     this.onSuccess.emit({token: token, username: values.username, password: values.password});
+                    if (this.successRoute) {
+                        this.router.navigate([this.successRoute]);
+                    }
                 },
                 (err: any) => {
                     this.actualLoginStep = LoginSteps.Landing;
@@ -317,7 +325,7 @@ export class LoginComponent implements OnInit {
 
     private initFormFieldsDefault() {
         this.form = this._fb.group({
-            username: ['', Validators.compose([Validators.required, Validators.minLength(this.minLength)])],
+            username: ['', Validators.required],
             password: ['', Validators.required]
         });
     }

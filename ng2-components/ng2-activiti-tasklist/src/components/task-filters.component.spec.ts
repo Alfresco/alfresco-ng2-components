@@ -17,10 +17,9 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigModule, AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
+import { AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
 
 import { Observable } from 'rxjs/Rx';
-import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
 import { TaskListService } from '../services/tasklist.service';
@@ -70,24 +69,23 @@ describe('TaskFiltersComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
-                AppConfigModule.forRoot('app.config.json', {
-                    bpmHost: 'http://localhost:9876/bpm'
-                })
+                CoreModule
             ],
             declarations: [
                 TaskFiltersComponent
             ],
             providers: [
                 TaskListService,
-                { provide: TranslationService, useClass: TranslationMock },
-                { provide: AppConfigService, useClass: AppConfigServiceMock }
+                { provide: TranslationService, useClass: TranslationMock }
             ]
         }).compileComponents();
 
     }));
 
     beforeEach(() => {
+        let appConfig: AppConfigService = TestBed.get(AppConfigService);
+        appConfig.config.bpmHost = 'http://localhost:9876/bpm';
+
         fixture = TestBed.createComponent(TaskFiltersComponent);
         component = fixture.componentInstance;
 

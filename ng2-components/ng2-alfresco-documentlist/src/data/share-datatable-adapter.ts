@@ -194,7 +194,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         }
     }
 
-    public loadPage(page: NodePaging) {
+    public loadPage(page: NodePaging, merge: boolean = false) {
         this.page = page;
 
         let rows = [];
@@ -225,9 +225,12 @@ export class ShareDataTableAdapter implements DataTableAdapter {
             }
         }
 
-        this.rows = rows;
+        if (merge) {
+            this.rows = this.rows.concat(rows);
+        } else {
+            this.rows = rows;
+        }
     }
-
 }
 
 export class ShareDataRow implements DataRow {

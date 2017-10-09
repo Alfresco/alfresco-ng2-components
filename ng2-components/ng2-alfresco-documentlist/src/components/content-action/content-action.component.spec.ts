@@ -71,7 +71,7 @@ describe('ContentAction', () => {
         documentActions = new DocumentActionsService(nodeActionsService);
         folderActions = new FolderActionsService(nodeActionsService, null, contentService);
 
-        documentList = TestBed.createComponent(DocumentListComponent).componentInstance;
+        documentList = (TestBed.createComponent(DocumentListComponent).componentInstance as DocumentListComponent);
         actionList = new ContentActionListComponent(documentList);
     });
 

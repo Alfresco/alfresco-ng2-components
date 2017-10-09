@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { MaterialModule } from './src/material.module';
@@ -30,10 +30,12 @@ export { DataRowActionEvent, DataRowActionModel } from './src/components/datatab
 
 import { DataTableCellComponent } from './src/components/datatable/datatable-cell.component';
 import { DataTableComponent } from './src/components/datatable/datatable.component';
+import { DateCellComponent } from './src/components/datatable/date-cell.component';
 import { EmptyListBodyDirective,
     EmptyListComponent,
     EmptyListFooterDirective,
     EmptyListHeaderDirective } from './src/components/datatable/empty-list.component';
+import { FileSizeCellComponent } from './src/components/datatable/filesize-cell.component';
 import { LocationCellComponent } from './src/components/datatable/location-cell.component';
 import { LoadingContentTemplateDirective } from './src/directives/loading-template.directive';
 import { NoContentTemplateDirective } from './src/directives/no-content-template.directive';
@@ -46,6 +48,8 @@ export function directives() {
         EmptyListBodyDirective,
         EmptyListFooterDirective,
         DataTableCellComponent,
+        DateCellComponent,
+        FileSizeCellComponent,
         LocationCellComponent,
         NoContentTemplateDirective,
         LoadingContentTemplateDirective
@@ -75,10 +79,4 @@ export function directives() {
         RouterModule
     ]
 })
-export class DataTableModule {
-    static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: DataTableModule
-        };
-    }
-}
+export class DataTableModule {}

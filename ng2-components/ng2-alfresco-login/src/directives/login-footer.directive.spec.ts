@@ -16,10 +16,11 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from 'ng2-alfresco-core';
-import { MaterialModule } from '../material.module';
 
 import { LoginComponent } from '../components/login.component';
+import { MaterialModule } from '../material.module';
 import { LoginFooterDirective } from './login-footer.directive';
 
 describe('LoginFooterDirective', () => {
@@ -29,6 +30,7 @@ describe('LoginFooterDirective', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+                RouterTestingModule,
                 CoreModule,
                 MaterialModule
             ],

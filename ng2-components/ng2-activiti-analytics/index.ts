@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { DiagramsModule } from 'ng2-activiti-diagrams';
 import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 
@@ -75,13 +75,4 @@ export const ANALYTICS_PROVIDERS: any[] = [
         MaterialModule
     ]
 })
-export class AnalyticsModule {
-    static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: AnalyticsModule,
-            providers: [
-                ...ANALYTICS_PROVIDERS
-            ]
-        };
-    }
-}
+export class AnalyticsModule {}

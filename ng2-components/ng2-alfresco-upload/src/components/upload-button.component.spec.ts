@@ -61,7 +61,7 @@ describe('UploadButtonComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule
             ],
             declarations: [
                 UploadButtonComponent

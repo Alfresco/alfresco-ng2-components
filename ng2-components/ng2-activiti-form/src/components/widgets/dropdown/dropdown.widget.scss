@@ -1,18 +1,27 @@
-@import '~ng2-alfresco-core/styles/theming';
 @import '../form';
 
 .adf {
     &-dropdown-widget {
         width: 100%;
-        padding-top: 16px;
-    }
+        margin-top: 13px;
 
-    &-select {
-        width: 100%;
-    }
+        .adf-select{
+            padding-top: 0 !important;
+            width: 100%;
+        }
 
-    &-dropdown-required-message .adf-error-text-container{
-        margin-top: 1px !important;
+        .mat-select-value-text{
+            font-size: 14px;
+        }
+
+        &-select {
+            width: 100%;
+        }
+
+        &-dropdown-required-message .adf-error-text-container{
+            margin-top: 1px !important;
+        }
+
     }
 
 }

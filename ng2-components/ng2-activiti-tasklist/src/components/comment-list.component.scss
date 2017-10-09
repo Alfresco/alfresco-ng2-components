@@ -15,7 +15,6 @@
             width: 30px;
             background-color: mat-color($primary);
             border-radius: 50%;
-            font-family: Muli;
             font-size: 16px;
             color: #fff;
             text-align: center;
@@ -27,7 +26,6 @@
             float: left;
             width: calc(100% - 120px);
             padding: 2px 10px;
-            font-family: Muli;
             font-weight: 600;
             color: #595959;
         }
@@ -36,7 +34,6 @@
             float: left;
             width: calc(100% - 10px);
             padding: 2px 10px;
-            font-family: Muli;
             font-style: italic;
             color: #595959;
             white-space: initial;
@@ -46,7 +43,6 @@
             float: left;
             width: calc(100% - 120px);
             padding: 2px 10px;
-            font-family: Muli;
             font-size: 12px;
             color: #595959;
         }
@@ -57,9 +53,6 @@
         }
 
         &-datatable /deep/ table {
-            thead {
-                display: none;
-            }
             border: none !important;
             tbody td {
                 padding: 0px !important;

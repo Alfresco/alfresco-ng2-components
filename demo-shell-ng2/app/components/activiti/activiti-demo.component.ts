@@ -16,11 +16,14 @@
  */
 
 // tslint:disable-next-line:adf-file-name
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Pagination } from 'alfresco-js-api';
 import { AnalyticsReportListComponent } from 'ng2-activiti-analytics';
-import { FORM_FIELD_VALIDATORS, FormEvent, FormFieldEvent, FormRenderingService, FormService } from 'ng2-activiti-form';
+import {
+    DynamicTableRow, FORM_FIELD_VALIDATORS, FormEvent, FormFieldEvent, FormRenderingService,
+    FormService, ValidateDynamicTableRowEvent
+} from 'ng2-activiti-form';
 import {
     FilterProcessRepresentationModel,
     ProcessFiltersComponent,
@@ -48,15 +51,14 @@ import { Subscription } from 'rxjs/Rx';
 import { /*CustomEditorComponent*/ CustomStencil01 } from './custom-editor/custom-editor.component';
 import { DemoFieldValidator } from './demo-field-validator';
 
-declare var componentHandler;
-
 const currentProcessIdNew = '__NEW__';
 const currentTaskIdNew = '__NEW__';
 
 @Component({
-    selector: 'activiti-demo',
+    selector: 'adf-activiti-demo',
     templateUrl: './activiti-demo.component.html',
-    styleUrls: ['./activiti-demo.component.css']
+    styleUrls: ['./activiti-demo.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
 
@@ -90,7 +92,7 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     fileShowed: boolean = false;
     selectFirstReport: boolean = false;
 
-    private tabs = { tasks : 0 , processes : 1, reports: 2};
+    private tabs = { tasks: 0, processes: 1, reports: 2 };
 
     content: Blob;
     contentName: string;
@@ -99,14 +101,14 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     currentTaskId: string;
     currentProcessInstanceId: string;
 
-    taskSchemaColumns: any [] = [];
+    taskSchemaColumns: any[] = [];
     taskPagination: Pagination = {
         skipCount: 0,
         maxItems: 10,
         totalItems: 0
     };
     taskPage: number = 0;
-    processSchemaColumns: any [] = [];
+    processSchemaColumns: any[] = [];
 
     activeTab: number = this.tabs.tasks; // tasks|processes|reports
 
@@ -159,6 +161,17 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
             console.log(`Field value changed. Form: ${e.form.id}, Field: ${e.field.id}, Value: ${e.field.value}`);
         });
 
+        formService.validateDynamicTableRow.subscribe(
+            (e: ValidateDynamicTableRowEvent) => {
+                const row: DynamicTableRow = e.row;
+                if (row && row.value && row.value.name === 'admin') {
+                    e.summary.isValid = false;
+                    e.summary.text = 'Sorry, wrong value. You cannot use "admin".';
+                    e.preventDefault();
+                }
+            }
+        );
+
         // Uncomment this block to see form event handling in action
         /*
         formService.formEvents.subscribe((event: Event) => {
@@ -199,13 +212,13 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     ngOnInit() {
         this.taskListService.tasksList$.subscribe(
             (tasks) => {
-                this.taskPagination = {count: tasks.data.length, maxItems: this.taskPagination.maxItems, skipCount: this.taskPagination.skipCount, totalItems: tasks.total};
-                console.log({count: tasks.data.length, maxItems: this.taskPagination.maxItems, skipCount: this.taskPagination.skipCount, totalItems: tasks.total});
+                this.taskPagination = { count: tasks.data.length, maxItems: this.taskPagination.maxItems, skipCount: this.taskPagination.skipCount, totalItems: tasks.total };
+                console.log({ count: tasks.data.length, maxItems: this.taskPagination.maxItems, skipCount: this.taskPagination.skipCount, totalItems: tasks.total });
             }, (err) => {
-            console.log('err');
-        });
+                console.log('err' +  err);
+            });
 
-        if (this.router.url.includes('processes') ) {
+        if (this.router.url.includes('processes')) {
             this.activeTab = this.tabs.processes;
         }
         this.sub = this.route.params.subscribe(params => {
@@ -225,6 +238,7 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
 
     ngOnDestroy() {
         this.sub.unsubscribe();
+        this.taskListService.tasksList$.subscribe();
     }
 
     onTaskFilterClick(filter: FilterRepresentationModel): void {
@@ -277,6 +291,16 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
         this.currentTaskId = taskId;
     }
 
+    onTaskRowDblClick(event: CustomEvent) {
+        const taskId = event.detail.value.obj.id;
+        this.currentTaskId = taskId;
+    }
+
+    onProcessRowDblClick(event: CustomEvent) {
+        const processInstanceId = event.detail.value.obj.id;
+        this.currentProcessInstanceId = processInstanceId;
+    }
+
     onProcessRowClick(processInstanceId): void {
         this.currentProcessInstanceId = processInstanceId;
     }
@@ -309,7 +333,7 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     onStartProcessInstance(instance: ProcessInstance): void {
         this.currentProcessInstanceId = instance.id;
         this.activitiStartProcess.reset();
-        this.resetProcessFilters();
+        this.activitiprocessfilter.selectRunningFilter();
     }
 
     onCancelProcessInstance() {
@@ -369,11 +393,6 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     }
 
     ngAfterViewInit() {
-        // workaround for MDL issues with dynamic components
-        if (componentHandler) {
-            componentHandler.upgradeAllRegistered();
-        }
-
         this.loadStencilScriptsInPageFromActiviti();
     }
 
@@ -403,8 +422,10 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
             created: event.value.created
         });
         this.activitifilter.selectFilter(null);
-        this.taskList.setCustomDataSource([processTaskDataRow]);
-        this.taskList.selectTask(taskId);
+        if (this.taskList) {
+            this.taskList.setCustomDataSource([processTaskDataRow]);
+            this.taskList.selectTask(taskId);
+        }
         this.currentTaskId = taskId;
     }
 

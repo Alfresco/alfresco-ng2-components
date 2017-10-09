@@ -52,7 +52,7 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
 
     ngOnInit() {
         if (this.field) {
-            this.content = new DynamicTableModel(this.field);
+            this.content = new DynamicTableModel(this.field, this.formService);
             this.visibilityService.refreshVisibility(this.field.form);
         }
     }

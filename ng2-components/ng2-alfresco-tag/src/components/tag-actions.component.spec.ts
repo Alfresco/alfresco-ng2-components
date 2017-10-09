@@ -17,7 +17,7 @@
 
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigModule, CoreModule } from 'ng2-alfresco-core';
+import { AppConfigService, CoreModule } from 'ng2-alfresco-core';
 import { TagActionsComponent } from '../components/tag-actions.component';
 import { TagService } from '../services/tag.service';
 import { MaterialModule } from './material.module';
@@ -35,10 +35,7 @@ describe('TagActionsComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 MaterialModule,
-                CoreModule.forRoot(),
-                AppConfigModule.forRoot('app.config.json', {
-                    ecmHost: 'http://localhost:9876/ecm'
-                })
+                CoreModule
             ],
             declarations: [
                 TagActionsComponent
@@ -50,6 +47,9 @@ describe('TagActionsComponent', () => {
     }));
 
     beforeEach(() => {
+        let appConfig: AppConfigService = TestBed.get(AppConfigService);
+        appConfig.config.ecmHost = 'http://localhost:9876/ecm';
+
         fixture = TestBed.createComponent(TagActionsComponent);
 
         debug = fixture.debugElement;

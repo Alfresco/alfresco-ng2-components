@@ -39,7 +39,7 @@ describe('WidgetVisibilityService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule
             ],
             providers: [
                 WidgetVisibilityService
@@ -353,14 +353,14 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should be able to retrieve a field value searching in the form', () => {
-            let formValue = service.searchForm(stubFormWithFields, 'FIELD_WITH_CONDITION');
+            let formValue = service.searchValueInForm(stubFormWithFields, 'FIELD_WITH_CONDITION');
 
             expect(formValue).not.toBeNull();
             expect(formValue).toBe('field_with_condition_value');
         });
 
         it('should return empty string if the field value is not in the form', () => {
-            let formValue = service.searchForm(stubFormWithFields, 'FIELD_MYSTERY');
+            let formValue = service.searchValueInForm(stubFormWithFields, 'FIELD_MYSTERY');
 
             expect(formValue).not.toBeUndefined();
             expect(formValue).toBe('');

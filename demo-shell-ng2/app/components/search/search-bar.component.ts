@@ -64,8 +64,4 @@ export class SearchBarComponent {
     onSearchTermChange(event) {
         this.searchTerm = event.value;
     }
-
-    onExpandToggle(event) {
-        this.expand.emit(event);
-    }
 }

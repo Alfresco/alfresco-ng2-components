@@ -16,11 +16,11 @@
  */
 
 import { EventEmitter } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 import { FileModel, FileUploadOptions, FileUploadStatus } from '../models/file.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AlfrescoSettingsService } from './alfresco-settings.service';
-import { AppConfigModule } from './app-config.service';
+import { AppConfigModule, AppConfigService } from './app-config.service';
 import { AuthenticationService } from './authentication.service';
 import { StorageService } from './storage.service';
 import { UploadService } from './upload.service';
@@ -30,15 +30,10 @@ declare let jasmine: any;
 describe('UploadService', () => {
     let service: UploadService;
 
-    beforeEach(() => {
+    beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                AppConfigModule.forRoot('app.config.json', {
-                    ecmHost: 'http://localhost:9876/ecm',
-                    files: {
-                        excluded: ['.DS_Store', 'desktop.ini', '.git', '*.git']
-                    }
-                })
+                AppConfigModule
             ],
             providers: [
                 UploadService,
@@ -47,7 +42,18 @@ describe('UploadService', () => {
                 AuthenticationService,
                 StorageService
             ]
-        });
+        }).compileComponents();
+    }));
+
+    beforeEach(() => {
+        let appConfig: AppConfigService = TestBed.get(AppConfigService);
+        appConfig.config = {
+            ecmHost: 'http://localhost:9876/ecm',
+            files: {
+                excluded: ['.DS_Store', 'desktop.ini', '.git', '*.git']
+            }
+        };
+
         service = TestBed.get(UploadService);
         jasmine.Ajax.install();
     });

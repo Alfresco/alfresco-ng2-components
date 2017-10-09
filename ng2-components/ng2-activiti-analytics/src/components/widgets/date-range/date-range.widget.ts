@@ -47,8 +47,8 @@ export class DateRangeWidgetComponent implements OnInit {
 
     minDate: Moment;
     maxDate: Moment;
-    startDatePicker: Moment;
-    endDatePicker: Moment;
+    startDatePicker: Moment = moment();
+    endDatePicker: Moment = moment();
 
     constructor(public dateAdapter: DateAdapter<Moment>) {
     }

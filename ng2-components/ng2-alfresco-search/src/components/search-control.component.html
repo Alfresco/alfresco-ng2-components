@@ -1,25 +1,29 @@
-<form #f="ngForm" (ngSubmit)="onSearch(f.value)">
-    <div [class]="getTextFieldClassName()">
-        <label *ngIf="expandable" class="mdl-button mdl-js-button mdl-button--icon" for="searchControl">
-            <i mdl-upgrade class="material-icons">search</i>
-        </label>
-        <div [class]="getTextFieldHolderClassName()">
-            <input
-                mdl
-                class="mdl-textfield__input"
-                [type]="inputType"
-                [autocomplete]="getAutoComplete()"
-                data-automation-id="search_input"
-                #searchInput
-                id="searchControl"
-                [formControl]="searchControl"
-                [(ngModel)]="searchTerm"
-                (focus)="onFocus($event)"
-                (blur)="onBlur($event)"
-                (keyup.escape)="onEscape()"
-                (keyup.arrowdown)="onArrowDown()"
-                aria-labelledby="searchLabel">
-            <label id="searchLabel" class="mdl-textfield__label" for="searchControl">{{'SEARCH.CONTROL.LABEL' | translate}}</label>
+<form #f="ngForm" (ngSubmit)="onSearch(f.value)" class="adf-search-form">
+    <div class="adf-search-container"
+        [@transitionMessages]="subscriptAnimationState">
+        <a md-icon-button
+                *ngIf="expandable"
+                id="adf-search-button"
+            (click)="toggleSearchBar()"
+            class="adf-search-button">
+            <md-icon aria-label="search button">search</md-icon>
+        </a>
+        <div class="adf-search-field">
+            <md-input-container>
+                <input
+                    mdInput
+                    [type]="inputType"
+                    [autocomplete]="getAutoComplete()"
+                    data-automation-id="search_input"
+                    #searchInput
+                    id="searchControl"
+                    [formControl]="searchControl"
+                    [(ngModel)]="searchTerm"
+                    (focus)="onFocus($event)"
+                    (blur)="onBlur($event)"
+                    (keyup.escape)="onEscape()"
+                    (keyup.arrowdown)="onArrowDown()">
+            </md-input-container>
         </div>
     </div>
 </form>
@@ -32,7 +36,6 @@
     [resultSort]="liveSearchResultSort"
     [maxResults]="liveSearchMaxResults"
     [highlight]="highlight"
-    [ngClass]="{active: searchActive, valid: searchValid}"
     (fileSelect)="onFileClicked($event)"
     (searchFocus)="onAutoCompleteFocus($event)"
     (scrollBack)="onAutoCompleteReturn($event)"

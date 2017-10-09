@@ -16,7 +16,7 @@
  */
 
 import { CommonModule } from '@angular/common';
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Http, HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -36,8 +36,6 @@ import { DownloadZipDialogComponent } from './src/dialogs/download-zip.dialog';
 import { AlfrescoApiService } from './src/services/alfresco-api.service';
 import { AlfrescoContentService } from './src/services/alfresco-content.service';
 import { AlfrescoSettingsService } from './src/services/alfresco-settings.service';
-import { AppConfigService } from './src/services/app-config.service';
-import { InitAppConfigServiceProvider } from './src/services/app-config.service';
 import { AuthGuardBpm } from './src/services/auth-guard-bpm.service';
 import { AuthGuardEcm } from './src/services/auth-guard-ecm.service';
 import { AuthGuard } from './src/services/auth-guard.service';
@@ -47,6 +45,7 @@ import { CookieService } from './src/services/cookie.service';
 import { LogService } from './src/services/log.service';
 import { LogServiceMock } from './src/services/log.service';
 import { NotificationService } from './src/services/notification.service';
+import { PageTitleService } from './src/services/page-title.service';
 import { RenditionsService } from './src/services/renditions.service';
 import { StorageService } from './src/services/storage.service';
 import { ThumbnailService } from './src/services/thumbnail.service';
@@ -56,12 +55,14 @@ import { UploadService } from './src/services/upload.service';
 import { UserPreferencesService } from './src/services/user-preferences.service';
 
 import { HighlightDirective } from './src/directives/highlight.directive';
+import { LogoutDirective } from './src/directives/logout.directive';
 import { DeletedNodesApiService } from './src/services/deleted-nodes-api.service';
 import { DiscoveryApiService } from './src/services/discovery-api.service';
 import { FavoritesApiService } from './src/services/favorites-api.service';
 import { HighlightTransformService } from './src/services/highlight-transform.service';
 import { NodesApiService } from './src/services/nodes-api.service';
-import { PeopleApiService } from './src/services/people-api.service';
+import { PeopleContentService } from './src/services/people-content.service';
+import { PeopleProcessService } from './src/services/people-process.service';
 import { SearchApiService } from './src/services/search-api.service';
 import { SearchService } from './src/services/search.service';
 import { SharedLinksApiService } from './src/services/shared-links-api.service';
@@ -73,6 +74,7 @@ import { MomentDateAdapter } from './src/utils/momentDateAdapter';
 export { CreateFolderDialogComponent } from './src/dialogs/create-folder.dialog';
 export { DownloadZipDialogComponent } from './src/dialogs/download-zip.dialog';
 
+export { PageTitleService } from './src/services/page-title.service';
 export { ContentService } from './src/services/content.service';
 export { StorageService } from './src/services/storage.service';
 export { CookieService } from './src/services/cookie.service';
@@ -90,7 +92,6 @@ export { AuthenticationService } from './src/services/authentication.service';
 export { TranslationService, TRANSLATION_PROVIDER, TranslationProvider } from './src/services/translation.service';
 export { AlfrescoTranslateLoader } from './src/services/translate-loader.service';
 export { AppConfigService } from './src/services/app-config.service';
-export { InitAppConfigServiceProvider } from './src/services/app-config.service';
 export { ThumbnailService } from './src/services/thumbnail.service';
 export { UploadService } from './src/services/upload.service';
 export { CardViewUpdateService } from './src/services/card-view-update.service';
@@ -103,7 +104,8 @@ export { HighlightTransformService, HightlightTransformResult } from './src/serv
 export { DeletedNodesApiService } from './src/services/deleted-nodes-api.service';
 export { FavoritesApiService } from './src/services/favorites-api.service';
 export { NodesApiService } from './src/services/nodes-api.service';
-export { PeopleApiService } from './src/services/people-api.service';
+export { PeopleContentService } from './src/services/people-content.service';
+export { PeopleProcessService } from './src/services/people-process.service';
 export { SearchApiService } from './src/services/search-api.service';
 export { SharedLinksApiService } from './src/services/shared-links-api.service';
 export { SitesApiService } from './src/services/sites-api.service';
@@ -122,6 +124,7 @@ import { NodePermissionDirective } from './src/directives/node-permission.direct
 import { UploadDirective } from './src/directives/upload.directive';
 
 import { FileSizePipe } from './src/pipes/file-size.pipe';
+import { MimeTypeIconPipe } from './src/pipes/mime-type-icon.pipe';
 import { HighlightPipe } from './src/pipes/text-highlight.pipe';
 import { TimeAgoPipe } from './src/pipes/time-ago.pipe';
 
@@ -155,6 +158,7 @@ export * from './src/models/file.model';
 export * from './src/models/permissions.enum';
 export * from './src/models/site.model';
 export * from './src/models/product-version.model';
+export * from './src/models/user-process.model';
 
 // Old deprecated import
 import { AuthenticationService as AlfrescoAuthenticationService } from './src/services/authentication.service';
@@ -165,6 +169,7 @@ export * from './src/services/search.service';
 
 export function providers() {
     return [
+        PageTitleService,
         UserPreferencesService,
         NotificationService,
         LogService,
@@ -188,12 +193,14 @@ export function providers() {
         DeletedNodesApiService,
         FavoritesApiService,
         NodesApiService,
-        PeopleApiService,
+        PeopleContentService,
         SearchApiService,
         SharedLinksApiService,
         SitesApiService,
         DiscoveryApiService,
-        HighlightTransformService
+        HighlightTransformService,
+        MomentDateAdapter,
+        PeopleProcessService
     ];
 }
 
@@ -209,6 +216,15 @@ export function obsoleteMdlDirectives() {
         MDLDirective,
         AlfrescoMdlMenuDirective,
         AlfrescoMdlTextFieldDirective
+    ];
+}
+
+export function pipes() {
+    return [
+        FileSizePipe,
+        HighlightPipe,
+        TimeAgoPipe,
+        MimeTypeIconPipe
     ];
 }
 
@@ -240,6 +256,8 @@ export function createTranslateLoader(http: Http, logService: LogService) {
     ],
     declarations: [
         ...obsoleteMdlDirectives(),
+        ...pipes(),
+        LogoutDirective,
         UploadDirective,
         NodePermissionDirective,
         HighlightDirective,
@@ -251,16 +269,12 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         InfoDrawerTitleDirective,
         InfoDrawerButtonsDirective,
         InfoDrawerContentDirective,
-        FileSizePipe,
-        HighlightPipe,
-        TimeAgoPipe,
         CreateFolderDialogComponent,
         DownloadZipDialogComponent
     ],
     providers: [
         ...providers(),
         ...deprecatedProviders(),
-        MomentDateAdapter,
         {
             provide: TRANSLATION_PROVIDER,
             multi: true,
@@ -271,6 +285,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         }
     ],
     exports: [
+        AppConfigModule,
         BrowserAnimationsModule,
         CommonModule,
         FormsModule,
@@ -284,14 +299,13 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         PaginationModule,
         ToolbarModule,
         ...obsoleteMdlDirectives(),
+        ...pipes(),
+        LogoutDirective,
         UploadDirective,
         NodePermissionDirective,
         HighlightDirective,
         DataColumnComponent,
         DataColumnListComponent,
-        FileSizePipe,
-        HighlightPipe,
-        TimeAgoPipe,
         CreateFolderDialogComponent,
         DownloadZipDialogComponent,
         InfoDrawerComponent,
@@ -306,18 +320,4 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         DownloadZipDialogComponent
     ]
 })
-export class CoreModule {
-    static forRoot(opts: any = {}): ModuleWithProviders {
-
-        const appConfigFile = opts.appConfigFile || 'app.config.json';
-
-        return {
-            ngModule: CoreModule,
-            providers: [
-                ...providers(),
-                AppConfigService,
-                InitAppConfigServiceProvider(appConfigFile)
-            ]
-        };
-    }
-}
+export class CoreModule {}

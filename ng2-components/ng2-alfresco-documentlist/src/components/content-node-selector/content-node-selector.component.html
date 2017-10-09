@@ -45,7 +45,7 @@
         <adf-document-list
                     #documentList
                     adf-highlight
-                    adf-highlight-selector=".cell-value adf-datatable-cell"
+                    adf-highlight-selector=".cell-value adf-datatable-cell .adf-datatable-cell-value"
                     [node]="nodes"
                     [rowFilter]="rowFilter"
                     [imageResolver]="imageResolver"
@@ -55,6 +55,8 @@
                     [contentActions]="false"
                     [allowDropFiles]="false"
                     [enablePagination]="!showingSearchResults"
+                    paginationStrategy="{{paginationStrategy}}"
+                    [pageSize]="pageSize"
                     (folderChange)="onFolderChange()"
                     (ready)="onFolderLoaded()"
                     data-automation-id="content-node-selector-document-list">
@@ -64,6 +66,16 @@
                 </ng-template>
             </empty-folder-content>
         </adf-document-list>
+
+        <adf-infinite-pagination
+            *ngIf="showingSearchResults && isSearchTermLongEnough()"
+            [pagination]="pagination"
+            [pageSize]="pageSize"
+            [loading]="loadingSearchResults"
+            (loadMore)="getNextPageOfSearch($event)"
+            data-automation-id="content-node-selector-search-pagination">
+            {{ 'ADF-DOCUMENT-LIST.LAYOUT.LOAD_MORE' | translate }}
+        </adf-infinite-pagination>
     </div>
 
 </section>

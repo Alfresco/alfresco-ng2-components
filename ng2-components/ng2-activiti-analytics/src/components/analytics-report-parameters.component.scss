@@ -18,10 +18,6 @@
     background-color: #d50000;
 }
 
-.dropdown-widget__invalid .mdl-textfield__error {
-    visibility: visible !important;
-}
-
 .adf-edit-report-title {
     float: left;
     font-size: 20px!important;
@@ -78,14 +74,6 @@
     padding-top: 20px;
 }
 
-.mdl-dialog__title.choose_name {
-    padding: 0px;
-}
-
-.mdl-dialog.options-name-dialog {
-    width: 30%;
-}
-
 .export-message {
     background-color: lightgray;
 }
@@ -102,4 +90,14 @@
 
 .hide {
     display: none;
+}
+
+.adf-report-dialog {
+    .mat-input-container {
+        width: 100%;
+    }
+
+    .mat-dialog-actions {
+        justify-content: flex-end;
+    }
 }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 
@@ -31,6 +31,7 @@ import { EmptyFolderContentDirective } from './src/components/empty-folder/empty
 import { DropdownSitesComponent } from './src/components/site-dropdown/sites-dropdown.component';
 import { MaterialModule } from './src/material.module';
 
+import { ContentNodeSelectorService } from './src/components/content-node-selector/content-node-selector.service';
 import { DocumentActionsService } from './src/services/document-actions.service';
 import { DocumentListService } from './src/services/document-list.service';
 import { FolderActionsService } from './src/services/folder-actions.service';
@@ -43,6 +44,7 @@ export * from './src/components/content-column/content-column.component';
 export * from './src/components/content-column/content-column-list.component';
 export * from './src/components/content-action/content-action.component';
 export * from './src/components/content-action/content-action-list.component';
+export * from './src/components/content-node-selector/content-node-selector.component';
 export * from './src/components/empty-folder/empty-folder-content.directive';
 export * from './src/components/breadcrumb/breadcrumb.component';
 export * from './src/components/site-dropdown/sites-dropdown.component';
@@ -80,7 +82,8 @@ export const DOCUMENT_LIST_PROVIDERS: any[] = [
     DocumentListService,
     FolderActionsService,
     DocumentActionsService,
-    NodeActionsService
+    NodeActionsService,
+    ContentNodeSelectorService
 ];
 
 @NgModule({
@@ -112,15 +115,4 @@ export const DOCUMENT_LIST_PROVIDERS: any[] = [
         MaterialModule
     ]
 })
-export class DocumentListModule {
-    /** @deprecated in 1.8.0 */
-    static forRoot(): ModuleWithProviders {
-        console.log('DocumentListModule.forRoot is deprecated and will be removed in future versions');
-        return {
-            ngModule: DocumentListModule,
-            providers: [
-                ...DOCUMENT_LIST_PROVIDERS
-            ]
-        };
-    }
-}
+export class DocumentListModule {}

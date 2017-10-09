@@ -21,7 +21,7 @@ import { Observable, Observer } from 'rxjs/Rx';
 import { AnalyticsService } from '../services/analytics.service';
 
 @Component({
-    selector: ' adf-analytics-report-list, analytics-report-list',
+    selector: 'adf-analytics-report-list, analytics-report-list',
     templateUrl: './analytics-report-list.component.html',
     styleUrls: ['./analytics-report-list.component.scss'],
     encapsulation: ViewEncapsulation.None

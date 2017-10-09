@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { ProcessAttachmentListComponent, ProcessUploadService } from 'ng2-activiti-processlist';
+import { ProcessInstance, ProcessService } from 'ng2-activiti-processlist';
 import { UploadService } from 'ng2-alfresco-core';
 
 @Component({
@@ -24,11 +25,11 @@ import { UploadService } from 'ng2-alfresco-core';
     templateUrl: './activiti-process-attachments.component.html',
     styleUrls: ['./activiti-process-attachments.component.css'],
     providers: [
-        { provide: UploadService, useClass: ProcessUploadService }
+        {provide: UploadService, useClass: ProcessUploadService}
     ]
 })
 
-export class ActivitiProcessAttachmentsComponent implements OnInit {
+export class ActivitiProcessAttachmentsComponent implements OnInit, OnChanges {
 
     @Input()
     processId: string;
@@ -39,13 +40,21 @@ export class ActivitiProcessAttachmentsComponent implements OnInit {
     fileShowed: boolean = false;
     content: Blob;
     contentName: string;
+    processInstance: ProcessInstance;
 
-    constructor(private uploadService: UploadService) {
-
+    constructor(private uploadService: UploadService, private processService: ProcessService) {
     }
 
     ngOnInit() {
         this.uploadService.fileUploadComplete.subscribe(value => this.onFileUploadComplete(value.data));
+    }
+
+    ngOnChanges() {
+        if (this.processId) {
+            this.processService.getProcess(this.processId).subscribe((processInstance: ProcessInstance) => {
+                this.processInstance = processInstance;
+            });
+        }
     }
 
     onFileUploadComplete(content: any) {
@@ -56,6 +65,10 @@ export class ActivitiProcessAttachmentsComponent implements OnInit {
         this.fileShowed = true;
         this.content = content.contentBlob;
         this.contentName = content.name;
+    }
+
+    isCompletedProcess(): boolean {
+        return this.processInstance && this.processInstance.ended !== undefined && this.processInstance.ended !== null;
     }
 
 }

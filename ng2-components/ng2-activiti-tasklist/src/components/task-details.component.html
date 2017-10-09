@@ -1,5 +1,6 @@
 <div *ngIf="!taskDetails">
-    <ng-template *ngIf="noTaskDetailsTemplateComponent" ngFor [ngForOf]="[data]" [ngForTemplate]="noTaskDetailsTemplateComponent">
+    <ng-template *ngIf="noTaskDetailsTemplateComponent" ngFor [ngForOf]="[data]"
+                 [ngForTemplate]="noTaskDetailsTemplateComponent">
         {{ 'TASK_DETAILS.MESSAGES.NONE' | translate }}
     </ng-template>
     <div *ngIf="!noTaskDetailsTemplateComponent">
@@ -19,32 +20,34 @@
     </div>
 
     <div class="adf-task-details-core">
+
         <div class="adf-task-details-core-form">
             <div *ngIf="isAssigned()">
                 <adf-form *ngIf="hasFormKey()" #activitiForm
-                    [showDebugButton]="debugMode"
-                    [taskId]="taskDetails.id"
-                    [showTitle]="showFormTitle"
-                    [showRefreshButton]="showFormRefreshButton"
-                    [showCompleteButton]="showFormCompleteButton"
-                    [disableCompleteButton]="!isAssignedToMe()"
-                    [showSaveButton]="showFormSaveButton"
-                    [readOnly]="readOnlyForm"
-                    [fieldValidators]="fieldValidators"
-                    (formSaved)='onFormSaved($event)'
-                    (formCompleted)='onFormCompleted($event)'
-                    (formContentClicked)='onFormContentClick($event)'
-                    (formLoaded)='onFormLoaded($event)'
-                    (onError)='onFormError($event)'
-                    (executeOutcome)='onFormExecuteOutcome($event)'>
-                    <div empty-form ><h3 class="adf-task-title">Please select a Task</h3></div>
+                          [showDebugButton]="debugMode"
+                          [taskId]="taskDetails.id"
+                          [showTitle]="showFormTitle"
+                          [showRefreshButton]="showFormRefreshButton"
+                          [showCompleteButton]="showFormCompleteButton"
+                          [disableCompleteButton]="!isAssignedToMe()"
+                          [showSaveButton]="showFormSaveButton"
+                          [readOnly]="readOnlyForm"
+                          [fieldValidators]="fieldValidators"
+                          (formSaved)='onFormSaved($event)'
+                          (formCompleted)='onFormCompleted($event)'
+                          (formContentClicked)='onFormContentClick($event)'
+                          (formLoaded)='onFormLoaded($event)'
+                          (onError)='onFormError($event)'
+                          (executeOutcome)='onFormExecuteOutcome($event)'>
+                    <div empty-form><h3 class="adf-task-title">Please select a Task</h3></div>
                 </adf-form>
             </div>
             <div *ngIf="!isAssigned()">
                 {{ 'TASK_DETAILS.MESSAGES.CLAIM' | translate }}
             </div>
-            <button md-raised-button class="activiti-task-details__action-button" *ngIf="!hasFormKey() && isTaskActive()" (click)="onComplete()">
-                    {{ 'TASK_DETAILS.BUTTON.COMPLETE' | translate }}
+            <button md-raised-button class="activiti-task-details__action-button"
+                    *ngIf="!hasFormKey() && isTaskActive()" (click)="onComplete()">
+                {{ 'TASK_DETAILS.BUTTON.COMPLETE' | translate }}
             </button>
         </div>
         <div class="adf-task-details-core-sidebar">
@@ -57,25 +60,28 @@
                 <adf-info-drawer-tab label="Activity">
                     <div class="assignment-container" *ngIf="showAssignee">
                         <adf-people-search
-                        (searchPeople)="searchUser($event)"
-                        (success)="assignTaskToUser($event)"
-                        (closeSearch)="onCloseSearch()"
-                        [results]="peopleSearch$">
-                            <ng-container people-search-title>{{ 'TASK_DETAILS.LABELS.ADD_ASSIGNEE' | translate }}</ng-container>
-                            <ng-container people-search-action-label>{{ 'PEOPLE.ADD_ASSIGNEE' | translate }}</ng-container>
+                            (searchPeople)="searchUser($event)"
+                            (success)="assignTaskToUser($event)"
+                            (closeSearch)="onCloseSearch()"
+                            [results]="peopleSearch$">
+                            <ng-container people-search-title>{{ 'TASK_DETAILS.LABELS.ADD_ASSIGNEE' | translate }}
+                            </ng-container>
+                            <ng-container people-search-action-label>{{ 'PEOPLE.ADD_ASSIGNEE' | translate }}
+                            </ng-container>
                         </adf-people-search>
                     </div>
                     <adf-task-header
                         [class]="getTaskHeaderViewClass()"
                         [taskDetails]="taskDetails"
                         [formName]="taskFormName"
-                        (claim)="onClaimTask($event)">
+                        (claim)="onClaimAction($event)"
+                        (unclaim)="onClaimAction($event)">
                     </adf-task-header>
                     <adf-people *ngIf="showInvolvePeople" #people
-                        [iconImageUrl]="peopleIconImageUrl"
-                        [people]="taskPeople"
-                        [readOnly]="readOnlyForm"
-                        [taskId]="taskDetails.id">
+                                [iconImageUrl]="peopleIconImageUrl"
+                                [people]="taskPeople"
+                                [readOnly]="readOnlyForm"
+                                [taskId]="taskDetails.id">
                     </adf-people>
                 </adf-info-drawer-tab>
 
@@ -83,10 +89,10 @@
                     <md-card *ngIf="showComments">
                         <md-card-content>
                             <adf-comments #activiticomments
-                                [readOnly]="readOnlyForm"
-                                [taskId]="taskDetails.id">
+                                          [readOnly]="isReadOnlyComment()"
+                                          [taskId]="taskDetails.id">
                             </adf-comments>
-                            </md-card-content>
+                        </md-card-content>
                     </md-card>
                 </adf-info-drawer-tab>
 
@@ -95,21 +101,26 @@
             <div *ngIf="showHeaderContent" class="adf-task-details-core-sidebar-checklist">
                 <div *ngIf="showChecklist">
                     <adf-checklist #activitichecklist
-                        [readOnly]="readOnlyForm"
-                        [taskId]="taskDetails.id"
-                        [assignee]="taskDetails?.assignee?.id"
-                        (checklistTaskCreated)="onChecklistTaskCreated($event)"
-                        (checklistTaskDeleted)="onChecklistTaskDeleted($event)">
+                                   [readOnly]="readOnlyForm"
+                                   [taskId]="taskDetails.id"
+                                   [assignee]="taskDetails?.assignee?.id"
+                                   (checklistTaskCreated)="onChecklistTaskCreated($event)"
+                                   (checklistTaskDeleted)="onChecklistTaskDeleted($event)">
                     </adf-checklist>
                 </div>
             </div>
         </div>
     </div>
-    <dialog class="mdl-dialog error-dialog" #errorDialog>
-        <div class="mdl-dialog__content">
-            <h3>{{'TASK_DETAILS.ERROR.TITLE'|translate}}</h3>
+
+    <ng-template #errorDialog>
+        <h3 md-dialog-title>{{'TASK_DETAILS.ERROR.TITLE'|translate}}</h3>
+        <md-dialog-content>
             <p>{{'TASK_DETAILS.ERROR.DESCRIPTION'|translate}}</p>
-            <button type="button" class="mdl-button" (click)="closeErrorDialog()">{{'TASK_DETAILS.ERROR.CLOSE'|translate}}</button>
-        </div>
-    </dialog>
+        </md-dialog-content>
+        <md-dialog-actions>
+            <button md-button type="button" (click)="closeErrorDialog()">{{'TASK_DETAILS.ERROR.CLOSE'|translate}}
+            </button>
+        </md-dialog-actions>
+    </ng-template>
+
 </div>

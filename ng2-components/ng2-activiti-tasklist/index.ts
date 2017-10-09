@@ -16,13 +16,13 @@
  */
 
 import { DatePipe } from '@angular/common';
-import { ModuleWithProviders, NgModule } from '@angular/core';
-import { MdAutocompleteModule, MdButtonModule, MdCardModule, MdDatepickerModule, MdGridListModule,
-    MdIconModule, MdInputModule, MdNativeDateModule, MdProgressSpinnerModule, MdRippleModule, MdSelectModule } from '@angular/material';
+import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { ActivitiFormModule } from 'ng2-activiti-form';
+
 import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
-import { PeopleService } from './src/services/people.service';
+import { MaterialModule } from './src/components/material.module';
 import { ProcessUploadService } from './src/services/process-upload.service';
 import { TaskListService } from './src/services/tasklist.service';
 
@@ -61,7 +61,6 @@ export {PeopleListComponent } from './src/components/people-list.component';
 export {CommentListComponent } from './src/components/comment-list.component';
 
 export { TaskListService }  from './src/services/tasklist.service';
-export { PeopleService }  from './src/services/people.service';
 export { ProcessUploadService }  from './src/services/process-upload.service';
 
 // Old Deprecated export
@@ -78,7 +77,6 @@ import {TaskDetailsComponent as ActivitiTaskDetails } from './src/components/tas
 import {TaskFiltersComponent as ActivitiFilters } from './src/components/task-filters.component';
 import {TaskHeaderComponent as ActivitiTaskHeader } from './src/components/task-header.component';
 import {TaskListComponent as ActivitiTaskList } from './src/components/tasklist.component';
-import {PeopleService as ActivitiPeopleService } from './src/services/people.service';
 import {TaskListService as ActivitiTaskListService } from './src/services/tasklist.service';
 export {AppsListComponent as ActivitiApps} from './src/components/apps-list.component';
 export {ChecklistComponent as ActivitiChecklist} from './src/components/checklist.component';
@@ -93,13 +91,11 @@ export {TaskDetailsComponent as ActivitiTaskDetails } from './src/components/tas
 export {TaskFiltersComponent as ActivitiFilters } from './src/components/task-filters.component';
 export {TaskHeaderComponent as ActivitiTaskHeader} from './src/components/task-header.component';
 export {TaskListComponent as ActivitiTaskList } from './src/components/tasklist.component';
-export {PeopleService as ActivitiPeopleService } from './src/services/people.service';
 export {TaskListService as ActivitiTaskListService } from './src/services/tasklist.service';
 
 export * from './src/models/comment.model';
 export * from './src/models/filter.model';
 export * from './src/models/icon.model';
-export * from './src/models/user.model';
 export * from './src/models/task-details.model';
 export * from './src/models/task-details.event';
 export * from './src/models/user-event.model';
@@ -143,12 +139,10 @@ export const ACTIVITI_TASKLIST_DIRECTIVES: any[] = [
 
 export const ACTIVITI_TASKLIST_PROVIDERS: any[] = [
     TaskListService,
-    PeopleService,
     ProcessUploadService,
 
     // Old Deprecated export
-    ActivitiTaskListService,
-    ActivitiPeopleService
+    ActivitiTaskListService
 ];
 
 @NgModule({
@@ -156,17 +150,8 @@ export const ACTIVITI_TASKLIST_PROVIDERS: any[] = [
         CoreModule,
         DataTableModule,
         ActivitiFormModule,
-        MdIconModule,
-        MdButtonModule,
-        MdInputModule,
-        MdCardModule,
-        MdProgressSpinnerModule,
-        MdDatepickerModule,
-        MdNativeDateModule,
-        MdSelectModule,
-        MdAutocompleteModule,
-        MdGridListModule,
-        MdRippleModule
+        FlexLayoutModule,
+        MaterialModule
     ],
     declarations: [
         ...ACTIVITI_TASKLIST_DIRECTIVES
@@ -185,17 +170,7 @@ export const ACTIVITI_TASKLIST_PROVIDERS: any[] = [
     ],
     exports: [
         ...ACTIVITI_TASKLIST_DIRECTIVES,
-        MdIconModule,
-        MdButtonModule
+        MaterialModule
     ]
 })
-export class ActivitiTaskListModule {
-    static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: ActivitiTaskListModule,
-            providers: [
-                ...ACTIVITI_TASKLIST_PROVIDERS
-            ]
-        };
-    }
-}
+export class ActivitiTaskListModule {}

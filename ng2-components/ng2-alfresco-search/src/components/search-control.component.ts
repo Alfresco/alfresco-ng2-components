@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Observable, Subject } from 'rxjs/Rx';
 import { SearchTermValidator } from './../forms/search-term-validator';
@@ -24,7 +25,19 @@ import { SearchAutocompleteComponent } from './search-autocomplete.component';
 @Component({
     selector: 'adf-search-control, alfresco-search-control',
     templateUrl: './search-control.component.html',
-    styleUrls: ['./search-control.component.scss']
+    styleUrls: ['./search-control.component.scss'],
+    animations: [
+        trigger('transitionMessages', [
+            state('active', style({transform: 'translateX(0%)'})),
+            state('inactive', style({transform: 'translateX(83%)'})),
+            state('no-animation', style({transform: 'translateX(0%)', width: '100%'})),
+            transition('inactive => active',
+                animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)')),
+            transition('active => inactive',
+                animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)'))
+        ])
+    ],
+    encapsulation: ViewEncapsulation.None
 })
 export class SearchControlComponent implements OnInit, OnDestroy {
 
@@ -52,9 +65,6 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     @Output()
     fileSelect = new EventEmitter();
 
-    @Output()
-    expand = new EventEmitter();
-
     searchControl: FormControl;
 
     @ViewChild('searchInput', {})
@@ -66,7 +76,6 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     @Input()
     liveSearchEnabled: boolean = true;
 
-    @Input()
     liveSearchTerm: string = '';
 
     @Input()
@@ -81,25 +90,39 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     @Input()
     liveSearchMaxResults: number = 5;
 
-    searchActive = false;
-
     searchValid = false;
 
     private focusSubject = new Subject<FocusEvent>();
+
+    private toggleSearch = new Subject<any>();
+
+    subscriptAnimationState: string;
 
     constructor() {
         this.searchControl = new FormControl(
             this.searchTerm,
             Validators.compose([Validators.required, SearchTermValidator.minAlphanumericChars(3)])
         );
+
+        this.toggleSearch.asObservable().debounceTime(200).subscribe(() => {
+            if (this.expandable) {
+                this.subscriptAnimationState = this.subscriptAnimationState === 'inactive' ? 'active' : 'inactive';
+
+                if (this.subscriptAnimationState === 'inactive') {
+                    this.searchTerm = '';
+                }
+            }
+        });
     }
 
     ngOnInit(): void {
+        this.subscriptAnimationState = this.expandable ? 'inactive' : 'no-animation';
+
         this.searchControl.valueChanges.debounceTime(400).distinctUntilChanged()
             .subscribe((value: string) => {
-                this.onSearchTermChange(value);
-            }
-        );
+                    this.onSearchTermChange(value);
+                }
+            );
 
         this.setupFocusEventHandlers();
     }
@@ -120,24 +143,12 @@ export class SearchControlComponent implements OnInit, OnDestroy {
 
     private setupFocusEventHandlers() {
         let focusEvents: Observable<FocusEvent> = this.focusSubject.asObservable().debounceTime(50);
-        focusEvents.filter(($event: FocusEvent) => {
-            return $event.type === 'focusin' || $event.type === 'focus';
-        }).subscribe(($event) => {
-            this.onSearchFocus($event);
-        });
+
         focusEvents.filter(($event: any) => {
             return $event.type === 'focusout' || $event.type === 'blur';
-        }).subscribe(($event) => {
-            this.onSearchBlur($event);
+        }).subscribe(() => {
+            this.onSearchBlur();
         });
-    }
-
-    getTextFieldClassName(): string {
-        return 'mdl-textfield mdl-js-textfield' + (this.expandable ? ' mdl-textfield--expandable' : '');
-    }
-
-    getTextFieldHolderClassName(): string {
-        return this.expandable ? 'search-field mdl-textfield__expandable-holder' : 'search-field';
     }
 
     getAutoComplete(): string {
@@ -149,7 +160,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
      *
      * @param event Submit event that was fired
      */
-    onSearch(event): void {
+    onSearch(): void {
         this.searchControl.setValue(this.searchTerm);
         if (this.searchControl.valid) {
             this.searchSubmit.emit({
@@ -159,72 +170,59 @@ export class SearchControlComponent implements OnInit, OnDestroy {
         }
     }
 
-    isAutoCompleteDisplayed(): boolean {
-        return this.searchActive;
-    }
-
-    setAutoCompleteDisplayed(display: boolean): void {
-        this.searchActive = display;
+    hideAutocomplete(): void {
+        if (this.liveSearchComponent) {
+            this.liveSearchComponent.resetAnimation();
+        }
     }
 
     onFileClicked(event): void {
-        this.setAutoCompleteDisplayed(false);
+        this.hideAutocomplete();
+        this.toggleSearchBar();
         this.fileSelect.emit(event);
+        this.searchTerm = '';
     }
 
-    onSearchFocus($event): void {
-        this.setAutoCompleteDisplayed(true);
-    }
-
-    onSearchBlur($event): void {
-        this.setAutoCompleteDisplayed(false);
+    onSearchBlur(): void {
+        this.hideAutocomplete();
+        this.toggleSearchBar();
     }
 
     onFocus($event): void {
-        if (this.expandable) {
-            this.expand.emit({
-                expanded: true
-            });
-        }
         this.focusSubject.next($event);
     }
 
     onBlur($event): void {
-        if (this.expandable && (this.searchControl.value === '' || this.searchControl.value === undefined)) {
-            this.expand.emit({
-                expanded: false
-            });
-        }
         this.focusSubject.next($event);
     }
 
     onEscape(): void {
-        this.setAutoCompleteDisplayed(false);
+        this.hideAutocomplete();
+        this.toggleSearchBar();
     }
 
     onArrowDown(): void {
-        if (this.isAutoCompleteDisplayed()) {
-            this.liveSearchComponent.focusResult();
-        } else {
-            this.setAutoCompleteDisplayed(true);
-        }
+        this.liveSearchComponent.focusResult();
     }
 
     onAutoCompleteFocus($event): void {
         this.focusSubject.next($event);
     }
 
-    onAutoCompleteReturn($event): void {
+    onAutoCompleteReturn(): void {
         if (this.searchInput) {
             (<any> this.searchInput.nativeElement).focus();
         }
     }
 
-    onAutoCompleteCancel($event): void {
+    onAutoCompleteCancel(): void {
         if (this.searchInput) {
             (<any> this.searchInput.nativeElement).focus();
         }
-        this.setAutoCompleteDisplayed(false);
+        this.hideAutocomplete();
     }
 
+    toggleSearchBar() {
+        this.toggleSearch.next();
+    }
 }

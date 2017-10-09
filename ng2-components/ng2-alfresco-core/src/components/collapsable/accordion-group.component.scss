@@ -11,6 +11,7 @@
         letter-spacing: normal;
         text-align: left;
         width: 100%;
+        cursor: pointer;
     }
 
     .adf-panel-heading-selected {
@@ -21,6 +22,10 @@
         float: left;
     }
 
+    .adf-panel-collapse {
+        display: inline-block;            
+    }
+    
     .adf-panel-heading-text {
         float: left;
         padding-left: 20px;

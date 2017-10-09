@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SimpleChange } from '@angular/core';
+import { NgZone, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MdProgressSpinnerModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
@@ -41,10 +41,11 @@ describe('TaskAttachmentList', () => {
     let mockAttachment: any;
 
     beforeEach(async(() => {
+        let zone = new NgZone({enableLongStackTrace: false});
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
-                DataTableModule.forRoot(),
+                CoreModule,
+                DataTableModule,
                 MdProgressSpinnerModule
             ],
             declarations: [
@@ -53,7 +54,8 @@ describe('TaskAttachmentList', () => {
             providers: [
                 ActivitiContentService,
                 { provide: AppConfigService, useClass: AppConfigServiceMock },
-                { provide: TranslationService, useClass: TranslationMock }
+                { provide: TranslationService, useClass: TranslationMock },
+                { provide: NgZone, useValue: zone }
             ]
         }).compileComponents();
 
@@ -219,6 +221,24 @@ describe('TaskAttachmentList', () => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(fixture.nativeElement.querySelector('adf-empty-list .adf-empty-list-drag_drop').innerText.trim()).toEqual('TASK-ATTACHMENT.EMPTY.DRAG-AND-DROP.TITLE');
+        });
+    }));
+
+    it('should not show the empty list drag and drop component when is disabled', async(() => {
+        getTaskRelatedContentSpy.and.returnValue(Observable.of({
+            'size': 0,
+            'total': 0,
+            'start': 0,
+            'data': []
+        }));
+        let change = new SimpleChange(null, '123', true);
+        component.ngOnChanges({'taskId': change});
+        component.disabled = true;
+
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(fixture.nativeElement.querySelector('adf-empty-list .adf-empty-list-drag_drop')).toBeNull();
+            expect(fixture.nativeElement.querySelector('div[adf-empty-list-header]').innerText.trim()).toEqual('TASK-ATTACHMENT.EMPTY.HEADER');
         });
     }));
 

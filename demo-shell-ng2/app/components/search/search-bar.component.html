@@ -1,15 +1,14 @@
-<alfresco-search-control *ngIf="isLoggedIn()"
+<adf-search-control *ngIf="isLoggedIn()"
                          [searchTerm]="searchTerm"
                          [autocomplete]="false"
                          [highlight]="true"
                          (searchSubmit)="onSearchSubmit($event);"
                          (searchChange)="onSearchTermChange($event);"
-                         (expand)="onExpandToggle($event);"
                          (fileSelect)="onItemClicked($event)">
-</alfresco-search-control>
+</adf-search-control>
 
-<alfresco-viewer *ngIf="fileShowed" [(showViewer)]="fileShowed"
+<adf-viewer *ngIf="fileShowed" [(showViewer)]="fileShowed"
                  [fileNodeId]="fileNodeId"
                  [overlayMode]="true">
     <md-spinner></md-spinner>
-</alfresco-viewer>
+</adf-viewer>

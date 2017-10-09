@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CoreModule } from 'ng2-alfresco-core';
 
 import { MaterialModule } from './src/material.module';
@@ -23,60 +23,37 @@ import { MaterialModule } from './src/material.module';
 export { ViewerComponent } from './src/components/viewer.component';
 import { ImgViewerComponent } from './src/components/imgViewer.component';
 import { MediaPlayerComponent } from './src/components/mediaPlayer.component';
-import { NotSupportedFormatComponent } from './src/components/notSupportedFormat.component';
 import { PdfViewerComponent } from './src/components/pdfViewer.component';
 import { TxtViewerComponent } from './src/components/txtViewer.component';
-import { ViewerDialogComponent } from './src/components/viewer-dialog.component';
+import { UnknownFormatComponent } from './src/components/unknown-format/unknown-format.component';
 import { ViewerComponent } from './src/components/viewer.component';
 import { ExtensionViewerDirective } from './src/directives/extension-viewer.directive';
-
 import { RenderingQueueServices } from './src/services/rendering-queue.services';
-import { ViewerService } from './src/services/viewer.service';
 
-export { ViewerDialogComponent } from './src/components/viewer-dialog.component';
-export { ViewerDialogSettings } from './src/components/viewer-dialog.settings';
-export { ViewerService } from './src/services/viewer.service';
-
-export const VIEWER_DIRECTIVES: any[] = [
-    ViewerComponent,
-    ImgViewerComponent,
-    TxtViewerComponent,
-    MediaPlayerComponent,
-    NotSupportedFormatComponent,
-    PdfViewerComponent,
-    ExtensionViewerDirective,
-    ViewerDialogComponent
-];
+export function declarations() {
+    return [
+        ViewerComponent,
+        ImgViewerComponent,
+        TxtViewerComponent,
+        MediaPlayerComponent,
+        PdfViewerComponent,
+        ExtensionViewerDirective,
+        UnknownFormatComponent
+    ];
+}
 
 @NgModule({
     imports: [
         CoreModule,
         MaterialModule
     ],
-    declarations: [
-        ...VIEWER_DIRECTIVES
-    ],
+    declarations: declarations(),
     providers: [
-        RenderingQueueServices,
-        ViewerService
+        RenderingQueueServices
     ],
     exports: [
-        ...VIEWER_DIRECTIVES
-    ],
-    entryComponents: [
-        ViewerDialogComponent
+        MaterialModule,
+        ...declarations()
     ]
 })
-export class ViewerModule {
-    /** @deprecated in 1.8.0 */
-    static forRoot(): ModuleWithProviders {
-        console.log('ViewerModule.forRoot is deprecated and will be removed in future versions');
-        return {
-            ngModule: ViewerModule,
-            providers: [
-                RenderingQueueServices,
-                ViewerService
-            ]
-        };
-    }
-}
+export class ViewerModule {}

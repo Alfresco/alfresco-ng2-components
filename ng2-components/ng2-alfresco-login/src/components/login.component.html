@@ -20,7 +20,7 @@
             <md-card-content class="adf-login-controls">
 
                 <!--ERRORS AREA-->
-                <div>
+                <div class="adf-error-container">
                     <div *ngIf="error" id="login-error" data-automation-id="login-error"
                          class="error  adf-error-message">
                         <md-icon class="error-icon">warning</md-icon>
@@ -97,8 +97,8 @@
                     </div>
 
                 </button>
-                <div *ngIf="showRememberMe" class="adf-login__remember-me" id="login-remember">
-                    <md-checkbox color="primary" class="rememberme-cb" [checked]="rememberMe"
+                <div *ngIf="showRememberMe" class="adf-login__remember-me">
+                    <md-checkbox id="adf-login-remember" color="primary" class="adf-login-rememberme" [checked]="rememberMe"
                                  (change)="rememberMe = !rememberMe">{{ 'LOGIN.LABEL.REMEMBER' | translate }}
                     </md-checkbox>
                 </div>

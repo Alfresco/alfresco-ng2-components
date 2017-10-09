@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, SimpleChange } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, SimpleChange } from '@angular/core';
 import { AlfrescoContentService } from './../services/alfresco-content.service';
 import { NodePermissionDirective, NodePermissionSubject } from './node-permission.directive';
 
@@ -28,19 +28,27 @@ class TestComponent implements NodePermissionSubject {
 
 describe('NodePermissionDirective', () => {
 
+    let changeDetectorMock: ChangeDetectorRef;
+
+    beforeEach(() => {
+        changeDetectorMock = <ChangeDetectorRef> { detectChanges: () => {} };
+    });
+
     describe('HTML nativeElement as subject', () => {
 
         it('updates element once it is loaded', () => {
-            const directive = new NodePermissionDirective(null, null, null);
+            const directive = new NodePermissionDirective(null, null, null, changeDetectorMock);
             spyOn(directive, 'updateElement').and.stub();
 
-            directive.ngAfterViewInit();
+            const nodes = [{}, {}];
+            const change = new SimpleChange([], nodes, false);
+            directive.ngOnChanges({ nodes: change });
 
             expect(directive.updateElement).toHaveBeenCalled();
         });
 
         it('updates element on nodes change', () => {
-            const directive = new NodePermissionDirective(null, null, null);
+            const directive = new NodePermissionDirective(null, null, null, changeDetectorMock);
             spyOn(directive, 'updateElement').and.stub();
 
             const nodes = [{}, {}];
@@ -51,7 +59,7 @@ describe('NodePermissionDirective', () => {
         });
 
         it('updates element only on subsequent change', () => {
-            const directive = new NodePermissionDirective(null, null, null);
+            const directive = new NodePermissionDirective(null, null, null, changeDetectorMock);
             spyOn(directive, 'updateElement').and.stub();
 
             const nodes = [{}, {}];
@@ -64,7 +72,7 @@ describe('NodePermissionDirective', () => {
         it('enables decorated element', () => {
             const renderer = jasmine.createSpyObj('renderer', ['removeAttribute']);
             const elementRef = new ElementRef({});
-            const directive = new NodePermissionDirective(elementRef, renderer, null);
+            const directive = new NodePermissionDirective(elementRef, renderer, null, changeDetectorMock);
 
             directive.enableElement();
 
@@ -74,7 +82,7 @@ describe('NodePermissionDirective', () => {
         it('disables decorated element', () => {
             const renderer = jasmine.createSpyObj('renderer', ['setAttribute']);
             const elementRef = new ElementRef({});
-            const directive = new NodePermissionDirective(elementRef, renderer, null);
+            const directive = new NodePermissionDirective(elementRef, renderer, null, changeDetectorMock);
 
             directive.disableElement();
 
@@ -82,7 +90,7 @@ describe('NodePermissionDirective', () => {
         });
 
         it('disables element when nodes not available', () => {
-            const directive = new NodePermissionDirective(null, null, null);
+            const directive = new NodePermissionDirective(null, null, null, changeDetectorMock);
             spyOn(directive, 'disableElement').and.stub();
 
             directive.nodes = null;
@@ -96,7 +104,7 @@ describe('NodePermissionDirective', () => {
             const contentService = new AlfrescoContentService(null, null, null);
             spyOn(contentService, 'hasPermission').and.returnValue(true);
 
-            const directive = new NodePermissionDirective(null, null, contentService);
+            const directive = new NodePermissionDirective(null, null, contentService, changeDetectorMock);
             spyOn(directive, 'enableElement').and.stub();
 
             directive.nodes = <any> [{}, {}];
@@ -109,7 +117,7 @@ describe('NodePermissionDirective', () => {
             const contentService = new AlfrescoContentService(null, null, null);
             spyOn(contentService, 'hasPermission').and.returnValue(false);
 
-            const directive = new NodePermissionDirective(null, null, contentService);
+            const directive = new NodePermissionDirective(null, null, contentService, changeDetectorMock);
             spyOn(directive, 'disableElement').and.stub();
 
             directive.nodes = <any> [{}, {}];
@@ -124,29 +132,33 @@ describe('NodePermissionDirective', () => {
         it('disables decorated component', () => {
             const contentService = new AlfrescoContentService(null, null, null);
             spyOn(contentService, 'hasPermission').and.returnValue(false);
+            spyOn(changeDetectorMock, 'detectChanges');
 
             let testComponent = new TestComponent();
             testComponent.disabled = false;
-            const directive = new NodePermissionDirective(null, null, contentService, testComponent);
+            const directive = new NodePermissionDirective(null, null, contentService, changeDetectorMock, testComponent);
             directive.nodes = <any> [{}, {}];
 
             directive.updateElement();
 
             expect(testComponent.disabled).toBeTruthy();
+            expect(changeDetectorMock.detectChanges).toHaveBeenCalledTimes(1);
         });
 
         it('enables decorated component', () => {
             const contentService = new AlfrescoContentService(null, null, null);
             spyOn(contentService, 'hasPermission').and.returnValue(true);
+            spyOn(changeDetectorMock, 'detectChanges');
 
             let testComponent = new TestComponent();
             testComponent.disabled = true;
-            const directive = new NodePermissionDirective(null, null, contentService, testComponent);
+            const directive = new NodePermissionDirective(null, null, contentService, changeDetectorMock, testComponent);
             directive.nodes = <any> [{}, {}];
 
             directive.updateElement();
 
             expect(testComponent.disabled).toBeFalsy();
+            expect(changeDetectorMock.detectChanges).toHaveBeenCalledTimes(1);
         });
     });
 });

@@ -24,19 +24,19 @@ import { Observable } from 'rxjs/Rx';
 import { ActivitiFormModule, FormModel, FormOutcomeEvent, FormOutcomeModel, FormService } from 'ng2-activiti-form';
 import { AppConfigService, CoreModule, LogService, TranslationService } from 'ng2-alfresco-core';
 
+import { LightUserRepresentation } from 'ng2-alfresco-core';
+import { PeopleProcessService } from 'ng2-alfresco-core';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { TaskDetailsModel } from '../models/task-details.model';
-import { User } from '../models/user.model';
 import { noDataMock, taskDetailsMock, taskFormMock, tasksMock } from './../assets/task-details.mock';
-import { PeopleService } from './../services/people.service';
 import { TaskListService } from './../services/tasklist.service';
 import { PeopleSearchComponent } from './people-search.component';
 import { TaskDetailsComponent } from './task-details.component';
 
 declare let jasmine: any;
 
-const fakeUser: User = new User({
+const fakeUser: LightUserRepresentation = new LightUserRepresentation({
     id: 'fake-id',
     firstName: 'fake-name',
     lastName: 'fake-last',
@@ -61,8 +61,8 @@ describe('TaskDetailsComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
-                ActivitiFormModule.forRoot(),
+                CoreModule,
+                ActivitiFormModule,
                 MdButtonModule,
                 MdInputModule
             ],
@@ -72,11 +72,11 @@ describe('TaskDetailsComponent', () => {
             ],
             providers: [
                 TaskListService,
-                PeopleService,
-                { provide: TranslationService, useClass: TranslationMock },
-                { provide: AppConfigService, useClass: AppConfigServiceMock }
+                PeopleProcessService,
+                {provide: TranslationService, useClass: TranslationMock},
+                {provide: AppConfigService, useClass: AppConfigServiceMock}
             ],
-            schemas: [ NO_ERRORS_SCHEMA ]
+            schemas: [NO_ERRORS_SCHEMA]
         }).compileComponents();
 
         logService = TestBed.get(LogService);
@@ -157,7 +157,7 @@ describe('TaskDetailsComponent', () => {
         }));
 
         it('should fetch new task details when taskId changed', () => {
-            component.ngOnChanges({ 'taskId': change });
+            component.ngOnChanges({'taskId': change});
             expect(getTaskDetailsSpy).toHaveBeenCalledWith('456');
         });
 
@@ -167,12 +167,12 @@ describe('TaskDetailsComponent', () => {
         });
 
         it('should NOT fetch new task details when taskId changed to null', () => {
-            component.ngOnChanges({ 'taskId': nullChange });
+            component.ngOnChanges({'taskId': nullChange});
             expect(getTaskDetailsSpy).not.toHaveBeenCalled();
         });
 
         it('should set a placeholder message when taskId changed to null', () => {
-            component.ngOnChanges({ 'taskId': nullChange });
+            component.ngOnChanges({'taskId': nullChange});
             fixture.detectChanges();
             expect(fixture.nativeElement.innerText).toBe('TASK_DETAILS.MESSAGES.NONE');
         });
@@ -185,6 +185,14 @@ describe('TaskDetailsComponent', () => {
             fixture.detectChanges();
             fixture.whenStable();
         }));
+
+        afterEach(() => {
+            const overlayContainers = <any> window.document.querySelectorAll('.cdk-overlay-container');
+
+            overlayContainers.forEach((overlayContainer) => {
+                overlayContainer.innerHTML = '';
+            });
+        });
 
         it('should emit a save event when form saved', () => {
             let emitSpy: jasmine.Spy = spyOn(component.formSaved, 'emit');
@@ -258,18 +266,14 @@ describe('TaskDetailsComponent', () => {
         });
 
         it('should display a dialog to the user when a form error occurs', () => {
-            let dialogEl = fixture.debugElement.query(By.css('.error-dialog')).nativeElement;
-            let showSpy: jasmine.Spy = spyOn(dialogEl, 'showModal');
-            component.onFormError({});
-            expect(showSpy).toHaveBeenCalled();
-        });
+            let dialogEl = window.document.querySelector('md-dialog-content');
+            expect(dialogEl).toBeNull();
 
-        it('should close error dialog when close button clicked', () => {
-            let dialogEl = fixture.debugElement.query(By.css('.error-dialog')).nativeElement;
-            let closeSpy: jasmine.Spy = spyOn(dialogEl, 'close');
             component.onFormError({});
-            component.closeErrorDialog();
-            expect(closeSpy).toHaveBeenCalled();
+            fixture.detectChanges();
+
+            dialogEl = window.document.querySelector('md-dialog-content');
+            expect(dialogEl).not.toBeNull();
         });
 
         it('should emit a task created event when checklist task is created', () => {
@@ -279,6 +283,78 @@ describe('TaskDetailsComponent', () => {
             expect(emitSpy).toHaveBeenCalled();
         });
 
+    });
+
+    describe('Comments', () => {
+
+        it('should comments be readonly if the task is complete and no user are involved', () => {
+            component.showComments = true;
+            component.showHeaderContent = true;
+            component.ngOnChanges({'taskId': new SimpleChange('123', '456', true)});
+            component.taskPeople = [];
+            component.taskDetails = new TaskDetailsModel(taskDetailsMock);
+            component.taskDetails.endDate = '2017-10-03T17:03:57.311+0000';
+
+            fixture.detectChanges();
+            expect((component.activiticomments as any).nativeElement.readOnly).toBe(true);
+        });
+
+        it('should comments be readonly if the task is complete and user are NOT involved', () => {
+            component.showComments = true;
+            component.showHeaderContent = true;
+            component.ngOnChanges({'taskId': new SimpleChange('123', '456', true)});
+            component.taskPeople = [];
+            component.taskDetails = new TaskDetailsModel(taskDetailsMock);
+            component.taskDetails.endDate = '2017-10-03T17:03:57.311+0000';
+
+            fixture.detectChanges();
+            expect((component.activiticomments as any).nativeElement.readOnly).toBe(true);
+        });
+
+        it('should comments NOT be readonly if the task is NOT complete and user are NOT involved', () => {
+            component.showComments = true;
+            component.showHeaderContent = true;
+            component.ngOnChanges({'taskId': new SimpleChange('123', '456', true)});
+            component.taskPeople = [fakeUser];
+            component.taskDetails = new TaskDetailsModel(taskDetailsMock);
+            component.taskDetails.endDate = null;
+
+            fixture.detectChanges();
+            expect((component.activiticomments as any).nativeElement.readOnly).toBe(false);
+        });
+
+        it('should comments NOT be readonly if the task is complete and user are involved', () => {
+            component.showComments = true;
+            component.showHeaderContent = true;
+            component.ngOnChanges({'taskId': new SimpleChange('123', '456', true)});
+            component.taskPeople = [fakeUser];
+            component.taskDetails = new TaskDetailsModel(taskDetailsMock);
+            component.taskDetails.endDate = '2017-10-03T17:03:57.311+0000';
+
+            fixture.detectChanges();
+            expect((component.activiticomments as any).nativeElement.readOnly).toBe(false);
+        });
+
+        it('should comments be present if showComments is true', () => {
+            component.showComments = true;
+            component.showHeaderContent = true;
+            component.ngOnChanges({'taskId': new SimpleChange('123', '456', true)});
+            component.taskPeople = [];
+            component.taskDetails = new TaskDetailsModel(taskDetailsMock);
+
+            fixture.detectChanges();
+            expect(component.activiticomments).toBeDefined();
+        });
+
+        it('should comments NOT be present if showComments is false', () => {
+            component.showComments = false;
+            component.ngOnChanges({'taskId': new SimpleChange('123', '456', true)});
+            component.taskPeople = [];
+            component.taskDetails = new TaskDetailsModel(taskDetailsMock);
+
+            fixture.detectChanges();
+            expect(component.activiticomments).not.toBeDefined();
+        });
     });
 
     describe('assign task to user', () => {

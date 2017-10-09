@@ -31,7 +31,7 @@ describe('EcmUserService', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule
             ],
             providers: [
                 EcmUserService

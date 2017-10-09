@@ -30,6 +30,8 @@ import {
 } from './../../data/index';
 import { DataTableCellComponent } from './datatable-cell.component';
 import { DataTableComponent } from './datatable.component';
+import { DateCellComponent } from './date-cell.component';
+import { FileSizeCellComponent } from './filesize-cell.component';
 import { LocationCellComponent } from './location-cell.component';
 
 describe('DataTable', () => {
@@ -49,6 +51,8 @@ describe('DataTable', () => {
             declarations: [
                 DataTableCellComponent,
                 LocationCellComponent,
+                FileSizeCellComponent,
+                DateCellComponent,
                 DataTableComponent
             ]
         }).compileComponents();
@@ -627,4 +631,31 @@ describe('DataTable', () => {
         expect(dataTable.getCellTooltip(row, col)).toBeNull();
     });
 
+    it('should cache the rows menu', () => {
+        let emitted = 0;
+        dataTable.showRowActionsMenu.subscribe(() => { emitted++; });
+
+        const column = <DataColumn> {};
+        const row = <DataRow>  { getValue: function (key: string) { return 'id'; } };
+
+        dataTable.getRowActions(row, column);
+        dataTable.getRowActions(row, column);
+        dataTable.getRowActions(row, column);
+
+        expect(emitted).toBe(1);
+    });
+
+    it('should reset the menu cache after rows change', () => {
+        let emitted = 0;
+        dataTable.showRowActionsMenu.subscribe(() => { emitted++; });
+
+        const column = <DataColumn> {};
+        const row = <DataRow>  { getValue: function (key: string) { return 'id'; } };
+
+        dataTable.getRowActions(row, column);
+        dataTable.ngOnChanges({'data': new SimpleChange('123', {}, true)});
+        dataTable.getRowActions(row, column);
+
+        expect(emitted).toBe(2);
+    });
 });

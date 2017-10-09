@@ -6,20 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96">
+    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <!--[if IE]>
-    <script src=js/shim.min.js></script>
-    <script src=//cdnjs.cloudflare.com/ajax/libs/dom4/1.8.3/dom4.js></script>
-    <script src=js/classlist-polyfill.js></script>
-    <script src=js/web-animations.min.js></script>
-    <script src=js/typedarray.js></script>
     <script src=js/Blob.js></script>
+    <script src=js/core.min.js></script>
+    <script src=js/Intl.min.js></script>
+    <script src=js/classList.js></script>
+    <script src=js/web-animations.min.js></script>
     <script src=js/formdata.js></script>
-    <script src=https://npmcdn.com/angular2/es6/dev/src/testing/shims_for_IE.js></script>
-    <script src=js/es5-shim.min.js></script>
-    <script src=js/es6-shim.min.js></script>
-    <script src=js/system-polyfills.js></script>
-    <![endif]-->
+    <script src=js/typedarray.js></script>
+    <script src=js/custom-event-polyfill.js></script>
 
     <style>
         body, html {
@@ -57,12 +54,6 @@
 <adf-app>
     <div id="loader-container" class="loader-container">
         <div class="loader-item">
-            <div id="loader-spin" class="mdl-progress mdl-js-progress mdl-progress__indeterminate is-upgraded"
-                 data-upgraded=",MaterialProgress">
-                <div class="progressbar bar bar1" style="width: 0%;"></div>
-                <div class="bufferbar bar bar2" style="width: 100%;"></div>
-                <div class="auxbar bar bar3" style="width: 0%;"></div>
-            </div>
             <div id="loader-text" class="loader-text">Loading Demo Shell..</div>
         </div>
     </div>

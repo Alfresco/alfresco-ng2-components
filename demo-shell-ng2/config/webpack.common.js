@@ -76,7 +76,7 @@ module.exports = {
                     emitErrors: true,
                     licenseFile: path.resolve(__dirname, '../assets/license_header.txt')
                 },
-                exclude: [/node_modules/, /bundles/, /dist/, /demo/]
+                exclude: [/theme-picker/]
             }
         ]
     },
@@ -99,17 +99,27 @@ module.exports = {
                 to: 'resources/i18n'
             },
             {
-                from: 'app.config-dev.json'
-            },
-            {
-                from: 'app.config-prod.json'
-            },
-            {
                 from: 'favicon-96x96.png'
             },
             {
                 from: 'node_modules/pdfjs-dist/build/pdf.worker.js',
                 to: 'pdf.worker.js'
+            },
+            {
+                from: 'node_modules/web-animations-js/web-animations.min.js',
+                to: 'js/web-animations.min.js'
+            },
+            {
+                from: 'node_modules/core-js/client/core.min.js',
+                to: 'js/core.min.js'
+            },
+            {
+                from: 'node_modules/custom-event-polyfill/custom-event-polyfill.js',
+                to: 'js/custom-event-polyfill.js'
+            },
+            {
+                from: 'node_modules/intl/dist/Intl.min.js',
+                to: 'js/Intl.min.js'
             },
             {
                 context: 'public',
@@ -142,6 +152,15 @@ module.exports = {
                 },
                 pathRewrite: {
                     '^/ecm': ''
+                },
+                secure: false,
+                changeOrigin: true,
+                // workaround for REPO-2260
+                onProxyRes: function (proxyRes, req, res) {
+                    const header = proxyRes.headers['www-authenticate'];
+                    if (header && header.startsWith('Basic')) {
+                        proxyRes.headers['www-authenticate'] = 'x' + header;
+                    }
                 }
             },
             '/bpm': {
@@ -152,6 +171,15 @@ module.exports = {
                 },
                 pathRewrite: {
                     '^/bpm': ''
+                },
+                secure: false,
+                changeOrigin: true,
+                // workaround
+                onProxyRes: function (proxyRes, req, res) {
+                    const header = proxyRes.headers['www-authenticate'];
+                    if (header && header.startsWith('Basic')) {
+                        proxyRes.headers['www-authenticate'] = 'x' + header;
+                    }
                 }
             }
         }

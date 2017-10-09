@@ -112,6 +112,10 @@ export class FormFieldModel extends FormWidgetModel {
         return this._isValid;
     }
 
+    markAsInvalid() {
+        this._isValid = false;
+    }
+
     validate(): boolean {
         this.validationSummary = null;
 
@@ -167,8 +171,18 @@ export class FormFieldModel extends FormWidgetModel {
             }
 
             if (FormFieldTypes.isReadOnlyType(json.type)) {
-                if (json.params && json.params.field && json.params.field.responseVariable) {
-                    this.value = this.getVariablesValue(json.params.field.name, form);
+                if (json.params && json.params.field) {
+                    if (form.processVariables) {
+                        const processVariable = this.getProcessVariableValue(json.params.field, form);
+                        if (processVariable) {
+                            this.value = processVariable;
+                        }
+                    } else if (json.params.field.responseVariable) {
+                        const formVariable = this.getVariablesValue(json.params.field.name, form);
+                        if (formVariable) {
+                            this.value = formVariable;
+                        }
+                    }
                 }
             }
 
@@ -184,16 +198,50 @@ export class FormFieldModel extends FormWidgetModel {
         this.updateForm();
     }
 
+    private isTypeaHeadFieldType(type: string): boolean {
+        return type === 'typeahead' ? true : false;
+    }
+
+    private getFieldNameWithLabel(name: string): string {
+        return name += '_LABEL';
+    }
+
+    private getProcessVariableValue(field: any, form: FormModel) {
+        let fieldName = field.name;
+        if (this.isTypeaHeadFieldType(field.type)) {
+            fieldName = this.getFieldNameWithLabel(field.id);
+        }
+        return this.findProcessVariableValue(fieldName, form);
+    }
+
     private getVariablesValue(variableName: string, form: FormModel) {
         let variable = form.json.variables.find((currentVariable) => {
             return currentVariable.name === variableName;
         });
 
-        if (variable.type === 'boolean') {
-            return JSON.parse(variable.value);
+        if (variable) {
+            if (variable.type === 'boolean') {
+                return JSON.parse(variable.value);
+            }
+
+            return variable.value;
         }
 
-        return variable.value;
+        return null;
+    }
+
+    private findProcessVariableValue(variableName: string, form: FormModel) {
+        if (form.processVariables) {
+            const variable = form.processVariables.find((currentVariable) => {
+                return currentVariable.name === variableName;
+            });
+
+            if (variable) {
+                return variable.type === 'boolean' ? JSON.parse(variable.value) : variable.value;
+            }
+        }
+
+        return undefined;
     }
 
     private containerFactory(json: any, form: FormModel): void {

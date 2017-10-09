@@ -22,12 +22,12 @@
  *
  * @returns {TaskDetailsModel} .
  */
-import { User } from './user.model';
+import { LightUserRepresentation } from 'ng2-alfresco-core';
 
 export class TaskDetailsModel {
     id: string;
     name: string;
-    assignee: User;
+    assignee: LightUserRepresentation;
     priority: number;
     adhocTaskCanBeReassigned: number;
     category: string;
@@ -42,7 +42,7 @@ export class TaskDetailsModel {
     managerOfCandidateGroup: boolean;
     memberOfCandidateGroup: boolean;
     memberOfCandidateUsers: boolean;
-    involvedPeople: User [];
+    involvedPeople: LightUserRepresentation [];
     parentTaskId: string;
     parentTaskName: string;
     processDefinitionCategory: string;
@@ -62,7 +62,7 @@ export class TaskDetailsModel {
             this.id = obj.id || null;
             this.name = obj.name || null;
             this.priority = obj.priority;
-            this.assignee = obj.assignee ? new User(obj.assignee) : null;
+            this.assignee = obj.assignee ? new LightUserRepresentation(obj.assignee) : null;
             this.adhocTaskCanBeReassigned = obj.adhocTaskCanBeReassigned;
             this.category = obj.category || null;
             this.created = obj.created || null;
@@ -103,5 +103,9 @@ export class TaskDetailsModel {
         }
 
         return fullName.trim();
+    }
+
+    isCompleted(): boolean {
+        return !!this.endDate;
     }
 }

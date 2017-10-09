@@ -36,6 +36,9 @@ export class TaskHeaderComponent implements OnChanges {
     @Output()
     claim: EventEmitter<any> = new EventEmitter<any>();
 
+    @Output()
+    unclaim: EventEmitter<any> = new EventEmitter<any>();
+
     properties: CardViewItem [];
     inEdit: boolean = false;
 
@@ -47,15 +50,18 @@ export class TaskHeaderComponent implements OnChanges {
         this.refreshData();
     }
 
+    /**
+     * Refresh the card data
+     */
     refreshData() {
         if (this.taskDetails) {
-            let valueMap = new Map([[this.taskDetails.processInstanceId, this.taskDetails.processDefinitionName]]);
+            const parentInfoMap = this.getParentInfo();
             this.properties = [
                 new CardViewTextItemModel({ label: 'Assignee', value: this.taskDetails.getFullName(), key: 'assignee', default: 'No assignee', clickable: !this.isCompleted() } ),
                 new CardViewTextItemModel({ label: 'Status', value: this.getTaskStatus(), key: 'status' }),
                 new CardViewDateItemModel({ label: 'Due Date', value: this.taskDetails.dueDate, key: 'dueDate', default: 'No date', editable: true }),
                 new CardViewTextItemModel({ label: 'Category', value: this.taskDetails.category, key: 'category', default: 'No category' }),
-                new CardViewMapItemModel({ label: 'Parent name', value: valueMap, key: 'parentName', default: 'No parent name', clickable: true  }),
+                new CardViewMapItemModel({ label: 'Parent name', value: parentInfoMap, key: 'parentName', default: 'None', clickable: true  }),
                 new CardViewTextItemModel({ label: 'Created By', value: this.taskDetails.getFullName(), key: 'created-by', default: 'No assignee' }),
                 new CardViewDateItemModel({ label: 'Created', value: this.taskDetails.created, key: 'created' }),
                 new CardViewTextItemModel({ label: 'Id', value: this.taskDetails.id, key: 'id' }),
@@ -72,18 +78,41 @@ export class TaskHeaderComponent implements OnChanges {
         }
     }
 
+    /**
+     * Return the process parent information
+     */
+    getParentInfo() {
+        if (this.taskDetails.processInstanceId && this.taskDetails.processDefinitionName) {
+            return new Map([[this.taskDetails.processInstanceId, this.taskDetails.processDefinitionName]]);
+        }
+    }
+
+    /**
+     * Does the task have an assignee
+     */
     public hasAssignee(): boolean {
         return (this.taskDetails && this.taskDetails.assignee) ? true : false;
     }
 
+    /**
+     * Is the task assigned to the currently loggedin user
+     */
     isAssignedToMe(): boolean {
         return this.taskDetails.assignee ? true : false;
     }
 
+    /**
+     * Returns task's status
+     */
     getTaskStatus(): string {
-        return this.isCompleted() ? 'Completed' : 'Running';
+        return (this.taskDetails && this.taskDetails.isCompleted()) ? 'Completed' : 'Running';
     }
 
+    /**
+     * Claim task
+     *
+     * @param taskId
+     */
     claimTask(taskId: string) {
         this.activitiTaskService.claimTask(taskId).subscribe(
             (res: any) => {
@@ -92,6 +121,22 @@ export class TaskHeaderComponent implements OnChanges {
             });
     }
 
+    /**
+     * Unclaim task
+     *
+     * @param taskId
+     */
+    unclaimTask(taskId: string) {
+        this.activitiTaskService.unclaimTask(taskId).subscribe(
+            (res: any) => {
+                this.logService.info('Task unclaimed');
+                this.unclaim.emit(taskId);
+            });
+    }
+
+    /**
+     * Returns true if the task is completed
+     */
     isCompleted() {
         return !!this.taskDetails.endDate;
     }

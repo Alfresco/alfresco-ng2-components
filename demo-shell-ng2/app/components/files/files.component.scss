@@ -1,0 +1,93 @@
+$minimumDocumentListWidth: 425px;
+
+.container {
+    margin: 10px;
+}
+
+@media only screen and (max-width: 640px) {
+    .container {
+        margin: 0;
+    }
+}
+
+.error-message {
+    text-align: left;
+}
+
+.error-message--text {
+    color: #d50000;
+}
+
+.adf-not-overlay-viewer {
+    height:900px;
+}
+
+adf-document-list ::ng-deep adf-datatable tr.is-selected .image-table-cell {
+    position: relative;
+}
+
+adf-document-list ::ng-deep adf-datatable tr.document-list__create {
+    background: green !important;
+}
+
+adf-document-list ::ng-deep adf-datatable tr.document-list__disable {
+    background: red !important;
+}
+
+adf-document-list ::ng-deep adf-datatable tr.is-selected .image-table-cell::before {
+    content: "\E876"; /* "done" */
+    font-family: "Material Icons";
+    font-size: 24px;
+    line-height: 32px;
+    text-align: center;
+    color: white;
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    top: 50%;
+    left: 50%;
+    margin-top: -16px;
+    margin-left: -12px;
+    border-radius: 100%;
+    background: #00bcd4;
+}
+
+.adf-demo-site-container-style {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    min-width: 200px;
+}
+
+.adf-content-service-settings {
+    padding: 16px;
+}
+
+.adf-files-toolbar {
+    & /deep/ md-toolbar-row {
+        white-space: initial;
+
+        & /deep/ a.adf-breadcrumb-item-anchor {
+            white-space: initial;
+        }
+    }
+}
+
+@media (max-width: $minimumDocumentListWidth) {
+    adf-document-list /deep/ adf-datatable  {
+        & /deep/ .adf-data-table-cell--fileSize {
+            display: none;
+        }
+    }
+
+    .adf-demo-site-container-style {
+        width: 100%;
+        display: block;
+
+        & /deep/ .adf-site-dropdown-list-element {
+            width: 100%;
+        }
+    }
+}
+
+

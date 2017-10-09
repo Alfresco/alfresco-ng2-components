@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { Location } from '@angular/common';
+import { SpyLocation } from '@angular/common/testing';
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
@@ -25,9 +27,9 @@ import { EventMock } from '../assets/event.mock';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { ImgViewerComponent } from './imgViewer.component';
 import { MediaPlayerComponent } from './mediaPlayer.component';
-import { NotSupportedFormatComponent } from './notSupportedFormat.component';
 import { PdfViewerComponent } from './pdfViewer.component';
 import { TxtViewerComponent } from './txtViewer.component';
+import { UnknownFormatComponent } from './unknown-format/unknown-format.component';
 import { ViewerComponent } from './viewer.component';
 
 declare let jasmine: any;
@@ -49,12 +51,13 @@ describe('ViewerComponent', () => {
                 ViewerComponent,
                 PdfViewerComponent,
                 TxtViewerComponent,
-                NotSupportedFormatComponent,
                 MediaPlayerComponent,
-                ImgViewerComponent
+                ImgViewerComponent,
+                UnknownFormatComponent
             ],
             providers: [
-                RenderingQueueServices
+                RenderingQueueServices,
+                { provide: Location, useClass: SpyLocation }
             ]
         }).compileComponents();
     }));
@@ -128,10 +131,6 @@ describe('ViewerComponent', () => {
                 expect(element.querySelector('header')).toBeNull();
             });
 
-            it('should Close button be not present if is not overlay mode', () => {
-                expect(element.querySelector('.adf-viewer-close-button')).toBeNull();
-            });
-
             it('should Esc button not hide the viewer if is not overlay mode', () => {
                 EventMock.keyDown(27);
                 fixture.detectChanges();
@@ -182,7 +181,7 @@ describe('ViewerComponent', () => {
         });
     });
 
-    describe('Exteznsion Type Test', () => {
+    describe('Extension Type Test', () => {
         it('should  extension file pdf  be loaded', (done) => {
             component.urlFile = 'base/src/assets/fake-test-file.pdf';
 
@@ -243,13 +242,13 @@ describe('ViewerComponent', () => {
             });
         });
 
-        it('should the not supported div be loaded if the file is a not supported extension', (done) => {
+        it('should display [unknown format] for unsupported extensions', (done) => {
             component.urlFile = 'fake-url-file.unsupported';
             component.mimeType = '';
 
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
-                expect(element.querySelector('adf-not-supported-format')).not.toBeNull();
+                expect(element.querySelector('adf-viewer-unknown-format')).toBeDefined();
                 done();
             });
         });
@@ -330,17 +329,6 @@ describe('ViewerComponent', () => {
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('adf-media-player')).not.toBeNull();
-                done();
-            });
-        });
-
-        it('should not display the media player if the file identified by mimetype is a media but with not supported extension', (done) => {
-            component.urlFile = 'content';
-            component.mimeType = 'video/avi';
-
-            component.ngOnChanges(null).then(() => {
-                fixture.detectChanges();
-                expect(element.querySelector('adf-media-player')).toBeNull();
                 done();
             });
         });

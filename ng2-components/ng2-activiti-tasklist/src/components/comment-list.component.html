@@ -3,22 +3,21 @@
     (rowClick)="selectComment($event)" *ngIf="hasComments()">
 
     <data-columns>
-        <data-column key="createdBy">
+        <data-column key="createdBy" title="{{'TASK_DETAILS.COMMENTS.CREATED_BY_HEADER' | translate }}">
             <ng-template let-entry="$implicit">
                 <div id="comment-user-icon"
                 class="adf-comment-img-container">
                     <div
-                        *ngIf="!entry.row.obj.createdBy.userImage" class="adf-comment-user-icon">
+                        *ngIf="!entry.row.obj.createdBy.pictureId" class="adf-comment-user-icon">
                             {{getUserShortName(entry.row.obj.createdBy)}}</div>
                     <div>
-                        <img *ngIf="entry.row.obj.createdBy.userImage" class="adf-people-img"
-                            [src]="entry.row.obj.createdBy.userImage"
-                            (error)="onErrorImageLoad(entry.row.obj.createdBy)"/>
+                        <img *ngIf="entry.row.obj.createdBy.pictureId" class="adf-people-img"
+                            [src]="peopleProcessService.getUserImage(entry.row.obj.createdBy)"/>
                     </div>
                 </div>
             </ng-template>
         </data-column>
-        <data-column key="message">
+        <data-column key="message" title="{{'TASK_DETAILS.COMMENTS.MESSAGE_HEADER' | translate }}">
             <ng-template let-entry="$implicit">
                 <div class="adf-comment-contents">
                     <div id="comment-user" class="adf-comment-user-name">

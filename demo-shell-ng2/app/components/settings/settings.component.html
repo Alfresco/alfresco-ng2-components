@@ -10,7 +10,7 @@
             <md-card-subtitle>{{'SETTINGS.CS-HOST' | translate }}</md-card-subtitle>
 
             <md-input-container class="full-width">
-                <md-icon mdPrefix>link</md-icon>
+                <md-icon class="adf-settings-link-icon" mdPrefix>link</md-icon>
                 <input mdInput
                        [formControl]="urlFormControlEcm"
                        data-automation-id="ecmHost"
@@ -29,7 +29,7 @@
             <md-card-subtitle>{{'SETTINGS.BP-HOST' | translate }}</md-card-subtitle>
 
             <md-input-container class="full-width">
-                <md-icon mdPrefix>link</md-icon>
+                <md-icon class="adf-settings-link-icon" mdPrefix>link</md-icon>
                 <input mdInput
                        [formControl]="urlFormControlBpm"
                        data-automation-id="bpmHost"
@@ -45,13 +45,13 @@
             </md-input-container>
 
         </md-card-content>
-        <md-card-actions>
+        <md-card-actions class="adf-settings-actions">
 
             <button md-button onclick="window.history.back()" color="primary">
                 {{'SETTINGS.BACK' | translate }}
             </button>
 
-            <button md-button onclick="window.location.href = '/'" color="primary">
+            <button md-raised-button (click)="save($event)" [disabled]="urlFormControlBpm.hasError('pattern') || urlFormControlEcm.hasError('pattern')" color="primary">
                 {{'SETTINGS.APPLY' | translate }}
             </button>
 

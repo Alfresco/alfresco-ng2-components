@@ -23,7 +23,9 @@ module.exports = function (config) {
       {pattern: 'karma-test-shim.js', watched: false},
       {pattern: './src/assets/**/*.*', included: false, served: true, watched: false},
       {pattern: './src/i18n/**/*.*', included: false, served: true, watched: false},
-      {pattern: './src/**/*.ts', included: false, served: true, watched: false}
+      {pattern: './src/**/*.ts', included: false, served: true, watched: false},
+      {pattern: './config/app.config.json', included: false, served: true, watched: false}
+
     ],
 
     webpack: (config.mode === 'coverage') ? require('./webpack.coverage') : require('./webpack.test'),
@@ -33,6 +35,10 @@ module.exports = function (config) {
     },
 
     port: 9876,
+
+    proxies: {
+      '/app.config.json': '/base/config/app.config.json'
+    },
 
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG

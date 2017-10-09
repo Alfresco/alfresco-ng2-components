@@ -115,7 +115,7 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
     parse(value: any, parseFormat: any): Moment {
         let m = moment(value, parseFormat, true);
         if (!m.isValid()) {
-            m = moment(value);
+            m = moment(value, this.overrideDisplyaFormat);
         }
         if (m.isValid()) {
             // if user omits year, it defaults to 2001, so check for that issue.
@@ -190,4 +190,19 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
             return date;
         }
     }
+
+    isDateInstance(date: any) {
+        let isValidDateInstance = false;
+
+        if (date) {
+            isValidDateInstance = date._isAMomentObject;
+        }
+
+        return isValidDateInstance;
+    }
+
+    isValid(date: Moment): boolean {
+        return date.isValid();
+    }
+
 }

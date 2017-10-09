@@ -19,9 +19,11 @@ import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AppConfigService, CardViewUpdateService, CoreModule, TranslationService } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Rx';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
 
+import { LightUserRepresentation } from '../../../ng2-alfresco-core/src/models/user-process.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { taskDetailsMock } from './../assets/task-details.mock';
 import { TaskListService } from './../services/tasklist.service';
@@ -38,7 +40,7 @@ describe('TaskHeaderComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule
             ],
             declarations: [
                 TaskHeaderComponent
@@ -122,12 +124,55 @@ describe('TaskHeaderComponent', () => {
         expect(datePicker).not.toBeNull('Datepicker should be in DOM');
     });
 
-    it('should display the claim button if no assignee', () => {
-        component.taskDetails.assignee = null;
-        component.ngOnChanges({});
-        fixture.detectChanges();
-        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
-        expect(valueEl.nativeElement.innerText).toBe('TASK_DETAILS.BUTTON.CLAIM');
+    describe('Claiming', () => {
+
+        it('should display the claim button if no assignee', () => {
+            component.taskDetails.assignee = null;
+
+            component.ngOnChanges({});
+            fixture.detectChanges();
+
+            let claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
+            expect(claimButton.nativeElement.innerText).toBe('TASK_DETAILS.BUTTON.CLAIM');
+        });
+    });
+
+    describe('Unclaim', () => {
+
+        const batman = new LightUserRepresentation({ id : 1, email: 'bruce.wayne@gotham.com', firstName: 'Bruce', lastName: 'Wayne', userImage: 'batman.jpg' });
+        let taskListService;
+
+        beforeEach(() => {
+            taskListService = TestBed.get(TaskListService);
+            component.taskDetails.assignee = batman;
+            component.taskDetails.id = 'repair-batmobile';
+            fixture.detectChanges();
+        });
+
+        it('should display the requeue button if there is assignee', () => {
+            let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
+            expect(unclaimButton.nativeElement.innerText).toBe('TASK_DETAILS.BUTTON.UNCLAIM');
+        });
+
+        it('should call the service\'s unclaim method on unclaiming' , () => {
+            spyOn(taskListService, 'unclaimTask');
+
+            let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
+            unclaimButton.triggerEventHandler('click', {});
+
+            expect(taskListService.unclaimTask).toHaveBeenCalledWith('repair-batmobile');
+        });
+
+        it('should trigger the unclaim event on successfull unclaiming', () => {
+            let unclaimed: boolean = false;
+            component.unclaim.subscribe(() => { unclaimed = true; });
+            spyOn(taskListService, 'unclaimTask').and.returnValue(Observable.of(true));
+
+            let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
+            unclaimButton.triggerEventHandler('click', {});
+
+            expect(unclaimed).toBeTruthy();
+        });
     });
 
     it('should display due date', () => {
@@ -152,6 +197,23 @@ describe('TaskHeaderComponent', () => {
         fixture.detectChanges();
         let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-formName"] .adf-property-value'));
         expect(valueEl.nativeElement.innerText).toBe('test form');
+    });
+
+    it('should display the default parent value if is undefined', () => {
+        component.taskDetails.processInstanceId = null;
+        component.ngOnChanges({});
+        fixture.detectChanges();
+        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-parentName"] .adf-property-value'));
+        expect(valueEl.nativeElement.innerText.trim()).toEqual('None');
+    });
+
+    it('should display the Parent name value', () => {
+        component.taskDetails.processInstanceId = '1';
+        component.taskDetails.processDefinitionName = 'Parent Name';
+        component.ngOnChanges({});
+        fixture.detectChanges();
+        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-parentName"] .adf-property-value'));
+        expect(valueEl.nativeElement.innerText.trim()).toEqual('Parent Name');
     });
 
     it('should not display form name if no form name provided', () => {

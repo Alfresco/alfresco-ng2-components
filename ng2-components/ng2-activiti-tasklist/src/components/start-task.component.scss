@@ -5,7 +5,6 @@
 
     .adf-new-task-heading {
         padding: 12px 20px;
-        font-family: Muli;
         font-weight: bold;
         border-bottom: 1px solid #eee;
         font-size: 18px;
@@ -25,7 +24,6 @@
 
     .adf-new-task-footer {
         padding: 4px;
-        font-family: Muli;
         font-size: 18px;
         border-top: 1px solid #eee;
         float: left;
@@ -41,58 +39,68 @@
         width: 90%;
     }
 
-    .adf {
+    .adf-md-select {
+        padding-top: 0px;
+    }
 
-        &-error-text-container {
-            position: absolute;
-            width: 81%;
-            height: 20px;
-            margin-top: 30px;
-        }
-
-        &-error-text {
-            padding: 1px;
-            height: 16px;
-            font-size: 12px;
-            line-height: 1.33;
-            float: left;
-            color: mat-color($warn);
-        }
-
-        &-error-icon {
-            float: right;
-            font-size: 17px;
-            color: mat-color($warn);
-        }
-
-        &-label {
-            color: rgb(186, 186, 186);;
-        }
-
-        &-invalid {
-
-            .mat-input-underline {
-                background-color: #f44336 !important;
+    adf-start-task {
+        .adf {
+    
+            &-start-task-input-container .mat-input-wrapper {
+                padding-top: 8px;
             }
-
-            .adf-file {
-                border-color: mat-color($warn);
+    
+            &-error-text-container {
+                position: absolute;
+                width: 81%;
+                height: 20px;
+                margin-top: 30px;
             }
-
-            .mat-input-prefix {
+    
+            &-error-text {
+                padding: 1px;
+                height: 16px;
+                font-size: 12px;
+                line-height: 1.33;
+                float: left;
                 color: mat-color($warn);
             }
-
-            .adf-input {
-                border-color: mat-color($warn);
-            }
-
-            .adf-label {
+    
+            &-error-icon {
+                float: right;
+                font-size: 17px;
                 color: mat-color($warn);
-                &:after {
-                    background-color: mat-color($warn);
+            }
+    
+            &-label {
+                color: rgb(186, 186, 186);;
+            }
+    
+            &-invalid {
+    
+                .mat-input-underline {
+                    background-color: #f44336 !important;
+                }
+    
+                .adf-file {
+                    border-color: mat-color($warn);
+                }
+    
+                .mat-input-prefix {
+                    color: mat-color($warn);
+                }
+    
+                .adf-input {
+                    border-color: mat-color($warn);
+                }
+    
+                .adf-label {
+                    color: mat-color($warn);
+                    &:after {
+                        background-color: mat-color($warn);
+                    }
                 }
             }
-        }
+        }            
     }
 }

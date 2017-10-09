@@ -15,17 +15,27 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MdDatepicker } from '@angular/material';
+import { DateAdapter, MD_DATE_FORMATS } from '@angular/material';
+import * as moment from 'moment';
+import { Moment } from 'moment';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
+import { MOMENT_DATE_FORMATS, MomentDateAdapter } from '../../utils/momentDateAdapter';
 
 @Component({
+    providers: [
+        {provide: DateAdapter, useClass: MomentDateAdapter},
+        {provide: MD_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS}],
     selector: 'adf-card-view-dateitem',
     templateUrl: './card-view-dateitem.component.html',
     styleUrls: ['./card-view-dateitem.component.scss']
 })
-export class CardViewDateItemComponent {
+export class CardViewDateItemComponent implements OnInit {
+
+    public SHOW_FORMAT: string = 'MMM DD YY';
+
     @Input()
     property: CardViewDateItemModel;
 
@@ -35,9 +45,22 @@ export class CardViewDateItemComponent {
     @ViewChild(MdDatepicker)
     public datepicker: MdDatepicker<any>;
 
-    constructor(private cardViewUpdateService: CardViewUpdateService) {}
+    valueDate: Moment;
 
-    isEditble() {
+    constructor(private cardViewUpdateService: CardViewUpdateService, public dateAdapter: DateAdapter<Moment>) {
+    }
+
+    ngOnInit() {
+        let momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
+        momentDateAdapter.overrideDisplyaFormat = this.SHOW_FORMAT;
+
+        if (this.property.value) {
+            this.valueDate = moment(this.property.value, this.SHOW_FORMAT);
+        }
+
+    }
+
+    isEditable() {
         return this.editable && this.property.editable;
     }
 
@@ -45,7 +68,14 @@ export class CardViewDateItemComponent {
         this.datepicker.open();
     }
 
-    dateChanged(changed) {
-        this.cardViewUpdateService.update(this.property, { [this.property.key]: changed });
+    onDateChanged(newDateValue) {
+        if (newDateValue) {
+            let momentDate = moment(newDateValue.value, this.SHOW_FORMAT, true);
+            if (momentDate.isValid()) {
+                this.valueDate = momentDate;
+                this.cardViewUpdateService.update(this.property, {[this.property.key]: momentDate.toDate()});
+            }
+        }
     }
+
 }

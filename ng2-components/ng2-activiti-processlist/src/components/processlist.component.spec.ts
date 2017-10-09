@@ -39,8 +39,8 @@ describe('ProcessInstanceListComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
-                DataTableModule.forRoot(),
+                CoreModule,
+                DataTableModule,
                 MdProgressSpinnerModule
             ],
             declarations: [ ProcessInstanceListComponent ],
@@ -277,6 +277,40 @@ describe('ProcessInstanceListComponent', () => {
 
         component.onRowClick(rowEvent);
     });
+
+    it('should emit row click event on Enter', (done) => {
+        let prevented = false;
+        let keyEvent = new CustomEvent('Keyboard event', { detail: {
+            keyboardEvent: { key: 'Enter' },
+            row: new ObjectDataRow({ id: 999 })
+        }});
+
+        spyOn(keyEvent, 'preventDefault').and.callFake(() => prevented = true);
+
+        component.rowClick.subscribe(taskId => {
+            expect(taskId).toEqual(999);
+            expect(component.getCurrentId()).toEqual(999);
+            expect(prevented).toBeTruthy();
+            done();
+        });
+
+        component.onRowKeyUp(keyEvent);
+    });
+
+    it('should NOT emit row click event on every other key', async(() => {
+        let triggered = false;
+        let keyEvent = new CustomEvent('Keyboard event', { detail: {
+            keyboardEvent: { key: 'Space' },
+            row: new ObjectDataRow({ id: 999 })
+        }});
+
+        component.rowClick.subscribe(() => triggered = true);
+        component.onRowKeyUp(keyEvent);
+
+        fixture.whenStable().then(() => {
+            expect(triggered).toBeFalsy();
+        });
+    }));
 
     describe('component changes', () => {
 

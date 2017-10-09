@@ -1,0 +1,17 @@
+@import '../theming';
+@import './all-theme';
+
+$custom-typography: mat-typography-config(
+    $font-family: 'Muli, Roboto, "Helvetica Neue", sans-serif'
+);
+@include angular-material-typography($custom-typography);
+
+@include mat-core();
+
+$primary: mat-palette($alfresco-ecm-cyan);
+$accent:  mat-palette($alfresco-accent-purple);
+$warn:    mat-palette($alfresco-warn);
+$theme:   mat-light-theme($primary, $accent, $warn);
+
+@include angular-material-theme($theme);
+@include alfresco-material-theme($theme);

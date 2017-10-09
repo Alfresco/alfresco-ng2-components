@@ -15,19 +15,20 @@
  * limitations under the License.
  */
 
-import { APP_INITIALIZER, Injectable, ModuleWithProviders, NgModule } from '@angular/core';
+import { APP_INITIALIZER, Injectable, NgModule } from '@angular/core';
 import { Http, HttpModule } from '@angular/http';
 import { ObjectUtils } from '../utils/object-utils';
 
 @Injectable()
 export class AppConfigService {
 
-    private config: any = {
-        'ecmHost': 'http://{hostname}:{port}/ecm',
-        'bpmHost': 'http://{hostname}:{port}/bpm'
+    config: any = {
+        application: {
+            name: 'Alfresco ADF Application'
+        },
+        ecmHost: 'http://{hostname}:{port}/ecm',
+        bpmHost: 'http://{hostname}:{port}/bpm'
     };
-
-    configFile: string = null;
 
     constructor(private http: Http) {}
 
@@ -45,18 +46,14 @@ export class AppConfigService {
         return <T> result;
     }
 
-    load(resource: string = 'app.config.json', values?: {}): Promise<any> {
-        this.configFile = resource;
+    load(): Promise<any> {
         return new Promise(resolve => {
-            this.config = Object.assign({}, values || {});
-            this.http.get(resource).subscribe(
+            this.http.get('app.config.json').subscribe(
                 data => {
                     this.config = Object.assign({}, this.config, data.json() || {});
                     resolve(this.config);
                 },
                 () => {
-                    const errorMessage = `Error loading ${resource}`;
-                    console.log(errorMessage);
                     resolve(this.config);
                 }
             );
@@ -75,17 +72,8 @@ export class AppConfigService {
     }
 }
 
-export function InitAppConfigServiceProvider(resource: string, values?: {}): any {
-    return {
-        provide: APP_INITIALIZER,
-        useFactory: (configService: AppConfigService) => {
-            return () => configService.load(resource, values);
-        },
-        deps: [
-            AppConfigService
-        ],
-        multi: true
-    };
+export function startupServiceFactory(configService: AppConfigService): Function {
+    return () => configService.load();
 }
 
 @NgModule({
@@ -93,17 +81,15 @@ export function InitAppConfigServiceProvider(resource: string, values?: {}): any
         HttpModule
     ],
     providers: [
-        AppConfigService
+        AppConfigService,
+        {
+            provide: APP_INITIALIZER,
+            useFactory: startupServiceFactory,
+            deps: [
+                AppConfigService
+            ],
+            multi: true
+        }
     ]
 })
-export class AppConfigModule {
-    static forRoot(resource: string, values?: {}): ModuleWithProviders {
-        return {
-            ngModule: AppConfigModule,
-            providers: [
-                AppConfigService,
-                InitAppConfigServiceProvider(resource, values)
-            ]
-        };
-    }
-}
+export class AppConfigModule {}

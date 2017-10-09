@@ -17,6 +17,7 @@
 
 import { async, TestBed } from '@angular/core/testing';
 import { AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
+import { LightUserRepresentation } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import {
@@ -43,7 +44,6 @@ import { TranslationMock } from '../assets/translation.service.mock';
 import { Comment } from '../models/comment.model';
 import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
-import { User } from '../models/user.model';
 import { TaskListService } from './tasklist.service';
 
 declare let jasmine: any;
@@ -55,7 +55,7 @@ describe('Activiti TaskList Service', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule
             ],
             providers: [
                 TaskListService,
@@ -679,7 +679,7 @@ describe('Activiti TaskList Service', () => {
                     expect(res.category).toEqual('3');
                     expect(res.created).not.toEqual('');
                     expect(res.adhocTaskCanBeReassigned).toBe(true);
-                    expect(res.assignee).toEqual(new User(fakeUser2));
+                    expect(res.assignee).toEqual(new LightUserRepresentation(fakeUser2));
                     expect(res.involvedPeople).toEqual([fakeUser1]);
                     done();
                 }
@@ -712,7 +712,7 @@ describe('Activiti TaskList Service', () => {
                     expect(res.category).toEqual('3');
                     expect(res.created).not.toEqual('');
                     expect(res.adhocTaskCanBeReassigned).toBe(true);
-                    expect(res.assignee).toEqual(new User(fakeUser2));
+                    expect(res.assignee).toEqual(new LightUserRepresentation(fakeUser2));
                     expect(res.involvedPeople).toEqual([fakeUser1]);
                     done();
                 }
@@ -738,6 +738,22 @@ describe('Activiti TaskList Service', () => {
             let taskId = '111';
 
             service.claimTask(taskId).subscribe(
+                (res: any) => {
+                    done();
+                }
+            );
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 200,
+                contentType: 'application/json',
+                responseText: JSON.stringify({})
+            });
+        });
+
+        it('should unclaim a task', (done) => {
+            let taskId = '111';
+
+            service.unclaimTask(taskId).subscribe(
                 (res: any) => {
                     done();
                 }

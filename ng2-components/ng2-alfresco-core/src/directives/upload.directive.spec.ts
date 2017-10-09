@@ -138,4 +138,15 @@ describe('UploadDirective', () => {
         directive.onDrop(event);
     });
 
+    it('should reset input value after file upload', () => {
+        directive.enabled = true;
+        directive.mode = ['click'];
+        const files = [
+            <FileInfo> {}
+        ];
+        const event = {'currentTarget': {'files': files}, 'target': {'value': '/testpath/document.pdf'}};
+
+        directive.onSelectFiles(event);
+        expect(event.target.value).toBe('');
+    });
 });

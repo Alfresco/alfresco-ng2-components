@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, HostListener, Input, OnChanges, ViewEncapsulation } from '@angular/core';
+import { Component, HostListener, Input, OnChanges, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 
@@ -32,7 +32,7 @@ declare let PDFJS: any;
     host: { 'class': 'adf-pdf-viewer' },
     encapsulation: ViewEncapsulation.None
 })
-export class PdfViewerComponent implements OnChanges {
+export class PdfViewerComponent implements OnChanges, OnDestroy {
 
     @Input()
     urlFile: string;
@@ -45,6 +45,9 @@ export class PdfViewerComponent implements OnChanges {
 
     @Input()
     showToolbar: boolean = true;
+
+    @Input()
+    allowThumbnails = false;
 
     currentPdfDocument: any;
     page: number;
@@ -62,6 +65,8 @@ export class PdfViewerComponent implements OnChanges {
 
     constructor(private renderingQueueServices: RenderingQueueServices,
                 private logService: LogService) {
+        // needed to preserve "this" context when setting as a global document event listener
+        this.onDocumentScroll = this.onDocumentScroll.bind(this);
     }
 
     ngOnChanges(changes) {
@@ -127,9 +132,7 @@ export class PdfViewerComponent implements OnChanges {
         let documentContainer = document.getElementById('viewer-pdf-container');
         let viewer: any = document.getElementById('viewer-viewerPdf');
 
-        window.document.addEventListener('scroll', (event) => {
-            this.watchScroll(event.target);
-        }, true);
+        window.document.addEventListener('scroll', this.onDocumentScroll, true);
 
         this.pdfViewer = new PDFJS.PDFViewer({
             container: documentContainer,
@@ -140,6 +143,10 @@ export class PdfViewerComponent implements OnChanges {
         this.renderingQueueServices.setViewer(this.pdfViewer);
 
         this.pdfViewer.setDocument(pdfDocument);
+    }
+
+    ngOnDestroy() {
+        window.document.removeEventListener('scroll', this.onDocumentScroll, true);
     }
 
     /**
@@ -394,6 +401,12 @@ export class PdfViewerComponent implements OnChanges {
             this.nextPage();
         } else if (key === 37) {// left arrow
             this.previousPage();
+        }
+    }
+
+    onDocumentScroll(event: Event) {
+        if (event && event.target) {
+            this.watchScroll(event.target);
         }
     }
 

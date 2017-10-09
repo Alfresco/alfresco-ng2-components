@@ -1,9 +1,9 @@
 <label>{{field.nameKey | translate}}</label><br>
 <div [formGroup]="dateRange">
-    <small *ngIf="isStartDateGreaterThanEndDate()" class="adf-text-danger">
+    <small *ngIf="isStartDateGreaterThanEndDate()" class="adf-date-range-analytics-text-danger">
        {{'DATE-WIDGET.MESSAGES.START-LESS-THAN-END-DATE' | translate}}
     </small>
-    <small *ngIf="isStartDateEmpty()" class="adf-text-danger">
+    <small *ngIf="isStartDateEmpty()" class="adf-date-range-analytics-text-danger">
        {{'DATE-WIDGET.MESSAGES.START-DATE-REQUIRED' | translate}}
     </small>
 
@@ -15,39 +15,39 @@
                             [min]="minDate"
                             [max]="maxDate"
                             formControlName="startDate"
-                            [mdDatepicker]="startDatePicker"
+                            [mdDatepicker]="startDate"
                             [value]="startDatePicker"
                             (keydown)="true"
+                            (dateChange)="onGroupValueChanged()"
                             placeholder="{{'DATE-WIDGET.START-DATE' | translate}}"
                             id="startDate_id"
                             required>
-                        <button mdSuffix [mdDatepickerToggle]="startDatePicker"></button>
+                        <md-datepicker-toggle mdSuffix [for]="startDate" ></md-datepicker-toggle>
                     </md-input-container>
                     <md-datepicker
-                        #startDatePicker
-                        [touchUi]="true"
-                        (selectedChanged)="onGroupValueChanged()">
+                        #startDate
+                        [touchUi]="true">
                     </md-datepicker>
                 </md-grid-tile>
                 <md-grid-tile>
-                    <md-input-container class="adf-start-task-input-container">
+                    <md-input-container>
                         <input
                             mdInput
                             [min]="minDate"
                             [max]="maxDate"
                             formControlName="endDate"
-                            [mdDatepicker]="endDatePicker"
+                            [mdDatepicker]="endDate"
                             [value]="endDatePicker"
                             (keydown)="true"
+                            (dateChange)="onGroupValueChanged()"
                             placeholder="{{'DATE-WIDGET.END-DATE' | translate}}"
                             id="endDate_id"
                             required>
-                        <button mdSuffix [mdDatepickerToggle]="endDatePicker"></button>
+                        <md-datepicker-toggle mdSuffix [for]="endDate" ></md-datepicker-toggle>
                     </md-input-container>
                     <md-datepicker
-                        #endDatePicker
-                        [touchUi]="true"
-                        (selectedChanged)="onGroupValueChanged()">
+                        #endDate
+                        [touchUi]="true">
                     </md-datepicker>
                 </md-grid-tile>
             </md-grid-list>

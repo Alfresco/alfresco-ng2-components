@@ -35,9 +35,6 @@ import { DataTableCellComponent } from './datatable-cell.component';
 export class LocationCellComponent extends DataTableCellComponent implements OnInit {
 
     @Input()
-    tooltip: string = '';
-
-    @Input()
     link: any[];
 
     @Input()
@@ -50,7 +47,10 @@ export class LocationCellComponent extends DataTableCellComponent implements OnI
             if (path) {
                 this.value = path;
                 this.displayText = path.name.split('/').pop();
-                this.tooltip = path.name;
+
+                if (!this.tooltip) {
+                    this.tooltip = path.name;
+                }
 
                 const parent = path.elements[path.elements.length - 1];
                 this.link = [ this.column.format, parent.id ];

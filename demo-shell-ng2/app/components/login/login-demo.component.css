@@ -35,6 +35,6 @@
     }
 }
 
-.settings >>> .mat-slide-toggle-thumb-container {
+.settings ::ng-deep .mat-slide-toggle-thumb-container {
     cursor: pointer;
 }

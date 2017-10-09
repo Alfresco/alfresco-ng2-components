@@ -73,19 +73,19 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     showHeader: boolean = true;
 
     @Output()
-    rowClick: EventEmitter<DataRowEvent> = new EventEmitter<DataRowEvent>();
+    rowClick = new EventEmitter<DataRowEvent>();
 
     @Output()
-    rowDblClick: EventEmitter<DataRowEvent> = new EventEmitter<DataRowEvent>();
+    rowDblClick = new EventEmitter<DataRowEvent>();
 
     @Output()
-    showRowContextMenu: EventEmitter<DataCellEvent> = new EventEmitter<DataCellEvent>();
+    showRowContextMenu = new EventEmitter<DataCellEvent>();
 
     @Output()
-    showRowActionsMenu: EventEmitter<DataCellEvent> = new EventEmitter<DataCellEvent>();
+    showRowActionsMenu = new EventEmitter<DataCellEvent>();
 
     @Output()
-    executeRowAction: EventEmitter<DataRowActionEvent> = new EventEmitter<DataRowActionEvent>();
+    executeRowAction = new EventEmitter<DataRowActionEvent>();
 
     @Input()
     loading: boolean = false;
@@ -102,6 +102,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     private schema: DataColumn[] = [];
 
     private differ: any;
+    private rowMenuCache: object = {};
 
     private singleClickStreamSub: Subscription;
     private multiClickStreamSub: Subscription;
@@ -208,6 +209,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
 
     private initTable() {
         this.data = new ObjectDataTableAdapter(this.rows, this.schema);
+        this.rowMenuCache = {};
     }
 
     isTableEmpty() {
@@ -280,10 +282,32 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
         this.clickObserver.next(dataRowEvent);
     }
 
-    onKeyboardNavigate(row: DataRow, e: KeyboardEvent) {
+    onRowKeyUp(row: DataRow, e: KeyboardEvent) {
+        const event = new CustomEvent('row-keyup', {
+            detail: {
+                row: row,
+                keyboardEvent: e,
+                sender: this
+            },
+            bubbles: true
+        });
+
+        this.elementRef.nativeElement.dispatchEvent(event);
+
+        if (event.defaultPrevented) {
+            e.preventDefault();
+        } else {
+            if (e.key === 'Enter') {
+                this.onKeyboardNavigate(row, e);
+            }
+        }
+    }
+
+    private onKeyboardNavigate(row: DataRow, e: KeyboardEvent) {
         if (e) {
             e.preventDefault();
         }
+
         const event = new DataRowEvent(row, e, this);
 
         this.rowDblClick.emit(event);
@@ -375,9 +399,15 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
     }
 
     getRowActions(row: DataRow, col: DataColumn): any[] {
-        let event = new DataCellEvent(row, col, []);
-        this.showRowActionsMenu.emit(event);
-        return event.value.actions;
+        const id = row.getValue('id');
+
+        if (!this.rowMenuCache[id]) {
+            let event = new DataCellEvent(row, col, []);
+            this.showRowActionsMenu.emit(event);
+            this.rowMenuCache[id] = event.value.actions;
+        }
+
+        return this.rowMenuCache[id];
     }
 
     onExecuteRowAction(row: DataRow, action: any) {

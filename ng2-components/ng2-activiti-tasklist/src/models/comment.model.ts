@@ -22,15 +22,15 @@
  *
  * @returns {Comment} .
  */
-import { User } from './user.model';
+import { LightUserRepresentation } from 'ng2-alfresco-core';
 
 export class Comment {
     id: number;
     message: string;
     created: string;
-    createdBy: User;
+    createdBy: LightUserRepresentation;
 
-    constructor(id: number, message: string, created: string, createdBy: User) {
+    constructor(id: number, message: string, created: string, createdBy: LightUserRepresentation) {
         this.id = id;
         this.message = message;
         this.created = created;

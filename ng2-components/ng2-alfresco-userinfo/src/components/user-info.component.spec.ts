@@ -48,7 +48,7 @@ describe('User info component', () => {
         window['componentHandler'] = componentHandler;
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot(),
+                CoreModule,
                 MaterialModule
             ],
             declarations: [

@@ -50,7 +50,7 @@ describe('ContentColumnList', () => {
     }));
 
     beforeEach(() => {
-        documentList = TestBed.createComponent(DocumentListComponent).componentInstance;
+        documentList = (TestBed.createComponent(DocumentListComponent).componentInstance as DocumentListComponent);
         actionList = new ContentActionListComponent(documentList);
     });
 

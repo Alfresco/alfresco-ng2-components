@@ -17,67 +17,168 @@
 
 import { async, inject, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
-
-import { CookieServiceMock } from './../assets/cookie.service.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { AlfrescoSettingsService } from './alfresco-settings.service';
-import { AppConfigModule } from './app-config.service';
 import { AuthGuardEcm } from './auth-guard-ecm.service';
-import { AuthenticationService } from './authentication.service';
-import { CookieService } from './cookie.service';
-import { LogService } from './log.service';
-import { StorageService } from './storage.service';
-import { UserPreferencesService } from './user-preferences.service';
 
-describe('AuthGuardService ECM', () => {
+class RouterProvider {
+    navigate: Function = jasmine.createSpy('RouterProviderNavigate');
+}
 
-    beforeEach(async(() => {
+class AlfrescoApiServiceProvider {
+    private settings: any = {
+        validateTicket: true,
+        isLoggedIn: true
+    };
+
+    constructor(settings: any = {}) {
+        Object.assign(this.settings, settings);
+    }
+
+    getInstance() {
+        return {
+            ecmAuth: this.ecmAuth
+        };
+    }
+
+    private get ecmAuth() {
+        return {
+            validateTicket: this.validateTicket.bind(this),
+            isLoggedIn: this.isLoggedIn.bind(this)
+        };
+    }
+
+    private validateTicket() {
+        const { validateTicket } = this.settings;
+
+        return validateTicket
+            ? Promise.resolve('Valid!')
+            : Promise.reject('Invalid');
+    }
+
+    private isLoggedIn() {
+        return this.settings.isLoggedIn;
+    }
+}
+
+class TestConfig {
+    router: any;
+    guard: any;
+
+    private settings: any = {
+        validateTicket: true,
+        isLoggedIn: true
+    };
+
+    constructor(settings: any = {}) {
+        Object.assign(this.settings, settings);
+
         TestBed.configureTestingModule({
-            imports: [
-                AppConfigModule,
-                RouterTestingModule
-            ],
-            declarations: [
-            ],
             providers: [
-                AuthGuardEcm,
-                AlfrescoSettingsService,
-                AlfrescoApiService,
-                AuthenticationService,
-                StorageService,
-                UserPreferencesService,
-                { provide: CookieService, useClass: CookieServiceMock },
-                LogService
+                this.routerProvider,
+                this.alfrescoApiServiceProvider,
+                AuthGuardEcm
             ]
-        }).compileComponents();
-    }));
+        });
 
-    it('if the alfresco js api is logged in should canActivate be true',
-        async(inject([AuthGuardEcm, Router, AlfrescoSettingsService, StorageService, AuthenticationService], (auth, router, settingsService, storage, authService) => {
-            spyOn(router, 'navigate');
+        inject([ AuthGuardEcm, Router ], (guard: AuthGuardEcm, router: Router) => {
+            this.guard = guard;
+            this.router = router;
+        })();
+    }
 
-            authService.isEcmLoggedIn = () => {
-                return true;
-            };
+    private get routerProvider() {
+        return {
+            provide: Router,
+            useValue: new RouterProvider()
+        };
+    }
 
-            expect(auth.canActivate()).toBeTruthy();
-            expect(router.navigate).not.toHaveBeenCalled();
-        }))
-    );
+    private get alfrescoApiServiceProvider () {
+        const { validateTicket, isLoggedIn } = this.settings;
 
-    it('if the alfresco js api is NOT logged in should canActivate be false',
-        async(inject([AuthGuardEcm, Router, AlfrescoSettingsService, StorageService, AuthenticationService], (auth, router, settingsService, storage, authService) => {
+        return {
+            provide: AlfrescoApiService,
+            useValue: new AlfrescoApiServiceProvider({
+                validateTicket,
+                isLoggedIn
+            })
+        };
+    }
 
-            spyOn(router, 'navigate');
+    get navigateSpy() {
+        return this.router.navigate;
+    }
+}
 
-            authService.isEcmLoggedIn = () => {
-                return false;
-            };
+describe('CanActivateLoggedIn', () => {
+    describe('user is not logged in', () => {
+        beforeEach(async(() => {
+            this.test = new TestConfig({
+                isLoggedIn: false
+            });
 
-            expect(auth.canActivate()).toBeFalsy();
-            expect(router.navigate).toHaveBeenCalled();
-        }))
-    );
+            const { guard, router } = this.test;
 
+            guard.canActivate().then((activate) => {
+                this.activate = activate;
+                this.navigateSpy = router.navigate;
+            });
+        }));
+
+        it('does not allow route to activate', () => {
+            expect(this.activate).toBe(false);
+        });
+
+        it('redirects to /login', () => {
+            expect(this.navigateSpy).toHaveBeenCalledWith([ '/login' ]);
+        });
+    });
+
+    describe('user is logged in but ticket is invalid', () => {
+        beforeEach(async(() => {
+            this.test = new TestConfig({
+                isLoggedIn: true,
+                validateTicket: false
+            });
+
+            const { guard, router } = this.test;
+
+            guard.canActivate().then((activate) => {
+                this.activate = activate;
+                this.navigateSpy = router.navigate;
+            });
+        }));
+
+        it('does not allow route to activate', () => {
+            expect(this.activate).toBe(false);
+        });
+
+        it('redirects to /login', () => {
+            expect(this.navigateSpy).toHaveBeenCalledWith([ '/login' ]);
+        });
+    });
+
+    describe('user is logged in and ticket is valid', () => {
+        beforeEach(async(() => {
+            this.test = new TestConfig({
+                isLoggedIn: true,
+                validateTicket: true
+            });
+
+            const { guard, router } = this.test;
+
+            guard.canActivate().then((activate) => {
+                this.activate = activate;
+                this.navigateSpy = router.navigate;
+            });
+        }));
+
+        it('allows route to activate', () => {
+            expect(this.activate).toBe(true);
+        });
+
+        it('does not redirect', () => {
+            expect(this.navigateSpy).not.toHaveBeenCalled();
+        });
+    });
 });

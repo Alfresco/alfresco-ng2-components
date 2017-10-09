@@ -102,19 +102,23 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
     }
 
     loadStartForm(processId: string) {
-        this.formService
-            .getStartFormInstance(processId)
-            .subscribe(
-                form => {
-                    this.formName = form.name;
-                    form.processDefinitionId = this.processDefinitionId;
-                    this.form = this.parseForm(form);
-                    this.form.readOnly = this.readOnlyForm;
-                    // this.form.processDefinitionId = this.processDefinitionId;
-                    this.onFormLoaded(this.form);
-                },
-                error => this.handleError(error)
-            );
+        this.formService.getProcessIntance(processId)
+            .subscribe((intance: any) => {
+                this.formService
+                    .getStartFormInstance(processId)
+                    .subscribe(
+                    form => {
+                        this.formName = form.name;
+                        if (intance.variables) {
+                            form.processVariables = intance.variables;
+                        }
+                        this.form = this.parseForm(form);
+                        this.form.readOnly = this.readOnlyForm;
+                        this.onFormLoaded(this.form);
+                    },
+                    error => this.handleError(error)
+                    );
+            });
     }
 
     getStartFormDefinition(processId: string) {

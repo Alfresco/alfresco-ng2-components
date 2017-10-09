@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 
 import { DIAGRAM_DIRECTIVES, DIAGRAM_PROVIDERS } from './src/components/index';
@@ -52,14 +52,4 @@ export * from './src/models/index';
         ...DIAGRAM_DIRECTIVES
     ]
 })
-export class DiagramsModule {
-    static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: DiagramsModule,
-            providers: [
-                ...DIAGRAM_PROVIDERS,
-                ...RAPHAEL_PROVIDERS
-            ]
-        };
-    }
-}
+export class DiagramsModule {}
