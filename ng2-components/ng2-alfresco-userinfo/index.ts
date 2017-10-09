@@ -60,3 +60,6 @@ export const USER_INFO_PROVIDERS: any[] = [
     ]
 })
 export class UserInfoModule {}
+
+/** @deprecated in 1.9.0 */
+export class UserInfoComponentModule {}
