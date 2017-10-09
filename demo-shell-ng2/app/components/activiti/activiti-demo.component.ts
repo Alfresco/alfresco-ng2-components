@@ -366,7 +366,10 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
             this.taskPagination.skipCount -= maxItems;
         }
         this.taskPage = this.currentPage(this.taskPagination.skipCount, maxItems);
-        this.taskList.reload();
+        if (this.taskList) {
+            this.taskList.reload();
+        }
+        this.processList.reload();
     }
 
     onFormContentClick(content: any): void {
