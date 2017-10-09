@@ -27,7 +27,6 @@ import {
     fakeErrorTaskList,
     fakeFilter,
     fakeFilters,
-    fakeFilterWithProcessDefinitionKey,
     fakeFormList,
     fakeRepresentationFilter1,
     fakeRepresentationFilter2,
@@ -191,7 +190,7 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should return the task list filtered by processDefinitionKey', (done) => {
-            service.getTasks(<TaskQueryRequestRepresentationModel> fakeFilterWithProcessDefinitionKey).subscribe(
+            service.getTasks(<TaskQueryRequestRepresentationModel> fakeFilter).subscribe(
                 res => {
                     expect(res).toBeDefined();
                     expect(res.size).toEqual(2);
@@ -202,7 +201,6 @@ describe('Activiti TaskList Service', () => {
                     expect(res.data[0].assignee.email).toEqual('fake-email@dom.com');
                     expect(res.data[0].assignee.firstName).toEqual('firstName');
                     expect(res.data[0].assignee.lastName).toEqual('lastName');
-                    expect(res.data[0].processDefinitionKey).toEqual('1');
                     done();
                 }
             );

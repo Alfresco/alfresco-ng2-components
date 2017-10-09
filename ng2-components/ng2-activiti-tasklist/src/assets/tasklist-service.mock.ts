@@ -64,10 +64,6 @@ export let fakeFilter = {
     sort: 'created-desc', text: '', state: 'open', assignment: 'fake-assignee'
 };
 
-export let fakeFilterWithProcessDefinitionKey = {
-    sort: 'created-desc', text: '', state: 'open', assignment: 'fake-assignee', processDefinitionKey: '1'
-};
-
 export let fakeUser1 = { id: 1, email: 'fake-email@dom.com', firstName: 'firstName', lastName: 'lastName' };
 
 export let fakeUser2 = { id: 1001, email: 'some-one@somegroup.com', firstName: 'some', lastName: 'one' };
