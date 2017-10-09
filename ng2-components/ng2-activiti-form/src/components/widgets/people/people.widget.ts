@@ -73,7 +73,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         }
         if (this.isValueDefined() && this.value.trim().length === 0) {
           this.oldValue = this.value;
-          this.field.validationSummary = '';
+          this.field.value = this.value;
           this.users = [];
         }
     }
