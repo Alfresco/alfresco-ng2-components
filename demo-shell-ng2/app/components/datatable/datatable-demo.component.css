@@ -1,10 +1,10 @@
-adf-datatable >>> .custom-row-style.alfresco-datatable__row:focus {
+adf-datatable ::ng-deep .custom-row-style.alfresco-datatable__row:focus {
     outline-offset: -1px;
     outline-width: 1px;
     outline-color: green;
     outline-style: solid;
 }
 
-adf-datatable >>> .custom-row-style.alfresco-datatable__row--selected {
+adf-datatable ::ng-deep .custom-row-style.alfresco-datatable__row--selected {
     color: green;
 }

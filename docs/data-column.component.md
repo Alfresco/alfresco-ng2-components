@@ -204,11 +204,11 @@ Let's start by assigning an "image-table-cell" class to the thumbnail column:
 Now your application can define styles to change the content of the column based on conditions such as the selection state:
 
 ```css
-adf-document-list >>> adf-datatable tr.is-selected .image-table-cell {
+adf-document-list ::ng-deep adf-datatable tr.is-selected .image-table-cell {
     position: relative;
 }
 
-adf-document-list >>> adf-datatable tr.is-selected .image-table-cell::before {
+adf-document-list ::ng-deep adf-datatable tr.is-selected .image-table-cell::before {
     content: "\E876"; /* "done" */
     font-family: "Material Icons";
     font-size: 24px;
@@ -238,11 +238,11 @@ You can hide columns on small screens using custom CSS rules:
 ```css
 @media all and (max-width: 768px) {
 
-    alfresco-document-list >>> th.desktop-only .cell-value {
+    alfresco-document-list ::ng-deep th.desktop-only .cell-value {
         display: none;
     }
 
-    alfresco-document-list >>> td.desktop-only .cell-value {
+    alfresco-document-list ::ng-deep td.desktop-only .cell-value {
         display: none;
     }
 }

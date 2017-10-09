@@ -25,7 +25,7 @@
     text-transform: uppercase;
 }
 
-adf-people >>> .assignment-top-container{
+adf-people ::ng-deep .assignment-top-container{
     background-color: #fff;
 }
 
