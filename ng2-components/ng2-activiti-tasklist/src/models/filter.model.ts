@@ -139,7 +139,6 @@ export class TaskQueryRequestRepresentationModel {
     appDefinitionId: string;
     processInstanceId: string;
     processDefinitionId: string;
-    processDefinitionKey: string;
     text: string;
     assignment: string;
     state: string;
@@ -147,14 +146,12 @@ export class TaskQueryRequestRepresentationModel {
     sort: string;
     page: number;
     size: number;
-    landingTaskId: string;
 
     constructor(obj?: any) {
         if (obj) {
             this.appDefinitionId = obj.appDefinitionId || null;
             this.processInstanceId = obj.processInstanceId || null;
             this.processDefinitionId = obj.processDefinitionId || null;
-            this.processDefinitionKey = obj.processDefinitionKey || null;
             this.text = obj.text || null;
             this.assignment = obj.assignment || null;
             this.state = obj.state || null;
@@ -162,7 +159,6 @@ export class TaskQueryRequestRepresentationModel {
             this.sort = obj.sort || null;
             this.page = obj.page || 0;
             this.size = obj.size || 25;
-            this.landingTaskId = obj.landingTaskId || '';
         }
     }
 }

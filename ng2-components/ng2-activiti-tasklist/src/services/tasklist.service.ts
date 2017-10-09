@@ -127,7 +127,6 @@ export class TaskListService {
     private generateTaskRequestNodeFromFilter(filter: FilterRepresentationModel): TaskQueryRequestRepresentationModel {
         let requestNode = {
             appDefinitionId: filter.appId,
-            processDefinitionKey: filter.filter.processDefinitionKey,
             assignment: filter.filter.assignment,
             state: filter.filter.state,
             sort: filter.filter.sort
