@@ -71,7 +71,7 @@ describe('RenditionsService', () => {
     it('Create redition service should call the server with the ID passed and the asked encoding', (done) => {
         service.createRendition('fake-node-id', 'pdf').subscribe((res) => {
             expect(jasmine.Ajax.requests.mostRecent().method).toBe('POST');
-            expect(jasmine.Ajax.requests.mostRecent().url).toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/renditions');
+            expect(jasmine.Ajax.requests.mostRecent().url).toContain('/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/renditions');
             done();
         });
 
@@ -88,7 +88,7 @@ describe('RenditionsService', () => {
             service.convert('fake-node-id', 'pdf', 1000);
 
             expect(jasmine.Ajax.requests.mostRecent().method).toBe('POST');
-            expect(jasmine.Ajax.requests.mostRecent().url).toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/renditions');
+            expect(jasmine.Ajax.requests.mostRecent().url).toContain('/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/renditions');
             done();
         });
     });
