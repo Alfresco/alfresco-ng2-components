@@ -336,7 +336,7 @@ describe('TypeaheadWidgetComponent', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(element.querySelector('.adf-error-text')).not.toBeNull();
-                    expect(element.querySelector('.adf-error-text').textContent).toContain('Invalid data inserted');
+                    expect(element.querySelector('.adf-error-text').textContent).toContain('FORM.FIELD.VALIDATOR.INVALID_VALUE');
                 });
             }));
 
