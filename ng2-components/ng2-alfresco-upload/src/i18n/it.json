@@ -1,8 +1,8 @@
 {
   "ADF_FILE_UPLOAD": {
     "BUTTON": {
-      "MINIMIZE": "Riduci a icona",
-      "MAXIMIZE": "Ingrandisci",
+      "MINIMIZE": "Minimizzare",
+      "MAXIMIZE": "Massimizzare",
       "CLOSE": "Chiudi",
       "CANCEL_ALL": "Annulla i caricamenti",
       "CANCEL_FILE": "Annulla caricamento",
