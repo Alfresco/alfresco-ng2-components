@@ -93,12 +93,12 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
     validateValue() {
         let validUserName = this.getUserFromValue();
         if (validUserName) {
-            this.field.validationSummary = '';
+            this.field.validationSummary.message = '';
             this.field.value = validUserName;
             this.value = this.getDisplayName(validUserName);
         } else {
             this.field.value = '';
-            this.field.validationSummary = 'Invalid value provided';
+            this.field.validationSummary.message = 'Invalid value provided';
             this.field.markAsInvalid();
             this.field.form.markAsInvalid();
           }

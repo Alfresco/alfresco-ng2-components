@@ -7,7 +7,16 @@
       "IMAGE_NOT_AVAILABLE": "Preview not available"
     },
     "FIELD": {
-        "REQUIRED" : "*Required"
+        "REQUIRED" : "*Required",
+        "VALIDATOR" : {
+            "INVALID_NUMBER" : "Incorrect number format",
+            "INVALID_DATE" : "Invalid date format",
+            "INVALID_VALUE": "Invalid value inserted",
+            "NOT_GREATER_THAN" : "Should not be greater than {{ maxValue }}",
+            "NOT_LESS_THAN" : "Should not be less than {{ minValue }}",
+            "AT_LEAST_LONG" : "Should be at least {{ minLength }} characters long.",
+            "NO_LONGER_THAN" : "Should be {{ maxLength }} characters maximum."
+        }
     }
   }
 }

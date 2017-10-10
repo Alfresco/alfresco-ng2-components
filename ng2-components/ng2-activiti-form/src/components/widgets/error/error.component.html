@@ -1,6 +1,6 @@
 <div class="adf-error-text-container">
-    <div *ngIf="error" [@transitionMessages]="_subscriptAnimationState">
-        <div class="adf-error-text">{{error}}</div>
+    <div *ngIf="error.isActive()" [@transitionMessages]="_subscriptAnimationState">
+        <div class="adf-error-text">{{error.message | translate:translateParameters}}</div>
         <i class="material-icons adf-error-icon">warning</i>
     </div>
     <div *ngIf="required" [@transitionMessages]="_subscriptAnimationState">

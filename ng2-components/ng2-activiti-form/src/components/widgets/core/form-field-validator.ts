@@ -118,7 +118,7 @@ export class NumberFieldValidator implements FormFieldValidator {
             if (valueStr.match(pattern)) {
                 return true;
             }
-            field.validationSummary = 'Incorrect number format';
+            field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_NUMBER';
             return false;
         }
         return true;
@@ -150,7 +150,7 @@ export class DateFieldValidator implements FormFieldValidator {
             if (DateFieldValidator.isValidDate(field.value, field.dateDisplayFormat)) {
                 return true;
             }
-            field.validationSummary = field.dateDisplayFormat;
+            field.validationSummary.message = field.dateDisplayFormat;
             return false;
         }
         return true;
@@ -173,7 +173,7 @@ export class MinDateFieldValidator implements FormFieldValidator {
             const dateFormat = field.dateDisplayFormat;
 
             if (!DateFieldValidator.isValidDate(field.value, dateFormat)) {
-                field.validationSummary = 'Invalid date format';
+                field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_DATE';
                 return false;
             }
 
@@ -187,7 +187,8 @@ export class MinDateFieldValidator implements FormFieldValidator {
             let min = moment(field.minValue, dateFormat);
 
             if (d.isBefore(min)) {
-                field.validationSummary = `Should not be less than ${field.minValue}`;
+                field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_LESS_THAN`;
+                field.validationSummary.attributes.set('minValue', field.minValue.toLocaleString());
                 return false;
             }
         }
@@ -211,7 +212,7 @@ export class MaxDateFieldValidator implements FormFieldValidator {
             const dateFormat = field.dateDisplayFormat;
 
             if (!DateFieldValidator.isValidDate(field.value, dateFormat)) {
-                field.validationSummary = 'Invalid date format';
+                field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_DATE';
                 return false;
             }
 
@@ -225,7 +226,8 @@ export class MaxDateFieldValidator implements FormFieldValidator {
             let max = moment(field.maxValue, dateFormat);
 
             if (d.isAfter(max)) {
-                field.validationSummary = `Should not be greater than ${field.maxValue}`;
+                field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`;
+                field.validationSummary.attributes.set('maxValue', field.maxValue.toLocaleString());
                 return false;
             }
         }
@@ -251,7 +253,8 @@ export class MinLengthFieldValidator implements FormFieldValidator {
             if (field.value.length >= field.minLength) {
                 return true;
             }
-            field.validationSummary = `Should be at least ${field.minLength} characters long.`;
+            field.validationSummary.message = `FORM.FIELD.VALIDATOR.AT_LEAST_LONG`;
+            field.validationSummary.attributes.set('minLength', field.minLength.toLocaleString());
             return false;
         }
         return true;
@@ -276,7 +279,8 @@ export class MaxLengthFieldValidator implements FormFieldValidator {
             if (field.value.length <= field.maxLength) {
                 return true;
             }
-            field.validationSummary = `Should be ${field.maxLength} characters maximum.`;
+            field.validationSummary.message = `FORM.FIELD.VALIDATOR.NO_LONGER_THAN`;
+            field.validationSummary.attributes.set('maxLength', field.maxLength.toLocaleString());
             return false;
         }
         return true;
@@ -304,7 +308,8 @@ export class MinValueFieldValidator implements FormFieldValidator {
             if (value >= minValue) {
                 return true;
             }
-            field.validationSummary = `Should not be less than ${field.minValue}`;
+            field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_LESS_THAN`;
+            field.validationSummary.attributes.set('minValue', field.minValue.toLocaleString());
             return false;
         }
 
@@ -333,7 +338,8 @@ export class MaxValueFieldValidator implements FormFieldValidator {
             if (value <= maxValue) {
                 return true;
             }
-            field.validationSummary = `Should not be greater than ${field.maxValue}`;
+            field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`;
+            field.validationSummary.attributes.set('maxValue', field.maxValue.toLocaleString());
             return false;
         }
 
@@ -358,7 +364,7 @@ export class RegExFieldValidator implements FormFieldValidator {
             if (field.value.length > 0 && field.value.match(new RegExp('^' + field.regexPattern + '$'))) {
                 return true;
             }
-            field.validationSummary = 'Invalid value format';
+            field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_VALUE';
             return false;
         }
         return true;
@@ -399,7 +405,7 @@ export class FixedValueFieldValidator implements FormFieldValidator {
     validate(field: FormFieldModel): boolean {
         if (this.isSupported(field)) {
             if (this.hasStringValue(field) && this.hasOptions(field) && !this.hasValidNameOrValidId(field)) {
-                field.validationSummary = 'Invalid data inserted';
+                field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_VALUE';
                 return false;
             }
         }

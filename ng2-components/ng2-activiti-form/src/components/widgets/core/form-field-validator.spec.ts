@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { ErrorMessageModel } from './error-message.model';
 import { FormFieldOption } from './form-field-option';
 import { FormFieldTypes } from './form-field-types';
 import {
@@ -229,7 +230,7 @@ describe('FormFieldValidator', () => {
                 value: '<value>'
             });
 
-            field.validationSummary = null;
+            field.validationSummary = new ErrorMessageModel();
             expect(validator.validate(field)).toBeFalsy();
             expect(field.validationSummary).not.toBeNull();
         });
@@ -282,7 +283,7 @@ describe('FormFieldValidator', () => {
                 value: '12'
             });
 
-            field.validationSummary = null;
+            field.validationSummary = new ErrorMessageModel();
             expect(validator.validate(field)).toBeFalsy();
             expect(field.validationSummary).not.toBeNull();
         });
@@ -335,7 +336,7 @@ describe('FormFieldValidator', () => {
                 value: '1234'
             });
 
-            field.validationSummary = null;
+            field.validationSummary = new ErrorMessageModel();
             expect(validator.validate(field)).toBeFalsy();
             expect(field.validationSummary).not.toBeNull();
         });
@@ -406,7 +407,7 @@ describe('FormFieldValidator', () => {
                 minValue: '10'
             });
 
-            field.validationSummary = null;
+            field.validationSummary = new ErrorMessageModel();
             expect(validator.validate(field)).toBeFalsy();
             expect(field.validationSummary).not.toBeNull();
         });
@@ -478,7 +479,7 @@ describe('FormFieldValidator', () => {
                 maxValue: '10'
             });
 
-            field.validationSummary = null;
+            field.validationSummary = new ErrorMessageModel();
             expect(validator.validate(field)).toBeFalsy();
             expect(field.validationSummary).not.toBeNull();
         });
