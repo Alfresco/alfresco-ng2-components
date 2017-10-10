@@ -1,0 +1,54 @@
+{
+  "ADF-DOCUMENT-LIST": {
+    "EMPTY": {
+      "HEADER": "Deze map is leeg"
+    },
+    "LAYOUT": {
+      "THUMBNAIL": "Miniatuur",
+      "NAME": "Naam",
+      "LOCATION": "Locatie",
+      "SIZE": "Grootte",
+      "DELETED_ON": "Verwijderd",
+      "DELETED_BY": "Verwijderd door",
+      "STATUS": "Status",
+      "MODIFIED_ON": "Aangepast",
+      "MODIFIED_BY": "Aangepast door",
+      "SHARED_BY": "Gedeeld door",
+      "LOAD_MORE": "Meer laden"
+    }
+  },
+  "ALFRESCO_DOCUMENT_LIST": {
+    "BUTTON": {
+      "ACTION_CREATE": "Maken...",
+      "ACTION_NEW_FOLDER": "Nieuwe map",
+      "CREATE": "Maken",
+      "CANCEL": "Annuleren"
+    }
+  },
+  "DROPDOWN": {
+    "PLACEHOLDER_LABEL": "Lijst met sites",
+    "DEFAULT_OPTION": "Standaard"
+  },
+  "NODE_SELECTOR": {
+    "CANCEL": "Annuleren",
+    "CHOOSE": "Kiezen",
+    "NO_RESULTS": "Geen resultaten gevonden"
+  },
+  "OPERATION": {
+    "SUCCES": {
+      "CONTENT": {
+        "COPY": "Kopiëren geslaagd",
+        "MOVE": "Verplaatsen geslaagd"
+      },
+      "FOLDER": {
+        "COPY": "Kopiëren geslaagd",
+        "MOVE": "Verplaatsen geslaagd"
+      }
+    },
+    "ERROR": {
+      "CONFLICT": "Deze naam wordt al gebruikt, probeer een andere naam.",
+      "UNKNOWN": "De actie is mislukt. Probeer het opnieuw of neem contact op met het IT-team.",
+      "PERMISSION": "U beschikt niet over de benodigde toegang om dit te doen."
+    }
+  }
+}

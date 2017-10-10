@@ -1,34 +1,46 @@
 {
-    "ADF_FILE_UPLOAD": {
-        "BUTTON": {
-            "MINIMIZE": "Минимизировать",
-            "MAXIMIZE": "Mаксимизировать",
-            "CLOSE": "Закрыть",
-            "CANCEL_ALL": "Отменить загрузку"
-        },
-        "STATUS": {
-            "FILE_CANCELED_STATUS": "Oтменен"
-        }
+  "ADF_FILE_UPLOAD": {
+    "BUTTON": {
+      "MINIMIZE": "Свернуть",
+      "MAXIMIZE": "Развернуть",
+      "CLOSE": "Закрыть",
+      "CANCEL_ALL": "Отменить выгрузки",
+      "CANCEL_FILE": "Отменить выгрузку",
+      "REMOVE_FILE": "Удалить выгруженный файл"
     },
-    "FILE_UPLOAD": {
-        "BUTTON": {
-            "UPLOAD_FILE": "Загрузить файл",
-            "UPLOAD_FOLDER": "Загрузить папку",
-            "CANCEL_ALL": "Отменить все"
-        },
-        "MESSAGES": {
-            "UPLOAD_CANCELED": "Отменить отмену",
-            "UPLOAD_COMPLETED": "закачанный {{ completed }} / {{ total }}",
-            "UPLOAD_PROGRESS": "загрузка {{ completed }} / {{ total }}",
-            "UPLOAD_ERROR": "{{ total }} ошибка",
-            "UPLOAD_ERRORS": "{{ total }} ошибки",
-            "PROGRESS": "Идет загрузка...",
-            "FOLDER_ALREADY_EXIST": "Папка {0} уже существует",
-            "FOLDER_NOT_SUPPORTED": "Данный браузер не поддерживает загрузку папки",
-            "REMOVE_FILE_ERROR": "Ошибка удаления файла {{ fileName }}"
-        },
-        "ACTION": {
-            "UNDO": "Отменить"
-        }
+    "STATUS": {
+      "FILE_CANCELED_STATUS": "Oтменено"
+    },
+    "CONFIRMATION": {
+      "BUTTON": {
+        "CANCEL": "Да",
+        "CONTINUE": "Нет"
+      },
+      "MESSAGE": {
+        "TITLE": "Отменить выгрузку",
+        "TEXT": "Остановите выгрузку и удалите уже выгруженные файлы."
+      }
     }
+  },
+  "FILE_UPLOAD": {
+    "BUTTON": {
+      "UPLOAD_FILE": "Выгрузить файл",
+      "UPLOAD_FOLDER": "Выгрузить папку"
+    },
+    "MESSAGES": {
+      "UPLOAD_CANCELED": "Выгрузка отменена",
+      "UPLOAD_COMPLETED": "Выгружено {{ completed }} / {{ total }}",
+      "UPLOAD_PROGRESS": "Выгрузка {{ completed }} / {{ total }}",
+      "UPLOAD_ERROR": "Ошибка {{ total }} выгрузки",
+      "UPLOAD_ERRORS": "Ошибка {{ total }} выгрузок",
+      "PROGRESS": "Идет выгрузка...",
+      "FOLDER_ALREADY_EXIST": "Папка {0} уже существует",
+      "FOLDER_NOT_SUPPORTED": "Данный браузер не поддерживает выгрузку папок, используйте другой браузер",
+      "REMOVE_FILE_ERROR": "Ошибка удаления файла {{ fileName }}, повторите попытку или обратитесь к IT-специалистам.",
+      "REMOVE_FILES_ERROR": "Не удалось удалить следующее количество файлов: {{ total }}. Повторите попытку или обратитесь к IT-специалистам."
+    },
+    "ACTION": {
+      "UNDO": "Отменить"
+    }
+  }
 }

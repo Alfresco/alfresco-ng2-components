@@ -1,0 +1,47 @@
+{
+  "title": "欢迎使用",
+  "DOCUMENT_LIST": {
+    "COLUMNS": {
+      "DISPLAY_NAME": "显示名称",
+      "TAG": "标签",
+      "CREATED_BY": "创建者",
+      "CREATED_ON": "创建日期",
+      "CREATED": "已创建"
+    },
+    "ACTIONS": {
+      "FOLDER": {
+        "COPY": "复制",
+        "MOVE": "移动",
+        "DELETE": "删除"
+      },
+      "DOCUMENT": {
+        "DOWNLOAD": "下载",
+        "COPY": "复制",
+        "MOVE": "移动",
+        "DELETE": "删除"
+      }
+    }
+  },
+  "ANALYTICS_REPORT": {
+    "NO_REPORT_MESSAGE": "未选择报告，请从列表中选择报告"
+  },
+  "PS-TAB": {
+    "TASKS-TAB": "任务",
+    "PROCESSES-TAB": "流程",
+    "REPORTS-TAB": "报告",
+    "START-TASK": "启动任务",
+    "START-PROCESS": "启动流程",
+    "AUDIT-LOG": "流程审计记录"
+  },
+  "SETTINGS": {
+    "TITLE": "设置",
+    "CS-HOST": "Content Services 主机 URL 配置",
+    "BP-HOST": "流程服务主机 URL 配置",
+    "BACK": "返回",
+    "APPLY": "应用"
+  },
+  "FORM-LIST": {
+    "STORE": "存储",
+    "RESTORE": "恢复"
+  }
+}

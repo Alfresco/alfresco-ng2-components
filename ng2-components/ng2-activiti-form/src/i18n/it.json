@@ -1,7 +1,7 @@
 {
   "FORM": {
     "START_FORM": {
-      "TITLE": "Inizia"
+      "TITLE": "Modulo di inizio"
     },
     "PREVIEW": {
       "IMAGE_NOT_AVAILABLE": "Anteprima immagine non disponibile."
@@ -17,6 +17,7 @@
             "AT_LEAST_LONG" : "Dovrebbe essere almeno {{ minLength }} caratteri.",
             "NO_LONGER_THAN" : "Dovrebbe essere massimo {{ maxLength }} caratteri."
         }
+    }
     }
   }
 }

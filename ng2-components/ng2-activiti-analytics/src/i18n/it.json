@@ -1,50 +1,62 @@
 {
-    "ANALYTICS": {
-        "TITLE": "ANALYTICS",
-        "MESSAGES": {
-            "UNKNOWN-WIDGET-TYPE": "TIPO WIDGET SCONOSCIUTO",
-            "FILL-PARAMETER": "Riempi tutti i campi per generare il report",
-            "NO-DATA-FOUND": "Nessun valore trovato",
-            "ZERO-DATA-FOUND": "Ci sono solo valori che valgono zero",
-            "ICON-SETTING": "Modifica i parametri del report",
-            "ICON-SAVE": "Salva",
-            "ICON-DELETE": "Cancella",
-            "ICON-EXPORT-CSV": "Esporta come CSV"
-        }
-    },
-    "__KEY_REPORTING": {
-        "DEFAULT-REPORTS": {
-            "PROCESS-DEFINITION-OVERVIEW": {
-                "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Numero totale di process definitions",
-                "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Numero totale di process instances",
-                "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Numero totale di process instances attivi",
-                "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Numero totale di process instances completi"
-            }
-        }
-    },
-    "REPORTING": {
-        "DEFAULT-REPORTS": {
-            "PROCESS-HEAT-MAP": {
-                "TYPE-FILTERING": "Include tutti gli steps (Deselezionandolo, rimuoverai gli step come start events, gateways, etc.)?"
-            },
-            "PROCESS-INSTANCES-OVERVIEW": {
-                "PROCESS-DEFINITION": "Definizione del processo",
-                "DATE-RANGE": "Intervallo di Date",
-                "SLOW-PROC-INST-NUMBER": "Quanti process instances lenti vuoi mostrare?"
-            },
-            "TASK-OVERVIEW": {
-                "PROCESS-DEFINITION": "Definizione del processo",
-                "DATE-RANGE": "Intervallo di Date",
-                "DATE-RANGE-INTERVAL": "Aggrega date per"
-            },
-            "TASK-SLA": {
-                "TASK": "Task",
-                "PROCESS-DEFINITION": "Definizione del processo",
-                "DATE-RANGE": "Intervallo di Date",
-                "SLA-DURATION": "Qual' é il tempo che questo task necessita per essere completato per rimanere nella SLA?"
-            }
-        },
-        "PROCESS-STATUS": "Stato del processo",
-        "TASK-STATUS": "Stato del task"
+  "ANALYTICS": {
+    "TITLE": "ANALISI",
+    "MESSAGES": {
+      "UNKNOWN-WIDGET-TYPE": "TIPO WIDGET SCONOSCIUTO",
+      "FILL-PARAMETER": "Scegli dalle opzioni del rapporto",
+      "NO-DATA-FOUND": "Nessun dato trovato",
+      "ZERO-DATA-FOUND": "Ci sono solo valori che valgono zero",
+      "ICON-SETTING": "Impostazioni",
+      "ICON-SAVE": "Salva",
+      "ICON-DELETE": "Elimina",
+      "ICON-EXPORT-CSV": "Esporta"
     }
+  },
+  "__KEY_REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-DEFINITION-OVERVIEW": {
+        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Numero totale di definizioni del processo",
+        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Numero totale di istanze del processo",
+        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Numero totale di istanze del processo attive",
+        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Numero totale di istanze del processo completate"
+      }
+    }
+  },
+  "REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-HEAT-MAP": {
+        "TYPE-FILTERING": "Include tutti i gli eventi di passaggio come eventi iniziali e gateway"
+      },
+      "PROCESS-INSTANCES-OVERVIEW": {
+        "PROCESS-DEFINITION": "Definizione del processo",
+        "DATE-RANGE": "Intervallo di date",
+        "SLOW-PROC-INST-NUMBER": "Quante delle istanze di processo più lente devono essere visualizzate?"
+      },
+      "TASK-OVERVIEW": {
+        "PROCESS-DEFINITION": "Definizione del processo",
+        "DATE-RANGE": "Intervallo di date",
+        "DATE-RANGE-INTERVAL": "Aggrega date per"
+      },
+      "TASK-SLA": {
+        "TASK": "Compito",
+        "PROCESS-DEFINITION": "Definizione del processo",
+        "DATE-RANGE": "Intervallo di date",
+        "SLA-DURATION": "Tempo di completamento richiesto dallo SLA"
+      }
+    },
+    "PROCESS-STATUS": "Stato del processo",
+    "TASK-STATUS": "Stato del compito"
+  },
+  "DIALOG": {
+    "SAVE_MESSAGE": "Fai clic su Salva per aggiungere un rapporto con le impostazioni correnti all'elenco dei rapporti.",
+    "EXPORT_MESSAGE": ""
+  },
+  "DATE-WIDGET": {
+    "START-DATE": "Data di inizio",
+    "END-DATE": "Data di fine",
+    "MESSAGES": {
+      "START-DATE-REQUIRED": "Data di inizio richiesta",
+      "START-LESS-THAN-END-DATE": "La data di inizio deve essere precedente alla data di fine"
+    }
+  }
 }

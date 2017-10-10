@@ -1,0 +1,54 @@
+{
+  "ADF-DOCUMENT-LIST": {
+    "EMPTY": {
+      "HEADER": "Denne mappen er tom"
+    },
+    "LAYOUT": {
+      "THUMBNAIL": "Miniatyrbilde",
+      "NAME": "Navn",
+      "LOCATION": "Sted",
+      "SIZE": "Størrelse",
+      "DELETED_ON": "Slettet",
+      "DELETED_BY": "Slettet av",
+      "STATUS": "Status",
+      "MODIFIED_ON": "Endret",
+      "MODIFIED_BY": "Endret av",
+      "SHARED_BY": "Delt av",
+      "LOAD_MORE": "Last ned mer"
+    }
+  },
+  "ALFRESCO_DOCUMENT_LIST": {
+    "BUTTON": {
+      "ACTION_CREATE": "Opprett...",
+      "ACTION_NEW_FOLDER": "Ny mappe",
+      "CREATE": "Opprett",
+      "CANCEL": "Avbryt"
+    }
+  },
+  "DROPDOWN": {
+    "PLACEHOLDER_LABEL": "Områdeliste",
+    "DEFAULT_OPTION": "Standard"
+  },
+  "NODE_SELECTOR": {
+    "CANCEL": "Avbryt",
+    "CHOOSE": "Velg",
+    "NO_RESULTS": "Ingen resultater funnet"
+  },
+  "OPERATION": {
+    "SUCCES": {
+      "CONTENT": {
+        "COPY": "Er nå kopiert",
+        "MOVE": "Er nå flyttet"
+      },
+      "FOLDER": {
+        "COPY": "Er nå kopiert",
+        "MOVE": "Er nå flyttet"
+      }
+    },
+    "ERROR": {
+      "CONFLICT": "Dette navnet er allerede i bruk, prøv et annet navn.",
+      "UNKNOWN": "Handlingen var mislykket. Prøv på nytt, eller kontakt IT-teamet.",
+      "PERMISSION": "Du har ikke tilgang til dette."
+    }
+  }
+}

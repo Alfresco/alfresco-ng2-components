@@ -1,0 +1,11 @@
+{
+  "ADF-DATATABLE": {
+    "EMPTY": {
+      "HEADER": "Cette liste est vide",
+      "DRAG-AND-DROP": {
+        "TITLE": "Glissez-déposez",
+        "SUBTITLE": "les fichiers à importer"
+      }
+    }
+  }
+}

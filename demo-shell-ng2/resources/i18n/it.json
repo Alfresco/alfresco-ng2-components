@@ -1,26 +1,47 @@
 {
-  "title" : "Benvenuto",
-
+  "title": "Benvenuto",
   "DOCUMENT_LIST": {
     "COLUMNS": {
-      "DISPLAY_NAME": "Mostra name",
+      "DISPLAY_NAME": "Nome visualizzato",
       "TAG": "Tag",
       "CREATED_BY": "Creato da",
-      "CREATED_ON": "Creato il"
+      "CREATED_ON": "Creato il",
+      "CREATED": "Creato"
     },
     "ACTIONS": {
       "FOLDER": {
-        "SYSTEM_1": "Azione 1 di sistema sulla cartella",
-        "CUSTOM": "Azione personalizzata su cartella"
+        "COPY": "Copia",
+        "MOVE": "Sposta",
+        "DELETE": "Elimina"
       },
       "DOCUMENT": {
         "DOWNLOAD": "Download",
-        "SYSTEM_2": "System document action 2",
-        "CUSTOM": "Custom action"
+        "COPY": "Copia",
+        "MOVE": "Sposta",
+        "DELETE": "Elimina"
       }
     }
+  },
+  "ANALYTICS_REPORT": {
+    "NO_REPORT_MESSAGE": "Nessun rapporto selezionato. Scegliere un rapporto dall'elenco"
+  },
+  "PS-TAB": {
+    "TASKS-TAB": "Compiti",
+    "PROCESSES-TAB": "Processo",
+    "REPORTS-TAB": "Rapporti",
+    "START-TASK": "Avvia compito",
+    "START-PROCESS": "Avvia processo",
+    "AUDIT-LOG": "Log di audit processo"
+  },
+  "SETTINGS": {
+    "TITLE": "Impostazioni",
+    "CS-HOST": "Configurazione URL host Content Services",
+    "BP-HOST": "Configurazione URL host Process Services",
+    "BACK": "Indietro",
+    "APPLY": "APPLICA"
+  },
+  "FORM-LIST": {
+    "STORE": "Memorizza",
+    "RESTORE": "Ripristina"
   }
-
-
-
 }

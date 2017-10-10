@@ -1,0 +1,47 @@
+{
+  "title": "Willkommen",
+  "DOCUMENT_LIST": {
+    "COLUMNS": {
+      "DISPLAY_NAME": "Namen anzeigen",
+      "TAG": "Tag",
+      "CREATED_BY": "Erstellt von",
+      "CREATED_ON": "Erstellt am",
+      "CREATED": "Erstellt"
+    },
+    "ACTIONS": {
+      "FOLDER": {
+        "COPY": "Kopieren",
+        "MOVE": "Verschieben",
+        "DELETE": "Löschen"
+      },
+      "DOCUMENT": {
+        "DOWNLOAD": "Herunterladen",
+        "COPY": "Kopieren",
+        "MOVE": "Verschieben",
+        "DELETE": "Löschen"
+      }
+    }
+  },
+  "ANALYTICS_REPORT": {
+    "NO_REPORT_MESSAGE": "Kein Bericht ausgewählt. Wählen Sie einen Bericht aus der Liste"
+  },
+  "PS-TAB": {
+    "TASKS-TAB": "Aufgaben",
+    "PROCESSES-TAB": "Prozess",
+    "REPORTS-TAB": "Berichte",
+    "START-TASK": "Aufgabe starten",
+    "START-PROCESS": "Prozess starten",
+    "AUDIT-LOG": "Audit-Protokoll verarbeiten"
+  },
+  "SETTINGS": {
+    "TITLE": "Einstellungen",
+    "CS-HOST": "Konfiguration der Host-URL für Content Services",
+    "BP-HOST": "Konfiguration der Host-URL für Process Services",
+    "BACK": "Zurück",
+    "APPLY": "ANWENDEN"
+  },
+  "FORM-LIST": {
+    "STORE": "Speichern",
+    "RESTORE": "Wiederherstellen"
+  }
+}

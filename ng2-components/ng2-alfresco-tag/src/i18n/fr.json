@@ -1,0 +1,13 @@
+{
+  "TAG": {
+    "LABEL": {
+      "NEWTAG": "Nouveau Tag"
+    },
+    "MESSAGES": {
+      "EXIST": "Le tag existe déjà"
+    },
+    "BUTTON": {
+      "ADD": "Ajouter un Tag"
+    }
+  }
+}

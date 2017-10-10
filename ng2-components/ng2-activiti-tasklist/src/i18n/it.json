@@ -1,14 +1,54 @@
 {
-    "APPS": {
-        "NONE": "Nessuna applicazione trovata.",
+  "APPS": {
+    "NONE": "Nessuna applicazione trovata"
         "TASK_APP_NAME": "I miei compiti"
+  },
+  "TASK_LIST": {
+    "MESSAGES": {
+      "NONE": "Nessun elenco compiti trovato"
+    }
+  },
+  "TASK_DETAILS": {
+    "LABELS": {
+      "ASSIGNEE": "Assegnatario",
+      "DUE": "Scadenza",
+      "FORM": "Modulo",
+      "PEOPLE": "Persone con cui è condiviso questo compito",
+      "COMMENTS": "Commenti",
+      "CHECKLIST": "Lista di controllo",
+      "INVOLVED_PEOPLE": "Persone coinvolte",
+      "ADD_PEOPLE": "Aggiungi persone e gruppi",
+      "ADD_ASSIGNEE": "Aggiungi nuovo assegnatario"
     },
-    "TASK_LIST": {
-        "MESSAGES": {
-            "NONE": "Nessuna lista tasks trovata."
-        }
+    "BUTTON": {
+      "COMPLETE": "Completa",
+      "CLAIM": "Richiedi",
+      "UNCLAIM": "Metti di nuovo in coda",
+      "DRAG-ATTACHMENT": "Rilascia qui i file...",
+      "UPLOAD-ATTACHMENT": "Carica allegato"
     },
-    "TASK_DETAILS": {
+    "MESSAGES": {
+      "NONE": "Nessun dettaglio compito trovato",
+      "CLAIM": "Per lavorare su questo compito, fai clic su Richiedi."
+    },
+    "FORM": {
+      "NONE": "Nessun modulo."
+    },
+    "DUE": {
+      "NONE": "Nessuna data di scadenza."
+    },
+    "ASSIGNEE": {
+      "NONE": "Nessun assegnatario."
+    },
+    "PEOPLE": {
+      "NONE": "Nessuno coinvolto."
+    },
+    "COMMENTS": {
+      "NONE": "Nessun commento",
+      "ADD": "Aggiungi un commento",
+      "HEADER": "Commenti",
+      "DIALOG": {
+        "TITLE": "Nuovo commento",
         "LABELS": {
             "INFO_DRAWER_TITLE": "pippo",
             "INFO_DRAWER_TAB_ACTIVITY_TITLE": "Attivita",
@@ -17,35 +57,73 @@
             "DUE": "Scadenza",
             "FORM": "Form",
             "PEOPLE": "Persone",
+            "MESSAGE": "Messaggio",
             "COMMENTS": "Commenti",
             "CHECKLIST": "Checklist",
             "INVOLVED_PEOPLE": "Persone coinvolte",
             "ADD_PEOPLE": "Aggiungi persone & gruppi"
         },
         "BUTTON": {
-            "COMPLETE": "Completa",
-            "CLAIM": "Richiedi"
-        },
-        "MESSAGES": {
-            "NONE": "Nessun dettaglio task trovato.",
-            "CLAIM": "Per lavorare con questo task, hai bisogno di richiederlo prima. Per richiedere il task basta premere il tasto Richiedi"
-        },
-        "FORM": {
-            "NONE": "Nessuna form."
-        },
-        "DUE": {
-            "NONE": "Nessuna data di scadenza."
+          "ADD": "Aggiungi commento",
+          "CANCEL": "Annulla"
         }
+      }
     },
-    "TASK_FILTERS": {
-        "MESSAGES": {
-            "NONE": "Nessun filtro task selezionato."
-        }
+    "CHECKLIST": {
+      "NONE": "Nessun elenco di controllo"
     },
-    "PEOPLE": {
-        "DIALOG_CLOSE": "CHIUDI",
-        "SEARCH": {
-            "NO_USERS": "Nessun utente trovato"
-        }
+    "ERROR": {
+      "TITLE": "Impossibile completare l'azione",
+      "DESCRIPTION": "Riprova o verifica di avere l'accesso.",
+      "CLOSE": "Chiudi"
     }
+  },
+  "TASK_FILTERS": {
+    "MESSAGES": {
+      "NONE": "Nessun filtro compito selezionato."
+    }
+  },
+  "START_TASK": {
+    "BUTTON": "CREA COMPITO",
+    "FORM": {
+      "TITLE": "Avvia compito",
+      "LABEL": {
+        "NONE": "Nessuno",
+        "NAME": "Nome",
+        "DESCRIPTION": "Descrizione",
+        "ATTACHFORM": "Allega modulo",
+        "ASSIGNEE": "Assegnatario",
+        "FORM": "Modulo",
+        "DATE": "Scegli data"
+      },
+      "ACTION": {
+        "START": "Avvia",
+        "CANCEL": "Annulla"
+      },
+      "DATE": {
+        "ERROR": "Formato data GG/MM/AAAA"
+      }
+    }
+  },
+  "PEOPLE": {
+    "DIALOG_CLOSE": "CHIUDI",
+    "ADD_USER": "Aggiungi",
+    "ADD_ASSIGNEE": "ASSEGNA",
+    "SEARCH_USER": "Cerca utente",
+    "SEARCH": {
+      "NO_USERS": "Nessun utente trovato da coinvolgere"
+    }
+  },
+  "TASK-ATTACHMENT": {
+    "EMPTY": {
+      "HEADER": "Questo elenco è vuoto",
+      "DRAG-AND-DROP": {
+        "TITLE": "Trascinare e rilasciare",
+        "SUBTITLE": "per caricare i file"
+      }
+    },
+    "EMPTY-LIST": {
+      "HEADER": "Nessun file disponibile"
+    }
+  }
 }

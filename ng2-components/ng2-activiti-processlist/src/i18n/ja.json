@@ -1,0 +1,106 @@
+{
+  "PROCESSLIST": {
+    "NONE": "プロセスインスタンスが見つかりません",
+    "SUMMARY": "{{total}} 個のプロセスインスタンスが見つかりました",
+    "ERROR": "プロセスインスタンスを読み込みませんでした。もう一度操作をやり直すか、次のメッセージを IT 担当者に伝えてください: {{errorMessage}}",
+    "COLUMN": {
+      "NAME": "名前"
+    }
+  },
+  "FILTERS": {
+    "MESSAGES": {
+      "NONE": "プロセスインスタンスのフィルタが選択されていません"
+    }
+  },
+  "DETAILS": {
+    "LABELS": {
+      "STARTED_BY": "開始者",
+      "STARTED": "開始日",
+      "ENDED": "終了日",
+      "COMMENTS": "コメント",
+      "START_FORM": "開始フォーム",
+      "TASKS_ACTIVE": "アクティブなタスク",
+      "TASKS_COMPLETED": "完了済みタスク",
+      "TASK_SUBTITLE": "割り当て先: {{user}}, 作成日: {{created}}"
+    },
+    "BUTTON": {
+      "CANCEL": "プロセスのキャンセル",
+      "CLOSE": "閉じる",
+      "SHOW_DIAGRAM": "図の表示",
+      "DRAG-ATTACHMENT": "アップロードするファイルをドロップ",
+      "UPLOAD-ATTACHMENT": "添付ファイルをアップロード"
+    },
+    "MESSAGES": {
+      "NONE": "プロセスの詳細が見つかりません。"
+    },
+    "TASKS": {
+      "NO_ACTIVE": "現在アクティブなタスクはありません",
+      "NO_COMPLETED": "完了したタスクはありません",
+      "TASK_DETAILS": "タスクの詳細",
+      "TASK_CLOSE": "閉じる"
+    },
+    "COMMENTS": {
+      "NONE": "コメントなし",
+      "BUTTON": {
+        "ADD": "コメントの追加"
+      },
+      "ADD_DIALOG": {
+        "TITLE": "新しいコメント",
+        "LABEL": {
+          "MESSAGE": "メッセージ"
+        },
+        "BUTTON": {
+          "ADD": "コメントの追加",
+          "CANCEL": "キャンセル"
+        }
+      }
+    },
+    "ADD_DIALOG": {
+      "TITLE": "プロセス変数の設定",
+      "LABEL": {
+        "NAME": "名前",
+        "VALUE": "値",
+        "SCOPE": "範囲"
+      }
+    },
+    "EDIT_DIALOG": {
+      "TITLE": "プロセス変数の編集"
+    },
+    "ERROR_DIALOG": {
+      "TITLE": "処理を完了できませんでした",
+      "DESCRIPTION": "必要なレベルのアクセス権がない可能性があります。IT 担当者に確認してください。"
+    }
+  },
+  "START_PROCESS": {
+    "BUTTON": "プロセスの開始",
+    "NO_PROCESS_DEFINITIONS": "使用できるプロセス定義がないため、プロセスを開始できません",
+    "FORM": {
+      "TITLE": "プロセスの開始",
+      "LABEL": {
+        "TYPE": "種類",
+        "NAME": "名前"
+      },
+      "TYPE_PLACEHOLDER": "1 つ選択してください...",
+      "ACTION": {
+        "START": "開始",
+        "CANCEL": "キャンセル"
+      }
+    },
+    "ERROR": {
+      "LOAD_PROCESS_DEFS": "プロセス定義を読み込めませんでした。アクセス権があることを確認してください。",
+      "START": "新しいプロセスインスタンスを開始できませんでした。アクセス権があることを確認してください。"
+    }
+  },
+  "PROCESS-ATTACHMENT": {
+    "EMPTY": {
+      "HEADER": "このリストは空です",
+      "DRAG-AND-DROP": {
+        "TITLE": "アップロードするファイルをドラッグ & ドロップしてください",
+        "SUBTITLE": ""
+      }
+    },
+    "EMPTY-LIST": {
+      "HEADER": "使用できるファイルがありません"
+    }
+  }
+}

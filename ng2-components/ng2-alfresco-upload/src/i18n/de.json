@@ -1,0 +1,46 @@
+{
+  "ADF_FILE_UPLOAD": {
+    "BUTTON": {
+      "MINIMIZE": "Minimieren",
+      "MAXIMIZE": "Maximieren",
+      "CLOSE": "Schließen",
+      "CANCEL_ALL": "Hochladen abbrechen",
+      "CANCEL_FILE": "Upload abbrechen",
+      "REMOVE_FILE": "Hochgeladene Datei entfernen"
+    },
+    "STATUS": {
+      "FILE_CANCELED_STATUS": "Abgebrochen"
+    },
+    "CONFIRMATION": {
+      "BUTTON": {
+        "CANCEL": "Ja",
+        "CONTINUE": "Nein"
+      },
+      "MESSAGE": {
+        "TITLE": "Upload abbrechen",
+        "TEXT": "Beenden Sie das Hochladen und entfernen Sie bereits hochgeladene Dateien."
+      }
+    }
+  },
+  "FILE_UPLOAD": {
+    "BUTTON": {
+      "UPLOAD_FILE": "Datei hochladen",
+      "UPLOAD_FOLDER": "Ordner hochladen"
+    },
+    "MESSAGES": {
+      "UPLOAD_CANCELED": "Hochladen abgebrochen",
+      "UPLOAD_COMPLETED": "Hochgeladen: {{ completed }} / {{ total }}",
+      "UPLOAD_PROGRESS": "Hochladen: {{ completed }} / {{ total }}",
+      "UPLOAD_ERROR": "{{ total }} erfolgreich hochgeladen",
+      "UPLOAD_ERRORS": "{{ total }} nicht erfolgreich hochgeladen",
+      "PROGRESS": "Hochladen läuft ...",
+      "FOLDER_ALREADY_EXIST": "Den Ordner {0} gibt es bereits",
+      "FOLDER_NOT_SUPPORTED": "Ihr Browser lässt das Hochladen von Ordnern nicht zu. Versuchen Sie es mit einem anderen Browser",
+      "REMOVE_FILE_ERROR": "{{ fileName }} konnte nicht entfernt werden. Versuchen Sie es noch einmal oder wenden Sie sich an Ihr IT-Team.",
+      "REMOVE_FILES_ERROR": "{{ total }} Dateien konnten nicht entfernt werden. Versuchen Sie es noch einmal oder wenden Sie sich an Ihr IT-Team."
+    },
+    "ACTION": {
+      "UNDO": "Rückgängig machen"
+    }
+  }
+}

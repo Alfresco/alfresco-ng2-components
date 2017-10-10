@@ -1,0 +1,106 @@
+{
+  "PROCESSLIST": {
+    "NONE": "Geen procesinstances gevonden",
+    "SUMMARY": "{{total}} procesinstances gevonden",
+    "ERROR": "Kan procesinstances niet laden. Probeer het opnieuw of deel het volgende bericht met het IT-team: {{errorMessage}}",
+    "COLUMN": {
+      "NAME": "Naam"
+    }
+  },
+  "FILTERS": {
+    "MESSAGES": {
+      "NONE": "Geen procesinstancefilter geselecteerd."
+    }
+  },
+  "DETAILS": {
+    "LABELS": {
+      "STARTED_BY": "Gestart door",
+      "STARTED": "Gestart",
+      "ENDED": "Beëindigd",
+      "COMMENTS": "Opmerkingen",
+      "START_FORM": "Beginformulier",
+      "TASKS_ACTIVE": "Actieve taken",
+      "TASKS_COMPLETED": "Voltooide taken",
+      "TASK_SUBTITLE": "Toegewezen aan {{user}}, gemaakt op {{created}}"
+    },
+    "BUTTON": {
+      "CANCEL": "Proces annuleren",
+      "CLOSE": "Sluiten",
+      "SHOW_DIAGRAM": "Diagram weergeven",
+      "DRAG-ATTACHMENT": "Bestanden neerzetten om te uploaden",
+      "UPLOAD-ATTACHMENT": "Bijlage uploaden"
+    },
+    "MESSAGES": {
+      "NONE": "Geen procesdetails gevonden."
+    },
+    "TASKS": {
+      "NO_ACTIVE": "Geen momenteel actieve taken",
+      "NO_COMPLETED": "Nog geen taken voltooid",
+      "TASK_DETAILS": "Taakdetails",
+      "TASK_CLOSE": "Sluiten"
+    },
+    "COMMENTS": {
+      "NONE": "Geen opmerkingen",
+      "BUTTON": {
+        "ADD": "Een opmerking toevoegen"
+      },
+      "ADD_DIALOG": {
+        "TITLE": "Nieuwe opmerking",
+        "LABEL": {
+          "MESSAGE": "Bericht"
+        },
+        "BUTTON": {
+          "ADD": "Opmerking toevoegen",
+          "CANCEL": "Annuleren"
+        }
+      }
+    },
+    "ADD_DIALOG": {
+      "TITLE": "Procesvariabele instellen",
+      "LABEL": {
+        "NAME": "Naam",
+        "VALUE": "Waarde",
+        "SCOPE": "Bereik"
+      }
+    },
+    "EDIT_DIALOG": {
+      "TITLE": "Procesvariabele bewerken"
+    },
+    "ERROR_DIALOG": {
+      "TITLE": "Kan die actie niet voltooien",
+      "DESCRIPTION": "U beschikt mogelijk niet over het vereiste toegangsniveau, neem contact op met het IT-team."
+    }
+  },
+  "START_PROCESS": {
+    "BUTTON": "Proces starten",
+    "NO_PROCESS_DEFINITIONS": "U kunt geen proces starten omdat er geen procesdefinities beschikbaar zijn",
+    "FORM": {
+      "TITLE": "Proces starten",
+      "LABEL": {
+        "TYPE": "Type",
+        "NAME": "Naam"
+      },
+      "TYPE_PLACEHOLDER": "Maak een keuze...",
+      "ACTION": {
+        "START": "Start",
+        "CANCEL": "Annuleren"
+      }
+    },
+    "ERROR": {
+      "LOAD_PROCESS_DEFS": "Kan procesdefinities niet laden, controleer of u over toegang beschikt",
+      "START": "Kan geen nieuwe procesinstance starten, controleer of u over toegang beschikt."
+    }
+  },
+  "PROCESS-ATTACHMENT": {
+    "EMPTY": {
+      "HEADER": "Deze lijst is leeg",
+      "DRAG-AND-DROP": {
+        "TITLE": "Slepen en neerzetten om bestanden te uploaden",
+        "SUBTITLE": "om bestanden te uploaden"
+      }
+    },
+    "EMPTY-LIST": {
+      "HEADER": "Er zijn geen bestanden beschikbaar"
+    }
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "PROCESSLIST": {
+    "NONE": "Nenhuma instância de processo encontrada",
+    "SUMMARY": "{{total}} instâncias de processo encontradas",
+    "ERROR": "Não foi possível carregar instâncias de processos. Tente novamente ou compartilhe a mensagem a seguir com a Equipe de TI {{errorMessage}}",
+    "COLUMN": {
+      "NAME": "Nome"
+    }
+  },
+  "FILTERS": {
+    "MESSAGES": {
+      "NONE": "Nenhum filtro de instância de processo selecionado."
+    }
+  },
+  "DETAILS": {
+    "LABELS": {
+      "STARTED_BY": "Iniciado por",
+      "STARTED": "Iniciado",
+      "ENDED": "Finalizado",
+      "COMMENTS": "Comentários",
+      "START_FORM": "Iniciar formulário",
+      "TASKS_ACTIVE": "Tarefas ativas",
+      "TASKS_COMPLETED": "Tarefas concluídas",
+      "TASK_SUBTITLE": "Atribuídas a {{user}}, criadas em {{created}}"
+    },
+    "BUTTON": {
+      "CANCEL": "Cancelar processo",
+      "CLOSE": "Fechar",
+      "SHOW_DIAGRAM": "Mostrar diagrama",
+      "DRAG-ATTACHMENT": "Solte os arquivos para carregar",
+      "UPLOAD-ATTACHMENT": "Carregar anexo"
+    },
+    "MESSAGES": {
+      "NONE": "Nenhum detalhe de processo encontrado."
+    },
+    "TASKS": {
+      "NO_ACTIVE": "Nenhuma tarefa ativa no momento",
+      "NO_COMPLETED": "Nenhuma tarefa concluída ainda",
+      "TASK_DETAILS": "Detalhes da tarefa",
+      "TASK_CLOSE": "Fechar"
+    },
+    "COMMENTS": {
+      "NONE": "Sem comentários",
+      "BUTTON": {
+        "ADD": "Adicionar comentário"
+      },
+      "ADD_DIALOG": {
+        "TITLE": "Novo comentário",
+        "LABEL": {
+          "MESSAGE": "Mensagem"
+        },
+        "BUTTON": {
+          "ADD": "Adicionar comentário",
+          "CANCEL": "Cancelar"
+        }
+      }
+    },
+    "ADD_DIALOG": {
+      "TITLE": "Definir variável do processo",
+      "LABEL": {
+        "NAME": "Nome",
+        "VALUE": "Valor",
+        "SCOPE": "Escopo"
+      }
+    },
+    "EDIT_DIALOG": {
+      "TITLE": "Editar variável do processo"
+    },
+    "ERROR_DIALOG": {
+      "TITLE": "Não foi possível concluir a ação",
+      "DESCRIPTION": "Talvez você não tenha o nível de acesso necessário, verifique com a Equipe de TI."
+    }
+  },
+  "START_PROCESS": {
+    "BUTTON": "Iniciar processo",
+    "NO_PROCESS_DEFINITIONS": "Você não pode iniciar um processo, não há definições de processo disponíveis",
+    "FORM": {
+      "TITLE": "Iniciar processo",
+      "LABEL": {
+        "TYPE": "Tipo",
+        "NAME": "Nome"
+      },
+      "TYPE_PLACEHOLDER": "Escolha uma opção...",
+      "ACTION": {
+        "START": "Iniciar",
+        "CANCEL": "Cancelar"
+      }
+    },
+    "ERROR": {
+      "LOAD_PROCESS_DEFS": "Não foi possível carregar as definições do processo, verifique se você tem acesso.",
+      "START": "Não foi possível iniciar a nova instância do processo, verifique se você tem acesso."
+    }
+  },
+  "PROCESS-ATTACHMENT": {
+    "EMPTY": {
+      "HEADER": "Esta lista está vazia",
+      "DRAG-AND-DROP": {
+        "TITLE": "Arraste e solte",
+        "SUBTITLE": "para carregar arquivos"
+      }
+    },
+    "EMPTY-LIST": {
+      "HEADER": "Nenhum arquivo disponível"
+    }
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "PROCESSLIST": {
+    "NONE": "Ingen prosesstilfeller funnet",
+    "SUMMARY": "{{total}} prosesstilfeller funnet",
+    "ERROR": "Kan ikke laste inn prosesstilfeller. Prøv på nytt, eller del følgende melding med IT-teamet {{errorMessage}}",
+    "COLUMN": {
+      "NAME": "Navn"
+    }
+  },
+  "FILTERS": {
+    "MESSAGES": {
+      "NONE": "Ingen prosesstilfellefilter valgt."
+    }
+  },
+  "DETAILS": {
+    "LABELS": {
+      "STARTED_BY": "Startet av",
+      "STARTED": "Startet",
+      "ENDED": "Avsluttet",
+      "COMMENTS": "Kommentarer",
+      "START_FORM": "Start skjema",
+      "TASKS_ACTIVE": "Aktive oppgaver",
+      "TASKS_COMPLETED": "Fullførte oppgaver",
+      "TASK_SUBTITLE": "Tilordet {{user}}, opprettet {{created}}"
+    },
+    "BUTTON": {
+      "CANCEL": "Avbryt prosess",
+      "CLOSE": "Lukk",
+      "SHOW_DIAGRAM": "Vis diagram",
+      "DRAG-ATTACHMENT": "Slipp filer for å laste opp",
+      "UPLOAD-ATTACHMENT": "Last opp vedlegg"
+    },
+    "MESSAGES": {
+      "NONE": "Ingen prosessdetaljer funnet."
+    },
+    "TASKS": {
+      "NO_ACTIVE": "Ingen aktive oppgaver i øyeblikket",
+      "NO_COMPLETED": "Ingen oppgaver fullført ennå",
+      "TASK_DETAILS": "Detaljer for oppgave",
+      "TASK_CLOSE": "Lukk"
+    },
+    "COMMENTS": {
+      "NONE": "Ingen kommentarer",
+      "BUTTON": {
+        "ADD": "Legg til en kommentar"
+      },
+      "ADD_DIALOG": {
+        "TITLE": "Nytt kommentar",
+        "LABEL": {
+          "MESSAGE": "Melding"
+        },
+        "BUTTON": {
+          "ADD": "Legg til kommentar",
+          "CANCEL": "Avbryt"
+        }
+      }
+    },
+    "ADD_DIALOG": {
+      "TITLE": "Still inn prosessvariabel",
+      "LABEL": {
+        "NAME": "Navn",
+        "VALUE": "Verdi",
+        "SCOPE": "Område"
+      }
+    },
+    "EDIT_DIALOG": {
+      "TITLE": "Rediger prosessvariabel"
+    },
+    "ERROR_DIALOG": {
+      "TITLE": "Kan ikke fullføre den handlingen",
+      "DESCRIPTION": "Du har kanskje ikke det påkrevde tilgangsnivået, sjekk med IT-teamet."
+    }
+  },
+  "START_PROCESS": {
+    "BUTTON": "Start prosess",
+    "NO_PROCESS_DEFINITIONS": "Du kan ikke starte en prosess fordi det ikke finnes noen tilgjengelige prosessdefinisjoner",
+    "FORM": {
+      "TITLE": "Start prosess",
+      "LABEL": {
+        "TYPE": "Type",
+        "NAME": "Navn"
+      },
+      "TYPE_PLACEHOLDER": "Velg én...",
+      "ACTION": {
+        "START": "Start",
+        "CANCEL": "Avbryt"
+      }
+    },
+    "ERROR": {
+      "LOAD_PROCESS_DEFS": "Kan ikke laste inn prosessdefinisjoner, kontroller om du har tilgang.",
+      "START": "Kan ikke starte nytt prosesstilfelle, kontroller om du har tilgang."
+    }
+  },
+  "PROCESS-ATTACHMENT": {
+    "EMPTY": {
+      "HEADER": "Denne listen er tom",
+      "DRAG-AND-DROP": {
+        "TITLE": "Dra og slipp",
+        "SUBTITLE": "for å laste opp filer"
+      }
+    },
+    "EMPTY-LIST": {
+      "HEADER": "Ingen tilgjengelige filer"
+    }
+  }
+}

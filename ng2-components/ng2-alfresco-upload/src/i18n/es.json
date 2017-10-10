@@ -1,0 +1,46 @@
+{
+  "ADF_FILE_UPLOAD": {
+    "BUTTON": {
+      "MINIMIZE": "Minimizar",
+      "MAXIMIZE": "Maximizar",
+      "CLOSE": "Cerrar",
+      "CANCEL_ALL": "Cancelar cargas",
+      "CANCEL_FILE": "Cancelar carga",
+      "REMOVE_FILE": "Eliminar fichero cargado"
+    },
+    "STATUS": {
+      "FILE_CANCELED_STATUS": "Cancelado"
+    },
+    "CONFIRMATION": {
+      "BUTTON": {
+        "CANCEL": "Sí",
+        "CONTINUE": "No"
+      },
+      "MESSAGE": {
+        "TITLE": "Cancelar carga",
+        "TEXT": "Detener la carga y eliminar los ficheros ya cargados."
+      }
+    }
+  },
+  "FILE_UPLOAD": {
+    "BUTTON": {
+      "UPLOAD_FILE": "Añadir fichero",
+      "UPLOAD_FOLDER": "Cargar carpeta"
+    },
+    "MESSAGES": {
+      "UPLOAD_CANCELED": "Carga cancelada",
+      "UPLOAD_COMPLETED": "Cargados {{ completed }} / {{ total }}",
+      "UPLOAD_PROGRESS": "Cargando {{ completed }} / {{ total }}",
+      "UPLOAD_ERROR": "Error en carga {{ total }}",
+      "UPLOAD_ERRORS": "Error en {{ total }} cargas",
+      "PROGRESS": "Carga en curso...",
+      "FOLDER_ALREADY_EXIST": "La carpeta {0} ya existe",
+      "FOLDER_NOT_SUPPORTED": "Su navegador no es compatible con la carga de carpetas; pruebe con un navegador diferente.",
+      "REMOVE_FILE_ERROR": "{{ fileName }} no se ha podido eliminar; vuelva a intentarlo o póngase en contacto con el equipo de TI.",
+      "REMOVE_FILES_ERROR": "{{ total }} ficheros no se han podido eliminar; vuelva a intentarlo o póngase en contacto con su equipo de TI."
+    },
+    "ACTION": {
+      "UNDO": "Deshacer"
+    }
+  }
+}

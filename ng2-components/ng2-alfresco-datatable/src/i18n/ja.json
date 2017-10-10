@@ -1,0 +1,11 @@
+{
+  "ADF-DATATABLE": {
+    "EMPTY": {
+      "HEADER": "このリストは空です",
+      "DRAG-AND-DROP": {
+        "TITLE": "アップロードするファイルをドラッグ & ドロップしてください",
+        "SUBTITLE": ""
+      }
+    }
+  }
+}

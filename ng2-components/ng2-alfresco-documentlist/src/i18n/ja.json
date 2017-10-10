@@ -1,0 +1,54 @@
+{
+  "ADF-DOCUMENT-LIST": {
+    "EMPTY": {
+      "HEADER": "このフォルダは空です"
+    },
+    "LAYOUT": {
+      "THUMBNAIL": "サムネイル",
+      "NAME": "名前",
+      "LOCATION": "場所",
+      "SIZE": "サイズ",
+      "DELETED_ON": "削除済み",
+      "DELETED_BY": "削除者",
+      "STATUS": "ステータス",
+      "MODIFIED_ON": "変更日",
+      "MODIFIED_BY": "変更者",
+      "SHARED_BY": "共有者",
+      "LOAD_MORE": "もっと見る"
+    }
+  },
+  "ALFRESCO_DOCUMENT_LIST": {
+    "BUTTON": {
+      "ACTION_CREATE": "作成...",
+      "ACTION_NEW_FOLDER": "新しいフォルダ",
+      "CREATE": "作成",
+      "CANCEL": "キャンセル"
+    }
+  },
+  "DROPDOWN": {
+    "PLACEHOLDER_LABEL": "サイトリスト",
+    "DEFAULT_OPTION": "デフォルト"
+  },
+  "NODE_SELECTOR": {
+    "CANCEL": "キャンセル",
+    "CHOOSE": "選択",
+    "NO_RESULTS": "一致するアイテムはありません"
+  },
+  "OPERATION": {
+    "SUCCES": {
+      "CONTENT": {
+        "COPY": "コピーが完了しました",
+        "MOVE": "移動が完了しました"
+      },
+      "FOLDER": {
+        "COPY": "コピーが完了しました",
+        "MOVE": "移動が完了しました"
+      }
+    },
+    "ERROR": {
+      "CONFLICT": "この名前は既に使用されています。別の名前を使用してください。",
+      "UNKNOWN": "処理が失敗しました。もう一度操作をやり直すか、IT 担当者に連絡してください。",
+      "PERMISSION": "この処理を行うための権限がありません。"
+    }
+  }
+}

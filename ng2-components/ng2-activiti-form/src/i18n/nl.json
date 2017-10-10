@@ -1,0 +1,13 @@
+{
+  "FORM": {
+    "START_FORM": {
+      "TITLE": "Beginformulier"
+    },
+    "PREVIEW": {
+      "IMAGE_NOT_AVAILABLE": "Preview niet beschikbaar"
+    },
+    "FIELD": {
+      "REQUIRED": "*Verplicht"
+    }
+  }
+}

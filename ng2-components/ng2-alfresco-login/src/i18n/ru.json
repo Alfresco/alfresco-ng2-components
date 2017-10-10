@@ -1,29 +1,31 @@
 {
-    "LOGIN": {
-        "LOGO": "Alfresco",
-        "LABEL": {
-            "LOGIN": "Логин",
-            "USERNAME": "Имя пользователя",
-            "PASSWORD": "Пароль",
-            "REMEMBER": "Запомнить?"
-        },
-        "MESSAGES": {
-            "USERNAME-REQUIRED": "Обязательное поле",
-            "USERNAME-MIN": "Имя пользователя должно быть не меньше {{minLenght}} символов.",
-            "PASSWORD-REQUIRED": "Введите пароль для входа",
-            "LOGIN-ERROR-CREDENTIALS": "Не правильный логин или пароль",
-            "LOGIN-ERROR-PROVIDERS": "Ошибка при авторизации",
-            "LOGIN-SUCCESS": "Вы успешно авторизовались",
-            "LOGIN-ERROR-CORS": "CORS exception, проверьте настройки на сервере",
-            "LOGIN-ERROR-CSRF": "CSRF exception, установите [disableCsrf]=\"true\" в alfresco-login компоненте",
-            "LOGIN-ECM-LICENSE": "Content Services находится в режиме для чтения"
-        },
-        "BUTTON": {
-            "LOGIN": "ВОЙТИ"
-        },
-        "ACTION": {
-            "HELP": "НУЖНА ПОМОЩЬ?",
-            "REGISTER": "РЕГИСТРАЦИЯ"
-        }
+  "LOGIN": {
+    "LOGO": "Alfresco",
+    "LABEL": {
+      "LOGIN": "Вход",
+      "USERNAME": "Имя пользователя",
+      "PASSWORD": "Пароль",
+      "REMEMBER": "Запомнить меня"
+    },
+    "MESSAGES": {
+      "USERNAME-REQUIRED": "Обязательное поле",
+      "USERNAME-MIN": "Имя пользователя должно быть не меньше {{minLenght}} символов.",
+      "PASSWORD-REQUIRED": "Введите пароль для входа",
+      "LOGIN-ERROR-CREDENTIALS": "Вы ввели неверное имя пользователя или пароль",
+      "LOGIN-ERROR-PROVIDERS": "Поставщики не могут оставаться неопределенными",
+      "LOGIN-SUCCESS": "Вы успешно вошли",
+      "LOGIN-ERROR-CORS": "Исключение CORS, проверьте конфигурацию сервера",
+      "LOGIN-ERROR-CSRF": "Исключение CSRF, установите [disableCsrf]=\"true\" в login.component",
+      "LOGIN-ECM-LICENSE": "Репозиторий Alfresco Content Services находится в режиме только для чтения"
+    },
+    "BUTTON": {
+      "LOGIN": "ВОЙТИ",
+      "CHECKING": "ПРОВЕРКА",
+      "WELCOME": "ДОБРО ПОЖАЛОВАТЬ"
+    },
+    "ACTION": {
+      "HELP": "НУЖНА ПОМОЩЬ?",
+      "REGISTER": "РЕГИСТРАЦИЯ"
     }
+  }
 }

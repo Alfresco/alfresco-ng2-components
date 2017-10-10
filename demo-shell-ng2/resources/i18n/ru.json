@@ -1,0 +1,47 @@
+{
+  "title": "Приветствие",
+  "DOCUMENT_LIST": {
+    "COLUMNS": {
+      "DISPLAY_NAME": "Отображаемое имя",
+      "TAG": "Метка",
+      "CREATED_BY": "Создано пользователем",
+      "CREATED_ON": "Дата создания",
+      "CREATED": "Создано"
+    },
+    "ACTIONS": {
+      "FOLDER": {
+        "COPY": "Копировать",
+        "MOVE": "Переместить",
+        "DELETE": "Удалить"
+      },
+      "DOCUMENT": {
+        "DOWNLOAD": "Скачать",
+        "COPY": "Копировать",
+        "MOVE": "Переместить",
+        "DELETE": "Удалить"
+      }
+    }
+  },
+  "ANALYTICS_REPORT": {
+    "NO_REPORT_MESSAGE": "Отчет не выбран. Выберите отчет из списка"
+  },
+  "PS-TAB": {
+    "TASKS-TAB": "Задачи",
+    "PROCESSES-TAB": "Процесс",
+    "REPORTS-TAB": "Отчеты",
+    "START-TASK": "Начать задачу",
+    "START-PROCESS": "Начать процесс",
+    "AUDIT-LOG": "Журнал аудита процессов"
+  },
+  "SETTINGS": {
+    "TITLE": "Параметры",
+    "CS-HOST": "Конфигурация URL-адреса хоста Content Services",
+    "BP-HOST": "Конфигурация URL-адреса хоста Process Services",
+    "BACK": "Назад",
+    "APPLY": "ПРИМЕНИТЬ"
+  },
+  "FORM-LIST": {
+    "STORE": "Хранилище",
+    "RESTORE": "Восстановить"
+  }
+}
