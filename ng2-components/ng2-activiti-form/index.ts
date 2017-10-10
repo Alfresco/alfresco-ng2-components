@@ -19,6 +19,7 @@ import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
+import { StartFormCustomButtonDirective } from './src/components/form-custom-button.directive';
 import { FormFieldComponent } from './src/components/form-field/form-field.component';
 import { FormListComponent } from './src/components/form-list.component';
 import { FormComponent } from './src/components/form.component';
@@ -61,6 +62,7 @@ export const ACTIVITI_FORM_DIRECTIVES: any[] = [
     FormListComponent,
     ContentWidgetComponent,
     StartFormComponent,
+    StartFormCustomButtonDirective,
     FormFieldComponent,
     ...WIDGET_DIRECTIVES
 ];
