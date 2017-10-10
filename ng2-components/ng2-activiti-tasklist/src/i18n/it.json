@@ -9,6 +9,9 @@
     },
     "TASK_DETAILS": {
         "LABELS": {
+            "INFO_DRAWER_TITLE": "pippo",
+            "INFO_DRAWER_TAB_ACTIVITY_TITLE": "Attivita",
+            "INFO_DRAWER_TAB_DETAILS_TITLE": "Dettagli",
             "ASSIGNEE": "Assegnatario",
             "DUE": "Scadenza",
             "FORM": "Form",

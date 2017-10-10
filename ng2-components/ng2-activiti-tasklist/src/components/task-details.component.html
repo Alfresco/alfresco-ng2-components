@@ -51,13 +51,12 @@
             </button>
         </div>
         <div class="adf-task-details-core-sidebar">
-            <adf-info-drawer *ngIf="showHeaderContent" title="Activities" class="adf-task-details-core-sidebar-drawer">
-
+            <adf-info-drawer *ngIf="showHeaderContent" title="{{ 'TASK_DETAILS.LABELS.INFO_DRAWER_TITLE' | translate }}" class="adf-task-details-core-sidebar-drawer">
                 <div info-drawer-buttons>
                     <md-icon (click)="toggleHeaderContent()">clear</md-icon>
                 </div>
 
-                <adf-info-drawer-tab label="Activity">
+                <adf-info-drawer-tab label="{{ 'TASK_DETAILS.LABELS.INFO_DRAWER_TAB_DETAILS_TITLE' | translate }}">
                     <div class="assignment-container" *ngIf="showAssignee">
                         <adf-people-search
                             (searchPeople)="searchUser($event)"
@@ -85,7 +84,7 @@
                     </adf-people>
                 </adf-info-drawer-tab>
 
-                <adf-info-drawer-tab label="Details">
+                <adf-info-drawer-tab label="{{ 'TASK_DETAILS.LABELS.INFO_DRAWER_TAB_ACTIVITY_TITLE' | translate }}">
                     <md-card *ngIf="showComments">
                         <md-card-content>
                             <adf-comments #activiticomments

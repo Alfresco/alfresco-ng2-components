@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-import { DebugElement } from '@angular/core';
+import { Component, DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { MaterialModule } from '../../material.module';
 import { InfoDrawerLayoutComponent } from './info-drawer-layout.component';
 import { InfoDrawerComponent } from './info-drawer.component';
@@ -69,5 +70,54 @@ describe('InfoDrawerComponent', () => {
         component.onTabChange(event);
         expect(tabEmitSpy).toHaveBeenCalled();
         expect(tabEmitSpy).toHaveBeenCalledWith('DETAILS');
+    });
+
+    it('should render the title', () => {
+        component.title = 'FakeTitle';
+        fixture.detectChanges();
+        let title: any = fixture.debugElement.queryAll(By.css('[info-drawer-title]'));
+        expect(title.length).toBe(1);
+        expect(title[0].nativeElement.innerText).toBe('FakeTitle');
+    });
+});
+
+@Component({
+    template: `
+    <adf-info-drawer>
+        <div info-drawer-title>Fake Title Custom</div>
+    </adf-info-drawer>
+       `
+})
+class CustomInfoDrawerComponent {
+}
+
+describe('Custom InfoDrawer', () => {
+    let fixture: ComponentFixture<CustomInfoDrawerComponent>;
+    let component: CustomInfoDrawerComponent;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [
+                InfoDrawerComponent,
+                InfoDrawerLayoutComponent,
+                CustomInfoDrawerComponent
+            ],
+            imports: [
+                MaterialModule
+            ]
+        }).compileComponents();
+    }));
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(CustomInfoDrawerComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+
+    it('should render the title', () => {
+        fixture.detectChanges();
+        let title: any = fixture.debugElement.queryAll(By.css('[info-drawer-title]'));
+        expect(title.length).toBe(1);
+        expect(title[0].nativeElement.innerText).toBe('Fake Title Custom');
     });
 });
