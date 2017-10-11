@@ -22,7 +22,7 @@ import { ContextMenuHolderComponent } from './context-menu-holder.component';
 import { ContextMenuModule } from './context-menu.module';
 import { ContextMenuService } from './context-menu.service';
 
-fdescribe('ContextMenuHolderComponent', () => {
+describe('ContextMenuHolderComponent', () => {
     let fixture: ComponentFixture<ContextMenuHolderComponent>;
     let component: ContextMenuHolderComponent;
     let contextMenuService: ContextMenuService;
