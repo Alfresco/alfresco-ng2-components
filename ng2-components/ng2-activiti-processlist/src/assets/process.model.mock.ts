@@ -76,3 +76,86 @@ export let exampleProcessNoName = new ProcessInstance({
     },
     processDefinitionName: 'My Process'
 });
+
+export let fakeProcessInstances = {
+    size: 2,
+    total: 2,
+    start: 0,
+    data: [
+      {
+        id: '340124',
+        name: 'James Franklin EMEA Onboarding',
+        businessKey: null,
+        processDefinitionId: 'HROnboarding:60:338704',
+        tenantId: 'tenant_1',
+        started: '2017-10-09T12:19:44.560+0000',
+        ended: null,
+        startedBy: {
+          id: 4004,
+          firstName: 'Integration',
+          lastName: 'Test',
+          email: 'srintegrationtest@test.com'
+        },
+        processDefinitionName: 'HROnboarding',
+        processDefinitionDescription: 'HR Onboarding Workflow',
+        processDefinitionKey: 'fakeProcessDefinitionKey1',
+        processDefinitionCategory: 'http://www.activiti.org/processdef',
+        processDefinitionVersion: 60,
+        processDefinitionDeploymentId: '338695',
+        graphicalNotationDefined: true,
+        startFormDefined: false,
+        suspended: false,
+        variables: []
+      },
+      {
+        id: '340063',
+        name: 'Mary Franklin AMERICAS Onboarding',
+        businessKey: null,
+        processDefinitionId: 'HROnboarding:60:338704',
+        tenantId: 'tenant_1',
+        started: '2017-10-09T12:18:07.484+0000',
+        ended: null,
+        startedBy: {
+          id: 4004,
+          firstName: 'Integration',
+          lastName: 'Test',
+          email: 'srintegrationtest@test.com'
+        },
+        processDefinitionName: 'HROnboarding',
+        processDefinitionDescription: 'HR Onboarding Workflow',
+        processDefinitionKey: 'HROnboarding',
+        processDefinitionCategory: 'http://www.activiti.org/processdef',
+        processDefinitionVersion: 60,
+        processDefinitionDeploymentId: '338695',
+        graphicalNotationDefined: true,
+        startFormDefined: false,
+        suspended: false,
+        variables: []
+      },
+      {
+        id: '337604',
+        name: 'John Jacobs AMERICAS Onboarding',
+        businessKey: null,
+        processDefinitionId: 'HROnboarding:49:303243',
+        tenantId: 'tenant_1',
+        started: '2017-09-25T10:02:23.522+0000',
+        ended: null,
+        startedBy: {
+          id: 4004,
+          firstName: 'Integration',
+          lastName: 'Test',
+          email: 'srintegrationtest@test.com'
+        },
+        processDefinitionName: 'HROnboarding',
+        processDefinitionDescription: 'HR Onboarding Workflow',
+        processDefinitionKey: 'fakeProcessDefinitionKey2',
+        processDefinitionCategory: 'http://www.activiti.org/processdef',
+        processDefinitionVersion: 49,
+        processDefinitionDeploymentId: '303234',
+        graphicalNotationDefined: true,
+        startFormDefined: false,
+        suspended: false,
+        variables: []
+      }
+    ]
+  };

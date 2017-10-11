@@ -39,11 +39,11 @@ export class ProcessService extends TaskListService {
         super(alfrescoApiService, processLogService);
     }
 
-    getProcessInstances(requestNode: ProcessFilterRequestRepresentation): Observable<ProcessInstance[]> {
+    getProcessInstances(requestNode: ProcessFilterRequestRepresentation, processDefinitionKey?: string): Observable<ProcessInstance[]> {
         return Observable.fromPromise(this.alfrescoApiService.getInstance().activiti.processApi.getProcessInstances(requestNode))
             .map((res: any) => {
-                if (requestNode.processDefinitionKey) {
-                    return res.data.filter(process => process.processDefinitionKey === requestNode.processDefinitionKey);
+                if (processDefinitionKey) {
+                    return res.data.filter(process => process.processDefinitionKey === processDefinitionKey);
                 } else {
                     return res.data;
                 }

@@ -138,7 +138,7 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
 
     private load(requestNode: ProcessFilterRequestRepresentation) {
         this.isLoading = true;
-        this.processService.getProcessInstances(requestNode)
+        this.processService.getProcessInstances(requestNode, this.processDefinitionKey)
             .subscribe(
                 (response) => {
                     let instancesRow = this.createDataRow(response);
@@ -281,7 +281,6 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     private createRequestNode() {
         let requestNode = {
             appDefinitionId: this.appId,
-            processDefinitionKey: this.processDefinitionKey,
             state: this.state,
             sort: this.sort
         };

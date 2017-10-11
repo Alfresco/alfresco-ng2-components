@@ -187,22 +187,6 @@ describe('ProcessInstanceListComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should return the process instances list filtered by processDefinitionKey', (done) => {
-        let key = 'fakeprocess';
-        component.appId = '1';
-        component.state = 'open';
-        component.processDefinitionKey = key;
-        component.onSuccess.subscribe((res) => {
-            let lastCall = getProcessInstancesSpy.calls.mostRecent();
-            expect(lastCall).toBeDefined();
-            let lastCallArgs = lastCall.args;
-            expect(lastCallArgs[0]).toBeDefined();
-            expect(lastCallArgs[0].processDefinitionKey).toEqual(key);
-            done();
-        });
-        fixture.detectChanges();
-    });
-
     it('should return a default name if no name is specified on the process', (done) => {
         getProcessInstancesSpy = getProcessInstancesSpy.and.returnValue(Observable.of(fakeProcessInstancesWithNoName));
         component.appId = '1';

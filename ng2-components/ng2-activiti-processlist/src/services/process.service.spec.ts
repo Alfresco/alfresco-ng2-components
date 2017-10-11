@@ -19,7 +19,7 @@ import { TestBed } from '@angular/core/testing';
 import { async } from '@angular/core/testing';
 import { AlfrescoApi } from 'alfresco-js-api';
 import { AlfrescoApiService, CoreModule } from 'ng2-alfresco-core';
-import { exampleProcess } from '../assets/process.model.mock';
+import { exampleProcess, fakeProcessInstances } from '../assets/process.model.mock';
 import {
     fakeApp1,
     fakeApp2,
@@ -84,6 +84,18 @@ describe('ProcessService', () => {
                 expect(instance.id).toBe(exampleProcess.id);
                 expect(instance.name).toBe(exampleProcess.name);
                 expect(instance.started).toBe(exampleProcess.started);
+            });
+        }));
+
+        it('should filter by processDefinitionKey', async(() => {
+            getProcessInstances = getProcessInstances.and.returnValue(Promise.resolve(fakeProcessInstances));
+
+            service.getProcessInstances(filter, 'fakeProcessDefinitionKey1').subscribe((instances) => {
+                expect(instances.length).toBe(1);
+                let instance = instances[0];
+                expect(instance.id).toBe('340124');
+                expect(instance.name).toBe('James Franklin EMEA Onboarding');
+                expect(instance.started).toBe('2017-10-09T12:19:44.560+0000');
             });
         }));
 
