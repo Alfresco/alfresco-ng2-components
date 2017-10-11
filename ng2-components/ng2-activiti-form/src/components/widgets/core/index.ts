@@ -32,3 +32,4 @@ export * from './form-outcome.model';
 export * from './form-outcome-event.model';
 export * from './form-field-validator';
 export * from './content-link.model';
+export * from './error-message.model';

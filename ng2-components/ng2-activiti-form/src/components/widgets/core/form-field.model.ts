@@ -19,6 +19,7 @@
 import * as moment from 'moment';
 import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 import { ContainerColumnModel } from './container-column.model';
+import { ErrorMessageModel } from './error-message.model';
 import { FormFieldMetadata } from './form-field-metadata';
 import { FormFieldOption } from './form-field-option';
 import { FormFieldTypes } from './form-field-types';
@@ -75,7 +76,7 @@ export class FormFieldModel extends FormWidgetModel {
 
     // util members
     emptyOption: FormFieldOption;
-    validationSummary: string;
+    validationSummary: ErrorMessageModel;
 
     get value(): any {
         return this._value;
@@ -117,7 +118,7 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     validate(): boolean {
-        this.validationSummary = null;
+        this.validationSummary = new ErrorMessageModel();
 
         let validators = this.form.fieldValidators || [];
         for (let validator of validators) {
@@ -165,6 +166,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.currency = json.currency;
             this.dateDisplayFormat = json.dateDisplayFormat || this.defaultDateFormat;
             this._value = this.parseValue(json);
+            this.validationSummary = new ErrorMessageModel();
 
             if (json.placeholder && json.placeholder !== '' && json.placeholder !== 'null') {
                 this.placeholder = json.placeholder;

@@ -18,7 +18,8 @@
 /* tslint:disable:component-selector  */
 
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { ErrorMessageModel } from '../core/index';
 import { FormService } from './../../../services/form.service';
 import { baseHost , WidgetComponent } from './../widget.component';
 
@@ -38,13 +39,15 @@ import { baseHost , WidgetComponent } from './../widget.component';
     host: baseHost,
     encapsulation: ViewEncapsulation.None
 })
-export class ErrorWidgetComponent extends WidgetComponent implements AfterViewInit, OnChanges {
+export class ErrorWidgetComponent extends WidgetComponent implements OnChanges {
 
     @Input()
-    error: string;
+    error: ErrorMessageModel;
 
     @Input()
     required: string;
+
+    translateParameters: any = null;
 
     _subscriptAnimationState: string = '';
 
@@ -52,15 +55,17 @@ export class ErrorWidgetComponent extends WidgetComponent implements AfterViewIn
         super(formService);
     }
 
-    ngAfterViewInit() {
-        this._subscriptAnimationState = 'enter';
-    }
-
     ngOnChanges(changes: SimpleChanges) {
         if (changes['required']) {
             this.required = changes.required.currentValue;
             this._subscriptAnimationState = 'enter';
         }
+        if (changes['error']) {
+            if (changes.error.currentValue.isActive()) {
+                this.error = changes.error.currentValue;
+                this.translateParameters = this.error.getAttributesAsJsonObj();
+                this._subscriptAnimationState = 'enter';
+            }
+        }
     }
-
 }

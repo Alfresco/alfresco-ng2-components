@@ -1,4 +1,4 @@
-<div class="{{field.className}}" *ngIf="field?.isVisible" id="data-widget" [class.adf-invalid]="!field.isValid || field.validationSummary">
+<div class="{{field.className}}" *ngIf="field?.isVisible" id="data-widget" [class.adf-invalid]="!field.isValid || field.validationSummary.message">
     <md-input-container class="adf-date-widget">
         <label class="adf-label" [attr.for]="field.id">{{field.name}} ({{field.dateDisplayFormat}})<span *ngIf="isRequired()">*</span></label>
         <input mdInput
@@ -14,7 +14,7 @@
                placeholder="{{field.placeholder}}">
         <md-datepicker-toggle  mdSuffix [for]="datePicker" [disabled]="field.readOnly" ></md-datepicker-toggle>
     </md-input-container>
-    <error-widget [error]="field.validationSummary" ></error-widget>
+    <error-widget [error]="field.validationSummary"></error-widget>
     <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
     <md-datepicker #datePicker [touchUi]="true" [startAt]="startAt" ></md-datepicker>
 </div>

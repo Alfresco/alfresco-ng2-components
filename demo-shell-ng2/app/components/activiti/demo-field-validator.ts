@@ -26,7 +26,7 @@ export class DemoFieldValidator implements FormFieldValidator {
     validate(field: FormFieldModel): boolean {
         if (this.isSupported(field)) {
             if (field.value && field.value.toLowerCase() === 'admin') {
-                field.validationSummary = 'Sorry, the value cannot be "admin".';
+                field.validationSummary.message = 'Sorry, the value cannot be "admin".';
                 return false;
             }
         }
