@@ -64,11 +64,12 @@ adf-document-list ::ng-deep adf-datatable tr.is-selected .image-table-cell::befo
 }
 
 .adf-files-toolbar {
-    & ::ng-deep md-toolbar-row {
-        white-space: initial;
+    .adf-toolbar-title {
+        display: flex;
+        width: 100%;
 
-        & ::ng-deep a.adf-breadcrumb-item-anchor {
-            white-space: initial;
+        .adf-breadcrumb {
+            width: 0;
         }
     }
 }
