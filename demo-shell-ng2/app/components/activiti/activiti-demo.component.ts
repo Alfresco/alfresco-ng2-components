@@ -369,7 +369,9 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
         if (this.taskList) {
             this.taskList.reload();
         }
-        this.processList.reload();
+        if (this.processList) {
+            this.processList.reload();
+        }
     }
 
     onFormContentClick(content: any): void {
