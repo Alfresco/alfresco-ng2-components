@@ -1,6 +1,7 @@
 {
     "APPS": {
-        "NONE": "No apps found"
+        "NONE": "No apps found",
+        "TASK_APP_NAME": "Task App"
     },
     "TASK_LIST": {
         "MESSAGES": {
