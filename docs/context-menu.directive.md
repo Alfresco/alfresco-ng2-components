@@ -45,6 +45,12 @@ export class MyComponent implements OnInit {
 }
 ```
 
+### Properties
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| showIcons | boolean | false | Render defined icons  |
+
 ## Details
 
 See **Demo Shell** or **DocumentList** implementation for more details and use cases.

@@ -15,74 +15,73 @@
  * limitations under the License.
  */
 
-import { Component, HostListener } from '@angular/core';
+import { OverlayContainer } from '@angular/cdk/overlay';
+import { ViewportRuler } from '@angular/cdk/scrolling';
+import { Component, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MdMenuTrigger } from '@angular/material';
+import { Subscription } from 'rxjs/Rx';
 import { ContextMenuService } from './context-menu.service';
 
 @Component({
     selector: 'adf-context-menu-holder, context-menu-holder',
-    styles: [
-        `
-        .menu-container {
-            background: #fff;
-            display: block;
-            margin: 0;
-            padding: 0;
-            border: none;
-            overflow: visible;
-            z-index: 9999;
-        }
-
-        .context-menu {
-            list-style-type: none;
-            position: static;
-            height: auto;
-            width: auto;
-            min-width: 124px;
-            padding: 8px 0;
-            margin: 0;
-            box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
-            border-radius: 2px;
-        }
-
-        .context-menu .link {
-            opacity: 1;
-        }
-        `
-    ],
     template: `
-        <div [ngStyle]="locationCss" class="menu-container">
-            <ul class="context-menu">
-                <li *ngFor="let link of links"
-                    class="mdl-menu__item link"
-                    (click)="onMenuItemClick($event, link)"
-                    [attr.disabled]="link.model?.disabled || undefined">
+        <button md-button [mdMenuTriggerFor]="contextMenu"></button>
+        <md-menu #contextMenu="mdMenu" class="context-menu">
+            <button
+                *ngFor="let link of links"
+                md-menu-item
+                (click)="onMenuItemClick($event, link)"
+                [attr.disabled]="link.model?.disabled || undefined">
+                <md-icon *ngIf="showIcons && link.model?.icon">
+                    {{ link.model?.icon }}
+                </md-icon>
                     {{link.title || link.model?.title}}
-                </li>
-            </ul>
-        </div>
+            </button>
+        </md-menu>
     `
 })
-export class ContextMenuHolderComponent {
+export class ContextMenuHolderComponent implements OnInit, OnDestroy {
     links = [];
-    isShown = false;
+
     private mouseLocation: { left: number, top: number } = {left: 0, top: 0};
+    private menuElement = null;
+    private openSubscription: Subscription;
+    private closeSubscription: Subscription;
+    private contextSubscription: Subscription;
 
-    constructor(contextMenuService: ContextMenuService) {
-        contextMenuService.show.subscribe(e => this.showMenu(e.event, e.obj));
+    @Input() showIcons: boolean = false;
+    @ViewChild(MdMenuTrigger) menuTrigger: MdMenuTrigger;
+
+    @HostListener('contextmenu', ['$event'])
+    onShowContextMenu(event?: MouseEvent) {
+        if (event) {
+            event.preventDefault();
+        }
     }
 
-    get locationCss() {
-        return {
-            position: 'fixed',
-            display: this.isShown ? 'block' : 'none',
-            left: this.mouseLocation.left + 'px',
-            top: this.mouseLocation.top + 'px'
-        };
+    @HostListener('window:resize', ['$event'])
+    onResize(event) {
+        if (this.mdMenuElement) {
+            this.setPosition();
+        }
     }
 
-    @HostListener('document:click')
-    clickedOutside() {
-        this.isShown = false;
+    constructor(
+            private viewport: ViewportRuler,
+            private overlayContainer: OverlayContainer,
+            private contextMenuService: ContextMenuService
+    ) {}
+
+    ngOnInit() {
+        this.contextSubscription = this.contextMenuService.show.subscribe(e => this.showMenu(e.event, e.obj));
+        this.openSubscription = this.menuTrigger.onMenuOpen.subscribe(() => this.menuElement = this.getContextMenuElement());
+        this.closeSubscription = this.menuTrigger.onMenuClose.subscribe(() => this.menuElement = null);
+    }
+
+    ngOnDestroy() {
+        this.contextSubscription.unsubscribe();
+        this.openSubscription.unsubscribe();
+        this.closeSubscription.unsubscribe();
     }
 
     onMenuItemClick(event: Event, menuItem: any): void {
@@ -95,7 +94,6 @@ export class ContextMenuHolderComponent {
     }
 
     showMenu(e, links) {
-        this.isShown = true;
         this.links = links;
 
         if (e) {
@@ -104,12 +102,44 @@ export class ContextMenuHolderComponent {
                 top: e.clientY
             };
         }
+
+        this.menuTrigger.openMenu();
+
+        if (this.mdMenuElement) {
+            this.setPosition();
+        }
     }
 
-    @HostListener('contextmenu', ['$event'])
-    onShowContextMenu(event?: MouseEvent) {
-        if (event) {
-            event.preventDefault();
+    get mdMenuElement() {
+        return this.menuElement;
+    }
+
+    private locationCss() {
+        return {
+            left: this.mouseLocation.left + 'px',
+            top: this.mouseLocation.top + 'px'
+        };
+    }
+
+    private setPosition() {
+        if (this.mdMenuElement.clientWidth + this.mouseLocation.left > this.viewport.getViewportRect().width) {
+            this.menuTrigger.menu.xPosition = 'before';
+            this.mdMenuElement.parentElement.style.left = this.mouseLocation.left - this.mdMenuElement.clientWidth + 'px';
+        } else {
+            this.menuTrigger.menu.xPosition = 'after';
+            this.mdMenuElement.parentElement.style.left = this.locationCss().left;
         }
+
+        if (this.mdMenuElement.clientHeight + this.mouseLocation.top > this.viewport.getViewportRect().height) {
+            this.menuTrigger.menu.yPosition = 'above';
+            this.mdMenuElement.parentElement.style.top = this.mouseLocation.top - this.mdMenuElement.clientHeight + 'px';
+        } else {
+            this.menuTrigger.menu.yPosition = 'below';
+            this.mdMenuElement.parentElement.style.top = this.locationCss().top;
+        }
+    }
+
+    private getContextMenuElement() {
+        return this.overlayContainer.getContainerElement().querySelector('.context-menu');
     }
 }
