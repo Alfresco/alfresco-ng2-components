@@ -15,99 +15,248 @@
  * limitations under the License.
  */
 
+import { OverlayContainer } from '@angular/cdk/overlay';
+import { ViewportRuler } from '@angular/cdk/scrolling';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContextMenuHolderComponent } from './context-menu-holder.component';
+import { ContextMenuModule } from './context-menu.module';
 import { ContextMenuService } from './context-menu.service';
 
 describe('ContextMenuHolderComponent', () => {
+    let fixture: ComponentFixture<ContextMenuHolderComponent>;
+    let component: ContextMenuHolderComponent;
+    let contextMenuService: ContextMenuService;
+    let overlayContainer = {
+        getContainerElement: () => ({
+            querySelector: (val) => ({
+                name: val,
+                clientWidth: 0,
+                clientHeight: 0,
+                parentElement: {
+                    style: {
+                        left: 0,
+                        top: 0
+                    }
+                }
+            })
 
-    let contextMenuService;
-    let menuHolder;
+        })
+    };
+
+    let getViewportRect = {
+        getViewportRect: () => ({
+            left: 0, top: 0, width: 1014, height: 686, bottom: 0, right: 0
+        })
+    };
 
     beforeEach(() => {
-        contextMenuService = new ContextMenuService();
-        menuHolder = new ContextMenuHolderComponent(contextMenuService);
-    });
-
-    it('should show menu on service event', () => {
-        spyOn(menuHolder, 'showMenu').and.callThrough();
-        contextMenuService.show.next({});
-
-        expect(menuHolder.showMenu).toHaveBeenCalled();
-    });
-
-    it('should have fixed position', () => {
-        expect(menuHolder.locationCss).toEqual(
-            jasmine.objectContaining({
-                position: 'fixed'
-            })
-        );
-    });
-
-    it('should setup empty location by default', () => {
-        expect(menuHolder.locationCss).toEqual(
-            jasmine.objectContaining({
-                left: '0px',
-                top: '0px'
-            })
-        );
-    });
-
-    it('should be hidden by default', () => {
-        expect(menuHolder.isShown).toBeFalsy();
-        expect(menuHolder.locationCss).toEqual(
-            jasmine.objectContaining({
-                display: 'none'
-            })
-        );
-    });
-
-    it('should show on service event', () => {
-        expect(menuHolder.isShown).toBeFalsy();
-        contextMenuService.show.next({});
-        expect(menuHolder.isShown).toBeTruthy();
-    });
-
-    it('should update position from service event', () => {
-
-        expect(menuHolder.locationCss).toEqual(
-            jasmine.objectContaining({
-                left: '0px',
-                top: '0px'
-            })
-        );
-
-        let event = new MouseEvent('click', {
-            clientX: 10,
-            clientY: 20
+        TestBed.configureTestingModule({
+                imports: [
+                    ContextMenuModule
+                ],
+                providers: [
+                    {
+                        provide: OverlayContainer,
+                        useValue: overlayContainer
+                    },
+                    {
+                        provide: ViewportRuler,
+                        useValue: getViewportRect
+                    }
+                ]
         });
 
-        contextMenuService.show.next({ event: event });
+        fixture = TestBed.createComponent(ContextMenuHolderComponent);
+        component = fixture.componentInstance;
+        contextMenuService = TestBed.get(ContextMenuService);
 
-        expect(menuHolder.locationCss).toEqual(
-            jasmine.objectContaining({
-                left: '10px',
-                top: '20px'
-            })
-        );
+        fixture.detectChanges();
     });
 
-    it('should take links from service event', () => {
-        let links = [{}, {}];
-        contextMenuService.show.next({ obj: links });
-        expect(menuHolder.links).toBe(links);
+    beforeEach(() => {
+        spyOn(component.menuTrigger, 'openMenu');
     });
 
-    it('should hide on outside click', () => {
-        contextMenuService.show.next({});
-        expect(menuHolder.isShown).toBeTruthy();
+    describe('Events', () => {
+        it('should show menu on service event', () => {
+            spyOn(component, 'showMenu');
 
-        menuHolder.clickedOutside();
-        expect(menuHolder.isShown).toBeFalsy();
-        expect(menuHolder.locationCss).toEqual(
-            jasmine.objectContaining({
-                display: 'none'
-            })
-        );
+            contextMenuService.show.next(<any> {});
+
+            expect(component.showMenu).toHaveBeenCalled();
+        });
+
+        it('should set DOM element reference on  menu open event', () => {
+            component.menuTrigger.onMenuOpen.next();
+
+            expect(component.mdMenuElement.name).toBe('.context-menu');
+        });
+
+        it('should reset DOM element reference on  menu close event', () => {
+            component.menuTrigger.onMenuClose.next();
+
+            expect(component.mdMenuElement).toBe(null);
+        });
     });
 
+    describe('onMenuItemClick()', () => {
+        const menuItem = {
+            model: {
+                disabled: false
+            },
+            subject: {
+                next: (val) => val
+            }
+        };
+
+        const event = {
+            preventDefault: () => null,
+            stopImmediatePropagation: () => null
+        };
+
+        beforeEach(() => {
+            spyOn(menuItem.subject, 'next');
+        });
+
+        it('should emit when link is not disabled', () => {
+            component.onMenuItemClick(<any> event, menuItem);
+
+            expect(menuItem.subject.next).toHaveBeenCalledWith(menuItem);
+        });
+
+        it('should not emit when link is disabled', () => {
+            menuItem.model.disabled = true;
+            component.onMenuItemClick(<any> event, menuItem);
+
+            expect(menuItem.subject.next).not.toHaveBeenCalled();
+        });
+    });
+
+    describe('showMenu()', () => {
+        it('should open menu panel', () => {
+            component.showMenu(<any> {}, [{}]);
+
+            expect(component.menuTrigger.openMenu).toHaveBeenCalled();
+        });
+    });
+
+    describe('Menu position', () => {
+        beforeEach(() => {
+            component.menuTrigger.onMenuOpen.next();
+            component.mdMenuElement.clientHeight = 160;
+            component.mdMenuElement.clientWidth = 200;
+        });
+
+        it('should set position to mouse position', () => {
+            const contextMenuEvent = {
+                clientX: 100,
+                clientY: 210
+            };
+
+            component.showMenu(<any> contextMenuEvent, [{}]);
+
+            expect(component.mdMenuElement.parentElement.style).toEqual({
+                left: '100px',
+                top: '210px'
+            });
+        });
+
+        it('should ajust position relative to right margin of the screen', () => {
+            const contextMenuEvent = {
+                clientX: 1000,
+                clientY: 210
+            };
+
+            component.showMenu(<any> contextMenuEvent, [{}]);
+
+            expect(component.mdMenuElement.parentElement.style).toEqual({
+                left: '800px',
+                top: '210px'
+            });
+        });
+
+        it('should ajust position relative to bottom margin of the screen', () => {
+            const contextMenuEvent = {
+                clientX: 100,
+                clientY: 600
+            };
+
+            component.showMenu(<any> contextMenuEvent, [{}]);
+
+            expect(component.mdMenuElement.parentElement.style).toEqual({
+                left: '100px',
+                top: '440px'
+            });
+        });
+
+        it('should ajust position relative to bottom - right margin of the screen', () => {
+            const contextMenuEvent = {
+                clientX: 900,
+                clientY: 610
+            };
+
+            component.showMenu(<any> contextMenuEvent, [{}]);
+
+            expect(component.mdMenuElement.parentElement.style).toEqual({
+                left: '700px',
+                top: '450px'
+            });
+        });
+    });
+
+    describe('Menu direction', () => {
+        beforeEach(() => {
+            component.menuTrigger.onMenuOpen.next();
+            component.mdMenuElement.clientHeight = 160;
+            component.mdMenuElement.clientWidth = 200;
+        });
+
+        it('should set default menu direction', () => {
+            const contextMenuEvent = {
+                clientX: 100,
+                clientY: 210
+            };
+
+            component.showMenu(<any> contextMenuEvent, [{}]);
+
+            expect(component.menuTrigger.menu.xPosition).toBe('after');
+            expect(component.menuTrigger.menu.yPosition).toBe('below');
+        });
+
+        it('should ajust direction relative to right margin of the screen', () => {
+            const contextMenuEvent = {
+                clientX: 1000,
+                clientY: 210
+            };
+
+            component.showMenu(<any> contextMenuEvent, [{}]);
+
+            expect(component.menuTrigger.menu.xPosition).toBe('before');
+            expect(component.menuTrigger.menu.yPosition).toBe('below');
+        });
+
+        it('should ajust direction relative to bottom margin of the screen', () => {
+            const contextMenuEvent = {
+                clientX: 100,
+                clientY: 600
+            };
+
+            component.showMenu(<any> contextMenuEvent, [{}]);
+
+            expect(component.menuTrigger.menu.xPosition).toBe('after');
+            expect(component.menuTrigger.menu.yPosition).toBe('above');
+        });
+
+        it('should ajust position relative to bottom - right margin of the screen', () => {
+            const contextMenuEvent = {
+                clientX: 900,
+                clientY: 610
+            };
+
+            component.showMenu(<any> contextMenuEvent, [{}]);
+
+            expect(component.menuTrigger.menu.xPosition).toBe('before');
+            expect(component.menuTrigger.menu.yPosition).toBe('above');
+        });
+    });
 });

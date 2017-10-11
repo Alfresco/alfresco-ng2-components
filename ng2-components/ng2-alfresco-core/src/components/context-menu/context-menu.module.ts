@@ -17,6 +17,7 @@
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { MdButtonModule, MdIconModule, MdMenuModule } from '@angular/material';
 
 import { ContextMenuHolderComponent } from './context-menu-holder.component';
 import { ContextMenuDirective } from './context-menu.directive';
@@ -24,7 +25,10 @@ import { ContextMenuService } from './context-menu.service';
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule,
+        MdButtonModule,
+        MdIconModule,
+        MdMenuModule
     ],
     declarations: [
         ContextMenuHolderComponent,
