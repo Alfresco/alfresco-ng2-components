@@ -51,7 +51,7 @@
         padding: 0px;
     }
 
-    adf-people-list /deep/ adf-datatable /deep/ {
+    adf-people-list ::ng-deep adf-datatable ::ng-deep {
         thead {
             display: none;
         }

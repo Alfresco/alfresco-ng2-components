@@ -1,8 +1,8 @@
-adf-datatable /deep/ th span {
+adf-datatable ::ng-deep th span {
     color: #232323;
 }
 
-adf-datatable /deep/ .data-cell {
+adf-datatable ::ng-deep .data-cell {
     cursor: pointer !important;
 }
 

@@ -64,18 +64,18 @@ adf-document-list ::ng-deep adf-datatable tr.is-selected .image-table-cell::befo
 }
 
 .adf-files-toolbar {
-    & /deep/ md-toolbar-row {
+    & ::ng-deep md-toolbar-row {
         white-space: initial;
 
-        & /deep/ a.adf-breadcrumb-item-anchor {
+        & ::ng-deep a.adf-breadcrumb-item-anchor {
             white-space: initial;
         }
     }
 }
 
 @media (max-width: $minimumDocumentListWidth) {
-    adf-document-list /deep/ adf-datatable  {
-        & /deep/ .adf-data-table-cell--fileSize {
+    adf-document-list ::ng-deep adf-datatable  {
+        & ::ng-deep .adf-data-table-cell--fileSize {
             display: none;
         }
     }
@@ -84,7 +84,7 @@ adf-document-list ::ng-deep adf-datatable tr.is-selected .image-table-cell::befo
         width: 100%;
         display: block;
 
-        & /deep/ .adf-site-dropdown-list-element {
+        & ::ng-deep .adf-site-dropdown-list-element {
             width: 100%;
         }
     }

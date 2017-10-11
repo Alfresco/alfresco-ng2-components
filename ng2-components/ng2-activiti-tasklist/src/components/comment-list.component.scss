@@ -52,7 +52,7 @@
             width: calc(100% - 10px);
         }
 
-        &-datatable /deep/ table {
+        &-datatable ::ng-deep table {
             border: none !important;
             tbody td {
                 padding: 0px !important;
