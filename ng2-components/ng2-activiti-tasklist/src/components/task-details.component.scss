@@ -36,7 +36,7 @@ adf-people ::ng-deep .assignment-top-container{
     width: auto;
 }
 
-adf-task-header.assign-edit-view /deep/ adf-card-view /deep/ .adf-property[data-automation-id="header-assignee"] {
+adf-task-header.assign-edit-view ::ng-deep adf-card-view ::ng-deep .adf-property[data-automation-id="header-assignee"] {
     display: none;
 }
 
@@ -77,7 +77,7 @@ adf-task-header.assign-edit-view /deep/ adf-card-view /deep/ .adf-property[data-
         &-form {
             flex-grow: 1;
 
-            & /deep/ .adf-form-debug-container {
+            & ::ng-deep .adf-form-debug-container {
                 padding: 20px 0 0 0;
 
                 .mat-slide-toggle {
@@ -93,7 +93,7 @@ adf-task-header.assign-edit-view /deep/ adf-card-view /deep/ .adf-property[data-
                 }
             }
 
-            & /deep/ .mat-tab-label {
+            & ::ng-deep .mat-tab-label {
                 flex-grow: 1;
             }
         }

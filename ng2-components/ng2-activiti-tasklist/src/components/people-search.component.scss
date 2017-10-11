@@ -9,19 +9,19 @@
         .activiti-label {
             font-weight: bolder;
         }
-    
+
         .fix-element-user-list {
             padding-top: 0px;
             padding-right: 0px;
             padding-bottom: 0px;
             padding-left: 0px;
         }
-    
+
         .search-text-header {
             font-weight: bold;
             opacity: 0.54;
         }
-    
+
         .search-text-container {
             width: 100%;
 
@@ -29,17 +29,17 @@
                 line-height: normal;
             }
         }
-    
+
         .search-list-container {
             max-height: 152px;
             width: 100%;
             overflow-y: auto;
         }
-    
-        adf-people-list /deep/ adf-datatable /deep/ thead {
+
+        adf-people-list ::ng-deep adf-datatable ::ng-deep thead {
             display: none;
         }
-    
+
         .search-list-action-container {
             border-top: 1px solid #eee;
             text-align: right;
@@ -53,7 +53,7 @@
                 }
             }
         }
-    
+
         .people-pic {
             background: mat-color($primary);
             width: 30px;
@@ -66,12 +66,12 @@
             text-transform: uppercase;
             vertical-align: text-bottom;
         }
-    
+
         .people-img {
             border-radius: 90%;
             width: 40px;
             height: 40px;
             vertical-align: middle;
-        }    
+        }
     }
 }
