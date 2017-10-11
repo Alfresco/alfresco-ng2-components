@@ -9,6 +9,9 @@
     },
     "TASK_DETAILS": {
         "LABELS": {
+            "INFO_DRAWER_TITLE": "Activities",
+            "INFO_DRAWER_TAB_ACTIVITY_TITLE": "Activity",
+            "INFO_DRAWER_TAB_DETAILS_TITLE": "Details",
             "ASSIGNEE": "Assignee",
             "DUE": "Due",
             "FORM": "Form",
