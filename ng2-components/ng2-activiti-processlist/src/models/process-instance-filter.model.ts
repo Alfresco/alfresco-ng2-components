@@ -17,7 +17,6 @@
 
 export class ProcessFilterRequestRepresentation {
     processDefinitionId: string;
-    processDefinitionKey: string;
     appDefinitionId: string;
     state: string;
     sort: string;
@@ -26,7 +25,6 @@ export class ProcessFilterRequestRepresentation {
 
     constructor(obj?: any) {
         this.processDefinitionId = obj && obj.processDefinitionId || null;
-        this.processDefinitionKey = obj && obj.processDefinitionKey || null;
         this.appDefinitionId = obj && obj.appDefinitionId || null;
         this.state = obj && obj.state || null;
         this.sort = obj && obj.sort || null;

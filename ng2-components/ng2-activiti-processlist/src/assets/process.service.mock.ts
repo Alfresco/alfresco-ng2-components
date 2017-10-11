@@ -16,9 +16,9 @@
  */
 
 import { AppDefinitionRepresentationModel, Comment, TaskDetailsModel } from 'ng2-activiti-tasklist';
+import { LightUserRepresentation } from 'ng2-alfresco-core';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessDefinitionRepresentation } from '../models/process-definition.model';
-import { LightUserRepresentation } from 'ng2-alfresco-core';
 
 export let fakeFilters = {
     size: 1, total: 1, start: 0,
