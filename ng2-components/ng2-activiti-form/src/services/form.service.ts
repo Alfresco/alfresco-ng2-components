@@ -155,7 +155,7 @@ export class FormService {
      * @returns {Observable<any>}
      */
     addFieldsToAForm(formId: string, formModel: FormDefinitionModel): Observable<any> {
-        console.log('addFieldsToAForm is deprecated in 1.7.0, use saveForm API instead');
+        this.logService.log('addFieldsToAForm is deprecated in 1.7.0, use saveForm API instead');
         return Observable.fromPromise(
             this.editorApi.saveForm(formId, formModel)
         );

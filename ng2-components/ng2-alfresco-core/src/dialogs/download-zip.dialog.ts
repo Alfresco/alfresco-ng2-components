@@ -17,31 +17,14 @@
 
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
-
 import { DownloadEntry, MinimalNodeEntity } from 'alfresco-js-api';
+import { LogService } from '../services/log.service';
 import { AlfrescoApiService } from './../services/alfresco-api.service';
 
 @Component({
     selector: 'adf-download-zip-dialog',
-    template: `
-        <h1 md-dialog-title>{{ 'CORE.DIALOG.DOWNLOAD_ZIP.TITLE' | translate }}</h1>
-        <div md-dialog-content>
-            <md-progress-bar color="primary" mode="indeterminate"></md-progress-bar>
-        </div>
-        <div md-dialog-actions>
-            <span class="spacer"></span>
-            <button md-button color="primary" (click)="cancelDownload()">
-                {{ 'CORE.DIALOG.DOWNLOAD_ZIP.ACTIONS.CANCEL' | translate }}
-            </button>
-        </div>
-    `,
-    styles: [`
-        .spacer { flex: 1 1 auto; }
-
-        .adf-download-zip-dialog .mat-dialog-actions .mat-button-wrapper {
-            text-transform: uppercase;
-        }
-    `],
+    templateUrl: './download-zip.dialog.html',
+    styleUrls: ['./download-zip.dialog.scss'],
     host: { 'class': 'adf-download-zip-dialog' },
     encapsulation: ViewEncapsulation.None
 })
@@ -52,7 +35,8 @@ export class DownloadZipDialogComponent implements OnInit {
 
     constructor(private apiService: AlfrescoApiService,
                 private dialogRef: MdDialogRef<DownloadZipDialogComponent>,
-                @Inject(MD_DIALOG_DATA) private data: { nodeIds?: string[] }) {
+                @Inject(MD_DIALOG_DATA) private data: { nodeIds?: string[] },
+                private logService: LogService) {
     }
 
     private get downloadsApi() {
@@ -74,7 +58,7 @@ export class DownloadZipDialogComponent implements OnInit {
                 if (!this.cancelled) {
                     this.downloadZip(this.data.nodeIds);
                 } else {
-                    console.log('Cancelled');
+                    this.logService.log('Cancelled');
                 }
             }, 0);
         }
@@ -90,17 +74,16 @@ export class DownloadZipDialogComponent implements OnInit {
 
             const promise: any = this.downloadsApi.createDownload({ nodeIds });
 
-            promise.on('progress', progress => console.log('Progress', progress));
-            promise.on('error', error => console.log('Error', error));
-            promise.on('abort', data => console.log('Abort', data));
+            promise.on('progress', progress => this.logService.log('Progress', progress));
+            promise.on('error', error => this.logService.error('Error', error));
+            promise.on('abort', data => this.logService.log('Abort', data));
 
             promise.on('success', (data: DownloadEntry) => {
-                console.log('Success', data);
                 if (data && data.entry && data.entry.id) {
                     const url = this.contentApi.getContentUrl(data.entry.id, true);
                     // the call is needed only to get the name of the package
                     this.nodesApi.getNode(data.entry.id).then((downloadNode: MinimalNodeEntity) => {
-                        console.log(downloadNode);
+                        this.logService.log(downloadNode);
                         const fileName = downloadNode.entry.name;
                         this.waitAndDownload(data.entry.id, url, fileName);
                     });

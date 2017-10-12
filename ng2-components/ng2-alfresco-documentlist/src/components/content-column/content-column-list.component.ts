@@ -18,6 +18,7 @@
  /* tslint:disable:component-selector  */
 
 import { Component } from '@angular/core';
+import { LogService } from 'ng2-alfresco-core';
 import { DataColumn } from 'ng2-alfresco-datatable';
 
 import { DocumentListComponent } from './../document-list.component';
@@ -28,8 +29,8 @@ import { DocumentListComponent } from './../document-list.component';
 })
 export class ContentColumnListComponent {
 
-    constructor(private documentList: DocumentListComponent) {
-        console.log('ContentColumnListComponent is deprecated starting with 1.7.0 and may be removed in future versions. Use DataColumnListComponent instead.');
+    constructor(private documentList: DocumentListComponent, private logService: LogService ) {
+        this.logService.log('ContentColumnListComponent is deprecated starting with 1.7.0 and may be removed in future versions. Use DataColumnListComponent instead.');
     }
 
     /**

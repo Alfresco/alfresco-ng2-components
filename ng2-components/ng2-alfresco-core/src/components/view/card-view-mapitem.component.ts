@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CardViewMapItemModel } from '../../models/card-view-mapitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 
@@ -25,15 +25,11 @@ import { CardViewUpdateService } from '../../services/card-view-update.service';
     styleUrls: ['./card-view-mapitem.component.scss']
 })
 
-export class CardViewMapItemComponent implements OnChanges {
+export class CardViewMapItemComponent {
     @Input()
     property: CardViewMapItemModel;
 
     constructor(private cardViewUpdateService: CardViewUpdateService) {}
-
-    ngOnChanges() {
-        console.log();
-    }
 
     isClickable() {
         return this.property.clickable;

@@ -17,7 +17,7 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule, LogService } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { MaterialModule } from '../../material.module';
 import { DocumentListService } from '../../services/document-list.service';
@@ -29,6 +29,7 @@ describe('ContentColumn', () => {
 
     let documentList: DocumentListComponent;
     let columnList: ContentColumnListComponent;
+    let logService: LogService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -41,7 +42,8 @@ describe('ContentColumn', () => {
                 DocumentListComponent
             ],
             providers: [
-                DocumentListService
+                DocumentListService,
+                LogService
             ],
             schemas: [
                 CUSTOM_ELEMENTS_SCHEMA
@@ -51,7 +53,8 @@ describe('ContentColumn', () => {
 
     beforeEach(() => {
         documentList = (TestBed.createComponent(DocumentListComponent).componentInstance as DocumentListComponent);
-        columnList = new ContentColumnListComponent(documentList);
+        logService = TestBed.get(LogService);
+        columnList = new ContentColumnListComponent(documentList, logService);
 
         documentList.ngOnInit();
     });
@@ -59,7 +62,7 @@ describe('ContentColumn', () => {
     it('should register model within parent column list', () => {
         spyOn(columnList, 'registerColumn').and.callThrough();
 
-        let column = new ContentColumnComponent(columnList);
+        let column = new ContentColumnComponent(columnList, logService);
         column.ngAfterContentInit();
 
         expect(columnList.registerColumn).toHaveBeenCalled();
@@ -70,7 +73,7 @@ describe('ContentColumn', () => {
     });
 
     it('should setup screen reader title for thumbnail column', () => {
-        let column = new ContentColumnComponent(columnList);
+        let column = new ContentColumnComponent(columnList, logService);
         column.key = '$thumbnail';
         column.ngOnInit();
 
@@ -78,7 +81,7 @@ describe('ContentColumn', () => {
     });
 
     it('should register on init', () => {
-        let column = new ContentColumnComponent(columnList);
+        let column = new ContentColumnComponent(columnList, logService);
         spyOn(column, 'register').and.callThrough();
 
         column.ngAfterContentInit();
@@ -86,10 +89,10 @@ describe('ContentColumn', () => {
     });
 
     it('should require action list to register action with', () => {
-        let column = new ContentColumnComponent(columnList);
+        let column = new ContentColumnComponent(columnList, logService);
         expect(column.register()).toBeTruthy();
 
-        column = new ContentColumnComponent(null);
+        column = new ContentColumnComponent(null, null);
         expect(column.register()).toBeFalsy();
     });
 

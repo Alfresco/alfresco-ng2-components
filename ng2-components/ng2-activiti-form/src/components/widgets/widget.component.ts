@@ -93,13 +93,11 @@ export class WidgetComponent implements AfterViewInit {
 
     /** @deprecated used only to trigger visibility engine, components should do that internally if needed */
     checkVisibility(field: FormFieldModel) {
-        console.log('WidgetComponent.checkVisibility was used only to trigger visibility engine, components should do that internally if needed');
         this.fieldChanged.emit(field);
     }
 
     /** @deprecated used only to trigger visibility engine, components should do that internally if needed */
     onFieldChanged(field: FormFieldModel) {
-        console.log('WidgetComponent.onFieldChanged was used only to trigger visibility engine, components should do that internally if needed');
         this.fieldChanged.emit(field);
     }
 
