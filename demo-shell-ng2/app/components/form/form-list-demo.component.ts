@@ -21,7 +21,7 @@ import { LogService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'form-list-demo',
-    templateUrl: 'form-list-demo.component.ts',
+    templateUrl: 'form-list-demo.component.html',
     styleUrls: ['form-list-demo.component.scss']
 })
 export class FormListDemoComponent {
