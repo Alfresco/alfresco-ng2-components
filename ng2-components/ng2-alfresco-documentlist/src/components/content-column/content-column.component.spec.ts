@@ -92,7 +92,7 @@ describe('ContentColumn', () => {
         let column = new ContentColumnComponent(columnList, logService);
         expect(column.register()).toBeTruthy();
 
-        column = new ContentColumnComponent(null, null);
+        column = new ContentColumnComponent(null, logService);
         expect(column.register()).toBeFalsy();
     });
 
