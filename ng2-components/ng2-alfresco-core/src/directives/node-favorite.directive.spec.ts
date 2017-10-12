@@ -34,7 +34,7 @@ class TestComponent {
     done = jasmine.createSpy('done');
 }
 
-fdescribe('NodeFavoriteDirective', () => {
+describe('NodeFavoriteDirective', () => {
     let component: TestComponent;
     let fixture: ComponentFixture<TestComponent>;
     let element: DebugElement;
