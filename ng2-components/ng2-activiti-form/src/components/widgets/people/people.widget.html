@@ -19,9 +19,7 @@
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onItemSelect($event.option.value)"  [displayWith]="getDisplayName">
             <mat-option *ngFor="let user of users; let i = index" [value]="user">
                 <div class="adf-people-widget-row" id="adf-people-widget-user-{{i}}">
-                    <div class="adf-people-widget-pic">
-                        {{getInitialUserName(user.firstName, user.lastName)}}
-                    </div>
+                    <div [outerHTML]="user | initial:'adf-people-widget-pic'"></div>
                     <div *ngIf="user.pictureId" class="adf-people-widget-image-row">
                         <img id="adf-people-widget-pic-{{i}}" class="adf-people-widget-image"
                              [src]="peopleProcessService.getUserImage(user)"/>

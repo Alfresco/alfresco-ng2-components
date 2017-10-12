@@ -116,16 +116,4 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
             this.field.value = item;
         }
     }
-
-    getInitialUserName(firstName: string, lastName: string) {
-        firstName = (firstName !== null && firstName !== '' ? firstName[0] : '');
-        lastName = (lastName !== null && lastName !== '' ? lastName[0] : '');
-        return this.getDisplayUser(firstName, lastName, '');
-    }
-
-    getDisplayUser(firstName: string, lastName: string, delimiter: string = '-'): string {
-        firstName = (firstName !== null ? firstName : '');
-        lastName = (lastName !== null ? lastName : '');
-        return firstName + delimiter + lastName;
-    }
 }

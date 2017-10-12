@@ -2,8 +2,36 @@
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
     $warn: map-get($theme, warn);
+    $foreground: map-get($theme, foreground);
 
     .adf {
+
+        &-userinfo-container {
+            display: flex;
+            align-items: center;
+            padding: 0 5px 0 5px;
+        }
+
+        &-userinfo-name-right {
+            flex-direction: row-reverse;
+        }
+
+        &-userinfo-name {
+            padding: 0 5px 0 5px;
+        }
+
+        &-userinfo-pic {
+            background: mat-color($primary, 300);
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border-radius: 100px;
+            text-align: center;
+            font-weight: bolder;
+            font-size: 18px;
+            text-transform: uppercase;
+            vertical-align: middle;
+        }
 
         &-userinfo-profile-image {
             text-align: center;
@@ -13,6 +41,11 @@
             margin-right: 0;
             cursor: pointer;
             vertical-align: middle;
+            margin-left: -45px;
+        }
+
+        &-userinfo-profile-container{
+            display: inline-block;
         }
 
         &-userinfo-menu_button.mat-button {
@@ -101,9 +134,25 @@
             border-radius: 50%;
             height: 80px;
             width: 80px;
-            z-index: 3;
+            margin-left: -88px;
+            margin-right: 8px;
+        }
+
+        &-userinfo-profile-initials {
+            background-size: cover;
+            background: mat-color($primary, 300);
+            border-radius: 50%;
+            height: 80px;
+            width: 80px;
             margin-left: 0;
             margin-right: 8px;
+            font-size: 45px;
+            font-weight: 400;
+            letter-spacing: 0;
+            line-height: 78px;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-around;
         }
 
         &-userinfo-button-profile {
