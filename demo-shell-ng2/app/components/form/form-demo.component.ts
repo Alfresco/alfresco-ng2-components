@@ -17,6 +17,7 @@
 
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormModel, FormService } from 'ng2-activiti-form';
+import { LogService } from 'ng2-alfresco-core';
 import { InMemoryFormService } from '../../services/in-memory-form.service';
 import { DemoForm } from './demo-form';
 
@@ -32,11 +33,11 @@ export class FormDemoComponent implements OnInit {
 
     form: FormModel;
 
-    constructor(@Inject(FormService) private formService: InMemoryFormService) {
+    constructor(@Inject(FormService) private formService: InMemoryFormService, private logSevice: LogService) {
         // Prevent default outcome actions
         formService.executeOutcome.subscribe(e => {
             e.preventDefault();
-            console.log(e.outcome);
+            this.logSevice.log(e.outcome);
         });
     }
 

@@ -16,7 +16,7 @@
  */
 
 import { Component, Input } from '@angular/core';
-import { AlfrescoApiService } from 'ng2-alfresco-core';
+import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 import { DataCellEvent, DataRowActionEvent, DataSorting, ObjectDataColumn, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 import { Observable } from 'rxjs/Rx';
 
@@ -45,7 +45,7 @@ export class DataTableDemoComponent {
         email: 'denys.vuika@alfresco.com'
     };
 
-    constructor(private apiService: AlfrescoApiService) {
+    constructor(private apiService: AlfrescoApiService, private logService: LogService) {
         this.reset();
     }
 
@@ -162,17 +162,17 @@ export class DataTableDemoComponent {
 
     onExecuteRowAction(event: DataRowActionEvent) {
         let args = event.value;
-        console.log(args.row);
-        console.log(args.action);
+        this.logService.log(args.row);
+        this.logService.log(args.action);
         window.alert(`My custom action: ${args.action.title}`);
     }
 
     onRowClick(event) {
-        console.log(event);
+        this.logService.log(event);
     }
 
     onRowDblClick(event) {
-        console.log(event);
+        this.logService.log(event);
     }
 
     getRowForNode() {
@@ -183,8 +183,8 @@ export class DataTableDemoComponent {
 
         Observable.fromPromise(this.apiService.getInstance().nodes
             .getNodeInfo('-my-', opts)).subscribe((data) => {
-                console.log('FUnNy');
-                console.log(data);
+                this.logService.log('FUnNy');
+                this.logService.log(data);
                 let objects = new ObjectDataTableAdapter([
                     {
                         id: data.id,
