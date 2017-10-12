@@ -70,7 +70,6 @@ describe('DocumentList', () => {
     beforeEach(() => {
         eventMock = {
             preventDefault: function () {
-                console.log('mock preventDefault');
             }
         };
 
@@ -228,7 +227,6 @@ describe('DocumentList', () => {
     it('should not execute action without node provided', () => {
         let action = new ContentActionModel();
         action.handler = function () {
-            console.log('mock handler');
         };
 
         spyOn(action, 'handler').and.stub();
