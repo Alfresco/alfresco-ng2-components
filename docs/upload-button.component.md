@@ -19,10 +19,9 @@
 
 ```html
 <adf-upload-button 
-    [parentId]="-my-"
     [uploadFolders]="true"
     [multipleFiles]="false"
-    [acceptedFilesType]=".jpg,.gif,.png,.svg"
+    [acceptedFilesType]="'.jpg,.gif,.png,.svg'"
     [versioning]="false"
     (onSuccess)="customMethod($event)">
 </adf-upload-button>
@@ -39,8 +38,7 @@
 | multipleFiles | boolean | false | Allow/disallow multiple files |
 | acceptedFilesType | string | * |  array of allowed file extensions , example: ".jpg,.gif,.png,.svg" |
 | **(deprecated)** currentFolderPath | string | '/Sites/swsdp/documentLibrary' | define the path where the files are uploaded. **Deprecated in 1.6.0: use rootFolderId instead.** |
-| **(deprecated)** rootFolderId | string | '-root-' | The ID of the root folder node. **Deprecated in 1.6.2: use parentId instead.** |
-| parentId | string | empty | The ID of the root. It can be the nodeId if you are using the upload for the Content Service or taskId/processId for the Process Service. |
+| rootFolderId | string | '-root-' | The ID of the root folder node. |
 | versioning | boolean | false | Versioning false is the default uploader behaviour and it renames the file using an integer suffix if there is a name clash. Versioning true to indicate that a major version should be created |
 | staticTitle | string | (predefined) | define the text of the upload button |
 | **(deprecated)** disableWithNoPermission ***use node permission directive from core instead*** | boolean | false |  If the value is true and the user doesn't have the permission to delete the node the button will be disabled |
