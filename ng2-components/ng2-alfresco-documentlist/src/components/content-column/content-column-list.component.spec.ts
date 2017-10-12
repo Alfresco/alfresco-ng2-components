@@ -24,11 +24,13 @@ import { MaterialModule } from '../../material.module';
 import { DocumentListService } from '../../services/document-list.service';
 import { DocumentListComponent } from './../document-list.component';
 import { ContentColumnListComponent } from './content-column-list.component';
+import { LogService } from 'ng2-alfresco-core';
 
 describe('ContentColumnList', () => {
 
     let documentList: DocumentListComponent;
     let columnList: ContentColumnListComponent;
+    let logService: LogService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -41,7 +43,8 @@ describe('ContentColumnList', () => {
                 DocumentListComponent
             ],
             providers: [
-                DocumentListService
+                DocumentListService,
+                LogService
             ],
             schemas: [
                 CUSTOM_ELEMENTS_SCHEMA
@@ -51,7 +54,8 @@ describe('ContentColumnList', () => {
 
     beforeEach(() => {
         documentList = (TestBed.createComponent(DocumentListComponent).componentInstance as DocumentListComponent);
-        columnList = new ContentColumnListComponent(documentList);
+        logService = TestBed.get(LogService);
+        columnList = new ContentColumnListComponent(documentList, logService);
 
         documentList.ngOnInit();
     });
@@ -69,7 +73,7 @@ describe('ContentColumnList', () => {
     });
 
     it('should require document list instance to register action', () => {
-        columnList = new ContentColumnListComponent(null);
+        columnList = new ContentColumnListComponent(null, logService);
         let col = <DataColumn> {};
         expect(columnList.registerColumn(col)).toBeFalsy();
     });

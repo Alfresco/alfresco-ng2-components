@@ -128,10 +128,6 @@ import { MimeTypeIconPipe } from './src/pipes/mime-type-icon.pipe';
 import { HighlightPipe } from './src/pipes/text-highlight.pipe';
 import { TimeAgoPipe } from './src/pipes/time-ago.pipe';
 
-import { AlfrescoMdlMenuDirective } from './src/components/material/mdl-menu.directive';
-import { AlfrescoMdlTextFieldDirective } from './src/components/material/mdl-textfield.directive';
-import { MDLDirective } from './src/components/material/mdl-upgrade-element.directive';
-
 export { ContextMenuModule } from './src/components/context-menu/context-menu.module';
 export { CardViewModule } from './src/components/view/card-view.module';
 export { CollapsableModule } from './src/components/collapsable/collapsable.module';
@@ -211,14 +207,6 @@ export function deprecatedProviders() {
     ];
 }
 
-export function obsoleteMdlDirectives() {
-    return [
-        MDLDirective,
-        AlfrescoMdlMenuDirective,
-        AlfrescoMdlTextFieldDirective
-    ];
-}
-
 export function pipes() {
     return [
         FileSizePipe,
@@ -255,7 +243,6 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         CollapsableModule
     ],
     declarations: [
-        ...obsoleteMdlDirectives(),
         ...pipes(),
         LogoutDirective,
         UploadDirective,
@@ -298,7 +285,6 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         CollapsableModule,
         PaginationModule,
         ToolbarModule,
-        ...obsoleteMdlDirectives(),
         ...pipes(),
         LogoutDirective,
         UploadDirective,

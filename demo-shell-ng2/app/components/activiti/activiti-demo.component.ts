@@ -41,6 +41,7 @@ import {
     TaskListComponent,
     TaskListService
 } from 'ng2-activiti-tasklist';
+import { LogService } from 'ng2-alfresco-core';
 import { AlfrescoApiService } from 'ng2-alfresco-core';
 import {
     DataSorting,
@@ -133,6 +134,7 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
                 private router: Router,
                 private taskListService: TaskListService,
                 private apiService: AlfrescoApiService,
+                private logService: LogService,
                 formRenderingService: FormRenderingService,
                 formService: FormService) {
         this.dataTasks = new ObjectDataTableAdapter();
@@ -154,11 +156,11 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
         formRenderingService.setComponentTypeResolver('custom_stencil_01', () => CustomStencil01, true);
 
         formService.formLoaded.subscribe((e: FormEvent) => {
-            console.log(`Form loaded: ${e.form.id}`);
+            this.logService.log(`Form loaded: ${e.form.id}`);
         });
 
         formService.formFieldValueChanged.subscribe((e: FormFieldEvent) => {
-            console.log(`Field value changed. Form: ${e.form.id}, Field: ${e.field.id}, Value: ${e.field.value}`);
+            this.logService.log(`Field value changed. Form: ${e.form.id}, Field: ${e.field.id}, Value: ${e.field.value}`);
         });
 
         formService.validateDynamicTableRow.subscribe(
@@ -175,8 +177,8 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
         // Uncomment this block to see form event handling in action
         /*
         formService.formEvents.subscribe((event: Event) => {
-            console.log('Event fired:' + event.type);
-            console.log('Event Target:' + event.target);
+            this.logService.log('Event fired:' + event.type);
+            this.logService.log('Event Target:' + event.target);
         });
         */
     }
@@ -213,9 +215,9 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
         this.taskListService.tasksList$.subscribe(
             (tasks) => {
                 this.taskPagination = { count: tasks.data.length, maxItems: this.taskPagination.maxItems, skipCount: this.taskPagination.skipCount, totalItems: tasks.total };
-                console.log({ count: tasks.data.length, maxItems: this.taskPagination.maxItems, skipCount: this.taskPagination.skipCount, totalItems: tasks.total });
+                this.logService.log({ count: tasks.data.length, maxItems: this.taskPagination.maxItems, skipCount: this.taskPagination.skipCount, totalItems: tasks.total });
             }, (err) => {
-                console.log('err' +  err);
+                this.logService.log('err' +  err);
             });
 
         if (this.router.url.includes('processes')) {
@@ -381,11 +383,11 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     }
 
     onAuditClick(event: any) {
-        console.log(event);
+        this.logService.log(event);
     }
 
     onAuditError(event: any): void {
-        console.error('My custom error message' + event);
+        this.logService.error('My custom error message' + event);
     }
 
     onTaskCreated(data: any): void {
@@ -451,11 +453,11 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
     }
 
     onRowClick(event): void {
-        console.log(event);
+        this.logService.log(event);
     }
 
     onRowDblClick(event): void {
-        console.log(event);
+        this.logService.log(event);
     }
 
     isTaskCompleted(): boolean {

@@ -21,6 +21,7 @@ import { AlfrescoSettingsService } from './alfresco-settings.service';
 import { AppConfigModule } from './app-config.service';
 import { StorageService } from './storage.service';
 import { UserPreferencesService } from './user-preferences.service';
+import { LogService } from './log.service';
 
 describe('AlfrescoSettingsService', () => {
 
@@ -35,7 +36,8 @@ describe('AlfrescoSettingsService', () => {
                 AlfrescoApiService,
                 AlfrescoSettingsService,
                 UserPreferencesService,
-                StorageService
+                StorageService,
+                LogService
             ]
         }).compileComponents();
     }));

@@ -52,7 +52,7 @@ export class FormService {
 
     constructor(private ecmModelService: EcmModelService,
                 private apiService: AlfrescoApiService,
-                private logService: LogService) {
+                protected logService: LogService) {
     }
 
     private get contentApi(): any {
@@ -155,7 +155,7 @@ export class FormService {
      * @returns {Observable<any>}
      */
     addFieldsToAForm(formId: string, formModel: FormDefinitionModel): Observable<any> {
-        console.log('addFieldsToAForm is deprecated in 1.7.0, use saveForm API instead');
+        this.logService.log('addFieldsToAForm is deprecated in 1.7.0, use saveForm API instead');
         return Observable.fromPromise(
             this.editorApi.saveForm(formId, formModel)
         );
@@ -173,10 +173,10 @@ export class FormService {
         return Observable.fromPromise(
             this.modelsApi.getModels(opts)
         )
-        .map(function (forms: any) {
-            return forms.data.find(formdata => formdata.name === name);
-        })
-        .catch(err => this.handleError(err));
+            .map(function (forms: any) {
+                return forms.data.find(formdata => formdata.name === name);
+            })
+            .catch(err => this.handleError(err));
     }
 
     /**
@@ -383,9 +383,9 @@ export class FormService {
         return Observable.fromPromise(this.usersWorkflowApi.getUsers(option))
             .switchMap((response: any) => <LightUserRepresentation[]> response.data || [])
             .map((user: any) => {
-                    user.userImage = this.getUserProfileImageApi(user.id);
-                    return Observable.of(user);
-                })
+                user.userImage = this.getUserProfileImageApi(user.id);
+                return Observable.of(user);
+            })
             .combineAll()
             .defaultIfEmpty([])
             .catch(err => this.handleError(err));

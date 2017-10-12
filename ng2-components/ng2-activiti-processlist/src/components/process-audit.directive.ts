@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Directive, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ContentService } from 'ng2-alfresco-core';
 import { ProcessService } from './../services/process.service';
 
@@ -29,7 +29,7 @@ const PDF_FORMAT: string = 'pdf';
         '(click)': 'onClickAudit()'
     }
 })
-export class ProcessAuditDirective implements OnInit, OnChanges {
+export class ProcessAuditDirective implements OnChanges {
 
     @Input('process-id')
     processId: string;
@@ -60,9 +60,6 @@ export class ProcessAuditDirective implements OnInit, OnChanges {
                 private processListService: ProcessService) {
     }
 
-    ngOnInit() {
-        console.log('OnInit');
-    }
     ngOnChanges(changes: SimpleChanges): void {
         if (!this.isValidType()) {
             this.setDefaultFormatType();

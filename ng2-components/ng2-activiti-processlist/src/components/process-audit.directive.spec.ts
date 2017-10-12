@@ -173,6 +173,5 @@ class BasicButtonComponent {
     }
 
     onAuditClick(event: any) {
-        console.log(event);
     }
 }

@@ -21,7 +21,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MinimalNodeEntity } from 'alfresco-js-api';
 import {
     AlfrescoApiService, AlfrescoContentService, AlfrescoTranslationService, CreateFolderDialogComponent,
-    DownloadZipDialogComponent, FileUploadEvent, FolderCreatedEvent, NotificationService,
+    DownloadZipDialogComponent, FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
     SiteModel, UploadService
 } from 'ng2-alfresco-core';
 import { DataColumn, DataRow } from 'ng2-alfresco-datatable';
@@ -87,7 +87,8 @@ export class FilesComponent implements OnInit {
                 private dialog: MdDialog,
                 private translateService: AlfrescoTranslationService,
                 private router: Router,
-                @Optional() private route: ActivatedRoute) {
+                @Optional() private route: ActivatedRoute,
+                private logService: LogService) {
     }
 
     showFile(event) {
@@ -151,8 +152,8 @@ export class FilesComponent implements OnInit {
     }
 
     onFolderCreated(event: FolderCreatedEvent) {
-        console.log('FOLDER CREATED');
-        console.log(event);
+        this.logService.log('FOLDER CREATED');
+        this.logService.log(event);
         if (event && event.parentId === this.documentList.currentFolderId) {
             this.documentList.reload();
         }
@@ -197,8 +198,8 @@ export class FilesComponent implements OnInit {
         dialogRef.afterClosed().subscribe(folderName => {
             if (folderName) {
                 this.contentService.createFolder('', folderName, this.documentList.currentFolderId).subscribe(
-                    node => console.log(node),
-                    err => console.log(err)
+                    node => this.logService.log(node),
+                    err => this.logService.log(err)
                 );
             }
         });
@@ -264,7 +265,7 @@ export class FilesComponent implements OnInit {
                 }
             });
             dialogRef.afterClosed().subscribe(result => {
-                console.log(result);
+                this.logService.log(result);
             });
         }
     }

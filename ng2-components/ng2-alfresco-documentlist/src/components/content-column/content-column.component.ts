@@ -18,6 +18,7 @@
  /* tslint:disable:component-selector  */
 
 import { AfterContentInit, Component, ContentChild, Input, OnInit, TemplateRef } from '@angular/core';
+import { LogService } from 'ng2-alfresco-core';
 import { DataColumn } from 'ng2-alfresco-datatable';
 
 import { ContentColumnListComponent } from './content-column-list.component';
@@ -55,8 +56,8 @@ export class ContentColumnComponent implements OnInit, AfterContentInit, DataCol
     @Input('class')
     cssClass: string;
 
-    constructor(private list: ContentColumnListComponent) {
-        console.log('ContentColumnComponent is deprecated starting with 1.7.0 and may be removed in future versions. Use DataColumnComponent instead.');
+    constructor(private list: ContentColumnListComponent, private logService: LogService) {
+        this.logService.log('ContentColumnComponent is deprecated starting with 1.7.0 and may be removed in future versions. Use DataColumnComponent instead.');
     }
 
     ngOnInit() {

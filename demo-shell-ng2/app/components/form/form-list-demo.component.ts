@@ -16,31 +16,13 @@
  */
 
 import { Component, ViewChild } from '@angular/core';
-import { FormModel, FormService } from 'ng2-activiti-form';
-import { ActivitiForm } from 'ng2-activiti-form';
+import { ActivitiForm, FormModel, FormService } from 'ng2-activiti-form';
+import { LogService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'form-list-demo',
-    template: `
-        <adf-form-list [forms]="formList" (row-dblclick)="onRowDblClick($event)">
-        </adf-form-list>
-        <div class="form-container" *ngIf="!isEmptyForm()">
-            <adf-form [form]="form" [data]="restoredData">
-            </adf-form>
-        </div>
-        <button md-button (click)="store()" color="primary">{{'FORM-LIST.STORE' | translate }}</button>
-        <button md-button (click)="restore()" color="primary">{{'FORM-LIST.RESTORE' | translate }}</button>
-    `,
-    styles: [`
-        .form-container {
-            padding: 10px;
-        }
-
-        .store-form-container{
-            width: 80%;
-            height: 80%;
-        }
-    `]
+    templateUrl: 'form-list-demo.component.html',
+    styleUrls: ['form-list-demo.component.scss']
 })
 export class FormListDemoComponent {
 
@@ -55,11 +37,11 @@ export class FormListDemoComponent {
     storedData: any = {};
     restoredData: any = {};
 
-    constructor(private formService: FormService) {
+    constructor(private formService: FormService, private logService: LogService) {
         // Prevent default outcome actions
         formService.executeOutcome.subscribe(e => {
             e.preventDefault();
-            console.log(e.outcome);
+            this.logService.log(e.outcome);
         });
     }
 
@@ -71,7 +53,7 @@ export class FormListDemoComponent {
             this.form = form;
         });
 
-        console.log(rowForm);
+        this.logService.log(rowForm);
     }
 
     isEmptyForm() {
@@ -80,9 +62,9 @@ export class FormListDemoComponent {
 
     store() {
         this.clone(this.activitiForm.form.values, this.storedData);
-        console.log('DATA SAVED');
-        console.log(this.storedData);
-        console.log('DATA SAVED');
+        this.logService.log('DATA SAVED');
+        this.logService.log(this.storedData);
+        this.logService.log('DATA SAVED');
         this.restoredData = null;
     }
 
