@@ -56,6 +56,7 @@ import { UserPreferencesService } from './src/services/user-preferences.service'
 
 import { HighlightDirective } from './src/directives/highlight.directive';
 import { LogoutDirective } from './src/directives/logout.directive';
+import { NodeFavoriteDirective } from './src/directives/node-favorite.directive';
 import { DeletedNodesApiService } from './src/services/deleted-nodes-api.service';
 import { DiscoveryApiService } from './src/services/discovery-api.service';
 import { FavoritesApiService } from './src/services/favorites-api.service';
@@ -145,6 +146,7 @@ export * from './src/components/info-drawer/info-drawer.component';
 export * from './src/directives/upload.directive';
 export * from './src/directives/highlight.directive';
 export * from './src/directives/node-permission.directive';
+export * from './src/directives/node-favorite.directive';
 export * from './src/utils/index';
 export * from './src/events/base.event';
 export * from './src/events/base-ui.event';
@@ -260,6 +262,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         LogoutDirective,
         UploadDirective,
         NodePermissionDirective,
+        NodeFavoriteDirective,
         HighlightDirective,
         DataColumnComponent,
         DataColumnListComponent,
@@ -303,6 +306,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         LogoutDirective,
         UploadDirective,
         NodePermissionDirective,
+        NodeFavoriteDirective,
         HighlightDirective,
         DataColumnComponent,
         DataColumnListComponent,

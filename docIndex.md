@@ -316,6 +316,7 @@ for more information about installing and using the source code.
 - [Context menu directive](docs/context-menu.directive.md)
 - [Logout directive](docs/logout.directive.md)
 - [Node permission directive](docs/node-permission.directive.md)
+- [Node favorite directive](docs/node-favorite.directive.md)
 - [Upload directive](docs/upload.directive.md)
 - [*Mdl menu directive](ng2-components/ng2-alfresco-core/src/components/material/mdl-menu.directive.ts)
 - [*Mdl textfield directive](ng2-components/ng2-alfresco-core/src/components/material/mdl-textfield.directive.ts)
