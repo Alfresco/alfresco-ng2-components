@@ -130,7 +130,7 @@ import { FileSizePipe } from './src/pipes/file-size.pipe';
 import { MimeTypeIconPipe } from './src/pipes/mime-type-icon.pipe';
 import { HighlightPipe } from './src/pipes/text-highlight.pipe';
 import { TimeAgoPipe } from './src/pipes/time-ago.pipe';
-import { InitialPipe } from './src/pipes/user-initial.pipe';
+import { InitialUsernamePipe } from './src/pipes/user-initial.pipe';
 
 export { InfinitePaginationComponent } from './src/components/pagination/infinite-pagination.component';
 export { PaginationComponent } from './src/components/pagination/pagination.component';
@@ -140,7 +140,7 @@ export { CollapsableModule } from './src/components/collapsable/collapsable.modu
 export { CardViewItem } from './src/interface/card-view-item.interface';
 export { TimeAgoPipe } from './src/pipes/time-ago.pipe';
 export { EXTENDIBLE_COMPONENT } from './src/interface/injection.tokens';
-export { InitialPipe } from './src/pipes/user-initial.pipe';
+export { InitialUsernamePipe } from './src/pipes/user-initial.pipe';
 
 export * from './src/components/data-column/data-column.component';
 export * from './src/components/data-column/data-column-list.component';
@@ -222,7 +222,7 @@ export function pipes() {
         HighlightPipe,
         TimeAgoPipe,
         MimeTypeIconPipe,
-        InitialPipe
+        InitialUsernamePipe
     ];
 }
 

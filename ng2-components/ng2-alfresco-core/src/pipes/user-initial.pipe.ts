@@ -19,11 +19,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { LightUserRepresentation } from '../models/user-process.model';
 
 @Pipe({
-    name: 'initial'
+    name: 'usernameInitials'
 })
-export class InitialPipe implements PipeTransform {
+export class InitialUsernamePipe implements PipeTransform {
 
-    transform(user: LightUserRepresentation, className: string, delimiter: string = ''): string {
+    transform(user: LightUserRepresentation, className: string = '', delimiter: string = ''): string {
         let result = '';
         if (user) {
             let initialResult = this.getInitialUserName(user.firstName, user.lastName, delimiter);

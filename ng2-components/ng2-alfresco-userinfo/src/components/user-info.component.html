@@ -6,14 +6,14 @@
     <button md-button [mdMenuTriggerFor]="menu" class="adf-userinfo-menu_button">
         <div class="adf-userinfo-button-profile" id="user-profile" data-automation-id="user-profile">
             <div *ngIf="bpmUser && !ecmUser" id="bpm-user-image">
-                <div [outerHTML]="bpmUser | initial:'adf-userinfo-pic'"></div>
+                <div [outerHTML]="bpmUser | usernameInitials:'adf-userinfo-pic'"></div>
                 <div *ngIf="bpmUser.pictureId" class="adf-userinfo-profile-container">
                     <img id="logged-user-img" [src]="bpmUserImage" alt="user-info-profile-button"
                         class="adf-userinfo-profile-image"/>
                 </div>
             </div>
             <div *ngIf="ecmUser" id="ecm-user-image">
-                    <div [outerHTML]="ecmUser | initial:'adf-userinfo-pic'"></div>
+                    <div [outerHTML]="ecmUser | usernameInitials:'adf-userinfo-pic'"></div>
                     <div *ngIf="ecmUser.avatarId" class="adf-userinfo-profile-container">
                         <img id="logged-user-img" [src]="ecmUserImage" alt="user-info-profile-button"
                             class="adf-userinfo-profile-image"/>
@@ -27,7 +27,7 @@
             <mat-tab id="ecm-panel" label="Content Services" *ngIf="ecmUser">
                 <mat-card class="adf-userinfo-card">
                     <mat-card-header class="adf-userinfo-card-header" [style.background-image]="'url(' + ecmBackgroundImage + ')'">
-                        <div [outerHTML]="ecmUser | initial:'adf-userinfo-profile-initials'"></div>
+                        <div [outerHTML]="ecmUser | usernameInitials:'adf-userinfo-profile-initials'"></div>
                         <div *ngIf="ecmUser.avatarId" class="adf-userinfo-profile-container">
                             <img class="adf-userinfo-profile-picture" id="ecm-user-detail-image"
                                 alt="ecm-profile-image" [src]="ecmUserImage" />
@@ -53,7 +53,7 @@
             <mat-tab label="Process Services" id="bpm-panel" *ngIf="bpmUser">
             <mat-card class="adf-userinfo-card">
                 <mat-card-header class="adf-userinfo-card-header" [style.background-image]="'url(' + bpmBackgroundImage + ')'">
-                    <div [outerHTML]="bpmUser | initial:'adf-userinfo-profile-initials'"></div>
+                    <div [outerHTML]="bpmUser | usernameInitials:'adf-userinfo-profile-initials'"></div>
                         <img *ngIf="bpmUser.pictureId" class="adf-userinfo-profile-picture" id="bpm-user-detail-image"
                             alt="bpm-profile-image" [src]="bpmUserImage"/>
                    <div class="adf-userinfo-title" id="bpm-username">{{bpmUser.fullNameDisplay}}</div>

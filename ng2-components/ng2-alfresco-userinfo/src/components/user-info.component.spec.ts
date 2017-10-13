@@ -81,17 +81,6 @@ describe('User info component', () => {
         expect(element.querySelector('#user-profile-lists')).toBeNull();
     });
 
-    it('should return the anonymous avatar when users do not have images', () => {
-        let event = <any> {
-            target: {
-                src: ''
-            }
-        };
-        userInfoComp.onImageLoadingError(event);
-        expect(event.target.src).toContain('assets/images/anonymous');
-        expect(event.target.src).toContain('.gif');
-    });
-
     describe('when user is logged on ecm', () => {
 
         beforeEach(() => {
