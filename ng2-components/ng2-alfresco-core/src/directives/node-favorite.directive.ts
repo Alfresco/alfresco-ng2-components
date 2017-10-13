@@ -30,7 +30,7 @@ export class NodeFavoriteDirective implements OnChanges {
     @Input('adf-node-favorite')
     selection: MinimalNodeEntity[] = [];
 
-    @Output() toggle: EventEmitter<void> = new EventEmitter();
+    @Output() toggle: EventEmitter<any> = new EventEmitter();
 
     @HostListener('click')
     onClick() {
