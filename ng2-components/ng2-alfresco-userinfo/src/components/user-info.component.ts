@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { AfterViewInit, Component, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MdMenu } from '@angular/material';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { BpmUserModel } from './../models/bpm-user.model';
 import { EcmUserModel } from './../models/ecm-user.model';
@@ -31,7 +30,7 @@ declare var require: any;
     templateUrl: './user-info.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class UserInfoComponent implements OnInit, AfterViewInit {
+export class UserInfoComponent implements OnInit {
 
     @Input()
     ecmBackgroundImage: string = require('../assets/images/ecm-background.png');
@@ -51,9 +50,6 @@ export class UserInfoComponent implements OnInit, AfterViewInit {
     @Input()
     namePosition: string = 'right';
 
-    @ViewChild(MdMenu)
-    sandro: MdMenu;
-
     ecmUser: EcmUserModel;
     bpmUser: BpmUserModel;
     anonymousImageUrl: string = require('../assets/images/anonymous.gif');
@@ -70,10 +66,6 @@ export class UserInfoComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
         this.getUserInfo();
-    }
-
-    ngAfterViewInit() {
-        console.log(this.sandro);
     }
 
     getUserInfo() {

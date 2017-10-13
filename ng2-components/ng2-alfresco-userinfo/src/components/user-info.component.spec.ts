@@ -102,6 +102,7 @@ describe('User info component', () => {
             });
 
             fixture.whenStable().then(() => {
+                fixture.detectChanges();
                 let imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#logged-user-img');
                 imageButton.click();
                 fixture.detectChanges();
@@ -128,6 +129,7 @@ describe('User info component', () => {
 
             it('should get the ecm current user image from the service', async(() => {
                 fixture.whenStable().then(() => {
+                    fixture.detectChanges();
                     let imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#logged-user-img');
                     imageButton.click();
                     fixture.detectChanges();
@@ -141,6 +143,7 @@ describe('User info component', () => {
 
             it('should get the ecm user informations from the service', () => {
                 fixture.whenStable().then(() => {
+                    fixture.detectChanges();
                     let imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#logged-user-img');
                     imageButton.click();
                     fixture.detectChanges();
@@ -161,17 +164,17 @@ describe('User info component', () => {
         describe('and has no image', () => {
 
             beforeEach(async(() => {
-                userInfoComp.anonymousImageUrl = userInfoComp.anonymousImageUrl.replace('/base/dist', '');
                 fixture.detectChanges();
                 jasmine.Ajax.requests.mostRecent().respondWith({
                     status: 200,
                     contentType: 'application/json',
                     responseText: JSON.stringify({entry: fakeEcmUserNoImage})
                 });
+                fixture.whenStable().then(() => fixture.detectChanges());
             }));
 
             it('should show N/A when the job title is null', async(() => {
-                let imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#logged-user-img');
+                let imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#user-initials-image');
                 imageButton.click();
                 fixture.detectChanges();
                 expect(element.querySelector('#userinfo_container')).not.toBeNull();
@@ -182,7 +185,7 @@ describe('User info component', () => {
             }));
 
             it('should not show the tabs', () => {
-                let imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#logged-user-img');
+                let imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#user-initials-image');
                 imageButton.click();
                 fixture.detectChanges();
                 let tabHeader = fixture.debugElement.query(By.css('#tab-group-env'));
@@ -198,8 +201,6 @@ describe('User info component', () => {
             spyOn(stubAuthService, 'isBpmLoggedIn').and.returnValue(true);
             spyOn(stubAuthService, 'isLoggedIn').and.returnValue(true);
             jasmine.Ajax.install();
-
-            userInfoComp.anonymousImageUrl = userInfoComp.anonymousImageUrl.replace('/base/dist', '');
         }));
 
         afterEach(() => {
@@ -312,7 +313,6 @@ describe('User info component', () => {
             spyOn(stubAuthService, 'isBpmLoggedIn').and.returnValue(true);
             spyOn(stubAuthService, 'isLoggedIn').and.returnValue(true);
             spyOn(stubContent, 'getContentUrl').and.returnValue('src/assets/images/ecmImg.gif');
-            userInfoComp.anonymousImageUrl = userInfoComp.anonymousImageUrl.replace('/base/dist', '');
             jasmine.Ajax.install();
         }));
 
@@ -331,6 +331,7 @@ describe('User info component', () => {
         }));
 
         beforeEach(() => {
+            fixture.detectChanges();
             let imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#logged-user-img');
             imageButton.click();
             fixture.detectChanges();
@@ -376,9 +377,12 @@ describe('User info component', () => {
         it('should show the bpm image if ecm does not have it', () => {
             userInfoComp.ecmUserImage = null;
             fixture.detectChanges();
-            expect(element.querySelector('#userinfo_container')).toBeDefined();
-            expect(element.querySelector('#logged-user-img')).toBeDefined();
-            expect(element.querySelector('#logged-user-img').getAttribute('src')).toContain('rest/admin/profile-picture');
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#userinfo_container')).toBeDefined();
+                expect(element.querySelector('#logged-user-img')).toBeDefined();
+                expect(element.querySelector('#logged-user-img').getAttribute('src')).toContain('rest/admin/profile-picture');
+            });
         });
 
         it('should show the tabs for the env', () => {

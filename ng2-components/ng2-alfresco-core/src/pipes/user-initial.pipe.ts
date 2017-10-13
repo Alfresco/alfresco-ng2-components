@@ -16,6 +16,7 @@
  */
 
 import { Pipe, PipeTransform } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { LightUserRepresentation } from '../models/user-process.model';
 
 @Pipe({
@@ -23,11 +24,13 @@ import { LightUserRepresentation } from '../models/user-process.model';
 })
 export class InitialUsernamePipe implements PipeTransform {
 
-    transform(user: LightUserRepresentation, className: string = '', delimiter: string = ''): string {
-        let result = '';
+    constructor(private sanitized: DomSanitizer) {}
+
+    transform(user: LightUserRepresentation, className: string = '', delimiter: string = ''): SafeHtml {
+        let result: SafeHtml = '';
         if (user) {
             let initialResult = this.getInitialUserName(user.firstName, user.lastName, delimiter);
-            result = `<div class="${className}">${initialResult}</div>`;
+            result = this.sanitized.bypassSecurityTrustHtml(`<div id="user-initials-image" class="${className}">${initialResult}</div>`);
         }
         return result;
     }

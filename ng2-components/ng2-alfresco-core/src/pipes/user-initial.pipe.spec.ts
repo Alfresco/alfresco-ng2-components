@@ -15,16 +15,48 @@
  * limitations under the License.
  */
 
+import { DomSanitizer } from '@angular/platform-browser';
 import { LightUserRepresentation } from '../models/user-process.model';
 import { InitialUsernamePipe } from './user-initial.pipe';
 
-fdescribe('UserInitialPipe', () => {
+class FakeSanitazer extends DomSanitizer {
+
+    constructor() {
+        super();
+    }
+
+    sanitize(html) {
+        return html;
+    }
+
+    bypassSecurityTrustHtml(value: string): any {
+        return value;
+    }
+
+    bypassSecurityTrustStyle(value: string): any {
+        return null;
+    }
+
+    bypassSecurityTrustScript(value: string): any {
+        return null;
+    }
+
+    bypassSecurityTrustUrl(value: string): any {
+        return null;
+    }
+
+    bypassSecurityTrustResourceUrl(value: string): any {
+        return null;
+    }
+}
+
+describe('UserInitialPipe', () => {
 
     let pipe: InitialUsernamePipe;
     let fakeUser: LightUserRepresentation;
 
     beforeEach(() => {
-        pipe = new InitialUsernamePipe();
+        pipe = new InitialUsernamePipe(new FakeSanitazer());
         fakeUser = new LightUserRepresentation();
     });
 
@@ -32,28 +64,28 @@ fdescribe('UserInitialPipe', () => {
         fakeUser.firstName = 'FAKE-NAME';
         fakeUser.lastName = 'FAKE-SURNAME';
         let result = pipe.transform(fakeUser);
-        expect(result).toBe('<div class="">FF</div>');
+        expect(result).toBe('<div id="user-initials-image" class="">FF</div>');
     });
 
     it('should apply the style class passed in input', () => {
         fakeUser.firstName = 'FAKE-NAME';
         fakeUser.lastName = 'FAKE-SURNAME';
         let result = pipe.transform(fakeUser, 'fake-class-to-check');
-        expect(result).toBe('<div class="fake-class-to-check">FF</div>');
+        expect(result).toBe('<div id="user-initials-image" class="fake-class-to-check">FF</div>');
     });
 
     it('should return a single letter into div when lastname is undefined', () => {
         fakeUser.firstName = 'FAKE-NAME';
         fakeUser.lastName = undefined;
         let result = pipe.transform(fakeUser);
-        expect(result).toBe('<div class="">F</div>');
+        expect(result).toBe('<div id="user-initials-image" class="">F</div>');
     });
 
     it('should return a single letter into div when firstname is null', () => {
         fakeUser.firstName = undefined;
         fakeUser.lastName = 'FAKE-SURNAME';
         let result = pipe.transform(fakeUser);
-        expect(result).toBe('<div class="">F</div>');
+        expect(result).toBe('<div id="user-initials-image" class="">F</div>');
     });
 
     it('should return an empty string when user is null', () => {

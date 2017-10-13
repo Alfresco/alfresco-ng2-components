@@ -57,7 +57,7 @@ export let fakeBpmUser = {
     lastUpdate: 'fake-update-date',
     latestSyncTimeStamp: 'fake-timestamp',
     password: 'fake-password',
-    pictureId: 'src/assets/bpmImg.gif',
+    pictureId: 12,
     status: 'fake-status',
     tenantId: 'fake-tenant-id',
     tenantName: 'fake-tenant-name',
