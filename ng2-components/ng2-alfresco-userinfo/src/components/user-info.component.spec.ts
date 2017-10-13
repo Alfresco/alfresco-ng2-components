@@ -216,6 +216,7 @@ describe('User info component', () => {
             });
 
             fixture.whenStable().then(() => {
+                fixture.detectChanges();
                 let imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#logged-user-img');
                 imageButton.click();
                 fixture.detectChanges();
