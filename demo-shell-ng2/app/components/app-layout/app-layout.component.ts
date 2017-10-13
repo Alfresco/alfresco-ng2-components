@@ -49,6 +49,5 @@ export class AppLayoutComponent {
 
     changeLanguage(lang: string) {
         this.preferences.locale = lang;
-        this.translateService.use(lang);
     }
 }

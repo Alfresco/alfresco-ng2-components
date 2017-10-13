@@ -75,15 +75,15 @@ export class StartTaskComponent implements OnInit {
     constructor(
         private taskService: TaskListService,
         private peopleService: PeopleProcessService,
-        public dateAdapter: DateAdapter<Moment>,
+        private dateAdapter: DateAdapter<Moment>,
         private preferences: UserPreferencesService,
         private logService: LogService) {
-            this.preferences.locale$.subscribe( (locale) => {
-                this.dateAdapter.setLocale(locale);
-            });
     }
 
     ngOnInit() {
+        this.preferences.locale$.subscribe( (locale) => {
+            this.dateAdapter.setLocale(locale);
+        });
         this.loadFormsTask();
         this.getUsers();
     }

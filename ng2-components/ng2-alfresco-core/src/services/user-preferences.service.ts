@@ -16,6 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Rx';
 import { AlfrescoApiService } from './alfresco-api.service';
@@ -27,17 +28,20 @@ export class UserPreferencesService {
 
     private defaults = {
         paginationSize: 25,
-        locale: 'en-EN'
+        locale: 'en'
     };
 
-    private localeSubject: BehaviorSubject<string> = new BehaviorSubject(this.locale);
+    private localeSubject: BehaviorSubject<string> ;
     locale$: Observable<string>;
 
     constructor(
-        appConfig: AppConfigService,
+        public translate: TranslateService,
+        private appConfig: AppConfigService,
         private storage: StorageService,
         private apiService: AlfrescoApiService
     ) {
+        const currentLocale = this.locale || this.getDefaultLocale();
+        this.localeSubject = new BehaviorSubject(currentLocale);
         this.locale$ = this.localeSubject.asObservable();
         this.defaults.paginationSize = appConfig.get('pagination.size', 25);
     }
@@ -99,13 +103,17 @@ export class UserPreferencesService {
     }
 
     get locale(): string {
-        const locale = this.get('LOCALE') || this.defaults.locale;
+        const locale = this.get('LOCALE');
         return locale;
     }
 
     set locale(value: string) {
         this.localeSubject.next(value);
         this.set('LOCALE', value);
+    }
+
+    public getDefaultLocale(): string {
+        return this.appConfig.get('locale') || this.translate.getBrowserLang() || 'en';
     }
 
 }

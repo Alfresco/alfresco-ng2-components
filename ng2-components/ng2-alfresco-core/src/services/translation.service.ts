@@ -19,6 +19,7 @@ import { Inject, Injectable, OpaqueToken } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs/Rx';
 import { AlfrescoTranslateLoader } from './translate-loader.service';
+import { UserPreferencesService } from './user-preferences.service';
 
 export const TRANSLATION_PROVIDER = new OpaqueToken('Injection token for translation providers.');
 
@@ -29,17 +30,22 @@ export interface TranslationProvider {
 
 @Injectable()
 export class TranslationService {
-    defaultLang: string = 'en';
-    userLang: string = 'en';
+    defaultLang: string;
+    userLang: string;
     customLoader: AlfrescoTranslateLoader;
 
     constructor(public translate: TranslateService,
+                private userPreference: UserPreferencesService,
                 @Inject(TRANSLATION_PROVIDER) providers: TranslationProvider[]) {
-        this.userLang = translate.getBrowserLang() || this.defaultLang;
+        this.customLoader = <AlfrescoTranslateLoader> this.translate.currentLoader;
+
+        this.defaultLang = this.userPreference.getDefaultLocale();
         translate.setDefaultLang(this.defaultLang);
 
-        this.customLoader = <AlfrescoTranslateLoader> this.translate.currentLoader;
-        this.use(this.userLang);
+        this.userPreference.locale$.subscribe( (locale) => {
+            this.userLang = locale;
+            this.use(this.userLang);
+        });
 
         if (providers && providers.length > 0) {
             for (let provider of providers) {
