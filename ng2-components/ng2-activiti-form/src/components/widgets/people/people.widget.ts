@@ -19,11 +19,10 @@
 
 import { ENTER, ESCAPE } from '@angular/cdk/keycodes';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MdAutocompleteTrigger } from '@angular/material';
 import { LightUserRepresentation, PeopleProcessService } from 'ng2-alfresco-core';
 import { FormService } from '../../../services/form.service';
 import { GroupModel } from '../core/group.model';
-import { baseHost , WidgetComponent } from './../widget.component';
+import { baseHost, WidgetComponent } from './../widget.component';
 
 @Component({
     selector: 'people-widget',
@@ -34,11 +33,10 @@ import { baseHost , WidgetComponent } from './../widget.component';
 })
 export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
 
-    @ViewChild(MdAutocompleteTrigger)
-    input: MdAutocompleteTrigger;
+    @ViewChild('inputValue')
+    input: HTMLInputElement;
 
     minTermLength: number = 1;
-    value: string;
     oldValue: string;
     users: LightUserRepresentation[] = [];
     groupId: string;
@@ -49,63 +47,58 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
 
     ngOnInit() {
         if (this.field) {
-            let user: LightUserRepresentation = this.field.value;
-            if (user) {
-                this.value = this.getDisplayName(user);
-            }
-
             let params = this.field.params;
-            if (params && params['restrictWithGroup']) {
-                let restrictWithGroup = <GroupModel> params['restrictWithGroup'];
+            if (params && params.restrictWithGroup) {
+                let restrictWithGroup = <GroupModel> params.restrictWithGroup;
                 this.groupId = restrictWithGroup.id;
             }
         }
     }
 
     onKeyUp(event: KeyboardEvent) {
-        if (this.value && this.value.length >= this.minTermLength  && this.oldValue !== this.value) {
+        let value = this.input.value;
+        if (value && value.length >= this.minTermLength && this.oldValue !== value) {
             if (event.keyCode !== ESCAPE && event.keyCode !== ENTER) {
-                if (this.value.length >= this.minTermLength) {
-                    this.oldValue = this.value;
-                    this.searchUsers();
+                if (value.length >= this.minTermLength) {
+                    this.oldValue = value;
+                    this.searchUsers(value);
                 }
             }
         }
-        if (this.isValueDefined() && this.value.trim().length === 0) {
-          this.oldValue = this.value;
-          this.field.value = this.value;
-          this.users = [];
-        }
     }
 
-    isValueDefined() {
-        return this.value !== null && this.value !== undefined;
-    }
-
-    searchUsers() {
-        this.formService.getWorkflowUsers(this.value, this.groupId)
+    searchUsers(userName: string) {
+        this.formService.getWorkflowUsers(userName, this.groupId)
             .subscribe((result: LightUserRepresentation[]) => {
                 this.users = result || [];
-                this.validateValue();
+                this.validateValue(userName);
             });
     }
 
-    validateValue() {
-        let validUserName = this.getUserFromValue();
-        if (validUserName) {
+    validateValue(userName: string) {
+        if (this.isValidUser(userName)) {
             this.field.validationSummary.message = '';
-            this.field.value = validUserName;
-            this.value = this.getDisplayName(validUserName);
+        } else if (userName === '') {
+            this.field.value = null;
+            this.users = [];
         } else {
-            this.field.value = '';
-            this.field.validationSummary.message = 'Invalid value provided';
+            this.field.validationSummary.message = 'FORM.FIELD.VALIDATOR.INVALID_VALUE';
             this.field.markAsInvalid();
             this.field.form.markAsInvalid();
-          }
+        }
     }
 
-    getUserFromValue() {
-        return this.users.find((user) => this.getDisplayName(user).toLocaleLowerCase() === this.value.toLocaleLowerCase());
+    isValidUser(value: string): boolean {
+        let isValid = false;
+        if (value) {
+            let resultUser: LightUserRepresentation = this.users.find((user) => this.getDisplayName(user).toLocaleLowerCase() === value.toLocaleLowerCase());
+
+            if (resultUser) {
+                isValid = true;
+            }
+        }
+
+        return isValid;
     }
 
     getDisplayName(model: LightUserRepresentation) {
@@ -119,7 +112,6 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
     onItemSelect(item: LightUserRepresentation) {
         if (item) {
             this.field.value = item;
-            this.value = this.getDisplayName(item);
         }
     }
 
