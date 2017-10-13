@@ -25,7 +25,7 @@ import { NodeFavoriteDirective } from './node-favorite.directive';
 @Component({
     template: `
         <div [adf-node-favorite]="selection"
-             (selection-toggle-favorite)="done()">
+             (toggle)="done()">
         </div>`
 })
 class TestComponent {

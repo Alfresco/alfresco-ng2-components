@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, ElementRef, HostListener, Input, OnChanges } from '@angular/core';
+import { Directive, EventEmitter, HostListener, Input, OnChanges, Output } from '@angular/core';
 import { FavoriteBody, MinimalNodeEntity } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Rx';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
@@ -30,15 +30,14 @@ export class NodeFavoriteDirective implements OnChanges {
     @Input('adf-node-favorite')
     selection: MinimalNodeEntity[] = [];
 
+    @Output() toggle: EventEmitter<void> = new EventEmitter();
+
     @HostListener('click')
     onClick() {
         this.toggleFavorite();
     }
 
-    constructor(
-        private alfrescoApiService: AlfrescoApiService,
-        private elRef: ElementRef
-    ) {}
+    constructor(private alfrescoApiService: AlfrescoApiService) {}
 
     ngOnChanges(changes) {
         if (!changes.selection.currentValue.length) {
@@ -65,7 +64,7 @@ export class NodeFavoriteDirective implements OnChanges {
 
             Observable.forkJoin(batch).subscribe(() => {
                 this.reset();
-                this.done();
+                this.toggle.emit();
             });
         }
 
@@ -76,7 +75,7 @@ export class NodeFavoriteDirective implements OnChanges {
             Observable.fromPromise(this.alfrescoApiService.getInstance().core.favoritesApi.addFavorite('-me-', <any> body))
                 .subscribe(() => {
                     this.reset();
-                    this.done();
+                    this.toggle.emit();
                 });
         }
     }
@@ -173,10 +172,5 @@ export class NodeFavoriteDirective implements OnChanges {
         const ids = comparator.map(item => item.entry.id);
 
         return patch.filter(item => ids.includes(item.entry.id) ? item : null);
-    }
-
-    private done() {
-        const e = new CustomEvent('selection-toggle-favorite', { bubbles: true });
-        this.elRef.nativeElement.dispatchEvent(e);
     }
 }

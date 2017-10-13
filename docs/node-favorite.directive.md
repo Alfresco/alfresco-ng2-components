@@ -20,7 +20,7 @@ Selectively toggle nodes as favorite
 ```html
 <adf-toolbar>
     <button md-icon-button
-            (adf-toggle-favorite)="done()"
+            (toggle)="done()"
             [adf-node-favorite]="documentList.selection">
     </button>
 </adf-toolbar>
@@ -53,7 +53,7 @@ export class MyComponent {
 
 | Name                      | Description                                  |
 | ------------------------- | -------------------------------------------- |
-| selection-toggle-favorite | emitted when toggle favorite process is done |
+| toggle                    | emitted when toggle favorite process is done |
 
 ## Details
 

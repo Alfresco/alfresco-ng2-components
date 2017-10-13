@@ -49,7 +49,7 @@
                 </button>
                 <button md-icon-button
                     #favorite="adfFavorite"
-                    (selection-toggle-favorite)="documentList.reload()"
+                    (toggle)="documentList.reload()"
                     [adf-node-favorite]="documentList.selection">
                     <md-icon>
                         {{ favorite.hasFavorites() ? 'star' :'star_border' }}
