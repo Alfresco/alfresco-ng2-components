@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
+import { DocumentListComponent } from 'ng2-alfresco-documentlist';
 
 @Component({
     selector: 'adf-custom-sources-demo',
@@ -25,6 +26,9 @@ export class CustomSourcesComponent {
 
     @Input()
     selectedSource = '-recent-';
+
+    @ViewChild(DocumentListComponent)
+    documentList: DocumentListComponent;
 
     sources = [
         { title: 'Favorites', value: '-favorites-' },

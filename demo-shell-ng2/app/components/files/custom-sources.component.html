@@ -6,8 +6,20 @@
             </md-option>
         </md-select>
     </adf-toolbar-title>
+
+    <div fxFlex="0 1 auto" class="adf-document-action-buttons" fxShow fxHide.lt-sm="true">
+        <button md-icon-button
+            (restore)="documentList.reload()"
+            [disabled]="!documentList.selection.length"
+            *ngIf="selectedSource === '-trashcan-'"
+            [restoreLocation]="'/files'"
+            [adf-node-restore]="documentList.selection">
+            <md-icon>restore</md-icon>
+        </button>
+    </div>
 </adf-toolbar>
 <adf-document-list
     [currentFolderId]="selectedSource"
-    locationFormat="/files">
+    locationFormat="/files"
+    selectionMode="multiple">
 </adf-document-list>
