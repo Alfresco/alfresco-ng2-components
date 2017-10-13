@@ -29,7 +29,7 @@ import { NodeRestoreDirective } from './node-restore.directive';
 
 @Component({
     template: `
-        <div [adf-node-restore]="selection"
+        <div [adf-restore]="selection"
              (restore)="done()">
         </div>`
 })

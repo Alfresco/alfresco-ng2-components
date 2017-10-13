@@ -24,15 +24,15 @@ import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { TranslationService } from '../services/translation.service';
 
 @Directive({
-    selector: '[adf-node-restore]'
+    selector: '[adf-restore]'
 })
 export class NodeRestoreDirective {
     private restoreProcessStatus;
 
-    @Input('adf-node-restore')
+    @Input('adf-restore')
     selection: DeletedNodeEntry[];
 
-    @Input('restoreLocation') location: string = '';
+    @Input() location: string = '';
 
     @Output() restore: EventEmitter<any> = new EventEmitter();
 

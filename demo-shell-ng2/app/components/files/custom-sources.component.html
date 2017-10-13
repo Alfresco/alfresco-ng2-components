@@ -12,8 +12,8 @@
             (restore)="documentList.reload()"
             [disabled]="!documentList.selection.length"
             *ngIf="selectedSource === '-trashcan-'"
-            [restoreLocation]="'/files'"
-            [adf-node-restore]="documentList.selection">
+            location="/files"
+            [adf-restore]="documentList.selection">
             <md-icon>restore</md-icon>
         </button>
     </div>
