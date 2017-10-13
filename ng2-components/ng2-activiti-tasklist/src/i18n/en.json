@@ -119,5 +119,19 @@
         "EMPTY-LIST": {
             "HEADER": "No files are available"
         }
+    },
+    "TASK_HEADER": {
+        "ASSIGNEE": "Assignee",
+        "PRIORITY":"Priority",
+        "DUE_DATE":"Due Date",
+        "STATUS":"Status",
+        "CATEGORY":"Category",
+        "PARENT_NAME":"Parent name",
+        "CREATED_BY":"Created By",
+        "CREATED":"Created",
+        "ID":"Id",
+        "DESCRIPTION":"Description",
+        "FORM_NAME":"Form Name"
     }
+
 }
