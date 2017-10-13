@@ -18,7 +18,7 @@
 /* tslint:disable:component-selector  */
 
 import { ENTER, ESCAPE } from '@angular/cdk/keycodes';
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { LightUserRepresentation, PeopleProcessService } from 'ng2-alfresco-core';
 import { FormService } from '../../../services/form.service';
 import { GroupModel } from '../core/group.model';
@@ -34,7 +34,7 @@ import { baseHost, WidgetComponent } from './../widget.component';
 export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
 
     @ViewChild('inputValue')
-    input: HTMLInputElement;
+    input: ElementRef;
 
     minTermLength: number = 1;
     oldValue: string;
@@ -56,7 +56,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     onKeyUp(event: KeyboardEvent) {
-        let value = this.input.value;
+        let value = (this.input.nativeElement as HTMLInputElement).value;
         if (value && value.length >= this.minTermLength && this.oldValue !== value) {
             if (event.keyCode !== ESCAPE && event.keyCode !== ENTER) {
                 if (value.length >= this.minTermLength) {
@@ -64,6 +64,8 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
                     this.searchUsers(value);
                 }
             }
+        } else {
+            this.validateValue(value);
         }
     }
 
@@ -78,7 +80,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
     validateValue(userName: string) {
         if (this.isValidUser(userName)) {
             this.field.validationSummary.message = '';
-        } else if (userName === '') {
+        } else if (!userName) {
             this.field.value = null;
             this.users = [];
         } else {

@@ -52,7 +52,8 @@ describe('PeopleWidgetComponent', () => {
                 FormService,
                 EcmModelService,
                 ActivitiAlfrescoContentService,
-                {provide: OverlayContainer, useFactory: () => {
+                {
+                    provide: OverlayContainer, useFactory: () => {
                     overlayContainerElement = document.createElement('div');
                     overlayContainerElement.classList.add('cdk-overlay-container');
 
@@ -63,7 +64,8 @@ describe('PeopleWidgetComponent', () => {
                     document.body.style.margin = '0';
 
                     return {getContainerElement: () => overlayContainerElement};
-                }}
+                }
+                }
             ]
         }).compileComponents();
     }));
@@ -102,6 +104,7 @@ describe('PeopleWidgetComponent', () => {
 
     it('should init value from the field', () => {
         widget.field.value = new LightUserRepresentation({
+            id: 'people-id',
             firstName: 'John',
             lastName: 'Doe'
         });
@@ -114,14 +117,17 @@ describe('PeopleWidgetComponent', () => {
         );
 
         widget.ngOnInit();
-        expect(widget.value).toBe('John Doe');
+        fixture.detectChanges();
+
+        expect((element.querySelector('input') as HTMLInputElement).value).toBe('John Doe');
     });
 
     it('should require form field to setup values on init', () => {
-        widget.field = null;
+        widget.field.value = null;
         widget.ngOnInit();
-
-        expect(widget.value).toBeUndefined();
+        fixture.detectChanges();
+        let input = widget.input;
+        expect(input.nativeElement.value).toBe('');
         expect(widget.groupId).toBeUndefined();
     });
 
@@ -135,37 +141,59 @@ describe('PeopleWidgetComponent', () => {
     });
 
     it('should fetch users by search term', () => {
-        let users = [{}, {}];
+        let users = [{
+            id: 'people-id',
+            firstName: 'John',
+            lastName: 'Doe'
+        }, {
+            id: 'people-id2',
+            firstName: 'John',
+            lastName: 'Ping'
+        }];
+
         spyOn(formService, 'getWorkflowUsers').and.returnValue(
             Observable.create(observer => {
                 observer.next(users);
                 observer.complete();
             })
         );
+        fixture.detectChanges();
 
         let keyboardEvent = new KeyboardEvent('keypress');
-        widget.value = 'user1';
+        let input = widget.input;
+        input.nativeElement.value = 'John';
         widget.onKeyUp(keyboardEvent);
 
-        expect(formService.getWorkflowUsers).toHaveBeenCalledWith(widget.value, widget.groupId);
+        expect(formService.getWorkflowUsers).toHaveBeenCalledWith('John', widget.groupId);
         expect(widget.users).toBe(users);
     });
 
     it('should fetch users by search term and group id', () => {
-        let users = [{}, {}];
+        let users = [{
+            id: 'people-id',
+            firstName: 'John',
+            lastName: 'Doe'
+        }, {
+            id: 'people-id2',
+            firstName: 'John',
+            lastName: 'Ping'
+        }];
+
         spyOn(formService, 'getWorkflowUsers').and.returnValue(
             Observable.create(observer => {
                 observer.next(users);
                 observer.complete();
             })
         );
+        fixture.detectChanges();
 
         let keyboardEvent = new KeyboardEvent('keypress');
-        widget.value = 'user1';
+        let input = widget.input;
+        input.nativeElement.value = 'John';
         widget.groupId = '1001';
         widget.onKeyUp(keyboardEvent);
 
-        expect(formService.getWorkflowUsers).toHaveBeenCalledWith(widget.value, widget.groupId);
+        expect(formService.getWorkflowUsers).toHaveBeenCalledWith('John', widget.groupId);
         expect(widget.users).toBe(users);
     });
 
@@ -176,12 +204,14 @@ describe('PeopleWidgetComponent', () => {
                 observer.complete();
             })
         );
+        fixture.detectChanges();
 
         let keyboardEvent = new KeyboardEvent('keypress');
-        widget.value = 'user1';
+        let input = widget.input;
+        input.nativeElement.value = 'user1';
         widget.onKeyUp(keyboardEvent);
 
-        expect(formService.getWorkflowUsers).toHaveBeenCalledWith(widget.value, widget.groupId);
+        expect(formService.getWorkflowUsers).toHaveBeenCalledWith('user1', widget.groupId);
         expect(widget.users).toEqual([]);
     });
 
@@ -189,7 +219,8 @@ describe('PeopleWidgetComponent', () => {
         spyOn(formService, 'getWorkflowUsers').and.stub();
 
         let keyboardEvent = new KeyboardEvent('keypress');
-        widget.value = null;
+        let input = widget.input;
+        input.nativeElement.value = null;
         widget.onKeyUp(keyboardEvent);
 
         expect(formService.getWorkflowUsers).not.toHaveBeenCalled();
@@ -199,7 +230,7 @@ describe('PeopleWidgetComponent', () => {
         spyOn(formService, 'getWorkflowUsers').and.stub();
 
         let keyboardEvent = new KeyboardEvent('keypress');
-        widget.value = '123';
+        (element.querySelector('input') as HTMLInputElement).value = '123';
         widget.minTermLength = 4;
         widget.onKeyUp(keyboardEvent);
 
@@ -209,9 +240,10 @@ describe('PeopleWidgetComponent', () => {
     it('should reset users when the input field is blank string', () => {
         let fakeUser = new LightUserRepresentation({id: '1', email: 'ffff@fff'});
         widget.users.push(fakeUser);
+        fixture.detectChanges();
 
         let keyboardEvent = new KeyboardEvent('keypress');
-        widget.value = '';
+        (element.querySelector('input') as HTMLInputElement).value = '';
         widget.onKeyUp(keyboardEvent);
 
         expect(widget.users).toEqual([]);
@@ -220,15 +252,15 @@ describe('PeopleWidgetComponent', () => {
     describe('when template is ready', () => {
 
         let fakeUserResult = [
-            { id: 1001, firstName: 'Test01', lastName: 'Test01', email: 'test' },
-            { id: 1002, firstName: 'Test02', lastName: 'Test02', email: 'test2' }];
+            {id: 1001, firstName: 'Test01', lastName: 'Test01', email: 'test'},
+            {id: 1002, firstName: 'Test02', lastName: 'Test02', email: 'test2'}];
 
         beforeEach(async(() => {
             spyOn(formService, 'getWorkflowUsers').and.returnValue(Observable.create(observer => {
                 observer.next(fakeUserResult);
                 observer.complete();
             }));
-            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+            widget.field = new FormFieldModel(new FormModel({taskId: 'fake-task-id'}), {
                 id: 'people-id',
                 name: 'people-name',
                 type: FormFieldTypes.PEOPLE,
@@ -248,23 +280,21 @@ describe('PeopleWidgetComponent', () => {
         });
 
         it('should show an error message if the user is invalid', async(() => {
-            let peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('#people-id');
+            let peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
             peopleHTMLElement.focus();
-            widget.value = 'K';
             peopleHTMLElement.value = 'K';
             peopleHTMLElement.dispatchEvent(new Event('keyup'));
             peopleHTMLElement.dispatchEvent(new Event('input'));
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 expect(element.querySelector('.adf-error-text')).not.toBeNull();
-                expect(element.querySelector('.adf-error-text').textContent).toContain('Invalid value provided');
+                expect(element.querySelector('.adf-error-text').textContent).toContain('FORM.FIELD.VALIDATOR.INVALID_VALUE');
             });
         }));
 
         it('should show the people if the typed result match', async(() => {
-            let peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('#people-id');
+            let peopleHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
             peopleHTMLElement.focus();
-            widget.value = 'T';
             peopleHTMLElement.value = 'T';
             peopleHTMLElement.dispatchEvent(new Event('keyup'));
             peopleHTMLElement.dispatchEvent(new Event('input'));
