@@ -4,13 +4,17 @@
 <div fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="stretch">
     <div class="adf-social-example-area" fxFlex.gt-md="1 1 auto">
         <md-card>
-            <div class="adf-social-title">Like component</div>
+            <div class="adf-social-title">
+                {{'SOCIAL.LIKE' | translate }}
+            </div>
             <adf-like [nodeId]="nodeId"></adf-like>
         </md-card>
     </div>
     <div class="adf-social-example-area" fxFlex.gt-md="1 1 auto">
         <md-card>
-            <div class="adf-social-title">Rating component</div>
+            <div class="adf-social-title">
+                {{'SOCIAL.RATING' | translate }}
+            </div>
             <adf-rating [nodeId]="nodeId"></adf-rating>
         </md-card>
     </div>

@@ -21,7 +21,7 @@
                        value="{{ecmHost}}"
                        placeholder="http(s)://host|ip:port(/path)">
                 <md-error *ngIf="urlFormControlEcm.hasError('pattern')">
-                    ECM host is not valid! http(s)://host|ip:port(/path)
+                    {{ 'SETTINGS.NOT_VALID'| translate }}
                 </md-error>
             </md-input-container>
             <p>
@@ -40,7 +40,7 @@
                        value="{{bpmHost}}"
                        placeholder="http(s)://host|ip:port(/path)">
                 <md-error *ngIf="urlFormControlBpm.hasError('pattern')">
-                    BPM host is not valid! http(s)://host|ip:port(/path)
+                    {{ 'SETTINGS.NOT_VALID'| translate }}
                 </md-error>
             </md-input-container>
 

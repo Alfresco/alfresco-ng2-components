@@ -22,10 +22,10 @@
     </alfresco-datatable>
 </div>
 <div class="p-10" data-automation-id="multiselect">
-    <md-checkbox [(ngModel)]="multiselect">Multiselect</md-checkbox>
+    <md-checkbox [(ngModel)]="multiselect">{{ 'DATATABLE.MULTISELECT'| translate }}</md-checkbox>
 </div>
 <div class="p-10">
-    <p>For 'Multiple' selection mode use Cmd (macOS) or Ctrl (Win) to toggle selection of multiple items.</p>
+    <p>{{ 'DATATABLE.MULTISELECT_DESCRIPTION'| translate }}</p>
     <md-select placeholder="Selection Mode" [(ngModel)]="selectionMode" name="food">
         <md-option *ngFor="let mode of selectionModes" [value]="mode.value">
             {{mode.viewValue}}
@@ -33,9 +33,9 @@
     </md-select>
 </div>
 <div class="p-10">
-    <button md-raised-button (click)="reset()">Reset to default</button>
-    <button md-raised-button (click)="addRow()">Add row</button>
-    <button md-raised-button (click)="replaceRows()">Replace rows</button>
-    <button md-raised-button (click)="replaceColumns()">Replace columns</button>
-    <button md-raised-button (click)="getRowForNode()">Load Node</button>
+    <button md-raised-button (click)="reset()">{{ 'DATATABLE.RESET_DEFAULT'| translate }}</button>
+    <button md-raised-button (click)="addRow()">{{ 'DATATABLE.ADD_ROW'| translate }}</button>
+    <button md-raised-button (click)="replaceRows()">{{ 'DATATABLE.REPLACE_ROWS'| translate }}</button>
+    <button md-raised-button (click)="replaceColumns()">{{ 'DATATABLE.REPLACE_COLUMNS'| translate }}</button>
+    <button md-raised-button (click)="getRowForNode()">{{ 'DATATABLE.LOAD_NODE'| translate }}</button>
 </div>

@@ -16,8 +16,7 @@
  */
 
 import { NgModule } from '@angular/core';
-import { CoreModule } from 'ng2-alfresco-core';
-
+import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { MaterialModule } from './src/material.module';
 
 export { ViewerComponent } from './src/components/viewer.component';
@@ -49,11 +48,20 @@ export function declarations() {
     ],
     declarations: declarations(),
     providers: [
-        RenderingQueueServices
+        RenderingQueueServices,
+        {
+            provide: TRANSLATION_PROVIDER,
+            multi: true,
+            useValue: {
+                name: 'ng2-alfresco-viewer',
+                source: 'assets/ng2-alfresco-viewer'
+            }
+        }
     ],
     exports: [
         MaterialModule,
         ...declarations()
     ]
 })
-export class ViewerModule {}
+export class ViewerModule {
+}

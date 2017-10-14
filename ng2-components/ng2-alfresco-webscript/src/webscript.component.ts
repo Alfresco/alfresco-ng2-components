@@ -42,15 +42,7 @@ import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
  */
 @Component({
     selector: 'adf-webscript-get, alfresco-webscript-get',
-    template: `
-        <div *ngIf="showData">
-            <div *ngIf="contentType === 'JSON'" id="webscript-data-JSON">{{data | json}}</div>
-            <div *ngIf="contentType === 'HTML'" id="webscript-data-HTML" [innerHTML]="data"></div>
-            <div *ngIf="contentType === 'TEXT'" id="webscript-data-TEXT" >{{data}}</div>
-            <div *ngIf="isDataTableContent()"><alfresco-datatable id="webscript-datatable-wrapper" [data]="data"></alfresco-datatable><div>
-            <div *ngIf="showError" id="error">Error during the deserialization of {{data}} as {{contentType}}</div>
-        </div>
-    `
+    templateUrl: 'webscript.component.html'
 })
 export class WebscriptComponent implements OnChanges {
 
