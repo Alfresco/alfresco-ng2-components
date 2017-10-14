@@ -11,12 +11,12 @@
                class="adf-input"
                type="text"
                [id]="field.id"
-               [(ngModel)]="value"
+               [value]="getDisplayName(field.value)"
                (keyup)="onKeyUp($event)"
                [disabled]="field.readOnly"
                placeholder="{{field.placeholder}}"
                [mdAutocomplete]="auto">
-        <md-autocomplete #auto="mdAutocomplete" (optionSelected)="onItemSelect($event.option.value)">
+        <md-autocomplete #auto="mdAutocomplete" (optionSelected)="onItemSelect($event.option.value)"  [displayWith]="getDisplayName">
             <md-option *ngFor="let user of users; let i = index" [value]="user">
                 <div class="adf-people-widget-row" id="adf-people-widget-user-{{i}}">
                     <div class="adf-people-widget-pic">
