@@ -16,11 +16,11 @@
  */
 
 import { Directive, EventEmitter, HostListener, Input, Output } from '@angular/core';
-import { MdSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { DeletedNodeEntry, PathInfoEntity } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Rx';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
+import { NotificationService } from '../services/notification.service';
 import { TranslationService } from '../services/translation.service';
 
 @Directive({
@@ -45,7 +45,7 @@ export class NodeRestoreDirective {
         private alfrescoApiService: AlfrescoApiService,
         private translation: TranslationService,
         private router: Router,
-        private mdSnackBar: MdSnackBar
+        private notification: NotificationService
     ) {
         this.restoreProcessStatus = this.processStatus();
     }
@@ -248,7 +248,7 @@ export class NodeRestoreDirective {
             const [ message, actionLabel ] = messages;
             const action = (status.oneSucceeded && !status.someFailed) ? actionLabel : '';
 
-            this.mdSnackBar.open(message, action, { duration: 3000 })
+            this.notification.openSnackMessageAction(message, action)
                 .onAction()
                 .subscribe(() => this.navigateLocation(status.success[0].entry.path));
         });

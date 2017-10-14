@@ -17,7 +17,6 @@
 
 import { Component, DebugElement } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { MdSnackBar } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -25,6 +24,7 @@ import { Observable } from 'rxjs/Rx';
 import { AlfrescoTranslationService } from '../../index';
 import { CoreModule } from '../../index';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
+import { NotificationService } from '../services/notification.service';
 import { NodeRestoreDirective } from './node-restore.directive';
 
 @Component({
@@ -45,7 +45,7 @@ describe('NodeRestoreDirective', () => {
     let component: TestComponent;
     let alfrescoService: AlfrescoApiService;
     let translation: AlfrescoTranslationService;
-    let snackBar: MdSnackBar;
+    let notification: NotificationService;
     let router: Router;
     let nodesService;
     let coreApi;
@@ -72,7 +72,7 @@ describe('NodeRestoreDirective', () => {
             nodesService = alfrescoService.getInstance().nodes;
             coreApi = alfrescoService.getInstance().core;
             translation = TestBed.get(AlfrescoTranslationService);
-            snackBar = TestBed.get(MdSnackBar);
+            notification = TestBed.get(NotificationService);
             router = TestBed.get(Router);
         });
     }));
@@ -177,7 +177,7 @@ describe('NodeRestoreDirective', () => {
         it('should notify on multiple fails', fakeAsync(() => {
             const error = { message: '{ "error": {} }' };
 
-            spyOn(snackBar, 'open').and.returnValue({ onAction: () => Observable.throw(null) });
+            spyOn(notification, 'openSnackMessageAction').and.returnValue({ onAction: () => Observable.throw(null) });
 
             spyOn(nodesService, 'restoreNode').and.callFake((id) => {
                 if (id === '1') {
@@ -212,7 +212,7 @@ describe('NodeRestoreDirective', () => {
         it('should notify fail when restored node exist, error 409', fakeAsync(() => {
             const error = { message: '{ "error": { "statusCode": 409 } }' };
 
-            spyOn(snackBar, 'open').and.returnValue({ onAction: () => Observable.throw(null) });
+            spyOn(notification, 'openSnackMessageAction').and.returnValue({ onAction: () => Observable.throw(null) });
             spyOn(nodesService, 'restoreNode').and.returnValue(Promise.reject(error));
 
             component.selection = [
@@ -232,7 +232,7 @@ describe('NodeRestoreDirective', () => {
         it('should notify fail when restored node returns different statusCode', fakeAsync(() => {
             const error = { message: '{ "error": { "statusCode": 404 } }' };
 
-            spyOn(snackBar, 'open').and.returnValue({ onAction: () => Observable.throw(null) });
+            spyOn(notification, 'openSnackMessageAction').and.returnValue({ onAction: () => Observable.throw(null) });
             spyOn(nodesService, 'restoreNode').and.returnValue(Promise.reject(error));
 
             component.selection = [
@@ -252,7 +252,7 @@ describe('NodeRestoreDirective', () => {
         it('should notify fail when restored node location is missing', fakeAsync(() => {
             const error = { message: '{ "error": { } }' };
 
-            spyOn(snackBar, 'open').and.returnValue({ onAction: () => Observable.throw(null) });
+            spyOn(notification, 'openSnackMessageAction').and.returnValue({ onAction: () => Observable.throw(null) });
             spyOn(nodesService, 'restoreNode').and.returnValue(Promise.reject(error));
 
             component.selection = [
@@ -270,7 +270,7 @@ describe('NodeRestoreDirective', () => {
         }));
 
         it('should notify success when restore multiple nodes', fakeAsync(() => {
-            spyOn(snackBar, 'open').and.returnValue({ onAction: () => Observable.throw(null) });
+            spyOn(notification, 'openSnackMessageAction').and.returnValue({ onAction: () => Observable.throw(null) });
             spyOn(nodesService, 'restoreNode').and.callFake((id) => {
                 if (id === '1') {
                     return Promise.resolve();
@@ -296,7 +296,7 @@ describe('NodeRestoreDirective', () => {
         }));
 
         it('should notify success on restore selected node', fakeAsync(() => {
-            spyOn(snackBar, 'open').and.returnValue({ onAction: () => Observable.throw(null) });
+            spyOn(notification, 'openSnackMessageAction').and.returnValue({ onAction: () => Observable.throw(null) });
             spyOn(nodesService, 'restoreNode').and.returnValue(Promise.resolve());
 
             component.selection = [
@@ -316,7 +316,7 @@ describe('NodeRestoreDirective', () => {
         it('should navigate to restored node location onAction', fakeAsync(() => {
             spyOn(router, 'navigate');
             spyOn(nodesService, 'restoreNode').and.returnValue(Promise.resolve());
-            spyOn(snackBar, 'open').and.returnValue({ onAction: () => Observable.of({}) });
+            spyOn(notification, 'openSnackMessageAction').and.returnValue({ onAction: () => Observable.of({}) });
 
             component.selection = [
                 {
