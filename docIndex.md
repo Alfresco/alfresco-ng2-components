@@ -315,6 +315,7 @@ for more information about installing and using the source code.
 
 - [Context menu directive](docs/context-menu.directive.md)
 - [Logout directive](docs/logout.directive.md)
+- [Node restore directive](docs/node-restore.directive.md)
 - [Node permission directive](docs/node-permission.directive.md)
 - [Node favorite directive](docs/node-favorite.directive.md)
 - [Upload directive](docs/upload.directive.md)

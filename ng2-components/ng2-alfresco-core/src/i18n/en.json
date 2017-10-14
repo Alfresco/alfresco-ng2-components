@@ -13,6 +13,15 @@
                 },
                 "TITLE": "Adding files to zip, this could take a few minutes"
             }
+        },
+        "RESTORE_NODE": {
+            "VIEW": "View",
+            "PARTIAL_PLURAL": "{{ number }} items not restored because of issues with the restore location",
+            "NODE_EXISTS": "Can't restore, {{ name }} item already exists",
+            "LOCATION_MISSING": "Can't restore {{ name }} item, the original location no longer exists",
+            "GENERIC": "There was a problem restoring {{ name }} item",
+            "PLURAL": "Restore successful",
+            "SINGULAR": "{{ name }} item restored"
         }
     }
 }

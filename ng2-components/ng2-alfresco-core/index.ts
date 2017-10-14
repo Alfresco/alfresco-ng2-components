@@ -122,6 +122,7 @@ import {
 } from './src/components/info-drawer/info-drawer-layout.component';
 import { InfoDrawerComponent, InfoDrawerTabComponent } from './src/components/info-drawer/info-drawer.component';
 import { NodePermissionDirective } from './src/directives/node-permission.directive';
+import { NodeRestoreDirective } from './src/directives/node-restore.directive';
 import { UploadDirective } from './src/directives/upload.directive';
 
 import { FileSizePipe } from './src/pipes/file-size.pipe';
@@ -141,6 +142,7 @@ export * from './src/components/data-column/data-column-list.component';
 export * from './src/components/info-drawer/info-drawer.component';
 export * from './src/directives/upload.directive';
 export * from './src/directives/highlight.directive';
+export * from './src/directives/node-restore.directive';
 export * from './src/directives/node-permission.directive';
 export * from './src/directives/node-favorite.directive';
 export * from './src/utils/index';
@@ -248,6 +250,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         ...pipes(),
         LogoutDirective,
         UploadDirective,
+        NodeRestoreDirective,
         NodePermissionDirective,
         NodeFavoriteDirective,
         HighlightDirective,
@@ -291,6 +294,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         ...pipes(),
         LogoutDirective,
         UploadDirective,
+        NodeRestoreDirective,
         NodePermissionDirective,
         NodeFavoriteDirective,
         HighlightDirective,
