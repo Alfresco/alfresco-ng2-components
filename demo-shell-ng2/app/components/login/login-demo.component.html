@@ -7,7 +7,7 @@
             [color]="'primary'"
             (change)="toggleECM()"
             [checked]="isECM">
-            Content Services
+            {{ 'LOGIN.CONTENT_SERVICES'| translate }}
         </md-slide-toggle>
     </p>
     <p class="toggle">
@@ -16,7 +16,7 @@
             [color]="'primary'"
             (change)="toggleBPM()"
             [checked]="isBPM">
-            Process Services
+            {{ 'LOGIN.PROCESS_SERVICES'| translate }}
         </md-slide-toggle>
     </p>
     <p class="toggle">
@@ -34,7 +34,7 @@
             [color]="'primary'"
             (change)="toggleFooter()"
             [checked]="showFooter">
-            Login footer
+            {{ 'LOGIN.LOGIN_FOOTER'| translate }}
         </md-slide-toggle>
     </p>
 </div>
@@ -62,7 +62,7 @@
                 [color]="'primary'"
                 (change)="toggleECM()"
                 [checked]="isECM">
-                Content Services
+                {{ 'LOGIN.CONTENT_SERVICES'| translate }}
             </md-slide-toggle>
         </p>
         <p>
@@ -71,7 +71,7 @@
                 [color]="'primary'"
                 (change)="toggleBPM()"
                 [checked]="isBPM">
-                Process Services
+                {{ 'LOGIN.PROCESS_SERVICES'| translate }}
             </md-slide-toggle>
         </p>
         <p>
@@ -89,7 +89,7 @@
                 [color]="'primary'"
                 (change)="toggleFooter()"
                 [checked]="showFooter">
-                Login footer
+                {{ 'LOGIN.LOGIN_FOOTER'| translate }}
             </md-slide-toggle>
         </p>
     </div>

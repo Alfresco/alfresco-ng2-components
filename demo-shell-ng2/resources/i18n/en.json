@@ -1,6 +1,30 @@
 {
     "title": "Welcome",
+    "APP_LAYOUT": {
+        "APP_NAME": "ADF Demo Application",
+        "HOME": "Home",
+        "CONTENT_SERVICES": "Content Services",
+        "PROCESS_SERVICES": "Process Services",
+        "LOGIN": "Login",
+        "CUSTOM_SOURCES": "DL: Custom Sources",
+        "DATATABLE": "Datatable",
+        "FORM": "Form",
+        "FORM_LIST": "Form List",
+        "UPLOADER": "Uploader",
+        "WEBSCRIPT": "Webscript",
+        "TAG": "Tag",
+        "SOCIAL": "Social",
+        "SETTINGS": "Settings",
+        "ABOUT": "About"
+    },
     "DOCUMENT_LIST": {
+        "MULTISELECT_CHECKBOXES" :"Multiselect (with checkboxes)",
+        "MULTIPLE_FILE_UPLOAD" :"Multiple File Upload",
+        "FOLDER_UPLOAD" :"Folder upload",
+        "CUSTOM_FILTER" :"Custom extensions filter",
+        "ENABLE_VERSIONING" :"Enable versioning",
+        "MULTISELECT_DESCRIPTION" : "Enable upload (demoing enabled/disabled state only if the permission are not checked dynamically)",
+        "DESCRIPTION_" : "For 'Multiple' selection mode use Cmd (macOS) or Ctrl (Win) to toggle selection of multiple items.",
         "COLUMNS": {
             "DISPLAY_NAME": "Display name",
             "TAG": "Tag",
@@ -22,6 +46,15 @@
             }
         }
     },
+    "DATATABLE" :{
+        "RESET_DEFAULT":"Reset to default",
+        "ADD_ROW":"Add row",
+        "REPLACE_ROWS":"Replace rows",
+        "REPLACE_COLUMNS":"Replace columns",
+        "LOAD_NODE":"Load Node",
+        "MULTISELECT":"Multiselect",
+        "MULTISELECT_DESCRIPTION":"For 'Multiple' selection mode use Cmd (macOS) or Ctrl (Win) to toggle selection of multiple items."
+    },
     "ANALYTICS_REPORT": {
         "NO_REPORT_MESSAGE": "No report selected. Choose a report from the list"
     },
@@ -38,10 +71,28 @@
         "CS-HOST": "Content Services host URL configuration",
         "BP-HOST": "Process Services host URL configuration",
         "BACK": "Back",
-        "APPLY": "APPLY"
+        "APPLY": "APPLY",
+        "NOT_VALID": "Host not valid! http(s)://host|ip:port(/path)"
     },
-    "FORM-LIST":{
+    "FORM-LIST": {
         "STORE": "Store",
         "RESTORE": "Restore"
+    },
+    "LOGIN": {
+        "CONTENT_SERVICES": "Content Services",
+        "PROCESS_SERVICES": "Process Services",
+        "LOGIN_FOOTER": "Login footer"
+    },
+    "SEARCH": {
+        "RESULTS": "Search results"
+    },
+    "SOCIAL": {
+        "LIKE":"Like component",
+        "RATING":"Rating component"
+    },
+    "TAG": {
+        "LIST":"List Tags Content Services",
+        "INSERT":"Insert Node Id",
+        "NODE_LIST":"Tag list By Node ID"
     }
 }

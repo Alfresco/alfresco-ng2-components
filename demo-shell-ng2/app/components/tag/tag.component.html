@@ -1,4 +1,4 @@
-<label for="nodeId"><b>Insert Node Id</b></label><br>
+<label for="nodeId"><b>{{'TAG.INSERT' | translate }}</b></label><br>
 <input id="nodeId" type="text" size="48" [(ngModel)]="nodeId"><br>
 <div fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="stretch">
     <div class="adf-tag-example-area" fxFlex.gt-md="1 1 auto">
@@ -8,13 +8,17 @@
     </div>
     <div class="adf-tag-example-area" fxFlex.gt-md="1 1 auto">
         <md-card>
-            <div class="adf-tag-example-title">List Tags Content Services</div>
+            <div class="adf-tag-example-title">
+                {{'TAG.LIST' | translate }}
+            </div>
             <adf-tag-list></adf-tag-list>
         </md-card>
     </div>
     <div class="adf-tag-example-area" fxFlex.gt-md="1 1 auto">
         <md-card>
-            <div class="adf-tag-example-title">Tag list By Node ID</div>
+            <div class="adf-tag-example-title">
+                {{'TAG.NODE_LIST' | translate }}
+            </div>
             <adf-tag-node-list [nodeId]="nodeId"></adf-tag-node-list>
         </md-card>
     </div>

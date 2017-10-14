@@ -92,7 +92,7 @@
                     <md-icon>delete</md-icon>
                     <span>Delete</span>
                 </button>
-            </md-menu>                    
+            </md-menu>
         </adf-toolbar>
         <adf-document-list
                 #documentList
@@ -232,7 +232,7 @@
 <div class="adf-content-service-settings">
 
     <p>Current folder ID: {{ documentList.currentFolderId }}</p>
-    
+
     <div class="p-10">
         Selected Nodes:
         <ul>
@@ -241,28 +241,28 @@
             </li>
         </ul>
     </div>
-    
+
     <div class="container">
         <section>
-            <md-slide-toggle [color]="'primary'" [(ngModel)]="multiselect">Multiselect (with checkboxes)</md-slide-toggle>
+            <md-slide-toggle [color]="'primary'" [(ngModel)]="multiselect">{{'DOCUMENT_LIST.MULTISELECT_CHECKBOXES' | translate}}</md-slide-toggle>
         </section>
-    
+
         <section>
-            <md-slide-toggle [color]="'primary'" [(ngModel)]="multipleFileUpload">Multiple File Upload</md-slide-toggle>
+            <md-slide-toggle [color]="'primary'" [(ngModel)]="multipleFileUpload">{{'DOCUMENT_LIST.MULTIPLE_FILE_UPLOAD' | translate}}</md-slide-toggle>
         </section>
-    
+
         <section>
-            <md-slide-toggle [color]="'primary'" [(ngModel)]="folderUpload">Folder upload</md-slide-toggle>
+            <md-slide-toggle [color]="'primary'" [(ngModel)]="folderUpload">{{'DOCUMENT_LIST.FOLDER_UPLOAD' | translate}}</md-slide-toggle>
         </section>
-    
+
         <section>
-            <md-slide-toggle [color]="'primary'" [(ngModel)]="acceptedFilesTypeShow">Custom extensions filter</md-slide-toggle>
+            <md-slide-toggle [color]="'primary'" [(ngModel)]="acceptedFilesTypeShow">{{'DOCUMENT_LIST.CUSTOM_FILTER' | translate}}</md-slide-toggle>
         </section>
-    
+
         <section>
-            <md-slide-toggle [color]="'primary'" [(ngModel)]="versioning">Enable versioning</md-slide-toggle>
+            <md-slide-toggle [color]="'primary'" [(ngModel)]="versioning">{{'DOCUMENT_LIST.ENABLE_VERSIONING' | translate}}</md-slide-toggle>
         </section>
-    
+
         <h5>Upload</h5>
         <section *ngIf="acceptedFilesTypeShow">
             <md-input-container>
@@ -301,18 +301,22 @@
             </adf-upload-button>
         </div>
         <section>
-            <md-checkbox [(ngModel)]="enableUpload">Enable upload (demoing enabled/disabled state only if the permission are not checked dynamically)</md-checkbox>
+            <md-checkbox [(ngModel)]="enableUpload">
+                {{'DOCUMENT_LIST.DESCRIPTION_UPLOAD' | translate}}
+            </md-checkbox>
         </section>
     </div>
-    
+
     <div class="p-10">
-        <p>For 'Multiple' selection mode use Cmd (macOS) or Ctrl (Win) to toggle selection of multiple items.</p>
+        <p>
+            {{'DOCUMENT_LIST.MULTISELECT_DESCRIPTION' | translate}}
+        </p>
         <md-select placeholder="Selection Mode" [(ngModel)]="selectionMode" name="food">
             <md-option *ngFor="let mode of selectionModes" [value]="mode.value">
                 {{mode.viewValue}}
             </md-option>
         </md-select>
-    </div>            
+    </div>
 </div>
 
 <file-uploading-dialog #fileDialog></file-uploading-dialog>
