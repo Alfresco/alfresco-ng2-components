@@ -20,6 +20,7 @@ import {
     MatButtonModule,
     MatDialogModule,
     MatInputModule,
+    MatMenuModule,
     MatProgressBarModule,
     MatSnackBarModule,
     MatTabsModule,
@@ -34,7 +35,8 @@ export function modules() {
         MatProgressBarModule,
         MatSnackBarModule,
         MatToolbarModule,
-        MatTabsModule
+        MatTabsModule,
+        MatMenuModule
     ];
 }
 

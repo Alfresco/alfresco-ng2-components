@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { OVERLAY_PROVIDERS, OverlayModule } from '@angular/cdk/overlay';
 import { Component } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { OverlayModule, OVERLAY_PROVIDERS } from '@angular/cdk/overlay';
 
 import { MatSnackBar, MatSnackBarModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';

@@ -17,10 +17,8 @@
 
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
-import { MaterialModule } from '../../material.module';
-
 import { CoreModule } from 'ng2-alfresco-core';
-
+import { MaterialModule } from '../../material.module';
 import { PaginationComponent } from './pagination.component';
 
 declare let jasmine: any;
@@ -38,21 +36,8 @@ class FakePaginationInput {
     }
 }
 
-class TestConfig {
-    testBed: any = null;
-
-    constructor() {
-        this.testBed = TestBed.configureTestingModule({
-            imports: [
-                CoreModule,
-                MaterialModule
-            ],
-            schemas: [ NO_ERRORS_SCHEMA ]
-        });
-    }
-}
-
 describe('PaginationComponent', () => {
+
     beforeEach(() => {
         jasmine.Ajax.install();
     });
@@ -62,12 +47,18 @@ describe('PaginationComponent', () => {
     });
 
     beforeEach(async(() => {
-        const test = new TestConfig();
-
-        test.testBed
-            .compileComponents()
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule,
+                MaterialModule
+            ],
+            declarations: [
+                PaginationComponent
+            ],
+            schemas: [ NO_ERRORS_SCHEMA ]
+        }).compileComponents()
             .then(() => {
-                const fixture = test.testBed.createComponent(PaginationComponent);
+                const fixture = TestBed.createComponent(PaginationComponent);
                 const component: PaginationComponent = fixture.componentInstance;
 
                 (<any> component).ngAfterViewInit = jasmine
