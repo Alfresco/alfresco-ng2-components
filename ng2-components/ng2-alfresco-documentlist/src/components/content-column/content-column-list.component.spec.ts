@@ -21,10 +21,10 @@ import { CoreModule } from 'ng2-alfresco-core';
 import { DataColumn, DataTableModule } from 'ng2-alfresco-datatable';
 import { MaterialModule } from '../../material.module';
 
+import { LogService } from 'ng2-alfresco-core';
 import { DocumentListService } from '../../services/document-list.service';
 import { DocumentListComponent } from './../document-list.component';
 import { ContentColumnListComponent } from './content-column-list.component';
-import { LogService } from 'ng2-alfresco-core';
 
 describe('ContentColumnList', () => {
 

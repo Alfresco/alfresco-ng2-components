@@ -17,8 +17,12 @@
 
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreModule } from 'ng2-alfresco-core';
+import { HttpModule } from '@angular/http';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../../material.module';
+import { LogService } from '../../services/log.service';
+import { AlfrescoTranslateLoader } from '../../services/translate-loader.service';
+import { TranslationService } from '../../services/translation.service';
 import { PaginationComponent } from './pagination.component';
 
 declare let jasmine: any;
@@ -51,11 +55,21 @@ describe('PaginationComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
-                MaterialModule
+                HttpModule,
+                MaterialModule,
+                TranslateModule.forRoot({
+                    loader: {
+                        provide: TranslateLoader,
+                        useClass: AlfrescoTranslateLoader
+                    }
+                })
             ],
             declarations: [
                 PaginationComponent
+            ],
+            providers: [
+                TranslationService,
+                LogService
             ],
             schemas: [ NO_ERRORS_SCHEMA ]
         }).compileComponents()
