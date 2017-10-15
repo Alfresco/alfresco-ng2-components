@@ -25,7 +25,7 @@ import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
 
 import { DatePipe } from '@angular/common';
-import { MdInputModule } from '@angular/material';
+import { MatInputModule } from '@angular/material';
 import { PeopleProcessService } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { TaskListService } from './../services/tasklist.service';
@@ -47,7 +47,7 @@ describe('CommentsComponent', () => {
                 CoreModule,
                 ActivitiFormModule,
                 DataTableModule,
-                MdInputModule
+                MatInputModule
             ],
             declarations: [
                 CommentsComponent,

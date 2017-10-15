@@ -2,7 +2,7 @@
     <div id="viewer-viewerPdf" class="pdfViewer">
         <div id="loader-container" class="loader-container">
             <div class="loader-item">
-                <md-progress-bar mode="indeterminate"></md-progress-bar>
+                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
             </div >
         </div>
     </div>
@@ -12,8 +12,8 @@
     <adf-toolbar>
 
         <ng-container *ngIf="allowThumbnails">
-            <button md-icon-button>
-                <md-icon>dashboard</md-icon>
+            <button mat-icon-button>
+                <mat-icon>dashboard</mat-icon>
             </button>
             <adf-toolbar-divider></adf-toolbar-divider>
         </ng-container>
@@ -21,17 +21,17 @@
         <button
             id="viewer-previous-page-button"
             aria-label="previous page"
-            md-icon-button
+            mat-icon-button
             (click)="previousPage()">
-            <md-icon>keyboard_arrow_up</md-icon>
+            <mat-icon>keyboard_arrow_up</mat-icon>
         </button>
 
         <button
             id="viewer-next-page-button"
             aria-label="arrow right"
-            md-icon-button
+            mat-icon-button
             (click)="nextPage()">
-            <md-icon>keyboard_arrow_down</md-icon>
+            <mat-icon>keyboard_arrow_down</mat-icon>
         </button>
 
         <div>
@@ -50,25 +50,25 @@
         <button
             id="viewer-zoom-in-button"
             aria-label="zoom in"
-            md-icon-button
+            mat-icon-button
             (click)="zoomIn()">
-            <md-icon>zoom_in</md-icon>
+            <mat-icon>zoom_in</mat-icon>
         </button>
 
         <button
             id="viewer-zoom-out-button"
             aria-label="zoom out"
-            md-icon-button
+            mat-icon-button
             (click)="zoomOut()">
-            <md-icon>zoom_out</md-icon>
+            <mat-icon>zoom_out</mat-icon>
         </button>
 
         <button
             id="viewer-scale-page-button"
             aria-label="zoom out map"
-            md-icon-button
+            mat-icon-button
             (click)="pageFit()">
-            <md-icon>zoom_out_map</md-icon>
+            <mat-icon>zoom_out_map</mat-icon>
         </button>
 
     </adf-toolbar>

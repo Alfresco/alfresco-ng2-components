@@ -1,15 +1,15 @@
 <div class="about-container">
     <h3>Server settings</h3>
-    <md-list>
+    <mat-list>
         <small>The values below are taken from the AppConfigService and loaded from the '{{ configFile }}' file.</small>
-        <md-list-item>
-            <h4 md-line> Alfresco Process Services URL: {{ bpmHost }}</h4>
-        </md-list-item>
-        <md-divider></md-divider>
-        <md-list-item>
-            <h4 md-line>Alfresco Content Services URL: {{ ecmHost }}</h4>
-        </md-list-item>
-    </md-list>
+        <mat-list-item>
+            <h4 matLine> Alfresco Process Services URL: {{ bpmHost }}</h4>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+            <h4 matLine>Alfresco Content Services URL: {{ ecmHost }}</h4>
+        </mat-list-item>
+    </mat-list>
 
     <h3>Product Versions</h3>
     <div *ngIf="bpmVersion">

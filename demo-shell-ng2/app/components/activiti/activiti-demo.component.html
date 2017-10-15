@@ -1,11 +1,11 @@
-<md-tab-group [(selectedIndex)]="activeTab">
-    <md-tab id="tasks-header" href="#tasks" label="{{'PS-TAB.TASKS-TAB' | translate}}">
+<mat-tab-group [(selectedIndex)]="activeTab">
+    <mat-tab id="tasks-header" href="#tasks" label="{{'PS-TAB.TASKS-TAB' | translate}}">
         <div class="page-content">
             <div class="activiti-demo-grid" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="stretch">
                 <div class="activiti-demo-grid-item activiti-demo-tasks-menu" fxFlex.gt-md="225px">
                     <div class="activiti-demo-list-buttons">
-                        <button color="primary" md-raised-button data-automation-id="btn-start-task" class="activiti-demo-list-buttons-start" (click)="navigateStartTask()">
-                            <md-icon>add</md-icon>
+                        <button color="primary" mat-raised-button data-automation-id="btn-start-task" class="activiti-demo-list-buttons-start" (click)="navigateStartTask()">
+                            <mat-icon>add</mat-icon>
                             <span>{{'PS-TAB.START-TASK' | translate}}</span>
                         </button>
                     </div>
@@ -77,18 +77,18 @@
                             adf-task-audit
                             [task-id]="currentTaskId"
                             [download]="true"
-                            md-icon-button (clicked)="onAuditClick($event)" (error)="onAuditError($event)">
-                            <md-icon>assignment_ind</md-icon>
+                            mat-icon-button (clicked)="onAuditClick($event)" (error)="onAuditError($event)">
+                            <mat-icon>assignment_ind</mat-icon>
                         </button>
                         <hr>
                     </div>
-                    <md-card>
-                        <md-card-content>
+                    <mat-card>
+                        <mat-card-content>
                             <activiti-task-attachments
                                 [taskId]="currentTaskId">
                             </activiti-task-attachments>
-                        </md-card-content>
-                    </md-card>
+                        </mat-card-content>
+                    </mat-card>
                 </div>
                 <div class="activiti-demo-grid-item activiti-demo-tasks-start" *ngIf="isStartTaskMode()" fxFlex.gt-md="1 1 auto">
                     <adf-start-task
@@ -99,8 +99,8 @@
                 </div>
             </div>
         </div>
-    </md-tab>
-    <md-tab id="processes-header" href="#processes"
+    </mat-tab>
+    <mat-tab id="processes-header" href="#processes"
             label="{{'PS-TAB.PROCESSES-TAB' | translate}}">
         <div class="page-content">
             <div class="activiti-demo-grid" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="stretch">
@@ -108,11 +108,11 @@
                     <div class="activiti-demo-list-buttons">
                         <button
                             color="primary"
-                            md-raised-button
+                            mat-raised-button
                             class="activiti-demo-list-buttons-start"
                             data-automation-id="btn-start-process"
                             (click)="navigateStartProcess()">
-                            <md-icon>add</md-icon>
+                            <mat-icon>add</mat-icon>
                             <span>{{'PS-TAB.START-PROCESS' | translate}}</span>
                         </button>
                     </div>
@@ -161,21 +161,21 @@
                         {{'PS-TAB.AUDIT-LOG' | translate}}
                         <button adf-process-audit
                                 [process-id]="currentProcessInstanceId"
-                                [download]="true" md-icon-button
+                                [download]="true" mat-icon-button
                                 [format]="'pdf'"
                                 (clicked)="onAuditClick($event)"
                                 (error)="onAuditError($event)">
-                            <md-icon>assignment_ind</md-icon>
+                            <mat-icon>assignment_ind</mat-icon>
                         </button>
                         <hr>
                     </div>
-                    <md-card>
-                        <md-card-content>
+                    <mat-card>
+                        <mat-card-content>
                             <activiti-process-attachments
                                 [processId]="currentProcessInstanceId">
                             </activiti-process-attachments>
-                        </md-card-content>
-                    </md-card>
+                        </mat-card-content>
+                    </mat-card>
                 </div>
                 <div class="activiti-demo-grid-item activiti-demo-processes-start" fxFlex.gt-md="1 1 auto"
                      *ngIf="isStartProcessMode()">
@@ -187,8 +187,8 @@
                 </div>
             </div>
         </div>
-    </md-tab>
-    <md-tab id="report-header" href="#report"
+    </mat-tab>
+    <mat-tab id="report-header" href="#report"
             label="{{'PS-TAB.REPORTS-TAB' | translate}}">
         <div class="activiti-demo-grid" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="stretch">
             <div class="activiti-demo-grid-item activiti-demo-reports-menu" fxFlex.gt-md="300px">
@@ -216,8 +216,8 @@
                 </div>
             </div>
         </div>
-    </md-tab>
-</md-tab-group>
+    </mat-tab>
+</mat-tab-group>
 
 <div *ngIf="fileShowed">
     <alfresco-viewer

@@ -17,24 +17,24 @@
 
 import { NgModule } from '@angular/core';
 import {
-    MdButtonModule,
-    MdDialogModule,
-    MdInputModule,
-    MdProgressBarModule,
-    MdSnackBarModule,
-    MdTabsModule,
-    MdToolbarModule
+    MatButtonModule,
+    MatDialogModule,
+    MatInputModule,
+    MatProgressBarModule,
+    MatSnackBarModule,
+    MatTabsModule,
+    MatToolbarModule
 } from '@angular/material';
 
 export function modules() {
     return [
-        MdButtonModule,
-        MdDialogModule,
-        MdInputModule,
-        MdProgressBarModule,
-        MdSnackBarModule,
-        MdToolbarModule,
-        MdTabsModule
+        MatButtonModule,
+        MatDialogModule,
+        MatInputModule,
+        MatProgressBarModule,
+        MatSnackBarModule,
+        MatToolbarModule,
+        MatTabsModule
     ];
 }
 

@@ -17,14 +17,14 @@
 
 import { NgModule } from '@angular/core';
 import {
-    MdIconModule,
-    MdListModule
+    MatIconModule,
+    MatListModule
 } from '@angular/material';
 
 export function modules() {
     return [
-        MdIconModule,
-        MdListModule
+        MatIconModule,
+        MatListModule
     ];
 }
 

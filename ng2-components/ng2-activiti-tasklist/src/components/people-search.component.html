@@ -1,9 +1,9 @@
 <div class="search-text-header">
     <ng-content select="[people-search-title]"></ng-content>
 </div>
-<md-input-container class="search-text-container">
-	<input mdInput placeholder="{{'PEOPLE.SEARCH_USER'|translate}}" type="text" id="userSearchText" [value]="" [formControl]="searchUser">
-</md-input-container>
+<mat-form-field class="search-text-container">
+	<input matInput placeholder="{{'PEOPLE.SEARCH_USER'|translate}}" type="text" id="userSearchText" [value]="" [formControl]="searchUser">
+</mat-form-field>
 <div class="search-list-container" id="search-people-list" *ngIf="hasUsers()">
     <adf-people-list
     [users]="users"
@@ -28,10 +28,10 @@
     </adf-people-list>
 </div>
 <div class="search-list-action-container">
-    <button md-button type="button" id="close-people-search" (click)="closeSearchList()">
+    <button mat-button type="button" id="close-people-search" (click)="closeSearchList()">
         {{'PEOPLE.DIALOG_CLOSE' | translate }}
     </button>
-    <button md-button type="button" id="add-people" (click)="involveUserAndClose()">
+    <button mat-button type="button" id="add-people" (click)="involveUserAndClose()">
         <ng-content select="[people-search-action-label]"></ng-content>
     </button>
 </div>

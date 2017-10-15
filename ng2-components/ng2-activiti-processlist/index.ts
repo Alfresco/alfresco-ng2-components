@@ -17,12 +17,12 @@
 
 import { NgModule } from '@angular/core';
 import {
-    MdButtonModule,
-    MdCardModule,
-    MdChipsModule,
-    MdInputModule,
-    MdProgressSpinnerModule,
-    MdSelectModule
+    MatButtonModule,
+    MatCardModule,
+    MatChipsModule,
+    MatInputModule,
+    MatProgressSpinnerModule,
+    MatSelectModule
 } from '@angular/material';
 import { ActivitiFormModule } from 'ng2-activiti-form';
 import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
@@ -122,12 +122,12 @@ export const ACTIVITI_PROCESSLIST_PROVIDERS: [any] = [
         DataTableModule,
         ActivitiFormModule,
         ActivitiTaskListModule,
-        MdProgressSpinnerModule,
-        MdButtonModule,
-        MdCardModule,
-        MdInputModule,
-        MdChipsModule,
-        MdSelectModule
+        MatProgressSpinnerModule,
+        MatButtonModule,
+        MatCardModule,
+        MatInputModule,
+        MatChipsModule,
+        MatSelectModule
     ],
     declarations: [
         ...ACTIVITI_PROCESSLIST_DIRECTIVES

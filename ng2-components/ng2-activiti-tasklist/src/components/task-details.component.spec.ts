@@ -17,7 +17,7 @@
 
 import { NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdButtonModule, MdInputModule } from '@angular/material';
+import { MatButtonModule, MatInputModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
@@ -63,8 +63,8 @@ describe('TaskDetailsComponent', () => {
             imports: [
                 CoreModule,
                 ActivitiFormModule,
-                MdButtonModule,
-                MdInputModule
+                MatButtonModule,
+                MatInputModule
             ],
             declarations: [
                 TaskDetailsComponent,
@@ -266,13 +266,13 @@ describe('TaskDetailsComponent', () => {
         });
 
         it('should display a dialog to the user when a form error occurs', () => {
-            let dialogEl = window.document.querySelector('md-dialog-content');
+            let dialogEl = window.document.querySelector('mat-dialog-content');
             expect(dialogEl).toBeNull();
 
             component.onFormError({});
             fixture.detectChanges();
 
-            dialogEl = window.document.querySelector('md-dialog-content');
+            dialogEl = window.document.querySelector('mat-dialog-content');
             expect(dialogEl).not.toBeNull();
         });
 

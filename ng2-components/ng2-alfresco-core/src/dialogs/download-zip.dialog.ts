@@ -16,7 +16,7 @@
  */
 
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { DownloadEntry, MinimalNodeEntity } from 'alfresco-js-api';
 import { LogService } from '../services/log.service';
 import { AlfrescoApiService } from './../services/alfresco-api.service';
@@ -34,8 +34,8 @@ export class DownloadZipDialogComponent implements OnInit {
     private cancelled = false;
 
     constructor(private apiService: AlfrescoApiService,
-                private dialogRef: MdDialogRef<DownloadZipDialogComponent>,
-                @Inject(MD_DIALOG_DATA) private data: { nodeIds?: string[] },
+                private dialogRef: MatDialogRef<DownloadZipDialogComponent>,
+                @Inject(MAT_DIALOG_DATA) private data: { nodeIds?: string[] },
                 private logService: LogService) {
     }
 

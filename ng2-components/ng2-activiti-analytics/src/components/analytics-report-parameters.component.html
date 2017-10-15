@@ -5,9 +5,9 @@
                 <adf-toolbar>
                     <adf-toolbar-title class="adf-report-title-container">
                         <div *ngIf="isEditable">
-                            <md-input-container class="adf-full-width-input">
+                            <mat-form-field class="adf-full-width-input">
                                 <input
-                                    mdInput
+                                    matInput
                                     type="text"
                                     class="adf-edit-report-title"
                                     id="reportName"
@@ -18,30 +18,30 @@
                                     (blur)="editTitle($event)"
                                     (keyup.enter)="editTitle($event)"
                                 />
-                            </md-input-container>
+                            </mat-form-field>
                         </div>
                         <div class="adf-report-title" *ngIf="!isEditable" (click)="editEnable()">
-                            <md-icon class="adf-report-icon" >mode_edit</md-icon>
+                            <mat-icon class="adf-report-icon" >mode_edit</mat-icon>
                             <h4>{{reportParameters.name}}</h4>
                         </div>
                     </adf-toolbar-title>
                     <div *ngIf="!isEditable">
-                        <button md-button mdTooltip="{{'ANALYTICS.MESSAGES.ICON-SETTING' | translate}}"
+                        <button mat-button matTooltip="{{'ANALYTICS.MESSAGES.ICON-SETTING' | translate}}"
                                 (click)="toggleParameters()">
-                            <md-icon>settings</md-icon>
+                            <mat-icon>settings</mat-icon>
                         </button>
-                        <button md-button id="delete-button" (click)="deleteReport(reportId)"
-                                mdTooltip="{{'ANALYTICS.MESSAGES.ICON-DELETE' | translate}}">
-                            <md-icon>delete</md-icon>
+                        <button mat-button id="delete-button" (click)="deleteReport(reportId)"
+                                matTooltip="{{'ANALYTICS.MESSAGES.ICON-DELETE' | translate}}">
+                            <mat-icon>delete</mat-icon>
                         </button>
                         <span *ngIf="isFormValid()">
-                            <button md-button id="export-button" (click)="showDialog('Export')"
-                                    mdTooltip="{{'ANALYTICS.MESSAGES.ICON-EXPORT-CSV' | translate}}">
-                                <md-icon>file_download</md-icon>
+                            <button mat-button id="export-button" (click)="showDialog('Export')"
+                                    matTooltip="{{'ANALYTICS.MESSAGES.ICON-EXPORT-CSV' | translate}}">
+                                <mat-icon>file_download</mat-icon>
                             </button>
-                            <button md-button id="save-button" (click)="showDialog('Save')"
-                                    mdTooltip="{{'ANALYTICS.MESSAGES.ICON-SAVE' | translate}}">
-                                <md-icon>save</md-icon>
+                            <button mat-button id="save-button" (click)="showDialog('Save')"
+                                    matTooltip="{{'ANALYTICS.MESSAGES.ICON-SAVE' | translate}}">
+                                <mat-icon>save</mat-icon>
                             </button>
                         </span>
                     </div>
@@ -102,30 +102,30 @@
                 </div>
                 <ng-template #reportNameDialog>
                     <div id="report-dialog" class="adf-report-dialog">
-                        <h5 md-dialog-title id="report-dialog-title">{{action}} report</h5>
-                        <div md-dialog-content>
+                        <h5 matDialogTitle id="report-dialog-title">{{action}} report</h5>
+                        <div mat-dialog-content>
                             <div *ngIf="isSaveAction()" id="save-title-submessage" class="export-message">
                                 {{'DIALOG.SAVE_MESSAGE' | translate}}
                             </div>
                             <div class="save-export-input">
-                                <md-input-container class="example-full-width" floatPlaceholder="always">
-                                    <input mdInput
+                                <mat-form-field class="example-full-width" floatPlaceholder="always">
+                                    <input matInput
                                         type="text"
                                         id="repName"
                                         placeholder="Report Name"
                                         [value]="reportName"
                                         [(ngModel)]="reportName"
                                         [ngModelOptions]="{standalone: true}">
-                                </md-input-container>
+                                </mat-form-field>
                             </div>
                         </div>
-                        <div md-dialog-actions>
-                            <button md-button
+                        <div mat-dialog-actions>
+                            <button mat-button
                                 color="accent"
                                 type="button"
                                 id="close-dialog-button"
                                 (click)="closeDialog()">Close</button>
-                            <button md-button
+                            <button mat-button
                                 color="primary"
                                 type="button"
                                 id="action-dialog-button"

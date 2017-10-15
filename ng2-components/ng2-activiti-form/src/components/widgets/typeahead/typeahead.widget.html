@@ -4,9 +4,9 @@
         [class.adf-invalid]="!field.isValid"
         [class.adf-readonly]="field.readOnly"
         id="typehead-div" *ngIf="field.isVisible">
-        <md-input-container>
+        <mat-form-field>
             <label class="adf-label" [attr.for]="field.id">{{field.name}}</label>
-            <input mdInput class="adf-input"
+            <input matInput class="adf-input"
                    type="text"
                    [id]="field.id"
                    [(ngModel)]="value"
@@ -14,13 +14,13 @@
                    (keyup)="onKeyUp($event)"
                    [disabled]="field.readOnly"
                    placeholder="{{field.placeholder}}"
-                   [mdAutocomplete]="auto">
-            <md-autocomplete #auto="mdAutocomplete" (optionSelected)="onItemSelect($event.option.value)">
-                <md-option *ngFor="let item of options" [value]="item">
+                   [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onItemSelect($event.option.value)">
+                <mat-option *ngFor="let item of options" [value]="item">
                     <span [id]="field.name+'_option_'+item.id">{{item.name}}</span>
-                </md-option>
-            </md-autocomplete>
-        </md-input-container>
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
 
         <error-widget [error]="field.validationSummary"></error-widget>
         <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>

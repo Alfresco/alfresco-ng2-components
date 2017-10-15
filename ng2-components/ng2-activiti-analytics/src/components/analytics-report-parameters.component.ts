@@ -30,7 +30,7 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import * as moment from 'moment';
 import { ParameterValueModel, ReportParameterDetailsModel, ReportParametersModel, ReportQuery } from 'ng2-activiti-diagrams';
 import { ContentService, LogService } from 'ng2-alfresco-core';
@@ -105,7 +105,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                 private formBuilder: FormBuilder,
                 private logService: LogService,
                 private contentService: ContentService,
-                private dialog: MdDialog) {
+                private dialog: MatDialog) {
     }
 
     ngOnInit() {

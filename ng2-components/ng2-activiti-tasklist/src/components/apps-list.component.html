@@ -1,15 +1,15 @@
 <div class="menu-container" *ngIf="!isEmpty()">
-    <md-list *ngIf="isList()" class="adf-app-list">
-        <md-list-item class="adf-app-list-item" (click)="selectApp(app)" (keyup.enter)="selectApp(app)" *ngFor="let app of appList" tabindex="0" role="button" title="{{app.name}}">
-            <md-icon mdListIcon>touch_app</md-icon>
-            <span mdLine>{{app.name}}</span>
-        </md-list-item>
-    </md-list>
+    <mat-list *ngIf="isList()" class="adf-app-list">
+        <mat-list-item class="adf-app-list-item" (click)="selectApp(app)" (keyup.enter)="selectApp(app)" *ngFor="let app of appList" tabindex="0" role="button" title="{{app.name}}">
+            <mat-icon matListIcon>touch_app</mat-icon>
+            <span matLine>{{app.name}}</span>
+        </mat-list-item>
+    </mat-list>
     <div fxLayout="row wrap" *ngIf="isGrid()" class="adf-app-listgrid">
         <div *ngFor="let app of appList"
             class="adf-app-listgrid-item"
             fxFlex="33.33333%" fxFlex.lt-md="50%" fxFlex.lt-sm="100%">
-                <md-card tabindex="0"
+                <mat-card tabindex="0"
                     fxLayout="column"
                     role="button"
                     class="adf-app-listgrid-item-card"
@@ -18,18 +18,18 @@
                     (click)="selectApp(app)"
                     (keyup.enter)="selectApp(app)">
                         <div class="adf-app-listgrid-item-card-logo">
-                            <md-icon class="adf-app-listgrid-item-card-logo-icon">{{getBackgroundIcon(app)}}</md-icon>
+                            <mat-icon class="adf-app-listgrid-item-card-logo-icon">{{getBackgroundIcon(app)}}</mat-icon>
                         </div>
-                        <div md-card-title class="adf-app-listgrid-item-card-title">
+                        <div mat-card-title class="adf-app-listgrid-item-card-title">
                             <h1>{{app.name | translate}}</h1>
                         </div>
-                        <div md-card-subtitle class="adf-app-listgrid-item-card-subtitle" fxFlex="1 0 auto">
+                        <div mat-card-subtitle class="adf-app-listgrid-item-card-subtitle" fxFlex="1 0 auto">
                             <p>{{app.description}}</p>
                         </div>
-                        <div md-card-actions class="adf-app-listgrid-item-card-actions">
-                            <md-icon class="adf-app-listgrid-item-card-actions-icon" *ngIf="isSelected(app.id)">done</md-icon>
+                        <div mat-card-actions class="adf-app-listgrid-item-card-actions">
+                            <mat-icon class="adf-app-listgrid-item-card-actions-icon" *ngIf="isSelected(app.id)">done</mat-icon>
                         </div>
-                </md-card>
+                </mat-card>
         </div>
     </div>
 </div>

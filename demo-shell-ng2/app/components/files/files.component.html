@@ -9,8 +9,8 @@
         [adf-node-permission]="'create'"
         [adf-nodes]="getCurrentDocumentListNode()">
         <div *ngIf="errorMessage" class="error-message">
-            <button (click)="resetError()" md-icon-button>
-                <md-icon>highlight_off</md-icon>
+            <button (click)="resetError()" mat-icon-button>
+                <mat-icon>highlight_off</mat-icon>
             </button>
             <span class="error-message--text">{{errorMessage}}</span>
         </div>
@@ -32,67 +32,67 @@
             <adf-toolbar-divider fxFlex="0 0 auto"></adf-toolbar-divider>
 
             <div fxFlex="0 0 auto" class="adf-document-action-buttons" fxShow fxHide.lt-sm="true">
-                <button md-icon-button
+                <button mat-icon-button
                     (click)="onCreateFolderClicked($event)">
-                    <md-icon>create_new_folder</md-icon>
+                    <mat-icon>create_new_folder</mat-icon>
                 </button>
-                <button md-icon-button
+                <button mat-icon-button
                     [disabled]="!hasSelection(documentList.selection)"
                     title="Download"
                     (click)="downloadNodes(documentList.selection)">
-                    <md-icon>get_app</md-icon>
+                    <mat-icon>get_app</mat-icon>
                 </button>
-                <button md-icon-button
+                <button mat-icon-button
                         adf-node-permission="delete"
                         [adf-nodes]="documentList.selection">
-                    <md-icon>delete</md-icon>
+                    <mat-icon>delete</mat-icon>
                 </button>
-                <button md-icon-button
+                <button mat-icon-button
                     #favorite="adfFavorite"
                     (toggle)="documentList.reload()"
                     [adf-node-favorite]="documentList.selection">
-                    <md-icon>
+                    <mat-icon>
                         {{ favorite.hasFavorites() ? 'star' :'star_border' }}
-                    </md-icon>
+                    </mat-icon>
                 </button>
             </div>
 
-            <button fxFlex="0 0 auto" md-icon-button [mdMenuTriggerFor]="themePicker">
-                <md-icon>format_color_fill</md-icon>
+            <button fxFlex="0 0 auto" mat-icon-button [matMenuTriggerFor]="themePicker">
+                <mat-icon>format_color_fill</mat-icon>
             </button>
 
-            <md-menu #themePicker="mdMenu">
-                <button md-menu-item (click)="toolbarColor = 'default'">Default</button>
-                <button md-menu-item (click)="toolbarColor = 'primary'">Primary</button>
-                <button md-menu-item (click)="toolbarColor = 'accent'">Accent</button>
-                <button md-menu-item (click)="toolbarColor = 'warn'">Warn</button>
-            </md-menu>
+            <mat-menu #themePicker="matMenu">
+                <button mat-menu-item (click)="toolbarColor = 'default'">Default</button>
+                <button mat-menu-item (click)="toolbarColor = 'primary'">Primary</button>
+                <button mat-menu-item (click)="toolbarColor = 'accent'">Accent</button>
+                <button mat-menu-item (click)="toolbarColor = 'warn'">Warn</button>
+            </mat-menu>
 
             <adf-toolbar-divider fxFlex="0 0 auto" fxHide fxShow.lt-sm="true"></adf-toolbar-divider>
 
-            <button fxFlex="0 0 auto" md-icon-button [mdMenuTriggerFor]="menu" fxHide fxShow.lt-sm="true">
-                <md-icon>more_vert</md-icon>
+            <button fxFlex="0 0 auto" mat-icon-button [matMenuTriggerFor]="menu" fxHide fxShow.lt-sm="true">
+                <mat-icon>more_vert</mat-icon>
             </button>
-            <md-menu #menu="mdMenu">
-                <button md-menu-item
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item
                     (click)="onCreateFolderClicked($event)">
-                    <md-icon>create_new_folder</md-icon>
+                    <mat-icon>create_new_folder</mat-icon>
                     <span>New folder</span>
                 </button>
-                <button md-menu-item
+                <button mat-menu-item
                     [disabled]="!hasSelection(documentList.selection)"
                     title="Download"
                     (click)="downloadNodes(documentList.selection)">
-                    <md-icon>get_app</md-icon>
+                    <mat-icon>get_app</mat-icon>
                     <span>Download</span>
                 </button>
-                <button md-menu-item
+                <button mat-menu-item
                         adf-node-permission="delete"
                         [adf-nodes]="documentList.selection">
-                    <md-icon>delete</md-icon>
+                    <mat-icon>delete</mat-icon>
                     <span>Delete</span>
                 </button>
-            </md-menu>
+            </mat-menu>
         </adf-toolbar>
         <adf-document-list
                 #documentList
@@ -244,30 +244,30 @@
 
     <div class="container">
         <section>
-            <md-slide-toggle [color]="'primary'" [(ngModel)]="multiselect">{{'DOCUMENT_LIST.MULTISELECT_CHECKBOXES' | translate}}</md-slide-toggle>
+            <mat-slide-toggle [color]="'primary'" [(ngModel)]="multiselect">{{'DOCUMENT_LIST.MULTISELECT_CHECKBOXES' | translate}}</mat-slide-toggle>
         </section>
 
         <section>
-            <md-slide-toggle [color]="'primary'" [(ngModel)]="multipleFileUpload">{{'DOCUMENT_LIST.MULTIPLE_FILE_UPLOAD' | translate}}</md-slide-toggle>
+            <mat-slide-toggle [color]="'primary'" [(ngModel)]="multipleFileUpload">{{'DOCUMENT_LIST.MULTIPLE_FILE_UPLOAD' | translate}}</mat-slide-toggle>
         </section>
 
         <section>
-            <md-slide-toggle [color]="'primary'" [(ngModel)]="folderUpload">{{'DOCUMENT_LIST.FOLDER_UPLOAD' | translate}}</md-slide-toggle>
+            <mat-slide-toggle [color]="'primary'" [(ngModel)]="folderUpload">{{'DOCUMENT_LIST.FOLDER_UPLOAD' | translate}}</mat-slide-toggle>
         </section>
 
         <section>
-            <md-slide-toggle [color]="'primary'" [(ngModel)]="acceptedFilesTypeShow">{{'DOCUMENT_LIST.CUSTOM_FILTER' | translate}}</md-slide-toggle>
+            <mat-slide-toggle [color]="'primary'" [(ngModel)]="acceptedFilesTypeShow">{{'DOCUMENT_LIST.CUSTOM_FILTER' | translate}}</mat-slide-toggle>
         </section>
 
         <section>
-            <md-slide-toggle [color]="'primary'" [(ngModel)]="versioning">{{'DOCUMENT_LIST.ENABLE_VERSIONING' | translate}}</md-slide-toggle>
+            <mat-slide-toggle [color]="'primary'" [(ngModel)]="versioning">{{'DOCUMENT_LIST.ENABLE_VERSIONING' | translate}}</mat-slide-toggle>
         </section>
 
         <h5>Upload</h5>
         <section *ngIf="acceptedFilesTypeShow">
-            <md-input-container>
-                <input mdInput placeholder="Extension accepted" [(ngModel)]="acceptedFilesType"  data-automation-id="accepted-files-type">
-            </md-input-container>
+            <mat-form-field>
+                <input matInput placeholder="Extension accepted" [(ngModel)]="acceptedFilesType"  data-automation-id="accepted-files-type">
+            </mat-form-field>
         </section>
         <div *ngIf="!acceptedFilesTypeShow">
             <adf-upload-button
@@ -301,9 +301,9 @@
             </adf-upload-button>
         </div>
         <section>
-            <md-checkbox [(ngModel)]="enableUpload">
+            <mat-checkbox [(ngModel)]="enableUpload">
                 {{'DOCUMENT_LIST.DESCRIPTION_UPLOAD' | translate}}
-            </md-checkbox>
+            </mat-checkbox>
         </section>
     </div>
 
@@ -311,11 +311,11 @@
         <p>
             {{'DOCUMENT_LIST.MULTISELECT_DESCRIPTION' | translate}}
         </p>
-        <md-select placeholder="Selection Mode" [(ngModel)]="selectionMode" name="food">
-            <md-option *ngFor="let mode of selectionModes" [value]="mode.value">
+        <mat-select placeholder="Selection Mode" [(ngModel)]="selectionMode" name="food">
+            <mat-option *ngFor="let mode of selectionModes" [value]="mode.value">
                 {{mode.viewValue}}
-            </md-option>
-        </md-select>
+            </mat-option>
+        </mat-select>
     </div>
 </div>
 

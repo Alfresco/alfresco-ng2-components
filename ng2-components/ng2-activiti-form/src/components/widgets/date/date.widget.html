@@ -1,9 +1,9 @@
 <div class="{{field.className}}" *ngIf="field?.isVisible" id="data-widget" [class.adf-invalid]="!field.isValid || field.validationSummary.message">
-    <md-input-container class="adf-date-widget">
+    <mat-form-field class="adf-date-widget">
         <label class="adf-label" [attr.for]="field.id">{{field.name}} ({{field.dateDisplayFormat}})<span *ngIf="isRequired()">*</span></label>
-        <input mdInput
+        <input matInput
                [id]="field.id"
-               [mdDatepicker]="datePicker"
+               [matDatepicker]="datePicker"
                [(value)]="displayDate"
                [required]="isRequired()"
                [disabled]="field.readOnly"
@@ -12,10 +12,10 @@
                (focusout)="onDateChanged($event.srcElement.value)"
                (dateChange)="onDateChanged($event)"
                placeholder="{{field.placeholder}}">
-        <md-datepicker-toggle  mdSuffix [for]="datePicker" [disabled]="field.readOnly" ></md-datepicker-toggle>
-    </md-input-container>
+        <mat-datepicker-toggle  matSuffix [for]="datePicker" [disabled]="field.readOnly" ></mat-datepicker-toggle>
+    </mat-form-field>
     <error-widget [error]="field.validationSummary"></error-widget>
     <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
-    <md-datepicker #datePicker [touchUi]="true" [startAt]="startAt" ></md-datepicker>
+    <mat-datepicker #datePicker [touchUi]="true" [startAt]="startAt" ></mat-datepicker>
 </div>
 

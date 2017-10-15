@@ -2,24 +2,24 @@
 <input id="nodeId" type="text" size="48" [(ngModel)]="nodeId"><br>
 <div fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="stretch">
     <div class="adf-tag-example-area" fxFlex.gt-md="1 1 auto">
-        <md-card>
+        <mat-card>
             <adf-tag-node-actions-list [nodeId]="nodeId"></adf-tag-node-actions-list>
-        </md-card>
+        </mat-card>
     </div>
     <div class="adf-tag-example-area" fxFlex.gt-md="1 1 auto">
-        <md-card>
+        <mat-card>
             <div class="adf-tag-example-title">
                 {{'TAG.LIST' | translate }}
             </div>
             <adf-tag-list></adf-tag-list>
-        </md-card>
+        </mat-card>
     </div>
     <div class="adf-tag-example-area" fxFlex.gt-md="1 1 auto">
-        <md-card>
+        <mat-card>
             <div class="adf-tag-example-title">
                 {{'TAG.NODE_LIST' | translate }}
             </div>
             <adf-tag-node-list [nodeId]="nodeId"></adf-tag-node-list>
-        </md-card>
+        </mat-card>
     </div>
 </div>

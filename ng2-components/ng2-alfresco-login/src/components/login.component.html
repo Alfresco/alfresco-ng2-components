@@ -1,10 +1,10 @@
 <div class="adf-login-content"
      [style.background-image]="'url(' + backgroundImageUrl + ')'">
-    <md-card class="adf-login-card-wide">
+    <mat-card class="adf-login-card-wide">
         <form [formGroup]="form" (submit)="onSubmit(form.value)">
 
-            <md-card-header>
-                <md-card-title>
+            <mat-card-header>
+                <mat-card-title>
                     <div class="adf-alfresco-logo">
                         <!--HEADER TEMPLATE-->
                         <ng-template *ngIf="headerTemplate"
@@ -14,16 +14,16 @@
                         <img *ngIf="!headerTemplate" class="adf-img-logo" [src]="logoImageUrl"
                              alt="{{'LOGIN.LOGO' | translate }}">
                     </div>
-                </md-card-title>
-            </md-card-header>
+                </mat-card-title>
+            </mat-card-header>
 
-            <md-card-content class="adf-login-controls">
+            <mat-card-content class="adf-login-controls">
 
                 <!--ERRORS AREA-->
                 <div class="adf-error-container">
                     <div *ngIf="error" id="login-error" data-automation-id="login-error"
                          class="error  adf-error-message">
-                        <md-icon class="error-icon">warning</md-icon>
+                        <mat-icon class="error-icon">warning</mat-icon>
                         <span class="login-error-message">{{errorMsg | translate }}</span>
                     </div>
                     <div *ngIf="success" id="login-success" data-automation-id="login-success"
@@ -34,8 +34,8 @@
 
                 <!--USERNAME FIELD-->
                 <div class="adf-login__field" [ngClass]="{'is-invalid': isErrorStyle(form.controls.username)}">
-                    <md-input-container class="adf-full-width" floatPlaceholder="never" color="primary">
-                        <input mdInput placeholder="{{'LOGIN.LABEL.USERNAME' | translate }}"
+                    <mat-form-field class="adf-full-width" floatPlaceholder="never" color="primary">
+                        <input matInput placeholder="{{'LOGIN.LABEL.USERNAME' | translate }}"
                                type="text"
                                class="adf-full-width"
                                [formControl]="form.controls['username']"
@@ -44,7 +44,7 @@
                                data-automation-id="username"
                                (blur)="trimUsername($event)"
                                tabindex="1">
-                    </md-input-container>
+                    </mat-form-field>
 
                     <span class="adf-login-validation" for="username" *ngIf="formError.username">
                         <span id="username-error" class="adf-login-error" data-automation-id="username-error">{{formError.username | translate }}</span>
@@ -53,20 +53,20 @@
 
                 <!--PASSWORD FIELD-->
                 <div class="adf-login__field alfresco-login__password">
-                    <md-input-container class="adf-full-width" floatPlaceholder="never" color="primary">
-                        <input mdInput placeholder="{{'LOGIN.LABEL.PASSWORD' | translate }}"
+                    <mat-form-field class="adf-full-width" floatPlaceholder="never" color="primary">
+                        <input matInput placeholder="{{'LOGIN.LABEL.PASSWORD' | translate }}"
                                type="password"
                                [formControl]="form.controls['password']"
                                id="password"
                                data-automation-id="password"
                                tabindex="2">
-                        <md-icon *ngIf="isPasswordShow" mdSuffix class="adf-login-password-icon"
+                        <mat-icon *ngIf="isPasswordShow" matSuffix class="adf-login-password-icon"
                                  data-automation-id="hide_password" (click)="toggleShowPassword()">visibility
-                        </md-icon>
-                        <md-icon *ngIf="!isPasswordShow" mdSuffix class="adf-login-password-icon"
+                        </mat-icon>
+                        <mat-icon *ngIf="!isPasswordShow" matSuffix class="adf-login-password-icon"
                                  data-automation-id="show_password" (click)="toggleShowPassword()">visibility_off
-                        </md-icon>
-                    </md-input-container>
+                        </mat-icon>
+                    </mat-form-field>
                     <span class="adf-login-validation" for="password" *ngIf="formError.password">
                         <span id="password-required" class="adf-login-error"
                               data-automation-id="password-required">{{formError.password | translate }}</span>
@@ -79,7 +79,7 @@
                 <br>
                 <button type="submit" id="login-button" tabindex="3"
                         class="adf-login-button"
-                        md-raised-button color="primary"
+                        mat-raised-button color="primary"
                         [class.isChecking]="actualLoginStep === LoginSteps.Checking"
                         [class.isWelcome]="actualLoginStep === LoginSteps.Welcome"
                         data-automation-id="login-button" [disabled]="!form.valid">
@@ -88,22 +88,22 @@
 
                     <div *ngIf="actualLoginStep === LoginSteps.Checking" class="adf-interactive-login-label">
                         <span class="adf-login-button-label">{{ 'LOGIN.BUTTON.CHECKING' | translate }}</span>
-                        <md-spinner id="checking-spinner" class="adf-login-checking-spinner"></md-spinner>
+                        <mat-spinner id="checking-spinner" class="adf-login-checking-spinner"></mat-spinner>
                     </div>
 
                     <div *ngIf="actualLoginStep === LoginSteps.Welcome" class="adf-interactive-login-label">
                         <span class="adf-login-button-label">{{ 'LOGIN.BUTTON.WELCOME' | translate }}</span>
-                        <md-icon class="welcome-icon">done</md-icon>
+                        <mat-icon class="welcome-icon">done</mat-icon>
                     </div>
 
                 </button>
                 <div *ngIf="showRememberMe" class="adf-login__remember-me">
-                    <md-checkbox id="adf-login-remember" color="primary" class="adf-login-rememberme" [checked]="rememberMe"
+                    <mat-checkbox id="adf-login-remember" color="primary" class="adf-login-rememberme" [checked]="rememberMe"
                                  (change)="rememberMe = !rememberMe">{{ 'LOGIN.LABEL.REMEMBER' | translate }}
-                    </md-checkbox>
+                    </mat-checkbox>
                 </div>
-            </md-card-content>
-            <md-card-actions *ngIf="footerTemplate || showLoginActions">
+            </mat-card-content>
+            <mat-card-actions *ngIf="footerTemplate || showLoginActions">
 
                 <div class="adf-login-action-container">
                     <!--FOOTER TEMPLATE-->
@@ -120,10 +120,10 @@
                         </div>
                     </div>
                 </div>
-            </md-card-actions>
+            </mat-card-actions>
 
         </form>
-    </md-card>
+    </mat-card>
 
     <div class="copyright" data-automation-id="login-copyright">
         {{ copyrightText }}

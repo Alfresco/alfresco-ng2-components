@@ -17,7 +17,7 @@
 
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { DateAdapter, MD_DATE_FORMATS } from '@angular/material';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import * as moment from 'moment';
 import { Moment } from 'moment';
 import { MOMENT_DATE_FORMATS, MomentDateAdapter } from 'ng2-alfresco-core';
@@ -27,7 +27,7 @@ import { MOMENT_DATE_FORMATS, MomentDateAdapter } from 'ng2-alfresco-core';
     templateUrl: './date-range.widget.html',
     providers: [
         {provide: DateAdapter, useClass: MomentDateAdapter},
-        {provide: MD_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS}],
+        {provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS}],
     styleUrls: ['./date-range.widget.scss'],
     encapsulation: ViewEncapsulation.None
 })

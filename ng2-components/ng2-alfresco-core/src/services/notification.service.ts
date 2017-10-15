@@ -16,23 +16,23 @@
  */
 
 import { Injectable } from '@angular/core';
-import { MdSnackBar, MdSnackBarRef } from '@angular/material';
+import { MatSnackBar, MatSnackBarRef } from '@angular/material';
 
 @Injectable()
 export class NotificationService {
 
     static DEFAULT_DURATION_MESSAGE: number = 5000;
 
-    constructor(public snackbar: MdSnackBar) {
+    constructor(public snackbar: MatSnackBar) {
     }
 
-    public openSnackMessage(message: string, millisecondsDuration?: number): MdSnackBarRef<any> {
+    public openSnackMessage(message: string, millisecondsDuration?: number): MatSnackBarRef<any> {
         return this.snackbar.open(message, null, {
             duration: millisecondsDuration || NotificationService.DEFAULT_DURATION_MESSAGE
         });
     }
 
-    public openSnackMessageAction(message: string, action: string, millisecondsDuration?: number): MdSnackBarRef<any> {
+    public openSnackMessageAction(message: string, action: string, millisecondsDuration?: number): MatSnackBarRef<any> {
         return this.snackbar.open(message, action, {
             duration: millisecondsDuration || NotificationService.DEFAULT_DURATION_MESSAGE
         });

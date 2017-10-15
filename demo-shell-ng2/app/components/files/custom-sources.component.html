@@ -1,20 +1,20 @@
 <adf-toolbar>
     <adf-toolbar-title>
-        <md-select [(ngModel)]="selectedSource">
-            <md-option *ngFor="let source of sources" [value]="source.value">
+        <mat-select [(ngModel)]="selectedSource">
+            <mat-option *ngFor="let source of sources" [value]="source.value">
                 {{ source.title }}
-            </md-option>
-        </md-select>
+            </mat-option>
+        </mat-select>
     </adf-toolbar-title>
 
     <div fxFlex="0 1 auto" class="adf-document-action-buttons" fxShow fxHide.lt-sm="true">
-        <button md-icon-button
+        <button mat-icon-button
             (restore)="documentList.reload()"
             [disabled]="!documentList.selection.length"
             *ngIf="selectedSource === '-trashcan-'"
             location="/files"
             [adf-restore]="documentList.selection">
-            <md-icon>restore</md-icon>
+            <mat-icon>restore</mat-icon>
         </button>
     </div>
 </adf-toolbar>

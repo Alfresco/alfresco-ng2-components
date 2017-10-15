@@ -1,37 +1,37 @@
 <div *ngIf="!processInstanceDetails">{{ 'DETAILS.MESSAGES.NONE'|translate }}</div>
-<md-card *ngIf="processInstanceDetails">
-    <md-card-header>
-        <md-card-title>{{ getProcessNameOrDescription('medium') }}</md-card-title>
-    </md-card-header>
-    <md-card-content>
+<mat-card *ngIf="processInstanceDetails">
+    <mat-card-header>
+        <mat-card-title>{{ getProcessNameOrDescription('medium') }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
         <adf-process-instance-header
             [processInstance]="processInstanceDetails"
             (showProcessDiagram)="onShowProcessDiagram($event)">
         </adf-process-instance-header>
 
-        <button class="adf-in-medias-res-button" md-button id="show-diagram-button" type="button" md-button md-raised-button [disabled]="isDiagramDisabled()" (click)="onShowProcessDiagram(processInstanceId)">{{ 'DETAILS.BUTTON.SHOW_DIAGRAM' | translate }}</button>
+        <button class="adf-in-medias-res-button" mat-button id="show-diagram-button" type="button" mat-button mat-raised-button [disabled]="isDiagramDisabled()" (click)="onShowProcessDiagram(processInstanceId)">{{ 'DETAILS.BUTTON.SHOW_DIAGRAM' | translate }}</button>
 
-        <md-card>
-            <md-card-content>
+        <mat-card>
+            <mat-card-content>
                 <adf-process-instance-tasks
                     [processInstanceDetails]="processInstanceDetails"
                     (taskClick)="onTaskClicked($event)">
                 </adf-process-instance-tasks>
-            </md-card-content>
-        </md-card>
+            </mat-card-content>
+        </mat-card>
 
         <div data-automation-id="header-status" *ngIf="isRunning()" class="adf-in-medias-res-button">
-            <button md-button type="button" (click)="cancelProcess()">{{ 'DETAILS.BUTTON.CANCEL' | translate }}</button>
+            <button mat-button type="button" (click)="cancelProcess()">{{ 'DETAILS.BUTTON.CANCEL' | translate }}</button>
         </div>
 
-        <md-card>
-            <md-card-content>
+        <mat-card>
+            <mat-card-content>
                 <adf-process-instance-comments #activiticomments
                     [readOnly]="false"
                     [processInstanceId]="processInstanceDetails.id">
                 </adf-process-instance-comments>
-            </md-card-content>
-        </md-card>
+            </mat-card-content>
+        </mat-card>
 
-    </md-card-content>
-</md-card>
+    </mat-card-content>
+</mat-card>

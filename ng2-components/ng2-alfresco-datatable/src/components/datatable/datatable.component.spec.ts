@@ -17,7 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdCheckboxChange } from '@angular/material';
+import { MatCheckboxChange } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from 'ng2-alfresco-core';
 import { MaterialModule } from '../../material.module';
@@ -440,9 +440,9 @@ describe('DataTable', () => {
 
     it('should invert "select all" status', () => {
         expect(dataTable.isSelectAllChecked).toBeFalsy();
-        dataTable.onSelectAllClick(<MdCheckboxChange> { checked: true });
+        dataTable.onSelectAllClick(<MatCheckboxChange> { checked: true });
         expect(dataTable.isSelectAllChecked).toBeTruthy();
-        dataTable.onSelectAllClick(<MdCheckboxChange> { checked: false });
+        dataTable.onSelectAllClick(<MatCheckboxChange> { checked: false });
         expect(dataTable.isSelectAllChecked).toBeFalsy();
     });
 
@@ -454,13 +454,13 @@ describe('DataTable', () => {
         dataTable.multiselect = true;
         dataTable.ngAfterContentInit();
 
-        dataTable.onSelectAllClick(<MdCheckboxChange> { checked: true });
+        dataTable.onSelectAllClick(<MatCheckboxChange> { checked: true });
         expect(dataTable.isSelectAllChecked).toBe(true);
         for (let i = 0; i < rows.length; i++) {
             expect(rows[i].isSelected).toBe(true);
         }
 
-        dataTable.onSelectAllClick(<MdCheckboxChange> { checked: false });
+        dataTable.onSelectAllClick(<MatCheckboxChange> { checked: false });
         expect(dataTable.isSelectAllChecked).toBe(false);
         for (let i = 0; i < rows.length; i++) {
             expect(rows[i].isSelected).toBe(false);
@@ -471,7 +471,7 @@ describe('DataTable', () => {
         dataTable.multiselect = true;
         dataTable.ngOnChanges({'data': new SimpleChange('123', {}, true)});
 
-        dataTable.onSelectAllClick(<MdCheckboxChange> { checked: true });
+        dataTable.onSelectAllClick(<MatCheckboxChange> { checked: true });
         expect(dataTable.isSelectAllChecked).toBe(true);
     });
 
@@ -483,7 +483,7 @@ describe('DataTable', () => {
         dataTable.multiselect = false;
         dataTable.ngAfterContentInit();
 
-        dataTable.onSelectAllClick(<MdCheckboxChange> { checked: true });
+        dataTable.onSelectAllClick(<MatCheckboxChange> { checked: true });
         expect(dataTable.isSelectAllChecked).toBe(true);
         for (let i = 0; i < rows.length; i++) {
             expect(rows[i].isSelected).toBe(false);

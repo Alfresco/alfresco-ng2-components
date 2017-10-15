@@ -17,7 +17,7 @@
 
 import { NgZone, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdProgressSpinnerModule } from '@angular/material';
+import { MatProgressSpinnerModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { ActivitiContentService } from 'ng2-activiti-form';
 import { AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
@@ -46,7 +46,7 @@ describe('TaskAttachmentList', () => {
             imports: [
                 CoreModule,
                 DataTableModule,
-                MdProgressSpinnerModule
+                MatProgressSpinnerModule
             ],
             declarations: [
                 TaskAttachmentListComponent

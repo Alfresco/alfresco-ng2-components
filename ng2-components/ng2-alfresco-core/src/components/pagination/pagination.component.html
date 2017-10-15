@@ -18,18 +18,18 @@
         {{ pagination.maxItems }}
     </span>
 
-    <button md-icon-button [mdMenuTriggerFor]="pageSizeMenu">
-        <md-icon>arrow_drop_down</md-icon>
+    <button mat-icon-button [matMenuTriggerFor]="pageSizeMenu">
+        <mat-icon>arrow_drop_down</mat-icon>
     </button>
 
-    <md-menu #pageSizeMenu="mdMenu">
+    <mat-menu #pageSizeMenu="matMenu">
         <button
-            md-menu-item
+            mat-menu-item
             *ngFor="let pageSize of supportedPageSizes"
             (click)="changePageSize(pageSize)">
             {{ pageSize }}
         </button>
-    </md-menu>
+    </mat-menu>
 </div>
 
 <div class="adf-pagination__block adf-pagination__actualinfo-block">
@@ -38,40 +38,40 @@
     </span>
 
     <button
-        md-icon-button
-        [mdMenuTriggerFor]="pagesMenu"
+        mat-icon-button
+        [matMenuTriggerFor]="pagesMenu"
         *ngIf="pages.length > 1">
-        <md-icon>arrow_drop_down</md-icon>
+        <mat-icon>arrow_drop_down</mat-icon>
     </button>
 
     <span class="adf-pagination__total-pages">
         {{ 'CORE.PAGINATION.TOTAL_PAGES' | translate: { total: pages.length } }}
     </span>
 
-    <md-menu #pagesMenu="mdMenu" class="adf-pagination__page-selector">
+    <mat-menu #pagesMenu="matMenu" class="adf-pagination__page-selector">
         <button
-            md-menu-item
+            mat-menu-item
             *ngFor="let pageNumber of pages"
             (click)="changePageNumber(pageNumber)">
             {{ pageNumber }}
         </button>
-    </md-menu>
+    </mat-menu>
 </div>
 
 <div class="adf-pagination__block adf-pagination__controls-block">
     <button
         class="adf-pagination__previous-button"
-        md-icon-button
+        mat-icon-button
         [disabled]="isFirstPage"
         (click)="goPrevious()">
-        <md-icon>keyboard_arrow_left</md-icon>
+        <mat-icon>keyboard_arrow_left</mat-icon>
     </button>
 
     <button
         class="adf-pagination__next-button"
-        md-icon-button
+        mat-icon-button
         [disabled]="isLastPage"
         (click)="goNext()">
-        <md-icon>keyboard_arrow_right</md-icon>
+        <mat-icon>keyboard_arrow_right</mat-icon>
     </button>
 </div>

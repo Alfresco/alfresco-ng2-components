@@ -10,7 +10,7 @@
         </th>
         <!-- Columns -->
         <th *ngIf="multiselect">
-            <md-checkbox [checked]="isSelectAllChecked" (change)="onSelectAllClick($event)"></md-checkbox>
+            <mat-checkbox [checked]="isSelectAllChecked" (change)="onSelectAllClick($event)"></mat-checkbox>
         </th>
         <th class="adf-data-table-cell--{{col.type || 'text'}} {{col.cssClass}}"
             *ngFor="let col of data.getColumns()"
@@ -45,26 +45,26 @@
 
             <!-- Actions (left) -->
             <td *ngIf="actions && actionsPosition === 'left'">
-                <button md-icon-button [mdMenuTriggerFor]="menu"
+                <button mat-icon-button [matMenuTriggerFor]="menu"
                     [attr.data-automation-id]="'action_menu_' + idx">
-                    <md-icon>more_vert</md-icon>
+                    <mat-icon>more_vert</mat-icon>
                 </button>
-                <md-menu #menu="mdMenu">
-                    <button md-menu-item *ngFor="let action of getRowActions(row)"
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item *ngFor="let action of getRowActions(row)"
                         [attr.data-automation-id]="action.title"
                         [disabled]="action.disabled"
                         (click)="onExecuteRowAction(row, action)">
-                        <md-icon *ngIf="action.icon">{{ action.icon }}</md-icon>
+                        <mat-icon *ngIf="action.icon">{{ action.icon }}</mat-icon>
                         <span>{{ action.title }}</span>
                     </button>
-                </md-menu>
+                </mat-menu>
             </td>
 
             <td *ngIf="multiselect">
-                <md-checkbox
+                <mat-checkbox
                     [checked]="row.isSelected"
                     (change)="onCheckboxChange(row, $event)">
-                </md-checkbox>
+                </mat-checkbox>
             </td>
             <td *ngFor="let col of data.getColumns()"
                 class="adf-data-table-cell adf-data-table-cell--{{col.type || 'text'}} {{col.cssClass}}"
@@ -137,19 +137,19 @@
 
             <!-- Actions (right) -->
             <td *ngIf="actions && actionsPosition === 'right'" class="alfresco-datatable__actions-cell">
-                <button md-icon-button [mdMenuTriggerFor]="menu"
+                <button mat-icon-button [matMenuTriggerFor]="menu"
                     [attr.data-automation-id]="'action_menu_' + idx">
-                    <md-icon>more_vert</md-icon>
+                    <mat-icon>more_vert</mat-icon>
                 </button>
-                <md-menu #menu="mdMenu">
-                    <button md-menu-item *ngFor="let action of getRowActions(row)"
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item *ngFor="let action of getRowActions(row)"
                         [attr.data-automation-id]="action.title"
                         [disabled]="action.disabled"
                         (click)="onExecuteRowAction(row, action)">
-                        <md-icon *ngIf="action.icon">{{ action.icon }}</md-icon>
+                        <mat-icon *ngIf="action.icon">{{ action.icon }}</mat-icon>
                         <span>{{ action.title }}</span>
                     </button>
-                </md-menu>
+                </mat-menu>
             </td>
 
         </tr>

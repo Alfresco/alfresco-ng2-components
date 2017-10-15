@@ -2,8 +2,8 @@
      [class.adf-invalid]="!field.isValid" [class.adf-readonly]="field.readOnly" [id]="field.id" *ngIf="field?.isVisible">
     <div class="adf-radio-button-container">
         <label class="adf-label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
-        <md-radio-group class="adf-radio-group" [(ngModel)]="field.value">
-            <md-radio-button
+        <mat-radio-group class="adf-radio-group" [(ngModel)]="field.value">
+            <mat-radio-button
                 [id]="field.id + '-' + opt.id"
                 [name]="field.id"
                 [value]="opt.id"
@@ -13,8 +13,8 @@
                 color="primary"
                 class="adf-radio-button" *ngFor="let opt of field.options" >
                 {{opt.name}}
-            </md-radio-button>
-        </md-radio-group>
+            </mat-radio-button>
+        </mat-radio-group>
     </div>
     <error-widget [error]="field.validationSummary" ></error-widget>
     <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>

@@ -17,7 +17,7 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA, DebugElement, EventEmitter } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AlfrescoContentService, AlfrescoTranslationService, CoreModule, SearchService, SiteModel } from 'ng2-alfresco-core';
@@ -112,7 +112,7 @@ describe('ContentNodeSelectorComponent', () => {
                 currentFolderId: 'cat-girl-nuku-nuku'
             };
 
-            setupTestbed([{ provide: MD_DIALOG_DATA, useValue: data }]);
+            setupTestbed([{ provide: MAT_DIALOG_DATA, useValue: data }]);
             TestBed.compileComponents();
         }));
 
@@ -167,7 +167,7 @@ describe('ContentNodeSelectorComponent', () => {
             let dummyMdDialogRef;
 
             beforeEach(() => {
-                dummyMdDialogRef = <MdDialogRef<ContentNodeSelectorComponent>> { close: () => {} };
+                dummyMdDialogRef = <MatDialogRef<ContentNodeSelectorComponent>> { close: () => {} };
             });
 
             it('should be shown if dialogRef is injected', () => {

@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdInputModule } from '@angular/material';
+import { MatInputModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
 import { ErrorWidgetComponent } from '../widgets/error/error.component';
 import { FormRenderingService } from './../../services/form-rendering.service';
@@ -38,7 +38,7 @@ describe('FormFieldComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
                 imports: [CoreModule,
-                    MdInputModule
+                    MatInputModule
                 ],
                 declarations: [
                     FormFieldComponent,

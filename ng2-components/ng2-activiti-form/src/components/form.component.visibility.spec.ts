@@ -106,9 +106,9 @@ describe('FormComponent UI and visibiltiy', () => {
             expect(dropdown).toBeDefined();
             expect(dropdown).not.toBeNull();
 
-            const optOne = fixture.debugElement.queryAll(By.css('[id="md-option-1"]'));
-            const optTwo = fixture.debugElement.queryAll(By.css('[id="md-option-2"]'));
-            const optThree = fixture.debugElement.queryAll(By.css('[id="md-option-3"]'));
+            const optOne = fixture.debugElement.queryAll(By.css('[id="mat-option-1"]'));
+            const optTwo = fixture.debugElement.queryAll(By.css('[id="mat-option-2"]'));
+            const optThree = fixture.debugElement.queryAll(By.css('[id="mat-option-3"]'));
 
             expect(optOne[0].nativeElement.innerText).toEqual('united kingdom');
             expect(optTwo[0].nativeElement.innerText).toEqual('italy');

@@ -17,7 +17,7 @@
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MdToolbarModule } from '@angular/material';
+import { MatToolbarModule } from '@angular/material';
 
 import { ToolbarDividerComponent } from './toolbar-divider.component';
 import { ToolbarTitleComponent } from './toolbar-title.component';
@@ -26,7 +26,7 @@ import { ToolbarComponent } from './toolbar.component';
 @NgModule({
     imports: [
         CommonModule,
-        MdToolbarModule
+        MatToolbarModule
     ],
     declarations: [
         ToolbarComponent,
@@ -34,7 +34,7 @@ import { ToolbarComponent } from './toolbar.component';
         ToolbarDividerComponent
     ],
     exports: [
-        MdToolbarModule,
+        MatToolbarModule,
         ToolbarComponent,
         ToolbarTitleComponent,
         ToolbarDividerComponent

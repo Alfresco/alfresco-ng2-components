@@ -13,9 +13,9 @@
         <h2 class="activiti-task-details__header" (click)="toggleHeaderContent()">
             <span>{{taskDetails.name || 'No name'}}</span>
         </h2>
-        <div md-ripple [mdRippleUnbounded]="true" [mdRippleCentered]="true" class="adf-task-details-header-toggle">
-            <md-icon *ngIf="!showHeaderContent" (click)="toggleHeaderContent()">web</md-icon>
-            <md-icon *ngIf="showHeaderContent" (click)="toggleHeaderContent()">web_asset</md-icon>
+        <div matRipple [matRippleUnbounded]="true" [matRippleCentered]="true" class="adf-task-details-header-toggle">
+            <mat-icon *ngIf="!showHeaderContent" (click)="toggleHeaderContent()">web</mat-icon>
+            <mat-icon *ngIf="showHeaderContent" (click)="toggleHeaderContent()">web_asset</mat-icon>
         </div>
     </div>
 
@@ -45,7 +45,7 @@
             <div *ngIf="!isAssigned()">
                 {{ 'TASK_DETAILS.MESSAGES.CLAIM' | translate }}
             </div>
-            <button md-raised-button class="activiti-task-details__action-button"
+            <button mat-raised-button class="activiti-task-details__action-button"
                     *ngIf="!hasFormKey() && isTaskActive()" (click)="onComplete()">
                 {{ 'TASK_DETAILS.BUTTON.COMPLETE' | translate }}
             </button>
@@ -53,7 +53,7 @@
         <div class="adf-task-details-core-sidebar">
             <adf-info-drawer *ngIf="showHeaderContent" title="{{ 'TASK_DETAILS.LABELS.INFO_DRAWER_TITLE' | translate }}" class="adf-task-details-core-sidebar-drawer">
                 <div info-drawer-buttons>
-                    <md-icon (click)="toggleHeaderContent()">clear</md-icon>
+                    <mat-icon (click)="toggleHeaderContent()">clear</mat-icon>
                 </div>
 
                 <adf-info-drawer-tab label="{{ 'TASK_DETAILS.LABELS.INFO_DRAWER_TAB_DETAILS_TITLE' | translate }}">
@@ -85,14 +85,14 @@
                 </adf-info-drawer-tab>
 
                 <adf-info-drawer-tab label="{{ 'TASK_DETAILS.LABELS.INFO_DRAWER_TAB_ACTIVITY_TITLE' | translate }}">
-                    <md-card *ngIf="showComments">
-                        <md-card-content>
+                    <mat-card *ngIf="showComments">
+                        <mat-card-content>
                             <adf-comments #activiticomments
                                           [readOnly]="isReadOnlyComment()"
                                           [taskId]="taskDetails.id">
                             </adf-comments>
-                        </md-card-content>
-                    </md-card>
+                        </mat-card-content>
+                    </mat-card>
                 </adf-info-drawer-tab>
 
             </adf-info-drawer>
@@ -112,14 +112,14 @@
     </div>
 
     <ng-template #errorDialog>
-        <h3 md-dialog-title>{{'TASK_DETAILS.ERROR.TITLE'|translate}}</h3>
-        <md-dialog-content>
+        <h3 matDialogTitle>{{'TASK_DETAILS.ERROR.TITLE'|translate}}</h3>
+        <mat-dialog-content>
             <p>{{'TASK_DETAILS.ERROR.DESCRIPTION'|translate}}</p>
-        </md-dialog-content>
-        <md-dialog-actions>
-            <button md-button type="button" (click)="closeErrorDialog()">{{'TASK_DETAILS.ERROR.CLOSE'|translate}}
+        </mat-dialog-content>
+        <mat-dialog-actions>
+            <button mat-button type="button" (click)="closeErrorDialog()">{{'TASK_DETAILS.ERROR.CLOSE'|translate}}
             </button>
-        </md-dialog-actions>
+        </mat-dialog-actions>
     </ng-template>
 
 </div>

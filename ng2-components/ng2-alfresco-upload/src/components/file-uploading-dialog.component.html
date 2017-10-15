@@ -5,15 +5,15 @@
      [class.upload-dialog--position-right]="position === 'right'">
     <header class="upload-dialog__header">
         <button
-            md-button
+            mat-button
             color="secondary"
             [disabled]="isConfirmation"
             (click)="toggleMinimized()">
-            <md-icon
-                md-list-icon
+            <mat-icon
+                mat-list-icon
                 title="{{ (isDialogMinimized ? 'ADF_FILE_UPLOAD.BUTTON.MAXIMIZE': 'ADF_FILE_UPLOAD.BUTTON.MINIMIZE') | translate }}">
                     {{ isDialogMinimized ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
-            </md-icon>
+            </mat-icon>
         </button>
 
         <span
@@ -90,7 +90,7 @@
         [class.upload-dialog--hide]="isConfirmation">
         <button
             color="primary"
-            md-button
+            mat-button
             *ngIf="!uploadList.isUploadCompleted() && !uploadList.isUploadCancelled()"
             (click)="toggleConfirmation()">
             {{ 'ADF_FILE_UPLOAD.BUTTON.CANCEL_ALL' | translate }}
@@ -98,7 +98,7 @@
 
         <button
             *ngIf="uploadList.isUploadCompleted() || uploadList.isUploadCancelled()"
-            md-button
+            mat-button
             color="primary"
             (click)="close($event)">
             {{ 'ADF_FILE_UPLOAD.BUTTON.CLOSE' | translate }}
@@ -110,13 +110,13 @@
         [class.upload-dialog--hide]="!isConfirmation">
         <button
             color="secondary"
-            md-button
+            mat-button
             (click)="cancelAllUploads()">
             {{ 'ADF_FILE_UPLOAD.CONFIRMATION.BUTTON.CANCEL' | translate }}
         </button>
 
         <button
-            md-button
+            mat-button
             color="primary"
             (click)="toggleConfirmation()">
             {{ 'ADF_FILE_UPLOAD.CONFIRMATION.BUTTON.CONTINUE' | translate }}

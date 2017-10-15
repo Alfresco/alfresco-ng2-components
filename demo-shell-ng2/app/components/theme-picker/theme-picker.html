@@ -1,17 +1,17 @@
-<button md-icon-button [md-menu-trigger-for]="themeMenu" mdTooltip="Select a theme!">
-    <md-icon>format_color_fill</md-icon>
+<button mat-icon-button [mat-menu-trigger-for]="themeMenu" matTooltip="Select a theme!">
+    <mat-icon>format_color_fill</mat-icon>
 </button>
 
-<md-menu class="docs-theme-picker-menu" #themeMenu="mdMenu" x-position="before">
-    <md-list-item *ngFor="let theme of themes"  md-menu-item (click)="installTheme(theme)" >
-        <md-icon md-list-icon [mdTooltip]="theme.name" class="docs-theme-chosen-icon" [style.color]="theme.accent"
+<mat-menu class="docs-theme-picker-menu" #themeMenu="matMenu" x-position="before">
+    <mat-list-item *ngFor="let theme of themes"  mat-menu-item (click)="installTheme(theme)" >
+        <mat-icon mat-list-icon [matTooltip]="theme.name" class="docs-theme-chosen-icon" [style.color]="theme.accent"
                  [style.background]="theme.primary"
                  *ngIf="currentTheme === theme">check_circle
-        </md-icon>
-        <md-icon md-list-icon [mdTooltip]="theme.name" class="docs-theme-chosen-icon" [style.color]="theme.accent"
+        </mat-icon>
+        <mat-icon mat-list-icon [matTooltip]="theme.name" class="docs-theme-chosen-icon" [style.color]="theme.accent"
                  [style.background]="theme.primary"
                  *ngIf="currentTheme !== theme">invert_colors
-        </md-icon>
+        </mat-icon>
         {{theme.name}}
-    </md-list-item>
-</md-menu>
+    </mat-list-item>
+</mat-menu>

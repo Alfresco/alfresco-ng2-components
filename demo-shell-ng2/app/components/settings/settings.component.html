@@ -1,17 +1,17 @@
 <div class="adf-setting-container">
     <div class="adf-setting-card-padding"></div>
-    <md-toolbar color="primary" >
+    <mat-toolbar color="primary" >
         <h3>{{'SETTINGS.TITLE' | translate}}</h3>
-    </md-toolbar>
+    </mat-toolbar>
 
-    <md-card class="adf-setting-card">
-        <md-card-content>
+    <mat-card class="adf-setting-card">
+        <mat-card-content>
 
-            <md-card-subtitle>{{'SETTINGS.CS-HOST' | translate }}</md-card-subtitle>
+            <mat-card-subtitle>{{'SETTINGS.CS-HOST' | translate }}</mat-card-subtitle>
 
-            <md-input-container class="full-width">
-                <md-icon class="adf-settings-link-icon" mdPrefix>link</md-icon>
-                <input mdInput
+            <mat-form-field class="full-width">
+                <mat-icon class="adf-settings-link-icon" matPrefix>link</mat-icon>
+                <input matInput
                        [formControl]="urlFormControlEcm"
                        data-automation-id="ecmHost"
                        type="text"
@@ -20,17 +20,17 @@
                        id="ecmHost"
                        value="{{ecmHost}}"
                        placeholder="http(s)://host|ip:port(/path)">
-                <md-error *ngIf="urlFormControlEcm.hasError('pattern')">
+                <mat-error *ngIf="urlFormControlEcm.hasError('pattern')">
                     {{ 'SETTINGS.NOT_VALID'| translate }}
-                </md-error>
-            </md-input-container>
+                </mat-error>
+            </mat-form-field>
             <p>
             <p>
-            <md-card-subtitle>{{'SETTINGS.BP-HOST' | translate }}</md-card-subtitle>
+            <mat-card-subtitle>{{'SETTINGS.BP-HOST' | translate }}</mat-card-subtitle>
 
-            <md-input-container class="full-width">
-                <md-icon class="adf-settings-link-icon" mdPrefix>link</md-icon>
-                <input mdInput
+            <mat-form-field class="full-width">
+                <mat-icon class="adf-settings-link-icon" matPrefix>link</mat-icon>
+                <input matInput
                        [formControl]="urlFormControlBpm"
                        data-automation-id="bpmHost"
                        type="text"
@@ -39,23 +39,23 @@
                        id="bpmHost"
                        value="{{bpmHost}}"
                        placeholder="http(s)://host|ip:port(/path)">
-                <md-error *ngIf="urlFormControlBpm.hasError('pattern')">
+                <mat-error *ngIf="urlFormControlBpm.hasError('pattern')">
                     {{ 'SETTINGS.NOT_VALID'| translate }}
-                </md-error>
-            </md-input-container>
+                </mat-error>
+            </mat-form-field>
 
-        </md-card-content>
-        <md-card-actions class="adf-settings-actions">
+        </mat-card-content>
+        <mat-card-actions class="adf-settings-actions">
 
-            <button md-button onclick="window.history.back()" color="primary">
+            <button mat-button onclick="window.history.back()" color="primary">
                 {{'SETTINGS.BACK' | translate }}
             </button>
 
-            <button md-raised-button (click)="save($event)" [disabled]="urlFormControlBpm.hasError('pattern') || urlFormControlEcm.hasError('pattern')" color="primary">
+            <button mat-raised-button (click)="save($event)" [disabled]="urlFormControlBpm.hasError('pattern') || urlFormControlEcm.hasError('pattern')" color="primary">
                 {{'SETTINGS.APPLY' | translate }}
             </button>
 
-        </md-card-actions>
-    </md-card>
+        </mat-card-actions>
+    </mat-card>
     <div class="adf-setting-card-padding"></div>
 </div>

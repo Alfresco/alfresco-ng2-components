@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { DateAdapter, MD_DATE_FORMATS } from '@angular/material';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import * as moment from 'moment';
 import { LightUserRepresentation, LogService, MOMENT_DATE_FORMATS,
     MomentDateAdapter, PeopleProcessService } from 'ng2-alfresco-core';
@@ -32,7 +32,7 @@ import { TaskListService } from './../services/tasklist.service';
     styleUrls: ['./start-task.component.scss'],
     providers: [
         {provide: DateAdapter, useClass: MomentDateAdapter},
-        {provide: MD_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS}],
+        {provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS}],
     encapsulation: ViewEncapsulation.None
 })
 export class StartTaskComponent implements OnInit {

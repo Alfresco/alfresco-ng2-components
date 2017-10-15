@@ -16,8 +16,8 @@
  */
 
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { MdDatepicker } from '@angular/material';
-import { DateAdapter, MD_DATE_FORMATS } from '@angular/material';
+import { MatDatepicker } from '@angular/material';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import * as moment from 'moment';
 import { Moment } from 'moment';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
@@ -27,7 +27,7 @@ import { MOMENT_DATE_FORMATS, MomentDateAdapter } from '../../utils/momentDateAd
 @Component({
     providers: [
         {provide: DateAdapter, useClass: MomentDateAdapter},
-        {provide: MD_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS}],
+        {provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS}],
     selector: 'adf-card-view-dateitem',
     templateUrl: './card-view-dateitem.component.html',
     styleUrls: ['./card-view-dateitem.component.scss']
@@ -42,8 +42,8 @@ export class CardViewDateItemComponent implements OnInit {
     @Input()
     editable: boolean;
 
-    @ViewChild(MdDatepicker)
-    public datepicker: MdDatepicker<any>;
+    @ViewChild(MatDatepicker)
+    public datepicker: MatDatepicker<any>;
 
     valueDate: Moment;
 

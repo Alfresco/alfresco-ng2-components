@@ -19,7 +19,7 @@ import {
     AfterContentInit, Component, ContentChild, DoCheck, ElementRef, EventEmitter, Input,
     IterableDiffers, OnChanges, Output, SimpleChange, SimpleChanges, TemplateRef
 } from '@angular/core';
-import { MdCheckboxChange } from '@angular/material';
+import { MatCheckboxChange } from '@angular/material';
 import { DataColumnListComponent } from 'ng2-alfresco-core';
 import { Observable, Observer, Subscription } from 'rxjs/Rx';
 import { DataColumn, DataRow, DataRowEvent, DataSorting, DataTableAdapter } from '../../data/datatable-adapter';
@@ -330,7 +330,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
         }
     }
 
-    onSelectAllClick(e: MdCheckboxChange) {
+    onSelectAllClick(e: MatCheckboxChange) {
         this.isSelectAllChecked = e.checked;
 
         if (this.multiselect) {
@@ -348,7 +348,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck 
         }
     }
 
-    onCheckboxChange(row: DataRow, event: MdCheckboxChange) {
+    onCheckboxChange(row: DataRow, event: MatCheckboxChange) {
         const newValue = event.checked;
 
         this.selectRow(row, newValue);

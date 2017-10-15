@@ -127,7 +127,7 @@ describe('DropdownSitesComponent', () => {
                 fixture.detectChanges();
                 debug.query(By.css('.mat-select-trigger')).triggerEventHandler('click', null);
                 fixture.detectChanges();
-                let options: any = debug.queryAll(By.css('md-option'));
+                let options: any = debug.queryAll(By.css('mat-option'));
                 expect(options[0].attributes['ng-reflect-value']).toBe('default');
                 expect(options[1].attributes['ng-reflect-value']).toBe('fake-1');
                 expect(options[2].attributes['ng-reflect-value']).toBe('fake-2');
@@ -146,7 +146,7 @@ describe('DropdownSitesComponent', () => {
                 fixture.detectChanges();
                 debug.query(By.css('.mat-select-trigger')).triggerEventHandler('click', null);
                 fixture.detectChanges();
-                let options: any = debug.queryAll(By.css('md-option'));
+                let options: any = debug.queryAll(By.css('mat-option'));
                 options[1].triggerEventHandler('click', null);
                 fixture.detectChanges();
             });

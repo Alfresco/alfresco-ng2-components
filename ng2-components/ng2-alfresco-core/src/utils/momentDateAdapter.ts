@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { DateAdapter, MdDateFormats } from '@angular/material';
+import { DateAdapter, MatDateFormats } from '@angular/material';
 import { isMoment, Moment } from 'moment';
 import * as moment from 'moment';
 
-export const MOMENT_DATE_FORMATS: MdDateFormats = {
+export const MOMENT_DATE_FORMATS: MatDateFormats = {
     parse: {
         dateInput: 'DD/MM/YYYY'
     },
@@ -203,6 +203,15 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
 
     isValid(date: Moment): boolean {
         return date.isValid();
+    }
+
+    toIso8601(date: Moment): string {
+        return this.clone(date).format();
+    }
+
+    fromIso8601(iso8601String: string): Moment | null {
+        let d = moment(iso8601String, moment.ISO_8601).locale(this.locale);
+        return this.isValid(d) ? d : null;
     }
 
 }

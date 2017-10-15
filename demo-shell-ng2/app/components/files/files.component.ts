@@ -16,7 +16,7 @@
  */
 
 import { ChangeDetectorRef, Component, Input, OnInit, Optional, ViewChild } from '@angular/core';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MinimalNodeEntity } from 'alfresco-js-api';
 import {
@@ -84,7 +84,7 @@ export class FilesComponent implements OnInit {
                 private notificationService: NotificationService,
                 private uploadService: UploadService,
                 private contentService: AlfrescoContentService,
-                private dialog: MdDialog,
+                private dialog: MatDialog,
                 private translateService: AlfrescoTranslationService,
                 private router: Router,
                 @Optional() private route: ActivatedRoute,

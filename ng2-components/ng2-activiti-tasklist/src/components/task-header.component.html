@@ -1,12 +1,12 @@
-<md-card *ngIf="taskDetails" class="adf-card-container">
-    <md-card-content>
+<mat-card *ngIf="taskDetails" class="adf-card-container">
+    <mat-card-content>
         <adf-card-view [properties]="properties" [editable]="!isCompleted()"></adf-card-view>
-    </md-card-content>
+    </mat-card-content>
 
-    <md-card-actions class="adf-controls">
-        <button *ngIf="isAssignedToMe()" md-button data-automation-id="header-unclaim-button" id="unclaim-task" (click)="unclaimTask(taskDetails.id)" class="adf-claim-controls">{{ 'TASK_DETAILS.BUTTON.UNCLAIM' | translate }}
+    <mat-card-actions class="adf-controls">
+        <button *ngIf="isAssignedToMe()" mat-button data-automation-id="header-unclaim-button" id="unclaim-task" (click)="unclaimTask(taskDetails.id)" class="adf-claim-controls">{{ 'TASK_DETAILS.BUTTON.UNCLAIM' | translate }}
         </button>
-        <button *ngIf="!isAssignedToMe()" md-button data-automation-id="header-claim-button" id="claim-task" (click)="claimTask(taskDetails.id)" class="adf-claim-controls">{{ 'TASK_DETAILS.BUTTON.CLAIM' | translate }}
+        <button *ngIf="!isAssignedToMe()" mat-button data-automation-id="header-claim-button" id="claim-task" (click)="claimTask(taskDetails.id)" class="adf-claim-controls">{{ 'TASK_DETAILS.BUTTON.CLAIM' | translate }}
         </button>
-    </md-card-actions>
-</md-card>
+    </mat-card-actions>
+</mat-card>

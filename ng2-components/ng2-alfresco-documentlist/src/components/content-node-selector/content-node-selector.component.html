@@ -1,30 +1,30 @@
-<header mdDialogTitle
+<header matDialogTitle
     class="adf-content-node-selector-title"
     data-automation-id="content-node-selector-title">{{title}}</header>
 
-<section mdDialogContent
+<section matDialogContent
     class="adf-content-node-selector-content"
     (node-select)="onNodeSelect($event)">
 
-    <md-input-container floatPlaceholder="never" class="adf-content-node-selector-content-input">
+    <mat-form-field floatPlaceholder="never" class="adf-content-node-selector-content-input">
         <input #searchInput
-            mdInput
+            matInput
             placeholder="Search"
             (input)="search(searchInput.value)"
             [value]="searchTerm"
             data-automation-id="content-node-selector-search-input">
 
-        <md-icon *ngIf="searchTerm.length > 0"
-                mdSuffix (click)="clear()"
+        <mat-icon *ngIf="searchTerm.length > 0"
+                matSuffix (click)="clear()"
                 class="adf-content-node-selector-content-input-icon"
-                data-automation-id="content-node-selector-search-clear">clear</md-icon>
+                data-automation-id="content-node-selector-search-clear">clear</mat-icon>
 
-        <md-icon *ngIf="searchTerm.length === 0"
-            mdSuffix
+        <mat-icon *ngIf="searchTerm.length === 0"
+            matSuffix
             class="adf-content-node-selector-content-input-icon"
-            data-automation-id="content-node-selector-search-icon">search</md-icon>
+            data-automation-id="content-node-selector-search-icon">search</mat-icon>
 
-    </md-input-container>
+    </mat-form-field>
 
     <adf-sites-dropdown
         (change)="siteChanged($event)"
@@ -80,16 +80,16 @@
 
 </section>
 
-<footer mdDialogActions class="adf-content-node-selector-actions">
+<footer matDialogActions class="adf-content-node-selector-actions">
 
     <button *ngIf="inDialog"
-        md-button
+        mat-button
         class="adf-content-node-selector-actions-cancel"
         (click)="close()"
         data-automation-id="content-node-selector-actions-cancel">{{ 'NODE_SELECTOR.CANCEL' | translate }}
     </button>
 
-    <button md-button
+    <button mat-button
         [disabled]="!chosenNode"
         class="adf-content-node-selector-actions-choose"
         (click)="choose()"

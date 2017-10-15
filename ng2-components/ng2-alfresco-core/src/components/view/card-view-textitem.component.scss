@@ -18,7 +18,7 @@
         &-textitem-readonly {
             cursor: pointer;
 
-            &:hover md-icon {
+            &:hover mat-icon {
                 opacity: 1;
             }
         }
@@ -31,12 +31,12 @@
         &-textitem-editable {
             display: flex;
 
-            md-icon:hover {
+            mat-icon:hover {
                 opacity: 1;
                 cursor: pointer;
             }
 
-            md-input-container {
+            mat-form-field {
                 width: 100%;
             }
 

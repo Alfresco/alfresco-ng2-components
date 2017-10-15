@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdButtonModule, MdInputModule } from '@angular/material';
+import { MatButtonModule, MatInputModule } from '@angular/material';
 import { AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
 import { LightUserRepresentation } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
@@ -56,8 +56,8 @@ describe('PeopleSearchComponent', () => {
             imports: [
                 CoreModule,
                 DataTableModule,
-                MdButtonModule,
-                MdInputModule
+                MatButtonModule,
+                MatInputModule
             ],
             declarations: [
                 PeopleSearchComponent,

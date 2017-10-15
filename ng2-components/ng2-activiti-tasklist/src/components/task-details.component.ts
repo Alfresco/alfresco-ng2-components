@@ -25,7 +25,7 @@ import { Component,
     TemplateRef,
     ViewChild
 } from '@angular/core';
-import { MdDialog, MdDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { ContentLinkModel, FormFieldValidator, FormModel, FormOutcomeEvent } from 'ng2-activiti-form';
 import { AlfrescoAuthenticationService, CardViewUpdateService, ClickNotification, LogService, UpdateNotification } from 'ng2-alfresco-core';
 import { LightUserRepresentation, PeopleProcessService } from 'ng2-alfresco-core';
@@ -138,7 +138,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     showAssignee: boolean = false;
 
     private peopleSearchObserver: Observer<LightUserRepresentation[]>;
-    public errorDialogRef: MdDialogRef<TemplateRef<any>>;
+    public errorDialogRef: MatDialogRef<TemplateRef<any>>;
 
     peopleSearch$: Observable<LightUserRepresentation[]>;
 
@@ -147,7 +147,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
                 private peopleProcessService: PeopleProcessService,
                 private logService: LogService,
                 private cardViewUpdateService: CardViewUpdateService,
-                private dialog: MdDialog) {
+                private dialog: MatDialog) {
         this.peopleSearch$ = new Observable<LightUserRepresentation[]>(observer => this.peopleSearchObserver = observer).share();
     }
 

@@ -17,7 +17,7 @@
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MaterialModule } from '@angular/material';
+import { MatMenuModule, MatButtonModule, MatIconModule} from '@angular/material';
 
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -28,7 +28,9 @@ import { PaginationComponent } from './pagination.component';
     imports: [
         CommonModule,
         TranslateModule,
-        MaterialModule
+        MatMenuModule,
+        MatButtonModule,
+        MatIconModule
     ],
     declarations: [
         PaginationComponent,

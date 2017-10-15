@@ -7,19 +7,19 @@
         .mat-select-trigger {
             font-size: 14px !important;
         }
-        md-input-container {
+        mat-form-field {
             width: 100%;
         }
-        md-select {
+        mat-select {
             width: 100%;
             padding: 16px 0px 0px 0px;
         }
-        md-card-actions {
+        mat-card-actions {
             text-align: right;
         }
     }
     &-process-input-container {
-        md-input-container {
+        mat-form-field {
             width: 100%;
         }
     }

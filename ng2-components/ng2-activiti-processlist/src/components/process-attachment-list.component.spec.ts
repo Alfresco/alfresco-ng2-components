@@ -17,7 +17,7 @@
 
 import { NgZone, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdProgressSpinnerModule } from '@angular/material';
+import { MatProgressSpinnerModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivitiContentService } from 'ng2-activiti-form';
@@ -45,7 +45,7 @@ describe('ProcessAttachmentListComponent', () => {
             imports: [
                 CoreModule,
                 DataTableModule,
-                MdProgressSpinnerModule
+                MatProgressSpinnerModule
             ],
             declarations: [
                 ProcessAttachmentListComponent

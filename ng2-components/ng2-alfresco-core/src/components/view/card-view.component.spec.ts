@@ -17,7 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { MdDatepickerModule, MdIconModule, MdInputModule, MdNativeDateModule } from '@angular/material';
+import { MatDatepickerModule, MatIconModule, MatInputModule, MatNativeDateModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
@@ -37,10 +37,10 @@ describe('AdfCardView', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                MdDatepickerModule,
-                MdIconModule,
-                MdInputModule,
-                MdNativeDateModule,
+                MatDatepickerModule,
+                MatIconModule,
+                MatInputModule,
+                MatNativeDateModule,
                 FormsModule
             ],
             declarations: [

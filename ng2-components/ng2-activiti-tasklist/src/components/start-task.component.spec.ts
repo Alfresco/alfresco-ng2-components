@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdButtonModule, MdDatepickerModule, MdGridListModule, MdIconModule, MdInputModule, MdNativeDateModule, MdSelectModule } from '@angular/material';
+import { MatButtonModule, MatDatepickerModule, MatGridListModule, MatIconModule, MatInputModule, MatNativeDateModule, MatSelectModule } from '@angular/material';
 import { AppConfigService, CoreModule, PeopleProcessService, TranslationService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
@@ -53,13 +53,13 @@ describe('StartTaskComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule,
-                MdInputModule,
-                MdIconModule,
-                MdButtonModule,
-                MdDatepickerModule,
-                MdGridListModule,
-                MdNativeDateModule,
-                MdSelectModule
+                MatInputModule,
+                MatIconModule,
+                MatButtonModule,
+                MatDatepickerModule,
+                MatGridListModule,
+                MatNativeDateModule,
+                MatSelectModule
             ],
             declarations: [
                 StartTaskComponent

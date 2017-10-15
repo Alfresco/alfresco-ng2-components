@@ -1,6 +1,6 @@
 <div class="dropdown-editor">
     <label [attr.for]="column.id">{{column.name}}</label>
-    <md-select
+    <mat-select
         floatPlaceholder="never"
         class="adf-dropdown-editor-select"
         [id]="column.id"
@@ -8,7 +8,7 @@
         [required]="column.required"
         [disabled]="!column.editable"
         (change)="onValueChanged(row, column, $event)">
-        <md-option></md-option>
-        <md-option *ngFor="let opt of options" [value]="opt.name" [id]="opt.id">{{opt.name}}</md-option>
-    </md-select>
+        <mat-option></mat-option>
+        <mat-option *ngFor="let opt of options" [value]="opt.name" [id]="opt.id">{{opt.name}}</mat-option>
+    </mat-select>
 </div>

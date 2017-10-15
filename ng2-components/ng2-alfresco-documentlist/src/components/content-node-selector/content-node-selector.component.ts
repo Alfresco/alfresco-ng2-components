@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Inject, Input, OnInit, Optional, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { MinimalNodeEntryEntity, NodePaging, Pagination } from 'alfresco-js-api';
 import { AlfrescoContentService, HighlightDirective, SiteModel } from 'ng2-alfresco-core';
 import { ImageResolver, RowFilter } from '../../data/share-datatable-adapter';
@@ -77,8 +77,8 @@ export class ContentNodeSelectorComponent implements OnInit {
 
     constructor(private contentNodeSelectorService: ContentNodeSelectorService,
                 private contentService: AlfrescoContentService,
-                @Optional() @Inject(MD_DIALOG_DATA) data?: ContentNodeSelectorComponentData,
-                @Optional() private containingDialog?: MdDialogRef<ContentNodeSelectorComponent>) {
+                @Optional() @Inject(MAT_DIALOG_DATA) data?: ContentNodeSelectorComponentData,
+                @Optional() private containingDialog?: MatDialogRef<ContentNodeSelectorComponent>) {
         if (data) {
             this.title = data.title;
             this.select = data.select;
