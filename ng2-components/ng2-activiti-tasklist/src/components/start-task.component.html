@@ -42,6 +42,7 @@
                 </div>
             </mat-grid-tile>
             <mat-grid-tile>
+              <mat-form-field>
                 <mat-select placeholder="{{'START_TASK.FORM.LABEL.ASSIGNEE'|translate}}" id="assignee_id"
                            class="adf-start-task-input-container adf-mat-select" [(ngModel)]="assigneeId">
                     <mat-option>{{'START_TASK.FORM.LABEL.NONE'|translate}}</mat-option>
@@ -51,15 +52,18 @@
                         </mat-option>
 					</span>
                 </mat-select>
+              </mat-form-field>
             </mat-grid-tile>
         </mat-grid-list>
         <mat-grid-list cols="2" rowHeight="80px">
             <mat-grid-tile>
-                <mat-select placeholder="{{'START_TASK.FORM.LABEL.FORM'|translate}}" id="form_id" [(ngModel)]="formKey"
-                           class="adf-start-task-input-container">
-                    <mat-option>{{'START_TASK.FORM.LABEL.NONE'|translate}}</mat-option>
-                    <mat-option *ngFor="let form of forms" [value]="form.id">{{ form.name }}</mat-option>
-                </mat-select>
+                <mat-form-field>
+                    <mat-select placeholder="{{'START_TASK.FORM.LABEL.FORM'|translate}}" id="form_id" [(ngModel)]="formKey"
+                               class="adf-start-task-input-container">
+                        <mat-option>{{'START_TASK.FORM.LABEL.NONE'|translate}}</mat-option>
+                        <mat-option *ngFor="let form of forms" [value]="form.id">{{ form.name }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile></mat-grid-tile>
         </mat-grid-list>

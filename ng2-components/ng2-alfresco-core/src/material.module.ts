@@ -19,6 +19,7 @@ import { NgModule } from '@angular/core';
 import {
     MatButtonModule,
     MatDialogModule,
+    MatIconModule,
     MatInputModule,
     MatMenuModule,
     MatProgressBarModule,
@@ -36,7 +37,8 @@ export function modules() {
         MatSnackBarModule,
         MatToolbarModule,
         MatTabsModule,
-        MatMenuModule
+        MatMenuModule,
+        MatIconModule
     ];
 }
 

@@ -8,14 +8,16 @@
 		<mat-form-field class="adf-process-input-container">
 			<input matInput placeholder="{{'START_PROCESS.FORM.LABEL.NAME'|translate}}" [(ngModel)]="name" id="processName" required />
 		</mat-form-field>
-		<mat-select placeholder="{{'START_PROCESS.FORM.LABEL.TYPE'|translate}}" [(ngModel)]="currentProcessDef.id" (ngModelChange)="onProcessDefChange($event)" required>
-			<mat-option>{{'START_PROCESS.FORM.TYPE_PLACEHOLDER' | translate}}</mat-option>
-			<mat-option *ngFor="let processDef of processDefinitions" [value]="processDef.id">
-				{{ processDef.name }}
-			</mat-option>
-		</mat-select>
-		<activiti-start-form *ngIf="hasStartForm()" 
-			[processDefinitionId]="currentProcessDef.id" 
+        <mat-form-field>
+            <mat-select placeholder="{{'START_PROCESS.FORM.LABEL.TYPE'|translate}}" [(ngModel)]="currentProcessDef.id" (ngModelChange)="onProcessDefChange($event)" required>
+                <mat-option>{{'START_PROCESS.FORM.TYPE_PLACEHOLDER' | translate}}</mat-option>
+                <mat-option *ngFor="let processDef of processDefinitions" [value]="processDef.id">
+                    {{ processDef.name }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+		<activiti-start-form *ngIf="hasStartForm()"
+			[processDefinitionId]="currentProcessDef.id"
 			(outcomeClick)="onOutcomeClick($event)"
 		    [showRefreshButton]="false">
 		<button form-custom-button mat-button (click)="cancelStartProcess()" id="cancle_process" class=""> {{'START_PROCESS.FORM.ACTION.CANCEL'| translate}} </button>

@@ -1,19 +1,21 @@
 <adf-toolbar>
     <adf-toolbar-title>
-        <mat-select [(ngModel)]="selectedSource">
-            <mat-option *ngFor="let source of sources" [value]="source.value">
-                {{ source.title }}
-            </mat-option>
-        </mat-select>
+        <mat-form-field>
+            <mat-select [(ngModel)]="selectedSource">
+                <mat-option *ngFor="let source of sources" [value]="source.value">
+                    {{ source.title }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
     </adf-toolbar-title>
 
     <div fxFlex="0 1 auto" class="adf-document-action-buttons" fxShow fxHide.lt-sm="true">
         <button mat-icon-button
-            (restore)="documentList.reload()"
-            [disabled]="!documentList.selection.length"
-            *ngIf="selectedSource === '-trashcan-'"
-            location="/files"
-            [adf-restore]="documentList.selection">
+                (restore)="documentList.reload()"
+                [disabled]="!documentList.selection.length"
+                *ngIf="selectedSource === '-trashcan-'"
+                location="/files"
+                [adf-restore]="documentList.selection">
             <mat-icon>restore</mat-icon>
         </button>
     </div>

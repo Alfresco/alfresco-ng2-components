@@ -9,7 +9,7 @@
         (executeRowAction)="onExecuteRowAction($event)"
         (row-click)="onRowClick($event)"
         (row-dblclick)="onRowDblClick($event)">
-      <!-- HTML column definition demo -->
+        <!-- HTML column definition demo -->
         <!--
         <data-columns>
             <data-column type="image" key="icon" [sortable]="false"></data-column>
@@ -26,11 +26,13 @@
 </div>
 <div class="p-10">
     <p>{{ 'DATATABLE.MULTISELECT_DESCRIPTION'| translate }}</p>
-    <mat-select placeholder="Selection Mode" [(ngModel)]="selectionMode" name="food">
-        <mat-option *ngFor="let mode of selectionModes" [value]="mode.value">
-            {{mode.viewValue}}
-        </mat-option>
-    </mat-select>
+    <mat-form-field>
+        <mat-select placeholder="Selection Mode" [(ngModel)]="selectionMode" name="food">
+            <mat-option *ngFor="let mode of selectionModes" [value]="mode.value">
+                {{mode.viewValue}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
 </div>
 <div class="p-10">
     <button mat-raised-button (click)="reset()">{{ 'DATATABLE.RESET_DEFAULT'| translate }}</button>

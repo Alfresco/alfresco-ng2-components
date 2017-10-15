@@ -17,15 +17,15 @@
         <adf-toolbar [color]="toolbarColor" class="adf-files-toolbar">
             <adf-toolbar-title fxFlex="0 1 auto">
                 <adf-breadcrumb fxShow fxHide.lt-sm="true"
-                    class="files-breadcrumb"
-                    root="Personal Files"
-                    [target]="documentList"
-                    [folderNode]="documentList.folderNode">
+                                class="files-breadcrumb"
+                                root="Personal Files"
+                                [target]="documentList"
+                                [folderNode]="documentList.folderNode">
                 </adf-breadcrumb>
                 <adf-dropdown-breadcrumb fxHide fxShow.lt-sm="true"
-                    class="files-breadcrumb"
-                    [target]="documentList"
-                    [folderNode]="documentList.folderNode">
+                                         class="files-breadcrumb"
+                                         [target]="documentList"
+                                         [folderNode]="documentList.folderNode">
                 </adf-dropdown-breadcrumb>
             </adf-toolbar-title>
 
@@ -33,13 +33,13 @@
 
             <div fxFlex="0 0 auto" class="adf-document-action-buttons" fxShow fxHide.lt-sm="true">
                 <button mat-icon-button
-                    (click)="onCreateFolderClicked($event)">
+                        (click)="onCreateFolderClicked($event)">
                     <mat-icon>create_new_folder</mat-icon>
                 </button>
                 <button mat-icon-button
-                    [disabled]="!hasSelection(documentList.selection)"
-                    title="Download"
-                    (click)="downloadNodes(documentList.selection)">
+                        [disabled]="!hasSelection(documentList.selection)"
+                        title="Download"
+                        (click)="downloadNodes(documentList.selection)">
                     <mat-icon>get_app</mat-icon>
                 </button>
                 <button mat-icon-button
@@ -48,9 +48,9 @@
                     <mat-icon>delete</mat-icon>
                 </button>
                 <button mat-icon-button
-                    #favorite="adfFavorite"
-                    (toggle)="documentList.reload()"
-                    [adf-node-favorite]="documentList.selection">
+                        #favorite="adfFavorite"
+                        (toggle)="documentList.reload()"
+                        [adf-node-favorite]="documentList.selection">
                     <mat-icon>
                         {{ favorite.hasFavorites() ? 'star' :'star_border' }}
                     </mat-icon>
@@ -75,14 +75,14 @@
             </button>
             <mat-menu #menu="matMenu">
                 <button mat-menu-item
-                    (click)="onCreateFolderClicked($event)">
+                        (click)="onCreateFolderClicked($event)">
                     <mat-icon>create_new_folder</mat-icon>
                     <span>New folder</span>
                 </button>
                 <button mat-menu-item
-                    [disabled]="!hasSelection(documentList.selection)"
-                    title="Download"
-                    (click)="downloadNodes(documentList.selection)">
+                        [disabled]="!hasSelection(documentList.selection)"
+                        title="Download"
+                        (click)="downloadNodes(documentList.selection)">
                     <mat-icon>get_app</mat-icon>
                     <span>Download</span>
                 </button>
@@ -95,19 +95,19 @@
             </mat-menu>
         </adf-toolbar>
         <adf-document-list
-                #documentList
-                [permissionsStyle]="permissionsStyle"
-                [currentFolderId]="currentFolderId"
-                [contextMenuActions]="true"
-                [contentActions]="true"
-                [allowDropFiles]="true"
-                [selectionMode]="selectionMode"
-                [multiselect]="multiselect"
-                (error)="onNavigationError($event)"
-                (success)="resetError()"
-                (preview)="showFile($event)"
-                (folderChange)="onFolderChange($event)"
-                (permissionError)="handlePermissionError($event)">
+            #documentList
+            [permissionsStyle]="permissionsStyle"
+            [currentFolderId]="currentFolderId"
+            [contextMenuActions]="true"
+            [contentActions]="true"
+            [allowDropFiles]="true"
+            [selectionMode]="selectionMode"
+            [multiselect]="multiselect"
+            (error)="onNavigationError($event)"
+            (success)="resetError()"
+            (preview)="showFile($event)"
+            (folderChange)="onFolderChange($event)"
+            (permissionError)="handlePermissionError($event)">
             <data-columns>
                 <data-column
                     key="$thumbnail"
@@ -244,29 +244,40 @@
 
     <div class="container">
         <section>
-            <mat-slide-toggle [color]="'primary'" [(ngModel)]="multiselect">{{'DOCUMENT_LIST.MULTISELECT_CHECKBOXES' | translate}}</mat-slide-toggle>
+            <mat-slide-toggle [color]="'primary'" [(ngModel)]="multiselect">{{'DOCUMENT_LIST.MULTISELECT_CHECKBOXES' |
+                translate}}
+            </mat-slide-toggle>
         </section>
 
         <section>
-            <mat-slide-toggle [color]="'primary'" [(ngModel)]="multipleFileUpload">{{'DOCUMENT_LIST.MULTIPLE_FILE_UPLOAD' | translate}}</mat-slide-toggle>
+            <mat-slide-toggle [color]="'primary'" [(ngModel)]="multipleFileUpload">
+                {{'DOCUMENT_LIST.MULTIPLE_FILE_UPLOAD' | translate}}
+            </mat-slide-toggle>
         </section>
 
         <section>
-            <mat-slide-toggle [color]="'primary'" [(ngModel)]="folderUpload">{{'DOCUMENT_LIST.FOLDER_UPLOAD' | translate}}</mat-slide-toggle>
+            <mat-slide-toggle [color]="'primary'" [(ngModel)]="folderUpload">{{'DOCUMENT_LIST.FOLDER_UPLOAD' |
+                translate}}
+            </mat-slide-toggle>
         </section>
 
         <section>
-            <mat-slide-toggle [color]="'primary'" [(ngModel)]="acceptedFilesTypeShow">{{'DOCUMENT_LIST.CUSTOM_FILTER' | translate}}</mat-slide-toggle>
+            <mat-slide-toggle [color]="'primary'" [(ngModel)]="acceptedFilesTypeShow">{{'DOCUMENT_LIST.CUSTOM_FILTER' |
+                translate}}
+            </mat-slide-toggle>
         </section>
 
         <section>
-            <mat-slide-toggle [color]="'primary'" [(ngModel)]="versioning">{{'DOCUMENT_LIST.ENABLE_VERSIONING' | translate}}</mat-slide-toggle>
+            <mat-slide-toggle [color]="'primary'" [(ngModel)]="versioning">{{'DOCUMENT_LIST.ENABLE_VERSIONING' |
+                translate}}
+            </mat-slide-toggle>
         </section>
 
         <h5>Upload</h5>
         <section *ngIf="acceptedFilesTypeShow">
             <mat-form-field>
-                <input matInput placeholder="Extension accepted" [(ngModel)]="acceptedFilesType"  data-automation-id="accepted-files-type">
+                <input matInput placeholder="Extension accepted" [(ngModel)]="acceptedFilesType"
+                       data-automation-id="accepted-files-type">
             </mat-form-field>
         </section>
         <div *ngIf="!acceptedFilesTypeShow">
@@ -311,11 +322,13 @@
         <p>
             {{'DOCUMENT_LIST.MULTISELECT_DESCRIPTION' | translate}}
         </p>
-        <mat-select placeholder="Selection Mode" [(ngModel)]="selectionMode" name="food">
-            <mat-option *ngFor="let mode of selectionModes" [value]="mode.value">
-                {{mode.viewValue}}
-            </mat-option>
-        </mat-select>
+        <mat-form-field>
+            <mat-select placeholder="Selection Mode" [(ngModel)]="selectionMode" name="food">
+                <mat-option *ngFor="let mode of selectionModes" [value]="mode.value">
+                    {{mode.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
     </div>
 </div>
 
