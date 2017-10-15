@@ -17,7 +17,7 @@
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatMenuModule, MatButtonModule, MatIconModule} from '@angular/material';
+import { MatButtonModule, MatIconModule, MatMenuModule } from '@angular/material';
 
 import { TranslateModule } from '@ngx-translate/core';
 

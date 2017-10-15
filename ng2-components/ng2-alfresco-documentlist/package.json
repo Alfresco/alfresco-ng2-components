@@ -65,7 +65,7 @@
     "zone.js": "0.8.12"
   },
   "devDependencies": {
-    "@types/hammerjs": "2.0.34",
+    "@types/hammerjs": "2.0.35",
     "@types/jasmine": "2.5.35",
     "@types/node": "6.0.45",
     "adf-tslint-rules": "0.0.3",
