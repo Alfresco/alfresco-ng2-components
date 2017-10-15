@@ -357,7 +357,7 @@ describe('StartTaskComponent', () => {
             let selectElement = fixture.nativeElement.querySelector('#assignee_id');
             expect(selectElement).not.toBeNull();
             expect(selectElement).toBeDefined();
-            expect(selectElement.innerText.trim()).toBe('START_TASK.FORM.LABEL.ASSIGNEE');
+            expect(selectElement.attributes['aria-label'].value).toContain('START_TASK.FORM.LABEL.ASSIGNEE');
         });
     }));
 
@@ -365,7 +365,7 @@ describe('StartTaskComponent', () => {
         component.forms = fakeForms;
         fixture.detectChanges();
         let selectElement = fixture.nativeElement.querySelector('#form_id');
-        expect(selectElement.innerText.trim()).toBe('START_TASK.FORM.LABEL.FORM');
+        expect(selectElement.attributes['aria-label'].value).toContain('START_TASK.FORM.LABEL.FORM');
     });
 
     it('should get formatted fullname', () => {
