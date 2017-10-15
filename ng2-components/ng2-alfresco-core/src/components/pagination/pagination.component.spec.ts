@@ -16,7 +16,7 @@
  */
 
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { async, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
 import { MaterialModule } from '../../material.module';
 import { PaginationComponent } from './pagination.component';
@@ -38,6 +38,9 @@ class FakePaginationInput {
 
 describe('PaginationComponent', () => {
 
+    let fixture: ComponentFixture<PaginationComponent>;
+    let component: PaginationComponent;
+
     beforeEach(() => {
         jasmine.Ajax.install();
     });
@@ -58,8 +61,8 @@ describe('PaginationComponent', () => {
             schemas: [ NO_ERRORS_SCHEMA ]
         }).compileComponents()
             .then(() => {
-                const fixture = TestBed.createComponent(PaginationComponent);
-                const component: PaginationComponent = fixture.componentInstance;
+                fixture = TestBed.createComponent(PaginationComponent);
+                component = fixture.componentInstance;
 
                 (<any> component).ngAfterViewInit = jasmine
                     .createSpy('ngAfterViewInit').and
@@ -150,8 +153,6 @@ describe('PaginationComponent', () => {
         });
 
         it('goes next', () => {
-            const { component } = this;
-
             component.goNext();
 
             const { emit: { calls } } = component.onNextPage;
@@ -161,8 +162,6 @@ describe('PaginationComponent', () => {
         });
 
         it('goes previous', () => {
-            const { component } = this;
-
             component.goPrevious();
 
             const { emit: { calls } } = component.onPrevPage;
@@ -172,7 +171,6 @@ describe('PaginationComponent', () => {
         });
 
         it('changes page size', () => {
-            const { component } = this;
             component.changePageSize(50);
 
             const { emit: { calls } } = component.onChangePageSize;
@@ -182,8 +180,6 @@ describe('PaginationComponent', () => {
         });
 
         it('changes page number', () => {
-            const { component } = this;
-
             component.changePageNumber(5);
 
             const { emit: { calls } } = component.onChangePageNumber;
@@ -194,8 +190,6 @@ describe('PaginationComponent', () => {
     });
 
     describe('First page', () => {
-
-        // This test describes 10 pages being on the first page
 
         beforeEach(() => {
             this.component.pagination = new FakePaginationInput(10, 1, 5);
