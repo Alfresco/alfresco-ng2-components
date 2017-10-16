@@ -145,7 +145,11 @@ module.exports = {
         inline: true,
         proxy: {
             '/ecm': {
-                target: 'http://adfdev.lab.alfresco.me/',
+                target: {
+                    host: "0.0.0.0",
+                    protocol: 'http:',
+                    port: 8080
+                },
                 pathRewrite: {
                     '^/ecm': ''
                 },
@@ -160,7 +164,11 @@ module.exports = {
                 }
             },
             '/bpm': {
-                target: 'http://adfdev.lab.alfresco.me/',
+                target: {
+                    host: "0.0.0.0",
+                    protocol: 'http:',
+                    port: 9999
+                },
                 pathRewrite: {
                     '^/bpm': ''
                 },
