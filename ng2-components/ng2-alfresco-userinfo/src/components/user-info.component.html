@@ -1,8 +1,10 @@
 <div id="userinfo_container"
     [class.adf-userinfo-name-right]="showOnRight()"
     class="adf-userinfo-container" *ngIf="isLoggedIn()">
-    <span *ngIf="ecmUser && showName" class="adf-userinfo-name">{{ecmUser.fullNameDisplay}}</span>
-    <span *ngIf="bpmUser && !ecmUser && showName" class="adf-userinfo-name">{{bpmUser.fullNameDisplay}}</span>
+    <span *ngIf="ecmUser && showName" id="adf-userinfo-ecm-name-display"
+          class="adf-userinfo-name">{{ecmUser.fullNameDisplay}}</span>
+    <span *ngIf="bpmUser && !ecmUser && showName" id="adf-userinfo-bpm-name-display"
+          class="adf-userinfo-name">{{bpmUser.fullNameDisplay}}</span>
     <button mat-button [matMenuTriggerFor]="menu" class="adf-userinfo-menu_button">
         <div class="adf-userinfo-button-profile" id="user-profile" data-automation-id="user-profile">
             <div *ngIf="bpmUser && !ecmUser" id="bpm-user-image">

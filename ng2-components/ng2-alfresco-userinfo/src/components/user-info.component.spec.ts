@@ -115,6 +115,65 @@ describe('User info component', () => {
             });
         }));
 
+        it('should show the username when showName attribute is true', async(() => {
+            fixture.detectChanges();
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'application/json',
+                responseText: JSON.stringify({entry: fakeEcmEditedUser})
+            });
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(userInfoComp.showName).toBeTruthy();
+                expect(element.querySelector('#adf-userinfo-ecm-name-display')).not.toBeNull();
+            });
+        }));
+
+        it('should hide the username when showName attribute is false', async(() => {
+            userInfoComp.showName = false;
+            fixture.detectChanges();
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'application/json',
+                responseText: JSON.stringify({entry: fakeEcmEditedUser})
+            });
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#adf-userinfo-ecm-name-display')).toBeNull();
+            });
+        }));
+
+        it('should have the defined class to show the name on the right side', async(() => {
+            fixture.detectChanges();
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'application/json',
+                responseText: JSON.stringify({entry: fakeEcmEditedUser})
+            });
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#userinfo_container').classList).toContain('adf-userinfo-name-right');
+            });
+        }));
+
+        it('should not have the defined class to show the name on the left side', async(() => {
+            userInfoComp.namePosition = 'left';
+            fixture.detectChanges();
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'application/json',
+                responseText: JSON.stringify({entry: fakeEcmEditedUser})
+            });
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#userinfo_container').classList).not.toContain('adf-userinfo-name-right');
+            });
+        }));
+
         describe('and has image', () => {
 
             beforeEach(async(() => {
