@@ -20,7 +20,7 @@ Contains the Alfresco Viewer component.
 
 ## Documentation
 
-See the [ADF Viewer](../../docIndex.md#adf-viewer) section of the [docs index](../../docIndex.md)
+See the [ADF Viewer](../../docs/README.md#adf-viewer) section of the [docs index](../../docs/README.md)
 for all available documentation on this library.
 
 ## Prerequisites
