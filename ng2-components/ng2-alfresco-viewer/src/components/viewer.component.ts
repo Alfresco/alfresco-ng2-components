@@ -16,18 +16,30 @@
  */
 
 import { Location } from '@angular/common';
-import { Component, EventEmitter, HostListener, Input, OnChanges, OnDestroy, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
+import {
+    Component, ContentChild, EventEmitter, HostListener,
+    Input, OnChanges, OnDestroy, Output, TemplateRef, ViewEncapsulation
+} from '@angular/core';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AlfrescoApiService, BaseEvent, LogService, RenditionsService } from 'ng2-alfresco-core';
 
+import { ViewerInfoDrawerComponent } from './viewer-info-drawer.component';
+import { ViewerToolbarComponent  } from './viewer-toolbar.component';
+
 @Component({
-    selector: 'adf-viewer, alfresco-viewer',
+    selector: 'adf-viewer',
     templateUrl: './viewer.component.html',
     styleUrls: ['./viewer.component.scss'],
     host: { 'class': 'adf-viewer' },
     encapsulation: ViewEncapsulation.None
 })
 export class ViewerComponent implements OnDestroy, OnChanges {
+
+    @ContentChild(ViewerToolbarComponent)
+    toolbar: ViewerToolbarComponent;
+
+    @ContentChild(ViewerInfoDrawerComponent)
+    infoDrawer: ViewerInfoDrawerComponent;
 
     @Input()
     urlFile: string = '';

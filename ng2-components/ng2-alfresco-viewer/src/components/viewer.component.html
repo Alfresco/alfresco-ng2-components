@@ -4,7 +4,8 @@
     [class.adf-viewer-inline-container]="!overlayMode">
 
     <div class="adf-viewer-content">
-        <ng-container *ngIf="showToolbar">
+        <ng-content select="adf-viewer-toolbar"></ng-content>
+        <ng-container *ngIf="showToolbar && !toolbar">
             <adf-toolbar color="default" class="adf-viewer-toolbar">
 
                 <adf-toolbar-title>
@@ -135,18 +136,21 @@
 
             <ng-container *ngIf="showInfoDrawer">
                 <div class="adf-viewer__info-drawer">
-                    <mat-tab-group md-stretch-tabs>
-                        <mat-tab label="Details">
-                            <mat-card>
-                                DETAILS
-                            </mat-card>
-                        </mat-tab>
-                        <mat-tab label="Activity">
-                            <mat-card>
-                                Activity
-                            </mat-card>
-                        </mat-tab>
-                    </mat-tab-group>
+                    <ng-content select="adf-viewer-info-drawer"></ng-content>
+                    <ng-container *ngIf="!infoDrawer">
+                        <mat-tab-group md-stretch-tabs>
+                            <mat-tab label="Details">
+                                <mat-card>
+                                    DETAILS
+                                </mat-card>
+                            </mat-tab>
+                            <mat-tab label="Activity">
+                                <mat-card>
+                                    Activity
+                                </mat-card>
+                            </mat-tab>
+                        </mat-tab-group>
+                    </ng-container>
                 </div>
             </ng-container>
         </div>

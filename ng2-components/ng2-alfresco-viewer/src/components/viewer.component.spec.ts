@@ -17,7 +17,7 @@
 
 import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
-import { DebugElement } from '@angular/core';
+import { Component, DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CoreModule } from 'ng2-alfresco-core';
@@ -30,9 +30,35 @@ import { MediaPlayerComponent } from './mediaPlayer.component';
 import { PdfViewerComponent } from './pdfViewer.component';
 import { TxtViewerComponent } from './txtViewer.component';
 import { UnknownFormatComponent } from './unknown-format/unknown-format.component';
+import { ViewerInfoDrawerComponent } from './viewer-info-drawer.component';
+import { ViewerToolbarComponent } from './viewer-toolbar.component';
 import { ViewerComponent } from './viewer.component';
 
 declare let jasmine: any;
+
+@Component({
+    selector: 'adf-viewer-container-toolbar',
+    template: `
+        <adf-viewer>
+            <adf-viewer-toolbar>
+                <div class="custom-toolbar-element"></div>
+            </adf-viewer-toolbar>
+        </adf-viewer>
+    `
+})
+class ViewerWithCustomToolbarComponent {}
+
+@Component({
+    selector: 'adf-viewer-container-info-drawer',
+    template: `
+        <adf-viewer>
+            <adf-viewer-info-drawer>
+                <div class="custom-info-drawer-element"></div>
+            </adf-viewer-info-drawer>
+        </adf-viewer>
+    `
+})
+class ViewerWithCustomInfoDrawerComponent {}
 
 describe('ViewerComponent', () => {
 
@@ -53,7 +79,11 @@ describe('ViewerComponent', () => {
                 TxtViewerComponent,
                 MediaPlayerComponent,
                 ImgViewerComponent,
-                UnknownFormatComponent
+                UnknownFormatComponent,
+                ViewerInfoDrawerComponent,
+                ViewerToolbarComponent,
+                ViewerWithCustomToolbarComponent,
+                ViewerWithCustomInfoDrawerComponent
             ],
             providers: [
                 RenderingQueueServices,
@@ -80,6 +110,22 @@ describe('ViewerComponent', () => {
 
     afterEach(() => {
         jasmine.Ajax.uninstall();
+    });
+
+    it('should use custom toolbar', () => {
+        let customFixture = TestBed.createComponent(ViewerWithCustomToolbarComponent);
+        let customElement: HTMLElement = customFixture.nativeElement;
+
+        customFixture.detectChanges();
+        expect(customElement.querySelector('.custom-toolbar-element')).toBeDefined();
+    });
+
+    it('should use custom info drawer', () => {
+        let customFixture = TestBed.createComponent(ViewerWithCustomInfoDrawerComponent);
+        let customElement: HTMLElement = customFixture.nativeElement;
+
+        customFixture.detectChanges();
+        expect(customElement.querySelector('.custom-info-drawer-element')).toBeDefined();
     });
 
     describe('View', () => {
