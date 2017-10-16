@@ -1,6 +1,6 @@
 <div class="adf-comments-container">
     <div id="comment-header" class="adf-comments-header">
-        {{'TASK_DETAILS.COMMENTS.HEADER' | translate}}({{comments?.length}})
+        {{'TASK_DETAILS.COMMENTS.HEADER' | translate: { count: comments?.length} }}
     </div>
     <div class="adf-comments-input-container" *ngIf="!isReadOnly()">
             <mat-form-field class="adf-full-width">

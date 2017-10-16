@@ -49,7 +49,7 @@
         "COMMENTS": {
             "NONE": "No comments",
             "ADD": "Add a comment",
-            "HEADER": "Comments",
+            "HEADER": "Comments ({{ count }})",
             "CREATED_BY_HEADER": "Created by",
             "MESSAGE_HEADER": "Message",
             "DIALOG": {
