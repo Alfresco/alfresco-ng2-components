@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { CardViewDateItemModel, CardViewItem, CardViewMapItemModel, CardViewTextItemModel, LogService, AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { CardViewDateItemModel, CardViewItem, CardViewMapItemModel, CardViewTextItemModel, LogService } from 'ng2-alfresco-core';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 
@@ -44,7 +44,7 @@ export class TaskHeaderComponent implements OnChanges {
 
     constructor(private activitiTaskService: TaskListService,
                 private logService: LogService,
-                private translateService: AlfrescoTranslationService) {
+                ) {
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -57,48 +57,26 @@ export class TaskHeaderComponent implements OnChanges {
     refreshData() {
         if (this.taskDetails) {
             const parentInfoMap = this.getParentInfo();
-            let assigneeLabel: any;
-            assigneeLabel = this.translateService.get('TASK_HEADER.ASSIGNEE');
-            let statusLabel: any;
-            statusLabel = this.translateService.get('TASK_HEADER.STATUS');
-            let priorityLabel: any;
-            priorityLabel = this.translateService.get('TASK_HEADER.PRIORITY');
-            let dueDateLabel: any;
-            dueDateLabel = this.translateService.get('TASK_HEADER.DUE_DATE');
-            let categoryLabel: any;
-            categoryLabel = this.translateService.get('TASK_HEADER.CATEGORY');
-            let parentNameLabel: any;
-            parentNameLabel = this.translateService.get('TASK_HEADER.PARENT_NAME');
-            let createdByLabel: any;
-            createdByLabel = this.translateService.get('TASK_HEADER.CREATED_BY');
-            let createdLabel: any;
-            createdLabel = this.translateService.get('TASK_HEADER.CREATED');
-            let idLabel: any;
-            idLabel = this.translateService.get('TASK_HEADER.ID');
-            let descriptionLabel: any;
-            descriptionLabel = this.translateService.get('TASK_HEADER.DESCRIPTION');
-            let formNameLabel:any;
-            formNameLabel = this.translateService.get('TASK_HEADER.FORM_NAME')
 
             this.properties = [
-                new CardViewTextItemModel({ label: assigneeLabel.value, value: this.taskDetails.getFullName(), key: 'assignee', default: 'No assignee', clickable: !this.isCompleted() } ),
-                new CardViewTextItemModel({ label: statusLabel.value, value: this.getTaskStatus(), key: 'status' }),
-                new CardViewTextItemModel({ label: priorityLabel.value, value: this.taskDetails.priority, key: 'status' }),
-                new CardViewDateItemModel({ label: dueDateLabel.value, value: this.taskDetails.dueDate, key: 'dueDate', default: 'No date', editable: true }),
-                new CardViewTextItemModel({ label: categoryLabel.value, value: this.taskDetails.category, key: 'category', default: 'No category' }),
-                new CardViewMapItemModel({ label: parentNameLabel.value, value: parentInfoMap, key: 'parentName', default: 'None', clickable: true  }),
-                new CardViewTextItemModel({ label: createdByLabel.value, value: this.taskDetails.getFullName(), key: 'created-by', default: 'No assignee' }),
-                new CardViewDateItemModel({ label: createdLabel.value, value: this.taskDetails.created, key: 'created' }),
-                new CardViewTextItemModel({ label: idLabel.value, value: this.taskDetails.id, key: 'id' }),
+                new CardViewTextItemModel({ label: 'CORE.TASK_HEADER.ASSIGNEE', value: this.taskDetails.getFullName(), key: 'assignee', default: 'No assignee', clickable: !this.isCompleted() } ),
+                new CardViewTextItemModel({ label: 'CORE.TASK_HEADER.STATUS', value: this.getTaskStatus(), key: 'status', default: 'No Status' }),
+                new CardViewTextItemModel({ label: 'CORE.TASK_HEADER.PRIORITY', value: this.taskDetails.priority, key: 'priority', default: 'None' }),
+                new CardViewDateItemModel({ label: 'CORE.TASK_HEADER.DUE_DATE', value: this.taskDetails.dueDate, key: 'dueDate', default: 'No date', editable: true }),
+                new CardViewTextItemModel({ label: 'CORE.TASK_HEADER.CATEGORY', value: this.taskDetails.category, key: 'category', default: 'No category' }),
+                new CardViewMapItemModel({ label: 'CORE.TASK_HEADER.PARENT_NAME', value: parentInfoMap, key: 'parentName', default: 'None', clickable: true  }),
+                new CardViewTextItemModel({ label: 'CORE.TASK_HEADER.CREATED_BY', value: this.taskDetails.getFullName(), key: 'created-by', default: 'No assignee' }),
+                new CardViewDateItemModel({ label: 'CORE.TASK_HEADER.CREATED', value: this.taskDetails.created, key: 'created', default: 'None' }),
+                new CardViewTextItemModel({ label: 'CORE.TASK_HEADER.ID', value: this.taskDetails.id, key: 'id', default: 'No ID' }),
                 new CardViewTextItemModel({
-                    label: descriptionLabel.value,
+                    label: 'CORE.TASK_HEADER.DESCRIPTION',
                     value: this.taskDetails.description,
                     key: 'description',
                     default: 'No description',
                     multiline: true,
                     editable: true
                 }),
-                new CardViewTextItemModel({ label: formNameLabel.value, value: this.formName, key: 'formName', default: 'No form' })
+                new CardViewTextItemModel({ label: 'CORE.TASK_HEADER.FORM_NAME', value: this.formName, key: 'formName', default: 'No form' })
             ];
         }
     }

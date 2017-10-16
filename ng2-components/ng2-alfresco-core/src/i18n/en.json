@@ -22,6 +22,19 @@
             "GENERIC": "There was a problem restoring {{ name }} item",
             "PLURAL": "Restore successful",
             "SINGULAR": "{{ name }} item restored"
+        },
+        "TASK_HEADER": {
+            "ASSIGNEE": "Assignee",
+            "PRIORITY": "Priority",
+            "DUE_DATE": "Due Date",
+            "STATUS": "Status",
+            "CATEGORY": "Category",
+            "PARENT_NAME": "Parent name",
+            "CREATED_BY": "Created By",
+            "CREATED": "Created",
+            "ID": "Id",
+            "DESCRIPTION": "Description",
+            "FORM_NAME": "Form Name"
         }
     }
 }
