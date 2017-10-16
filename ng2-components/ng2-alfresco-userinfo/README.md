@@ -20,7 +20,7 @@ Contains the Alfresco User Info component.
 
 ## Documentation
 
-See the [ADF Analytics](../../docs/README.md#adf-analytics) section of the [docs index](../../docs/README.md)
+See the [ADF Userinfo](../../docs/README.md#adf-userinfo) section of the [docs index](../../docs/README.md)
 for all available documentation on this library.
 
 ## Prerequisites
