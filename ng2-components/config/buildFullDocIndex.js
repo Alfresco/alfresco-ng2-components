@@ -3,7 +3,7 @@ var path = require('path');
 
 var angFilenameRegex = /([a-zA-Z0-9\-]+)\.((component)|(directive)|(model)|(service)|(widget))\.ts/;
 
-var indexFileName = path.resolve('..', 'docIndex.md');
+var indexFileName = path.resolve('..', 'docs', 'README.md');
 var summaryFileName = path.resolve('..', 'docs', 'summary.json');
 var undocStoplistFileName = path.resolve('..', 'docs', 'undocStoplist.json');
 
@@ -112,7 +112,7 @@ function makeSummaryIndex() {
     
     for (var i = 0; i < summary.length; i++) {
         var item = summary[i];
-        result += '- [' + item.title + '](docs/' + item.file + ')\n';
+        result += '- [' + item.title + '](' + item.file + ')\n';
     }
     
     return result;
@@ -156,7 +156,7 @@ function buildIndexSection(name, documented, undocumented) {
         var libFileName = path.basename(libFilePath, '.ts');
         var nameSections = libFileName.split('.');
         var visibleName = tidyName(nameSections[0]) + ' ' + nameSections[1];
-        var mdListItem = '- [' + visibleName + '](docs/' + libFileName + '.md)';
+        var mdListItem = '- [' + visibleName + '](' + libFileName + '.md)';
         listItems.push(mdListItem);
     }
     
@@ -166,7 +166,7 @@ function buildIndexSection(name, documented, undocumented) {
         var nameSections = libFileName.split('.');
         var visibleName = tidyName(nameSections[0]) + ' ' + nameSections[1];
         var relPath = libFilePath.substr(libFilePath.indexOf('/ng2-') + 1);
-        var mdListItem = '- [*' + visibleName + '](' + relPath + ')';
+        var mdListItem = '- [*' + visibleName + '](../' + relPath + ')';
         listItems.push(mdListItem);
     }
     
