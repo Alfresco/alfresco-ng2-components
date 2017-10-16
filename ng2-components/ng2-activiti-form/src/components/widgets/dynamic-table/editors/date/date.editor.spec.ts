@@ -40,7 +40,7 @@ describe('DateEditorComponent', () => {
         table = new DynamicTableModel(field, null);
         table.rows.push(row);
         table.columns.push(column);
-        component = new DateEditorComponent(new MomentDateAdapter());
+        component = new DateEditorComponent(new MomentDateAdapter(), null);
         component.table = table;
         component.row = row;
         component.column = column;
