@@ -29,7 +29,7 @@
                     <data-columns>
                         <data-column key="firstName">
                             <ng-template let-entry="$implicit">
-                                <div *ngIf="!entry.row.obj.pictureId" class="people-pic">
+                                <div *ngIf="!entry.row.obj.pictureId" class="adf-people-search-people-pic">
                                     {{getInitialUserName(entry.row.obj.firstName, entry.row.obj.lastName)}}</div>
                                 <div>
                                     <img *ngIf="entry.row.obj.pictureId" class="people-img"

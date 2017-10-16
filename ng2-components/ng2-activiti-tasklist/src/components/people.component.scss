@@ -58,18 +58,6 @@
         .people-email {
             opacity: 0.54;
         }
-        .people-pic {
-            background: mat-color($primary);
-            width: 30px;
-            padding: 10px 5px;
-            border-radius: 100px;
-            color: #fff;
-            text-align: center;
-            font-weight: bolder;
-            font-size: 18px;
-            text-transform: uppercase;
-            vertical-align: text-bottom;
-        }
     }
 
     .people-img {
@@ -77,5 +65,18 @@
         width: 40px;
         height: 40px;
         vertical-align: middle;
+    }
+
+    .adf-people-search-people-pic {
+        background: mat-color($primary);
+        width: 30px;
+        padding: 10px 5px;
+        border-radius: 100px;
+        color: #fff;
+        text-align: center;
+        font-weight: bolder;
+        font-size: 18px;
+        text-transform: uppercase;
+        vertical-align: text-bottom;
     }
 }
