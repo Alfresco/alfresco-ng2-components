@@ -220,10 +220,10 @@
 </mat-tab-group>
 
 <div *ngIf="fileShowed">
-    <alfresco-viewer
+    <adf-viewer
         [(showViewer)]="fileShowed"
         [blobFile]="content"
         [displayName]="contentName"
         [overlayMode]="true">
-    </alfresco-viewer>
+    </adf-viewer>
 </div>

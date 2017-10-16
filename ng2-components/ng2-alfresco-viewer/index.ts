@@ -19,15 +19,18 @@ import { NgModule } from '@angular/core';
 import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { MaterialModule } from './src/material.module';
 
-export { ViewerComponent } from './src/components/viewer.component';
 import { ImgViewerComponent } from './src/components/imgViewer.component';
 import { MediaPlayerComponent } from './src/components/mediaPlayer.component';
 import { PdfViewerComponent } from './src/components/pdfViewer.component';
 import { TxtViewerComponent } from './src/components/txtViewer.component';
 import { UnknownFormatComponent } from './src/components/unknown-format/unknown-format.component';
+import { ViewerInfoDrawerComponent } from './src/components/viewer-info-drawer.component';
+import { ViewerToolbarComponent } from './src/components/viewer-toolbar.component';
 import { ViewerComponent } from './src/components/viewer.component';
 import { ExtensionViewerDirective } from './src/directives/extension-viewer.directive';
 import { RenderingQueueServices } from './src/services/rendering-queue.services';
+
+export { ViewerComponent } from './src/components/viewer.component';
 
 export function declarations() {
     return [
@@ -37,7 +40,9 @@ export function declarations() {
         MediaPlayerComponent,
         PdfViewerComponent,
         ExtensionViewerDirective,
-        UnknownFormatComponent
+        UnknownFormatComponent,
+        ViewerToolbarComponent,
+        ViewerInfoDrawerComponent
     ];
 }
 

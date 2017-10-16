@@ -110,6 +110,35 @@ new CopyWebpackPlugin([
 
 The Viewer component now should be able displaying PDF files.
 
+### Custom toolbar
+
+You can replace standard viewer toolbar with your custom implementation.
+
+```html
+<adf-viewer>
+    <adf-viewer-toolbar>
+        <h1>toolbar</h1>
+    </adf-viewer-toolbar>
+</adf-viewer>
+```
+
+Everything you put inside the "adf-viewer-toolbar" tags is going to be rendered instead of the toolbar.
+
+### Custom info drawer
+
+The Viewer component also suports custom Info Drawer components and layouts.
+The `allowInfoDrawer` property should be set to `true` to enable Info Drawer feature.
+
+```html
+<adf-viewer [allowInfoDrawer]="true">
+    <adf-viewer-info-drawer>
+        <h1>My info</h1>
+    </adf-viewer-info-drawer>
+</adf-viewer>
+```
+
+Everything you put inside the "adf-viewer-info-drawer" tags is going to be rendered instead of the default info drawer.
+
 ### Custom extension handler
 
 If you want to handle other file formats that are not yet supported by the ng2-alfresco-viewer you can define your own custom handler.
