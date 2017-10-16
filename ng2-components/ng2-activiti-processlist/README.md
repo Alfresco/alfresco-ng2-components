@@ -20,7 +20,7 @@ Contains the Activiti Process Instance List component and other related componen
 
 ## Documentation
 
-See the [ADF Processlist](../../docIndex.md#adf-processlist) section of the [docs index](../../docIndex.md)
+See the [ADF Processlist](../../docs/README.md#adf-processlist) section of the [docs index](../../docs/README.md)
 for all available documentation on this library.
 
 ## Prerequisites

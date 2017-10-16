@@ -13,7 +13,7 @@
 
 ## Documentation
 
-The [docs index](../docIndex.md) lists all available documentation for components and
+The [docs index](../docs/README.md) lists all available documentation for components and
 also includes a user guide that explains techniques in greater detail.
 
 ## Libraries

@@ -20,7 +20,7 @@ Contains the Search and Search Results components.
 
 ## Documentation
 
-See the [ADF Search](../../docIndex.md#adf-search) section of the [docs index](../../docIndex.md)
+See the [ADF Search](../../docs/README.md#adf-search) section of the [docs index](../../docs/README.md)
 for all available documentation on this library.
 
 ## Prerequisites

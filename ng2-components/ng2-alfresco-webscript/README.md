@@ -20,7 +20,7 @@ Contains the Alfresco Webscript Get component.
 
 ## Documentation
 
-See the [ADF Webscript](../../docIndex.md#adf-webscript) section of the [docs index](../../docIndex.md)
+See the [ADF Webscript](../../docs/README.md#adf-webscript) section of the [docs index](../../docs/README.md)
 for all available documentation on this library.
 
 ## Prerequisites
