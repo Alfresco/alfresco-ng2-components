@@ -378,9 +378,9 @@ describe('TypeaheadWidgetComponent', () => {
                 typeaheadWidgetComponent.onKeyUp(keyboardEvent);
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
-                    expect(fixture.debugElement.queryAll(By.css('[id="md-option-1"]'))).toBeDefined();
-                    expect(fixture.debugElement.queryAll(By.css('[id="md-option-2"]'))).toBeDefined();
-                    expect(fixture.debugElement.queryAll(By.css('[id="md-option-3"]'))).toBeDefined();
+                    expect(fixture.debugElement.queryAll(By.css('[id="mat-option-1"]'))).toBeDefined();
+                    expect(fixture.debugElement.queryAll(By.css('[id="mat-option-2"]'))).toBeDefined();
+                    expect(fixture.debugElement.queryAll(By.css('[id="mat-option-3"]'))).toBeDefined();
                 });
             }));
         });

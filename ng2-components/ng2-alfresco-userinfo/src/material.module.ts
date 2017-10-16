@@ -17,18 +17,18 @@
 
 import { NgModule } from '@angular/core';
 import {
-    MdButtonModule,
-    MdCardModule,
-    MdMenuModule,
-    MdTabsModule
+    MatButtonModule,
+    MatCardModule,
+    MatMenuModule,
+    MatTabsModule
 } from '@angular/material';
 
 export function modules() {
     return [
-        MdButtonModule,
-        MdMenuModule,
-        MdTabsModule,
-        MdCardModule
+        MatButtonModule,
+        MatMenuModule,
+        MatTabsModule,
+        MatCardModule
     ];
 }
 

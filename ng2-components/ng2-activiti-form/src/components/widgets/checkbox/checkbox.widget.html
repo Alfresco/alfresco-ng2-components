@@ -1,5 +1,5 @@
 <div [ngClass]="field.className">
-    <md-checkbox
+    <mat-checkbox
         [id]="field.id"
         color="primary"
         [required]="field.required"
@@ -8,5 +8,5 @@
         (change)="onChange()">
         {{field.name}}
         <span *ngIf="field.required">*</span>
-    </md-checkbox>
+    </mat-checkbox>
 </div>

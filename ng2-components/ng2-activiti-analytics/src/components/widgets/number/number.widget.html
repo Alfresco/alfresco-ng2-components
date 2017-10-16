@@ -1,6 +1,6 @@
 <div class="adf-number-widget" [formGroup]="formGroup">
-    <md-input-container class="example-full-width" floatPlaceholder="always">
-        <input mdInput
+    <mat-form-field class="example-full-width" floatPlaceholder="always">
+        <input matInput
             placeholder="{{field.nameKey | translate}}"
             formControlName="{{controllerName}}"
             type="text"
@@ -9,5 +9,5 @@
             [value]="field.value"
             [(ngModel)]="field.value"
             (ngModelChange)="changeValue(field)">
-    </md-input-container>
+    </mat-form-field>
 </div>

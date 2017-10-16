@@ -1,12 +1,12 @@
 <div class="adf-text-editor">
-    <md-input-container>
+    <mat-form-field>
     <label [attr.for]="column.id">{{displayName}}</label>
-    <input mdInput
+    <input matInput
         type="text"
         [value]="table.getCellValue(row, column)"
         (keyup)="onValueChanged(row, column, $event)"
         [required]="column.required"
         [disabled]="!column.editable"
         [id]="column.id">
-    </md-input-container>
+    </mat-form-field>
 </div>

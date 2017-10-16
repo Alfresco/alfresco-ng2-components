@@ -2,8 +2,8 @@
     <!--Files Upload-->
     <a *ngIf="!uploadFolders"
         [disabled]="isButtonDisabled()"
-        md-raised-button color="primary">
-        <md-icon>file_upload</md-icon>
+        mat-raised-button color="primary">
+        <mat-icon>file_upload</mat-icon>
 
         <!--Multiple Files Upload-->
         <span *ngIf="multipleFiles">
@@ -51,8 +51,8 @@
 
     <!--Folders Upload-->
     <a *ngIf="uploadFolders"
-        [disabled]="isButtonDisabled()" md-raised-button color="primary">
-        <md-icon>file_upload</md-icon>
+        [disabled]="isButtonDisabled()" mat-raised-button color="primary">
+        <mat-icon>file_upload</mat-icon>
         <label
             id="uploadFolder-label"
             *ngIf="!staticTitle"

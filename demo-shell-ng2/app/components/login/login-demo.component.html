@@ -2,47 +2,47 @@
 
 <div class="settings">
     <p class="toggle">
-        <md-slide-toggle
+        <mat-slide-toggle
             id="switch1"
             [color]="'primary'"
             (change)="toggleECM()"
             [checked]="isECM">
             {{ 'LOGIN.CONTENT_SERVICES'| translate }}
-        </md-slide-toggle>
+        </mat-slide-toggle>
     </p>
     <p class="toggle">
-        <md-slide-toggle
+        <mat-slide-toggle
             id="switch2"
             [color]="'primary'"
             (change)="toggleBPM()"
             [checked]="isBPM">
             {{ 'LOGIN.PROCESS_SERVICES'| translate }}
-        </md-slide-toggle>
+        </mat-slide-toggle>
     </p>
     <p class="toggle">
-        <md-slide-toggle
+        <mat-slide-toggle
             id="switch3"
             [color]="'primary'"
             (change)="toggleCSRF()"
             [checked]="!disableCsrf">
             CSRF
-        </md-slide-toggle>
+        </mat-slide-toggle>
     </p>
     <p class="toggle">
-        <md-slide-toggle
+        <mat-slide-toggle
             id="switch4"
             [color]="'primary'"
             (change)="toggleFooter()"
             [checked]="showFooter">
             {{ 'LOGIN.LOGIN_FOOTER'| translate }}
-        </md-slide-toggle>
+        </mat-slide-toggle>
     </p>
 </div>
 
 <!--SETTING BUTTON-->
 
-<a md-fab class="setting-button" data-automation-id="settings" href="" routerLink="/settings" >
-    <md-icon>settings</md-icon>
+<a mat-fab class="setting-button" data-automation-id="settings" href="" routerLink="/settings" >
+    <mat-icon>settings</mat-icon>
 </a>
 
 <alfresco-login
@@ -57,40 +57,40 @@
     (onError)="onError($event)">
     <div class="mobile-settings">
         <p>
-            <md-slide-toggle
+            <mat-slide-toggle
                 id="switch1-mobile"
                 [color]="'primary'"
                 (change)="toggleECM()"
                 [checked]="isECM">
                 {{ 'LOGIN.CONTENT_SERVICES'| translate }}
-            </md-slide-toggle>
+            </mat-slide-toggle>
         </p>
         <p>
-            <md-slide-toggle
+            <mat-slide-toggle
                 id="switch2-mobile"
                 [color]="'primary'"
                 (change)="toggleBPM()"
                 [checked]="isBPM">
                 {{ 'LOGIN.PROCESS_SERVICES'| translate }}
-            </md-slide-toggle>
+            </mat-slide-toggle>
         </p>
         <p>
-            <md-slide-toggle
+            <mat-slide-toggle
                 id="switch3-mobile"
                 [color]="'primary'"
                 (change)="toggleCSRF()"
                 [checked]="!disableCsrf">
                 CSRF
-            </md-slide-toggle>
+            </mat-slide-toggle>
         </p>
         <p>
-            <md-slide-toggle
+            <mat-slide-toggle
                 id="switch4-mobile"
                 [color]="'primary'"
                 (change)="toggleFooter()"
                 [checked]="showFooter">
                 {{ 'LOGIN.LOGIN_FOOTER'| translate }}
-            </md-slide-toggle>
+            </mat-slide-toggle>
         </p>
     </div>
 </alfresco-login>

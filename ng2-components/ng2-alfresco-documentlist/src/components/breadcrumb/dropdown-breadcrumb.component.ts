@@ -16,7 +16,7 @@
  */
 
 import { Component, OnChanges, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MdSelect } from '@angular/material';
+import { MatSelect } from '@angular/material';
 import { PathElementEntity } from 'alfresco-js-api';
 import { BreadcrumbComponent } from './breadcrumb.component';
 
@@ -30,7 +30,7 @@ import { BreadcrumbComponent } from './breadcrumb.component';
     }
 })
 export class DropdownBreadcrumbComponent extends BreadcrumbComponent implements OnChanges {
-    @ViewChild(MdSelect) selectbox: MdSelect;
+    @ViewChild(MatSelect) selectbox: MatSelect;
 
     currentNode: PathElementEntity;
     previousNodes: PathElementEntity[];

@@ -16,11 +16,13 @@
  */
 
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { async, TestBed } from '@angular/core/testing';
-import { MaterialModule } from '@angular/material';
-
-import { CoreModule } from 'ng2-alfresco-core';
-
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpModule } from '@angular/http';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { MaterialModule } from '../../material.module';
+import { LogService } from '../../services/log.service';
+import { AlfrescoTranslateLoader } from '../../services/translate-loader.service';
+import { TranslationService } from '../../services/translation.service';
 import { PaginationComponent } from './pagination.component';
 
 declare let jasmine: any;
@@ -38,21 +40,10 @@ class FakePaginationInput {
     }
 }
 
-class TestConfig {
-    testBed: any = null;
-
-    constructor() {
-        this.testBed = TestBed.configureTestingModule({
-            imports: [
-                CoreModule,
-                MaterialModule
-            ],
-            schemas: [ NO_ERRORS_SCHEMA ]
-        });
-    }
-}
-
 describe('PaginationComponent', () => {
+
+    let fixture: ComponentFixture<PaginationComponent>;
+
     beforeEach(() => {
         jasmine.Ajax.install();
     });
@@ -62,12 +53,28 @@ describe('PaginationComponent', () => {
     });
 
     beforeEach(async(() => {
-        const test = new TestConfig();
-
-        test.testBed
-            .compileComponents()
+        TestBed.configureTestingModule({
+            imports: [
+                HttpModule,
+                MaterialModule,
+                TranslateModule.forRoot({
+                    loader: {
+                        provide: TranslateLoader,
+                        useClass: AlfrescoTranslateLoader
+                    }
+                })
+            ],
+            declarations: [
+                PaginationComponent
+            ],
+            providers: [
+                TranslationService,
+                LogService
+            ],
+            schemas: [ NO_ERRORS_SCHEMA ]
+        }).compileComponents()
             .then(() => {
-                const fixture = test.testBed.createComponent(PaginationComponent);
+                fixture = TestBed.createComponent(PaginationComponent);
                 const component: PaginationComponent = fixture.componentInstance;
 
                 (<any> component).ngAfterViewInit = jasmine

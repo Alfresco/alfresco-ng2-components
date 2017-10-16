@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { Observable, Observer } from 'rxjs/Rx';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
@@ -64,7 +64,7 @@ export class ChecklistComponent implements OnInit, OnChanges {
      */
     constructor(
         private activitiTaskList: TaskListService,
-        private dialog: MdDialog
+        private dialog: MatDialog
     ) {
         this.task$ = new Observable<TaskDetailsModel>(observer => this.taskObserver = observer).share();
     }

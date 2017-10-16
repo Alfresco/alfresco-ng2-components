@@ -18,26 +18,26 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { ViewportRuler } from '@angular/cdk/scrolling';
 import { Component, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MdMenuTrigger } from '@angular/material';
+import { MatMenuTrigger } from '@angular/material';
 import { Subscription } from 'rxjs/Rx';
 import { ContextMenuService } from './context-menu.service';
 
 @Component({
     selector: 'adf-context-menu-holder, context-menu-holder',
     template: `
-        <button md-button [mdMenuTriggerFor]="contextMenu"></button>
-        <md-menu #contextMenu="mdMenu" class="context-menu">
+        <button mat-button [matMenuTriggerFor]="contextMenu"></button>
+        <mat-menu #contextMenu="matMenu" class="context-menu">
             <button
                 *ngFor="let link of links"
-                md-menu-item
+                mat-menu-item
                 (click)="onMenuItemClick($event, link)"
                 [attr.disabled]="link.model?.disabled || undefined">
-                <md-icon *ngIf="showIcons && link.model?.icon">
+                <mat-icon *ngIf="showIcons && link.model?.icon">
                     {{ link.model?.icon }}
-                </md-icon>
+                </mat-icon>
                     {{link.title || link.model?.title}}
             </button>
-        </md-menu>
+        </mat-menu>
     `
 })
 export class ContextMenuHolderComponent implements OnInit, OnDestroy {
@@ -50,7 +50,7 @@ export class ContextMenuHolderComponent implements OnInit, OnDestroy {
     private contextSubscription: Subscription;
 
     @Input() showIcons: boolean = false;
-    @ViewChild(MdMenuTrigger) menuTrigger: MdMenuTrigger;
+    @ViewChild(MatMenuTrigger) menuTrigger: MatMenuTrigger;
 
     @HostListener('contextmenu', ['$event'])
     onShowContextMenu(event?: MouseEvent) {

@@ -19,9 +19,9 @@ import { async, TestBed } from '@angular/core/testing';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AlfrescoSettingsService } from './alfresco-settings.service';
 import { AppConfigModule } from './app-config.service';
+import { LogService } from './log.service';
 import { StorageService } from './storage.service';
 import { UserPreferencesService } from './user-preferences.service';
-import { LogService } from './log.service';
 
 describe('AlfrescoSettingsService', () => {
 

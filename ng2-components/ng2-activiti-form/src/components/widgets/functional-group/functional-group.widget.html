@@ -1,9 +1,9 @@
 <div class="adf-group-widget {{field.className}}"
      [class.is-dirty]="value"
      [class.adf-invalid]="!field.isValid" [class.adf-readonly]="field.readOnly" id="functional-group-div" *ngIf="field.isVisible">
-    <md-input-container>
+    <mat-form-field>
         <label class="adf-label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
-        <input mdInput
+        <input matInput
                class="adf-input"
                type="text"
                [id]="field.id"
@@ -11,16 +11,16 @@
                (keyup)="onKeyUp($event)"
                [disabled]="field.readOnly"
                placeholder="{{field.placeholder}}"
-               [mdAutocomplete]="auto">
-        <md-autocomplete #auto="mdAutocomplete" (optionSelected)="onItemSelect($event.option.value)">
-            <md-option *ngFor="let item of groups"
+               [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onItemSelect($event.option.value)">
+            <mat-option *ngFor="let item of groups"
                        [id]="field.id +'-'+item.id"
                        (click)="onItemClick(item, $event)"  [value]="item">
                 <span>{{item.name}}</span>
-            </md-option>
-        </md-autocomplete>
+            </mat-option>
+        </mat-autocomplete>
 
-    </md-input-container>
+    </mat-form-field>
     <error-widget [error]="field.validationSummary"></error-widget>
     <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
 </div>

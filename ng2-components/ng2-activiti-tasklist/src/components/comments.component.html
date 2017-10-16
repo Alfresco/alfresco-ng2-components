@@ -3,9 +3,9 @@
         {{'TASK_DETAILS.COMMENTS.HEADER' | translate}}({{comments?.length}})
     </div>
     <div class="adf-comments-input-container" *ngIf="!isReadOnly()">
-            <md-input-container class="adf-full-width">
-                <input mdInput id="comment-input" placeholder="{{'TASK_DETAILS.COMMENTS.ADD' | translate}}" [(ngModel)]="message" (keyup.enter)="add()" (keyup.esc)="clear()">
-            </md-input-container>
+            <mat-form-field class="adf-full-width">
+                <input matInput id="comment-input" placeholder="{{'TASK_DETAILS.COMMENTS.ADD' | translate}}" [(ngModel)]="message" (keyup.enter)="add()" (keyup.esc)="clear()">
+            </mat-form-field>
     </div>
 
     <div *ngIf="comments.length > 0">

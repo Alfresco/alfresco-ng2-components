@@ -17,18 +17,18 @@
 
 import { NgModule } from '@angular/core';
 import {
-    MdCheckboxModule,
-    MdIconModule,
-    MdInputModule,
-    MdProgressSpinnerModule
+    MatCheckboxModule,
+    MatIconModule,
+    MatInputModule,
+    MatProgressSpinnerModule
 } from '@angular/material';
 
 export function modules() {
     return [
-        MdCheckboxModule,
-        MdIconModule,
-        MdInputModule,
-        MdProgressSpinnerModule
+        MatCheckboxModule,
+        MatIconModule,
+        MatInputModule,
+        MatProgressSpinnerModule
     ];
 }
 

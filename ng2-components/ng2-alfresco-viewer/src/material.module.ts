@@ -17,28 +17,28 @@
 
 import { NgModule } from '@angular/core';
 import {
-    MdButtonModule,
-    MdCardModule,
-    MdDialogModule,
-    MdIconModule,
-    MdMenuModule,
-    MdProgressBarModule,
-    MdProgressSpinnerModule,
-    MdTabsModule,
-    MdTooltipModule
+    MatButtonModule,
+    MatCardModule,
+    MatDialogModule,
+    MatIconModule,
+    MatMenuModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
+    MatTabsModule,
+    MatTooltipModule
 } from '@angular/material';
 
 export function modules() {
     return [
-        MdButtonModule,
-        MdCardModule,
-        MdDialogModule,
-        MdIconModule,
-        MdMenuModule,
-        MdProgressBarModule,
-        MdProgressSpinnerModule,
-        MdTabsModule,
-        MdTooltipModule
+        MatButtonModule,
+        MatCardModule,
+        MatDialogModule,
+        MatIconModule,
+        MatMenuModule,
+        MatProgressBarModule,
+        MatProgressSpinnerModule,
+        MatTabsModule,
+        MatTooltipModule
     ];
 }
 

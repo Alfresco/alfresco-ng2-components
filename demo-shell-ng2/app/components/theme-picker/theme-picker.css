@@ -1,8 +1,8 @@
-.docs-theme-picker-menu .md-menu-content {
+.docs-theme-picker-menu .mat-menu-content {
     padding: 8px;
 }
 
-.docs-theme-picker-menu [md-menu-item] {
+.docs-theme-picker-menu [mat-menu-item] {
     flex: 0 0 auto;
     padding: 0;
     overflow: hidden;

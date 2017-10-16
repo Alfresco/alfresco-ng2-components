@@ -14,14 +14,14 @@
         &-dateitem-editable {
             cursor: pointer;
 
-            md-icon {
+            mat-icon {
                 width: 16px;
                 height: 16px;
                 opacity: 0.5;
                 margin-left: 4px;
             }
 
-            &:hover md-icon {
+            &:hover mat-icon {
                 opacity: 1;
             }
         }

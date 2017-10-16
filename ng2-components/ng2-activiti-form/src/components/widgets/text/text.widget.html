@@ -1,8 +1,8 @@
 <div class="adf-textfield adf-text-widget {{field.className}}"
      [class.adf-invalid]="!field.isValid" [class.adf-readonly]="field.readOnly">
-    <md-input-container>
+    <mat-form-field>
         <label class="adf-label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
-        <input mdInput
+        <input matInput
                class="adf-input"
                type="text"
                [id]="field.id"
@@ -13,7 +13,7 @@
                [disabled]="field.readOnly || readOnly"
                [textMask]="{mask: mask, isReversed: isMaskReversed}"
                placeholder="{{field.placeholder}}">
-    </md-input-container>
+    </mat-form-field>
     <error-widget [error]="field.validationSummary"></error-widget>
     <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
 </div>

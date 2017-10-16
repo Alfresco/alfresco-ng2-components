@@ -17,7 +17,7 @@
 
 import { DatePipe } from '@angular/common';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdInputModule } from '@angular/material';
+import { MatInputModule } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
 
 import {
@@ -45,7 +45,7 @@ describe('ActivitiProcessInstanceComments', () => {
             imports: [
                 CoreModule,
                 DataTableModule,
-                MdInputModule
+                MatInputModule
             ],
             declarations: [
                 ProcessCommentsComponent,

@@ -4,21 +4,21 @@
         <span [attr.data-automation-id]="'card-dateitem-' + property.key">{{ property.displayValue }}</span>
     </span>
     <span *ngIf="isEditable()" class="adf-dateitem-editable">
-        <input class="adf-invisible-date-input" [mdDatepicker]="picker" [value]="valueDate"
+        <input class="adf-invisible-date-input" [matDatepicker]="picker" [value]="valueDate"
                (dateChange)="onDateChanged($event)">
         <span
             class="adf-datepicker-toggle"
             [attr.data-automation-id]="'datepicker-label-toggle-' + property.key"
             (click)="showDatePicker($event)">{{ property.displayValue }}
         </span>
-        <md-datepicker-toggle
+        <mat-datepicker-toggle
             [attr.data-automation-id]="'datepickertoggle-' + property.key"
             [for]="picker">
-        </md-datepicker-toggle>
-        <md-datepicker #picker
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker
                        [attr.data-automation-id]="'datepicker-' + property.key"
                        [startAt]="valueDate"
                        [touchUi]="true">
-        </md-datepicker>
+        </mat-datepicker>
     </span>
 </div>

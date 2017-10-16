@@ -17,7 +17,7 @@
 
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { TaskDetailsEvent, TaskDetailsModel } from 'ng2-activiti-tasklist';
 import { LogService } from 'ng2-alfresco-core';
 import { Observable, Observer } from 'rxjs/Rx';
@@ -66,7 +66,7 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges {
 
     constructor(private activitiProcess: ProcessService,
                 private logService: LogService,
-                private dialog: MdDialog) {
+                private dialog: MatDialog) {
         this.task$ = new Observable<TaskDetailsModel>(observer => this.taskObserver = observer).share();
         this.completedTask$ = new Observable<TaskDetailsModel>(observer => this.completedTaskObserver = observer).share();
     }

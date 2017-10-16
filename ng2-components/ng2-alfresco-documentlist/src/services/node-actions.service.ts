@@ -16,7 +16,7 @@
  */
 
 import { EventEmitter, Injectable } from '@angular/core';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AlfrescoContentService } from 'ng2-alfresco-core';
 import { DataColumn } from 'ng2-alfresco-datatable';
@@ -28,7 +28,7 @@ import { DocumentListService } from './document-list.service';
 @Injectable()
 export class NodeActionsService {
 
-    constructor(private dialog: MdDialog,
+    constructor(private dialog: MatDialog,
                 private documentListService?: DocumentListService,
                 private contentService?: AlfrescoContentService) {}
 

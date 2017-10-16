@@ -235,7 +235,7 @@ describe('ActivitiStartForm', () => {
                 const formFields = component.form.getFormFields();
                 const labelField = formFields.find(field => field.id === 'mockTypeDropDown');
                 const dropDownWidget = fixture.debugElement.nativeElement.querySelector('dropdown-widget');
-                const selectElement = fixture.debugElement.nativeElement.querySelector('.adf-dropdown-widget>md-select .mat-select-trigger');
+                const selectElement = fixture.debugElement.nativeElement.querySelector('.adf-dropdown-widget>mat-select .mat-select-trigger');
                 selectElement.click();
                 expect(selectElement).toBeDefined();
                 expect(dropDownWidget).toBeDefined();
@@ -365,8 +365,8 @@ describe('ActivitiStartForm', () => {
             component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                const titleIcon = fixture.debugElement.nativeElement.querySelector('md-card-title>md-icon');
-                const titleElement = fixture.debugElement.nativeElement.querySelector('md-card-title>h2');
+                const titleIcon = fixture.debugElement.nativeElement.querySelector('mat-card-title>mat-icon');
+                const titleElement = fixture.debugElement.nativeElement.querySelector('mat-card-title>h2');
                 const actionButtons = fixture.debugElement.nativeElement.querySelectorAll('.mat-button');
                 expect(titleIcon).toBeDefined();
                 expect(titleElement).toBeDefined();

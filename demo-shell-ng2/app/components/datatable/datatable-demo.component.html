@@ -9,7 +9,7 @@
         (executeRowAction)="onExecuteRowAction($event)"
         (row-click)="onRowClick($event)"
         (row-dblclick)="onRowDblClick($event)">
-      <!-- HTML column definition demo -->
+        <!-- HTML column definition demo -->
         <!--
         <data-columns>
             <data-column type="image" key="icon" [sortable]="false"></data-column>
@@ -22,20 +22,22 @@
     </alfresco-datatable>
 </div>
 <div class="p-10" data-automation-id="multiselect">
-    <md-checkbox [(ngModel)]="multiselect">{{ 'DATATABLE.MULTISELECT'| translate }}</md-checkbox>
+    <mat-checkbox [(ngModel)]="multiselect">{{ 'DATATABLE.MULTISELECT'| translate }}</mat-checkbox>
 </div>
 <div class="p-10">
     <p>{{ 'DATATABLE.MULTISELECT_DESCRIPTION'| translate }}</p>
-    <md-select placeholder="Selection Mode" [(ngModel)]="selectionMode" name="food">
-        <md-option *ngFor="let mode of selectionModes" [value]="mode.value">
-            {{mode.viewValue}}
-        </md-option>
-    </md-select>
+    <mat-form-field>
+        <mat-select placeholder="Selection Mode" [(ngModel)]="selectionMode" name="food">
+            <mat-option *ngFor="let mode of selectionModes" [value]="mode.value">
+                {{mode.viewValue}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
 </div>
 <div class="p-10">
-    <button md-raised-button (click)="reset()">{{ 'DATATABLE.RESET_DEFAULT'| translate }}</button>
-    <button md-raised-button (click)="addRow()">{{ 'DATATABLE.ADD_ROW'| translate }}</button>
-    <button md-raised-button (click)="replaceRows()">{{ 'DATATABLE.REPLACE_ROWS'| translate }}</button>
-    <button md-raised-button (click)="replaceColumns()">{{ 'DATATABLE.REPLACE_COLUMNS'| translate }}</button>
-    <button md-raised-button (click)="getRowForNode()">{{ 'DATATABLE.LOAD_NODE'| translate }}</button>
+    <button mat-raised-button (click)="reset()">{{ 'DATATABLE.RESET_DEFAULT'| translate }}</button>
+    <button mat-raised-button (click)="addRow()">{{ 'DATATABLE.ADD_ROW'| translate }}</button>
+    <button mat-raised-button (click)="replaceRows()">{{ 'DATATABLE.REPLACE_ROWS'| translate }}</button>
+    <button mat-raised-button (click)="replaceColumns()">{{ 'DATATABLE.REPLACE_COLUMNS'| translate }}</button>
+    <button mat-raised-button (click)="getRowForNode()">{{ 'DATATABLE.LOAD_NODE'| translate }}</button>
 </div>

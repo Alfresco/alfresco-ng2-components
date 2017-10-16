@@ -1,5 +1,5 @@
  <label [attr.for]="column.id">
-    <md-checkbox
+    <mat-checkbox
         color="primary"
         [id]="column.id"
         [checked]="table.getCellValue(row, column)"
@@ -7,5 +7,5 @@
         [disabled]="!column.editable"
         (change)="onValueChanged(row, column, $event)">
     <span class="adf-checkbox-label">{{column.name}}</span>
-    </md-checkbox>
+    </mat-checkbox>
 </label>

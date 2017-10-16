@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdDatepickerModule, MdInputModule, MdNativeDateModule } from '@angular/material';
+import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import * as moment from 'moment';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
@@ -31,9 +31,9 @@ describe('CardViewDateItemComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                MdDatepickerModule,
-                MdInputModule,
-                MdNativeDateModule
+                MatDatepickerModule,
+                MatInputModule,
+                MatNativeDateModule
             ],
             declarations: [
                 CardViewDateItemComponent

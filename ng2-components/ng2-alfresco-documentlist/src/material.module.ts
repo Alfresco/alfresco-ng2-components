@@ -17,28 +17,28 @@
 
 import { NgModule } from '@angular/core';
 import {
-    MdButtonModule,
-    MdDialogModule,
-    MdIconModule,
-    MdInputModule,
-    MdMenuModule,
-    MdOptionModule,
-    MdProgressSpinnerModule,
-    MdRippleModule,
-    MdSelectModule
+    MatButtonModule,
+    MatDialogModule,
+    MatIconModule,
+    MatInputModule,
+    MatMenuModule,
+    MatOptionModule,
+    MatProgressSpinnerModule,
+    MatRippleModule,
+    MatSelectModule
 } from '@angular/material';
 
 export function modules() {
     return [
-        MdMenuModule,
-        MdDialogModule,
-        MdButtonModule,
-        MdIconModule,
-        MdInputModule,
-        MdProgressSpinnerModule,
-        MdSelectModule,
-        MdRippleModule,
-        MdOptionModule
+        MatMenuModule,
+        MatDialogModule,
+        MatButtonModule,
+        MatIconModule,
+        MatInputModule,
+        MatProgressSpinnerModule,
+        MatSelectModule,
+        MatRippleModule,
+        MatOptionModule
     ];
 }
 

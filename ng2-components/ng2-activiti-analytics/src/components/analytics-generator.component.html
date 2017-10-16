@@ -1,11 +1,11 @@
 <div *ngIf="reports">
     <div class="report-icons">
-        <button md-icon-button
+        <button mat-icon-button
                 *ngFor="let report of reports; let idx = index"
-                [mdTooltip]="report.title"
+                [matTooltip]="report.title"
                 [color]="isCurrent(idx) ? 'primary' : null"
                 (click)="selectCurrent(idx)">
-            <md-icon>{{report.icon}}</md-icon>
+            <mat-icon>{{report.icon}}</mat-icon>
         </button>
     </div>
     <div class="clear-both"> </div>
@@ -84,12 +84,12 @@
                     <h4>{{report.title}}</h4>
                     <div *ngIf="!report.hasDatasets()">{{'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate}}</div>
                     <div *ngIf="report.hasDatasets()">
-                        <md-checkbox
+                        <mat-checkbox
                             color="primary"
                             [id]="'stacked-id'"
                             [checked]="report.options.scales.xAxes[0].stacked"
                             [(ngModel)]="report.options.scales.xAxes[0].stacked"
-                            (change)="refresh(report)">Stacked</md-checkbox>
+                            (change)="refresh(report)">Stacked</mat-checkbox>
 
                         <canvas baseChart class="chart"
                                 [datasets]="report.datasets"

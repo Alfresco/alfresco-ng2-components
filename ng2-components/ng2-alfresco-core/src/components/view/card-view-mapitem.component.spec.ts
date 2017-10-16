@@ -18,7 +18,7 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { MdDatepickerModule, MdIconModule, MdInputModule, MdNativeDateModule } from '@angular/material';
+import { MatDatepickerModule, MatIconModule, MatInputModule, MatNativeDateModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CardViewMapItemModel } from '../../models/card-view-mapitem.model';
@@ -38,10 +38,10 @@ describe('CardViewMapItemComponent', () => {
             imports: [
                 FormsModule,
                 NoopAnimationsModule,
-                MdDatepickerModule,
-                MdIconModule,
-                MdInputModule,
-                MdNativeDateModule
+                MatDatepickerModule,
+                MatIconModule,
+                MatInputModule,
+                MatNativeDateModule
             ],
             declarations: [
                 CardViewMapItemComponent

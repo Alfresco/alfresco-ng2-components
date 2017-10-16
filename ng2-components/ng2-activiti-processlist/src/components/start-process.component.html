@@ -1,33 +1,35 @@
-<md-card class="adf-start-process">
-	<md-card-title>{{'START_PROCESS.FORM.TITLE' | translate}}
-	</md-card-title>
-	<md-card-content *ngIf="isProcessDefinitionEmpty()">
-		<md-card-subtitle id="error-message" *ngIf="errorMessageId">
+<mat-card class="adf-start-process">
+	<mat-card-title>{{'START_PROCESS.FORM.TITLE' | translate}}
+	</mat-card-title>
+	<mat-card-content *ngIf="isProcessDefinitionEmpty()">
+		<mat-card-subtitle id="error-message" *ngIf="errorMessageId">
 			{{errorMessageId|translate}}
-		</md-card-subtitle>
-		<md-input-container class="adf-process-input-container">
-			<input mdInput placeholder="{{'START_PROCESS.FORM.LABEL.NAME'|translate}}" [(ngModel)]="name" id="processName" required />
-		</md-input-container>
-		<md-select placeholder="{{'START_PROCESS.FORM.LABEL.TYPE'|translate}}" [(ngModel)]="currentProcessDef.id" (ngModelChange)="onProcessDefChange($event)" required>
-			<md-option>{{'START_PROCESS.FORM.TYPE_PLACEHOLDER' | translate}}</md-option>
-			<md-option *ngFor="let processDef of processDefinitions" [value]="processDef.id">
-				{{ processDef.name }}
-			</md-option>
-		</md-select>
-		<activiti-start-form *ngIf="hasStartForm()" 
-			[processDefinitionId]="currentProcessDef.id" 
+		</mat-card-subtitle>
+		<mat-form-field class="adf-process-input-container">
+			<input matInput placeholder="{{'START_PROCESS.FORM.LABEL.NAME'|translate}}" [(ngModel)]="name" id="processName" required />
+		</mat-form-field>
+        <mat-form-field>
+            <mat-select placeholder="{{'START_PROCESS.FORM.LABEL.TYPE'|translate}}" [(ngModel)]="currentProcessDef.id" (ngModelChange)="onProcessDefChange($event)" required>
+                <mat-option>{{'START_PROCESS.FORM.TYPE_PLACEHOLDER' | translate}}</mat-option>
+                <mat-option *ngFor="let processDef of processDefinitions" [value]="processDef.id">
+                    {{ processDef.name }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+		<activiti-start-form *ngIf="hasStartForm()"
+			[processDefinitionId]="currentProcessDef.id"
 			(outcomeClick)="onOutcomeClick($event)"
 		    [showRefreshButton]="false">
-		<button form-custom-button md-button (click)="cancelStartProcess()" id="cancle_process" class=""> {{'START_PROCESS.FORM.ACTION.CANCEL'| translate}} </button>
+		<button form-custom-button mat-button (click)="cancelStartProcess()" id="cancle_process" class=""> {{'START_PROCESS.FORM.ACTION.CANCEL'| translate}} </button>
 		</activiti-start-form>
-	</md-card-content>
-	<md-card-content *ngIf="hasErrorMessage()">
-		<md-card-subtitle class="error-message" id="no-process-message">
+	</mat-card-content>
+	<mat-card-content *ngIf="hasErrorMessage()">
+		<mat-card-subtitle class="error-message" id="no-process-message">
 			{{'START_PROCESS.NO_PROCESS_DEFINITIONS' | translate}}
-		</md-card-subtitle>
-	</md-card-content>
-	<md-card-actions *ngIf="!hasStartForm()">
-		<button md-button *ngIf="!hasStartForm()" (click)="cancelStartProcess()" id="cancle_process" class=""> {{'START_PROCESS.FORM.ACTION.CANCEL'| translate}} </button>
-		<button md-button *ngIf="!hasStartForm()" [disabled]="!validateForm()" (click)="startProcess()" data-automation-id="btn-start" id="button-start" class="btn-start"> {{'START_PROCESS.FORM.ACTION.START' | translate}} </button>
-	</md-card-actions>
-</md-card>
+		</mat-card-subtitle>
+	</mat-card-content>
+	<mat-card-actions *ngIf="!hasStartForm()">
+		<button mat-button *ngIf="!hasStartForm()" (click)="cancelStartProcess()" id="cancle_process" class=""> {{'START_PROCESS.FORM.ACTION.CANCEL'| translate}} </button>
+		<button mat-button *ngIf="!hasStartForm()" [disabled]="!validateForm()" (click)="startProcess()" data-automation-id="btn-start" id="button-start" class="btn-start"> {{'START_PROCESS.FORM.ACTION.START' | translate}} </button>
+	</mat-card-actions>
+</mat-card>

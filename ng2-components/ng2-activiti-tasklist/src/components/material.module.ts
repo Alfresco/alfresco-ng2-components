@@ -17,36 +17,36 @@
 
 import { NgModule } from '@angular/core';
 import {
-    MdAutocompleteModule,
-    MdButtonModule,
-    MdCardModule,
-    MdChipsModule,
-    MdDatepickerModule,
-    MdGridListModule,
-    MdIconModule,
-    MdInputModule,
-    MdNativeDateModule,
-    MdProgressSpinnerModule,
-    MdRippleModule,
-    MdSelectModule,
-    MdTooltipModule
+    MatAutocompleteModule,
+    MatButtonModule,
+    MatCardModule,
+    MatChipsModule,
+    MatDatepickerModule,
+    MatGridListModule,
+    MatIconModule,
+    MatInputModule,
+    MatNativeDateModule,
+    MatProgressSpinnerModule,
+    MatRippleModule,
+    MatSelectModule,
+    MatTooltipModule
 } from '@angular/material';
 
 export function modules() {
     return [
-        MdIconModule,
-        MdButtonModule,
-        MdInputModule,
-        MdCardModule,
-        MdProgressSpinnerModule,
-        MdDatepickerModule,
-        MdNativeDateModule,
-        MdSelectModule,
-        MdAutocompleteModule,
-        MdGridListModule,
-        MdRippleModule,
-        MdTooltipModule,
-        MdChipsModule
+        MatIconModule,
+        MatButtonModule,
+        MatInputModule,
+        MatCardModule,
+        MatProgressSpinnerModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatSelectModule,
+        MatAutocompleteModule,
+        MatGridListModule,
+        MatRippleModule,
+        MatTooltipModule,
+        MatChipsModule
     ];
 }
 

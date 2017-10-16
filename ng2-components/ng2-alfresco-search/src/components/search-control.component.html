@@ -1,17 +1,17 @@
 <form #f="ngForm" (ngSubmit)="onSearch(f.value)" class="adf-search-form">
     <div class="adf-search-container"
         [@transitionMessages]="subscriptAnimationState">
-        <a md-icon-button
+        <a mat-icon-button
                 *ngIf="expandable"
                 id="adf-search-button"
             (click)="toggleSearchBar()"
             class="adf-search-button">
-            <md-icon aria-label="search button">search</md-icon>
+            <mat-icon aria-label="search button">search</mat-icon>
         </a>
         <div class="adf-search-field">
-            <md-input-container>
+            <mat-form-field>
                 <input
-                    mdInput
+                    matInput
                     [type]="inputType"
                     [autocomplete]="getAutoComplete()"
                     data-automation-id="search_input"
@@ -23,7 +23,7 @@
                     (blur)="onBlur($event)"
                     (keyup.escape)="onEscape()"
                     (keyup.arrowdown)="onArrowDown()">
-            </md-input-container>
+            </mat-form-field>
         </div>
     </div>
 </form>

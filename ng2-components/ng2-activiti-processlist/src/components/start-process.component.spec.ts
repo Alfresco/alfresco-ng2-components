@@ -18,10 +18,10 @@
 import { DebugElement, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import {
-    MdButtonModule,
-    MdCardModule,
-    MdInputModule,
-    MdSelectModule
+    MatButtonModule,
+    MatCardModule,
+    MatInputModule,
+    MatSelectModule
 } from '@angular/material';
 import { ActivitiFormModule, FormService } from 'ng2-activiti-form';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
@@ -50,10 +50,10 @@ describe('StartProcessInstanceComponent', () => {
             imports: [
                 CoreModule,
                 ActivitiFormModule,
-                MdButtonModule,
-                MdCardModule,
-                MdInputModule,
-                MdSelectModule
+                MatButtonModule,
+                MatCardModule,
+                MatInputModule,
+                MatSelectModule
             ],
             declarations: [
                 StartProcessInstanceComponent
@@ -120,7 +120,7 @@ describe('StartProcessInstanceComponent', () => {
             component.ngOnChanges({'appId': change});
             fixture.detectChanges();
 
-            let selectElement = fixture.nativeElement.querySelector('md-select');
+            let selectElement = fixture.nativeElement.querySelector('mat-select');
             expect(selectElement.children.length).toBe(1);
         });
 
@@ -130,8 +130,8 @@ describe('StartProcessInstanceComponent', () => {
             component.processDefinitions = testProcessDefs;
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                let selectElement = fixture.nativeElement.querySelector('md-select > .mat-select-trigger');
-                let optionElement = fixture.nativeElement.querySelectorAll('md-option');
+                let selectElement = fixture.nativeElement.querySelector('mat-select > .mat-select-trigger');
+                let optionElement = fixture.nativeElement.querySelectorAll('mat-option');
                 selectElement.click();
                 expect(selectElement).not.toBeNull();
                 expect(selectElement).toBeDefined();

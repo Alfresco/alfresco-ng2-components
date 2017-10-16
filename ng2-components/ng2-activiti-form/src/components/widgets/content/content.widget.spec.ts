@@ -17,7 +17,7 @@
 
 import { DebugElement, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdTabsModule } from '@angular/material';
+import { MatTabsModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { AlfrescoTranslationService, ContentService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
@@ -65,7 +65,7 @@ describe('ContentWidgetComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                MdTabsModule,
+                MatTabsModule,
                 CoreModule
             ],
             declarations: [

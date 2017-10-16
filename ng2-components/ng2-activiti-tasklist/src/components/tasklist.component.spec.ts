@@ -17,7 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdProgressSpinnerModule } from '@angular/material';
+import { MatProgressSpinnerModule } from '@angular/material';
 import { AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { DataRowEvent, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
@@ -94,7 +94,7 @@ describe('TaskListComponent', () => {
             imports: [
                 CoreModule,
                 DataTableModule,
-                MdProgressSpinnerModule
+                MatProgressSpinnerModule
             ],
             declarations: [
                 TaskListComponent

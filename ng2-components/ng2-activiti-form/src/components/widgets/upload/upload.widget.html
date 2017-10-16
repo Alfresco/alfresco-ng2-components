@@ -4,9 +4,9 @@
     <label class="adf-label" [attr.for]="field.id" >{{field.name}}<span *ngIf="isRequired()">*</span></label>
     <div class="adf-upload-widget-container">
         <div>
-            <md-list *ngIf="hasFile">
-                <md-list-item class="adf-upload-files-row" *ngFor="let file of field.value">
-                    <img md-list-icon class="adf-upload-widget__icon"
+            <mat-list *ngIf="hasFile">
+                <mat-list-item class="adf-upload-files-row" *ngFor="let file of field.value">
+                    <img mat-list-icon class="adf-upload-widget__icon"
                             [id]="'file-'+file.id+'-icon'"
                             [src]="getIcon(file.mimeType)"
                             [alt]="mimeTypeIcon"
@@ -14,12 +14,12 @@
                             (keyup.enter)="fileClicked(file)"
                             role="button"
                             tabindex="0"/>
-                    <span md-line id="{{'file-'+file.id}}" (click)="fileClicked(file)" (keyup.enter)="fileClicked(file)" role="button" tabindex="0" class="adf-file">{{decode(file.name)}}</span>
-                    <button *ngIf="!field.readOnly" md-icon-button [id]="'file-'+file.id+'-remove'" (click)="reset(file);" (keyup.enter)="reset(file);">
-                        <md-icon class="md-24">highlight_off</md-icon>
+                    <span matLine id="{{'file-'+file.id}}" (click)="fileClicked(file)" (keyup.enter)="fileClicked(file)" role="button" tabindex="0" class="adf-file">{{decode(file.name)}}</span>
+                    <button *ngIf="!field.readOnly" mat-icon-button [id]="'file-'+file.id+'-remove'" (click)="reset(file);" (keyup.enter)="reset(file);">
+                        <mat-icon class="mat-24">highlight_off</mat-icon>
                     </button>
-                </md-list-item>
-            </md-list>
+                </mat-list-item>
+            </mat-list>
         </div>
         <input *ngIf="!hasFile"
                #file

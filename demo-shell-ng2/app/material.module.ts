@@ -17,21 +17,21 @@
 
 import { NgModule } from '@angular/core';
 import {
-    MdDialogModule,
-    MdInputModule,
-    MdProgressBarModule,
-    MdSelectModule,
-    MdSidenavModule,
-    MdSlideToggleModule
+    MatDialogModule,
+    MatInputModule,
+    MatProgressBarModule,
+    MatSelectModule,
+    MatSidenavModule,
+    MatSlideToggleModule
 } from '@angular/material';
 
 const MATERIAL_MODULES = [
-    MdSlideToggleModule,
-    MdInputModule,
-    MdSelectModule,
-    MdDialogModule,
-    MdSidenavModule,
-    MdProgressBarModule
+    MatSlideToggleModule,
+    MatInputModule,
+    MatSelectModule,
+    MatDialogModule,
+    MatSidenavModule,
+    MatProgressBarModule
 ];
 
 @NgModule({

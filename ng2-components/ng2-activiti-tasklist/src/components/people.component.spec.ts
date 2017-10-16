@@ -17,7 +17,7 @@
 
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdButtonModule, MdInputModule } from '@angular/material';
+import { MatButtonModule, MatInputModule } from '@angular/material';
 import { AppConfigService, CoreModule, LogService, TranslationService } from 'ng2-alfresco-core';
 import { LightUserRepresentation } from 'ng2-alfresco-core';
 import { PeopleProcessService } from 'ng2-alfresco-core';
@@ -58,8 +58,8 @@ describe('PeopleComponent', () => {
             imports: [
                 CoreModule,
                 DataTableModule,
-                MdButtonModule,
-                MdInputModule
+                MatButtonModule,
+                MatInputModule
             ],
             declarations: [
                 PeopleSearchComponent,

@@ -17,7 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { MdProgressSpinnerModule } from '@angular/material';
+import { MatProgressSpinnerModule } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
 import { ProcessInstanceListComponent } from './processlist.component';
 
@@ -41,7 +41,7 @@ describe('ProcessInstanceListComponent', () => {
             imports: [
                 CoreModule,
                 DataTableModule,
-                MdProgressSpinnerModule
+                MatProgressSpinnerModule
             ],
             declarations: [ ProcessInstanceListComponent ],
             providers: [

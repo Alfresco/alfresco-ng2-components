@@ -153,9 +153,9 @@ describe('DropdownWidgetComponent', () => {
 
                 openSelect();
 
-                const optOne = fixture.debugElement.queryAll(By.css('[id="md-option-1"]'));
-                const optTwo = fixture.debugElement.queryAll(By.css('[id="md-option-2"]'));
-                const optThree = fixture.debugElement.queryAll(By.css('[id="md-option-3"]'));
+                const optOne = fixture.debugElement.queryAll(By.css('[id="mat-option-1"]'));
+                const optTwo = fixture.debugElement.queryAll(By.css('[id="mat-option-2"]'));
+                const optThree = fixture.debugElement.queryAll(By.css('[id="mat-option-3"]'));
 
                 expect(optOne).not.toBeNull();
                 expect(optTwo).not.toBeNull();
@@ -236,9 +236,9 @@ describe('DropdownWidgetComponent', () => {
 
                 openSelect();
 
-                const optOne = fixture.debugElement.queryAll(By.css('[id="md-option-1"]'));
-                const optTwo = fixture.debugElement.queryAll(By.css('[id="md-option-2"]'));
-                const optThree = fixture.debugElement.queryAll(By.css('[id="md-option-3"]'));
+                const optOne = fixture.debugElement.queryAll(By.css('[id="mat-option-1"]'));
+                const optTwo = fixture.debugElement.queryAll(By.css('[id="mat-option-2"]'));
+                const optThree = fixture.debugElement.queryAll(By.css('[id="mat-option-3"]'));
 
                 expect(optOne).not.toBeNull();
                 expect(optTwo).not.toBeNull();

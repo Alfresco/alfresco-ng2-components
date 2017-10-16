@@ -1,5 +1,5 @@
-<md-card class="assignment-top-container">
-    <div md-card-content class="assignment-top-container-content">
+<mat-card class="assignment-top-container">
+    <div mat-card-content class="assignment-top-container-content">
         <div class="assignment-header">
                 <div *ngIf="hasPeople()" class="assigment-count" id="people-title">
                     {{ 'TASK_DETAILS.LABELS.PEOPLE' | translate }} {{ ' (' + people.length + ')' }}
@@ -8,7 +8,7 @@
                     {{ 'TASK_DETAILS.PEOPLE.NONE' | translate }}
                 </div>
                 <div *ngIf="isEditMode()" class="add-people" (click)="onAddAssignement()">
-                    <md-icon class="adf-add-person-icon">person_add</md-icon>
+                    <mat-icon class="adf-add-person-icon">person_add</mat-icon>
                 </div>
             </div>
             <div class="assignment-container" *ngIf="showAssignment">
@@ -48,4 +48,4 @@
                 </adf-people-list>
             </div>
     </div>
-</md-card>
+</mat-card>

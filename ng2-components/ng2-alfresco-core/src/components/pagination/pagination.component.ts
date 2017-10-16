@@ -26,7 +26,6 @@ import {
 } from '@angular/core';
 
 import { Pagination } from 'alfresco-js-api';
-import { TranslationService } from './../../services/translation.service';
 import { PaginationQueryParams } from './pagination-query-params.interface';
 
 @Component({
@@ -79,12 +78,6 @@ export class PaginationComponent implements OnInit {
 
     @Output('prevPage')
     onPrevPage: EventEmitter<Pagination> = new EventEmitter<Pagination>();
-
-    constructor(translationService: TranslationService) {
-        if (translationService) {
-            translationService.addTranslationFolder('ng2-alfresco-core', 'assets/ng2-alfresco-core');
-        }
-    }
 
     ngOnInit() {
         if (!this.pagination) {

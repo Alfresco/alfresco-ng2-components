@@ -24,7 +24,6 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { CollapsableModule } from './src/components/collapsable/collapsable.module';
 import { ContextMenuModule } from './src/components/context-menu/context-menu.module';
-import { PaginationModule } from './src/components/pagination/pagination.module';
 import { ToolbarModule } from './src/components/toolbar/toolbar.module';
 import { CardViewModule } from './src/components/view/card-view.module';
 import { MaterialModule } from './src/material.module';
@@ -125,11 +124,15 @@ import { NodePermissionDirective } from './src/directives/node-permission.direct
 import { NodeRestoreDirective } from './src/directives/node-restore.directive';
 import { UploadDirective } from './src/directives/upload.directive';
 
+import { InfinitePaginationComponent } from './src/components/pagination/infinite-pagination.component';
+import { PaginationComponent } from './src/components/pagination/pagination.component';
 import { FileSizePipe } from './src/pipes/file-size.pipe';
 import { MimeTypeIconPipe } from './src/pipes/mime-type-icon.pipe';
 import { HighlightPipe } from './src/pipes/text-highlight.pipe';
 import { TimeAgoPipe } from './src/pipes/time-ago.pipe';
 
+export { InfinitePaginationComponent } from './src/components/pagination/infinite-pagination.component';
+export { PaginationComponent } from './src/components/pagination/pagination.component';
 export { ContextMenuModule } from './src/components/context-menu/context-menu.module';
 export { CardViewModule } from './src/components/view/card-view.module';
 export { CollapsableModule } from './src/components/collapsable/collapsable.module';
@@ -240,7 +243,6 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         }),
         MaterialModule,
         AppConfigModule,
-        PaginationModule,
         ToolbarModule,
         ContextMenuModule,
         CardViewModule,
@@ -263,7 +265,9 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         InfoDrawerButtonsDirective,
         InfoDrawerContentDirective,
         CreateFolderDialogComponent,
-        DownloadZipDialogComponent
+        DownloadZipDialogComponent,
+        InfinitePaginationComponent,
+        PaginationComponent
     ],
     providers: [
         ...providers(),
@@ -289,7 +293,6 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         ContextMenuModule,
         CardViewModule,
         CollapsableModule,
-        PaginationModule,
         ToolbarModule,
         ...pipes(),
         LogoutDirective,
@@ -307,7 +310,9 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         InfoDrawerLayoutComponent,
         InfoDrawerTitleDirective,
         InfoDrawerButtonsDirective,
-        InfoDrawerContentDirective
+        InfoDrawerContentDirective,
+        InfinitePaginationComponent,
+        PaginationComponent
     ],
     entryComponents: [
         CreateFolderDialogComponent,

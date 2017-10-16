@@ -1,26 +1,26 @@
 <div  *ngIf="showRefreshButton" class="process-tasks-refresh" >
-    <button md-icon-button (click)="onRefreshClicked()">
-        <md-icon class="md-24" aria-label="Refresh">refresh</md-icon>
+    <button mat-icon-button (click)="onRefreshClicked()">
+        <mat-icon class="md-24" aria-label="Refresh">refresh</mat-icon>
     </button>
 </div>
 
 <!-- ACTIVE FORM -->
 
-<md-chip-list>
+<mat-chip-list>
     <span class="adf-chip-label">{{ 'DETAILS.LABELS.TASKS_ACTIVE'|translate }}</span>
-    <md-chip class="adf-process-badge" color="accent" selected="true">{{activeTasks?.length}}</md-chip>
-</md-chip-list>
+    <mat-chip class="adf-process-badge" color="accent" selected="true">{{activeTasks?.length}}</mat-chip>
+</mat-chip-list>
 
 <div class="menu-container" *ngIf="activeTasks?.length > 0" data-automation-id="active-tasks">
-    <md-list>
-        <md-list-item class="process-tasks__task-item" *ngFor="let task of activeTasks" (click)="clickTask($event, task)">
-                <md-icon md-list-icon>assignment</md-icon>
-                <h3 md-line>{{task.name || 'Nameless task'}}</h3>
-                <span md-line>
+    <mat-list>
+        <mat-list-item class="process-tasks__task-item" *ngFor="let task of activeTasks" (click)="clickTask($event, task)">
+                <mat-icon mat-list-icon>assignment</mat-icon>
+                <h3 matLine>{{task.name || 'Nameless task'}}</h3>
+                <span matLine>
                     {{ 'DETAILS.LABELS.TASK_SUBTITLE' | translate:{user: getUserFullName(task.assignee), created: getFormatDate(task.created, 'mediumDate') } }}
                 </span>
-        </md-list-item>
-    </md-list>
+        </mat-list-item>
+    </mat-list>
 </div>
 
 <!-- START FORM -->
@@ -34,35 +34,35 @@
 
     <!--IF START TASK COMPLETED -->
     <div class="menu-container">
-        <md-list>
-            <md-list-item class="process-tasks__task-item" (click)="clickStartTask($event)">
-                <md-icon md-list-icon>assignment</md-icon>
-                <h3 md-line>{{ 'DETAILS.LABELS.START_FORM'|translate }}</h3>
-                <span md-line>
+        <mat-list>
+            <mat-list-item class="process-tasks__task-item" (click)="clickStartTask($event)">
+                <mat-icon mat-list-icon>assignment</mat-icon>
+                <h3 matLine>{{ 'DETAILS.LABELS.START_FORM'|translate }}</h3>
+                <span matLine>
                     {{ 'DETAILS.LABELS.TASK_SUBTITLE' | translate:{user:getUserFullName(processInstanceDetails.startedBy), created: getFormatDate(processInstanceDetails.started, 'mediumDate') } }}
                 </span>
-            </md-list-item>
-        </md-list>
+            </mat-list-item>
+        </mat-list>
     </div>
 
 </div>
 
 <!-- COMPLETED FORM -->
-<md-chip-list>
+<mat-chip-list>
         <span class="adf-chip-label">{{ 'DETAILS.LABELS.TASKS_COMPLETED'|translate }}</span>
-        <md-chip class="adf-process-badge" color="accent" selected="true">{{completedTasks?.length}}</md-chip>
-</md-chip-list>
+        <mat-chip class="adf-process-badge" color="accent" selected="true">{{completedTasks?.length}}</mat-chip>
+</mat-chip-list>
 
 <div class="menu-container" *ngIf="completedTasks?.length > 0" data-automation-id="completed-tasks">
-    <md-list>
-        <md-list-item class="process-tasks__task-item" *ngFor="let task of completedTasks" (click)="clickTask($event, task)">
-            <md-icon md-list-icon>assignment</md-icon>
-            <h3 md-line>{{task.name || 'Nameless task'}}</h3>
-            <span md-line>
+    <mat-list>
+        <mat-list-item class="process-tasks__task-item" *ngFor="let task of completedTasks" (click)="clickTask($event, task)">
+            <mat-icon mat-list-icon>assignment</mat-icon>
+            <h3 matLine>{{task.name || 'Nameless task'}}</h3>
+            <span matLine>
                 {{ 'DETAILS.LABELS.TASK_SUBTITLE' | translate:{user:getUserFullName(task.assignee), created: getFormatDate(task.created, 'mediumDate') } }}
             </span>
-        </md-list-item>
-    </md-list>
+        </mat-list-item>
+    </mat-list>
 </div>
 
 <div *ngIf="completedTasks?.length === 0" data-automation-id="completed-tasks-none" class="no-results">
@@ -71,15 +71,15 @@
 
 <ng-template *ngIf="hasStartFormDefined()" #startDialog>
     <div id="adf-start-process-dialog" class="adf-start-process-dialog">
-        <h4 md-dialog-title>{{ 'DETAILS.LABELS.START_FORM'|translate }}</h4>
-        <div md-dialog-content class="adf-start-process-dialog-content">
+        <h4 matDialogTitle>{{ 'DETAILS.LABELS.START_FORM'|translate }}</h4>
+        <div mat-dialog-content class="adf-start-process-dialog-content">
             <adf-start-form [processId]="processId"
                                  [showRefreshButton]="false" [readOnlyForm]="true"
                                  (formContentClicked)='onFormContentClick($event)'>
             </adf-start-form>
         </div>
-        <div md-dialog-actions class="adf-start-process-dialog-actions">
-            <button md-button type="button" (click)="closeSartDialog()">{{ 'DETAILS.TASKS.TASK_CLOSE' | translate }}</button>
+        <div mat-dialog-actions class="adf-start-process-dialog-actions">
+            <button mat-button type="button" (click)="closeSartDialog()">{{ 'DETAILS.TASKS.TASK_CLOSE' | translate }}</button>
         </div>
     </div>
 </ng-template>

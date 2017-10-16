@@ -17,23 +17,23 @@
 
 import { NgModule } from '@angular/core';
 import {
-    MD_PLACEHOLDER_GLOBAL_OPTIONS, MdAutocompleteModule, MdButtonModule, MdCardModule,
-    MdCheckboxModule, MdDatepickerModule, MdGridListModule, MdIconModule, MdInputModule,
-    MdListModule, MdOptionModule, MdRadioModule, MdSelectModule, MdSlideToggleModule, MdTableModule,
-    MdTabsModule
+    MAT_PLACEHOLDER_GLOBAL_OPTIONS, MatAutocompleteModule, MatButtonModule, MatCardModule,
+    MatCheckboxModule, MatDatepickerModule, MatGridListModule, MatIconModule, MatInputModule,
+    MatListModule, MatOptionModule, MatRadioModule, MatSelectModule, MatSlideToggleModule, MatTableModule,
+    MatTabsModule
 } from '@angular/material';
 
 export function modules() {
     return [
-        MdAutocompleteModule, MdButtonModule, MdCardModule, MdCheckboxModule,
-        MdDatepickerModule, MdGridListModule, MdIconModule, MdInputModule, MdListModule,
-        MdOptionModule, MdRadioModule, MdSelectModule, MdSlideToggleModule, MdTableModule, MdTabsModule
+        MatAutocompleteModule, MatButtonModule, MatCardModule, MatCheckboxModule,
+        MatDatepickerModule, MatGridListModule, MatIconModule, MatInputModule, MatListModule,
+        MatOptionModule, MatRadioModule, MatSelectModule, MatSlideToggleModule, MatTableModule, MatTabsModule
     ];
 }
 
 @NgModule({
     providers: [
-        {provide: MD_PLACEHOLDER_GLOBAL_OPTIONS, useValue: { float: 'never' }}
+        {provide: MAT_PLACEHOLDER_GLOBAL_OPTIONS, useValue: { float: 'never' }}
     ],
     imports: modules(),
     exports: modules()

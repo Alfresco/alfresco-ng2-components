@@ -18,7 +18,7 @@
 /* tslint:disable:component-selector  */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { DateAdapter, MD_DATE_FORMATS } from '@angular/material';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import * as moment from 'moment';
 import { Moment } from 'moment';
 import { MOMENT_DATE_FORMATS, MomentDateAdapter } from 'ng2-alfresco-core';
@@ -29,7 +29,7 @@ import { baseHost , WidgetComponent } from './../widget.component';
     selector: 'date-widget',
     providers: [
         {provide: DateAdapter, useClass: MomentDateAdapter},
-        {provide: MD_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS}],
+        {provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS}],
     templateUrl: './date.widget.html',
     styleUrls: ['./date.widget.scss'],
     host: baseHost,

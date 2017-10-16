@@ -17,28 +17,28 @@
 
 import { NgModule } from '@angular/core';
 import {
-    MdButtonModule,
-    MdCheckboxModule,
-    MdDatepickerModule,
-    MdGridListModule,
-    MdIconModule,
-    MdInputModule,
-    MdListModule,
-    MdNativeDateModule,
-    MdTooltipModule
+    MatButtonModule,
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatGridListModule,
+    MatIconModule,
+    MatInputModule,
+    MatListModule,
+    MatNativeDateModule,
+    MatTooltipModule
 } from '@angular/material';
 
 export function modules() {
     return [
-        MdButtonModule,
-        MdInputModule,
-        MdIconModule,
-        MdTooltipModule,
-        MdNativeDateModule,
-        MdDatepickerModule,
-        MdCheckboxModule,
-        MdListModule,
-        MdGridListModule
+        MatButtonModule,
+        MatInputModule,
+        MatIconModule,
+        MatTooltipModule,
+        MatNativeDateModule,
+        MatDatepickerModule,
+        MatCheckboxModule,
+        MatListModule,
+        MatGridListModule
     ];
 }
 

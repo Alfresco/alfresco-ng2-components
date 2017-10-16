@@ -15,9 +15,12 @@
  * limitations under the License.
  */
 
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { OVERLAY_PROVIDERS, OverlayModule } from '@angular/cdk/overlay';
 import { Component } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { LiveAnnouncer, MdSnackBar, MdSnackBarModule, OVERLAY_PROVIDERS, OverlayModule } from '@angular/material';
+
+import { MatSnackBar, MatSnackBarModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NotificationService } from './notification.service';
 
@@ -29,12 +32,12 @@ describe('NotificationService', () => {
             imports: [
                 BrowserAnimationsModule,
                 OverlayModule,
-                MdSnackBarModule
+                MatSnackBarModule
             ],
             declarations: [ProvidesNotificationServiceComponent],
             providers: [
                 NotificationService,
-                MdSnackBar,
+                MatSnackBar,
                 OVERLAY_PROVIDERS,
                 LiveAnnouncer
             ]

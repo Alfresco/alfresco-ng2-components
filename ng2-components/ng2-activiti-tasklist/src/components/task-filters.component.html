@@ -1,9 +1,9 @@
 <div class="menu-container">
-    <md-list>
-        <md-list-item (click)="selectFilter(filter)" *ngFor="let filter of filters"
+    <mat-list>
+        <mat-list-item (click)="selectFilter(filter)" *ngFor="let filter of filters"
                       class="adf-filters__entry" [class.active]="currentFilter === filter">
-            <md-icon *ngIf="hasIcon" mdListIcon class="adf-filters__entry-icon">assignment</md-icon>
-            <span mdLine [attr.data-automation-id]="filter.name + '_filter'">{{filter.name}}</span>
-        </md-list-item>
-    </md-list>
+            <mat-icon *ngIf="hasIcon" matListIcon class="adf-filters__entry-icon">assignment</mat-icon>
+            <span matLine [attr.data-automation-id]="filter.name + '_filter'">{{filter.name}}</span>
+        </mat-list-item>
+    </mat-list>
 </div>

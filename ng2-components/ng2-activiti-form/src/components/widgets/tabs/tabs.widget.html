@@ -1,9 +1,9 @@
 <div *ngIf="hasTabs()" class="alfresco-tabs-widget">
-    <md-tab-group>
-        <md-tab *ngFor="let tab of visibleTabs" [label]="tab.title">
+    <mat-tab-group>
+        <mat-tab *ngFor="let tab of visibleTabs" [label]="tab.title">
             <div *ngFor="let field of tab.fields">
                 <form-field [field]="field.field"></form-field>
              </div>
-        </md-tab>
-    </md-tab-group>
+        </mat-tab>
+    </mat-tab-group>
 </div>

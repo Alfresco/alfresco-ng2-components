@@ -17,20 +17,20 @@
 
 import { NgModule } from '@angular/core';
 import {
-    MdButtonModule,
-    MdCheckboxModule,
-    MdIconModule,
-    MdMenuModule,
-    MdTooltipModule
+    MatButtonModule,
+    MatCheckboxModule,
+    MatIconModule,
+    MatMenuModule,
+    MatTooltipModule
 } from '@angular/material';
 
 export function modules() {
     return [
-        MdCheckboxModule,
-        MdMenuModule,
-        MdIconModule,
-        MdButtonModule,
-        MdTooltipModule
+        MatCheckboxModule,
+        MatMenuModule,
+        MatIconModule,
+        MatButtonModule,
+        MatTooltipModule
     ];
 }
 

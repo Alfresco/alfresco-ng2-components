@@ -20,15 +20,15 @@ import { Component, ViewEncapsulation } from '@angular/core';
 @Component({
     selector: 'adf-create-folder-dialog',
     template: `
-        <h1 md-dialog-title>Create a new folder</h1>
-        <div md-dialog-content>
-            <md-input-container class="create-folder--name">
-                <input mdInput placeholder="Folder name" [(ngModel)]="value">
-            </md-input-container>
+        <h1 matDialogTitle>Create a new folder</h1>
+        <div mat-dialog-content>
+            <mat-form-field class="create-folder--name">
+                <input matInput placeholder="Folder name" [(ngModel)]="value">
+            </mat-form-field>
         </div>
-        <div md-dialog-actions>
-            <button md-button md-dialog-close>Cancel</button>
-            <button md-button [md-dialog-close]="value">Create</button>
+        <div mat-dialog-actions>
+            <button mat-button matDialogClose>Cancel</button>
+            <button mat-button [matDialogClose]="value">Create</button>
         </div>
     `,
     styles: [

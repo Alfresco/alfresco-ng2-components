@@ -1,18 +1,18 @@
-<md-sidenav-container class="adf-nav-container">
-    <md-sidenav #sidenav class="adf-sidenav" position="end" mode="push">
-        <md-nav-list>
-            <a md-list-item *ngFor="let link of links" [routerLink]="link.href" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="sidenav.close()" class="adf-sidenav-link">
-                <md-icon mdListIcon>{{link.icon}}</md-icon>
+<mat-sidenav-container class="adf-nav-container">
+    <mat-sidenav #sidenav class="adf-sidenav" position="end" mode="push">
+        <mat-nav-list>
+            <a mat-list-item *ngFor="let link of links" [routerLink]="link.href" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="sidenav.close()" class="adf-sidenav-link">
+                <mat-icon matListIcon>{{link.icon}}</mat-icon>
                 <span>{{link.title | translate }}</span>
             </a>
-            <a md-list-item adf-logout (click)="sidenav.close()">
-                <md-icon mdListIcon>exit_to_app</md-icon>
+            <a mat-list-item adf-logout (click)="sidenav.close()">
+                <mat-icon matListIcon>exit_to_app</mat-icon>
                 <span>Logout</span>
             </a>
-        </md-nav-list>
-    </md-sidenav>
+        </mat-nav-list>
+    </mat-sidenav>
 
-    <md-toolbar color="primary" class="adf-app-layout-toolbar" md-no-ink>
+    <mat-toolbar color="primary" class="adf-app-layout-toolbar" md-no-ink>
         <adf-userinfo
             class="adf-app-layout-user-profile"
             [menuPositionX]="'before'"
@@ -25,25 +25,25 @@
 
         <search-bar fxFlex="0 1 auto"></search-bar>
 
-        <a fxFlex="0 0 auto" class="adf-toolbar-link" fxShow fxHide.lt-md="true" md-button data-automation-id="home" href="" routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">{{'APP_LAYOUT.HOME' | translate }}</a>
-        <a fxFlex="0 0 auto" class="adf-toolbar-link" fxShow fxHide.lt-md="true" md-button data-automation-id="files" href="" routerLink="/files" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">{{'APP_LAYOUT.CONTENT_SERVICES' | translate }}</a>
-        <a fxFlex="0 0 auto" class="adf-toolbar-link" fxShow fxHide.lt-md="true"  md-button data-automation-id="activiti" href="" routerLink="/activiti" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">{{'APP_LAYOUT.PROCESS_SERVICES' | translate }}</a>
-        <a fxFlex="0 0 auto" class="adf-toolbar-link" fxShow fxHide.lt-md="true" md-button data-automation-id="login" href="" routerLink="/login">Login</a>
+        <a fxFlex="0 0 auto" class="adf-toolbar-link" fxShow fxHide.lt-md="true" mat-button data-automation-id="home" href="" routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">{{'APP_LAYOUT.HOME' | translate }}</a>
+        <a fxFlex="0 0 auto" class="adf-toolbar-link" fxShow fxHide.lt-md="true" mat-button data-automation-id="files" href="" routerLink="/files" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">{{'APP_LAYOUT.CONTENT_SERVICES' | translate }}</a>
+        <a fxFlex="0 0 auto" class="adf-toolbar-link" fxShow fxHide.lt-md="true"  mat-button data-automation-id="activiti" href="" routerLink="/activiti" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">{{'APP_LAYOUT.PROCESS_SERVICES' | translate }}</a>
+        <a fxFlex="0 0 auto" class="adf-toolbar-link" fxShow fxHide.lt-md="true" mat-button data-automation-id="login" href="" routerLink="/login">Login</a>
 
         <theme-picker></theme-picker>
-        <button md-icon-button [mdMenuTriggerFor]="langMenu">
-            <md-icon>language</md-icon>
+        <button mat-icon-button [matMenuTriggerFor]="langMenu">
+            <mat-icon>language</mat-icon>
         </button>
-        <md-menu #langMenu="mdMenu">
-            <button md-menu-item (click)="changeLanguage('en')">English</button>
-            <button md-menu-item (click)="changeLanguage('it')">Italian</button>
-            <button md-menu-item (click)="changeLanguage('ru')">Russian</button>
-        </md-menu>
+        <mat-menu #langMenu="matMenu">
+            <button mat-menu-item (click)="changeLanguage('en')">English</button>
+            <button mat-menu-item (click)="changeLanguage('it')">Italian</button>
+            <button mat-menu-item (click)="changeLanguage('ru')">Russian</button>
+        </mat-menu>
 
-        <button md-icon-button (click)="sidenav.open()">
-            <md-icon>menu</md-icon>
+        <button mat-icon-button (click)="sidenav.open()">
+            <mat-icon>menu</mat-icon>
         </button>
-    </md-toolbar>
+    </mat-toolbar>
 
     <router-outlet></router-outlet>
-</md-sidenav-container>
+</mat-sidenav-container>

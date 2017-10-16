@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdInputModule } from '@angular/material';
+import { MatInputModule } from '@angular/material';
 import { CoreModule } from 'ng2-alfresco-core';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 import { ErrorWidgetComponent } from '../error/error.component';
@@ -34,7 +34,7 @@ describe('AmountWidgetComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule,
-                MdInputModule
+                MatInputModule
             ],
             declarations: [
                 AmountWidgetComponent,

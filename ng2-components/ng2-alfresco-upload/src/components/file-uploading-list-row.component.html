@@ -1,9 +1,9 @@
 <div class="adf-file-uploading-row">
-    <md-icon
-        md-list-icon
+    <mat-icon
+        mat-list-icon
         class="adf-file-uploading-row__type">
         insert_drive_file
-    </md-icon>
+    </mat-icon>
 
     <span
         class="adf-file-uploading-row__name"
@@ -20,11 +20,11 @@
             {{ file.progress.loaded | adfFileSize }} / {{ file.progress.total | adfFileSize }}
         </span>
 
-        <md-icon
-            md-list-icon
+        <mat-icon
+            mat-list-icon
             class="adf-file-uploading-row__action adf-file-uploading-row__action--cancel">
             clear
-        </md-icon>
+        </mat-icon>
     </div>
 
     <div
@@ -32,43 +32,43 @@
         (click)="onRemove(file)"
         class="adf-file-uploading-row__group adf-file-uploading-row__group--toggle"
         title="{{ 'ADF_FILE_UPLOAD.BUTTON.REMOVE_FILE' | translate }}">
-        <md-icon
-            md-list-icon
+        <mat-icon
+            mat-list-icon
             class="adf-file-uploading-row__status adf-file-uploading-row__status--done">
             check_circle
-        </md-icon>
+        </mat-icon>
 
-        <md-icon
-            md-list-icon
+        <mat-icon
+            mat-list-icon
             class="adf-file-uploading-row__action adf-file-uploading-row__action--remove">
             remove_circle
-        </md-icon>
+        </mat-icon>
     </div>
 
     <div
         *ngIf="file.status === FileUploadStatus.Pending"
         (click)="onCancel(file)"
         class="adf-file-uploading-row__group adf-file-uploading-row__group--toggle">
-        <md-icon
-            md-list-icon
+        <mat-icon
+            mat-list-icon
             class="adf-file-uploading-row__status adf-file-uploading-row__status--pending">
             schedule
-        </md-icon>
+        </mat-icon>
 
-        <md-icon
-            md-list-icon
+        <mat-icon
+            mat-list-icon
             class="adf-file-uploading-row__action adf-file-uploading-row__action--remove">
             remove_circle
-        </md-icon>
+        </mat-icon>
     </div>
 
     <div
         *ngIf="file.status === FileUploadStatus.Error"
         class="adf-file-uploading-row__block adf-file-uploading-row__status--error"
         title="{{ file.response }}">
-        <md-icon md-list-icon>
+        <mat-icon mat-list-icon>
             report_problem
-        </md-icon>
+        </mat-icon>
     </div>
 
     <div
