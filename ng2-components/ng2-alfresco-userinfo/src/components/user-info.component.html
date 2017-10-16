@@ -1,9 +1,26 @@
-<div id="userinfo_container" *ngIf="isLoggedIn()">
+<div id="userinfo_container"
+    [class.adf-userinfo-name-right]="showOnRight()"
+    class="adf-userinfo-container" *ngIf="isLoggedIn()">
+    <span *ngIf="ecmUser && showName" id="adf-userinfo-ecm-name-display"
+          class="adf-userinfo-name">{{ecmUser.fullNameDisplay}}</span>
+    <span *ngIf="bpmUser && !ecmUser && showName" id="adf-userinfo-bpm-name-display"
+          class="adf-userinfo-name">{{bpmUser.fullNameDisplay}}</span>
     <button mat-button [matMenuTriggerFor]="menu" class="adf-userinfo-menu_button">
-    <div class="adf-userinfo-button-profile" id="user-profile" data-automation-id="user-profile">
-        <img id="logged-user-img" [src]="getUserAvatar()"
-             alt="user-info-profile-button"
-             (error)="onImageLoadingError($event)" class="adf-userinfo-profile-image"/>
+        <div class="adf-userinfo-button-profile" id="user-profile" data-automation-id="user-profile">
+            <div *ngIf="bpmUser && !ecmUser" id="bpm-user-image">
+                <div [outerHTML]="bpmUser | usernameInitials:'adf-userinfo-pic'"></div>
+                <div *ngIf="bpmUser.pictureId" class="adf-userinfo-profile-container">
+                    <img id="logged-user-img" [src]="bpmUserImage" alt="user-info-profile-button"
+                        class="adf-userinfo-profile-image"/>
+                </div>
+            </div>
+            <div *ngIf="ecmUser" id="ecm-user-image">
+                    <div [outerHTML]="ecmUser | usernameInitials:'adf-userinfo-pic'"></div>
+                    <div *ngIf="ecmUser.avatarId" class="adf-userinfo-profile-container">
+                        <img id="logged-user-img" [src]="ecmUserImage" alt="user-info-profile-button"
+                            class="adf-userinfo-profile-image"/>
+                    </div>
+            </div>
     </div>
 </button>
     <mat-menu #menu="matMenu" id="user-profile-lists" [xPosition]="menuPositionX" [yPosition]="menuPositionY" [overlapTrigger]="false" class="adf-userinfo-menu">
@@ -12,11 +29,11 @@
             <mat-tab id="ecm-panel" label="Content Services" *ngIf="ecmUser">
                 <mat-card class="adf-userinfo-card">
                     <mat-card-header class="adf-userinfo-card-header" [style.background-image]="'url(' + ecmBackgroundImage + ')'">
-                        <img class="adf-userinfo-profile-picture"
-                            id="ecm-user-detail-image"
-                            alt="ecm-profile-image"
-                            (error)="onImageLoadingError($event)"
-                            [src]="getEcmUserAvatar()" />
+                        <div [outerHTML]="ecmUser | usernameInitials:'adf-userinfo-profile-initials'"></div>
+                        <div *ngIf="ecmUser.avatarId" class="adf-userinfo-profile-container">
+                            <img class="adf-userinfo-profile-picture" id="ecm-user-detail-image"
+                                alt="ecm-profile-image" [src]="ecmUserImage" />
+                        </div>
                        <div class="adf-userinfo-title" id="ecm-username">{{ecmUser.fullNameDisplay}}</div>
                     </mat-card-header>
                     <mat-card-content>
@@ -38,11 +55,9 @@
             <mat-tab label="Process Services" id="bpm-panel" *ngIf="bpmUser">
             <mat-card class="adf-userinfo-card">
                 <mat-card-header class="adf-userinfo-card-header" [style.background-image]="'url(' + bpmBackgroundImage + ')'">
-                    <img class="adf-userinfo-profile-picture"
-                        id="bpm-user-detail-image"
-                        alt="bpm-profile-image"
-                        (error)="onImageLoadingError($event)"
-                        [src]="getBpmUserAvatar()"/>
+                    <div [outerHTML]="bpmUser | usernameInitials:'adf-userinfo-profile-initials'"></div>
+                        <img *ngIf="bpmUser.pictureId" class="adf-userinfo-profile-picture" id="bpm-user-detail-image"
+                            alt="bpm-profile-image" [src]="bpmUserImage"/>
                    <div class="adf-userinfo-title" id="bpm-username">{{bpmUser.fullNameDisplay}}</div>
                 </mat-card-header>
                 <mat-card-content>

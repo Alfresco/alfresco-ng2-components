@@ -45,7 +45,10 @@ export class UserInfoComponent implements OnInit {
     menuPositionY: string = 'below';
 
     @Input()
-    fallBackThumbnailImage: string;
+    showName: boolean = true;
+
+    @Input()
+    namePosition: string = 'right';
 
     ecmUser: EcmUserModel;
     bpmUser: BpmUserModel;
@@ -78,9 +81,9 @@ export class UserInfoComponent implements OnInit {
         if (this.authService.isEcmLoggedIn()) {
             this.ecmUserService.getCurrentUserInfo()
                 .subscribe((res) => {
-                        this.ecmUser = new EcmUserModel(res);
-                        this.getEcmAvatar();
-                    }
+                    this.ecmUser = new EcmUserModel(res);
+                    this.getEcmAvatar();
+                }
                 );
         } else {
             this.ecmUser = null;
@@ -101,13 +104,6 @@ export class UserInfoComponent implements OnInit {
         }
     }
 
-    onImageLoadingError(event) {
-        if (event) {
-            let element = <any> event.target;
-            element.src = this.fallBackThumbnailImage || this.anonymousImageUrl;
-        }
-    }
-
     stopClosing(event) {
         event.stopPropagation();
     }
@@ -116,15 +112,7 @@ export class UserInfoComponent implements OnInit {
         this.ecmUserImage = this.ecmUserService.getUserProfileImage(this.ecmUser.avatarId);
     }
 
-    getUserAvatar() {
-        return this.ecmUserImage || this.bpmUserImage;
-    }
-
-    getBpmUserAvatar() {
-        return this.bpmUserImage;
-    }
-
-    getEcmUserAvatar() {
-        return this.ecmUserImage;
+    showOnRight() {
+        return this.namePosition === 'right';
     }
 }
