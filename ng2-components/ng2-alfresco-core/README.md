@@ -20,7 +20,7 @@ Contains a variety of components, directives and services used throughout ADF
 
 ## Documentation
 
-See the [ADF Core](../../docIndex.md#adf-core) section of the [docs index](../../docIndex.md)
+See the [ADF Core](../../docs/README.md#adf-core) section of the [docs index](../../docs/README.md)
 for all available documentation on this library.
 
 ## Prerequisites

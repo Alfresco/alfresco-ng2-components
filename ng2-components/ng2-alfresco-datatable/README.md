@@ -20,7 +20,7 @@ Contains the DataTable component and other related components and classes.
 
 ## Documentation
 
-See the [ADF Datatable](../../docIndex.md#adf-datatable) section of the [docs index](../../docIndex.md)
+See the [ADF Datatable](../../docs/README.md#adf-datatable) section of the [docs index](../../docs/README.md)
 for all available documentation on this library.
 
 ## Prerequisites

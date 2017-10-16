@@ -20,7 +20,7 @@ Contains the ADF Like and ADF Rating components.
 
 ## Documentation
 
-See the [ADF Social](../../docIndex.md#adf-social) section of the [docs index](../../docIndex.md)
+See the [ADF Social](../../docs/README.md#adf-social) section of the [docs index](../../docs/README.md)
 for all available documentation on this library.
 
 ## Prerequisites

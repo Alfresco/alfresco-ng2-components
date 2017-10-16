@@ -20,7 +20,7 @@ Contains the Activiti Task List component and other related components and class
 
 ## Documentation
 
-See the [ADF Tasklist](../../docIndex.md#adf-tasklist) section of the [docs index](../../docIndex.md)
+See the [ADF Tasklist](../../docs/README.md#adf-tasklist) section of the [docs index](../../docs/README.md)
 for all available documentation on this library.
 
 ## Prerequisites
