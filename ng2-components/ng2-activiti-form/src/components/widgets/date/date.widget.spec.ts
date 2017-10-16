@@ -143,7 +143,7 @@ describe('DateWidgetComponent', () => {
                     expect(element.querySelector('#date-field-id')).toBeDefined();
                     expect(element.querySelector('#date-field-id')).not.toBeNull();
                     let dateElement: any = element.querySelector('#date-field-id');
-                    expect(dateElement.value).toEqual('9-9-9999');
+                    expect(dateElement.value).toContain('Sep 09 9999');
                 });
         }));
 
@@ -168,7 +168,7 @@ describe('DateWidgetComponent', () => {
                         expect(element.querySelector('#date-field-id')).toBeDefined();
                         expect(element.querySelector('#date-field-id')).not.toBeNull();
                         let dateElement: any = element.querySelector('#date-field-id');
-                        expect(dateElement.value).toEqual('9-9-9999');
+                        expect(dateElement.value).toContain('Sep 09 9999');
                     });
             });
             widget.checkVisibility(widget.field);
