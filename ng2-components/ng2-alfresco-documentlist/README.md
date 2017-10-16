@@ -19,7 +19,7 @@ Contains the Document List component and other related components and classes.
 
 ## Documentation
 
-See the [ADF Documentlist](../../docIndex.md#adf-documentlist) section of the [docs index](../../docIndex.md)
+See the [ADF Documentlist](../../docs/README.md#adf-documentlist) section of the [docs index](../../docs/README.md)
 for all available documentation on this library.
 
 ## Prerequisites

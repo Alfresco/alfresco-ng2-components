@@ -20,7 +20,7 @@ Contains components for handling uploads to Content Services.
 
 ## Documentation
 
-See the [ADF Upload](../../docIndex.md#adf-upload) section of the [docs index](../../docIndex.md)
+See the [ADF Upload](../../docs/README.md#adf-upload) section of the [docs index](../../docs/README.md)
 for all available documentation on this library.
 
 ## Prerequisites

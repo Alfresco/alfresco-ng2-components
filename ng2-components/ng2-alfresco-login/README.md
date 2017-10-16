@@ -20,7 +20,7 @@ Contains the Login component.
 
 ## Documentation
 
-See the [ADF Login](../../docIndex.md#adf-login) section of the [docs index](../../docIndex.md)
+See the [ADF Login](../../docs/README.md#adf-login) section of the [docs index](../../docs/README.md)
 for all available documentation on this library.
 
 ## Prerequisites

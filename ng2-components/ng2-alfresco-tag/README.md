@@ -20,7 +20,7 @@ Contains the Alfresco Tag Node Actions list, Tag List and Node List components.
 
 ## Documentation
 
-See the [ADF Tag](../../docIndex.md#adf-tag) section of the [docs index](../../docIndex.md)
+See the [ADF Tag](../../docs/README.md#adf-tag) section of the [docs index](../../docs/README.md)
 for all available documentation on this library.
 
 ## Prerequisites

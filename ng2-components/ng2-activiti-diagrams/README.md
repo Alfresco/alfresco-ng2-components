@@ -20,7 +20,7 @@ Contains the Activiti Diagram component.
 
 ## Documentation
 
-See the [ADF Diagrams](../../docIndex.md#adf-diagrams) section of the [docs index](../../docIndex.md)
+See the [ADF Diagrams](../../docs/README.md#adf-diagrams) section of the [docs index](../../docs/README.md)
 for all available documentation on this library.
 
 ## Prerequisites

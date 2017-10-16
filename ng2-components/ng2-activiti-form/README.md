@@ -20,7 +20,7 @@ Contains the Activiti Form component and other related components and services.
 
 ## Documentation
 
-See the [ADF Form](../../docIndex.md#adf-form) section of the [docs index](../../docIndex.md)
+See the [ADF Form](../../docs/README.md#adf-form) section of the [docs index](../../docs/README.md)
 for all available documentation on this library.
 
 ## Prerequisites
