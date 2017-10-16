@@ -18,7 +18,7 @@
 import { async, inject, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { CookieServiceMock } from './../assets/cookie.service.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AlfrescoSettingsService } from './alfresco-settings.service';
@@ -28,6 +28,7 @@ import { AuthenticationService } from './authentication.service';
 import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
 import { StorageService } from './storage.service';
+import { AlfrescoTranslateLoader } from './translate-loader.service';
 import { UserPreferencesService } from './user-preferences.service';
 
 describe('AuthGuardService BPM', () => {
@@ -36,9 +37,13 @@ describe('AuthGuardService BPM', () => {
         TestBed.configureTestingModule({
             imports: [
                 AppConfigModule,
-                RouterTestingModule
-            ],
-            declarations: [
+                RouterTestingModule,
+                TranslateModule.forRoot({
+                    loader: {
+                        provide: TranslateLoader,
+                        useClass: AlfrescoTranslateLoader
+                    }
+                })
             ],
             providers: [
                 AuthGuardBpm,

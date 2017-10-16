@@ -21,9 +21,13 @@ import { HttpModule, Response, ResponseOptions, XHRBackend } from '@angular/http
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
+import { AlfrescoApiService } from '../services/alfresco-api.service';
+import { AppConfigService } from './app-config.service';
 import { LogService } from './log.service';
+import { StorageService } from './storage.service';
 import { AlfrescoTranslateLoader } from './translate-loader.service';
 import { TRANSLATION_PROVIDER, TranslationService } from './translation.service';
+import { UserPreferencesService } from './user-preferences.service';
 
 const mockBackendResponse = (connection: MockConnection, response: string) => {
     connection.mockRespond(new Response(new ResponseOptions({body: response})));
@@ -49,6 +53,10 @@ describe('TranslationService', () => {
             providers: [
                 TranslationService,
                 LogService,
+                AlfrescoApiService,
+                StorageService,
+                UserPreferencesService,
+                AppConfigService,
                 { provide: XHRBackend, useClass: MockBackend },
                 {
                     provide: TRANSLATION_PROVIDER,

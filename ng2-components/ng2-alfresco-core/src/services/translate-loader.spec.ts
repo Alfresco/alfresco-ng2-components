@@ -20,10 +20,14 @@ import { getTestBed, TestBed } from '@angular/core/testing';
 import { HttpModule, Response, ResponseOptions, XHRBackend } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { AppConfigService } from './app-config.service';
 
+import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { LogService } from './log.service';
+import { StorageService } from './storage.service';
 import { AlfrescoTranslateLoader } from './translate-loader.service';
 import { TRANSLATION_PROVIDER, TranslationService } from './translation.service';
+import { UserPreferencesService } from './user-preferences.service';
 
 let componentJson1 = ' {"TEST": "This is a test", "TEST2": "This is another test"} ' ;
 
@@ -52,6 +56,10 @@ describe('TranslateLoader', () => {
             providers: [
                 TranslationService,
                 LogService,
+                AlfrescoApiService,
+                StorageService,
+                UserPreferencesService,
+                AppConfigService,
                 { provide: XHRBackend, useClass: MockBackend },
                 {
                     provide: TRANSLATION_PROVIDER,

@@ -16,6 +16,7 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { CookieServiceMock } from './../assets/cookie.service.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AlfrescoSettingsService } from './alfresco-settings.service';
@@ -24,6 +25,7 @@ import { AuthenticationService } from './authentication.service';
 import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
 import { StorageService } from './storage.service';
+import { AlfrescoTranslateLoader } from './translate-loader.service';
 import { UserPreferencesService } from './user-preferences.service';
 
 declare let jasmine: any;
@@ -39,7 +41,13 @@ describe('AuthenticationService', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                AppConfigModule
+                AppConfigModule,
+                TranslateModule.forRoot({
+                    loader: {
+                        provide: TranslateLoader,
+                        useClass: AlfrescoTranslateLoader
+                    }
+                })
             ],
             providers: [
                 AlfrescoSettingsService,
