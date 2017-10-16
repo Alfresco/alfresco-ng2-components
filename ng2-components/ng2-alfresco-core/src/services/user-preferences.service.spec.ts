@@ -16,11 +16,12 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { TranslateService } from '@ngx-translate/core';
-import { CoreModule } from 'ng2-alfresco-core';
-import { AlfrescoApiService } from './alfresco-api.service';
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { providers } from '../../index';
+
 import { AppConfigModule, AppConfigService } from './app-config.service';
 import { StorageService } from './storage.service';
+import { AlfrescoTranslateLoader } from './translate-loader.service';
 import { UserPreferencesService } from './user-preferences.service';
 
 describe('UserPreferencesService', () => {
@@ -28,20 +29,23 @@ describe('UserPreferencesService', () => {
     const defaultPaginationSize: number = 10;
     let preferences: UserPreferencesService;
     let storage: StorageService;
-    let translate: TranslateService;
     let appConfig: AppConfigService;
+    let translate: TranslateService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
-                AppConfigModule
+                AppConfigModule,
+                TranslateModule.forRoot({
+                    loader: {
+                        provide: TranslateLoader,
+                        useClass: AlfrescoTranslateLoader
+                    }
+                })
             ],
             providers: [
-                AlfrescoApiService,
-                StorageService,
-                UserPreferencesService,
-                TranslateService
+                ...providers(),
+                UserPreferencesService
             ]
         }).compileComponents();
     }));
