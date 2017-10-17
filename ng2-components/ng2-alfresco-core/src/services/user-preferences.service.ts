@@ -16,6 +16,9 @@
  */
 
 import { Injectable } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Rx';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AppConfigService } from './app-config.service';
 import { StorageService } from './storage.service';
@@ -24,27 +27,32 @@ import { StorageService } from './storage.service';
 export class UserPreferencesService {
 
     private defaults = {
-        paginationSize: 25
+        paginationSize: 25,
+        locale: 'en'
     };
 
-    getStoragePrefix(): string {
-        return this.storage.getItem('USER_PROFILE') || 'GUEST';
-    }
-
-    setStoragePrefix(value: string) {
-        this.storage.setItem('USER_PROFILE', value || 'GUEST');
-    }
+    private localeSubject: BehaviorSubject<string> ;
+    locale$: Observable<string>;
 
     constructor(
-        appConfig: AppConfigService,
+        public translate: TranslateService,
+        private appConfig: AppConfigService,
         private storage: StorageService,
         private apiService: AlfrescoApiService
     ) {
+        const currentLocale = this.locale || this.getDefaultLocale();
+        this.localeSubject = new BehaviorSubject(currentLocale);
+        this.locale$ = this.localeSubject.asObservable();
         this.defaults.paginationSize = appConfig.get('pagination.size', 25);
     }
 
-    getPropertyKey(property: string): string {
-        return `${this.getStoragePrefix()}__${property}`;
+    get(property: string, defaultValue?: string): string {
+        const key = this.getPropertyKey(property);
+        const value = this.storage.getItem(key);
+        if (value === undefined) {
+            return defaultValue;
+        }
+        return value;
     }
 
     set(property: string, value: any) {
@@ -56,13 +64,16 @@ export class UserPreferencesService {
         );
     }
 
-    get(property: string, defaultValue?: string): string {
-        const key = this.getPropertyKey(property);
-        const value = this.storage.getItem(key);
-        if (value === undefined) {
-            return defaultValue;
-        }
-        return value;
+    getStoragePrefix(): string {
+        return this.storage.getItem('USER_PROFILE') || 'GUEST';
+    }
+
+    setStoragePrefix(value: string) {
+        this.storage.setItem('USER_PROFILE', value || 'GUEST');
+    }
+
+    getPropertyKey(property: string): string {
+        return `${this.getStoragePrefix()}__${property}`;
     }
 
     set authType(value: string) {
@@ -89,6 +100,20 @@ export class UserPreferencesService {
 
     get paginationSize(): number {
         return Number(this.get('PAGINATION_SIZE')) || this.defaults.paginationSize;
+    }
+
+    get locale(): string {
+        const locale = this.get('LOCALE');
+        return locale;
+    }
+
+    set locale(value: string) {
+        this.localeSubject.next(value);
+        this.set('LOCALE', value);
+    }
+
+    public getDefaultLocale(): string {
+        return this.appConfig.get<string>('locale') || this.translate.getBrowserLang() || 'en';
     }
 
 }

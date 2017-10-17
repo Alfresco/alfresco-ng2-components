@@ -16,9 +16,12 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { AlfrescoApiService } from './alfresco-api.service';
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { providers } from '../../index';
+
 import { AppConfigModule, AppConfigService } from './app-config.service';
 import { StorageService } from './storage.service';
+import { AlfrescoTranslateLoader } from './translate-loader.service';
 import { UserPreferencesService } from './user-preferences.service';
 
 describe('UserPreferencesService', () => {
@@ -26,27 +29,37 @@ describe('UserPreferencesService', () => {
     const defaultPaginationSize: number = 10;
     let preferences: UserPreferencesService;
     let storage: StorageService;
+    let appConfig: AppConfigService;
+    let translate: TranslateService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                AppConfigModule
+                AppConfigModule,
+                TranslateModule.forRoot({
+                    loader: {
+                        provide: TranslateLoader,
+                        useClass: AlfrescoTranslateLoader
+                    }
+                })
             ],
             providers: [
-                AlfrescoApiService,
-                StorageService,
+                ...providers(),
                 UserPreferencesService
             ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
-        let appConfig: AppConfigService = TestBed.get(AppConfigService);
-        appConfig.config.pagination = {
-            size: 10
+        appConfig = TestBed.get(AppConfigService);
+        appConfig.config = {
+            pagination: {
+                size: 10
+            }
         };
         preferences = TestBed.get(UserPreferencesService);
         storage = TestBed.get(StorageService);
+        translate = TestBed.get(TranslateService);
     });
 
     it('should get default pagination from app config', () => {
@@ -93,6 +106,29 @@ describe('UserPreferencesService', () => {
     it('should return default paginationSize value', () => {
         preferences.set('PAGINATION_SIZE', 0);
         expect(preferences.paginationSize).toBe(defaultPaginationSize);
+    });
+
+    it('should return as default locale the app.config locate as first', () => {
+        appConfig.config.locale = 'fake-locate-config';
+        spyOn(translate, 'getBrowserLang').and.returnValue('fake-locate-browser');
+        expect(preferences.getDefaultLocale()).toBe('fake-locate-config');
+    });
+
+    it('should return as default locale the browser locale as second', () => {
+        spyOn(translate, 'getBrowserLang').and.returnValue('fake-locate-browser');
+        expect(preferences.getDefaultLocale()).toBe('fake-locate-browser');
+    });
+
+    it('should return as default locale the component propery as third ', () => {
+        spyOn(translate, 'getBrowserLang').and.stub();
+        expect(preferences.getDefaultLocale()).toBe('en');
+    });
+
+    it('should return as locale the store locate', () => {
+        preferences.locale = 'fake-store-locate';
+        appConfig.config.locale = 'fake-locate-config';
+        spyOn(translate, 'getBrowserLang').and.returnValue('fake-locate-browser');
+        expect(preferences.locale).toBe('fake-store-locate');
     });
 
 });

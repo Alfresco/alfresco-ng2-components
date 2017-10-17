@@ -22,6 +22,7 @@ import * as moment from 'moment';
 import { Moment } from 'moment';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
+import { UserPreferencesService } from '../../services/user-preferences.service';
 import { MOMENT_DATE_FORMATS, MomentDateAdapter } from '../../utils/momentDateAdapter';
 
 @Component({
@@ -47,10 +48,16 @@ export class CardViewDateItemComponent implements OnInit {
 
     valueDate: Moment;
 
-    constructor(private cardViewUpdateService: CardViewUpdateService, public dateAdapter: DateAdapter<Moment>) {
+    constructor(
+        private cardViewUpdateService: CardViewUpdateService,
+        private dateAdapter: DateAdapter<Moment>,
+        private preferences: UserPreferencesService) {
     }
 
     ngOnInit() {
+        this.preferences.locale$.subscribe( (locale) => {
+            this.dateAdapter.setLocale(locale);
+        });
         let momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
         momentDateAdapter.overrideDisplyaFormat = this.SHOW_FORMAT;
 

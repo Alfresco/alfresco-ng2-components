@@ -16,11 +16,16 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpModule } from '@angular/http';
 import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import * as moment from 'moment';
+import { AppConfigService, providers } from '../../../index';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
+import { AlfrescoTranslateLoader } from '../../services/translate-loader.service';
+
 import { CardViewDateItemComponent } from './card-view-dateitem.component';
 
 describe('CardViewDateItemComponent', () => {
@@ -31,15 +36,24 @@ describe('CardViewDateItemComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+                HttpModule,
                 MatDatepickerModule,
                 MatInputModule,
-                MatNativeDateModule
+                MatNativeDateModule,
+                TranslateModule.forRoot({
+                    loader: {
+                        provide: TranslateLoader,
+                        useClass: AlfrescoTranslateLoader
+                    }
+                })
             ],
             declarations: [
                 CardViewDateItemComponent
             ],
             providers: [
-                CardViewUpdateService
+                CardViewUpdateService,
+                AppConfigService,
+                ...providers()
             ]
         }).compileComponents();
     }));

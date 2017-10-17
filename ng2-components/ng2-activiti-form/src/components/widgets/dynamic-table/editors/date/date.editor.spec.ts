@@ -15,24 +15,41 @@
  * limitations under the License.
  */
 
+import { DebugElement } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import * as moment from 'moment';
-import { MomentDateAdapter } from 'ng2-alfresco-core';
+import { CoreModule } from 'ng2-alfresco-core';
+import { MaterialModule } from '../../../../material.module';
 import { FormFieldModel, FormModel } from '../../../index';
 import { DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './../../dynamic-table.widget.model';
 import { DateEditorComponent } from './date.editor';
 
 describe('DateEditorComponent', () => {
-
-    let nativeElement: any;
+    let debugElement: DebugElement;
+    let element: HTMLElement;
     let component: DateEditorComponent;
+    let fixture: ComponentFixture<DateEditorComponent>;
     let row: DynamicTableRow;
     let column: DynamicTableColumn;
     let table: DynamicTableModel;
 
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [
+                DateEditorComponent
+            ],
+            imports: [
+                CoreModule,
+                MaterialModule
+            ]
+        }).compileComponents();
+    }));
+
     beforeEach(() => {
-        nativeElement = {
-            querySelector: function () { return null; }
-        };
+        fixture = TestBed.createComponent(DateEditorComponent);
+        component = fixture.componentInstance;
+        element = fixture.nativeElement;
+        debugElement = fixture.debugElement;
 
         row = <DynamicTableRow> { value: { date: '1879-03-14T00:00:00.000Z' } };
         column = <DynamicTableColumn> { id: 'date', type: 'Date' };
@@ -40,10 +57,13 @@ describe('DateEditorComponent', () => {
         table = new DynamicTableModel(field, null);
         table.rows.push(row);
         table.columns.push(column);
-        component = new DateEditorComponent(new MomentDateAdapter());
         component.table = table;
         component.row = row;
         component.column = column;
+    });
+
+    it('should create instance of DateEditorComponent', () => {
+        expect(fixture.componentInstance instanceof DateEditorComponent).toBe(true, 'should create DateEditorComponent');
     });
 
     it('should update fow value on change', () => {
@@ -72,4 +92,5 @@ describe('DateEditorComponent', () => {
 
         expect(table.flushValue).toHaveBeenCalled();
     });
+
 });

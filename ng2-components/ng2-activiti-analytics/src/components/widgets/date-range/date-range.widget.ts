@@ -20,7 +20,7 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import * as moment from 'moment';
 import { Moment } from 'moment';
-import { MOMENT_DATE_FORMATS, MomentDateAdapter } from 'ng2-alfresco-core';
+import { MOMENT_DATE_FORMATS, MomentDateAdapter, UserPreferencesService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'adf-date-range-widget',
@@ -50,10 +50,15 @@ export class DateRangeWidgetComponent implements OnInit {
     startDatePicker: Moment = moment();
     endDatePicker: Moment = moment();
 
-    constructor(public dateAdapter: DateAdapter<Moment>) {
+    constructor(
+        private dateAdapter: DateAdapter<Moment>,
+        private preferences: UserPreferencesService) {
     }
 
     ngOnInit() {
+        this.preferences.locale$.subscribe( (locale) => {
+            this.dateAdapter.setLocale(locale);
+        });
         let momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
         momentDateAdapter.overrideDisplyaFormat = this.SHOW_FORMAT;
 

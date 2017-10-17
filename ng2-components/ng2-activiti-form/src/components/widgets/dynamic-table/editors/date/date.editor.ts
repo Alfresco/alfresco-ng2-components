@@ -21,7 +21,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import * as moment from 'moment';
 import { Moment } from 'moment';
-import { MOMENT_DATE_FORMATS, MomentDateAdapter } from 'ng2-alfresco-core';
+import { MOMENT_DATE_FORMATS, MomentDateAdapter, UserPreferencesService } from 'ng2-alfresco-core';
 import { DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './../../dynamic-table.widget.model';
 
 @Component({
@@ -50,10 +50,15 @@ export class DateEditorComponent implements OnInit {
     minDate: Moment;
     maxDate: Moment;
 
-    constructor(public dateAdapter: DateAdapter<Moment>) {
+    constructor(
+        private dateAdapter: DateAdapter<Moment>,
+        private preferences: UserPreferencesService) {
     }
 
     ngOnInit() {
+        this.preferences.locale$.subscribe( (locale) => {
+            this.dateAdapter.setLocale(locale);
+        });
         let momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
         momentDateAdapter.overrideDisplyaFormat = this.DATE_FORMAT;
 

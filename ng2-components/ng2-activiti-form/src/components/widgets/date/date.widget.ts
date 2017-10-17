@@ -21,7 +21,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import * as moment from 'moment';
 import { Moment } from 'moment';
-import { MOMENT_DATE_FORMATS, MomentDateAdapter } from 'ng2-alfresco-core';
+import { MOMENT_DATE_FORMATS, MomentDateAdapter, UserPreferencesService } from 'ng2-alfresco-core';
 import { FormService } from './../../../services/form.service';
 import { baseHost , WidgetComponent } from './../widget.component';
 
@@ -42,11 +42,17 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit {
 
     displayDate: Moment;
 
-    constructor(public formService: FormService, public dateAdapter: DateAdapter<Moment>) {
+    constructor(
+        public formService: FormService,
+        private dateAdapter: DateAdapter<Moment>,
+        private preferences: UserPreferencesService) {
         super(formService);
     }
 
     ngOnInit() {
+        this.preferences.locale$.subscribe( (locale) => {
+            this.dateAdapter.setLocale(locale);
+        });
         let momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
         momentDateAdapter.overrideDisplyaFormat = this.field.dateDisplayFormat;
 

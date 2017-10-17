@@ -16,6 +16,7 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { fakeApi, fakeError, fakeSearch } from '../assets/search.service.mock';
 import { CookieServiceMock } from './../assets/cookie.service.mock';
 import { AlfrescoApiService } from './alfresco-api.service';
@@ -26,6 +27,7 @@ import { CookieService } from './cookie.service';
 import { LogService } from './log.service';
 import { SearchService } from './search.service';
 import { StorageService } from './storage.service';
+import { AlfrescoTranslateLoader } from './translate-loader.service';
 import { UserPreferencesService } from './user-preferences.service';
 
 describe('SearchService', () => {
@@ -36,7 +38,13 @@ describe('SearchService', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                AppConfigModule
+                AppConfigModule,
+                TranslateModule.forRoot({
+                    loader: {
+                        provide: TranslateLoader,
+                        useClass: AlfrescoTranslateLoader
+                    }
+                })
             ],
             providers: [
                 SearchService,

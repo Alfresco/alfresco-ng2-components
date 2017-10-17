@@ -18,8 +18,9 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import * as moment from 'moment';
+import { Moment } from 'moment';
 import { LightUserRepresentation, LogService, MOMENT_DATE_FORMATS,
-    MomentDateAdapter, PeopleProcessService } from 'ng2-alfresco-core';
+    MomentDateAdapter, PeopleProcessService, UserPreferencesService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { Form } from '../models/form.model';
 import { StartTaskModel } from '../models/start-task.model';
@@ -71,12 +72,18 @@ export class StartTaskComponent implements OnInit {
      * @param translate
      * @param taskService
      */
-    constructor(private taskService: TaskListService,
-                private peopleService: PeopleProcessService,
-                private logService: LogService) {
+    constructor(
+        private taskService: TaskListService,
+        private peopleService: PeopleProcessService,
+        private dateAdapter: DateAdapter<Moment>,
+        private preferences: UserPreferencesService,
+        private logService: LogService) {
     }
 
     ngOnInit() {
+        this.preferences.locale$.subscribe( (locale) => {
+            this.dateAdapter.setLocale(locale);
+        });
         this.loadFormsTask();
         this.getUsers();
     }
