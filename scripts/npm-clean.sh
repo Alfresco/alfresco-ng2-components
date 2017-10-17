@@ -40,13 +40,15 @@ do
     echo "====== clean component: ${PACKAGE} ====="
     cd "$DIR/../ng2-components/${PACKAGE}"
     npm run clean
+    npm run clean-lock
 done
 
 cd "$DIR/../demo-shell-ng2"
 npm run clean
-
+npm run clean-lock
 
 cd "$DIR/../ng2-components"
 npm run clean
+npm run clean-lock
 
 cd ${DIR}
