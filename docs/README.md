@@ -323,6 +323,7 @@ for more information about installing and using the source code.
 - [Node permission directive](node-permission.directive.md)
 - [Node restore directive](node-restore.directive.md)
 - [Upload directive](upload.directive.md)
+- [Node Name Tooltip directive](node-name-tooltip.pipe.md)
 - [*Card view content proxy directive](../ng2-components/ng2-alfresco-core/src/components/view/card-view-content-proxy.directive.ts)
 - [*Highlight directive](../ng2-components/ng2-alfresco-core/src/directives/highlight.directive.ts)
 
