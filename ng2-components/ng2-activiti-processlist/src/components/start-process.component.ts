@@ -154,4 +154,8 @@ export class StartProcessInstanceComponent implements OnChanges {
         }
         this.resetErrorMessage();
     }
+
+    hasProcessName(): boolean {
+        return this.name ? true : false;
+    }
 }

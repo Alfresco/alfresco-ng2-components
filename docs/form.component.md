@@ -114,6 +114,7 @@ and store the form field as metadata. The param nameNode is optional.
 | showTitle | boolean | true | Toggle rendering of the form title. |
 | showCompleteButton | boolean | true | Toggle rendering of the `Complete` outcome button. |
 | disableCompleteButton | boolean | false | The `Complete` outcome button is shown but it will be disabled. |
+| disableStartProcessButton | boolean | false | The `Start Process` outcome button is shown but it will be disabled. |
 | showSaveButton | boolean | true | Toggle rendering of the `Save` outcome button. |
 | readOnly | boolean | false | Toggle readonly state of the form. Enforces all form widgets render readonly if enabled. |
 | showRefreshButton | boolean | true | Toggle rendering of the `Refresh` button. |

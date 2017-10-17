@@ -353,7 +353,14 @@ describe('StartProcessInstanceComponent', () => {
             it('should enable start button when name and process filled out', async(() => {
                 fixture.detectChanges();
                 let startButton = fixture.nativeElement.querySelector('#button-start');
-                expect(startButton.enable).toBeFalsy();
+                expect(startButton.disabled).toBeFalsy();
+            }));
+
+            it('should disable the start process button when process name is empty', async(() => {
+                component.name = '';
+                fixture.detectChanges();
+                let startButton = fixture.nativeElement.querySelector('#button-start');
+                expect(startButton.disabled).toBeTruthy();
             }));
 
         });

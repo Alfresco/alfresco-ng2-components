@@ -76,6 +76,9 @@ export class FormComponent implements OnInit, OnChanges {
     disableCompleteButton: boolean = false;
 
     @Input()
+    disableStartProcessButton: boolean = false;
+
+    @Input()
     showSaveButton: boolean = true;
 
     @Input()
@@ -147,6 +150,9 @@ export class FormComponent implements OnInit, OnChanges {
             }
             if (outcome.name === FormOutcomeModel.COMPLETE_ACTION) {
                 return this.disableCompleteButton ? false : this.form.isValid;
+            }
+            if (outcome.name === FormOutcomeModel.START_PROCESS_ACTION) {
+                return this.disableStartProcessButton ? false : this.form.isValid;
             }
             return this.form.isValid;
         }

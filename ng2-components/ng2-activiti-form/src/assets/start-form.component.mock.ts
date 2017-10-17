@@ -577,6 +577,10 @@ export let startMockForm = {
         {
             id: 'complete',
             name: 'Complete'
+        },
+        {
+            id: 'start_process',
+            name: 'Start Process'
         }
     ],
     javascriptEvents: [],
