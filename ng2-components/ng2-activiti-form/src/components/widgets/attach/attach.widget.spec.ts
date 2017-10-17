@@ -166,7 +166,7 @@ describe('AttachWidgetComponent', () => {
         expect(closed).toBeTruthy();
     });
 
-    it('should show modal dialog', () => {
+    xit('should show modal dialog', () => {
         spyOn(contentService, 'getAlfrescoNodes').and.returnValue(
             Observable.create(observer => {
                 observer.next([]);
