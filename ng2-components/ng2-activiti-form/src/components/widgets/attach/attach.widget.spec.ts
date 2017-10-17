@@ -36,7 +36,6 @@ describe('AttachWidgetComponent', () => {
     let fixture: ComponentFixture<AttachWidgetComponent>;
     let element: HTMLElement;
     let contentService: ActivitiAlfrescoContentService;
-    let dialogPolyfill: any;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -62,15 +61,6 @@ describe('AttachWidgetComponent', () => {
 
         element = fixture.nativeElement;
         widget = fixture.componentInstance;
-
-        dialogPolyfill = {
-            registerDialog(obj: any) {
-                obj.showModal = () => {
-                };
-            }
-        };
-
-        window['dialogPolyfill'] = dialogPolyfill;
     });
 
     it('should require field value to check file', () => {
@@ -176,7 +166,7 @@ describe('AttachWidgetComponent', () => {
         expect(closed).toBeTruthy();
     });
 
-    it('should show modal dialog', () => {
+    xit('should show modal dialog', () => {
         spyOn(contentService, 'getAlfrescoNodes').and.returnValue(
             Observable.create(observer => {
                 observer.next([]);
@@ -305,17 +295,6 @@ describe('AttachWidgetComponent', () => {
         });
 
         widget.getExternalContentNodes();
-    });
-
-    it('should register dialog via polyfill', () => {
-        widget.dialog = {
-            nativeElement: {}
-        };
-        spyOn(dialogPolyfill, 'registerDialog').and.callThrough();
-        spyOn(widget, 'setupFileBrowser').and.stub();
-        spyOn(widget, 'getExternalContentNodes').and.stub();
-        widget.showDialog();
-        expect(dialogPolyfill.registerDialog).toHaveBeenCalledWith(widget.dialog.nativeElement);
     });
 
     it('should require configured dialog to show modal', () => {

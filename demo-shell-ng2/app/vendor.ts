@@ -50,17 +50,6 @@ import 'ng2-alfresco-userinfo';
 import 'ng2-alfresco-viewer';
 import 'ng2-alfresco-webscript';
 
-// Polyfill(s) for dialogs
-require('script-loader!dialog-polyfill/dialog-polyfill');
-import 'dialog-polyfill/dialog-polyfill.css';
-
-// Google Material Design Lite
-import 'material-design-lite/dist/material.orange-blue.min.css';
-import 'material-design-lite/material.js';
-
-import 'ng2-activiti-form/stencils/runtime.adf';
-import 'ng2-activiti-form/stencils/runtime.ng1';
-
 import 'chart.js';
 import 'ng2-charts';
 require('script-loader!raphael/raphael.min.js');

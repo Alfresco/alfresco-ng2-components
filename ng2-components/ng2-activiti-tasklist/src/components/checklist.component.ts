@@ -101,14 +101,8 @@ export class ChecklistComponent implements OnInit, OnChanges {
         }
     }
 
-    public showDialog() {
+    showDialog() {
         this.dialog.open(this.addNewDialog, { width: '350px' });
-        // if (this.addNewDialog) {
-        //     if (!this.addNewDialog.nativeElement.showModal) {
-        //         dialogPolyfill.registerDialog(this.addNewDialog.nativeElement);
-        //     }
-        //     this.addNewDialog.nativeElement.showModal();
-        // }
     }
 
     public add() {

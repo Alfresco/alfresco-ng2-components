@@ -25,8 +25,6 @@ import { FormFieldModel } from '../core/form-field.model';
 import { FormService } from './../../../services/form.service';
 import { baseHost , WidgetComponent } from './../widget.component';
 
-declare let dialogPolyfill: any;
-
 @Component({
     selector: 'attach-widget',
     templateUrl: './attach.widget.html',
@@ -130,11 +128,7 @@ export class AttachWidgetComponent extends WidgetComponent implements OnInit {
         this.getExternalContentNodes();
 
         if (this.dialog) {
-            if (!this.dialog.nativeElement.showModal) {
-                dialogPolyfill.registerDialog(this.dialog.nativeElement);
-            }
-
-            this.dialog.nativeElement.showModal();
+            // todo: show dialog
             return true;
         }
         return false;

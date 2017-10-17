@@ -8,6 +8,10 @@ $adf-viewer-background-color: #f5f5f5;
 
 .adf-viewer {
 
+    &__mimeicon {
+        vertical-align: middle;
+    }
+
     &-container {
         .adf-viewer-layout-content {
             @include full-screen();
