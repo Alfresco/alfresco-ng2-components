@@ -326,6 +326,14 @@ for more information about installing and using the source code.
 - [*Card view content proxy directive](../ng2-components/ng2-alfresco-core/src/components/view/card-view-content-proxy.directive.ts)
 - [*Highlight directive](../ng2-components/ng2-alfresco-core/src/directives/highlight.directive.ts)
 
+### Pipes
+
+- [*File size pipe](../ng2-components/ng2-alfresco-core/src/pipes/file-size.pipe.ts)
+- [*Mime type icon pipe](../ng2-components/ng2-alfresco-core/src/pipes/mime-type-icon.pipe.ts)
+- [*Text highlight pipe](../ng2-components/ng2-alfresco-core/src/pipes/text-highlight.pipe.ts)
+- [*Time ago pipe](../ng2-components/ng2-alfresco-core/src/pipes/time-ago.pipe.ts)
+- [*User initial pipe](../ng2-components/ng2-alfresco-core/src/pipes/user-initial.pipe.ts)
+
 ### Services
 
 - [Alfresco api service](alfresco-api.service.md)
@@ -548,6 +556,8 @@ for more information about installing and using the source code.
 - [*PdfViewer component](../ng2-components/ng2-alfresco-viewer/src/components/pdfViewer.component.ts)
 - [*TxtViewer component](../ng2-components/ng2-alfresco-viewer/src/components/txtViewer.component.ts)
 - [*Unknown format component](../ng2-components/ng2-alfresco-viewer/src/components/unknown-format/unknown-format.component.ts)
+- [*Viewer info drawer component](../ng2-components/ng2-alfresco-viewer/src/components/viewer-info-drawer.component.ts)
+- [*Viewer toolbar component](../ng2-components/ng2-alfresco-viewer/src/components/viewer-toolbar.component.ts)
 
 ### Directives
 

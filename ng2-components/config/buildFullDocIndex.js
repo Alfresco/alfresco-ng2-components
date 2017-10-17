@@ -1,7 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 
-var angFilenameRegex = /([a-zA-Z0-9\-]+)\.((component)|(directive)|(model)|(service)|(widget))\.ts/;
+var angFilenameRegex = /([a-zA-Z0-9\-]+)\.((component)|(directive)|(model)|(pipe)|(service)|(widget))\.ts/;
 
 var indexFileName = path.resolve('..', 'docs', 'README.md');
 var summaryFileName = path.resolve('..', 'docs', 'summary.json');
@@ -36,6 +36,10 @@ function searchLibraryRecursive(libData, folderPath) {
                         libData.modelsWithDocs.push(itemPath);
                         break;
                         
+                    case "pipe":
+                        libData.pipesWithDocs.push(itemPath);
+                        break;
+                        
                     case "service":
                         libData.servicesWithDocs.push(itemPath);
                         break;
@@ -59,6 +63,10 @@ function searchLibraryRecursive(libData, folderPath) {
                     
                     case "model":
                         libData.modelsWithoutDocs.push(itemPath);
+                        break;
+                    
+                    case "pipe":
+                        libData.pipesWithoutDocs.push(itemPath);
                         break;
                         
                     case "service":
@@ -191,12 +199,10 @@ for (var i = 0; i < rootItems.length; i++) {
             componentsWithDocs: [], componentsWithoutDocs: [],
             directivesWithDocs: [], directivesWithoutDocs: [],
             modelsWithDocs: [],     modelsWithoutDocs: [],
+            pipesWithDocs: [],      pipesWithoutDocs: [],
             servicesWithDocs: [],   servicesWithoutDocs: [],
             widgetsWithDocs: [],    widgetsWithoutDocs: [],
         };
-        
-        //var itemsWithDocs = libs[rootItems[i]].componentsWithDocs;
-        //var itemsWithoutDocs = libs[rootItems[i]].componentsWithoutDocs;
 
         searchLibraryRecursive(libs[rootItems[i]], path.resolve(itemPath, 'src'));
     }
@@ -213,6 +219,7 @@ for (var i = 0; i < libNames.length; i++) {
     var listItems = buildIndexSection('Components', libData.componentsWithDocs, libData.componentsWithoutDocs);
     listItems = listItems.concat(buildIndexSection('Directives', libData.directivesWithDocs, libData.directivesWithoutDocs));
     listItems = listItems.concat(buildIndexSection('Models', libData.modelsWithDocs, libData.modelsWithoutDocs));
+    listItems = listItems.concat(buildIndexSection('Pipes', libData.pipesWithDocs, libData.pipesWithoutDocs));
     listItems = listItems.concat(buildIndexSection('Services', libData.servicesWithDocs, libData.servicesWithoutDocs));
     listItems = listItems.concat(buildIndexSection('Widgets', libData.widgetsWithDocs, libData.widgetsWithoutDocs));
     
