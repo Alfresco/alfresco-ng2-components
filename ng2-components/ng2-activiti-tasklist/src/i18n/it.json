@@ -1,7 +1,7 @@
 {
   "APPS": {
-    "NONE": "Nessuna applicazione trovata"
-        "TASK_APP_NAME": "I miei compiti"
+    "NONE": "Nessuna applicazione trovata",
+    "TASK_APP_NAME": "I miei compiti"
   },
   "TASK_LIST": {
     "MESSAGES": {
