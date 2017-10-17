@@ -17,8 +17,7 @@
 
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { LightUserRepresentation, PeopleProcessService } from 'ng2-alfresco-core';
-import { Comment } from '../models/comment.model';
+import { CommentProcessModel, PeopleProcessService, UserProcessModel } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'adf-comment-list',
@@ -29,12 +28,12 @@ import { Comment } from '../models/comment.model';
 export class CommentListComponent {
 
     @Input()
-    comments: Comment[];
+    comments: CommentProcessModel[];
 
     @Output()
-    clickRow: EventEmitter<Comment> = new EventEmitter<Comment>();
+    clickRow: EventEmitter<CommentProcessModel> = new EventEmitter<CommentProcessModel>();
 
-    selectedComment: Comment;
+    selectedComment: CommentProcessModel;
 
     constructor(private datePipe: DatePipe, public peopleProcessService: PeopleProcessService) {
     }
@@ -44,7 +43,7 @@ export class CommentListComponent {
         this.clickRow.emit(this.selectedComment);
     }
 
-    getUserShortName(user: LightUserRepresentation): string {
+    getUserShortName(user: UserProcessModel): string {
         let shortName = '';
         if (user) {
             if (user.firstName) {

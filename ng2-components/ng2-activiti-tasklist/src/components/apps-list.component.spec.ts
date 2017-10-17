@@ -18,21 +18,19 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { CoreModule, TranslationService } from 'ng2-alfresco-core';
+import { CoreModule, TranslationService, AppsProcessService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 
 import { TranslationMock } from '../assets/translation.service.mock';
 import { defaultApp, deployedApps, nonDeployedApps } from './../assets/apps-list.mock';
-import { TaskListService } from './../services/tasklist.service';
 import { AppsListComponent } from './apps-list.component';
 
 describe('AppsListComponent', () => {
 
-    let componentHandler: any;
     let component: AppsListComponent;
     let fixture: ComponentFixture<AppsListComponent>;
     let debugElement: DebugElement;
-    let service: TaskListService;
+    let service: AppsProcessService;
     let getAppsSpy: jasmine.Spy;
 
     beforeEach(async(() => {
@@ -44,7 +42,7 @@ describe('AppsListComponent', () => {
                 AppsListComponent
             ],
             providers: [
-                TaskListService,
+                AppsProcessService,
                 { provide: TranslationService, useClass: TranslationMock }
             ]
         }).compileComponents();
@@ -57,14 +55,8 @@ describe('AppsListComponent', () => {
         component = fixture.componentInstance;
         debugElement = fixture.debugElement;
 
-        service = fixture.debugElement.injector.get(TaskListService);
+        service = fixture.debugElement.injector.get(AppsProcessService);
         getAppsSpy = spyOn(service, 'getDeployedApplications').and.returnValue(Observable.of(deployedApps));
-
-        componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered',
-            'upgradeElement'
-        ]);
-        window['componentHandler'] = componentHandler;
     });
 
     it('should define layoutType with the default value', () => {

@@ -41,11 +41,8 @@ describe('User info component', () => {
     let element: HTMLElement;
     let stubAuthService: AlfrescoAuthenticationService;
     let stubContent: AlfrescoContentService;
-    let componentHandler;
 
     beforeEach(async(() => {
-        componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
-        window['componentHandler'] = componentHandler;
         TestBed.configureTestingModule({
             imports: [
                 CoreModule,

@@ -17,31 +17,28 @@
 
 import { DatePipe } from '@angular/common';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
-import {  LightUserRepresentation } from 'ng2-alfresco-core';
+import { AppConfigService, CoreModule, CommentProcessModel, TranslationService, UserProcessModel } from 'ng2-alfresco-core';
 import { DataRowEvent, DataTableModule, ObjectDataRow } from 'ng2-alfresco-datatable';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
-import { Comment  } from '../models/comment.model';
 import { CommentListComponent } from './comment-list.component';
 
 declare let jasmine: any;
 
-const testUser: LightUserRepresentation = new LightUserRepresentation({
+const testUser: UserProcessModel = new UserProcessModel({
     id: '1',
     firstName: 'Test',
     lastName: 'User',
     email: 'tu@domain.com'
 });
 const testDate = new Date();
-const testComment: Comment = new Comment(1, 'Test Comment', testDate.toDateString(), testUser);
+const testComment: CommentProcessModel = new CommentProcessModel({id:1, message:'Test Comment', created:testDate.toDateString(), createdBy:testUser});
 
 describe('CommentListComponent', () => {
 
     let commentList: CommentListComponent;
     let fixture: ComponentFixture<CommentListComponent>;
     let element: HTMLElement;
-    let componentHandler;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -62,11 +59,6 @@ describe('CommentListComponent', () => {
             fixture = TestBed.createComponent(CommentListComponent);
             commentList = fixture.componentInstance;
             element = fixture.nativeElement;
-            componentHandler = jasmine.createSpyObj('componentHandler', [
-                'upgradeAllRegistered'
-            ]);
-
-            window['componentHandler'] = componentHandler;
             fixture.detectChanges();
         });
     }));
@@ -126,7 +118,7 @@ describe('CommentListComponent', () => {
     });
 
     it('comment date time should start with Yesterday when comment date is yesterday', () => {
-        testComment.created = (Date.now() - 24 * 3600 * 1000).toString();
+        testComment.created = new Date((Date.now() - 24 * 3600 * 1000));
         commentList.comments = [testComment];
         fixture.detectChanges();
         element = fixture.nativeElement.querySelector('#comment-time');
@@ -134,7 +126,7 @@ describe('CommentListComponent', () => {
     });
 
     it('comment date time should not start with Today/Yesterday when comment date is before yesterday', () => {
-        testComment.created = (Date.now() - 24 * 3600 * 1000 * 2).toString();
+        testComment.created = new Date((Date.now() - 24 * 3600 * 1000 * 2));
         commentList.comments = [testComment];
         fixture.detectChanges();
         element = fixture.nativeElement.querySelector('#comment-time');

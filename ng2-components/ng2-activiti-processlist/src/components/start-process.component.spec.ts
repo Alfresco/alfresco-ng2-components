@@ -27,7 +27,7 @@ import { ActivitiFormModule, FormService } from 'ng2-activiti-form';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 
-import { RestVariable } from 'alfresco-js-api';
+import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessService } from '../services/process.service';
 import { newProcess, taskFormMock, testProcessDefRepr, testProcessDefs, testProcessDefWithForm } from './../assets/start-process.component.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
@@ -35,7 +35,6 @@ import { StartProcessInstanceComponent } from './start-process.component';
 
 describe('StartProcessInstanceComponent', () => {
 
-    let componentHandler: any;
     let component: StartProcessInstanceComponent;
     let fixture: ComponentFixture<StartProcessInstanceComponent>;
     let processService: ProcessService;
@@ -78,11 +77,6 @@ describe('StartProcessInstanceComponent', () => {
         startProcessSpy = spyOn(processService, 'startProcess').and.returnValue(Observable.of(newProcess));
         getStartFormDefinitionSpy = spyOn(formService, 'getStartFormDefinition').and.returnValue(Observable.of(taskFormMock));
 
-        componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered',
-            'upgradeElement'
-        ]);
-        window['componentHandler'] = componentHandler;
     });
 
     it('should create instance of StartProcessInstanceComponent', () => {
@@ -170,11 +164,11 @@ describe('StartProcessInstanceComponent', () => {
 
     describe('input changes', () => {
 
-        let change = new SimpleChange('123', '456', true);
-        let nullChange = new SimpleChange('123', null, true);
+        let change = new SimpleChange(123, 456, true);
+        let nullChange = new SimpleChange(123, null, true);
 
         beforeEach(async(() => {
-            component.appId = '123';
+            component.appId = 123;
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -184,7 +178,7 @@ describe('StartProcessInstanceComponent', () => {
 
         it('should reload processes when appId input changed', () => {
             component.ngOnChanges({appId: change});
-            expect(getDefinitionsSpy).toHaveBeenCalledWith('456');
+            expect(getDefinitionsSpy).toHaveBeenCalledWith(456);
         });
 
         it('should reload processes when appId input changed to null', () => {
@@ -205,7 +199,7 @@ describe('StartProcessInstanceComponent', () => {
 
         beforeEach(() => {
             component.name = 'My new process';
-            let change = new SimpleChange(null, '123', true);
+            let change = new SimpleChange(null, 123, true);
             component.ngOnChanges({'appId': change});
         });
 
@@ -234,9 +228,9 @@ describe('StartProcessInstanceComponent', () => {
         }));
 
         it('should call service to start process with the variables setted', async(() => {
-            let inputProcessVariable: RestVariable[] = [];
+            let inputProcessVariable: ProcessInstanceVariable[] = [];
 
-            let variable: RestVariable = {};
+            let variable: ProcessInstanceVariable = {};
             variable.name = 'nodeId';
             variable.value = 'id';
 

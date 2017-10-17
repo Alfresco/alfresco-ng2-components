@@ -84,7 +84,6 @@ describe('TaskListComponent', () => {
         error: 'wrong request'
     };
 
-    let componentHandler: any;
     let component: TaskListComponent;
     let fixture: ComponentFixture<TaskListComponent>;
     let taskListService: TaskListService;
@@ -116,11 +115,6 @@ describe('TaskListComponent', () => {
 
         taskListService = TestBed.get(TaskListService);
 
-        componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered',
-            'upgradeElement'
-        ]);
-        window['componentHandler'] = componentHandler;
     });
 
     beforeEach(() => {

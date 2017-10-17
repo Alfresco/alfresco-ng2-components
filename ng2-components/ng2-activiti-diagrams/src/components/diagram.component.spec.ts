@@ -42,8 +42,6 @@ describe('Test ng2-activiti-diagrams ', () => {
     let debug: DebugElement;
     let element: HTMLElement;
 
-    let componentHandler: any;
-
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
@@ -67,11 +65,6 @@ describe('Test ng2-activiti-diagrams ', () => {
         debug = fixture.debugElement;
         element = fixture.nativeElement;
         fixture.detectChanges();
-        componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered',
-            'upgradeElement'
-        ]);
-        window['componentHandler'] = componentHandler;
     });
 
     describe('Diagrams component Events: ', () => {

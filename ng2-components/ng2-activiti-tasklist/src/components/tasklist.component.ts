@@ -36,7 +36,7 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
     @Input()
-    appId: string;
+    appId: number;
 
     @Input()
     processInstanceId: string;

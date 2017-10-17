@@ -19,8 +19,8 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } fro
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import * as moment from 'moment';
 import { Moment } from 'moment';
-import { LightUserRepresentation, LogService, MOMENT_DATE_FORMATS,
-    MomentDateAdapter, PeopleProcessService, UserPreferencesService } from 'ng2-alfresco-core';
+import { LogService, MOMENT_DATE_FORMATS,
+    MomentDateAdapter, PeopleProcessService, UserPreferencesService, UserProcessModel } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { Form } from '../models/form.model';
 import { StartTaskModel } from '../models/start-task.model';
@@ -41,7 +41,7 @@ export class StartTaskComponent implements OnInit {
     public  FORMAT_DATE: string = 'DD/MM/YYYY';
 
     @Input()
-    appId: string;
+    appId: number;
 
     @Output()
     success: EventEmitter<any> = new EventEmitter<any>();
@@ -52,7 +52,7 @@ export class StartTaskComponent implements OnInit {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    people: LightUserRepresentation[] = [];
+    people: UserProcessModel[] = [];
 
     startTaskmodel: StartTaskModel = new StartTaskModel();
 
@@ -90,7 +90,7 @@ export class StartTaskComponent implements OnInit {
 
     public start(): void {
         if (this.startTaskmodel.name) {
-            this.startTaskmodel.category = this.appId;
+            this.startTaskmodel.category = this.appId.toString();
             this.taskService.createNewTask(new TaskDetailsModel(this.startTaskmodel))
                 .switchMap((createRes: any) =>
                     this.attachForm(createRes.id, this.formKey).defaultIfEmpty(createRes)
@@ -148,7 +148,7 @@ export class StartTaskComponent implements OnInit {
         });
     }
 
-    public isUserNameEmpty(user: LightUserRepresentation): boolean {
+    public isUserNameEmpty(user: UserProcessModel): boolean {
         return !user || (this.isEmpty(user.firstName) && this.isEmpty(user.lastName));
     }
 

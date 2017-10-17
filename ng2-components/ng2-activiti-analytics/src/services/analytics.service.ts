@@ -41,7 +41,7 @@ export class AnalyticsService {
      * Retrive all the Deployed app
      * @returns {Observable<any>}
      */
-    getReportList(appId: string): Observable<any> {
+    getReportList(appId: number): Observable<any> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.getReportList())
             .map((res: any) => {
                 let reports: ReportParametersModel[] = [];
@@ -67,9 +67,9 @@ export class AnalyticsService {
             }).catch(err => this.handleError(err));
     }
 
-    private isReportValid(appId: string, report: ReportParametersModel) {
+    private isReportValid(appId: number, report: ReportParametersModel) {
         let isValid: boolean = true;
-        if (appId && appId !== '0' && report.name.includes('Process definition overview')) {
+        if (appId && appId !== 0 && report.name.includes('Process definition overview')) {
             isValid = false;
         }
         return isValid;
@@ -82,7 +82,7 @@ export class AnalyticsService {
             }).catch(err => this.handleError(err));
     }
 
-    getParamValuesByType(type: string, appId: string, reportId?: string, processDefinitionId?: string) {
+    getParamValuesByType(type: string, appId: number, reportId?: string, processDefinitionId?: string) {
         if (type === 'status') {
             return this.getProcessStatusValues();
         } else if (type === 'processDefinition') {
@@ -155,7 +155,7 @@ export class AnalyticsService {
             }).catch(err => this.handleError(err));
     }
 
-    getProcessDefinitionsValues(appId: string): Observable<any> {
+    getProcessDefinitionsValues(appId: number): Observable<any> {
         let options = {'appDefinitionId': appId};
         return Observable.fromPromise(this.apiService.getInstance().activiti.processDefinitionsApi.getProcessDefinitions(options))
             .map((res: any) => {

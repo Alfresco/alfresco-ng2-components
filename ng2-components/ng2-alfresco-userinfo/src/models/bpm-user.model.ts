@@ -15,11 +15,13 @@
  * limitations under the License.
  */
 
-export class BpmUserModel {
+import { UserRepresentation } from 'alfresco-js-api';
+
+export class BpmUserModel implements UserRepresentation {
     apps: any;
-    capabilities: string;
+    capabilities: string[];
     company: string;
-    created: string;
+    created: Date;
     email: string;
     externalId: string;
     firstName: string;
@@ -28,14 +30,14 @@ export class BpmUserModel {
     fullNameDisplay: string;
     groups: any;
     id: string;
-    lastUpdate: string;
-    latestSyncTimeStamp: string;
+    lastUpdate: Date;
+    latestSyncTimeStamp: Date;
     password: string;
-    pictureId: string;
+    pictureId: number;
     status: string;
-    tenantId: string;
+    tenantId: number;
     tenantName: string;
-    tenantPictureId: string;
+    tenantPictureId: number;
     type: string;
 
     constructor(obj?: any) {

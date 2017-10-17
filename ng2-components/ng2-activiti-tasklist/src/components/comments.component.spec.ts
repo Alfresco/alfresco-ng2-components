@@ -34,7 +34,6 @@ import { CommentsComponent } from './comments.component';
 
 describe('CommentsComponent', () => {
 
-    let componentHandler: any;
     let service: TaskListService;
     let component: CommentsComponent;
     let fixture: ComponentFixture<CommentsComponent>;
@@ -76,11 +75,6 @@ describe('CommentsComponent', () => {
         ]));
         addCommentSpy = spyOn(service, 'addComment').and.returnValue(Observable.of({id: 123, message: 'Test Comment', createdBy: {id: '999'}}));
 
-        componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered',
-            'upgradeElement'
-        ]);
-        window['componentHandler'] = componentHandler;
     });
 
     it('should load comments when taskId specified', () => {

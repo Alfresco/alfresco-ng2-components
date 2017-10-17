@@ -18,12 +18,11 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService, CardViewUpdateService, CoreModule, TranslationService } from 'ng2-alfresco-core';
+import { AppConfigService, CardViewUpdateService, CoreModule, TranslationService, UserProcessModel } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
 
-import { LightUserRepresentation } from '../../../ng2-alfresco-core/src/models/user-process.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { taskDetailsMock } from './../assets/task-details.mock';
 import { TaskListService } from './../services/tasklist.service';
@@ -32,7 +31,6 @@ import { TaskHeaderComponent } from './task-header.component';
 describe('TaskHeaderComponent', () => {
 
     let service: TaskListService;
-    let componentHandler: any;
     let component: TaskHeaderComponent;
     let fixture: ComponentFixture<TaskHeaderComponent>;
     let debugElement: DebugElement;
@@ -62,12 +60,6 @@ describe('TaskHeaderComponent', () => {
         debugElement = fixture.debugElement;
 
         component.taskDetails = new TaskDetailsModel(taskDetailsMock);
-
-        componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered',
-            'upgradeElement'
-        ]);
-        window['componentHandler'] = componentHandler;
     });
 
     it('should render empty component if no task details provided', () => {
@@ -107,7 +99,7 @@ describe('TaskHeaderComponent', () => {
     });
 
     it('should set editable to false if the task has already completed', () => {
-        component.taskDetails.endDate = '05/05/2002';
+        component.taskDetails.endDate = new Date('05/05/2002');
         component.ngOnChanges({});
         fixture.detectChanges();
 
@@ -139,7 +131,7 @@ describe('TaskHeaderComponent', () => {
 
     describe('Unclaim', () => {
 
-        const batman = new LightUserRepresentation({ id : 1, email: 'bruce.wayne@gotham.com', firstName: 'Bruce', lastName: 'Wayne', userImage: 'batman.jpg' });
+        const batman = new UserProcessModel({ id : 1, email: 'bruce.wayne@gotham.com', firstName: 'Bruce', lastName: 'Wayne', userImage: 'batman.jpg' });
         let taskListService;
 
         beforeEach(() => {
@@ -176,7 +168,7 @@ describe('TaskHeaderComponent', () => {
     });
 
     it('should display due date', () => {
-        component.taskDetails.dueDate = '2016-11-03';
+        component.taskDetails.dueDate = new Date('2016-11-03');
         component.ngOnChanges({});
         fixture.detectChanges();
         let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value'));

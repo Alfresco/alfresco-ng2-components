@@ -18,7 +18,7 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { CoreModule, LightUserRepresentation } from 'ng2-alfresco-core';
+import { CoreModule, UserProcessModel } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 import { FormService } from '../../../services/form.service';
@@ -85,7 +85,7 @@ describe('PeopleWidgetComponent', () => {
     });
 
     it('should return full name for a given model', () => {
-        let model = new LightUserRepresentation({
+        let model = new UserProcessModel({
             firstName: 'John',
             lastName: 'Doe'
         });
@@ -93,17 +93,17 @@ describe('PeopleWidgetComponent', () => {
     });
 
     it('should skip first name for display name', () => {
-        let model = new LightUserRepresentation({firstName: null, lastName: 'Doe'});
+        let model = new UserProcessModel({firstName: null, lastName: 'Doe'});
         expect(widget.getDisplayName(model)).toBe('Doe');
     });
 
     it('should skip last name for display name', () => {
-        let model = new LightUserRepresentation({firstName: 'John', lastName: null});
+        let model = new UserProcessModel({firstName: 'John', lastName: null});
         expect(widget.getDisplayName(model)).toBe('John');
     });
 
     it('should init value from the field', () => {
-        widget.field.value = new LightUserRepresentation({
+        widget.field.value = new UserProcessModel({
             id: 'people-id',
             firstName: 'John',
             lastName: 'Doe'
@@ -238,7 +238,7 @@ describe('PeopleWidgetComponent', () => {
     });
 
     it('should reset users when the input field is blank string', () => {
-        let fakeUser = new LightUserRepresentation({id: '1', email: 'ffff@fff'});
+        let fakeUser = new UserProcessModel({id: '1', email: 'ffff@fff'});
         widget.users.push(fakeUser);
         fixture.detectChanges();
 

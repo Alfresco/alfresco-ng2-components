@@ -36,8 +36,6 @@ describe('AnalyticsReportParametersComponent', () => {
     let debug: DebugElement;
     let element: HTMLElement;
 
-    let componentHandler: any;
-
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
@@ -59,11 +57,6 @@ describe('AnalyticsReportParametersComponent', () => {
         spyOn(translateService, 'get').and.callFake((key) => {
             return Observable.of(key);
         });
-
-        componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered'
-        ]);
-        window['componentHandler'] = componentHandler;
     }));
 
     beforeEach(() => {
@@ -327,7 +320,7 @@ describe('AnalyticsReportParametersComponent', () => {
                 responseText: analyticParamsMock.reportDefParamProcessDef
             });
 
-            let appId = '1';
+            let appId = 1;
 
             jasmine.Ajax.stubRequest('http://localhost:9876/bpm/activiti-app/api/enterprise/process-definitions?appDefinitionId=' + appId).andReturn({
                 status: 200,

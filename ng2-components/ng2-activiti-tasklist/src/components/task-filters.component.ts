@@ -16,12 +16,13 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { AppsProcessService } from 'ng2-alfresco-core';
 import { Observable, Observer } from 'rxjs/Rx';
 import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
 import { TaskListService } from './../services/tasklist.service';
 
 @Component({
-    selector: 'adf-filters, activiti-filters',
+    selector: 'adf-filters, taskListService-filters',
     templateUrl: './task-filters.component.html',
     styleUrls: ['task-filters.component.scss']
 })
@@ -40,7 +41,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
     onError: EventEmitter<any> = new EventEmitter<any>();
 
     @Input()
-    appId: string;
+    appId: number;
 
     @Input()
     appName: string;
@@ -55,7 +56,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
 
     filters: FilterRepresentationModel [] = [];
 
-    constructor(private activiti: TaskListService) {
+    constructor(private taskListService: TaskListService, private appsProcessService: AppsProcessService) {
         this.filter$ = new Observable<FilterRepresentationModel>(observer => this.filterObserver = observer).share();
     }
 
@@ -85,7 +86,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
      * @param appId
      * @param appName
      */
-    getFilters(appId?: string, appName?: string) {
+    getFilters(appId?: number, appName?: string) {
         if (appName) {
             this.getFiltersByAppName(appName);
         } else {
@@ -97,11 +98,11 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
      * Return the filter list filtered by appId
      * @param appId - optional
      */
-    getFiltersByAppId(appId?: string) {
-        this.activiti.getTaskListFilters(appId).subscribe(
+    getFiltersByAppId(appId?: number) {
+        this.taskListService.getTaskListFilters(appId).subscribe(
             (res: FilterRepresentationModel[]) => {
                 if (res.length === 0 && this.isFilterListEmpty()) {
-                    this.activiti.createDefaultFilters(appId).subscribe(
+                    this.taskListService.createDefaultFilters(appId).subscribe(
                         (resDefault: FilterRepresentationModel[]) => {
                             this.resetFilter();
                             resDefault.forEach((filter) => {
@@ -136,7 +137,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
      * @param appName
      */
     getFiltersByAppName(appName: string) {
-        this.activiti.getDeployedApplications(appName).subscribe(
+        this.appsProcessService.getDeployedApplicationsByName(appName).subscribe(
             application => {
                 this.getFiltersByAppId(application.id);
                 this.selectTaskFilter(this.filterParam, this.filters);
@@ -157,7 +158,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
 
     public selectFilterWithTask(taskId: string) {
         let filteredFilterList: FilterRepresentationModel[] = [];
-        this.activiti.getFilterForTaskById(taskId, this.filters).subscribe(
+        this.taskListService.getFilterForTaskById(taskId, this.filters).subscribe(
             (filter: FilterRepresentationModel) => {
                 filteredFilterList.push(filter);
             },
@@ -167,7 +168,6 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
             () => {
                 if (filteredFilterList.length > 0) {
                     this.selectTaskFilter(new FilterParamsModel({name: 'My Tasks'}), filteredFilterList);
-                    this.currentFilter.landingTaskId = taskId;
                     this.filterClick.emit(this.currentFilter);
                 }
             });
@@ -181,7 +181,8 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
         if (filterParam) {
             filteredFilterList.filter((taskFilter: FilterRepresentationModel, index) => {
                 if (filterParam.name && filterParam.name.toLowerCase() === taskFilter.name.toLowerCase() ||
-                    filterParam.id === taskFilter.id || filterParam.index === index) {
+                    filterParam.id === taskFilter.id.toString()
+                    || filterParam.index === index) {
                     findTaskFilter = taskFilter;
                 }
             });

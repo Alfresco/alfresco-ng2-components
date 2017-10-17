@@ -15,20 +15,16 @@
  * limitations under the License.
  */
 
-import { RestVariable } from 'alfresco-js-api';
-
-export class ProcessInstanceVariable implements RestVariable {
-
-    name?: string;
-    scope?: string;
-    type?: string;
-    value?: string;
-    valueUrl?: string;
-
-    constructor(obj?: any) {
-        this.name = obj && obj.name !== undefined ? obj.name : null;
-        this.scope = obj && obj.scope !== undefined ? obj.scope : null;
-        this.value = obj && obj.value !== undefined ? obj.value : null;
-        this.valueUrl = obj && obj.valueUrl !== undefined ? obj.valueUrl : null;
-    }
-}
+export let fakeApps = {
+    size: 2, total: 2, start: 0,
+    data: [
+        {
+            id: 1, defaultAppId: null, name: 'Sales-Fakes-App', description: 'desc-fake1', modelId: 22,
+            theme: 'theme-1-fake', icon: 'glyphicon-asterisk', 'deploymentId': '111', 'tenantId': null
+        },
+        {
+            id: 2, defaultAppId: null, name: 'health-care-Fake', description: 'desc-fake2', modelId: 33,
+            theme: 'theme-2-fake', icon: 'glyphicon-asterisk', 'deploymentId': '444', 'tenantId': null
+        }
+    ]
+};

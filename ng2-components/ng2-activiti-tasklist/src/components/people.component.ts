@@ -16,13 +16,12 @@
  */
 
 import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
-import { LogService } from 'ng2-alfresco-core';
-import { LightUserRepresentation, PeopleProcessService } from 'ng2-alfresco-core';
+import { LogService, UserProcessModel } from 'ng2-alfresco-core';
+import { PeopleProcessService } from 'ng2-alfresco-core';
 import { Observable, Observer } from 'rxjs/Rx';
 import { UserEventModel } from '../models/user-event.model';
 import { PeopleSearchComponent } from './people-search.component';
 
-declare let componentHandler: any;
 declare var require: any;
 
 @Component({
@@ -36,7 +35,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
     iconImageUrl: string = require('../assets/images/user.jpg');
 
     @Input()
-    people: LightUserRepresentation[] = [];
+    people: UserProcessModel[] = [];
 
     @Input()
     taskId: string = '';
@@ -49,28 +48,17 @@ export class PeopleComponent implements OnInit, AfterViewInit {
 
     showAssignment: boolean = false;
 
-    private peopleSearchObserver: Observer<LightUserRepresentation[]>;
-    peopleSearch$: Observable<LightUserRepresentation[]>;
+    private peopleSearchObserver: Observer<UserProcessModel[]>;
+    peopleSearch$: Observable<UserProcessModel[]>;
 
     constructor(private logService: LogService, public peopleProcessService: PeopleProcessService) {
-        this.peopleSearch$ = new Observable<LightUserRepresentation[]>(observer => this.peopleSearchObserver = observer).share();
+        this.peopleSearch$ = new Observable<UserProcessModel[]>(observer => this.peopleSearchObserver = observer).share();
     }
 
     ngOnInit() {
     }
 
     ngAfterViewInit() {
-        this.setupMaterialComponents(componentHandler);
-    }
-
-    setupMaterialComponents(handler?: any): boolean {
-        // workaround for MDL issues with dynamic components
-        let isUpgraded: boolean = false;
-        if (handler) {
-            handler.upgradeAllRegistered();
-            isUpgraded = true;
-        }
-        return isUpgraded;
     }
 
     involveUserAndCloseSearch() {
@@ -92,14 +80,14 @@ export class PeopleComponent implements OnInit, AfterViewInit {
             }, error => this.logService.error(error));
     }
 
-    involveUser(user: LightUserRepresentation) {
+    involveUser(user: UserProcessModel) {
         this.peopleProcessService.involveUserWithTask(this.taskId, user.id.toString())
             .subscribe(() => {
                 this.people = [...this.people, user];
             }, error => this.logService.error('Impossible to involve user with task'));
     }
 
-    removeInvolvedUser(user: LightUserRepresentation) {
+    removeInvolvedUser(user: UserProcessModel) {
         this.peopleProcessService.removeInvolvedUser(this.taskId, user.id.toString())
             .subscribe(() => {
                 this.people = this.people.filter((involvedUser) => {

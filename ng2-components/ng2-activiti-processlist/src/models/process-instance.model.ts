@@ -15,26 +15,27 @@
  * limitations under the License.
  */
 
-export class ProcessInstance {
+import { LightUserRepresentation, ProcessInstanceRepresentation, RestVariable } from 'alfresco-js-api';
 
-    public businessKey: string;
-    public ended: any;
-    public graphicalNotationDefined: boolean;
-    public id: string;
-    public name: string;
-    public processDefinitionCategory: string;
-    public processDefinitionDeploymentId: string;
-    public processDefinitionDescription: string;
-    public processDefinitionId: string;
-    public processDefinitionKey: string;
-    public processDefinitionName: string;
-    public processDefinitionVersion: number;
-    public startFormDefined: boolean;
-    public started: string;
-    public startedBy: any;
-    public suspended: boolean;
-    public tenantId: string;
-    public variables: any;
+export class ProcessInstance implements ProcessInstanceRepresentation {
+
+    businessKey?: string;
+    ended?: Date;
+    graphicalNotationDefined?: boolean;
+    id?: string;
+    name?: string;
+    processDefinitionCategory?: string;
+    processDefinitionDeploymentId?: string;
+    processDefinitionDescription?: string;
+    processDefinitionId?: string;
+    processDefinitionKey?: string;
+    processDefinitionName?: string;
+    processDefinitionVersion?: number;
+    startFormDefined?: boolean;
+    started?: Date;
+    startedBy?: LightUserRepresentation;
+    tenantId?: string;
+    variables?: RestVariable[];
 
     constructor(data?: any) {
         this.businessKey = data && data.businessKey !== undefined ? data.businessKey : null;
@@ -52,7 +53,6 @@ export class ProcessInstance {
         this.startFormDefined = data && data.startFormDefined !== undefined ? data.startFormDefined : null;
         this.started = data && data.started !== undefined ? data.started : null;
         this.startedBy = data && data.startedBy !== undefined ? data.startedBy : null;
-        this.suspended = data && data.suspended !== undefined ? data.suspended : null;
         this.tenantId = data && data.tenantId !== undefined ? data.tenantId : null;
         this.variables = data && data.variables !== undefined ? data.variables : null;
     }

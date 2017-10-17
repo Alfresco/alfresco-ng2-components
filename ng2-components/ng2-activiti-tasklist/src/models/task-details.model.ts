@@ -22,27 +22,28 @@
  *
  * @returns {TaskDetailsModel} .
  */
-import { LightUserRepresentation } from 'ng2-alfresco-core';
+import { TaskRepresentation } from 'alfresco-js-api';
+import { UserProcessModel } from 'ng2-alfresco-core';
 
-export class TaskDetailsModel {
+export class TaskDetailsModel implements TaskRepresentation {
     id: string;
     name: string;
-    assignee: LightUserRepresentation;
+    assignee: UserProcessModel;
     priority: number;
-    adhocTaskCanBeReassigned: number;
+    adhocTaskCanBeReassigned: boolean;
     category: string;
-    created: string;
+    created: Date;
     description: string;
-    dueDate: string;
-    duration: string;
-    endDate: string;
+    dueDate: Date;
+    duration: number;
+    endDate: Date;
     executionId: string;
     formKey: string;
     initiatorCanCompleteTask: boolean;
     managerOfCandidateGroup: boolean;
     memberOfCandidateGroup: boolean;
     memberOfCandidateUsers: boolean;
-    involvedPeople: LightUserRepresentation [];
+    involvedPeople: UserProcessModel [];
     parentTaskId: string;
     parentTaskName: string;
     processDefinitionCategory: string;
@@ -62,7 +63,7 @@ export class TaskDetailsModel {
             this.id = obj.id || null;
             this.name = obj.name || null;
             this.priority = obj.priority;
-            this.assignee = obj.assignee ? new LightUserRepresentation(obj.assignee) : null;
+            this.assignee = obj.assignee ? new UserProcessModel(obj.assignee) : null;
             this.adhocTaskCanBeReassigned = obj.adhocTaskCanBeReassigned;
             this.category = obj.category || null;
             this.created = obj.created || null;
@@ -107,5 +108,9 @@ export class TaskDetailsModel {
 
     isCompleted(): boolean {
         return !!this.endDate;
+    }
+
+    toTaskRepresentation() {
+        return new TaskRepresentation(this);
     }
 }

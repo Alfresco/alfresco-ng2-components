@@ -27,7 +27,6 @@ import { AttachmentComponent } from './create-task-attachment.component';
 
 describe('Activiti Task Create Attachment', () => {
 
-    let componentHandler: any;
     let service: ActivitiContentService;
     let component: AttachmentComponent;
     let fixture: ComponentFixture<AttachmentComponent>;
@@ -59,12 +58,6 @@ describe('Activiti Task Create Attachment', () => {
             {
                 status: true
             }));
-
-        componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered',
-            'upgradeElement'
-        ]);
-        window['componentHandler'] = componentHandler;
     });
 
     it('should not call createTaskRelatedContent service when taskId changed', () => {

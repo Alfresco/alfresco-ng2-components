@@ -15,25 +15,20 @@
  * limitations under the License.
  */
 
-/**
- *
- * This object represent the comment of a task.
- *
- *
- * @returns {Comment} .
- */
-import { LightUserRepresentation } from 'ng2-alfresco-core';
+import { CommentRepresentation, LightUserRepresentation } from 'alfresco-js-api';
 
-export class Comment {
+export class CommentProcessModel implements CommentRepresentation {
     id: number;
     message: string;
-    created: string;
+    created: Date;
     createdBy: LightUserRepresentation;
 
-    constructor(id: number, message: string, created: string, createdBy: LightUserRepresentation) {
-        this.id = id;
-        this.message = message;
-        this.created = created;
-        this.createdBy = createdBy;
+    constructor(obj?: any) {
+        if (obj) {
+            this.id = obj.id;
+            this.message = obj.message;
+            this.created = obj.created;
+            this.createdBy = obj.createdBy;
+        }
     }
 }

@@ -25,7 +25,6 @@ declare let jasmine: any;
 
 describe('Activiti Process Create Attachment', () => {
 
-    let componentHandler: any;
     let service: ActivitiContentService;
     let component: CreateProcessAttachmentComponent;
     let fixture: ComponentFixture<CreateProcessAttachmentComponent>;
@@ -69,12 +68,6 @@ describe('Activiti Process Create Attachment', () => {
         component = fixture.componentInstance;
         service = fixture.debugElement.injector.get(ActivitiContentService);
         element = fixture.nativeElement;
-
-        componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered',
-            'upgradeElement'
-        ]);
-        window['componentHandler'] = componentHandler;
 
         component.processInstanceId = '9999';
         fixture.detectChanges();

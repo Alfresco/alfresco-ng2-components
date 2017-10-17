@@ -16,8 +16,8 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges,  ViewChild, ViewEncapsulation } from '@angular/core';
-import { RestVariable } from 'alfresco-js-api';
 import { StartFormComponent } from 'ng2-activiti-form';
+import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessDefinitionRepresentation } from './../models/process-definition.model';
 import { ProcessInstance } from './../models/process-instance.model';
 import { ProcessService } from './../services/process.service';
@@ -31,10 +31,10 @@ import { ProcessService } from './../services/process.service';
 export class StartProcessInstanceComponent implements OnChanges {
 
     @Input()
-    appId: string;
+    appId: number;
 
     @Input()
-    variables: RestVariable[];
+    variables: ProcessInstanceVariable[];
 
     @Output()
     start: EventEmitter<ProcessInstance> = new EventEmitter<ProcessInstance>();
@@ -65,7 +65,7 @@ export class StartProcessInstanceComponent implements OnChanges {
         this.load(appId);
     }
 
-    public load(appId?: string) {
+    public load(appId?: number) {
         this.resetSelectedProcessDefinition();
         this.resetErrorMessage();
         this.activitiProcess.getProcessDefinitions(appId).subscribe(

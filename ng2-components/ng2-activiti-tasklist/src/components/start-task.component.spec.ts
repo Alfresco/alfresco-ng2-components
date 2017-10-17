@@ -129,7 +129,7 @@ describe('StartTaskComponent', () => {
 
         it('should create new task when start is clicked', () => {
             let successSpy = spyOn(component.success, 'emit');
-            component.appId = 'fakeAppId';
+            component.appId = 42;
             component.startTaskmodel = new StartTaskModel(startTaskMock);
             fixture.detectChanges();
             let createTaskButton = <HTMLElement> element.querySelector('#button-start');
@@ -139,7 +139,7 @@ describe('StartTaskComponent', () => {
 
         it('should send on success event when the task is started', () => {
             let successSpy = spyOn(component.success, 'emit');
-            component.appId = 'fakeAppId';
+            component.appId = 42;
             component.startTaskmodel = new StartTaskModel(startTaskMock);
             fixture.detectChanges();
             let createTaskButton = <HTMLElement> element.querySelector('#button-start');
@@ -154,7 +154,7 @@ describe('StartTaskComponent', () => {
 
         it('should send on success event when only name is given', () => {
             let successSpy = spyOn(component.success, 'emit');
-            component.appId = 'fakeAppId';
+            component.appId = 42;
             component.startTaskmodel.name = 'fakeName';
             fixture.detectChanges();
             let createTaskButton = <HTMLElement> element.querySelector('#button-start');
@@ -195,7 +195,7 @@ describe('StartTaskComponent', () => {
 
         it('should attach form to the task when a form is selected', () => {
             let successSpy = spyOn(component.success, 'emit');
-            component.appId = 'fakeAppId';
+            component.appId = 42;
             component.startTaskmodel = new StartTaskModel(startTaskMock);
             component.formKey = 1204;
             fixture.detectChanges();
@@ -211,7 +211,7 @@ describe('StartTaskComponent', () => {
 
         it('should not attach form to the task when a no form is selected', () => {
             let successSpy = spyOn(component.success, 'emit');
-            component.appId = 'fakeAppId';
+            component.appId = 42;
             component.startTaskmodel = new StartTaskModel(startTaskMock);
             component.formKey = null;
             fixture.detectChanges();
@@ -256,7 +256,7 @@ describe('StartTaskComponent', () => {
 
         it('should assign task when an assignee is selected', () => {
             let successSpy = spyOn(component.success, 'emit');
-            component.appId = 'fakeAppId';
+            component.appId = 42;
             component.startTaskmodel = new StartTaskModel(startTaskMock);
             component.formKey = 1204;
             component.assigneeId = testUser.id;
@@ -273,7 +273,7 @@ describe('StartTaskComponent', () => {
 
         it('should not assign task when no assignee is selected', () => {
             let successSpy = spyOn(component.success, 'emit');
-            component.appId = 'fakeAppId';
+            component.appId = 42;
             component.formKey = 1204;
             component.assigneeId = null;
             component.startTaskmodel = new StartTaskModel(startTaskMock);

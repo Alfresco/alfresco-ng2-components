@@ -24,8 +24,7 @@ import { Observable } from 'rxjs/Rx';
 import { ActivitiFormModule, FormModel, FormOutcomeEvent, FormOutcomeModel, FormService } from 'ng2-activiti-form';
 import { AppConfigService, CoreModule, LogService, TranslationService } from 'ng2-alfresco-core';
 
-import { LightUserRepresentation } from 'ng2-alfresco-core';
-import { PeopleProcessService } from 'ng2-alfresco-core';
+import { PeopleProcessService, UserProcessModel } from 'ng2-alfresco-core';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { TaskDetailsModel } from '../models/task-details.model';
@@ -36,7 +35,7 @@ import { TaskDetailsComponent } from './task-details.component';
 
 declare let jasmine: any;
 
-const fakeUser: LightUserRepresentation = new LightUserRepresentation({
+const fakeUser: UserProcessModel = new UserProcessModel({
     id: 'fake-id',
     firstName: 'fake-name',
     lastName: 'fake-last',
@@ -45,7 +44,6 @@ const fakeUser: LightUserRepresentation = new LightUserRepresentation({
 
 describe('TaskDetailsComponent', () => {
 
-    let componentHandler: any;
     let service: TaskListService;
     let formService: FormService;
     let component: TaskDetailsComponent;
@@ -101,11 +99,6 @@ describe('TaskDetailsComponent', () => {
         spyOn(service, 'getComments').and.returnValue(Observable.of(noDataMock));
         spyOn(service, 'getTaskChecklist').and.returnValue(Observable.of(noDataMock));
 
-        componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered',
-            'upgradeElement'
-        ]);
-        window['componentHandler'] = componentHandler;
     });
 
     it('should load task details when taskId specified', () => {
@@ -293,7 +286,7 @@ describe('TaskDetailsComponent', () => {
             component.ngOnChanges({'taskId': new SimpleChange('123', '456', true)});
             component.taskPeople = [];
             component.taskDetails = new TaskDetailsModel(taskDetailsMock);
-            component.taskDetails.endDate = '2017-10-03T17:03:57.311+0000';
+            component.taskDetails.endDate = new Date('2017-10-03T17:03:57.311+0000');
 
             fixture.detectChanges();
             expect((component.activiticomments as any).nativeElement.readOnly).toBe(true);
@@ -305,7 +298,7 @@ describe('TaskDetailsComponent', () => {
             component.ngOnChanges({'taskId': new SimpleChange('123', '456', true)});
             component.taskPeople = [];
             component.taskDetails = new TaskDetailsModel(taskDetailsMock);
-            component.taskDetails.endDate = '2017-10-03T17:03:57.311+0000';
+            component.taskDetails.endDate = new Date('2017-10-03T17:03:57.311+0000');
 
             fixture.detectChanges();
             expect((component.activiticomments as any).nativeElement.readOnly).toBe(true);
@@ -329,7 +322,7 @@ describe('TaskDetailsComponent', () => {
             component.ngOnChanges({'taskId': new SimpleChange('123', '456', true)});
             component.taskPeople = [fakeUser];
             component.taskDetails = new TaskDetailsModel(taskDetailsMock);
-            component.taskDetails.endDate = '2017-10-03T17:03:57.311+0000';
+            component.taskDetails.endDate = new Date('2017-10-03T17:03:57.311+0000');
 
             fixture.detectChanges();
             expect((component.activiticomments as any).nativeElement.readOnly).toBe(false);

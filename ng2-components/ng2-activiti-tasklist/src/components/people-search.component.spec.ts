@@ -17,8 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule, MatInputModule } from '@angular/material';
-import { AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
-import { LightUserRepresentation } from 'ng2-alfresco-core';
+import { AppConfigService, CoreModule, TranslationService, UserProcessModel } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { Observable } from 'rxjs/Observable';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
@@ -28,14 +27,14 @@ import { PeopleSearchComponent } from './people-search.component';
 
 declare let jasmine: any;
 
-const fakeUser: LightUserRepresentation = new LightUserRepresentation({
+const fakeUser: UserProcessModel = new UserProcessModel({
     id: '1',
     firstName: 'fake-name',
     lastName: 'fake-last',
     email: 'fake@mail.com'
 });
 
-const fakeSecondUser: LightUserRepresentation = new LightUserRepresentation({
+const fakeSecondUser: UserProcessModel = new UserProcessModel({
     id: '2',
     firstName: 'fake-involve-name',
     lastName: 'fake-involve-last',
@@ -47,7 +46,6 @@ describe('PeopleSearchComponent', () => {
     let peopleSearchComponent: PeopleSearchComponent;
     let fixture: ComponentFixture<PeopleSearchComponent>;
     let element: HTMLElement;
-    let componentHandler;
     let userArray = [fakeUser, fakeSecondUser];
     let searchInput: any;
 
@@ -72,11 +70,6 @@ describe('PeopleSearchComponent', () => {
             fixture = TestBed.createComponent(PeopleSearchComponent);
             peopleSearchComponent = fixture.componentInstance;
             element = fixture.nativeElement;
-            componentHandler = jasmine.createSpyObj('componentHandler', [
-                'upgradeAllRegistered'
-            ]);
-
-            window['componentHandler'] = componentHandler;
             peopleSearchComponent.results = Observable.of([]);
             fixture.detectChanges();
         });

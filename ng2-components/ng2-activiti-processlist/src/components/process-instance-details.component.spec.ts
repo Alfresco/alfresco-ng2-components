@@ -32,7 +32,6 @@ import { ProcessInstanceDetailsComponent } from './process-instance-details.comp
 
 describe('ProcessInstanceDetailsComponent', () => {
 
-    let componentHandler: any;
     let service: ProcessService;
     let formService: FormService;
     let component: ProcessInstanceDetailsComponent;
@@ -65,12 +64,6 @@ describe('ProcessInstanceDetailsComponent', () => {
         formService = fixture.debugElement.injector.get(FormService);
 
         getProcessSpy = spyOn(service, 'getProcess').and.returnValue(Observable.of(exampleProcess));
-
-        componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered',
-            'upgradeElement'
-        ]);
-        window['componentHandler'] = componentHandler;
     });
 
     it('should not load task details when no processInstanceId is specified', () => {

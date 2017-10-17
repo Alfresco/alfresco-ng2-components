@@ -16,7 +16,7 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { LogServiceMock } from 'ng2-alfresco-core';
+import { AppsProcessService, LogServiceMock } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessService } from '../services/process.service';
@@ -25,7 +25,8 @@ import { ProcessFiltersComponent } from './process-filters.component';
 describe('ActivitiFilters', () => {
 
     let filterList: ProcessFiltersComponent;
-    let activitiService: ProcessService;
+    let processService: ProcessService;
+    let appsProcessService: AppsProcessService;
     let logService: LogServiceMock;
 
     let fakeGlobalFilter = [];
@@ -57,12 +58,13 @@ describe('ActivitiFilters', () => {
 
     beforeEach(() => {
         logService = new LogServiceMock();
-        activitiService = new ProcessService(null, logService);
-        filterList = new ProcessFiltersComponent(activitiService);
+        processService = new ProcessService(null, logService);
+        appsProcessService = new AppsProcessService(null, logService);
+        filterList = new ProcessFiltersComponent(processService, appsProcessService);
     });
 
     it('should return the filter task list', (done) => {
-        spyOn(activitiService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+        spyOn(processService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
         const appId = '1';
         let change = new SimpleChange(null, appId, true);
         filterList.ngOnChanges({ 'appId': change });
@@ -81,7 +83,7 @@ describe('ActivitiFilters', () => {
     });
 
     it('should select the Running process filter', (done) => {
-        spyOn(activitiService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+        spyOn(processService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
         const appId = '1';
         let change = new SimpleChange(null, appId, true);
         filterList.ngOnChanges({ 'appId': change });
@@ -103,14 +105,14 @@ describe('ActivitiFilters', () => {
             resolve({  id: 1 });
         });
 
-        spyOn(activitiService, 'getDeployedApplications').and.returnValue(Observable.fromPromise(fakeDeployedApplicationsPromise));
-        spyOn(activitiService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+        spyOn(appsProcessService, 'getDeployedApplicationsByName').and.returnValue(Observable.fromPromise(fakeDeployedApplicationsPromise));
+        spyOn(processService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
 
         let change = new SimpleChange(null, 'test', true);
         filterList.ngOnChanges({ 'appName': change });
 
         filterList.onSuccess.subscribe((res) => {
-            let deployApp: any = activitiService.getDeployedApplications;
+            let deployApp: any = appsProcessService.getDeployedApplicationsByName;
             expect(deployApp.calls.count()).toEqual(1);
             expect(res).toBeDefined();
             done();
@@ -120,7 +122,7 @@ describe('ActivitiFilters', () => {
     });
 
     it('should emit an error with a bad response', (done) => {
-        spyOn(activitiService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeErrorFilterPromise));
+        spyOn(processService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeErrorFilterPromise));
 
         const appId = '1';
         let change = new SimpleChange(null, appId, true);
@@ -135,7 +137,7 @@ describe('ActivitiFilters', () => {
     });
 
     it('should emit an error with a bad response', (done) => {
-        spyOn(activitiService, 'getDeployedApplications').and.returnValue(Observable.fromPromise(fakeErrorFilterPromise));
+        spyOn(appsProcessService, 'getDeployedApplicationsByName').and.returnValue(Observable.fromPromise(fakeErrorFilterPromise));
 
         const appId = 'fake-app';
         let change = new SimpleChange(null, appId, true);

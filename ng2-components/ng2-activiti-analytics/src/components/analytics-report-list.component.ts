@@ -35,7 +35,7 @@ export class AnalyticsReportListComponent implements OnInit {
     layoutType: string = AnalyticsReportListComponent.LAYOUT_LIST;
 
     @Input()
-    appId: string;
+    appId: number;
 
     @Input()
     selectFirst: boolean = false;
@@ -83,7 +83,7 @@ export class AnalyticsReportListComponent implements OnInit {
     /**
      * Get the report list
      */
-    getReportList(appId: string, reportId?: string) {
+    getReportList(appId: number, reportId?: string) {
         this.analyticsService.getReportList(appId).subscribe(
             (res: ReportParametersModel[]) => {
                 if (res && res.length === 0) {

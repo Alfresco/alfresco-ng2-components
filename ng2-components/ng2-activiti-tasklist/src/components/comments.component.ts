@@ -16,10 +16,8 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { CommentProcessModel, CommentProcessService } from 'ng2-alfresco-core';
 import { Observable, Observer } from 'rxjs/Rx';
-
-import { Comment } from '../models/comment.model';
-import { TaskListService } from '../services/tasklist.service';
 
 @Component({
     selector: 'adf-comments, activiti-comments',
@@ -37,23 +35,18 @@ export class CommentsComponent implements OnChanges {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    comments: Comment [] = [];
+    comments: CommentProcessModel [] = [];
 
-    private commentObserver: Observer<Comment>;
-    comment$: Observable<Comment>;
+    private commentObserver: Observer<CommentProcessModel>;
+    comment$: Observable<CommentProcessModel>;
 
     message: string;
 
     beingAdded: boolean = false;
 
-    /**
-     * Constructor
-     * @param translate Translation service
-     * @param activitiTaskList Task service
-     */
-    constructor(private activitiTaskList: TaskListService) {
-        this.comment$ = new Observable<Comment>(observer =>  this.commentObserver = observer).share();
-        this.comment$.subscribe((comment: Comment) => {
+    constructor(private commentProcessService: CommentProcessService) {
+        this.comment$ = new Observable<CommentProcessModel>(observer =>  this.commentObserver = observer).share();
+        this.comment$.subscribe((comment: CommentProcessModel) => {
             this.comments.push(comment);
         });
     }
@@ -72,9 +65,9 @@ export class CommentsComponent implements OnChanges {
     private getTaskComments(taskId: string): void {
         this.resetComments();
         if (taskId) {
-            this.activitiTaskList.getComments(taskId).subscribe(
-                (res: Comment[]) => {
-                    res = res.sort((comment1: Comment, comment2: Comment) => {
+            this.commentProcessService.getTaskComments(taskId).subscribe(
+                (res: CommentProcessModel[]) => {
+                    res = res.sort((comment1: CommentProcessModel, comment2: CommentProcessModel) => {
                         let date1 = new Date(comment1.created);
                         let date2 = new Date(comment2.created);
                         return date1 > date2 ? -1 : date1 < date2 ? 1 : 0;
@@ -97,9 +90,9 @@ export class CommentsComponent implements OnChanges {
     add(): void {
         if (this.message && this.message.trim() && !this.beingAdded) {
             this.beingAdded = true;
-            this.activitiTaskList.addComment(this.taskId, this.message)
+            this.commentProcessService.addTaskComment(this.taskId, this.message)
             .subscribe(
-                (res: Comment) => {
+                (res: CommentProcessModel) => {
                         this.comments.unshift(res);
                         this.message = '';
                         this.beingAdded = false;

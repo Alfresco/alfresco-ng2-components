@@ -15,23 +15,18 @@
  * limitations under the License.
  */
 
-/**
- *
- * This object represent the filter.
- *
- *
- * @returns {FilterProcessRepresentationModel} .
- */
-export class FilterProcessRepresentationModel {
-    id: string;
-    appId: string;
+import { ProcessFilterRequestRepresentation, ProcessInstanceFilterRepresentation, UserProcessInstanceFilterRepresentation } from 'alfresco-js-api';
+
+export class FilterProcessRepresentationModel implements UserProcessInstanceFilterRepresentation {
+    appId: number;
+    filter: ProcessInstanceFilterRepresentation;
+    icon: number;
+    id: number;
+    index: number;
     name: string;
     recent: boolean;
-    icon: string;
-    filter: ProcessFilterParamRepresentationModel;
-    index: number;
 
-    constructor(obj?: any) {
+    constructor(obj: any) {
         if (obj) {
             this.id = obj.id || null;
             this.appId = obj.appId || null;
@@ -44,26 +39,7 @@ export class FilterProcessRepresentationModel {
     }
 
     hasFilter() {
-        return this.filter ? true : false;
-    }
-}
-
-/**
- *
- * This object represent the parameters to filter a filter.
- *
- *
- * @returns {FilterParamsModel} .
- */
-export class FilterParamsModel {
-    id: string;
-    name: string;
-    index: number;
-
-    constructor(obj?: any) {
-        this.id = obj.id || null;
-        this.name = obj.name || null;
-        this.index = obj.index;
+        return !!this.filter;
     }
 }
 
@@ -74,12 +50,21 @@ export class FilterParamsModel {
  *
  * @returns {ProcessFilterParamRepresentationModel} .
  */
-export class ProcessFilterParamRepresentationModel {
-    state: string;
-    sort: string;
+export class ProcessFilterParamRepresentationModel implements ProcessFilterRequestRepresentation {
+
+    processDefinitionId?: number;
+    appDefinitionId?: number;
+    state?: string;
+    sort?: string;
+    page?: number;
+    size?: number;
 
     constructor(obj?: any) {
+        this.processDefinitionId = obj.processDefinitionId || null;
+        this.appDefinitionId = obj.appDefinitionId || null;
         this.state = obj.state || null;
         this.sort = obj.sort || null;
+        this.page = obj.page || null;
+        this.size = obj.size || null;
     }
 }

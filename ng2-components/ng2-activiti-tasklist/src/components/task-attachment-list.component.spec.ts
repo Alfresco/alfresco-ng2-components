@@ -31,7 +31,6 @@ declare let jasmine: any;
 
 describe('TaskAttachmentList', () => {
 
-    let componentHandler: any;
     let component: TaskAttachmentListComponent;
     let fixture: ComponentFixture<TaskAttachmentListComponent>;
     let service: ActivitiContentService;
@@ -113,11 +112,6 @@ describe('TaskAttachmentList', () => {
             blobObj
         ));
 
-        componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered',
-            'upgradeElement'
-        ]);
-        window['componentHandler'] = componentHandler;
     });
 
     it('should load attachments when taskId specified', () => {
