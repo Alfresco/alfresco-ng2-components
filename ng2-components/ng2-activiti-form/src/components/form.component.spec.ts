@@ -775,6 +775,17 @@ describe('FormComponent', () => {
         expect(formComponent.isOutcomeButtonEnabled(completeOutcome)).toBeFalsy();
     });
 
+    it('should disable start process outcome button when disableStartProcessButton is true', () => {
+        let formModel = new FormModel();
+        formComponent.form = formModel;
+        formComponent.disableStartProcessButton = true;
+
+        expect(formModel.isValid).toBeTruthy();
+        let startProcessOutcome = formComponent.form.outcomes.find(outcome => outcome.name === FormOutcomeModel.START_PROCESS_ACTION);
+
+        expect(formComponent.isOutcomeButtonEnabled(startProcessOutcome)).toBeFalsy();
+    });
+
     it('should raise [executeOutcome] event for formService', (done) => {
         formService.executeOutcome.subscribe(() => {
             done();
