@@ -22,8 +22,6 @@ import { MaterialModule } from '../../material.module';
 import { InfoDrawerLayoutComponent } from './info-drawer-layout.component';
 import { InfoDrawerComponent } from './info-drawer.component';
 
-declare let jasmine: any;
-
 describe('InfoDrawerComponent', () => {
     let debugElement: DebugElement;
     let element: HTMLElement;

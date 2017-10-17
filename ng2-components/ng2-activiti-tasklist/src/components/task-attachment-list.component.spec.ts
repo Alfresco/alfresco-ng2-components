@@ -27,8 +27,6 @@ import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { TaskAttachmentListComponent } from './task-attachment-list.component';
 
-declare let jasmine: any;
-
 describe('TaskAttachmentList', () => {
 
     let component: TaskAttachmentListComponent;

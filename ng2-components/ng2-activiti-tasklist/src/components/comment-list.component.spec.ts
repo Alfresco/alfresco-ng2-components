@@ -23,8 +23,6 @@ import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { CommentListComponent } from './comment-list.component';
 
-declare let jasmine: any;
-
 const testUser: UserProcessModel = new UserProcessModel({
     id: '1',
     firstName: 'Test',

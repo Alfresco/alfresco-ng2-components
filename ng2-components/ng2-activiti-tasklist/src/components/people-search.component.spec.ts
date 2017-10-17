@@ -25,8 +25,6 @@ import { TranslationMock } from '../assets/translation.service.mock';
 import { PeopleListComponent } from './people-list.component';
 import { PeopleSearchComponent } from './people-search.component';
 
-declare let jasmine: any;
-
 const fakeUser: UserProcessModel = new UserProcessModel({
     id: '1',
     firstName: 'fake-name',

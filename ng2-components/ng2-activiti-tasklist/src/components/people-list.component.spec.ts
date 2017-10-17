@@ -23,8 +23,6 @@ import { TranslationMock } from '../assets/translation.service.mock';
 import { UserEventModel } from '../models/user-event.model';
 import { PeopleListComponent } from './people-list.component';
 
-declare let jasmine: any;
-
 const fakeUser: UserProcessModel = new UserProcessModel({
     id: '1',
     firstName: 'fake-name',
