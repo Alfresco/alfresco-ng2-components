@@ -322,7 +322,7 @@ describe('StartProcessInstanceComponent', () => {
 
     });
 
-    fdescribe('start forms', () => {
+    describe('start forms', () => {
 
         let startBtn;
 
