@@ -35,13 +35,13 @@ Delete multiple files and folders
 | Name              | Type                | Default | Description                 |
 | ----------------- | ------------------- | ------- | --------------------------- |
 | adf-delete        | MinimalNodeEntity[] | []      | Nodes to delete             |
-| permanent         | boolean             | false   | Permanent delete, no undo action |
+| permanent         | boolean             | false   | Permanent delete            |
 
 ### Events
 
 | Name                      | Description                                  |
 | ------------------------- | -------------------------------------------- |
-| delete                    | emitted when delete/undo process is done |
+| delete                    | emitted when delete process is done          |
 
 ## Details
 

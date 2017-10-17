@@ -22,9 +22,12 @@ import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { NotificationService } from '../services/notification.service';
 import { TranslationService } from '../services/translation.service';
 
+interface DeleteData {
+    entry: MinimalNodeEntity;
+    status: number;
+}
 @Directive({
-    selector: '[adf-delete]',
-    exportAs: 'adfDelete'
+    selector: '[adf-delete]'
 })
 export class NodeDeleteDirective {
     private nodesApi;
@@ -49,51 +52,34 @@ export class NodeDeleteDirective {
         this.nodesApi = this.alfrescoApiService.getInstance().nodes;
     }
 
-    process(selection: any, isRestore = false) {
+    private process(selection: MinimalNodeEntity[]) {
         if (!selection.length) {
             return;
         }
 
-        let batch = null;
-
-        if (!isRestore) {
-            batch = this.getDeletedNodesBatch(selection);
-        } else {
-            batch = this.getRestoredNodesBatch(selection);
-        }
+        const batch = this.getDeleteNodesBatch(selection);
 
         Observable.forkJoin(...batch)
             .subscribe((data: any) => {
                 const processedItems = this.processStatus(data);
 
+                this.notify(processedItems);
+
                 if (processedItems.someSucceeded) {
                     this.delete.emit();
                 }
-
-                this.notify(processedItems, isRestore);
             });
     }
 
-    private getDeletedNodesBatch(selection) {
-        return selection.map((node) => this.performAction('delete', node));
+    private getDeleteNodesBatch(selection): Observable<DeleteData>[] {
+        return selection.map((node) => this.deleteNode(node));
     }
 
-    private getRestoredNodesBatch(selection) {
-        return selection.map((node) => this.performAction('restore', node));
-    }
-
-    private performAction(action, node) {
-        let promise: Promise<any> = null;
+    private deleteNode(node): Observable<DeleteData> {
         // shared nodes support
         const id = node.entry.nodeId || node.entry.id;
 
-        if (action === 'delete') {
-            promise = this.nodesApi.deleteNode(id, { permanent: this.permanent });
-        }
-
-        if (action === 'restore') {
-            promise = this.nodesApi.restoreNode(id);
-        }
+        const promise = this.nodesApi.deleteNode(id, { permanent: this.permanent });
 
         return Observable.fromPromise(promise)
             .map(() => ({
@@ -108,7 +94,7 @@ export class NodeDeleteDirective {
             });
     }
 
-    private processStatus(data): any {
+    private processStatus(data): DeleteData {
         const deleteStatus = {
             success: [],
             failed: [],
@@ -146,43 +132,28 @@ export class NodeDeleteDirective {
         );
     }
 
-    private notify(status, isRestore) {
-        this.getMessage(status, isRestore)
-            .subscribe((message) => {
-                const action = this.showAction(status, isRestore) ? 'Undo' : '';
-
-                this.notification.openSnackMessageAction(message, action)
-                    .onAction()
-                    .subscribe(() => {
-                        this.process(status.success, true);
-                    });
-            });
+    private notify(status) {
+        this.getMessage(status).subscribe((message) => this.notification.openSnackMessage(message));
     }
 
-    private getMessage(status, isRestore): Observable<string> {
+    private getMessage(status): Observable<string> {
         if (status.allFailed && !status.oneFailed) {
             return this.translation.get(
-                isRestore
-                    ? 'CORE.DELETE_NODE.RESTORE_ERROR_PLURAL'
-                    : 'CORE.DELETE_NODE.ERROR_PLURAL',
+                'CORE.DELETE_NODE.ERROR_PLURAL',
                 { number: status.failed.length }
             );
         }
 
         if (status.allSucceeded && !status.oneSucceeded) {
             return this.translation.get(
-                isRestore
-                    ? 'CORE.DELETE_NODE.RESTORE_PLURAL'
-                    : 'CORE.DELETE_NODE.PLURAL',
+                'CORE.DELETE_NODE.PLURAL',
                 { number: status.success.length  }
             );
         }
 
         if (status.someFailed && status.someSucceeded && !status.oneSucceeded) {
             return this.translation.get(
-                isRestore
-                    ? 'CORE.DELETE_NODE.RESTORE_PARTIAL_PLURAL'
-                    : 'CORE.DELETE_NODE.PARTIAL_PLURAL',
+                'CORE.DELETE_NODE.PARTIAL_PLURAL',
                 {
                     success: status.success.length,
                     failed: status.failed.length
@@ -192,9 +163,7 @@ export class NodeDeleteDirective {
 
         if (status.someFailed && status.oneSucceeded) {
             return this.translation.get(
-                isRestore
-                    ? 'CORE.DELETE_NODE.RESTORE_PARTIAL_SINGULAR'
-                    : 'CORE.DELETE_NODE.PARTIAL_SINGULAR',
+                'CORE.DELETE_NODE.PARTIAL_SINGULAR',
                 {
                     success: status.success.length,
                     failed: status.failed.length
@@ -204,24 +173,16 @@ export class NodeDeleteDirective {
 
         if (status.oneFailed && !status.someSucceeded) {
             return this.translation.get(
-                isRestore
-                    ? 'CORE.DELETE_NODE.RESTORE_ERROR_SINGULAR'
-                    : 'CORE.DELETE_NODE.ERROR_SINGULAR',
+                'CORE.DELETE_NODE.ERROR_SINGULAR',
                 { name: status.failed[0].entry.name }
             );
         }
 
         if (status.oneSucceeded && !status.someFailed) {
             return this.translation.get(
-                isRestore
-                    ? 'CORE.DELETE_NODE.RESTORE_SINGULAR'
-                    : 'CORE.DELETE_NODE.SINGULAR',
+                'CORE.DELETE_NODE.SINGULAR',
                 { name: status.success[0].entry.name }
             );
         }
-    }
-
-    private showAction(data, isRestore): boolean {
-        return !isRestore && !this.permanent && data.someSucceeded;
     }
 }

@@ -76,8 +76,7 @@ describe('NodeDeleteDirective', () => {
 
     describe('Delete', () => {
         beforeEach(() => {
-            spyOn(notification, 'openSnackMessageAction')
-                .and.returnValue({ onAction: () => Observable.throw(null) });
+            spyOn(notification, 'openSnackMessage');
         });
 
         it('should do nothing if selection is empty', () => {
@@ -99,8 +98,8 @@ describe('NodeDeleteDirective', () => {
             element.triggerEventHandler('click', null);
             tick();
 
-            expect(notification.openSnackMessageAction).toHaveBeenCalledWith(
-                'CORE.DELETE_NODE.SINGULAR', 'Undo'
+            expect(notification.openSnackMessage).toHaveBeenCalledWith(
+                'CORE.DELETE_NODE.SINGULAR'
             );
         }));
 
@@ -113,8 +112,8 @@ describe('NodeDeleteDirective', () => {
             element.triggerEventHandler('click', null);
             tick();
 
-            expect(notification.openSnackMessageAction).toHaveBeenCalledWith(
-                'CORE.DELETE_NODE.ERROR_SINGULAR', ''
+            expect(notification.openSnackMessage).toHaveBeenCalledWith(
+                'CORE.DELETE_NODE.ERROR_SINGULAR'
             );
         }));
 
@@ -130,8 +129,8 @@ describe('NodeDeleteDirective', () => {
             element.triggerEventHandler('click', null);
             tick();
 
-            expect(notification.openSnackMessageAction).toHaveBeenCalledWith(
-                'CORE.DELETE_NODE.PLURAL', 'Undo'
+            expect(notification.openSnackMessage).toHaveBeenCalledWith(
+                'CORE.DELETE_NODE.PLURAL'
             );
         }));
 
@@ -147,8 +146,8 @@ describe('NodeDeleteDirective', () => {
             element.triggerEventHandler('click', null);
             tick();
 
-            expect(notification.openSnackMessageAction).toHaveBeenCalledWith(
-                'CORE.DELETE_NODE.ERROR_PLURAL', ''
+            expect(notification.openSnackMessage).toHaveBeenCalledWith(
+                'CORE.DELETE_NODE.ERROR_PLURAL'
             );
         }));
 
@@ -170,8 +169,8 @@ describe('NodeDeleteDirective', () => {
             element.triggerEventHandler('click', null);
             tick();
 
-            expect(notification.openSnackMessageAction).toHaveBeenCalledWith(
-                'CORE.DELETE_NODE.PARTIAL_SINGULAR', 'Undo'
+            expect(notification.openSnackMessage).toHaveBeenCalledWith(
+                'CORE.DELETE_NODE.PARTIAL_SINGULAR'
             );
         }));
 
@@ -200,8 +199,8 @@ describe('NodeDeleteDirective', () => {
             element.triggerEventHandler('click', null);
             tick();
 
-            expect(notification.openSnackMessageAction).toHaveBeenCalledWith(
-                'CORE.DELETE_NODE.PARTIAL_PLURAL', 'Undo'
+            expect(notification.openSnackMessage).toHaveBeenCalledWith(
+                'CORE.DELETE_NODE.PARTIAL_PLURAL'
             );
         }));
 
@@ -216,143 +215,6 @@ describe('NodeDeleteDirective', () => {
             tick();
 
             expect(component.done).toHaveBeenCalled();
-        }));
-    });
-
-    describe('Restore', () => {
-        let notificationSpy;
-
-        beforeEach(() => {
-            spyOn(nodeApi, 'deleteNode').and.returnValue(Promise.resolve());
-
-            notificationSpy = spyOn(notification, 'openSnackMessageAction')
-                .and.callFake(() => {
-                    if (notificationSpy.calls.count() === 1) {
-                        return { onAction: () => Observable.of({}) };
-                    } else {
-                        return { onAction: () => Observable.throw(null) };
-                    }
-                });
-        });
-
-        it('should notify node restore', fakeAsync(() => {
-            spyOn(nodeApi, 'restoreNode').and.returnValue(Promise.resolve());
-
-            component.selection = [
-                { entry: { id: '1', name: 'name1' } }
-            ];
-
-            fixture.detectChanges();
-            element.triggerEventHandler('click', null);
-            tick();
-
-            expect(notificationSpy.calls.mostRecent().args[0]).toEqual('CORE.DELETE_NODE.RESTORE_SINGULAR');
-        }));
-
-        it('should notify nodes restore', fakeAsync(() => {
-            spyOn(nodeApi, 'restoreNode').and.returnValue(Promise.resolve());
-
-            component.selection = [
-                { entry: { id: '1', name: 'name1' } },
-                { entry: { id: '2', name: 'name2' } }
-            ];
-
-            fixture.detectChanges();
-            element.triggerEventHandler('click', null);
-            tick();
-
-            expect(notificationSpy.calls.mostRecent().args[0]).toEqual('CORE.DELETE_NODE.RESTORE_PLURAL');
-        }));
-
-        it('should notify failed node restore', fakeAsync(() => {
-            spyOn(nodeApi, 'restoreNode').and.returnValue(Promise.reject('error'));
-
-            component.selection = [{ entry: { id: '1', name: 'name1' } }];
-
-            fixture.detectChanges();
-            element.triggerEventHandler('click', null);
-            tick();
-
-            expect(notificationSpy.calls.mostRecent().args[0]).toEqual('CORE.DELETE_NODE.RESTORE_ERROR_SINGULAR');
-        }));
-
-        it('should notify failed nodes restore', fakeAsync(() => {
-            spyOn(nodeApi, 'restoreNode').and.returnValue(Promise.reject('error'));
-
-            component.selection = [
-                { entry: { id: '1', name: 'name1' } },
-                { entry: { id: '2', name: 'name2' } }
-            ];
-
-            fixture.detectChanges();
-            element.triggerEventHandler('click', null);
-            tick();
-
-            expect(notificationSpy.calls.mostRecent().args[0]).toEqual('CORE.DELETE_NODE.RESTORE_ERROR_PLURAL');
-        }));
-
-        it('should notify partial restore when only one node is successful', fakeAsync(() => {
-            spyOn(nodeApi, 'restoreNode').and.callFake((id) => {
-                if (id === '1') {
-                    return Promise.reject('error');
-                } else {
-                    return Promise.resolve();
-                }
-            });
-
-            component.selection = [
-                { entry: { id: '1', name: 'name1' } },
-                { entry: { id: '2', name: 'name2' } }
-            ];
-
-            fixture.detectChanges();
-            element.triggerEventHandler('click', null);
-            tick();
-
-            expect(notificationSpy.calls.mostRecent().args[0]).toEqual('CORE.DELETE_NODE.RESTORE_PARTIAL_SINGULAR');
-        }));
-
-        it('should notify partial restore when some nodes are successful', fakeAsync(() => {
-            spyOn(nodeApi, 'restoreNode').and.callFake((id) => {
-                if (id === '1') {
-                    return Promise.reject(null);
-                }
-
-                if (id === '2') {
-                    return Promise.resolve();
-                }
-
-                if (id === '3') {
-                    return Promise.resolve();
-                }
-            });
-
-            component.selection = [
-                { entry: { id: '1', name: 'name1' } },
-                { entry: { id: '2', name: 'name2' } },
-                { entry: { id: '3', name: 'name3' } }
-            ];
-
-            fixture.detectChanges();
-            element.triggerEventHandler('click', null);
-            tick();
-
-            expect(notificationSpy.calls.mostRecent().args[0]).toEqual('CORE.DELETE_NODE.RESTORE_PARTIAL_PLURAL');
-        }));
-
-        it('should emit event when restore is done', fakeAsync(() => {
-            spyOn(nodeApi, 'restoreNode').and.returnValue(Promise.resolve());
-
-            component.selection = [
-                { entry: { id: '1', name: 'name1' } }
-            ];
-
-            fixture.detectChanges();
-            element.triggerEventHandler('click', null);
-            tick();
-
-            expect(component.done).toHaveBeenCalled();
-            expect(component.done.calls.count()).toBe(2);
         }));
     });
 });

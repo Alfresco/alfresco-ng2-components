@@ -24,19 +24,12 @@
             "SINGULAR": "{{ name }} item restored"
         },
         "DELETE_NODE": {
-            "UNDO": "Undo",
             "SINGULAR": "{{ name }} deleted",
             "PLURAL": "{{ number }} items deleted",
             "PARTIAL_SINGULAR": "Deleted {{ success }} item, {{ failed }} couldn't be deleted",
             "PARTIAL_PLURAL": "Deleted {{ success }} items, {{ failed }} couldn't be deleted",
             "ERROR_SINGULAR": "{{ name }} couldn't be deleted",
-            "ERROR_PLURAL": "{{ number }} items couldn't be deleted",
-            "RESTORE_SINGULAR": "{{ name }} restored",
-            "RESTORE_PLURAL": "{{ number }} items restored",
-            "RESTORE_PARTIAL_SINGULAR": "Restored {{ success }} item, {{ failed }} couldn't be restored",
-            "RESTORE_PARTIAL_PLURAL": "Restored {{ success }} items, {{ failed }} couldn't be restored",
-            "RESTORE_ERROR_SINGULAR": "{{ name }} couldn't be restored",
-            "RESTORE_ERROR_PLURAL": "{{ number }} items couldn't be restored"
+            "ERROR_PLURAL": "{{ number }} items couldn't be deleted"
         }
     }
 }
