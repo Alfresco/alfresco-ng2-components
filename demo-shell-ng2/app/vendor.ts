@@ -50,10 +50,6 @@ import 'ng2-alfresco-userinfo';
 import 'ng2-alfresco-viewer';
 import 'ng2-alfresco-webscript';
 
-// Polyfill(s) for dialogs
-require('script-loader!dialog-polyfill/dialog-polyfill');
-import 'dialog-polyfill/dialog-polyfill.css';
-
 import 'chart.js';
 import 'ng2-charts';
 require('script-loader!raphael/raphael.min.js');

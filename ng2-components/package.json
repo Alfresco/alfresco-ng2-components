@@ -34,33 +34,10 @@
   "bugs": {
     "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
   },
-  "contributors": {
-    "0": {
-      "name": "Eugenio Romano",
-      "email": "eugenio.romano@alfresco.com"
-    },
-    "1": {
-      "name": "Eugenio Romano",
-      "email": "eugenio.romano@alfresco.com"
-    },
-    "2": {
-      "name": "Denys Vuika",
-      "email": "denys.vuika@gmail.com"
-    },
-    "3": {
-      "name": "Eugenio Romano",
-      "email": "eugenio.romano@alfresco.com"
-    }
-  },
-  "keywords": {
-    "0": "alfresco-ng2-components",
-    "1": "angular2",
-    "2": "typescript",
-    "3": "alfresco",
-    "4": "activiti",
-    "5": "ecm",
-    "6": "bpm"
-  },
+  "keywords": [
+    "alfresco",
+    "angular"
+  ],
   "dependencies": {
     "@angular/animations": "4.4.5",
     "@angular/cdk": "2.0.0-beta.12",
@@ -68,6 +45,7 @@
     "@angular/compiler": "4.4.5",
     "@angular/compiler-cli": "4.4.5",
     "@angular/core": "4.4.5",
+    "@angular/flex-layout": "2.0.0-beta.9",
     "@angular/forms": "4.4.5",
     "@angular/http": "4.4.5",
     "@angular/material": "2.0.0-beta.12",
@@ -76,26 +54,24 @@
     "@angular/router": "4.4.5",
     "@ngx-translate/core": "7.0.0",
     "alfresco-js-api": "1.9.0",
+    "chart.js": "2.5.0",
     "core-js": "2.4.1",
     "hammerjs": "2.0.8",
-    "material-design-lite": "1.2.1",
+    "minimatch": "3.0.4",
     "moment": "2.15.1",
+    "ng2-activiti-diagrams": "1.9.0",
+    "ng2-activiti-form": "1.9.0",
+    "ng2-activiti-tasklist": "1.9.0",
+    "ng2-alfresco-core": "1.9.0",
+    "ng2-alfresco-datatable": "1.9.0",
+    "ng2-alfresco-documentlist": "1.9.0",
+    "ng2-charts": "1.6.0",
+    "pdfjs-dist": "1.5.404",
+    "raphael": "2.2.7",
     "reflect-metadata": "0.1.10",
     "rxjs": "5.1.0",
     "systemjs": "0.19.27",
-    "zone.js": "0.8.12",
-    "ng2-alfresco-core": "1.9.0",
-    "raphael": "2.2.7",
-    "chart.js": "2.5.0",
-    "ng2-activiti-diagrams": "1.9.0",
-    "ng2-charts": "1.6.0",
-    "@angular/flex-layout": "2.0.0-beta.9",
-    "ng2-activiti-form": "1.9.0",
-    "ng2-alfresco-datatable": "1.9.0",
-    "ng2-activiti-tasklist": "1.9.0",
-    "ng2-alfresco-documentlist": "1.9.0",
-    "minimatch": "3.0.4",
-    "pdfjs-dist": "1.5.404"
+    "zone.js": "0.8.12"
   },
   "devDependencies": {
     "@types/hammerjs": "2.0.35",
