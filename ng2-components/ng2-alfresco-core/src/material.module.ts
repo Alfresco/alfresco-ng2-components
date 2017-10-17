@@ -18,7 +18,6 @@
 import { NgModule } from '@angular/core';
 import {
     MatButtonModule,
-    MatDatepickerModule,
     MatDialogModule,
     MatIconModule,
     MatInputModule,
@@ -32,7 +31,6 @@ import {
 export function modules() {
     return [
         MatButtonModule,
-        MatDatepickerModule,
         MatDialogModule,
         MatInputModule,
         MatProgressBarModule,
