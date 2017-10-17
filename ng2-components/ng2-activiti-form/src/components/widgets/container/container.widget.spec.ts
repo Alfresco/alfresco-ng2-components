@@ -39,7 +39,6 @@ describe('ContainerWidgetComponent', () => {
     let fixture: ComponentFixture<ContainerWidgetComponent>;
     let element: HTMLElement;
     let contentService: ActivitiAlfrescoContentService;
-    let dialogPolyfill;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -62,13 +61,6 @@ describe('ContainerWidgetComponent', () => {
 
         element = fixture.nativeElement;
         widget = fixture.componentInstance;
-
-        dialogPolyfill = {
-            registerDialog(obj: any) {
-                obj.showModal = function () {
-                };
-            }
-        };
     });
 
     it('should wrap field with model instance', () => {
