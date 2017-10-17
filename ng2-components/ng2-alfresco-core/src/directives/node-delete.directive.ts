@@ -16,16 +16,28 @@
  */
 
 import { Directive, EventEmitter, HostListener, Input, Output } from '@angular/core';
-import { MinimalNodeEntity } from 'alfresco-js-api';
+import { MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { Observable } from 'rxjs/Rx';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { NotificationService } from '../services/notification.service';
 import { TranslationService } from '../services/translation.service';
 
-interface DeleteData {
-    entry: MinimalNodeEntity;
+interface ProcessedNodeData {
+    entry: MinimalNodeEntryEntity;
     status: number;
 }
+
+interface ProcessStatus {
+    success: ProcessedNodeData[];
+    failed: ProcessedNodeData[];
+    someFailed();
+    someSucceeded();
+    oneFailed();
+    oneSucceeded();
+    allSucceeded();
+    allFailed();
+}
+
 @Directive({
     selector: '[adf-delete]'
 })
@@ -60,8 +72,8 @@ export class NodeDeleteDirective {
         const batch = this.getDeleteNodesBatch(selection);
 
         Observable.forkJoin(...batch)
-            .subscribe((data: any) => {
-                const processedItems = this.processStatus(data);
+            .subscribe((data: ProcessedNodeData[]) => {
+                const processedItems: ProcessStatus = this.processStatus(data);
 
                 this.notify(processedItems);
 
@@ -71,13 +83,13 @@ export class NodeDeleteDirective {
             });
     }
 
-    private getDeleteNodesBatch(selection): Observable<DeleteData>[] {
+    private getDeleteNodesBatch(selection: MinimalNodeEntity[]): Observable<ProcessedNodeData>[] {
         return selection.map((node) => this.deleteNode(node));
     }
 
-    private deleteNode(node): Observable<DeleteData> {
+    private deleteNode(node: MinimalNodeEntity): Observable<ProcessedNodeData> {
         // shared nodes support
-        const id = node.entry.nodeId || node.entry.id;
+        const id = (<any> node.entry).nodeId || node.entry.id;
 
         const promise = this.nodesApi.deleteNode(id, { permanent: this.permanent });
 
@@ -94,7 +106,7 @@ export class NodeDeleteDirective {
             });
     }
 
-    private processStatus(data): DeleteData {
+    private processStatus(data): ProcessStatus {
         const deleteStatus = {
             success: [],
             failed: [],
