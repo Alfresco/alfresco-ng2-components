@@ -44,7 +44,9 @@
                 </button>
                 <button mat-icon-button
                         adf-node-permission="delete"
-                        [adf-nodes]="documentList.selection">
+                        [adf-nodes]="documentList.selection"
+                        (delete)="documentList.reload()"
+                        [adf-delete]="documentList.selection">
                     <mat-icon>delete</mat-icon>
                 </button>
                 <button mat-icon-button
