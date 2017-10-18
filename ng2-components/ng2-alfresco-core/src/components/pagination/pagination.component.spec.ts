@@ -20,6 +20,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpModule } from '@angular/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../../material.module';
+import { AppConfigService } from '../../services/app-config.service';
 import { LogService } from '../../services/log.service';
 import { AlfrescoTranslateLoader } from '../../services/translate-loader.service';
 import { TranslationService } from '../../services/translation.service';
@@ -69,7 +70,8 @@ describe('PaginationComponent', () => {
             ],
             providers: [
                 TranslationService,
-                LogService
+                LogService,
+                AppConfigService
             ],
             schemas: [ NO_ERRORS_SCHEMA ]
         }).compileComponents()
