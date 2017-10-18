@@ -27,10 +27,6 @@ import { Component, ViewEncapsulation } from '@angular/core';
 })
 export class AppLayoutComponent {
 
-    languages: Array<any> = [
-        { key: 'en', label: 'English'}
-    ];
-
     links: Array<any> = [
         { href: '/home', icon: 'home', title: 'Home' },
         { href: '/files', icon: 'folder_open', title: 'Content Services' },

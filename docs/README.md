@@ -309,6 +309,7 @@ for more information about installing and using the source code.
 - [Info drawer layout component](info-drawer-layout.component.md)
 - [Info drawer component](info-drawer.component.md)
 - [Pagination component](pagination.component.md)
+- [Language Manu](language-menu.component.md)
 - [Toolbar divider component](toolbar-divider.component.md)
 - [Toolbar title component](toolbar-title.component.md)
 - [Toolbar component](toolbar.component.md)
