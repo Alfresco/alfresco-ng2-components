@@ -56,7 +56,7 @@
     "files": {
             "excluded": [".DS_Store", "desktop.ini", ".git"]
     },
-    "logLevel" : "trace",
+    "logLevel" : "silent",
     "activiti": {
         "rest": {
             "fields": [
