@@ -20,18 +20,15 @@ import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { SiteModel } from '../models/site.model';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { UserPreferencesService } from './user-preferences.service';
 
 @Injectable()
 export class SitesApiService {
 
     constructor(
-        private apiService: AlfrescoApiService,
-        private preferences: UserPreferencesService) { }
+        private apiService: AlfrescoApiService) { }
 
     getSites(opts: any = {}): any {
         const defaultOptions = {
-            maxItems: this.preferences.paginationSize,
             skipCount: 0,
             include: ['properties']
         };
