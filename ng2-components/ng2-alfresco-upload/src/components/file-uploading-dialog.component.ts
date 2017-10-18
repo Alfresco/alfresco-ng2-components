@@ -66,6 +66,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
             )
             .subscribe((event: (FileUploadDeleteEvent|FileUploadCompleteEvent)) => {
                 this.totalCompleted = event.totalComplete;
+                this.changeDetecor.detectChanges();
             });
 
         this.errorSubscription = this.uploadService.fileUploadError
