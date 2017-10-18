@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { AlfrescoTranslationService, UserPreferencesService } from 'ng2-alfresco-core';
+import { UserPreferencesService } from 'ng2-alfresco-core';
 
 @Component({
     templateUrl: 'app-layout.component.html',
@@ -45,7 +45,7 @@ export class AppLayoutComponent {
         { href: '/about', icon: 'info_outline', title: 'About' }
     ];
 
-    constructor(private translateService: AlfrescoTranslationService, private preferences: UserPreferencesService) {}
+    constructor(private preferences: UserPreferencesService) {}
 
     changeLanguage(lang: string) {
         this.preferences.locale = lang;
