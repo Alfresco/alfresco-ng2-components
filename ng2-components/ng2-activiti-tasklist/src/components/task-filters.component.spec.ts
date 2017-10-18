@@ -17,7 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppsProcessService, AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
+import { AppConfigService, AppsProcessService, CoreModule, TranslationService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
@@ -127,7 +127,7 @@ describe('TaskFiltersComponent', () => {
             resolve({});
         });
 
-        spyOn(appsProcessService, 'getDeployedApplications').and.returnValue(Observable.fromPromise(fakeDeployedApplicationsPromise));
+        spyOn(appsProcessService, 'getDeployedApplicationsByName').and.returnValue(Observable.fromPromise(fakeDeployedApplicationsPromise));
         spyOn(activitiService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
 
         let change = new SimpleChange(null, 'test', true);

@@ -17,7 +17,7 @@
 
 import { DatePipe } from '@angular/common';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService, CoreModule, CommentProcessModel, TranslationService, UserProcessModel } from 'ng2-alfresco-core';
+import { AppConfigService, CommentProcessModel, CoreModule, TranslationService, UserProcessModel } from 'ng2-alfresco-core';
 import { DataRowEvent, DataTableModule, ObjectDataRow } from 'ng2-alfresco-datatable';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
@@ -30,7 +30,7 @@ const testUser: UserProcessModel = new UserProcessModel({
     email: 'tu@domain.com'
 });
 const testDate = new Date();
-const testComment: CommentProcessModel = new CommentProcessModel({id:1, message:'Test Comment', created:testDate.toDateString(), createdBy:testUser});
+const testComment: CommentProcessModel = new CommentProcessModel({id: 1, message: 'Test Comment', created: testDate.toDateString(), createdBy: testUser});
 
 describe('CommentListComponent', () => {
 

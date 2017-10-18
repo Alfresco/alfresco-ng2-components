@@ -433,7 +433,7 @@ export class TaskListService {
     }
 
     private callApiAddTask(task: TaskDetailsModel) {
-        return this.apiService.getInstance().activiti.taskApi.addSubtask(task.parentTaskId, task.toTaskRepresentation());
+        return this.apiService.getInstance().activiti.taskApi.addSubtask(task.parentTaskId, task);
     }
 
     private callApiDeleteTask(taskId: string) {
@@ -449,7 +449,7 @@ export class TaskListService {
     }
 
     private callApiCreateTask(task: TaskDetailsModel) {
-        return this.apiService.getInstance().activiti.taskApi.createNewTask(task.toTaskRepresentation());
+        return this.apiService.getInstance().activiti.taskApi.createNewTask(task);
     }
 
     private handleError(error: any) {

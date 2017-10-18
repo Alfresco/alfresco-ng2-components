@@ -18,7 +18,7 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { CoreModule, TranslationService, AppsProcessService } from 'ng2-alfresco-core';
+import { AppsProcessService, CoreModule, TranslationService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 
 import { TranslationMock } from '../assets/translation.service.mock';
@@ -50,7 +50,6 @@ describe('AppsListComponent', () => {
     }));
 
     beforeEach(() => {
-
         fixture = TestBed.createComponent(AppsListComponent);
         component = fixture.componentInstance;
         debugElement = fixture.debugElement;

@@ -572,7 +572,10 @@ describe('Activiti TaskList Service', () => {
                     expect(res.created).not.toEqual('');
                     expect(res.adhocTaskCanBeReassigned).toBe(true);
                     expect(res.assignee).toEqual(new UserProcessModel(fakeUser2));
-                    expect(res.involvedPeople).toEqual([fakeUser1]);
+                    expect(res.involvedPeople[0].email).toEqual(fakeUser1.email);
+                    expect(res.involvedPeople[0].firstName).toEqual(fakeUser1.firstName);
+                    expect(res.involvedPeople[0].lastName).toEqual(fakeUser1.lastName);
+                    expect(res.involvedPeople[0].id).toEqual(fakeUser1.id);
                     done();
                 }
             );

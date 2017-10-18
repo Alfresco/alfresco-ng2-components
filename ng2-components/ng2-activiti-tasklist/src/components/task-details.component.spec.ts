@@ -22,7 +22,7 @@ import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
 import { ActivitiFormModule, FormModel, FormOutcomeEvent, FormOutcomeModel, FormService } from 'ng2-activiti-form';
-import { AppConfigService, CoreModule, LogService, TranslationService } from 'ng2-alfresco-core';
+import { AppConfigService, CommentProcessService, CoreModule, LogService, TranslationService } from 'ng2-alfresco-core';
 
 import { PeopleProcessService, UserProcessModel } from 'ng2-alfresco-core';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
@@ -55,6 +55,7 @@ describe('TaskDetailsComponent', () => {
     let getFormTaskSpy: jasmine.Spy;
     let completeTaskSpy: jasmine.Spy;
     let logService: LogService;
+    let commentProcessService: CommentProcessService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -72,7 +73,8 @@ describe('TaskDetailsComponent', () => {
                 TaskListService,
                 PeopleProcessService,
                 {provide: TranslationService, useClass: TranslationMock},
-                {provide: AppConfigService, useClass: AppConfigServiceMock}
+                {provide: AppConfigService, useClass: AppConfigServiceMock},
+                CommentProcessService
             ],
             schemas: [NO_ERRORS_SCHEMA]
         }).compileComponents();
@@ -87,6 +89,7 @@ describe('TaskDetailsComponent', () => {
         component = fixture.componentInstance;
         service = fixture.debugElement.injector.get(TaskListService);
         formService = fixture.debugElement.injector.get(FormService);
+        commentProcessService = TestBed.get(CommentProcessService);
 
         getTaskDetailsSpy = spyOn(service, 'getTaskDetails').and.returnValue(Observable.of(taskDetailsMock));
         getFormSpy = spyOn(formService, 'getTaskForm').and.returnValue(Observable.of(taskFormMock));
@@ -96,7 +99,7 @@ describe('TaskDetailsComponent', () => {
         getTasksSpy = spyOn(service, 'getTasks').and.returnValue(Observable.of(tasksMock));
         assignTaskSpy = spyOn(service, 'assignTask').and.returnValue(Observable.of(fakeUser));
         completeTaskSpy = spyOn(service, 'completeTask').and.returnValue(Observable.of({}));
-        spyOn(service, 'getComments').and.returnValue(Observable.of(noDataMock));
+        spyOn(commentProcessService, 'getTaskComments').and.returnValue(Observable.of(noDataMock));
         spyOn(service, 'getTaskChecklist').and.returnValue(Observable.of(noDataMock));
 
     });

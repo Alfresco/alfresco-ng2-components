@@ -109,8 +109,4 @@ export class TaskDetailsModel implements TaskRepresentation {
     isCompleted(): boolean {
         return !!this.endDate;
     }
-
-    toTaskRepresentation() {
-        return new TaskRepresentation(this);
-    }
 }

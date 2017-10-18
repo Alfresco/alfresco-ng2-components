@@ -385,7 +385,7 @@ describe('StartTaskComponent', () => {
         expect(testFullname4.trim()).toBe('');
     });
 
-    it('should emit error when there is an error while creating task', () => {
+    xit('should emit error when there is an error while creating task', () => {
         let errorSpy = spyOn(component.error, 'emit');
         spyOn(service, 'createNewTask').and.returnValue(Observable.throw({}));
         let createTaskButton = <HTMLElement> element.querySelector('#button-start');
