@@ -22,6 +22,14 @@ import { ValidateDynamicTableRowEvent } from '../../../events/validate-dynamic-t
 import { FormService } from './../../../services/form.service';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormWidgetModel } from './../core/form-widget.model';
+import { DynamicTableColumn } from './dynamic-table-column.model';
+import { DynamicTableRow } from './dynamic-table-row.model';
+import { CellValidator } from './cell-validator.model';
+import { RequiredCellValidator } from './required-cell-validator.model';
+import { DateCellValidator } from './date-cell-validator-model';
+import { DynamicRowValidationSummary } from './dynamic-row-validation-summary.model';
+import { NumberCellValidator } from './number-cell-validator.model';
+
 
 export class DynamicTableModel extends FormWidgetModel {
 
@@ -193,156 +201,4 @@ export class DynamicTableModel extends FormWidgetModel {
         }
         return result;
     }
-}
-
-export interface DynamicRowValidationSummary {
-
-    isValid: boolean;
-    text: string;
-
-}
-
-export interface CellValidator {
-
-    isSupported(column: DynamicTableColumn): boolean;
-    validate(row: DynamicTableRow, column: DynamicTableColumn, summary?: DynamicRowValidationSummary): boolean;
-
-}
-
-export class RequiredCellValidator implements CellValidator {
-
-    private supportedTypes: string[] = [
-        'String',
-        'Number',
-        'Amount',
-        'Date',
-        'Dropdown'
-    ];
-
-    isSupported(column: DynamicTableColumn): boolean {
-        return column && column.required && this.supportedTypes.indexOf(column.type) > -1;
-    }
-
-    validate(row: DynamicTableRow, column: DynamicTableColumn, summary?: DynamicRowValidationSummary): boolean {
-        if (this.isSupported(column)) {
-            let value = row.value[column.id];
-            if (column.required) {
-                if (value === null || value === undefined || value === '') {
-                    if (summary) {
-                        summary.isValid = false;
-                        summary.text = `Field '${column.name}' is required.`;
-                    }
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
-}
-
-export class DateCellValidator implements CellValidator {
-
-    private supportedTypes: string[] = [
-        'Date'
-    ];
-
-    isSupported(column: DynamicTableColumn): boolean {
-        return column && column.editable && this.supportedTypes.indexOf(column.type) > -1;
-    }
-
-    validate(row: DynamicTableRow, column: DynamicTableColumn, summary?: DynamicRowValidationSummary): boolean {
-
-        if (this.isSupported(column)) {
-            let value = row.value[column.id];
-            let dateValue = moment(value, 'D-M-YYYY');
-            if (!dateValue.isValid()) {
-                if (summary) {
-                    summary.isValid = false;
-                    summary.text = `Invalid '${column.name}' format.`;
-                }
-                return false;
-            }
-        }
-
-        return true;
-    }
-}
-
-export class NumberCellValidator implements CellValidator {
-
-    private supportedTypes: string[] = [
-        'Number',
-        'Amount'
-    ];
-
-    isSupported(column: DynamicTableColumn): boolean {
-        return column && column.required && this.supportedTypes.indexOf(column.type) > -1;
-    }
-
-    isNumber(value: any): boolean {
-        if (value === null || value === undefined || value === '') {
-            return false;
-        }
-
-        return !isNaN(+value);
-    }
-
-    validate(row: DynamicTableRow, column: DynamicTableColumn, summary?: DynamicRowValidationSummary): boolean {
-
-        if (this.isSupported(column)) {
-            let value = row.value[column.id];
-            if (value === null ||
-                value === undefined ||
-                value === '' ||
-                this.isNumber(value)) {
-                return true;
-            }
-
-            if (summary) {
-                summary.isValid = false;
-                summary.text = `Field '${column.name}' must be a number.`;
-            }
-            return false;
-        }
-        return true;
-    }
-}
-
-// maps to: com.activiti.model.editor.form.ColumnDefinitionRepresentation
-export interface DynamicTableColumn {
-
-    id: string;
-    name: string;
-    type: string;
-    value: any;
-    optionType: string;
-    options: DynamicTableColumnOption[];
-    restResponsePath: string;
-    restUrl: string;
-    restIdProperty: string;
-    restLabelProperty: string;
-    amountCurrency: string;
-    amountEnableFractions: boolean;
-    required: boolean;
-    editable: boolean;
-    sortable: boolean;
-    visible: boolean;
-
-    // TODO: com.activiti.domain.idm.EndpointConfiguration.EndpointConfigurationRepresentation
-    endpoint: any;
-    // TODO: com.activiti.model.editor.form.RequestHeaderRepresentation
-    requestHeaders: any;
-}
-
-// maps to: com.activiti.model.editor.form.OptionRepresentation
-export interface DynamicTableColumnOption {
-    id: string;
-    name: string;
-}
-
-export interface DynamicTableRow {
-    isNew: boolean;
-    selected: boolean;
-    value: any;
 }

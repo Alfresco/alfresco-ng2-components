@@ -16,7 +16,7 @@
  */
 
 import { BaseEvent } from 'ng2-alfresco-core';
-import { DataRow } from '../../data/datatable-adapter';
+import { DataRow } from '../../data/data-row.model';
 
 export class DataRowActionEvent extends BaseEvent<DataRowActionModel> {
 

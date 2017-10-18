@@ -15,7 +15,9 @@
  * limitations under the License.
  */
 
-import { DataColumn, DataRow, DataSorting } from './datatable-adapter';
+import { DataColumn } from './data-column.model';
+import { DataRow } from './data-row.model';
+import { DataSorting } from './data-sorting.model';
 import { ObjectDataColumn, ObjectDataRow, ObjectDataTableAdapter } from './object-datatable-adapter';
 
 describe('ObjectDataTableAdapter', () => {

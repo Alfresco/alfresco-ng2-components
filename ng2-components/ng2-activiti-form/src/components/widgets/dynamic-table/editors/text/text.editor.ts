@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+/* tslint:disable:component-selector  */
 
 import { Component, Input, OnInit } from '@angular/core';
-import { DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './../../dynamic-table.widget.model';
+import { DynamicTableModel } from './../../dynamic-table.widget.model';
+import { DynamicTableRow } from './../../dynamic-table-row.model';
+import { DynamicTableColumn } from './../../dynamic-table-column.model';
 
 @Component({
     selector: 'adf-text-editor',

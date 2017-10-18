@@ -15,14 +15,16 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+/* tslint:disable:component-selector  */
 
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { FormService } from './../../../services/form.service';
-import { baseHost , WidgetComponent } from './../widget.component';
-import { DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './dynamic-table.widget.model';
+import { baseHost, WidgetComponent } from './../widget.component';
+import { DynamicTableColumn } from './dynamic-table-column.model';
+import { DynamicTableModel } from './dynamic-table.widget.model';
+import { DynamicTableRow } from './dynamic-table-row.model';
 
 @Component({
     selector: 'dynamic-table-widget',
@@ -47,7 +49,7 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
                 private visibilityService: WidgetVisibilityService,
                 private logService: LogService,
                 private cd: ChangeDetectorRef) {
-         super(formService);
+        super(formService);
     }
 
     ngOnInit() {

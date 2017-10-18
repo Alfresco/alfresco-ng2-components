@@ -15,14 +15,16 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+/* tslint:disable:component-selector  */
 
 import { Component, Input, OnInit } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import * as moment from 'moment';
 import { Moment } from 'moment';
 import { MOMENT_DATE_FORMATS, MomentDateAdapter, UserPreferencesService } from 'ng2-alfresco-core';
-import { DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './../../dynamic-table.widget.model';
+import { DynamicTableModel } from './../../dynamic-table.widget.model';
+import { DynamicTableRow } from './../../dynamic-table-row.model';
+import { DynamicTableColumn } from './../../dynamic-table-column.model';
 
 @Component({
     selector: 'adf-date-editor',
@@ -50,19 +52,18 @@ export class DateEditorComponent implements OnInit {
     minDate: Moment;
     maxDate: Moment;
 
-    constructor(
-        private dateAdapter: DateAdapter<Moment>,
-        private preferences: UserPreferencesService) {
+    constructor(private dateAdapter: DateAdapter<Moment>,
+                private preferences: UserPreferencesService) {
     }
 
     ngOnInit() {
-        this.preferences.locale$.subscribe( (locale) => {
+        this.preferences.locale$.subscribe((locale) => {
             this.dateAdapter.setLocale(locale);
         });
         let momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
         momentDateAdapter.overrideDisplyaFormat = this.DATE_FORMAT;
 
-        this.value =  moment(this.table.getCellValue(this.row, this.column), this.DATE_FORMAT);
+        this.value = moment(this.table.getCellValue(this.row, this.column), this.DATE_FORMAT);
     }
 
     onDateChanged(newDateValue) {
@@ -70,8 +71,8 @@ export class DateEditorComponent implements OnInit {
             let momentDate = moment(newDateValue, this.DATE_FORMAT, true);
 
             if (!momentDate.isValid()) {
-                this.row.value[this.column.id]   = '';
-            }else {
+                this.row.value[this.column.id] = '';
+            } else {
                 this.row.value[this.column.id] = `${momentDate.format('YYYY-MM-DD')}T00:00:00.000Z`;
                 this.table.flushValue();
             }
