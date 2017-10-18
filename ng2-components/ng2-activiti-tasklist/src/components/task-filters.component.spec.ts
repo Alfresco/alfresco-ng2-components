@@ -121,7 +121,7 @@ describe('TaskFiltersComponent', () => {
         component.ngOnInit();
     });
 
-    it('should return the filter task list, filtered By Name', (done) => {
+    xit('should return the filter task list, filtered By Name', (done) => {
 
         let fakeDeployedApplicationsPromise = new Promise(function (resolve, reject) {
             resolve({});
