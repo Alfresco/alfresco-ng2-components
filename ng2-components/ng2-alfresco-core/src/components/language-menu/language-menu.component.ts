@@ -17,7 +17,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { AppConfigService } from '../../services/app-config.service';
-import { TranslationService } from '../../services/translation.service';
+import { UserPreferencesService } from '../../services/user-preferences.service';
 
 @Component({
     selector: 'adf-lanugage-menu',
@@ -33,7 +33,7 @@ export class LanguageMenuComponent implements OnInit {
 
     constructor(
         private appConfig: AppConfigService,
-        private translateService: TranslationService) {
+        private userPreference: UserPreferencesService) {
     }
 
     ngOnInit() {
@@ -44,7 +44,7 @@ export class LanguageMenuComponent implements OnInit {
     }
 
     changeLanguage(lang: string) {
-        this.translateService.use(lang);
+        this.userPreference.locale = lang;
     }
 
 }

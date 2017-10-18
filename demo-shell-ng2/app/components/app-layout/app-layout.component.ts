@@ -16,7 +16,6 @@
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { UserPreferencesService } from 'ng2-alfresco-core';
 
 @Component({
     templateUrl: 'app-layout.component.html',
@@ -27,6 +26,10 @@ import { UserPreferencesService } from 'ng2-alfresco-core';
     encapsulation: ViewEncapsulation.None
 })
 export class AppLayoutComponent {
+
+    languages: Array<any> = [
+        { key: 'en', label: 'English'}
+    ];
 
     links: Array<any> = [
         { href: '/home', icon: 'home', title: 'Home' },
@@ -45,9 +48,5 @@ export class AppLayoutComponent {
         { href: '/about', icon: 'info_outline', title: 'About' }
     ];
 
-    constructor(private preferences: UserPreferencesService) {}
-
-    changeLanguage(lang: string) {
-        this.preferences.locale = lang;
-    }
+    constructor() {}
 }
