@@ -58,11 +58,11 @@ export class DateWidgetComponent extends WidgetComponent implements OnInit {
 
         if (this.field) {
             if (this.field.minValue) {
-                this.minDate = moment(this.field.minValue, this.field.dateDisplayFormat);
+                this.minDate = moment(this.field.minValue, 'DD/MM/YYYY');
             }
 
             if (this.field.maxValue) {
-                this.maxDate = moment(this.field.maxValue, this.field.dateDisplayFormat);
+                this.maxDate = moment(this.field.maxValue, 'DD/MM/YYYY');
             }
         }
         this.displayDate = moment(this.field.value, this.field.dateDisplayFormat);
