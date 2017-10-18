@@ -4,6 +4,7 @@
             "HEADER": "This folder is empty"
         },
         "LAYOUT": {
+            "CREATED": "Created",
             "THUMBNAIL": "Thumbnail",
             "NAME": "Name",
             "LOCATION": "Location",
@@ -15,6 +16,11 @@
             "MODIFIED_BY": "Modified by",
             "SHARED_BY": "Shared by",
             "LOAD_MORE": "Load more"
+        },
+        "MENU_ACTIONS": {
+            "VIEW": "View",
+            "REMOVE": "Remove",
+            "DOWNLOAD": "Download"
         }
     },
     "ALFRESCO_DOCUMENT_LIST": {
