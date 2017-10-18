@@ -121,7 +121,7 @@ describe('TaskFiltersComponent', () => {
         component.ngOnInit();
     });
 
-    xit('should return the filter task list, filtered By Name', (done) => {
+    it('should return the filter task list, filtered By Name', (done) => {
 
         let fakeDeployedApplicationsPromise = new Promise(function (resolve, reject) {
             resolve({});
@@ -134,7 +134,7 @@ describe('TaskFiltersComponent', () => {
         component.ngOnChanges({ 'appName': change });
 
         component.onSuccess.subscribe((res) => {
-            let deployApp: any = appsProcessService.getDeployedApplications;
+            let deployApp: any = appsProcessService.getDeployedApplicationsByName;
             expect(deployApp.calls.count()).toEqual(1);
             expect(res).toBeDefined();
             done();
