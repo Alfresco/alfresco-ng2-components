@@ -25,10 +25,12 @@ export class LogService {
     currentLogLevel: LogLevelsEnum = LogLevelsEnum.TRACE;
 
     constructor(appConfig: AppConfigService) {
-        let configLevel: string = appConfig.get<string>('logLevel');
+        if (appConfig) {
+            let configLevel: string = appConfig.get<string>('logLevel');
 
-        if (configLevel) {
-            this.currentLogLevel = this.getCurrentLogLevel(configLevel);
+            if (configLevel) {
+                this.currentLogLevel = this.getCurrentLogLevel(configLevel);
+            }
         }
     }
 

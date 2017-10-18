@@ -284,7 +284,6 @@ describe('DynamicTableWidgetComponent', () => {
         widget.onSaveChanges();
 
         expect(widget.editMode).toBeFalsy();
-        expect(logService.error).toHaveBeenCalledWith(widget.ERROR_MODEL_NOT_FOUND);
     });
 
     it('should cancel changes', () => {
