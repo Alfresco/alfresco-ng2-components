@@ -22,6 +22,8 @@ import { ObjectUtils } from '../utils/object-utils';
 @Injectable()
 export class AppConfigService {
 
+    static APP_CONFIG_LANGUAGES_KEY = 'languages';
+
     config: any = {
         application: {
             name: 'Alfresco ADF Application'

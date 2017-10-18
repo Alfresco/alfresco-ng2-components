@@ -35,7 +35,7 @@
             <mat-icon>language</mat-icon>
         </button>
         <mat-menu #langMenu="matMenu">
-            <button mat-menu-item *ngFor="let language of languages" (click)="changeLanguage(language.key)">{{language.label}}</button>
+            <adf-lanugage-menu></adf-lanugage-menu>
         </mat-menu>
 
         <button mat-icon-button (click)="sidenav.open()">

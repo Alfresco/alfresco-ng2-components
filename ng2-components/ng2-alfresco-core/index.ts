@@ -125,6 +125,7 @@ import {
     InfoDrawerTitleDirective
 } from './src/components/info-drawer/info-drawer-layout.component';
 import { InfoDrawerComponent, InfoDrawerTabComponent } from './src/components/info-drawer/info-drawer.component';
+import { LanguageMenuComponent } from './src/components/language-menu/language-menu.component';
 import { NodePermissionDirective } from './src/directives/node-permission.directive';
 import { NodeRestoreDirective } from './src/directives/node-restore.directive';
 import { UploadDirective } from './src/directives/upload.directive';
@@ -276,6 +277,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         InfoDrawerTitleDirective,
         InfoDrawerButtonsDirective,
         InfoDrawerContentDirective,
+        LanguageMenuComponent,
         CreateFolderDialogComponent,
         DownloadZipDialogComponent,
         InfinitePaginationComponent,
@@ -325,6 +327,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         InfoDrawerButtonsDirective,
         InfoDrawerContentDirective,
         InfinitePaginationComponent,
+        LanguageMenuComponent,
         PaginationComponent
     ],
     entryComponents: [
