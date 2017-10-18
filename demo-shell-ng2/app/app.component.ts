@@ -30,7 +30,7 @@ export class AppComponent {
 
     constructor(private settingsService: AlfrescoSettingsService,
                 private storage: StorageService,
-                translate: TranslationService,
+                translationService: TranslationService,
                 pageTitleService: PageTitleService,
                 route: ActivatedRoute,
                 router: Router) {
