@@ -15,13 +15,8 @@
  * limitations under the License.
  */
 
-/**
- *
- * This object represent the app definition.
- *
- *
- * @returns {AppDefinitionRepresentationModel} .
- */
+import { TaskQueryRequestRepresentation, UserTaskFilterRepresentation } from 'alfresco-js-api';
+
 export class AppDefinitionRepresentationModel {
     defaultAppId: string;
     deploymentId: string;
@@ -36,25 +31,18 @@ export class AppDefinitionRepresentationModel {
     constructor(obj?: any) {
         if (obj) {
             this.defaultAppId = obj.defaultAppId ? obj.defaultAppId : null;
-            this.deploymentId = obj.deploymentId ? obj.deploymentId  : null;
-            this.name = obj.name ? obj.name  : null;
-            this.description = obj.description ? obj.description  : null;
-            this.theme = obj.theme ? obj.theme  : null;
-            this.icon = obj.icon ? obj.icon  : null;
-            this.id = obj.id ? obj.id  : null;
-            this.modelId = obj.modelId ? obj.modelId  : null;
-            this.tenantId = obj.tenantId ? obj.tenantId  : null;
+            this.deploymentId = obj.deploymentId ? obj.deploymentId : null;
+            this.name = obj.name ? obj.name : null;
+            this.description = obj.description ? obj.description : null;
+            this.theme = obj.theme ? obj.theme : null;
+            this.icon = obj.icon ? obj.icon : null;
+            this.id = obj.id ? obj.id : null;
+            this.modelId = obj.modelId ? obj.modelId : null;
+            this.tenantId = obj.tenantId ? obj.tenantId : null;
         }
     }
 }
 
-/**
- *
- * This object represent the parameters to filter a filter.
- *
- *
- * @returns {FilterParamsModel} .
- */
 export class FilterParamsModel {
     id: string;
     name: string;
@@ -69,22 +57,14 @@ export class FilterParamsModel {
     }
 }
 
-/**
- *
- * This object represent the filter.
- *
- *
- * @returns {FilterRepresentationModel} .
- */
-export class FilterRepresentationModel {
-    id: string;
-    appId: string;
+export class FilterRepresentationModel implements UserTaskFilterRepresentation {
+    id: number;
+    appId: number;
     name: string;
     recent: boolean;
     icon: string;
     filter: FilterParamRepresentationModel;
     index: number;
-    landingTaskId: string;
 
     constructor(obj?: any) {
         if (obj) {
@@ -95,7 +75,6 @@ export class FilterRepresentationModel {
             this.icon = obj.icon || null;
             this.filter = new FilterParamRepresentationModel(obj.filter);
             this.index = obj.index;
-            this.landingTaskId = obj.landingTaskId;
         }
     }
 
@@ -104,13 +83,6 @@ export class FilterRepresentationModel {
     }
 }
 
-/**
- *
- * This object represent the parameters of a filter.
- *
- *
- * @returns {FilterParamRepresentationModel} .
- */
 export class FilterParamRepresentationModel {
     processDefinitionId: string;
     processDefinitionKey: string;
@@ -135,7 +107,7 @@ export class FilterParamRepresentationModel {
     }
 }
 
-export class TaskQueryRequestRepresentationModel {
+export class TaskQueryRequestRepresentationModel implements TaskQueryRequestRepresentation {
     appDefinitionId: string;
     processInstanceId: string;
     processDefinitionId: string;

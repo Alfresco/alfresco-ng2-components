@@ -20,17 +20,8 @@ import { async } from '@angular/core/testing';
 import { AlfrescoApi } from 'alfresco-js-api';
 import { AlfrescoApiService, CoreModule } from 'ng2-alfresco-core';
 import { exampleProcess, fakeProcessInstances } from '../assets/process.model.mock';
-import {
-    fakeApp1,
-    fakeApp2,
-    fakeComment,
-    fakeError,
-    fakeFilters,
-    fakeProcessDef,
-    fakeTaskList
-} from '../assets/process.service.mock';
-import { FilterProcessRepresentationModel } from '../models/filter-process.model';
-import { ProcessFilterRequestRepresentation } from '../models/process-instance-filter.model';
+import { fakeError, fakeFilters, fakeProcessDef, fakeTaskList } from '../assets/process.service.mock';
+import { FilterProcessRepresentationModel, ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessService } from './process.service';
 
@@ -58,7 +49,7 @@ describe('ProcessService', () => {
 
         let getProcessInstances: jasmine.Spy;
 
-        let filter: ProcessFilterRequestRepresentation = new ProcessFilterRequestRepresentation({
+        let filter: ProcessFilterParamRepresentationModel = new ProcessFilterParamRepresentationModel({
             processDefinitionId: '1',
             appDefinitionId: '1',
             page: 1,
@@ -327,7 +318,7 @@ describe('ProcessService', () => {
         });
 
         it('should call API with correct parameters when appId provided', () => {
-            const appId = '1';
+            const appId = 1;
             service.getProcessDefinitions(appId);
             expect(getProcessDefinitions).toHaveBeenCalledWith({
                 latest: true,
@@ -426,167 +417,6 @@ describe('ProcessService', () => {
 
     });
 
-    describe('comments', () => {
-
-        const processId = '1001';
-
-        describe('get comments', () => {
-
-            let getProcessInstanceComments: jasmine.Spy;
-
-            beforeEach(() => {
-                getProcessInstanceComments = spyOn(alfrescoApi.activiti.commentsApi, 'getProcessInstanceComments')
-                    .and
-                    .returnValue(Promise.resolve({ data: [ fakeComment, fakeComment ] }));
-            });
-
-            it('should return the correct number of comments', async(() => {
-                service.getComments(processId).subscribe((tasks) => {
-                    expect(tasks.length).toBe(2);
-                });
-            }));
-
-            it('should return the correct comment data', async(() => {
-                service.getComments(processId).subscribe((comments) => {
-                    let comment = comments[0];
-                    expect(comment.id).toBe(fakeComment.id);
-                    expect(comment.created).toBe(fakeComment.created);
-                    expect(comment.message).toBe(fakeComment.message);
-                    expect(comment.createdBy.id).toBe(fakeComment.createdBy.id);
-                });
-            }));
-
-            it('should call service to fetch process instance comments', () => {
-                service.getComments(processId);
-                expect(getProcessInstanceComments).toHaveBeenCalledWith(processId);
-            });
-
-            it('should pass on any error that is returned by the API', async(() => {
-                getProcessInstanceComments = getProcessInstanceComments.and.returnValue(Promise.reject(fakeError));
-                service.getComments(processId).subscribe(
-                    () => {},
-                    (res) => {
-                        expect(res).toBe(fakeError);
-                    }
-                );
-            }));
-
-            it('should return a default error if no data is returned by the API', async(() => {
-                getProcessInstanceComments = getProcessInstanceComments.and.returnValue(Promise.reject(null));
-                service.getComments(processId).subscribe(
-                    () => {},
-                    (res) => {
-                        expect(res).toBe('Server error');
-                    }
-                );
-            }));
-
-        });
-
-        describe('add comment', () => {
-
-            const message = 'Test message';
-            let addProcessInstanceComment: jasmine.Spy;
-
-            beforeEach(() => {
-                addProcessInstanceComment = spyOn(alfrescoApi.activiti.commentsApi, 'addProcessInstanceComment')
-                    .and
-                    .returnValue(Promise.resolve(fakeComment));
-            });
-
-            it('should call service to add comment', () => {
-                service.addComment(processId, message);
-                expect(addProcessInstanceComment).toHaveBeenCalledWith({
-                    message: message
-                }, processId);
-            });
-
-            it('should return the created comment', async(() => {
-                service.addComment(processId, message).subscribe((comment) => {
-                    expect(comment.id).toBe(fakeComment.id);
-                    expect(comment.created).toBe(fakeComment.created);
-                    expect(comment.message).toBe(fakeComment.message);
-                    expect(comment.createdBy).toBe(fakeComment.createdBy);
-                });
-            }));
-
-            it('should pass on any error that is returned by the API', async(() => {
-                addProcessInstanceComment = addProcessInstanceComment.and.returnValue(Promise.reject(fakeError));
-                service.addComment(processId, message).subscribe(
-                    () => {},
-                    (res) => {
-                        expect(res).toBe(fakeError);
-                    }
-                );
-            }));
-
-            it('should return a default error if no data is returned by the API', async(() => {
-                addProcessInstanceComment = addProcessInstanceComment.and.returnValue(Promise.reject(null));
-                service.addComment(processId, message).subscribe(
-                    () => {},
-                    (res) => {
-                        expect(res).toBe('Server error');
-                    }
-                );
-            }));
-
-        });
-
-    });
-
-    describe('deployed apps', () => {
-
-        let getAppDefinitions: jasmine.Spy;
-
-        beforeEach(() => {
-            getAppDefinitions = spyOn(alfrescoApi.activiti.appsApi, 'getAppDefinitions')
-                .and
-                .returnValue(Promise.resolve({ data: [ fakeApp1, fakeApp2 ] }));
-        });
-
-        it('should return the correct app', async(() => {
-            service.getDeployedApplications(fakeApp1.name).subscribe((app) => {
-                expect(app.id).toBe(fakeApp1.id);
-                expect(app.name).toBe(fakeApp1.name);
-                expect(app.deploymentId).toBe(fakeApp1.deploymentId);
-            });
-        }));
-
-        it('should call service to fetch apps', () => {
-            service.getDeployedApplications(null);
-            expect(getAppDefinitions).toHaveBeenCalled();
-        });
-
-        it('should pass on any error that is returned by the API', async(() => {
-            getAppDefinitions = getAppDefinitions.and.returnValue(Promise.reject(fakeError));
-            service.getDeployedApplications(null).subscribe(
-                () => {},
-                (res) => {
-                    expect(res).toBe(fakeError);
-                }
-            );
-        }));
-
-        it('should return a default error if no data is returned by the API', async(() => {
-            getAppDefinitions = getAppDefinitions.and.returnValue(Promise.reject(null));
-            service.getDeployedApplications(null).subscribe(
-                () => {},
-                (res) => {
-                    expect(res).toBe('Server error');
-                }
-            );
-        }));
-
-        it('should return the correct app by id', async(() => {
-            service.getApplicationDetailsById(fakeApp1.id).subscribe((app) => {
-                expect(app.id).toBe(fakeApp1.id);
-                expect(app.name).toBe(fakeApp1.name);
-                expect(app.deploymentId).toBe(fakeApp1.deploymentId);
-            });
-        }));
-
-    });
-
     describe('filters', () => {
 
         let getFilters: jasmine.Spy;
@@ -610,8 +440,8 @@ describe('ProcessService', () => {
             });
 
             it('should call the API with the correct appId when specified', () => {
-                service.getProcessFilters('226');
-                expect(getFilters).toHaveBeenCalledWith({appId: '226'});
+                service.getProcessFilters(226);
+                expect(getFilters).toHaveBeenCalledWith({appId: 226});
             });
 
             it('should return the task filter by id', (done) => {
@@ -649,7 +479,7 @@ describe('ProcessService', () => {
             }));
 
             it('should return the default filters', (done) => {
-                service.createDefaultFilters('1234').subscribe(
+                service.createDefaultFilters(1234).subscribe(
                     (res: FilterProcessRepresentationModel []) => {
                         expect(res).toBeDefined();
                         expect(res.length).toEqual(3);

@@ -108,7 +108,7 @@ export class ProcessAttachmentListComponent implements OnChanges {
         }
     }
 
-    private deleteAttachmentById(contentId: string) {
+    private deleteAttachmentById(contentId: number) {
         if (contentId) {
             this.activitiContentService.deleteRelatedContent(contentId).subscribe(
                 (res: any) => {

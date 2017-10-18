@@ -22,10 +22,7 @@ import { MaterialModule } from '../../material.module';
 import { InfoDrawerLayoutComponent } from './info-drawer-layout.component';
 import { InfoDrawerComponent } from './info-drawer.component';
 
-declare let jasmine: any;
-
 describe('InfoDrawerComponent', () => {
-    let componentHandler: any;
     let debugElement: DebugElement;
     let element: HTMLElement;
     let component: InfoDrawerComponent;
@@ -48,11 +45,6 @@ describe('InfoDrawerComponent', () => {
         component = fixture.componentInstance;
         element = fixture.nativeElement;
         debugElement = fixture.debugElement;
-        componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered',
-            'upgradeElement'
-        ]);
-        window['componentHandler'] = componentHandler;
     });
 
     it('should create instance of InfoDrawerComponent', () => {

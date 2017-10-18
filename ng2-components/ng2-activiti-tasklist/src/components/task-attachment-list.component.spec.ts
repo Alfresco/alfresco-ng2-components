@@ -27,11 +27,8 @@ import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { TaskAttachmentListComponent } from './task-attachment-list.component';
 
-declare let jasmine: any;
-
 describe('TaskAttachmentList', () => {
 
-    let componentHandler: any;
     let component: TaskAttachmentListComponent;
     let fixture: ComponentFixture<TaskAttachmentListComponent>;
     let service: ActivitiContentService;
@@ -113,11 +110,6 @@ describe('TaskAttachmentList', () => {
             blobObj
         ));
 
-        componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered',
-            'upgradeElement'
-        ]);
-        window['componentHandler'] = componentHandler;
     });
 
     it('should load attachments when taskId specified', () => {

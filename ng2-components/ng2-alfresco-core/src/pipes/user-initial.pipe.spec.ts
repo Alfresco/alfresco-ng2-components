@@ -16,7 +16,7 @@
  */
 
 import { DomSanitizer } from '@angular/platform-browser';
-import { LightUserRepresentation } from '../models/user-process.model';
+import { UserProcessModel } from '../models/user-process.model';
 import { InitialUsernamePipe } from './user-initial.pipe';
 
 class FakeSanitazer extends DomSanitizer {
@@ -53,11 +53,11 @@ class FakeSanitazer extends DomSanitizer {
 describe('UserInitialPipe', () => {
 
     let pipe: InitialUsernamePipe;
-    let fakeUser: LightUserRepresentation;
+    let fakeUser: UserProcessModel;
 
     beforeEach(() => {
         pipe = new InitialUsernamePipe(new FakeSanitazer());
-        fakeUser = new LightUserRepresentation();
+        fakeUser = new UserProcessModel();
     });
 
     it('should return a div with the user initials', () => {

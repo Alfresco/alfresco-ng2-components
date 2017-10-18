@@ -30,7 +30,6 @@ import { ProcessAttachmentListComponent } from './process-attachment-list.compon
 
 describe('ProcessAttachmentListComponent', () => {
 
-    let componentHandler: any;
     let service: ActivitiContentService;
     let component: ProcessAttachmentListComponent;
     let fixture: ComponentFixture<ProcessAttachmentListComponent>;
@@ -123,12 +122,6 @@ describe('ProcessAttachmentListComponent', () => {
         getFileRawContentSpy = spyOn(service, 'getFileRawContent').and.returnValue(Observable.of(
             blobObj
         ));
-
-        componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered',
-            'upgradeElement'
-        ]);
-        window['componentHandler'] = componentHandler;
     });
 
     it('should load attachments when processInstanceId specified', () => {

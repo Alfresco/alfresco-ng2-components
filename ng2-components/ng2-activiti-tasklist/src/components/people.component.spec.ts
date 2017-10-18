@@ -19,8 +19,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule, MatInputModule } from '@angular/material';
 import { AppConfigService, CoreModule, LogService, TranslationService } from 'ng2-alfresco-core';
-import { LightUserRepresentation } from 'ng2-alfresco-core';
-import { PeopleProcessService } from 'ng2-alfresco-core';
+import { PeopleProcessService, UserProcessModel } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
@@ -30,14 +29,14 @@ import { PeopleComponent } from './people.component';
 
 declare let jasmine: any;
 
-const fakeUser: LightUserRepresentation = new LightUserRepresentation({
+const fakeUser: UserProcessModel = new UserProcessModel({
     id: 'fake-id',
     firstName: 'fake-name',
     lastName: 'fake-last',
     email: 'fake@mail.com'
 });
 
-const fakeSecondUser: LightUserRepresentation = new LightUserRepresentation({
+const fakeSecondUser: UserProcessModel = new UserProcessModel({
     id: 'fake-involve-id',
     firstName: 'fake-involve-name',
     lastName: 'fake-involve-last',
@@ -49,7 +48,6 @@ describe('PeopleComponent', () => {
     let activitiPeopleComponent: PeopleComponent;
     let fixture: ComponentFixture<PeopleComponent>;
     let element: HTMLElement;
-    let componentHandler;
     let userArray = [fakeUser, fakeSecondUser];
     let logService: LogService;
 
@@ -78,11 +76,6 @@ describe('PeopleComponent', () => {
             fixture = TestBed.createComponent(PeopleComponent);
             activitiPeopleComponent = fixture.componentInstance;
             element = fixture.nativeElement;
-            componentHandler = jasmine.createSpyObj('componentHandler', [
-                'upgradeAllRegistered'
-            ]);
-
-            window['componentHandler'] = componentHandler;
 
             activitiPeopleComponent.people = [];
             activitiPeopleComponent.readOnly = true;

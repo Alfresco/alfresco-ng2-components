@@ -19,7 +19,7 @@
 
 import { ENTER, ESCAPE } from '@angular/cdk/keycodes';
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { LightUserRepresentation, PeopleProcessService } from 'ng2-alfresco-core';
+import { PeopleProcessService, UserProcessModel } from 'ng2-alfresco-core';
 import { FormService } from '../../../services/form.service';
 import { GroupModel } from '../core/group.model';
 import { baseHost, WidgetComponent } from './../widget.component';
@@ -38,7 +38,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
 
     minTermLength: number = 1;
     oldValue: string;
-    users: LightUserRepresentation[] = [];
+    users: UserProcessModel[] = [];
     groupId: string;
 
     constructor(public formService: FormService, public peopleProcessService: PeopleProcessService) {
@@ -71,7 +71,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
 
     searchUsers(userName: string) {
         this.formService.getWorkflowUsers(userName, this.groupId)
-            .subscribe((result: LightUserRepresentation[]) => {
+            .subscribe((result: UserProcessModel[]) => {
                 this.users = result || [];
                 this.validateValue(userName);
             });
@@ -93,7 +93,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
     isValidUser(value: string): boolean {
         let isValid = false;
         if (value) {
-            let resultUser: LightUserRepresentation = this.users.find((user) => this.getDisplayName(user).toLocaleLowerCase() === value.toLocaleLowerCase());
+            let resultUser: UserProcessModel = this.users.find((user) => this.getDisplayName(user).toLocaleLowerCase() === value.toLocaleLowerCase());
 
             if (resultUser) {
                 isValid = true;
@@ -103,7 +103,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         return isValid;
     }
 
-    getDisplayName(model: LightUserRepresentation) {
+    getDisplayName(model: UserProcessModel) {
         if (model) {
             let displayName = `${model.firstName || ''} ${model.lastName || ''}`;
             return displayName.trim();
@@ -111,7 +111,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
         return '';
     }
 
-    onItemSelect(item: LightUserRepresentation) {
+    onItemSelect(item: UserProcessModel) {
         if (item) {
             this.field.value = item;
         }

@@ -29,7 +29,6 @@ declare let jasmine: any;
 
 describe('AnalyticsReportHeatMapComponent', () => {
 
-    let componentHandler: any;
     let component: AnalyticsReportHeatMapComponent;
     let fixture: ComponentFixture<AnalyticsReportHeatMapComponent>;
     let debug: DebugElement;
@@ -70,10 +69,6 @@ describe('AnalyticsReportHeatMapComponent', () => {
         component = fixture.componentInstance;
         debug = fixture.debugElement;
         element = fixture.nativeElement;
-        componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered'
-        ]);
-        window['componentHandler'] = componentHandler;
 
         component.report = {
             totalCountsPercentages: totalCountPerc,

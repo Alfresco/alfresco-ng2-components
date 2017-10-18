@@ -93,7 +93,6 @@ export {TaskHeaderComponent as ActivitiTaskHeader} from './src/components/task-h
 export {TaskListComponent as ActivitiTaskList } from './src/components/tasklist.component';
 export {TaskListService as ActivitiTaskListService } from './src/services/tasklist.service';
 
-export * from './src/models/comment.model';
 export * from './src/models/filter.model';
 export * from './src/models/icon.model';
 export * from './src/models/task-details.model';

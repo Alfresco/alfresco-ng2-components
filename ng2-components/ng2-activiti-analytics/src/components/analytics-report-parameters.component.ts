@@ -17,7 +17,6 @@
 
 import {
     AfterContentChecked,
-    AfterViewChecked,
     Component,
     EventEmitter,
     Input,
@@ -36,20 +35,18 @@ import { ParameterValueModel, ReportParameterDetailsModel, ReportParametersModel
 import { ContentService, LogService } from 'ng2-alfresco-core';
 import { AnalyticsService } from '../services/analytics.service';
 
-declare var componentHandler;
-
 @Component({
     selector: 'adf-analytics-report-parameters, analytics-report-parameters',
     templateUrl: './analytics-report-parameters.component.html',
     styleUrls: ['./analytics-report-parameters.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class AnalyticsReportParametersComponent implements OnInit, OnChanges, OnDestroy, AfterViewChecked, AfterContentChecked {
+export class AnalyticsReportParametersComponent implements OnInit, OnChanges, OnDestroy, AfterContentChecked {
 
     public static FORMAT_DATE_ACTIVITI: string = 'YYYY-MM-DD';
 
     @Input()
-    appId: string;
+    appId: number;
 
     @Input()
     reportId: string;
@@ -208,7 +205,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         );
     }
 
-    private retrieveParameterOptions(parameters: ReportParameterDetailsModel[], appId: string, reportId?: string, processDefinitionId?: string) {
+    private retrieveParameterOptions(parameters: ReportParameterDetailsModel[], appId: number, reportId?: string, processDefinitionId?: string) {
         parameters.forEach((param) => {
             this.analyticsService.getParamValuesByType(param.type, appId, reportId, processDefinitionId).subscribe(
                 (opts: ParameterValueModel[]) => {
@@ -369,12 +366,6 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         this.analyticsService.deleteReport(reportId).subscribe(() => {
             this.deleteReportSuccess.emit(reportId);
         },                                                     error => this.logService.error(error));
-    }
-
-    ngAfterViewChecked() {
-        if (componentHandler) {
-            componentHandler.upgradeAllRegistered();
-        }
     }
 
     ngAfterContentChecked() {

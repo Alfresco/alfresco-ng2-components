@@ -16,8 +16,8 @@
  */
 
 import { TestBed } from '@angular/core/testing';
+import { UserProcessModel } from 'ng2-alfresco-core';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
-import { LightUserRepresentation } from '../models/user-process.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AppConfigService } from './app-config.service';
 import { LogService } from './log.service';
@@ -26,21 +26,21 @@ import { StorageService } from './storage.service';
 
 declare let jasmine: any;
 
-const firstInvolvedUser: LightUserRepresentation = new LightUserRepresentation({
+const firstInvolvedUser: UserProcessModel = new UserProcessModel({
     id: '1',
     email: 'fake-user1@fake.com',
     firstName: 'fakeName1',
     lastName: 'fakeLast1'
 });
 
-const secondInvolvedUser: LightUserRepresentation = new LightUserRepresentation({
+const secondInvolvedUser: UserProcessModel = new UserProcessModel({
     id: '2',
     email: 'fake-user2@fake.com',
     firstName: 'fakeName2',
     lastName: 'fakeLast2'
 });
 
-const fakeInvolveUserList: LightUserRepresentation[] = [firstInvolvedUser, secondInvolvedUser];
+const fakeInvolveUserList: UserProcessModel[] = [firstInvolvedUser, secondInvolvedUser];
 
 describe('PeopleProcessService', () => {
 
@@ -71,7 +71,7 @@ describe('PeopleProcessService', () => {
 
         it('should be able to retrieve people to involve in the task', (done) => {
             service.getWorkflowUsers('fake-task-id', 'fake-filter').subscribe(
-                (users: LightUserRepresentation[]) => {
+                (users: UserProcessModel[]) => {
                     expect(users).toBeDefined();
                     expect(users.length).toBe(2);
                     expect(users[0].id).toEqual('1');
@@ -89,7 +89,7 @@ describe('PeopleProcessService', () => {
 
         it('should be able to get people images for people retrieved', (done) => {
             service.getWorkflowUsers('fake-task-id', 'fake-filter').subscribe(
-                (users: LightUserRepresentation[]) => {
+                (users: UserProcessModel[]) => {
                     expect(users).toBeDefined();
                     expect(users.length).toBe(2);
                     expect(service.getUserImage(users[0])).toContain('/users/' + users[0].id + '/picture');
@@ -111,7 +111,7 @@ describe('PeopleProcessService', () => {
 
         it('should return empty list when there are no users to involve', (done) => {
             service.getWorkflowUsers('fake-task-id', 'fake-filter').subscribe(
-                (users: LightUserRepresentation[]) => {
+                (users: UserProcessModel[]) => {
                     expect(users).toBeDefined();
                     expect(users.length).toBe(0);
                     done();

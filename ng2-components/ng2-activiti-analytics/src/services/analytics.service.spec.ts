@@ -51,7 +51,7 @@ describe('Activiti Analytics Service', () => {
     describe('Content tests', () => {
 
         it('should return the report list by appId', (done) => {
-            service.getReportList('1').subscribe(
+            service.getReportList(1).subscribe(
                 (reportList) => {
                     expect(reportList).toBeDefined();
                     expect(reportList.length).toEqual(2);

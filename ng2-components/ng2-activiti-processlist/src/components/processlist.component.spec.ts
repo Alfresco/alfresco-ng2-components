@@ -30,7 +30,6 @@ import { TranslationMock } from './../assets/translation.service.mock';
 
 describe('ProcessInstanceListComponent', () => {
 
-    let componentHandler: any;
     let fixture: ComponentFixture<ProcessInstanceListComponent>;
     let component: ProcessInstanceListComponent;
     let service: ProcessService;
@@ -55,11 +54,6 @@ describe('ProcessInstanceListComponent', () => {
 
             getProcessInstancesSpy = spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeProcessInstances));
 
-            componentHandler = jasmine.createSpyObj('componentHandler', [
-                'upgradeAllRegistered',
-                'upgradeElement'
-            ]);
-            window['componentHandler'] = componentHandler;
         });
     }));
 
@@ -90,7 +84,7 @@ describe('ProcessInstanceListComponent', () => {
 
     it('should emit onSuccess event when process instances loaded', fakeAsync(() => {
         let emitSpy = spyOn(component.onSuccess, 'emit');
-        component.appId = '1';
+        component.appId = 1;
         component.state = 'open';
         component.processDefinitionKey = null;
         fixture.detectChanges();
@@ -105,7 +99,7 @@ describe('ProcessInstanceListComponent', () => {
                 {type: 'text', key: 'fake-id', title: 'Name'}
             ]
         );
-        component.appId = '1';
+        component.appId = 1;
         component.state = 'open';
         component.processDefinitionKey = null;
         component.onSuccess.subscribe((res) => {
@@ -121,7 +115,7 @@ describe('ProcessInstanceListComponent', () => {
     });
 
     it('should order the process instances by name column when no sort passed', (done) => {
-        component.appId = '1';
+        component.appId = 1;
         component.state = 'open';
         component.processDefinitionKey = null;
         component.onSuccess.subscribe((res) => {
@@ -137,7 +131,7 @@ describe('ProcessInstanceListComponent', () => {
     });
 
     it('should order the process instances by descending column when specified', (done) => {
-        component.appId = '1';
+        component.appId = 1;
         component.state = 'open';
         component.processDefinitionKey = null;
         component.sort = 'name-desc';
@@ -154,7 +148,7 @@ describe('ProcessInstanceListComponent', () => {
     });
 
     it('should order the process instances by ascending column when specified', (done) => {
-        component.appId = '1';
+        component.appId = 1;
         component.state = 'open';
         component.processDefinitionKey = null;
         component.sort = 'started-asc';
@@ -171,7 +165,7 @@ describe('ProcessInstanceListComponent', () => {
     });
 
     it('should order the process instances by descending start date when specified', (done) => {
-        component.appId = '1';
+        component.appId = 1;
         component.state = 'open';
         component.processDefinitionKey = null;
         component.sort = 'started-desc';
@@ -189,7 +183,7 @@ describe('ProcessInstanceListComponent', () => {
 
     it('should return a default name if no name is specified on the process', (done) => {
         getProcessInstancesSpy = getProcessInstancesSpy.and.returnValue(Observable.of(fakeProcessInstancesWithNoName));
-        component.appId = '1';
+        component.appId = 1;
         component.state = 'open';
         component.processDefinitionKey = 'fakeprocess';
         component.onSuccess.subscribe( (res) => {
@@ -209,7 +203,7 @@ describe('ProcessInstanceListComponent', () => {
         let emitSpy: jasmine.Spy = spyOn(component.onError, 'emit');
         let fakeError = 'Fake server error';
         getProcessInstancesSpy.and.returnValue(Observable.throw(fakeError));
-        component.appId = '1';
+        component.appId = 1;
         component.state = 'open';
         fixture.detectChanges();
         tick();
@@ -217,7 +211,7 @@ describe('ProcessInstanceListComponent', () => {
     }));
 
     it('should emit onSuccess event when reload() called', fakeAsync(() => {
-        component.appId = '1';
+        component.appId = 1;
         component.state = 'open';
         component.processDefinitionKey = null;
         fixture.detectChanges();

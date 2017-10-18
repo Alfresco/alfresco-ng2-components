@@ -74,8 +74,6 @@ describe('UploadButtonComponent', () => {
     }));
 
     beforeEach(() => {
-        window['componentHandler'] = null;
-
         fixture = TestBed.createComponent(UploadButtonComponent);
         uploadService = TestBed.get(UploadService);
         contentService = TestBed.get(AlfrescoContentService);

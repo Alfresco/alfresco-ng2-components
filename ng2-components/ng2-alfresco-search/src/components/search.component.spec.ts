@@ -108,12 +108,7 @@ describe('SearchComponent', () => {
         }
     };
 
-    let componentHandler;
-
     beforeEach(async(() => {
-        componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
-        window['componentHandler'] = componentHandler;
-
         TestBed.configureTestingModule({
             imports: [
                 CoreModule,

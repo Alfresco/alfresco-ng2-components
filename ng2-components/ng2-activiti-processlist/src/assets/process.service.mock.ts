@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { AppDefinitionRepresentationModel, Comment, TaskDetailsModel } from 'ng2-activiti-tasklist';
-import { LightUserRepresentation } from 'ng2-alfresco-core';
+import { AppDefinitionRepresentationModel, TaskDetailsModel } from 'ng2-activiti-tasklist';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessDefinitionRepresentation } from '../models/process-definition.model';
 
@@ -75,13 +74,6 @@ export let fakeTaskList = {
         created: '2016-11-10T03:37:30.010+0000'
     })]
 };
-
-export let fakeComment = new Comment(1, 'Test', '2016-11-10T03:37:30.010+0000', new LightUserRepresentation({
-    id: 13,
-    firstName: 'Wilbur',
-    lastName: 'Adams',
-    email: 'wilbur@app.com'
-}));
 
 export let fakeProcessDef = new ProcessDefinitionRepresentation({
     id: '32323',

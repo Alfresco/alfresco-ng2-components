@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { LightUserRepresentation } from '../models/user-process.model';
+import { UserProcessModel } from '../models/user-process.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { LogService } from './log.service';
 
@@ -29,24 +29,24 @@ export class PeopleProcessService {
                 private logService: LogService) {
     }
 
-    getWorkflowUsers(taskId?: string, searchWord?: string): Observable<LightUserRepresentation[]> {
+    getWorkflowUsers(taskId?: string, searchWord?: string): Observable<UserProcessModel[]> {
         let option = { excludeTaskId: taskId, filter: searchWord };
         return Observable.fromPromise(this.getWorkflowUserApi(option))
-            .map((response: any) => <LightUserRepresentation[]> response.data || [])
+            .map((response: any) => <UserProcessModel[]> response.data || [])
             .catch(err => this.handleError(err));
     }
 
-    getUserImage(user: LightUserRepresentation): string {
-        return this.getUserProfileImageApi(user.id + '');
+    getUserImage(user: UserProcessModel): string {
+        return this.getUserProfileImageApi(user.id);
     }
 
-    involveUserWithTask(taskId: string, idToInvolve: string): Observable<LightUserRepresentation[]> {
+    involveUserWithTask(taskId: string, idToInvolve: string): Observable<UserProcessModel[]> {
         let node = {userId: idToInvolve};
         return Observable.fromPromise(this.involveUserToTaskApi(taskId, node))
             .catch(err => this.handleError(err));
     }
 
-    removeInvolvedUser(taskId: string, idToRemove: string): Observable<LightUserRepresentation[]> {
+    removeInvolvedUser(taskId: string, idToRemove: string): Observable<UserProcessModel[]> {
         let node = {userId: idToRemove};
         return Observable.fromPromise(this.removeInvolvedUserFromTaskApi(taskId, node))
             .catch(err => this.handleError(err));
@@ -64,7 +64,7 @@ export class PeopleProcessService {
         return this.alfrescoJsApi.getInstance().activiti.taskActionsApi.removeInvolvedUser(taskId, node);
     }
 
-    private getUserProfileImageApi(userId: string) {
+    private getUserProfileImageApi(userId: number) {
         return this.alfrescoJsApi.getInstance().activiti.userApi.getUserProfilePictureUrl(userId);
     }
 

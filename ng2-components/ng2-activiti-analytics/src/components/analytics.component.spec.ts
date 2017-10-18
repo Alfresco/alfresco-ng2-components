@@ -51,8 +51,6 @@ describe('AnalyticsComponent', () => {
     let debug: DebugElement;
     let element: HTMLElement;
 
-    let componentHandler: any;
-
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
@@ -79,10 +77,6 @@ describe('AnalyticsComponent', () => {
         debug = fixture.debugElement;
         element = fixture.nativeElement;
         fixture.detectChanges();
-        componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered'
-        ]);
-        window['componentHandler'] = componentHandler;
     });
 
     describe('Rendering tests', () => {

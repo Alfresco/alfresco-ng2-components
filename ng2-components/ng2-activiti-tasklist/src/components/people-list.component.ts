@@ -16,12 +16,9 @@
  */
 
 import { AfterContentInit, AfterViewInit, Component, ContentChild, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { DataColumnListComponent } from 'ng2-alfresco-core';
-import { LightUserRepresentation } from 'ng2-alfresco-core';
+import { DataColumnListComponent, UserProcessModel } from 'ng2-alfresco-core';
 import { DataTableComponent } from 'ng2-alfresco-datatable';
 import { UserEventModel } from '../models/user-event.model';
-
-declare let componentHandler: any;
 
 @Component({
     selector: 'adf-people-list',
@@ -37,35 +34,24 @@ export class PeopleListComponent implements AfterViewInit, AfterContentInit {
     peopleDataTable: DataTableComponent;
 
     @Input()
-    users: LightUserRepresentation[];
+    users: UserProcessModel[];
 
     @Input()
     actions: boolean = false;
 
     @Output()
-    clickRow: EventEmitter<LightUserRepresentation> = new EventEmitter<LightUserRepresentation>();
+    clickRow: EventEmitter<UserProcessModel> = new EventEmitter<UserProcessModel>();
 
     @Output()
     clickAction: EventEmitter<UserEventModel> = new EventEmitter<UserEventModel>();
 
-    user: LightUserRepresentation;
+    user: UserProcessModel;
 
     ngAfterContentInit() {
         this.peopleDataTable.columnList = this.columnList;
     }
 
     ngAfterViewInit() {
-        this.setupMaterialComponents(componentHandler);
-    }
-
-    setupMaterialComponents(handler?: any): boolean {
-        // workaround for MDL issues with dynamic components
-        let isUpgraded: boolean = false;
-        if (handler) {
-            handler.upgradeAllRegistered();
-            isUpgraded = true;
-        }
-        return isUpgraded;
     }
 
     selectUser(event: any) {

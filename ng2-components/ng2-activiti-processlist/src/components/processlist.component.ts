@@ -19,7 +19,7 @@ import { DatePipe } from '@angular/common';
 import { AfterContentInit, Component, ContentChild, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { DataColumnListComponent } from 'ng2-alfresco-core';
 import { DataColumn, DataRowEvent, DataSorting, DataTableAdapter, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
-import { ProcessFilterRequestRepresentation } from '../models/process-instance-filter.model';
+import { ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
 import { ProcessInstance } from '../models/process-instance.model';
 import { ProcessService } from '../services/process.service';
 
@@ -33,7 +33,7 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
     @Input()
-    appId: string;
+    appId: number;
 
     @Input()
     processDefinitionKey: string;
@@ -47,7 +47,7 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     @Input()
     name: string;
 
-    requestNode: ProcessFilterRequestRepresentation;
+    requestNode: ProcessFilterParamRepresentationModel;
 
     @Input()
     data: DataTableAdapter;
@@ -136,7 +136,7 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
         this.load(this.requestNode);
     }
 
-    private load(requestNode: ProcessFilterRequestRepresentation) {
+    private load(requestNode: ProcessFilterParamRepresentationModel) {
         this.isLoading = true;
         this.processService.getProcessInstances(requestNode, this.processDefinitionKey)
             .subscribe(
@@ -284,6 +284,6 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
             state: this.state,
             sort: this.sort
         };
-        return new ProcessFilterRequestRepresentation(requestNode);
+        return new ProcessFilterParamRepresentationModel(requestNode);
     }
 }

@@ -16,17 +16,14 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
-import { LightUserRepresentation } from 'ng2-alfresco-core';
+import { AppConfigService, CoreModule, TranslationService, UserProcessModel } from 'ng2-alfresco-core';
 import { DataRowActionEvent, DataRowEvent, DataTableModule, ObjectDataRow } from 'ng2-alfresco-datatable';
 import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { UserEventModel } from '../models/user-event.model';
 import { PeopleListComponent } from './people-list.component';
 
-declare let jasmine: any;
-
-const fakeUser: LightUserRepresentation = new LightUserRepresentation({
+const fakeUser: UserProcessModel = new UserProcessModel({
     id: '1',
     firstName: 'fake-name',
     lastName: 'fake-last',
@@ -38,7 +35,6 @@ describe('PeopleListComponent', () => {
     let peopleListComponent: PeopleListComponent;
     let fixture: ComponentFixture<PeopleListComponent>;
     let element: HTMLElement;
-    let componentHandler;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -58,11 +54,6 @@ describe('PeopleListComponent', () => {
             fixture = TestBed.createComponent(PeopleListComponent);
             peopleListComponent = fixture.componentInstance;
             element = fixture.nativeElement;
-            componentHandler = jasmine.createSpyObj('componentHandler', [
-                'upgradeAllRegistered'
-            ]);
-
-            window['componentHandler'] = componentHandler;
             fixture.detectChanges();
         });
     }));

@@ -87,15 +87,15 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges {
         }
     }
 
-    load(processId: string) {
-        this.loadActive(processId);
-        this.loadCompleted(processId);
+    load(processInstanceId: string) {
+        this.loadActive(processInstanceId);
+        this.loadCompleted(processInstanceId);
     }
 
-    loadActive(processId: string) {
+    loadActive(processInstanceId: string) {
         this.activeTasks = [];
-        if (processId) {
-            this.activitiProcess.getProcessTasks(processId, null).subscribe(
+        if (processInstanceId) {
+            this.activitiProcess.getProcessTasks(processInstanceId, null).subscribe(
                 (res: TaskDetailsModel[]) => {
                     res.forEach((task) => {
                         this.taskObserver.next(task);
@@ -110,10 +110,10 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges {
         }
     }
 
-    loadCompleted(processId: string) {
+    loadCompleted(processInstanceId: string) {
         this.completedTasks = [];
-        if (processId) {
-            this.activitiProcess.getProcessTasks(processId, 'completed').subscribe(
+        if (processInstanceId) {
+            this.activitiProcess.getProcessTasks(processInstanceId, 'completed').subscribe(
                 (res: TaskDetailsModel[]) => {
                     res.forEach((task) => {
                         this.completedTaskObserver.next(task);

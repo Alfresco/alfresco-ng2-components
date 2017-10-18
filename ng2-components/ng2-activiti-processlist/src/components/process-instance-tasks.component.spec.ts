@@ -31,7 +31,6 @@ import { ProcessInstanceTasksComponent } from './process-instance-tasks.componen
 
 describe('ProcessInstanceTasksComponent', () => {
 
-    let componentHandler: any;
     let component: ProcessInstanceTasksComponent;
     let fixture: ComponentFixture<ProcessInstanceTasksComponent>;
     let debugElement: DebugElement;
@@ -64,11 +63,6 @@ describe('ProcessInstanceTasksComponent', () => {
         service = fixture.debugElement.injector.get(ProcessService);
         getProcessTasksSpy = spyOn(service, 'getProcessTasks').and.returnValue(Observable.of([new TaskDetailsModel(taskDetailsMock)]));
 
-        componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered',
-            'upgradeElement'
-        ]);
-        window['componentHandler'] = componentHandler;
     });
 
     it('should initially render message about no active tasks if no process instance ID provided', async(() => {

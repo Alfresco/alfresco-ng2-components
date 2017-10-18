@@ -16,6 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AppsProcessService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { AppDefinitionRepresentationModel } from '../models/filter.model';
@@ -59,13 +60,8 @@ export class AppsListComponent implements OnInit {
 
     private iconsMDL: IconModel;
 
-    /**
-     * Constructor
-     * @param translate Translate service
-     * @param activitiTaskList Task service
-     */
-    constructor(private activitiTaskList: TaskListService) {
-        this.apps$ = new Observable<AppDefinitionRepresentationModel>(observer =>  this.appsObserver = observer).share();
+    constructor(private appsProcessService: AppsProcessService) {
+        this.apps$ = new Observable<AppDefinitionRepresentationModel>(observer => this.appsObserver = observer).share();
     }
 
     ngOnInit() {
@@ -81,10 +77,9 @@ export class AppsListComponent implements OnInit {
     }
 
     private load() {
-        this.activitiTaskList.getDeployedApplications().subscribe(
-            (res) => {
-                res = this.filterApps(res);
-                res.forEach((app: AppDefinitionRepresentationModel) => {
+        this.appsProcessService.getDeployedApplications().subscribe(
+            (res: AppDefinitionRepresentationModel[]) => {
+                this.filterApps(res).forEach((app: AppDefinitionRepresentationModel) => {
                     if (app.defaultAppId === AppsListComponent.DEFAULT_TASKS_APP) {
                         app.name = AppsListComponent.DEFAULT_TASKS_APP_NAME;
                         app.theme = AppsListComponent.DEFAULT_TASKS_APP_THEME;
@@ -120,7 +115,7 @@ export class AppsListComponent implements OnInit {
     }
 
     private filterApps(apps: AppDefinitionRepresentationModel []): AppDefinitionRepresentationModel[] {
-        let filteredApps = [];
+        let filteredApps: AppDefinitionRepresentationModel[] = [];
         if (this.filtersAppId) {
             apps.filter((app: AppDefinitionRepresentationModel) => {
                 this.filtersAppId.forEach((filter) => {

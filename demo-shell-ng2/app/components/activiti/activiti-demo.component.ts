@@ -18,14 +18,13 @@
 // tslint:disable-next-line:adf-file-name
 import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Pagination } from 'alfresco-js-api';
+import { Pagination, ProcessInstanceFilterRepresentation } from 'alfresco-js-api';
 import { AnalyticsReportListComponent } from 'ng2-activiti-analytics';
 import {
     DynamicTableRow, FORM_FIELD_VALIDATORS, FormEvent, FormFieldEvent, FormRenderingService,
     FormService, ValidateDynamicTableRowEvent
 } from 'ng2-activiti-form';
 import {
-    FilterProcessRepresentationModel,
     ProcessFiltersComponent,
     ProcessInstance,
     ProcessInstanceDetailsComponent,
@@ -115,7 +114,7 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
 
     taskFilter: FilterRepresentationModel;
     report: any;
-    processFilter: FilterProcessRepresentationModel;
+    processFilter: ProcessInstanceFilterRepresentation;
 
     sub: Subscription;
     blobFile: any;
@@ -276,7 +275,7 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
         this.currentTaskId = this.taskList.getCurrentId();
     }
 
-    onProcessFilterClick(event: FilterProcessRepresentationModel): void {
+    onProcessFilterClick(event: ProcessInstanceFilterRepresentation): void {
         this.currentProcessInstanceId = null;
         this.processFilter = event;
     }

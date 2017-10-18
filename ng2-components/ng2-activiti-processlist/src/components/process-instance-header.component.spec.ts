@@ -27,7 +27,6 @@ import { ProcessInstanceHeaderComponent } from './process-instance-header.compon
 describe('ProcessInstanceHeaderComponent', () => {
 
     let service: ProcessService;
-    let componentHandler: any;
     let component: ProcessInstanceHeaderComponent;
     let fixture: ComponentFixture<ProcessInstanceHeaderComponent>;
 
@@ -57,12 +56,6 @@ describe('ProcessInstanceHeaderComponent', () => {
         service = TestBed.get(ProcessService);
 
         component.processInstance = new ProcessInstance(exampleProcess);
-
-        componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered',
-            'upgradeElement'
-        ]);
-        window['componentHandler'] = componentHandler;
     });
 
     it('should render empty component if no process details provided', () => {
@@ -80,7 +73,7 @@ describe('ProcessInstanceHeaderComponent', () => {
     });
 
     it('should display status as completed when process is complete', () => {
-        component.processInstance.ended = '2016-11-03';
+        component.processInstance.ended = new Date('2016-11-03');
         component.ngOnChanges({});
         fixture.detectChanges();
         let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-status"]');
@@ -88,7 +81,7 @@ describe('ProcessInstanceHeaderComponent', () => {
     });
 
     it('should display due date', () => {
-        component.processInstance.ended = '2016-11-03';
+        component.processInstance.ended = new Date('2016-11-03');
         component.ngOnChanges({});
         fixture.detectChanges();
         let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-dateitem-dueDate"]');
@@ -120,7 +113,7 @@ describe('ProcessInstanceHeaderComponent', () => {
     });
 
     it('should display created date', () => {
-        component.processInstance.started = '2016-11-03';
+        component.processInstance.started = new Date('2016-11-03');
         component.ngOnChanges({});
         fixture.detectChanges();
         let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-dateitem-created"]');

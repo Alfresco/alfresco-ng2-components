@@ -1,1 +1,15 @@
-<adf-comments [readOnly]="readOnly" [taskId]="processInstanceId" (error)="onError($event)" #activiticomments></adf-comments>
+<div class="adf-comments-container">
+    <div id="comment-header" class="adf-comments-header">
+        {{'DETAILS.COMMENTS.HEADER' | translate: { count: comments?.length} }}
+    </div>
+    <div class="adf-comments-input-container" *ngIf="!isReadOnly()">
+        <mat-form-field class="adf-full-width">
+            <input matInput id="comment-input" placeholder="{{'DETAILS.COMMENTS.ADD' | translate}}" [(ngModel)]="message" (keyup.enter)="add()" (keyup.esc)="clear()">
+        </mat-form-field>
+    </div>
+
+    <div *ngIf="comments.length > 0">
+        <adf-comment-list [comments]="comments">
+        </adf-comment-list>
+    </div>
+</div>

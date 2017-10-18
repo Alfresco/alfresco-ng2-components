@@ -17,8 +17,7 @@
 
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService, CoreModule, TranslationService } from 'ng2-alfresco-core';
-
+import { AppConfigService, AppsProcessService, CoreModule, TranslationService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
@@ -28,6 +27,7 @@ import { TaskFiltersComponent } from './task-filters.component';
 describe('TaskFiltersComponent', () => {
 
     let activitiService: TaskListService;
+    let appsProcessService: AppsProcessService;
 
     let fakeGlobalFilter = [];
     fakeGlobalFilter.push(new FilterRepresentationModel({
@@ -45,11 +45,6 @@ describe('TaskFiltersComponent', () => {
         id: 12,
         filter: { state: 'open', assignment: 'fake-assignee' }
     }));
-
-    let fakeFilter = new FilterRepresentationModel({
-        name: 'FakeMyTasks1',
-        filter: { state: 'open', assignment: 'fake-assignee' }
-    });
 
     let fakeGlobalFilterPromise = new Promise(function (resolve, reject) {
         resolve(fakeGlobalFilter);
@@ -90,6 +85,7 @@ describe('TaskFiltersComponent', () => {
         component = fixture.componentInstance;
 
         activitiService = TestBed.get(TaskListService);
+        appsProcessService = TestBed.get(AppsProcessService);
     });
 
     it('should emit an error with a bad response', (done) => {
@@ -98,20 +94,6 @@ describe('TaskFiltersComponent', () => {
         const appId = '1';
         let change = new SimpleChange(null, appId, true);
         component.ngOnChanges({ 'appId': change });
-
-        component.onError.subscribe((err) => {
-            expect(err).toBeDefined();
-            done();
-        });
-
-    });
-
-    it('should emit an error with a bad response', (done) => {
-        spyOn(activitiService, 'getDeployedApplications').and.returnValue(Observable.fromPromise(fakeErrorFilterPromise));
-
-        const appId = 'fake-app';
-        let change = new SimpleChange(null, appId, true);
-        component.ngOnChanges({ 'appName': change });
 
         component.onError.subscribe((err) => {
             expect(err).toBeDefined();
@@ -145,14 +127,14 @@ describe('TaskFiltersComponent', () => {
             resolve({});
         });
 
-        spyOn(activitiService, 'getDeployedApplications').and.returnValue(Observable.fromPromise(fakeDeployedApplicationsPromise));
+        spyOn(appsProcessService, 'getDeployedApplicationsByName').and.returnValue(Observable.fromPromise(fakeDeployedApplicationsPromise));
         spyOn(activitiService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
 
         let change = new SimpleChange(null, 'test', true);
         component.ngOnChanges({ 'appName': change });
 
         component.onSuccess.subscribe((res) => {
-            let deployApp: any = activitiService.getDeployedApplications;
+            let deployApp: any = appsProcessService.getDeployedApplicationsByName;
             expect(deployApp.calls.count()).toEqual(1);
             expect(res).toBeDefined();
             done();
@@ -319,20 +301,6 @@ describe('TaskFiltersComponent', () => {
 
         expect(component.getFiltersByAppId).toHaveBeenCalled();
     });
-
-    it('should change the current filter if a filter with taskid is found', async(() => {
-        spyOn(activitiService, 'isTaskRelatedToFilter').and.returnValue(Observable.of(fakeFilter));
-        component.filters = fakeGlobalFilter;
-        component.selectFilterWithTask('111');
-        fixture.detectChanges();
-
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(component.currentFilter.landingTaskId).toBeDefined();
-            expect(component.currentFilter.landingTaskId).toBe('111');
-        });
-
-    }));
 
     it('should not change the current filter if no filter with taskid is found', async(() => {
         let filter = new FilterRepresentationModel({

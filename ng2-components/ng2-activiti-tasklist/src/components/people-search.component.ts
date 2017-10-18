@@ -17,8 +17,7 @@
 
 import { Component, Directive, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { LightUserRepresentation } from 'ng2-alfresco-core';
-import { PeopleProcessService } from 'ng2-alfresco-core';
+import { PeopleProcessService, UserProcessModel } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
@@ -34,22 +33,22 @@ import { Observable } from 'rxjs/Observable';
 export class PeopleSearchComponent implements OnInit {
 
     @Input()
-    results: Observable<LightUserRepresentation[]>;
+    results: Observable<UserProcessModel[]>;
 
     @Output()
     searchPeople: EventEmitter<any> = new EventEmitter();
 
     @Output()
-    success: EventEmitter<LightUserRepresentation> = new EventEmitter<LightUserRepresentation>();
+    success: EventEmitter<UserProcessModel> = new EventEmitter<UserProcessModel>();
 
     @Output()
     closeSearch = new EventEmitter();
 
     searchUser: FormControl = new FormControl();
 
-    users: LightUserRepresentation[] = [];
+    users: UserProcessModel[] = [];
 
-    selectedUser: LightUserRepresentation;
+    selectedUser: UserProcessModel;
 
     constructor(public peopleProcessService: PeopleProcessService) {
         this.searchUser
@@ -70,7 +69,7 @@ export class PeopleSearchComponent implements OnInit {
         });
     }
 
-    onRowClick(user: LightUserRepresentation) {
+    onRowClick(user: UserProcessModel) {
         this.selectedUser = user;
     }
 

@@ -27,8 +27,8 @@ import { Component,
 } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { ContentLinkModel, FormFieldValidator, FormModel, FormOutcomeEvent } from 'ng2-activiti-form';
+import { PeopleProcessService, UserProcessModel } from 'ng2-alfresco-core';
 import { AlfrescoAuthenticationService, CardViewUpdateService, ClickNotification, LogService, UpdateNotification } from 'ng2-alfresco-core';
-import { LightUserRepresentation, PeopleProcessService } from 'ng2-alfresco-core';
 import { Observable, Observer } from 'rxjs/Rx';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
@@ -131,16 +131,16 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
     taskDetails: TaskDetailsModel;
     taskFormName: string = null;
 
-    taskPeople: LightUserRepresentation[] = [];
+    taskPeople: UserProcessModel[] = [];
 
     noTaskDetailsTemplateComponent: TemplateRef<any>;
 
     showAssignee: boolean = false;
 
-    private peopleSearchObserver: Observer<LightUserRepresentation[]>;
+    private peopleSearchObserver: Observer<UserProcessModel[]>;
     public errorDialogRef: MatDialogRef<TemplateRef<any>>;
 
-    peopleSearch$: Observable<LightUserRepresentation[]>;
+    peopleSearch$: Observable<UserProcessModel[]>;
 
     constructor(private activitiTaskList: TaskListService,
                 private authService: AlfrescoAuthenticationService,
@@ -148,7 +148,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
                 private logService: LogService,
                 private cardViewUpdateService: CardViewUpdateService,
                 private dialog: MatDialog) {
-        this.peopleSearch$ = new Observable<LightUserRepresentation[]>(observer => this.peopleSearchObserver = observer).share();
+        this.peopleSearch$ = new Observable<UserProcessModel[]>(observer => this.peopleSearchObserver = observer).share();
     }
 
     ngOnInit() {
@@ -234,7 +234,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
                     this.readOnlyForm = this.readOnlyForm ? this.readOnlyForm : !!(endDate && !isNaN(endDate.getTime()));
                     if (this.taskDetails && this.taskDetails.involvedPeople) {
                         this.taskDetails.involvedPeople.forEach((user) => {
-                            this.taskPeople.push(new LightUserRepresentation(user));
+                            this.taskPeople.push(new UserProcessModel(user));
                         });
                     }
                 });
@@ -347,7 +347,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
         this.showAssignee = false;
     }
 
-    assignTaskToUser(selectedUser: LightUserRepresentation) {
+    assignTaskToUser(selectedUser: UserProcessModel) {
         this.activitiTaskList.assignTask(this.taskDetails.id, selectedUser).subscribe(
             (res: any) => {
                 this.logService.info('Task Assigned to ' + selectedUser.email);

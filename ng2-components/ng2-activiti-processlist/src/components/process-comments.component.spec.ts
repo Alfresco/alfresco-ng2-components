@@ -16,6 +16,7 @@
  */
 
 import { DatePipe } from '@angular/common';
+import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatInputModule } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
@@ -25,7 +26,7 @@ import {
     CommentsComponent,
     TaskListService
 } from 'ng2-activiti-tasklist';
-import { AlfrescoTranslationService, CoreModule, PeopleProcessService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, CommentProcessService, CoreModule, PeopleProcessService } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 
 import { TranslationMock } from './../assets/translation.service.mock';
@@ -34,11 +35,11 @@ import { ProcessCommentsComponent } from './process-comments.component';
 
 describe('ActivitiProcessInstanceComments', () => {
 
-    let componentHandler: any;
     let service: TaskListService;
     let component: ProcessCommentsComponent;
     let fixture: ComponentFixture<ProcessCommentsComponent>;
     let getCommentsSpy: jasmine.Spy;
+    let commentProcessService: CommentProcessService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -56,7 +57,8 @@ describe('ActivitiProcessInstanceComments', () => {
                 { provide: AlfrescoTranslationService, useClass: TranslationMock },
                 { provide: TaskListService, useClass: ProcessService },
                 DatePipe,
-                PeopleProcessService
+                PeopleProcessService,
+                CommentProcessService
             ]
         }).compileComponents();
     }));
@@ -65,23 +67,19 @@ describe('ActivitiProcessInstanceComments', () => {
 
         fixture = TestBed.createComponent(ProcessCommentsComponent);
         component = fixture.componentInstance;
-        service = fixture.debugElement.injector.get(TaskListService);
+        service = TestBed.get(TaskListService);
+        commentProcessService = TestBed.get(CommentProcessService);
 
-        getCommentsSpy = spyOn(service, 'getComments').and.returnValue(Observable.of([
+        getCommentsSpy = spyOn(commentProcessService, 'getProcessInstanceComments').and.returnValue(Observable.of([
             { message: 'Test1', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'} },
             { message: 'Test2', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'} },
             { message: 'Test3', created: Date.now(), createdBy: {firstName: 'Admin', lastName: 'User'} }
         ]));
-
-        componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered',
-            'upgradeElement'
-        ]);
-        window['componentHandler'] = componentHandler;
     });
 
     it('should load comments when processInstanceId specified', () => {
-        component.processInstanceId = '123';
+        let change = new SimpleChange(null, '123', true);
+        component.ngOnChanges({ 'processInstanceId': change });
         fixture.detectChanges();
         expect(getCommentsSpy).toHaveBeenCalled();
     });
@@ -89,7 +87,10 @@ describe('ActivitiProcessInstanceComments', () => {
     it('should emit an error when an error occurs loading comments', () => {
         let emitSpy = spyOn(component.error, 'emit');
         getCommentsSpy.and.returnValue(Observable.throw({}));
-        component.processInstanceId = '123';
+
+        let change = new SimpleChange(null, '123', true);
+        component.ngOnChanges({ 'processInstanceId': change });
+
         fixture.detectChanges();
         expect(emitSpy).toHaveBeenCalled();
     });
@@ -100,7 +101,9 @@ describe('ActivitiProcessInstanceComments', () => {
     });
 
     it('should display comments when the process has comments', async(() => {
-        component.processInstanceId = '123';
+        let change = new SimpleChange(null, '123', true);
+        component.ngOnChanges({ 'processInstanceId': change });
+
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(fixture.nativeElement.querySelectorAll('#comment-message').length).toBe(3);
@@ -109,17 +112,20 @@ describe('ActivitiProcessInstanceComments', () => {
     }));
 
     it('should display comments count when the process has comments', () => {
-        component.processInstanceId = '123';
+        let change = new SimpleChange(null, '123', true);
+        component.ngOnChanges({ 'processInstanceId': change });
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             let element = fixture.nativeElement.querySelector('#comment-header');
-            expect(element.innerText).toBe('TASK_DETAILS.COMMENTS.HEADER');
+            expect(element.innerText).toBe('DETAILS.COMMENTS.HEADER');
         });
     });
 
     it('should not display comments when the process has no comments', async(() => {
-        component.processInstanceId = '123';
+        let change = new SimpleChange(null, '123', true);
+        component.ngOnChanges({ 'processInstanceId': change });
+
         getCommentsSpy.and.returnValue(Observable.of([]));
         fixture.whenStable().then(() => {
             fixture.detectChanges();
@@ -128,7 +134,9 @@ describe('ActivitiProcessInstanceComments', () => {
     }));
 
     it('should not display comments input by default', async(() => {
-        component.processInstanceId = '123';
+        let change = new SimpleChange(null, '123', true);
+        component.ngOnChanges({ 'processInstanceId': change });
+
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(fixture.nativeElement.querySelector('#comment-input')).toBeNull();

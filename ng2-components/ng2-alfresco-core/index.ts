@@ -39,10 +39,11 @@ import { AuthGuardBpm } from './src/services/auth-guard-bpm.service';
 import { AuthGuardEcm } from './src/services/auth-guard-ecm.service';
 import { AuthGuard } from './src/services/auth-guard.service';
 import { AuthenticationService } from './src/services/authentication.service';
+import { CommentProcessService } from './src/services/comment-process.service';
 import { ContentService } from './src/services/content.service';
 import { CookieService } from './src/services/cookie.service';
-import { LogService } from './src/services/log.service';
 import { LogServiceMock } from './src/services/log.service';
+import { LogService } from './src/services/log.service';
 import { NotificationService } from './src/services/notification.service';
 import { PageTitleService } from './src/services/page-title.service';
 import { RenditionsService } from './src/services/renditions.service';
@@ -51,11 +52,11 @@ import { ThumbnailService } from './src/services/thumbnail.service';
 import { AlfrescoTranslateLoader } from './src/services/translate-loader.service';
 import { TRANSLATION_PROVIDER, TranslationService } from './src/services/translation.service';
 import { UploadService } from './src/services/upload.service';
-import { UserPreferencesService } from './src/services/user-preferences.service';
 
 import { HighlightDirective } from './src/directives/highlight.directive';
 import { LogoutDirective } from './src/directives/logout.directive';
 import { NodeFavoriteDirective } from './src/directives/node-favorite.directive';
+import { AppsProcessService } from './src/services/apps-process.service';
 import { DeletedNodesApiService } from './src/services/deleted-nodes-api.service';
 import { DiscoveryApiService } from './src/services/discovery-api.service';
 import { FavoritesApiService } from './src/services/favorites-api.service';
@@ -67,6 +68,7 @@ import { SearchApiService } from './src/services/search-api.service';
 import { SearchService } from './src/services/search.service';
 import { SharedLinksApiService } from './src/services/shared-links-api.service';
 import { SitesApiService } from './src/services/sites-api.service';
+import { UserPreferencesService } from './src/services/user-preferences.service';
 
 export { MomentDateAdapter, MOMENT_DATE_FORMATS } from './src/utils/momentDateAdapter';
 import { MomentDateAdapter } from './src/utils/momentDateAdapter';
@@ -100,6 +102,7 @@ export { ClickNotification } from './src/services/card-view-update.service';
 export { AppConfigModule } from './src/services/app-config.service';
 export { UserPreferencesService } from './src/services/user-preferences.service';
 export { HighlightTransformService, HightlightTransformResult } from './src/services/highlight-transform.service';
+export { AppsProcessService } from './src/services/apps-process.service';
 
 export { DeletedNodesApiService } from './src/services/deleted-nodes-api.service';
 export { FavoritesApiService } from './src/services/favorites-api.service';
@@ -110,6 +113,7 @@ export { SearchApiService } from './src/services/search-api.service';
 export { SharedLinksApiService } from './src/services/shared-links-api.service';
 export { SitesApiService } from './src/services/sites-api.service';
 export { DiscoveryApiService } from './src/services/discovery-api.service';
+export { CommentProcessService } from './src/services/comment-process.service';
 
 import { DataColumnListComponent } from './src/components/data-column/data-column-list.component';
 import { DataColumnComponent } from './src/components/data-column/data-column.component';
@@ -164,6 +168,7 @@ export * from './src/models/permissions.enum';
 export * from './src/models/site.model';
 export * from './src/models/product-version.model';
 export * from './src/models/user-process.model';
+export * from './src/models/comment-process.model';
 
 // Old deprecated import
 import { AuthenticationService as AlfrescoAuthenticationService } from './src/services/authentication.service';
@@ -205,7 +210,9 @@ export function providers() {
         DiscoveryApiService,
         HighlightTransformService,
         MomentDateAdapter,
-        PeopleProcessService
+        PeopleProcessService,
+        AppsProcessService,
+        CommentProcessService
     ];
 }
 

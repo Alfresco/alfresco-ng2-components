@@ -17,7 +17,7 @@
 
 import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { LightUserRepresentation } from '../models/user-process.model';
+import { UserProcessModel } from '../models/user-process.model';
 
 @Pipe({
     name: 'usernameInitials'
@@ -26,7 +26,7 @@ export class InitialUsernamePipe implements PipeTransform {
 
     constructor(private sanitized: DomSanitizer) {}
 
-    transform(user: LightUserRepresentation, className: string = '', delimiter: string = ''): SafeHtml {
+    transform(user: UserProcessModel, className: string = '', delimiter: string = ''): SafeHtml {
         let result: SafeHtml = '';
         if (user) {
             let initialResult = this.getInitialUserName(user.firstName, user.lastName, delimiter);

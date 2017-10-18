@@ -15,17 +15,16 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { TaskListService } from 'ng2-activiti-tasklist';
-import { ProcessService } from './../services/process.service';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { CommentProcessModel, CommentProcessService } from 'ng2-alfresco-core';
+import { Observable, Observer } from 'rxjs/Rx';
 
 @Component({
     selector: 'adf-process-instance-comments, activiti-process-instance-comments',
     templateUrl: './process-comments.component.html',
-    styleUrls: ['./process-comments.component.css'],
-    providers: [{provide: TaskListService, useClass: ProcessService}]
+    styleUrls: ['./process-comments.component.css']
 })
-export class ProcessCommentsComponent {
+export class ProcessCommentsComponent implements OnChanges {
 
     @Input()
     processInstanceId: string;
@@ -36,7 +35,87 @@ export class ProcessCommentsComponent {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
+    comments: CommentProcessModel [] = [];
+
+    private commentObserver: Observer<CommentProcessModel>;
+    comment$: Observable<CommentProcessModel>;
+
+    message: string;
+
+    beingAdded: boolean = false;
+
+    constructor(private commentProcessService: CommentProcessService) {
+        this.comment$ = new Observable<CommentProcessModel>(observer =>  this.commentObserver = observer).share();
+        this.comment$.subscribe((comment: CommentProcessModel) => {
+            this.comments.push(comment);
+        });
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        let processInstanceId = changes['processInstanceId'];
+        if (processInstanceId) {
+            if (processInstanceId.currentValue) {
+                this.getProcessInstanceComments(processInstanceId.currentValue);
+            } else {
+                this.resetComments();
+            }
+        }
+    }
+
+    private getProcessInstanceComments(processInstanceId: string): void {
+        this.resetComments();
+        if (processInstanceId) {
+            this.commentProcessService.getProcessInstanceComments(processInstanceId).subscribe(
+                (res: CommentProcessModel[]) => {
+                    res = res.sort((comment1: CommentProcessModel, comment2: CommentProcessModel) => {
+                        let date1 = new Date(comment1.created);
+                        let date2 = new Date(comment2.created);
+                        return date1 > date2 ? -1 : date1 < date2 ? 1 : 0;
+                    });
+                    res.forEach((comment) => {
+                        this.commentObserver.next(comment);
+                    });
+                },
+                (err) => {
+                    this.error.emit(err);
+                }
+            );
+        }
+    }
+
+    private resetComments(): void {
+        this.comments = [];
+    }
+
+    add(): void {
+        if (this.message && this.message.trim() && !this.beingAdded) {
+            this.beingAdded = true;
+            this.commentProcessService.addProcessInstanceComment(this.processInstanceId, this.message)
+                .subscribe(
+                    (res: CommentProcessModel) => {
+                        this.comments.unshift(res);
+                        this.message = '';
+                        this.beingAdded = false;
+
+                    },
+                    (err) => {
+                        this.error.emit(err);
+                        this.beingAdded = false;
+                    }
+                );
+        }
+    }
+
+    clear(): void {
+        this.message = '';
+    }
+
+    isReadOnly(): boolean {
+        return this.readOnly;
+    }
+
     onError(error: any) {
         this.error.emit(error);
     }
+
 }

@@ -60,7 +60,7 @@ export class ActivitiContentService {
      * @param contentId
      * @returns {any}
      */
-    deleteRelatedContent(contentId: string): Observable<any> {
+    deleteRelatedContent(contentId: number): Observable<any> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.contentApi.deleteContent(contentId))
             .catch(err => this.handleError(err));
     }
