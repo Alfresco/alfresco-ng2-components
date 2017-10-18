@@ -11,6 +11,8 @@ Shows the details of the task id passed in input
   * [Events](#events)
 - [Details](#details)
   * [Custom 'empty Activiti Task Details' template](#custom-empty-activiti-task-details-template)
+  * [Field Validators](#field-validators)
+- [See also](#see-also)
 
 <!-- tocstop -->
 
@@ -41,7 +43,12 @@ Shows the details of the task id passed in input
 | showInvolvePeople | boolean | true | Toggle `Involve People` feature for Header component |
 | showComments | boolean | true | Toggle `Comments` feature for Header component |
 | showChecklist | boolean | true | Toggle `Checklist` feature for Header component |
-| fieldValidators | FormFieldValidator[] | [] | Field validators for use with the form. |
+| fieldValidators | FormFieldValidator[] | [] | Field validators for use with the form (see the [Field validators](#field-validators) section below) |
+
+You can provide validation for a form by assigning an array of validator objects to its
+`fieldValidators` property. Several standard validator classes are defined for common tasks
+but you can also extend or replace this set with your own validators. See the
+[FormFieldValidator interface](FormFieldValidator.md) for full details and examples.. |
 
 ### Events
 
@@ -78,3 +85,17 @@ This can be changed by adding the following custom html template:
 ```
 
 Note that can put any HTML content as part of the template, including other Angular components.
+
+### Field Validators
+
+You can provide validation for a task details component by assigning an array of validator objects to its
+`fieldValidators` property. Several standard validator classes are defined for common tasks
+but you can also extend or replace this set with your own validators. See the
+[FormFieldValidator interface](FormFieldValidator.md) for full details and examples.
+
+<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
+<!-- seealso start -->
+## See also
+
+- [FormFieldValidator](FormFieldValidator.md)
+<!-- seealso end -->
