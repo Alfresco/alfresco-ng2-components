@@ -62,6 +62,6 @@ export class EcmUserModel implements Person {
     }
 
     private formatValue(value: string) {
-        return value && value !== 'null' ? value : 'N/A';
+        return value && value !== 'null' ? value : '';
     }
 }
