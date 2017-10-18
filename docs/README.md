@@ -360,7 +360,7 @@ for more information about installing and using the source code.
 - [*Discovery api service](../ng2-components/ng2-alfresco-core/src/services/discovery-api.service.ts)
 - [*Favorites api service](../ng2-components/ng2-alfresco-core/src/services/favorites-api.service.ts)
 - [*Highlight transform service](../ng2-components/ng2-alfresco-core/src/services/highlight-transform.service.ts)
-- [*Log service](../ng2-components/ng2-alfresco-core/src/services/log.service.ts)
+- [Log service](log.service.md)
 - [*Nodes api service](../ng2-components/ng2-alfresco-core/src/services/nodes-api.service.ts)
 - [*Page title service](../ng2-components/ng2-alfresco-core/src/services/page-title.service.ts)
 - [*People content service](../ng2-components/ng2-alfresco-core/src/services/people-content.service.ts)

@@ -16,9 +16,8 @@
  */
 
 import { Injectable } from '@angular/core';
+import { logLevels, LogLevelsEnum } from '../models/log-levels.model';
 import { AppConfigService } from './app-config.service';
-import { LogLevelsEnum, logLevels } from '../models/log-levels.model';
-
 
 @Injectable()
 export class LogService {
@@ -26,7 +25,7 @@ export class LogService {
     currentLogLevel: LogLevelsEnum = LogLevelsEnum.TRACE;
 
     constructor(appConfig: AppConfigService) {
-        let configLevel: string = appConfig.get<string>('loglevel');
+        let configLevel: string = appConfig.get<string>('logLevel');
 
         if (configLevel) {
             this.currentLogLevel = this.getCurrentLogLevel(configLevel);
@@ -50,7 +49,7 @@ export class LogService {
     }
 
     get log(): (message?: any, ...optionalParams: any[]) => any {
-        if (this.currentLogLevel >= LogLevelsEnum.ERROR) {
+        if (this.currentLogLevel >= LogLevelsEnum.TRACE) {
             return console.log.bind(console);
         }
 
@@ -60,7 +59,7 @@ export class LogService {
 
     get trace(): (message?: any, ...optionalParams: any[]) => any {
         if (this.currentLogLevel >= LogLevelsEnum.TRACE) {
-            return console.log.bind(console);
+            return console.trace.bind(console);
         }
         return (message?: any, ...optionalParams: any[]) => {
         };
@@ -104,33 +103,8 @@ export class LogService {
     }
 
     getCurrentLogLevel(level: string): LogLevelsEnum {
-        return logLevels.find((currentLevel: LogLevelsEnum) => {
-            return Object.keys(currentLevel)[0].toLocaleLowerCase() === level.toLocaleLowerCase();
+        return logLevels.find((currentLevel: any) => {
+            return currentLevel.name.toLocaleLowerCase() === level.toLocaleLowerCase();
         });
     }
-}
-
-export class LogServiceMock {
-
-    assert(message?: any, ...optionalParams: any[]) {
-    }
-
-    error(message?: any, ...optionalParams: any[]) {
-    }
-
-    group(message?: any, ...optionalParams: any[]) {
-    }
-
-    groupEnd(message?: any, ...optionalParams: any[]) {
-    }
-
-    info(message?: any, ...optionalParams: any[]) {
-    }
-
-    log(message?: any, ...optionalParams: any[]) {
-    }
-
-    warn(message?: any, ...optionalParams: any[]) {
-    }
-
 }

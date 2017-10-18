@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreModule, LogServiceMock } from 'ng2-alfresco-core';
+import { CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 
 import { EcmModelService } from '../../../services/ecm-model.service';
@@ -36,13 +36,11 @@ describe('RadioButtonsWidgetComponent', () => {
     let formService: FormService;
     let widget: RadioButtonsWidgetComponent;
     let visibilityService: WidgetVisibilityService;
-    let logService: LogServiceMock;
 
     beforeEach(() => {
-        logService = new LogServiceMock();
-        formService = new FormService(null, null, logService);
-        visibilityService = new WidgetVisibilityService(null, logService);
-        widget = new RadioButtonsWidgetComponent(formService, visibilityService, logService);
+        formService = new FormService(null, null, null);
+        visibilityService = new WidgetVisibilityService(null, null);
+        widget = new RadioButtonsWidgetComponent(formService, visibilityService, null);
         widget.field = new FormFieldModel(new FormModel(), { restUrl: '<url>' });
     });
 
@@ -120,12 +118,6 @@ describe('RadioButtonsWidgetComponent', () => {
         widget.field.restUrl = '<url>';
         widget.ngOnInit();
         expect(formService.getRestFieldValues).toHaveBeenCalled();
-    });
-
-    it('should log error to console by default', () => {
-        spyOn(logService, 'error').and.stub();
-        widget.handleError('Err');
-        expect(logService.error).toHaveBeenCalledWith('Err');
     });
 
     xit('should update the field value when an option is selected', () => {
