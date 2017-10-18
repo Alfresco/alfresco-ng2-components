@@ -20,7 +20,7 @@
 
         <button
             id="viewer-previous-page-button"
-            aria-label="previous page"
+            attr.aria-label="{{ 'ADF_VIEWER.ARIA.PREVIOUS_PAGE' | translate }}"
             mat-icon-button
             (click)="previousPage()">
             <mat-icon>keyboard_arrow_up</mat-icon>
@@ -28,28 +28,28 @@
 
         <button
             id="viewer-next-page-button"
-            aria-label="arrow right"
+            attr.aria-label="{{ 'ADF_VIEWER.ARIA.NEXT_PAGE' | translate }}"
             mat-icon-button
             (click)="nextPage()">
             <mat-icon>keyboard_arrow_down</mat-icon>
         </button>
 
         <div>
-            Showing
+            {{ 'ADF_VIEWER.PAGE_LABEL.SHOWING' | translate }}
             <input #page
                 class="adf-pdf-viewer__toolbar-page-selector"
                 type="text"
                 pattern="-?[0-9]*(\.[0-9]+)?"
                 value="{{ displayPage }}"
                 (keyup.enter)="inputPage(page.value)">
-            of {{ totalPages }}
+            {{ 'ADF_VIEWER.PAGE_LABEL.OF' | translate }} {{ totalPages }}
         </div>
 
         <adf-toolbar-divider></adf-toolbar-divider>
 
         <button
             id="viewer-zoom-in-button"
-            aria-label="zoom in"
+            attr.aria-label="{{ 'ADF_VIEWER.ARIA.ZOOM_IN' | translate }}"
             mat-icon-button
             (click)="zoomIn()">
             <mat-icon>zoom_in</mat-icon>
@@ -57,7 +57,7 @@
 
         <button
             id="viewer-zoom-out-button"
-            aria-label="zoom out"
+            attr.aria-label="{{ 'ADF_VIEWER.ARIA.ZOOM_OUT' | translate }}"
             mat-icon-button
             (click)="zoomOut()">
             <mat-icon>zoom_out</mat-icon>
@@ -65,7 +65,7 @@
 
         <button
             id="viewer-scale-page-button"
-            aria-label="zoom out map"
+            attr.aria-label="{{ 'ADF_VIEWER.ARIA.FIT_PAGE' | translate }}"
             mat-icon-button
             (click)="pageFit()">
             <mat-icon>zoom_out_map</mat-icon>
