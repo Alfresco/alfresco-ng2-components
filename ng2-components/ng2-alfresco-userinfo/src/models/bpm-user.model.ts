@@ -67,6 +67,6 @@ export class BpmUserModel implements UserRepresentation {
     }
 
     private formatValue(value: string): string {
-        return value && value !== 'null' ? value : 'N/A';
+        return value && value !== 'null' ? value : '';
     }
 }
