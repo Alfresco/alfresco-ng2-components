@@ -42,7 +42,8 @@
             "@angular/*": ["node_modules/@angular/*"],
             "rxjs/*": ["node_modules/rxjs/*"]
         },
-        "suppressImplicitAnyIndexErrors": true
+        "suppressImplicitAnyIndexErrors": true,
+        "noUnusedLocals": true
     },
     "exclude": [
         "demo",
