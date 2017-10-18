@@ -159,6 +159,8 @@ export class DateFieldValidator implements FormFieldValidator {
 
 export class MinDateFieldValidator implements FormFieldValidator {
 
+    MIN_DATE_FORMAT = 'DD-MM-YYYY';
+
     private supportedTypes = [
         FormFieldTypes.DATE
     ];
@@ -184,7 +186,7 @@ export class MinDateFieldValidator implements FormFieldValidator {
             } else {
                 d = field.value;
             }
-            let min = moment(field.minValue, dateFormat);
+            let min = moment(field.minValue, this.MIN_DATE_FORMAT);
 
             if (d.isBefore(min)) {
                 field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_LESS_THAN`;
@@ -197,6 +199,8 @@ export class MinDateFieldValidator implements FormFieldValidator {
 }
 
 export class MaxDateFieldValidator implements FormFieldValidator {
+
+    MAX_DATE_FORMAT = 'DD-MM-YYYY';
 
     private supportedTypes = [
         FormFieldTypes.DATE
@@ -223,7 +227,7 @@ export class MaxDateFieldValidator implements FormFieldValidator {
             } else {
                 d = field.value;
             }
-            let max = moment(field.maxValue, dateFormat);
+            let max = moment(field.maxValue, this.MAX_DATE_FORMAT);
 
             if (d.isAfter(max)) {
                 field.validationSummary.message = `FORM.FIELD.VALIDATOR.NOT_GREATER_THAN`;

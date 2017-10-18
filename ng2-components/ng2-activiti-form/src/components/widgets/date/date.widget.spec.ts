@@ -147,6 +147,37 @@ describe('DateWidgetComponent', () => {
                 });
         }));
 
+        it('should check correctly the min value with different formats', async(() => {
+            widget.field.value = '11-30-9999';
+            widget.field.dateDisplayFormat = 'MM-DD-YYYY';
+            widget.field.minValue = '30-12-9999';
+            widget.ngOnInit();
+            widget.field.validate();
+            fixture.detectChanges();
+            fixture.whenStable()
+                .then(() => {
+                    expect(element.querySelector('#date-field-id')).toBeDefined();
+                    expect(element.querySelector('#date-field-id')).not.toBeNull();
+                    let dateElement: any = element.querySelector('#date-field-id');
+                    expect(dateElement.value).toContain('11-30-9999');
+                    expect(element.querySelector('.adf-error-text').textContent).toBe('FORM.FIELD.VALIDATOR.NOT_LESS_THAN');
+                });
+        }));
+
+        it('should show the correct format type', async(() => {
+            widget.field.value = '12-30-9999';
+            widget.field.dateDisplayFormat = 'MM-DD-YYYY';
+            widget.ngOnInit();
+            fixture.detectChanges();
+            fixture.whenStable()
+                .then(() => {
+                    expect(element.querySelector('#date-field-id')).toBeDefined();
+                    expect(element.querySelector('#date-field-id')).not.toBeNull();
+                    let dateElement: any = element.querySelector('#date-field-id');
+                    expect(dateElement.value).toContain('12-30-9999');
+                });
+        }));
+
         it('should hide not visible date widget', async(() => {
             widget.field.isVisible = false;
             fixture.detectChanges();
