@@ -1,33 +1,46 @@
 {
-    "ADF_FILE_UPLOAD": {
-        "BUTTON": {
-            "MINIMIZE": "Minimizzare",
-            "MAXIMIZE": "Massimizzare",
-            "CLOSE": "Vicino",
-            "CANCEL_ALL": "Annulla i caricamenti"
-        },
-        "STATUS": {
-            "FILE_CANCELED_STATUS": "Annullato"
-        }
+  "ADF_FILE_UPLOAD": {
+    "BUTTON": {
+      "MINIMIZE": "Minimizzare",
+      "MAXIMIZE": "Massimizzare",
+      "CLOSE": "Chiudi",
+      "CANCEL_ALL": "Annulla i caricamenti",
+      "CANCEL_FILE": "Annulla caricamento",
+      "REMOVE_FILE": "Rimuovere file caricato"
     },
-    "FILE_UPLOAD": {
-        "BUTTON": {
-            "UPLOAD_FILE": "Carica un file",
-            "UPLOAD_FOLDER": "Carica una cartella"
-        },
-        "MESSAGES": {
-            "UPLOAD_CANCELED": "Carica annullata",
-            "UPLOAD_COMPLETED": "Caricato {{ completed }} / {{ total }}",
-            "UPLOAD_PROGRESS": "Caricamento {{ completed }} / {{ total }}",
-            "UPLOAD_ERROR": "{{ total }} errore",
-            "UPLOAD_ERRORS": "{{ total }} errori",
-            "PROGRESS": "caricamento in corso...",
-            "FOLDER_ALREADY_EXIST": "Cartella {0} già presente",
-            "FOLDER_NOT_SUPPORTED": "L' upload di cartelle non é supportato dal tuo browser",
-            "REMOVE_FILE_ERROR": "Errore durante la rimozione del file {{ fileName }}"
-        },
-        "ACTION": {
-            "UNDO": "Annulla"
-        }
+    "STATUS": {
+      "FILE_CANCELED_STATUS": "Annullato"
+    },
+    "CONFIRMATION": {
+      "BUTTON": {
+        "CANCEL": "Sì",
+        "CONTINUE": "No"
+      },
+      "MESSAGE": {
+        "TITLE": "Annulla caricamento",
+        "TEXT": "Interrompi il caricamento e rimuovi i file già caricati."
+      }
     }
+  },
+  "FILE_UPLOAD": {
+    "BUTTON": {
+      "UPLOAD_FILE": "Carica file",
+      "UPLOAD_FOLDER": "Carica cartella"
+    },
+    "MESSAGES": {
+      "UPLOAD_CANCELED": "Caricamento annullato",
+      "UPLOAD_COMPLETED": "Caricato {{ completed }} / {{ total }}",
+      "UPLOAD_PROGRESS": "Caricamento in corso di {{ completed }} / {{ total }}",
+      "UPLOAD_ERROR": "Caricamento di {{ total }} non eseguito correttamente",
+      "UPLOAD_ERRORS": "{{ total }} caricamenti eseguiti correttamente",
+      "PROGRESS": "Caricamento in corso...",
+      "FOLDER_ALREADY_EXIST": "Cartella {0} già presente",
+      "FOLDER_NOT_SUPPORTED": "L'upload di cartelle non è supportato dal browser, prova con un altro browser",
+      "REMOVE_FILE_ERROR": "Impossibile rimuovere {{ fileName }}, riprova o verifica con il team IT.",
+      "REMOVE_FILES_ERROR": "Impossibile rimuovere {{ total }} file. Riprova o verifica con il team IT."
+    },
+    "ACTION": {
+      "UNDO": "Annulla"
+    }
+  }
 }

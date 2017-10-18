@@ -1,0 +1,13 @@
+{
+  "TAG": {
+    "LABEL": {
+      "NEWTAG": "Nova marca"
+    },
+    "MESSAGES": {
+      "EXIST": "A marca já existe"
+    },
+    "BUTTON": {
+      "ADD": "Adicionar marca"
+    }
+  }
+}

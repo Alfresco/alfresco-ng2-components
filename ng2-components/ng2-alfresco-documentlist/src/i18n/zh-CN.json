@@ -1,0 +1,54 @@
+{
+  "ADF-DOCUMENT-LIST": {
+    "EMPTY": {
+      "HEADER": "此文件夹为空"
+    },
+    "LAYOUT": {
+      "THUMBNAIL": "缩略图",
+      "NAME": "名称",
+      "LOCATION": "位置",
+      "SIZE": "字号(&S)",
+      "DELETED_ON": "已删除",
+      "DELETED_BY": "删除人",
+      "STATUS": "状态",
+      "MODIFIED_ON": "已修改",
+      "MODIFIED_BY": "修改人",
+      "SHARED_BY": "分享人",
+      "LOAD_MORE": "加载更多"
+    }
+  },
+  "ALFRESCO_DOCUMENT_LIST": {
+    "BUTTON": {
+      "ACTION_CREATE": "创建...",
+      "ACTION_NEW_FOLDER": "新建文件夹",
+      "CREATE": "创建",
+      "CANCEL": "取消"
+    }
+  },
+  "DROPDOWN": {
+    "PLACEHOLDER_LABEL": "网站列表",
+    "DEFAULT_OPTION": "默认值"
+  },
+  "NODE_SELECTOR": {
+    "CANCEL": "取消",
+    "CHOOSE": "选择",
+    "NO_RESULTS": "未找到结果"
+  },
+  "OPERATION": {
+    "SUCCES": {
+      "CONTENT": {
+        "COPY": "复制成功",
+        "MOVE": "移动成功"
+      },
+      "FOLDER": {
+        "COPY": "复制成功",
+        "MOVE": "移动成功"
+      }
+    },
+    "ERROR": {
+      "CONFLICT": "此名称已使用，请尝试其他名称。",
+      "UNKNOWN": "此操作未成功，请重试或联系您的 IT 团队。",
+      "PERMISSION": "您没有执行此操作的访问权。"
+    }
+  }
+}

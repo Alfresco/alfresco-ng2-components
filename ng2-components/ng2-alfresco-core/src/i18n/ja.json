@@ -1,0 +1,10 @@
+{
+  "CORE": {
+    "PAGINATION": {
+      "ITEMS_RANGE": "表示中: {{ range }} / {{ total }} 件",
+      "ITEMS_PER_PAGE": "1 ページのアイテム数",
+      "CURRENT_PAGE": "ページ: {{ number }}",
+      "TOTAL_PAGES": "/ {{ total }}"
+    }
+  }
+}

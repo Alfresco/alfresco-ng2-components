@@ -1,17 +1,47 @@
 {
-    "SEARCH": {
-        "CONTROL": {
-            "LABEL": "Contenuto ricerca"
+  "SEARCH": {
+    "CONTROL": {},
+    "RESULTS": {
+      "SUMMARY": "Trovati {{numResults}} risultati per {{searchTerm}}",
+      "NONE": "Nessun risultato trovato per {{searchTerm}}",
+      "ERROR": "La ricerca ha generato un errore, riprova.",
+      "COLUMNS": {
+        "NAME": "Nome visualizzato",
+        "MODIFIED_BY": "Modificato da",
+        "MODIFIED_AT": "Modificato"
+      }
+    },
+    "ICONS": {
+      "ft_ic_raster_image": "File di immagine",
+      "ft_ic_pdf": "Documento PDF",
+      "ft_ic_ms_excel": "File Microsoft Excel",
+      "ft_ic_ms_word": "Documento di Microsoft Word",
+      "ft_ic_ms_powerpoint": "File di Microsoft PowerPoint",
+      "ft_ic_video": "File video",
+      "ft_ic_document": "File di documento",
+      "ft_ic_website": "Risorsa Web",
+      "ft_ic_archive": "File di archivio",
+      "ft_ic_presentation": "File di presentazione",
+      "ft_ic_spreadsheet": "File di foglio di calcolo"
+    },
+    "DOCUMENT_LIST": {
+      "COLUMNS": {
+        "DISPLAY_NAME": "Nome visualizzato",
+        "CREATED_BY": "Creato da",
+        "CREATED_ON": "Creato"
+      },
+      "ACTIONS": {
+        "FOLDER": {
+          "DELETE": "Elimina"
         },
-        "RESULTS": {
-            "SUMMARY": "Trovati {{numResults}} risultati per {{searchTerm}}",
-            "NONE": "Nessun risultato trovato per {{searchTerm}}",
-            "ERROR": "La ricerca é andata in errore, riprova",
-            "COLUMNS": {
-                "NAME": "Nome",
-                "MODIFIED_BY": "Modificato da",
-                "MODIFIED_AT": "Modificato il"
-            }
+        "DOCUMENT": {
+          "DOWNLOAD": "Download",
+          "DELETE": "Elimina"
         }
+      }
     }
+  },
+  "PERMISSON": {
+    "LACKOF": "Non hai l'autorizzazione {{permission}} per {{action}} {{type}}"
+  }
 }

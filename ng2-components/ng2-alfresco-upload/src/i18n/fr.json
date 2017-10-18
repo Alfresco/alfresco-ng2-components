@@ -1,0 +1,46 @@
+{
+  "ADF_FILE_UPLOAD": {
+    "BUTTON": {
+      "MINIMIZE": "Réduire",
+      "MAXIMIZE": "Agrandir",
+      "CLOSE": "Fermer",
+      "CANCEL_ALL": "Annuler les importations",
+      "CANCEL_FILE": "Annuler l'importation",
+      "REMOVE_FILE": "Supprimer le fichier importé"
+    },
+    "STATUS": {
+      "FILE_CANCELED_STATUS": "Annulé"
+    },
+    "CONFIRMATION": {
+      "BUTTON": {
+        "CANCEL": "Oui",
+        "CONTINUE": "Non"
+      },
+      "MESSAGE": {
+        "TITLE": "Annuler l'Importation",
+        "TEXT": "Arrêter l'importation et supprimer les fichiers déjà importés."
+      }
+    }
+  },
+  "FILE_UPLOAD": {
+    "BUTTON": {
+      "UPLOAD_FILE": "Importer le fichier",
+      "UPLOAD_FOLDER": "Importer le dossier"
+    },
+    "MESSAGES": {
+      "UPLOAD_CANCELED": "Importation annulée",
+      "UPLOAD_COMPLETED": "Importé {{ completed }} sur {{ total }}",
+      "UPLOAD_PROGRESS": "Importation de {{ completed }} sur {{ total }}",
+      "UPLOAD_ERROR": "{{ total }} importation échouée",
+      "UPLOAD_ERRORS": "{{ total }} importations échouées",
+      "PROGRESS": "Importation en cours...",
+      "FOLDER_ALREADY_EXIST": "Le dossier {0} existe déjà",
+      "FOLDER_NOT_SUPPORTED": "Votre navigateur ne prend pas en charge l'importation de dossiers, réessayez avec un autre navigateur",
+      "REMOVE_FILE_ERROR": "{{ fileName }} n'a pas pu être supprimé ; réessayez ou contactez le service informatique.",
+      "REMOVE_FILES_ERROR": "{{ total }} fichiers n'ont pas pu être supprimés ; réessayez ou contactez le service informatique."
+    },
+    "ACTION": {
+      "UNDO": "Annuler"
+    }
+  }
+}

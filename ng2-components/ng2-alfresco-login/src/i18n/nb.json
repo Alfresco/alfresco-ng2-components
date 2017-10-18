@@ -1,0 +1,31 @@
+{
+  "LOGIN": {
+    "LOGO": "Alfresco",
+    "LABEL": {
+      "LOGIN": "Logg på",
+      "USERNAME": "Brukernavn",
+      "PASSWORD": "Passord",
+      "REMEMBER": "Husk meg"
+    },
+    "MESSAGES": {
+      "USERNAME-REQUIRED": "Påkrevd",
+      "USERNAME-MIN": "Brukernavnet må ha minst {{minLenght}} tegn.",
+      "PASSWORD-REQUIRED": "Angi passordet for å logge på",
+      "LOGIN-ERROR-CREDENTIALS": "Du har angitt ukjent brukernavn eller passord",
+      "LOGIN-ERROR-PROVIDERS": "Leverandører kan ikke være udefinert",
+      "LOGIN-SUCCESS": "Du er nå pålogget",
+      "LOGIN-ERROR-CORS": "CORS-unntak, kontroller serverkonfigurasjonen",
+      "LOGIN-ERROR-CSRF": "CSRF-unntak, still inn [disableCsrf]=\"sannt\" i påloggingskomponent",
+      "LOGIN-ECM-LICENSE": "Alfresco Content Services-database i skrivebeskyttet modus"
+    },
+    "BUTTON": {
+      "LOGIN": "LOGG PÅ",
+      "CHECKING": "KONTROLLERER",
+      "WELCOME": "VELKOMMEN"
+    },
+    "ACTION": {
+      "HELP": "TRENGER HJELP?",
+      "REGISTER": "REGISTRER"
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "ADF-DOCUMENT-LIST": {
+    "EMPTY": {
+      "HEADER": "Esta pasta está vazia"
+    },
+    "LAYOUT": {
+      "THUMBNAIL": "Miniatura",
+      "NAME": "Nome",
+      "LOCATION": "Localização",
+      "SIZE": "Tamanho",
+      "DELETED_ON": "Excluído",
+      "DELETED_BY": "Excluído por",
+      "STATUS": "Status",
+      "MODIFIED_ON": "Modificado",
+      "MODIFIED_BY": "Modificado por",
+      "SHARED_BY": "Compartilhado por",
+      "LOAD_MORE": "Carregar mais"
+    }
+  },
+  "ALFRESCO_DOCUMENT_LIST": {
+    "BUTTON": {
+      "ACTION_CREATE": "Criar...",
+      "ACTION_NEW_FOLDER": "Nova Pasta",
+      "CREATE": "Criar",
+      "CANCEL": "Cancelar"
+    }
+  },
+  "DROPDOWN": {
+    "PLACEHOLDER_LABEL": "Lista do Site",
+    "DEFAULT_OPTION": "Padrão"
+  },
+  "NODE_SELECTOR": {
+    "CANCEL": "Cancelar",
+    "CHOOSE": "Escolher",
+    "NO_RESULTS": "Nenhum resultado encontrado"
+  },
+  "OPERATION": {
+    "SUCCES": {
+      "CONTENT": {
+        "COPY": "Copiado com êxito",
+        "MOVE": "Movido com êxito"
+      },
+      "FOLDER": {
+        "COPY": "Copiado com êxito",
+        "MOVE": "Movido com êxito"
+      }
+    },
+    "ERROR": {
+      "CONFLICT": "Este nome já está em uso, tente outro nome.",
+      "UNKNOWN": "A ação não teve êxito. Tente novamente ou entre em contato com a Equipe de TI.",
+      "PERMISSION": "Você não tem acesso para fazer isso."
+    }
+  }
+}

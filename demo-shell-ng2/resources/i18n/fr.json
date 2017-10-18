@@ -1,0 +1,47 @@
+{
+  "title": "Bienvenue",
+  "DOCUMENT_LIST": {
+    "COLUMNS": {
+      "DISPLAY_NAME": "Nom affiché",
+      "TAG": "Tag",
+      "CREATED_BY": "Créé par",
+      "CREATED_ON": "Créé le",
+      "CREATED": "Créé"
+    },
+    "ACTIONS": {
+      "FOLDER": {
+        "COPY": "Copier",
+        "MOVE": "Déplacer",
+        "DELETE": "Supprimer"
+      },
+      "DOCUMENT": {
+        "DOWNLOAD": "Télécharger",
+        "COPY": "Copier",
+        "MOVE": "Déplacer",
+        "DELETE": "Supprimer"
+      }
+    }
+  },
+  "ANALYTICS_REPORT": {
+    "NO_REPORT_MESSAGE": "Aucun rapport sélectionné. Choisissez un rapport dans la liste"
+  },
+  "PS-TAB": {
+    "TASKS-TAB": "Tâches",
+    "PROCESSES-TAB": "Processus",
+    "REPORTS-TAB": "Rapports",
+    "START-TASK": "Démarrer la tâche",
+    "START-PROCESS": "Démarrer le processus",
+    "AUDIT-LOG": "Journal d'audit des processus"
+  },
+  "SETTINGS": {
+    "TITLE": "Paramètres",
+    "CS-HOST": "Configuration de l'URL de l'hôte de Content Services",
+    "BP-HOST": "Configuration de l'URL de l'hôte de Process Services",
+    "BACK": "Retour",
+    "APPLY": "APPLIQUER"
+  },
+  "FORM-LIST": {
+    "STORE": "Stocker",
+    "RESTORE": "Restaurer"
+  }
+}

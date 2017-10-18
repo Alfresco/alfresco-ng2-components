@@ -1,0 +1,10 @@
+{
+  "CORE": {
+    "PAGINATION": {
+      "ITEMS_RANGE": "显示 {{range}}/{{total}}",
+      "ITEMS_PER_PAGE": "每页的项目",
+      "CURRENT_PAGE": "第 {{number}} 页",
+      "TOTAL_PAGES": "/共 {{total}} 页"
+    }
+  }
+}

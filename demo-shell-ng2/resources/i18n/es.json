@@ -1,0 +1,47 @@
+{
+  "title": "Bienvenida",
+  "DOCUMENT_LIST": {
+    "COLUMNS": {
+      "DISPLAY_NAME": "Nombre a mostrar",
+      "TAG": "Etiqueta",
+      "CREATED_BY": "Creado por",
+      "CREATED_ON": "Creado",
+      "CREATED": "Creado"
+    },
+    "ACTIONS": {
+      "FOLDER": {
+        "COPY": "Copiar",
+        "MOVE": "Mover",
+        "DELETE": "Eliminar"
+      },
+      "DOCUMENT": {
+        "DOWNLOAD": "Descargar",
+        "COPY": "Copiar",
+        "MOVE": "Mover",
+        "DELETE": "Eliminar"
+      }
+    }
+  },
+  "ANALYTICS_REPORT": {
+    "NO_REPORT_MESSAGE": "No se ha seleccionado ningún informe. Elija un informe de la lista."
+  },
+  "PS-TAB": {
+    "TASKS-TAB": "Tareas",
+    "PROCESSES-TAB": "Proceso",
+    "REPORTS-TAB": "Informes",
+    "START-TASK": "Iniciar tarea",
+    "START-PROCESS": "Iniciar proceso",
+    "AUDIT-LOG": "Procesar registro de auditorías"
+  },
+  "SETTINGS": {
+    "TITLE": "Configuración",
+    "CS-HOST": "Configuración de URL de host de Content Services",
+    "BP-HOST": "Configuración de URL de host de Process Services",
+    "BACK": "Volver",
+    "APPLY": "APLICAR"
+  },
+  "FORM-LIST": {
+    "STORE": "Almacenar",
+    "RESTORE": "Restaurar"
+  }
+}

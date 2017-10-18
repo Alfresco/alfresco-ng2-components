@@ -1,0 +1,54 @@
+{
+  "ADF-DOCUMENT-LIST": {
+    "EMPTY": {
+      "HEADER": "Esta carpeta está vacía"
+    },
+    "LAYOUT": {
+      "THUMBNAIL": "Miniatura",
+      "NAME": "Nombre",
+      "LOCATION": "Ubicación",
+      "SIZE": "Tamaño",
+      "DELETED_ON": "Eliminado",
+      "DELETED_BY": "Eliminado por",
+      "STATUS": "Estado",
+      "MODIFIED_ON": "Modificado",
+      "MODIFIED_BY": "Modificado por",
+      "SHARED_BY": "Compartido por",
+      "LOAD_MORE": "Cargar más"
+    }
+  },
+  "ALFRESCO_DOCUMENT_LIST": {
+    "BUTTON": {
+      "ACTION_CREATE": "Crear...",
+      "ACTION_NEW_FOLDER": "Nueva carpeta",
+      "CREATE": "Crear",
+      "CANCEL": "Cancelar"
+    }
+  },
+  "DROPDOWN": {
+    "PLACEHOLDER_LABEL": "Lista de sitios",
+    "DEFAULT_OPTION": "Predeterminada"
+  },
+  "NODE_SELECTOR": {
+    "CANCEL": "Cancelar",
+    "CHOOSE": "Elegir",
+    "NO_RESULTS": "Ningún resultado encontrado"
+  },
+  "OPERATION": {
+    "SUCCES": {
+      "CONTENT": {
+        "COPY": "Copia satisfactoria",
+        "MOVE": "Traslado satisfactorio"
+      },
+      "FOLDER": {
+        "COPY": "Copia satisfactoria",
+        "MOVE": "Traslado satisfactorio"
+      }
+    },
+    "ERROR": {
+      "CONFLICT": "Este nombre ya está en uso; pruebe con un nombre diferente.",
+      "UNKNOWN": "La acción no ha sido satisfactoria. Vuelva a intentarlo o póngase en contacto con el equipo de TI.",
+      "PERMISSION": "No tiene acceso para hacer esto."
+    }
+  }
+}

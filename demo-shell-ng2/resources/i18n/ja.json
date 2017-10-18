@@ -1,0 +1,47 @@
+{
+  "title": "ようこそ",
+  "DOCUMENT_LIST": {
+    "COLUMNS": {
+      "DISPLAY_NAME": "表示名",
+      "TAG": "タグ",
+      "CREATED_BY": "作成者",
+      "CREATED_ON": "作成日",
+      "CREATED": "作成日"
+    },
+    "ACTIONS": {
+      "FOLDER": {
+        "COPY": "コピー",
+        "MOVE": "移動",
+        "DELETE": "削除"
+      },
+      "DOCUMENT": {
+        "DOWNLOAD": "ダウンロード",
+        "COPY": "コピー",
+        "MOVE": "移動",
+        "DELETE": "削除"
+      }
+    }
+  },
+  "ANALYTICS_REPORT": {
+    "NO_REPORT_MESSAGE": "レポートが選択されていません。リストからレポートを選択してください。"
+  },
+  "PS-TAB": {
+    "TASKS-TAB": "タスク",
+    "PROCESSES-TAB": "プロセス",
+    "REPORTS-TAB": "レポート",
+    "START-TASK": "タスクの開始",
+    "START-PROCESS": "プロセスの開始",
+    "AUDIT-LOG": "プロセスの監査ログ"
+  },
+  "SETTINGS": {
+    "TITLE": "設定",
+    "CS-HOST": "Content Services ホストの URL の設定",
+    "BP-HOST": "Process Services ホストの URL の設定",
+    "BACK": "戻る",
+    "APPLY": "適用"
+  },
+  "FORM-LIST": {
+    "STORE": "保存",
+    "RESTORE": "復元"
+  }
+}

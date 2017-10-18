@@ -1,0 +1,46 @@
+{
+  "ADF_FILE_UPLOAD": {
+    "BUTTON": {
+      "MINIMIZE": "最小化",
+      "MAXIMIZE": "最大化",
+      "CLOSE": "閉じる",
+      "CANCEL_ALL": "アップロードをキャンセル",
+      "CANCEL_FILE": "アップロードのキャンセル",
+      "REMOVE_FILE": "アップロードしたファイルを削除"
+    },
+    "STATUS": {
+      "FILE_CANCELED_STATUS": "キャンセルされました"
+    },
+    "CONFIRMATION": {
+      "BUTTON": {
+        "CANCEL": "はい",
+        "CONTINUE": "いいえ"
+      },
+      "MESSAGE": {
+        "TITLE": "アップロードのキャンセル",
+        "TEXT": "アップロードを中止し、アップロード済みのファイルを削除します。"
+      }
+    }
+  },
+  "FILE_UPLOAD": {
+    "BUTTON": {
+      "UPLOAD_FILE": "ファイルのアップロード",
+      "UPLOAD_FOLDER": "フォルダのアップロード"
+    },
+    "MESSAGES": {
+      "UPLOAD_CANCELED": "アップロードがキャンセルされました",
+      "UPLOAD_COMPLETED": "{{ completed }} / {{ total }} 個をアップロードしました",
+      "UPLOAD_PROGRESS": "{{ completed }} / {{ total }} 個をアップロードしています",
+      "UPLOAD_ERROR": "{{ total }} 個をアップロードできませんでした",
+      "UPLOAD_ERRORS": "{{ total }} 個をアップロードできませんでした",
+      "PROGRESS": "アップロードしています...",
+      "FOLDER_ALREADY_EXIST": "フォルダ ''{0}'' は既に存在します",
+      "FOLDER_NOT_SUPPORTED": "お使いのブラウザではフォルダをアップロードできません。別のブラウザを使用してください。",
+      "REMOVE_FILE_ERROR": "{{ fileName }} を削除できませんでした。もう一度操作をやり直すか、IT 担当者に確認してください。",
+      "REMOVE_FILES_ERROR": "{{ total }} 個のファイルを削除できませんでした。もう一度操作をやり直すか、IT 担当者に確認してください。"
+    },
+    "ACTION": {
+      "UNDO": "元に戻す"
+    }
+  }
+}

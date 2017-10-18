@@ -35,9 +35,7 @@
             <mat-icon>language</mat-icon>
         </button>
         <mat-menu #langMenu="matMenu">
-            <button mat-menu-item (click)="changeLanguage('en')">English</button>
-            <button mat-menu-item (click)="changeLanguage('it')">Italian</button>
-            <button mat-menu-item (click)="changeLanguage('ja-JP')">Japanese</button>
+            <adf-lanugage-menu></adf-lanugage-menu>
         </mat-menu>
 
         <button mat-icon-button (click)="sidenav.open()">
