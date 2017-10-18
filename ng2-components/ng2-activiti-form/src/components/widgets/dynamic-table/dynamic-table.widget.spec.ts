@@ -17,7 +17,6 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule, LogService } from 'ng2-alfresco-core';
-import { LogServiceMock } from 'ng2-alfresco-core';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { MaterialModule } from '../../material.module';
@@ -94,7 +93,7 @@ describe('DynamicTableWidgetComponent', () => {
                 TextEditorComponent, ErrorWidgetComponent],
             providers: [
                 FormService,
-                {provide: LogService, useClass: LogServiceMock},
+                LogService,
                 ActivitiAlfrescoContentService,
                 EcmModelService,
                 WidgetVisibilityService
