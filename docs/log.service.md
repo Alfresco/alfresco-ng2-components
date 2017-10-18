@@ -43,12 +43,12 @@ The log service provide 6 level of logs:
 
 Name | Level
 -|-
-TRACE |5;
-DEBUG |4;
-INFO |3;
-WARN |2;
-ERROR |1;
-SILENT |0;
+TRACE |5
+DEBUG |4
+INFO |3
+WARN |2
+ERROR |1
+SILENT |0
 
 You can configure the log level setting the ***logLevel*** properties in the **app.config.json**. By default the level is TRACE.
 
