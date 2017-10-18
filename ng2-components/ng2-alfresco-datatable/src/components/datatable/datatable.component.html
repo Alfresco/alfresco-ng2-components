@@ -55,7 +55,7 @@
                         [disabled]="action.disabled"
                         (click)="onExecuteRowAction(row, action)">
                         <mat-icon *ngIf="action.icon">{{ action.icon }}</mat-icon>
-                        <span>{{ action.title }}</span>
+                        <span>{{ action.title | translate }}</span>
                     </button>
                 </mat-menu>
             </td>
@@ -147,7 +147,7 @@
                         [disabled]="action.disabled"
                         (click)="onExecuteRowAction(row, action)">
                         <mat-icon *ngIf="action.icon">{{ action.icon }}</mat-icon>
-                        <span>{{ action.title }}</span>
+                        <span>{{ action.title | translate }}</span>
                     </button>
                 </mat-menu>
             </td>
