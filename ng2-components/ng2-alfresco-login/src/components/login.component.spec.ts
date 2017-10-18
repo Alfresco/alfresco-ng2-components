@@ -523,8 +523,6 @@ describe('AlfrescoLogin', () => {
 
         expect(component.error).toBe(false);
         expect(component.success).toBe(true);
-        expect(element.querySelector('#login-success')).toBeDefined();
-        expect(element.querySelector('#login-success').innerHTML).toContain('LOGIN.MESSAGES.LOGIN-SUCCESS');
         expect(component.onSuccess.emit).toHaveBeenCalledWith({
             token: true,
             username: 'fake-username',

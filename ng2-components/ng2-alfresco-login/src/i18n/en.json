@@ -13,7 +13,6 @@
             "PASSWORD-REQUIRED": "Enter your password to sign in",
             "LOGIN-ERROR-CREDENTIALS": "You've entered an unknown username or password",
             "LOGIN-ERROR-PROVIDERS": "Providers cannot be undefined",
-            "LOGIN-SUCCESS": "Sign in successful",
             "LOGIN-ERROR-CORS": "CORS exception, check your server configuration",
             "LOGIN-ERROR-CSRF": "CSRF exception, set [disableCsrf]=\"true\" in login.component",
             "LOGIN-ECM-LICENSE": "Alfresco Content Services repository is in read-only mode"
