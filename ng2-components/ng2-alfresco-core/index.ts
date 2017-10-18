@@ -55,6 +55,7 @@ import { UploadService } from './src/services/upload.service';
 
 import { HighlightDirective } from './src/directives/highlight.directive';
 import { LogoutDirective } from './src/directives/logout.directive';
+import { NodeDeleteDirective } from './src/directives/node-delete.directive';
 import { NodeFavoriteDirective } from './src/directives/node-favorite.directive';
 import { AppsProcessService } from './src/services/apps-process.service';
 import { DeletedNodesApiService } from './src/services/deleted-nodes-api.service';
@@ -265,6 +266,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         NodeRestoreDirective,
         NodePermissionDirective,
         NodeFavoriteDirective,
+        NodeDeleteDirective,
         HighlightDirective,
         DataColumnComponent,
         DataColumnListComponent,
@@ -310,6 +312,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         NodeRestoreDirective,
         NodePermissionDirective,
         NodeFavoriteDirective,
+        NodeDeleteDirective,
         HighlightDirective,
         DataColumnComponent,
         DataColumnListComponent,

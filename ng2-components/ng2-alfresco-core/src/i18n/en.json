@@ -22,6 +22,14 @@
             "GENERIC": "There was a problem restoring {{ name }} item",
             "PLURAL": "Restore successful",
             "SINGULAR": "{{ name }} item restored"
+        },
+        "DELETE_NODE": {
+            "SINGULAR": "{{ name }} deleted",
+            "PLURAL": "{{ number }} items deleted",
+            "PARTIAL_SINGULAR": "Deleted {{ success }} item, {{ failed }} couldn't be deleted",
+            "PARTIAL_PLURAL": "Deleted {{ success }} items, {{ failed }} couldn't be deleted",
+            "ERROR_SINGULAR": "{{ name }} couldn't be deleted",
+            "ERROR_PLURAL": "{{ number }} items couldn't be deleted"
         }
     }
 }
