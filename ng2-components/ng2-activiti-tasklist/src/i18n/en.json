@@ -8,6 +8,25 @@
             "NONE": "No task lists found"
         }
     },
+    "TASK_PROPERTIES": {
+        "ASSIGNEE": "Assignee",
+        "ASSIGNEE_DEFAULT": "No assignee",
+        "PRIORITY": "Priority",
+        "DUE_DATE": "Due Date",
+        "DUE_DATE_DEFAULT": "No date",
+        "STATUS": "Status",
+        "CATEGORY": "Category",
+        "CATEGORY_DEFAULT": "No category",
+        "PARENT_NAME": "Parent name",
+        "PARENT_NAME_DEFAULT": "No parent",
+        "CREATED_BY": "Created By",
+        "CREATED": "Created",
+        "ID": "Id",
+        "DESCRIPTION": "Description",
+        "DESCRIPTION_DEFAULT": "No description",
+        "FORM_NAME": "Form Name",
+        "FORM_NAME_DEFAULT": "No form"
+    },
     "TASK_DETAILS": {
         "LABELS": {
             "INFO_DRAWER_TITLE": "Activities",

@@ -57,23 +57,93 @@ export class TaskHeaderComponent implements OnChanges {
         if (this.taskDetails) {
             const parentInfoMap = this.getParentInfo();
             this.properties = [
-                new CardViewTextItemModel({ label: 'Assignee', value: this.taskDetails.getFullName(), key: 'assignee', default: 'No assignee', clickable: !this.isCompleted() } ),
-                new CardViewTextItemModel({ label: 'Status', value: this.getTaskStatus(), key: 'status' }),
-                new CardViewDateItemModel({ label: 'Due Date', value: this.taskDetails.dueDate, key: 'dueDate', default: 'No date', editable: true }),
-                new CardViewTextItemModel({ label: 'Category', value: this.taskDetails.category, key: 'category', default: 'No category' }),
-                new CardViewMapItemModel({ label: 'Parent name', value: parentInfoMap, key: 'parentName', default: 'None', clickable: true  }),
-                new CardViewTextItemModel({ label: 'Created By', value: this.taskDetails.getFullName(), key: 'created-by', default: 'No assignee' }),
-                new CardViewDateItemModel({ label: 'Created', value: this.taskDetails.created, key: 'created' }),
-                new CardViewTextItemModel({ label: 'Id', value: this.taskDetails.id, key: 'id' }),
-                new CardViewTextItemModel({
-                    label: 'Description',
-                    value: this.taskDetails.description,
-                    key: 'description',
-                    default: 'No description',
-                    multiline: true,
-                    editable: true
-                }),
-                new CardViewTextItemModel({ label: 'Form name', value: this.formName, key: 'formName', default: 'No form' })
+                new CardViewTextItemModel(
+                    {
+                     label: 'TASK_PROPERTIES.ASSIGNEE',
+                     value: this.taskDetails.getFullName(),
+                     key: 'assignee',
+                     default: 'TASK_PROPERTIES.ASSIGNEE_DEFAULT',
+                     clickable: !this.isCompleted()
+                    }
+                ),
+                new CardViewTextItemModel(
+                    {
+                        label: 'TASK_PROPERTIES.STATUS',
+                        value: this.getTaskStatus(),
+                        key: 'status'
+                    }
+                ),
+                new CardViewTextItemModel(
+                    {
+                        label: 'TASK_PROPERTIES.PRIORITY',
+                        value: this.taskDetails.priority,
+                        key: 'priority'
+                    }
+                ),
+                new CardViewDateItemModel(
+                    {
+                        label: 'TASK_PROPERTIES.DUE_DATE',
+                        value: this.taskDetails.dueDate,
+                        key: 'dueDate',
+                        default: 'TASK_PROPERTIES.DUE_DATE_DEFAULT',
+                        editable: true
+                    }
+                ),
+                new CardViewTextItemModel(
+                    {
+                        label: 'TASK_PROPERTIES.CATEGORY',
+                        value: this.taskDetails.category,
+                        key: 'category',
+                        default: 'TASK_PROPERTIES.CATEGORY_DEFAULT'
+                    }
+                ),
+                new CardViewMapItemModel(
+                    {
+                        label: 'TASK_PROPERTIES.PARENT_NAME',
+                        value: parentInfoMap, key: 'parentName',
+                        default: 'TASK_PROPERTIES.PARENT_NAME_DEFAULT',
+                        clickable: true
+                    }
+                ),
+                new CardViewTextItemModel(
+                    {
+                        label: 'TASK_PROPERTIES.CREATED_BY',
+                        value: this.taskDetails.getFullName(),
+                        key: 'created-by'
+                    }
+                ),
+                new CardViewDateItemModel(
+                    {
+                        label: 'TASK_PROPERTIES.CREATED',
+                        value: this.taskDetails.created,
+                        key: 'created'
+                    }
+                ),
+                new CardViewTextItemModel(
+                    {
+                        label: 'TASK_PROPERTIES.ID',
+                        value: this.taskDetails.id,
+                        key: 'id'
+                    }
+                ),
+                new CardViewTextItemModel(
+                    {
+                        label: 'TASK_PROPERTIES.DESCRIPTION',
+                        value: this.taskDetails.description,
+                        key: 'description',
+                        default: 'TASK_PROPERTIES.DESCRIPTION_DEFAULT',
+                        multiline: true,
+                        editable: true
+                    }
+                ),
+                new CardViewTextItemModel(
+                    {
+                        label: 'TASK_PROPERTIES.FORM_NAME',
+                        value: this.formName,
+                        key: 'formName',
+                        default: 'TASK_PROPERTIES.FORM_NAME_DEFAULT'
+                    }
+                )
             ];
         }
     }

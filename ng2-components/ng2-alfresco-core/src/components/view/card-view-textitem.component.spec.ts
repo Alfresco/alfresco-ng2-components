@@ -17,11 +17,16 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 import { MatDatepickerModule, MatIconModule, MatInputModule, MatNativeDateModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
+import { LogService } from '../../services/log.service';
+import { AlfrescoTranslateLoader } from '../../services/translate-loader.service';
+
 import { CardViewTextItemComponent } from './card-view-textitem.component';
 
 describe('CardViewTextItemComponent', () => {
@@ -32,18 +37,26 @@ describe('CardViewTextItemComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+                HttpModule,
                 FormsModule,
                 NoopAnimationsModule,
                 MatDatepickerModule,
                 MatIconModule,
                 MatInputModule,
-                MatNativeDateModule
+                MatNativeDateModule,
+                TranslateModule.forRoot({
+                    loader: {
+                        provide: TranslateLoader,
+                        useClass: AlfrescoTranslateLoader
+                    }
+                })
             ],
             declarations: [
                 CardViewTextItemComponent
             ],
             providers: [
-                CardViewUpdateService
+                CardViewUpdateService,
+                LogService
             ]
         }).compileComponents();
     }));
@@ -55,7 +68,7 @@ describe('CardViewTextItemComponent', () => {
             label: 'Text label',
             value: 'Lorem ipsum',
             key: 'textkey',
-            default: '',
+            default: 'FAKE-DEFAULT-KEY',
             editable: false
         });
     });
@@ -75,6 +88,66 @@ describe('CardViewTextItemComponent', () => {
         let value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
         expect(value).not.toBeNull();
         expect(value.nativeElement.innerText.trim()).toBe('Lorem ipsum');
+    });
+
+    it('should render the default as value if the value is empty and editable false', () => {
+        component.property = new CardViewTextItemModel ({
+            label: 'Text label',
+            value: '',
+            key: 'textkey',
+            default: 'FAKE-DEFAULT-KEY',
+            editable: false
+        });
+        fixture.detectChanges();
+
+        let value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
+        expect(value).not.toBeNull();
+        expect(value.nativeElement.innerText.trim()).toBe('FAKE-DEFAULT-KEY');
+    });
+
+    it('should render the default as value if the value is empty and editable true', () => {
+        component.property = new CardViewTextItemModel ({
+            label: 'Text label',
+            value: '',
+            key: 'textkey',
+            default: 'FAKE-DEFAULT-KEY',
+            editable: true
+        });
+        fixture.detectChanges();
+
+        let value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
+        expect(value).not.toBeNull();
+        expect(value.nativeElement.innerText.trim()).toBe('FAKE-DEFAULT-KEY');
+    });
+
+    it('should render the default as value if the value is empty and clickable false', () => {
+        component.property = new CardViewTextItemModel ({
+            label: 'Text label',
+            value: '',
+            key: 'textkey',
+            default: 'FAKE-DEFAULT-KEY',
+            clickable: false
+        });
+        fixture.detectChanges();
+
+        let value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
+        expect(value).not.toBeNull();
+        expect(value.nativeElement.innerText.trim()).toBe('FAKE-DEFAULT-KEY');
+    });
+
+    it('should render the default as value if the value is empty and clickable true', () => {
+        component.property = new CardViewTextItemModel ({
+            label: 'Text label',
+            value: '',
+            key: 'textkey',
+            default: 'FAKE-DEFAULT-KEY',
+            clickable: true
+        });
+        fixture.detectChanges();
+
+        let value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
+        expect(value).not.toBeNull();
+        expect(value.nativeElement.innerText.trim()).toBe('FAKE-DEFAULT-KEY');
     });
 
     it('should render value when editable:true', () => {

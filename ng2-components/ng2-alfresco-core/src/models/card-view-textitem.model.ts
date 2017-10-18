@@ -39,6 +39,7 @@ export class CardViewTextItemModel extends CardViewBaseItemModel implements Card
     }
 
     get displayValue() {
-        return this.value || this.default;
+        return this.value;
     }
+
 }
