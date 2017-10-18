@@ -17,11 +17,13 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpModule } from '@angular/http';
-import { TranslationMock } from '../../assets/translation.service.mock';
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { providers } from '../../../index';
 import { MaterialModule } from '../../material.module';
 import { AppConfigService } from '../../services/app-config.service';
-import { LogService } from '../../services/log.service';
-import { TranslationService } from '../../services/translation.service';
+import { AlfrescoTranslateLoader } from '../../services/translate-loader.service';
+import { UserPreferencesService } from '../../services/user-preferences.service';
+
 import { LanguageMenuComponent } from './language-menu.component';
 
 describe('LanguageMenuComponent', () => {
@@ -29,20 +31,27 @@ describe('LanguageMenuComponent', () => {
     let fixture: ComponentFixture<LanguageMenuComponent>;
     let component: LanguageMenuComponent;
     let appConfig: AppConfigService;
+    let translate: TranslateService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+                MaterialModule,
                 HttpModule,
-                MaterialModule
+                TranslateModule.forRoot({
+                    loader: {
+                        provide: TranslateLoader,
+                        useClass: AlfrescoTranslateLoader
+                    }
+                })
             ],
             declarations: [
                 LanguageMenuComponent
             ],
             providers: [
-                LogService,
+                ...providers(),
                 AppConfigService,
-                { provide: TranslationService, useClass: TranslationMock }
+                UserPreferencesService
             ]
         }).compileComponents();
     }));
@@ -51,6 +60,7 @@ describe('LanguageMenuComponent', () => {
         fixture = TestBed.createComponent(LanguageMenuComponent);
         component = fixture.componentInstance;
         appConfig = TestBed.get(AppConfigService);
+        translate = TestBed.get(TranslateService);
     });
 
     it('should have the default language', () => {
