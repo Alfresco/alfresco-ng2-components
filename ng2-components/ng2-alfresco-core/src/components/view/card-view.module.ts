@@ -19,6 +19,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule, MatDatepickerModule, MatIconModule, MatInputModule, MatNativeDateModule } from '@angular/material';
+import { TranslateModule } from '@ngx-translate/core';
 import { CardViewContentProxyDirective } from './card-view-content-proxy.directive';
 import { CardViewDateItemComponent } from './card-view-dateitem.component';
 import { CardViewItemDispatcherComponent } from './card-view-item-dispatcher.component';
@@ -34,7 +35,8 @@ import { CardViewComponent } from './card-view.component';
         MatInputModule,
         MatIconModule,
         MatButtonModule,
-        FormsModule
+        FormsModule,
+        TranslateModule
     ],
     declarations: [
         CardViewComponent,

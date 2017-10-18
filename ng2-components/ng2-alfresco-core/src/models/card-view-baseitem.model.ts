@@ -48,4 +48,8 @@ export abstract class CardViewBaseItemModel {
         this.editable = !!obj.editable;
         this.clickable = !!obj.clickable;
     }
+
+    isEmpty(): boolean {
+        return this.value === undefined || this.value === null || this.value === '';
+    }
 }

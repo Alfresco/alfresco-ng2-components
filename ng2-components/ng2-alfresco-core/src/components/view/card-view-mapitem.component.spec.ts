@@ -18,11 +18,16 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 import { MatDatepickerModule, MatIconModule, MatInputModule, MatNativeDateModule } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { CardViewMapItemModel } from '../../models/card-view-mapitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
+import { LogService } from '../../services/log.service';
+import { AlfrescoTranslateLoader } from '../../services/translate-loader.service';
+
 import { CardViewMapItemComponent } from './card-view-mapitem.component';
 
 describe('CardViewMapItemComponent', () => {
@@ -36,18 +41,26 @@ describe('CardViewMapItemComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
+                HttpModule,
                 FormsModule,
                 NoopAnimationsModule,
                 MatDatepickerModule,
                 MatIconModule,
                 MatInputModule,
-                MatNativeDateModule
+                MatNativeDateModule,
+                TranslateModule.forRoot({
+                    loader: {
+                        provide: TranslateLoader,
+                        useClass: AlfrescoTranslateLoader
+                    }
+                })
             ],
             declarations: [
                 CardViewMapItemComponent
             ],
             providers: [
-                CardViewUpdateService
+                CardViewUpdateService,
+                LogService
             ]
         }).compileComponents();
     }));

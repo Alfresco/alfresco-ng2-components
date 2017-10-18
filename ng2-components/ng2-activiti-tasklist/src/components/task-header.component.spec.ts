@@ -80,7 +80,7 @@ describe('TaskHeaderComponent', () => {
         component.ngOnChanges({});
         fixture.detectChanges();
         let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-assignee"] .adf-property-value'));
-        expect(valueEl.nativeElement.innerText).toBe('No assignee');
+        expect(valueEl.nativeElement.innerText).toBe('TASK_PROPERTIES.ASSIGNEE_DEFAULT');
     });
 
     it('should display created-by', () => {
@@ -88,14 +88,6 @@ describe('TaskHeaderComponent', () => {
         fixture.detectChanges();
         let formNameEl = fixture.debugElement.query(By.css('[data-automation-id="header-created-by"] .adf-property-value'));
         expect(formNameEl.nativeElement.innerText).toBe('Wilbur Adams');
-    });
-
-    it('should display placeholder if no created-by', () => {
-        component.taskDetails.assignee = null;
-        component.ngOnChanges({});
-        fixture.detectChanges();
-        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-created-by"] .adf-property-value'));
-        expect(valueEl.nativeElement.innerText).toBe('No assignee');
     });
 
     it('should set editable to false if the task has already completed', () => {
@@ -180,7 +172,7 @@ describe('TaskHeaderComponent', () => {
         component.ngOnChanges({});
         fixture.detectChanges();
         let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value'));
-        expect(valueEl.nativeElement.innerText.trim()).toBe('No date');
+        expect(valueEl.nativeElement.innerText.trim()).toBe('TASK_PROPERTIES.DUE_DATE_DEFAULT');
     });
 
     it('should display form name', () => {
@@ -196,7 +188,7 @@ describe('TaskHeaderComponent', () => {
         component.ngOnChanges({});
         fixture.detectChanges();
         let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-parentName"] .adf-property-value'));
-        expect(valueEl.nativeElement.innerText.trim()).toEqual('None');
+        expect(valueEl.nativeElement.innerText.trim()).toEqual('TASK_PROPERTIES.PARENT_NAME_DEFAULT');
     });
 
     it('should display the Parent name value', () => {
@@ -212,7 +204,7 @@ describe('TaskHeaderComponent', () => {
         component.ngOnChanges({});
         fixture.detectChanges();
         let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-formName"] .adf-property-value'));
-        expect(valueEl.nativeElement.innerText).toBe('No form');
+        expect(valueEl.nativeElement.innerText).toBe('TASK_PROPERTIES.FORM_NAME_DEFAULT');
     });
 
 });
