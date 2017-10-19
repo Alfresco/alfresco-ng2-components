@@ -34,7 +34,7 @@ describe('FormComponent', () => {
     let logService: LogService;
 
     beforeEach(() => {
-        logService = new LogService();
+        logService = new LogService(null);
         visibilityService = new WidgetVisibilityService(null, logService);
         spyOn(visibilityService, 'refreshVisibility').and.stub();
         formService = new FormService(null, null, logService);

@@ -17,7 +17,7 @@
 
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreModule, LogServiceMock } from 'ng2-alfresco-core';
+import { CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 
 import { By } from '@angular/platform-browser';
@@ -37,14 +37,12 @@ describe('TypeaheadWidgetComponent', () => {
     let formService: FormService;
     let widget: TypeaheadWidgetComponent;
     let visibilityService: WidgetVisibilityService;
-    let logService: LogServiceMock;
     let overlayContainerElement: HTMLElement;
 
     beforeEach(() => {
-        logService = new LogServiceMock();
-        formService = new FormService(null, null, logService);
-        visibilityService = new WidgetVisibilityService(null, logService);
-        widget = new TypeaheadWidgetComponent(formService, visibilityService, logService);
+        formService = new FormService(null, null, null);
+        visibilityService = new WidgetVisibilityService(null, null);
+        widget = new TypeaheadWidgetComponent(formService, visibilityService, null);
         widget.field = new FormFieldModel(new FormModel({ taskId: 'task-id' }));
     });
 

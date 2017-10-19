@@ -42,7 +42,6 @@ import { AuthenticationService } from './src/services/authentication.service';
 import { CommentProcessService } from './src/services/comment-process.service';
 import { ContentService } from './src/services/content.service';
 import { CookieService } from './src/services/cookie.service';
-import { LogServiceMock } from './src/services/log.service';
 import { LogService } from './src/services/log.service';
 import { NotificationService } from './src/services/notification.service';
 import { PageTitleService } from './src/services/page-title.service';
@@ -90,7 +89,6 @@ export { AuthGuardEcm } from './src/services/auth-guard-ecm.service';
 export { AuthGuardBpm } from './src/services/auth-guard-bpm.service';
 export { NotificationService } from './src/services/notification.service';
 export { LogService } from './src/services/log.service';
-export { LogServiceMock } from './src/services/log.service';
 export { AuthenticationService } from './src/services/authentication.service';
 export { TranslationService, TRANSLATION_PROVIDER, TranslationProvider } from './src/services/translation.service';
 export { AlfrescoTranslateLoader } from './src/services/translate-loader.service';
@@ -185,7 +183,6 @@ export function providers() {
         UserPreferencesService,
         NotificationService,
         LogService,
-        LogServiceMock,
         AuthenticationService,
         AlfrescoContentService,
         AlfrescoSettingsService,
