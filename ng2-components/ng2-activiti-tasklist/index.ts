@@ -24,7 +24,7 @@ import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { MaterialModule } from './src/components/material.module';
 import { ProcessUploadService } from './src/services/process-upload.service';
-import { TaskListService } from './src/services/task-list.service';
+import { TaskListService } from './src/services/tasklist.service';
 
 import { AppsListComponent } from './src/components/apps-list.component';
 import { ChecklistComponent } from './src/components/checklist.component';
@@ -77,7 +77,7 @@ import {TaskDetailsComponent as ActivitiTaskDetails } from './src/components/tas
 import {TaskFiltersComponent as ActivitiFilters } from './src/components/task-filters.component';
 import {TaskHeaderComponent as ActivitiTaskHeader } from './src/components/task-header.component';
 import {TaskListComponent as ActivitiTaskList } from './src/components/task-list.component';
-import {TaskListService as ActivitiTaskListService } from './src/services/task-list.service';
+import {TaskListService as ActivitiTaskListService } from './src/services/tasklist.service';
 export {AppsListComponent as ActivitiApps} from './src/components/apps-list.component';
 export {ChecklistComponent as ActivitiChecklist} from './src/components/checklist.component';
 export {CommentsComponent as ActivitiComments} from './src/components/comments.component';
