@@ -280,7 +280,7 @@ for more information about installing and using the source code.
 - [Task details component](task-details.component.md)
 - [Task filters component](task-filters.component.md)
 - [Task header component](task-header.component.md)
-- [Tasklist component](tasklist.component.md)
+- [Tasklist component](task-list.component.md)
 - [*Comment list component](../ng2-components/ng2-activiti-tasklist/src/components/comment-list.component.ts)
 - [*People list component](../ng2-components/ng2-activiti-tasklist/src/components/people-list.component.ts)
 

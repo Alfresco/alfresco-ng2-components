@@ -24,7 +24,7 @@ import { CoreModule, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { MaterialModule } from './src/components/material.module';
 import { ProcessUploadService } from './src/services/process-upload.service';
-import { TaskListService } from './src/services/tasklist.service';
+import { TaskListService } from './src/services/task-list.service';
 
 import { AppsListComponent } from './src/components/apps-list.component';
 import { ChecklistComponent } from './src/components/checklist.component';
@@ -41,10 +41,10 @@ import { TaskAuditDirective } from './src/components/task-audit.directive';
 import { TaskDetailsComponent } from './src/components/task-details.component';
 import { TaskFiltersComponent } from './src/components/task-filters.component';
 import { TaskHeaderComponent } from './src/components/task-header.component';
-import { TaskListComponent } from './src/components/tasklist.component';
+import { TaskListComponent } from './src/components/task-list.component';
 
 export {AppsListComponent } from './src/components/apps-list.component';
-export {TaskListComponent } from './src/components/tasklist.component';
+export {TaskListComponent } from './src/components/task-list.component';
 export {ChecklistComponent } from './src/components/checklist.component';
 export {CommentsComponent } from './src/components/comments.component';
 export {TaskAttachmentListComponent} from './src/components/task-attachment-list.component';
@@ -76,8 +76,8 @@ import {StartTaskComponent as ActivitiStartTaskButton } from './src/components/s
 import {TaskDetailsComponent as ActivitiTaskDetails } from './src/components/task-details.component';
 import {TaskFiltersComponent as ActivitiFilters } from './src/components/task-filters.component';
 import {TaskHeaderComponent as ActivitiTaskHeader } from './src/components/task-header.component';
-import {TaskListComponent as ActivitiTaskList } from './src/components/tasklist.component';
-import {TaskListService as ActivitiTaskListService } from './src/services/tasklist.service';
+import {TaskListComponent as ActivitiTaskList } from './src/components/task-list.component';
+import {TaskListService as ActivitiTaskListService } from './src/services/task-list.service';
 export {AppsListComponent as ActivitiApps} from './src/components/apps-list.component';
 export {ChecklistComponent as ActivitiChecklist} from './src/components/checklist.component';
 export {CommentsComponent as ActivitiComments} from './src/components/comments.component';
@@ -90,7 +90,7 @@ export {StartTaskComponent as ActivitiStartTaskButton } from './src/components/s
 export {TaskDetailsComponent as ActivitiTaskDetails } from './src/components/task-details.component';
 export {TaskFiltersComponent as ActivitiFilters } from './src/components/task-filters.component';
 export {TaskHeaderComponent as ActivitiTaskHeader} from './src/components/task-header.component';
-export {TaskListComponent as ActivitiTaskList } from './src/components/tasklist.component';
+export {TaskListComponent as ActivitiTaskList } from './src/components/task-list.component';
 export {TaskListService as ActivitiTaskListService } from './src/services/tasklist.service';
 
 export * from './src/models/filter.model';

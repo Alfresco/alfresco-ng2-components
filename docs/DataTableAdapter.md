@@ -1,7 +1,7 @@
 # DataTableAdapter interface
 
 Defines how table data is supplied to [DataTable](datatable.component.md)
-and [Tasklist](tasklist.component.md) components.
+and [Tasklist](task-list.component.md) components.
 
 <!-- markdown-toc start - Don't edit this section.  npm run toc to generate it-->
 
@@ -48,7 +48,7 @@ Sort the table with a specified key and direction (ascending or descending).
 ## Details
 
 You can implement DataTableAdapter in your own class to display your data with the [DataTable](datatable.component.md)
-and [Tasklist](tasklist.component.md) components.
+and [Tasklist](task-list.component.md) components.
 This interface (along with other interfaces for column and row data) hides the details of your class from the caller, so you can store your data internally however you like. The DataTable library implements the interface in the [ObjectDataTableAdapter](#objectdatatableadapter) class which is the standard adapter for the Datatable component.
 
 The basic idea of DataTableAdapter is that the caller can request your class to return an array of column
@@ -162,5 +162,5 @@ let schema = ObjectDataTableAdapter.generateSchema(data);
 ## See also
 
 - [Datatable component](datatable.component.md)
-- [Tasklist component](tasklist.component.md)
+- [Tasklist component](task-list.component.md)
 <!-- seealso end -->

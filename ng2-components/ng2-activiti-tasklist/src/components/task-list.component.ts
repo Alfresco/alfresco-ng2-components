@@ -26,8 +26,8 @@ import { TaskListService } from './../services/tasklist.service';
 const DEFAULT_SIZE = 5;
 @Component({
     selector: 'adf-tasklist, activiti-tasklist',
-    templateUrl: './tasklist.component.html',
-    styleUrls: ['./tasklist.component.css']
+    templateUrl: './task-list.component.html',
+    styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
 
