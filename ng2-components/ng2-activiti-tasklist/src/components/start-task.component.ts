@@ -90,7 +90,9 @@ export class StartTaskComponent implements OnInit {
 
     public start(): void {
         if (this.startTaskmodel.name) {
-            this.startTaskmodel.category = this.appId.toString();
+            if(this.appId) {
+                this.startTaskmodel.category = this.appId.toString();
+            }
             this.taskService.createNewTask(new TaskDetailsModel(this.startTaskmodel))
                 .switchMap((createRes: any) =>
                     this.attachForm(createRes.id, this.formKey).defaultIfEmpty(createRes)
