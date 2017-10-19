@@ -23,8 +23,8 @@
         "FOLDER_UPLOAD" :"Folder upload",
         "CUSTOM_FILTER" :"Custom extensions filter",
         "ENABLE_VERSIONING" :"Enable versioning",
-        "MULTISELECT_DESCRIPTION" : "Enable upload (demoing enabled/disabled state only if the permission are not checked dynamically)",
-        "DESCRIPTION_" : "For 'Multiple' selection mode use Cmd (macOS) or Ctrl (Win) to toggle selection of multiple items.",
+        "DESCRIPTION_UPLOAD" : "Enable upload (demoing enabled/disabled state only if the permission are not checked dynamically)",
+        "MULTISELECT_DESCRIPTION" : "For 'Multiple' selection mode use Cmd (macOS) or Ctrl (Win) to toggle selection of multiple items.",
         "COLUMNS": {
             "DISPLAY_NAME": "Display name",
             "TAG": "Tag",
