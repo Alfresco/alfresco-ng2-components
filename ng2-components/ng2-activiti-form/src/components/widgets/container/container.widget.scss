@@ -4,6 +4,10 @@
     $accent: map-get($theme, accent);
     $warn: map-get($theme, warn);
 
+    .hidden{
+        display: none;
+    }
+
     .adf {
         &-field-list {
             padding: 0;
