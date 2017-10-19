@@ -20,8 +20,8 @@ This component renders a list containing all the process instances matched by th
 **app.component.html**
 
 ```html
-<adf-process-instance-list 
-    [appId]="'1'" 
+<adf-process-instance-list
+    [appId]="'1'"
     [state]="'open'">
 </adf-process-instance-list>
 ```
