@@ -12,6 +12,19 @@
             "NONE": "No process instance filter selected."
         }
     },
+    "PROCESS_PROPERTIES": {
+        "STATUS": "Status",
+        "DUE_DATE": "Due Date",
+        "DUE_DATE_DEFAULT": "No date",
+        "CATEGORY": "Category",
+        "CATEGORY_DEFAULT": "No category",
+        "CREATED_BY": "Created By",
+        "CREATED_BY_DEFAULT": "No assignee",
+        "CREATED": "Created",
+        "DESCRIPTION": "Description",
+        "DESCRIPTION_DEFAULT": "No description",
+        "ID": "Id"
+    },
     "DETAILS": {
         "LABELS": {
             "STARTED_BY": "Started by",
