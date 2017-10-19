@@ -233,6 +233,20 @@ describe('UploadWidgetComponent', () => {
             });
         }));
 
+        it('should show correctly the file name when there are special characters', async(() => {
+            uploadWidgetComponent.field.value = [];
+            fakeJpgAnswer.name = 'FAKE~!@#$%^&()_+}{[]7711form.jpg';
+            uploadWidgetComponent.field.value.push(fakeJpgAnswer);
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                let jpegElement = element.querySelector('#file-1156');
+                expect(jpegElement).not.toBeNull();
+                expect(jpegElement.textContent).toBe('FAKE~!@#$%^&()_+}{[]7711form.jpg');
+            });
+        }));
+
         it('should remove file from field value', async(() => {
             uploadWidgetComponent.field.params.multiple = true;
             uploadWidgetComponent.field.value = [];

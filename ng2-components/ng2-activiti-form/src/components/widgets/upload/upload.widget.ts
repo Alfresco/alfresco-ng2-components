@@ -97,7 +97,7 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     decode(fileName: string): string {
-        return decodeURI(fileName);
+        return decodeURI(encodeURI(fileName));
     }
 
     private removeElementFromList(list, element) {
