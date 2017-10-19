@@ -233,9 +233,9 @@ describe('UploadWidgetComponent', () => {
             });
         }));
 
-        it('should show correctly the file name when there are special characters', async(() => {
+        it('should show correctly the file name when is formed with special characters', async(() => {
             uploadWidgetComponent.field.value = [];
-            fakeJpgAnswer.name = 'FAKE~!@#$%^&()_+}{[]7711form.jpg';
+            fakeJpgAnswer.name = '±!@#$%^&*()_+{}:”|<>?§™£-=[];’\\,./.jpg';
             uploadWidgetComponent.field.value.push(fakeJpgAnswer);
             fixture.detectChanges();
 
@@ -243,7 +243,91 @@ describe('UploadWidgetComponent', () => {
                 fixture.detectChanges();
                 let jpegElement = element.querySelector('#file-1156');
                 expect(jpegElement).not.toBeNull();
-                expect(jpegElement.textContent).toBe('FAKE~!@#$%^&()_+}{[]7711form.jpg');
+                expect(jpegElement.textContent).toBe(`±!@#$%^&*()_+{}:”|<>?§™£-=[];’\\,./.jpg`);
+            });
+        }));
+
+        it('should show correctly the file name when is formed with Arabic characters', async(() => {
+            uploadWidgetComponent.field.value = [];
+            fakeJpgAnswer.name = 'غ ظ	ض	ذ	خ	ث	ت	ش	ر	ق	ص	ف	ع	س	ن	م	ل	ك	ي	ط	ح	ز	و	ه	د	ج	ب	ا.jpg';
+            uploadWidgetComponent.field.value.push(fakeJpgAnswer);
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                let jpegElement = element.querySelector('#file-1156');
+                expect(jpegElement).not.toBeNull();
+                expect(jpegElement.textContent).toBe('غ ظ	ض	ذ	خ	ث	ت	ش	ر	ق	ص	ف	ع	س	ن	م	ل	ك	ي	ط	ح	ز	و	ه	د	ج	ب	ا.jpg');
+            });
+        }));
+
+        it('should show correctly the file name when is formed with French characters', async(() => {
+            uploadWidgetComponent.field.value = [];
+            fakeJpgAnswer.name = 'Àâæçéèêëïîôœùûüÿ.jpg';
+            uploadWidgetComponent.field.value.push(fakeJpgAnswer);
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                let jpegElement = element.querySelector('#file-1156');
+                expect(jpegElement).not.toBeNull();
+                expect(jpegElement.textContent).toBe('Àâæçéèêëïîôœùûüÿ.jpg');
+            });
+        }));
+
+        it('should show correctly the file name when is formed with Greek characters', async(() => {
+            uploadWidgetComponent.field.value = [];
+            fakeJpgAnswer.name = 'άέήίϊϊΐόύϋΰώθωερτψυιοπασδφγηςκλζχξωβνμ.jpg';
+            uploadWidgetComponent.field.value.push(fakeJpgAnswer);
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                let jpegElement = element.querySelector('#file-1156');
+                expect(jpegElement).not.toBeNull();
+                expect(jpegElement.textContent).toBe('άέήίϊϊΐόύϋΰώθωερτψυιοπασδφγηςκλζχξωβνμ.jpg');
+            });
+        }));
+
+        it('should show correctly the file name when is formed with Polish accented characters', async(() => {
+            uploadWidgetComponent.field.value = [];
+            fakeJpgAnswer.name = 'Ą	Ć	Ę	Ł	Ń	Ó	Ś	Ź	Żą	ć	ę	ł	ń	ó	ś	ź	ż.jpg';
+            uploadWidgetComponent.field.value.push(fakeJpgAnswer);
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                let jpegElement = element.querySelector('#file-1156');
+                expect(jpegElement).not.toBeNull();
+                expect(jpegElement.textContent).toBe('Ą	Ć	Ę	Ł	Ń	Ó	Ś	Ź	Żą	ć	ę	ł	ń	ó	ś	ź	ż.jpg');
+            });
+        }));
+
+        it('should show correctly the file name when is formed with Spanish accented characters', async(() => {
+            uploadWidgetComponent.field.value = [];
+            fakeJpgAnswer.name = 'á, é, í, ó, ú, ñ, Ñ, ü, Ü, ¿, ¡. Á, É, Í, Ó, Ú.jpg';
+            uploadWidgetComponent.field.value.push(fakeJpgAnswer);
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                let jpegElement = element.querySelector('#file-1156');
+                expect(jpegElement).not.toBeNull();
+                expect(jpegElement.textContent).toBe('á, é, í, ó, ú, ñ, Ñ, ü, Ü, ¿, ¡. Á, É, Í, Ó, Ú.jpg');
+            });
+        }));
+
+        it('should show correctly the file name when is formed with Swedish characters', async(() => {
+            uploadWidgetComponent.field.value = [];
+            fakeJpgAnswer.name = 'Äåéö.jpg';
+            uploadWidgetComponent.field.value.push(fakeJpgAnswer);
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                let jpegElement = element.querySelector('#file-1156');
+                expect(jpegElement).not.toBeNull();
+                expect(jpegElement.textContent).toBe('Äåéö.jpg');
             });
         }));
 
