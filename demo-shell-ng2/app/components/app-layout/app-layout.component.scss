@@ -49,4 +49,9 @@
             }
         }
     }
+
+    @media ($mat-small) {
+        .adf-userinfo-name{display: none;
+        }
+    }
 }
