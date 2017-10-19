@@ -38,8 +38,17 @@
     "file-uploading-dialog.component": [],
     "folder-actions.service": ["document-actions.service"],
     "form-list.component": [],
-    "form.component": [],
+    "form-field.model": ["extensibility", "FormFieldValidator", "form-rendering.service"],
+    "form-rendering.service": ["extensibility"],
+    "form.component": [
+        "stencils",
+        "FormFieldValidator",
+        "extensibility",
+        "form-rendering.service",
+        "form-field.model"
+    ],
     "form.service": [],
+    "FormFieldValidator": [],
     "info-drawer.component": ["info-drawer-layout.component"],
     "info-drawer-layout.component": [],
     "like.component": ["rating.component"],
@@ -90,5 +99,6 @@
     "user-info.component": [],
     "user-preferences.service": [],
     "viewer.component": [],
-    "webscript.component": []
+    "webscript.component": [],
+    "widget.component": ["extensibility"]
 }
