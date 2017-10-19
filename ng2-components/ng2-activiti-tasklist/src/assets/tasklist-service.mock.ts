@@ -222,3 +222,49 @@ export let fakeFormList = {
         tenantId: null
     }]
 };
+
+export let fakeTaskOpen1 = {
+        id: '1', name: 'FakeOpenTask1', description: null, category: null,
+        assignee: fakeUser1,
+        created: '2017-07-15T11:19:17.440+0000',
+        dueDate: null,
+        endDate: null
+    };
+
+export let fakeTaskOpen2 = {
+        id: '1', name: 'FakeOpenTask2', description: null, category: null,
+        assignee: { id: 1, email: 'fake-open-email@dom.com', firstName: 'firstName', lastName: 'lastName' },
+        created: '2017-07-15T11:19:17.440+0000',
+        dueDate: null,
+        endDate: null
+    };
+
+export let fakeTaskCompleted1 = {
+        id: '1', name: 'FakeCompletedTaskName1', description: null, category: null,
+        assignee: { id: 1, email: 'fake-completed-email@dom.com', firstName: 'firstName', lastName: 'lastName' },
+        created: '2016-07-15T11:19:17.440+0000',
+        dueDate: null,
+        endDate: '2016-11-03T15:25:42.749+0000'
+    };
+
+export let fakeTaskCompleted2 = {
+        id: '1', name: 'FakeCompletedTaskName2', description: null, category: null,
+        assignee: fakeUser1,
+        created: null,
+        dueDate: null,
+        endDate: '2016-11-03T15:25:42.749+0000'
+    };
+
+export let fakeOpenTaskList = {
+    size: 2,
+    total: 2,
+    start: 0,
+    data: [fakeTaskOpen1, fakeTaskOpen2]
+};
+
+export let fakeCompletedTaskList = {
+    size: 2,
+    total: 2,
+    start: 0,
+    data: [fakeTaskCompleted1, fakeTaskCompleted2]
+};
