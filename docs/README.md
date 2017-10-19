@@ -245,7 +245,7 @@ for more information about installing and using the source code.
 - [Process instance details component](process-instance-details.component.md)
 - [Process instance header component](process-instance-header.component.md)
 - [Process instance tasks component](process-instance-tasks.component.md)
-- [Processlist component](processlist.component.md)
+- [Process list component](process-list.component.md)
 - [Start process component](start-process.component.md)
 
 ### Directives

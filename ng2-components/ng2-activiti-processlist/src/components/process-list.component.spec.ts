@@ -19,7 +19,7 @@ import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatProgressSpinnerModule } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
-import { ProcessInstanceListComponent } from './processlist.component';
+import { ProcessInstanceListComponent } from './process-list.component';
 
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { DataRowEvent, DataSorting, DataTableModule, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
