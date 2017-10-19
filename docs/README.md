@@ -39,7 +39,7 @@ to the appropriate source file.
 ## ADF Analytics
 
 Contains the Analytics component and other related items. See the library's
-[README file](ng2-components/ng2-activiti-analytics/README.md)
+[README file](../ng2-components/ng2-activiti-analytics/README.md)
 for more information about installing and using the source code.
 <!-- ng2-activiti-analytics start -->
 
@@ -70,7 +70,7 @@ for more information about installing and using the source code.
 ## ADF Diagrams
 
 Contains the Diagram component and other related items. See the library's
-[README file](ng2-components/ng2-activiti-diagrams/README.md)
+[README file](../ng2-components/ng2-activiti-diagrams/README.md)
 for more information about installing and using the source code.
 <!-- ng2-activiti-diagrams start -->
 
@@ -168,7 +168,7 @@ for more information about installing and using the source code.
 ## ADF Form
 
 Contains the Form component and other related items. See the library's
-[README file](ng2-components/ng2-activiti-form/README.md)
+[README file](../ng2-components/ng2-activiti-form/README.md)
 for more information about installing and using the source code.
 <!-- ng2-activiti-form start -->
 
@@ -220,7 +220,7 @@ for more information about installing and using the source code.
 ## ADF Processlist
 
 Contains the Processlist component and other related items. See the library's
-[README file](ng2-components/ng2-activiti-processlist/README.md)
+[README file](../ng2-components/ng2-activiti-processlist/README.md)
 for more information about installing and using the source code.
 
 <!-- ng2-activiti-processlist start -->
@@ -252,7 +252,7 @@ for more information about installing and using the source code.
 ## ADF Tasklist
 
 Contains the Tasklist component and other related items. See the library's
-[README file](ng2-components/ng2-activiti-tasklist/README.md)
+[README file](../ng2-components/ng2-activiti-tasklist/README.md)
 for more information about installing and using the source code.
 <!-- ng2-activiti-tasklist start -->
 
@@ -293,7 +293,7 @@ for more information about installing and using the source code.
 ## ADF Core
 
 Contains a variety of components, directives and other classes used throughout ADF. See the library's
-[README file](ng2-components/ng2-alfresco-core/README.md)
+[README file](../ng2-components/ng2-alfresco-core/README.md)
 for more information about installing and using the source code.
 <!-- ng2-alfresco-core start -->
 
@@ -365,7 +365,7 @@ for more information about installing and using the source code.
 ## ADF Datatable
 
 Contains the Datatable component and other related items. See the library's
-[README file](ng2-components/ng2-alfresco-datatable/README.md)
+[README file](../ng2-components/ng2-alfresco-datatable/README.md)
 for more information about installing and using the source code.
 <!-- ng2-alfresco-datatable start -->
 
@@ -387,7 +387,7 @@ for more information about installing and using the source code.
 ## ADF Documentlist
 
 Contains the Document List component and other related items. See the library's
-[README file](ng2-components/ng2-alfresco-documentlist/README.md)
+[README file](../ng2-components/ng2-alfresco-documentlist/README.md)
 for more information about installing and using the source code.
 <!-- ng2-alfresco-documentlist start -->
 
@@ -418,7 +418,7 @@ for more information about installing and using the source code.
 ## ADF Login
 
 Contains the Login component and other related items. See the library's
-[README file](ng2-components/ng2-alfresco-login/README.md)
+[README file](../ng2-components/ng2-alfresco-login/README.md)
 for more information about installing and using the source code.
 <!-- ng2-alfresco-login start -->
 
@@ -437,7 +437,7 @@ for more information about installing and using the source code.
 ## ADF Search
 
 Contains the Search component and other related items. See the library's
-[README file](ng2-components/ng2-alfresco-search/README.md)
+[README file](../ng2-components/ng2-alfresco-search/README.md)
 for more information about installing and using the source code.
 <!-- ng2-alfresco-search start -->
 
@@ -453,7 +453,7 @@ for more information about installing and using the source code.
 ## ADF Social
 
 Contains components for adding likes and ratings to items. See the library's
-[README file](ng2-components/ng2-alfresco-social/README.md)
+[README file](../ng2-components/ng2-alfresco-social/README.md)
 for more information about installing and using the source code.
 <!-- ng2-alfresco-social start -->
 
@@ -472,7 +472,7 @@ for more information about installing and using the source code.
 ## ADF Tag
 
 Contains components for adding tags to documents. See the library's
-[README file](ng2-components/ng2-alfresco-tag/README.md)
+[README file](../ng2-components/ng2-alfresco-tag/README.md)
 for more information about installing and using the source code.
 <!-- ng2-alfresco-tag start -->
 
@@ -492,7 +492,7 @@ for more information about installing and using the source code.
 ## ADF Upload
 
 Contains components for uploading files to Content Services. See the library's
-[README file](ng2-components/ng2-alfresco-upload/README.md)
+[README file](../ng2-components/ng2-alfresco-upload/README.md)
 for more information about installing and using the source code.
 <!-- ng2-alfresco-upload start -->
 
@@ -514,7 +514,7 @@ for more information about installing and using the source code.
 ## ADF Userinfo
 
 Contains the User Info component and other related items. See the library's
-[README file](ng2-components/ng2-alfresco-userinfo/README.md)
+[README file](../ng2-components/ng2-alfresco-userinfo/README.md)
 for more information about installing and using the source code.
 <!-- ng2-alfresco-userinfo start -->
 
@@ -533,7 +533,7 @@ for more information about installing and using the source code.
 ## ADF Viewer
 
 Contains the Viewer component and other related items. See the library's
-[README file](ng2-components/ng2-alfresco-viewer/README.md)
+[README file](../ng2-components/ng2-alfresco-viewer/README.md)
 for more information about installing and using the source code.
 <!-- ng2-alfresco-viewer start -->
 
@@ -556,7 +556,7 @@ for more information about installing and using the source code.
 ## ADF Webscript
 
 Contains the Webscript component. See the library's
-[README file](ng2-components/ng2-alfresco-webscript/README.md)
+[README file](../ng2-components/ng2-alfresco-webscript/README.md)
 for more information about installing and using the source code.
 <!-- ng2-alfresco-webscript start -->
 
