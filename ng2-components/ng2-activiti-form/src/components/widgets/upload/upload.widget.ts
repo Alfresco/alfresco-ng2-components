@@ -96,10 +96,6 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
         }
     }
 
-    decode(fileName: string): string {
-        return decodeURI(fileName);
-    }
-
     private removeElementFromList(list, element) {
         let index = list.indexOf(element);
         if (index !== -1) {
