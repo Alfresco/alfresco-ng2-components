@@ -1,49 +1,23 @@
 @mixin mat-info-drawer-theme($theme) {
-    $primary: map-get($theme, primary);
+    $background: map-get($theme, background);
 
     .adf {
         &-info-drawer-layout {
-            width: 385px;
+            width: 350px;
             display: block;
-            background-color: #fafafa;
+            padding: 8px 0;
+            background-color: mat-color($background, dialog);
             box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.27);
 
-            & .mat-tab-label {
-                font-family: Muli;
-                font-size: 14px;
-                font-weight: bold;
-                text-align: left;
-                color: mat-color($primary);
-            }
-
             &-header {
-                padding: 13px 0px 0px 23px;
+                padding: 8px 24px 24px 24px;
                 display: flex;
                 justify-content: space-between;
                 font-size: 20px;
-                margin-bottom: 40px;
 
                 &-buttons {
                     mat-icon {
                         cursor: pointer;
-                    }
-                }
-
-                &-title {
-                    width: 197px;
-                    height: 32px;
-                    opacity: 0.54;
-                    font-family: Helvetica;
-                    font-size: 20px;
-                    line-height: 1.6;
-                    letter-spacing: -0.5px;
-                    text-align: left;
-                    color: #000000;
-
-                    & > div {
-                        overflow: hidden;
-                        white-space: nowrap;
-                        text-overflow: ellipsis;
                     }
                 }
             }
