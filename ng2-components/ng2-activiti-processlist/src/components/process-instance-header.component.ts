@@ -38,19 +38,52 @@ export class ProcessInstanceHeaderComponent implements OnChanges {
     refreshData() {
         if (this.processInstance) {
             this.properties = [
-                new CardViewTextItemModel({label: 'Status:', value: this.getProcessStatus(), key: 'status'}),
-                new CardViewDateItemModel({label: 'Due Date:', value: this.processInstance.ended, format: 'MMM DD YYYY', key: 'dueDate', default: 'No date'}),
-                new CardViewTextItemModel({label: 'Category:', value: this.processInstance.processDefinitionCategory, key: 'category', default: 'No category'}),
                 new CardViewTextItemModel(
                     {
-                        label: 'Created By:',
+                        label: 'PROCESS_PROPERTIES.STATUS',
+                        value: this.getProcessStatus(),
+                        key: 'status'
+                    }),
+                new CardViewDateItemModel(
+                    {
+                        label: 'PROCESS_PROPERTIES.DUE_DATE',
+                        value: this.processInstance.ended,
+                        format: 'MMM DD YYYY',
+                        key: 'dueDate',
+                        default: 'PROCESS_PROPERTIES.DUE_DATE_DEFAULT'
+                    }),
+                new CardViewTextItemModel(
+                    {
+                        label: 'PROCESS_PROPERTIES.CATEGORY',
+                        value: this.processInstance.processDefinitionCategory,
+                        key: 'category',
+                        default: 'PROCESS_PROPERTIES.CATEGORY_DEFAULT'
+                    }),
+                new CardViewTextItemModel(
+                    {
+                        label: 'PROCESS_PROPERTIES.CREATED_BY',
                         value: this.getStartedByFullName(),
                         key: 'assignee',
-                        default: 'No assignee'
+                        default: 'PROCESS_PROPERTIES.CREATED_BY_DEFAULT'
                     }),
-                new CardViewDateItemModel({label: 'Created:', value: this.processInstance.started, format: 'MMM DD YYYY', key: 'created'}),
-                new CardViewTextItemModel({label: 'Id:', value: this.processInstance.id, key: 'id'}),
-                new CardViewTextItemModel({label: 'Description:', value: this.processInstance.processDefinitionDescription, key: 'description', default: 'No description'})
+                new CardViewDateItemModel(
+                    {
+                        label: 'PROCESS_PROPERTIES.CREATED',
+                        value: this.processInstance.started,
+                        format: 'MMM DD YYYY',
+                        key: 'created'
+                    }),
+                new CardViewTextItemModel(
+                    {label: 'PROCESS_PROPERTIES.ID',
+                    value: this.processInstance.id,
+                    key: 'id'
+                }),
+                new CardViewTextItemModel(
+                    {label: 'PROCESS_PROPERTIES.DESCRIPTION',
+                    value: this.processInstance.processDefinitionDescription,
+                    key: 'description',
+                    default: 'PROCESS_PROPERTIES.DESCRIPTION_DEFAULT'
+                })
             ];
         }
     }
