@@ -73,7 +73,7 @@ describe('ProcessInstanceDetailsComponent', () => {
 
     it('should set a placeholder message when processInstanceId not initialised', () => {
         fixture.detectChanges();
-        expect(fixture.nativeElement.innerText).toBe('DETAILS.MESSAGES.NONE');
+        expect(fixture.nativeElement.innerText).toBe('ADF_PROCESS_LIST.DETAILS.MESSAGES.NONE');
     });
 
     it('should display a header when the processInstanceId is provided', async(() => {
@@ -131,7 +131,7 @@ describe('ProcessInstanceDetailsComponent', () => {
         it('should set a placeholder message when processInstanceId changed to null', () => {
             component.ngOnChanges({ 'processInstanceId': nullChange });
             fixture.detectChanges();
-            expect(fixture.nativeElement.innerText).toBe('DETAILS.MESSAGES.NONE');
+            expect(fixture.nativeElement.innerText).toBe('ADF_PROCESS_LIST.DETAILS.MESSAGES.NONE');
         });
 
         it('should display cancel button if process is running', () => {

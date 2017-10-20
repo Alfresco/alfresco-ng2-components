@@ -1,106 +1,105 @@
 {
-  "PROCESSLIST": {
-    "NONE": "Nessuna istanza del processo trovata",
-    "SUMMARY": "{{total}} istanze del processo trovate",
-    "ERROR": "Impossibile caricare le istanze del processo. Riprova o condividi il messaggio seguente con il team IT: {{errorMessage}}",
-    "COLUMN": {
-      "NAME": "Nome"
-    }
-  },
-  "FILTERS": {
-    "MESSAGES": {
-      "NONE": "Nessun filtro dell'istanza di processo selezionato."
-    }
-  },
-  "DETAILS": {
-    "LABELS": {
-      "STARTED_BY": "Avviato da",
-      "STARTED": "Avviato",
-      "ENDED": "Terminato",
-      "COMMENTS": "Commenti",
-      "START_FORM": "Modulo di inizio",
-      "TASKS_ACTIVE": "Compiti attivi",
-      "TASKS_COMPLETED": "Compiti completati",
-      "TASK_SUBTITLE": "Assegnato a {{user}}, creato il {{created}}"
-    },
-    "BUTTON": {
-      "CANCEL": "Annulla processo",
-      "CLOSE": "Chiudi",
-      "SHOW_DIAGRAM": "Visualizza diagramma",
-      "DRAG-ATTACHMENT": "Trascinare i file da caricare",
-      "UPLOAD-ATTACHMENT": "Carica allegato"
-    },
-    "MESSAGES": {
-      "NONE": "Nessun dettaglio del processo trovato."
-    },
-    "TASKS": {
-      "NO_ACTIVE": "Nessun compito attualmente attivo",
-      "NO_COMPLETED": "Nessun compito già completato",
-      "TASK_DETAILS": "Dettagli compito",
-      "TASK_CLOSE": "Chiudi"
-    },
-    "COMMENTS": {
-      "NONE": "Nessun commento",
-      "BUTTON": {
-        "ADD": "Aggiungi un commento"
-      },
-      "ADD_DIALOG": {
-        "TITLE": "Nuovo commento",
-        "LABEL": {
-          "MESSAGE": "Messaggio"
+    "ADF_PROCESS_LIST": {
+        "LIST": {
+            "NONE": "Nessuna istanza del processo trovata",
+            "SUMMARY": "{{total}} istanze del processo trovate",
+            "ERROR": "Impossibile caricare le istanze del processo. Riprova o condividi il messaggio seguente con il team IT: {{errorMessage}}"
         },
-        "BUTTON": {
-          "ADD": "Aggiungi commento",
-          "CANCEL": "Annulla"
+        "FILTERS": {
+            "MESSAGES": {
+                "NONE": "Nessun filtro dell'istanza di processo selezionato."
+            }
+        },
+        "DETAILS": {
+            "LABELS": {
+                "STARTED_BY": "Avviato da",
+                "STARTED": "Avviato",
+                "ENDED": "Terminato",
+                "COMMENTS": "Commenti",
+                "START_FORM": "Modulo di inizio",
+                "TASKS_ACTIVE": "Compiti attivi",
+                "TASKS_COMPLETED": "Compiti completati",
+                "TASK_SUBTITLE": "Assegnato a {{user}}, creato il {{created}}"
+            },
+            "BUTTON": {
+                "CANCEL": "Annulla processo",
+                "CLOSE": "Chiudi",
+                "SHOW_DIAGRAM": "Visualizza diagramma",
+                "DRAG-ATTACHMENT": "Trascinare i file da caricare",
+                "UPLOAD-ATTACHMENT": "Carica allegato"
+            },
+            "MESSAGES": {
+                "NONE": "Nessun dettaglio del processo trovato."
+            },
+            "TASKS": {
+                "NO_ACTIVE": "Nessun compito attualmente attivo",
+                "NO_COMPLETED": "Nessun compito già completato",
+                "TASK_DETAILS": "Dettagli compito",
+                "TASK_CLOSE": "Chiudi"
+            },
+            "COMMENTS": {
+                "NONE": "Nessun commento",
+                "BUTTON": {
+                    "ADD": "Aggiungi un commento"
+                },
+                "ADD_DIALOG": {
+                    "TITLE": "Nuovo commento",
+                    "LABEL": {
+                        "MESSAGE": "Messaggio"
+                    },
+                    "BUTTON": {
+                        "ADD": "Aggiungi commento",
+                        "CANCEL": "Annulla"
+                    }
+                }
+            },
+            "ADD_DIALOG": {
+                "TITLE": "Imposta variabile di processo",
+                "LABEL": {
+                    "NAME": "Nome",
+                    "VALUE": "Valore",
+                    "SCOPE": "Ambito"
+                }
+            },
+            "EDIT_DIALOG": {
+                "TITLE": "Modifica variabile di processo"
+            },
+            "ERROR_DIALOG": {
+                "TITLE": "Impossibile completare l'azione",
+                "DESCRIPTION": "Potresti non avere il livello di accesso necessario, verifica con il team IT."
+            }
+        },
+        "START_PROCESS": {
+            "BUTTON": "Avvia processo",
+            "NO_PROCESS_DEFINITIONS": "Impossibile iniziare un processo in quanto non ci sono definizioni del processo disponibili",
+            "FORM": {
+                "TITLE": "Avvia processo",
+                "LABEL": {
+                    "TYPE": "Tipo",
+                    "NAME": "Nome"
+                },
+                "TYPE_PLACEHOLDER": "Effettua una scelta...",
+                "ACTION": {
+                    "START": "Avvia",
+                    "CANCEL": "Annulla"
+                }
+            },
+            "ERROR": {
+                "LOAD_PROCESS_DEFS": "Impossibile caricare le definizioni del processo, verifica di avere l'accesso.",
+                "START": "Impossibile iniziare la nuova istanza di processo, verifica di avere l'accesso."
+            }
+        },
+        "PROCESS-ATTACHMENT": {
+            "EMPTY": {
+                "HEADER": "Questo elenco è vuoto",
+                "DRAG-AND-DROP": {
+                    "TITLE": "Trascinare e rilasciare",
+                    "SUBTITLE": "per caricare i file"
+                }
+            },
+            "EMPTY-LIST": {
+                "HEADER": "Nessun file disponibile"
+            }
         }
-      }
-    },
-    "ADD_DIALOG": {
-      "TITLE": "Imposta variabile di processo",
-      "LABEL": {
-        "NAME": "Nome",
-        "VALUE": "Valore",
-        "SCOPE": "Ambito"
-      }
-    },
-    "EDIT_DIALOG": {
-      "TITLE": "Modifica variabile di processo"
-    },
-    "ERROR_DIALOG": {
-      "TITLE": "Impossibile completare l'azione",
-      "DESCRIPTION": "Potresti non avere il livello di accesso necessario, verifica con il team IT."
     }
-  },
-  "START_PROCESS": {
-    "BUTTON": "Avvia processo",
-    "NO_PROCESS_DEFINITIONS": "Impossibile iniziare un processo in quanto non ci sono definizioni del processo disponibili",
-    "FORM": {
-      "TITLE": "Avvia processo",
-      "LABEL": {
-        "TYPE": "Tipo",
-        "NAME": "Nome"
-      },
-      "TYPE_PLACEHOLDER": "Effettua una scelta...",
-      "ACTION": {
-        "START": "Avvia",
-        "CANCEL": "Annulla"
-      }
-    },
-    "ERROR": {
-      "LOAD_PROCESS_DEFS": "Impossibile caricare le definizioni del processo, verifica di avere l'accesso.",
-      "START": "Impossibile iniziare la nuova istanza di processo, verifica di avere l'accesso."
-    }
-  },
-  "PROCESS-ATTACHMENT": {
-    "EMPTY": {
-      "HEADER": "Questo elenco è vuoto",
-      "DRAG-AND-DROP": {
-        "TITLE": "Trascinare e rilasciare",
-        "SUBTITLE": "per caricare i file"
-      }
-    },
-    "EMPTY-LIST": {
-      "HEADER": "Nessun file disponibile"
-    }
-  }
 }

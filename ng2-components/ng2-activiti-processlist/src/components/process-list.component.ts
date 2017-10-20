@@ -65,8 +65,8 @@ export class ProcessInstanceListComponent implements OnChanges, AfterContentInit
     isLoading: boolean = true;
 
     private defaultSchema: DataColumn[] = [
-        { type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true },
-        { type: 'text', key: 'created', title: 'Created', cssClass: 'hidden', sortable: true }
+        { type: 'text', key: 'name', title: 'ADF_PROCESS_LIST.PROPERTIES.NAME', cssClass: 'full-width name-column', sortable: true },
+        { type: 'text', key: 'created', title: 'ADF_PROCESS_LIST.PROPERTIES.CREATED', cssClass: 'hidden', sortable: true }
     ];
 
     constructor(private processService: ProcessService) {

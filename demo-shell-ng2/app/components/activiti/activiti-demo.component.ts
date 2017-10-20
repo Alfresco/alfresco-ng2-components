@@ -139,15 +139,6 @@ export class ActivitiDemoComponent implements AfterViewInit, OnDestroy, OnInit {
         this.dataTasks = new ObjectDataTableAdapter();
         this.dataTasks.setSorting(new DataSorting('created', 'desc'));
 
-        this.dataProcesses = new ObjectDataTableAdapter(
-            [],
-            [
-                { type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true },
-                { type: 'text', key: 'started', title: 'Started', cssClass: 'hidden', sortable: true }
-            ]
-        );
-        this.dataProcesses.setSorting(new DataSorting('started', 'desc'));
-
         // Uncomment this line to replace all 'text' field editors with custom component
         // formRenderingService.setComponentTypeResolver('text', () => CustomEditorComponent, true);
 
