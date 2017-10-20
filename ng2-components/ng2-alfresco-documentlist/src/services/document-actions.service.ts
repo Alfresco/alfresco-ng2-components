@@ -65,6 +65,7 @@ export class DocumentActionsService {
         this.handlers['download'] = this.download.bind(this);
         this.handlers['copy'] = this.copyNode.bind(this);
         this.handlers['move'] = this.moveNode.bind(this);
+        this.handlers['versions'] = this.manageVersions.bind(this);
         this.handlers['delete'] = this.deleteNode.bind(this);
     }
 
@@ -91,6 +92,11 @@ export class DocumentActionsService {
         const actionObservable = this.nodeActionsService.moveContent(obj.entry, permission);
         this.prepareHandlers(actionObservable, 'content', 'move', target, permission);
         return actionObservable;
+    }
+
+    private manageVersions(obj: MinimalNodeEntity) {
+        this.nodeActionsService.manageVersions(obj.entry);
+        return Observable.of(true);
     }
 
     private prepareHandlers(actionObservable, type: string, action: string, target?: any, permission?: string): void {

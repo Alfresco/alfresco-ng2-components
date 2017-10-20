@@ -41,6 +41,7 @@ export class FilesComponent implements OnInit {
     errorMessage: string = null;
     fileNodeId: any;
     showViewer: boolean = false;
+    showVersions: boolean = false;
 
     toolbarColor = 'default';
 
@@ -221,6 +222,12 @@ export class FilesComponent implements OnInit {
 
     hasSelection(selection: Array<MinimalNodeEntity>): boolean {
         return selection && selection.length > 0;
+    }
+
+    hasOneFileSelected(): boolean {
+        const selection: Array<MinimalNodeEntity> = this.documentList.selection;
+        const hasOneFileSelected = selection && selection.length === 1 && selection[0].entry.isFile;
+        return hasOneFileSelected;
     }
 
     downloadNodes(selection: Array<MinimalNodeEntity>) {

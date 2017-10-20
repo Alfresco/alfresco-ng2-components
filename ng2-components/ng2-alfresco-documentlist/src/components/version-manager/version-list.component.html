@@ -1,0 +1,16 @@
+<mat-list class="adf-version">
+    <mat-list-item *ngFor="let folder of folders">
+        <mat-icon mat-list-icon>insert_drive_file</mat-icon>
+        <h4 mat-line>{{folder.name}}</h4>
+        <p mat-line> {{folder.updated | date}}</p>
+
+        <mat-menu #versionMenu="matMenu" yPosition="below" xPosition="before">
+            <button mat-menu-item> Download </button>
+            <button mat-menu-item> Delete </button>
+        </mat-menu>
+
+        <button mat-icon-button [matMenuTriggerFor]="versionMenu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+    </mat-list-item>
+</mat-list>

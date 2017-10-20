@@ -74,6 +74,39 @@ adf-document-list ::ng-deep adf-datatable tr.is-selected .image-table-cell::befo
     }
 }
 
+.adf-manage-versions-sidebar {
+    width: 300px;
+    color: rgba(0, 0, 0, 0.87);
+
+    .adf-manage-versions-empty {
+        margin: 24px;
+        color: grey;
+        text-align: justify;
+
+        &-icon {
+            display: block;
+            font-size: 48px;
+            margin: 0 auto 32px auto;
+        }
+    }
+
+    & ::ng-deep .adf-info-drawer-layout-header {
+        display: none;
+    }
+
+    & ::ng-deep .adf-info-drawer-layout-content {
+        padding: 0;
+
+        .adf-upload-new-version {
+            width: 100%;
+        }
+
+        .adf-new-version-uploader-container {
+            padding: 8px 24px 16px 24px;
+        }
+    }
+}
+
 @media (max-width: $minimumDocumentListWidth) {
     adf-document-list ::ng-deep adf-datatable  {
         & ::ng-deep .adf-data-table-cell--fileSize {

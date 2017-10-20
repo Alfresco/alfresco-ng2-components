@@ -21,6 +21,12 @@ import {
     MatIconModule,
     MatInputModule,
     MatProgressSpinnerModule
+    MatListModule,
+    MatProgressBarModule,
+    MatSelectModule,
+    MatDialogModule,
+    MatSidenavModule,
+    MatSlideToggleModule
 } from '@angular/material';
 
 export function modules() {
@@ -28,7 +34,14 @@ export function modules() {
         MatCheckboxModule,
         MatIconModule,
         MatInputModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatSlideToggleModule,
+        MatInputModule,
+        MatSelectModule,
+        MatListModule,
+        MatDialogModule,
+        MatSidenavModule,
+        MatProgressBarModule
     ];
 }
 

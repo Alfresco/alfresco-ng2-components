@@ -22,7 +22,8 @@ import { AlfrescoContentService } from 'ng2-alfresco-core';
 import { DataColumn } from 'ng2-alfresco-datatable';
 import { Subject } from 'rxjs/Rx';
 import { ContentNodeSelectorComponent, ContentNodeSelectorComponentData } from '../components/content-node-selector/content-node-selector.component';
-import { ShareDataRow } from '../data/share-data-row.model';
+import { VersionManagerDialogAdapterComponent } from '../components/version-manager/version-manager-dialog-adapter.component';
+import { ShareDataRow } from '../data/share-datatable-adapter';
 import { DocumentListService } from './document-list.service';
 
 @Injectable()
@@ -40,6 +41,10 @@ export class NodeActionsService {
      */
     public copyContent(contentEntry: MinimalNodeEntryEntity, permission?: string): Subject<string> {
         return this.doFileOperation('copy', 'content', contentEntry, permission);
+    }
+
+    public manageVersions(contentEntry: MinimalNodeEntryEntity) {
+        this.dialog.open(VersionManagerDialogAdapterComponent, { data: { contentEntry }, panelClass: 'adf-version-manager-dialog', width: '630px' });
     }
 
     /**
