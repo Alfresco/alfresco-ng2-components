@@ -7,6 +7,7 @@
     "start": "npm run server-versions && rimraf dist && ng serve --app=0 --open",
     "start:dev": "npm run server-versions && rimraf dist && ng serve --app=1 pp-dev --proxy-config proxy.conf.json --open",
     "build": "npm run server-versions && rimraf dist && ng build",
+    "build:dev": "npm run server-versions && rimraf dist && ng build -app=1",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
