@@ -22,10 +22,12 @@ import { AppConfigServiceMock } from '../assets/app-config.service.mock';
 import {
     fakeAppFilter,
     fakeAppPromise,
+    fakeCompletedTaskList,
     fakeErrorTaskList,
     fakeFilter,
     fakeFilters,
     fakeFormList,
+    fakeOpenTaskList,
     fakeRepresentationFilter1,
     fakeRepresentationFilter2,
     fakeTaskDetails,
@@ -328,6 +330,50 @@ describe('Activiti TaskList Service', () => {
                     expect(res.data[1].assignee.email).toEqual('fake-email@dom.com');
                     expect(res.data[1].assignee.firstName).toEqual('firstName');
                     expect(res.data[1].assignee.lastName).toEqual('lastName');
+                    done();
+                }
+            );
+        });
+
+        it('Should return both open and completed task', (done) => {
+            spyOn(service, 'findTasksByState').and.returnValue(Observable.of(fakeOpenTaskList));
+            spyOn(service, 'findAllTaskByState').and.returnValue(Observable.of(fakeCompletedTaskList));
+            service.findAllTasksWhitoutState(<TaskQueryRequestRepresentationModel> fakeFilter).subscribe(
+                res => {
+                    expect(res).toBeDefined();
+                    expect(res.data).toBeDefined();
+                    expect(res.data.length).toEqual(4);
+                    expect(res.data[0].name).toEqual('FakeOpenTask1');
+                    expect(res.data[1].assignee.email).toEqual('fake-open-email@dom.com');
+                    expect(res.data[2].name).toEqual('FakeCompletedTaskName1');
+                    expect(res.data[2].assignee.email).toEqual('fake-completed-email@dom.com');
+                    expect(res.data[3].name).toEqual('FakeCompletedTaskName2');
+                    done();
+                }
+            );
+        });
+
+        it('should add  the task list to the tasklistSubject with all tasks filtered without state', (done) => {
+            spyOn(service, 'getTasks').and.returnValue(Observable.of(fakeTaskList));
+            spyOn(service, 'getTotalTasks').and.returnValue(Observable.of(fakeTaskList));
+
+            service.tasksList$.subscribe(
+                 (res) => {
+                    expect(res).toBeDefined();
+                    expect(res.data).toBeDefined();
+                    expect(res.data.length).toEqual(2);
+                    expect(res.data[0].name).toEqual('FakeNameTask');
+                    expect(res.data[1].assignee.email).toEqual('fake-email@dom.com');
+                });
+            service.findAllTasksWhitoutState(<TaskQueryRequestRepresentationModel> fakeFilter).subscribe(
+                res => {
+                    expect(res).toBeDefined();
+                    expect(res.data).toBeDefined();
+                    expect(res.data.length).toEqual(2);
+                    expect(res.data[0].name).toEqual('FakeNameTask');
+                    expect(res.data[0].assignee.email).toEqual('fake-email@dom.com');
+                    expect(res.data[1].name).toEqual('FakeNameTask');
+                    expect(res.data[1].assignee.email).toEqual('fake-email@dom.com');
                     done();
                 }
             );

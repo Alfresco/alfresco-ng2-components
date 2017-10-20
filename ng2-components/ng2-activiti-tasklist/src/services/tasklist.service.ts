@@ -163,15 +163,16 @@ export class TaskListService {
      */
     findAllTasksWhitoutState(requestNode: TaskQueryRequestRepresentationModel): Observable<TaskListModel> {
         return Observable.forkJoin(
-            this.findTasksByState(requestNode, 'open'),
-            this.findAllTaskByState(requestNode, 'completed'),
-            (activeTasks: TaskListModel, completedTasks: TaskListModel) => {
-                const tasks = Object.assign({}, activeTasks);
-                tasks.total += completedTasks.total;
-                tasks.data = tasks.data.concat(completedTasks.data);
-                return tasks;
-            }
-        );
+                this.findTasksByState(requestNode, 'open'),
+                this.findAllTaskByState(requestNode, 'completed'),
+                (activeTasks: TaskListModel, completedTasks: TaskListModel) => {
+                    const tasks = Object.assign({}, activeTasks);
+                    tasks.total += completedTasks.total;
+                    tasks.data = tasks.data.concat(completedTasks.data);
+                    this.tasksListSubject.next(tasks);
+                    return tasks;
+                }
+            );
     }
 
     /**
