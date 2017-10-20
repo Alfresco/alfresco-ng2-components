@@ -141,12 +141,12 @@
                         (row-dblclick)="onProcessRowDblClick($event)"
                         (onSuccess)="onSuccessProcessList($event)">
                         <!-- Custom column definition demo -->
-                        <!--
+
                         <data-columns>
-                            <data-column key="name" title="NAME" class="full-width name-column"></data-column>
-                            <data-column key="created" title="Created" class="hidden"></data-column>
+                            <data-column key="name" title="ADF_PROCESS_LIST.PROPERTIES.NAME" class="full-width name-column"></data-column>
+                            <data-column key="created" title="ADF_PROCESS_LIST.PROPERTIES.CREATED" class="hidden"></data-column>
                         </data-columns>
-                        -->
+
                     </adf-process-instance-list>
                 </div>
                 <div class="activiti-demo-grid-item activiti-demo-processes-details" *ngIf="!isStartProcessMode()" fxFlex.gt-md="1 1 auto">

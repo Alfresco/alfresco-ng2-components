@@ -40,49 +40,49 @@ export class ProcessInstanceHeaderComponent implements OnChanges {
             this.properties = [
                 new CardViewTextItemModel(
                     {
-                        label: 'PROCESS_PROPERTIES.STATUS',
+                        label: 'ADF_PROCESS_LIST.PROPERTIES.STATUS',
                         value: this.getProcessStatus(),
                         key: 'status'
                     }),
                 new CardViewDateItemModel(
                     {
-                        label: 'PROCESS_PROPERTIES.DUE_DATE',
+                        label: 'ADF_PROCESS_LIST.PROPERTIES.DUE_DATE',
                         value: this.processInstance.ended,
                         format: 'MMM DD YYYY',
                         key: 'dueDate',
-                        default: 'PROCESS_PROPERTIES.DUE_DATE_DEFAULT'
+                        default: 'ADF_PROCESS_LIST.PROPERTIES.DUE_DATE_DEFAULT'
                     }),
                 new CardViewTextItemModel(
                     {
-                        label: 'PROCESS_PROPERTIES.CATEGORY',
+                        label: 'ADF_PROCESS_LIST.PROPERTIES.CATEGORY',
                         value: this.processInstance.processDefinitionCategory,
                         key: 'category',
-                        default: 'PROCESS_PROPERTIES.CATEGORY_DEFAULT'
+                        default: 'ADF_PROCESS_LIST.PROPERTIES.CATEGORY_DEFAULT'
                     }),
                 new CardViewTextItemModel(
                     {
-                        label: 'PROCESS_PROPERTIES.CREATED_BY',
+                        label: 'ADF_PROCESS_LIST.PROPERTIES.CREATED_BY',
                         value: this.getStartedByFullName(),
                         key: 'assignee',
-                        default: 'PROCESS_PROPERTIES.CREATED_BY_DEFAULT'
+                        default: 'ADF_PROCESS_LIST.PROPERTIES.CREATED_BY_DEFAULT'
                     }),
                 new CardViewDateItemModel(
                     {
-                        label: 'PROCESS_PROPERTIES.CREATED',
+                        label: 'ADF_PROCESS_LIST.PROPERTIES.CREATED',
                         value: this.processInstance.started,
                         format: 'MMM DD YYYY',
                         key: 'created'
                     }),
                 new CardViewTextItemModel(
-                    {label: 'PROCESS_PROPERTIES.ID',
+                    {label: 'ADF_PROCESS_LIST.PROPERTIES.ID',
                     value: this.processInstance.id,
                     key: 'id'
                 }),
                 new CardViewTextItemModel(
-                    {label: 'PROCESS_PROPERTIES.DESCRIPTION',
+                    {label: 'ADF_PROCESS_LIST.PROPERTIES.DESCRIPTION',
                     value: this.processInstance.processDefinitionDescription,
                     key: 'description',
-                    default: 'PROCESS_PROPERTIES.DESCRIPTION_DEFAULT'
+                    default: 'ADF_PROCESS_LIST.PROPERTIES.DESCRIPTION_DEFAULT'
                 })
             ];
         }

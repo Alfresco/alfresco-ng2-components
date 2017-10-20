@@ -93,7 +93,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.ngOnChanges({});
         fixture.detectChanges();
         let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-dateitem-dueDate"]');
-        expect(valueEl.innerText).toBe('PROCESS_PROPERTIES.DUE_DATE_DEFAULT');
+        expect(valueEl.innerText).toBe('ADF_PROCESS_LIST.PROPERTIES.DUE_DATE_DEFAULT');
     });
 
     it('should display process category', () => {
@@ -109,7 +109,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.ngOnChanges({});
         fixture.detectChanges();
         let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-category"]');
-        expect(valueEl.innerText).toBe('PROCESS_PROPERTIES.CATEGORY_DEFAULT');
+        expect(valueEl.innerText).toBe('ADF_PROCESS_LIST.PROPERTIES.CATEGORY_DEFAULT');
     });
 
     it('should display created date', () => {
@@ -149,6 +149,6 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.ngOnChanges({});
         fixture.detectChanges();
         let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-description"]');
-        expect(valueEl.innerText).toBe('PROCESS_PROPERTIES.DESCRIPTION_DEFAULT');
+        expect(valueEl.innerText).toBe('ADF_PROCESS_LIST.PROPERTIES.DESCRIPTION_DEFAULT');
     });
 });
