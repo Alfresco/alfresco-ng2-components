@@ -96,6 +96,10 @@
             letter-spacing: -2px;
             color: mat-color($foreground, text);
             margin-top: 40px;
+
+            @media screen and (max-width: 599px) {
+                font-size: 48px;
+            }
         }
 
         &-any-files-here-to-add {
@@ -113,6 +117,10 @@
             max-width: 100%;
             object-fit: contain;
             margin-top: 17px;
+
+            @media screen and (max-width: 599px) {
+                width: 250px;
+            }
         }
     }
 }

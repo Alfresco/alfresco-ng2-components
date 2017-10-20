@@ -28,6 +28,10 @@ adf-datatable  ::ng-deep .data-cell {
     letter-spacing: -2px;
     color: #000000;
     margin-top: 40px;
+
+    @media screen and (max-width: 599px) {
+        font-size: 40px;
+    }
 }
 
 .adf-empty-list__any-files-here-to-add {
@@ -42,7 +46,12 @@ adf-datatable  ::ng-deep .data-cell {
 
 .adf-empty-list__empty_doc_lib {
     width: 565px;
+    max-width: 100%;
     height: 161px;
     object-fit: contain;
     margin-top: 17px;
+
+    @media screen and (max-width: 599px) {
+        width: 250px;
+    }
 }
