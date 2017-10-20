@@ -62,6 +62,33 @@ describe('AppConfigService', () => {
         expect(service).toBeDefined();
     });
 
+    it('should skip the optional port number', () => {
+        appConfigService.config.testUrl = 'http://{hostname}{:port}';
+
+        spyOn(appConfigService, 'getLocationHostname').and.returnValue('localhost');
+        spyOn(appConfigService, 'getLocationPort').and.returnValue('');
+
+        expect(appConfigService.get('testUrl')).toBe('http://localhost');
+    });
+
+    it('should set the optional port number', () => {
+        appConfigService.config.testUrl = 'http://{hostname}{:port}';
+
+        spyOn(appConfigService, 'getLocationHostname').and.returnValue('localhost');
+        spyOn(appConfigService, 'getLocationPort').and.returnValue(':9090');
+
+        expect(appConfigService.get('testUrl')).toBe('http://localhost:9090');
+    });
+
+    it('should set the mandatory port number', () => {
+        appConfigService.config.testUrl = 'http://{hostname}:{port}';
+
+        spyOn(appConfigService, 'getLocationHostname').and.returnValue('localhost');
+        spyOn(appConfigService, 'getLocationPort').and.returnValue('9090');
+
+        expect(appConfigService.get('testUrl')).toBe('http://localhost:9090');
+    });
+
     it('should load external settings', () => {
         appConfigService.load().then(config => {
             expect(config).toEqual(mockResponse);

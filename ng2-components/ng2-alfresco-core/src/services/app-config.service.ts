@@ -28,8 +28,8 @@ export class AppConfigService {
         application: {
             name: 'Alfresco ADF Application'
         },
-        ecmHost: 'http://{hostname}:{port}/ecm',
-        bpmHost: 'http://{hostname}:{port}/bpm'
+        ecmHost: 'http://{hostname}{:port}/ecm',
+        bpmHost: 'http://{hostname}{:port}/bpm'
     };
 
     constructor(private http: Http) {}
@@ -38,14 +38,23 @@ export class AppConfigService {
         let result: any = ObjectUtils.getValue(this.config, key);
         if (typeof result === 'string') {
             const map = new Map<string, string>();
-            map.set('hostname', location.hostname);
-            map.set('port', location.port);
+            map.set('hostname', this.getLocationHostname());
+            map.set(':port', this.getLocationPort(':'));
+            map.set('port', this.getLocationPort());
             result = this.formatString(result, map);
         }
         if (result === undefined) {
             return defaultValue;
         }
         return <T> result;
+    }
+
+    getLocationHostname(): string {
+        return location.hostname;
+    }
+
+    getLocationPort(prefix: string = ''): string {
+        return location.port ? prefix + location.port : '';
     }
 
     load(): Promise<any> {
