@@ -21,6 +21,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { LogService, ThumbnailService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { FormService } from '../../../services/form.service';
+import { ProcessContentService } from '../../../services/process-content.service';
 import { ContentLinkModel } from '../core/content-link.model';
 import { baseHost, WidgetComponent } from './../widget.component';
 
@@ -40,7 +41,8 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
 
     constructor(public formService: FormService,
                 private logService: LogService,
-                private thumbnailService: ThumbnailService) {
+                private thumbnailService: ThumbnailService,
+                public processContentService: ProcessContentService) {
         super(formService);
     }
 
@@ -66,8 +68,7 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
         let files = event.target.files;
         let filesSaved = [];
         if (files && files.length > 0) {
-            Observable.from(files).
-                flatMap(file => this.uploadRawContent(file)).subscribe((res) => {
+            Observable.from(files).flatMap(file => this.uploadRawContent(file)).subscribe((res) => {
                     filesSaved.push(res);
                 },
                 (error) => {
@@ -77,11 +78,13 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
                     this.field.value = filesSaved;
                     this.field.json.value = filesSaved;
                 });
+
+            this.hasFile = true;
         }
     }
 
     private uploadRawContent(file): Observable<any> {
-        return this.formService.createTemporaryRawRelatedContent(file)
+        return this.processContentService.createTemporaryRawRelatedContent(file)
             .map((response: any) => {
                 this.logService.info(response);
                 return response;
@@ -115,7 +118,7 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     fileClicked(file: ContentLinkModel): void {
-        this.formService.getFileRawContent(file.id).subscribe(
+        this.processContentService.getFileRawContent(file.id).subscribe(
             (blob: Blob) => {
                 file.contentBlob = blob;
                 this.formService.formContentClicked.next(file);

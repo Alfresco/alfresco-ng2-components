@@ -17,10 +17,12 @@
 
  /* tslint:disable:component-selector  */
 
-export class ContentLinkModel {
+ import { RelatedContentRepresentation } from 'alfresco-js-api';
+
+ export class ContentLinkModel implements RelatedContentRepresentation {
 
     contentAvailable: boolean;
-    created: string;
+    created: Date;
     createdBy: any;
     id: number;
     link: boolean;

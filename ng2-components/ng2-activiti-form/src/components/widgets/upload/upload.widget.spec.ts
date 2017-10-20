@@ -21,6 +21,7 @@ import { By } from '@angular/platform-browser';
 import { CoreModule } from 'ng2-alfresco-core';
 import { EcmModelService } from '../../../services/ecm-model.service';
 import { FormService } from '../../../services/form.service';
+import { ProcessContentService } from '../../../services/process-content.service';
 import { MaterialModule } from '../../material.module';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormModel } from '../core/form.model';
@@ -32,7 +33,7 @@ let fakePngAnswer = {
     'id': 1155,
     'name': 'a_png_file.png',
     'created': '2017-07-25T17:17:37.099Z',
-    'createdBy': { 'id': 1001, 'firstName': 'Admin', 'lastName': 'admin', 'email': 'admin' },
+    'createdBy': {'id': 1001, 'firstName': 'Admin', 'lastName': 'admin', 'email': 'admin'},
     'relatedContent': false,
     'contentAvailable': true,
     'link': false,
@@ -46,7 +47,7 @@ let fakeJpgAnswer = {
     'id': 1156,
     'name': 'a_jpg_file.jpg',
     'created': '2017-07-25T17:17:37.118Z',
-    'createdBy': { 'id': 1001, 'firstName': 'Admin', 'lastName': 'admin', 'email': 'admin' },
+    'createdBy': {'id': 1001, 'firstName': 'Admin', 'lastName': 'admin', 'email': 'admin'},
     'relatedContent': false,
     'contentAvailable': true,
     'link': false,
@@ -60,51 +61,8 @@ declare let jasmine: any;
 
 describe('UploadWidgetComponent', () => {
 
-    let widget: UploadWidgetComponent;
-    let formService: FormService;
-    let filePngFake = new File(['fakePng'], 'file-fake.png', { type: 'image/png' });
-    let filJpgFake = new File(['fakeJpg'], 'file-fake.jpg', { type: 'image/jpg' });
-
-    beforeEach(() => {
-        formService = new FormService(null, null, null);
-        widget = new UploadWidgetComponent(formService, null, null);
-    });
-
-    it('should setup with field data', () => {
-        const fileName = 'hello world';
-        const encodedFileName = encodeURI(fileName);
-
-        widget.field = new FormFieldModel(null, {
-            type: FormFieldTypes.UPLOAD,
-            value: [
-                { name: encodedFileName }
-            ]
-        });
-
-        widget.ngOnInit();
-        expect(widget.hasFile).toBeTruthy();
-    });
-
-    it('should require form field to setup', () => {
-        widget.field = null;
-        widget.ngOnInit();
-
-        expect(widget.hasFile).toBeFalsy();
-    });
-
-    it('should reset field value', () => {
-        widget.field = new FormFieldModel(new FormModel(), {
-            type: FormFieldTypes.UPLOAD,
-            value: [
-                { name: 'filename' }
-            ]
-        });
-
-        widget.reset(widget.field.value[0]);
-        expect(widget.field.value).toBeNull();
-        expect(widget.field.json.value).toBeNull();
-        expect(widget.hasFile).toBeFalsy();
-    });
+    let filePngFake = new File(['fakePng'], 'file-fake.png', {type: 'image/png'});
+    let filJpgFake = new File(['fakeJpg'], 'file-fake.jpg', {type: 'image/jpg'});
 
     describe('when template is ready', () => {
         let uploadWidgetComponent: UploadWidgetComponent;
@@ -118,7 +76,7 @@ describe('UploadWidgetComponent', () => {
             TestBed.configureTestingModule({
                 imports: [CoreModule, MaterialModule],
                 declarations: [UploadWidgetComponent, ErrorWidgetComponent],
-                providers: [FormService, EcmModelService]
+                providers: [FormService, EcmModelService, ProcessContentService]
             }).compileComponents().then(() => {
                 fixture = TestBed.createComponent(UploadWidgetComponent);
                 uploadWidgetComponent = fixture.componentInstance;
@@ -127,14 +85,55 @@ describe('UploadWidgetComponent', () => {
             });
         }));
 
+        beforeEach(() => {
+            jasmine.Ajax.install();
+
+        });
+
         afterEach(() => {
             fixture.destroy();
             TestBed.resetTestingModule();
             jasmine.Ajax.uninstall();
         });
 
+        it('should setup with field data', () => {
+            const fileName = 'hello world';
+            const encodedFileName = encodeURI(fileName);
+
+            uploadWidgetComponent.field = new FormFieldModel(null, {
+                type: FormFieldTypes.UPLOAD,
+                value: [
+                    {name: encodedFileName}
+                ]
+            });
+
+            uploadWidgetComponent.ngOnInit();
+            expect(uploadWidgetComponent.hasFile).toBeTruthy();
+        });
+
+        it('should require form field to setup', () => {
+            uploadWidgetComponent.field = null;
+            uploadWidgetComponent.ngOnInit();
+
+            expect(uploadWidgetComponent.hasFile).toBeFalsy();
+        });
+
+        it('should reset field value', () => {
+            uploadWidgetComponent.field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.UPLOAD,
+                value: [
+                    {name: 'filename'}
+                ]
+            });
+
+            uploadWidgetComponent.reset(uploadWidgetComponent.field.value[0]);
+            expect(uploadWidgetComponent.field.value).toBeNull();
+            expect(uploadWidgetComponent.field.json.value).toBeNull();
+            expect(uploadWidgetComponent.hasFile).toBeFalsy();
+        });
+
         beforeEach(() => {
-            uploadWidgetComponent.field = new FormFieldModel(new FormModel({ taskId: 'fake-upload-id' }), {
+            uploadWidgetComponent.field = new FormFieldModel(new FormModel({taskId: 'fake-upload-id'}), {
                 id: 'upload-id',
                 name: 'upload-name',
                 value: '',
@@ -142,7 +141,6 @@ describe('UploadWidgetComponent', () => {
                 readOnly: false
             });
             formServiceInstance = TestBed.get(FormService);
-            jasmine.Ajax.install();
         });
 
         it('should be disabled on readonly forms', async(() => {
@@ -184,11 +182,28 @@ describe('UploadWidgetComponent', () => {
             });
         }));
 
+        it('should show the list file after upload a new content', async(() => {
+            uploadWidgetComponent.field.params.multiple = false;
+            fixture.detectChanges();
+            let inputDebugElement = fixture.debugElement.query(By.css('#upload-id'));
+            inputDebugElement.triggerEventHandler('change', {target: {files: [filJpgFake]}});
+
+            jasmine.Ajax.requests.at(0).respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: fakeJpgAnswer
+            });
+
+            let filesList = fixture.debugElement.query(By.css('#file-1156'));
+            expect(filesList).toBeDefined();
+
+        }));
+
         it('should set has field value all the files uploaded', async(() => {
             uploadWidgetComponent.field.params.multiple = true;
             fixture.detectChanges();
             let inputDebugElement = fixture.debugElement.query(By.css('#upload-id'));
-            inputDebugElement.triggerEventHandler('change', { target: { files: [filePngFake, filJpgFake] } });
+            inputDebugElement.triggerEventHandler('change', {target: {files: [filePngFake, filJpgFake]}});
 
             jasmine.Ajax.requests.at(0).respondWith({
                 status: 200,
@@ -376,6 +391,8 @@ describe('UploadWidgetComponent', () => {
 
         });
 
-    });
+    })
+    ;
 
-});
+})
+;

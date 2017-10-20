@@ -18,6 +18,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { ContentService, LogService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
+import { ProcessContentService } from '../../../services/process-content.service';
 import { ContentLinkModel } from '../core/content-link.model';
 import { FormService } from './../../../services/form.service';
 
@@ -51,7 +52,8 @@ export class ContentWidgetComponent implements OnChanges {
 
     constructor(protected formService: FormService,
                 private logService: LogService,
-                private contentService: ContentService) {
+                private contentService: ContentService,
+                private processContentService: ProcessContentService) {
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -62,7 +64,7 @@ export class ContentWidgetComponent implements OnChanges {
     }
 
     loadContent(id: number) {
-        this.formService
+        this.processContentService
             .getFileContent(id)
             .subscribe(
                 (response: ContentLinkModel) => {
@@ -81,9 +83,9 @@ export class ContentWidgetComponent implements OnChanges {
             let observable: Observable<any>;
 
             if (this.content.isTypeImage()) {
-                observable = this.formService.getFileRawContent(content.id);
+                observable = this.processContentService.getFileRawContent(content.id);
             } else {
-                observable = this.formService.getContentThumbnailUrl(content.id);
+                observable = this.processContentService.getContentThumbnailUrl(content.id);
             }
 
             if (observable) {
@@ -102,7 +104,7 @@ export class ContentWidgetComponent implements OnChanges {
     }
 
     openViewer(content: ContentLinkModel): void {
-        this.formService.getFileRawContent(content.id).subscribe(
+        this.processContentService.getFileRawContent(content.id).subscribe(
             (blob: Blob) => {
                 content.contentBlob = blob;
                 this.contentClick.emit(content);
@@ -119,7 +121,7 @@ export class ContentWidgetComponent implements OnChanges {
      * Invoke content download.
      */
     download(content: ContentLinkModel): void {
-        this.formService.getFileRawContent(content.id).subscribe(
+        this.processContentService.getFileRawContent(content.id).subscribe(
             (blob: Blob) => this.contentService.downloadBlob(blob, content.name),
             (error) => {
                 this.error.emit(error);
