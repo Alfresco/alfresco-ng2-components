@@ -20,7 +20,7 @@ import { AppConfigService } from '../../services/app-config.service';
 import { UserPreferencesService } from '../../services/user-preferences.service';
 
 @Component({
-    selector: 'adf-lanugage-menu',
+    selector: 'adf-language-menu',
     template: `
             <button mat-menu-item *ngFor="let language of languages" (click)="changeLanguage(language.key)">{{language.label}}</button>
     `

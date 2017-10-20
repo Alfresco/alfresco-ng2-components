@@ -25,7 +25,7 @@ How to attach an ADF Language Menu as main menu
     <mat-icon>language</mat-icon>
 </button>
 <mat-menu #langMenu="matMenu">
-    <adf-lanugage-menu></adf-lanugage-menu>
+    <adf-language-menu></adf-language-menu>
 </mat-menu>
 ```
 
@@ -70,7 +70,7 @@ How to attach an ADF Language Menu as nested menu
     <button md-menu-item>sign-out</button>
 </md-menu>
 <md-menu #langMenu="mdMenu">
-    <adf-lanugage-menu></adf-lanugage-menu>
+    <adf-language-menu></adf-language-menu>
 </md-menu>
 ```
 ![Nested Language Menu screenshot](docassets/images/languages-menu-nested.png)
