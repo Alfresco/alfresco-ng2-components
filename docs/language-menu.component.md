@@ -10,7 +10,7 @@ Displays all the languages that are present in the "app.config.json" or the defa
 
 - [Basic usage](#basic-usage)
 - [Details](#details)
-- [Nested menu lanugages](#nested-menu-languages)
+- [Nested menu language](#nested-menu-language)
 - [Nested menu details](#nested-menu-details)
 <!-- tocstop -->
 
@@ -56,7 +56,7 @@ In case no setting is provided, the component shows only the English language.
 <!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
 <!-- seealso start -->
 
-## Nested Menu lanugages
+## Nested Menu language
 
 How to attach an ADF Language Menu as nested menu
 
