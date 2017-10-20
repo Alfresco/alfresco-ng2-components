@@ -20,24 +20,13 @@
                     <span>{{ displayName }}</span>
                 </adf-toolbar-title>
 
-                <ng-container *ngIf="allowOpenWith">
+                <ng-container *ngIf="mnuOpenWith">
                     <button mat-button [matMenuTriggerFor]="mnuOpenWith">
                         <span>{{ 'ADF_VIEWER.ACTIONS.OPEN_WITH' | translate }}</span>
                         <mat-icon>arrow_drop_down</mat-icon>
                     </button>
                     <mat-menu #mnuOpenWith="matMenu" [overlapTrigger]="false">
-                        <button mat-menu-item>
-                            <mat-icon>dialpad</mat-icon>
-                            <span>Option 1</span>
-                        </button>
-                        <button mat-menu-item disabled>
-                            <mat-icon>voicemail</mat-icon>
-                            <span>Option 2</span>
-                        </button>
-                        <button mat-menu-item>
-                            <mat-icon>notifications_off</mat-icon>
-                            <span>Option 3</span>
-                        </button>
+                        <ng-content select="adf-viewer-open-with"></ng-content>
                     </mat-menu>
                 </ng-container>
 
@@ -55,23 +44,12 @@
                     <mat-icon>share</mat-icon>
                 </button>
 
-                <ng-container *ngIf="allowMoreActions">
+                <ng-container *ngIf="mnuMoreActions">
                     <button mat-icon-button [matMenuTriggerFor]="mnuMoreActions" matTooltip="{{ 'ADF_VIEWER.ACTIONS.MORE_ACTIONS' | translate }}">
                         <mat-icon>more_vert</mat-icon>
                     </button>
-                    <mat-menu #mnuMoreActions="matMenu">
-                        <button mat-menu-item>
-                            <mat-icon>dialpad</mat-icon>
-                            <span>Action One</span>
-                        </button>
-                        <button mat-menu-item disabled>
-                            <mat-icon>voicemail</mat-icon>
-                            <span>Action Two</span>
-                        </button>
-                        <button mat-menu-item>
-                            <mat-icon>notifications_off</mat-icon>
-                            <span>Action Three</span>
-                        </button>
+                    <mat-menu #mnuMoreActions="matMenu" [overlapTrigger]="false">
+                        <ng-content select="adf-viewer-more-actions"></ng-content>
                     </mat-menu>
                 </ng-container>
 

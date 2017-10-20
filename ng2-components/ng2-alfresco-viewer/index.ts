@@ -25,6 +25,8 @@ import { PdfViewerComponent } from './src/components/pdfViewer.component';
 import { TxtViewerComponent } from './src/components/txtViewer.component';
 import { UnknownFormatComponent } from './src/components/unknown-format/unknown-format.component';
 import { ViewerInfoDrawerComponent } from './src/components/viewer-info-drawer.component';
+import { ViewerMoreActionsComponent } from './src/components/viewer-more-actions.component';
+import { ViewerOpenWithComponent } from './src/components/viewer-open-with.component';
 import { ViewerToolbarComponent } from './src/components/viewer-toolbar.component';
 import { ViewerComponent } from './src/components/viewer.component';
 import { ExtensionViewerDirective } from './src/directives/extension-viewer.directive';
@@ -42,7 +44,9 @@ export function declarations() {
         ExtensionViewerDirective,
         UnknownFormatComponent,
         ViewerToolbarComponent,
-        ViewerInfoDrawerComponent
+        ViewerInfoDrawerComponent,
+        ViewerOpenWithComponent,
+        ViewerMoreActionsComponent
     ];
 }
 
