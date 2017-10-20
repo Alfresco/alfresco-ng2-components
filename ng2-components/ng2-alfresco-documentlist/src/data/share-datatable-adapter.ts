@@ -145,8 +145,15 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     }
 
     setSorting(sorting: DataSorting): void {
+        const options: Intl.CollatorOptions = {};
+
         this.sorting = sorting;
-        this.sortRows(this.rows, this.sorting);
+
+        if (sorting.key && sorting.key.includes('sizeInBytes')) {
+            options.numeric =  true;
+        }
+
+        this.sortRows(this.rows, this.sorting, options);
     }
 
     sort(key?: string, direction?: string): void {
@@ -166,7 +173,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         this.imageResolver = resolver;
     }
 
-    private sortRows(rows: DataRow[], sorting: DataSorting) {
+    private sortRows(rows: DataRow[], sorting: DataSorting, options?: Intl.CollatorOptions) {
         if (sorting && sorting.key && rows && rows.length > 0) {
             rows.sort((a: ShareDataRow, b: ShareDataRow) => {
                 if (a.node.entry.isFolder !== b.node.entry.isFolder) {
@@ -188,8 +195,8 @@ export class ShareDataTableAdapter implements DataTableAdapter {
                 }
 
                 return sorting.direction === 'asc'
-                    ? left.localeCompare(right)
-                    : right.localeCompare(left);
+                    ? left.localeCompare(right, undefined, options)
+                    : right.localeCompare(left, undefined, options);
             });
         }
     }

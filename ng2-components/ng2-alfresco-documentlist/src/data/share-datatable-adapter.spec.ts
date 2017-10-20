@@ -343,6 +343,42 @@ describe('ShareDataTableAdapter', () => {
         expect((<ShareDataRow> rows[1]).node).toBe(file1);
     });
 
+    it('should sort by file size', () => {
+        let file1 = new FileNode('file1');
+        let file2 = new FileNode('file2');
+        let file3 = new FileNode('file3');
+        let file4 = new FileNode('file4');
+
+        file1.entry.content.sizeInBytes = 146; // 146 bytes
+        file2.entry.content.sizeInBytes = 10075; // 9.84 KB
+        file3.entry.content.sizeInBytes = 4224120; // 4.03 MB
+        file4.entry.content.sizeInBytes = 2852791665; // 2.66 GB
+
+        let col = <DataColumn> {key: 'content.sizeInBytes'};
+        let adapter = new ShareDataTableAdapter(documentListService, [col]);
+
+        adapter.setRows([
+            new ShareDataRow(file3, documentListService, null),
+            new ShareDataRow(file4, documentListService, null),
+            new ShareDataRow(file1, documentListService, null),
+            new ShareDataRow(file2, documentListService, null)
+        ]);
+
+        adapter.sort('content.sizeInBytes', 'asc');
+        let rows = adapter.getRows();
+
+        expect((<ShareDataRow> rows[0]).node).toBe(file1);
+        expect((<ShareDataRow> rows[1]).node).toBe(file2);
+        expect((<ShareDataRow> rows[2]).node).toBe(file3);
+        expect((<ShareDataRow> rows[3]).node).toBe(file4);
+
+        adapter.sort('content.sizeInBytes', 'desc');
+        expect((<ShareDataRow> rows[0]).node).toBe(file4);
+        expect((<ShareDataRow> rows[1]).node).toBe(file3);
+        expect((<ShareDataRow> rows[2]).node).toBe(file2);
+        expect((<ShareDataRow> rows[3]).node).toBe(file1);
+    });
+
 });
 
 describe('ShareDataRow', () => {
