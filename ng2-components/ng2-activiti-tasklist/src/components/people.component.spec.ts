@@ -97,7 +97,7 @@ describe('PeopleComponent', () => {
         fixture.whenStable()
             .then(() => {
                 expect(element.querySelector('#no-people-label')).not.toBeNull();
-                expect(element.querySelector('#no-people-label').textContent).toContain('TASK_DETAILS.PEOPLE.NONE');
+                expect(element.querySelector('#no-people-label').textContent).toContain('ADF_TASK_LIST.DETAILS.PEOPLE.NONE');
             });
     });
 

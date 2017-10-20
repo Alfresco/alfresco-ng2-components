@@ -1,10 +1,10 @@
 <div *ngIf="!taskDetails">
     <ng-template *ngIf="noTaskDetailsTemplateComponent" ngFor [ngForOf]="[data]"
                  [ngForTemplate]="noTaskDetailsTemplateComponent">
-        {{ 'TASK_DETAILS.MESSAGES.NONE' | translate }}
+        {{ 'ADF_TASK_LIST.DETAILS.MESSAGES.NONE' | translate }}
     </ng-template>
     <div *ngIf="!noTaskDetailsTemplateComponent">
-        {{ 'TASK_DETAILS.MESSAGES.NONE' | translate }}
+        {{ 'ADF_TASK_LIST.DETAILS.MESSAGES.NONE' | translate }}
     </div>
 </div>
 <div *ngIf="taskDetails" class="adf-task-details">
@@ -43,29 +43,29 @@
                 </adf-form>
             </div>
             <div *ngIf="!isAssigned()">
-                {{ 'TASK_DETAILS.MESSAGES.CLAIM' | translate }}
+                {{ 'ADF_TASK_LIST.DETAILS.MESSAGES.CLAIM' | translate }}
             </div>
             <button mat-raised-button class="activiti-task-details__action-button"
                     *ngIf="!hasFormKey() && isTaskActive()" (click)="onComplete()">
-                {{ 'TASK_DETAILS.BUTTON.COMPLETE' | translate }}
+                {{ 'ADF_TASK_LIST.DETAILS.BUTTON.COMPLETE' | translate }}
             </button>
         </div>
         <div class="adf-task-details-core-sidebar">
-            <adf-info-drawer *ngIf="showHeaderContent" title="{{ 'TASK_DETAILS.LABELS.INFO_DRAWER_TITLE' | translate }}" class="adf-task-details-core-sidebar-drawer">
+            <adf-info-drawer *ngIf="showHeaderContent" title="{{ 'ADF_TASK_LIST.DETAILS.LABELS.INFO_DRAWER_TITLE' | translate }}" class="adf-task-details-core-sidebar-drawer">
                 <div info-drawer-buttons>
                     <mat-icon (click)="toggleHeaderContent()">clear</mat-icon>
                 </div>
 
-                <adf-info-drawer-tab label="{{ 'TASK_DETAILS.LABELS.INFO_DRAWER_TAB_DETAILS_TITLE' | translate }}">
+                <adf-info-drawer-tab label="{{ 'ADF_TASK_LIST.DETAILS.LABELS.INFO_DRAWER_TAB_DETAILS_TITLE' | translate }}">
                     <div class="assignment-container" *ngIf="showAssignee">
                         <adf-people-search
                             (searchPeople)="searchUser($event)"
                             (success)="assignTaskToUser($event)"
                             (closeSearch)="onCloseSearch()"
                             [results]="peopleSearch$">
-                            <ng-container people-search-title>{{ 'TASK_DETAILS.LABELS.ADD_ASSIGNEE' | translate }}
+                            <ng-container people-search-title>{{ 'ADF_TASK_LIST.DETAILS.LABELS.ADD_ASSIGNEE' | translate }}
                             </ng-container>
-                            <ng-container people-search-action-label>{{ 'PEOPLE.ADD_ASSIGNEE' | translate }}
+                            <ng-container people-search-action-label>{{ 'ADF_TASK_LIST.PEOPLE.ADD_ASSIGNEE' | translate }}
                             </ng-container>
                         </adf-people-search>
                     </div>
@@ -84,7 +84,7 @@
                     </adf-people>
                 </adf-info-drawer-tab>
 
-                <adf-info-drawer-tab label="{{ 'TASK_DETAILS.LABELS.INFO_DRAWER_TAB_ACTIVITY_TITLE' | translate }}">
+                <adf-info-drawer-tab label="{{ 'ADF_TASK_LIST.DETAILS.LABELS.INFO_DRAWER_TAB_ACTIVITY_TITLE' | translate }}">
                     <mat-card *ngIf="showComments">
                         <mat-card-content>
                             <adf-comments #activiticomments
@@ -112,12 +112,12 @@
     </div>
 
     <ng-template #errorDialog>
-        <h3 matDialogTitle>{{'TASK_DETAILS.ERROR.TITLE'|translate}}</h3>
+        <h3 matDialogTitle>{{'ADF_TASK_LIST.DETAILS.ERROR.TITLE'|translate}}</h3>
         <mat-dialog-content>
-            <p>{{'TASK_DETAILS.ERROR.DESCRIPTION'|translate}}</p>
+            <p>{{'ADF_TASK_LIST.DETAILS.ERROR.DESCRIPTION'|translate}}</p>
         </mat-dialog-content>
         <mat-dialog-actions>
-            <button mat-button type="button" (click)="closeErrorDialog()">{{'TASK_DETAILS.ERROR.CLOSE'|translate}}
+            <button mat-button type="button" (click)="closeErrorDialog()">{{'ADF_TASK_LIST.DETAILS.ERROR.CLOSE'|translate}}
             </button>
         </mat-dialog-actions>
     </ng-template>

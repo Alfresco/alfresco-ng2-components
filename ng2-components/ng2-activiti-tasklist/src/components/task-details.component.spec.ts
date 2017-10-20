@@ -117,7 +117,7 @@ describe('TaskDetailsComponent', () => {
 
     it('should set a placeholder message when taskId not initialised', () => {
         fixture.detectChanges();
-        expect(fixture.nativeElement.innerText).toBe('TASK_DETAILS.MESSAGES.NONE');
+        expect(fixture.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.MESSAGES.NONE');
     });
 
     it('shoud display a form when the task has an associated form', () => {
@@ -170,7 +170,7 @@ describe('TaskDetailsComponent', () => {
         it('should set a placeholder message when taskId changed to null', () => {
             component.ngOnChanges({'taskId': nullChange});
             fixture.detectChanges();
-            expect(fixture.nativeElement.innerText).toBe('TASK_DETAILS.MESSAGES.NONE');
+            expect(fixture.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.MESSAGES.NONE');
         });
     });
 
@@ -217,7 +217,7 @@ describe('TaskDetailsComponent', () => {
             getTasksSpy.and.returnValue(Observable.of(noDataMock));
             component.onComplete();
             fixture.detectChanges();
-            expect(fixture.nativeElement.innerText).toBe('TASK_DETAILS.MESSAGES.NONE');
+            expect(fixture.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.MESSAGES.NONE');
         });
 
         it('should emit an error event if an error occurs fetching the next task', () => {

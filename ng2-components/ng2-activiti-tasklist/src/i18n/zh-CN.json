@@ -1,117 +1,119 @@
 {
-  "APPS": {
-    "NONE": "未找到应用程序"
-  },
-  "TASK_LIST": {
-    "MESSAGES": {
-      "NONE": "未找到任务列表"
-    }
-  },
-  "TASK_DETAILS": {
-    "LABELS": {
-      "ASSIGNEE": "被指派者",
-      "DUE": "截止时间",
-      "FORM": "表单",
-      "PEOPLE": "此任务分享的人员",
-      "COMMENTS": "注释",
-      "CHECKLIST": "检查表",
-      "INVOLVED_PEOPLE": "涉及的人员",
-      "ADD_PEOPLE": "添加人和组",
-      "ADD_ASSIGNEE": "添加新的被分配人员"
-    },
-    "BUTTON": {
-      "COMPLETE": "完成",
-      "CLAIM": "申领",
-      "UNCLAIM": "重新排队",
-      "DRAG-ATTACHMENT": "将文件放到此处...",
-      "UPLOAD-ATTACHMENT": "上传附件"
-    },
-    "MESSAGES": {
-      "NONE": "未找到任务详情",
-      "CLAIM": "要执行此任务，单击申领。"
-    },
-    "FORM": {
-      "NONE": "无格式。"
-    },
-    "DUE": {
-      "NONE": "无过期时间。"
-    },
-    "ASSIGNEE": {
-      "NONE": "无被分配人员。"
-    },
-    "PEOPLE": {
-      "NONE": "未涉及任何人。"
-    },
-    "COMMENTS": {
-      "NONE": "无注释",
-      "ADD": "添加注释",
-      "HEADER": "注释",
-      "DIALOG": {
-        "TITLE": "新建注释",
-        "LABELS": {
-          "MESSAGE": "消息"
+    "ADF_TASK_LIST": {
+        "APPS": {
+            "NONE": "未找到应用程序"
         },
-        "BUTTON": {
-          "ADD": "添加注释",
-          "CANCEL": "取消"
+        "LIST": {
+            "MESSAGES": {
+                "NONE": "未找到任务列表"
+            }
+        },
+        "DETAILS": {
+            "LABELS": {
+                "ASSIGNEE": "被指派者",
+                "DUE": "截止时间",
+                "FORM": "表单",
+                "PEOPLE": "此任务分享的人员",
+                "COMMENTS": "注释",
+                "CHECKLIST": "检查表",
+                "INVOLVED_PEOPLE": "涉及的人员",
+                "ADD_PEOPLE": "添加人和组",
+                "ADD_ASSIGNEE": "添加新的被分配人员"
+            },
+            "BUTTON": {
+                "COMPLETE": "完成",
+                "CLAIM": "申领",
+                "UNCLAIM": "重新排队",
+                "DRAG-ATTACHMENT": "将文件放到此处...",
+                "UPLOAD-ATTACHMENT": "上传附件"
+            },
+            "MESSAGES": {
+                "NONE": "未找到任务详情",
+                "CLAIM": "要执行此任务，单击申领。"
+            },
+            "FORM": {
+                "NONE": "无格式。"
+            },
+            "DUE": {
+                "NONE": "无过期时间。"
+            },
+            "ASSIGNEE": {
+                "NONE": "无被分配人员。"
+            },
+            "PEOPLE": {
+                "NONE": "未涉及任何人。"
+            },
+            "COMMENTS": {
+                "NONE": "无注释",
+                "ADD": "添加注释",
+                "HEADER": "注释",
+                "DIALOG": {
+                    "TITLE": "新建注释",
+                    "LABELS": {
+                        "MESSAGE": "消息"
+                    },
+                    "BUTTON": {
+                        "ADD": "添加注释",
+                        "CANCEL": "取消"
+                    }
+                }
+            },
+            "CHECKLIST": {
+                "NONE": "没有检查表"
+            },
+            "ERROR": {
+                "TITLE": "无法完成此操作",
+                "DESCRIPTION": "请重试或检查您是否具有访问权。",
+                "CLOSE": "关闭"
+            }
+        },
+        "FILTERS": {
+            "MESSAGES": {
+                "NONE": "未选择任务过滤器。"
+            }
+        },
+        "START_TASK": {
+            "BUTTON": "创建任务",
+            "FORM": {
+                "TITLE": "启动任务",
+                "LABEL": {
+                    "NONE": "无",
+                    "NAME": "名称",
+                    "DESCRIPTION": "说明",
+                    "ATTACHFORM": "附加表单",
+                    "ASSIGNEE": "被指派者",
+                    "FORM": "表单",
+                    "DATE": "选择日期"
+                },
+                "ACTION": {
+                    "START": "启动",
+                    "CANCEL": "取消"
+                },
+                "DATE": {
+                    "ERROR": "日期格式：年/月/日"
+                }
+            }
+        },
+        "PEOPLE": {
+            "DIALOG_CLOSE": "关闭",
+            "ADD_USER": "添加",
+            "ADD_ASSIGNEE": "分配",
+            "SEARCH_USER": "搜索用户",
+            "SEARCH": {
+                "NO_USERS": "没找到涉及的人员"
+            }
+        },
+        "ATTACHMENT": {
+            "EMPTY": {
+                "HEADER": "此列表为空",
+                "DRAG-AND-DROP": {
+                    "TITLE": "拖放",
+                    "SUBTITLE": "要上传文件"
+                }
+            },
+            "EMPTY-LIST": {
+                "HEADER": "没有可用文件"
+            }
         }
-      }
-    },
-    "CHECKLIST": {
-      "NONE": "没有检查表"
-    },
-    "ERROR": {
-      "TITLE": "无法完成此操作",
-      "DESCRIPTION": "请重试或检查您是否具有访问权。",
-      "CLOSE": "关闭"
     }
-  },
-  "TASK_FILTERS": {
-    "MESSAGES": {
-      "NONE": "未选择任务过滤器。"
-    }
-  },
-  "START_TASK": {
-    "BUTTON": "创建任务",
-    "FORM": {
-      "TITLE": "启动任务",
-      "LABEL": {
-        "NONE": "无",
-        "NAME": "名称",
-        "DESCRIPTION": "说明",
-        "ATTACHFORM": "附加表单",
-        "ASSIGNEE": "被指派者",
-        "FORM": "表单",
-        "DATE": "选择日期"
-      },
-      "ACTION": {
-        "START": "启动",
-        "CANCEL": "取消"
-      },
-      "DATE": {
-        "ERROR": "日期格式：年/月/日"
-      }
-    }
-  },
-  "PEOPLE": {
-    "DIALOG_CLOSE": "关闭",
-    "ADD_USER": "添加",
-    "ADD_ASSIGNEE": "分配",
-    "SEARCH_USER": "搜索用户",
-    "SEARCH": {
-      "NO_USERS": "没找到涉及的人员"
-    }
-  },
-  "TASK-ATTACHMENT": {
-    "EMPTY": {
-      "HEADER": "此列表为空",
-      "DRAG-AND-DROP": {
-        "TITLE": "拖放",
-        "SUBTITLE": "要上传文件"
-      }
-    },
-    "EMPTY-LIST": {
-      "HEADER": "没有可用文件"
-    }
-  }
 }

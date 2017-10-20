@@ -80,7 +80,7 @@ describe('TaskHeaderComponent', () => {
         component.ngOnChanges({});
         fixture.detectChanges();
         let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-assignee"] .adf-property-value'));
-        expect(valueEl.nativeElement.innerText).toBe('TASK_PROPERTIES.ASSIGNEE_DEFAULT');
+        expect(valueEl.nativeElement.innerText).toBe('ADF_TASK_LIST.PROPERTIES.ASSIGNEE_DEFAULT');
     });
 
     it('should display created-by', () => {
@@ -117,7 +117,7 @@ describe('TaskHeaderComponent', () => {
             fixture.detectChanges();
 
             let claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
-            expect(claimButton.nativeElement.innerText).toBe('TASK_DETAILS.BUTTON.CLAIM');
+            expect(claimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.CLAIM');
         });
     });
 
@@ -135,7 +135,7 @@ describe('TaskHeaderComponent', () => {
 
         it('should display the requeue button if there is assignee', () => {
             let unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
-            expect(unclaimButton.nativeElement.innerText).toBe('TASK_DETAILS.BUTTON.UNCLAIM');
+            expect(unclaimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.UNCLAIM');
         });
 
         it('should call the service\'s unclaim method on unclaiming' , () => {
@@ -172,7 +172,7 @@ describe('TaskHeaderComponent', () => {
         component.ngOnChanges({});
         fixture.detectChanges();
         let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value'));
-        expect(valueEl.nativeElement.innerText.trim()).toBe('TASK_PROPERTIES.DUE_DATE_DEFAULT');
+        expect(valueEl.nativeElement.innerText.trim()).toBe('ADF_TASK_LIST.PROPERTIES.DUE_DATE_DEFAULT');
     });
 
     it('should display form name', () => {
@@ -188,7 +188,7 @@ describe('TaskHeaderComponent', () => {
         component.ngOnChanges({});
         fixture.detectChanges();
         let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-parentName"] .adf-property-value'));
-        expect(valueEl.nativeElement.innerText.trim()).toEqual('TASK_PROPERTIES.PARENT_NAME_DEFAULT');
+        expect(valueEl.nativeElement.innerText.trim()).toEqual('ADF_TASK_LIST.PROPERTIES.PARENT_NAME_DEFAULT');
     });
 
     it('should display the Parent name value', () => {
@@ -204,7 +204,7 @@ describe('TaskHeaderComponent', () => {
         component.ngOnChanges({});
         fixture.detectChanges();
         let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-formName"] .adf-property-value'));
-        expect(valueEl.nativeElement.innerText).toBe('TASK_PROPERTIES.FORM_NAME_DEFAULT');
+        expect(valueEl.nativeElement.innerText).toBe('ADF_TASK_LIST.PROPERTIES.FORM_NAME_DEFAULT');
     });
 
 });
