@@ -25,8 +25,8 @@ import { ProcessService } from '../services/process.service';
 
 @Component({
     selector: 'adf-process-instance-list, activiti-process-instance-list',
-    styleUrls: ['./processlist.component.css'],
-    templateUrl: './processlist.component.html'
+    styleUrls: ['./process-list.component.css'],
+    templateUrl: './process-list.component.html'
 })
 export class ProcessInstanceListComponent implements OnChanges, AfterContentInit {
 

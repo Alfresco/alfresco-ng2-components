@@ -37,7 +37,7 @@ import { ProcessFiltersComponent } from './src/components/process-filters.compon
 import { ProcessInstanceDetailsComponent } from './src/components/process-instance-details.component';
 import { ProcessInstanceHeaderComponent } from './src/components/process-instance-header.component';
 import { ProcessInstanceTasksComponent } from './src/components/process-instance-tasks.component';
-import { ProcessInstanceListComponent } from './src/components/processlist.component';
+import { ProcessInstanceListComponent } from './src/components/process-list.component';
 import { StartProcessInstanceComponent } from './src/components/start-process.component';
 export {ProcessAttachmentListComponent} from './src/components/process-attachment-list.component';
 export {ProcessCommentsComponent} from './src/components/process-comments.component';
@@ -46,7 +46,7 @@ export {ProcessInstanceDetailsComponent} from './src/components/process-instance
 export {ProcessAuditDirective} from './src/components/process-audit.directive';
 export {ProcessInstanceHeaderComponent} from './src/components/process-instance-header.component';
 export {ProcessInstanceTasksComponent} from './src/components/process-instance-tasks.component';
-export {ProcessInstanceListComponent} from './src/components/processlist.component';
+export {ProcessInstanceListComponent} from './src/components/process-list.component';
 export {StartProcessInstanceComponent} from './src/components/start-process.component';
 
 import { ProcessUploadService } from './src/services/process-upload.service';
@@ -69,7 +69,7 @@ import {ProcessFiltersComponent as ActivitiProcessFilters } from './src/componen
 import {ProcessInstanceDetailsComponent as ActivitiProcessInstanceDetails } from './src/components/process-instance-details.component';
 import {ProcessInstanceHeaderComponent as ActivitiProcessInstanceHeader } from './src/components/process-instance-header.component';
 import {ProcessInstanceTasksComponent as ActivitiProcessInstanceTasks } from './src/components/process-instance-tasks.component';
-import {ProcessInstanceListComponent as ActivitiProcessInstanceListComponent } from './src/components/processlist.component';
+import {ProcessInstanceListComponent as ActivitiProcessInstanceListComponent } from './src/components/process-list.component';
 import {StartProcessInstanceComponent as ActivitiStartProcessInstance } from './src/components/start-process.component';
 import {ProcessService as ActivitiProcessService } from './src/services/process.service';
 export {CreateProcessAttachmentComponent as ActivitiCreateProcessAttachmentComponent } from './src/components/create-process-attachment.component';
@@ -79,7 +79,7 @@ export {ProcessFiltersComponent as ActivitiProcessFilters} from './src/component
 export {ProcessInstanceDetailsComponent as ActivitiProcessInstanceDetails} from './src/components/process-instance-details.component';
 export {ProcessInstanceHeaderComponent as ActivitiProcessInstanceHeader} from './src/components/process-instance-header.component';
 export {ProcessInstanceTasksComponent as ActivitiProcessInstanceTasks} from './src/components/process-instance-tasks.component';
-export {ProcessInstanceListComponent as ActivitiProcessInstanceListComponent} from './src/components/processlist.component';
+export {ProcessInstanceListComponent as ActivitiProcessInstanceListComponent} from './src/components/process-list.component';
 export {StartProcessInstanceComponent as ActivitiStartProcessInstance} from './src/components/start-process.component';
 export {ProcessService as ActivitiProcessService} from './src/services/process.service';
 

@@ -68,7 +68,7 @@
     "process-instance-details.component": [],
     "process-instance-header.component": [],
     "process-instance-tasks.component": [],
-    "processlist.component": [],
+    "process-list.component": [],
     "rating.component": ["like.component"],
     "renditions.service": [],
     "search-control.component": ["search.component"],
