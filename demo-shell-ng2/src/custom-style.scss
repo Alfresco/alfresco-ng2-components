@@ -1,0 +1,46 @@
+@import './app/components/app-layout/app-layout.component.scss';
+
+@import '~ng2-alfresco-core/styles/theming';
+@import '~ng2-alfresco-core/styles/index';
+@import '~ng2-activiti-analytics/styles/index';
+@import '~ng2-activiti-diagrams/styles/index';
+@import '~ng2-activiti-form/styles/index';
+@import '~ng2-activiti-processlist/styles/index';
+@import '~ng2-activiti-tasklist/styles/index';
+@import '~ng2-alfresco-datatable/styles/index';
+@import '~ng2-alfresco-documentlist/styles/index';
+@import '~ng2-alfresco-login/styles/index';
+@import '~ng2-alfresco-upload/styles/index';
+@import '~ng2-alfresco-userinfo/styles/index';
+@import '~ng2-alfresco-search/styles/index';
+
+@import '~@angular/material/theming';
+
+
+@include mat-core();
+
+$custom-typography: mat-typography-config(
+  $font-family: 'Muli, Roboto, "Helvetica Neue", sans-serif'
+);
+@include angular-material-typography($custom-typography);
+
+$primary: mat-palette($alfresco-accent-orange);
+$accent:  mat-palette($alfresco-accent-purple);
+$warn:    mat-palette($alfresco-warn);
+$theme:   mat-light-theme($primary, $accent, $warn);
+
+@include angular-material-theme($theme);
+
+@include adf-app-layout-theme($theme);
+@include alfresco-core-theme($theme);
+@include alfresco-activity-analytics-theme($theme);
+@include alfresco-activity-diagrams-theme($theme);
+@include alfresco-activity-form-theme($theme);
+@include alfresco-activity-processlist-theme($theme);
+@include alfresco-activity-tasklist-theme($theme);
+@include alfresco-datatable-theme($theme);
+@include alfresco-documentlist-theme($theme);
+@include alfresco-login-theme($theme);
+@include alfresco-upload-theme($theme);
+@include alfresco-userinfo-theme($theme);
+@include alfresco-search-theme($theme);

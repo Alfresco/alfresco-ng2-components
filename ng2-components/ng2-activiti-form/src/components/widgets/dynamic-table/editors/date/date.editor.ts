@@ -22,9 +22,9 @@ import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import * as moment from 'moment';
 import { Moment } from 'moment';
 import { MOMENT_DATE_FORMATS, MomentDateAdapter, UserPreferencesService } from 'ng2-alfresco-core';
-import { DynamicTableModel } from './../../dynamic-table.widget.model';
-import { DynamicTableRow } from './../../dynamic-table-row.model';
 import { DynamicTableColumn } from './../../dynamic-table-column.model';
+import { DynamicTableRow } from './../../dynamic-table-row.model';
+import { DynamicTableModel } from './../../dynamic-table.widget.model';
 
 @Component({
     selector: 'adf-date-editor',

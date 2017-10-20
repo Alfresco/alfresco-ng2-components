@@ -21,8 +21,8 @@ import { TimeAgoPipe } from 'ng2-alfresco-core';
 import { DataColumn, DataRow, DataSorting, DataTableAdapter } from 'ng2-alfresco-datatable';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { DocumentListService } from './../services/document-list.service';
-import { RowFilter } from './row-filter.model';
 import { ImageResolver } from './image-resolver.model';
+import { RowFilter } from './row-filter.model';
 import { ShareDataRow } from './share-data-row.model';
 
 export class ShareDataTableAdapter implements DataTableAdapter {

@@ -1,0 +1,120 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../out-tsc/app",
+    "module": "es2015",
+    "baseUrl": "",
+    "types": [],
+    "paths": {
+      "alfresco-js-api": [
+        "../../../alfresco-js-api"
+      ],
+      "ng2-alfresco-core": [
+        "../../ng2-components/ng2-alfresco-core/index.ts"
+      ],
+      "ng2-alfresco-core/*": [
+        "../../ng2-components/ng2-alfresco-core/*"
+      ],
+      "ng2-alfresco-login": [
+        "../../ng2-components/ng2-alfresco-login/index.ts"
+      ],
+      "ng2-alfresco-login/*": [
+        "../../ng2-components/ng2-alfresco-login/*"
+      ],
+      "ng2-alfresco-userinfo": [
+        "../../ng2-components/ng2-alfresco-userinfo/index.ts"
+      ],
+      "ng2-alfresco-userinfo/*": [
+        "../../ng2-components/ng2-alfresco-userinfo/*"
+      ],
+      "ng2-alfresco-search": [
+        "../../ng2-components/ng2-alfresco-search/index.ts"
+      ],
+      "ng2-alfresco-search/*": [
+        "../../ng2-components/ng2-alfresco-search/*"
+      ],
+      "ng2-alfresco-datatable": [
+        "../../ng2-components/ng2-alfresco-datatable/index.ts"
+      ],
+      "ng2-alfresco-datatable/*": [
+        "../../ng2-components/ng2-alfresco-datatable/*"
+      ],
+      "ng2-alfresco-documentlist": [
+        "../../ng2-components/ng2-alfresco-documentlist/index.ts"
+      ],
+      "ng2-alfresco-documentlist/*": [
+        "../../ng2-components/ng2-alfresco-documentlist/*"
+      ],
+      "ng2-alfresco-viewer": [
+        "../../ng2-components/ng2-alfresco-viewer/index.ts"
+      ],
+      "ng2-alfresco-viewer/*": [
+        "../../ng2-components/ng2-alfresco-viewer/*"
+      ],
+      "ng2-alfresco-social": [
+        "../../ng2-components/ng2-alfresco-social/index.ts"
+      ],
+      "ng2-alfresco-social/*": [
+        "../../ng2-components/ng2-alfresco-social/*"
+      ],
+      "ng2-alfresco-tag": [
+        "../../ng2-components/ng2-alfresco-tag/index.ts"
+      ],
+      "ng2-alfresco-tag/*": [
+        "../../ng2-components/ng2-alfresco-tag/*"
+      ],
+      "ng2-alfresco-upload": [
+        "../../ng2-components/ng2-alfresco-upload/index.ts"
+      ],
+      "ng2-alfresco-upload/*": [
+        "../../ng2-components/ng2-alfresco-upload/*"
+      ],
+      "ng2-alfresco-webscript": [
+        "../../ng2-components/ng2-alfresco-webscript/index.ts"
+      ],
+      "ng2-alfresco-webscript/*": [
+        "../../ng2-components/ng2-alfresco-webscript/*"
+      ],
+      "ng2-activiti-analytics": [
+        "../../ng2-components/ng2-activiti-analytics/index.ts"
+      ],
+      "ng2-activiti-analytics/*": [
+        "../../ng2-components/ng2-activiti-analytics/*"
+      ],
+      "ng2-activiti-diagrams": [
+        "../../ng2-components/ng2-activiti-diagrams/index.ts"
+      ],
+      "ng2-activiti-diagrams/*": [
+        "../../ng2-components/ng2-activiti-diagrams/*"
+      ],
+      "ng2-activiti-form": [
+        "../../ng2-components/ng2-activiti-form/index.ts"
+      ],
+      "ng2-activiti-form/*": [
+        "../../ng2-components/ng2-activiti-form/*"
+      ],
+      "ng2-activiti-processlist": [
+        "../../ng2-components/ng2-activiti-processlist/index.ts"
+      ],
+      "ng2-activiti-processlist/*": [
+        "../../ng2-components/ng2-activiti-processlist/*"
+      ],
+      "ng2-activiti-tasklist": [
+        "../../ng2-components/ng2-activiti-tasklist/index.ts"
+      ],
+      "ng2-activiti-tasklist/*": [
+        "../../ng2-components/ng2-activiti-tasklist/*"
+      ],
+      "rxjs/*": [
+        "../node_modules/rxjs/*"
+      ],
+      "@angular/*": [
+        "../node_modules/@angular/*"
+      ]
+    }
+  },
+  "exclude": [
+    "test.ts",
+    "**/*.spec.ts"
+  ]
+}

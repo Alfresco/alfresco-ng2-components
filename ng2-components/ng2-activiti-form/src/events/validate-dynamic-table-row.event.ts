@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { DynamicTableRow } from '../components/widgets/dynamic-table/dynamic-table-row.model';
 import { DynamicRowValidationSummary } from '../components/widgets/dynamic-table/dynamic-row-validation-summary.model';
+import { DynamicTableRow } from '../components/widgets/dynamic-table/dynamic-table-row.model';
 
 import { FormFieldModel, FormModel } from './../components/widgets/core/index';
 import { FormFieldEvent } from './form-field.event';

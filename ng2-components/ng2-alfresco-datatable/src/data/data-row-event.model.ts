@@ -16,7 +16,7 @@
  */
 
 import { BaseUIEvent } from 'ng2-alfresco-core';
-import { DataRow } from './data-row.model'
+import { DataRow } from './data-row.model';
 
 export class DataRowEvent extends BaseUIEvent<DataRow> {
 

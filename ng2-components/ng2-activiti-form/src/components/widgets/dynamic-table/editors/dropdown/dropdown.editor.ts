@@ -20,10 +20,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
 import { FormService } from './../../../../../services/form.service';
-import { DynamicTableModel } from './../../dynamic-table.widget.model';
-import { DynamicTableRow } from './../../dynamic-table-row.model';
-import { DynamicTableColumn } from './../../dynamic-table-column.model';
 import { DynamicTableColumnOption } from './../../dynamic-table-column-option.model';
+import { DynamicTableColumn } from './../../dynamic-table-column.model';
+import { DynamicTableRow } from './../../dynamic-table-row.model';
+import { DynamicTableModel } from './../../dynamic-table.widget.model';
 
 @Component({
     selector: 'adf-dropdown-editor',

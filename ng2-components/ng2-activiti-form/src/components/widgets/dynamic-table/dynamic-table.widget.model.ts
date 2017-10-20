@@ -22,14 +22,13 @@ import { ValidateDynamicTableRowEvent } from '../../../events/validate-dynamic-t
 import { FormService } from './../../../services/form.service';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormWidgetModel } from './../core/form-widget.model';
-import { DynamicTableColumn } from './dynamic-table-column.model';
-import { DynamicTableRow } from './dynamic-table-row.model';
 import { CellValidator } from './cell-validator.model';
-import { RequiredCellValidator } from './required-cell-validator.model';
 import { DateCellValidator } from './date-cell-validator-model';
 import { DynamicRowValidationSummary } from './dynamic-row-validation-summary.model';
+import { DynamicTableColumn } from './dynamic-table-column.model';
+import { DynamicTableRow } from './dynamic-table-row.model';
 import { NumberCellValidator } from './number-cell-validator.model';
-
+import { RequiredCellValidator } from './required-cell-validator.model';
 
 export class DynamicTableModel extends FormWidgetModel {
 

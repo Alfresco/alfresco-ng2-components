@@ -17,10 +17,10 @@
 
 /* tslint:disable:component-selector  */
 
-import { DynamicTableColumn } from './dynamic-table-column.model';
 import { CellValidator } from './cell-validator.model';
-import { DynamicTableRow } from './dynamic-table-row.model';
 import { DynamicRowValidationSummary } from './dynamic-row-validation-summary.model';
+import { DynamicTableColumn } from './dynamic-table-column.model';
+import { DynamicTableRow } from './dynamic-table-row.model';
 
 export class RequiredCellValidator implements CellValidator {
 

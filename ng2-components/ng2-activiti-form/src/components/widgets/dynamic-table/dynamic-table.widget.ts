@@ -23,8 +23,8 @@ import { WidgetVisibilityService } from '../../../services/widget-visibility.ser
 import { FormService } from './../../../services/form.service';
 import { baseHost, WidgetComponent } from './../widget.component';
 import { DynamicTableColumn } from './dynamic-table-column.model';
-import { DynamicTableModel } from './dynamic-table.widget.model';
 import { DynamicTableRow } from './dynamic-table-row.model';
+import { DynamicTableModel } from './dynamic-table.widget.model';
 
 @Component({
     selector: 'dynamic-table-widget',

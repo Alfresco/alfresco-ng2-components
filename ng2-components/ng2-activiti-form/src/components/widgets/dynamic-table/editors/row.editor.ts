@@ -18,10 +18,10 @@
  /* tslint:disable:component-selector  */
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { DynamicTableModel } from './../dynamic-table.widget.model';
-import { DynamicTableRow } from './../dynamic-table-row.model';
-import { DynamicTableColumn } from './../dynamic-table-column.model';
 import { DynamicRowValidationSummary } from './../dynamic-row-validation-summary.model';
+import { DynamicTableColumn } from './../dynamic-table-column.model';
+import { DynamicTableRow } from './../dynamic-table-row.model';
+import { DynamicTableModel } from './../dynamic-table.widget.model';
 
 @Component({
     selector: 'row-editor',
