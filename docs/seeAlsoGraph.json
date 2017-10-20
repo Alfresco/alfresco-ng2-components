@@ -18,12 +18,12 @@
     "context-menu.directive": [],
     "create-process-attachment.component": [],
     "create-task-attachment.component": [],
-    "data-column.component": ["document-list.component", "datatable.component", "tasklist.component"],
+    "data-column.component": ["document-list.component", "datatable.component", "task-list.component"],
     "datatable.component": [
         "data-column.component",
         "pagination.component"
     ],
-    "DataTableAdapter": ["datatable.component", "tasklist.component"],
+    "DataTableAdapter": ["datatable.component", "task-list.component"],
     "diagram.component": [],
     "document-actions.service": [],
     "document-list.component": [
@@ -86,7 +86,7 @@
     "task-details.model": [],
     "task-filters.component": [],
     "task-header.component": [],
-    "tasklist.component": [],
+    "task-list.component": [],
     "theming": [],
     "toolbar-divider.component": [],
     "toolbar-title.component": [],

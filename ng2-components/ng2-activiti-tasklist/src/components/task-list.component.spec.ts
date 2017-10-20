@@ -23,7 +23,7 @@ import { DataTableModule } from 'ng2-alfresco-datatable';
 import { DataRowEvent, ObjectDataRow, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { TaskListService } from '../services/tasklist.service';
-import { TaskListComponent } from './tasklist.component';
+import { TaskListComponent } from './task-list.component';
 
 declare let jasmine: any;
 

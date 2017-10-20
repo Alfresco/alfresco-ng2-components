@@ -295,5 +295,5 @@ Now you can declare columns and assign `desktop-only` class where needed:
 
 - [Document list component](document-list.component.md)
 - [Datatable component](datatable.component.md)
-- [Tasklist component](tasklist.component.md)
+- [Tasklist component](task-list.component.md)
 <!-- seealso end -->
