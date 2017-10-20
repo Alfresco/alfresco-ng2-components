@@ -90,7 +90,7 @@ export class StartTaskComponent implements OnInit {
 
     public start(): void {
         if (this.startTaskmodel.name) {
-            if(this.appId) {
+            if (this.appId) {
                 this.startTaskmodel.category = this.appId.toString();
             }
             this.taskService.createNewTask(new TaskDetailsModel(this.startTaskmodel))

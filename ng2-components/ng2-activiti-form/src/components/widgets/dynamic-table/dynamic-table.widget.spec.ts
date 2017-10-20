@@ -25,7 +25,12 @@ import { EcmModelService } from './../../../services/ecm-model.service';
 import { FormService } from './../../../services/form.service';
 import { FormFieldModel, FormFieldTypes, FormModel } from './../core/index';
 import { DynamicTableWidgetComponent } from './dynamic-table.widget';
-import { DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './dynamic-table.widget.model';
+import { DynamicTableModel } from './dynamic-table.widget.model';
+import { DynamicTableColumn  } from './dynamic-table-column.model';
+import { DynamicTableRow  } from './dynamic-table-row.model';
+
+
+
 import { BooleanEditorComponent } from './editors/boolean/boolean.editor';
 import { DateEditorComponent } from './editors/date/date.editor';
 import { DropdownEditorComponent } from './editors/dropdown/dropdown.editor';

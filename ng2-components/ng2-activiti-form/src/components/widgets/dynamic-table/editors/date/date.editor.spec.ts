@@ -21,7 +21,12 @@ import * as moment from 'moment';
 import { CoreModule } from 'ng2-alfresco-core';
 import { MaterialModule } from '../../../../material.module';
 import { FormFieldModel, FormModel } from '../../../index';
-import { DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './../../dynamic-table.widget.model';
+import { DynamicTableModel } from './../../dynamic-table.widget.model';
+import { DynamicTableColumn  } from './../../dynamic-table-column.model';
+import { DynamicTableRow  } from './../../dynamic-table-row.model';
+
+
+
 import { DateEditorComponent } from './date.editor';
 
 describe('DateEditorComponent', () => {

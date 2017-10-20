@@ -23,12 +23,11 @@ import { EcmModelService } from '../../../../../services/ecm-model.service';
 import { MaterialModule } from '../../../../material.module';
 import { FormService } from './../../../../../services/form.service';
 import { FormFieldModel, FormModel } from './../../../core/index';
-import {
-    DynamicTableColumn,
-    DynamicTableColumnOption,
-    DynamicTableModel,
-    DynamicTableRow
-} from './../../dynamic-table.widget.model';
+import { DynamicTableModel } from './../../dynamic-table.widget.model';
+import { DynamicTableColumn  } from './../../dynamic-table-column.model';
+import { DynamicTableColumnOption  } from './../../dynamic-table-column-option.model';
+import { DynamicTableRow  } from './../../dynamic-table-row.model';
+
 import { DropdownEditorComponent } from './dropdown.editor';
 
 describe('DropdownEditorComponent', () => {

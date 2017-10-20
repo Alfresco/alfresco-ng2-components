@@ -17,5 +17,4 @@
 
 import { DataColumn, DataRow } from 'ng2-alfresco-datatable';
 
-
 export type ImageResolver = (row: DataRow, column: DataColumn) => string;
