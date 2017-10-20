@@ -15,25 +15,10 @@
  * limitations under the License.
  */
 
-export class FormSubmitEvent {
-
-    private _values: any;
-    private _defaultPrevented: boolean = false;
-
-    get values(): any {
-        return this._values;
+export class LoginSuccessEvent {
+    constructor(
+        public token: any,
+        public username: string,
+        public password: string) {
     }
-
-    get defaultPrevented() {
-        return this._defaultPrevented;
-    }
-
-    constructor(_values: any) {
-        this._values = _values;
-    }
-
-    preventDefault() {
-        this._defaultPrevented = true;
-    }
-
 }
