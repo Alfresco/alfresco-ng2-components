@@ -69,7 +69,7 @@ describe('ChecklistComponent', () => {
 
     it('should show no checklist message', () => {
         expect(element.querySelector('#checklist-none-message')).not.toBeNull();
-        expect(element.querySelector('#checklist-none-message').textContent).toContain('TASK_DETAILS.CHECKLIST.NONE');
+        expect(element.querySelector('#checklist-none-message').textContent).toContain('ADF_TASK_LIST.DETAILS.CHECKLIST.NONE');
     });
 
     describe('when is readonly mode', () => {
@@ -247,7 +247,7 @@ describe('ChecklistComponent', () => {
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('#checklist-none-message')).not.toBeNull();
-                expect(element.querySelector('#checklist-none-message').textContent).toContain('TASK_DETAILS.CHECKLIST.NONE');
+                expect(element.querySelector('#checklist-none-message').textContent).toContain('ADF_TASK_LIST.DETAILS.CHECKLIST.NONE');
             });
         }));
 

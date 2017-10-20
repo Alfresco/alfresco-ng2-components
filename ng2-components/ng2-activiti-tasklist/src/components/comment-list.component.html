@@ -3,7 +3,7 @@
     (rowClick)="selectComment($event)" *ngIf="hasComments()">
 
     <data-columns>
-        <data-column key="createdBy" title="{{'TASK_DETAILS.COMMENTS.CREATED_BY_HEADER' | translate }}">
+        <data-column key="createdBy" title="{{'ADF_TASK_LIST.DETAILS.COMMENTS.CREATED_BY_HEADER' | translate }}">
             <ng-template let-entry="$implicit">
                 <div id="comment-user-icon"
                 class="adf-comment-img-container">
@@ -17,7 +17,7 @@
                 </div>
             </ng-template>
         </data-column>
-        <data-column key="message" title="{{'TASK_DETAILS.COMMENTS.MESSAGE_HEADER' | translate }}">
+        <data-column key="message" title="{{'ADF_TASK_LIST.DETAILS.COMMENTS.MESSAGE_HEADER' | translate }}">
             <ng-template let-entry="$implicit">
                 <div class="adf-comment-contents">
                     <div id="comment-user" class="adf-comment-user-name">

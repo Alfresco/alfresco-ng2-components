@@ -103,8 +103,8 @@ export class TaskListComponent implements OnChanges, OnInit, AfterContentInit {
     isStreamLoaded = false;
 
     private defaultSchemaColumn: DataColumn[] = [
-        { type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true },
-        { type: 'text', key: 'created', title: 'Created', cssClass: 'hidden', sortable: true }
+        { type: 'text', key: 'name', title: 'ADF_TASK_LIST.PROPERTIES.NAME', cssClass: 'full-width name-column', sortable: true },
+        { type: 'text', key: 'created', title: 'ADF_TASK_LIST.PROPERTIES.CREATED', cssClass: 'hidden', sortable: true }
     ];
 
     constructor(private taskListService: TaskListService) {

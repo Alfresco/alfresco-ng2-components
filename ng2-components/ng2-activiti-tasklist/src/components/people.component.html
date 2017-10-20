@@ -2,10 +2,10 @@
     <div mat-card-content class="assignment-top-container-content">
         <div class="assignment-header">
                 <div *ngIf="hasPeople()" class="assigment-count" id="people-title">
-                    {{ 'TASK_DETAILS.LABELS.PEOPLE' | translate }} {{ ' (' + people.length + ')' }}
+                    {{ 'ADF_TASK_LIST.DETAILS.LABELS.PEOPLE' | translate }} {{ ' (' + people.length + ')' }}
                 </div>
                 <div *ngIf="!hasPeople()" class="assigment-count" id="no-people-label">
-                    {{ 'TASK_DETAILS.PEOPLE.NONE' | translate }}
+                    {{ 'ADF_TASK_LIST.DETAILS.PEOPLE.NONE' | translate }}
                 </div>
                 <div *ngIf="isEditMode()" class="add-people" (click)="onAddAssignement()">
                     <mat-icon class="adf-add-person-icon">person_add</mat-icon>
@@ -17,8 +17,8 @@
                 (success)="involveUser($event)"
                 (closeSearch)="onCloseSearch()"
                 [results]="peopleSearch$">
-                    <ng-container people-search-title>{{ 'TASK_DETAILS.LABELS.ADD_PEOPLE' | translate }}</ng-container>
-                    <ng-container people-search-action-label>{{ 'PEOPLE.ADD_USER' | translate }}</ng-container>
+                    <ng-container people-search-title>{{ 'ADF_TASK_LIST.DETAILS.LABELS.ADD_PEOPLE' | translate }}</ng-container>
+                    <ng-container people-search-action-label>{{ 'ADF_TASK_LIST.PEOPLE.ADD_USER' | translate }}</ng-container>
                 </adf-people-search>
             </div>
             <div class="assignment-list-container" id="assignment-people-list" *ngIf="hasPeople()">

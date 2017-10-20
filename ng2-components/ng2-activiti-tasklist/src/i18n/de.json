@@ -1,117 +1,119 @@
 {
-  "APPS": {
-    "NONE": "Keine Anwendungen gefunden"
-  },
-  "TASK_LIST": {
-    "MESSAGES": {
-      "NONE": "Keine Aufgabenliste gefunden"
-    }
-  },
-  "TASK_DETAILS": {
-    "LABELS": {
-      "ASSIGNEE": "Zugewiesener Benutzer",
-      "DUE": "Fällig",
-      "FORM": "Formular",
-      "PEOPLE": "Personen, für die diese Aufgabe freigegeben wurde",
-      "COMMENTS": "Kommentare",
-      "CHECKLIST": "Prüfliste",
-      "INVOLVED_PEOPLE": "Beteiligte Personen",
-      "ADD_PEOPLE": "Personen und Gruppen hinzufügen",
-      "ADD_ASSIGNEE": "Neuen zugewiesenen Benutzer hinzufügen"
-    },
-    "BUTTON": {
-      "COMPLETE": "Abschließen",
-      "CLAIM": "Anfordern",
-      "UNCLAIM": "Erneut in Warteschlange stellen",
-      "DRAG-ATTACHMENT": "Dateien hier ablegen ...",
-      "UPLOAD-ATTACHMENT": "Anhang hochladen"
-    },
-    "MESSAGES": {
-      "NONE": "Keine Aufgabendetails gefunden",
-      "CLAIM": "Klicken Sie auf 'Anfordern', um diese Aufgabe zu bearbeiten."
-    },
-    "FORM": {
-      "NONE": "Kein Formular."
-    },
-    "DUE": {
-      "NONE": "Kein Fälligkeitsdatum."
-    },
-    "ASSIGNEE": {
-      "NONE": "Kein zugewiesener Benutzer."
-    },
-    "PEOPLE": {
-      "NONE": "Niemand beteiligt."
-    },
-    "COMMENTS": {
-      "NONE": "Keine Kommentare vorhanden",
-      "ADD": "Kommentar hinzufügen",
-      "HEADER": "Kommentare",
-      "DIALOG": {
-        "TITLE": "Neuer Kommentar",
-        "LABELS": {
-          "MESSAGE": "Fehlermeldung"
+    "ADF_TASK_LIST": {
+        "APPS": {
+            "NONE": "Keine Anwendungen gefunden"
         },
-        "BUTTON": {
-          "ADD": "Kommentar hinzufügen",
-          "CANCEL": "Abbrechen"
+        "LIST": {
+            "MESSAGES": {
+                "NONE": "Keine Aufgabenliste gefunden"
+            }
+        },
+        "DETAILS": {
+            "LABELS": {
+                "ASSIGNEE": "Zugewiesener Benutzer",
+                "DUE": "Fällig",
+                "FORM": "Formular",
+                "PEOPLE": "Personen, für die diese Aufgabe freigegeben wurde",
+                "COMMENTS": "Kommentare",
+                "CHECKLIST": "Prüfliste",
+                "INVOLVED_PEOPLE": "Beteiligte Personen",
+                "ADD_PEOPLE": "Personen und Gruppen hinzufügen",
+                "ADD_ASSIGNEE": "Neuen zugewiesenen Benutzer hinzufügen"
+            },
+            "BUTTON": {
+                "COMPLETE": "Abschließen",
+                "CLAIM": "Anfordern",
+                "UNCLAIM": "Erneut in Warteschlange stellen",
+                "DRAG-ATTACHMENT": "Dateien hier ablegen ...",
+                "UPLOAD-ATTACHMENT": "Anhang hochladen"
+            },
+            "MESSAGES": {
+                "NONE": "Keine Aufgabendetails gefunden",
+                "CLAIM": "Klicken Sie auf 'Anfordern', um diese Aufgabe zu bearbeiten."
+            },
+            "FORM": {
+                "NONE": "Kein Formular."
+            },
+            "DUE": {
+                "NONE": "Kein Fälligkeitsdatum."
+            },
+            "ASSIGNEE": {
+                "NONE": "Kein zugewiesener Benutzer."
+            },
+            "PEOPLE": {
+                "NONE": "Niemand beteiligt."
+            },
+            "COMMENTS": {
+                "NONE": "Keine Kommentare vorhanden",
+                "ADD": "Kommentar hinzufügen",
+                "HEADER": "Kommentare",
+                "DIALOG": {
+                    "TITLE": "Neuer Kommentar",
+                    "LABELS": {
+                        "MESSAGE": "Fehlermeldung"
+                    },
+                    "BUTTON": {
+                        "ADD": "Kommentar hinzufügen",
+                        "CANCEL": "Abbrechen"
+                    }
+                }
+            },
+            "CHECKLIST": {
+                "NONE": "Keine Prüfliste"
+            },
+            "ERROR": {
+                "TITLE": "Vorgang konnte nicht durchgeführt werden",
+                "DESCRIPTION": "Versuchen Sie es noch einmal oder überprüfen Sie, ob Sie Zugriff haben.",
+                "CLOSE": "Schließen"
+            }
+        },
+        "FILTERS": {
+            "MESSAGES": {
+                "NONE": "Kein Aufgabenfilter ausgewählt."
+            }
+        },
+        "START_TASK": {
+            "BUTTON": "AUFGABE ERSTELLEN",
+            "FORM": {
+                "TITLE": "Aufgabe starten",
+                "LABEL": {
+                    "NONE": "Keine",
+                    "NAME": "Name",
+                    "DESCRIPTION": "Beschreibung",
+                    "ATTACHFORM": "Formular anhängen",
+                    "ASSIGNEE": "Zugewiesener Benutzer",
+                    "FORM": "Formular",
+                    "DATE": "Datum auswählen"
+                },
+                "ACTION": {
+                    "START": "Start",
+                    "CANCEL": "Abbrechen"
+                },
+                "DATE": {
+                    "ERROR": "Datumsformat TT.MM.JJJJ"
+                }
+            }
+        },
+        "PEOPLE": {
+            "DIALOG_CLOSE": "SCHLIESSEN",
+            "ADD_USER": "HINZUFÜGEN",
+            "ADD_ASSIGNEE": "ZUWEISEN",
+            "SEARCH_USER": "Benutzer suchen",
+            "SEARCH": {
+                "NO_USERS": "Niemand gefunden, der beteiligt werden kann"
+            }
+        },
+        "ATTACHMENT": {
+            "EMPTY": {
+                "HEADER": "Diese Liste ist leer",
+                "DRAG-AND-DROP": {
+                    "TITLE": "Ziehen und ablegen",
+                    "SUBTITLE": "um Dateien hochzuladen"
+                }
+            },
+            "EMPTY-LIST": {
+                "HEADER": "Keine Dateien verfügbar"
+            }
         }
-      }
-    },
-    "CHECKLIST": {
-      "NONE": "Keine Prüfliste"
-    },
-    "ERROR": {
-      "TITLE": "Vorgang konnte nicht durchgeführt werden",
-      "DESCRIPTION": "Versuchen Sie es noch einmal oder überprüfen Sie, ob Sie Zugriff haben.",
-      "CLOSE": "Schließen"
     }
-  },
-  "TASK_FILTERS": {
-    "MESSAGES": {
-      "NONE": "Kein Aufgabenfilter ausgewählt."
-    }
-  },
-  "START_TASK": {
-    "BUTTON": "AUFGABE ERSTELLEN",
-    "FORM": {
-      "TITLE": "Aufgabe starten",
-      "LABEL": {
-        "NONE": "Keine",
-        "NAME": "Name",
-        "DESCRIPTION": "Beschreibung",
-        "ATTACHFORM": "Formular anhängen",
-        "ASSIGNEE": "Zugewiesener Benutzer",
-        "FORM": "Formular",
-        "DATE": "Datum auswählen"
-      },
-      "ACTION": {
-        "START": "Start",
-        "CANCEL": "Abbrechen"
-      },
-      "DATE": {
-        "ERROR": "Datumsformat TT.MM.JJJJ"
-      }
-    }
-  },
-  "PEOPLE": {
-    "DIALOG_CLOSE": "SCHLIESSEN",
-    "ADD_USER": "HINZUFÜGEN",
-    "ADD_ASSIGNEE": "ZUWEISEN",
-    "SEARCH_USER": "Benutzer suchen",
-    "SEARCH": {
-      "NO_USERS": "Niemand gefunden, der beteiligt werden kann"
-    }
-  },
-  "TASK-ATTACHMENT": {
-    "EMPTY": {
-      "HEADER": "Diese Liste ist leer",
-      "DRAG-AND-DROP": {
-        "TITLE": "Ziehen und ablegen",
-        "SUBTITLE": "um Dateien hochzuladen"
-      }
-    },
-    "EMPTY-LIST": {
-      "HEADER": "Keine Dateien verfügbar"
-    }
-  }
 }

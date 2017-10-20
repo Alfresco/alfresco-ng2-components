@@ -1,10 +1,10 @@
 <adf-datatable [rows]="attachments" [actions]="true" [loading]="isLoading" (rowDblClick)="openContent($event)" (showRowActionsMenu)="onShowRowActionsMenu($event)"
     (executeRowAction)="onExecuteRowAction($event)">
     <adf-empty-list *ngIf="isEmpty()">
-        <div adf-empty-list-header class="adf-empty-list-header"> {{'TASK-ATTACHMENT.EMPTY.HEADER' | translate}} </div>
+        <div adf-empty-list-header class="adf-empty-list-header"> {{'ADF_TASK_LIST.ATTACHMENT.EMPTY.HEADER' | translate}} </div>
         <div adf-empty-list-body *ngIf="!isDisabled()">
-            <div class="adf-empty-list-drag_drop">{{'TASK-ATTACHMENT.EMPTY.DRAG-AND-DROP.TITLE' | translate}}</div>
-            <div class="adf-empty-list__any-files-here-to-add"> {{'TASK-ATTACHMENT.EMPTY.DRAG-AND-DROP.SUBTITLE' | translate}} </div>
+            <div class="adf-empty-list-drag_drop">{{'ADF_TASK_LIST.ATTACHMENT.EMPTY.DRAG-AND-DROP.TITLE' | translate}}</div>
+            <div class="adf-empty-list__any-files-here-to-add"> {{'ADF_TASK_LIST.ATTACHMENT.EMPTY.DRAG-AND-DROP.SUBTITLE' | translate}} </div>
         </div>
         <div adf-empty-list-footer *ngIf="!isDisabled()">
             <img class="adf-empty-list__empty_doc_lib" [src]="emptyListImageUrl">
