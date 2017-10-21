@@ -6,9 +6,6 @@
     "baseUrl": "",
     "types": [],
     "paths": {
-      "alfresco-js-api": [
-        "../../../alfresco-js-api"
-      ],
       "ng2-alfresco-core": [
         "../../ng2-components/ng2-alfresco-core/index.ts"
       ],
