@@ -25,11 +25,13 @@ import { AlfrescoAuthenticationService, CoreModule } from 'ng2-alfresco-core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 
 import { MaterialModule } from '../material.module';
+import { LoginErrorEvent } from '../models/login-error.event';
+import { LoginSuccessEvent } from '../models/login-success.event';
 import { AuthenticationMock } from './../assets/authentication.service.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
 import { LoginComponent } from './login.component';
 
-describe('AlfrescoLogin', () => {
+describe('LoginComponent', () => {
     let component: LoginComponent;
     let fixture: ComponentFixture<LoginComponent>;
     let debug: DebugElement;
@@ -523,11 +525,9 @@ describe('AlfrescoLogin', () => {
 
         expect(component.error).toBe(false);
         expect(component.success).toBe(true);
-        expect(component.onSuccess.emit).toHaveBeenCalledWith({
-            token: true,
-            username: 'fake-username',
-            password: 'fake-password'
-        });
+        expect(component.onSuccess.emit).toHaveBeenCalledWith(
+            new LoginSuccessEvent({ type: 'type', ticket: 'ticket' }, 'fake-username', 'fake-password')
+        );
     });
 
     it('should emit onError event after the login has failed', () => {
@@ -553,7 +553,9 @@ describe('AlfrescoLogin', () => {
         expect(component.success).toBe(false);
         expect(getLoginErrorElement()).toBeDefined();
         expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
-        expect(component.onError.emit).toHaveBeenCalledWith('Fake server error');
+        expect(component.onError.emit).toHaveBeenCalledWith(
+            new LoginErrorEvent('Fake server error')
+        );
     });
 
     it('should render the password in clear when the toggleShowPassword is call', () => {
@@ -598,6 +600,6 @@ describe('AlfrescoLogin', () => {
         expect(component.success).toBe(false);
         expect(getLoginErrorElement()).toBeDefined();
         expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-PROVIDERS');
-        expect(component.onError.emit).toHaveBeenCalledWith('LOGIN.MESSAGES.LOGIN-ERROR-PROVIDERS');
+        expect(component.onError.emit).toHaveBeenCalledWith(new LoginErrorEvent('LOGIN.MESSAGES.LOGIN-ERROR-PROVIDERS'));
     });
 });

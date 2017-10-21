@@ -19,7 +19,10 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, Output, TemplateRef
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
-import { FormSubmitEvent } from '../models/form-submit-event.model';
+
+import { LoginErrorEvent } from '../models/login-error.event';
+import { LoginSubmitEvent } from '../models/login-submit.event';
+import { LoginSuccessEvent } from '../models/login-success.event';
 
 declare var require: any;
 
@@ -30,7 +33,7 @@ enum LoginSteps {
 }
 
 @Component({
-    selector: 'adf-login, alfresco-login',
+    selector: 'adf-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
     host: {'(blur)': 'onBlur($event)'},
@@ -74,13 +77,13 @@ export class LoginComponent implements OnInit {
     successRoute: string = null;
 
     @Output()
-    onSuccess = new EventEmitter();
+    onSuccess = new EventEmitter<LoginSuccessEvent>();
 
     @Output()
-    onError = new EventEmitter();
+    onError = new EventEmitter<LoginErrorEvent>();
 
     @Output()
-    executeSubmit: EventEmitter<FormSubmitEvent> = new EventEmitter<FormSubmitEvent>();
+    executeSubmit = new EventEmitter<LoginSubmitEvent>();
 
     form: FormGroup;
     error: boolean = false;
@@ -139,7 +142,7 @@ export class LoginComponent implements OnInit {
 
         this.disableError();
 
-        let args = new FormSubmitEvent(this.form);
+        const args = new LoginSubmitEvent(this.form);
         this.executeSubmit.emit(args);
 
         if (args.defaultPrevented) {
@@ -183,7 +186,7 @@ export class LoginComponent implements OnInit {
                 (token: any) => {
                     this.actualLoginStep = LoginSteps.Welcome;
                     this.success = true;
-                    this.onSuccess.emit({token: token, username: values.username, password: values.password});
+                    this.onSuccess.emit(new LoginSuccessEvent(token, values.username, values.password));
                     if (this.successRoute) {
                         this.router.navigate([this.successRoute]);
                     }
@@ -192,7 +195,7 @@ export class LoginComponent implements OnInit {
                     this.actualLoginStep = LoginSteps.Landing;
                     this.displayErrorMessage(err);
                     this.enableError();
-                    this.onError.emit(err);
+                    this.onError.emit(new LoginErrorEvent(err));
                 },
                 () => this.logService.info('Login done')
             );
@@ -230,7 +233,7 @@ export class LoginComponent implements OnInit {
             this.enableError();
             let messageProviders: any;
             messageProviders = this.translateService.get(this.errorMsg);
-            this.onError.emit(messageProviders.value);
+            this.onError.emit(new LoginErrorEvent(messageProviders.value));
             return false;
         }
         return true;
@@ -251,7 +254,7 @@ export class LoginComponent implements OnInit {
      * @param ruleId - i.e. required | minlength | maxlength
      * @param msg
      */
-    public addCustomValidationError(field: string, ruleId: string, msg: string, params?: any) {
+    addCustomValidationError(field: string, ruleId: string, msg: string, params?: any) {
         if (params) {
             this.translateService.get(msg, params).subscribe((res: string) => {
                 this._message[field][ruleId] = res;

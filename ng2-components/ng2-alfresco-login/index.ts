@@ -28,18 +28,17 @@ export { LoginHeaderDirective } from './src/directives/login-header.directive';
 export { LoginFooterDirective } from './src/directives/login-footer.directive';
 export { LoginComponent } from './src/components/login.component';
 
-// Old Deprecated export
-import { LoginComponent as AlfrescoLoginComponent } from './src/components/login.component';
-export { LoginComponent as AlfrescoLoginComponent } from './src/components/login.component';
+export { LoginErrorEvent } from './src/models/login-error.event';
+export { LoginSubmitEvent } from './src/models/login-submit.event';
+export { LoginSuccessEvent } from './src/models/login-success.event';
 
-export const ALFRESCO_LOGIN_DIRECTIVES: any[] = [
-    LoginComponent,
-    LoginFooterDirective,
-    LoginHeaderDirective,
-
-    // Old Deprecated export
-    AlfrescoLoginComponent
-];
+export function declarations() {
+    return [
+        LoginComponent,
+        LoginFooterDirective,
+        LoginHeaderDirective
+    ];
+}
 
 @NgModule({
     imports: [
@@ -47,9 +46,7 @@ export const ALFRESCO_LOGIN_DIRECTIVES: any[] = [
         CoreModule,
         MaterialModule
     ],
-    declarations: [
-        ...ALFRESCO_LOGIN_DIRECTIVES
-    ],
+    declarations: declarations(),
     providers: [
         {
             provide: TRANSLATION_PROVIDER,
@@ -61,7 +58,7 @@ export const ALFRESCO_LOGIN_DIRECTIVES: any[] = [
         }
     ],
     exports: [
-        ...ALFRESCO_LOGIN_DIRECTIVES,
+        ...declarations(),
         MaterialModule
     ]
 })

@@ -21,9 +21,9 @@ import { Observable } from 'rxjs/Rx';
 export class AuthenticationMock /*extends AlfrescoAuthenticationService*/ {
 
     // TODO: real auth service returns Observable<string>
-    login(username: string, password: string): Observable<boolean> {
+    login(username: string, password: string): Observable<{ type: string, ticket: any }> {
         if (username === 'fake-username' && password === 'fake-password') {
-            return Observable.of(true);
+            return Observable.of({ type: 'type', ticket: 'ticket'});
         }
 
         if (username === 'fake-username-CORS-error' && password === 'fake-password') {
