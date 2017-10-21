@@ -17,8 +17,11 @@
 
 import { FormFieldModel, FormModel } from '../../index';
 import { FormService } from './../../../../services/form.service';
-import { DynamicRowValidationSummary, DynamicTableColumn, DynamicTableModel, DynamicTableRow } from './../dynamic-table.widget.model';
 import { RowEditorComponent } from './row.editor';
+import { DynamicTableModel } from './../dynamic-table.widget.model';
+import { DynamicTableColumn } from './../dynamic-table-column.model';
+import { DynamicRowValidationSummary } from './../dynamic-row-validation-summary.model';
+import { DynamicTableRow } from './../dynamic-table-row.model';
 
 describe('RowEditorComponent', () => {
 
@@ -28,7 +31,7 @@ describe('RowEditorComponent', () => {
         component = new RowEditorComponent();
         const field = new FormFieldModel(new FormModel());
         component.table = new DynamicTableModel(field, new FormService(null, null, null));
-        component.row =  <DynamicTableRow> {};
+        component.row = <DynamicTableRow> {};
         component.column = <DynamicTableColumn> {};
     });
 
@@ -55,7 +58,7 @@ describe('RowEditorComponent', () => {
 
     it('should emit [save] event', (done) => {
         spyOn(component.table, 'validateRow').and.returnValue(
-            <DynamicRowValidationSummary> { isValid: true, text: null }
+            <DynamicRowValidationSummary> {isValid: true, text: null}
         );
         component.save.subscribe(e => {
             expect(e.table).toBe(component.table);
@@ -68,7 +71,7 @@ describe('RowEditorComponent', () => {
 
     it('should not emit [save] event for invalid row', () => {
         spyOn(component.table, 'validateRow').and.returnValue(
-            <DynamicRowValidationSummary> { isValid: false, text: 'error' }
+            <DynamicRowValidationSummary> {isValid: false, text: 'error'}
         );
         let raised = false;
         component.save.subscribe(e => raised = true);

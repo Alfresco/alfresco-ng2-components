@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { DynamicTableColumn, DynamicTableRow } from './../../dynamic-table.widget.model';
+import { DynamicTableColumn } from './../../dynamic-table-column.model';
+import { DynamicTableRow } from './../../dynamic-table-row.model';
 import { TextEditorComponent } from './text.editor';
 
 describe('TextEditorComponent', () => {

@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-import { TemplateRef } from '@angular/core';
-import { BaseUIEvent } from 'ng2-alfresco-core';
+import { DataColumn } from './data-column.model';
+import { DataRow } from './data-row.model';
+import { DataSorting } from './data-sorting.model';
 
 export interface DataTableAdapter {
     selectedRow: DataRow;
@@ -28,44 +29,4 @@ export interface DataTableAdapter {
     getSorting(): DataSorting;
     setSorting(sorting: DataSorting): void;
     sort(key?: string, direction?: string): void;
-}
-
-export interface DataRow {
-    isSelected: boolean;
-    isDropTarget?: boolean;
-    cssClass?: string;
-    hasValue(key: string): boolean;
-    getValue(key: string): any;
-}
-
-export interface DataColumn {
-    key: string;
-    type: string; // text|image|date
-    format?: string;
-    sortable?: boolean;
-    title?: string;
-    srTitle?: string;
-    cssClass?: string;
-    template?: TemplateRef<any>;
-    formatTooltip?: Function;
-}
-
-export class DataSorting {
-    constructor(
-        public key?: string,
-        public direction?: string) {
-    }
-}
-
-export class DataRowEvent extends BaseUIEvent<DataRow> {
-
-    sender: any;
-
-    constructor(value: DataRow, domEvent: Event, sender?: any) {
-        super();
-        this.value = value;
-        this.event = domEvent;
-        this.sender = sender;
-    }
-
 }

@@ -32,7 +32,10 @@ import {
 import { MaterialModule } from '../material.module';
 import { ContentActionModel } from '../models/content-action.model';
 import { NodeMinimal, NodeMinimalEntry, NodePaging } from '../models/document-library.model';
-import { ImageResolver, RowFilter } from './../data/share-datatable-adapter';
+import { ImageResolver } from './../data/image-resolver.model';
+import { RowFilter } from './../data/row-filter.model';
+
+
 import { DocumentListService } from './../services/document-list.service';
 import { DocumentListComponent } from './document-list.component';
 

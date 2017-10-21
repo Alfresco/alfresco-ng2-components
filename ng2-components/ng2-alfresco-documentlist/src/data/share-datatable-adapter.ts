@@ -16,11 +16,14 @@
  */
 
 import { DatePipe } from '@angular/common';
-import { MinimalNode, MinimalNodeEntity, NodePaging } from 'alfresco-js-api';
-import { ObjectUtils, TimeAgoPipe } from 'ng2-alfresco-core';
+import { NodePaging } from 'alfresco-js-api';
+import { TimeAgoPipe } from 'ng2-alfresco-core';
 import { DataColumn, DataRow, DataSorting, DataTableAdapter } from 'ng2-alfresco-datatable';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { DocumentListService } from './../services/document-list.service';
+import { ImageResolver } from './image-resolver.model';
+import { RowFilter } from './row-filter.model';
+import { ShareDataRow } from './share-data-row.model';
 
 export class ShareDataTableAdapter implements DataTableAdapter {
 
@@ -239,82 +242,3 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         }
     }
 }
-
-export class ShareDataRow implements DataRow {
-
-    static ERR_OBJECT_NOT_FOUND: string = 'Object source not found';
-
-    cache: { [key: string]: any } = {};
-    isSelected: boolean = false;
-    isDropTarget: boolean;
-    cssClass: string = '';
-
-    get node(): MinimalNodeEntity {
-        return this.obj;
-    }
-
-    constructor(private obj: MinimalNodeEntity, private documentListService: DocumentListService, private permissionsStyle: PermissionStyleModel[]) {
-        if (!obj) {
-            throw new Error(ShareDataRow.ERR_OBJECT_NOT_FOUND);
-        }
-
-        this.isDropTarget = this.isFolderAndHasPermissionToUpload(obj);
-
-        if (permissionsStyle) {
-            this.cssClass = this.getPermissionClass(obj);
-        }
-    }
-
-    getPermissionClass(nodeEntity: MinimalNodeEntity): string {
-        let permissionsClasses = '';
-
-        this.permissionsStyle.forEach((currentPermissionsStyle: PermissionStyleModel) => {
-
-            if (this.applyPermissionStyleToFolder(nodeEntity.entry, currentPermissionsStyle) || this.applyPermissionStyleToFile(nodeEntity.entry, currentPermissionsStyle)) {
-
-                if (this.documentListService.hasPermission(nodeEntity.entry, currentPermissionsStyle.permission)) {
-                     permissionsClasses += ` ${currentPermissionsStyle.css}`;
-                }
-            }
-
-        });
-
-        return permissionsClasses;
-    }
-
-    private applyPermissionStyleToFile(node: MinimalNode, currentPermissionsStyle: PermissionStyleModel): boolean {
-        return (currentPermissionsStyle.isFile && node.isFile);
-    }
-
-    private applyPermissionStyleToFolder(node: MinimalNode, currentPermissionsStyle: PermissionStyleModel): boolean {
-        return (currentPermissionsStyle.isFolder && node.isFolder);
-    }
-
-    isFolderAndHasPermissionToUpload(obj: MinimalNodeEntity): boolean {
-        return this.isFolder(obj) && this.documentListService.hasPermission(obj.entry, 'create');
-    }
-
-    isFolder(obj: MinimalNodeEntity): boolean {
-        return obj.entry && obj.entry.isFolder;
-    }
-
-    cacheValue(key: string, value: any): any {
-        this.cache[key] = value;
-        return value;
-    }
-
-    getValue(key: string): any {
-        if (this.cache[key] !== undefined) {
-            return this.cache[key];
-        }
-        return ObjectUtils.getValue(this.obj.entry, key);
-    }
-
-    hasValue(key: string): boolean {
-        return this.getValue(key) !== undefined;
-    }
-}
-
-export type RowFilter = (value: ShareDataRow, index: number, array: ShareDataRow[]) => any;
-
-export type ImageResolver = (row: DataRow, column: DataColumn) => string;
