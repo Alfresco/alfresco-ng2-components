@@ -218,6 +218,7 @@ if $EXEC_START == true; then
 else
     if $EXEC_DEVELOP == true; then
         echo "====== Build Demo shell dev mode ====="
+        npm run install
         npm run build:dev
     else
         echo "====== Build Demo shell ====="
