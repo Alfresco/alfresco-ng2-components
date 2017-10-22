@@ -126,9 +126,9 @@ describe('UploadWidgetComponent', () => {
                 ]
             });
 
-            uploadWidgetComponent.reset(uploadWidgetComponent.field.value[0]);
-            expect(uploadWidgetComponent.field.value).toBeNull();
-            expect(uploadWidgetComponent.field.json.value).toBeNull();
+            uploadWidgetComponent.removeFile(uploadWidgetComponent.field.value[0]);
+            expect(uploadWidgetComponent.field.value.length).toBe(0);
+            expect(uploadWidgetComponent.field.json.value.length).toBe(0);
             expect(uploadWidgetComponent.hasFile).toBeFalsy();
         });
 
@@ -143,16 +143,14 @@ describe('UploadWidgetComponent', () => {
             formServiceInstance = TestBed.get(FormService);
         });
 
-        it('should be disabled on readonly forms', async(() => {
+        it('should be not present in readonly forms', async(() => {
             uploadWidgetComponent.field.form.readOnly = true;
             fixture.detectChanges();
             inputElement = <HTMLInputElement> element.querySelector('#upload-id');
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(inputElement).toBeDefined();
-                expect(inputElement).not.toBeNull();
-                expect(inputElement.disabled).toBeTruthy();
+                expect(inputElement).toBeNull();
             });
         }));
 
@@ -196,6 +194,20 @@ describe('UploadWidgetComponent', () => {
 
             let filesList = fixture.debugElement.query(By.css('#file-1156'));
             expect(filesList).toBeDefined();
+
+        }));
+
+        it('should update the form after deleted a file', async(() => {
+            spyOn(uploadWidgetComponent.field, 'updateForm');
+            fixture.detectChanges();
+            let inputDebugElement = fixture.debugElement.query(By.css('#upload-id'));
+            inputDebugElement.triggerEventHandler('change', {target: {files: [filePngFake, filJpgFake]}});
+
+            jasmine.Ajax.requests.at(0).respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: fakePngAnswer
+            });
 
         }));
 
@@ -391,8 +403,6 @@ describe('UploadWidgetComponent', () => {
 
         });
 
-    })
-    ;
+    });
 
-})
-;
+});
