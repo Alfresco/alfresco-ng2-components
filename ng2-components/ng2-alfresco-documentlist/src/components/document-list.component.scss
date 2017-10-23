@@ -1,3 +1,5 @@
+@import '~@angular/material/theming';
+
 @mixin mat-document-list-theme($theme) {
     $foreground: map-get($theme, foreground);
 
@@ -96,6 +98,10 @@
             letter-spacing: -2px;
             color: mat-color($foreground, text);
             margin-top: 40px;
+
+            @media screen and ($mat-xsmall) {
+                font-size: 48px;
+            }
         }
 
         &-any-files-here-to-add {
@@ -113,6 +119,10 @@
             max-width: 100%;
             object-fit: contain;
             margin-top: 17px;
+
+            @media screen and ($mat-xsmall) {
+                width: 250px;
+            }
         }
     }
 }

@@ -1,3 +1,5 @@
+@import '~@angular/material/theming';
+
 adf-datatable  ::ng-deep th span {
     color: #232323;
 }
@@ -28,6 +30,10 @@ adf-datatable  ::ng-deep .data-cell {
     letter-spacing: -2px;
     color: #000000;
     margin-top: 40px;
+
+    @media screen and ($mat-xsmall) {
+        font-size: 40px;
+    }
 }
 
 .adf-empty-list__any-files-here-to-add {
@@ -42,7 +48,12 @@ adf-datatable  ::ng-deep .data-cell {
 
 .adf-empty-list__empty_doc_lib {
     width: 565px;
+    max-width: 100%;
     height: 161px;
     object-fit: contain;
     margin-top: 17px;
+
+    @media screen and ($mat-xsmall) {
+        width: 250px;
+    }
 }
