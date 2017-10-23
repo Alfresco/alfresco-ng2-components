@@ -115,6 +115,10 @@
             },
             "EMPTY-LIST": {
                 "HEADER": "No files are available"
+            },
+            "COLUMNS": {
+                "NAME": "Name",
+                "CREATED-ON": "Created on"
             }
         }
     }
