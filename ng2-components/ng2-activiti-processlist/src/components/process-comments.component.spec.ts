@@ -118,7 +118,7 @@ describe('ActivitiProcessInstanceComments', () => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             let element = fixture.nativeElement.querySelector('#comment-header');
-            expect(element.innerText).toBe('DETAILS.COMMENTS.HEADER');
+            expect(element.innerText).toBe('ADF_PROCESS_LIST.DETAILS.COMMENTS.HEADER');
         });
     });
 

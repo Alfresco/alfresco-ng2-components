@@ -16,7 +16,9 @@
  */
 
 import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { DataColumn, DataRow, DataTableAdapter } from '../../data/datatable-adapter';
+import { DataColumn } from '../../data/data-column.model';
+import { DataRow } from '../../data/data-row.model';
+import { DataTableAdapter } from '../../data/datatable-adapter';
 
 @Component({
     selector: 'adf-datatable-cell, alfresco-datatable-cell',

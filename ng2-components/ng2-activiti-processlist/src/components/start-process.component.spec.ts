@@ -156,7 +156,7 @@ describe('StartProcessInstanceComponent', () => {
             fixture.whenStable().then(() => {
                 let noprocessElement = fixture.nativeElement.querySelector('#no-process-message');
                 expect(noprocessElement).not.toBeNull('Expected no available process message to be present');
-                expect(noprocessElement.innerText.trim()).toBe('START_PROCESS.NO_PROCESS_DEFINITIONS');
+                expect(noprocessElement.innerText.trim()).toBe('ADF_PROCESS_LIST.START_PROCESS.NO_PROCESS_DEFINITIONS');
             });
         }));
 

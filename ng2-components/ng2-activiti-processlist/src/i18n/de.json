@@ -1,106 +1,105 @@
 {
-  "PROCESSLIST": {
-    "NONE": "Keine Prozessinstanzen gefunden",
-    "SUMMARY": "{{total}} Prozessinstanzen gefunden",
-    "ERROR": "Prozessesinstanzen konnten nicht geladen werden. Versuchen Sie es noch einmal oder geben Sie die folgende Meldung an Ihr IT-Team weiter: {{errorMessage}}",
-    "COLUMN": {
-      "NAME": "Name"
-    }
-  },
-  "FILTERS": {
-    "MESSAGES": {
-      "NONE": "Kein Prozessinstanzfilter ausgewählt."
-    }
-  },
-  "DETAILS": {
-    "LABELS": {
-      "STARTED_BY": "Gestartet von",
-      "STARTED": "Gestartet",
-      "ENDED": "Beendet",
-      "COMMENTS": "Kommentare",
-      "START_FORM": "Startformular",
-      "TASKS_ACTIVE": "Aktive Aufgaben",
-      "TASKS_COMPLETED": "Abgeschlossene Aufgaben",
-      "TASK_SUBTITLE": "Zugewiesen: {{user}}. Erstellt: {{created}}"
-    },
-    "BUTTON": {
-      "CANCEL": "Prozess abbrechen",
-      "CLOSE": "Schließen",
-      "SHOW_DIAGRAM": "Diagramm anzeigen",
-      "DRAG-ATTACHMENT": "Dateien zum Hochladen ablegen",
-      "UPLOAD-ATTACHMENT": "Anhang hochladen"
-    },
-    "MESSAGES": {
-      "NONE": "Keine Prozessdetails gefunden."
-    },
-    "TASKS": {
-      "NO_ACTIVE": "Keine derzeit aktiven Aufgaben",
-      "NO_COMPLETED": "Noch keine Aufgaben abgeschlossen",
-      "TASK_DETAILS": "Aufgabendetails",
-      "TASK_CLOSE": "Schließen"
-    },
-    "COMMENTS": {
-      "NONE": "Keine Kommentare vorhanden",
-      "BUTTON": {
-        "ADD": "Kommentar hinzufügen"
-      },
-      "ADD_DIALOG": {
-        "TITLE": "Neuer Kommentar",
-        "LABEL": {
-          "MESSAGE": "Fehlermeldung"
+    "ADF_PROCESS_LIST": {
+        "LIST": {
+            "NONE": "Keine Prozessinstanzen gefunden",
+            "SUMMARY": "{{total}} Prozessinstanzen gefunden",
+            "ERROR": "Prozessesinstanzen konnten nicht geladen werden. Versuchen Sie es noch einmal oder geben Sie die folgende Meldung an Ihr IT-Team weiter: {{errorMessage}}"
         },
-        "BUTTON": {
-          "ADD": "Kommentar hinzufügen",
-          "CANCEL": "Abbrechen"
+        "FILTERS": {
+            "MESSAGES": {
+                "NONE": "Kein Prozessinstanzfilter ausgewählt."
+            }
+        },
+        "DETAILS": {
+            "LABELS": {
+                "STARTED_BY": "Gestartet von",
+                "STARTED": "Gestartet",
+                "ENDED": "Beendet",
+                "COMMENTS": "Kommentare",
+                "START_FORM": "Startformular",
+                "TASKS_ACTIVE": "Aktive Aufgaben",
+                "TASKS_COMPLETED": "Abgeschlossene Aufgaben",
+                "TASK_SUBTITLE": "Zugewiesen: {{user}}. Erstellt: {{created}}"
+            },
+            "BUTTON": {
+                "CANCEL": "Prozess abbrechen",
+                "CLOSE": "Schließen",
+                "SHOW_DIAGRAM": "Diagramm anzeigen",
+                "DRAG-ATTACHMENT": "Dateien zum Hochladen ablegen",
+                "UPLOAD-ATTACHMENT": "Anhang hochladen"
+            },
+            "MESSAGES": {
+                "NONE": "Keine Prozessdetails gefunden."
+            },
+            "TASKS": {
+                "NO_ACTIVE": "Keine derzeit aktiven Aufgaben",
+                "NO_COMPLETED": "Noch keine Aufgaben abgeschlossen",
+                "TASK_DETAILS": "Aufgabendetails",
+                "TASK_CLOSE": "Schließen"
+            },
+            "COMMENTS": {
+                "NONE": "Keine Kommentare vorhanden",
+                "BUTTON": {
+                    "ADD": "Kommentar hinzufügen"
+                },
+                "ADD_DIALOG": {
+                    "TITLE": "Neuer Kommentar",
+                    "LABEL": {
+                        "MESSAGE": "Fehlermeldung"
+                    },
+                    "BUTTON": {
+                        "ADD": "Kommentar hinzufügen",
+                        "CANCEL": "Abbrechen"
+                    }
+                }
+            },
+            "ADD_DIALOG": {
+                "TITLE": "Prozessvariable festlegen",
+                "LABEL": {
+                    "NAME": "Name",
+                    "VALUE": "Wert",
+                    "SCOPE": "Bereich"
+                }
+            },
+            "EDIT_DIALOG": {
+                "TITLE": "Prozessvariable bearbeiten"
+            },
+            "ERROR_DIALOG": {
+                "TITLE": "Diese Aktion konnte nicht durchgeführt werden",
+                "DESCRIPTION": "Unter Umständen verfügen Sie nicht über die erforderlichen Zugriffsrechte. Wenden Sie sich an Ihr IT-Team."
+            }
+        },
+        "START_PROCESS": {
+            "BUTTON": "Prozess starten",
+            "NO_PROCESS_DEFINITIONS": "Sie können keinen Prozess starten, weil es keine Prozessdefinitionen gibt",
+            "FORM": {
+                "TITLE": "Prozess starten",
+                "LABEL": {
+                    "TYPE": "Typ",
+                    "NAME": "Name"
+                },
+                "TYPE_PLACEHOLDER": "Eine auswählen...",
+                "ACTION": {
+                    "START": "Start",
+                    "CANCEL": "Abbrechen"
+                }
+            },
+            "ERROR": {
+                "LOAD_PROCESS_DEFS": "Prozessdefinitionen konnten nicht geladen werden. Überprüfen Sie, ob Sie über die nötigen Zugriffsrechte verfügen.",
+                "START": "Neue Prozessinstanz konnte nicht gestartet werden. Überprüfen Sie, ob Sie über die nötigen Zugriffsrechte verfügen."
+            }
+        },
+        "PROCESS-ATTACHMENT": {
+            "EMPTY": {
+                "HEADER": "Diese Liste ist leer",
+                "DRAG-AND-DROP": {
+                    "TITLE": "Ziehen und ablegen",
+                    "SUBTITLE": "um Dateien hochzuladen"
+                }
+            },
+            "EMPTY-LIST": {
+                "HEADER": "Keine Dateien verfügbar"
+            }
         }
-      }
-    },
-    "ADD_DIALOG": {
-      "TITLE": "Prozessvariable festlegen",
-      "LABEL": {
-        "NAME": "Name",
-        "VALUE": "Wert",
-        "SCOPE": "Bereich"
-      }
-    },
-    "EDIT_DIALOG": {
-      "TITLE": "Prozessvariable bearbeiten"
-    },
-    "ERROR_DIALOG": {
-      "TITLE": "Diese Aktion konnte nicht durchgeführt werden",
-      "DESCRIPTION": "Unter Umständen verfügen Sie nicht über die erforderlichen Zugriffsrechte. Wenden Sie sich an Ihr IT-Team."
     }
-  },
-  "START_PROCESS": {
-    "BUTTON": "Prozess starten",
-    "NO_PROCESS_DEFINITIONS": "Sie können keinen Prozess starten, weil es keine Prozessdefinitionen gibt",
-    "FORM": {
-      "TITLE": "Prozess starten",
-      "LABEL": {
-        "TYPE": "Typ",
-        "NAME": "Name"
-      },
-      "TYPE_PLACEHOLDER": "Eine auswählen...",
-      "ACTION": {
-        "START": "Start",
-        "CANCEL": "Abbrechen"
-      }
-    },
-    "ERROR": {
-      "LOAD_PROCESS_DEFS": "Prozessdefinitionen konnten nicht geladen werden. Überprüfen Sie, ob Sie über die nötigen Zugriffsrechte verfügen.",
-      "START": "Neue Prozessinstanz konnte nicht gestartet werden. Überprüfen Sie, ob Sie über die nötigen Zugriffsrechte verfügen."
-    }
-  },
-  "PROCESS-ATTACHMENT": {
-    "EMPTY": {
-      "HEADER": "Diese Liste ist leer",
-      "DRAG-AND-DROP": {
-        "TITLE": "Ziehen und ablegen",
-        "SUBTITLE": "um Dateien hochzuladen"
-      }
-    },
-    "EMPTY-LIST": {
-      "HEADER": "Keine Dateien verfügbar"
-    }
-  }
 }

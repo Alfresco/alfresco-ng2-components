@@ -50,12 +50,13 @@ export * from './src/events/index';
 export { FORM_FIELD_VALIDATORS } from './src/components/widgets/core/form-field-validator';
 
 // Old deprecated import
-import {FormComponent as ActivitiForm } from './src/components/form.component';
-import {StartFormComponent as ActivitiStartForm } from './src/components/start-form.component';
-import {ContentWidgetComponent as ActivitiContent } from './src/components/widgets/content/content.widget';
-export {FormComponent as ActivitiForm} from './src/components/form.component';
-export {ContentWidgetComponent as ActivitiContent} from './src/components/widgets/content/content.widget';
-export {StartFormComponent as ActivitiStartForm} from './src/components/start-form.component';
+import { FormComponent as ActivitiForm } from './src/components/form.component';
+import { StartFormComponent as ActivitiStartForm } from './src/components/start-form.component';
+import { ContentWidgetComponent as ActivitiContent } from './src/components/widgets/content/content.widget';
+export { FormComponent as ActivitiForm } from './src/components/form.component';
+export { ContentWidgetComponent as ActivitiContent } from './src/components/widgets/content/content.widget';
+export { StartFormComponent as ActivitiStartForm } from './src/components/start-form.component';
+export { DynamicTableRow } from './src/components/widgets/dynamic-table/dynamic-table-row.model';
 
 export const ACTIVITI_FORM_DIRECTIVES: any[] = [
     FormComponent,
@@ -116,4 +117,5 @@ export const ACTIVITI_FORM_PROVIDERS: any[] = [
         MaterialModule
     ]
 })
-export class ActivitiFormModule {}
+export class ActivitiFormModule {
+}

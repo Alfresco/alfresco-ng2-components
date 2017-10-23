@@ -1,0 +1,292 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "project": {
+    "name": "myapp"
+  },
+  "apps": [
+    {
+      "root": "src",
+      "outDir": "dist",
+      "assets": [
+        "assets",
+        "favicon.ico",
+        "app.config.json",
+        {
+          "glob": "**/*",
+          "input": "../resources",
+          "output": "./resources"
+        },
+        {
+          "glob": "**/*",
+          "input": "../node_modules/ng2-alfresco-core/prebuilt-themes",
+          "output": "./prebuilt-themes"
+        },
+        {
+          "glob": "**/*",
+          "input": "../node_modules/ng2-alfresco-core/bundles/assets",
+          "output": "./assets/"
+        },
+        {
+          "glob": "**/*",
+          "input": "../node_modules/ng2-alfresco-login/bundles/assets",
+          "output": "./assets/"
+        },
+        {
+          "glob": "**/*",
+          "input": "../node_modules/ng2-alfresco-userinfo/bundles/assets",
+          "output": "./assets/"
+        },
+        {
+          "glob": "**/*",
+          "input": "../node_modules/ng2-alfresco-upload/bundles/assets",
+          "output": "./assets/"
+        },
+
+        {
+          "glob": "**/*",
+          "input": "../node_modules/ng2-alfresco-search/bundles/assets",
+          "output": "./assets/"
+        },
+        {
+          "glob": "**/*",
+          "input": "../node_modules/ng2-alfresco-datatable/bundles/assets",
+          "output": "./assets/"
+        },
+        {
+          "glob": "**/*",
+          "input": "../node_modules/ng2-alfresco-documentlist/bundles/assets",
+          "output": "./assets/"
+        },
+        {
+          "glob": "**/*",
+          "input": "../node_modules/ng2-alfresco-viewer/bundles/assets",
+          "output": "./assets/"
+        },
+        {
+          "glob": "**/*",
+          "input": "../node_modules/ng2-alfresco-social/bundles/assets",
+          "output": "./assets/"
+        },
+        {
+          "glob": "**/*",
+          "input": "../node_modules/ng2-alfresco-tag/bundles/assets",
+          "output": "./assets/"
+        },
+        {
+          "glob": "**/*",
+          "input": "../node_modules/ng2-alfresco-webscript/bundles/assets",
+          "output": "./assets/"
+        },
+        {
+          "glob": "**/*",
+          "input": "../node_modules/ng2-activiti-analytics/bundles/assets",
+          "output": "./assets/"
+        },
+        {
+          "glob": "**/*",
+          "input": "../node_modules/ng2-activiti-diagrams/bundles/assets",
+          "output": "./assets/"
+        },
+        {
+          "glob": "**/*",
+          "input": "../node_modules/ng2-activiti-form/bundles/assets",
+          "output": "./assets/"
+        },
+        {
+          "glob": "**/*",
+          "input": "../node_modules/ng2-activiti-processlist/bundles/assets",
+          "output": "./assets/"
+        },
+        {
+          "glob": "**/*",
+          "input": "../node_modules/ng2-activiti-tasklist/bundles/assets",
+          "output": "./assets/"
+        }
+      ],
+      "index": "index.html",
+      "main": "main.ts",
+      "polyfills": "polyfills.ts",
+      "test": "test.ts",
+      "tsconfig": "tsconfig.app.json",
+      "testTsconfig": "tsconfig.spec.json",
+      "prefix": "app",
+      "styles": [
+        "styles.css",
+        "../node_modules/ng2-alfresco-core/prebuilt-themes/adf-blue-orange.css",
+        "../node_modules/material-design-lite/dist/material.orange-blue.min.css",
+        "../node_modules/dialog-polyfill/dialog-polyfill.css",
+        "custom-style.scss"
+      ],
+      "scripts": [
+        "../node_modules/material-design-lite/material.min.js",
+        "../node_modules/pdfjs-dist/build/pdf.js",
+        "../node_modules/pdfjs-dist/web/compatibility.js",
+        "../node_modules/pdfjs-dist/web/pdf_viewer.js",
+        "../node_modules/dialog-polyfill/dialog-polyfill",
+        "../node_modules/raphael/raphael.min.js",
+        "../node_modules/moment/min/moment.min.js",
+        "../node_modules/three/build/three.min.js"
+      ],
+      "environmentSource": "environments/environment.ts",
+      "environments": {
+        "dev": "environments/environment.ts",
+        "prod": "environments/environment.prod.ts"
+      }
+    },
+
+    {
+      "root": "src",
+      "outDir": "dist",
+      "assets": [
+        "assets",
+        "app.config.json",
+        {
+          "glob": "**/*",
+          "input": "../resources",
+          "output": "./resources"
+        },
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/ng2-alfresco-core/prebuilt-themes",
+          "output": "./prebuilt-themes"
+        },
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/ng2-alfresco-core/bundles/assets",
+          "output": "./assets/"
+        },
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/ng2-alfresco-login/bundles/assets",
+          "output": "./assets/"
+        },
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/ng2-alfresco-userinfo/bundles/assets",
+          "output": "./assets/"
+        },
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/ng2-alfresco-upload/bundles/assets",
+          "output": "./assets/"
+        },
+
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/ng2-alfresco-search/bundles/assets",
+          "output": "./assets/"
+        },
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/ng2-alfresco-datatable/bundles/assets",
+          "output": "./assets/"
+        },
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/ng2-alfresco-documentlist/bundles/assets",
+          "output": "./assets/"
+        },
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/ng2-alfresco-viewer/bundles/assets",
+          "output": "./assets/"
+        },
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/ng2-alfresco-social/bundles/assets",
+          "output": "./assets/"
+        },
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/ng2-alfresco-tag/bundles/assets",
+          "output": "./assets/"
+        },
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/ng2-alfresco-webscript/bundles/assets",
+          "output": "./assets/"
+        },
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/ng2-activiti-analytics/bundles/assets",
+          "output": "./assets/"
+        },
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/ng2-activiti-diagrams/bundles/assets",
+          "output": "./assets/"
+        },
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/ng2-activiti-form/bundles/assets",
+          "output": "./assets/"
+        },
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/ng2-activiti-processlist/bundles/assets",
+          "output": "./assets/"
+        },
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/ng2-activiti-tasklist/bundles/assets",
+          "output": "./assets/"
+        }
+      ],
+      "index": "index.html",
+      "main": "main.ts",
+      "polyfills": "polyfills.ts",
+      "test": "test.ts",
+      "tsconfig": "tsconfig.dev.json",
+      "testTsconfig": "tsconfig.spec.json",
+      "prefix": "app-dev",
+      "styles": [
+        "styles.css",
+        "../node_modules/ng2-alfresco-core/prebuilt-themes/adf-blue-orange.css",
+        "../node_modules/material-design-lite/dist/material.orange-blue.min.css",
+        "../node_modules/dialog-polyfill/dialog-polyfill.css",
+        "custom-style.scss"
+      ],
+      "scripts": [
+        "../node_modules/material-design-lite/material.min.js",
+        "../node_modules/pdfjs-dist/build/pdf.js",
+        "../node_modules/pdfjs-dist/web/compatibility.js",
+        "../node_modules/pdfjs-dist/web/pdf_viewer.js",
+        "../node_modules/dialog-polyfill/dialog-polyfill",
+        "../node_modules/raphael/raphael.min.js",
+        "../node_modules/moment/min/moment.min.js",
+        "../node_modules/three/build/three.min.js"
+      ],
+      "environmentSource": "environments/environment.ts",
+      "environments": {
+        "dev": "environments/environment.ts",
+        "prod": "environments/environment.prod.ts"
+      }
+    }
+  ],
+  "e2e": {
+    "protractor": {
+      "config": "./protractor.conf.js"
+    }
+  },
+  "lint": [
+    {
+      "project": "src/tsconfig.app.json"
+    },
+    {
+      "project": "src/tsconfig.spec.json"
+    },
+    {
+      "project": "e2e/tsconfig.e2e.json"
+    }
+  ],
+  "test": {
+    "karma": {
+      "config": "./karma.conf.js"
+    }
+  },
+  "defaults": {
+    "styleExt": "scss",
+    "component": {
+    }
+  }
+}

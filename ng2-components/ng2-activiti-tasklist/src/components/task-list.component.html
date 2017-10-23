@@ -1,4 +1,4 @@
-<div *ngIf="!requestNode">{{ 'TASK_FILTERS.MESSAGES.NONE' | translate }}</div>
+<div *ngIf="!requestNode">{{ 'ADF_TASK_LIST.FILTERS.MESSAGES.NONE' | translate }}</div>
 <div *ngIf="requestNode">
     <div>
         <adf-datatable
@@ -24,7 +24,7 @@
                 <!--Add your custom empty template here-->
                 <ng-template>
                     <div class="no-content-message">
-                        {{ 'TASK_LIST.MESSAGES.NONE' | translate }}
+                        {{ 'ADF_TASK_LIST.LIST.MESSAGES.NONE' | translate }}
                     </div>
                 </ng-template>
             </no-content-template>

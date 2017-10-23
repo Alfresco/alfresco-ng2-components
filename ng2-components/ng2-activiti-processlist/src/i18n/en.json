@@ -1,75 +1,74 @@
 {
-    "PROCESSLIST": {
-        "NONE": "No process instances found",
-        "SUMMARY": "{{total}} process instances found",
-        "ERROR": "Couldn't load processes instances. Try again or share the following message with your IT Team: {{errorMessage}}",
-        "COLUMN": {
-            "NAME": "Name"
-        }
-    },
-    "FILTERS": {
-        "MESSAGES": {
-            "NONE": "No process instance filter selected."
-        }
-    },
-    "PROCESS_PROPERTIES": {
-        "STATUS": "Status",
-        "DUE_DATE": "Due Date",
-        "DUE_DATE_DEFAULT": "No date",
-        "CATEGORY": "Category",
-        "CATEGORY_DEFAULT": "No category",
-        "CREATED_BY": "Created By",
-        "CREATED_BY_DEFAULT": "No assignee",
-        "CREATED": "Created",
-        "DESCRIPTION": "Description",
-        "DESCRIPTION_DEFAULT": "No description",
-        "ID": "Id"
-    },
-    "DETAILS": {
-        "LABELS": {
-            "STARTED_BY": "Started by",
-            "STARTED": "Started",
-            "ENDED": "Ended",
-            "COMMENTS": "Comments",
-            "START_FORM": "Start Form",
-            "TASKS_ACTIVE": "Active Tasks",
-            "TASKS_COMPLETED": "Completed Tasks",
-            "TASK_SUBTITLE": "Assigned to {{user}}, created {{created}}"
+    "ADF_PROCESS_LIST": {
+        "LIST": {
+            "NONE": "No process instances found",
+            "SUMMARY": "{{total}} process instances found",
+            "ERROR": "Couldn't load processes instances. Try again or share the following message with your IT Team: {{errorMessage}}"
         },
-        "BUTTON": {
-            "CANCEL": "Cancel Process",
-            "CLOSE": "Close",
-            "SHOW_DIAGRAM": "Show Diagram",
-            "DRAG-ATTACHMENT": "Drop files to upload",
-            "UPLOAD-ATTACHMENT": "Upload Attachment"
-        },
-        "MESSAGES": {
-            "NONE": "No process details found."
-        },
-        "TASKS": {
-            "NO_ACTIVE": "No currently active tasks",
-            "NO_COMPLETED": "No tasks completed yet",
-            "TASK_DETAILS": "Task details",
-            "TASK_CLOSE": "Close"
-        },
-        "COMMENTS": {
-            "ADD": "Add a comment",
-            "HEADER": "Comments ({{ count }})",
-            "NONE": "No comments",
-            "BUTTON": {
-                "ADD": "Add a comment"
-            },
-            "ADD_DIALOG": {
-                "TITLE": "New comment",
-                "LABEL": {
-                    "MESSAGE": "Message"
-                },
-                "BUTTON": {
-                    "ADD": "Add Comment",
-                    "CANCEL": "Cancel"
-                }
+        "FILTERS": {
+            "MESSAGES": {
+                "NONE": "No process instance filter selected."
             }
         },
+        "PROPERTIES": {
+            "NAME": "Name",
+            "STATUS": "Status",
+            "DUE_DATE": "Due Date",
+            "DUE_DATE_DEFAULT": "No date",
+            "CATEGORY": "Category",
+            "CATEGORY_DEFAULT": "No category",
+            "CREATED_BY": "Created By",
+            "CREATED_BY_DEFAULT": "No assignee",
+            "CREATED": "Created",
+            "DESCRIPTION": "Description",
+            "DESCRIPTION_DEFAULT": "No description",
+            "ID": "Id"
+        },
+        "DETAILS": {
+            "LABELS": {
+                "STARTED_BY": "Started by",
+                "STARTED": "Started",
+                "ENDED": "Ended",
+                "COMMENTS": "Comments",
+                "START_FORM": "Start Form",
+                "TASKS_ACTIVE": "Active Tasks",
+                "TASKS_COMPLETED": "Completed Tasks",
+                "TASK_SUBTITLE": "Assigned to {{user}}, created {{created}}"
+            },
+            "BUTTON": {
+                "CANCEL": "Cancel Process",
+                "CLOSE": "Close",
+                "SHOW_DIAGRAM": "Show Diagram",
+                "DRAG-ATTACHMENT": "Drop files to upload",
+                "UPLOAD-ATTACHMENT": "Upload Attachment"
+            },
+            "MESSAGES": {
+                "NONE": "No process details found."
+            },
+            "TASKS": {
+                "NO_ACTIVE": "No currently active tasks",
+                "NO_COMPLETED": "No tasks completed yet",
+                "TASK_DETAILS": "Task details",
+                "TASK_CLOSE": "Close"
+            },
+            "COMMENTS": {
+                "ADD": "Add a comment",
+                "HEADER": "Comments ({{ count }})",
+                "NONE": "No comments",
+                "BUTTON": {
+                    "ADD": "Add a comment"
+                },
+                "ADD_DIALOG": {
+                    "TITLE": "New comment",
+                    "LABEL": {
+                        "MESSAGE": "Message"
+                    },
+                    "BUTTON": {
+                        "ADD": "Add Comment",
+                        "CANCEL": "Cancel"
+                    }
+                }
+            },
             "ADD_DIALOG": {
                 "TITLE": "Set process variable",
                 "LABEL": {
@@ -85,42 +84,42 @@
                 "TITLE": "Couldn't complete that action",
                 "DESCRIPTION": "You might not have the required access level, check with your IT Team."
             }
-    },
-    "START_PROCESS": {
-        "BUTTON": "Start Process",
-        "NO_PROCESS_DEFINITIONS": "You can't start a process as there are no process definitions available",
-        "FORM": {
-            "TITLE": "Start Process",
-            "LABEL": {
-                "TYPE": "Select Process",
-                "NAME": "Process Name"
+        },
+        "START_PROCESS": {
+            "BUTTON": "Start Process",
+            "NO_PROCESS_DEFINITIONS": "You can't start a process as there are no process definitions available",
+            "FORM": {
+                "TITLE": "Start Process",
+                "LABEL": {
+                    "TYPE": "Select Process",
+                    "NAME": "Process Name"
+                },
+                "TYPE_PLACEHOLDER": "Choose one...",
+                "ACTION": {
+                    "START": "Start Process",
+                    "CANCEL": "Cancel"
+                }
             },
-            "TYPE_PLACEHOLDER": "Choose one...",
-            "ACTION": {
-                "START": "Start Process",
-                "CANCEL": "Cancel"
+            "ERROR": {
+                "LOAD_PROCESS_DEFS": "Couldn't load process definitions, check you have access.",
+                "START": "Couldn't start new process instance, check you have access."
             }
         },
-        "ERROR": {
-          "LOAD_PROCESS_DEFS": "Couldn't load process definitions, check you have access.",
-          "START": "Couldn't start new process instance, check you have access."
-        }
-    },
-    "PROCESS-ATTACHMENT": {
-        "EMPTY": {
-            "HEADER": "This list is empty",
-            "DRAG-AND-DROP": {
-                "TITLE": "Drag and drop",
-                "SUBTITLE": "to upload files"
+        "PROCESS-ATTACHMENT": {
+            "EMPTY": {
+                "HEADER": "This list is empty",
+                "DRAG-AND-DROP": {
+                    "TITLE": "Drag and drop",
+                    "SUBTITLE": "to upload files"
+                }
+            },
+            "EMPTY-LIST": {
+                "HEADER": "No files are available"
+            },
+            "COLUMNS": {
+                "NAME": "Name",
+                "CREATED-ON": "Created on"
             }
-        },
-        "EMPTY-LIST": {
-            "HEADER": "No files are available"
-        },
-        "COLUMNS": {
-            "NAME": "Name",
-            "CREATED-ON": "Created on"
         }
-        
     }
 }

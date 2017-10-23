@@ -1,117 +1,119 @@
 {
-  "APPS": {
-    "NONE": "Ingen apper funnet"
-  },
-  "TASK_LIST": {
-    "MESSAGES": {
-      "NONE": "Ingen oppgaveliste funnet"
-    }
-  },
-  "TASK_DETAILS": {
-    "LABELS": {
-      "ASSIGNEE": "Tilordnet",
-      "DUE": "Forfaller",
-      "FORM": "Skjema",
-      "PEOPLE": "Folk som denne oppgaven deles med",
-      "COMMENTS": "Kommentarer",
-      "CHECKLIST": "Sjekkliste",
-      "INVOLVED_PEOPLE": "Folk involvert",
-      "ADD_PEOPLE": "Legg til folk og grupper",
-      "ADD_ASSIGNEE": "Legg til ny tilordnet"
-    },
-    "BUTTON": {
-      "COMPLETE": "Fullfør",
-      "CLAIM": "Krev",
-      "UNCLAIM": "Legg tilbake i kø",
-      "DRAG-ATTACHMENT": "Slipp filer her...",
-      "UPLOAD-ATTACHMENT": "Last opp vedlegg"
-    },
-    "MESSAGES": {
-      "NONE": "Ingen oppgavedetaljer funnet",
-      "CLAIM": "Klikk på Krev for å jobbe med denne oppgaven."
-    },
-    "FORM": {
-      "NONE": "Ingen skjema."
-    },
-    "DUE": {
-      "NONE": "Ingen forfallsdato."
-    },
-    "ASSIGNEE": {
-      "NONE": "Ingen tilordnet."
-    },
-    "PEOPLE": {
-      "NONE": "Ingen involvert."
-    },
-    "COMMENTS": {
-      "NONE": "Ingen kommentarer",
-      "ADD": "Legg til en kommentar",
-      "HEADER": "Kommentarer",
-      "DIALOG": {
-        "TITLE": "Nytt kommentar",
-        "LABELS": {
-          "MESSAGE": "Melding"
+    "ADF_TASK_LIST": {
+        "APPS": {
+            "NONE": "Ingen apper funnet"
         },
-        "BUTTON": {
-          "ADD": "Legg til kommentar",
-          "CANCEL": "Avbryt"
+        "LIST": {
+            "MESSAGES": {
+                "NONE": "Ingen oppgaveliste funnet"
+            }
+        },
+        "DETAILS": {
+            "LABELS": {
+                "ASSIGNEE": "Tilordnet",
+                "DUE": "Forfaller",
+                "FORM": "Skjema",
+                "PEOPLE": "Folk som denne oppgaven deles med",
+                "COMMENTS": "Kommentarer",
+                "CHECKLIST": "Sjekkliste",
+                "INVOLVED_PEOPLE": "Folk involvert",
+                "ADD_PEOPLE": "Legg til folk og grupper",
+                "ADD_ASSIGNEE": "Legg til ny tilordnet"
+            },
+            "BUTTON": {
+                "COMPLETE": "Fullfør",
+                "CLAIM": "Krev",
+                "UNCLAIM": "Legg tilbake i kø",
+                "DRAG-ATTACHMENT": "Slipp filer her...",
+                "UPLOAD-ATTACHMENT": "Last opp vedlegg"
+            },
+            "MESSAGES": {
+                "NONE": "Ingen oppgavedetaljer funnet",
+                "CLAIM": "Klikk på Krev for å jobbe med denne oppgaven."
+            },
+            "FORM": {
+                "NONE": "Ingen skjema."
+            },
+            "DUE": {
+                "NONE": "Ingen forfallsdato."
+            },
+            "ASSIGNEE": {
+                "NONE": "Ingen tilordnet."
+            },
+            "PEOPLE": {
+                "NONE": "Ingen involvert."
+            },
+            "COMMENTS": {
+                "NONE": "Ingen kommentarer",
+                "ADD": "Legg til en kommentar",
+                "HEADER": "Kommentarer",
+                "DIALOG": {
+                    "TITLE": "Nytt kommentar",
+                    "LABELS": {
+                        "MESSAGE": "Melding"
+                    },
+                    "BUTTON": {
+                        "ADD": "Legg til kommentar",
+                        "CANCEL": "Avbryt"
+                    }
+                }
+            },
+            "CHECKLIST": {
+                "NONE": "Ingen sjekkliste"
+            },
+            "ERROR": {
+                "TITLE": "Kan ikke fullføre handlingen",
+                "DESCRIPTION": "Prøve på nytt, eller kontroller at du har tilgang.",
+                "CLOSE": "Lukk"
+            }
+        },
+        "FILTERS": {
+            "MESSAGES": {
+                "NONE": "Ingen oppgavefilter valgt."
+            }
+        },
+        "START_TASK": {
+            "BUTTON": "OPPRETT OPPGAVE",
+            "FORM": {
+                "TITLE": "Start oppgave",
+                "LABEL": {
+                    "NONE": "Ingen",
+                    "NAME": "Navn",
+                    "DESCRIPTION": "Beskrivelse",
+                    "ATTACHFORM": "Legg ved skjema",
+                    "ASSIGNEE": "Tilordnet",
+                    "FORM": "Skjema",
+                    "DATE": "Velg dato"
+                },
+                "ACTION": {
+                    "START": "Start",
+                    "CANCEL": "Avbryt"
+                },
+                "DATE": {
+                    "ERROR": "Datoformat DD/MM/ÅÅÅÅ"
+                }
+            }
+        },
+        "PEOPLE": {
+            "DIALOG_CLOSE": "LUKK",
+            "ADD_USER": "LEGG TIL",
+            "ADD_ASSIGNEE": "TILORDNE",
+            "SEARCH_USER": "Søk etter bruker",
+            "SEARCH": {
+                "NO_USERS": "Ingen funnet å involvere"
+            }
+        },
+        "ATTACHMENT": {
+            "EMPTY": {
+                "HEADER": "Denne listen er tom",
+                "DRAG-AND-DROP": {
+                    "TITLE": "Dra og slipp",
+                    "SUBTITLE": "for å laste opp filer"
+                }
+            },
+            "EMPTY-LIST": {
+                "HEADER": "Ingen tilgjengelige filer"
+            }
         }
-      }
-    },
-    "CHECKLIST": {
-      "NONE": "Ingen sjekkliste"
-    },
-    "ERROR": {
-      "TITLE": "Kan ikke fullføre handlingen",
-      "DESCRIPTION": "Prøve på nytt, eller kontroller at du har tilgang.",
-      "CLOSE": "Lukk"
     }
-  },
-  "TASK_FILTERS": {
-    "MESSAGES": {
-      "NONE": "Ingen oppgavefilter valgt."
-    }
-  },
-  "START_TASK": {
-    "BUTTON": "OPPRETT OPPGAVE",
-    "FORM": {
-      "TITLE": "Start oppgave",
-      "LABEL": {
-        "NONE": "Ingen",
-        "NAME": "Navn",
-        "DESCRIPTION": "Beskrivelse",
-        "ATTACHFORM": "Legg ved skjema",
-        "ASSIGNEE": "Tilordnet",
-        "FORM": "Skjema",
-        "DATE": "Velg dato"
-      },
-      "ACTION": {
-        "START": "Start",
-        "CANCEL": "Avbryt"
-      },
-      "DATE": {
-        "ERROR": "Datoformat DD/MM/ÅÅÅÅ"
-      }
-    }
-  },
-  "PEOPLE": {
-    "DIALOG_CLOSE": "LUKK",
-    "ADD_USER": "LEGG TIL",
-    "ADD_ASSIGNEE": "TILORDNE",
-    "SEARCH_USER": "Søk etter bruker",
-    "SEARCH": {
-      "NO_USERS": "Ingen funnet å involvere"
-    }
-  },
-  "TASK-ATTACHMENT": {
-    "EMPTY": {
-      "HEADER": "Denne listen er tom",
-      "DRAG-AND-DROP": {
-        "TITLE": "Dra og slipp",
-        "SUBTITLE": "for å laste opp filer"
-      }
-    },
-    "EMPTY-LIST": {
-      "HEADER": "Ingen tilgjengelige filer"
-    }
-  }
 }

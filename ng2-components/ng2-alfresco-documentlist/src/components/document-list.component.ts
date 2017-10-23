@@ -24,7 +24,11 @@ import { AlfrescoApiService, AppConfigService, DataColumnListComponent, UserPref
 import { DataCellEvent, DataColumn, DataRowActionEvent, DataSorting, DataTableComponent, ObjectDataColumn } from 'ng2-alfresco-datatable';
 import { Observable, Subject } from 'rxjs/Rx';
 import { presetsDefaultModel } from '../models/preset.model';
-import { ImageResolver, RowFilter, ShareDataRow, ShareDataTableAdapter } from './../data/share-datatable-adapter';
+import { ImageResolver } from './../data/image-resolver.model';
+import { RowFilter } from './../data/row-filter.model';
+import { ShareDataRow } from './../data/share-data-row.model';
+import { ShareDataTableAdapter } from './../data/share-datatable-adapter';
+
 import { ContentActionModel } from './../models/content-action.model';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { DocumentListService } from './../services/document-list.service';

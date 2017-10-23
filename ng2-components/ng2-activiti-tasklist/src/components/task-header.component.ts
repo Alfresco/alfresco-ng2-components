@@ -59,89 +59,89 @@ export class TaskHeaderComponent implements OnChanges {
             this.properties = [
                 new CardViewTextItemModel(
                     {
-                     label: 'TASK_PROPERTIES.ASSIGNEE',
+                     label: 'ADF_TASK_LIST.PROPERTIES.ASSIGNEE',
                      value: this.taskDetails.getFullName(),
                      key: 'assignee',
-                     default: 'TASK_PROPERTIES.ASSIGNEE_DEFAULT',
+                     default: 'ADF_TASK_LIST.PROPERTIES.ASSIGNEE_DEFAULT',
                      clickable: !this.isCompleted()
                     }
                 ),
                 new CardViewTextItemModel(
                     {
-                        label: 'TASK_PROPERTIES.STATUS',
+                        label: 'ADF_TASK_LIST.PROPERTIES.STATUS',
                         value: this.getTaskStatus(),
                         key: 'status'
                     }
                 ),
                 new CardViewTextItemModel(
                     {
-                        label: 'TASK_PROPERTIES.PRIORITY',
+                        label: 'ADF_TASK_LIST.PROPERTIES.PRIORITY',
                         value: this.taskDetails.priority,
                         key: 'priority'
                     }
                 ),
                 new CardViewDateItemModel(
                     {
-                        label: 'TASK_PROPERTIES.DUE_DATE',
+                        label: 'ADF_TASK_LIST.PROPERTIES.DUE_DATE',
                         value: this.taskDetails.dueDate,
                         key: 'dueDate',
-                        default: 'TASK_PROPERTIES.DUE_DATE_DEFAULT',
+                        default: 'ADF_TASK_LIST.PROPERTIES.DUE_DATE_DEFAULT',
                         editable: true
                     }
                 ),
                 new CardViewTextItemModel(
                     {
-                        label: 'TASK_PROPERTIES.CATEGORY',
+                        label: 'ADF_TASK_LIST.PROPERTIES.CATEGORY',
                         value: this.taskDetails.category,
                         key: 'category',
-                        default: 'TASK_PROPERTIES.CATEGORY_DEFAULT'
+                        default: 'ADF_TASK_LIST.PROPERTIES.CATEGORY_DEFAULT'
                     }
                 ),
                 new CardViewMapItemModel(
                     {
-                        label: 'TASK_PROPERTIES.PARENT_NAME',
+                        label: 'ADF_TASK_LIST.PROPERTIES.PARENT_NAME',
                         value: parentInfoMap, key: 'parentName',
-                        default: 'TASK_PROPERTIES.PARENT_NAME_DEFAULT',
+                        default: 'ADF_TASK_LIST.PROPERTIES.PARENT_NAME_DEFAULT',
                         clickable: true
                     }
                 ),
                 new CardViewTextItemModel(
                     {
-                        label: 'TASK_PROPERTIES.CREATED_BY',
+                        label: 'ADF_TASK_LIST.PROPERTIES.CREATED_BY',
                         value: this.taskDetails.getFullName(),
                         key: 'created-by'
                     }
                 ),
                 new CardViewDateItemModel(
                     {
-                        label: 'TASK_PROPERTIES.CREATED',
+                        label: 'ADF_TASK_LIST.PROPERTIES.CREATED',
                         value: this.taskDetails.created,
                         key: 'created'
                     }
                 ),
                 new CardViewTextItemModel(
                     {
-                        label: 'TASK_PROPERTIES.ID',
+                        label: 'ADF_TASK_LIST.PROPERTIES.ID',
                         value: this.taskDetails.id,
                         key: 'id'
                     }
                 ),
                 new CardViewTextItemModel(
                     {
-                        label: 'TASK_PROPERTIES.DESCRIPTION',
+                        label: 'ADF_TASK_LIST.PROPERTIES.DESCRIPTION',
                         value: this.taskDetails.description,
                         key: 'description',
-                        default: 'TASK_PROPERTIES.DESCRIPTION_DEFAULT',
+                        default: 'ADF_TASK_LIST.PROPERTIES.DESCRIPTION_DEFAULT',
                         multiline: true,
                         editable: true
                     }
                 ),
                 new CardViewTextItemModel(
                     {
-                        label: 'TASK_PROPERTIES.FORM_NAME',
+                        label: 'ADF_TASK_LIST.PROPERTIES.FORM_NAME',
                         value: this.formName,
                         key: 'formName',
-                        default: 'TASK_PROPERTIES.FORM_NAME_DEFAULT'
+                        default: 'ADF_TASK_LIST.PROPERTIES.FORM_NAME_DEFAULT'
                     }
                 )
             ];

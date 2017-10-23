@@ -19,7 +19,8 @@ import { Component, EventEmitter, Inject, Input, OnInit, Optional, Output, ViewC
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { MinimalNodeEntryEntity, NodePaging, Pagination } from 'alfresco-js-api';
 import { AlfrescoContentService, HighlightDirective, SiteModel } from 'ng2-alfresco-core';
-import { ImageResolver, RowFilter } from '../../data/share-datatable-adapter';
+import { ImageResolver } from '../../data/image-resolver.model';
+import { RowFilter } from '../../data/row-filter.model';
 import { DocumentListComponent, PaginationStrategy } from '../document-list.component';
 import { ContentNodeSelectorService } from './content-node-selector.service';
 
@@ -130,7 +131,7 @@ export class ContentNodeSelectorComponent implements OnInit {
     /**
      * Returns the actually selected|entered folder node or null in case of searching for the breadcrumb
      */
-    get breadcrumbFolderNode(): MinimalNodeEntryEntity|null {
+    get breadcrumbFolderNode(): MinimalNodeEntryEntity | null {
         if (this.showingSearchResults && this.chosenNode) {
             return this.chosenNode;
         } else {

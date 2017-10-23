@@ -15,5 +15,9 @@
  * limitations under the License.
  */
 
-export { DataColumn, DataRow, DataRowEvent, DataSorting, DataTableAdapter } from './datatable-adapter';
+export { DataTableAdapter } from './datatable-adapter';
 export { ObjectDataColumn, ObjectDataRow, ObjectDataTableAdapter } from './object-datatable-adapter';
+export { DataRow } from './data-row.model';
+export { DataRowEvent } from './data-row-event.model';
+export { DataColumn } from './data-column.model';
+export { DataSorting } from './data-sorting.model';

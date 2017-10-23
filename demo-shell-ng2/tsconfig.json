@@ -1,41 +1,30 @@
 {
-    "compilerOptions": {
-        "baseUrl": ".",
-        "target": "es5",
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "sourceMap": true,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "skipLibCheck": true,
-        "noLib": false,
-        "allowUnreachableCode": false,
-        "allowUnusedLabels": false,
-        "noImplicitAny": false,
-        "noImplicitReturns": false,
-        "noImplicitUseStrict": false,
-        "noFallthroughCasesInSwitch": true,
-        "removeComments": true,
-        "declaration": true,
-        "outDir": "./dist",
-        "lib": [
-            "es2015",
-            "dom"
-        ],
-        "paths": {
-            "@angular/*": ["node_modules/@angular/*"],
-            "rxjs/*": ["node_modules/rxjs/*"]
-        },
-        "suppressImplicitAnyIndexErrors": true,
-        "noUnusedLocals": true
-    },
-    "exclude": [
-        "demo",
-        "node_modules",
-        "dist"
+  "compileOnSave": false,
+  "compilerOptions": {
+    "outDir": "./dist/out-tsc",
+    "baseUrl": "src",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "noUnusedLocals": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
     ],
-    "angularCompilerOptions": {
-        "strictMetadataEmit": false,
-        "skipTemplateCodegen": true
+    "lib": [
+      "es2016",
+      "dom"
+    ],
+    "paths": {
+      "rxjs/*": [
+        "../node_modules/rxjs/*"
+      ],
+      "@angular/*": [
+        "../node_modules/@angular/*"
+      ]
     }
+  }
 }
