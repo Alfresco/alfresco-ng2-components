@@ -198,6 +198,8 @@ describe('UploadWidgetComponent', () => {
         }));
 
         it('should update the form after deleted a file', async(() => {
+            uploadWidgetComponent.field.params.multiple = true;
+
             spyOn(uploadWidgetComponent.field, 'updateForm');
             fixture.detectChanges();
             let inputDebugElement = fixture.debugElement.query(By.css('#upload-id'));
@@ -207,6 +209,20 @@ describe('UploadWidgetComponent', () => {
                 status: 200,
                 contentType: 'json',
                 responseText: fakePngAnswer
+            });
+
+            jasmine.Ajax.requests.at(1).respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: fakeJpgAnswer
+            });
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                let deleteButton = <HTMLInputElement> element.querySelector('#file-1155-remove');
+                deleteButton.click();
+
+                expect(uploadWidgetComponent.field.updateForm).toHaveBeenCalled();
             });
 
         }));
