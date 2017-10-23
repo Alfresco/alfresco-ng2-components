@@ -272,7 +272,7 @@ export class ActivitiComponent implements AfterViewInit, OnDestroy, OnInit {
         this.processFilter = event;
     }
 
-    onSuccessProcessFilterList(): void {
+    onSuccessProcessFilterList(event: ProcessInstanceFilterRepresentation[]): void {
         this.processFilter = this.activitiprocessfilter.getCurrentFilter();
     }
 
