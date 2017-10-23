@@ -20,7 +20,7 @@ Rule.FAILURE_STRING = 'The name of the File should not start with ADF Alfresco o
 exports.Rule = Rule;
 class AdfFileName extends Lint.RuleWalker {
     visitSourceFile(node) {
-        var whiteList = ['activiti-content.component.ts', 'activiti-alfresco.service.ts', 'activiti-content-service.ts',
+        var whiteList = ['activiti-content.component.ts', 'activiti-alfresco.service.ts',
             'alfresco-api.service.ts', 'alfresco-settings.service.ts', 'alfresco-content.service.ts',
             'activiti-content.component.spec.ts', 'activiti-alfresco.service.spec.ts', 'activiti-content-service.spec.ts',
             'alfresco-api.service.spec.ts', 'alfresco-settings.service.spec.ts', 'alfresco-content.service.spec.ts',

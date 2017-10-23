@@ -194,6 +194,7 @@ for more information about installing and using the source code.
 
 - [Form rendering service](form-rendering.service.md)
 - [Form service](form.service.md)
+- [*Process content service](../ng2-components/ng2-activiti-form/src/services/process-content.service.ts)
 - [*Activiti alfresco service](../ng2-components/ng2-activiti-form/src/services/activiti-alfresco.service.ts)
 - [*Node service](../ng2-components/ng2-activiti-form/src/services/node.service.ts)
 - [*Widget visibility service](../ng2-components/ng2-activiti-form/src/services/widget-visibility.service.ts)

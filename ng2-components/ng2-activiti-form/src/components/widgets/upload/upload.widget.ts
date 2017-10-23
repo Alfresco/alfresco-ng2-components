@@ -17,10 +17,11 @@
 
 /* tslint:disable:component-selector  */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { LogService, ThumbnailService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { FormService } from '../../../services/form.service';
+import { ProcessContentService } from '../../../services/process-content.service';
 import { ContentLinkModel } from '../core/content-link.model';
 import { baseHost, WidgetComponent } from './../widget.component';
 
@@ -38,9 +39,13 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
     multipleOption: string = '';
     mimeTypeIcon: string;
 
+    @ViewChild('uploadFiles')
+    fileInput: ElementRef;
+
     constructor(public formService: FormService,
                 private logService: LogService,
-                private thumbnailService: ThumbnailService) {
+                private thumbnailService: ThumbnailService,
+                public processContentService: ProcessContentService) {
         super(formService);
     }
 
@@ -53,21 +58,22 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
         this.getMultipleFileParam();
     }
 
-    reset(file: any) {
+    removeFile(file: any) {
         if (this.field) {
-            this.removeElementFromList(this.field.value, file);
-            this.removeElementFromList(this.field.json.value, file);
-            this.hasFile = this.field.value.length > 0;
-            this.resetFormValueWithNoFiles();
+            this.removeElementFromList(file);
         }
     }
 
     onFileChanged(event: any) {
         let files = event.target.files;
         let filesSaved = [];
+
+        if (this.field.json.value) {
+            filesSaved = [...this.field.json.value];
+        }
+
         if (files && files.length > 0) {
-            Observable.from(files).
-                flatMap(file => this.uploadRawContent(file)).subscribe((res) => {
+            Observable.from(files).flatMap(file => this.uploadRawContent(file)).subscribe((res) => {
                     filesSaved.push(res);
                 },
                 (error) => {
@@ -77,11 +83,13 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
                     this.field.value = filesSaved;
                     this.field.json.value = filesSaved;
                 });
+
+            this.hasFile = true;
         }
     }
 
     private uploadRawContent(file): Observable<any> {
-        return this.formService.createTemporaryRawRelatedContent(file)
+        return this.processContentService.createTemporaryRawRelatedContent(file)
             .map((response: any) => {
                 this.logService.info(response);
                 return response;
@@ -96,17 +104,24 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
         }
     }
 
-    private removeElementFromList(list, element) {
-        let index = list.indexOf(element);
+    private removeElementFromList(file) {
+        let index = this.field.value.indexOf(file);
+
         if (index !== -1) {
-            list.splice(index, 1);
+            this.field.value.splice(index, 1);
+            this.field.json.value = this.field.value;
+            this.field.updateForm();
         }
+
+        this.hasFile = this.field.value.length > 0;
+
+        this.resetFormValueWithNoFiles();
     }
 
     private resetFormValueWithNoFiles() {
         if (this.field.value.length === 0) {
-            this.field.value = null;
-            this.field.json.value = null;
+            this.field.value = [];
+            this.field.json.value = [];
         }
     }
 
@@ -115,7 +130,7 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     fileClicked(file: ContentLinkModel): void {
-        this.formService.getFileRawContent(file.id).subscribe(
+        this.processContentService.getFileRawContent(file.id).subscribe(
             (blob: Blob) => {
                 file.contentBlob = blob;
                 this.formService.formContentClicked.next(file);
@@ -125,5 +140,4 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
             }
         );
     }
-
 }

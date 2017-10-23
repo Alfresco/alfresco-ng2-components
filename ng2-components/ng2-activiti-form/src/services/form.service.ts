@@ -55,10 +55,6 @@ export class FormService {
                 protected logService: LogService) {
     }
 
-    private get contentApi(): any {
-        return this.apiService.getInstance().activiti.contentApi;
-    }
-
     private get taskApi(): any {
         return this.apiService.getInstance().activiti.taskApi;
     }
@@ -328,31 +324,6 @@ export class FormService {
             this.processApi.getProcessDefinitionStartForm(processId))
             .map(this.toJson)
             .catch(err => this.handleError(err));
-    }
-
-    /**
-     * Save File
-     * @param file file
-     * @returns {Observable<any>}
-     */
-    createTemporaryRawRelatedContent(file: any): Observable<any> {
-        return Observable.fromPromise(this.contentApi.createTemporaryRawRelatedContent(file)).catch(err => this.handleError(err));
-    }
-
-    getFileContent(contentId: number): Observable<any> {
-        return Observable.fromPromise(this.contentApi.getContent(contentId)).catch(err => this.handleError(err));
-    }
-
-    getFileRawContent(contentId: number): Observable<any> {
-        return Observable.fromPromise(this.contentApi.getRawContent(contentId)).catch(err => this.handleError(err));
-    }
-
-    getFileRawContentUrl(contentId: number): string {
-        return this.contentApi.getRawContentUrl(contentId);
-    }
-
-    getContentThumbnailUrl(contentId: number): Observable<any> {
-        return Observable.fromPromise(this.contentApi.getContentThumbnailUrl(contentId)).catch(err => this.handleError(err));
     }
 
     getRestFieldValues(taskId: string, field: string): Observable<any> {

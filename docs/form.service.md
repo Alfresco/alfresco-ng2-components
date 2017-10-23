@@ -73,7 +73,6 @@ class MyComponent {
 | getFormDefinitionByName | (name: string) | Observable\<any\> | Returns form definition by a given name. |
 | getStartFormInstance | (processId: string) | Observable\<any\> | Get start form instance for a given processId |
 | getStartFormDefinition | (processId: string) | Observable\<any\> | Get start form definition for a given process |
-| createTemporaryRawRelatedContent | (file: any) | Observable\<any\> | Save File |
 | getRestFieldValues | (taskId: string, field: string) | Observable\<any\> |  |
 | getRestFieldValuesByProcessId | (processDefinitionId: string, field: string) | Observable\<any\> |  |
 | getRestFieldValuesColumnByProcessId | (processDefinitionId: string, field: string, column?: string) | Observable\<any\> |  |
