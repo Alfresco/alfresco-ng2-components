@@ -1,3 +1,5 @@
+@import '~@angular/material/theming';
+
 adf-datatable  ::ng-deep th span {
     color: #232323;
 }
@@ -29,7 +31,7 @@ adf-datatable  ::ng-deep .data-cell {
     color: #000000;
     margin-top: 40px;
 
-    @media screen and (max-width: 599px) {
+    @media screen and ($mat-xsmall) {
         font-size: 40px;
     }
 }
@@ -51,7 +53,7 @@ adf-datatable  ::ng-deep .data-cell {
     object-fit: contain;
     margin-top: 17px;
 
-    @media screen and (max-width: 599px) {
+    @media screen and ($mat-xsmall) {
         width: 250px;
     }
 }
