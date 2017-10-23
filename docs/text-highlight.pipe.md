@@ -6,7 +6,7 @@ Adds highlighting to words or sections of text that match a search string.
 
 ```HTML
 <div>
-    Some rude words have been detected in your summary: { summary | highlight:rudeWordList }
+    Some rude words have been detected in your summary: {{ summary | highlight:rudeWordList }}
 </div>
 ```
 
