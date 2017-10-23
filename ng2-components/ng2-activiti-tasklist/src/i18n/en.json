@@ -10,6 +10,7 @@
             }
         },
         "PROPERTIES": {
+            "THUMBNAIL": "Thumbnail",
             "NAME": "Name",
             "ASSIGNEE": "Assignee",
             "ASSIGNEE_DEFAULT": "No assignee",
@@ -28,6 +29,11 @@
             "DESCRIPTION_DEFAULT": "No description",
             "FORM_NAME": "Form Name",
             "FORM_NAME_DEFAULT": "No form"
+        },
+        "MENU_ACTIONS": {
+            "VIEW": "View",
+            "REMOVE": "Remove",
+            "DOWNLOAD": "Download"
         },
         "DETAILS": {
             "LABELS": {
