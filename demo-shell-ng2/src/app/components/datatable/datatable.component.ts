@@ -21,7 +21,7 @@ import { DataCellEvent, DataRowActionEvent, DataSorting, ObjectDataColumn, Objec
 import { Observable } from 'rxjs/Rx';
 
 @Component({
-    selector: 'datatable-demo',
+    selector: 'datatable',
     templateUrl: './datatable.component.html',
     styleUrls: ['./datatable.component.css']
 })

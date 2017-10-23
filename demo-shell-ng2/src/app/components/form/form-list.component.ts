@@ -20,7 +20,7 @@ import { ActivitiForm, FormModel, FormService } from 'ng2-activiti-form';
 import { LogService } from 'ng2-alfresco-core';
 
 @Component({
-    selector: 'form-list-demo',
+    selector: 'form-list',
     templateUrl: 'form-list.component.html',
     styleUrls: ['form-list.component.scss']
 })

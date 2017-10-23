@@ -56,7 +56,7 @@ const currentProcessIdNew = '__NEW__';
 const currentTaskIdNew = '__NEW__';
 
 @Component({
-    selector: 'adf-activiti-demo',
+    selector: 'adf-activiti',
     templateUrl: './activiti.component.html',
     styleUrls: ['./activiti.component.scss'],
     encapsulation: ViewEncapsulation.None

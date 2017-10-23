@@ -18,7 +18,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'alfresco-social-demo',
+    selector: 'alfresco-social',
     templateUrl: 'social.component.html',
     styleUrls: ['social.component.scss']
 })
