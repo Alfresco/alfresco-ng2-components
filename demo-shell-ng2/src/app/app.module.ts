@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { MatInputModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { Editor3DModule } from 'ng2-3d-editor';
+// import { Editor3DModule } from 'ng2-3d-editor';
 import { ChartsModule } from 'ng2-charts';
 
 import { AppConfigService, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
@@ -79,7 +79,7 @@ import { routing } from './app.routes';
     MaterialModule,
     ThemePickerModule,
     FlexLayoutModule,
-    Editor3DModule,
+    //Editor3DModule,
     ChartsModule,
   ],
   providers: [
