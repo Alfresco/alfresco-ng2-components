@@ -24,6 +24,8 @@ import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AlfrescoApiService, BaseEvent, LogService, RenditionsService } from 'ng2-alfresco-core';
 
 import { ViewerInfoDrawerComponent } from './viewer-info-drawer.component';
+import { ViewerMoreActionsComponent } from './viewer-more-actions.component';
+import { ViewerOpenWithComponent } from './viewer-open-with.component';
 import { ViewerToolbarComponent  } from './viewer-toolbar.component';
 
 @Component({
@@ -41,8 +43,14 @@ export class ViewerComponent implements OnDestroy, OnChanges {
     @ContentChild(ViewerInfoDrawerComponent)
     infoDrawer: ViewerInfoDrawerComponent;
 
+    @ContentChild(ViewerOpenWithComponent)
+    mnuOpenWith: ViewerOpenWithComponent;
+
+    @ContentChild(ViewerMoreActionsComponent)
+    mnuMoreActions: ViewerMoreActionsComponent;
+
     @Input()
-    urlFile: string = '';
+    urlFile = '';
 
     @Input()
     blobFile: Blob;
@@ -51,22 +59,19 @@ export class ViewerComponent implements OnDestroy, OnChanges {
     fileNodeId: string = null;
 
     @Input()
-    overlayMode: boolean = false;
+    overlayMode = false;
 
     @Input()
-    showViewer: boolean = true;
+    showViewer = true;
 
     @Input()
     showToolbar = true;
 
     @Input()
-    displayName: string = 'Unknown';
+    displayName = 'Unknown';
 
     @Input()
     allowGoBack = true;
-
-    @Input()
-    allowOpenWith = false;
 
     @Input()
     allowDownload = true;
@@ -83,9 +88,6 @@ export class ViewerComponent implements OnDestroy, OnChanges {
     @Input()
     showInfoDrawer = false;
 
-    @Input()
-    allowMoreActions = false;
-
     @Output()
     goBack = new EventEmitter<BaseEvent<any>>();
 
@@ -95,10 +97,10 @@ export class ViewerComponent implements OnDestroy, OnChanges {
     @Output()
     extensionChange = new EventEmitter<string>();
 
-    viewerType: string = 'unknown';
+    viewerType = 'unknown';
     downloadUrl: string = null;
-    fileName: string = 'document';
-    isLoading: boolean = false;
+    fileName = 'document';
+    isLoading = false;
 
     extensionTemplates: { template: TemplateRef<any>, isVisible: boolean }[] = [];
     externalExtensions: string[] = [];

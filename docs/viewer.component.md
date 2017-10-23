@@ -51,13 +51,11 @@ Using with file url:
 | showToolbar | boolean | true | Hide or show the toolbars |
 | displayName | string | | You can specify the name of the file |
 | allowGoBack | boolean | true | Allow `back` navigation |
-| allowOpenWith | boolean | false | Toggle `Open With` options |
 | allowDownload | boolean | true | Toggle download feature |
 | allowPrint | boolean | false | Toggle printing feature |
 | allowShare | boolean | false | Toggle sharing feature |
 | allowInfoDrawer | boolean |false | Toogle info drawer feature |
 | showInfoDrawer | boolean | false | Toggles info drawer visibility. Requires `allowInfoDrawer` to be set to `true`. |
-| allowMoreActions | boolean | false | Toggles `More actions` feature |
 
 ## Details
 
@@ -138,6 +136,60 @@ The `allowInfoDrawer` property should be set to `true` to enable Info Drawer fea
 ```
 
 Everything you put inside the "adf-viewer-info-drawer" tags is going to be rendered instead of the default info drawer.
+
+### Custom "Open With" menu
+
+You can enable custom "Open With" menu by providing at least one action inside the "adf-viewer-open-with" tag:
+
+```html
+<adf-viewer [fileNodeId]="nodeId">
+
+    <adf-viewer-open-with>
+        <button mat-menu-item>
+            <mat-icon>dialpad</mat-icon>
+            <span>Option 1</span>
+        </button>
+        <button mat-menu-item disabled>
+            <mat-icon>voicemail</mat-icon>
+            <span>Option 2</span>
+        </button>
+        <button mat-menu-item>
+            <mat-icon>notifications_off</mat-icon>
+            <span>Option 3</span>
+        </button>
+    </adf-viewer-open-with>
+
+</adv-viewer>
+```
+
+![Open with](docassets/images/viewer-open-with.png)
+
+### Custom "More actions" menu
+
+You can enable custom "More actions" menu by providing at least one action indide the "adf-viewer-more-actions" tag:
+
+```html
+<adf-viewer [fileNodeId]="nodeId">
+
+    <adf-viewer-more-actions>
+        <button mat-menu-item>
+            <mat-icon>dialpad</mat-icon>
+            <span>Action One</span>
+        </button>
+        <button mat-menu-item disabled>
+            <mat-icon>voicemail</mat-icon>
+            <span>Action Two</span>
+        </button>
+        <button mat-menu-item>
+            <mat-icon>notifications_off</mat-icon>
+            <span>Action Three</span>
+        </button>
+    </adf-viewer-more-actions>
+
+</adv-viewer>
+```
+
+![More actions](docassets/images/viewer-more-actions.png)
 
 ### Custom extension handler
 
