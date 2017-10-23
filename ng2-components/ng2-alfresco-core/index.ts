@@ -132,6 +132,7 @@ import { InfinitePaginationComponent } from './src/components/pagination/infinit
 import { PaginationComponent } from './src/components/pagination/pagination.component';
 import { FileSizePipe } from './src/pipes/file-size.pipe';
 import { MimeTypeIconPipe } from './src/pipes/mime-type-icon.pipe';
+import { NodeNameTooltipPipe } from './src/pipes/node-name-tooltip.pipe';
 import { HighlightPipe } from './src/pipes/text-highlight.pipe';
 import { TimeAgoPipe } from './src/pipes/time-ago.pipe';
 import { InitialUsernamePipe } from './src/pipes/user-initial.pipe';
@@ -145,6 +146,7 @@ export { CardViewItem } from './src/interface/card-view-item.interface';
 export { TimeAgoPipe } from './src/pipes/time-ago.pipe';
 export { EXTENDIBLE_COMPONENT } from './src/interface/injection.tokens';
 export { InitialUsernamePipe } from './src/pipes/user-initial.pipe';
+export { NodeNameTooltipPipe } from './src/pipes/node-name-tooltip.pipe';
 
 export * from './src/components/data-column/data-column.component';
 export * from './src/components/data-column/data-column-list.component';
@@ -228,7 +230,8 @@ export function pipes() {
         HighlightPipe,
         TimeAgoPipe,
         MimeTypeIconPipe,
-        InitialUsernamePipe
+        InitialUsernamePipe,
+        NodeNameTooltipPipe
     ];
 }
 
