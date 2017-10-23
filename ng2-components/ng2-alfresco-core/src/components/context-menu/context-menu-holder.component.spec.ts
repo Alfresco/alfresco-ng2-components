@@ -28,6 +28,7 @@ describe('ContextMenuHolderComponent', () => {
     let contextMenuService: ContextMenuService;
     let overlayContainer = {
         getContainerElement: () => ({
+            addEventListener: () => {},
             querySelector: (val) => ({
                 name: val,
                 clientWidth: 0,
