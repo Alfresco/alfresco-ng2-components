@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "npm run server-versions && rimraf dist && ng serve --app=0 --open --aot=true",
-    "start:dev": "npm run server-versions && rimraf dist && ng serve --app=1 pp-dev --proxy-config proxy.conf.json --open",
+    "start:dev": "npm run clean-ng2-component-angular && npm run server-versions && rimraf dist && ng serve --app=1 pp-dev --proxy-config proxy.conf.json --open",
     "start:dist": "npm run server-versions && rimraf dist && ng serve --aot=false --prod --app=0",
     "build": "npm run server-versions && rimraf dist && ng build  -app=0",
     "build:dev": "npm run server-versions && rimraf dist && ng build -app=1",
@@ -14,6 +14,7 @@
     "e2e": "ng e2e",
     "server-versions": "rimraf versions.json && npm list --depth=0 --json=true --prod=true > versions.json  || exit 0",
     "clean": "npm run clean-build  && rimraf dist node_modules typings dist",
+    "clean-ng2-component-angular": "rimraf ../ng2-components/node_modules/@angular",
     "clean-build": "rimraf 'app/{,**/}**.js' 'app/{,**/}**.js.map' 'app/{,**/}**.d.ts'",
     "clean-lock": "rimraf package-lock.json"
   },
@@ -62,10 +63,10 @@
     "ng2-charts": "1.6.0",
     "pdfjs-dist": "1.5.404",
     "raphael": "2.2.7",
-    "reflect-metadata": "0.1.9",
+    "reflect-metadata": "0.1.10",
     "rxjs": "5.1.0",
     "web-animations-js": "2.3.1",
-    "zone.js": "0.8.4"
+    "zone.js": "0.8.12"
   },
   "devDependencies": {
     "@angular/cli": "1.4.9",

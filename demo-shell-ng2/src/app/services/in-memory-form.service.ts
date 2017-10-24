@@ -43,7 +43,7 @@ export class InMemoryFormService extends FormService {
     constructor(appConfig: AppConfigService,
                 ecmModelService: EcmModelService,
                 apiService: AlfrescoApiService,
-                logService: LogService) {
+                public logService: LogService) {
         super(ecmModelService, apiService, logService);
         this.data = appConfig.get<ActivitiData>('activiti');
     }

@@ -185,22 +185,22 @@ export class DataTableComponent {
             .getNodeInfo('-my-', opts)).subscribe((data) => {
                 this.logService.log('FUnNy');
                 this.logService.log(data);
-                let objects = new ObjectDataTableAdapter([
-                    {
-                        id: data.id,
-                        name: data.name,
-                        createdBy: data.createdByUser.displayName,
-                        createdOn: new Date(data.createdAt),
-                        icon: 'material-icons://face'
-                    }],
-                    [
-                        { type: 'image', key: 'icon', title: '', srTitle: 'Thumbnail' },
-                        { type: 'text', key: 'id', title: 'Id', sortable: true },
-                        { type: 'text', key: 'createdOn', title: 'Created On', sortable: true },
-                        { type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true },
-                        { type: 'text', key: 'createdBy.name', title: 'Created By', sortable: true }
-                    ]);
-                this.data = objects;
+                // let objects = new ObjectDataTableAdapter([
+                //     {
+                //         id: data.id,
+                //         name: data.name,
+                //         createdBy: data.createdByUser.displayName,
+                //         createdOn: new Date(data.createdAt),
+                //         icon: 'material-icons://face'
+                //     }],
+                //     [
+                //         { type: 'image', key: 'icon', title: '', srTitle: 'Thumbnail' },
+                //         { type: 'text', key: 'id', title: 'Id', sortable: true },
+                //         { type: 'text', key: 'createdOn', title: 'Created On', sortable: true },
+                //         { type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true },
+                //         { type: 'text', key: 'createdBy.name', title: 'Created By', sortable: true }
+                //     ]);
+                // this.data = objects;
             });
     }
 }
