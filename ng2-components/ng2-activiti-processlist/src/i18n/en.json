@@ -11,6 +11,7 @@
             }
         },
         "PROPERTIES": {
+            "PROCESS_NAME": "Process",
             "NAME": "Name",
             "STATUS": "Status",
             "DUE_DATE": "Due Date",
