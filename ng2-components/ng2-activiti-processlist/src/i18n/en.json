@@ -24,6 +24,13 @@
             "DESCRIPTION_DEFAULT": "No description",
             "ID": "Id"
         },
+        "MENU_ACTIONS": {
+            "VIEW_CONTENT": "View",
+            "REMOVE_CONTENT": "Remove",
+            "DOWNLOAD_CONTENT": "Download",
+            "DOWNLOAD_AUDIT": "Download audit",
+            "VIEW_TASK": "View Task"
+        },
         "DETAILS": {
             "LABELS": {
                 "STARTED_BY": "Started by",
