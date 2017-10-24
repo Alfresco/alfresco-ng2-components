@@ -17,7 +17,7 @@
 
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { ViewportRuler } from '@angular/cdk/scrolling';
-import { Component, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, Input, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { MatMenuTrigger } from '@angular/material';
 import { Subscription } from 'rxjs/Rx';
 import { ContextMenuService } from './context-menu.service';
@@ -48,9 +48,13 @@ export class ContextMenuHolderComponent implements OnInit, OnDestroy {
     private openSubscription: Subscription;
     private closeSubscription: Subscription;
     private contextSubscription: Subscription;
+    private contextMenuListenerFn: () => void;
 
-    @Input() showIcons: boolean = false;
-    @ViewChild(MatMenuTrigger) menuTrigger: MatMenuTrigger;
+    @Input()
+    showIcons: boolean = false;
+
+    @ViewChild(MatMenuTrigger)
+    menuTrigger: MatMenuTrigger;
 
     @HostListener('contextmenu', ['$event'])
     onShowContextMenu(event?: MouseEvent) {
@@ -69,19 +73,39 @@ export class ContextMenuHolderComponent implements OnInit, OnDestroy {
     constructor(
             private viewport: ViewportRuler,
             private overlayContainer: OverlayContainer,
-            private contextMenuService: ContextMenuService
+            private contextMenuService: ContextMenuService,
+            private renderer: Renderer2
     ) {}
 
     ngOnInit() {
         this.contextSubscription = this.contextMenuService.show.subscribe(e => this.showMenu(e.event, e.obj));
-        this.openSubscription = this.menuTrigger.onMenuOpen.subscribe(() => this.menuElement = this.getContextMenuElement());
-        this.closeSubscription = this.menuTrigger.onMenuClose.subscribe(() => this.menuElement = null);
+
+        this.openSubscription = this.menuTrigger.onMenuOpen.subscribe(() => {
+            const container = this.overlayContainer.getContainerElement();
+            if (container) {
+                this.contextMenuListenerFn = this.renderer.listen(container, 'contextmenu', (e: Event) => {
+                    e.preventDefault();
+                });
+            }
+            this.menuElement = this.getContextMenuElement();
+        });
+
+        this.closeSubscription = this.menuTrigger.onMenuClose.subscribe(() => {
+            this.menuElement = null;
+            if (this.contextMenuListenerFn) {
+                this.contextMenuListenerFn();
+            }
+        });
     }
 
     ngOnDestroy() {
+        if (this.contextMenuListenerFn) {
+            this.contextMenuListenerFn();
+        }
         this.contextSubscription.unsubscribe();
         this.openSubscription.unsubscribe();
         this.closeSubscription.unsubscribe();
+        this.menuElement = null;
     }
 
     onMenuItemClick(event: Event, menuItem: any): void {
