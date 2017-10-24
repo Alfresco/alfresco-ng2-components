@@ -130,17 +130,17 @@ export class TaskAttachmentListComponent implements OnChanges {
 
     onShowRowActionsMenu(event: any) {
         let viewAction = {
-            title: 'ADF_TASK_LIST.MENU_ACTIONS.VIEW',
+            title: 'ADF_TASK_LIST.MENU_ACTIONS.VIEW_CONTENT',
             name: 'view'
         };
 
         let removeAction = {
-            title: 'ADF_TASK_LIST.MENU_ACTIONS.REMOVE',
+            title: 'ADF_TASK_LIST.MENU_ACTIONS.REMOVE_CONTENT',
             name: 'remove'
         };
 
         let downloadAction = {
-            title: 'ADF_TASK_LIST.MENU_ACTIONS.DOWNLOAD',
+            title: 'ADF_TASK_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT',
             name: 'download'
         };
 

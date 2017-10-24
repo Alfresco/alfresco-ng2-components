@@ -10,6 +10,7 @@
             }
         },
         "PROPERTIES": {
+            "TASK_NAME": "Task",
             "THUMBNAIL": "Thumbnail",
             "NAME": "Name",
             "ASSIGNEE": "Assignee",
@@ -31,9 +32,10 @@
             "FORM_NAME_DEFAULT": "No form"
         },
         "MENU_ACTIONS": {
-            "VIEW": "View",
-            "REMOVE": "Remove",
-            "DOWNLOAD": "Download"
+            "VIEW_CONTENT": "View",
+            "REMOVE_CONTENT": "Remove",
+            "DOWNLOAD_CONTENT": "Download",
+            "DOWNLOAD_AUDIT": "Download Audit"
         },
         "DETAILS": {
             "LABELS": {
