@@ -308,7 +308,7 @@ describe('StartTaskComponent', () => {
     it('should show start task button', () => {
         expect(element.querySelector('#button-start')).toBeDefined();
         expect(element.querySelector('#button-start')).not.toBeNull();
-        expect(element.querySelector('#button-start').textContent).toContain('START_TASK.FORM.ACTION.START');
+        expect(element.querySelector('#button-start').textContent).toContain('ADF_TASK_LIST.START_TASK.FORM.ACTION.START');
     });
 
     it('should fetch all users on ngonint', () => {
@@ -357,7 +357,7 @@ describe('StartTaskComponent', () => {
             let selectElement = fixture.nativeElement.querySelector('#assignee_id');
             expect(selectElement).not.toBeNull();
             expect(selectElement).toBeDefined();
-            expect(selectElement.attributes['aria-label'].value).toContain('START_TASK.FORM.LABEL.ASSIGNEE');
+            expect(selectElement.attributes['aria-label'].value).toContain('ADF_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE');
         });
     }));
 
@@ -365,7 +365,7 @@ describe('StartTaskComponent', () => {
         component.forms = fakeForms;
         fixture.detectChanges();
         let selectElement = fixture.nativeElement.querySelector('#form_id');
-        expect(selectElement.attributes['aria-label'].value).toContain('START_TASK.FORM.LABEL.FORM');
+        expect(selectElement.attributes['aria-label'].value).toContain('ADF_TASK_LIST.START_TASK.FORM.LABEL.FORM');
     });
 
     it('should get formatted fullname', () => {

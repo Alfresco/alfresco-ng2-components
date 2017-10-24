@@ -1,14 +1,14 @@
 <mat-card class="adf-new-task-layout-card">
     <mat-grid-list cols="1" rowHeight="60px">
         <mat-grid-tile>
-            <div class="adf-new-task-heading">{{'START_TASK.FORM.TITLE'|translate}}</div>
+            <div class="adf-new-task-heading">{{'ADF_TASK_LIST.START_TASK.FORM.TITLE'|translate}}</div>
         </mat-grid-tile>
     </mat-grid-list>
     <mat-card-content>
         <mat-grid-list cols="1" rowHeight="80px">
             <mat-grid-tile>
                 <mat-form-field class="adf-new-task-text-width">
-                    <input matInput placeholder="{{'START_TASK.FORM.LABEL.NAME'|translate}}"
+                    <input matInput placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NAME'|translate}}"
                            [(ngModel)]="startTaskmodel.name" required id="name_id">
                 </mat-form-field>
             </mat-grid-tile>
@@ -16,7 +16,7 @@
         <mat-grid-list cols="1" rowHeight="80px">
             <mat-grid-tile>
                 <mat-form-field class="adf-new-task-text-width">
-                    <textarea matInput placeholder="{{'START_TASK.FORM.LABEL.DESCRIPTION'|translate}}"
+                    <textarea matInput placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.DESCRIPTION'|translate}}"
                               [(ngModel)]="startTaskmodel.description" id="description_id"></textarea>
                 </mat-form-field>
             </mat-grid-tile>
@@ -28,7 +28,7 @@
                            [matDatepicker]="taskDatePicker"
                            (keydown)="true"
                            (focusout)="onDateChanged($event.srcElement.value)"
-                           placeholder="{{'START_TASK.FORM.LABEL.DATE'|translate}}"
+                           placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.DATE'|translate}}"
                            [(ngModel)]="startTaskmodel.dueDate" id="date_id">
                     <mat-datepicker-toggle matSuffix [for]="taskDatePicker"></mat-datepicker-toggle>
                 </mat-form-field>
@@ -36,16 +36,16 @@
                                (dateChanged)="onDateChanged($event)"></mat-datepicker>
                 <div class="adf-error-text-container">
                     <div *ngIf="dateError">
-                        <div class="adf-error-text">{{'START_TASK.FORM.DATE.ERROR'|translate}}</div>
+                        <div class="adf-error-text">{{'ADF_TASK_LIST.START_TASK.FORM.DATE.ERROR'|translate}}</div>
                         <mat-icon class="adf-error-icon">warning</mat-icon>
                     </div>
                 </div>
             </mat-grid-tile>
             <mat-grid-tile>
               <mat-form-field>
-                <mat-select placeholder="{{'START_TASK.FORM.LABEL.ASSIGNEE'|translate}}" id="assignee_id"
+                <mat-select placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE'|translate}}" id="assignee_id"
                            class="adf-start-task-input-container adf-mat-select" [(ngModel)]="assigneeId">
-                    <mat-option>{{'START_TASK.FORM.LABEL.NONE'|translate}}</mat-option>
+                    <mat-option>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NONE'|translate}}</mat-option>
 					<span *ngFor="let user of people">
 						<mat-option [value]="user.id" *ngIf="!isUserNameEmpty(user)">{{ getDisplayUser(user.firstName,
                             user.lastName, ' ')}}
@@ -58,9 +58,9 @@
         <mat-grid-list cols="2" rowHeight="80px">
             <mat-grid-tile>
                 <mat-form-field>
-                    <mat-select placeholder="{{'START_TASK.FORM.LABEL.FORM'|translate}}" id="form_id" [(ngModel)]="formKey"
+                    <mat-select placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.FORM'|translate}}" id="form_id" [(ngModel)]="formKey"
                                class="adf-start-task-input-container">
-                        <mat-option>{{'START_TASK.FORM.LABEL.NONE'|translate}}</mat-option>
+                        <mat-option>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NONE'|translate}}</mat-option>
                         <mat-option *ngFor="let form of forms" [value]="form.id">{{ form.name }}</mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -73,10 +73,10 @@
             <mat-grid-tile>
                 <div class="adf-new-task-footer">
                     <button mat-button (click)="onCancel()" id="button-cancle">
-                        {{'START_TASK.FORM.ACTION.CANCEL'|translate}}
+                        {{'ADF_TASK_LIST.START_TASK.FORM.ACTION.CANCEL'|translate}}
                     </button>
                     <button mat-button [disabled]="!startTaskmodel.name || dateError" (click)="start()" id="button-start">
-                        {{'START_TASK.FORM.ACTION.START'|translate}}
+                        {{'ADF_TASK_LIST.START_TASK.FORM.ACTION.START'|translate}}
                     </button>
                 </div>
             </mat-grid-tile>
