@@ -128,17 +128,17 @@ export class ProcessAttachmentListComponent implements OnChanges {
 
     onShowRowActionsMenu(event: any) {
         let viewAction = {
-            title: 'View',
+            title: 'ADF_PROCESS_LIST.MENU_ACTIONS.VIEW_CONTENT',
             name: 'view'
         };
 
         let removeAction = {
-            title: 'Remove',
+            title: 'ADF_PROCESS_LIST.MENU_ACTIONS.REMOVE_CONTENT',
             name: 'remove'
         };
 
         let downloadAction = {
-            title: 'Download',
+            title: 'ADF_PROCESS_LIST.MENU_ACTIONS.DOWNLOAD_CONTENT',
             name: 'download'
         };
 
