@@ -227,6 +227,7 @@ for more information about installing and using the source code.
 ### Other classes and interfaces
 
 - [FormFieldValidator interface](FormFieldValidator.md)
+
 [(Back to Contents)](#contents)
 
 ## ADF Processlist
@@ -281,7 +282,7 @@ for more information about installing and using the source code.
 - [Task details component](task-details.component.md)
 - [Task filters component](task-filters.component.md)
 - [Task header component](task-header.component.md)
-- [Tasklist component](task-list.component.md)
+- [Task list component](task-list.component.md)
 - [*Comment list component](../ng2-components/ng2-activiti-tasklist/src/components/comment-list.component.ts)
 - [*People list component](../ng2-components/ng2-activiti-tasklist/src/components/people-list.component.ts)
 
@@ -327,6 +328,7 @@ for more information about installing and using the source code.
 ### Directives
 
 - [Context menu directive](context-menu.directive.md)
+- [Highlight directive](highlight.directive.md)
 - [Logout directive](logout.directive.md)
 - [Node delete directive](node-delete.directive.md)
 - [Node favorite directive](node-favorite.directive.md)
@@ -334,14 +336,13 @@ for more information about installing and using the source code.
 - [Node restore directive](node-restore.directive.md)
 - [Upload directive](upload.directive.md)
 - [*Card view content proxy directive](../ng2-components/ng2-alfresco-core/src/components/view/card-view-content-proxy.directive.ts)
-- [*Highlight directive](../ng2-components/ng2-alfresco-core/src/directives/highlight.directive.ts)
 
 ### Pipes
 
 - [Node name tooltip pipe](node-name-tooltip.pipe.md)
+- [Text highlight pipe](text-highlight.pipe.md)
 - [*File size pipe](../ng2-components/ng2-alfresco-core/src/pipes/file-size.pipe.ts)
 - [*Mime type icon pipe](../ng2-components/ng2-alfresco-core/src/pipes/mime-type-icon.pipe.ts)
-- [*Text highlight pipe](../ng2-components/ng2-alfresco-core/src/pipes/text-highlight.pipe.ts)
 - [*Time ago pipe](../ng2-components/ng2-alfresco-core/src/pipes/time-ago.pipe.ts)
 - [*User initial pipe](../ng2-components/ng2-alfresco-core/src/pipes/user-initial.pipe.ts)
 
@@ -351,6 +352,8 @@ for more information about installing and using the source code.
 - [App config service](app-config.service.md)
 - [Authentication service](authentication.service.md)
 - [Card view update service](card-view-update.service.md)
+- [Highlight transform service](highlight-transform.service.md)
+- [Log service](log.service.md)
 - [Notification service](notification.service.md)
 - [Renditions service](renditions.service.md)
 - [Translation service](translation.service.md)
@@ -369,8 +372,6 @@ for more information about installing and using the source code.
 - [*Deleted nodes api service](../ng2-components/ng2-alfresco-core/src/services/deleted-nodes-api.service.ts)
 - [*Discovery api service](../ng2-components/ng2-alfresco-core/src/services/discovery-api.service.ts)
 - [*Favorites api service](../ng2-components/ng2-alfresco-core/src/services/favorites-api.service.ts)
-- [*Highlight transform service](../ng2-components/ng2-alfresco-core/src/services/highlight-transform.service.ts)
-- [Log service](log.service.md)
 - [*Nodes api service](../ng2-components/ng2-alfresco-core/src/services/nodes-api.service.ts)
 - [*Page title service](../ng2-components/ng2-alfresco-core/src/services/page-title.service.ts)
 - [*People content service](../ng2-components/ng2-alfresco-core/src/services/people-content.service.ts)
@@ -590,3 +591,5 @@ for more information about installing and using the source code.
 
 - [Webscript component](webscript.component.md)
 <!-- ng2-alfresco-webscript end -->
+
+[(Back to Contents)](#contents)
