@@ -101,7 +101,8 @@
           "glob": "**/*",
           "input": "../node_modules/ng2-activiti-tasklist/bundles/assets",
           "output": "./assets/"
-        }
+        },
+        { "glob": "pdf.worker.js", "input": "../node_modules/pdfjs-dist/build", "output": "./" }
       ],
       "index": "index.html",
       "main": "main.ts",
@@ -122,7 +123,7 @@
         "../node_modules/pdfjs-dist/build/pdf.js",
         "../node_modules/pdfjs-dist/web/compatibility.js",
         "../node_modules/pdfjs-dist/web/pdf_viewer.js",
-        "../node_modules/dialog-polyfill/dialog-polyfill",
+        "../node_modules/dialog-polyfill/dialog-polyfill.js",
         "../node_modules/raphael/raphael.min.js",
         "../node_modules/moment/min/moment.min.js",
         "../node_modules/three/build/three.min.js"
@@ -230,7 +231,89 @@
           "glob": "**/*",
           "input": "../../ng2-components/ng2-activiti-tasklist/bundles/assets",
           "output": "./assets/"
-        }
+        },
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/ng2-alfresco-core/src/i18n",
+          "output": "./assets/ng2-alfresco-core/i18n"
+        },
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/ng2-alfresco-login/src/i18n",
+          "output": "./assets/ng2-alfresco-login/i18n"
+        },
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/ng2-alfresco-userinfo/src/i18n",
+          "output": "./assets/ng2-alfresco-userinfo/i18n"
+        },
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/ng2-alfresco-upload/src/i18n",
+          "output": "./assets/ng2-alfresco-upload/i18n"
+        },
+
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/ng2-alfresco-search/src/i18n",
+          "output": "./assets/ng2-alfresco-search/i18n"
+        },
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/ng2-alfresco-datatable/src/i18n",
+          "output": "./assets/ng2-alfresco-datatable/i18n"
+        },
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/ng2-alfresco-documentlist/src/i18n",
+          "output": "./assets/ng2-alfresco-documentlist/i18n"
+        },
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/ng2-alfresco-viewer/src/i18n",
+          "output": "./assets/ng2-alfresco-viewer/i18n"
+        },
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/ng2-alfresco-social/src/i18n",
+          "output": "./assets/ng2-alfresco-social/i18n"
+        },
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/ng2-alfresco-tag/src/i18n",
+          "output": "./assets/ng2-alfresco-tag/i18n"
+        },
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/ng2-alfresco-webscript/src/i18n",
+          "output": "./assets/ng2-alfresco-webscript/i18n"
+        },
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/ng2-activiti-analytics/src/i18n",
+          "output": "./assets/ng2-activiti-analytics/i18n"
+        },
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/ng2-activiti-diagrams/src/i18n",
+          "output": "./assets/ng2-activiti-diagrams/i18n"
+        },
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/ng2-activiti-form/src/i18n",
+          "output": "./assets/ng2-activiti-form/i18n"
+        },
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/ng2-activiti-processlist/src/i18n",
+          "output": "./assets/ng2-activiti-processlist/i18n"
+        },
+        {
+          "glob": "**/*",
+          "input": "../../ng2-components/ng2-activiti-tasklist/src/i18n",
+          "output": "./assets/ng2-activiti-tasklist/i18n"
+        },
+        { "glob": "pdf.worker.js", "input": "../node_modules/pdfjs-dist/build", "output": "./" }
       ],
       "index": "index.html",
       "main": "main.ts",
@@ -251,7 +334,7 @@
         "../node_modules/pdfjs-dist/build/pdf.js",
         "../node_modules/pdfjs-dist/web/compatibility.js",
         "../node_modules/pdfjs-dist/web/pdf_viewer.js",
-        "../node_modules/dialog-polyfill/dialog-polyfill",
+        "../node_modules/dialog-polyfill/dialog-polyfill.js",
         "../node_modules/raphael/raphael.min.js",
         "../node_modules/moment/min/moment.min.js",
         "../node_modules/three/build/three.min.js"
@@ -287,6 +370,9 @@
   "defaults": {
     "styleExt": "scss",
     "component": {
+    },
+    "serve": {
+      "port": 3000
     }
   }
 }

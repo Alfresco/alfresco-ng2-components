@@ -22,7 +22,7 @@ import { InMemoryFormService } from '../../services/in-memory-form.service';
 import { DemoForm } from './demo-form';
 
 @Component({
-    selector: 'form-demo',
+    selector: 'form',
     templateUrl: 'form.component.html',
     styleUrls: [ 'form.component.css' ],
     providers: [

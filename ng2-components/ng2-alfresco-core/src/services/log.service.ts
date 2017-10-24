@@ -105,8 +105,10 @@ export class LogService {
     }
 
     getCurrentLogLevel(level: string): LogLevelsEnum {
-        return logLevels.find((currentLevel: any) => {
+        let referencedLevel = logLevels.find((currentLevel: any) => {
             return currentLevel.name.toLocaleLowerCase() === level.toLocaleLowerCase();
         });
+
+        return referencedLevel ? referencedLevel.level : 5;
     }
 }

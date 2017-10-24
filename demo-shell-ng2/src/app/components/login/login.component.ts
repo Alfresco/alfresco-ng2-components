@@ -21,7 +21,7 @@ import { Router } from '@angular/router';
 import { LogService, StorageService } from 'ng2-alfresco-core';
 
 @Component({
-    selector: 'login-demo',
+    selector: 'login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css']
 })

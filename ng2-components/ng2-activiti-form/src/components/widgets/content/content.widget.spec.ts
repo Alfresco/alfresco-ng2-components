@@ -24,6 +24,7 @@ import { Observable } from 'rxjs/Rx';
 
 import { EcmModelService } from '../../../services/ecm-model.service';
 import { FormService } from '../../../services/form.service';
+import { ProcessContentService } from '../../../services/process-content.service';
 import { ContentLinkModel } from '../index';
 import { ContentWidgetComponent } from './content.widget';
 
@@ -37,6 +38,7 @@ describe('ContentWidgetComponent', () => {
     let element: HTMLElement;
 
     let serviceForm: FormService;
+    let processContentService: ProcessContentService;
     let serviceContent: ContentService;
 
     function createFakeImageBlob() {
@@ -74,12 +76,14 @@ describe('ContentWidgetComponent', () => {
             providers: [
                 FormService,
                 EcmModelService,
-                ContentService
+                ContentService,
+                ProcessContentService
             ]
         }).compileComponents();
 
         serviceForm = TestBed.get(FormService);
         serviceContent = TestBed.get(ContentService);
+        processContentService = TestBed.get(ProcessContentService);
 
         let translateService = TestBed.get(AlfrescoTranslationService);
         spyOn(translateService, 'addTranslationFolder').and.stub();
@@ -116,7 +120,7 @@ describe('ContentWidgetComponent', () => {
 
         it('should load the thumbnail preview of the png image', (done) => {
             let blob = createFakeImageBlob();
-            spyOn(serviceForm, 'getFileRawContent').and.returnValue(Observable.of(blob));
+            spyOn(processContentService, 'getFileRawContent').and.returnValue(Observable.of(blob));
 
             component.thumbnailLoaded.subscribe((res) => {
                 fixture.detectChanges();
@@ -159,7 +163,7 @@ describe('ContentWidgetComponent', () => {
 
         it('should load the thumbnail preview of a pdf', (done) => {
             let blob = createFakePdfBlob();
-            spyOn(serviceForm, 'getContentThumbnailUrl').and.returnValue(Observable.of(blob));
+            spyOn(processContentService, 'getContentThumbnailUrl').and.returnValue(Observable.of(blob));
 
             component.thumbnailLoaded.subscribe((res) => {
                 fixture.detectChanges();
@@ -241,7 +245,7 @@ describe('ContentWidgetComponent', () => {
 
         it('should open the viewer when the view button is clicked', (done) => {
             let blob = createFakePdfBlob();
-            spyOn(serviceForm, 'getFileRawContent').and.returnValue(Observable.of(blob));
+            spyOn(processContentService, 'getFileRawContent').and.returnValue(Observable.of(blob));
 
             component.content = new ContentLinkModel({
                 id: 4004,
@@ -274,7 +278,7 @@ describe('ContentWidgetComponent', () => {
 
         it('should download the pdf when the download button is clicked', () => {
             let blob = createFakePdfBlob();
-            spyOn(serviceForm, 'getFileRawContent').and.returnValue(Observable.of(blob));
+            spyOn(processContentService, 'getFileRawContent').and.returnValue(Observable.of(blob));
             spyOn(serviceContent, 'downloadBlob').and.callThrough();
 
             component.content = new ContentLinkModel({

@@ -18,7 +18,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'alfresco-tag-demo',
+    selector: 'alfresco-tag',
     templateUrl: 'tag.component.html',
     styleUrls: ['tag.component.scss']
 })

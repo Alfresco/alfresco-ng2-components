@@ -18,7 +18,6 @@
 import { async, TestBed } from '@angular/core/testing';
 import { Response, ResponseOptions } from '@angular/http';
 import { AlfrescoApiService, CoreModule, LogService } from 'ng2-alfresco-core';
-import { Observable } from 'rxjs/Rx';
 import { FormDefinitionModel } from '../models/form-definition.model';
 import { formModelTabs } from './assets/form.service.mock';
 import { EcmModelService } from './ecm-model.service';
@@ -50,17 +49,6 @@ let fakePeopleResponse = {
         'email': 'people02'
     }, { 'id': 2004, 'firstName': 'Peo03', 'lastName': 'Ple03', 'email': 'people03' }]
 };
-
-function createFakeBlob() {
-    let data = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
-
-    let bytes = new Uint8Array(data.length / 2);
-
-    for (let i = 0; i < data.length; i += 2) {
-        bytes[i / 2] = parseInt(data.substring(i, i + 2), /* base = */ 16);
-    }
-    return new Blob([bytes], { type: 'image/png' });
-}
 
 describe('Form service', () => {
 
@@ -109,34 +97,6 @@ describe('Form service', () => {
         };
 
         let simpleResponseBody = { id: 1, modelType: 'test' };
-
-        let fileContentPdfResponseBody = {
-            id: 999,
-            name: 'fake-name.pdf',
-            created: '2017-01-23T12:12:53.219+0000',
-            createdBy: { id: 2, firstName: 'fake-admin', lastName: 'fake-last', 'email': 'fake-admin' },
-            relatedContent: false,
-            contentAvailable: true,
-            link: false,
-            mimeType: 'application/pdf',
-            simpleType: 'pdf',
-            previewStatus: 'created',
-            thumbnailStatus: 'created'
-        };
-
-        let fileContentJpgResponseBody = {
-            id: 888,
-            name: 'fake-name.jpg',
-            created: '2017-01-23T12:12:53.219+0000',
-            createdBy: { id: 2, firstName: 'fake-admin', lastName: 'fake-last', 'email': 'fake-admin' },
-            relatedContent: false,
-            contentAvailable: true,
-            link: false,
-            mimeType: 'image/jpeg',
-            simpleType: 'image',
-            previewStatus: 'unsupported',
-            thumbnailStatus: 'unsupported'
-        };
 
         it('should fetch and parse process definitions', (done) => {
             service.getProcessDefinitions().subscribe(result => {
@@ -420,60 +380,6 @@ describe('Form service', () => {
                 'status': 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify(simpleResponseBody)
-            });
-        });
-
-        it('should return the unsupported content when the file is an image', (done) => {
-            let contentId: number = 888;
-
-            service.getFileContent(contentId).subscribe(result => {
-                expect(result.id).toEqual(contentId);
-                expect(result.name).toEqual('fake-name.jpg');
-                expect(result.simpleType).toEqual('image');
-                expect(result.thumbnailStatus).toEqual('unsupported');
-                done();
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fileContentJpgResponseBody)
-            });
-        });
-
-        it('should return the supported content when the file is a pdf', (done) => {
-            let contentId: number = 999;
-
-            service.getFileContent(contentId).subscribe(result => {
-                expect(result.id).toEqual(contentId);
-                expect(result.name).toEqual('fake-name.pdf');
-                expect(result.simpleType).toEqual('pdf');
-                expect(result.thumbnailStatus).toEqual('created');
-                done();
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(fileContentPdfResponseBody)
-            });
-        });
-
-        it('should return the raw content URL', () => {
-            let contentId: number = 999;
-            let contentUrl = service.getFileRawContentUrl(contentId);
-            expect(contentUrl).toContain(`/api/enterprise/content/${contentId}/raw`);
-        });
-
-        it('should return a Blob as thumbnail', (done) => {
-            let contentId: number = 999;
-            let blob = createFakeBlob();
-            spyOn(service, 'getContentThumbnailUrl').and.returnValue(Observable.of(blob));
-            service.getContentThumbnailUrl(contentId).subscribe(result => {
-                expect(result).toEqual(jasmine.any(Blob));
-                expect(result.size).toEqual(48);
-                expect(result.type).toEqual('image/png');
-                done();
             });
         });
 

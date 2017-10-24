@@ -162,5 +162,5 @@ let schema = ObjectDataTableAdapter.generateSchema(data);
 ## See also
 
 - [Datatable component](datatable.component.md)
-- [Tasklist component](task-list.component.md)
+- [Task list component](task-list.component.md)
 <!-- seealso end -->

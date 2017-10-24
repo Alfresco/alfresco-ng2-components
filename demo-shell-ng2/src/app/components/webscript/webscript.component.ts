@@ -19,7 +19,7 @@ import { Component } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
 
 @Component({
-    selector: 'alfresco-webscript-demo',
+    selector: 'alfresco-webscript',
     templateUrl: 'webscript.component.html'
 })
 export class WebscriptComponent {

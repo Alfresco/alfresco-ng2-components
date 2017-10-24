@@ -1,10 +1,10 @@
 <mat-tab-group [(selectedIndex)]="activeTab">
     <mat-tab id="tasks-header" href="#tasks" label="{{'PS-TAB.TASKS-TAB' | translate}}">
         <div class="page-content">
-            <div class="activiti-demo-grid" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="stretch">
-                <div class="activiti-demo-grid-item activiti-demo-tasks-menu" fxFlex.gt-md="225px">
-                    <div class="activiti-demo-list-buttons">
-                        <button color="primary" mat-raised-button data-automation-id="btn-start-task" class="activiti-demo-list-buttons-start" (click)="navigateStartTask()">
+            <div class="activiti-grid" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="stretch">
+                <div class="activiti-grid-item activiti-tasks-menu" fxFlex.gt-md="225px">
+                    <div class="activiti-list-buttons">
+                        <button color="primary" mat-raised-button data-automation-id="btn-start-task" class="activiti-list-buttons-start" (click)="navigateStartTask()">
                             <mat-icon>add</mat-icon>
                             <span>{{'PS-TAB.START-TASK' | translate}}</span>
                         </button>
@@ -23,7 +23,7 @@
                         </adf-accordion-group>
                     </adf-accordion>
                 </div>
-                <div class="activiti-demo-grid-item activiti-demo-tasks-list" fxFlex.gt-md="335px" [ngClass.gt-md]="{'small-pagination': true}"
+                <div class="activiti-grid-item activiti-tasks-list" fxFlex.gt-md="335px" [ngClass.gt-md]="{'small-pagination': true}"
                      *ngIf="taskFilter && !isStartTaskMode()">
                     <adf-tasklist
                         [appId]="taskFilter?.appId"
@@ -59,7 +59,7 @@
                         [supportedPageSizes]="[2, 4, 6, 8, 10, 12]">
                     </adf-pagination>
                 </div>
-                <div class="activiti-demo-grid-item activiti-demo-tasks-details" *ngIf="!isStartTaskMode()" fxFlex.gt-md="1 1 auto">
+                <div class="activiti-grid-item activiti-tasks-details" *ngIf="!isStartTaskMode()" fxFlex.gt-md="1 1 auto">
                     <adf-task-details #activitidetails
                                            [debugMode]="true"
                                            [taskId]="currentTaskId"
@@ -90,7 +90,7 @@
                         </mat-card-content>
                     </mat-card>
                 </div>
-                <div class="activiti-demo-grid-item activiti-demo-tasks-start" *ngIf="isStartTaskMode()" fxFlex.gt-md="1 1 auto">
+                <div class="activiti-grid-item activiti-tasks-start" *ngIf="isStartTaskMode()" fxFlex.gt-md="1 1 auto">
                     <adf-start-task
                         [appId]="appId"
                         (success)="onStartTaskSuccess($event)"
@@ -103,13 +103,13 @@
     <mat-tab id="processes-header" href="#processes"
             label="{{'PS-TAB.PROCESSES-TAB' | translate}}">
         <div class="page-content">
-            <div class="activiti-demo-grid" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="stretch">
-                <div class="activiti-demo-grid-item activiti-demo-processes-menu" fxFlex.gt-md="225px">
-                    <div class="activiti-demo-list-buttons">
+            <div class="activiti-grid" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="stretch">
+                <div class="activiti-grid-item activiti-processes-menu" fxFlex.gt-md="225px">
+                    <div class="activiti-list-buttons">
                         <button
                             color="primary"
                             mat-raised-button
-                            class="activiti-demo-list-buttons-start"
+                            class="activiti-list-buttons-start"
                             data-automation-id="btn-start-process"
                             (click)="navigateStartProcess()">
                             <mat-icon>add</mat-icon>
@@ -128,7 +128,7 @@
                         </adf-accordion-group>
                     </adf-accordion>
                 </div>
-                <div class="activiti-demo-grid-item activiti-demo-processes-list activiti-demo-list" fxFlex.gt-md="335px" [ngClass.gt-md]="{'small-pagination': true}"
+                <div class="activiti-grid-item activiti-processes-list activiti-list" fxFlex.gt-md="335px" [ngClass.gt-md]="{'small-pagination': true}"
                      *ngIf="processFilter && !isStartProcessMode()">
                     <adf-process-instance-list
                         *ngIf="processFilter?.hasFilter()" [appId]="processFilter.appId"
@@ -149,7 +149,7 @@
 
                     </adf-process-instance-list>
                 </div>
-                <div class="activiti-demo-grid-item activiti-demo-processes-details" *ngIf="!isStartProcessMode()" fxFlex.gt-md="1 1 auto">
+                <div class="activiti-grid-item activiti-processes-details" *ngIf="!isStartProcessMode()" fxFlex.gt-md="1 1 auto">
                     <adf-process-instance-details
                         [processInstanceId]="currentProcessInstanceId"
                         (processCancelled)="processCancelled()"
@@ -177,7 +177,7 @@
                         </mat-card-content>
                     </mat-card>
                 </div>
-                <div class="activiti-demo-grid-item activiti-demo-processes-start" fxFlex.gt-md="1 1 auto"
+                <div class="activiti-grid-item activiti-processes-start" fxFlex.gt-md="1 1 auto"
                      *ngIf="isStartProcessMode()">
                     <adf-start-process
                         [appId]="appId"
@@ -190,8 +190,8 @@
     </mat-tab>
     <mat-tab id="report-header" href="#report"
             label="{{'PS-TAB.REPORTS-TAB' | translate}}">
-        <div class="activiti-demo-grid" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="stretch">
-            <div class="activiti-demo-grid-item activiti-demo-reports-menu" fxFlex.gt-md="300px">
+        <div class="activiti-grid" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="stretch">
+            <div class="activiti-grid-item activiti-reports-menu" fxFlex.gt-md="300px">
                 <span><h5>Report List</h5></span>
                 <hr>
                 <analytics-report-list
@@ -201,7 +201,7 @@
                     #analyticsreportlist>
                 </analytics-report-list>
             </div>
-            <div class="activiti-demo-grid-item activiti-demo-reports-details" fxFlex.gt-md="1 1 auto">
+            <div class="activiti-grid-item activiti-reports-details" fxFlex.gt-md="1 1 auto">
                 <adf-analytics
                     *ngIf="report"
                     [appId]="appId"

@@ -9,5 +9,9 @@
     "empty-folder-content",
     "empty-list",
     "loading-template",
-    "no-content-template"
+    "no-content-template",
+    "card-view-content-proxy",
+    "login-footer.directive",
+    "login-header.directive",
+    "no-task-detail-template"
 ]

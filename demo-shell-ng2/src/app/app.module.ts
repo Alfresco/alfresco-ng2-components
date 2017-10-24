@@ -6,7 +6,6 @@ import { MatInputModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 // import { Editor3DModule } from 'ng2-3d-editor';
 import { ChartsModule } from 'ng2-charts';
-// import { Viewer3DComponent } from './../../node_modules/ng2-3d-editor/src/componets/viewer3D.component';
 
 import { AppConfigService, TRANSLATION_PROVIDER } from 'ng2-alfresco-core';
 import { AppComponent } from './app.component';
@@ -80,7 +79,7 @@ import { routing } from './app.routes';
     MaterialModule,
     ThemePickerModule,
     FlexLayoutModule,
-    // Editor3DModule,
+    //Editor3DModule,
     ChartsModule,
   ],
   providers: [

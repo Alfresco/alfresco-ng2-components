@@ -31,6 +31,8 @@ import { PdfViewerComponent } from './pdfViewer.component';
 import { TxtViewerComponent } from './txtViewer.component';
 import { UnknownFormatComponent } from './unknown-format/unknown-format.component';
 import { ViewerInfoDrawerComponent } from './viewer-info-drawer.component';
+import { ViewerMoreActionsComponent } from './viewer-more-actions.component';
+import { ViewerOpenWithComponent } from './viewer-open-with.component';
 import { ViewerToolbarComponent } from './viewer-toolbar.component';
 import { ViewerComponent } from './viewer.component';
 
@@ -60,6 +62,52 @@ class ViewerWithCustomToolbarComponent {}
 })
 class ViewerWithCustomInfoDrawerComponent {}
 
+@Component({
+    selector: 'adf-viewer-container-open-with',
+    template: `
+        <adf-viewer>
+            <adf-viewer-open-with>
+                <button mat-menu-item>
+                    <mat-icon>dialpad</mat-icon>
+                    <span>Option 1</span>
+                </button>
+                <button mat-menu-item disabled>
+                    <mat-icon>voicemail</mat-icon>
+                    <span>Option 2</span>
+                </button>
+                <button mat-menu-item>
+                    <mat-icon>notifications_off</mat-icon>
+                    <span>Option 3</span>
+                </button>
+            </adf-viewer-open-with>
+        </adf-viewer>
+    `
+})
+class ViewerWithCustomOpenWithComponent {}
+
+@Component({
+    selector: 'adf-viewer-container-more-actions',
+    template: `
+        <adf-viewer>
+            <adf-viewer-more-actions>
+                <button mat-menu-item>
+                    <mat-icon>dialpad</mat-icon>
+                    <span>Action One</span>
+                </button>
+                <button mat-menu-item disabled>
+                    <mat-icon>voicemail</mat-icon>
+                    <span>Action Two</span>
+                </button>
+                <button mat-menu-item>
+                    <mat-icon>notifications_off</mat-icon>
+                    <span>Action Three</span>
+                </button>
+            </adf-viewer-more-actions>
+        </adf-viewer>
+    `
+})
+class ViewerWithCustomMoreActionsComponent {}
+
 describe('ViewerComponent', () => {
 
     let component: ViewerComponent;
@@ -82,8 +130,12 @@ describe('ViewerComponent', () => {
                 UnknownFormatComponent,
                 ViewerInfoDrawerComponent,
                 ViewerToolbarComponent,
+                ViewerOpenWithComponent,
+                ViewerMoreActionsComponent,
                 ViewerWithCustomToolbarComponent,
-                ViewerWithCustomInfoDrawerComponent
+                ViewerWithCustomInfoDrawerComponent,
+                ViewerWithCustomOpenWithComponent,
+                ViewerWithCustomMoreActionsComponent
             ],
             providers: [
                 RenderingQueueServices,
@@ -126,6 +178,22 @@ describe('ViewerComponent', () => {
 
         customFixture.detectChanges();
         expect(customElement.querySelector('.custom-info-drawer-element')).toBeDefined();
+    });
+
+    it('should use custom open with menu', () => {
+        let customFixture = TestBed.createComponent(ViewerWithCustomOpenWithComponent);
+        let customElement: HTMLElement = customFixture.nativeElement;
+
+        customFixture.detectChanges();
+        expect(customElement.querySelector('.adf-viewer-container-open-with')).toBeDefined();
+    });
+
+    it('should use custom more actions menu', () => {
+        let customFixture = TestBed.createComponent(ViewerWithCustomMoreActionsComponent);
+        let customElement: HTMLElement = customFixture.nativeElement;
+
+        customFixture.detectChanges();
+        expect(customElement.querySelector('.adf-viewer-container-more-actions')).toBeDefined();
     });
 
     describe('View', () => {
