@@ -112,10 +112,14 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "../node_modules/ng2-alfresco-core/prebuilt-themes/adf-blue-orange.css",
         "styles.css",
         "custom-style.scss"
       ],
+      "stylePreprocessorOptions": {
+        "includePaths": [
+          "../node_modules/"
+        ]
+      },
       "scripts": [
         "../node_modules/pdfjs-dist/build/pdf.js",
         "../node_modules/pdfjs-dist/web/compatibility.js",
@@ -319,10 +323,14 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app-dev",
       "styles": [
-        "../node_modules/ng2-alfresco-core/prebuilt-themes/adf-blue-orange.css",
         "styles.css",
         "custom-style.scss"
       ],
+      "stylePreprocessorOptions": {
+      "includePaths": [
+        "../../ng2-components/"
+      ]
+      },
       "scripts": [
         "../node_modules/pdfjs-dist/build/pdf.js",
         "../node_modules/pdfjs-dist/web/compatibility.js",
