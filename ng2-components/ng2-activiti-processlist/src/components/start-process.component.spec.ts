@@ -143,7 +143,7 @@ describe('StartProcessInstanceComponent', () => {
             fixture.whenStable().then(() => {
                 let errorEl = fixture.nativeElement.querySelector('#error-message');
                 expect(errorEl).not.toBeNull('Expected error message to be present');
-                expect(errorEl.innerText.trim()).toBe('START_PROCESS.ERROR.LOAD_PROCESS_DEFS');
+                expect(errorEl.innerText.trim()).toBe('ADF_PROCESS_LIST.START_PROCESS.ERROR.LOAD_PROCESS_DEFS');
             });
         }));
 
@@ -272,7 +272,7 @@ describe('StartProcessInstanceComponent', () => {
                 fixture.detectChanges();
                 let errorEl = fixture.nativeElement.querySelector('#error-message');
                 expect(errorEl).not.toBeNull();
-                expect(errorEl.innerText.trim()).toBe('START_PROCESS.ERROR.START');
+                expect(errorEl.innerText.trim()).toBe('ADF_PROCESS_LIST.START_PROCESS.ERROR.START');
             });
         }));
 

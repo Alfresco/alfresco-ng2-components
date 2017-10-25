@@ -73,7 +73,7 @@ export class StartProcessInstanceComponent implements OnChanges {
                 this.processDefinitions = res;
             },
             () => {
-                this.errorMessageId = 'START_PROCESS.ERROR.LOAD_PROCESS_DEFS';
+                this.errorMessageId = 'ADF_PROCESS_LIST.START_PROCESS.ERROR.LOAD_PROCESS_DEFS';
             }
         );
     }
@@ -88,7 +88,7 @@ export class StartProcessInstanceComponent implements OnChanges {
                     this.start.emit(res);
                 },
                 (err) => {
-                    this.errorMessageId = 'START_PROCESS.ERROR.START';
+                    this.errorMessageId = 'ADF_PROCESS_LIST.START_PROCESS.ERROR.START';
                     this.error.error(err);
                 }
             );
