@@ -151,4 +151,20 @@ describe('ProcessInstanceHeaderComponent', () => {
         let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-description"]');
         expect(valueEl.innerText).toBe('ADF_PROCESS_LIST.PROPERTIES.DESCRIPTION_DEFAULT');
     });
+
+    it('should display businessKey value', () => {
+        component.processInstance.businessKey = 'fakeBusinessKey';
+        component.ngOnChanges({});
+        fixture.detectChanges();
+        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-businessKey"]');
+        expect(valueEl.innerText).toBe('fakeBusinessKey');
+    });
+
+    it('should display default key if no businessKey', () => {
+        component.processInstance.businessKey = null;
+        component.ngOnChanges({});
+        fixture.detectChanges();
+        let valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-businessKey"]');
+        expect(valueEl.innerText).toBe('ADF_PROCESS_LIST.PROPERTIES.BUSINESS_KEY_DEFAULT');
+    });
 });
