@@ -380,6 +380,44 @@ describe('ShareDataTableAdapter', () => {
         expect((<ShareDataRow> rows[3]).node).toBe(file1);
     });
 
+    it('should sort by name', () => {
+        let file1 = new FileNode('file1');
+        let file2 = new FileNode('file11');
+        let file3 = new FileNode('file20');
+        let file4 = new FileNode('file11-1'); // auto rename
+        let file5 = new FileNode('a');
+        let file6 = new FileNode('b');
+
+        let col = <DataColumn> {key: 'name'};
+        let adapter = new ShareDataTableAdapter(documentListService, [col]);
+
+        adapter.setRows([
+            new ShareDataRow(file4, documentListService, null),
+            new ShareDataRow(file6, documentListService, null),
+            new ShareDataRow(file3, documentListService, null),
+            new ShareDataRow(file1, documentListService, null),
+            new ShareDataRow(file2, documentListService, null),
+            new ShareDataRow(file5, documentListService, null)
+        ]);
+
+        adapter.sort('name', 'asc');
+        let rows = adapter.getRows();
+
+        expect((<ShareDataRow> rows[0]).node).toBe(file5);
+        expect((<ShareDataRow> rows[1]).node).toBe(file6);
+        expect((<ShareDataRow> rows[2]).node).toBe(file1);
+        expect((<ShareDataRow> rows[3]).node).toBe(file2);
+        expect((<ShareDataRow> rows[4]).node).toBe(file4);
+        expect((<ShareDataRow> rows[5]).node).toBe(file3);
+
+        adapter.sort('name', 'desc');
+        expect((<ShareDataRow> rows[0]).node).toBe(file3);
+        expect((<ShareDataRow> rows[1]).node).toBe(file4);
+        expect((<ShareDataRow> rows[2]).node).toBe(file2);
+        expect((<ShareDataRow> rows[3]).node).toBe(file1);
+        expect((<ShareDataRow> rows[4]).node).toBe(file6);
+        expect((<ShareDataRow> rows[5]).node).toBe(file5);
+    });
 });
 
 describe('ShareDataRow', () => {

@@ -156,7 +156,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
             options.numeric =  true;
         }
 
-        this.sortRows(this.rows, this.sorting, options);
+        this.sortRows(this.rows, this.sorting);
     }
 
     sort(key?: string, direction?: string): void {
@@ -176,8 +176,15 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         this.imageResolver = resolver;
     }
 
-    private sortRows(rows: DataRow[], sorting: DataSorting, options?: Intl.CollatorOptions) {
+    private sortRows(rows: DataRow[], sorting: DataSorting) {
+        const options: Intl.CollatorOptions = {};
+
         if (sorting && sorting.key && rows && rows.length > 0) {
+
+            if (sorting.key.includes('sizeInBytes') || sorting.key === 'name') {
+                options.numeric =  true;
+            }
+
             rows.sort((a: ShareDataRow, b: ShareDataRow) => {
                 if (a.node.entry.isFolder !== b.node.entry.isFolder) {
                     return a.node.entry.isFolder ? -1 : 1;
