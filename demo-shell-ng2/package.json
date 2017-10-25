@@ -1,7 +1,8 @@
 {
-  "name": "myapp",
-  "version": "0.0.0",
-  "license": "MIT",
+  "name": "Alfresco-Angular2-Demo",
+  "description": "Demo shell for Alfresco Angular2 components",
+  "version": "1.9.0",
+  "author": "Alfresco Software, Ltd.",
   "scripts": {
     "ng": "ng",
     "start": "npm run server-versions && rimraf dist && ng serve --host 0.0.0.0 --app=0 --open --aot=true",
@@ -18,6 +19,42 @@
     "clean-build": "rimraf 'app/{,**/}**.js' 'app/{,**/}**.js.map' 'app/{,**/}**.d.ts'",
     "clean-lock": "rimraf package-lock.json"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alfresco/alfresco-ng2-components.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
+  },
+  "license": "Apache-2.0",
+  "contributors": [
+    {
+      "name": "Denys Vuika",
+      "email": "denis.vuyka@gmail.com"
+    },
+    {
+      "name": "Mario Romano",
+      "email": "mario.romano83@gmail.com"
+    },
+    {
+      "name": "Will Abson",
+      "email": "will.abson@alfresco.com"
+    },
+    {
+      "name": "Eugenio Romano",
+      "email": "eugenio.romano@alfresco.com"
+    },
+    {
+      "name": "Maurizio Vitale",
+      "email": "maurizio.vitale@alfresco.com"
+    }
+  ],
+  "keywords": [
+    "ng2",
+    "angular",
+    "angular2",
+    "alfresco"
+  ],
   "private": true,
   "dependencies": {
     "@angular/animations": "4.4.5",
