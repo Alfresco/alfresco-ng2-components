@@ -7,7 +7,7 @@
     "clean": "rimraf dist node_modules typings bundles coverage .npmrc",
     "clean-lock": "rimraf package-lock.json",
     "rimraf": "rimraf",
-    "build": "npm run build-style && webpack --config webpack.build.js --progress --profile --bail",
+    "build": "webpack --config webpack.build.js --progress --profile --bail",
     "test": "karma start karma.conf.js --reporters mocha,coverage --single-run --mode coverage",
     "build-style": "webpack --config webpack.style.js --progress --profile --bail",
     "test-browser": "karma start karma.conf.js --reporters kjhtml --component",
